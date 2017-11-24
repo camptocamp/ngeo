@@ -9,6 +9,8 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
+  console.log("drawpoints");
+  let cartoFeatures = [];
 
   let i = -1;
   let n = points.distance.length;
@@ -19,6 +21,7 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
 
     let distance = points.distance[i];
     let altitude = points.altitude[i];
+    let coords = points.coords[i];
     let rgb = points.color_packed[i];
     let intensity = points.intensity[i];
     let classification = points.classification[i];
@@ -29,19 +32,45 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
 
       ctx.beginPath();
       ctx.moveTo(cx, cy);
+      let olColor = '';
       if (material == 'COLOR_PACKED') {
         ctx.fillStyle = 'RGB(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ')';
+        olColor = 'rgba(' + rgb[0] + ', ' + rgb[1] + ', ' + rgb[2] + ', 0.5)';
       } else if (material == 'INTENSITY') {
         ctx.fillStyle = 'RGB(' + intensity + ', ' + intensity + ', ' + intensity + ')';
+        olColor = 'rgba(' + intensity + ', ' + intensity + ', ' + intensity + ', 0.5)'
       } else if (material == 'CLASSIFICATION') {
         ctx.fillStyle = 'RGB(' + ngeo.extendedProfile.options.profileConfig.classification[classification].color + ')';
+        olColor = 'rgba(' + ngeo.extendedProfile.options.profileConfig.classification[classification].color + ', 0.5)';
       } else {
         ctx.fillStyle = ngeo.extendedProfile.options.profileConfig.defaultColor;
+        olColor = 'rgba(0, 0, 255, 0.5)';
       }
       ctx.arc(cx, cy, ngeo.extendedProfile.options.profileConfig.pointSize, 0, 2 * Math.PI, false);
       ctx.fill();
+      // TODO handle CRS
+      let olFeature = new  ol.Feature({
+        geometry: new ol.geom.Point([coords[0]-2000000, coords[1]-1000000])
+      });
+      olFeature.setStyle(new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: olColor
+                }),
+                stroke: new ol.style.Stroke({
+                    color: olColor,
+                    width: 1
+                }),
+                radius: 2
+            })
+        }));
+      cartoFeatures.push(olFeature);
     }
   }
+  ngeo.extendedProfile.loader.cartoPoints.getSource().clear();
+  console.log(cartoFeatures);
+  ngeo.extendedProfile.loader.cartoPoints.getSource().addFeatures(cartoFeatures);
+  
 };
 
 /***
@@ -108,7 +137,6 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   ngeo.extendedProfile.options.profileConfig.scaleY = sy;
   
   function zoomed() {
-    console.log("zoomed");
     let tr = d3.event.transform;
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
@@ -191,6 +219,7 @@ ngeo.extendedProfile.plot2canvas.getClosestPoint = function (points, xs,ys,toler
         classification: d.classification[i],
         color_packed: d.color_packed[i],
         intensity: d.intensity[i], 
+        coords: d.coords[i]
       }); 
       distances.push(pDistance);
     }
@@ -218,6 +247,7 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
   let pointSize = ngeo.extendedProfile.options.profileConfig.pointSize;
   let margin = ngeo.extendedProfile.options.profileConfig.margin;
   let tolerance = ngeo.extendedProfile.options.profileConfig.tolerance; 
+  ngeo.extendedProfile.loader.cartoHighlight.getSource().clear();
 
   let canvasCoordinates = d3.mouse(d3.select('#profileCanvas').node());
   let svgCoordinates = d3.mouse(this);
@@ -241,8 +271,8 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
     .attr('r', pointSize + 1)
     .style('fill', 'orange');
 
-    let html = 'distance: ' + Math.round(10 * p.distance) / 10 + ' alti: ' + Math.round( 10 * p.altitude) / 10 + '  -  ';
-    html += 'Classification: ' + ngeo.extendedProfile.options.profileConfig.classification[p.classification].name + '  -  ';
+    let html = 'distance: ' + Math.round(10 * p.distance) / 10 + ' alti: ' + Math.round( 10 * p.altitude) / 10 + '\n';
+    html += 'Classification: ' + ngeo.extendedProfile.options.profileConfig.classification[p.classification].name + '\n';
     html += 'Intensity: ' + p.intensity;
 
     d3.select('#profileInfo').style('color', 'orange')
@@ -251,9 +281,45 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
       .style('font-weight', 'bold')
       .html(html);
 
+      // TODO handle CRS
+      let olFeature = new  ol.Feature({
+        geometry: new ol.geom.Point([p.coords[0]-2000000, p.coords[1]-1000000])
+      });
+
+      olFeature.setStyle(new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,255,0,1)'
+                }),
+                stroke: new ol.style.Stroke({
+                    color: 'rgba(255,255,0,1)',
+                    width: 2
+                }),
+                radius: 4
+            }),
+            text: new ol.style.Text({
+              textAlign: 'left',
+              font: '12px arial',
+              text: html,
+              fill: new ol.style.Fill({
+                  color: 'orange'
+              }),
+              stroke: new ol.style.Stroke({
+                  color: 'white',
+                  width: 1
+              }),
+              offsetX: 2
+            })
+        })
+      );
+
+
+      ngeo.extendedProfile.loader.cartoHighlight.getSource().addFeature(olFeature);
+
   } else {
     svg.select('#highlightCircle').remove();
     d3.select('#profileInfo').html('');
+    ngeo.extendedProfile.loader.cartoHighlight.getSource().clear();
   }
 };
 

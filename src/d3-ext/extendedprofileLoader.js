@@ -1,27 +1,31 @@
 goog.provide('ngeo.extendedProfile.loader');
-
-/*Custom point cloud store
-*/
-ngeo.extendedProfile.loader.profilePoints = {
-  distance: [],
-  altitude: [],
-  color_packed: [],
-  intensity: [],
-  classification: []
-}
+goog.require('ol.interaction.Select');
 
 ngeo.extendedProfile.options = {};
 
 ngeo.extendedProfile.setOptions = function(options) {
   ngeo.extendedProfile.options = options;
   console.log(ngeo.extendedProfile.options);
+  
+  ngeo.extendedProfile.loader.cartoPoints = new ol.layer.Vector({
+    source: new ol.source.Vector({
+    })
+  });
+  ngeo.extendedProfile.loader.cartoPoints.setMap(options.map);
+  ngeo.extendedProfile.loader.cartoHighlight = new ol.layer.Vector({
+    source: new ol.source.Vector({
+    })
+  });
+  ngeo.extendedProfile.loader.cartoHighlight.setMap(options.map);
+
 }
 
 ngeo.extendedProfile.loader.requestsQueue = [];
 
+
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlot, minLOD, maxLOD) {
-
+  ngeo.extendedProfile.loader.cartoPoints.getSource().clear()
   ngeo.extendedProfile.options.pytreeLinestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.olLinestring);;
   
   let uuid = ngeo.extendedProfile.utils.UUID();
@@ -33,7 +37,8 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
     altitude: [],
     color_packed: [],
     intensity: [],
-    classification: []
+    classification: [],
+    coords: []
   }
 
   for (let i=0; i<maxLOD; i++) {
@@ -126,7 +131,8 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
       altitude: [],
       classification: [],
       intensity: [],
-      color_packed: []
+      color_packed: [],
+      coords: []
     }
     let bytesPerPoint = jHeader.bytesPerPoint;
     let buffer = profile.slice(4 + headerSize);
@@ -138,41 +144,46 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
       let aoffset = 0;
       for(let k=0; k<attributes.length; k++) {
 
-      let attribute = attributes[k];
+        let attribute = attributes[k];
 
-      if (attribute.name == 'POSITION_PROJECTED_PROFILE') {
+        if (attribute.name == 'POSITION_PROJECTED_PROFILE') {
 
-        let ux = view.getUint32(aoffset, true);
-        let uy = view.getUint32(aoffset + 4, true);
-        let x = ux * scale;
-        let y = uy * scale;
-        points.distance.push(Math.round(100 * (distanceOffset + x))/100);
-        points.altitude.push(Math.round(100 * y)/100);
-        ngeo.extendedProfile.loader.profilePoints.distance.push(Math.round(100 * (distanceOffset + x))/100);
-        ngeo.extendedProfile.loader.profilePoints.altitude.push(Math.round(100 * y)/100);
+          let ux = view.getUint32(aoffset, true);
+          let uy = view.getUint32(aoffset + 4, true);
+          let x = ux * scale;
+          let y = uy * scale;
+          points.distance.push(Math.round(100 * (distanceOffset + x))/100);
+          points.altitude.push(Math.round(100 * y)/100);
+          ngeo.extendedProfile.loader.profilePoints.distance.push(Math.round(100 * (distanceOffset + x))/100);
+          ngeo.extendedProfile.loader.profilePoints.altitude.push(Math.round(100 * y)/100);
 
-      } else if (attribute.name == 'CLASSIFICATION') {
-        let classif = view.getUint8(aoffset, true);
-        points.classification.push(classif);
-        ngeo.extendedProfile.loader.profilePoints.classification.push(classif);
+        } else if (attribute.name == 'CLASSIFICATION') {
+          let classif = view.getUint8(aoffset, true);
+          points.classification.push(classif);
+          ngeo.extendedProfile.loader.profilePoints.classification.push(classif);
 
-      } else if (attribute.name == 'INTENSITY') {
-        let intensity = view.getUint16(aoffset, true);
-        points.intensity.push(intensity);
-        ngeo.extendedProfile.loader.profilePoints.intensity.push(intensity);
+        } else if (attribute.name == 'INTENSITY') {
+          let intensity = view.getUint16(aoffset, true);
+          points.intensity.push(intensity);
+          ngeo.extendedProfile.loader.profilePoints.intensity.push(intensity);
 
-      } else if (attribute.name == 'COLOR_PACKED') {
-        let r = view.getUint8(aoffset, true);
-        let g = view.getUint8(aoffset + 1, true);
-        let b = view.getUint8(aoffset + 2, true);
-        points.color_packed.push([r, g, b]);
-        ngeo.extendedProfile.loader.profilePoints.color_packed.push([r, g, b]);
+        } else if (attribute.name == 'COLOR_PACKED') {
+          let r = view.getUint8(aoffset, true);
+          let g = view.getUint8(aoffset + 1, true);
+          let b = view.getUint8(aoffset + 2, true);
+          points.color_packed.push([r, g, b]);
+          ngeo.extendedProfile.loader.profilePoints.color_packed.push([r, g, b]);
 
-      }
-        aoffset = aoffset + attribute.bytes;
+        } else if (attribute.name == 'POSITION_CARTESIAN') {
+            let x = view.getInt32(aoffset, true) * scale + jHeader.boundingBox.lx;
+            let y = view.getInt32(aoffset + 4, true) * scale + jHeader.boundingBox.ly;
+            // TODO handle CRS
+            points.coords.push([x,y]);
+            ngeo.extendedProfile.loader.profilePoints.coords.push([x,y]);
+        }
+          aoffset = aoffset + attribute.bytes;
       }
     }
-
     let initialProfile = ngeo.extendedProfile.utils.getLinestring();
     let lastSegment = initialProfile[initialProfile.length-1];
     let rangeX = [0, lastSegment.endD];

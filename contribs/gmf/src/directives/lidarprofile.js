@@ -377,7 +377,7 @@ gmf.LidarProfileController.prototype.update_ = function() {
   if (this.line) {
 
     this.gmfLidarProfileConfig_.olLinestring = this.line;
-    this.gmfLidarProfileConfig_.map = this.map;
+    this.gmfLidarProfileConfig_.map = this.map_;
     ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig_);
     console.log(this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
     ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);

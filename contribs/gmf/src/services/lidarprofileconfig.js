@@ -33,7 +33,7 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
   this.profileConfig.margin = {
     'left': 40,
     'top': 10,
-    'right': 10,
+    'right': 200,
     'bottom': 40
   };
   this.profileConfig.defaultColor = 'RGB(250,150,150)';
@@ -73,7 +73,7 @@ gmf.LidarProfileConfig.prototype.getSelectedMaterial = function() {
 };
 
 gmf.LidarProfileConfig.prototype.getWidth = function() {
-  this.profileConfig.profilWidth = 11;
+  this.profileConfig.profilWidth = 20;
 };
 
 gmf.LidarProfileConfig.prototype.getMinLOD = function() {
