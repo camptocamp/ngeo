@@ -215,13 +215,14 @@ Find the closest neighboor of the mouse coordinates within tolerance
 ***/
 ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
 
-  let pointSize = 2;
+  let pointSize = ngeo.extendedProfile.options.profileConfig.pointSize;
+  let margin = ngeo.extendedProfile.options.profileConfig.margin;
+  let tolerance = ngeo.extendedProfile.options.profileConfig.tolerance; 
 
   let canvasCoordinates = d3.mouse(d3.select('#profileCanvas').node());
   let svgCoordinates = d3.mouse(this);
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
-  let tolerance = 5; 
   let sx = ngeo.extendedProfile.options.profileConfig.scaleX;
   let sy = ngeo.extendedProfile.options.profileConfig.scaleY;
 

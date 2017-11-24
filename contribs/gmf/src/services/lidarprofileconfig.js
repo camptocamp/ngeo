@@ -37,6 +37,7 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
     'bottom': 40
   };
   this.profileConfig.defaultColor = 'RGB(250,150,150)';
+  this.profileConfig.tolerance= 5;
 
 };
 
