@@ -3,7 +3,7 @@
  * - a "virtual" angular module root used to automatically register finely included ngeo dependencies;
  * - a JS namespace for constants and types;
  * - a list of requires (for olx, ol3) to please GCC (using hide_warnings_for GCC parameter might help here);
- * - a GCC entry point with requires on all parts of ngeo to produce the dist/exports.js file (badly broken).
+ * - a GCC entry point with requires on all parts of ngeo to produce the dist/ngeo.js file (badly broken).
  *
  * Also consider renaming the file, see https://github.com/google/closure-compiler/issues/2665.
  */
@@ -48,7 +48,7 @@ goog.require('ol.style.AtlasManager');
 /** @type {!angular.Module} */
 exports.module = angular.module('ngeo', [
   'gettext', 'ui.date', 'floatThead'
-  // src/modules/* were added for producing the dist/exports.js file, which is badly broken.
+  // src/modules/* were added for producing the dist/ngeo.js file, which is badly broken.
   // removing them as they conflict with the "virtual" angular module root "vocation" of this file.
 ]);
 
