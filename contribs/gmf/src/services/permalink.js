@@ -228,8 +228,16 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
    * @type {?gmf.ObjectEditingManager}
    * @private
    */
-  this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
-    $injector.get('gmfObjectEditingManager') : null;
+  this.gmfObjectEditingManager_;
+  try {
+    // Attempt to inject gmfObjectEditingManager.
+    // This fails if the GMF application is not completely configured, like
+    // in the examples, where there is no gmfLayersUrl defined. Usually in
+    // those cases the gmfObjectEditingManager is not being used.
+    this.gmfObjectEditingManager_ = $injector.get('gmfObjectEditingManager');
+  } catch (e) {
+    this.gmfObjectEditingManager_ = null;
+  }
 
   /**
    * @type {?gmf.ThemeManager}
