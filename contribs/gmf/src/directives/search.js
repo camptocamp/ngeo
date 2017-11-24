@@ -24,9 +24,9 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.uri');
 
-goog.require('ngeo.search.searchModule');
+goog.require('ngeo.search.module');
 
-gmf.module.requires.push(ngeo.search.searchModule.module.name);
+gmf.module.requires.push(ngeo.search.module.name);
 
 gmf.module.value('gmfSearchTemplateUrl',
   /**

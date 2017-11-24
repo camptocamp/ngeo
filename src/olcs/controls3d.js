@@ -2,6 +2,8 @@ goog.module('ngeo.olcs.controls3d');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol.easing');
+goog.require('ngeo');
+const ngeoModule = ngeo.module;
 
 
 function shouldUpdate(older, newer) {
@@ -196,9 +198,6 @@ const Controller = class {
 };
 
 
-ngeo.module.value('ngeoOlcsControls3dTemplateUrl', '');
-
-
 /**
  * @param {!angular.Attributes} $attrs Attributes.
  * @param {!string} ngeoOlcsControls3dTemplateUrl Template function.
@@ -238,4 +237,8 @@ const component = {
 };
 
 const name = 'ngeoOlcsControls3d';
-exports = angular.module(name, []).component(name, component);
+exports = angular.module(name, [])
+  .component(name, component)
+  .value('ngeoOlcsControls3dTemplateUrl', '');
+
+ngeoModule.requires.push(name);

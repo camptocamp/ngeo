@@ -13,6 +13,7 @@
  */
 goog.provide('ngeo');
 
+
 // Required by olx
 /** @suppress {extraRequire} */
 goog.require('ol.format.IGC');
