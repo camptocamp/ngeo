@@ -423,7 +423,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   const printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
-  $scope.$root.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
+  $scope.$root.$on(gmf.ThemeManager.EventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
         this.setDefaultBackground_(theme, false);

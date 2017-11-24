@@ -13,18 +13,6 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
 
 
 /**
- * @enum {string}
- * @export
- */
-gmf.ThemeManagerEventType = {
-  /**
-   * Triggered when the theme name change.
-   */
-  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
-};
-
-
-/**
  * Manage a tree with children. This service can be used in mode 'flush'
  * (default) or not (mode 'add'). In mode 'flush', each theme, group or group
  * by layer that you add will replace the previous children's array. In mode
@@ -126,7 +114,7 @@ gmf.ThemeManager.prototype.getThemeName = function() {
 gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
   this.themeName_ = name;
   if (!opt_stealth) {
-    this.$rootScope_.$emit(gmf.ThemeManagerEventType.THEME_NAME_SET, name);
+    this.$rootScope_.$emit(gmf.ThemeManager.EventType.THEME_NAME_SET, name);
   }
 };
 
@@ -140,3 +128,14 @@ gmf.ThemeManager.prototype.removeAll = function() {
 };
 
 gmf.module.service('gmfThemeManager', gmf.ThemeManager);
+
+
+/**
+ * @enum {string}
+ */
+gmf.ThemeManager.EventType = {
+  /**
+   * Triggered when the theme name change.
+   */
+  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
+};

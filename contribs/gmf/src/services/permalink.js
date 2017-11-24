@@ -439,7 +439,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   }
 
   if (this.gmfThemeManager_) {
-    this.rootScope_.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
+    this.rootScope_.$on(gmf.ThemeManager.EventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_();
     });
   }
