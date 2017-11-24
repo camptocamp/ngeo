@@ -25,7 +25,7 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
   this.profileConfig.currentZoom = 1;
   this.profileConfig.previousDomain = [];
   this.profileConfig.distanceOffset = 0;
-  this.profileConfig.initialLOD = 7;
+  this.profileConfig.initialLOD = 5;
   this.profileConfig.pointAttributes = {};
 
 };
@@ -50,7 +50,7 @@ gmf.LidarProfileConfig.prototype.getMaterials = function() {
 
   this.profileConfig.materials = [
     {'name': 'COLOR_PACKED', 'value': 'COLOR_PACKED', 'selected': ''},
-    {'name': 'RGB', 'value': 'RGB','selected': 'selected'},
+    {'name': 'INTENSITY', 'value': 'INTENSITY', 'selected': ''},
     {'name': 'CLASSIFICATION',  'value': 'CLASSIFICATION','selected': ''}
   ]
 };

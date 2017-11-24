@@ -9,11 +9,9 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
-  // In order to optimize the point size, we scale data, not canvas!
+  
+  // TODO get this value from config
   let pointSize = 2;
-  // if (scale != null) {
-    // pointSize = Math.max(pointSize/scale, 2);;
-  // }
 
   let i = -1;
   let n = points.distance.length;
@@ -53,11 +51,12 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
 Setup the d3 canvas & svg plot
 ***/
 ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
+  console.log("setupPlot");
   let canvasEl = d3.select('#profileCanvas').node();
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
   ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
-
+  // TODO move this to options
   margin = {
     'left': 40,
     'top': 10,
@@ -125,9 +124,9 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
 
     ctx.clearRect(0, 0, width, height);
 
-    d3.select('g.y.axis').selectAll('g.tick line')
+    svg.select('.y.axis').selectAll('g.tick line')
     .style('opacity', '0.5')
-    .style('stroke', '#d8d8d8');
+    .style('stroke', '#b7cff7');
 
     ngeo.extendedProfile.measure.clearMeasure();
     ngeo.extendedProfile.options.profileConfig.currentZoom = tr.k;
@@ -160,7 +159,7 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let yAxis = d3.axisLeft(sy)
   .tickSize(-width);
   
-  d3.select('g.y.axis').selectAll('g.tick line').style('stroke', '#d8d8d8');
+  svg.select('.y.axis').selectAll('g.tick line').style('stroke', '#b7cff7');
 
   let gx = svg.append('g')
     .attr('class', 'x axis')
@@ -173,9 +172,9 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   svg.select('.y.axis').attr('transform', 'translate('+ (margin.left).toString() + ',' + margin.top.toString() + ')');
   svg.select('.x.axis').attr('transform', 'translate(' + margin.left.toString() + ',' + (height + margin.top).toString() + ')');
 
-  d3.select('g.y.axis').selectAll('g.tick line')
+  svg.select('.y.axis').selectAll('g.tick line')
   .style('opacity', '0.5')
-  .style('stroke', '#d8d8d8');
+  .style('stroke', '#b7cff7');
   
   ngeo.extendedProfile.options.profileConfig.previousDomain= sx.domain();
 

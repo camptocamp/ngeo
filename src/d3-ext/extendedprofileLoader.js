@@ -38,9 +38,8 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
 
   for (let i=0; i<maxLOD; i++) {
     if (i==0){
-      // TODO set defaultLOD from config
-      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 4, i, ngeo.extendedProfile.options.pytreeLinestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, resetPlot, uuid);
-      i += 3;
+      ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD, ngeo.extendedProfile.options.profileConfig.initialLOD, i, ngeo.extendedProfile.options.pytreeLinestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, resetPlot, uuid);
+      i += ngeo.extendedProfile.options.profileConfig.initialLOD - 1;
     } else if (i < maxLOD - 1) {
       ngeo.extendedProfile.loader.xhrRequest(ngeo.extendedProfile.options, minLOD + i, minLOD + i + 1, i, ngeo.extendedProfile.options.pytreeLinestring, distanceOffset, lastLOD, ngeo.extendedProfile.options.profileConfig.profilWidth, false, uuid);
     } else {
@@ -178,16 +177,14 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
     let lastSegment = initialProfile[initialProfile.length-1];
     let rangeX = [0, lastSegment.endD];
     let rangeY = [ngeo.extendedProfile.plot2canvas.arrayMin(points.altitude), ngeo.extendedProfile.plot2canvas.arrayMax(points.altitude)];
+    console.log("ICICICCI");
+    console.log(resetPlot);
     if (iter==0 && resetPlot) {
       ngeo.extendedProfile.plot2canvas.setupPlot(rangeX, rangeY);
       ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
 
     } else {
       ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
-    }
-
-    if (resetPlot) {
-        // TODO reset plot
     }
 
   // } catch (e) {
@@ -212,15 +209,19 @@ ngeo.extendedProfile.loader.updateData = function () {
   let zoomDir = previousSpan - span;
 
   if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && zoomDir > 0) {
-
+    console.log("la")
+    console.log(zoomDir);
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
+        console.log("li")
+
     ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else {
+    console.log("lu")
 
     let line = clip.clippedLine;
     if(clip.clippedLine.length < 2) {

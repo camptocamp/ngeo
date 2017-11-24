@@ -20,7 +20,6 @@ ngeo.extendedProfile.utils.getLinestring = function () {
 
     let shiftedX = linestring[k+1][0]-linestring[k][0];
     let shiftedY = linestring[k+1][1]-linestring[k][1];
-
     let endDistance = distance + Math.sqrt(Math.pow(shiftedX,2) + Math.pow(shiftedY,2));
 
     lShifted.push({
@@ -274,7 +273,7 @@ ngeo.extendedProfile.utils.UUID = function() {
         randStr.substr(0, 8), "-",
         randStr.substr(8, 4), "-4",
         randStr.substr(12, 3), "-",
-        ((nbr*4|0)+8).toString(16), // [89ab]
+        ((nbr*4|0)+8).toString(16),
         randStr.substr(15, 3), "-",
         randStr.substr(18, 12)
         ].join("");
@@ -284,6 +283,7 @@ ngeo.extendedProfile.utils.getPytreeLinestring = function(line) {
       let flat = line.flatCoordinates;
       let pytreeLineString = '';
       for (let i=0; i<flat.length; i++) {
+      // TODO check for projection system
       let px = 2000000 + flat[i];
       let py = 1000000 + flat[i+1];
       pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
