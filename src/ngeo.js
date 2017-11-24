@@ -11,8 +11,7 @@
 /**
  * @module ngeo
  */
-goog.module('ngeo');
-goog.module.declareLegacyNamespace();
+goog.provide('ngeo');
 
 
 // Required by olx
@@ -46,7 +45,7 @@ goog.require('ol.style.AtlasManager');
 
 
 /** @type {!angular.Module} */
-exports.module = angular.module('ngeo', [
+ngeo.module = angular.module('ngeo', [
   'gettext', 'ui.date', 'floatThead'
   // src/modules/* were added for producing the dist/ngeo.js file, which is badly broken.
   // removing them as they conflict with the "virtual" angular module root "vocation" of this file.
@@ -57,20 +56,20 @@ exports.module = angular.module('ngeo', [
  * The default template base URL for directive partials, used as-is by the template cache.
  * @type {string}
  */
-exports.baseTemplateUrl = 'ngeo';
+ngeo.baseTemplateUrl = 'ngeo';
 
 /**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
-exports.baseModuleTemplateUrl = 'ngeomodule';
+ngeo.baseModuleTemplateUrl = 'ngeomodule';
 
 
 /**
  * @enum {string}
  * @export
  */
-exports.AttributeType = {
+ngeo.AttributeType = {
   /**
    * @type {string}
    */
@@ -106,7 +105,7 @@ exports.AttributeType = {
  * @enum {string}
  * @export
  */
-exports.FeatureProperties = {
+ngeo.FeatureProperties = {
   /**
    * @type {string}
    * @export
@@ -169,7 +168,7 @@ exports.FeatureProperties = {
  * @enum {string}
  * @export
  */
-exports.FilterCondition = {
+ngeo.FilterCondition = {
   /**
    * @type {string}
    * @export
@@ -192,7 +191,7 @@ exports.FilterCondition = {
  * @enum {string}
  * @export
  */
-exports.GeometryType = {
+ngeo.GeometryType = {
   /**
    * @type {string}
    * @export
@@ -245,7 +244,7 @@ exports.GeometryType = {
  * @enum {string}
  * @export
  */
-exports.NumberType = {
+ngeo.NumberType = {
   /**
    * @type {string}
    * @export
