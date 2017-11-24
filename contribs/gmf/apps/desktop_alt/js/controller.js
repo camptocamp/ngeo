@@ -54,7 +54,7 @@ gmf.module.value('ngeoMeasureDecimals', 2);
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
- * @param {ngeo.File} ngeoFile The file service.
+ * @param {ngeo.utils.File} ngeoFile The file service.
  * @param {gettext} gettext The gettext service
  * @param {angular.$q} $q Angular $q.
  * @constructor

@@ -20,7 +20,7 @@ goog.require('ol.Feature');
 ngeo.search.createLocationSearchBloodhound = function(opt_options) {
   const options = opt_options || {};
 
-  const sourceProjection = ol.proj.get('EPSG:21781');
+  const sourceProjection = ol.proj.get(ngeo.proj.EPSG21781);
   const targetProjection = options.targetProjection;
 
   /**

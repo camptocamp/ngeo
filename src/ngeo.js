@@ -3,7 +3,7 @@
  * - a "virtual" angular module root used to automatically register finely included ngeo dependencies;
  * - a JS namespace for constants and types;
  * - a list of requires (for olx, ol3) to please GCC (using hide_warnings_for GCC parameter might help here);
- * - a GCC entry point with requires on all parts of ngeo to produce the dist/ngeo.js file (badly broken).
+ * - a GCC entry point with requires on all parts of ngeo to produce the dist/exports.js file (badly broken).
  *
  * Also consider renaming the file, see https://github.com/google/closure-compiler/issues/2665.
  */
@@ -11,7 +11,9 @@
 /**
  * @module ngeo
  */
-goog.provide('ngeo');
+goog.module('ngeo');
+goog.module.declareLegacyNamespace();
+
 
 // Required by olx
 /** @suppress {extraRequire} */
@@ -44,9 +46,9 @@ goog.require('ol.style.AtlasManager');
 
 
 /** @type {!angular.Module} */
-ngeo.module = angular.module('ngeo', [
+exports.module = angular.module('ngeo', [
   'gettext', 'ui.date', 'floatThead'
-  // src/modules/* were added for producing the dist/ngeo.js file, which is badly broken.
+  // src/modules/* were added for producing the dist/exports.js file, which is badly broken.
   // removing them as they conflict with the "virtual" angular module root "vocation" of this file.
 ]);
 
@@ -55,20 +57,20 @@ ngeo.module = angular.module('ngeo', [
  * The default template base URL for directive partials, used as-is by the template cache.
  * @type {string}
  */
-ngeo.baseTemplateUrl = 'ngeo';
+exports.baseTemplateUrl = 'ngeo';
 
 /**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
-ngeo.baseModuleTemplateUrl = 'ngeomodule';
+exports.baseModuleTemplateUrl = 'ngeomodule';
 
 
 /**
  * @enum {string}
  * @export
  */
-ngeo.AttributeType = {
+exports.AttributeType = {
   /**
    * @type {string}
    */
@@ -104,7 +106,7 @@ ngeo.AttributeType = {
  * @enum {string}
  * @export
  */
-ngeo.FeatureProperties = {
+exports.FeatureProperties = {
   /**
    * @type {string}
    * @export
@@ -167,7 +169,7 @@ ngeo.FeatureProperties = {
  * @enum {string}
  * @export
  */
-ngeo.FilterCondition = {
+exports.FilterCondition = {
   /**
    * @type {string}
    * @export
@@ -190,7 +192,7 @@ ngeo.FilterCondition = {
  * @enum {string}
  * @export
  */
-ngeo.GeometryType = {
+exports.GeometryType = {
   /**
    * @type {string}
    * @export
@@ -243,7 +245,7 @@ ngeo.GeometryType = {
  * @enum {string}
  * @export
  */
-ngeo.NumberType = {
+exports.NumberType = {
   /**
    * @type {string}
    * @export
