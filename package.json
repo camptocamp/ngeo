@@ -52,7 +52,7 @@
     "jquery": "3.2.1",
     "jsdoc": "3.5.5",
     "jsdom": "11.4.0",
-    "jsts": "1.4.0",
+    "jsts": "1.5.0",
     "karma": "1.7.1",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.1",
