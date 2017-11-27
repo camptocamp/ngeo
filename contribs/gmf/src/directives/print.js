@@ -166,7 +166,6 @@ gmf.PrintController = class {
    * @param {angular.$filter} $filter Angular $filter service.
    * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
    * @param {gmf.Themes} gmfThemes The gmf Themes service.
-   * @constructor
    * @private
    * @ngInject
    * @ngdoc controller
@@ -190,6 +189,11 @@ gmf.PrintController = class {
     this.translate_ = $filter('translate');
 
     /**
+     * @type {ol.Map}
+     */
+    this.map;
+
+    /**
      * @type {boolean}
      */
     this.active;
@@ -205,6 +209,11 @@ gmf.PrintController = class {
      * @export
      */
     this.fieldValues = {};
+
+    /**
+     * @type {Array.<string>}
+     */
+    this.attributesOut;
 
     /**
      * @type {angular.Scope}
@@ -318,13 +327,13 @@ gmf.PrintController = class {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {ol.EventsKey|Array.<ol.EventsKey>}
      * @private
      */
     this.postComposeListenerKey_;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {ol.EventsKey|Array.<ol.EventsKey>}
      * @private
      */
     this.pointerDragListenerKey_;
@@ -712,8 +721,9 @@ gmf.PrintController = class {
    */
   onPointerDrag_(e) {
     const originalEvent = e.originalEvent;
-    if (this.active && originalEvent.altKey && originalEvent.shiftKey) {
-      const center = this.map.getPixelFromCoordinate(this.map.getView().getCenter());
+    const mapCenter = this.map.getView().getCenter();
+    if (this.active && originalEvent.altKey && originalEvent.shiftKey && mapCenter) {
+      const center = this.map.getPixelFromCoordinate(mapCenter);
       const pixel = e.pixel;
       // Reset previous position between two differents sessions of drags events.
       if (this.rotationTimeoutPromise_ === null) {
@@ -763,7 +773,7 @@ gmf.PrintController = class {
     this.gmfPrintState_.state = gmf.PrintStateEnum.PRINTING;
 
     const mapSize = this.map.getSize();
-    const viewResolution = this.map.getView().getResolution();
+    const viewResolution = this.map.getView().getResolution() || 0;
     const scale = this.getOptimalScale_(mapSize, viewResolution);
     const rotation = this.rotateMask ? -this.rotation : this.rotation;
     const datasource = this.getDataSource_();
@@ -921,8 +931,8 @@ gmf.PrintController = class {
   /**
    * Get the optimal scale to display the print mask. Return the first scale if
    * no scale matches.
-   * @param {ol.Size} mapSize Size of the map on the screen (px).
-   * @param {number} viewResolution Resolution of the map on the screen.
+   * @param {ol.Size|undefined} mapSize Size of the map on the screen (px).
+   * @param {number|undefined} viewResolution Resolution of the map on the screen.
    * @return {number} The best scale. -1 is returned if there is no optimal
    *     scale, that is the optimal scale is lower than or equal to the first
    *     value in printMapScales.
@@ -1114,7 +1124,7 @@ gmf.PrintController = class {
    */
   getSetScale(opt_scale) {
     if (opt_scale !== undefined) {
-      const mapSize = this.map.getSize();
+      const mapSize = this.map.getSize() || [0, 0];
       this.layoutInfo.scale = opt_scale;
       const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
       const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
