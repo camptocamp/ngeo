@@ -31,7 +31,6 @@ goog.require('ngeo');
  *
  * See our live example: [../examples/modal.html](../examples/modal.html)
  *
- * @type {!angular.Component}
  * @htmlAttribute {boolean} ngeo-modal-destroy-content-on-hide Destroy the
  *     content when the modal is hidden
  * @htmlAttribute {boolean} ngeo-modal-resizable Whether the modal can be
@@ -39,7 +38,138 @@ goog.require('ngeo');
  * @ngdoc component
  * @ngname ngeoModal
  */
-ngeo.modalDirective = {
+ngeo.modalDirective;
+
+ngeo.modalDirective.Controller = class {
+  /**
+   * @ngInject
+   * @param {!angular.Scope} $scope Scope.
+   * @param {!jQuery} $element Element.
+   * @param {!angular.$transclude} $transclude is a transclude linking
+   *      function pre-bound to the correct transclusion scope.
+   */
+  constructor($scope, $element, $transclude) {
+    /**
+     * @private
+     * @type {!jQuery}
+     */
+    this.$element_ = $element;
+
+    /**
+     * @private
+     * @type {!angular.Scope}
+     */
+    this.$scope_ = $scope;
+
+    /**
+     * @private
+     * @type {!angular.$transclude}
+     */
+    this.$transclude_ = $transclude;
+
+    /**
+     * @private
+     * @type {angular.Scope}
+     */
+    this.childScope_;
+
+    /**
+     * @private
+     * @type {jQuery}
+     */
+    this.modal_;
+
+    /**
+     * @export
+     * @type {boolean}
+     */
+    this.destroyContent;
+
+    /**
+     * @export
+     * @type {boolean}
+     */
+    this.resizable;
+
+    /**
+     * @export
+     * @type {angular.NgModelController|null}
+     */
+    this.ngModel;
+  }
+
+  /**
+   * @export
+   */
+  $onInit() {
+    this.modal_ = this.$element_.children();
+
+    this.destroyContent = !!this.destroyContent;
+    this.resizable = !!this.resizable;
+
+    this.childScope_ = this.$scope_.$new();
+
+    // move the modal to document body to ensure that it is on top of
+    // other elements even if in a positioned element initially.
+    angular.element(document.body).append(this.modal_);
+
+    this.modal_.find('.modal-dialog').draggable();
+
+    this.ngModel.$render = () => {
+      this.modal_.modal(this.ngModel.$viewValue ? 'show' : 'hide');
+    };
+
+    this.modal_.on('shown.bs.modal hidden.bs.modal', (e) => {
+      const type = e.type;
+      goog.asserts.assert(type == 'shown' || type == 'hidden');
+      this.$scope_.$apply(() => {
+        this.ngModel.$setViewValue(type == 'shown');
+      });
+    });
+
+    if (this.destroyContent) {
+      this.modal_.on('hide.bs.modal', this.onHide_.bind(this));
+      this.modal_.on('show.bs.modal', this.onShow_.bind(this));
+    } else {
+      if (this.resizable) {
+        this.modal_.find('.modal-content').resizable().append(this.$transclude_());
+      } else {
+        this.modal_.find('.modal-content').append(this.$transclude_());
+      }
+    }
+  }
+
+  /**
+   * @private
+   */
+  onShow_() {
+    this.childScope_ = this.$scope_.$new();
+    this.$transclude_(this.childScope_, (scope, clone) => {
+      if (this.resizable) {
+        this.modal_.find('.modal-content').resizable().append(clone);
+      } else {
+        this.modal_.find('.modal-content').append(clone);
+      }
+    });
+  }
+
+  /**
+   * @private
+   */
+  onHide_() {
+    this.childScope_.$destroy();
+    const content = this.modal_.find('.modal-content');
+    if (this.resizable && content.hasClass('ui-resizable')) {
+      content.resizable('destroy');
+    }
+    content.empty();
+  }
+};
+
+/**
+ * @type {!angular.Component}
+ */
+ngeo.modalDirective.Component = {
   template: `<div class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -58,132 +188,4 @@ ngeo.modalDirective = {
   }
 };
 
-ngeo.modalDirective.Controller = class {
-  /**
-   * @ngInject
-   * @param {!angular.Scope} $scope Scope.
-   * @param {!jQuery} $element Element.
-   * @param {!angular.$transclude} $transclude is a transclude linking
-   *      function pre-bound to the correct transclusion scope.
-   */
-  constructor($scope, $element, $transclude) {
-    /**
-     * @private
-     * @type {!jQuery}
-     */
-    this.$element = $element;
-
-    /**
-     * @private
-     * @type {!angular.Scope}
-     */
-    this.$scope = $scope;
-
-    /**
-     * @private
-     * @type {!angular.$transclude}
-     */
-    this.$transclude = $transclude;
-
-    /**
-     * @private
-     * @type {angular.Scope}
-     */
-    this.childScope;
-
-    /**
-     * @private
-     * @type {jQuery}
-     */
-    this.modal;
-
-    /**
-     * @private
-     * @type {boolean}
-     */
-    this.destroyContent;
-
-    /**
-     * @private
-     * @type {boolean}
-     */
-    this.resizable;
-
-    /**
-     * @type {angular.NgModelController|null}
-     * @export
-     */
-    this.ngModel;
-  }
-
-  /**
-   * @export
-   */
-  $onInit() {
-    this.modal = this.$element.children();
-
-    this.destroyContent = !!this.destroyContent;
-    this.resizable = !!this.resizable;
-
-    this.childScope = this.$scope.$new();
-
-    // move the modal to document body to ensure that it is on top of
-    // other elements even if in a positioned element initially.
-    angular.element(document.body).append(this.modal);
-
-    this.modal.find('.modal-dialog').draggable();
-
-    this.ngModel.$render = function() {
-      this.modal.modal(this.ngModel.$viewValue ? 'show' : 'hide');
-    };
-
-    this.modal.on('shown.bs.modal hidden.bs.modal', (e) => {
-      const type = e.type;
-      goog.asserts.assert(type == 'shown' || type == 'hidden');
-      this.$scope.$apply(() => {
-        this.ngModel.$setViewValue(type == 'shown');
-      });
-    });
-
-    if (this.destroyContent) {
-      this.modal.on('hide.bs.modal', this.onHide.bind(this));
-      this.modal.on('show.bs.modal', this.onShow.bind(this));
-    } else {
-      if (this.resizable) {
-        this.modal.find('.modal-content').resizable().append(this.$transclude());
-      } else {
-        this.modal.find('.modal-content').append(this.$transclude());
-      }
-    }
-  }
-
-  /**
-   * @private
-   */
-  onShow() {
-    this.childScope = this.$scope.$new();
-    // * @param {!function(!angular.Scope=, !function(Element)=)=} transcludeFn
-    // function((angular.Scope|null)=, function(angular.Scope, Element): ?=, (Element|null)=, string=): ?
-    this.$transclude(this.childScope, (scope, clone) => {
-      if (this.resizable) {
-        this.modal.find('.modal-content').resizable().append(clone);
-      } else {
-        this.modal.find('.modal-content').append(clone);
-      }
-    });
-  }
-
-  /**
-   * @private
-   */
-  onHide() {
-    this.childScope.$destroy();
-    const content = this.modal.find('.modal-content');
-    if (this.resizable && content.hasClass('ui-resizable')) {
-      content.resizable('destroy');
-    }
-    content.empty();
-  }
-};
-
-ngeo.module.component('ngeoModal', ngeo.modalDirective);
+ngeo.module.component('ngeoModal', ngeo.modalDirective.Component);
