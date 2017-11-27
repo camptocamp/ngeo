@@ -307,9 +307,9 @@ gmf.SearchController = class {
     /**
      * Supported projections for coordinates search.
      * @type {Array.<ol.proj.Projection>}
-     * @private
+     * @export
      */
-    this.coordinatesProjections_;
+    this.coordinatesProjections;
 
     /**
      * @type {ngeo.FeatureOverlay}
@@ -325,6 +325,7 @@ gmf.SearchController = class {
 
     /**
      * @type {TypeaheadOptions}
+     * @export
      */
     this.typeaheadOptions;
 
@@ -335,6 +336,12 @@ gmf.SearchController = class {
     this.options = /** @type {TypeaheadOptions} */ ({
       highlight: true
     });
+
+    /**
+     * @type {Object.<string, ol.style.Style>}
+     * @export
+     */
+    this.featuresStyles;
 
     /**
      * @type {Array.<TypeaheadDataset>}
@@ -386,7 +393,7 @@ gmf.SearchController = class {
   $onInit() {
 
     // Init coordinates projections
-    let coordProj = this.coordinatesProjections_;
+    let coordProj = this.coordinatesProjections;
     if (coordProj === undefined) {
       coordProj = [this.map.getView().getProjection()];
     } else {
@@ -394,7 +401,7 @@ gmf.SearchController = class {
         /** @type {Array.<string>} */ (coordProj)
       );
     }
-    this.coordinatesProjections_ = coordProj;
+    this.coordinatesProjections = coordProj;
 
     if (!this.clearButton) {
       // Empty the search field on focus and blur.
@@ -714,7 +721,7 @@ gmf.SearchController = class {
         return;
       }
       const position = this.ngeoAutoProjection_.tryProjectionsWithInversion(coordinates,
-        extent, viewProjection, this.coordinatesProjections_);
+        extent, viewProjection, this.coordinatesProjections);
       if (position === null) {
         return;
       }
@@ -761,7 +768,7 @@ gmf.SearchController = class {
       }),
       stroke: stroke
     });
-    const customStyles = this.scope_['featuresStyles'] || {};
+    const customStyles = this.featuresStyles || {};
     ol.obj.assign(this.styles_, customStyles);
   }
 

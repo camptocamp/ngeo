@@ -190,11 +190,13 @@ gmf.PrintController = class {
 
     /**
      * @type {ol.Map}
+     * @export
      */
     this.map;
 
     /**
      * @type {boolean}
+     * @export
      */
     this.active;
 
@@ -212,6 +214,7 @@ gmf.PrintController = class {
 
     /**
      * @type {Array.<string>}
+     * @export
      */
     this.attributesOut;
 
