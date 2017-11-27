@@ -51,7 +51,7 @@
     "jasmine-core": "2.8.0",
     "jquery": "3.2.1",
     "jsdoc": "3.5.5",
-    "jsdom": "11.4.0",
+    "jsdom": "11.5.0",
     "jsts": "1.4.0",
     "karma": "1.7.1",
     "karma-chrome-launcher": "2.2.0",
