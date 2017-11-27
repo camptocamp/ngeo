@@ -38,12 +38,9 @@ function ngeoRoutingTemplateUrl($element, $attrs, ngeoRoutingTemplateUrl) {
  * Example:
  *
  *  <ngeo-routing
- *    ngeo-routing-active="ctrl.routingActive"
  *    ngeo-routing-map="::ctrl.map">
  *  </ngeo-routing>
  *
- * @htmlAttribute {boolean} ngeo-routing-active Whether the component is
- *     active or not.
  * @htmlAttribute {ol.Map} ngeo-routing-map The map.
  * @ngdoc component
  * @ngname ngeoRouting
@@ -51,7 +48,6 @@ function ngeoRoutingTemplateUrl($element, $attrs, ngeoRoutingTemplateUrl) {
 ngeo.routingComponent = {
   controller: 'NgeoRoutingController as routeCtrl',
   bindings: {
-    'active': '=ngeoRoutingActive',
     'map': '<ngeoRoutingMap'
   },
   templateUrl: ngeoRoutingTemplateUrl
@@ -134,17 +130,6 @@ ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService, nge
    * @export
    */
   this.map;
-
-  /**
-   * @type {boolean}
-   * @private
-   */
-  this.active;
-
-  $scope.$watch(
-    () => this.active,
-    this.handleActiveChange_.bind(this)
-  );
 
   /**
    * @type {string}
@@ -255,20 +240,17 @@ ngeo.NgeoRoutingController.prototype.$onInit = function() {
 };
 
 /**
- * Cleanup when component becomes inactive.
- * @param {boolean} active component status
- * @private
+ * Clears start, end and vias. Removes features from map.
+ * @export
  */
-ngeo.NgeoRoutingController.prototype.handleActiveChange_ = function(active) {
-  if (!active) {
-    this.startFeature_ = null;
-    this.targetFeature_ = null;
-    this.viaArray = [];
-    this.routeDistance = 0;
-    this.routeDuration = null;
-    this.routeSource_.clear();
-    this.errorMessage = '';
-  }
+ngeo.NgeoRoutingController.prototype.clearRoute = function() {
+  this.startFeature_ = null;
+  this.targetFeature_ = null;
+  this.viaArray = [];
+  this.routeDistance = 0;
+  this.routeDuration = null;
+  this.routeSource_.clear();
+  this.errorMessage = '';
 };
 
 /**

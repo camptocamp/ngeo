@@ -231,14 +231,12 @@ ngeo.NgeoRoutingFeatureController.prototype.$onInit = function() {
       if (newVal) {
         this.onFeatureChange_();
       }
+      if (newVal === null) {
+        this.vectorSource_.clear();
+        this.featureLabel = '';
+      }
     }
   );
-};
-
-ngeo.NgeoRoutingFeatureController.prototype.$onDestroy = function() {
-  this.map.removeLayer(this.vectorLayer_);
-  this.modifyFeature_.setActive(false);
-  this.map.removeInteraction(this.modifyFeature_);
 };
 
 /**
