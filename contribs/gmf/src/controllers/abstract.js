@@ -571,6 +571,12 @@ gmf.AbstractController = function(config, $scope, $injector) {
   this.displaywindowContent = null;
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.displaywindowDraggableContainment = '.gmf-map';
+
+  /**
    * @type {?string}
    * @export
    */

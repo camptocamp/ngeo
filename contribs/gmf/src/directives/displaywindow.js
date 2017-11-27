@@ -56,6 +56,12 @@ gmf.DisplaywindowController = class {
     this.draggable;
 
     /**
+     * @type {Element|string}
+     * @export
+     */
+    this.draggableContainment;
+
+    /**
      * @type {boolean}
      * @export
      */
@@ -122,6 +128,7 @@ gmf.DisplaywindowController = class {
     this.clearOnClose = this.clearOnClose !== false;
     this.content = this.content || null;
     this.desktop = this.desktop !== false;
+    this.draggableContainment = this.draggableContainment || 'document';
     this.height = this.height || null;
     this.open = this.open === true;
     this.title = this.title || null;
@@ -135,7 +142,9 @@ gmf.DisplaywindowController = class {
 
     // Draggable
     if (this.draggable) {
-      this.element_.find('.gmf-displayquerywindow').draggable();
+      this.element_.find('.gmf-displayquerywindow').draggable({
+        'containment': this.draggableContainment
+      });
     }
 
     // Resizable
@@ -197,6 +206,7 @@ gmf.module.component('gmfDisplaywindow', {
     'content': '=',
     'desktop': '<',
     'draggable': '<',
+    'draggableContainment': '<',
     'height': '=',
     'open': '=',
     'resizable': '<',
