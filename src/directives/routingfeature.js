@@ -309,7 +309,7 @@ ngeo.NgeoRoutingFeatureController.prototype.onFeatureChange_ = function() {
  * @private
  */
 ngeo.NgeoRoutingFeatureController.prototype.onSelect_ = function(selected) {
-  const coordinate = selected.coordinate;
+  const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
   const newCoordinates = /** @type{ol.geom.Point} */(this.feature.getGeometry()).getCoordinates();
