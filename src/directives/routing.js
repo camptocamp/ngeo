@@ -4,6 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.RoutingService');
 goog.require('ngeo.NominatimService');
 goog.require('ol.format.GeoJSON');
+goog.require('ngeo.Debounce');
 
 
 ngeo.module.value('ngeoRoutingTemplateUrl',
@@ -63,13 +64,15 @@ ngeo.module.component('ngeoRouting', ngeo.routingComponent);
  * @param {!ngeo.RoutingService} ngeoRoutingService service for OSRM routing
  * @param {!ngeo.NominatimService} ngeoNominatimService service for Nominatim
  * @param {!angular.$q} $q Angular q service
+ * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoRoutingController
  */
-ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q) {
+ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService,
+                                      ngeoNominatimService, $q, ngeoDebounce) {
 
   /**
    * @type {angular.Scope}
@@ -225,11 +228,19 @@ ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService, nge
    */
   this.draw_ = null;
 
+  const debounceDelay = 200; // in milliseconds
+
   /**
+   * Debounced because in some cases (reverse route) multiple changes are done
+   * at once and spam this function.
    * @export
    * @type {function()}
    */
-  this.handleChange = this.calculateRoute.bind(this);
+  this.handleChange = /** @type {function()} */
+          (ngeoDebounce(
+            /** @type {function(?)} */ (this.calculateRoute.bind(this)),
+            debounceDelay,
+            true));
 };
 
 /**
@@ -279,7 +290,7 @@ ngeo.NgeoRoutingController.prototype.reverseRoute = function() {
   // reverse vias
   this.viaArray = this.viaArray.reverse();
 
-  this.calculateRoute();
+  // recalculation is done by the debounced handleChange
 };
 
 /**
