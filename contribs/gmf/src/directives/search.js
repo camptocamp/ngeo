@@ -325,6 +325,11 @@ gmf.SearchController = class {
 
     /**
      * @type {TypeaheadOptions}
+     */
+    this.typeaheadOptions;
+
+    /**
+     * @type {TypeaheadOptions}
      * @export
      */
     this.options = /** @type {TypeaheadOptions} */ ({
