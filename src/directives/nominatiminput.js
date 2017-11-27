@@ -136,7 +136,6 @@ ngeo.NgeoNominatimInputController = function($element, $injector, $scope, ngeoNo
 };
 
 ngeo.NgeoNominatimInputController.prototype.$onInit = function() {
-  // TODO are injected services shared?
   this.ngeoNominatimService.searchDefaultParams = this.searchDefaultParams || {};
 };
 

@@ -71,8 +71,7 @@ ngeo.module.component('ngeoRouting', ngeo.routingComponent);
  * @ngdoc controller
  * @ngname NgeoRoutingController
  */
-ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService,
-                                      ngeoNominatimService, $q, ngeoDebounce) {
+ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
 
   /**
    * @type {angular.Scope}
