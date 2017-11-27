@@ -3,6 +3,14 @@ goog.require('ngeo.RoutingService');
 describe('ngeo.RoutingService', () => {
   let $httpBackend;
 
+  beforeEach(() => {
+    module('ngeo', ($provide) => {
+      $provide.value('ngeoRoutingOptions', {
+        'backendUrl': 'http://example.com/'
+      });
+    });
+  });
+
   afterEach(() => {
     $httpBackend.verifyNoOutstandingExpectation();
     $httpBackend.verifyNoOutstandingRequest();
