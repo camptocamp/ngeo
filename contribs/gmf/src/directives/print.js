@@ -438,24 +438,6 @@ gmf.PrintController.prototype.$onInit = function() {
    */
   const getSizeFn = () => this.paperSize_;
 
-  /**
-   * @param {olx.FrameState} frameState Frame state.
-   * @return {number} Scale of the map to print.
-   */
-  const getScaleFn = (frameState) => {
-    // Don't compute an optimal scale if the user manualy choose a value not in
-    // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
-    goog.asserts.assert(this.layoutInfo.scales);
-    goog.asserts.assert(this.layoutInfo.scale !== undefined);
-    if (this.layoutInfo.scale === -1 ||
-        ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
-      const mapSize = frameState.size;
-      const viewResolution = frameState.viewState.resolution;
-      this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
-    }
-    return this.layoutInfo.scale;
-  };
-
   let getRotationFn;
   if (this.rotateMask) {
     /**
@@ -465,7 +447,26 @@ gmf.PrintController.prototype.$onInit = function() {
   }
 
   this.postcomposeListener_ = this.ngeoPrintUtils_.createPrintMaskPostcompose(
-    getSizeFn, getScaleFn, getRotationFn);
+    getSizeFn, this.getScaleFn.bind(this), getRotationFn);
+};
+
+
+/**
+ * @param {olx.FrameState} frameState Frame state.
+ * @return {number} Scale of the map to print.
+ */
+gmf.PrintController.prototype.getScaleFn = function(frameState) {
+  // Don't compute an optimal scale if the user manualy choose a value not in
+  // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
+  goog.asserts.assert(this.layoutInfo.scales);
+  goog.asserts.assert(this.layoutInfo.scale !== undefined);
+  if (this.layoutInfo.scale === -1 ||
+      ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
+    const mapSize = frameState.size;
+    const viewResolution = frameState.viewState.resolution;
+    this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
+  }
+  return this.layoutInfo.scale;
 };
 
 
