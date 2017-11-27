@@ -344,7 +344,20 @@ ngeo.NgeoRoutingController.prototype.calculateRoute = function() {
       this.routeDistance = parseInt(resp.data.routes[0].distance, 10);
       this.routeDuration = resp.data.routes[0].duration;
 
-      // TODO draw line between markes and end of route
+      // get first and last coordinate of route
+      const startRoute = /** @type{ol.geom.LineString} */(features[0].getGeometry()).getCoordinateAt(0);
+      const endRoute = /** @type{ol.geom.LineString} */(features[features.length - 1].getGeometry()).getCoordinateAt(1);
+
+      // build geometries to connect route to start and end point of query
+      const startToRoute = [/** @type {ol.geom.Point} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
+      const routeToEnd = [endRoute, /** @type {ol.geom.Point} */(this.targetFeature_.getGeometry()).getCoordinates()];
+      const routeConnections = [
+        new ol.Feature(new ol.geom.LineString(startToRoute)),
+        new ol.Feature(new ol.geom.LineString(routeToEnd))
+      ];
+
+      // add them to the source
+      this.routeSource_.addFeatures(routeConnections);
     }).bind(this);
 
     const onError_ = (function(resp) {
