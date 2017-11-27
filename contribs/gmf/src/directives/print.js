@@ -127,7 +127,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  */
 gmf.printComponent = {
   bindings: {
-    'map': '=gmfPrintMap',
+    'map': '<gmfPrintMap',
     'active': '=gmfPrintActive',
     'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',

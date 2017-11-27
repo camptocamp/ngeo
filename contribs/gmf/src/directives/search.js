@@ -71,7 +71,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *        gmf-search-styles="::ctrl.searchStyles"
  *        gmf-search-datasources="::ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections"
- *        gmf-search-clearbutton="true">
+ *        gmf-search-clearbutton="::true">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -93,8 +93,8 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *        gmf-search-styles="::ctrl.searchStyles"
  *        gmf-search-datasources="::ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections"
- *        gmf-search-clearbutton="true">
- *        gmf-search-colorchooser="true">
+ *        gmf-search-clearbutton="::true">
+ *        gmf-search-colorchooser="::true">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -138,10 +138,10 @@ gmf.searchComponent = {
     'datasources': '<gmfSearchDatasources',
     'typeaheadOptions': '<?gmfSearchOptions',
     'featuresStyles': '<?gmfSearchStyles',
-    'clearButton': '=gmfSearchClearbutton',
-    'colorChooser': '=gmfSearchColorchooser',
-    'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
-    'additionalListeners': '=gmfSearchListeners',
+    'clearButton': '<gmfSearchClearbutton',
+    'colorChooser': '<gmfSearchColorchooser',
+    'coordinatesProjections': '<?gmfSearchCoordinatesprojections',
+    'additionalListeners': '<gmfSearchListeners',
     'maxZoom': '<gmfSearchMaxzoom',
     'onInitCallback': '<?gmfSearchOnInit'
   },
