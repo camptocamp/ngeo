@@ -51,13 +51,21 @@ ngeo.NominatimService = function($http, $injector, ngeoDebounce) {
    * @type {Object<string, string>}
    * @export
    */
-  this.searchDefaultParams = {}; // FIXME should not be shared if different instances use the search; remove?
+  this.searchDefaultParams = {};
+
+  if ($injector.has('ngeoNominatimSearchDefaultParams')) {
+    this.searchDefaultParams = $injector.get('ngeoNominatimSearchDefaultParams');
+  }
 
   /**
    * @type {Object<string, string>}
    * @export
    */
-  this.reverseDefaultParams = {}; // FIXME should not be shared if different instances use the search; remove?
+  this.reverseDefaultParams = {};
+
+  if ($injector.has('ngeoNominatimReverseDefaultParams')) {
+    this.reverseDefaultParams = $injector.get('ngeoNominatimReverseDefaultParams');
+  }
 
   /**
    * Delay to avoid calling the API too often.

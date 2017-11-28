@@ -171,12 +171,6 @@ ngeo.NgeoRoutingController = function($injector, $scope, ngeoRoutingService, nge
   };
 
   /**
-   * @type {Object<string, string>}
-   * @export
-   */
-  this.searchDefaultParams = this.routingOptions_.searchDefaultParams || {};
-
-  /**
    * @type {ol.source.Vector}
    * @private
    */

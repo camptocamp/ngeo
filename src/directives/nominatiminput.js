@@ -43,7 +43,6 @@ ngeo.nominatimInputComponent = {
   controller: 'NgeoNominatimInputController as inputCtrl',
   bindings: {
     'onSelect': '=?ngeoNominatimInputOnSelect',
-    'searchDefaultParams': '<?ngeoNominatimInputSearchDefaultParams',
     'inputValue': '=?ngeoNominatimInputValue',
     'placeholder': '@?ngeoNominatimInputPlaceholder'
   },
@@ -77,12 +76,6 @@ ngeo.NgeoNominatimInputController = function($element, $injector, $scope, ngeoNo
    * @private
    */
   this.$scope_ = $scope;
-
-  /**
-   * @type {Object<string, string>}
-   * @private
-   */
-  this.searchDefaultParams;
 
   /**
    * @type {ngeo.NominatimService}
@@ -133,10 +126,6 @@ ngeo.NgeoNominatimInputController = function($element, $injector, $scope, ngeoNo
    */
   this.placeholder = '';
 
-};
-
-ngeo.NgeoNominatimInputController.prototype.$onInit = function() {
-  this.ngeoNominatimService.searchDefaultParams = this.searchDefaultParams || {};
 };
 
 /**

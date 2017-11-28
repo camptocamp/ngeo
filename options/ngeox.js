@@ -2647,8 +2647,7 @@ ngeox.RoutingProfile;
 /**
  * @typedef {{
  *     backendUrl: (string|undefined),
- *     profiles: (Array.<ngeox.RoutingProfile>|undefined),
- *     searchDefaultParams: (Object.<string, string>|undefined)
+ *     profiles: (Array.<ngeox.RoutingProfile>|undefined)
  * }}
  */
 ngeox.RoutingOptions;

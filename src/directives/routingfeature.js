@@ -58,8 +58,7 @@ ngeo.routingFeatureComponent = {
     'feature': '=ngeoRoutingFeatureFeature',
     'fillColor': '<?ngeoRoutingFeatureFillColor',
     'strokeColor': '<?ngeoRoutingFeatureStrokeColor',
-    'onChange': '=?ngeoRoutingFeatureOnChange',
-    'searchDefaultParams': '<?ngeoRoutingFeatureSearchDefaultParams'
+    'onChange': '=?ngeoRoutingFeatureOnChange'
   },
   templateUrl: ngeoRoutingFeatureTemplateUrl
 };
@@ -139,12 +138,6 @@ ngeo.NgeoRoutingFeatureController = function($scope, $timeout, $q, ngeoNominatim
    * @export
    */
   this.onChange;
-
-  /**
-   * @type {Object<string, string>}
-   * @export
-   */
-  this.searchDefaultParams;
 
   /**
    * @type {ol.Collection}

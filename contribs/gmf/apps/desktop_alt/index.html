@@ -399,10 +399,10 @@
             {label : 'Bike (Touring)', profile: 'routed-bike-touring'},
             {label : 'Foot', profile: 'routed-foot'},
             {label : 'Hiking', profile: 'routed-hiking'}
-          ],
-          'searchDefaultParams' : {
-            'countrycodes': 'CH'
-          }
+          ]
+        });
+        module.constant('ngeoNominatimSearchDefaultParams', {
+          'countrycodes': 'CH'
         });
         module.constant('gmfSearchGroups', ['osm','district']);
         // Requires that the gmfSearchGroups is specified
