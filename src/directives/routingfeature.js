@@ -240,6 +240,15 @@ ngeo.NgeoRoutingFeatureController.prototype.$onInit = function() {
 };
 
 /**
+ * Cleanup, mostly relevant for vias.
+ */
+ngeo.NgeoRoutingFeatureController.prototype.$onDestroy = function() {
+  this.map.removeLayer(this.vectorLayer_);
+  this.modifyFeature_.setActive(false);
+  this.map.removeInteraction(this.modifyFeature_);
+};
+
+/**
  * @export
  */
 ngeo.NgeoRoutingFeatureController.prototype.set = function() {
