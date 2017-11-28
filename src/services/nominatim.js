@@ -50,12 +50,12 @@ ngeo.NominatimService = function($http, $injector, ngeoDebounce) {
 
   /**
    * @type {Object<string, string>}
-   * @export
+   * @private
    */
-  this.searchDefaultParams = {};
+  this.searchDefaultParams_ = {};
 
   if ($injector.has('ngeoNominatimSearchDefaultParams')) {
-    this.searchDefaultParams = $injector.get('ngeoNominatimSearchDefaultParams');
+    this.searchDefaultParams_ = $injector.get('ngeoNominatimSearchDefaultParams');
   }
 
   /**
@@ -88,7 +88,7 @@ ngeo.NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
-  params = Object.assign({}, this.searchDefaultParams, params);
+  params = Object.assign({}, this.searchDefaultParams_, params);
 
   // require JSON response
   params['format'] = 'json';
