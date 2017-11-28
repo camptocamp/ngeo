@@ -90,7 +90,7 @@ const Service = class {
    */
   cameraFromPermalink_() {
     const manager = this.manager_;
-    const scene = manager.ol3d.getCesiumScene();
+    const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;
 
     const lon = this.ngeoLocation_.getParamAsFloat('3d_lon');
@@ -116,9 +116,9 @@ const Service = class {
    */
   setupPermalink_() {
     const manager = this.manager_;
-    const scene = manager.ol3d.getCesiumScene();
+    const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;
-    const is3DCurrentlyEnabled = manager.ol3d.getEnabled();
+    const is3DCurrentlyEnabled = manager.getOl3d().getEnabled();
 
     camera.moveEnd.addEventListener(this.ngeoDebounce_(() => {
       if (is3DCurrentlyEnabled) {
@@ -133,6 +133,30 @@ const Service = class {
         });
       }
     }, 1000, true));
+
+    this.$rootScope.$watch(
+      () => this.manager_.getOl3d().getEnabled(),
+      this.on3dToggle_.bind(this)
+    );
+  }
+
+  /**
+   * @private
+   */
+  teardownPermalink_() {
+    this.ngeoLocation_.getParamKeysWithPrefix('3d_').forEach((key) => {
+      this.ngeoLocation_.deleteParam(key);
+    });
+  }
+
+  /**
+   * @private
+   * @param {boolean} enabled Is 3d active or not.
+   */
+  on3dToggle_(enabled) {
+    if (!enabled) {
+      this.teardownPermalink_();
+    }
   }
 
 };
