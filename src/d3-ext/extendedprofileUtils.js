@@ -129,7 +129,7 @@ Export chart to a png file
 @SITN/OM 2017 Adapted from http://stackoverflow.com/questions/11567668/svg-to-canvas-with-d3-js
 ***/
 ngeo.extendedProfile.utils.exportToImageFile = function (format) {
-
+  let margin = ngeo.extendedProfile.options.profileConfig.margin;
   let svg = d3.select('#profileSVG').node();
   let img = new Image();
   var DOMURL = window.URL || window.webkitURL || window;

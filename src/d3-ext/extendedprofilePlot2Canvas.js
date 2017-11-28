@@ -270,14 +270,12 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
     .attr('r', pointSize + 1)
     .style('fill', 'orange');
 
-    let html = 'distance: ' + Math.round(10 * p.distance) / 10 + ' alti: ' + Math.round( 10 * p.altitude) / 10 + '\n';
+    let html = 'Distance: ' + Math.round(10 * p.distance) / 10 + '\n';
+    html += 'Altitude: ' + Math.round( 10 * p.altitude) / 10 + '\n';
     html += 'Classification: ' + ngeo.extendedProfile.options.profileConfig.classification[p.classification].name + '\n';
     html += 'Intensity: ' + p.intensity;
 
-    d3.select('#profileInfo').style('color', 'orange')
-      .style('color', 'orange')
-      .style('font-size', '14px')
-      .style('font-weight', 'bold')
+    d3.select('#profileInfo')
       .html(html);
 
       // TODO handle CRS
