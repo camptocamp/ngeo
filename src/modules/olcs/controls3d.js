@@ -26,21 +26,21 @@ const Controller = class {
 
     /**
      * @type {olcs.contrib.Manager}
-     * @private
+     * @export
      */
-    this.manager_ = goog.asserts.assert(ngeoOlcsService.getManager());
+    this.ol3dm;
+
+    /**
+     * @type {number}
+     * @export
+     */
+    this.minTilt;
 
     /**
      * @type {number}
      * @private
      */
-    this.minTilt_ = ngeoOlcsService.getMinTilt();
-
-    /**
-     * @type {number}
-     * @private
-     */
-    this.maxTilt_ = ngeoOlcsService.getMaxTilt();
+    this.maxTilt;
 
     /**
      * @type {jQuery}
@@ -83,30 +83,36 @@ const Controller = class {
      * @private
      */
     this.animationFrameRequestId_;
+
+    /**
+     * @type {ngeo.olcs.Service}
+     * @private
+     */
+    this.olcsService_ = ngeoOlcsService;
   }
 
   updateWidget_() {
-    const newRotation = this.manager_.getOl3d().getOlView().getRotation();
+    const newRotation = this.ol3dm.getOl3d().getOlView().getRotation();
     if (shouldUpdate(this.previousRotation_, newRotation)) {
       this.rotateElement_(this.rotation3dEl_, newRotation);
       this.previousRotation_ = newRotation;
     }
 
-    const newViewMatrix = this.manager_.getCesiumViewMatrix();
+    const newViewMatrix = this.ol3dm.getCesiumViewMatrix();
     if (!Cesium.Matrix4.equalsEpsilon(this.previousViewMatrix_, newViewMatrix, 1e-5)) {
-      const newTilt = this.manager_.getTiltOnGlobe(); // this is expensive!!
+      const newTilt = this.ol3dm.getTiltOnGlobe(); // this is expensive!!
       if (Number.isFinite(newTilt || 0)) { // Workaround https://github.com/google/closure-compiler/pull/2712
         this.rotateElement_(this.angle3dEl_, newTilt);
         this.previousViewMatrix_ = Cesium.Matrix4.clone(newViewMatrix);
 
         // if min or max tilt is reached, disable the tilting buttons
         const buffer = 0.01; // rad
-        if (newTilt - this.minTilt_ < buffer) {
+        if (newTilt - this.minTilt < buffer) {
           this.tiltRightEl_.addClass('ngeo-right-inactive');
         } else if (this.tiltRightEl_.hasClass('ngeo-right-inactive')) {
           this.tiltRightEl_.removeClass('ngeo-right-inactive');
         }
-        if (this.maxTilt_ - newTilt < buffer) {
+        if (this.maxTilt - newTilt < buffer) {
           this.tiltLeftEl_.addClass('ngeo-left-inactive');
         } else if (this.tiltLeftEl_.hasClass('ngeo-left-inactive')) {
           this.tiltLeftEl_.removeClass('ngeo-left-inactive');
@@ -124,6 +130,15 @@ const Controller = class {
   }
 
   $onInit() {
+    if (this.minTilt === undefined) {
+      this.minTilt = 0;
+    }
+    if (this.maxTilt === undefined) {
+      this.maxTilt = 7 * Math.PI / 16;
+    }
+    if (!this.ol3dm) {
+      this.ol3dm = goog.asserts.assert(this.olcsService_.getManager());
+    }
     this.tiltRightEl_ = this.element_.find('.ngeo-tilt-right');
     this.tiltLeftEl_ = this.element_.find('.ngeo-tilt-left');
     this.rotation3dEl_ = this.element_.find('.ngeo-rotation3d');
@@ -155,7 +170,7 @@ const Controller = class {
    */
   rotate(angle) {
     angle = Cesium.Math.toRadians(angle);
-    this.manager_.setHeading(angle);
+    this.ol3dm.setHeading(angle);
   }
 
 
@@ -165,13 +180,13 @@ const Controller = class {
    */
   tilt(angle) {
     angle = Cesium.Math.toRadians(angle);
-    const tiltOnGlobe = this.manager_.getTiltOnGlobe();
-    if (tiltOnGlobe + angle < this.minTilt_) {
-      angle = this.minTilt_ - tiltOnGlobe;
-    } else if (tiltOnGlobe + angle > this.maxTilt_) {
-      angle = this.maxTilt_ - tiltOnGlobe;
+    const tiltOnGlobe = this.ol3dm.getTiltOnGlobe();
+    if (tiltOnGlobe + angle < this.minTilt) {
+      angle = this.minTilt - tiltOnGlobe;
+    } else if (tiltOnGlobe + angle > this.maxTilt) {
+      angle = this.maxTilt - tiltOnGlobe;
     }
-    const scene = this.manager_.getCesiumScene();
+    const scene = this.ol3dm.getCesiumScene();
     olcs.core.rotateAroundBottomCenter(scene, angle);
   }
 
@@ -181,7 +196,7 @@ const Controller = class {
    * @export
    */
   zoom(delta) {
-    const view = this.manager_.getOlView();
+    const view = this.ol3dm.getOlView();
     const cur = view.getResolution();
     const newResolution = view.constrainResolution(cur, delta);
     if (view.getAnimating()) {
@@ -233,6 +248,11 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
  * @ngname ngeoOlcsControls3d
  */
 const component = {
+  bindings: {
+    'minTilt': '<?',
+    'maxTilt': '<?',
+    'ol3dm': '<?'
+  },
   controller: Controller,
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
 };
