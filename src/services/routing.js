@@ -3,8 +3,8 @@ goog.provide('ngeo.RoutingService');
 goog.require('ngeo');
 
 /**
- * Service to provide access to a Open Source Routing Machine (OSRM)
- * backend and its features.
+ * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
+ * of version 5.8 and higher and its features.
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
@@ -141,7 +141,7 @@ ngeo.RoutingService.prototype.getNearest = function(coordinate, config) {
   const coordinateString = coordinate.join(',');
   url += coordinateString;
 
-  // look for nereast service options
+  // look for nearest service options
   if (config.options) {
     url += '?';
     const options = [];
