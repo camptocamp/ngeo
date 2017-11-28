@@ -63,7 +63,7 @@
     "moment": "2.19.2",
     "nomnom": "1.8.1",
     "openlayers": "4.5.0",
-    "ol-cesium": "openlayers/ol-cesium#632423bd",
+    "ol-cesium": "openlayers/ol-cesium#3014d02de4",
     "@camptocamp/cesium": "1.39",
     "phantomjs-prebuilt": "2.1.16",
     "proj4": "2.4.4",

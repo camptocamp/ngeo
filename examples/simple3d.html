@@ -22,11 +22,11 @@
     </style>
   </head>
   <body ng-controller="MainController as $ctrl">
-    <input type="button" value="Enable/disable 3D" ng-click="$ctrl.manager.toggle3d()" />
+    <input type="button" value="Enable/disable 3D" ng-click="$ctrl.ol3dm.toggle3d()" />
 
     <div id="map-container">
       <div id="map" ngeo-map="$ctrl.map"></div>
-      <ngeo-olcs-controls3d ng-if="$ctrl.manager && $ctrl.manager.is3dEnabled()"></ngeo-olcs-controls3d>
+      <ngeo-olcs-controls3d ng-if="$ctrl.ol3dm && $ctrl.ol3dm.is3dEnabled()" ol3dm="$ctrl.ol3dm"></ngeo-olcs-controls3d>
     </div>
     <p id="desc">
       This example shows how to use <code>ngeo.olcs.Manager</code> and the

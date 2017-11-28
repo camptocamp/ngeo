@@ -23,7 +23,7 @@ app.module = angular.module('app', [
 /**
  * @constructor
  * @ngInject
- * @param {angular.Scope} $rootScope Angular root scope.
+ * @param {angular.Scope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
  */
 app.MainController = function($rootScope, ngeoOlcsService) {
@@ -51,12 +51,12 @@ app.MainController = function($rootScope, ngeoOlcsService) {
    * @export
    * @type {olcs.contrib.Manager}
    */
-  this.manager = new ngeo.olcs.Manager(cesiumUrl, {
+  this.ol3dm = new ngeo.olcs.Manager(cesiumUrl, $rootScope, {
     map: this.map
   });
-  this.manager.setRootScope($rootScope);
 
-  ngeoOlcsService.initialize(this.manager);
+  // Optionally, the manager can be registered into the olcs service
+  ngeoOlcsService.initialize(this.ol3dm);
 };
 
 app.module.controller('MainController', app.MainController);
