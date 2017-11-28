@@ -9,7 +9,6 @@ goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
-goog.require('ol.DeviceOrientation');
 
 
 /**
@@ -116,12 +115,6 @@ ngeo.MobileGeolocationController = function($scope, $element,
     })
   });
 
-  /**
-   * @private
-   * @type {ol.DeviceOrientation}
-   */
-  this.deviceOrientation;
-
   if (options.autorotate) {
     this.autorotateListener();
   }
@@ -129,9 +122,6 @@ ngeo.MobileGeolocationController = function($scope, $element,
   // handle geolocation error.
   this.geolocation_.on('error', function(error) {
     this.untrack_();
-    if (this.deviceOrientation) {
-      this.deviceOrientation.setTracking(false);
-    }
     let msg;
     switch (error.code) {
       case 1:
@@ -296,118 +286,44 @@ ngeo.MobileGeolocationController.prototype.handleViewChange_ = function(event) {
   }
 };
 
-function isIOS() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) &&
-    !window['MSStream'];
-}
 
-// Get heading depending on devices
-function headingFromDevices(deviceOrientation) {
-  let hdg = deviceOrientation.getHeading();
-  let orientation = window.orientation;
-  if (hdg === undefined) {
-    return undefined;
-  }
-  if (!isIOS()) {
-    hdg = -hdg;
-    if (window.screen.orientation.angle) {
-      orientation = window.screen.orientation.angle;
-    }
-  }
-  // Normalize to be between -90 and 180
-  orientation =  ((orientation + 179) % 360 - 179);
-  // Add to hdg in radian
-  hdg += orientation * Math.PI / 180;
-  return hdg;
-}
-
-// Update heading
-ngeo.MobileGeolocationController.prototype.headingUpdate = function() {
-  let heading = headingFromDevices(this.deviceOrientation);
-  if (heading !== undefined) {
-    heading = -heading;
-    const currRotation = this.map_.getView().getRotation();
-    const diff = heading - currRotation;
-
-    if (diff > Math.PI) {
-      heading -= 2 * Math.PI;
-    }
-    this.map_.getView().animate({
-      rotation: heading,
-      duration: 350,
-      easing: ol.easing.linear
-    });
+// Orientation control events
+ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
+  let currentAlpha = 0;
+  if (window.hasOwnProperty('ondeviceorientationabsolute')) {
+    window.addEventListener('deviceorientationabsolute', (evt) => {
+      currentAlpha = this.handleRotate_(evt.alpha, currentAlpha);
+    }, true);
+  } else if (window.hasOwnProperty('ondeviceorientation')) {
+    window.addEventListener('deviceorientation', (evt) => {
+      if (evt.webkitCompassHeading) { // check for iOS property
+        currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
+      } else { // non iOS
+        currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
+      }
+    }, true);
+  } else {
+    console.error('Orientation is not supported on this device');
   }
 };
 
 /**
- * Orientation control events
- * @suppress {deprecated}
+ * Handle rotation.
+ * @param {number} eventAlpha .
+ * @param {number} currentAlpha .
+ * @return {number} .
+ * @private
  */
-ngeo.MobileGeolocationController.prototype.autorotateListener = function() {
-  this.deviceOrientation = new ol.DeviceOrientation();
-
-  let currHeading = 0;
-  const headngUpdateWhenMapRotate = throttle(this.headingUpdate, 300, this);
-
-  this.deviceOrientation.on(['change'], (event) => {
-    const heading = headingFromDevices(this.deviceOrientation);
-    if (heading === undefined) {
-      console.error('Heading is undefined');
-      return;
-    }
-
-    if (Math.abs(heading - currHeading) > 0.05) {
-      currHeading = heading;
-      headngUpdateWhenMapRotate();
-    }
-  });
-
-  this.deviceOrientation.setTracking(true);
+ngeo.MobileGeolocationController.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
+  const alpha = eventAlpha;
+  if (Math.abs(alpha - currentAlpha) > 0.2) {
+    currentAlpha = alpha;
+    const radAlpha = currentAlpha * Math.PI / 180;
+    this.map_.getView().animate({
+      rotation: radAlpha,
+      duration: 350,
+      easing: ol.easing.linear
+    });
+  }
+  return currentAlpha;
 };
-
-function throttle(fn, time, context) {
-  let lock, args, asyncKey, destroyed;
-
-  function later() {
-    // reset lock and call if queued
-    lock = false;
-    if (args) {
-      throttled.call(context, args);
-      args = false;
-    }
-  }
-
-  const checkDestroyed = function() {
-    if (destroyed) {
-      throw new Error('Method was already destroyed');
-    }
-  };
-
-  function throttled(...argumentList) {
-    checkDestroyed();
-
-    if (lock) {
-      // called too soon, queue to call later
-      args = argumentList;
-      return;
-    }
-
-    // call and lock until later
-    fn.apply(context, argumentList);
-    asyncKey = setTimeout(later, time);
-    lock = true;
-  }
-
-  throttled.destroy = function() {
-    checkDestroyed();
-
-    if (asyncKey) {
-      clearTimeout(asyncKey);
-    }
-
-    destroyed = true;
-  };
-
-  return throttled;
-}
