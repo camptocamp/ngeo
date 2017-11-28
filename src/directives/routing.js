@@ -34,16 +34,47 @@ function ngeoRoutingTemplateUrl($element, $attrs, ngeoRoutingTemplateUrl) {
 
 
 /**
- * Component to provide OSRM routing.
+ * Component to provide an user interface for an OSRM routing back end.
+ *
+ * Sub-components:
+ *  - {@link ngeo.routingFeatureComponent}: represents the features for start, end and vias
+ *  - {@link ngeo.nominatimInputComponent}: search lookup using Nominatim
+ *
+ * Depends on {@link ngeo.RoutingService} and {@link ngeo.NominatimService}.
  *
  * Example:
  *
- *  <ngeo-routing
- *    ngeo-routing-map="::ctrl.map">
- *  </ngeo-routing>
+ *     <ngeo-routing
+ *        ngeo-routing-map="::ctrl.map">
+ *     </ngeo-routing>
+ *
+ * See the [../examples/routing.html](../examples/routing.html) example for a usage sample.
+ *
+ * Configuration:
+ *  - ngeoRoutingOptions: {@link ngeox.RoutingOptions}, example:
+ *
+ *
+ *      module.constant('ngeoRoutingOptions', {
+ *         'backendUrl': 'http://routing.osm.ch/',
+ *         'profiles': [ // if multiples are defined, a selector appears in the user interface
+ *           {
+ *            label : 'Car', // used as label in the UI
+ *            profile: 'routed-car' // used as part of the query
+ *           }
+ *         ]
+ *       });
+ *
+ *
+ * - ngeoNominatimSearchDefaultParams: Object<string, string>, [possible values](https://wiki.openstreetmap.org/wiki/Nominatim#Search), example:
+ *
+ *
+ *      module.constant('ngeoNominatimSearchDefaultParams', {
+ *         'countrycodes': 'CH' // restricts search to Switzerland
+ *       });
+ *
  *
  * @htmlAttribute {ol.Map} ngeo-routing-map The map.
- * @ngdoc component
+ * @ngdoc directive
  * @ngname ngeoRouting
  */
 ngeo.routingComponent = {

@@ -11,6 +11,7 @@ goog.require('ngeo.Debounce');
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @struct
+ * @ngdoc service
  * @ngInject
  * @export
  * @ngname ngeoNominatimService
@@ -58,20 +59,10 @@ ngeo.NominatimService = function($http, $injector, ngeoDebounce) {
   }
 
   /**
-   * @type {Object<string, string>}
-   * @export
-   */
-  this.reverseDefaultParams = {};
-
-  if ($injector.has('ngeoNominatimReverseDefaultParams')) {
-    this.reverseDefaultParams = $injector.get('ngeoNominatimReverseDefaultParams');
-  }
-
-  /**
-   * Delay to avoid calling the API too often.
+   * Delay (in milliseconds) to avoid calling the API too often.
    * Only if there were no calls for that many milliseconds,
    * the last call will be executed.
-   * @type {number} delay in ms
+   * @type {number}
    * @private
    */
   this.typeaheadDebounceDelay_ = 500;
@@ -125,7 +116,7 @@ ngeo.NominatimService.prototype.search = function(query, params) {
 ngeo.NominatimService.prototype.reverse = function(coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
 
-  params = Object.assign({}, this.reverseDefaultParams, params);
+  params = Object.assign({}, params);
 
   // coordinate
   params['lon'] = coordinate[0];

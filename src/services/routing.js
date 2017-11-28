@@ -9,6 +9,7 @@ goog.require('ngeo');
  * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @struct
+ * @ngdoc service
  * @ngInject
  * @export
  * @ngname ngeoRoutingService

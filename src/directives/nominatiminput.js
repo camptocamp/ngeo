@@ -20,7 +20,8 @@ ngeo.module.value('ngeoNominatimInputTemplateUrl',
 /**
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoNominatimInputTemplateUrl Template function.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string}
+ *  ngeoNominatimInputTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -30,13 +31,26 @@ function ngeoNominatimInputTemplateUrl($element, $attrs, ngeoNominatimInputTempl
 
 
 /**
+ * Input form field which provides Nominatim typeahead lookup using {@link ngeo.NominatimService}.
+ *
+ * Example:
+ *
+ *     <ngeo-nominatim-input
+ *         ngeo-nominatim-input-value="ctrl.label"
+ *         ngeo-nominatim-input-placeholder="type to search"
+ *         ngeo-nominatim-input-on-select="ctrl.onSelect">
+ *
+ * Is used in in the partial of {@link ngeo.routingFeatureComponent}.
+ *
+ * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
+ *
  * @htmlAttribute {function(ngeox.NominatimSearchResult)} ngeo-nominatim-input-on-select
  *  Event fired when user selects a new suggestion.
- * @htmlAttribute {Object<string, string>} ngeo-nominatim-input-search-default-params
- *  Default parameters to customize search.
- * @htmlAttribute {string} ngeo-nominatim-input-value Value of input field
- * @htmlAttribute {string} ngeo-nominatim-input-placeholder Placeholder
- * @ngdoc component
+ * @htmlAttribute {string} ngeo-nominatim-input-value
+ *  Value of input field, will be set to the label of the search result.
+ * @htmlAttribute {string} ngeo-nominatim-input-placeholder
+ *  Placeholder text, when field is empty.
+ * @ngdoc directive
  * @ngname ngeoNominatimInput
  */
 ngeo.nominatimInputComponent = {

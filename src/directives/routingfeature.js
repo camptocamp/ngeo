@@ -41,14 +41,29 @@ function ngeoRoutingFeatureTemplateUrl($element, $attrs, ngeoRoutingFeatureTempl
 }
 
 /**
+ * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature (point geometry).
+ *
+ * The text input is provided by {@link ngeo.nominatimInputComponent} and includes Nominatim search.
+ *
+ * Example:
+ *
+ *     <ngeo-routing-feature
+ *         ngeo-routing-feature-map="ctrl.map"
+ *         ngeo-routing-feature-feature="ctrl.feature"
+ *         ngeo-routing-feature-fill-color="#6BE62E"
+ *         ngeo-routing-feature-stroke-color="#4CB01E"
+ *         ngeo-routing-feature-on-change="ctrl.handleChange">
+ *
+ * Is used in in the partial of {@link ngeo.routingComponent}.
+ *
+ * See the [../examples/routing.html](../examples/routing.html) example for a usage sample.
+ *
  * @htmlAttribute {ol.Map} ngeo-routing-feature-map The map.
  * @htmlAttribute {ol.Feature} ngeo-routing-feature-feature The feature.
  * @htmlAttribute {string} ngeo-routing-feature-fill-color The marker fill color.
  * @htmlAttribute {string} ngeo-routing-feature-stroke-color The marker stroke color.
  * @htmlAttribute {function(ol.Feature)} ngeo-routing-feature-on-change Event fired when feature changes.
- * @htmlAttribute {Object<string, string>} ngeo-routing-feature-search-default-params
- *  Default parameters to customize search.
- * @ngdoc component
+ * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */
 ngeo.routingFeatureComponent = {
