@@ -49,27 +49,27 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
       ctx.arc(cx, cy, ngeo.extendedProfile.options.profileConfig.pointSize, 0, 2 * Math.PI, false);
       ctx.fill();
       // TODO handle CRS
-      let olFeature = new  ol.Feature({
-        geometry: new ol.geom.Point([coords[0]-2000000, coords[1]-1000000])
-      });
-      olFeature.setStyle(new ol.style.Style({
-            image: new ol.style.Circle({
-                fill: new ol.style.Fill({
-                    color: olColor
-                }),
-                stroke: new ol.style.Stroke({
-                    color: olColor,
-                    width: 1
-                }),
-                radius: 2
-            })
-        }));
-      cartoFeatures.push(olFeature);
+      // let olFeature = new  ol.Feature({
+        // geometry: new ol.geom.Point([coords[0]-2000000, coords[1]-1000000])
+      // });
+      // olFeature.setStyle(new ol.style.Style({
+            // image: new ol.style.Circle({
+                // fill: new ol.style.Fill({
+                    // color: olColor
+                // }),
+                // stroke: new ol.style.Stroke({
+                    // color: olColor,
+                    // width: 1
+                // }),
+                // radius: 1
+            // })
+        // }));
+      // cartoFeatures.push(olFeature);
     }
   }
-  ngeo.extendedProfile.loader.cartoPoints.getSource().clear();
-  console.log(cartoFeatures);
-  ngeo.extendedProfile.loader.cartoPoints.getSource().addFeatures(cartoFeatures);
+  // ngeo.extendedProfile.loader.cartoPoints.getSource().clear();
+  // console.log(cartoFeatures);
+  // ngeo.extendedProfile.loader.cartoPoints.getSource().addFeatures(cartoFeatures);
   
 };
 
@@ -82,11 +82,10 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
   ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
-  // TODO move this to options
   let margin = ngeo.extendedProfile.options.profileConfig.margin;
 
-  let containerWidth = d3.select('.gmf-extended-profile-container').node().getBoundingClientRect().width;
-  let containerHeight = d3.select('.gmf-extended-profile-container').node().getBoundingClientRect().height;
+  let containerWidth = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().width;
+  let containerHeight = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().height;
   let width = containerWidth - (margin.left + margin.right);
   let height = containerHeight - (margin.top + margin.bottom);
 

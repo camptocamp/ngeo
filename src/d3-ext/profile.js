@@ -235,6 +235,7 @@ ngeo.profile = function(options) {
 
   const profile = function(selection) {
     selection.each(function(data) {
+      
       d3.select(this).selectAll('svg').remove();
       if (data === undefined) {
         return;

@@ -1,7 +1,7 @@
 <div
-  class="gmf-extended-profile-container panel"
+  class="gmf-lidar-profile-container panel"
   ng-show="$ctrl.active">
-  <div class="extended-profile"
+  <div class="ngeo-lidar-profile"
       ngeo-extended-profile="::ctrl.profileData"
        ngeo-extended-profile-options="::ctrl.profileOptions"
        ngeo-extended-profile-pois="::ctrl.profilePoisData"
@@ -9,7 +9,7 @@
     <canvas id="profileCanvas"></canvas>
     <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
   </div>
-  <div id="profileInfo"></div>
+  <div id="profileInfo" class="gmf-lidar-profile-legend"></div>
   <div
     class="close"
     ng-click="$ctrl.line = null">&times;
