@@ -80,7 +80,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/build/d3.min.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
-	node_modules/url-polyfill/url-polyfill.js \
+	node_modules/url-polyfill/url-polyfill.min.js \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
 

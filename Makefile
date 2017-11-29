@@ -70,7 +70,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
 	node_modules/moment/min/moment.min.js \
-	node_modules/url-polyfill/url-polyfill.js \
+	node_modules/url-polyfill/url-polyfill.min.js \
 	third-party/jquery-ui/jquery-ui.min.js
 endif
 
@@ -105,7 +105,7 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/transpile.js \
 	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
-	.build/examples-hosted/lib/url-polyfill.js \
+	.build/examples-hosted/lib/url-polyfill.min.js \
 	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
 	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
 NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
@@ -487,7 +487,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/url-polyfill.js: node_modules/url-polyfill/url-polyfill.js
+.build/examples-hosted/lib/url-polyfill.min.js: node_modules/url-polyfill/url-polyfill.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -573,7 +573,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
-		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.js|' \
+		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
 		-e 's|/@?main=$*.js|lib/transpile.js|' \
 		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
@@ -607,6 +607,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
+		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
 		-e 's|/@?main=$*\.js|../../lib/transpile.js|' \
 		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
