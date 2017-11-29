@@ -55,8 +55,8 @@ gmf.LidarProfileConfig.prototype.getConfig = function() {
     this.profileConfig.defaultPointCloud = resp.data['default_point_cloud'];
     this.profileConfig.defaultColor = resp.data['default_color'];
     this.profileConfig.pointClouds = resp.data['pointclouds'];
-    console.log(this.profileConfig);
-  });
+
+    });
 };
 
 gmf.module.service('gmfLidarProfileConfig', gmf.LidarProfileConfig);
