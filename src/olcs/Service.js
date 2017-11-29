@@ -24,23 +24,6 @@ const Service = class {
   getManager() {
     return this.manager_;
   }
-
-  /**
-   * @export
-   * @return {number} the min tilt.
-   */
-  getMinTilt() {
-    return 0;
-  }
-
-  /**
-   * @export
-   * Almost Pi / 2
-   * @return {number} the max tilt.
-   */
-  getMaxTilt() {
-    return 7 * Math.PI / 16;
-  }
 };
 
 const name = 'ngeoOlcsService';

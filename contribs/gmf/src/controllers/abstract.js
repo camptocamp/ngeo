@@ -698,7 +698,7 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function(fallbackThemeNam
         this.gmfThemeManager.addTheme(theme, true);
       }
     } else {
-      this.gmfThemeManager.setThemeName(fallbackThemeName, true);
+      this.gmfThemeManager.setThemeName(fallbackThemeName);
     }
   });
 };
