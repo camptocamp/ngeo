@@ -43,7 +43,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/build/d3.js \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
-	node_modules/jsts/dist/jsts.min.js \
+	node_modules/jsts/dist/jsts.js \
 	node_modules/moment/moment.js \
 	third-party/jquery-ui/jquery-ui.js \
 	node_modules/google-closure-library/closure/goog/transpile.js
