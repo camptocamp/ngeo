@@ -357,16 +357,16 @@ ngeo.durationFilter = function(gettextCatalog) {
     let formattedUnit = '';
     switch (unit) {
       case TimeUnits.SECONDS:
-        formattedUnit = amount > 1 ? gettextCatalog.getString('seconds') : gettextCatalog.getString('second');
+        formattedUnit = amount !== 1 ? gettextCatalog.getString('seconds') : gettextCatalog.getString('second');
         break;
       case TimeUnits.MINUTES:
-        formattedUnit = amount > 1 ? gettextCatalog.getString('minutes') : gettextCatalog.getString('minute');
+        formattedUnit = amount !== 1 ? gettextCatalog.getString('minutes') : gettextCatalog.getString('minute');
         break;
       case TimeUnits.HOURS:
-        formattedUnit = amount > 1 ? gettextCatalog.getString('hours') : gettextCatalog.getString('hour');
+        formattedUnit = amount !== 1 ? gettextCatalog.getString('hours') : gettextCatalog.getString('hour');
         break;
       case TimeUnits.DAYS:
-        formattedUnit = amount > 1 ? gettextCatalog.getString('days') : gettextCatalog.getString('day');
+        formattedUnit = amount !== 1 ? gettextCatalog.getString('days') : gettextCatalog.getString('day');
         break;
       default:
         break;
