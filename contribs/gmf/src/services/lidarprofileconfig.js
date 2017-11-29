@@ -34,15 +34,13 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
   };
   // snap tolerance for d3 profile highlight
   this.profileConfig.tolerance= 5;
+  this.profileConfig.configLoaded = false;
 
 };
 
-gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
-  this.getConfig();
-}
-
-gmf.LidarProfileConfig.prototype.getConfig = function() {
-  this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/profile_config_gmf2').then((resp) => {
+gmf.LidarProfileConfig.prototype.initProfileConfig = function(q) {
+  console.log("initProfileConfig");
+    return this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/profile_config_gmf2').then((resp) => {
 
     this.profileConfig.classification = resp.data['classification_colors'];
     this.profileConfig.profilWidth = resp.data['width'];
@@ -55,8 +53,15 @@ gmf.LidarProfileConfig.prototype.getConfig = function() {
     this.profileConfig.defaultPointCloud = resp.data['default_point_cloud'];
     this.profileConfig.defaultColor = resp.data['default_color'];
     this.profileConfig.pointClouds = resp.data['pointclouds'];
+    q.resolve();
+    console.log("init params ok");
 
-    });
+  });
+  
+}
+
+gmf.LidarProfileConfig.prototype.getConfig = function() {
+
 };
 
 gmf.module.service('gmfLidarProfileConfig', gmf.LidarProfileConfig);

@@ -304,7 +304,6 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
     () => this.gmfLidarProfileConfig_,
     (newConfig, oldConfig) => {
       if (oldConfig !== newConfig) {
-        alert("tadam");
         this.update_();
       }
     }
@@ -375,11 +374,9 @@ gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
 
   if (this.line) {
-
     this.gmfLidarProfileConfig_.olLinestring = this.line;
     this.gmfLidarProfileConfig_.map = this.map_;
     ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig_);
-    console.log(this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
     ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
   } else {
     this.profileData = [];

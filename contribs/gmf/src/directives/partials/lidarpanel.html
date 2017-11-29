@@ -25,9 +25,12 @@
   <div>
   <hr>
     Material:
-    <select ng-model="option.value" ng-change="$ctrl.setSelectedMaterial(option)">
-      <option ng-repeat="option in ::$ctrl.getMaterials()" ng-value="option.value">{{option.name}}</option>
-    </select>
+    <!-- <select ng-model="option.name" ng-change="$ctrl.setDefaultAttribute(option)"> -->
+      <!-- <option ng-repeat="(key, option) in ::$ctrl.getPointAttributes()" ng-value="option.name">{{option.name}}</option> -->
+    <!-- </select> -->
+  <div ng-repeat="(key, option) in ::$ctrl.getPointAttributes()">
+    <span>{{key}}</span>
+  </div>
   </div>
   <hr>
   <div>

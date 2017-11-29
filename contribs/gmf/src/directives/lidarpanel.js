@@ -109,7 +109,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
  * @ngdoc controller
  * @ngname gmfLidarPanelController
  */
-gmf.LidarPanelController = function(gmfLidarProfileConfig) {
+gmf.LidarPanelController = function($q, gmfLidarProfileConfig) {
   this.gmfLidarProfileConfig = gmfLidarProfileConfig;
 
    /**
@@ -117,9 +117,8 @@ gmf.LidarPanelController = function(gmfLidarProfileConfig) {
    * @export
    */
   this.line;
-  
+  this.$q_ = $q;
   this.profilWidth;
-
 };
 
 
@@ -127,15 +126,20 @@ gmf.LidarPanelController = function(gmfLidarProfileConfig) {
  * Init the controller
  */
 gmf.LidarPanelController.prototype.$onInit = function() {
+  
+  this.promise_ = this.gmfLidarProfileConfig.initProfileConfig(this.$q_);
 
+  console.log("gmf.LidarPanelController.prototype.$onInit ");
+  console.log(this.promise_);
   this.line = this.line;
   this.active = this.active;
   this.map = this.map;
-  this.gmfLidarProfileConfig.initProfileConfig();
+
 
 };
 
 gmf.LidarPanelController.prototype.getProfileConfig = function() {
+  console.log(console.log(this.promise_));
   return this.gmfLidarProfileConfig.profileConfig;
 }
 
@@ -143,16 +147,16 @@ gmf.LidarPanelController.prototype.getClassification = function() {
   return this.gmfLidarProfileConfig.profileConfig.classification;
 }
 
-gmf.LidarPanelController.prototype.getMaterials = function() {
-  return this.gmfLidarProfileConfig.profileConfig.materials;
+gmf.LidarPanelController.prototype.getPointAttributes = function() {
+  return this.gmfLidarProfileConfig.profileConfig.pointAttributes;
 }
 
-gmf.LidarPanelController.prototype.getSelectedMaterial = function() {
-  return this.gmfLidarProfileConfig.profileConfig.selectedMaterial;
+gmf.LidarPanelController.prototype.getDefaultAttribute = function() {
+  return this.gmfLidarProfileConfig.profileConfig.defaultAttribute;
 }
 
-gmf.LidarPanelController.prototype.setSelectedMaterial = function(material) {
-  this.gmfLidarProfileConfig.profileConfig.selectedMaterial = material.value;
+gmf.LidarPanelController.prototype.setDefaultAttribute= function(material) {
+  this.gmfLidarProfileConfig.profileConfig.defaultAttribute = material.value;
   if (this.line) {
     ngeo.extendedProfile.plot2canvas.changeStyle(material.value);
   }
@@ -166,7 +170,7 @@ gmf.LidarPanelController.prototype.getWidth = function() {
 gmf.LidarPanelController.prototype.setClassification = function(classification, key) {
   this.gmfLidarProfileConfig.profileConfig.classification[key].visible = classification.visible;
   if (this.line) {
-    ngeo.extendedProfile.plot2canvas.setClassActive(this.gmfLidarProfileConfig.profileConfig.classification, this.gmfLidarProfileConfig.profileConfig.selectedMaterial);
+    ngeo.extendedProfile.plot2canvas.setClassActive(this.gmfLidarProfileConfig.profileConfig.classification, this.gmfLidarProfileConfig.profileConfig.defaultAttribute);
   }
 }
 

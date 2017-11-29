@@ -1,12 +1,15 @@
 goog.provide('ngeo.extendedProfile.loader');
 goog.require('ol.interaction.Select');
+goog.require('ol.interaction.Modify');
 
 ngeo.extendedProfile.options = {};
 
 ngeo.extendedProfile.setOptions = function(options) {
+  console.log(options)
   ngeo.extendedProfile.options = options;
   console.log(ngeo.extendedProfile.options);
   
+  // draw lidar points on map => performance issue with OL...
   ngeo.extendedProfile.loader.cartoPoints = new ol.layer.Vector({
     source: new ol.source.Vector({
     })
@@ -61,12 +64,12 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
  * its binary output format
  */
 ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
-  console.log("xhrRequest");
+  d3.select('#profileInfo').html('Loading levels:\n' + minLOD + ' to ' + maxLOD + '...');
   let hurl = options.pytreeLidarProfileJsonUrl_ + '/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
   hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2016';
   hurl += '&attributes=';
-
+  
 
   for (let i=0; i<ngeo.extendedProfile.loader.requestsQueue.length; i++) {
     if (ngeo.extendedProfile.loader.requestsQueue[i].uuid != ngeo.extendedProfile.loader.lastUuid) {
@@ -84,6 +87,7 @@ ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter,
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         if (this.uuid == ngeo.extendedProfile.loader.lastUuid) {
+          d3.select('#profileInfo').html('Levels loaded:<br> ' + minLOD + ' to ' + maxLOD);
           ngeo.extendedProfile.loader.processBuffer(options, xhr.response, iter, distanceOffset, lastLOD, resetPlot);
         }
       }
@@ -218,11 +222,11 @@ ngeo.extendedProfile.loader.updateData = function () {
   let zoomDir = previousSpan - span;
 
   if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && zoomDir > 0) {
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.defaultAttribute, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else if (niceLOD <= ngeo.extendedProfile.options.profileConfig.initialLOD && Math.abs(dxL) == 0 && Math.abs(dxR) == 0) {
-    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.selectedMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
+    ngeo.extendedProfile.plot2canvas.drawPoints(ngeo.extendedProfile.loader.profilePoints, ngeo.extendedProfile.options.profileConfig.defaultAttribute, ngeo.extendedProfile.options.profileConfig.currentZoom);
     return;
 
   } else {
