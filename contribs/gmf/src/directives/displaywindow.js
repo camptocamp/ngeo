@@ -142,14 +142,14 @@ gmf.DisplaywindowController = class {
 
     // Draggable
     if (this.draggable) {
-      this.element_.find('.gmf-displayquerywindow').draggable({
+      this.element_.find('.gmf-displayquerywindow-container').draggable({
         'containment': this.draggableContainment
       });
     }
 
     // Resizable
     if (this.resizable) {
-      this.element_.find('.gmf-displayquerywindow').resizable({
+      this.element_.find('.gmf-displayquerywindow-container').resizable({
         'minHeight': 240,
         'minWidth': 240
       });
