@@ -278,7 +278,7 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
 
   if (this.desktop) {
-    this.element_.find('.gmf-displayquerywindow').draggable({
+    this.element_.find('.gmf-displayquerywindow-container').draggable({
       'cancel': 'input,textarea,button,select,option,tr',
       'containment': this.draggableContainment
     });

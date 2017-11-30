@@ -142,7 +142,7 @@ gmf.DisplaywindowController = class {
 
     // Draggable
     if (this.draggable) {
-      this.element_.find('.gmf-displayquerywindow').draggable({
+      this.element_.find('.gmf-displayquerywindow-container').draggable({
         'containment': this.draggableContainment
       });
     }
