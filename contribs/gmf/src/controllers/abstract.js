@@ -22,8 +22,6 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.searchComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.themeselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.BackgroundLayerMgr');
