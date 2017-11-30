@@ -622,10 +622,13 @@ ngeo.RuleHelper = class {
         expression
       );
     } else if (operator === rot.LIKE) {
-      const stringExpression = String(expression);
+      const stringExpression = String(expression)
+        .replace(/!/g, '!!')
+        .replace(/\./g, '!.')
+        .replace(/\*/g, '!*');
       filter = ol.format.filter.like(
         propertyName,
-        stringExpression
+        `*${stringExpression}*`
       );
     } else if (operator === rot.NOT_EQUAL_TO) {
       filter = ol.format.filter.notEqualTo(
