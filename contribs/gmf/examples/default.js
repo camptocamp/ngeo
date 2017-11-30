@@ -8,7 +8,7 @@ ngeo.baseTemplateUrl = '../../../src/directives/partials';
  * The default ngeo template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
-ngeo.baseModuleTemplateUrl = '../../../src/modules';
+ngeo.baseModuleTemplateUrl = '../../../src';
 
 
 /**
@@ -16,3 +16,10 @@ ngeo.baseModuleTemplateUrl = '../../../src/modules';
  * @type {string}
  */
 gmf.baseTemplateUrl = '../src/directives/partials';
+
+
+/**
+ * The default gmf template base URL for modules, used as-is by the template cache.
+ * @type {string}
+ */
+gmf.baseModuleTemplateUrl = '../src';
