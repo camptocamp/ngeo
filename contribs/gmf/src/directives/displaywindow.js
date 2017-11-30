@@ -149,7 +149,7 @@ gmf.DisplaywindowController = class {
 
     // Resizable
     if (this.resizable) {
-      this.element_.find('.gmf-displayquerywindow-container').resizable({
+      this.element_.find('.gmf-displayquerywindow').resizable({
         'minHeight': 240,
         'minWidth': 240
       });
