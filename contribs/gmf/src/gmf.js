@@ -5,7 +5,6 @@ goog.provide('gmf');
 
 goog.require('ngeo');
 
-
 /** @type {!angular.Module} */
 gmf.module = angular.module('gmf', [
   ngeo.module.name, 'gettext', 'ngAnimate', 'ngTouch', 'ngSanitize',
@@ -40,6 +39,11 @@ gmf.module.config(['$animateProvider',
  */
 gmf.baseTemplateUrl = 'gmf';
 
+/**
+ * The default template base URL for modules, used as-is by the template cache.
+ * @type {string}
+ */
+gmf.baseModuleTemplateUrl = 'gmfmodule';
 
 /**
  * @const

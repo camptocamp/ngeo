@@ -1,7 +1,8 @@
-goog.provide('gmf.FulltextSearchService');
+goog.provide('gmf.search.FulltextSearch');
 
 goog.require('gmf');
 goog.require('ngeo.utils');
+
 
 /**
  * Provides the c2c-geoportal full-text search.
@@ -11,9 +12,9 @@ goog.require('ngeo.utils');
  * @struct
  * @ngInject
  * @export
- * @ngname gmfFulltextSearchService
+ * @ngname gmfFulltextSearch
  */
-gmf.FulltextSearchService = function($injector, $http) {
+gmf.search.FulltextSearch = function($injector, $http) {
 
   /**
    * @type {angular.$http}
@@ -48,7 +49,7 @@ gmf.FulltextSearchService = function($injector, $http) {
  * @param {Object.<string, string>} params Additional parameters.
  * @returns {Promise} Request promise with data array.
  */
-gmf.FulltextSearchService.prototype.search = function(query, params) {
+gmf.search.FulltextSearch.prototype.search = function(query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);
 
   queryParams['query'] = query;
@@ -62,4 +63,9 @@ gmf.FulltextSearchService.prototype.search = function(query, params) {
   });
 };
 
-gmf.module.service('gmfFulltextSearchService', gmf.FulltextSearchService);
+/**
+ * @type {!angular.Module}
+ */
+gmf.search.FulltextSearch.module = angular.module('gmfSearchFulltextSearch', []);
+gmf.search.FulltextSearch.module.service('gmfSearchFulltextSearch', gmf.search.FulltextSearch);
+gmf.module.requires.push(gmf.search.FulltextSearch.module.name);

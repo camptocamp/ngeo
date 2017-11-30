@@ -1,4 +1,4 @@
-goog.provide('gmf.searchComponent');
+goog.provide('gmf.search.component');
 
 goog.require('gmf');
 goog.require('gmf.Themes');
@@ -10,12 +10,12 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.FulltextSearchService');
 goog.require('ol.Feature');
 goog.require('ol.Map');
+goog.require('ol.color');
 goog.require('ol.geom.Point');
 goog.require('ol.obj');
+goog.require('ol.format.GeoJSON');
 goog.require('ol.proj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -25,20 +25,29 @@ goog.require('ol.style.Style');
 goog.require('ol.uri');
 
 goog.require('ngeo.search.module');
+goog.require('gmf.search.FulltextSearch');
 
-gmf.module.requires.push(ngeo.search.module.name);
 
-gmf.module.value('gmfSearchTemplateUrl',
-  /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
-  (element, attrs) => {
-    const templateUrl = attrs['gmfSearchTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/search.html`;
-  });
+/**
+ * @type {!angular.Module}
+ */
+gmf.search.component = angular.module('gmfSearch', [
+  ngeo.search.module.name,
+  gmf.search.FulltextSearch.module.name
+]);
+
+gmf.module.requires.push(gmf.search.component.name);
+
+/**
+ * @param {angular.JQLite} element Element.
+ * @param {angular.Attributes} attrs Attributes.
+ * @return {string} Template URL.
+ */
+gmf.search.component.gmfSearchTemplateUrl_ = (element, attrs) => {
+  const templateUrl = attrs['gmfSearchTemplateurl'];
+  return templateUrl !== undefined ? templateUrl :
+    `${gmf.baseModuleTemplateUrl}/search/component.html`;
+};
 
 
 /**
@@ -130,7 +139,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @ngdoc component
  * @ngname gmfSearch
  */
-gmf.searchComponent = {
+gmf.search.component.component_ = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
     'placeholder': '@?gmfSearchPlaceholder',
@@ -138,25 +147,29 @@ gmf.searchComponent = {
     'datasources': '<gmfSearchDatasources',
     'typeaheadOptions': '<?gmfSearchOptions',
     'featuresStyles': '<?gmfSearchStyles',
-    'clearButton': '<gmfSearchClearbutton',
+    'clearButton': '=gmfSearchClearbutton',
     'colorChooser': '<gmfSearchColorchooser',
     'coordinatesProjections': '<?gmfSearchCoordinatesprojections',
     'additionalListeners': '<gmfSearchListeners',
     'maxZoom': '<gmfSearchMaxzoom',
     'onInitCallback': '<?gmfSearchOnInit'
   },
-  controller: 'GmfSearchController',
+  controller: 'gmfSearchController',
   templateUrl: gmfSearchTemplateUrl
 };
 
 
-gmf.module.component('gmfSearch', gmf.searchComponent);
+gmf.search.component.value('gmfSearchTemplateUrl', gmf.search.component.gmfSearchTemplateUrl_);
+
+
+// Register the controller in the module
+gmf.search.component.component('gmfSearch', gmf.search.component.component_);
 
 
 /**
  * @private
  */
-gmf.SearchController = class {
+gmf.search.component.SearchController_ = class {
 
   /**
    * @private
@@ -173,14 +186,14 @@ gmf.SearchController = class {
    *     overlay manager service.
    * @param {gmf.Themes} gmfThemes gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {gmf.FulltextSearchService} gmfFulltextSearchService gmf Full text search service.
+   * @param {gmf.search.FulltextSearch} gmfSearchFulltextSearch gmf Full text search service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
    */
   constructor($element, $scope, $compile, $timeout, $injector,
     gettextCatalog, ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound,
-    ngeoFeatureOverlayMgr, gmfThemes, gmfTreeManager, gmfFulltextSearchService) {
+    ngeoFeatureOverlayMgr, gmfThemes, gmfTreeManager, gmfSearchFulltextSearch) {
 
 
     /**
@@ -226,10 +239,10 @@ gmf.SearchController = class {
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {gmf.FulltextSearchService}
+     * @type {gmf.search.FulltextSearch}
      * @private
      */
-    this.fullTextSearch_ = gmfFulltextSearchService;
+    this.fullTextSearch_ = gmfSearchFulltextSearch;
 
     /**
      * @type {ngeo.search.createGeoJSONBloodhound.Function}
@@ -432,9 +445,9 @@ gmf.SearchController = class {
     this.listeners = this.mergeListeners_(
       this.additionalListeners,
       /** @type {ngeox.SearchDirectiveListeners} */ ({
-        select: gmf.SearchController.select_.bind(this),
-        close: gmf.SearchController.close_.bind(this),
-        datasetsempty: gmf.SearchController.datasetsempty_.bind(this)
+        select: this.select_.bind(this),
+        close: this.close_.bind(this),
+        datasetsempty: this.datasetsempty_.bind(this)
       })
     );
 
@@ -868,10 +881,9 @@ gmf.SearchController = class {
    * @param {jQuery.Event} event Event.
    * @param {Object|ol.Feature} suggestion Suggestion.
    * @param {TypeaheadDataset} dataset Dataset.
-   * @this {gmf.SearchController}
    * @private
    */
-  static select_(event, suggestion, dataset) {
+  select_(event, suggestion, dataset) {
     if (suggestion['tt_source'] === 'coordinates') {
       const geom = new ol.geom.Point(suggestion['position']);
 
@@ -893,7 +905,6 @@ gmf.SearchController = class {
    * @param {jQuery.Event} event Event.
    * @param {ol.Feature} feature Feature.
    * @param {TypeaheadDataset} dataset Dataset.
-   * @this {gmf.SearchController}
    * @private
    */
   selectFromGMF_(event, feature, dataset) {
@@ -961,10 +972,9 @@ gmf.SearchController = class {
 
   /**
    * @param {jQuery.Event} event Event.
-   * @this {gmf.SearchController}
    * @private
    */
-  static close_(event) {
+  close_(event) {
     if (!this.clearButton) {
       this.setTTDropdownVisibility_();
     }
@@ -975,10 +985,9 @@ gmf.SearchController = class {
    * @param {jQuery.Event} event Event.
    * @param {string} query Query.
    * @param {boolean} empty Empty.
-   * @this {gmf.SearchController}
    * @private
    */
-  static datasetsempty_(event, query, empty) {
+  datasetsempty_(event, query, empty) {
     // workaround to display a 'no result found' in the search result when all of
     // the datasets are empty.
     // based on https://github.com/twitter/typeahead.js/issues/780#issuecomment-251554452
@@ -1027,4 +1036,6 @@ gmf.SearchController = class {
   }
 };
 
-gmf.module.controller('GmfSearchController', gmf.SearchController);
+
+// Register the controller in the module
+gmf.search.component.controller('gmfSearchController', gmf.search.component.SearchController_);

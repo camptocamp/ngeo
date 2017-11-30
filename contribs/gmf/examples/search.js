@@ -6,8 +6,6 @@ goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.searchComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -17,9 +15,14 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('gmf.search.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.search.module.name
+]);
 
 
 gmfapp.module.value('gmfTreeUrl',
@@ -91,7 +94,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
    * @type {string}
    * @export
    */
-  this.inputValue;
+  this.inputValue = '';
 
   /**
    * @type {ol.Map}
