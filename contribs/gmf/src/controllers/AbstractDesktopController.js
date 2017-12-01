@@ -1,7 +1,7 @@
 goog.provide('gmf.AbstractDesktopController');
 
 goog.require('gmf');
-goog.require('gmf.AbstractController');
+goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
@@ -82,7 +82,7 @@ gmf.module.value('ngeoMeasureDecimals', 0);
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractController}
+ * @extends {gmf.AbstractAppController}
  * @ngdoc controller
  * @ngInject
  * @export
@@ -94,7 +94,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractController.prototype.getLocationIcon();
+  const arrow = gmf.AbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
@@ -248,7 +248,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.profileLine = null;
 
-  gmf.AbstractController.call(this, config, $scope, $injector);
+  gmf.AbstractAppController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
@@ -258,7 +258,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
 
 };
-ol.inherits(gmf.AbstractDesktopController, gmf.AbstractController);
+ol.inherits(gmf.AbstractDesktopController, gmf.AbstractAppController);
 
 
 gmf.module.controller(

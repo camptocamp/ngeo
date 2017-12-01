@@ -1,4 +1,4 @@
-goog.provide('gmf.AbstractController');
+goog.provide('gmf.AbstractAppController');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -62,7 +62,7 @@ gmf.module.value('ngeoExportFeatureFormats', [
  * @ngInject
  * @export
  */
-gmf.AbstractController = function(config, $scope, $injector) {
+gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Location service
@@ -610,7 +610,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
  * @param {string} lang Language code.
  * @export
  */
-gmf.AbstractController.prototype.switchLanguage = function(lang) {
+gmf.AbstractAppController.prototype.switchLanguage = function(lang) {
   goog.asserts.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
@@ -621,7 +621,7 @@ gmf.AbstractController.prototype.switchLanguage = function(lang) {
 
 /**
  */
-gmf.AbstractController.prototype.initLanguage = function() {
+gmf.AbstractAppController.prototype.initLanguage = function() {
   this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
@@ -654,7 +654,7 @@ gmf.AbstractController.prototype.initLanguage = function() {
  * @param {boolean} use_permalink Get background from the permalink.
  * @private
  */
-gmf.AbstractController.prototype.setDefaultBackground_ = function(theme, use_permalink) {
+gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme, use_permalink) {
   this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
     let default_basemap;
     let layer;
@@ -687,7 +687,7 @@ gmf.AbstractController.prototype.setDefaultBackground_ = function(theme, use_per
  * @param {string} fallbackThemeName fallback theme name.
  * @private
  */
-gmf.AbstractController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
+gmf.AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
@@ -705,7 +705,7 @@ gmf.AbstractController.prototype.updateCurrentTheme_ = function(fallbackThemeNam
  * @protected
  * @return {Element} Span element with font-awesome inside of it
  */
-gmf.AbstractController.prototype.getLocationIcon = function() {
+gmf.AbstractAppController.prototype.getLocationIcon = function() {
   const arrow = document.createElement('span');
   arrow.className = 'fa fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
@@ -714,4 +714,4 @@ gmf.AbstractController.prototype.getLocationIcon = function() {
   return arrowWrapper;
 };
 
-gmf.module.controller('AbstractController', gmf.AbstractController);
+gmf.module.controller('AbstractController', gmf.AbstractAppController);
