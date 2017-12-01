@@ -872,7 +872,7 @@ $(EXTERNS_JQUERY): github_versions
 		$(NGEO_MODULES_PARTIALS_FILES) \
 		$(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials ngeomodule:src gmf:contribs/gmf/src/directives/partials" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src gmfmodule:contribs/gmf/src gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
