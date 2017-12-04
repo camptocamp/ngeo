@@ -132,7 +132,7 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
 ngeo.CsvDownload.prototype.startDownload = function(data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);
   this.download_(
-    fileContent, fileName, `attachment/csv;charset=${this.encoding_}`);
+    fileContent, fileName, `text/csv;charset=${this.encoding_}`);
 };
 
 ngeo.module.service('ngeoCsvDownload', ngeo.CsvDownload);
