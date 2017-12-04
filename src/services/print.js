@@ -795,7 +795,8 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
       if (width !== undefined) {
-        symbolizer.haloRadius = width;
+        // Width is a stroke, radius a radius, so divide by 2
+        symbolizer.haloRadius = width / 2;
       }
     }
 
