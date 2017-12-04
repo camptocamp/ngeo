@@ -1,7 +1,7 @@
 goog.provide('gmf.AbstractMobileController');
 
 goog.require('gmf');
-goog.require('gmf.AbstractController');
+goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
@@ -45,7 +45,7 @@ gmf.module.value('ngeoQueryOptions', {
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractController}
+ * @extends {gmf.AbstractAppController}
  * @ngdoc controller
  * @ngInject
  * @export
@@ -112,7 +112,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractController.prototype.getLocationIcon();
+  const arrow = gmf.AbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
@@ -137,7 +137,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
         ol.interaction.defaults({pinchRotate: true})
   });
 
-  gmf.AbstractController.call(this, config, $scope, $injector);
+  gmf.AbstractAppController.call(this, config, $scope, $injector);
 
 
   const dragEl = document.querySelector('main');
@@ -178,7 +178,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   this.manageResize = true;
   this.resizeTransition = 500;
 };
-ol.inherits(gmf.AbstractMobileController, gmf.AbstractController);
+ol.inherits(gmf.AbstractMobileController, gmf.AbstractAppController);
 
 
 /**
