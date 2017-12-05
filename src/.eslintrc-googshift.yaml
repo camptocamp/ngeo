@@ -9,7 +9,7 @@
       prefixes: ['ngeo', 'ol']
     }],
 
-    'googshift/no-unused-requires': 'error',
+    'googshift/no-unused-requires': 'warn',
 
     'googshift/one-provide-or-module': ['error', {
       entryPoints: ['ngeo'],
