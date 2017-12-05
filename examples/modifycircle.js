@@ -1,8 +1,6 @@
 goog.provide('app.modifycircle');
 
 goog.require('ngeo.interaction.ModifyCircle');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -13,9 +11,14 @@ goog.require('ol.geom.Circle');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**

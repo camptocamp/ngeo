@@ -1,13 +1,12 @@
 goog.provide('app.colorpicker');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
 
-
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name
+]);
 
 
 /**

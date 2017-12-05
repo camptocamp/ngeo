@@ -4,8 +4,6 @@ goog.provide('app.mapfishprint');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.Print');
 goog.require('ngeo.PrintUtils');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.format.GeoJSON');
@@ -14,9 +12,14 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
@@ -263,4 +266,4 @@ app.MainController.prototype.handleGetStatusError_ = function(resp) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+module.controller('MainController', app.MainController);

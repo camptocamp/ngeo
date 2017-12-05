@@ -7,8 +7,6 @@ goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.bboxQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -17,9 +15,14 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.map.module');
 
-/** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+
+/** @type {!angular.Module} */
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 app.module.value('ngeoQueryOptions', {

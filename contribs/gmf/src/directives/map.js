@@ -10,7 +10,7 @@ goog.require('ngeo.FeatureOverlayMgr');
  * the template.
  * @suppress {extraRequire}
  */
-goog.require('ngeo.mapDirective');
+goog.require('ngeo.map.module');
 goog.require('ol.Map');
 
 

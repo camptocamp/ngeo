@@ -1,8 +1,6 @@
 goog.provide('app.rotate');
 
 goog.require('ngeo.interaction.Rotate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.Map');
@@ -17,6 +15,15 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Circle');
 goog.require('ol.geom.Polygon');
+
+goog.require('ngeo.map.module');
+
+
+/** @type {!angular.Module} **/
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /** @type {!angular.Module} **/

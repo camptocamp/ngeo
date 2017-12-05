@@ -3,7 +3,6 @@ goog.provide('app.search');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -14,12 +13,14 @@ goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 goog.require('goog.asserts');
 
+goog.require('ngeo.map.module');
 goog.require('ngeo.search.module');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.map.module.name,
   ngeo.search.module.name
 ]);
 
