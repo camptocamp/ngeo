@@ -94,7 +94,10 @@ ngeo.sortableDirective = function($timeout) {
         const sortableElement = $(element);
 
         const sortableOptions = {
-          axis: 'y'
+          'axis': 'y',
+          'classes': {
+            'ui-sortable-helper': options['draggerClassName']
+          }
         };
 
         // CSS class of the handle
@@ -104,27 +107,11 @@ ngeo.sortableDirective = function($timeout) {
 
         // Placeholder for the item being dragged in the sortable list
         if (options['placeholderClassName']) {
-          sortableOptions['placeholder'] = `${options['placeholderClassName']}`;
+          sortableOptions['placeholder'] = options['placeholderClassName'];
           sortableOptions['forcePlaceholderSize'] = true;
         }
 
         sortableElement.sortable(sortableOptions);
-
-        // Add draggerClass to element being dragged
-        sortableElement.on('sortstart', (event, ui) => {
-          if (options['draggerClassName']) {
-            $(ui.item).addClass(options['draggerClassName']);
-          }
-        });
-
-        // Remove draggerClass from element not being dragged anymore
-        // In contrast to sortupdate, sortstop does not care whether
-        // the dragged element has moved in the order.
-        sortableElement.on('sortstop', (event, ui) => {
-          if (options['draggerClassName']) {
-            $(ui.item).removeClass(options['draggerClassName']);
-          }
-        });
 
         // This event is triggered when the user stopped sorting and
         // the DOM position (i.e. order in the sortable list) has changed.
