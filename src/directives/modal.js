@@ -176,7 +176,6 @@ ngeo.modalDirective.Component = {
       </div>
     </div>
   </div>`,
-  restrict: 'E',
   require: {
     'ngModel': 'ngModel'
   },
