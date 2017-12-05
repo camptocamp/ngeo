@@ -41,7 +41,7 @@
       </span>
     </a>
     <div ng-switch-default>
-      <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown" ngeo-modal-destroy-content-on-hide="true">
+      <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown">
         <div class="modal-header">
           <button
               type="button"
@@ -126,7 +126,7 @@
       </form>
     </div>
   </div>
-  <ngeo-modal ng-model="efCtrl.showServerError" ngeo-modal-destroy-content-on-hide="true">
+  <ngeo-modal ng-model="efCtrl.showServerError">
     <div class="modal-header">{{'Server error.' | translate}}</div>
     <div class="modal-body">{{$parent.efCtrl.serverErrorType}}<br>
     {{$parent.efCtrl.serverErrorMessage || ('Unexpected server error.' | translate)}}</div>
