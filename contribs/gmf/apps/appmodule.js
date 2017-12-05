@@ -12,6 +12,7 @@ goog.require('gmf');
 
 goog.require('ngeo.utils.module');
 goog.require('gmf.search.module');
+goog.require('gmf.authentication.module');
 
 
 /**
@@ -20,6 +21,7 @@ goog.require('gmf.search.module');
 app.module = angular.module('app', [
   ngeo.utils.module.module.name,
   gmf.search.module.name,
+  gmf.authentication.module.name,
   gmf.module.name
 ]);
 

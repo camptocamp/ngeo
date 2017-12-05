@@ -2,8 +2,6 @@ goog.provide('gmf.AbstractAppController');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');

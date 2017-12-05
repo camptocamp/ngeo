@@ -1,4 +1,4 @@
-goog.provide('gmf.Authentication');
+goog.provide('gmf.authentication.service');
 
 goog.require('ngeo.CustomEvent');
 goog.require('gmf');
@@ -14,7 +14,7 @@ goog.require('ol.events.EventTarget');
  *     username: (string|undefined)
  * }}
  */
-gmf.AuthenticationLoginResponse;
+gmf.authentication.AuthenticationLoginResponse;
 
 
 /**
@@ -22,13 +22,13 @@ gmf.AuthenticationLoginResponse;
  *     success: boolean
  * }}
  */
-gmf.AuthenticationDefaultResponse;
+gmf.authentication.AuthenticationDefaultResponse;
 
 
 /**
  * @enum {string}
  */
-gmf.AuthenticationRouteSuffix = {
+gmf.authentication.AuthenticationRouteSuffix = {
   CHANGE_PASSWORD: 'loginchange',
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',
@@ -36,7 +36,7 @@ gmf.AuthenticationRouteSuffix = {
   RESET_PASSWORD: 'loginresetpassword'
 };
 
-
+// todo?
 gmf.module.value('gmfUser', {
   'functionalities': null,
   'is_password_changed': null,
@@ -58,193 +58,183 @@ gmf.module.value('gmfUser', {
  * - logout
  * - resetPassword
  *
- * @constructor
- * @struct
  * @extends {ol.events.EventTarget}
- * @param {angular.$http} $http Angular http service.
- * @param {string} authenticationBaseUrl URL to "authentication" web service.
- * @param {gmfx.User} gmfUser User.
- * @ngInject
  */
-gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
-
-  ol.events.EventTarget.call(this);
+gmf.authentication.service = class {
 
   /**
-   * @type {angular.$http}
+   * @param {angular.$http} $http Angular http service.
+   * @param {string} authenticationBaseUrl URL to "authentication" web service.
+   * @param {gmfx.User} gmfUser User.
+   * @ngInject
+   */
+  constructor($http, authenticationBaseUrl, gmfUser) {
+
+    ol.events.EventTarget.call(this);
+
+    /**
+     * @type {angular.$http}
+     * @private
+     */
+    this.$http_ = $http;
+
+    /**
+     * The authentication url without trailing slash
+     * @type {string}
+     * @private
+     */
+    this.baseUrl_ = authenticationBaseUrl.replace(/\/$/, '');
+
+    /**
+     * @type {gmfx.User}
+     * @private
+     */
+    this.user_ = gmfUser;
+
+    this.load_();
+  }
+
+  /**
+   * Load the authentication service, which sends an asynch request to
+   * determine whether the user is currently connected or not.
    * @private
    */
-  this.$http_ = $http;
+  load_() {
+    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.IS_LOGGED_IN}`;
+    this.$http_.get(url, {withCredentials: true}).then(
+      this.handleLogin_.bind(this, true)
+    );
+  }
 
   /**
-   * The authentication url without trailing slash
-   * @type {string}
-   * @private
+   * @param {string} oldPwd Old password.
+   * @param {string} newPwd New password.
+   * @param {string} confPwd New password confirmation.
+   * @return {angular.$q.Promise} Promise.
+   * @export
    */
-  this.baseUrl_ = authenticationBaseUrl.replace(/\/$/, '');
+  changePassword(oldPwd, newPwd, confPwd) {
+    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.CHANGE_PASSWORD}`;
+
+    return this.$http_.post(url, $.param({
+      'oldPassword': oldPwd,
+      'newPassword': newPwd,
+      'confirmNewPassword': confPwd
+    }), {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      withCredentials: true
+    });
+  }
 
   /**
-   * @type {gmfx.User}
-   * @private
+   * @param {string} login Login name.
+   * @param {string} pwd Password.
+   * @return {angular.$q.Promise} Promise.
+   * @export
    */
-  this.user_ = gmfUser;
+  login(login, pwd) {
+    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.LOGIN}`;
 
-  this.load_();
-};
-ol.inherits(gmf.Authentication, ol.events.EventTarget);
-
-
-/**
- * Load the authentication service, which sends an asynch request to
- * determine whether the user is currently connected or not.
- * @private
- */
-gmf.Authentication.prototype.load_ = function() {
-  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.IS_LOGGED_IN}`;
-  this.$http_.get(url, {withCredentials: true}).then(
-    this.handleLogin_.bind(this, true)
-  );
-};
-
-
-/**
- * @param {string} oldPwd Old password.
- * @param {string} newPwd New password.
- * @param {string} confPwd New password confirmation.
- * @return {angular.$q.Promise} Promise.
- * @export
- */
-gmf.Authentication.prototype.changePassword = function(oldPwd, newPwd,
-  confPwd) {
-
-  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.CHANGE_PASSWORD}`;
-
-  return this.$http_.post(url, $.param({
-    'oldPassword': oldPwd,
-    'newPassword': newPwd,
-    'confirmNewPassword': confPwd
-  }), {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    withCredentials: true
-  });
-};
-
-
-/**
- * @param {string} login Login name.
- * @param {string} pwd Password.
- * @return {angular.$q.Promise} Promise.
- * @export
- */
-gmf.Authentication.prototype.login = function(login, pwd) {
-
-  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.LOGIN}`;
-
-  return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    withCredentials: true
-  }).then(
-    this.handleLogin_.bind(this, false));
-};
-
-
-/**
- * @return {angular.$q.Promise} Promise.
- * @export
- */
-gmf.Authentication.prototype.logout = function() {
-  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.LOGOUT}`;
-  return this.$http_.get(url, {withCredentials: true}).then(
-    this.resetUser_.bind(this));
-};
-
-
-/**
- * @param {string} login Login name.
- * @return {angular.$q.Promise} Promise.
- * @export
- */
-gmf.Authentication.prototype.resetPassword = function(login) {
-  const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.RESET_PASSWORD}`;
+    return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      withCredentials: true
+    }).then(
+      this.handleLogin_.bind(this, false));
+  }
 
   /**
+   * @return {angular.$q.Promise} Promise.
+   * @export
+   */
+  logout() {
+    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.LOGOUT}`;
+    return this.$http_.get(url, {withCredentials: true}).then(
+      this.resetUser_.bind(this));
+  }
+
+  /**
+   * @param {string} login Login name.
+   * @return {angular.$q.Promise} Promise.
+   * @export
+   */
+  resetPassword(login) {
+    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.RESET_PASSWORD}`;
+
+    /**
+     * @param {angular.$http.Response} resp Ajax response.
+     * @return {gmf.authentication.AuthenticationDefaultResponse} Response.
+     */
+    const successFn = function(resp) {
+      const respData = /** @type gmf.authentication.AuthenticationDefaultResponse} */ (
+        resp.data);
+      return respData;
+    }.bind(this);
+
+    return this.$http_.post(url, $.param({'login': login}), {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).then(successFn);
+  }
+
+  /**
+   * @return {?gmfx.AuthenticationFunctionalities} The role functionalities.
+   */
+  getFunctionalities() {
+    return this.user_.functionalities;
+  }
+
+  /**
+   * @return {number|null} The role ID.
+   */
+  getRoleId() {
+    return this.user_.role_id;
+  }
+
+  /**
+   * @param {boolean} checkingLoginStatus Checking the login status?
    * @param {angular.$http.Response} resp Ajax response.
-   * @return {gmf.AuthenticationDefaultResponse} Response.
+   * @return {angular.$http.Response} Response.
+   * @private
    */
-  const successFn = function(resp) {
-    const respData = /** @type {gmf.AuthenticationDefaultResponse} */ (
-      resp.data);
-    return respData;
-  }.bind(this);
-
-  return this.$http_.post(url, $.param({'login': login}), {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-  }).then(successFn);
-};
-
-
-/**
- * @return {?gmfx.AuthenticationFunctionalities} The role functionalities.
- */
-gmf.Authentication.prototype.getFunctionalities = function() {
-  return this.user_.functionalities;
-};
-
-
-/**
- * @return {number|null} The role ID.
- */
-gmf.Authentication.prototype.getRoleId = function() {
-  return this.user_.role_id;
-};
-
-
-/**
- * @param {boolean} checkingLoginStatus Checking the login status?
- * @param {angular.$http.Response} resp Ajax response.
- * @return {angular.$http.Response} Response.
- * @private
- */
-gmf.Authentication.prototype.handleLogin_ = function(checkingLoginStatus, resp) {
-  const respData = /** @type {gmf.AuthenticationLoginResponse} */ (resp.data);
-  this.setUser_(respData, !checkingLoginStatus);
-  if (checkingLoginStatus) {
-    /** @type {gmfx.AuthenticationEvent} */
-    const event = new ngeo.CustomEvent('ready', {user: this.user_});
-    this.dispatchEvent(event);
+  handleLogin_(checkingLoginStatus, resp) {
+    const respData = /** @type {gmf.authentication.AuthenticationLoginResponse} */ (resp.data);
+    this.setUser_(respData, !checkingLoginStatus);
+    if (checkingLoginStatus) {
+      /** @type {gmfx.AuthenticationEvent} */
+      const event = new ngeo.CustomEvent('ready', {user: this.user_});
+      this.dispatchEvent(event);
+    }
+    return resp;
   }
-  return resp;
-};
 
-
-/**
- * @param {gmf.AuthenticationLoginResponse} respData Response.
- * @param {boolean} emitEvent Emit a login event?
- * @private
- */
-gmf.Authentication.prototype.setUser_ = function(respData, emitEvent) {
-  for (const key in respData) {
-    this.user_[key] = respData[key];
+  /**
+   * @param {gmf.authentication.AuthenticationLoginResponse} respData Response.
+   * @param {boolean} emitEvent Emit a login event?
+   * @private
+   */
+  setUser_(respData, emitEvent) {
+    for (const key in respData) {
+      this.user_[key] = respData[key];
+    }
+    if (emitEvent && respData.username !== undefined) {
+      /** @type {gmfx.AuthenticationEvent} */
+      const event = new ngeo.CustomEvent('login', {user: this.user_});
+      this.dispatchEvent(event);
+    }
   }
-  if (emitEvent && respData.username !== undefined) {
+
+  /**
+   * @private
+   */
+  resetUser_() {
+    for (const key in this.user_) {
+      this.user_[key] = null;
+    }
     /** @type {gmfx.AuthenticationEvent} */
-    const event = new ngeo.CustomEvent('login', {user: this.user_});
+    const event = new ngeo.CustomEvent('logout', {user: this.user_});
     this.dispatchEvent(event);
   }
 };
 
+ol.inherits(gmf.authentication.service, ol.events.EventTarget);
 
-/**
- * @private
- */
-gmf.Authentication.prototype.resetUser_ = function() {
-  for (const key in this.user_) {
-    this.user_[key] = null;
-  }
-  /** @type {gmfx.AuthenticationEvent} */
-  const event = new ngeo.CustomEvent('logout', {user: this.user_});
-  this.dispatchEvent(event);
-};
-
-
-gmf.module.service('gmfAuthentication', gmf.Authentication);
+gmf.authentication.module.service('gmfAuthentication', gmf.authentication.service);
