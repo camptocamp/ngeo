@@ -1,7 +1,6 @@
 goog.provide('app.simple3d');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -10,12 +9,14 @@ goog.require('ol.source.OSM');
 goog.require('ngeo.olcs.olcsModule');
 goog.require('ngeo');
 
+goog.require('ngeo.map.module');
 goog.require('ngeo.olcs.Manager');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.map.module.name,
   ngeo.olcs.olcsModule.name
 ]);
 

@@ -1,17 +1,20 @@
 goog.provide('app.locationchooser');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.recenterDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
@@ -38,4 +41,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+module.controller('MainController', app.MainController);

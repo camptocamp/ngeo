@@ -1,10 +1,19 @@
-goog.provide('ngeo.mapDirective');
+goog.provide('ngeo.map.directive');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+// TODO Remove me, there should not be a dependency on datasources from the map.
 goog.require('ngeo.datasource.SyncDataSourcesMap');
 goog.require('ol.events');
 goog.require('ol.Map');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.directive = angular.module('ngeoMap', []);
+
+ngeo.module.requires.push(ngeo.map.directive.name);
 
 
 /**
@@ -38,7 +47,7 @@ goog.require('ol.Map');
  * @ngdoc directive
  * @ngname ngeoMap
  */
-ngeo.mapDirective = function($window, ngeoSyncDataSourcesMap) {
+ngeo.map.directive.directive_ = function($window, ngeoSyncDataSourcesMap) {
   return {
     restrict: 'A',
     /**
@@ -105,4 +114,5 @@ ngeo.mapDirective = function($window, ngeoSyncDataSourcesMap) {
   };
 };
 
-ngeo.module.directive('ngeoMap', ngeo.mapDirective);
+// Register the directive in the module
+ngeo.map.directive.directive('ngeoMap', ngeo.map.directive.directive_);

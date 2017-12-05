@@ -5,8 +5,6 @@ goog.require('ngeo.ToolActivate');
 goog.require('ngeo.Features');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -14,9 +12,14 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**

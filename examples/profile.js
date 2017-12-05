@@ -1,8 +1,6 @@
 goog.provide('app.profile');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -17,9 +15,14 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**

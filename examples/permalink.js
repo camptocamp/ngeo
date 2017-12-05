@@ -4,8 +4,6 @@ goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.Location');
 goog.require('ngeo.format.FeatureHash');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
@@ -16,10 +14,14 @@ goog.require('ol.source.Vector');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
-
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 /**
  * An application-specific map component that updates the URL in the browser

@@ -1,8 +1,6 @@
 goog.provide('app.backgroundlayerdropdown');
 
 goog.require('ngeo.BackgroundLayerMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -12,9 +10,14 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**

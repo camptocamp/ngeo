@@ -7,8 +7,6 @@ goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -20,9 +18,14 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Fill');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
