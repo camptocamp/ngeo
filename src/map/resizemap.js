@@ -1,9 +1,15 @@
-goog.provide('ngeo.resizemapDirective');
+goog.provide('ngeo.map.resizemap');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ol.Map');
 
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.resizemap = angular.module('ngeoResizemap', []);
+
+ngeo.module.requires.push(ngeo.map.resizemap.name);
 
 /**
  * Provides a directive that resizes the map in an animation loop
@@ -26,7 +32,7 @@ goog.require('ol.Map');
  * @ngdoc directive
  * @ngname ngeoResizemap
  */
-ngeo.resizemapDirective = function($window) {
+ngeo.map.resizemap.directive_ = function($window) {
   const /** @type {number} */ duration = 1000;
 
   return {
@@ -76,4 +82,4 @@ ngeo.resizemapDirective = function($window) {
 };
 
 
-ngeo.module.directive('ngeoResizemap', ngeo.resizemapDirective);
+ngeo.map.resizemap.directive('ngeoResizemap', ngeo.map.resizemap.directive_);
