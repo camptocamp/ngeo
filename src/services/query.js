@@ -3,7 +3,7 @@
 goog.provide('ngeo.Query');
 
 goog.require('ngeo');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.obj');
@@ -65,7 +65,7 @@ ngeo.QueryableSources;
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.QueryOptions|undefined} ngeoQueryOptions The options to
  *     configure the ngeo query service with.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @ngdoc service
  * @ngname ngeoQuery
  * @ngInject
@@ -130,7 +130,7 @@ ngeo.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
     options.geometryName : 'geom';
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;

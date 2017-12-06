@@ -10,7 +10,7 @@ goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.geom');
 /** @suppress {extraRequire} */
 goog.require('ngeo.jstsExports');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.utils');
 goog.require('ol.Collection');
@@ -103,8 +103,8 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-goog.require('ngeo.LayerHelper');
- * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+goog.require('ngeo.map.LayerHelper');
+ * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {!ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -229,7 +229,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.featureHasGeom;
 
   /**
-   * @type {!ngeo.LayerHelper}
+   * @type {!ngeo.map.LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;

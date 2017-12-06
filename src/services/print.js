@@ -2,7 +2,7 @@ goog.provide('ngeo.Print');
 
 
 goog.require('ngeo');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.utils');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
@@ -96,7 +96,7 @@ ngeo.PrintStyleTypes_ = {
  * @struct
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
 ngeo.Print = function(url, $http, ngeoLayerHelper) {
   /**
@@ -112,7 +112,7 @@ ngeo.Print = function(url, $http, ngeoLayerHelper) {
   this.$http_ = $http;
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -898,7 +898,7 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
 
 /**
  * @param {angular.$http} $http Angular $http service.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {ngeo.CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service

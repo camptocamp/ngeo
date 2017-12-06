@@ -5,7 +5,7 @@ goog.require('gmf');
 goog.require('gmf.authenticationDirective');
 goog.require('ngeo.Print');
 goog.require('ngeo.FeatureOverlayMgr');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.PrintUtils');
 goog.require('ol.Observable');
 goog.require('ol.math');
@@ -155,7 +155,7 @@ gmf.PrintController = class {
    * @param {angular.$q} $q The Angular $q service.
    * @param {angular.$injector} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
    * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
@@ -249,7 +249,7 @@ gmf.PrintController = class {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {ngeo.LayerHelper}
+     * @type {ngeo.map.LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;

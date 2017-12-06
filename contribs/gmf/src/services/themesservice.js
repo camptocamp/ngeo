@@ -2,7 +2,7 @@ goog.provide('gmf.Themes');
 
 goog.require('goog.asserts');
 goog.require('gmf');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ol.array');
 goog.require('ol.Collection');
 goog.require('ol.events.EventTarget');
@@ -23,7 +23,7 @@ gmf.module.value('gmfThemesOptions', {});
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
  * @param {angular.$q} $q Angular q service
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
@@ -79,7 +79,7 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
   }
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;

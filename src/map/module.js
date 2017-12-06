@@ -11,6 +11,9 @@ goog.require('ngeo.map.resizemap');
 goog.require('ngeo.map.scaleselector');
 
 /**
+ * Also related to the map but not included in the module (require it manually):
+ *   - ngeo.map.LayerHelper
+ *
  * @type {!angular.Module}
  */
 ngeo.map.module = angular.module('ngeoMapModule', [
