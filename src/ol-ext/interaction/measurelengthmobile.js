@@ -13,7 +13,6 @@ goog.require('ngeo.interaction.MobileDraw');
  * @extends {ngeo.interaction.MeasureLength}
  * @param {ngeox.unitPrefix} format The format function
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
- * @export
  */
 ngeo.interaction.MeasureLengthMobile = function(format, opt_options) {
 

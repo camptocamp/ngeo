@@ -16,7 +16,6 @@ ngeo.format.WFSAttribute = class {
   /**
    * @param {Array.<Object>} complexTypeElements Complex type element
    * @return {Array.<ngeox.Attribute>} Attributes
-   * @export
    */
   read(complexTypeElements) {
     return complexTypeElements.map(this.readFromComplexTypeElement_);

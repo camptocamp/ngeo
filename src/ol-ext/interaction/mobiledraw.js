@@ -36,7 +36,6 @@ ngeo.interaction.MobileDrawProperty = {
  * @fires ol.interaction.Draw.Event
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.MobileDrawOptions} options Options
- * @export
  */
 ngeo.interaction.MobileDraw = function(options) {
 
@@ -149,7 +148,6 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
  * use of the `addToDrawing` method.
  * @return {boolean} `true` if the interaction is dirty, `false` otherwise.
  * @observable
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.getDirty = function() {
   return /** @type {boolean} */ (
@@ -161,7 +159,6 @@ ngeo.interaction.MobileDraw.prototype.getDirty = function() {
  * Return whether the interaction is currently drawing.
  * @return {boolean} `true` if the interaction is drawing, `false` otherwise.
  * @observable
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.getDrawing = function() {
   return /** @type {boolean} */ (
@@ -175,7 +172,6 @@ ngeo.interaction.MobileDraw.prototype.getDrawing = function() {
  * @return {boolean} `true` if the interaction has a valid sketch feature,
  *     `false` otherwise.
  * @observable
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.getValid = function() {
   return /** @type {boolean} */ (
@@ -186,7 +182,6 @@ ngeo.interaction.MobileDraw.prototype.getValid = function() {
 /**
  * Returns the current sketch feature.
  * @return {?ol.Feature} The sketch feature, or null if none.
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.getFeature = function() {
   return this.sketchFeature_;
@@ -199,7 +194,6 @@ ngeo.interaction.MobileDraw.prototype.getFeature = function() {
 /**
  * Add current sketch point to sketch feature if the latter exists, else create
  * it.
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
 
@@ -275,7 +269,6 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
 
 /**
  * Clear the drawing
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.clearDrawing = function() {
   this.setActive(false);
@@ -285,7 +278,6 @@ ngeo.interaction.MobileDraw.prototype.clearDrawing = function() {
 
 /**
  * Finish drawing. If there's a sketch point, it's added first.
- * @export
  */
 ngeo.interaction.MobileDraw.prototype.finishDrawing = function() {
 

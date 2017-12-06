@@ -18,7 +18,6 @@ goog.require('ol.interaction.Interaction');
  * @fires ol.interaction.Draw.Event
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.DrawRegularPolygonFromClickOptions} options Options
- * @export
  */
 ngeo.interaction.DrawRegularPolygonFromClick = function(options) {
 
@@ -58,7 +57,6 @@ ol.inherits(
 /**
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
- * @export
  * @override
  */
 ngeo.interaction.DrawRegularPolygonFromClick.prototype.setActive = function(active) {

@@ -23,7 +23,6 @@ goog.require('ol.source.Vector');
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent
- * @export
  * @api
  */
 ngeo.interaction.Rotate = function(options) {
@@ -125,7 +124,6 @@ ol.inherits(ngeo.interaction.Rotate, ol.interaction.Pointer);
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
  * @override
- * @export
  */
 ngeo.interaction.Rotate.prototype.setActive = function(active) {
 
