@@ -12,15 +12,6 @@ goog.require('ngeo.map.FeatureOverlay');
 
 
 /**
- * @typedef {{
- *  styleFunction: ol.StyleFunction,
- *  features: Object.<string, ol.Feature>
- * }}
- */
-ngeo.map.FeatureOverlayGroup;
-
-
-/**
  * Provides a service that wraps an "unmanaged" vector layer,
  * used as a shared vector layer across the application.
  *
@@ -52,7 +43,7 @@ ngeo.map.FeatureOverlayMgr = function() {
   this.featureUidToGroupIndex_ = {};
 
   /**
-   * @type {Array.<ngeo.map.FeatureOverlayGroup>}
+   * @type {Array.<ngeox.MapFeatureOverlayGroup>}
    * @private
    */
   this.groups_ = [];
