@@ -1,7 +1,7 @@
 goog.require('ol.Map');
-goog.require('ngeo.scaleselectorDirective');
+goog.require('ngeo.map.scaleselector');
 
-describe('ngeo.scaleselectorDirective', () => {
+describe('ngeo.map.scaleselector', () => {
 
   let element;
   let map;

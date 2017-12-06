@@ -41,7 +41,6 @@ goog.require('ngeo.FeatureOverlay');
 /** @suppress {extraRequire} */
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.scaleselectorDirective');
 goog.require('ngeo.ToolActivate');
 goog.require('ol.Collection');
 goog.require('ol.Map');
