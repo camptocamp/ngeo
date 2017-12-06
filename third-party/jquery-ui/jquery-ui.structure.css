@@ -168,6 +168,10 @@
 	right: -5px;
 	top: -5px;
 }
+.ui-sortable-handle {
+	-ms-touch-action: none;
+	touch-action: none;
+}
 .ui-datepicker {
 	width: 17em;
 	padding: .2em .2em 0;

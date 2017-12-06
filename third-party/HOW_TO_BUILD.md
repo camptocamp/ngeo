@@ -9,9 +9,9 @@
 2. Currently the following items have been selected:
   - jquery-ui version 1.12.1
   - All ui core dependencies
-  - Interactions Draggable and Resizable
-  - Widgets datepicker and slider
-  - The above selection should correspond to [this permalink](http://jqueryui.com/download/#!version=1.12.1&components=111111111111101000000010010010000000000000000000)
+  - Interactions Draggable, Resizable and Sortable
+  - Widgets Datepicker, Mouse and Slider
+  - The above selection should correspond to [this permalink](http://jqueryui.com/download/#!version=1.12.1&components=111111111111101010000010010010000000000000000000)
 3. Get the locales for datepicker
   - Unfortunately the custom build does not allow us to pick up translation files
   for the datepicker. By default, it's the English version.
