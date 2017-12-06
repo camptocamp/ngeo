@@ -1,8 +1,6 @@
 goog.provide('app.scaleselector');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.scaleselectorDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
 goog.require('ol.View');

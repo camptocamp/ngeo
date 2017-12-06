@@ -1,14 +1,20 @@
-goog.provide('ngeo.scaleselectorDirective');
+goog.provide('ngeo.map.scaleselector');
 
 goog.require('ngeo');
 goog.require('ol.array');
-goog.require('ol.events');
 goog.require('ol.Map');
-goog.require('ol.Object');
 goog.require('ol.events');
 
 
-ngeo.module.value('ngeoScaleselectorTemplateUrl',
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.scaleselector = angular.module('ngeoScaleselector', []);
+
+ngeo.module.requires.push(ngeo.map.scaleselector.name);
+
+
+ngeo.map.scaleselector.value('ngeoScaleselectorTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -17,7 +23,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseTemplateUrl}/scaleselector.html`;
+      `${ngeo.baseModuleTemplateUrl}/map/scaleselector.html`;
   });
 
 
@@ -72,7 +78,7 @@ ngeo.module.value('ngeoScaleselectorTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoScaleselector
  */
-ngeo.scaleselectorDirective = function(ngeoScaleselectorTemplateUrl) {
+ngeo.map.scaleselector.directive_ = function(ngeoScaleselectorTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -82,7 +88,7 @@ ngeo.scaleselectorDirective = function(ngeoScaleselectorTemplateUrl) {
 };
 
 
-ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
+ngeo.map.scaleselector.directive('ngeoScaleselector', ngeo.map.scaleselector.directive_);
 
 
 /**
@@ -96,7 +102,7 @@ ngeo.module.directive('ngeoScaleselector', ngeo.scaleselectorDirective);
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
  */
-ngeo.ScaleselectorController = function($scope, $element, $attrs) {
+ngeo.map.scaleselector.ScaleselectorController_ = function($scope, $element, $attrs) {
 
   const scalesExpr = $attrs['ngeoScaleselector'];
 
@@ -136,7 +142,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
    * @type {!ngeox.ScaleselectorOptions}
    * @export
    */
-  this.options = ngeo.ScaleselectorController.getOptions_(options);
+  this.options = ngeo.map.scaleselector.ScaleselectorController_.getOptions_(options);
 
   /**
    * @type {angular.Scope}
@@ -178,7 +184,7 @@ ngeo.ScaleselectorController = function($scope, $element, $attrs) {
  * @return {!ngeox.ScaleselectorOptions} Options object.
  * @private
  */
-ngeo.ScaleselectorController.getOptions_ = function(options) {
+ngeo.map.scaleselector.ScaleselectorController_.getOptions_ = function(options) {
   let dropup = false;
   if (options !== undefined) {
     dropup = options['dropup'] == true;
@@ -194,7 +200,7 @@ ngeo.ScaleselectorController.getOptions_ = function(options) {
  * @return {number} Scale.
  * @export
  */
-ngeo.ScaleselectorController.prototype.getScale = function(zoom) {
+ngeo.map.scaleselector.ScaleselectorController_.prototype.getScale = function(zoom) {
   return this.scales[zoom];
 };
 
@@ -203,7 +209,7 @@ ngeo.ScaleselectorController.prototype.getScale = function(zoom) {
  * @param {number} zoom Zoom level.
  * @export
  */
-ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
+ngeo.map.scaleselector.ScaleselectorController_.prototype.changeZoom = function(zoom) {
   this.map_.getView().setZoom(zoom);
 };
 
@@ -212,7 +218,7 @@ ngeo.ScaleselectorController.prototype.changeZoom = function(zoom) {
  * @param {ol.Object.Event} e OpenLayers object event.
  * @private
  */
-ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
+ngeo.map.scaleselector.ScaleselectorController_.prototype.handleResolutionChange_ = function(e) {
   const view = this.map_.getView();
   const currentScale = this.scales[/** @type {number} */ (view.getZoom())];
 
@@ -239,7 +245,7 @@ ngeo.ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
  * @param {ol.Object.Event} e OpenLayers object event.
  * @private
  */
-ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {
+ngeo.map.scaleselector.ScaleselectorController_.prototype.handleViewChange_ = function(e) {
   this.registerResolutionChangeListener_();
   this.handleResolutionChange_(null);
 };
@@ -248,7 +254,7 @@ ngeo.ScaleselectorController.prototype.handleViewChange_ = function(e) {
 /**
  * @private
  */
-ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = function() {
+ngeo.map.scaleselector.ScaleselectorController_.prototype.registerResolutionChangeListener_ = function() {
   if (this.resolutionChangeKey_ !== null) {
     ol.events.unlistenByKey(this.resolutionChangeKey_);
   }
@@ -259,5 +265,5 @@ ngeo.ScaleselectorController.prototype.registerResolutionChangeListener_ = funct
 };
 
 
-ngeo.module.controller('NgeoScaleselectorController',
-  ngeo.ScaleselectorController);
+ngeo.map.scaleselector.controller('NgeoScaleselectorController',
+  ngeo.map.scaleselector.ScaleselectorController_);
