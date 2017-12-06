@@ -1,7 +1,5 @@
-goog.provide('app.locationchooser');
+goog.provide('app.recenter');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.recenterDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');

@@ -1,7 +1,13 @@
-goog.provide('ngeo.recenterDirective');
+goog.provide('ngeo.map.recenter');
 
 goog.require('ngeo');
 
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.recenter = angular.module('ngeoRecenter', []);
+
+ngeo.module.requires.push(ngeo.map.recenter.name);
 
 /**
  * Provides the "ngeoRecenter" directive, a widget for recentering a map
@@ -23,14 +29,14 @@ goog.require('ngeo');
  *        <option ngeo-extent="[727681, 5784754, 1094579, 6029353]">B</option>
  *      </select>
  *
- * See our live example: [../examples/locationchooser.html](../examples/locationchooser.html)
+ * See our live example: [../examples/recenter.html](../examples/recenter.html)
  *
  * @htmlAttribute {ol.Map} ngeo-recenter-map The map.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoRecenter
  */
-ngeo.recenterDirective = function() {
+ngeo.map.recenter.directive_ = function() {
   return {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
@@ -63,4 +69,6 @@ ngeo.recenterDirective = function() {
     }
   };
 };
-ngeo.module.directive('ngeoRecenter', ngeo.recenterDirective);
+
+// Register the directive in the module
+ngeo.map.recenter.directive('ngeoRecenter', ngeo.map.recenter.directive_);
