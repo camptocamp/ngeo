@@ -5,9 +5,9 @@
   rules: {
     'googshift/no-duplicate-requires': 'error',
 
-    # FIXME launch 'error' again when 'ngeo.module' will be able to be an exception
-    'googshift/no-missing-requires': ['warn', {
-      prefixes: ['ngeo', 'ol']
+    'googshift/no-missing-requires': ['error', {
+      prefixes: ['ngeo', 'ol'],
+      exceptions: ['ngeo.module.requires.push']
     }],
 
     'googshift/no-unused-requires': 'warn',
