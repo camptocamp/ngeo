@@ -3,8 +3,13 @@ goog.provide('gmf.backgroundlayerselectorComponent');
 goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('gmf.Themes');
-goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ol.events');
+
+goog.require('ngeo.map.BackgroundLayerMgr');
+
+
+// In futur module declaration, don't forget to require:
+// - ngeo.map.BackgroundLayerMgr.module.name
 
 
 gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
@@ -76,7 +81,7 @@ gmf.module.component('gmfBackgroundlayerselector', gmf.backgroundlayerselectorCo
  * @private
  * @struct
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
+ * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!gmf.Themes} gmfThemes Themes service.
  * @ngInject
  * @ngdoc controller
@@ -130,7 +135,7 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.listenerKeys_.push(ol.events.listen(gmfThemes, 'change', this.handleThemesChange_, this));
 
   /**
-   * @type {!ngeo.BackgroundLayerMgr}
+   * @type {!ngeo.map.BackgroundLayerMgr}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;

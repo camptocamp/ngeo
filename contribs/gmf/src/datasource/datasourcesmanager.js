@@ -4,7 +4,7 @@ goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.BackgroundLayerMgr');
+goog.require('ngeo.map.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.LayerHelper');
@@ -32,7 +32,7 @@ gmf.datasource.DataSourcesManager = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {gmf.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
-   * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+   * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
@@ -81,7 +81,7 @@ gmf.datasource.DataSourcesManager = class {
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {!ngeo.BackgroundLayerMgr}
+     * @type {!ngeo.map.BackgroundLayerMgr}
      * @private
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
