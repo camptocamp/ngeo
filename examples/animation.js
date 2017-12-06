@@ -1,7 +1,5 @@
 goog.provide('app.animation');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.resizemapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
