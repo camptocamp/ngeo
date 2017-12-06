@@ -5,8 +5,6 @@ goog.require('ngeo.CsvDownload');
 goog.require('ngeo.GridConfig');
 /** @suppress {extraRequire} */
 goog.require('ngeo.gridComponent');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
 goog.require('ol.Collection');
@@ -14,6 +12,12 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 ngeo.module.value('gmfDisplayquerygridTemplateUrl',
@@ -45,7 +49,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 /**
  * Provides a component to display results of the {@link ngeo.queryResult} in a
  * grid and shows related features on the map using
- * the {@link ngeo.FeatureOverlayMgr}.
+ * the {@link ngeo.map.FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
@@ -107,7 +111,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
@@ -234,7 +238,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
   this.features_ = new ol.Collection();
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {ngeo.map.FeatureOverlay}
    * @private
    */
   this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

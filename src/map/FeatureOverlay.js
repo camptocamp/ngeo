@@ -1,31 +1,19 @@
-goog.provide('ngeo.FeatureOverlay');
+goog.provide('ngeo.map.FeatureOverlay');
 
 goog.require('ngeo');
 goog.require('ol');
 goog.require('ol.events');
-goog.require('ol.Collection');
-goog.require('ol.Feature');
-goog.require('ol.style.Style');
-
-
-/**
- * @typedef {{
- *  styleFunction: ol.StyleFunction,
- *  features: Object.<string, ol.Feature>
- * }}
- */
-ngeo.FeatureOverlayGroup;
 
 
 /**
  * @constructor
- * @param {ngeo.FeatureOverlayMgr} manager The feature overlay manager.
+ * @param {ngeo.map.FeatureOverlayMgr} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  */
-ngeo.FeatureOverlay = function(manager, index) {
+ngeo.map.FeatureOverlay = function(manager, index) {
 
   /**
-   * @type {ngeo.FeatureOverlayMgr}
+   * @type {ngeo.map.FeatureOverlayMgr}
    * @private
    */
   this.manager_ = manager;
@@ -49,7 +37,7 @@ ngeo.FeatureOverlay = function(manager, index) {
  * @param {ol.Feature} feature The feature to add.
  * @export
  */
-ngeo.FeatureOverlay.prototype.addFeature = function(feature) {
+ngeo.map.FeatureOverlay.prototype.addFeature = function(feature) {
   this.manager_.addFeature(feature, this.index_);
 };
 
@@ -59,7 +47,7 @@ ngeo.FeatureOverlay.prototype.addFeature = function(feature) {
  * @param {ol.Feature} feature The feature to remove.
  * @export
  */
-ngeo.FeatureOverlay.prototype.removeFeature = function(feature) {
+ngeo.map.FeatureOverlay.prototype.removeFeature = function(feature) {
   this.manager_.removeFeature(feature, this.index_);
 };
 
@@ -68,7 +56,7 @@ ngeo.FeatureOverlay.prototype.removeFeature = function(feature) {
  * Remove all the features from the feature overlay.
  * @export
  */
-ngeo.FeatureOverlay.prototype.clear = function() {
+ngeo.map.FeatureOverlay.prototype.clear = function() {
   this.manager_.clear(this.index_);
 };
 
@@ -82,7 +70,7 @@ ngeo.FeatureOverlay.prototype.clear = function() {
  * @param {ol.Collection.<ol.Feature>} features Feature collection.
  * @export
  */
-ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
+ngeo.map.FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
     ol.events.unlisten(this.features_, 'add', this.handleFeatureAdd_, this);
@@ -105,7 +93,7 @@ ngeo.FeatureOverlay.prototype.setFeatures = function(features) {
  * Style.
  * @export
  */
-ngeo.FeatureOverlay.prototype.setStyle = function(style) {
+ngeo.map.FeatureOverlay.prototype.setStyle = function(style) {
   this.manager_.setStyle(style, this.index_);
 };
 
@@ -114,7 +102,7 @@ ngeo.FeatureOverlay.prototype.setStyle = function(style) {
  * @param {ol.Collection.Event} evt Feature collection event.
  * @private
  */
-ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
+ngeo.map.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
   const feature = /** @type {ol.Feature} */ (evt.element);
   this.addFeature(feature);
 };
@@ -124,7 +112,13 @@ ngeo.FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
  * @param {ol.Collection.Event} evt Feature collection event.
  * @private
  */
-ngeo.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
+ngeo.map.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
   const feature = /** @type {ol.Feature} */ (evt.element);
   this.removeFeature(feature);
 };
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.FeatureOverlay.module = angular.module('ngeoFeatureOverlay', []);
+ngeo.module.requires.push(ngeo.map.FeatureOverlay.module.name);

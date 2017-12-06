@@ -27,7 +27,6 @@ goog.require('gmf.themeselectorComponent');
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.GetBrowserLanguage');
 /** @suppress {extraRequire} */
 goog.require('ngeo.MapQuerent');
@@ -390,7 +389,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * The ngeo feature overlay manager service
-   * @type {ngeo.FeatureOverlayMgr}
+   * @type {ngeo.map.FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);

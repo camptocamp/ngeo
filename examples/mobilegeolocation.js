@@ -1,6 +1,5 @@
 goog.provide('app.mobilegeolocation');
 
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mobileGeolocationDirective');
 goog.require('ol.Map');
@@ -24,7 +23,7 @@ const module = angular.module('app', [
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @ngInject

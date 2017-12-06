@@ -1,7 +1,6 @@
 goog.provide('app.toolActivate');
 
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
@@ -29,7 +28,7 @@ app.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr ToolActivate manager.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Interaction

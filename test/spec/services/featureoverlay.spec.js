@@ -1,6 +1,6 @@
-goog.require('ngeo.FeatureOverlayMgr');
+goog.require('ngeo.map.FeatureOverlayMgr');
 
-describe('ngeo.FeatureOverlayMgr', () => {
+describe('ngeo.map.FeatureOverlayMgr', () => {
   let ngeoFeatureOverlayMgr;
   let map;
   let layer;

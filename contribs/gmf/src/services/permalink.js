@@ -168,13 +168,13 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     $injector.get('ngeoBackgroundLayerMgr') : null;
 
   /**
-   * @type {?ngeo.FeatureOverlayMgr}
+   * @type {?ngeo.map.FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr') ?
     $injector.get('ngeoFeatureOverlayMgr') : null;
 
   /**
-   * @type {?ngeo.FeatureOverlay}
+   * @type {?ngeo.map.FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr ?

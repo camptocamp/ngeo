@@ -17,6 +17,12 @@ goog.require('ngeo.rule.Select');
 goog.require('ol.Collection');
 goog.require('ol.events');
 
+goog.require('ngeo.map.FeatureOverlay');
+
+
+// In futur module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlay.module.name
+
 
 /**
  * @private
@@ -46,7 +52,7 @@ ngeo.RuleController = class {
     // Binding properties
 
     /**
-     * @type {!ngeo.FeatureOverlay}
+     * @type {!ngeo.map.FeatureOverlay}
      * @export
      */
     this.featureOverlay;

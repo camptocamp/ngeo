@@ -1,15 +1,14 @@
-goog.provide('ngeo.FeatureOverlayMgr');
+goog.provide('ngeo.map.FeatureOverlayMgr');
 
 goog.require('ngeo');
-goog.require('ngeo.FeatureOverlay');
 goog.require('ol');
-goog.require('ol.Feature');
 goog.require('ol.layer.Vector');
 goog.require('ol.obj');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Style');
 
 goog.require('goog.asserts');
+goog.require('ngeo.map.FeatureOverlay');
 
 
 /**
@@ -18,7 +17,7 @@ goog.require('goog.asserts');
  *  features: Object.<string, ol.Feature>
  * }}
  */
-ngeo.FeatureOverlayGroup;
+ngeo.map.FeatureOverlayGroup;
 
 
 /**
@@ -44,7 +43,7 @@ ngeo.FeatureOverlayGroup;
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */
-ngeo.FeatureOverlayMgr = function() {
+ngeo.map.FeatureOverlayMgr = function() {
 
   /**
    * @type {Object.<string, number>}
@@ -53,7 +52,7 @@ ngeo.FeatureOverlayMgr = function() {
   this.featureUidToGroupIndex_ = {};
 
   /**
-   * @type {Array.<ngeo.FeatureOverlayGroup>}
+   * @type {Array.<ngeo.map.FeatureOverlayGroup>}
    * @private
    */
   this.groups_ = [];
@@ -85,7 +84,7 @@ ngeo.FeatureOverlayMgr = function() {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
+ngeo.map.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   const featureUid = ol.getUid(feature).toString();
@@ -100,7 +99,7 @@ ngeo.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
+ngeo.map.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   const featureUid = ol.getUid(feature).toString();
@@ -114,7 +113,7 @@ ngeo.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
+ngeo.map.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   const group = this.groups_[groupIndex];
@@ -129,22 +128,22 @@ ngeo.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
  * @return {ol.layer.Vector} The vector layer used internally.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.getLayer = function() {
+ngeo.map.FeatureOverlayMgr.prototype.getLayer = function() {
   return this.layer_;
 };
 
 
 /**
- * @return {ngeo.FeatureOverlay} Feature overlay.
+ * @return {ngeo.map.FeatureOverlay} Feature overlay.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
+ngeo.map.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
   const groupIndex = this.groups_.length;
   this.groups_.push({
     styleFunction: ol.style.Style.defaultFunction,
     features: {}
   });
-  return new ngeo.FeatureOverlay(this, groupIndex);
+  return new ngeo.map.FeatureOverlay(this, groupIndex);
 };
 
 
@@ -152,7 +151,7 @@ ngeo.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
  * @param {ol.Map} map Map.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.init = function(map) {
+ngeo.map.FeatureOverlayMgr.prototype.init = function(map) {
   this.layer_.setMap(map);
 };
 
@@ -163,7 +162,7 @@ ngeo.FeatureOverlayMgr.prototype.init = function(map) {
  * @param {number} groupIndex Group index.
  * @export
  */
-ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
+ngeo.map.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   goog.asserts.assert(groupIndex >= 0);
   goog.asserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
@@ -177,7 +176,7 @@ ngeo.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
  * @return {Array.<ol.style.Style>|ol.style.Style} Styles.
  * @private
  */
-ngeo.FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
+ngeo.map.FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
   const featureUid = ol.getUid(feature).toString();
   goog.asserts.assert(featureUid in this.featureUidToGroupIndex_);
   const groupIndex = this.featureUidToGroupIndex_[featureUid];
@@ -186,4 +185,11 @@ ngeo.FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) 
 };
 
 
-ngeo.module.service('ngeoFeatureOverlayMgr', ngeo.FeatureOverlayMgr);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.FeatureOverlayMgr.module = angular.module('ngeoFeatureOverlayMgr', [
+  ngeo.map.FeatureOverlay.module.name
+]);
+ngeo.map.FeatureOverlayMgr.module.service('ngeoFeatureOverlayMgr', ngeo.map.FeatureOverlayMgr);
+ngeo.module.requires.push(ngeo.map.FeatureOverlayMgr.module.name);

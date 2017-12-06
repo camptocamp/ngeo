@@ -37,10 +37,6 @@ goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 /** @suppress {extraRequire} */
-goog.require('ngeo.FeatureOverlay');
-/** @suppress {extraRequire} */
-goog.require('ngeo.FeatureOverlayMgr');
-/** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivate');
 goog.require('ol.Collection');
 goog.require('ol.Map');
@@ -193,7 +189,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   const ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {ngeo.map.FeatureOverlay}
    * @export
    */
   this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')

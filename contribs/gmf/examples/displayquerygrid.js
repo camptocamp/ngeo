@@ -27,9 +27,14 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
 gmfapp.module.constant('ngeoQueryOptions', {
@@ -84,7 +89,7 @@ gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultContro
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
