@@ -24,8 +24,6 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.themeselectorComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.BackgroundLayerMgr');
-/** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
@@ -204,7 +202,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   }
 
   /**
-   * @type {ngeo.BackgroundLayerMgr}
+   * @type {ngeo.map.BackgroundLayerMgr}
    * @private
    */
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');

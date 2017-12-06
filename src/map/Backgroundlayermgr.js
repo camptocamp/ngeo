@@ -1,9 +1,12 @@
-goog.provide('ngeo.BackgroundLayerMgr');
+goog.provide('ngeo.map.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.CustomEvent');
+goog.require('ol');
 goog.require('ol.Observable');
+goog.require('ol.layer.Group');
+goog.require('ol.layer.Layer');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
@@ -53,7 +56,7 @@ goog.require('ol.source.WMTS');
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
  */
-ngeo.BackgroundLayerMgr = function() {
+ngeo.map.BackgroundLayerMgr = function() {
 
   ol.Observable.call(this);
 
@@ -64,7 +67,7 @@ ngeo.BackgroundLayerMgr = function() {
    */
   this.mapUids_ = {};
 };
-ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
+ol.inherits(ngeo.map.BackgroundLayerMgr, ol.Observable);
 
 
 /**
@@ -74,7 +77,7 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  * @return {ol.layer.Base} layer The background layer.
  * @export
  */
-ngeo.BackgroundLayerMgr.prototype.get = function(map) {
+ngeo.map.BackgroundLayerMgr.prototype.get = function(map) {
   const mapUid = ol.getUid(map).toString();
   return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
 };
@@ -88,7 +91,7 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @return {ol.layer.Base} The previous background layer.
  * @export
  */
-ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
+ngeo.map.BackgroundLayerMgr.prototype.set = function(map, layer) {
   const mapUid = ol.getUid(map).toString();
   const previous = this.get(map);
   if (previous !== null) {
@@ -118,7 +121,7 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
  * @param {Object.<string, string>} dimensions The global dimensions object.
  * @export
  */
-ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
+ngeo.map.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
   const baseBgLayer = this.get(map);
   if (baseBgLayer) {
     let layers = [baseBgLayer];
@@ -154,4 +157,9 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
   }
 };
 
-ngeo.module.service('ngeoBackgroundLayerMgr', ngeo.BackgroundLayerMgr);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.map.BackgroundLayerMgr.module = angular.module('ngeoBackgroundLayerMgr', []);
+ngeo.map.BackgroundLayerMgr.module.service('ngeoBackgroundLayerMgr', ngeo.map.BackgroundLayerMgr);
+ngeo.module.requires.push(ngeo.map.BackgroundLayerMgr.module.name);

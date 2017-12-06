@@ -1,6 +1,5 @@
 goog.provide('app.backgroundlayerdropdown');
 
-goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -44,7 +43,7 @@ app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
 /**
  * @constructor
  * @param {angular.$http} $http Angular http service.
- * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+ * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export
  * @ngInject
@@ -58,7 +57,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
     });
 
   /**
-   * @type {ngeo.BackgroundLayerMgr}
+   * @type {ngeo.map.BackgroundLayerMgr}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;

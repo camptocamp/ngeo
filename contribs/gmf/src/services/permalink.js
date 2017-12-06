@@ -161,7 +161,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     $injector.get('ngeoFeatures') : null;
 
   /**
-   * @type {?ngeo.BackgroundLayerMgr}
+   * @type {?ngeo.map.BackgroundLayerMgr}
    * @private
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr') ?
