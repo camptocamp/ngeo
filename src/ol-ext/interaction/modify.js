@@ -29,7 +29,6 @@ goog.require('ol.interaction.Modify');
  * @struct
  * @extends {ol.interaction.Interaction}
  * @param {olx.interaction.ModifyOptions} options Options.
- * @export
  */
 ngeo.interaction.Modify = function(options) {
 
@@ -104,7 +103,6 @@ ol.inherits(ngeo.interaction.Modify, ol.interaction.Interaction);
 /**
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
- * @export
  * @override
  */
 ngeo.interaction.Modify.prototype.setActive = function(active) {

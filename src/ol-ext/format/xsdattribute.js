@@ -12,7 +12,6 @@ goog.require('ol.format.XML');
  * @constructor
  * @struct
  * @extends {ol.format.XML}
- * @export
  */
 ngeo.format.XSDAttribute = function() {
   ol.format.XML.call(this);
@@ -184,7 +183,6 @@ ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
  * Returns the first geometry attribute among a given list of attributes.
  * @param {Array.<ngeox.Attribute>} attributes The list of attributes.
  * @return {?ngeox.Attribute} A geometry attribute object.
- * @export
  */
 ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
   let geomAttribute = null;

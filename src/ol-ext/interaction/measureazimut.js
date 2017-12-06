@@ -30,7 +30,6 @@ goog.require('ol.source.Vector');
  * @param {!ngeox.unitPrefix} unitPrefixFormat The format function
  * @param {!ngeox.number} numberFormat The format function
  * @param {!ngeox.interaction.MeasureOptions=} opt_options Options
- * @export
  */
 ngeo.interaction.MeasureAzimut = function(unitPrefixFormat, numberFormat, opt_options) {
 
@@ -153,7 +152,6 @@ ngeo.interaction.MeasureAzimut.getAzimut = function(line) {
  * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.PointerOptions} options Options.
- * @export
  */
 ngeo.interaction.DrawAzimut = function(options) {
 

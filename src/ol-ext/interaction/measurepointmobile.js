@@ -14,7 +14,6 @@ goog.require('ol.geom.Point');
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.numberCoordinates} format the Formatter
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
- * @export
  */
 ngeo.interaction.MeasurePointMobile = function(format, opt_options) {
 

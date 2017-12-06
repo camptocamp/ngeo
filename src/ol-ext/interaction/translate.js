@@ -22,7 +22,6 @@ goog.require('ol.source.Vector');
  * @struct
  * @extends {ol.interaction.Translate}
  * @param {ngeox.interaction.TranslateOptions} options Options.
- * @export
  */
 ngeo.interaction.Translate = function(options) {
 
@@ -84,7 +83,6 @@ ol.inherits(ngeo.interaction.Translate, ol.interaction.Translate);
 /**
  * Activate or deactivate the interaction.
  * @param {boolean} active Active.
- * @export
  * @override
  */
 ngeo.interaction.Translate.prototype.setActive = function(active) {

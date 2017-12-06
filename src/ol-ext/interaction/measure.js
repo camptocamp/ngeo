@@ -220,7 +220,6 @@ ngeo.interaction.Measure.SPHERE_WGS84 = new ol.Sphere(ol.proj.EPSG4326.RADIUS);
  * @param {number|undefined} precision Precision.
  * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @export
  * @this {ngeo.interaction.Measure}
  */
 ngeo.interaction.Measure.getFormattedArea = function(
@@ -240,7 +239,6 @@ ngeo.interaction.Measure.getFormattedArea = function(
  * @param {number|undefined} precision Precision.
  * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @export
  */
 ngeo.interaction.Measure.getFormattedCircleArea = function(
   circle, precision, format) {
@@ -257,7 +255,6 @@ ngeo.interaction.Measure.getFormattedCircleArea = function(
  * @param {number|undefined} precision Precision.
  * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of length.
- * @export
  */
 ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
   precision, format) {
@@ -315,7 +312,6 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
 
 /**
  * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The draw interaction.
- * @export
  */
 ngeo.interaction.Measure.prototype.getDrawInteraction = function() {
   return this.drawInteraction_;
@@ -512,7 +508,6 @@ ngeo.interaction.Measure.prototype.handleMeasure = function(callback) {};
 /**
  * Get a reference to the tooltip element.
  * @return {Element} Tooltip Element.
- * @export
  */
 ngeo.interaction.Measure.prototype.getTooltipElement = function() {
   return this.measureTooltipElement_;
