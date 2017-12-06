@@ -3,7 +3,6 @@ goog.module.declareLegacyNamespace();
 
 goog.require('ol.easing');
 goog.require('ngeo');
-const ngeoModule = ngeo.module;
 
 
 function shouldUpdate(older, newer) {
@@ -261,4 +260,4 @@ exports = angular.module(name, [])
   .component(name, component)
   .value('ngeoOlcsControls3dTemplateUrl', '');
 
-ngeoModule.requires.push(name);
+ngeo.module.requires.push(name);

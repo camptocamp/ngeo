@@ -2,7 +2,6 @@ goog.module('ngeo.utils.File');
 goog.module.declareLegacyNamespace();
 
 goog.require('ngeo');
-const ngeoModule = ngeo.module;
 
 
 /**
@@ -96,6 +95,6 @@ const NgeoFile = function($q, $http, gettext) {
 
 const name = 'ngeoFile';
 NgeoFile.module = angular.module(name, []).service(name, NgeoFile);
-ngeoModule.requires.push(name);
+ngeo.module.requires.push(name);
 
 exports = NgeoFile;
