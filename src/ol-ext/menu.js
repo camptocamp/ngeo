@@ -173,7 +173,9 @@ ngeo.Menu.prototype.close = function() {
  */
 ngeo.Menu.prototype.handleActionClick_ = function(action, evt) {
 
-  this.dispatchEvent(new ngeo.CustomEvent('actionclick', action));
+  this.dispatchEvent(new ngeo.CustomEvent('actionclick', {
+    action: action
+  }));
 
   if (this.autoClose_) {
     this.close();
