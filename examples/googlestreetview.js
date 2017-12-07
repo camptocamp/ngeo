@@ -1,6 +1,5 @@
 goog.provide('app.googlestreetview');
 
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetviewComponent');
 goog.require('ngeo.ToolActivate');
@@ -24,7 +23,7 @@ app.module = angular.module('app', [
 
 
 /**
- * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager.
  * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.

@@ -4,8 +4,6 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.AutoProjection');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
@@ -24,6 +22,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.uri');
 
+goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.search.module');
 goog.require('gmf.search.FulltextSearch');
 
@@ -33,6 +32,7 @@ goog.require('gmf.search.FulltextSearch');
  */
 gmf.search.component = angular.module('gmfSearch', [
   ngeo.search.module.name,
+  ngeo.map.FeatureOverlayMgr.module.name,
   gmf.search.FulltextSearch.module.name
 ]);
 
@@ -68,9 +68,9 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This component uses the {@link ngeo.FeatureOverlayMgr} to create a
+ * This component uses the {@link ngeo.map.FeatureOverlayMgr} to create a
  * feature overlay for drawing features on the map. The application
- * is responsible to initialize the {@link ngeo.FeatureOverlayMgr}
+ * is responsible to initialize the {@link ngeo.map.FeatureOverlayMgr}
  * with the map.
  *
  * Example flat results:
@@ -182,7 +182,7 @@ gmf.search.component.SearchController_ = class {
    * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
    * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
-   * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
    * @param {gmf.Themes} gmfThemes gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
@@ -251,7 +251,7 @@ gmf.search.component.SearchController_ = class {
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
     /**
-     * @type {ngeo.FeatureOverlayMgr}
+     * @type {ngeo.map.FeatureOverlayMgr}
      * @private
      */
     this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
@@ -325,7 +325,7 @@ gmf.search.component.SearchController_ = class {
     this.coordinatesProjections;
 
     /**
-     * @type {ngeo.FeatureOverlay}
+     * @type {ngeo.map.FeatureOverlay}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

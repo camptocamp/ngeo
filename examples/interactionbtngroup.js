@@ -1,7 +1,6 @@
 goog.provide('app.interactionbtngroup');
 
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 goog.require('ol.Collection');
@@ -28,7 +27,7 @@ app.module = angular.module('app', [
 /**
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @constructor
  * @ngInject

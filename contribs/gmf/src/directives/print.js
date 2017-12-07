@@ -4,13 +4,18 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authenticationDirective');
 goog.require('ngeo.Print');
-goog.require('ngeo.FeatureOverlayMgr');
-goog.require('ngeo.LayerHelper');
 goog.require('ngeo.PrintUtils');
 goog.require('ol.Observable');
 goog.require('ol.math');
 goog.require('ol.Map');
 goog.require('ol.layer.Group');
+
+goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
+// - ngeo.map.LayerHelper.module.name (extra from the map module)
 
 
 /**
@@ -155,8 +160,8 @@ gmf.PrintController = class {
    * @param {angular.$q} $q The Angular $q service.
    * @param {angular.$injector} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
+   * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
    * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
@@ -249,7 +254,7 @@ gmf.PrintController = class {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {ngeo.LayerHelper}
+     * @type {ngeo.map.LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;

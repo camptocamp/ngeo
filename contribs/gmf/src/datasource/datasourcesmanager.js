@@ -7,7 +7,7 @@ goog.require('gmf.TreeManager');
 goog.require('ngeo.map.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
 goog.require('ol.events');
@@ -36,7 +36,7 @@ gmf.datasource.DataSourcesManager = class {
    *     manager.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
-   * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
    * @ngInject
@@ -96,7 +96,7 @@ gmf.datasource.DataSourcesManager = class {
     this.ngeoDataSources_ = ngeoDataSources;
 
     /**
-     * @type {!ngeo.LayerHelper}
+     * @type {!ngeo.map.LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;

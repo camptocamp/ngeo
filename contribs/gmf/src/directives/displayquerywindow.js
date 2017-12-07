@@ -1,8 +1,6 @@
 goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
 /** @suppress {extraRequire} */
@@ -12,6 +10,12 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
@@ -41,7 +45,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 
 /**
  * Provide a component to display results of the {@link ngeo.queryResult}
- * and shows related features on the map using the {@link ngeo.FeatureOverlayMgr}.
+ * and shows related features on the map using the {@link ngeo.map.FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.
@@ -92,7 +96,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @private
@@ -165,13 +169,13 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
   this.features_ = new ol.Collection();
 
   /**
-   * @type {!ngeo.FeatureOverlayMgr}
+   * @type {!ngeo.map.FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {ngeo.map.FeatureOverlay}
    * @private
    */
   this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

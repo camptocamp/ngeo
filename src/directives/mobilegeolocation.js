@@ -1,14 +1,18 @@
 goog.provide('ngeo.mobileGeolocationDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In futur module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 /**
@@ -62,7 +66,7 @@ ngeo.module.directive('ngeoMobileGeolocation', ngeo.mobileGeolocationDirective);
  * @param {angular.Scope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @ngInject
@@ -99,7 +103,7 @@ ngeo.MobileGeolocationController = function($scope, $element,
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {ngeo.map.FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

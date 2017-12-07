@@ -11,7 +11,7 @@ goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.WMSTime');
 goog.require('ngeo.Popup');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.LayertreeController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.layertreeDirective');
@@ -118,7 +118,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
- * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
@@ -174,7 +174,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
   this.$sce_ = $sce;
 
   /**
-   * @type {!ngeo.LayerHelper}
+   * @type {!ngeo.map.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;

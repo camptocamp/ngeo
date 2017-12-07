@@ -8,7 +8,7 @@ goog.require('ol.events');
 goog.require('ngeo.map.BackgroundLayerMgr');
 
 
-// In futur module declaration, don't forget to require:
+// In the future module declaration, don't forget to require:
 // - ngeo.map.BackgroundLayerMgr.module.name
 
 

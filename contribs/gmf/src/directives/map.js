@@ -3,7 +3,13 @@ goog.provide('gmf.mapDirective');
 goog.require('gmf');
 goog.require('gmf.Permalink');
 goog.require('gmf.Snapping');
-goog.require('ngeo.FeatureOverlayMgr');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
+
 
 /**
  * This goog.require is needed because it provides 'ngeo-map' used in
@@ -50,7 +56,7 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
 
 
 /**
- * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.Snapping} gmfSnapping The gmf snapping service.
  * @constructor
@@ -85,7 +91,7 @@ gmf.MapController = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Injected properties
 
   /**
-   * @type {!ngeo.FeatureOverlayMgr}
+   * @type {!ngeo.map.FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;

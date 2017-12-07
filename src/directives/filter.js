@@ -7,6 +7,12 @@ goog.require('ngeo.ruleComponent');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.rule.Geometry');
 
+goog.require('ngeo.map.FeatureOverlay');
+
+
+// In futur module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlay.module.name
+
 
 /**
  * @private
@@ -55,7 +61,7 @@ ngeo.FilterController = class {
     this.directedRules;
 
     /**
-     * @type {!ngeo.FeatureOverlay}
+     * @type {!ngeo.map.FeatureOverlay}
      * @export
      */
     this.featureOverlay;

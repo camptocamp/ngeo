@@ -5,7 +5,12 @@ goog.require('ol.Feature');
 goog.require('ol.Observable');
 goog.require('ol.geom.Point');
 goog.require('ngeo');
-goog.require('ngeo.FeatureOverlayMgr');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In futur module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 /**
@@ -16,7 +21,7 @@ ngeo.GooglestreetviewController = class {
   /**
    * @param {angular.JQLite} $element Element.
    * @param {!angular.Scope} $scope Scope.
-   * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager.
    * @private
    * @ngInject
@@ -77,7 +82,7 @@ ngeo.GooglestreetviewController = class {
     this.feature_ = new ol.Feature();
 
     /**
-     * @type {!ngeo.FeatureOverlay}
+     * @type {!ngeo.map.FeatureOverlay}
      * @private
      */
     this.featureOverlay_ = goog.asserts.assert(

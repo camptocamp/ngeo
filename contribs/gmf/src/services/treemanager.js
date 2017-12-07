@@ -24,7 +24,7 @@ goog.require('ol.events');
  * @struct
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
@@ -48,7 +48,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;

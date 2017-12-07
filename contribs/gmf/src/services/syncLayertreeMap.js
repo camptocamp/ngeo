@@ -13,7 +13,7 @@ goog.require('ol.layer.Tile');
  *
  * @constructor
  * @param {angular.Scope} $rootScope Angular rootScope.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.WMSTime} ngeoWMSTime wms time service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @ngInject
@@ -24,7 +24,7 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
   gmfThemes) {
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;

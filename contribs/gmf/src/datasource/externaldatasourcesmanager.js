@@ -30,7 +30,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    * @param {!ngeo.utils.File} ngeoFile Ngeo file.
-   * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo layer helper service
+   * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
    * @struct
    * @ngInject
    * @ngdoc service
@@ -74,7 +74,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     this.ngeoFile_ = ngeoFile;
 
     /**
-     * @type {!ngeo.LayerHelper}
+     * @type {!ngeo.map.LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;

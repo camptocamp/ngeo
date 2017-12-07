@@ -2,7 +2,6 @@ goog.provide('gmfapp.search');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -16,12 +15,14 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 goog.require('gmf.search.module');
+goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
-  gmf.search.module.name
+  gmf.search.module.name,
+  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
 
@@ -36,7 +37,7 @@ gmfapp.module.value('gmfLayersUrl',
 
 /**
  * @param {gmf.Themes} gmfThemes Themes service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
