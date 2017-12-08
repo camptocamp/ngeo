@@ -566,7 +566,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
 		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
 		-e 's|/@?main=$*.js|lib/transpile.js|' \
-		-e 's|\.\./default\.js|$*.js|' \
+		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
 		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' $< > $@
 
@@ -601,7 +601,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
 		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
 		-e 's|/@?main=$*\.js|../../lib/transpile.js|' \
-		-e 's|\.\./default\.js|$*.js|' \
+		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e '/<head>/a\$(SED_NEW_LINE)    <script src="../../https.js"></script>$(SED_NEW_LINE)' $< > $@
 
