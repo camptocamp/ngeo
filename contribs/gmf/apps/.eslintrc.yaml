@@ -1,0 +1,30 @@
+{
+  plugins: [
+    'googshift',
+  ],
+  rules: {
+    'googshift/no-duplicate-requires': 'error',
+
+    'googshift/no-missing-requires': ['off', {
+      prefixes: ['gmf', 'ngeo', 'ol'],
+      exceptions: ['gmf.module.requires.push', 'ngeo.module.requires.push']
+    }],
+
+    'googshift/no-unused-requires': 'off',
+
+    'googshift/one-provide-or-module': ['error', {
+      entryPoints: ['app'],
+      root: 'apps'
+    }],
+
+    'googshift/requires-first': 'error',
+
+    'googshift/valid-provide-and-module': ['off', {
+      entryPoints: ['apps'],
+      root: 'src/module',
+      replace: '../../contribs/gmf/apps|apps'
+    }],
+
+    'googshift/valid-requires': 'error',
+  }
+}
