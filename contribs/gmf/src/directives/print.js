@@ -2,7 +2,7 @@ goog.provide('gmf.printComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
+goog.require('gmf.authentication.module');
 goog.require('ngeo.Print');
 goog.require('ngeo.PrintUtils');
 goog.require('ol.Observable');
@@ -166,7 +166,7 @@ gmf.PrintController = class {
    * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
-   * @param {gmf.Authentication} gmfAuthentication The authentication service.
+   * @param {gmf.authentication.service} gmfAuthentication The authentication service.
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.$filter} $filter Angular $filter service.
    * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
@@ -284,7 +284,7 @@ gmf.PrintController = class {
     this.ngeoQueryResult_ = ngeoQueryResult;
 
     /**
-     * @type {gmf.Authentication}
+     * @type {gmf.authentication.service}
      * @private
      */
     this.gmfAuthentication_ = gmfAuthentication;
