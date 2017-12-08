@@ -258,9 +258,9 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 
 .PHONY: examples-hosted
 examples-hosted: \
-		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
-		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
-		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
+		examples-hosted-ngeo \
+		examples-hosted-gmf \
+		examples-hosted-apps
 
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: \
@@ -759,15 +759,6 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
-	unzip $< -d .build/closure-compiler
-	touch $@
-
-.build/closure-compiler/compiler-latest.zip:
-	mkdir -p $(dir $@)
-	wget -O $@ http://closure-compiler.googlecode.com/files/compiler-latest.zip
-	touch $@
-
 .PRECIOUS: .build/examples/%.json
 .build/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	mkdir -p $(dir $@)
@@ -850,11 +841,6 @@ $(EXTERNS_JQUERY): github_versions
 .build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
 	.build/python-venv/bin/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
-
-.build/closure-library: github_versions
-	mkdir -p $(dir $@)
-	git clone http://github.com/google/closure-library/ $@
-	cd $@; git checkout `grep ^closure-library= $< | cut -d = -f 2`
 
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
