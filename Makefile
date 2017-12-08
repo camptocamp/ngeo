@@ -1,5 +1,6 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
+ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
 NGEO_MODULES_PARTIALS_FILES := $(filter-out $(NGEO_DIRECTIVES_PARTIALS_FILES), $(shell find src/ -name '*.html'))
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
@@ -289,7 +290,7 @@ gh-pages:
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/eslint.timestamp: .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml \
+.build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
 		$(SRC_JS_FILES) \
 		$(TEST_JS_FILES) \
 		$(GMF_TEST_JS_FILES) \
@@ -297,7 +298,7 @@ gh-pages:
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml, $^)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
 dist/ngeo.js: .build/ngeo.json \
