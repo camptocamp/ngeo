@@ -1,59 +1,17 @@
-goog.provide('ngeo.ToolActivate');
-goog.provide('ngeo.ToolActivate.Mgr');
+goog.provide('ngeo.ToolActivateMgr');
 
 goog.require('ngeo');
 goog.require('goog.asserts');
 
 
 /**
- * A simple object that can be managed by `ngeo.ToolActivate.Mgr`.
- *
- * See our live examples:
- * [../examples/mapquery.html](../examples/mapquery.html)
- * [../examples/toolActivate.html](../examples/toolActivate.html)
- *
- * @param {Object} toolContext An object which acts as the context for the tool.
- * @param {string} activePropertyName The name of a boolean property on
- *      `toolContext` which represents the active state of the tool.
- * @constructor
- * @struct
- * @ngdoc value
- * @ngname ngeoToolActivate
- * @export
- */
-ngeo.ToolActivate = function(toolContext, activePropertyName) {
-
-  /**
-   * A getter function to get the active state of the tool.
-   * @return {boolean} Is active.
-   * @export
-   */
-  this.getActive = function() {
-    return toolContext[activePropertyName];
-  };
-
-  /**
-   * A setter function to set the active state of the tool.
-   * @param {boolean} newVal New active state.
-   * @export
-   */
-  this.setActive = function(newVal) {
-    toolContext[activePropertyName] = newVal;
-  };
-};
-
-
-ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);
-
-
-/**
- * An entry for a tool in a `ngeo.ToolActivate.Mgr` group.
+ * An entry for a tool in a `ngeo.ToolActivateMgr` group.
  * @typedef {{
  *    tool: (ngeo.ToolActivate),
  *    defaultTool: boolean,
  *    unlisten: (function(): void)}}
  */
-ngeo.ToolMgrEntry;
+ngeo.ToolActivateMgr.ToolMgrEntry;
 
 
 /**
@@ -84,10 +42,10 @@ ngeo.ToolMgrEntry;
  * @ngname ngeoToolActivateMgr
  * @ngInject
  */
-ngeo.ToolActivate.Mgr = function($rootScope) {
+ngeo.ToolActivateMgr = function($rootScope) {
 
   /**
-   * @type {!Object.<string, Array.<ngeo.ToolMgrEntry>>}
+   * @type {!Object.<string, Array.<ngeo.ToolActivateMgr.ToolMgrEntry>>}
    * @private
    */
   this.groups_ = {};
@@ -109,7 +67,7 @@ ngeo.ToolActivate.Mgr = function($rootScope) {
  *     when all other tools in the group are deactivated.
  * @export
  */
-ngeo.ToolActivate.Mgr.prototype.registerTool = function(groupName, tool,
+ngeo.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
   opt_defaultActivate) {
   let entries = this.groups_[groupName];
   if (!entries) {
@@ -155,7 +113,7 @@ ngeo.ToolActivate.Mgr.prototype.registerTool = function(groupName, tool,
  * @param {ngeo.ToolActivate} tool Tool to unregister.
  * @export
  */
-ngeo.ToolActivate.Mgr.prototype.unregisterTool = function(groupName, tool) {
+ngeo.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
   const entries = this.groups_[groupName];
   if (entries) {
     for (let i = 0; i < entries.length; i++) {
@@ -174,7 +132,7 @@ ngeo.ToolActivate.Mgr.prototype.unregisterTool = function(groupName, tool) {
  * @param {string} groupName Name of the group of tools to unregister.
  * @export
  */
-ngeo.ToolActivate.Mgr.prototype.unregisterGroup = function(groupName) {
+ngeo.ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
   const entries = this.groups_[groupName];
   if (entries) {
     for (let i = 0; i < entries.length; i++) {
@@ -190,7 +148,7 @@ ngeo.ToolActivate.Mgr.prototype.unregisterGroup = function(groupName) {
  * @param {ngeo.ToolActivate} tool Tool to activate.
  * @export
  */
-ngeo.ToolActivate.Mgr.prototype.activateTool = function(tool) {
+ngeo.ToolActivateMgr.prototype.activateTool = function(tool) {
   tool.setActive(true);
 };
 
@@ -200,7 +158,7 @@ ngeo.ToolActivate.Mgr.prototype.activateTool = function(tool) {
  * @param {ngeo.ToolActivate} tool Tool to deactivate.
  * @export
  */
-ngeo.ToolActivate.Mgr.prototype.deactivateTool = function(tool) {
+ngeo.ToolActivateMgr.prototype.deactivateTool = function(tool) {
   tool.setActive(false);
 };
 
@@ -212,7 +170,7 @@ ngeo.ToolActivate.Mgr.prototype.deactivateTool = function(tool) {
  * @param {ngeo.ToolActivate} tool Tool to activate.
  * @private
  */
-ngeo.ToolActivate.Mgr.prototype.deactivateTools_ = function(groupName, tool) {
+ngeo.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
   const entries = this.groups_[groupName];
   for (let i = 0; i < entries.length; i++) {
     if (tool != entries[i].tool) {
@@ -228,7 +186,7 @@ ngeo.ToolActivate.Mgr.prototype.deactivateTools_ = function(groupName, tool) {
  * @param {string} groupName Name of the group.
  * @private
  */
-ngeo.ToolActivate.Mgr.prototype.activateDefault_ = function(groupName) {
+ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
   const entries = this.groups_[groupName];
   let defaultTool = null;
   let hasActiveTool = false;
@@ -247,4 +205,4 @@ ngeo.ToolActivate.Mgr.prototype.activateDefault_ = function(groupName) {
 };
 
 
-ngeo.module.service('ngeoToolActivateMgr', ngeo.ToolActivate.Mgr);
+ngeo.module.service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);

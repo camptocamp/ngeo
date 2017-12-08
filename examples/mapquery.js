@@ -68,7 +68,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject

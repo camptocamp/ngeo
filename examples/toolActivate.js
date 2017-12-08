@@ -30,7 +30,7 @@ app.module = angular.module('app', [
 /**
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr ToolActivate manager.
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Interaction
   *    decorator.
  * @constructor

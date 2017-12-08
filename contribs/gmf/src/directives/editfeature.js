@@ -106,7 +106,7 @@ gmf.module.directive(
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -238,7 +238,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.ToolActivate.Mgr}
+   * @type {ngeo.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

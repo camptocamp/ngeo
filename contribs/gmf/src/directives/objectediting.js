@@ -105,7 +105,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -253,7 +253,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ngeo.ToolActivate.Mgr}
+   * @type {!ngeo.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

@@ -50,7 +50,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor

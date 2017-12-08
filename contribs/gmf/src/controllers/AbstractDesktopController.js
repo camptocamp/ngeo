@@ -214,7 +214,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivate.Mgr}
+   * @type {ngeo.ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

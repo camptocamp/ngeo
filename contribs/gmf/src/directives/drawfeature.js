@@ -63,7 +63,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  *     interaction service.
  * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
- * @param {!ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -151,7 +151,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
   this.features = ngeoFeatures;
 
   /**
-   * @type {!ngeo.ToolActivate.Mgr}
+   * @type {!ngeo.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

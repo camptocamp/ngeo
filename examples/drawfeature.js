@@ -25,7 +25,7 @@ app.module = angular.module('app', [
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor

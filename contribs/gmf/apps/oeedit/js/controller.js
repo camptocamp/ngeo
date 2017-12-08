@@ -55,7 +55,7 @@ app.OEEditController = function($scope, $injector, $timeout) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivate.Mgr}
+   * @type {ngeo.ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

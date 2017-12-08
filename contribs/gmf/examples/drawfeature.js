@@ -33,7 +33,7 @@ gmfapp.module.value('ngeoExportFeatureFormats', [
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager

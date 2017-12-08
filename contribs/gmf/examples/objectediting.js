@@ -30,7 +30,7 @@ gmfapp.module = angular.module('gmfapp', ['gmf']);
  *     ObjectEditing manager service.
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
