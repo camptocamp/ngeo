@@ -32,6 +32,8 @@ goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.MapQuerent');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.events');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');

@@ -10,8 +10,6 @@ goog.require('gmf.mobileMeasurelengthDirective');
 goog.require('gmf.mobileMeasurepointDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
-goog.require('goog.fx.Dragger');
-goog.require('goog.math.Rect');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
@@ -139,42 +137,6 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
 
   gmf.AbstractAppController.call(this, config, $scope, $injector);
 
-
-  const dragEl = document.querySelector('main');
-  const handleEl = document.querySelector('main .overlay');
-  /**
-   * @type {goog.fx.Dragger}
-   * @private
-   */
-  this.dragger_ = new goog.fx.Dragger(dragEl, handleEl);
-
-  goog.events.listen(this.dragger_, 'start', (e) => {
-    // Prevent transition to happen while dragging
-    angular.element(dragEl).addClass('dragging');
-  });
-
-  // Get the width of the navigation menus
-  // We expect that the width of left and right navs are similar
-  /**
-   * @type {number}
-   * @private
-   */
-  this.navWidth_ = angular.element(document.querySelector(
-    '.gmf-mobile-nav-left')).width();
-
-  goog.events.listen(this.dragger_, 'end', (e) => {
-    angular.element(dragEl).removeClass('dragging');
-    // Reset positioning when finished so that transition can happen correctly
-    angular.element(e.target.target).css('transform', '');
-    // Hide nav only if dragged sufficiently
-    const deltaX = this.dragger_.limitX(this.dragger_.deltaX);
-    if (Math.abs(deltaX) > this.navWidth_ / 2) {
-      $scope.$apply(() => {
-        this.hideNav();
-      });
-    }
-  });
-
   this.manageResize = true;
   this.resizeTransition = 500;
 };
@@ -186,18 +148,6 @@ ol.inherits(gmf.AbstractMobileController, gmf.AbstractAppController);
  */
 gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
   this.leftNavVisible = !this.leftNavVisible;
-
-  if (this.leftNavVisible) {
-    const navWidth = this.navWidth_;
-    // default dragger behavior is to change left/top, override it to change
-    // translateX
-    this.dragger_.defaultAction = function(x, y) {
-      this.target.style.transform = `translateX(${navWidth + x}px)`;
-    };
-    // Set the limits for dragger so that it's constrained horizontaly to the
-    // left.
-    this.dragger_.setLimits(new goog.math.Rect(-navWidth, 0, navWidth, 0));
-  }
 };
 
 
@@ -206,19 +156,6 @@ gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
  */
 gmf.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
   this.rightNavVisible = !this.rightNavVisible;
-
-  if (this.rightNavVisible) {
-    const navWidth = this.navWidth_;
-    // default dragger behavior is to change left/top, override it to change
-    // translateX
-    this.dragger_.defaultAction = function(x, y) {
-      this.target.style.transform = `translateX(${-navWidth + x}px)`;
-    };
-    // Set the limits for dragger so that it's constrained horizontaly to the
-    // right.
-    this.dragger_.setLimits(
-      new goog.math.Rect(0, 0, navWidth, 0));
-  }
 };
 
 
