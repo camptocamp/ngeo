@@ -5,6 +5,7 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
@@ -22,7 +23,8 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.ToolActivateMgr.module.name,
 ]);
 
 
@@ -68,7 +70,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject

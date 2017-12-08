@@ -51,11 +51,11 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
-gmf.module.value('isDesktop', true);
-
 /** @suppress {extraRequire} */
 goog.require('ngeo.sortableDirective');
 
+
+gmf.module.value('isDesktop', true);
 
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20
@@ -214,7 +214,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivate.Mgr}
+   * @type {ngeo.ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

@@ -9,6 +9,8 @@ goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.Menu');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
@@ -37,7 +39,7 @@ ngeo.RuleController = class {
    *     interaction service.
    * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate
+   * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
    * @struct
@@ -116,7 +118,7 @@ ngeo.RuleController = class {
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.ToolActivate.Mgr}
+     * @type {!ngeo.ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

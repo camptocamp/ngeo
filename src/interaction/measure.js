@@ -3,7 +3,6 @@ goog.provide('ngeo.interaction.Measure');
 goog.require('ngeo.CustomEvent');
 goog.require('goog.asserts');
 goog.require('ol.dom');
-goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');

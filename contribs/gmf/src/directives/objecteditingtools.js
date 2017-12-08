@@ -10,6 +10,8 @@ goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.createregularpolygonfromclickDirective');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
 
 
 /**
@@ -91,7 +93,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @param {!angular.Scope} $scope Scope.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.ToolActivate.Mgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -180,7 +182,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
-   * @type {ngeo.ToolActivate.Mgr}
+   * @type {ngeo.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

@@ -1,6 +1,7 @@
 goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 
-describe('ngeo.ToolActivate.Mgr', () => {
+describe('ngeo.ToolActivateMgr', () => {
   let interaction1, interaction2, interaction3, tool1, tool2, tool3;
   let ngeoToolActivateMgr;
   let $rootScope;
