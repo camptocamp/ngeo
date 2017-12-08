@@ -204,5 +204,6 @@ ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
   }
 };
 
-
-ngeo.module.service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
+ngeo.ToolActivateMgr.module = angular.module('ngeoToolActivateMgr', [])
+  .service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
+ngeo.module.requires.push(ngeo.ToolActivateMgr.module.name);

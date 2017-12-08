@@ -8,6 +8,7 @@ goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -19,7 +20,8 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
-  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.ToolActivateMgr.module.name,
 ]);
 
 

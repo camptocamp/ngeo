@@ -12,6 +12,8 @@ goog.require('ngeo.geom');
 goog.require('ngeo.jstsExports');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.utils');
 goog.require('ol.Collection');
 goog.require('ol.events');

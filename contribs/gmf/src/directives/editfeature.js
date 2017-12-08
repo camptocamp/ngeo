@@ -19,6 +19,8 @@ goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 /** @suppress {extraRequire} */

@@ -6,6 +6,8 @@ goog.require('gmf.featurestyleDirective');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
+/** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');

@@ -9,6 +9,8 @@ goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.Menu');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');

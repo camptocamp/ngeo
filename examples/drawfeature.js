@@ -1,6 +1,7 @@
 goog.provide('app.drawfeature');
 
 goog.require('ngeo.ToolActivate');
+goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 /** @suppress {extraRequire} */
@@ -18,7 +19,8 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.ToolActivateMgr.module.name,
 ]);
 
 
