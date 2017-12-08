@@ -205,7 +205,11 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/gmf.js
 
 .PHONY: check
-check: lint check-examples test dist build-gmf-apps
+check: lint check-googs check-examples test dist build-gmf-apps
+
+.PHONY: check-googs
+check-googs:
+	buildtools/check-no-goog.sh
 
 .PHONY: check-ngeox
 check-ngeox: options/ngeox.js
