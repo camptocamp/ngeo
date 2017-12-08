@@ -51,11 +51,11 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
-gmf.module.value('isDesktop', true);
-
 /** @suppress {extraRequire} */
 goog.require('ngeo.sortableDirective');
 
+
+gmf.module.value('isDesktop', true);
 
 gmf.module.value('ngeoQueryOptions', {
   'limit': 20
