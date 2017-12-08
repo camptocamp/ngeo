@@ -137,7 +137,7 @@ gmf.printComponent = {
     'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',
     'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
-    'attributesOut': '<?gmfPrintAttributesOut'
+    'attributesOut': '=?gmfPrintAttributesOut'
   },
   controller: 'GmfPrintController',
   templateUrl: gmfPrintTemplateUrl,
