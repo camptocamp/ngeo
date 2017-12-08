@@ -63,7 +63,7 @@
     "less-plugin-clean-css": "1.5.1",
     "moment": "2.19.3",
     "nomnom": "1.8.1",
-    "openlayers": "4.5.0",
+    "openlayers": "4.6.3",
     "ol-cesium": "1.33.0",
     "@camptocamp/cesium": "~1.40.0",
     "phantomjs-prebuilt": "2.1.16",
