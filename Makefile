@@ -806,7 +806,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		$(CLOSURE_VARS) \
 		--var 'src=contribs/gmf/apps/**/js/*.js,contribs/gmf/apps/appmodule.js' \
 		--var src_set=contribs_gmf \
-		--var entry_point=app_$* \
+		--var entry_point=app.$*.Controller \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
 contribs/gmf/build/angular-locale_%.js: github_versions

@@ -1,14 +1,10 @@
 /**
  * Application entry point.
  *
- * This file defines the "app_mobile" Closure namespace, which is be used as the
- * Closure entry point (see "closure_entry_point" in the "build.json" file).
- *
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-goog.provide('app.MobileController');
-goog.provide('app_mobile');
+goog.provide('app.mobile.Controller');
 
 goog.require('app');
 goog.require('gmf.AbstractMobileController');
@@ -26,7 +22,7 @@ goog.require('ngeo.proj.EPSG21781');
  * @ngInject
  * @export
  */
-app.MobileController = function($scope, $injector) {
+app.mobile.Controller = function($scope, $injector) {
   gmf.AbstractMobileController.call(this, {
     autorotate: false,
     srid: 21781,
@@ -53,7 +49,7 @@ app.MobileController = function($scope, $injector) {
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
 };
-ol.inherits(app.MobileController, gmf.AbstractMobileController);
+ol.inherits(app.mobile.Controller, gmf.AbstractMobileController);
 
 
-app.module.controller('MobileController', app.MobileController);
+app.module.controller('MobileController', app.mobile.Controller);
