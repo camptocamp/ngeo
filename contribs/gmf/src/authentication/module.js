@@ -3,7 +3,6 @@
  */
 goog.provide('gmf.authentication.module');
 
-goog.require('gmf');
 goog.require('gmf.authentication.component');
 goog.require('gmf.authentication.service');
 
