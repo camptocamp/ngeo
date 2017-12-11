@@ -1,6 +1,8 @@
-goog.provide('ngeo.googlestreetviewComponent');
+goog.provide('ngeo.googlestreetview.component');
 
+goog.require('ol.array');
 goog.require('ol.events');
+goog.require('ol.proj');
 goog.require('ol.Feature');
 goog.require('ol.Observable');
 goog.require('ol.geom.Point');
@@ -9,14 +11,19 @@ goog.require('ngeo');
 goog.require('ngeo.map.FeatureOverlayMgr');
 
 
-// In futur module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlayMgr.module.name
+/**
+ * @type {!angular.Module}
+ */
+ngeo.googlestreetview.component = angular.module('ngeoGooglestreetview', [
+  ngeo.map.FeatureOverlayMgr.module.name
+]);
 
+ngeo.module.requires.push(ngeo.googlestreetview.component.name);
 
 /**
  * @private
  */
-ngeo.GooglestreetviewController = class {
+ngeo.googlestreetview.Controller_ = class {
 
   /**
    * @param {angular.JQLite} $element Element.
@@ -360,13 +367,13 @@ ngeo.GooglestreetviewController = class {
 };
 
 
-ngeo.module.component('ngeoGooglestreetview', {
+ngeo.googlestreetview.component.component('ngeoGooglestreetview', {
   bindings: {
     'active': '<',
     'featureStyle': '<?',
     'map': '<',
     'radius': '<?'
   },
-  controller: ngeo.GooglestreetviewController,
-  templateUrl: () => `${ngeo.baseTemplateUrl}/googlestreetview.html`
+  controller: ngeo.googlestreetview.Controller_,
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/component.html`
 });
