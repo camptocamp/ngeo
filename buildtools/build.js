@@ -1,4 +1,8 @@
 "use strict";
+
+// This file and related ones should be kept for projects that based their build chain
+// on the one from ngeo.
+
 /**
  * This task builds OpenLayers with the Closure Compiler.
  */
