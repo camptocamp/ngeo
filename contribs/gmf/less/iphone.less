@@ -1,6 +1,20 @@
 // Hack for ios Safari browser (UI overlapping on iOS 11)
 @media all and (orientation: landscape) {
+  @ios-margin: 5rem;
+
   .ios-margin-top {
-    margin-top: 4rem;
+    margin-top: @ios-margin;
+  }
+
+  .ios-zoom-btn {
+    top: (@app-margin + @map-tools-size + @app-margin) + @ios-margin !important;
+  }
+
+  .ios-rotate-btn {
+    top: (4 * @map-tools-size + 2 * @app-margin + 3 * @micro-app-margin) + @ios-margin !important;
+  }
+
+  .ios-geolocation-btn {
+    top: (3 * @map-tools-size + 2 * @app-margin + 2 * @micro-app-margin) + @ios-margin !important;
   }
 }
