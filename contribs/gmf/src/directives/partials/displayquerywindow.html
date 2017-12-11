@@ -46,7 +46,8 @@
               ng-if="value !== undefined">
               <td
                 class="gmf-displayquerywindow-details-key"
-                >{{key | translate}}</td>
+                ng-bind-html="key | translate | ngeoTrustHtml"
+                ></td>
               <td
                 class="gmf-displayquerywindow-details-value"
                 ng-bind-html="value | ngeoTrustHtml"
