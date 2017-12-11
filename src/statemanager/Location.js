@@ -1,4 +1,4 @@
-goog.provide('ngeo.Location');
+goog.provide('ngeo.statemanager.Location');
 
 goog.require('ngeo');
 goog.require('ngeo.utils');
@@ -14,11 +14,11 @@ goog.require('ngeo.utils');
  * ng-view directives (which are based on the $anchorScroll and $route
  * services). See <https://github.com/angular/angular.js/issues/1417>.
  *
- * This file also provides an ngeo.Location.MockProvider function that you can
+ * This file also provides an ngeo.statemanager.Location.MockProvider function that you can
  * use to mock Angular's $location provider and make it possible to use both
  * ngeoLocation and ng-include.
  *
- *     app.module.config(ngeo.Location.MockProvider);
+ *     app.module.config(ngeo.statemanager.Location.MockProvider);
  *
  * The ngeo Location type.
  *
@@ -31,7 +31,7 @@ goog.require('ngeo.utils');
  * @ngdoc service
  * @ngname ngeoLocation
  */
-ngeo.Location = function(location, history) {
+ngeo.statemanager.Location = function(location, history) {
   /**
    * @type {History}
    * @private
@@ -80,7 +80,7 @@ ngeo.Location = function(location, history) {
  * @param {History} history History.
  * @param {string} state State.
  */
-ngeo.Location.replaceState = function(history, state) {
+ngeo.statemanager.Location.replaceState = function(history, state) {
   try {
     history.replaceState(null, '', state);
   } catch (error) {
@@ -95,7 +95,7 @@ ngeo.Location.replaceState = function(history, state) {
  * @return {string|undefined} The path.
  * @export
  */
-ngeo.Location.prototype.getPath = function() {
+ngeo.statemanager.Location.prototype.getPath = function() {
   return this.path_;
 };
 
@@ -105,7 +105,7 @@ ngeo.Location.prototype.getPath = function() {
  * @return {string} The URI.
  * @export
  */
-ngeo.Location.prototype.getUriString = function() {
+ngeo.statemanager.Location.prototype.getUriString = function() {
   const out = [];
 
   if (this.schema_) {
@@ -148,7 +148,7 @@ ngeo.Location.prototype.getUriString = function() {
  * @return {boolean} True if the param exists.
  * @export
  */
-ngeo.Location.prototype.hasParam = function(key) {
+ngeo.statemanager.Location.prototype.hasParam = function(key) {
   return key in this.queryData_;
 };
 
@@ -159,7 +159,7 @@ ngeo.Location.prototype.hasParam = function(key) {
  * @return {boolean} True if the param exists.
  * @export
  */
-ngeo.Location.prototype.hasFragmentParam = function(key) {
+ngeo.statemanager.Location.prototype.hasFragmentParam = function(key) {
   return key in this.fragment_;
 };
 
@@ -170,7 +170,7 @@ ngeo.Location.prototype.hasFragmentParam = function(key) {
  * @return {string|undefined} Param value.
  * @export
  */
-ngeo.Location.prototype.getParam = function(key) {
+ngeo.statemanager.Location.prototype.getParam = function(key) {
   return this.queryData_[key];
 };
 
@@ -181,7 +181,7 @@ ngeo.Location.prototype.getParam = function(key) {
  * @return {string|undefined} Param value.
  * @export
  */
-ngeo.Location.prototype.getFragmentParam = function(key) {
+ngeo.statemanager.Location.prototype.getFragmentParam = function(key) {
   return this.fragment_[key];
 };
 
@@ -193,7 +193,7 @@ ngeo.Location.prototype.getFragmentParam = function(key) {
  * @return {number|undefined} Param value.
  * @export
  */
-ngeo.Location.prototype.getParamAsInt = function(key) {
+ngeo.statemanager.Location.prototype.getParamAsInt = function(key) {
   const value = this.getParam(key);
   if (value === undefined) {
     return undefined;
@@ -212,7 +212,7 @@ ngeo.Location.prototype.getParamAsInt = function(key) {
  * @return {number|undefined} Param value.
  * @export
  */
-ngeo.Location.prototype.getParamAsFloat = function(key) {
+ngeo.statemanager.Location.prototype.getParamAsFloat = function(key) {
   const value = this.getParam(key);
   if (value === undefined) {
     return undefined;
@@ -230,7 +230,7 @@ ngeo.Location.prototype.getParamAsFloat = function(key) {
  * @return {number|undefined} Param value.
  * @export
  */
-ngeo.Location.prototype.getFragmentParamAsInt = function(key) {
+ngeo.statemanager.Location.prototype.getFragmentParamAsInt = function(key) {
   const value = this.getFragmentParam(key);
   if (value === undefined) {
     return undefined;
@@ -246,7 +246,7 @@ ngeo.Location.prototype.getFragmentParamAsInt = function(key) {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.Location.prototype.getParamKeys = function() {
+ngeo.statemanager.Location.prototype.getParamKeys = function() {
   const keys = [];
   for (const key in this.queryData_) {
     keys.push(key);
@@ -260,7 +260,7 @@ ngeo.Location.prototype.getParamKeys = function() {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.Location.prototype.getFragmentParamKeys = function() {
+ngeo.statemanager.Location.prototype.getFragmentParamKeys = function() {
   const keys = [];
   for (const key in this.fragment_) {
     keys.push(key);
@@ -276,7 +276,7 @@ ngeo.Location.prototype.getFragmentParamKeys = function() {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
+ngeo.statemanager.Location.prototype.getParamKeysWithPrefix = function(prefix) {
   const keys = [];
   for (const key in this.queryData_) {
     if (key.indexOf(prefix) == 0) {
@@ -294,7 +294,7 @@ ngeo.Location.prototype.getParamKeysWithPrefix = function(prefix) {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
+ngeo.statemanager.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
   const keys = [];
   for (const key in this.fragment_) {
     if (key.indexOf(prefix) == 0) {
@@ -310,7 +310,7 @@ ngeo.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
  * @param {!Object.<string, string>} params Parameters.
  * @export
  */
-ngeo.Location.prototype.updateParams = function(params) {
+ngeo.statemanager.Location.prototype.updateParams = function(params) {
   for (const key in params) {
     this.queryData_[key] = params[key];
   }
@@ -322,7 +322,7 @@ ngeo.Location.prototype.updateParams = function(params) {
  * @param {!Object.<string, string>} params Parameters.
  * @export
  */
-ngeo.Location.prototype.updateFragmentParams = function(params) {
+ngeo.statemanager.Location.prototype.updateFragmentParams = function(params) {
   for (const key in params) {
     this.fragment_[key] = params[key];
   }
@@ -334,7 +334,7 @@ ngeo.Location.prototype.updateFragmentParams = function(params) {
  * @param {string} key Param key.
  * @export
  */
-ngeo.Location.prototype.deleteParam = function(key) {
+ngeo.statemanager.Location.prototype.deleteParam = function(key) {
   delete this.queryData_[key];
 };
 
@@ -344,7 +344,7 @@ ngeo.Location.prototype.deleteParam = function(key) {
  * @param {string} key Param key.
  * @export
  */
-ngeo.Location.prototype.deleteFragmentParam = function(key) {
+ngeo.statemanager.Location.prototype.deleteFragmentParam = function(key) {
   delete this.fragment_[key];
 };
 
@@ -353,8 +353,8 @@ ngeo.Location.prototype.deleteFragmentParam = function(key) {
  * Refresh the the location's URI.
  * @export
  */
-ngeo.Location.prototype.refresh = function() {
-  ngeo.Location.replaceState(this.history_, this.getUriString());
+ngeo.statemanager.Location.prototype.refresh = function() {
+  ngeo.statemanager.Location.replaceState(this.history_, this.getUriString());
 };
 
 
@@ -363,7 +363,7 @@ ngeo.Location.prototype.refresh = function() {
  * @param {string} path Path.
  * @export
  */
-ngeo.Location.prototype.setPath = function(path) {
+ngeo.statemanager.Location.prototype.setPath = function(path) {
   this.path_ = path;
 };
 
@@ -373,12 +373,12 @@ ngeo.Location.prototype.setPath = function(path) {
  *
  * @param {angular.Scope} $rootScope The root scope.
  * @param {angular.$window} $window Angular window service.
- * @return {ngeo.Location} The ngeo location service.
+ * @return {ngeo.statemanager.Location} The ngeo location service.
  * @ngInject
  */
-ngeo.LocationFactory = function($rootScope, $window) {
+ngeo.statemanager.Location.LocationFactory = function($rootScope, $window) {
   const history = $window.history;
-  const service = new ngeo.Location($window.location, $window.history);
+  const service = new ngeo.statemanager.Location($window.location, $window.history);
 
   let lastUri = service.getUriString();
   $rootScope.$watch(() => {
@@ -387,7 +387,7 @@ ngeo.LocationFactory = function($rootScope, $window) {
       $rootScope.$evalAsync(() => {
         lastUri = newUri;
         if (history !== undefined && history.replaceState !== undefined) {
-          ngeo.Location.replaceState(history, newUri);
+          ngeo.statemanager.Location.replaceState(history, newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
       });
@@ -397,22 +397,18 @@ ngeo.LocationFactory = function($rootScope, $window) {
   return service;
 };
 
-
-ngeo.module.factory('ngeoLocation', ngeo.LocationFactory);
-
-
 /**
  * A function that changes Angular's $location provider to avoid problem
  * when both ngeoLocation and $location are used in an application. This
  * is how you can use that function in an application:
  *
- * app.module.config(ngeo.Location.MockProvider);
+ * app.module.config(ngeo.statemanager.Location.MockProvider);
  *
  * @param {angular.$locationProvider} $locationProvider Angular location
  *     provider.
  * @ngInject
  */
-ngeo.Location.MockProvider = function($locationProvider) {
+ngeo.statemanager.Location.MockProvider = function($locationProvider) {
   /**
    * @return {angular.$location} Mock object for Angular location service.
    */
@@ -477,3 +473,13 @@ ngeo.Location.MockProvider = function($locationProvider) {
     return locationMock;
   };
 };
+
+
+/**
+ * @type {!angular.Module}
+ * FIXME add utils dependencies.
+ * FIXME What about Mockup provider ?
+ */
+ngeo.statemanager.Location.module = angular.module('ngeoLocation', []);
+ngeo.statemanager.Location.module.factory('ngeoLocation', ngeo.statemanager.Location.LocationFactory);
+ngeo.module.requires.push(ngeo.statemanager.Location.module.name);

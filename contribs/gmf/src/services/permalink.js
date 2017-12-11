@@ -1104,7 +1104,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {?ngeo.WfsPermalinkData} The query data.
+ * @return {?ngeox.WfsPermalinkData} The query data.
  * @private
  */
 gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
@@ -1154,12 +1154,12 @@ gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
- * @return {ngeo.WfsPermalinkFilterGroup|null} A filter group.
+ * @return {ngeox.WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
 gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
-   * @type {Array.<ngeo.WfsPermalinkFilter>}
+   * @type {Array.<ngeox.WfsPermalinkFilter>}
    */
   const filters = [];
 

@@ -1,46 +1,9 @@
-goog.provide('ngeo.WfsPermalink');
+goog.provide('ngeo.statemanager.WfsPermalink');
 
 goog.require('ngeo');
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
-goog.require('ngeo.MapQuerent');
+goog.require('ol.extent');
+goog.require('ol.format.filter');
 goog.require('ol.format.WFS');
-
-
-/**
- * @typedef {{
- *     property: (string),
- *     condition: (string|Array.<string>)
- * }}
- */
-ngeo.WfsPermalinkFilter;
-
-
-/**
- * @typedef {{
- *     filters: (Array.<ngeo.WfsPermalinkFilter>)
- * }}
- */
-ngeo.WfsPermalinkFilterGroup;
-
-
-/**
- * @typedef {{
- *     wfsType: (string),
- *     filterGroups: (Array.<ngeo.WfsPermalinkFilterGroup>),
- *     showFeatures: (boolean)
- * }}
- */
-ngeo.WfsPermalinkData;
-
-
-/**
- * Value that is supposed to be set in applications to enable the WFS
- * permalink functionality.
- */
-ngeo.module.value('ngeoWfsPermalinkOptions',
-  /** @type {ngeox.WfsPermalinkOptions} */ ({
-    url: '', wfsTypes: [], defaultFeatureNS: '', defaultFeaturePrefix: ''
-  }));
 
 
 /**
@@ -86,7 +49,7 @@ ngeo.module.value('ngeoWfsPermalinkOptions',
  * @ngname ngeoWfsPermalink
  * @ngInject
  */
-ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
+ngeo.statemanager.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
 
   const options = ngeoWfsPermalinkOptions;
 
@@ -149,7 +112,7 @@ ngeo.WfsPermalink = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
  * Clear the results.
  * @export
  */
-ngeo.WfsPermalink.prototype.clear = function() {
+ngeo.statemanager.WfsPermalink.prototype.clear = function() {
   this.clearResult_();
 };
 
@@ -158,11 +121,11 @@ ngeo.WfsPermalink.prototype.clear = function() {
  * Build a WFS GetFeature request for the given query parameter data, send the
  * request and add the received features to {@link ngeox.QueryResult}.
  *
- * @param {ngeo.WfsPermalinkData} queryData Query data for the WFS request.
+ * @param {ngeox.WfsPermalinkData} queryData Query data for the WFS request.
  * @param {ol.Map} map The ol3 map object to get the current projection from.
  * @export
  */
-ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
+ngeo.statemanager.WfsPermalink.prototype.issue = function(queryData, map) {
   goog.asserts.assert(this.url_,
     'url is not set. to use the wfs permalink service, ' +
       'set the value `ngeoWfsPermalinkOptions`');
@@ -190,7 +153,7 @@ ngeo.WfsPermalink.prototype.issue = function(queryData, map) {
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
  * @private
  */
-ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showFeatures) {
+ngeo.statemanager.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showFeatures) {
   const wfsFormat = new ol.format.WFS();
   const featureRequestXml = wfsFormat.writeGetFeature({
     srsName: map.getView().getProjection().getCode(),
@@ -241,18 +204,18 @@ ngeo.WfsPermalink.prototype.issueRequest_ = function(wfsType, filter, map, showF
  * @return {ol.Extent} The extent of all features.
  * @private
  */
-ngeo.WfsPermalink.prototype.getExtent_ = function(features) {
+ngeo.statemanager.WfsPermalink.prototype.getExtent_ = function(features) {
   return features.reduce((extent, feature) => ol.extent.extend(extent, feature.getGeometry().getExtent()), ol.extent.createEmpty());
 };
 
 /**
  * Create OGC filters for the filter groups extracted from the query params.
  *
- * @param {Array.<ngeo.WfsPermalinkFilterGroup>} filterGroups Filter groups.
+ * @param {Array.<ngeox.WfsPermalinkFilterGroup>} filterGroups Filter groups.
  * @return {ol.format.filter.Filter} OGC filters.
  * @private
  */
-ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
+ngeo.statemanager.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
   if (filterGroups.length == 0) {
     return null;
   }
@@ -261,14 +224,14 @@ ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
     const filters = filterGroup.filters.map((filterDef) => {
       const condition = filterDef.condition;
       if (Array.isArray(condition)) {
-        return ngeo.WfsPermalink.or_(condition.map(cond => f.equalTo(filterDef.property, cond)));
+        return ngeo.statemanager.WfsPermalink.or_(condition.map(cond => f.equalTo(filterDef.property, cond)));
       } else {
         return f.equalTo(filterDef.property, filterDef.condition);
       }
     });
-    return ngeo.WfsPermalink.and_(filters);
+    return ngeo.statemanager.WfsPermalink.and_(filters);
   };
-  return ngeo.WfsPermalink.or_(filterGroups.map(createFiltersForGroup));
+  return ngeo.statemanager.WfsPermalink.or_(filterGroups.map(createFiltersForGroup));
 };
 
 
@@ -279,8 +242,8 @@ ngeo.WfsPermalink.prototype.createFilters_ = function(filterGroups) {
  * @return {ol.format.filter.Filter} The joined filters.
  * @private
  */
-ngeo.WfsPermalink.and_ = function(filters) {
-  return ngeo.WfsPermalink.joinFilters_(filters, ol.format.filter.and);
+ngeo.statemanager.WfsPermalink.and_ = function(filters) {
+  return ngeo.statemanager.WfsPermalink.joinFilters_(filters, ol.format.filter.and);
 };
 
 
@@ -291,8 +254,8 @@ ngeo.WfsPermalink.and_ = function(filters) {
  * @return {ol.format.filter.Filter} The joined filters.
  * @private
  */
-ngeo.WfsPermalink.or_ = function(filters) {
-  return ngeo.WfsPermalink.joinFilters_(filters, ol.format.filter.or);
+ngeo.statemanager.WfsPermalink.or_ = function(filters) {
+  return ngeo.statemanager.WfsPermalink.joinFilters_(filters, ol.format.filter.or);
 };
 
 
@@ -305,7 +268,7 @@ ngeo.WfsPermalink.or_ = function(filters) {
  * @return {ol.format.filter.Filter} The joined filters.
  * @private
  */
-ngeo.WfsPermalink.joinFilters_ = function(filters, joinFn) {
+ngeo.statemanager.WfsPermalink.joinFilters_ = function(filters, joinFn) {
   return filters.reduce((combinedFilters, currentFilter) => {
     if (combinedFilters === null) {
       return currentFilter;
@@ -322,11 +285,33 @@ ngeo.WfsPermalink.joinFilters_ = function(filters, joinFn) {
  * as well.
  * @private
  */
-ngeo.WfsPermalink.prototype.clearResult_ = function() {
+ngeo.statemanager.WfsPermalink.prototype.clearResult_ = function() {
   this.result_.total = 0;
   this.result_.sources.forEach((source) => {
     source.features.length = 0;
   }, this);
 };
 
-ngeo.module.service('ngeoWfsPermalink', ngeo.WfsPermalink);
+
+/**
+ * Value that is supposed to be set in applications to enable the WFS
+ * permalink functionality.
+ */
+ngeo.statemanager.WfsPermalink.value('ngeoWfsPermalinkOptions',
+  /** @type {ngeox.WfsPermalinkOptions} */ ({
+    url: '',
+    wfsTypes: [],
+    defaultFeatureNS: '',
+    defaultFeaturePrefix: ''
+  })
+);
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.statemanager.WfsPermalink.module = angular.module('ngeoWfsPermalink', [
+  // FIXME add dependencies
+]);
+ngeo.statemanager.WfsPermalink.module.service('ngeoWfsPermalink', ngeo.statemanager.WfsPermalink);
+ngeo.module.requires.push(ngeo.statemanager.WfsPermalink.module.name);
