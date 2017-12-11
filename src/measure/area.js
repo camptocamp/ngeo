@@ -2,8 +2,9 @@ goog.provide('ngeo.measure.area');
 
 goog.require('ngeo');
 goog.require('ol.events');
-goog.require('ngeo.interaction.MeasureArea');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.interaction.MeasureArea');
 
 
 /**

@@ -1,11 +1,14 @@
 goog.provide('ngeo.measure.azimut');
 
 goog.require('ngeo');
-goog.require('ngeo.interaction.MeasureAzimut');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.interaction.MeasureAzimut');
 
 
 /**

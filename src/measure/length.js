@@ -1,9 +1,12 @@
 goog.provide('ngeo.measure.length');
 
 goog.require('ngeo');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 goog.require('ol.events');
-goog.require('ngeo.interaction.MeasureLength');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.interaction.MeasureLength');
 
 
 /**
