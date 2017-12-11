@@ -1,11 +1,19 @@
-goog.provide('ngeo.measureareaDirective');
+goog.provide('ngeo.measure.area');
 
 goog.require('ngeo');
 goog.require('ol.events');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ol.style.Style');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.measure.area = angular.module('ngeoMeasurearea', [
+  // FIXME add requires
+]);
+
+ngeo.module.requires.push(ngeo.measure.area.name);
 
 
 /**
@@ -18,7 +26,7 @@ goog.require('ol.style.Style');
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injector) {
+ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -62,4 +70,4 @@ ngeo.measureareaDirective = function($compile, gettextCatalog, $filter, $injecto
 };
 
 
-ngeo.module.directive('ngeoMeasurearea', ngeo.measureareaDirective);
+ngeo.measure.area.directive('ngeoMeasurearea', ngeo.measure.area.directive_);
