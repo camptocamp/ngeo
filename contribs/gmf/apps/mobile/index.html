@@ -193,10 +193,12 @@
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
       // Hack for ios Safari browser (UI overlapping on iOS 11)
-      let userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      let isIos = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+      let userAgent = window.navigator.userAgent;
+      let iOS = !!userAgent.match(/iP(ad|hone)/i);
+      let webkit = !!userAgent.match(/WebKit/i);
+      let iOSSafari = iOS && webkit && !userAgent.match(/CriOS/i);
 
-      if (isIos) {
+      if (iOSSafari) {
         $('button.gmf-mobile-nav-left-trigger').addClass('ios-margin-top');
         $('button.gmf-mobile-nav-right-trigger').addClass('ios-margin-top');
         $('gmf-search').addClass('ios-margin-top');
