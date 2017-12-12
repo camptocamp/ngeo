@@ -39,7 +39,7 @@ ngeo.StateManager = function(ngeoLocation, ngeoUsedKeyRegexp) {
   /**
    * @type {boolean}
    */
-  this.useLocalStorage = false;
+  this.useLocalStorage = true;
 
   try {
     if ('localStorage' in window) {
