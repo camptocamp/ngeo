@@ -5,7 +5,6 @@ goog.require('ngeo');
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
-goog.require('ngeo.Download');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiLineString');
@@ -21,6 +20,10 @@ goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+
+goog.require('ngeo.download.Service');
+
+// FIXME add download service in the module dependencies
 
 
 /**
@@ -112,7 +115,7 @@ ngeo.FeatureHelper = function($injector, $filter) {
 
   /**
    * Download service.
-   * @type {ngeo.Download}
+   * @type {ngeox.Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');

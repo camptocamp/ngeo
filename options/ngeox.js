@@ -158,6 +158,12 @@ ngeox.DimensionsActive;
 
 
 /**
+ * @typedef {function(string, string, string=)}
+ */
+ngeox.Download;
+
+
+/**
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  * @typedef {{

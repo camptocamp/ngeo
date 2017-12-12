@@ -1,7 +1,7 @@
-goog.provide('ngeo.CsvDownload');
+goog.provide('ngeo.download.Csv');
 
 goog.require('ngeo');
-goog.require('ngeo.Download');
+goog.require('ngeo.download.Service');
 
 
 /**
@@ -16,7 +16,7 @@ goog.require('ngeo.Download');
  * @ngname ngeoCsvDownload
  * @ngInject
  */
-ngeo.CsvDownload = function($injector, gettextCatalog) {
+ngeo.download.Csv = function($injector, gettextCatalog) {
 
   /**
    * @type {angularGettext.Catalog}
@@ -66,7 +66,7 @@ ngeo.CsvDownload = function($injector, gettextCatalog) {
 
   /**
    * Download service.
-   * @type {ngeo.Download}
+   * @type {ngeox.Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
@@ -81,7 +81,7 @@ ngeo.CsvDownload = function($injector, gettextCatalog) {
  * @return {string} The CSV file as string.
  * @export
  */
-ngeo.CsvDownload.prototype.generateCsv = function(data, columnDefs) {
+ngeo.download.Csv.prototype.generateCsv = function(data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
     return '';
   }
@@ -103,7 +103,7 @@ ngeo.CsvDownload.prototype.generateCsv = function(data, columnDefs) {
  * @return {string} CSV row.
  * @private
  */
-ngeo.CsvDownload.prototype.getRow_ = function(values) {
+ngeo.download.Csv.prototype.getRow_ = function(values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
   const doubleQuote = this.quote_ + this.quote_;
 
@@ -129,10 +129,17 @@ ngeo.CsvDownload.prototype.getRow_ = function(values) {
  * @param {string} fileName The CSV file name, without the extension.
  * @export
  */
-ngeo.CsvDownload.prototype.startDownload = function(data, columnDefs, fileName) {
+ngeo.download.Csv.prototype.startDownload = function(data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);
   this.download_(
     fileContent, fileName, `text/csv;charset=${this.encoding_}`);
 };
 
-ngeo.module.service('ngeoCsvDownload', ngeo.CsvDownload);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.download.Csv.module = angular.module('ngeoCsvDownload', [
+  ngeo.download.Service.module.name
+]);
+ngeo.download.Csv.module.service('ngeoCsvDownload', ngeo.download.Csv);
+ngeo.module.requires.push(ngeo.download.Csv.module.name);
