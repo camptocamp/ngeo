@@ -5,13 +5,10 @@ goog.require('gmf');
 goog.require('ol.events.EventTarget');
 
 
-
-
-
 /**
  * @enum {string}
  */
-gmf.authentication.AuthenticationRouteSuffix = {
+gmf.authentication.service.RouteSuffix = {
   CHANGE_PASSWORD: 'loginchange',
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',
@@ -83,7 +80,7 @@ gmf.authentication.Service = class {
    * @private
    */
   load_() {
-    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.IS_LOGGED_IN}`;
+    const url = `${this.baseUrl_}/${gmf.authentication.service.RouteSuffix.IS_LOGGED_IN}`;
     this.$http_.get(url, {withCredentials: true}).then(
       this.handleLogin_.bind(this, true)
     );
@@ -97,7 +94,7 @@ gmf.authentication.Service = class {
    * @export
    */
   changePassword(oldPwd, newPwd, confPwd) {
-    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.CHANGE_PASSWORD}`;
+    const url = `${this.baseUrl_}/${gmf.authentication.service.RouteSuffix.CHANGE_PASSWORD}`;
 
     return this.$http_.post(url, $.param({
       'oldPassword': oldPwd,
@@ -116,7 +113,7 @@ gmf.authentication.Service = class {
    * @export
    */
   login(login, pwd) {
-    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.LOGIN}`;
+    const url = `${this.baseUrl_}/${gmf.authentication.service.RouteSuffix.LOGIN}`;
 
     return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -130,7 +127,7 @@ gmf.authentication.Service = class {
    * @export
    */
   logout() {
-    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.LOGOUT}`;
+    const url = `${this.baseUrl_}/${gmf.authentication.service.RouteSuffix.LOGOUT}`;
     return this.$http_.get(url, {withCredentials: true}).then(
       this.resetUser_.bind(this));
   }
@@ -141,7 +138,7 @@ gmf.authentication.Service = class {
    * @export
    */
   resetPassword(login) {
-    const url = `${this.baseUrl_}/${gmf.authentication.AuthenticationRouteSuffix.RESET_PASSWORD}`;
+    const url = `${this.baseUrl_}/${gmf.authentication.service.RouteSuffix.RESET_PASSWORD}`;
 
     /**
      * @param {angular.$http.Response} resp Ajax response.
