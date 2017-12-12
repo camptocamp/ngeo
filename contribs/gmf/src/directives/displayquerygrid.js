@@ -525,7 +525,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
       }
 
       allProperties.push(properties);
-      featuresForSource[ngeo.GridConfig.getRowUid(properties)] = feature;
+      featuresForSource[ngeo.grid.Config.getRowUid(properties)] = feature;
     }
   });
 
@@ -624,7 +624,7 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
 
 /**
  * @param {Array.<!Object>} data Grid rows.
- * @return {?ngeo.GridConfig} Grid config.
+ * @return {?ngeo.grid.Config} Grid config.
  * @private
  */
 gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
@@ -644,7 +644,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
   });
 
   if (columnDefs.length > 0) {
-    return new ngeo.GridConfig(data, columnDefs);
+    return new ngeo.grid.Config(data, columnDefs);
   } else {
     // no columns, do not show grid
     return null;

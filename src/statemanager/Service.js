@@ -3,7 +3,7 @@ goog.provide('ngeo.statemanager.Service');
 goog.require('goog.asserts');
 goog.require('ngeo');
 
-goog.require('ngeo.manager.Location');
+goog.require('ngeo.statemanager.Location');
 
 
 /**
@@ -172,14 +172,12 @@ ngeo.statemanager.Service.prototype.deleteParam = function(key) {
 };
 
 
-ngeo.statemanager.Service.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
-
-
 /**
  * @type {!angular.Module}
  */
 ngeo.statemanager.Service.module = angular.module('ngeoStateManager', [
-  ngeo.manager.Location.module.name
+  ngeo.statemanager.Location.module.name
 ]);
 ngeo.statemanager.Service.module.service('ngeoStateManager', ngeo.statemanager.Service);
+ngeo.statemanager.Service.module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
 ngeo.module.requires.push(ngeo.statemanager.Service.module.name);

@@ -16,7 +16,6 @@ goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
-goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -25,6 +24,10 @@ goog.require('ol.proj');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.statemanager.WfsPermalink');
+
+// FIXME Add ngeo.statemanager.WfsPermalink.module.name in the module dependencies
 
 
 /**
@@ -261,7 +264,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?ngeo.WfsPermalink}
+   * @type {?ngeo.statemanager.WfsPermalink}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?

@@ -1,6 +1,6 @@
 goog.provide('app.layeropacity');
 
-goog.require('ngeo.DecorateLayer');
+goog.require('ngeo.layertree.DecorateLayer');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -17,7 +17,7 @@ app.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
+ * @param {ngeo.layertree.DecorateLayer} ngeoDecorateLayer Decorate layer service.
  * @constructor
  * @ngInject
  */

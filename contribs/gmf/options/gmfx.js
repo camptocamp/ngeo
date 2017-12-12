@@ -73,7 +73,7 @@ gmfx.ExternalOGCServer;
 /**
  * Configuration for a grid tab.
  * @typedef {{
- *     configuration: ngeo.GridConfig,
+ *     configuration: ngeo.grid.Config,
  *     source: ngeox.QueryResultSource
  * }}
  */
@@ -82,7 +82,7 @@ gmfx.GridSource;
 
 /**
  * Configuration used to initialize a grid.
- * @type {ngeo.GridConfig}
+ * @type {ngeo.grid.Config}
  */
 gmfx.GridSource.prototype.configuration;
 

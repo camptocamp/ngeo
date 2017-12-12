@@ -13,7 +13,7 @@ goog.require('ngeo.statemanager.Service');
  *
  * @type {!angular.Module}
  */
-ngeo.map.module = angular.module('ngeoStatemanagerModule', [
+ngeo.statemanager.module = angular.module('ngeoStatemanagerModule', [
   ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.statemanager.Location.module.name,
   ngeo.statemanager.Service.module.name

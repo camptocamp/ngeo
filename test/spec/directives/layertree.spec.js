@@ -1,7 +1,7 @@
 goog.require('ol.Map');
-goog.require('ngeo.layertreeDirective');
+goog.require('ngeo.layertree.component');
 
-describe('ngeo.layertreeDirective', () => {
+describe('ngeo.layertree.component', () => {
 
   let roottreeCtrl;
 
@@ -126,8 +126,8 @@ describe('ngeo.layertreeDirective', () => {
     const treeNode0 = roottreeCtrl.children[0];
     const treeLeaf01 = treeNode0.children[1];
     const treeLeaf1 = roottreeCtrl.children[1];
-    expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
-    expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
+    expect(ngeo.layertree.Controller.getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
+    expect(ngeo.layertree.Controller.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
   });
 
   it('Traverse tree', () => {
@@ -142,7 +142,7 @@ describe('ngeo.layertreeDirective', () => {
     visited = '';
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
-      return ngeo.LayertreeController.VisitorDecision.STOP;
+      return ngeo.layertree.Controller.VisitorDecision.STOP;
     });
     expect(visited).toBe(', Root');
 
@@ -151,7 +151,7 @@ describe('ngeo.layertreeDirective', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Leaf 01') {
-        return ngeo.LayertreeController.VisitorDecision.STOP;
+        return ngeo.layertree.Controller.VisitorDecision.STOP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01');
@@ -161,7 +161,7 @@ describe('ngeo.layertreeDirective', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Node 0') {
-        return ngeo.LayertreeController.VisitorDecision.SKIP;
+        return ngeo.layertree.Controller.VisitorDecision.SKIP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 1');

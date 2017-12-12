@@ -1,14 +1,14 @@
 /*global describe beforeEach inject expect it */
 /*eslint no-undef: "error"*/
 
-goog.require('ngeo.DecorateLayerLoading');
+goog.require('ngeo.layertree.DecorateLayerLoading');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Group');
 goog.require('ol.source.Image');
 goog.require('ol.Collection');
 
 
-describe('DecorateLayerLoading test suite', () => {
+describe('ngeo.layertree.DecorateLayerLoading test suite', () => {
   let decorateLayerLoading;
   let scope;
 

@@ -294,10 +294,18 @@ ngeo.statemanager.WfsPermalink.prototype.clearResult_ = function() {
 
 
 /**
+ * @type {!angular.Module}
+ */
+ngeo.statemanager.WfsPermalink.module = angular.module('ngeoWfsPermalink', [
+  // FIXME add dependencies
+]);
+
+
+/**
  * Value that is supposed to be set in applications to enable the WFS
  * permalink functionality.
  */
-ngeo.statemanager.WfsPermalink.value('ngeoWfsPermalinkOptions',
+ngeo.statemanager.WfsPermalink.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
     url: '',
     wfsTypes: [],
@@ -307,11 +315,5 @@ ngeo.statemanager.WfsPermalink.value('ngeoWfsPermalinkOptions',
 );
 
 
-/**
- * @type {!angular.Module}
- */
-ngeo.statemanager.WfsPermalink.module = angular.module('ngeoWfsPermalink', [
-  // FIXME add dependencies
-]);
 ngeo.statemanager.WfsPermalink.module.service('ngeoWfsPermalink', ngeo.statemanager.WfsPermalink);
 ngeo.module.requires.push(ngeo.statemanager.WfsPermalink.module.name);

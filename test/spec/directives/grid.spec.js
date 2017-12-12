@@ -1,7 +1,7 @@
-goog.require('ngeo.GridConfig');
-goog.require('ngeo.gridComponent');
+goog.require('ngeo.grid.Config');
+goog.require('ngeo.grid.component');
 
-describe('ngeo.gridComponent', () => {
+describe('ngeo.grid.component', () => {
 
   let gridController;
   let $scope;
@@ -58,7 +58,7 @@ describe('ngeo.gridComponent', () => {
     ];
 
     const data = {
-      configuration: new ngeo.GridConfig(gridConfigData, columnDefs)
+      configuration: new ngeo.grid.Config(gridConfigData, columnDefs)
     };
     gridController = $controller(
       'ngeoGridController', {$scope}, data);

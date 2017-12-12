@@ -1,10 +1,10 @@
 /* global msGMLOutputFuel */
-goog.require('ngeo.WfsPermalink');
 goog.require('ol.format.filter');
 goog.require('ol.format.filter.LogicalNary');
+goog.require('ngeo.statemanager.WfsPermalink');
 goog.require('ngeo.test.data.msGMLOutputFuel');
 
-describe('ngeo.WfsPermalink', () => {
+describe('ngeo.statemanager.WfsPermalink', () => {
 
   let ngeoWfsPermalink;
   let ngeoQueryResult;
@@ -26,7 +26,7 @@ describe('ngeo.WfsPermalink', () => {
   });
 
   it('creates a service', () => {
-    expect(ngeoWfsPermalink instanceof ngeo.WfsPermalink).toBe(true);
+    expect(ngeoWfsPermalink instanceof ngeo.statemanager.WfsPermalink).toBe(true);
   });
 
   describe('#issue', () => {

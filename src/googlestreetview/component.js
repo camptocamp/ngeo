@@ -375,5 +375,5 @@ ngeo.googlestreetview.component.component('ngeoGooglestreetview', {
     'radius': '<?'
   },
   controller: ngeo.googlestreetview.Controller_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/component.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html`
 });

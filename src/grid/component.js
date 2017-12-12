@@ -1,5 +1,4 @@
-goog.module('ngeo.grid.component');
-goog.module.declareLegacyNamespace();
+goog.provide('ngeo.grid.component');
 
 goog.require('ngeo');
 goog.require('ol.has');
@@ -29,7 +28,7 @@ ngeo.grid.component.value('ngeoGridTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['ngeoGridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/component.html`;
+      `${ngeo.baseModuleTemplateUrl}/grid/component.html`;
   }
 );
 
@@ -57,7 +56,7 @@ function ngeoGridTemplateUrl($element, $attrs, ngeoGridTemplateUrl) {
  *       ngeo-grid-configuration="::ctrl.gridConfiguration"
  *     </ngeo-grid>
  *
- * @htmlAttribute {ngeo.GridConfig} ngeo-grid-configuration The
+ * @htmlAttribute {ngeo.grid.Config} ngeo-grid-configuration The
  * configuration to use.
  *
  * @ngdoc component
@@ -92,7 +91,7 @@ ngeo.grid.component.Controller_ = function($scope) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.GridConfig}
+   * @type {ngeo.grid.Config}
    * @export
    */
   this.configuration;
@@ -205,7 +204,7 @@ ngeo.grid.component.Controller_.prototype.clickRow_ = function(
  * @private
  */
 ngeo.grid.component.Controller_.prototype.selectRange_ = function(attributes) {
-  const targetUid = ngeo.GridConfig.getRowUid(attributes);
+  const targetUid = ngeo.grid.Config.getRowUid(attributes);
   const data = this.configuration.data;
 
   if (this.configuration.isRowSelected(attributes)) {
@@ -218,7 +217,7 @@ ngeo.grid.component.Controller_.prototype.selectRange_ = function(attributes) {
   const posSelectedRows = [];
   for (let i = 0; i < data.length; i++) {
     const currentRow = data[i];
-    const currentUid = ngeo.GridConfig.getRowUid(currentRow);
+    const currentUid = ngeo.grid.Config.getRowUid(currentRow);
 
     if (targetUid === currentUid) {
       posClickedRow = i;

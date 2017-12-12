@@ -11,13 +11,11 @@ goog.require('ngeo.drawpointDirective');
 goog.require('ngeo.drawrectangleDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawtextDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measureareaDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measureazimutDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measurelengthDirective');
 goog.require('ol.Feature');
+
+goog.require('ngeo.measure.module');
+
+// FIXME add ngeo.measure.module.name to the module requirement
 
 
 /**

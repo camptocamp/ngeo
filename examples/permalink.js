@@ -2,7 +2,6 @@ goog.provide('app.permalink');
 
 goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.Location');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ol.Map');
 goog.require('ol.geom.GeometryType');
@@ -15,12 +14,14 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 goog.require('ngeo.map.module');
+goog.require('ngeo.statemanager.module');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.statemanager.module.name
 ]);
 
 /**
@@ -46,7 +47,7 @@ app.module.component('appMap', app.mapComponent);
 
 
 /**
- * @param {ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngInject
@@ -59,7 +60,7 @@ app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.map;
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -135,7 +136,7 @@ app.module.component('appDraw', app.drawComponent);
  * @param {!angular.Scope} $scope Scope.
  * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {!ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {!ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
@@ -154,7 +155,7 @@ app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLoca
   this.layer;
 
   /**
-   * @type {!ngeo.Location}
+   * @type {!ngeo.layretree.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

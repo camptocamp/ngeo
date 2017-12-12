@@ -1,6 +1,5 @@
 goog.provide('app.layerloading');
 
-goog.require('ngeo.DecorateLayerLoading');
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -10,19 +9,21 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 
+goog.require('ngeo.layertree.DecorateLayerLoading');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.layertree.DecorateLayerLoading.module.name,
   ngeo.map.module.name
 ]);
 
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate layer service.
+ * @param {ngeo.layertree.DecorateLayer} ngeoDecorateLayerLoading Decorate layer service.
  * @constructor
  * @ngInject
  */

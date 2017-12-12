@@ -21,7 +21,7 @@ ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoLayertreeTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/component.html`;
+      `${ngeo.baseModuleTemplateUrl}/layertree/component.html`;
   });
 
 
@@ -101,7 +101,7 @@ ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
  *      to be a {@link Function} with the argument:
  *      {
  *          'treeScope': !{@link angular.Scope},
- *          'treeCtrl': {@link ngeo.LayertreeController}
+ *          'treeCtrl': {@link ngeo.layertree.Controller}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.

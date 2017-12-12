@@ -14,8 +14,8 @@ goog.require('ngeo.layertree.DecorateLayerLoading');
  * @param {angular.Scope} $scope Scope.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.Attributes} $attrs Attributes.
- * @param {ngeo.DecorateLayer} ngeoDecorateLayer layer decorator service.
- * @param {ngeo.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate Layer service.
+ * @param {ngeo.layertree.DecorateLayer} ngeoDecorateLayer layer decorator service.
+ * @param {ngeo.layertree.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate Layer service.
  * @constructor
  * @ngInject
  * @export
@@ -392,9 +392,9 @@ ngeo.layertree.Controller.prototype.traverseDepthFirst = function(visitor) {
 /**
  * @type {!angular.Module}
  */
-ngeo.layertree.Controller.module = angular.module('NgeoLayertreeController', [
+ngeo.layertree.Controller.module = angular.module('ngeoLayertreeController', [
   ngeo.layertree.DecorateLayer.module.name,
   ngeo.layertree.DecorateLayerLoading.module.name
 ]);
-ngeo.layertree.Controller.module.controller('NgeoLayertreeController', ngeo.layertree.Controller);
+ngeo.layertree.Controller.module.controller('ngeoLayertreeController', ngeo.layertree.Controller);
 ngeo.module.requires.push(ngeo.layertree.Controller.module.name);
