@@ -29,7 +29,7 @@ gmf.module.value('gmfUser', {
  *
  * @extends {ol.events.EventTarget}
  */
-gmf.authentication.Service = class {
+gmf.authentication.Service = class extends ol.events.EventTarget {
 
   /**
    * @param {angular.$http} $http Angular http service.
@@ -39,7 +39,7 @@ gmf.authentication.Service = class {
    */
   constructor($http, authenticationBaseUrl, gmfUser) {
 
-    ol.events.EventTarget.call(this);
+    super();
 
     /**
      * @type {angular.$http}
