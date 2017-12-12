@@ -192,8 +192,12 @@
     <script src="../default.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
-      // Hack for ios Safari browser (UI overlapping on iOS 11)
-      if(window.navigator.userAgent.match(/iP(hone|od|ad)/i)) {
+      // Hack for ios Safari browser (UI overlapping on iOS 10)
+      var userAgent = window.navigator.userAgent;
+      var iOS = !!userAgent.match(/iP(hone|od|ad)/i);
+      var webkit = !!userAgent.match(/WebKit/i);
+
+      if(iOS && webkit && !userAgent.match(/CriOS/i)) {
         function iosChecker() {
           if (/iP(hone|od|ad)/.test(window.navigator.platform)) {
             var v = (window.navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
@@ -202,11 +206,7 @@
         }
 
         var iosVersion = iosChecker()[0];
-        var userAgent = window.navigator.userAgent;
-        var webkit = !!userAgent.match(/WebKit/i);
-        var ios11Safari = webkit && !userAgent.match(/CriOS/i) && iosVersion >= 11;
-
-        if (ios11Safari) {
+        if (iosVersion >= 10) {
           var interval = setInterval(function () {
             if($('div.ol-zoom').get(0)) {
               clearInterval(interval);
