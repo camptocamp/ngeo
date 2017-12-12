@@ -4,7 +4,7 @@
 goog.provide('gmf.authentication.module');
 
 goog.require('gmf.authentication.component');
-goog.require('gmf.authentication.service');
+goog.require('gmf.authentication.Service');
 
 
 /**
@@ -12,5 +12,5 @@ goog.require('gmf.authentication.service');
  */
 gmf.authentication.module = angular.module('gmfAuthenticationModule', [
   gmf.authentication.component.name,
-  gmf.authentication.service.name
+  gmf.authentication.service.module.name
 ]);

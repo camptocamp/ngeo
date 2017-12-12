@@ -1,4 +1,4 @@
-goog.provide('gmf.authentication.service');
+goog.provide('gmf.authentication.Service');
 
 goog.require('ngeo.CustomEvent');
 goog.require('gmf');
@@ -60,7 +60,7 @@ gmf.module.value('gmfUser', {
  *
  * @extends {ol.events.EventTarget}
  */
-gmf.authentication.service = class {
+gmf.authentication.Service = class {
 
   /**
    * @param {angular.$http} $http Angular http service.
@@ -235,6 +235,6 @@ gmf.authentication.service = class {
   }
 };
 
-ol.inherits(gmf.authentication.service, ol.events.EventTarget);
+ol.inherits(gmf.authentication.Service, ol.events.EventTarget);
 
-gmf.authentication.module.service('gmfAuthentication', gmf.authentication.service);
+gmf.authentication.module.service('gmfAuthentication', gmf.authentication.Service);

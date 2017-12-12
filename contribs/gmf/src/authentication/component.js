@@ -11,7 +11,7 @@ goog.require('ngeo.modalDirective');
  * @type {angular.Module}
  */
 gmf.authentication.component = angular.module('gmfAuthentication', [
-  gmf.authentication.service.name
+  gmf.authentication.service.module.name
 ]);
 
 gmf.module.requires.push(gmf.authentication.component.name);
