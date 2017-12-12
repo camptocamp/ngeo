@@ -5,17 +5,6 @@ goog.require('gmf');
 goog.require('ol.events.EventTarget');
 
 
-/**
- * @enum {string}
- */
-gmf.authentication.Service.RouteSuffix = {
-  CHANGE_PASSWORD: 'loginchange',
-  IS_LOGGED_IN: 'loginuser',
-  LOGIN: 'login',
-  LOGOUT: 'logout',
-  RESET_PASSWORD: 'loginresetpassword'
-};
-
 // todo?
 gmf.module.value('gmfUser', {
   'functionalities': null,
@@ -217,4 +206,20 @@ gmf.authentication.Service = class {
 
 ol.inherits(gmf.authentication.Service, ol.events.EventTarget);
 
-gmf.authentication.module.service('gmfAuthentication', gmf.authentication.Service);
+/**
+ * @enum {string}
+ */
+gmf.authentication.Service.RouteSuffix = {
+  CHANGE_PASSWORD: 'loginchange',
+  IS_LOGGED_IN: 'loginuser',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  RESET_PASSWORD: 'loginresetpassword'
+};
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.authentication.Service.module = angular.module('gmfAuthenticationService', []);
+gmf.authentication.Service.module.service('gmfAuthenticationService', gmf.authentication.Service);
+gmf.module.requires.push(gmf.authentication.Service.module.name);
