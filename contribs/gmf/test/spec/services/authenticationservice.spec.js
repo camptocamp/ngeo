@@ -1,6 +1,6 @@
-goog.require('gmf.authentication.service');
+goog.require('gmf.authentication.Service');
 
-describe('gmf.authentication.service', () => {
+describe('gmf.authentication.Service', () => {
   let gmfAuthentication;
   let authenticationBaseUrl;
   let isLoggedInUrl;
@@ -10,12 +10,12 @@ describe('gmf.authentication.service', () => {
 
   beforeEach(() => {
     inject(($injector) => {
-      gmfAuthentication = $injector.get('gmf.authentication.service');
+      gmfAuthentication = $injector.get('gmfAuthenticationService');
       authenticationBaseUrl = $injector.get('authenticationBaseUrl');
 
-      isLoggedInUrl = `${authenticationBaseUrl}/${gmf.authentication.service.RouteSuffix.IS_LOGGED_IN}`;
-      loginUrl = `${authenticationBaseUrl}/${gmf.authentication.service.RouteSuffix.LOGIN}`;
-      logoutUrl = `${authenticationBaseUrl}/${gmf.authentication.service.RouteSuffix.LOGOUT}`;
+      isLoggedInUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.IS_LOGGED_IN}`;
+      loginUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.LOGIN}`;
+      logoutUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.LOGOUT}`;
 
       $httpBackend = $injector.get('$httpBackend');
       $httpBackend.when('GET', isLoggedInUrl).respond({});
