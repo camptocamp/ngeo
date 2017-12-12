@@ -2,8 +2,6 @@
 
 goog.provide('gmfapp.importdatasource');
 
-/** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */

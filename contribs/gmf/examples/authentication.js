@@ -1,6 +1,6 @@
 goog.provide('gmfapp.authentication');
 
-/** @suppress {extraRequire} */
+
 goog.require('gmf.authentication.module');
 
 
