@@ -4,6 +4,7 @@
 goog.provide('gmf.authentication.module');
 
 goog.require('gmf.authentication.component');
+/** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
 
 
@@ -12,6 +13,6 @@ goog.require('gmf.authentication.Service');
  */
 gmf.authentication.module = angular.module('gmfAuthenticationModule', [
   gmf.authentication.component.name,
-  gmf.authentication.service.module.name,
+  gmf.authentication.Service.module.name,
   'gmfUser'
 ]);

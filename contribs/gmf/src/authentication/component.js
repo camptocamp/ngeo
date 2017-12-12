@@ -1,7 +1,8 @@
 goog.provide('gmf.authentication.component');
 
 goog.require('gmf');
-goog.require('gmf.authentication.service');
+/** @suppress {extraRequire} */
+goog.require('gmf.authentication.Service');
 goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
@@ -11,7 +12,7 @@ goog.require('ngeo.modalDirective');
  * @type {angular.Module}
  */
 gmf.authentication.component = angular.module('gmfAuthentication', [
-  gmf.authentication.service.module.name
+  gmf.authentication.Service.module.name
 ]);
 
 gmf.module.requires.push(gmf.authentication.component.name);
@@ -87,7 +88,7 @@ gmf.authentication.component.AuthenticationController_ = class {
    * @private
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {angular.Scope} $scope The directive's scope.
-   * @param {gmf.authentication.service} gmfAuthentication GMF Authentication service
+   * @param {gmf.authentication.Service} gmfAuthentication GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
    * @ngInject
@@ -115,7 +116,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {gmf.authentication.service}
+     * @type {gmf.authentication.Service}
      * @private
      */
     this.gmfAuthentication_ = gmfAuthentication;
