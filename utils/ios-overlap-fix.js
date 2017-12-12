@@ -16,13 +16,15 @@ const iosChecker = function() {
 * webkit is true on Safari/Chrome, etc
 * platform is true on iOS, not emulator (platform)
 * chromeiOS is true on other browsers (chrome/opera)
-* MSStream is true on IE
 */
-if (iOS && webkit && platform && !chromeiOS && !window.MSStream) {
+if (iOS && webkit && platform && !chromeiOS) {
   const iosVersion = iosChecker()[0];
-  if (iosVersion >= 10) {
+  console.log('iOS version: ', iosVersion);
+  if (iosVersion > 10) {
     const interval = setInterval(() => {
+      console.log('interval');
       if ($('div.ol-zoom').get(0)) {
+        console.log('stop interval');
         clearInterval(interval);
         $('button.gmf-mobile-nav-left-trigger').addClass('ios-margin-top');
         $('button.gmf-mobile-nav-right-trigger').addClass('ios-margin-top');
