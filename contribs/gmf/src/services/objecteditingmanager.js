@@ -1,9 +1,11 @@
 goog.provide('gmf.ObjectEditingManager');
 
 goog.require('gmf.EditFeature');
-goog.require('ngeo.Location');
 goog.require('ol.Feature');
 
+goog.require('ngeo.statemanager.Location');
+
+// FIXME add ngeo.statemanager.Location.module.name in the module dependecies
 
 /**
  * A service that looks for certain parameters in the url and use them to fetch
@@ -11,7 +13,7 @@ goog.require('ol.Feature');
  *
  * @param {angular.$q} $q Angular $q service.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @constructor
  * @struct
  * @ngInject
@@ -31,7 +33,7 @@ gmf.ObjectEditingManager = function($q, gmfEditFeature, ngeoLocation) {
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

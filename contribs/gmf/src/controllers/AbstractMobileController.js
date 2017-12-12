@@ -13,8 +13,6 @@ goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mobileGeolocationDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -25,6 +23,8 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.geolocation.mobile');
 
 gmf.module.value('isMobile', true);
 

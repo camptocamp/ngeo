@@ -3,13 +3,14 @@ goog.provide('gmf.TreeManager');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.Notification');
-goog.require('ngeo.StateManager');
 goog.require('ol.events');
 
 goog.require('ngeo.layertree.Controller');
+goog.require('ngeo.statemanager.Service');
 
 
 // FIXME add ngeo.layertree.Controller.module.name in module dependencies
+// FIXME add ngeo.statemanager.Service.module.name in module dependencies
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
@@ -30,7 +31,7 @@ goog.require('ngeo.layertree.Controller');
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
+ * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
@@ -108,7 +109,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;

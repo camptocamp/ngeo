@@ -9,7 +9,6 @@ goog.require('gmf.disclaimerComponent');
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.Location');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -17,9 +16,13 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.statemanager.Location');
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me other dependencies are in a module
+  ngeo.statemanager.Location.module.name
+]);
 
 
 gmfapp.module.value('gmfTreeUrl',
@@ -31,7 +34,7 @@ gmfapp.module.value('gmfTreeUrl',
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.ThemeManager} gmfThemeManager gmf Tree Manager service.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  */
 gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLocation) {

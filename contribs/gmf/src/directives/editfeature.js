@@ -59,7 +59,7 @@ goog.require('ol.style.Text');
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {ngeo.LayertreeController} gmf-editfeature-editabletreectrl
+ * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
@@ -133,7 +133,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.dirty;
 
   /**
-   * @type {ngeo.LayertreeController}
+   * @type {ngeo.layertree.Controller}
    * @export
    */
   this.editableTreeCtrl;

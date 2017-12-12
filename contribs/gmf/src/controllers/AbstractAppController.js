@@ -30,7 +30,6 @@ goog.require('ngeo.mapQueryDirective');
 goog.require('ngeo.GetBrowserLanguage');
 /** @suppress {extraRequire} */
 goog.require('ngeo.MapQuerent');
-goog.require('ngeo.StateManager');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
@@ -39,6 +38,8 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.statemanager.module');
 
 
 gmf.module.value('ngeoExportFeatureFormats', [
@@ -65,7 +66,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Location service
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    */
   this.ngeoLocation = $injector.get('ngeoLocation');
   if (this.ngeoLocation.hasParam('debug')) {
@@ -341,7 +342,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    */
   this.stateManager = $injector.get('ngeoStateManager');
 

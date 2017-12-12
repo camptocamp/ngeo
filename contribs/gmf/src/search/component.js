@@ -257,7 +257,7 @@ gmf.search.component.SearchController_ = class {
     this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
 
     /**
-     * @type {ngeo.Location|undefined}
+     * @type {ngeo.statemanager.Location|undefined}
      * @private
      */
     this.ngeoLocation_;

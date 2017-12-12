@@ -1,7 +1,6 @@
 goog.provide('gmf.profileComponent');
 
 goog.require('gmf');
-goog.require('ngeo.CsvDownload');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profileDirective');
 goog.require('ol.events');
@@ -14,11 +13,13 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.download.Csv');
 goog.require('ngeo.map.FeatureOverlayMgr');
 
 
 // In the future module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlayMgr.module.name
+// - ngeo.download.Csv.module.name
 
 
 ngeo.module.value('gmfProfileTemplateUrl',
@@ -112,7 +113,7 @@ gmf.module.component('gmfProfile', gmf.profileComponent);
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
+ * @param {ngeo.module.Csv} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
  * @ngInject
@@ -166,7 +167,7 @@ gmf.ProfileController = function($scope, $http, $element, $filter,
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
-   * @type {ngeo.CsvDownload}
+   * @type {ngeo.module.Csv}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;

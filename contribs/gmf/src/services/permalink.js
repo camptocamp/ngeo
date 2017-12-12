@@ -10,7 +10,6 @@ goog.require('ngeo.EventHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 goog.require('ngeo.Popover');
-goog.require('ngeo.StateManager');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
@@ -25,9 +24,9 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.statemanager.WfsPermalink');
+goog.require('ngeo.statemanager.module');
 
-// FIXME Add ngeo.statemanager.WfsPermalink.module.name in the module dependencies
+// FIXME Add ngeo.statemanager.module.name in the module dependencies
 
 
 /**
@@ -78,8 +77,8 @@ gmf.module.value('gmfPermalinkOptions',
 
 
 /**
- * The Permalink service for GMF, which uses the `ngeo.StateManager` to manage
- * the GMF application state. Here's the list of states are are managed:
+ * The Permalink service for GMF, which uses the `ngeo.statemanager.Service` to
+ * manage the GMF application state. Here's the list of states are are managed:
  *
  * - the map center and zoom level
  * - the current background layer selected
@@ -100,8 +99,8 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -151,7 +150,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -258,7 +257,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   // == other properties ==
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -1024,7 +1023,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
         firstParent.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.getState() !== 'indeterminate') {
             this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
-            return ngeo.LayertreeController.VisitorDecision.STOP;
+            return ngeo.layertree.Controller.VisitorDecision.STOP;
           }
         });
       });
