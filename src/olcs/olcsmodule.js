@@ -4,6 +4,10 @@
 goog.module('ngeo.olcs.olcsModule');
 goog.module.declareLegacyNamespace();
 
+goog.require('ngeo.Debounce');
+goog.require('ngeo.Location');
+goog.require('ngeo.StateManager');
+
 const Service = goog.require('ngeo.olcs.Service');
 const control = goog.require('ngeo.olcs.controls3d');
 

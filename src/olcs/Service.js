@@ -1,8 +1,5 @@
 goog.module('ngeo.olcs.Service');
 
-goog.require('ngeo.Debounce');
-goog.require('ngeo.Location');
-
 const Service = class {
 
   /**
@@ -10,8 +7,9 @@ const Service = class {
    * @param {angular.Scope} $rootScope Angular root scope.
    * @param {!ngeo.Debounce} ngeoDebounce ngeo debounce service.
    * @param {ngeo.Location} ngeoLocation ngeo location service.
+   * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
    */
-  constructor($rootScope, ngeoDebounce, ngeoLocation) {
+  constructor($rootScope, ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**
      * @private
      * @type {olcs.contrib.Manager|undefined}
@@ -26,15 +24,21 @@ const Service = class {
 
     /**
      * @private
-     * @type {ngeo.Location}
+     * @type {ngeo.Debounce}
      */
     this.ngeoDebounce_ = ngeoDebounce;
 
     /**
      * @private
-     * @type {ngeo.Debounce}
+     * @type {ngeo.Location}
      */
     this.ngeoLocation_ = ngeoLocation;
+
+    /**
+     * @private
+     * @type {ngeo.StateManager}
+     */
+    this.ngeoStateManager_ = ngeoStateManager;
 
   }
 
@@ -49,7 +53,7 @@ const Service = class {
       () => this.manager_.getOl3d(),
       (ol3d) => {
         if (ol3d) {
-          if(this.ngeoLocation_.hasParam('3d_enabled')) {
+          if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
             this.cameraFromPermalink_();
           }
           this.setupPermalink_();
@@ -57,6 +61,10 @@ const Service = class {
         }
       }
     );
+
+    if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
+      this.manager_.toggle3d();
+    }
   }
 
   /**
@@ -89,18 +97,19 @@ const Service = class {
    */
   cameraFromPermalink_() {
     const manager = this.manager_;
+    const stateManager = this.ngeoStateManager_;
     const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;
 
-    const lon = this.ngeoLocation_.getParamAsFloat('3d_lon');
-    const lat = this.ngeoLocation_.getParamAsFloat('3d_lat');
-    const elevation = this.ngeoLocation_.getParamAsInt('3d_elevation');
+    const lon = stateManager.getInitialNumberValue('3d_lon');
+    const lat = stateManager.getInitialNumberValue('3d_lat');
+    const elevation = stateManager.getInitialNumberValue('3d_elevation');
     const destination = Cesium.Cartesian3.fromDegrees(lon, lat, elevation);
 
     const heading = Cesium.Math.toRadians(
-      this.ngeoLocation_.getParamAsFloat('3d_heading') || 0);
+      stateManager.getInitialNumberValue('3d_heading') || 0);
     const pitch = Cesium.Math.toRadians(
-      this.ngeoLocation_.getParamAsFloat('3d_pitch') || 0);
+      stateManager.getInitialNumberValue('3d_pitch') || 0);
     const roll = 0;
     const orientation = {heading, pitch, roll};
 
@@ -122,7 +131,7 @@ const Service = class {
     camera.moveEnd.addEventListener(this.ngeoDebounce_(() => {
       if (is3DCurrentlyEnabled) {
         const position = camera.positionCartographic;
-        this.ngeoLocation_.updateParams({
+        this.ngeoStateManager_.updateState({
           '3d_enabled': true,
           '3d_lon': Cesium.Math.toDegrees(position.longitude).toFixed(5),
           '3d_lat': Cesium.Math.toDegrees(position.latitude).toFixed(5),
@@ -144,7 +153,7 @@ const Service = class {
    */
   teardownPermalink_() {
     this.ngeoLocation_.getParamKeysWithPrefix('3d_').forEach((key) => {
-      this.ngeoLocation_.deleteParam(key);
+      this.ngeoStateManager_.deleteParam(key);
     });
   }
 
