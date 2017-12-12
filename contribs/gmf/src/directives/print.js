@@ -2,7 +2,7 @@ goog.provide('gmf.printComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.authentication.module');
+goog.require('gmf.authentication.Service');
 goog.require('ngeo.Print');
 goog.require('ngeo.PrintUtils');
 goog.require('ol.Observable');
@@ -166,7 +166,7 @@ gmf.PrintController = class {
    * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
-   * @param {gmf.authentication.Service} gmfAuthentication The authentication service.
+   * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.$filter} $filter Angular $filter service.
    * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
@@ -178,7 +178,7 @@ gmf.PrintController = class {
    */
   constructor($rootScope, $scope, $timeout, $q, $injector,
     gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
-    ngeoCreatePrint, gmfPrintUrl, gmfAuthentication, ngeoQueryResult,
+    ngeoCreatePrint, gmfPrintUrl, gmfAuthenticationService, ngeoQueryResult,
     $filter, gmfPrintState, gmfThemes) {
 
     /**
@@ -287,7 +287,7 @@ gmf.PrintController = class {
      * @type {gmf.authentication.Service}
      * @private
      */
-    this.gmfAuthentication_ = gmfAuthentication;
+    this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
      * @type {gmf.Themes}
@@ -428,7 +428,7 @@ gmf.PrintController = class {
    */
   $onInit() {
     // Clear the capabilities if the roleId changes
-    this.$scope_.$watch(() => this.gmfAuthentication_.getRoleId(), () => {
+    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRoleId(), () => {
       this.gmfPrintState_.state = gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED;
       this.capabilities_ = null;
     });
