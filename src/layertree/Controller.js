@@ -1,9 +1,12 @@
-goog.provide('ngeo.LayertreeController');
+goog.provide('ngeo.layertree.Controller');
 
 goog.require('ngeo');
-goog.require('ngeo.DecorateLayer');
-goog.require('ngeo.DecorateLayerLoading');
+goog.require('ol');
 goog.require('ol.events');
+goog.require('ol.layer.Group');
+goog.require('ol.layer.Layer');
+goog.require('ngeo.layertree.DecorateLayer');
+goog.require('ngeo.layertree.DecorateLayerLoading');
 
 
 /**
@@ -20,7 +23,8 @@ goog.require('ol.events');
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLayer, ngeoDecorateLayerLoading) {
+ngeo.layertree.Controller = function($scope, $rootScope, $attrs,
+  ngeoDecorateLayer, ngeoDecorateLayerLoading) {
 
   const isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -70,13 +74,13 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
   goog.asserts.assert(map !== undefined);
 
   /**
-   * @type {ngeo.LayertreeController}
+   * @type {ngeo.layertree.Controller}
    * @export
    */
   this.parent = $scope.$parent['layertreeCtrl'];
 
   /**
-   * @type {Array.<ngeo.LayertreeController>}
+   * @type {Array.<ngeo.layertree.controller>}
    * @export
    */
   this.children = [];
@@ -192,7 +196,7 @@ ngeo.LayertreeController = function($scope, $rootScope, $attrs, ngeoDecorateLaye
  * @return {string} 'on', 'off', 'indeterminate'.
  * @export
  */
-ngeo.LayertreeController.prototype.getState = function() {
+ngeo.layertree.Controller.prototype.getState = function() {
   return this.state_;
 };
 
@@ -204,7 +208,7 @@ ngeo.LayertreeController.prototype.getState = function() {
  * @param {boolean=} opt_broadcast Broadcast.
  * @export
  */
-ngeo.LayertreeController.prototype.setState = function(state, opt_broadcast) {
+ngeo.layertree.Controller.prototype.setState = function(state, opt_broadcast) {
   if (state === this.state_) {
     return;
   }
@@ -215,7 +219,7 @@ ngeo.LayertreeController.prototype.setState = function(state, opt_broadcast) {
     this.parent.refreshState();
   }
 
-  const firstParents = this.isRoot ? this.children : [ngeo.LayertreeController.getFirstParentTree(this)];
+  const firstParents = this.isRoot ? this.children : [ngeo.layertree.Controller.getFirstParentTree(this)];
 
   if (opt_broadcast === undefined || opt_broadcast) {
     firstParents.forEach((firstParent) => {
@@ -228,7 +232,7 @@ ngeo.LayertreeController.prototype.setState = function(state, opt_broadcast) {
 /**
  * @param {string} state 'on' or 'off'.
  */
-ngeo.LayertreeController.prototype.setStateInternal_ = function(state) {
+ngeo.layertree.Controller.prototype.setStateInternal_ = function(state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
   // Asks to each child to set its state;
@@ -243,7 +247,7 @@ ngeo.LayertreeController.prototype.setStateInternal_ = function(state) {
  * parent to do the same.
  * @public
  */
-ngeo.LayertreeController.prototype.refreshState = function() {
+ngeo.layertree.Controller.prototype.refreshState = function() {
   const newState = this.getCalculateState();
   if (this.state_ === newState) {
     return;
@@ -260,7 +264,7 @@ ngeo.LayertreeController.prototype.refreshState = function() {
  * @return {string} 'on', 'off' or 'indeterminate'.
  * @export
  */
-ngeo.LayertreeController.prototype.getCalculateState = function() {
+ngeo.layertree.Controller.prototype.getCalculateState = function() {
   if (this.node.children === undefined) {
     return this.state_;
   }
@@ -284,7 +288,7 @@ ngeo.LayertreeController.prototype.getCalculateState = function() {
  * @return {boolean|undefined} Value.
  * @export
  */
-ngeo.LayertreeController.prototype.getSetActive = function(val) {
+ngeo.layertree.Controller.prototype.getSetActive = function(val) {
   const layer = this.layer;
   const map = this.map;
   if (!layer) {
@@ -307,7 +311,7 @@ ngeo.LayertreeController.prototype.getSetActive = function(val) {
  *     this layer tree controller.
  * @export
  */
-ngeo.LayertreeController.prototype.getDataSource = function() {
+ngeo.layertree.Controller.prototype.getDataSource = function() {
   return this.dataSource_;
 };
 
@@ -316,7 +320,7 @@ ngeo.LayertreeController.prototype.getDataSource = function() {
  * @param {?ngeo.datasource.DataSource} dataSource Data source or null.
  * @export
  */
-ngeo.LayertreeController.prototype.setDataSource = function(dataSource) {
+ngeo.layertree.Controller.prototype.setDataSource = function(dataSource) {
   this.dataSource_ = dataSource;
 };
 
@@ -324,11 +328,11 @@ ngeo.LayertreeController.prototype.setDataSource = function(dataSource) {
 /**
  * Get the "top level" layertree (one of the first level child under the root
  * layertree). Can return itself.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @return {ngeo.LayertreeController} the top level layertree.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
+ * @return {ngeo.layertree.Controller} the top level layertree.
  * @public
  */
-ngeo.LayertreeController.getFirstParentTree = function(treeCtrl) {
+ngeo.layertree.Controller.getFirstParentTree = function(treeCtrl) {
   let tree = treeCtrl;
   while (!tree.parent.isRoot) {
     tree = tree.parent;
@@ -340,7 +344,7 @@ ngeo.LayertreeController.getFirstParentTree = function(treeCtrl) {
 /**
  * @enum {string}
  */
-ngeo.LayertreeController.VisitorDecision = {
+ngeo.layertree.Controller.VisitorDecision = {
   STOP: 'STOP',
   SKIP: 'SKIP',
   DESCEND: 'DESCEND'
@@ -349,28 +353,28 @@ ngeo.LayertreeController.VisitorDecision = {
 
 /**
  * @typedef {
- *   function(ngeo.LayertreeController): (!ngeo.LayertreeController.VisitorDecision|undefined)
+ *   function(ngeo.layertree.Controller): (!ngeo.layertree.Controller.VisitorDecision|undefined)
  * }
  */
-ngeo.LayertreeController.Visitor;
+ngeo.layertree.Controller.Visitor;
 
 
 /**
  * Recursive method to traverse the layertree controller graph.
- * @param {ngeo.LayertreeController.Visitor} visitor A visitor called for each node.
+ * @param {ngeo.layertree.Controller.Visitor} visitor A visitor called for each node.
  * @return {boolean} whether to stop traversing.
  * @export
  */
-ngeo.LayertreeController.prototype.traverseDepthFirst = function(visitor) {
+ngeo.layertree.Controller.prototype.traverseDepthFirst = function(visitor) {
   // First visit the current controller
-  const decision = visitor(this) || ngeo.LayertreeController.VisitorDecision.DESCEND;
+  const decision = visitor(this) || ngeo.layertree.Controller.VisitorDecision.DESCEND;
 
   switch (decision) {
-    case ngeo.LayertreeController.VisitorDecision.STOP:
+    case ngeo.layertree.Controller.VisitorDecision.STOP:
       return true; // stop traversing
-    case ngeo.LayertreeController.VisitorDecision.SKIP:
+    case ngeo.layertree.Controller.VisitorDecision.SKIP:
       return false; // continue traversing but skip current branch
-    case ngeo.LayertreeController.VisitorDecision.DESCEND:
+    case ngeo.layertree.Controller.VisitorDecision.DESCEND:
       for (let i = 0; i < this.children.length; ++i) {
         const child = this.children[i];
         const stop = child.traverseDepthFirst(visitor);
@@ -385,4 +389,12 @@ ngeo.LayertreeController.prototype.traverseDepthFirst = function(visitor) {
 };
 
 
-ngeo.module.controller('NgeoLayertreeController', ngeo.LayertreeController);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.layertree.Controller.module = angular.module('NgeoLayertreeController', [
+  ngeo.layertree.DecorateLayer.module.name,
+  ngeo.layertree.DecorateLayerLoading.module.name
+]);
+ngeo.layertree.Controller.module.controller('NgeoLayertreeController', ngeo.layertree.Controller);
+ngeo.module.requires.push(ngeo.layertree.Controller.module.name);

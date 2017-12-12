@@ -1,10 +1,18 @@
-goog.provide('ngeo.layertreeDirective');
+goog.provide('ngeo.layertree.component');
 
 goog.require('ngeo');
-goog.require('ngeo.LayertreeController');
+goog.require('ngeo.layertree.Controller');
 
 
-ngeo.module.value('ngeoLayertreeTemplateUrl',
+/**
+ * @type {!angular.Module}
+ */
+ngeo.layertree.component = angular.module('ngeoLayertree', [
+  ngeo.layertree.Controller.module.name
+]);
+
+
+ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -13,7 +21,7 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoLayertreeTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseTemplateUrl}/layertree.html`;
+      `${ngeo.baseModuleTemplateUrl}/component.html`;
   });
 
 
@@ -105,14 +113,14 @@ ngeo.module.value('ngeoLayertreeTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-ngeo.layertreeDirective = function($compile, ngeoLayertreeTemplateUrl) {
+ngeo.layertree.component.directive_ = function($compile, ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
-    controller: ngeo.LayertreeController
+    controller: ngeo.layertree.Controller
   };
 };
 
 
-ngeo.module.directive('ngeoLayertree', ngeo.layertreeDirective);
+ngeo.layertree.component.directive('ngeoLayertree', ngeo.layertree.component.directive_);
