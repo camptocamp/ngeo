@@ -5,24 +5,7 @@ goog.require('gmf');
 goog.require('ol.events.EventTarget');
 
 
-/**
- * @typedef {{
- *     functionalities: (gmfx.AuthenticationFunctionalities|undefined),
- *     is_password_changed: (boolean|undefined),
- *     role_id: (number|undefined),
- *     role_name: (string|undefined),
- *     username: (string|undefined)
- * }}
- */
-gmf.authentication.AuthenticationLoginResponse;
 
-
-/**
- * @typedef {{
- *     success: boolean
- * }}
- */
-gmf.authentication.AuthenticationDefaultResponse;
 
 
 /**
@@ -162,10 +145,10 @@ gmf.authentication.Service = class {
 
     /**
      * @param {angular.$http.Response} resp Ajax response.
-     * @return {gmf.authentication.AuthenticationDefaultResponse} Response.
+     * @return {gmfx.AuthenticationDefaultResponse} Response.
      */
     const successFn = function(resp) {
-      const respData = /** @type gmf.authentication.AuthenticationDefaultResponse} */ (
+      const respData = /** @type gmfx.AuthenticationDefaultResponse} */ (
         resp.data);
       return respData;
     }.bind(this);
@@ -196,7 +179,7 @@ gmf.authentication.Service = class {
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
-    const respData = /** @type {gmf.authentication.AuthenticationLoginResponse} */ (resp.data);
+    const respData = /** @type {gmfx.AuthenticationLoginResponse} */ (resp.data);
     this.setUser_(respData, !checkingLoginStatus);
     if (checkingLoginStatus) {
       /** @type {gmfx.AuthenticationEvent} */
@@ -207,7 +190,7 @@ gmf.authentication.Service = class {
   }
 
   /**
-   * @param {gmf.authentication.AuthenticationLoginResponse} respData Response.
+   * @param {gmfx.AuthenticationLoginResponse} respData Response.
    * @param {boolean} emitEvent Emit a login event?
    * @private
    */

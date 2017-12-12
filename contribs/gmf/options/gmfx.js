@@ -699,3 +699,23 @@ gmfx.openPopup_
  * }>}
  */
 gmfx.AuthenticationEvent;
+
+
+/**
+ * @typedef {{
+ *     functionalities: (gmfx.AuthenticationFunctionalities|undefined),
+ *     is_password_changed: (boolean|undefined),
+ *     role_id: (number|undefined),
+ *     role_name: (string|undefined),
+ *     username: (string|undefined)
+ * }}
+ */
+gmfx.AuthenticationLoginResponse;
+
+
+/**
+ * @typedef {{
+ *     success: boolean
+ * }}
+ */
+gmfx.AuthenticationDefaultResponse;
