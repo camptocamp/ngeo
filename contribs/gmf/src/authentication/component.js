@@ -89,14 +89,14 @@ gmf.authentication.component.AuthenticationController_ = class {
    * @private
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {angular.Scope} $scope The directive's scope.
-   * @param {gmf.authentication.Service} gmfAuthentication GMF Authentication service
+   * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
    */
-  constructor(gettextCatalog, $scope, gmfAuthentication, gmfUser, ngeoNotification) {
+  constructor(gettextCatalog, $scope, gmfAuthenticationService, gmfUser, ngeoNotification) {
 
     /**
      * @type {gmfx.User}
@@ -120,7 +120,7 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @type {gmf.authentication.Service}
      * @private
      */
-    this.gmfAuthentication_ = gmfAuthentication;
+    this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
      * @type {ngeo.Notification}
@@ -245,7 +245,7 @@ gmf.authentication.component.AuthenticationController_ = class {
         // (3) send request with current credentials, which may fail if
         //     the old password given is incorrect.
         const error = gettextCatalog.getString('Incorrect old password.');
-        this.gmfAuthentication_.changePassword(oldPwd, newPwd, confPwd).then(
+        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd).then(
           () => {
             this.changePasswordModalShown = true;
             this.changePasswordReset();
@@ -273,7 +273,7 @@ gmf.authentication.component.AuthenticationController_ = class {
       this.setError_(errors);
     } else {
       const error = gettextCatalog.getString('Incorrect username or password.');
-      this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
+      this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal).then(
         this.resetError_.bind(this),
         this.setError_.bind(this, error));
     }
@@ -286,7 +286,7 @@ gmf.authentication.component.AuthenticationController_ = class {
   logout() {
     const gettextCatalog = this.gettextCatalog;
     const error = gettextCatalog.getString('Could not log out.');
-    this.gmfAuthentication_.logout().then(
+    this.gmfAuthenticationService_.logout().then(
       this.resetError_.bind(this),
       this.setError_.bind(this, error));
   }
@@ -313,7 +313,7 @@ gmf.authentication.component.AuthenticationController_ = class {
       this.resetError_();
     }.bind(this);
 
-    this.gmfAuthentication_.resetPassword(this.loginVal).then(
+    this.gmfAuthenticationService_.resetPassword(this.loginVal).then(
       resetPasswordSuccessFn,
       this.setError_.bind(this, error)
     );

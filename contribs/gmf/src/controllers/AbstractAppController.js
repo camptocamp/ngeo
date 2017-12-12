@@ -110,7 +110,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
    * Authentication service
    * @type {gmf.authentication.Service}
    */
-  const gmfAuthentication = $injector.get('gmfAuthentication');
+  const gmfAuthentication = $injector.get('gmfAuthenticationService');
 
   /**
    * @type {boolean}
