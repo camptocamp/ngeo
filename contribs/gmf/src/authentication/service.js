@@ -5,17 +5,6 @@ goog.require('gmf');
 goog.require('ol');
 goog.require('ol.events.EventTarget');
 
-
-// todo?
-gmf.module.value('gmfUser', {
-  'functionalities': null,
-  'is_password_changed': null,
-  'role_id': null,
-  'role_name': null,
-  'username': null
-});
-
-
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
  * launches a request to determine whether a user is currently logged in or
@@ -224,3 +213,11 @@ gmf.authentication.Service.RouteSuffix = {
 gmf.authentication.Service.module = angular.module('gmfAuthenticationService', []);
 gmf.authentication.Service.module.service('gmfAuthenticationService', gmf.authentication.Service);
 gmf.module.requires.push(gmf.authentication.Service.module.name);
+
+gmf.authentication.Service.module.value('gmfUser', {
+  'functionalities': null,
+  'is_password_changed': null,
+  'role_id': null,
+  'role_name': null,
+  'username': null
+});
