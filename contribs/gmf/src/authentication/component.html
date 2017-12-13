@@ -133,7 +133,7 @@
     <span
         ng-show="$ctrl.error"
         class="gmf-authentication-error help-block"></span>
-    <div class="form-group">
+    <div ng-show="authCtrl.allowPasswordReset" class="form-group">
       <a ng-click="$ctrl.resetPassword()"
          href="">{{'Password forgotten?' | translate}}</a>
     </div>

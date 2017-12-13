@@ -58,11 +58,14 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * Example:
  *
  *      <gmf-authentication
+ *        gmf-authentication-allow-password-reset="true"
  *        gmf-authentication-allow-password-change="true">
  *      </gmf-authentication>
  *
  * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
  *     show the change password button. Default to true.
+ * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
+ *     show the password forgotten link. Default to true.
  * @ngdoc component
  * @ngname gmfAuthentication
  */
@@ -126,6 +129,12 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @private
      */
     this.notification_ = ngeoNotification;
+
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.allowPasswordReset;
 
     /**
      * @type {boolean}
@@ -196,6 +205,9 @@ gmf.authentication.component.AuthenticationController_ = class {
    * Initialise the controller.
    */
   $onInit() {
+    if (this.allowPasswordReset === undefined) {
+      this.allowPasswordReset = true;
+    }
     if (this.allowPasswordChange === undefined) {
       this.allowPasswordChange = true;
     }
