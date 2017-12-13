@@ -197,35 +197,49 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature with linestring geometry.
- * @return {!ol.style.Style} Style.
+ * @return {!Array.<!ol.style.Style>} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
 
   const strokeWidth = this.getStrokeProperty(feature);
+  const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
   const color = this.getRGBAColorProperty(feature);
 
-  const options = {
+  const styles = [new ol.style.Style({
     stroke: new ol.style.Stroke({
       color: color,
       width: strokeWidth
     })
-  };
-
+  })];
+  let offset = 0;
   if (showMeasure) {
-    options.text = this.createTextStyle_({
-      text: this.getMeasure(feature)
-    });
+    offset += 25;
+    styles.push(new ol.style.Style({
+      text: this.createTextStyle_({
+        text: this.getMeasure(feature),
+        offsetY: -(offset / 2 + 4)
+      })
+   }));
+  }
+  if (showLabel) {
+    offset += 25;
+    styles.push(new ol.style.Style({
+      text: this.createTextStyle_({
+        text: this.getNameProperty(feature),
+        offsetY: -(offset / 2 + 4)
+      })
+    }));
   }
 
-  return new ol.style.Style(options);
+  return styles;
 };
 
 
 /**
  * @param {!ol.Feature} feature Feature with point geometry.
- * @return {!ol.style.Style} Style.
+ * @return {!Array.<!ol.style.Style>} Style.
  * @private
  */
 ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
@@ -233,25 +247,38 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
   const size = this.getSizeProperty(feature);
   const color = this.getRGBAColorProperty(feature);
 
-  const options = {
+  const styles = [new ol.style.Style({
     image: new ol.style.Circle({
-      radius: size,
-      fill: new ol.style.Fill({
-        color
-      })
+	  radius: size,
+	  fill: new ol.style.Fill({
+	    color: color
+	  })
     })
-  };
+  })];
 
+  const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
-
+  let offset = 0;
   if (showMeasure) {
-    options.text = this.createTextStyle_({
-      text: this.getMeasure(feature),
-      offsetY: -(size + 10 / 2 + 4)
-    });
+    offset += 25;
+    styles.push(new ol.style.Style({
+      text: this.createTextStyle_({
+        text: this.getMeasure(feature),
+        offsetY: -(offset / 2 + 4)
+       })
+    }));
+  }
+  if (showLabel) {
+    offset += 25;
+    styles.push(new ol.style.Style({
+      text: this.createTextStyle_({
+        text: this.getNameProperty(feature),
+        offsetY: -(offset / 2 + 4)
+      })
+    }));
   }
 
-  return new ol.style.Style(options);
+  return styles;
 };
 
 
@@ -303,6 +330,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const opacity = this.getOpacityProperty(feature);
   const color = this.getRGBAColorProperty(feature);
+  const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
 
 
@@ -321,7 +349,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       width: strokeWidth
     })
   })];
-
+  let offset = 0;
   if (showMeasure) {
     if (azimut !== undefined) {
       // Radius style:
@@ -355,12 +383,24 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         })
       }));
     } else {
-      styles.push(new ol.style.Style({
-        text: this.createTextStyle_({
-          text: this.getMeasure(feature)
-        })
-      }));
+    offset += 25;
+    styles.push(new ol.style.Style({
+      text: this.createTextStyle_({
+        text: this.getMeasure(feature),
+        offsetY: -(offset / 2 + 4)
+      })
+    }));
     }
+  }
+  if (showLabel) {
+    offset += 25;
+    styles.push(new ol.style.Style({
+      text: this.createTextStyle_({
+        text: this.getNameProperty(feature),
+        size: 10,
+        offsetY: -(offset / 2 + 4)
+      })
+    }));
   }
 
   return styles;
@@ -604,7 +644,7 @@ ngeo.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
- * Delete also the 'ngeo_feature_type_' from the ngeo query system.
+ * Also delete the 'ngeo_feature_type_' from the ngeo query system.
  * @param {!ol.Feature} feature Feature.
  * @return {!Object.<string, *>} Filtered properties of the current feature.
  * @export
@@ -692,6 +732,20 @@ ngeo.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
   return goog.asserts.assertBoolean(showMeasure);
 };
 
+/**
+ * @param {!ol.Feature} feature Feature.
+ * @return {boolean} Show feature label.
+ * @export
+ */
+ngeo.FeatureHelper.prototype.getShowLabelProperty = function(feature) {
+ let showLabel = feature.get(ngeo.FeatureProperties.SHOW_LABEL);
+  if (showLabel === undefined) {
+    showLabel = false;
+  } else if (typeof showLabel === 'string') {
+    showLabel = (showLabel === 'true') ? true : false;
+  }
+  return goog.asserts.assertBoolean(showLabel);
+};
 
 /**
  * @param {!ol.Feature} feature Feature.
