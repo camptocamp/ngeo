@@ -713,10 +713,12 @@ ngeo.format.FeatureHash.castValue_ = function(key, value) {
     ngeo.FeatureProperties.IS_RECTANGLE,
     ngeo.FeatureProperties.IS_TEXT,
     ngeo.FeatureProperties.SHOW_MEASURE,
+    ngeo.FeatureProperties.SHOW_LABEL,
     'isCircle',
     'isRectangle',
     'isLabel',
-    'showMeasure'
+    'showMeasure',
+    'showLabel'
   ];
 
   if (ol.array.includes(numProperties, key)) {
