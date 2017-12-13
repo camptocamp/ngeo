@@ -3,8 +3,7 @@ goog.provide('gmf.printComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
-goog.require('ngeo.Print');
-goog.require('ngeo.PrintUtils');
+goog.require('ngeo.print.module');
 goog.require('ngeo.FeatureHelper');
 goog.require('ol.Observable');
 goog.require('ol.math');
