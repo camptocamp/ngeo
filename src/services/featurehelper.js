@@ -221,8 +221,6 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
         text: this.getMeasure(feature),
         offsetY: -(offset / 2 + 4)
       })
-   }));
-  }
   if (showLabel) {
     offset += 25;
     styles.push(new ol.style.Style({
@@ -249,10 +247,10 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
 
   const styles = [new ol.style.Style({
     image: new ol.style.Circle({
-	  radius: size,
-	  fill: new ol.style.Fill({
-	    color: color
-	  })
+      radius: size,
+      fill: new ol.style.Fill({
+        color: color
+      })
     })
   })];
 
@@ -268,7 +266,7 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
        })
     }));
   }
-  if (showLabel) {
+  if (showLabel){
     offset += 25;
     styles.push(new ol.style.Style({
       text: this.createTextStyle_({
