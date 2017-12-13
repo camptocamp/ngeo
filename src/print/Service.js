@@ -2,12 +2,10 @@ goog.provide('ngeo.print.Service');
 
 
 goog.require('ngeo');
-goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.utils');
-goog.require('ngeox');
+goog.require('ol');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
@@ -18,11 +16,7 @@ goog.require('ol.source.TileWMS');
 goog.require('ol.source.Vector');
 goog.require('ol.source.WMTS');
 goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Image');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
+goog.require('ol.style.Icon');
 goog.require('ol.style.RegularShape');
 goog.require('ol.tilegrid.WMTS');
 
@@ -91,18 +85,27 @@ ngeo.print.Service = function(url, $http, ngeoLayerHelper) {
 };
 
 
+/**
+ * @enum {string}
+ */
+ngeo.print.Service.PrintStyleType = {
+  LINE_STRING: 'LineString',
+  POINT: 'Point',
+  POLYGON: 'Polygon'
+};
+
 
 /**
- * @type {Object.<ol.geom.GeometryType, ngeox.PrintStyleType>}
+ * @type {Object.<ol.geom.GeometryType, ngeo.print.Service.PrintStyleType>}
  * @private
  */
 ngeo.print.Service.PrintStyleTypes_ = {
-  'LineString': ngeox.PrintStyleType.LINE_STRING,
-  'Point': ngeox.PrintStyleType.POINT,
-  'Polygon': ngeox.PrintStyleType.POLYGON,
-  'MultiLineString': ngeox.PrintStyleType.LINE_STRING,
-  'MultiPoint': ngeox.PrintStyleType.POINT,
-  'MultiPolygon': ngeox.PrintStyleType.POLYGON
+  'LineString': ngeo.print.Service.PrintStyleType.LINE_STRING,
+  'Point': ngeo.print.Service.PrintStyleType.POINT,
+  'Polygon': ngeo.print.Service.PrintStyleType.POLYGON,
+  'MultiLineString': ngeo.print.Service.PrintStyleType.LINE_STRING,
+  'MultiPoint': ngeo.print.Service.PrintStyleType.POINT,
+  'MultiPolygon': ngeo.print.Service.PrintStyleType.POLYGON
 };
 
 
@@ -521,16 +524,16 @@ ngeo.print.Service.prototype.encodeVectorStyle_ = function(object, geometryType,
   const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
   const textStyle = style.getText();
-  if (styleType == ngeo.print.ServiceStyleType.POLYGON) {
+  if (styleType == ngeo.print.Service.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
-  } else if (styleType == ngeo.print.ServiceStyleType.LINE_STRING) {
+  } else if (styleType == ngeo.print.Service.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
     }
-  } else if (styleType == ngeo.print.ServiceStyleType.POINT) {
+  } else if (styleType == ngeo.print.Service.PrintStyleType.POINT) {
     if (imageStyle !== null) {
       this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
     }

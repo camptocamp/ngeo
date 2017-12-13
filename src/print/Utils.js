@@ -1,6 +1,8 @@
 goog.provide('ngeo.print.Utils');
 
 goog.require('ngeo');
+goog.require('ol.has');
+goog.require('ol.math');
 
 
 /**

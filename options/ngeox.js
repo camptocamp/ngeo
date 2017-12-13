@@ -2653,13 +2653,3 @@ ngeox.WfsPermalinkData;
  * @typedef {function(string):!ngeo.print.Service}
  */
 ngeox.CreatePrint;
-
-
-/**
- * @enum {string}
- */
-ngeox.PrintStyleType = {
-  LINE_STRING: 'LineString',
-  POINT: 'Point',
-  POLYGON: 'Polygon'
-};
