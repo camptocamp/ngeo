@@ -13,6 +13,7 @@ goog.require('ngeo.drawrectangleDirective');
 goog.require('ngeo.drawtextDirective');
 goog.require('ol.Feature');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.measure.module');
 
 // FIXME add me at the module dependencies:

@@ -155,7 +155,7 @@ app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLoca
   this.layer;
 
   /**
-   * @type {!ngeo.layretree.Location}
+   * @type {!ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

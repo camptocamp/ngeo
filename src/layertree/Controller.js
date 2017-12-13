@@ -80,7 +80,7 @@ ngeo.layertree.Controller = function($scope, $rootScope, $attrs,
   this.parent = $scope.$parent['layertreeCtrl'];
 
   /**
-   * @type {Array.<ngeo.layertree.controller>}
+   * @type {Array.<ngeo.layertree.Controller>}
    * @export
    */
   this.children = [];

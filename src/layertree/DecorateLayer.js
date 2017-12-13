@@ -18,11 +18,18 @@ goog.require('ol.layer.Base');
  * [../examples/layeropacity.html](../examples/layeropacity.html)
  * [../examples/layervisibility.html](../examples/layervisibility.html)
  *
+ * @typedef {function(ol.layer.Base)}
  * @ngdoc service
  * @ngname ngeoDecorateLayer
+ * Useless, only used for the compiler
+ */
+ngeo.layertree.DecorateLayer;
+
+
+/**
  * @param {ol.layer.Base} layer Layer to decorate.
  */
-ngeo.layertree.DecorateLayer = function(layer) {
+ngeo.layertree.DecorateLayer_ = function(layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
 
   Object.defineProperty(layer, 'visible', {
@@ -59,5 +66,5 @@ ngeo.layertree.DecorateLayer = function(layer) {
  * @type {!angular.Module}
  */
 ngeo.layertree.DecorateLayer.module = angular.module('ngeoDecorateLayer', []);
-ngeo.layertree.DecorateLayer.module.value('ngeoDecorateLayer', ngeo.layertree.DecorateLayer);
+ngeo.layertree.DecorateLayer.module.value('ngeoDecorateLayer', ngeo.layertree.DecorateLayer_);
 ngeo.module.requires.push(ngeo.layertree.DecorateLayer.module.name);

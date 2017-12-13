@@ -6,7 +6,6 @@ goog.require('ngeo.utils');
 /**
  * A service to start a download for a file.
  *
- * @private
  * @return {ngeox.Download} The download function.
  * @ngdoc service
  * @ngname ngeoDownload

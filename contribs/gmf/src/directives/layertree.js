@@ -16,6 +16,7 @@ goog.require('ol.layer.Tile');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.layertree.component');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.map.LayerHelper');

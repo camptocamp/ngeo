@@ -18,12 +18,18 @@ goog.require('ol.source.Tile');
  *
  *      <span ng-if="layer.loading">please wait</span>
  *
+ * @typedef {function(ol.layer.Base, angular.Scope)}
  * @ngdoc service
  * @ngname ngeoDecorateLayerLoading
- * @param {ol.layer.Base} layer Layer to decorate.
+ */
+ngeo.layertree.DecorateLayerLoading;
+
+
+/**
+ * @param {ol.layer.Base} layer layer.
  * @param {angular.Scope} $scope Scope.
  */
-ngeo.layertree.DecorateLayerLoading = function(layer, $scope) {
+ngeo.layertree.DecorateLayerLoading_ = function(layer, $scope) {
 
   let source;
 
@@ -123,5 +129,5 @@ ngeo.layertree.DecorateLayerLoading = function(layer, $scope) {
  * @type {!angular.Module}
  */
 ngeo.layertree.DecorateLayerLoading.module = angular.module('ngeoDecorateLayerLoading', []);
-ngeo.layertree.DecorateLayerLoading.module.value('ngeoDecorateLayerLoading', ngeo.layertree.DecorateLayerLoading);
+ngeo.layertree.DecorateLayerLoading.module.value('ngeoDecorateLayerLoading', ngeo.layertree.DecorateLayerLoading_);
 ngeo.module.requires.push(ngeo.layertree.DecorateLayerLoading.module.name);

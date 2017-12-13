@@ -9,7 +9,9 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.download.module');
+/** @suppress {extraRequire} */
 goog.require('ngeo.grid.module');
 goog.require('ngeo.map.FeatureOverlayMgr');
 

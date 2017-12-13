@@ -14,6 +14,8 @@ goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ol.Collection');
+goog.require('ol.format.GPX');
+goog.require('ol.format.KML');
 
 
 gmf.datasource.ExternalDataSourcesManager = class {

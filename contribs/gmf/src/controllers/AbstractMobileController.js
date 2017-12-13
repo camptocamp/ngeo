@@ -24,6 +24,7 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.geolocation.mobile');
 
 gmf.module.value('isMobile', true);

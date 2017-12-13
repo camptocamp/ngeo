@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('gmf.authenticationDirective');
 goog.require('ngeo.Print');
 goog.require('ngeo.PrintUtils');
+goog.require('ngeo.FeatureHelper');
 goog.require('ol.Observable');
 goog.require('ol.math');
 goog.require('ol.Map');
