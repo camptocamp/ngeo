@@ -26,12 +26,7 @@ if (iOS && webkit && platform && !chromeiOS) {
       if ($('div.ol-zoom').get(0)) {
         console.log('stop interval');
         clearInterval(interval);
-        $('button.gmf-mobile-nav-left-trigger').addClass('ios-margin-top');
-        $('button.gmf-mobile-nav-right-trigger').addClass('ios-margin-top');
-        $('gmf-search').addClass('ios-margin-top');
-        $('div.ol-zoom').addClass('ios-zoom-btn');
-        $('div.ol-rotate').addClass('ios-rotate-btn');
-        $('button[ngeo-mobile-geolocation]').addClass('ios-geolocation-btn');
+        $('body').addClass('ios-margin');
       }
     }, 100);
   }
