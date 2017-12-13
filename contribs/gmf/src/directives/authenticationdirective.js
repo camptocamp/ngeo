@@ -37,12 +37,15 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  * Example:
  *
  *      <gmf-authentication
+ *        gmf-authentication-allow-password-reset="true"
  *        gmf-authentication-allow-password-change="true">
  *      </gmf-authentication>
  *
  * @param {string} gmfAuthenticationTemplateUrl Url to template.
  * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
  *     show the change password button. Default to true.
+ * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
+ *     show the password forgotten link. Default to true.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -52,6 +55,7 @@ gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
   return {
     bindToController: true,
     scope: {
+      'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
       'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange'
     },
     controller: 'GmfAuthenticationController as authCtrl',
@@ -107,6 +111,12 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    * @private
    */
   this.notification_ = ngeoNotification;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.allowPasswordReset;
 
   /**
    * @type {boolean}
@@ -179,6 +189,9 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
  * Initialise the controller.
  */
 gmf.AuthenticationController.prototype.$onInit = function() {
+  if (this.allowPasswordReset === undefined) {
+    this.allowPasswordReset = true;
+  }
   if (this.allowPasswordChange === undefined) {
     this.allowPasswordChange = true;
   }
