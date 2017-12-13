@@ -21,9 +21,11 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
+/** @suppress {extraRequire} */
 goog.require('ngeo.download.Service');
 
-// FIXME add download service in the module dependencies
+// FIXME add me at the module dependencies:
+// - ngeo.download.Service.module.name
 
 
 /**

@@ -8,9 +8,12 @@ goog.require('ol.events');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.statemanager.Service');
 
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.layertree.Controller.module.name
+// - ngeo.statemanager.Service.module.name
+ngeo.module.requires.push(ngeo.layertree.Controller.module.name);
+ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
 
-// FIXME add ngeo.layertree.Controller.module.name in module dependencies
-// FIXME add ngeo.statemanager.Service.module.name in module dependencies
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'

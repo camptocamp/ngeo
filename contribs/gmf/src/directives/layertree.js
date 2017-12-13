@@ -20,9 +20,15 @@ goog.require('ngeo.layertree.component');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.map.LayerHelper');
 
-// FIXME add me at the module dependencies:
+
+// FIXME remove lines right under and add me at the module dependencies:
 // - ngeo.layertree.component.name
 // - ngeo.layertree.Controller.module.name
+// - ngeo.map.LayerHelper.module.name
+goog.require('ngeo.layertree.module');
+ngeo.module.requires.push(ngeo.layertree.module.name);
+ngeo.module.requires.push(ngeo.map.LayerHelper.module.name);
+
 
 gmf.module.value('gmfLayertreeTemplate',
   /**

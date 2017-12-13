@@ -26,7 +26,9 @@ goog.require('ol.style.Style');
 
 goog.require('ngeo.statemanager.module');
 
-// FIXME Add ngeo.statemanager.module.name in the module dependencies
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.module.name
+ngeo.module.requires.push(ngeo.statemanager.module.name);
 
 
 /**

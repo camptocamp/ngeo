@@ -15,7 +15,8 @@ goog.require('ol.Feature');
 
 goog.require('ngeo.measure.module');
 
-// FIXME add ngeo.measure.module.name to the module requirement
+// FIXME add me at the module dependencies:
+//ngeo.module.requires.push(ngeo.measure.module.name);
 
 
 /**

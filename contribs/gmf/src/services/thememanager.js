@@ -5,7 +5,10 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.statemanager.Service');
 
-// FIXME add ngeo.statemanager.Service.module.name in the module dependencies
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.Service.module.name
+ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
+
 
 /**
  * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.

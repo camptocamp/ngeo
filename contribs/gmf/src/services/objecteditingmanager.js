@@ -5,7 +5,10 @@ goog.require('ol.Feature');
 
 goog.require('ngeo.statemanager.Location');
 
-// FIXME add ngeo.statemanager.Location.module.name in the module dependecies
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.Location.module.name
+ngeo.module.requires.push(ngeo.statemanager.Location.module.name);
+
 
 /**
  * A service that looks for certain parameters in the url and use them to fetch
