@@ -3,7 +3,8 @@ goog.provide('gmf.printComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
-goog.require('ngeo.print.module');
+goog.require('ngeo.print.Service');
+goog.require('ngeo.print.Utils');
 goog.require('ngeo.FeatureHelper');
 goog.require('ol.Observable');
 goog.require('ol.math');
@@ -163,7 +164,7 @@ gmf.PrintController = class {
    * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
-   * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
+   * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
@@ -266,13 +267,13 @@ gmf.PrintController = class {
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
 
     /**
-     * @type {ngeo.PrintUtils}
+     * @type {ngeo.print.Utils}
      * @private
      */
     this.ngeoPrintUtils_ = ngeoPrintUtils;
 
     /**
-     * @type {ngeo.Print}
+     * @type {ngeo.print.Service}
      * @private
      */
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
