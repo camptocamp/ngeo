@@ -1,6 +1,3 @@
-/**
- * @module gmf search namespace
- */
 goog.provide('gmf.search.module');
 
 goog.require('gmf.search.component');

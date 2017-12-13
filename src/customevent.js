@@ -1,4 +1,5 @@
 goog.provide('ngeo.CustomEvent');
+goog.require('ol');
 goog.require('ol.events.Event');
 
 

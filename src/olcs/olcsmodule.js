@@ -1,6 +1,3 @@
-/**
- * @module ngeo olcs namespace
- */
 goog.module('ngeo.olcs.olcsModule');
 goog.module.declareLegacyNamespace();
 

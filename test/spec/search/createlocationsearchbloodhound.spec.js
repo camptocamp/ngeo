@@ -1,17 +1,23 @@
 /* global geoAdminLocationSearch */
+
 goog.require('ngeo.search.createLocationSearchBloodhound');
 goog.require('ngeo.test.data.geoAdminLocationSearch');
 goog.require('ngeo.search.module');
 goog.require('ngeo');
+goog.require('ol.proj');
+
 
 describe('ngeo.search.createLocationSearchBloodhound', () => {
 
   let ngeoCreateLocationSearchBloodhound;
   ngeo.module.requires.push(ngeo.search.module.name);
+  angular.module('myTest', [ngeo.module.name]);
+
+  beforeEach(angular.mock.module('myTest'));
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoCreateLocationSearchBloodhound = $injector.get('ngeoCreateLocationSearchBloodhound');
+    inject((_ngeoCreateLocationSearchBloodhound_) => {
+      ngeoCreateLocationSearchBloodhound = _ngeoCreateLocationSearchBloodhound_;
     });
   });
 

@@ -1,6 +1,3 @@
-/**
- * @module ngeo search namespace
- */
 goog.provide('ngeo.search.module');
 
 goog.require('ngeo.search.searchDirective');

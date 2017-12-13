@@ -1,6 +1,3 @@
-/**
- * @module ngeo location search namespace
- */
 goog.provide('ngeo.search.createLocationSearchBloodhound');
 
 goog.require('ol');
@@ -11,6 +8,7 @@ goog.require('ngeo.proj.EPSG21781');
 
 goog.require('ol.geom.Point');
 goog.require('ol.Feature');
+// webpack: import 'corejs-typeahead';
 
 
 /**

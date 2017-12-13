@@ -1,11 +1,9 @@
-/**
- * @module ngeo search namespace
- */
 goog.provide('ngeo.search.createGeoJSONBloodhound');
 
 goog.require('ol');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.obj');
+// webpack: import 'corejs-typeahead';
 
 
 /**

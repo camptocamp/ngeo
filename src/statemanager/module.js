@@ -1,6 +1,3 @@
-/**
- * @module ngeo map namespace
- */
 goog.provide('ngeo.statemanager.module');
 
 goog.require('ngeo');

@@ -1,0 +1,38 @@
+#!/bin/bash -ex
+
+node node_modules/googshift/filename-case-from-module.js src '*.js'
+node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
+node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
+node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
+node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
+node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js contribs/gmf/apps
+git add -A  # To be removed when we use the new OpenLayers version
+buildtools/git-grep-sed " from 'ol/" "s/ from 'ol\/\(.*\)';/ from \'ol\/\L\1\';/g"  # To be removed when we use the new OpenLayers version
+buildtools/git-grep-sed 'ngInject' 's|\* @ngInject|*//* @ngInject|g'
+find -name node_modules -prune -or -name '*.js' -print | xargs sed -i 's|^// webpack: ||g'
+node_modules/.bin/eslint --fix src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps || true
+mv karma-conf{-webpack,}.js
+mv src/{ngeo,index}.js
+mv contribs/gmf/src/{gmf,index}.js
+mv src/goog.asserts.js{_,}
+mv src/goog.asserts.prod.js{_,}
+buildtools/git-grep-sed 'gmf/test/data/' 's/\<gmfTestDataThemes\>/themes/g'
+buildtools/git-grep-sed 'gmf/test/data/' 's/\<gmfTestDataPrintcapabilities\>/printCapabilities/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputFuel\>/msGMLOutputFuel/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStop\>/gmlResponseBusStop/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStopAndInformation\>/gmlResponseBusStopAndInformation/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputInformationWfs\>/gmlResponseInformationWfs/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStopWfs\>/gmlResponseBusStopWfs/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputInformationHitsWfs\>/gmlResponseInformationHitsWfs/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataWmtsCapabilities\>/wmtsCapabilities/g'
+buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataGeoAdminLocationSearch\>/geoAdminLocationSearch/g'
+git reset --mixed
+set +x
+
+echo ------------------------
+echo Clean used scripts with:
+echo '  git rm buildtools/git-grep-sed buildtools/webpack-migration'
+echo
+echo 'If your repository was completely clean (git clean --force -d) you can do the commit with:'
+echo '  git add -A'
+echo '  git commit -m "Apply the webpack migration"'

@@ -43,9 +43,9 @@ ngeo.module.requires.push(ngeo.map.directive.name);
  * @param {ngeo.datasource.SyncDataSourcesMap} ngeoSyncDataSourcesMap Ngeo sync
  *     data sources map service.
  * @return {angular.Directive} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoMap
+ * @ngInject
  */
 ngeo.map.directive.directive_ = function($window, ngeoSyncDataSourcesMap) {
   return {

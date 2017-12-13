@@ -1,6 +1,3 @@
-/**
- * @module gmf
- */
 goog.provide('gmf');
 
 goog.require('ngeo');

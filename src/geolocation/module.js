@@ -1,6 +1,3 @@
-/**
- * @module ngeo map namespace
- */
 goog.provide('ngeo.geolocation.module');
 
 goog.require('ngeo');

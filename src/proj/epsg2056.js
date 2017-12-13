@@ -3,10 +3,8 @@ goog.module.declareLegacyNamespace();
 
 goog.require('ol.proj');
 goog.require('ol.proj.proj4');
-
-if (typeof ol.proj.proj4.get() !== 'function' && typeof proj4 === 'function') {
-  ol.proj.setProj4(proj4);
-}
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.somerc');
 
 if (typeof ol.proj.proj4.get() == 'function') {
   const epsg2056def = [

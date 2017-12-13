@@ -1,6 +1,3 @@
-/**
- * @module ngeo search.directive namespace
- */
 goog.provide('ngeo.search.searchDirective');
 
 goog.require('ol');

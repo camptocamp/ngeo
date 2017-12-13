@@ -1,6 +1,3 @@
-/**
- * @module ngeo print namespace
- */
 goog.provide('ngeo.print.Utils');
 
 goog.require('ngeo');

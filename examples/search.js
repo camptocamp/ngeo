@@ -1,5 +1,7 @@
 goog.provide('app.search');
 
+// webpack: import './search.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
@@ -18,7 +20,7 @@ goog.require('ngeo.search.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.search.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.search.module.name
@@ -28,7 +30,7 @@ app.module = angular.module('app', [
 /**
  * @type {!angular.Component}
  */
-app.searchComponent = {
+app.search.searchComponent = {
   bndings: {
     'map': '=appSearchMap'
   },
@@ -42,7 +44,7 @@ app.searchComponent = {
 };
 
 
-app.module.component('appSearch', app.searchComponent);
+app.search.module.component('appSearch', app.search.searchComponent);
 
 
 /**
@@ -54,7 +56,7 @@ app.module.component('appSearch', app.searchComponent);
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-app.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+app.search.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
    * @private
    * @type {angular.JQLite}
@@ -123,7 +125,7 @@ app.SearchController = function($element, $rootScope, $compile, ngeoSearchCreate
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: app.SearchController.select_.bind(this)
+    select: app.search.SearchController.select_.bind(this)
   });
 };
 
@@ -131,7 +133,7 @@ app.SearchController = function($element, $rootScope, $compile, ngeoSearchCreate
 /**
  * @export
  */
-app.SearchController.prototype.$onInit = function() {
+app.search.SearchController.prototype.$onInit = function() {
   // Empty the search field on focus and blur.
   const input = this.$element.find('input');
   input.on('focus blur', () => {
@@ -144,7 +146,7 @@ app.SearchController.prototype.$onInit = function() {
  * @return {ol.layer.Vector} The vector layer.
  * @private
  */
-app.SearchController.prototype.createVectorLayer_ = function() {
+app.search.SearchController.prototype.createVectorLayer_ = function() {
   const vectorLayer = new ol.layer.Vector({
     source: new ol.source.Vector()
   });
@@ -161,7 +163,7 @@ app.SearchController.prototype.createVectorLayer_ = function() {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
+app.search.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
   const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?query=%QUERY';
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(
     url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
@@ -174,10 +176,10 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCre
  * @param {jQuery.Event} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
- * @this {app.SearchController}
+ * @this {app.search.SearchController}
  * @private
  */
-app.SearchController.select_ = function(event, suggestion, dataset) {
+app.search.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
   const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
@@ -193,14 +195,14 @@ app.SearchController.select_ = function(event, suggestion, dataset) {
 };
 
 
-app.module.controller('AppSearchController', app.SearchController);
+app.search.module.controller('AppSearchController', app.search.SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.search.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -220,4 +222,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.search.module.controller('MainController', app.search.MainController);

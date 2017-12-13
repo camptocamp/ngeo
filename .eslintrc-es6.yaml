@@ -72,6 +72,8 @@ rules:
   # http://eslint.org/docs/rules/no-this-before-super
   no-this-before-super: error
 
+  no-unused-vars: warn
+
   # disallow useless computed property keys
   # http://eslint.org/docs/rules/no-useless-computed-key
   no-useless-computed-key: error

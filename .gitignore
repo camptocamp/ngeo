@@ -1,9 +1,10 @@
 *.pyc
 .*.swp
-.transifexrc
-/.build
-/node_modules
-/dist
+/.transifexrc
+/package-lock.json
+/.build/
+/node_modules/
+/dist/
 /.tx/config
 /.tx/ngeo.ngeo-*
 /.tx/ngeo.gmf-*
