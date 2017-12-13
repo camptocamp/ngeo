@@ -2,8 +2,7 @@ goog.provide('gmfapp.editfeature');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
+goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('gmf.EditFeature');
@@ -19,7 +18,10 @@ goog.require('ol.source.ImageWMS');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.authentication.module.name
+]);
 
 
 gmfapp.module.value(

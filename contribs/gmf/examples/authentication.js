@@ -1,11 +1,14 @@
 goog.provide('gmfapp.authentication');
 
-/** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
+
+goog.require('gmf.authentication.module');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.authentication.module.name
+]);
 
 
 gmfapp.module.value(

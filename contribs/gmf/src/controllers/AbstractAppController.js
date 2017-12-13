@@ -2,8 +2,6 @@ goog.provide('gmf.AbstractAppController');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
@@ -110,9 +108,9 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Authentication service
-   * @type {gmf.Authentication}
+   * @type {gmf.authentication.Service}
    */
-  const gmfAuthentication = $injector.get('gmfAuthentication');
+  const gmfAuthentication = $injector.get('gmfAuthenticationService');
 
   /**
    * @type {boolean}

@@ -2,7 +2,7 @@ goog.provide('gmf.filterselectorComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.Authentication');
+goog.require('gmf.authentication.Service');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesHelper');
