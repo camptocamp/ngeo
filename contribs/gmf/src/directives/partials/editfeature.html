@@ -92,7 +92,7 @@
               class="close"
               ng-click="efCtrl.cancel()"
               ng-disabled="efCtrl.pending"
-              title="{{'Cancel modifications | translate'}}"
+              title="{{'Cancel modifications' | translate}}"
               href>&times;</a>
           </div>
         </div>
@@ -107,19 +107,19 @@
           class="btn btn-sm btn-default gmf-editfeature-btn-save"
           ng-click="form.$valid && efCtrl.save()"
           ng-disabled="!efCtrl.dirty || efCtrl.pending"
-          title="{{'Save modifications | translate'}}"></input>
+          title="{{'Save modifications' | translate}}"></input>
         <a
           class="btn btn-sm btn-default gmf-editfeature-btn-cancel"
           ng-click="efCtrl.confirmCancel()"
           ng-disabled="efCtrl.pending"
-          title="{{'Cancel modifications | translate'}}"
+          title="{{'Cancel modifications' | translate}}"
           href>{{'Cancel' | translate}}</a>
         <button
           class="btn btn-sm btn-link gmf-editfeature-btn-delete"
           ng-click="efCtrl.delete()"
           ng-disabled="efCtrl.pending"
           ng-show="efCtrl.featureId"
-          title="{{'Delete this feature | translate'}}">
+          title="{{'Delete this feature' | translate}}">
           <span class="fa fa-trash"></span>
           {{'Delete' | translate}}
         </button>
