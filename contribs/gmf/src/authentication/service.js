@@ -194,8 +194,6 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
   }
 };
 
-ol.inherits(gmf.authentication.Service, ol.events.EventTarget);
-
 /**
  * @enum {string}
  */
