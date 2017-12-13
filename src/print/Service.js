@@ -4,6 +4,7 @@ goog.provide('ngeo.Print');
 goog.require('ngeo');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.utils');
+goog.require('ngeox');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.GeometryType');
@@ -25,35 +26,6 @@ goog.require('ol.style.Text');
 goog.require('ol.style.RegularShape');
 goog.require('ol.tilegrid.WMTS');
 
-
-/**
- * @typedef {function(string):!ngeo.Print}
- */
-ngeo.CreatePrint;
-
-
-/**
- * @enum {string}
- */
-ngeo.PrintStyleType = {
-  LINE_STRING: 'LineString',
-  POINT: 'Point',
-  POLYGON: 'Polygon'
-};
-
-
-/**
- * @type {Object.<ol.geom.GeometryType, ngeo.PrintStyleType>}
- * @private
- */
-ngeo.PrintStyleTypes_ = {
-  'LineString': ngeo.PrintStyleType.LINE_STRING,
-  'Point': ngeo.PrintStyleType.POINT,
-  'Polygon': ngeo.PrintStyleType.POLYGON,
-  'MultiLineString': ngeo.PrintStyleType.LINE_STRING,
-  'MultiPoint': ngeo.PrintStyleType.POINT,
-  'MultiPolygon': ngeo.PrintStyleType.POLYGON
-};
 
 /**
  * Provides a function to create ngeo.Print objects used to
@@ -116,6 +88,21 @@ ngeo.Print = function(url, $http, ngeoLayerHelper) {
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
+};
+
+
+
+/**
+ * @type {Object.<ol.geom.GeometryType, ngeox.PrintStyleType>}
+ * @private
+ */
+ngeo.Print.PrintStyleTypes_ = {
+  'LineString': ngeox.PrintStyleType.LINE_STRING,
+  'Point': ngeox.PrintStyleType.POINT,
+  'Polygon': ngeox.PrintStyleType.POLYGON,
+  'MultiLineString': ngeox.PrintStyleType.LINE_STRING,
+  'MultiPoint': ngeox.PrintStyleType.POINT,
+  'MultiPolygon': ngeox.PrintStyleType.POLYGON
 };
 
 
@@ -516,11 +503,11 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
  * @private
  */
 ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, styleId, featureStyleProp) {
-  if (!(geometryType in ngeo.PrintStyleTypes_)) {
+  if (!(geometryType in ngeo.Print.PrintStyleTypes_)) {
     // unsupported geometry type
     return;
   }
-  const styleType = ngeo.PrintStyleTypes_[geometryType];
+  const styleType = ngeo.Print.PrintStyleTypes_[geometryType];
   const key = `[${featureStyleProp} = '${styleId}']`;
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
@@ -899,7 +886,7 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
 /**
  * @param {angular.$http} $http Angular $http service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @return {ngeo.CreatePrint} The function to create a print service.
+ * @return {ngeox.CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint

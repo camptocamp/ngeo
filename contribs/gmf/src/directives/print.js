@@ -165,7 +165,7 @@ gmf.PrintController = class {
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
    * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
-   * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+   * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
