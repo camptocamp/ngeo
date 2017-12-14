@@ -8,23 +8,16 @@ const Service = class {
 
   /**
    * @ngInject
-   * @param {angular.Scope} $rootScope Angular root scope.
    * @param {!ngeo.Debounce} ngeoDebounce ngeo debounce service.
    * @param {ngeo.Location} ngeoLocation ngeo location service.
    * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
    */
-  constructor($rootScope, ngeoDebounce, ngeoLocation, ngeoStateManager) {
+  constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**
      * @private
      * @type {olcs.contrib.Manager|undefined}
      */
     this.manager_;
-
-    /**
-     * @private
-     * @type {angular.Scope}
-     */
-    this.$rootScope = $rootScope;
 
     /**
      * @private
@@ -53,21 +46,14 @@ const Service = class {
   initialize(manager) {
     this.manager_ = manager;
 
-    const unWatchFn = this.$rootScope.$watch(
-      () => this.manager_.getOl3d(),
-      (ol3d) => {
-        if (ol3d) {
-          if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
-            this.cameraFromPermalink_();
-          }
-          this.setupPermalink_();
-          unWatchFn();
-        }
-      }
-    );
+    this.manager_.on('load', () => {
+      this.setupPermalink_();
+    });
 
     if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
-      this.manager_.toggle3d();
+      this.manager_.toggle3d().then(() => {
+        this.cameraFromPermalink_();
+      });
     }
   }
 
@@ -146,10 +132,11 @@ const Service = class {
       }
     }, 1000, true));
 
-    this.$rootScope.$watch(
-      () => this.manager_.getOl3d().getEnabled(),
-      this.on3dToggle_.bind(this)
-    );
+    this.manager_.on('toggle', (event) => {
+      if (!event.target.is3dEnabled()) {
+        this.teardownPermalink_();
+      }
+    });
   }
 
   /**
@@ -159,16 +146,6 @@ const Service = class {
     this.ngeoLocation_.getParamKeysWithPrefix('3d_').forEach((key) => {
       this.ngeoStateManager_.deleteParam(key);
     });
-  }
-
-  /**
-   * @private
-   * @param {boolean} enabled Is 3d active or not.
-   */
-  on3dToggle_(enabled) {
-    if (!enabled) {
-      this.teardownPermalink_();
-    }
   }
 
 };
