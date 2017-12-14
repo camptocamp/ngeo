@@ -47,7 +47,7 @@
     "fs-extra": "5.0.0",
     "gaze": "1.1.2",
     "google-closure-library": "20171203.0.0",
-    "googshift": "0.9.2",
+    "googshift": "0.9.3",
     "jasmine-core": "2.8.0",
     "jquery": "3.2.1",
     "jquery-ui-touch-punch": "0.2.3",
