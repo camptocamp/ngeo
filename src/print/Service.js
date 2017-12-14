@@ -1,12 +1,15 @@
-goog.provide('ngeo.Print');
+/**
+ * @module ngeo print namespace
+ */
+goog.provide('ngeo.print.Service');
 
 
 goog.require('ngeo');
-goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.utils');
+goog.require('ngeo.map.LayerHelper');
+goog.require('ol');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
@@ -17,49 +20,16 @@ goog.require('ol.source.TileWMS');
 goog.require('ol.source.Vector');
 goog.require('ol.source.WMTS');
 goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Image');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
+goog.require('ol.style.Icon');
 goog.require('ol.style.RegularShape');
 goog.require('ol.tilegrid.WMTS');
 
 
 /**
- * @typedef {function(string):!ngeo.Print}
- */
-ngeo.CreatePrint;
-
-
-/**
- * @enum {string}
- */
-ngeo.PrintStyleType = {
-  LINE_STRING: 'LineString',
-  POINT: 'Point',
-  POLYGON: 'Polygon'
-};
-
-
-/**
- * @type {Object.<ol.geom.GeometryType, ngeo.PrintStyleType>}
- * @private
- */
-ngeo.PrintStyleTypes_ = {
-  'LineString': ngeo.PrintStyleType.LINE_STRING,
-  'Point': ngeo.PrintStyleType.POINT,
-  'Polygon': ngeo.PrintStyleType.POLYGON,
-  'MultiLineString': ngeo.PrintStyleType.LINE_STRING,
-  'MultiPoint': ngeo.PrintStyleType.POINT,
-  'MultiPolygon': ngeo.PrintStyleType.POLYGON
-};
-
-/**
- * Provides a function to create ngeo.Print objects used to
+ * Provides a function to create ngeo.print.Service objects used to
  * interact with MapFish Print v3 services.
  *
- * ngeo.Print objects expose the following methods:
+ * ngeo.print.Service objects expose the following methods:
  *
  * - createSpec: create a report specification object
  * - createReport: send a create report request
@@ -69,7 +39,7 @@ ngeo.PrintStyleTypes_ = {
  *
  *
  *     let printBaseUrl = 'http://example.com/print';
- *     let print = new ngeo.Print(printBaseUrl);
+ *     let print = new ngeo.print.Service(printBaseUrl);
  *
  *     let scale = 5000;
  *     let dpi = 72;
@@ -98,7 +68,7 @@ ngeo.PrintStyleTypes_ = {
  * @param {angular.$http} $http Angular $http service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
-ngeo.Print = function(url, $http, ngeoLayerHelper) {
+ngeo.print.Service = function(url, $http, ngeoLayerHelper) {
   /**
    * @type {string}
    * @private
@@ -120,10 +90,34 @@ ngeo.Print = function(url, $http, ngeoLayerHelper) {
 
 
 /**
+ * @enum {string}
+ */
+ngeo.print.Service.PrintStyleType = {
+  LINE_STRING: 'LineString',
+  POINT: 'Point',
+  POLYGON: 'Polygon'
+};
+
+
+/**
+ * @type {Object.<ol.geom.GeometryType, ngeo.print.Service.PrintStyleType>}
+ * @private
+ */
+ngeo.print.Service.PrintStyleTypes_ = {
+  'LineString': ngeo.print.Service.PrintStyleType.LINE_STRING,
+  'Point': ngeo.print.Service.PrintStyleType.POINT,
+  'Polygon': ngeo.print.Service.PrintStyleType.POLYGON,
+  'MultiLineString': ngeo.print.Service.PrintStyleType.LINE_STRING,
+  'MultiPoint': ngeo.print.Service.PrintStyleType.POINT,
+  'MultiPolygon': ngeo.print.Service.PrintStyleType.POLYGON
+};
+
+
+/**
  * @const
  * @private
  */
-ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
+ngeo.print.Service.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
 
 
 /**
@@ -133,7 +127,7 @@ ngeo.Print.FEAT_STYLE_PROP_PREFIX_ = '_ngeo_style_';
  * @return {angular.$http.HttpPromise} HTTP promise.
  * @export
  */
-ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
+ngeo.print.Service.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
     /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/cancel/${ref}`;
@@ -153,7 +147,7 @@ ngeo.Print.prototype.cancel = function(ref, opt_httpConfig) {
  * @return {MapFishPrintSpec} The print spec.
  * @export
  */
-ngeo.Print.prototype.createSpec = function(
+ngeo.print.Service.prototype.createSpec = function(
   map, scale, dpi, layout, format, customAttributes) {
 
   const specMap = /** @type {MapFishPrintMap} */ ({
@@ -184,7 +178,7 @@ ngeo.Print.prototype.createSpec = function(
  * @param {MapFishPrintMap} object Object.
  * @private
  */
-ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
+ngeo.print.Service.prototype.encodeMap_ = function(map, scale, object) {
   const view = map.getView();
   const viewCenter = view.getCenter();
   const viewProjection = view.getProjection();
@@ -219,7 +213,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
  * @param {ol.layer.Base} layer Layer.
  * @param {number} resolution Resolution.
  */
-ngeo.Print.prototype.encodeLayer = function(arr, layer, resolution) {
+ngeo.print.Service.prototype.encodeLayer = function(arr, layer, resolution) {
   if (layer instanceof ol.layer.Image) {
     this.encodeImageLayer_(arr, layer);
   } else if (layer instanceof ol.layer.Tile) {
@@ -235,7 +229,7 @@ ngeo.Print.prototype.encodeLayer = function(arr, layer, resolution) {
  * @param {ol.layer.Image} layer Layer.
  * @private
  */
-ngeo.Print.prototype.encodeImageLayer_ = function(arr, layer) {
+ngeo.print.Service.prototype.encodeImageLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
   const source = layer.getSource();
   if (source instanceof ol.source.ImageWMS) {
@@ -249,7 +243,7 @@ ngeo.Print.prototype.encodeImageLayer_ = function(arr, layer) {
  * @param {ol.layer.Image} layer Layer.
  * @private
  */
-ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
+ngeo.print.Service.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
   goog.asserts.assertInstanceof(layer, ol.layer.Image);
@@ -270,7 +264,7 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  * @param {Object} params Url parameters
  * @private
  */
-ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
+ngeo.print.Service.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   if (url.startsWith('//')) {
     url = window.location.protocol  + url;
   }
@@ -294,7 +288,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   delete customParams['VERSION'];
 
   const object = /** @type {MapFishPrintWmsLayer} */ ({
-    baseURL: ngeo.Print.getAbsoluteUrl_(url_url.origin + url_url.pathname),
+    baseURL: ngeo.print.Service.getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
@@ -312,7 +306,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
  * @return {string} Absolute URL.
  * @private
  */
-ngeo.Print.getAbsoluteUrl_ = function(url) {
+ngeo.print.Service.getAbsoluteUrl_ = function(url) {
   const a = document.createElement('a');
   a.href = encodeURI(url);
   return decodeURI(a.href);
@@ -324,7 +318,7 @@ ngeo.Print.getAbsoluteUrl_ = function(url) {
  * @param {ol.layer.Tile} layer Layer.
  * @private
  */
-ngeo.Print.prototype.encodeTileLayer_ = function(arr, layer) {
+ngeo.print.Service.prototype.encodeTileLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
   const source = layer.getSource();
   if (source instanceof ol.source.WMTS) {
@@ -340,7 +334,7 @@ ngeo.Print.prototype.encodeTileLayer_ = function(arr, layer) {
  * @param {ol.layer.Tile} layer Layer.
  * @private
  */
-ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
+ngeo.print.Service.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
   const source = layer.getSource();
   goog.asserts.assertInstanceof(source, ol.source.WMTS);
@@ -395,7 +389,7 @@ ngeo.Print.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
  * @param {ol.layer.Tile} layer Layer.
  * @private
  */
-ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
+ngeo.print.Service.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
   goog.asserts.assertInstanceof(layer, ol.layer.Tile);
@@ -412,7 +406,7 @@ ngeo.Print.prototype.encodeTileWmsLayer_ = function(arr, layer) {
  * @param {number} resolution Resolution.
  * @private
  */
-ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
+ngeo.print.Service.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
   const source = layer.getSource();
   goog.asserts.assertInstanceof(source, ol.source.Vector);
 
@@ -478,7 +472,7 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
           geojsonFeature.properties = {};
         }
 
-        const featureStyleProp = ngeo.Print.FEAT_STYLE_PROP_PREFIX_ + j;
+        const featureStyleProp = ngeo.print.Service.FEAT_STYLE_PROP_PREFIX_ + j;
         this.encodeVectorStyle_(
           mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
@@ -515,12 +509,12 @@ ngeo.Print.prototype.encodeVectorLayer_ = function(arr, layer, resolution) {
  * @param {string} featureStyleProp Feature style property name.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, styleId, featureStyleProp) {
-  if (!(geometryType in ngeo.PrintStyleTypes_)) {
+ngeo.print.Service.prototype.encodeVectorStyle_ = function(object, geometryType, style, styleId, featureStyleProp) {
+  if (!(geometryType in ngeo.print.Service.PrintStyleTypes_)) {
     // unsupported geometry type
     return;
   }
-  const styleType = ngeo.PrintStyleTypes_[geometryType];
+  const styleType = ngeo.print.Service.PrintStyleTypes_[geometryType];
   const key = `[${featureStyleProp} = '${styleId}']`;
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
@@ -534,16 +528,16 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
   const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
   const textStyle = style.getText();
-  if (styleType == ngeo.PrintStyleType.POLYGON) {
+  if (styleType == ngeo.print.Service.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
-  } else if (styleType == ngeo.PrintStyleType.LINE_STRING) {
+  } else if (styleType == ngeo.print.Service.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
     }
-  } else if (styleType == ngeo.PrintStyleType.POINT) {
+  } else if (styleType == ngeo.print.Service.PrintStyleType.POINT) {
     if (imageStyle !== null) {
       this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
     }
@@ -559,7 +553,7 @@ ngeo.Print.prototype.encodeVectorStyle_ = function(object, geometryType, style, 
  * @param {!ol.style.Fill} fillStyle Fill style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
+ngeo.print.Service.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
     goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
@@ -577,7 +571,7 @@ ngeo.Print.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle) {
+ngeo.print.Service.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
@@ -592,7 +586,7 @@ ngeo.Print.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle)
  * @param {!ol.style.Image} imageStyle Image style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle) {
+ngeo.print.Service.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle) {
   let symbolizer;
   if (imageStyle instanceof ol.style.Circle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -688,7 +682,7 @@ ngeo.Print.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle)
  * @param {ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle, strokeStyle) {
+ngeo.print.Service.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
@@ -706,7 +700,7 @@ ngeo.Print.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @private
  */
-ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
+ngeo.print.Service.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
@@ -732,7 +726,7 @@ ngeo.Print.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle
  * @param {!ol.style.Text} textStyle Text style.
  * @private
  */
-ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
+ngeo.print.Service.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
@@ -820,7 +814,7 @@ ngeo.Print.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
  * @return {string} URL.
  * @private
  */
-ngeo.Print.prototype.getWmtsUrl_ = function(source) {
+ngeo.print.Service.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
   goog.asserts.assert(urls.length > 0);
   let url = urls[0];
@@ -830,7 +824,7 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
   if (url.indexOf('{Layer}') >= 0) {
     url = url.replace('{Layer}', layer);
   }
-  return ngeo.Print.getAbsoluteUrl_(url);
+  return ngeo.print.Service.getAbsoluteUrl_(url);
 };
 
 
@@ -841,7 +835,7 @@ ngeo.Print.prototype.getWmtsUrl_ = function(source) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  * @export
  */
-ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
+ngeo.print.Service.prototype.createReport = function(printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
   const url = `${this.url_}/report.${format}`;
   const httpConfig = /** @type {!angular.$http.Config} */ ({
@@ -862,7 +856,7 @@ ngeo.Print.prototype.createReport = function(printSpec, opt_httpConfig) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  * @export
  */
-ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
+ngeo.print.Service.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
     /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/status/${ref}.json`;
@@ -876,7 +870,7 @@ ngeo.Print.prototype.getStatus = function(ref, opt_httpConfig) {
  * @return {string} The report URL for this ref.
  * @export
  */
-ngeo.Print.prototype.getReportUrl = function(ref) {
+ngeo.print.Service.prototype.getReportUrl = function(ref) {
   return `${this.url_}/report/${ref}`;
 };
 
@@ -886,7 +880,7 @@ ngeo.Print.prototype.getReportUrl = function(ref) {
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
-ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
+ngeo.print.Service.prototype.getCapabilities = function(opt_httpConfig) {
   const httpConfig =
     opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.$http.Config} */ ({
       withCredentials: true
@@ -899,20 +893,25 @@ ngeo.Print.prototype.getCapabilities = function(opt_httpConfig) {
 /**
  * @param {angular.$http} $http Angular $http service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @return {ngeo.CreatePrint} The function to create a print service.
+ * @return {ngeox.CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
  */
-ngeo.createPrintServiceFactory = function($http, ngeoLayerHelper) {
+ngeo.print.Service.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
   /**
        * @param {string} url URL to MapFish print service.
        */
     function(url) {
-      return new ngeo.Print(url, $http, ngeoLayerHelper);
+      return new ngeo.print.Service(url, $http, ngeoLayerHelper);
     });
 };
 
-
-ngeo.module.factory('ngeoCreatePrint', ngeo.createPrintServiceFactory);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.print.Service.module = angular.module('ngeoPrint', []);
+ngeo.print.Service.module.service('ngeoPrintService', ngeo.print.Service);
+ngeo.print.Service.module.factory('ngeoCreatePrint', ngeo.print.Service.createPrintServiceFactory);
+ngeo.module.requires.push(ngeo.print.Service.module.name);

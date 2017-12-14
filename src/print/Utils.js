@@ -1,6 +1,11 @@
-goog.provide('ngeo.PrintUtils');
+/**
+ * @module ngeo print namespace
+ */
+goog.provide('ngeo.print.Utils');
 
 goog.require('ngeo');
+goog.require('ol.has');
+goog.require('ol.math');
 
 
 /**
@@ -11,7 +16,7 @@ goog.require('ngeo');
  * @ngdoc service
  * @ngname ngeoPrintUtils
  */
-ngeo.PrintUtils = function() {
+ngeo.print.Utils = function() {
 
   /**
    * @type {number}
@@ -32,14 +37,14 @@ ngeo.PrintUtils = function() {
  * @const
  * @private
  */
-ngeo.PrintUtils.INCHES_PER_METER_ = 39.37;
+ngeo.print.Utils.INCHES_PER_METER_ = 39.37;
 
 
 /**
  * @const
  * @private
  */
-ngeo.PrintUtils.DOTS_PER_INCH_ = 72;
+ngeo.print.Utils.DOTS_PER_INCH_ = 72;
 
 
 /**
@@ -56,7 +61,7 @@ ngeo.PrintUtils.DOTS_PER_INCH_ = 72;
  * listener.
  * @export
  */
-ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
+ngeo.print.Utils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
   const self = this;
 
   return (
@@ -79,8 +84,8 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScal
       const width = size[0] * ol.has.DEVICE_PIXEL_RATIO;
       const scale = getScale(frameState);
 
-      const ppi = ngeo.PrintUtils.DOTS_PER_INCH_;
-      const ipm = ngeo.PrintUtils.INCHES_PER_METER_;
+      const ppi = ngeo.print.Utils.DOTS_PER_INCH_;
+      const ipm = ngeo.print.Utils.INCHES_PER_METER_;
 
       const extentHalfWidth =
             (((width / ppi) / ipm) * scale / resolution) / 2;
@@ -125,7 +130,7 @@ ngeo.PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScal
  * @param {number} extentHalfHeight Extent half height.
  * @private
  */
-ngeo.PrintUtils.prototype.drawPrintZone_ = function(context, center,
+ngeo.print.Utils.prototype.drawPrintZone_ = function(context, center,
   extentHalfWidth, extentHalfHeight) {
   const minx = center[0] - extentHalfWidth;
   const miny = center[1] - extentHalfHeight;
@@ -149,7 +154,7 @@ ngeo.PrintUtils.prototype.drawPrintZone_ = function(context, center,
  * @param {number} rotation Rotation value in radians.
  * @private
  */
-ngeo.PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
+ngeo.print.Utils.prototype.drawPrintZoneWithRotation_ = function(context, center,
   extentHalfWidth, extentHalfHeight, rotation) {
   // diagonal = distance p1 to center.
   const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
@@ -191,16 +196,16 @@ ngeo.PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * in `printMapScales`.
  * @export
  */
-ngeo.PrintUtils.prototype.getOptimalScale = function(
+ngeo.print.Utils.prototype.getOptimalScale = function(
   mapSize, mapResolution, printMapSize, printMapScales) {
 
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
 
-  const scaleWidth = mapWidth * ngeo.PrintUtils.INCHES_PER_METER_ *
-      ngeo.PrintUtils.DOTS_PER_INCH_ / printMapSize[0];
-  const scaleHeight = mapHeight * ngeo.PrintUtils.INCHES_PER_METER_ *
-      ngeo.PrintUtils.DOTS_PER_INCH_ / printMapSize[1];
+  const scaleWidth = mapWidth * ngeo.print.Utils.INCHES_PER_METER_ *
+      ngeo.print.Utils.DOTS_PER_INCH_ / printMapSize[0];
+  const scaleHeight = mapHeight * ngeo.print.Utils.INCHES_PER_METER_ *
+      ngeo.print.Utils.DOTS_PER_INCH_ / printMapSize[1];
 
   const scale = Math.min(scaleWidth, scaleHeight);
 
@@ -223,11 +228,11 @@ ngeo.PrintUtils.prototype.getOptimalScale = function(
  * @return {number} The optimal map resolution.
  * @export
  */
-ngeo.PrintUtils.prototype.getOptimalResolution = function(
+ngeo.print.Utils.prototype.getOptimalResolution = function(
   mapSize, printMapSize, printMapScale) {
 
   const dotsPerMeter =
-      ngeo.PrintUtils.DOTS_PER_INCH_ * ngeo.PrintUtils.INCHES_PER_METER_;
+      ngeo.print.Utils.DOTS_PER_INCH_ * ngeo.print.Utils.INCHES_PER_METER_;
 
   const resolutionX = (printMapSize[0] * printMapScale) /
       (dotsPerMeter * mapSize[0]);
@@ -245,7 +250,7 @@ ngeo.PrintUtils.prototype.getOptimalResolution = function(
  * @param {ol.Coordinate} mapCenter Center of the map to print.
  * @return {ol.Coordinate} The coordinates of the bottom left corner.
  */
-ngeo.PrintUtils.prototype.getBottomLeftCorner = function(mapCenter) {
+ngeo.print.Utils.prototype.getBottomLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
     mapCenter[1] - this.extentHalfVerticalDistance_];
 };
@@ -256,7 +261,7 @@ ngeo.PrintUtils.prototype.getBottomLeftCorner = function(mapCenter) {
  * @param {ol.Coordinate} mapCenter Center of the map to print.ç
  * @return {ol.Coordinate} The coordinates of the bottom rigth corner.
  */
-ngeo.PrintUtils.prototype.getBottomRightCorner = function(mapCenter) {
+ngeo.print.Utils.prototype.getBottomRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
     mapCenter[1] - this.extentHalfVerticalDistance_];
 };
@@ -267,7 +272,7 @@ ngeo.PrintUtils.prototype.getBottomRightCorner = function(mapCenter) {
  * @param {ol.Coordinate} mapCenter Center of the map to print.
  * @return {ol.Coordinate} The coordinates of the up left corner.
  */
-ngeo.PrintUtils.prototype.getUpLeftCorner = function(mapCenter) {
+ngeo.print.Utils.prototype.getUpLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
@@ -278,10 +283,14 @@ ngeo.PrintUtils.prototype.getUpLeftCorner = function(mapCenter) {
  * @param {ol.Coordinate} mapCenter Center of the map to print.
  * @return {ol.Coordinate} The coordinates of the up right corner.
  */
-ngeo.PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
+ngeo.print.Utils.prototype.getUpRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
 
-
-ngeo.module.service('ngeoPrintUtils', ngeo.PrintUtils);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.print.Utils.module = angular.module('ngeoPrintUtils', []);
+ngeo.print.Utils.module.service('ngeoPrintUtils', ngeo.print.Utils);
+ngeo.module.requires.push(ngeo.print.Utils.module.name);
