@@ -288,10 +288,6 @@ ngeo.print.Utils.prototype.getUpRightCorner = function(mapCenter) {
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
 
-
-ngeo.module.service('ngeoPrintUtils', ngeo.print.Utils);
-
-
 /**
  * @type {!angular.Module}
  */
