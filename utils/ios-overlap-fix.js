@@ -20,7 +20,7 @@ const iosChecker = function() {
 if (iOS && webkit && platform && !chromeiOS) {
   const iosVersion = iosChecker()[0];
   console.log('iOS version: ', iosVersion);
-  if (iosVersion > 10) {
+  if (iosVersion >= 10) {
     const interval = setInterval(() => {
       console.log('interval');
       if ($('div.ol-zoom').get(0)) {
