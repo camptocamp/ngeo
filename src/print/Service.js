@@ -907,13 +907,10 @@ ngeo.print.Service.createPrintServiceFactory = function($http, ngeoLayerHelper) 
     });
 };
 
-
-ngeo.module.factory('ngeoCreatePrint', ngeo.print.Service.createPrintServiceFactory);
-
-
 /**
  * @type {!angular.Module}
  */
 ngeo.print.Service.module = angular.module('ngeoPrint', []);
 ngeo.print.Service.module.service('ngeoPrintService', ngeo.print.Service);
+ngeo.print.Service.module.factory('ngeoCreatePrint', ngeo.print.Service.createPrintServiceFactory);
 ngeo.module.requires.push(ngeo.print.Service.module.name);
