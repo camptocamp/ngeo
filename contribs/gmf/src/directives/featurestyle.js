@@ -75,6 +75,12 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
    * @type {string|undefined}
    * @export
    */
+  this.label = undefined;
+
+  /**
+   * @type {string|undefined}
+   * @export
+   */
   this.measure = undefined;
 
   $scope.$watch(
