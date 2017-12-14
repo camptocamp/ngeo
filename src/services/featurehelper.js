@@ -221,6 +221,8 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
         text: this.getMeasure(feature),
         offsetY: -(offset / 2 + 4)
       })
+    }));
+  }
   if (showLabel) {
     offset += 25;
     styles.push(new ol.style.Style({
@@ -263,10 +265,10 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
       text: this.createTextStyle_({
         text: this.getMeasure(feature),
         offsetY: -(offset / 2 + 4)
-       })
+      })
     }));
   }
-  if (showLabel){
+  if (showLabel) {
     offset += 25;
     styles.push(new ol.style.Style({
       text: this.createTextStyle_({
@@ -381,13 +383,13 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         })
       }));
     } else {
-    offset += 25;
-    styles.push(new ol.style.Style({
-      text: this.createTextStyle_({
-        text: this.getMeasure(feature),
-        offsetY: -(offset / 2 + 4)
-      })
-    }));
+      offset += 25;
+      styles.push(new ol.style.Style({
+        text: this.createTextStyle_({
+          text: this.getMeasure(feature),
+          offsetY: -(offset / 2 + 4)
+        })
+      }));
     }
   }
   if (showLabel) {
@@ -736,7 +738,7 @@ ngeo.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
  * @export
  */
 ngeo.FeatureHelper.prototype.getShowLabelProperty = function(feature) {
- let showLabel = feature.get(ngeo.FeatureProperties.SHOW_LABEL);
+  let showLabel = feature.get(ngeo.FeatureProperties.SHOW_LABEL);
   if (showLabel === undefined) {
     showLabel = false;
   } else if (typeof showLabel === 'string') {
