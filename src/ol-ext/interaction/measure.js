@@ -447,10 +447,12 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
  * @private
  */
 ngeo.interaction.Measure.prototype.unlistenerEvent_ = function() {
-  ol.events.unlistenByKey(this.changeEventKey_);
-  ol.events.unlistenByKey(this.postcomposeEventKey_);
-  this.changeEventKey_ = null;
-  this.postcomposeEventKey_ = null;
+  if (this.changeEventKey_ !== null && this.postcomposeEventKey_ !== null) {
+    ol.events.unlistenByKey(this.changeEventKey_);
+    ol.events.unlistenByKey(this.postcomposeEventKey_);
+    this.changeEventKey_ = null;
+    this.postcomposeEventKey_ = null;
+  }
 };
 
 /**
