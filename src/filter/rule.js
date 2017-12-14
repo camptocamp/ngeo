@@ -1,3 +1,6 @@
+/**
+ * @module ngeo filter namespace
+ */
 goog.provide('ngeo.ruleComponent');
 
 goog.require('ngeo');

@@ -1,4 +1,7 @@
-goog.provide('ngeo.filterComponent');
+/**
+ * @module ngeo filter namespace
+ */
+goog.provide('ngeo.filter.component');
 
 goog.require('ngeo');
 goog.require('ngeo.MapQuerent');
@@ -15,9 +18,34 @@ goog.require('ngeo.map.FeatureOverlay');
 
 
 /**
+ * @type {!angular.Module}
+ */
+ngeo.filter.component = angular.module('ngeoFilter', [
+  // todo
+]);
+
+ngeo.module.requires.push(ngeo.filter.component.name);
+
+ngeo.filter.component.component('ngeoFilter', {
+  bindings: {
+    'aRuleIsActive': '=',
+    'customRules': '<',
+    // It's 'datasource' instead of 'dataSource', because that would require
+    // the attribute to be 'data-source', and Angular strips the 'data-'.
+    'datasource': '<',
+    'directedRules': '<',
+    'featureOverlay': '<',
+    'map': '<',
+    'toolGroup': '<'
+  },
+  controller: 'ngeoFilterController',
+  templateUrl: () => `${ngeo.baseTemplateUrl}/filter.html`
+});
+
+/**
  * @private
  */
-ngeo.FilterController = class {
+ngeo.filter.component.FilterController_ = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
@@ -294,7 +322,7 @@ ngeo.FilterController = class {
 
 
   /**
-   * @param {!ngeo.FilterController.Condition} condition Condition to set.
+   * @param {!ngeo.filter.component.Condition} condition Condition to set.
    * @export
    */
   setCondition(condition) {
@@ -387,6 +415,7 @@ ngeo.FilterController = class {
 
 };
 
+ngeo.filter.component.controller('ngeoFilterController', ngeo.filter.component.FilterController_);
 
 /**
  * @typedef {{
@@ -394,21 +423,4 @@ ngeo.FilterController = class {
  *     value: (string)
  * }}
  */
-ngeo.FilterController.Condition;
-
-
-ngeo.module.component('ngeoFilter', {
-  bindings: {
-    'aRuleIsActive': '=',
-    'customRules': '<',
-    // It's 'datasource' instead of 'dataSource', because that would require
-    // the attribute to be 'data-source', and Angular strips the 'data-'.
-    'datasource': '<',
-    'directedRules': '<',
-    'featureOverlay': '<',
-    'map': '<',
-    'toolGroup': '<'
-  },
-  controller: ngeo.FilterController,
-  templateUrl: () => `${ngeo.baseTemplateUrl}/filter.html`
-});
+ngeo.filter.component.Condition;
