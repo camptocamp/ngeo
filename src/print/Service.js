@@ -6,6 +6,7 @@ goog.provide('ngeo.print.Service');
 
 goog.require('ngeo');
 goog.require('ngeo.utils');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ol');
 goog.require('ol.color');
 goog.require('ol.format.GeoJSON');
