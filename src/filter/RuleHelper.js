@@ -1,7 +1,7 @@
 /**
  * @module ngeo filter namespace
  */
-goog.provide('ngeo.RuleHelper');
+goog.provide('ngeo.filter.RuleHelper');
 
 goog.require('ngeo');
 goog.require('ngeo.FeatureHelper');
@@ -15,7 +15,7 @@ goog.require('ol.format.WFS');
 goog.require('ol.format.filter');
 
 
-ngeo.RuleHelper = class {
+ngeo.filter.RuleHelper = class {
 
   /**
    * A service that provides utility methods to create `ngeo.rule.Rule`
@@ -714,4 +714,9 @@ ngeo.RuleHelper = class {
 };
 
 
-ngeo.module.service('ngeoRuleHelper', ngeo.RuleHelper);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.filter.RuleHelper.module = angular.module('ngeoRuleHelper', []);
+ngeo.filter.RuleHelper.module.service('ngeoRuleHelper', ngeo.filter.RuleHelper);
+ngeo.module.requires.push(ngeo.filter.RuleHelper.module.name);

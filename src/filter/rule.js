@@ -1,7 +1,7 @@
 /**
  * @module ngeo filter namespace
  */
-goog.provide('ngeo.ruleComponent');
+goog.provide('ngeo.filter.ruleComponent');
 
 goog.require('ngeo');
 /** @suppress {extraRequire} */
@@ -10,7 +10,8 @@ goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.Menu');
-goog.require('ngeo.RuleHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
@@ -28,11 +29,19 @@ goog.require('ngeo.map.FeatureOverlay');
 // In futur module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlay.module.name
 
+/**
+ * @type {angular.Module}
+ */
+ngeo.filter.ruleComponent = angular.module('ngeoRule', [
+  ngeo.filter.RuleHelper.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.filter.ruleComponent.module.name);
 
 /**
  * @private
  */
-ngeo.RuleController = class {
+ngeo.filter.ruleComponent.RuleController_ = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
@@ -920,13 +929,13 @@ ngeo.RuleController = class {
  * Also, changes are not made on-the-fly. A button must be clicked for the
  * changes to be applied to the rule.
  */
-ngeo.module.component('ngeoRule', {
+ngeo.filter.ruleComponent.component('ngeoRule', {
   bindings: {
     'featureOverlay': '<',
     'map': '<',
     'rule': '<',
     'toolGroup': '<'
   },
-  controller: ngeo.RuleController,
-  templateUrl: () => `${ngeo.baseTemplateUrl}/rule.html`
+  controller: ngeo.filter.ruleComponent.RuleController_,
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rule.html`
 });

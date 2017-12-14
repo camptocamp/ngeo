@@ -6,8 +6,9 @@ goog.provide('ngeo.filter.component');
 goog.require('ngeo');
 goog.require('ngeo.MapQuerent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ruleComponent');
-goog.require('ngeo.RuleHelper');
+goog.require('ngeo.filter.ruleComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.rule.Geometry');
 
 goog.require('ngeo.map.FeatureOverlay');
@@ -21,10 +22,11 @@ goog.require('ngeo.map.FeatureOverlay');
  * @type {!angular.Module}
  */
 ngeo.filter.component = angular.module('ngeoFilter', [
-  // todo
+  ngeo.filter.RuleHelper.module.name,
+  ngeo.filter.ruleComponent.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.filter.component.name);
+ngeo.module.requires.push(ngeo.filter.component.module.name);
 
 ngeo.filter.component.component('ngeoFilter', {
   bindings: {
@@ -52,7 +54,7 @@ ngeo.filter.component.FilterController_ = class {
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
-   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @struct
    * @ngInject
@@ -134,7 +136,7 @@ ngeo.filter.component.FilterController_ = class {
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {!ngeo.RuleHelper}
+     * @type {!ngeo.filter.RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
