@@ -13,6 +13,7 @@ goog.require('ngeo.rule.Select');
 goog.require('ngeo.rule.Text');
 goog.require('ol.format.WFS');
 goog.require('ol.format.filter');
+goog.require('ol.array');
 
 
 ngeo.filter.RuleHelper = class {

@@ -18,10 +18,19 @@ goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
+goog.require('ol');
+goog.require('ol.Observable');
+goog.require('ol.Feature');
 goog.require('ol.Collection');
 goog.require('ol.events');
+goog.require('ol.array');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
+goog.require('ol.style.Fill');
+goog.require('ol.geom.Geometry');
 
 goog.require('ngeo.map.FeatureOverlay');
 
@@ -36,7 +45,7 @@ ngeo.filter.ruleComponent = angular.module('ngeoRule', [
   ngeo.filter.RuleHelper.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.filter.ruleComponent.module.name);
+ngeo.module.requires.push(ngeo.filter.ruleComponent.name);
 
 /**
  * @private
@@ -50,7 +59,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
    * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
    *     interaction service.
    * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
@@ -124,7 +133,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!ngeo.RuleHelper}
+     * @type {!ngeo.filter.RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
