@@ -14,10 +14,16 @@ goog.require('ngeo.drawtextDirective');
 goog.require('ol.Feature');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.measure.module');
+goog.require('ngeo.measure.area');
+/** @suppress {extraRequire} */
+goog.require('ngeo.measure.azimut');
+/** @suppress {extraRequire} */
+goog.require('ngeo.measure.length');
 
 // FIXME add me at the module dependencies:
-//ngeo.module.requires.push(ngeo.measure.module.name);
+// - ngeo.module.requires.push(ngeo.measure.area.name);
+// - ngeo.module.requires.push(ngeo.measure.azimut.name);
+// - ngeo.module.requires.push(ngeo.measure.length.name);
 
 
 /**
