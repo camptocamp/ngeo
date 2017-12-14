@@ -30,10 +30,13 @@ ngeo.format.WFSAttribute = class {
   readFromComplexTypeElement_(object) {
 
     const name = goog.asserts.assertString(object['name']);
+    const alias = 'alias' in object ?
+      goog.asserts.assertString(object['alias']) : null;
     const required = object['minOccurs'] != '0';
 
     const attribute = {
       name,
+      alias,
       required
     };
 

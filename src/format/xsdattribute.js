@@ -87,11 +87,13 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
   const name = node.getAttribute('name');
   goog.asserts.assertString(name, 'name should be defined in element node.');
 
+  const alias = node.getAttribute('alias');
   const nillable = node.getAttribute('nillable');
   const required = !(nillable === true || nillable === 'true');
 
   const attribute = {
     name,
+    alias,
     required
   };
 

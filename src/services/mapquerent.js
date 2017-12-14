@@ -167,7 +167,6 @@ ngeo.MapQuerent = class {
       let label = dataSource.name;
       goog.asserts.assert(dataSource);
 
-
       const querentResultItem = response[id];
       const features = querentResultItem.features;
       const limit = querentResultItem.limit;
@@ -179,6 +178,21 @@ ngeo.MapQuerent = class {
         const type = goog.asserts.assertString(feature.get('ngeo_feature_type_'));
         if (!typeSeparatedFeatures[type]) {
           typeSeparatedFeatures[type] = [];
+        }
+        // Use properties aliases if any
+        if (dataSource.attributes && dataSource.attributes.length) {
+          const properties = feature.getProperties();
+          const filteredProperties = {};
+          dataSource.attributes.forEach((attribute) => {
+            if (attribute.alias) {
+              filteredProperties[attribute.alias] = properties[attribute.name];
+              feature.unset(attribute.name, /* silent */ true);
+            } else {
+              // No alias is available => use the attribute as is.
+              filteredProperties[attribute.name] = properties[attribute.name];
+            }
+          });
+          feature.setProperties(filteredProperties, /* silent */ true);
         }
         typeSeparatedFeatures[type].push(feature);
       });

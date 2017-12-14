@@ -71,6 +71,13 @@ ngeox.Attribute.prototype.name;
 
 
 /**
+ * The attribute alias.
+ * @type {string|null}
+ */
+ngeox.Attribute.prototype.alias;
+
+
+/**
  * Whether the attribute required to have a value set or not. Defaults to
  * `false`.
  * @type {boolean|undefined}

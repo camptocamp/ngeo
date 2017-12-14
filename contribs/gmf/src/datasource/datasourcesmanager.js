@@ -4,6 +4,7 @@ goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
+goog.require('gmf.WFSAliases');
 goog.require('ngeo.map.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
@@ -39,13 +40,14 @@ gmf.datasource.DataSourcesManager = class {
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+   * @param {!gmf.WFSAliases} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
     ngeoBackgroundLayerMgr, ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper,
-    ngeoWMSTime
+    ngeoWMSTime, gmfWFSAliases
   ) {
 
     // === Injected properties ===
@@ -112,6 +114,12 @@ gmf.datasource.DataSourcesManager = class {
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
+
+    /**
+     * @type {!gmf.WFSAliases}
+     * @private
+     */
+    this.gmfWFSAliases_ = gmfWFSAliases;
 
 
     // === Inner properties ===
@@ -551,6 +559,8 @@ gmf.datasource.DataSourcesManager = class {
     };
 
     this.ngeoDataSources_.push(dataSource);
+
+    this.gmfWFSAliases_.describe(dataSource);
   }
 
   /**
