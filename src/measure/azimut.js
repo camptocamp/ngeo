@@ -1,13 +1,24 @@
-goog.provide('ngeo.measureazimutDirective');
+goog.provide('ngeo.measure.azimut');
 
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
-goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.interaction.MeasureAzimut');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.measure.azimut = angular.module('ngeoMeasureazimut', [
+  // FIXME add requires
+]);
+
+ngeo.module.requires.push(ngeo.measure.azimut.name);
 
 
 /**
@@ -20,7 +31,7 @@ goog.require('ol.style.Style');
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter, $injector) {
+ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -85,4 +96,4 @@ ngeo.measureazimutDirective = function($compile, gettextCatalog, $filter, $injec
 };
 
 
-ngeo.module.directive('ngeoMeasureazimut', ngeo.measureazimutDirective);
+ngeo.measure.azimut.directive('ngeoMeasureazimut', ngeo.measure.azimut.directive_);

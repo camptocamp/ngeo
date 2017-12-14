@@ -906,7 +906,7 @@ gmf.ObjecteditingController.prototype.setFeatureStyle_ = function() {
  * with this component, then find the WMS layer associated with it for
  * for refresh purpose.
  *
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
+ * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
  * @private
  */
 gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {

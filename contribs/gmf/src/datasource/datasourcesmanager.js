@@ -236,7 +236,7 @@ gmf.datasource.DataSourcesManager = class {
    * are added or removed, pushing it to the cache or removing it from the
    * cache.
    *
-   * @param {Array.<ngeo.LayertreeController>|undefined} value List of tree
+   * @param {Array.<ngeo.layertree.Controller>|undefined} value List of tree
    *     controllers.
    * @private
    */
@@ -500,7 +500,7 @@ gmf.datasource.DataSourcesManager = class {
    * Also, set its according data source. Finally, add the data source to
    * the ngeo collection.
    *
-   * @param {ngeo.LayertreeController} treeCtrl Layertree controller to add
+   * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to add
    * @private
    */
   addTreeCtrlToCache_(treeCtrl) {
@@ -612,7 +612,7 @@ gmf.datasource.DataSourcesManager = class {
    * Note: The possible states can only be 'on' or 'off', because the
    * layertree controller being a 'leaf'.
    *
-   * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+   * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
    * @param {string|undefined} newVal New state value
    * @private
    */
@@ -649,7 +649,7 @@ gmf.datasource.DataSourcesManager = class {
   /**
    * Returns a layertree controller cache item, if it exists.
    *
-   * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+   * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
    * @return {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} Cache item
    * @private
    */
@@ -844,7 +844,7 @@ gmf.datasource.DataSourcesManager.TreeCtrlCache;
  *     stateWatcherUnregister: (Function),
  *     timeLowerValueWatcherUnregister: (Function|undefined),
  *     timeUpperValueWatcherUnregister: (Function|undefined),
- *     treeCtrl: (ngeo.LayertreeController),
+ *     treeCtrl: (ngeo.layertree.Controller),
  *     wmsLayer: (ol.layer.Image|undefined)
  * }}
  */

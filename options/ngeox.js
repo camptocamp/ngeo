@@ -165,6 +165,12 @@ ngeox.DimensionsActive;
 
 
 /**
+ * @typedef {function(string, string, string=)}
+ */
+ngeox.Download;
+
+
+/**
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  * @typedef {{
@@ -2617,3 +2623,27 @@ ngeox.MeasureEvent;
  * }>}
  */
 ngeox.RotateEvent;
+
+/**
+ * @typedef {{
+ *     property: (string),
+ *     condition: (string|Array.<string>)
+ * }}
+ */
+ngeox.WfsPermalinkFilter;
+
+/**
+ * @typedef {{
+ *     filters: (Array.<ngeox.WfsPermalinkFilter>)
+ * }}
+ */
+ngeox.WfsPermalinkFilterGroup;
+
+/**
+ * @typedef {{
+ *     wfsType: (string),
+ *     filterGroups: (Array.<ngeox.WfsPermalinkFilterGroup>),
+ *     showFeatures: (boolean)
+ * }}
+ */
+ngeox.WfsPermalinkData;

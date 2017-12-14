@@ -1,10 +1,6 @@
 goog.provide('gmf.displayquerygridComponent');
 
 goog.require('gmf');
-goog.require('ngeo.CsvDownload');
-goog.require('ngeo.GridConfig');
-/** @suppress {extraRequire} */
-goog.require('ngeo.gridComponent');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
 goog.require('ol.Collection');
@@ -13,10 +9,16 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+/** @suppress {extraRequire} */
+goog.require('ngeo.download.module');
+/** @suppress {extraRequire} */
+goog.require('ngeo.grid.module');
 goog.require('ngeo.map.FeatureOverlayMgr');
 
 
 // In the future module declaration, don't forget to require:
+// - ngeo.download.module.name
+// - ngeo.grid.module.name
 // - ngeo.map.FeatureOverlayMgr.module.name
 
 
@@ -114,7 +116,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
+ * @param {ngeo.download.Csv} ngeoCsvDownload CSV download service.
  * @param {angular.JQLite} $element Element.
  * @constructor
  * @private
@@ -154,7 +156,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {ngeo.CsvDownload}
+   * @type {ngeo.download.Csv}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
@@ -525,7 +527,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
       }
 
       allProperties.push(properties);
-      featuresForSource[ngeo.GridConfig.getRowUid(properties)] = feature;
+      featuresForSource[ngeo.grid.Config.getRowUid(properties)] = feature;
     }
   });
 
@@ -624,7 +626,7 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
 
 /**
  * @param {Array.<!Object>} data Grid rows.
- * @return {?ngeo.GridConfig} Grid config.
+ * @return {?ngeo.grid.Config} Grid config.
  * @private
  */
 gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
@@ -644,7 +646,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
   });
 
   if (columnDefs.length > 0) {
-    return new ngeo.GridConfig(data, columnDefs);
+    return new ngeo.grid.Config(data, columnDefs);
   } else {
     // no columns, do not show grid
     return null;

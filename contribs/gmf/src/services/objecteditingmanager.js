@@ -1,8 +1,13 @@
 goog.provide('gmf.ObjectEditingManager');
 
 goog.require('gmf.EditFeature');
-goog.require('ngeo.Location');
 goog.require('ol.Feature');
+
+goog.require('ngeo.statemanager.Location');
+
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.Location.module.name
+ngeo.module.requires.push(ngeo.statemanager.Location.module.name);
 
 
 /**
@@ -11,7 +16,7 @@ goog.require('ol.Feature');
  *
  * @param {angular.$q} $q Angular $q service.
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @constructor
  * @struct
  * @ngInject
@@ -31,7 +36,7 @@ gmf.ObjectEditingManager = function($q, gmfEditFeature, ngeoLocation) {
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

@@ -6,9 +6,9 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 
 /**
- * Service to create layer based on a ngeo.LayertreeController with a
+ * Service to create layer based on a ngeo.layertree.Controller with a
  * GMFThemesGroup ou GMFThemesLeaf as node object.
- * This layer is also used to synchronise a state of ngeo.LayertreeController
+ * This layer is also used to synchronise a state of ngeo.layertree.Controller
  * and its corresponding layer in the map.
  *
  * @constructor
@@ -54,7 +54,7 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
 /**
  * Create, insert (or update) and return a layer from the GmfGroup or the
  * GmfLayer of the given treeCtrl.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the group to insert the not first
  *     level group layer.
  * @param {ol.layer.Group} dataLayerGroup the layer group to insert the first
@@ -95,7 +95,7 @@ gmf.SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGr
  * Synchronise the state of each layers corresponding to the given tree and
  * all its children.
  * @param {ol.Map} map A map that contains the layers.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
@@ -110,7 +110,7 @@ gmf.SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
 /**
  * Set the active state of a layer based on its treeCtrl state.
  * @param {ol.layer.Tile|ol.layer.Image} layer A layer.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
@@ -147,7 +147,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
  * Create insert and return a layer group (for not mixed case) or a wmsLayer (for
  * mixed case). Take care about the insertion order in the map in case of first
  * level group.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the group to insert the not first
  *     level group layer.
  * @param {ol.layer.Group} dataLayerGroup the layer group to insert the first
@@ -185,7 +185,7 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
 /**
  * Create, insert and return a layer group (for not mixed case) or a wmsLayer
  * for mixed case).
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
  * @return {ol.layer.Image|ol.layer.Group} a new layer.
  * @private
@@ -231,7 +231,7 @@ gmf.SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
 
 /**
  * Create and insert a layer from a leaf in a mixed group.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the group to insert the layer.
  * @return {ol.layer.Tile|ol.layer.Image} a new layer.
  * @private
@@ -281,7 +281,7 @@ gmf.SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map
  * Update a WMS layer with the given treeCtrl node information. Assumes that
  * the first parent with ogcServer information is linked to the layer to update
  * and that this treeCtrl node is a leafNode.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the layer to update.
  * @private
  */
@@ -346,7 +346,7 @@ gmf.SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer
 /**
  * Get the time parameter for a WMS Layer. If it's a group and it doesn't have
  * time, get the first time parameter available in any child.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @return {string|undefined} A wms time param.
  * @private
  */
@@ -360,7 +360,7 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     treeCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.children === undefined && treeCtrl.node.time) {
         wmsTime = treeCtrl.node.time;
-        return ngeo.LayertreeController.VisitorDecision.STOP;
+        return ngeo.layertree.Controller.VisitorDecision.STOP;
       }
     });
   }
@@ -377,7 +377,7 @@ gmf.SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
 
 /**
  * Return true if a parent tree is mixed, based on its node.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @return {boolean} True is any parent is mixed. False Otherwise.
  * @private
  */
@@ -395,8 +395,8 @@ gmf.SyncLayertreeMap.prototype.isOneParentNotMixed_ = function(treeCtrl) {
 
 /**
  * Return the first parent, from the root parent, that is not mixed.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
- * @return {ngeo.LayertreeController} The first not mixed parent.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
+ * @return {ngeo.layertree.Controller} The first not mixed parent.
  * @private
  */
 gmf.SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
@@ -411,7 +411,7 @@ gmf.SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
 
 /**
  * Return the layer used by the given treeCtrl.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @return {ol.layer.Base} The layer.
  * @public
  */

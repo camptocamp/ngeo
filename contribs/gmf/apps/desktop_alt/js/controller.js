@@ -11,11 +11,12 @@ goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.importdatasourceComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.googlestreetviewComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+
+/** @suppress {extraRequire} */
+goog.require('ngeo.googlestreetview.component');
 
 
 gmf.module.value('ngeoQueryOptions', {

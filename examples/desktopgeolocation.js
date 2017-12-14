@@ -1,7 +1,5 @@
 goog.provide('app.desktopgeolocation');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.desktopGeolocationDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -12,11 +10,13 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 
 goog.require('ngeo.map.module');
+goog.require('ngeo.geolocation.desktop');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.geolocation.desktop.name,
   ngeo.map.module.name
 ]);
 

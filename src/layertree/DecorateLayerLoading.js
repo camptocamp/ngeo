@@ -1,7 +1,11 @@
-goog.provide('ngeo.DecorateLayerLoading');
+goog.provide('ngeo.layertree.DecorateLayerLoading');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ol.layer.Group');
+goog.require('ol.layer.Layer');
+goog.require('ol.source.Image');
+goog.require('ol.source.Tile');
 
 
 /**
@@ -18,14 +22,14 @@ goog.require('ngeo');
  * @ngdoc service
  * @ngname ngeoDecorateLayerLoading
  */
-ngeo.DecorateLayerLoading;
+ngeo.layertree.DecorateLayerLoading;
 
 
 /**
- * @param {ol.layer.Base} layer Layer to decorate.
+ * @param {ol.layer.Base} layer layer.
  * @param {angular.Scope} $scope Scope.
  */
-ngeo.decorateLayerLoading = function(layer, $scope) {
+ngeo.layertree.DecorateLayerLoading_ = function(layer, $scope) {
 
   let source;
 
@@ -121,4 +125,9 @@ ngeo.decorateLayerLoading = function(layer, $scope) {
 };
 
 
-ngeo.module.value('ngeoDecorateLayerLoading', ngeo.decorateLayerLoading);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.layertree.DecorateLayerLoading.module = angular.module('ngeoDecorateLayerLoading', []);
+ngeo.layertree.DecorateLayerLoading.module.value('ngeoDecorateLayerLoading', ngeo.layertree.DecorateLayerLoading_);
+ngeo.module.requires.push(ngeo.layertree.DecorateLayerLoading.module.name);

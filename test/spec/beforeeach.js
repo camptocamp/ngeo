@@ -1,5 +1,6 @@
 /*eslint valid-jsdoc: 0 */
 
+goog.require('ngeo.layertree.module');
 goog.require('ngeo.search.module');
 
 beforeEach(() => {

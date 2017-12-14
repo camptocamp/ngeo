@@ -1,9 +1,9 @@
-goog.require('ngeo.DecorateLayer');
+goog.require('ngeo.layertree.DecorateLayer');
 goog.require('ol.Map');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-describe('ngeo.DecorateLayer', () => {
+describe('ngeo.layertree.DecorateLayer', () => {
   let ngeoDecorateLayer;
 
   beforeEach(() => {

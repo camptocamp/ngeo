@@ -3,9 +3,16 @@ goog.provide('gmf.TreeManager');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.Notification');
-goog.require('ngeo.StateManager');
-goog.require('ngeo.LayertreeController');
 goog.require('ol.events');
+
+goog.require('ngeo.layertree.Controller');
+goog.require('ngeo.statemanager.Service');
+
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.layertree.Controller.module.name
+// - ngeo.statemanager.Service.module.name
+ngeo.module.requires.push(ngeo.layertree.Controller.module.name);
+ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
 
 
 /**
@@ -27,7 +34,7 @@ goog.require('ol.events');
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.Themes} gmfThemes gmf Themes service.
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
+ * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
@@ -79,7 +86,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    * The controller of the (unique) root layer tree.
    * The array of top level layer trees is avaible through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
-   * @type {ngeo.LayertreeController}
+   * @type {ngeo.layertree.Controller}
    * @export
    */
   this.rootCtrl = null;
@@ -105,7 +112,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -292,7 +299,7 @@ gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt
         treeCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.name === layerName) {
             treeCtrlToActive = treeCtrl;
-            return ngeo.LayertreeController.VisitorDecision.STOP;
+            return ngeo.layertree.Controller.VisitorDecision.STOP;
           }
         });
 
@@ -408,7 +415,7 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
 /**
  * Get a treeCtrl based on it's node id.
  * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
- * @return {ngeo.LayertreeController?} treeCtrl The associated controller or null.
+ * @return {ngeo.layertree.Controller?} treeCtrl The associated controller or null.
  * @public
  */
 gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
@@ -417,7 +424,7 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
     this.rootCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.id === id) {
         correspondingTreeCtrl = treeCtrl;
-        return ngeo.LayertreeController.VisitorDecision.STOP;
+        return ngeo.layertree.Controller.VisitorDecision.STOP;
       }
     });
   }
@@ -427,7 +434,7 @@ gmf.TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
 
 /**
  * Get the OGC server.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {gmfThemes.GmfOgcServer} The OGC server.
  */
@@ -497,7 +504,7 @@ gmf.TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
 /**
  * Return a gmf.TreeManager.fullState that keeps the state of the given
  * treeCtrl including the state of its children.
- * @param {ngeo.LayertreeController} treeCtrl the ngeo layertree controller to
+ * @param {ngeo.layertree.Controller} treeCtrl the ngeo layertree controller to
  *     save.
  * @return {gmf.TreeManager.fullState!} the fullState object.
  * @private

@@ -124,7 +124,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @param {Array.<ngeo.LayertreeController>} value First level controllers.
+   * @param {Array.<ngeo.layertree.Controller>} value First level controllers.
    */
   const updateEditableTreeCtrls = function(value) {
     // Timeout required, because the collection event is fired before the
@@ -167,14 +167,14 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
 
   /**
    * List of editable Layertree controllers.
-   * @type {Array.<ngeo.LayertreeController>}
+   * @type {Array.<ngeo.layertree.Controller>}
    * @export
    */
   this.editableTreeCtrls = [];
 
   /**
    * The currently selected Layertree controller.
-   * @type {?ngeo.LayertreeController}
+   * @type {?ngeo.layertree.Controller}
    * @export
    */
   this.selectedEditableTreeCtrl = null;

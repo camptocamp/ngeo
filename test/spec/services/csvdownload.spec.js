@@ -1,6 +1,6 @@
-goog.require('ngeo.CsvDownload');
+goog.require('ngeo.download.Csv');
 
-describe('ngeo.csvdownload', () => {
+describe('ngeo.download.Csv', () => {
 
   let ngeoCsvDownload;
 

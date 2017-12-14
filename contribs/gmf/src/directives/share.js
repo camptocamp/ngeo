@@ -28,7 +28,7 @@ gmf.module.component('gmfShare', gmf.shareComponent);
 /**
  * The controller for the share component
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @param {gmf.ShareService} gmfShareService service for sharing map.
  * @param {angular.$q} $q Angular q service
  * @param {angular.Attributes} $attrs Attributes.
@@ -59,7 +59,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
   this.$q_ = $q;
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

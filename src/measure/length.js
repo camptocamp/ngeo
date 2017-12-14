@@ -1,11 +1,22 @@
-goog.provide('ngeo.measurelengthDirective');
+goog.provide('ngeo.measure.length');
 
 goog.require('ngeo');
-goog.require('ol.events');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
-goog.require('ngeo.interaction.MeasureLength');
+goog.require('ol.events');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.interaction.MeasureLength');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.measure.length = angular.module('ngeoMeasurelength', [
+  // FIXME add requires
+]);
+
+ngeo.module.requires.push(ngeo.measure.length.name);
 
 
 /**
@@ -18,7 +29,7 @@ goog.require('ol.style.Style');
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injector) {
+ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -62,4 +73,4 @@ ngeo.measurelengthDirective = function($compile, gettextCatalog, $filter, $injec
 };
 
 
-ngeo.module.directive('ngeoMeasurelength', ngeo.measurelengthDirective);
+ngeo.measure.length.directive('ngeoMeasurelength', ngeo.measure.length.directive_);

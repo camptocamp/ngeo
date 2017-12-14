@@ -10,13 +10,11 @@ goog.require('ngeo.EventHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
 goog.require('ngeo.Popover');
-goog.require('ngeo.StateManager');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
-goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -25,6 +23,12 @@ goog.require('ol.proj');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.statemanager.module');
+
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.module.name
+ngeo.module.requires.push(ngeo.statemanager.module.name);
 
 
 /**
@@ -75,8 +79,8 @@ gmf.module.value('gmfPermalinkOptions',
 
 
 /**
- * The Permalink service for GMF, which uses the `ngeo.StateManager` to manage
- * the GMF application state. Here's the list of states are are managed:
+ * The Permalink service for GMF, which uses the `ngeo.statemanager.Service` to
+ * manage the GMF application state. Here's the list of states are are managed:
  *
  * - the map center and zoom level
  * - the current background layer selected
@@ -97,8 +101,8 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -148,7 +152,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -255,13 +259,13 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   // == other properties ==
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?ngeo.WfsPermalink}
+   * @type {?ngeo.statemanager.WfsPermalink}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?
@@ -1021,7 +1025,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
         firstParent.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.getState() !== 'indeterminate') {
             this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
-            return ngeo.LayertreeController.VisitorDecision.STOP;
+            return ngeo.layertree.Controller.VisitorDecision.STOP;
           }
         });
       });
@@ -1104,7 +1108,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {?ngeo.WfsPermalinkData} The query data.
+ * @return {?ngeox.WfsPermalinkData} The query data.
  * @private
  */
 gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
@@ -1154,12 +1158,12 @@ gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
- * @return {ngeo.WfsPermalinkFilterGroup|null} A filter group.
+ * @return {ngeox.WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
 gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
-   * @type {Array.<ngeo.WfsPermalinkFilter>}
+   * @type {Array.<ngeox.WfsPermalinkFilter>}
    */
   const filters = [];
 

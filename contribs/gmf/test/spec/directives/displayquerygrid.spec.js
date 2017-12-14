@@ -1,6 +1,6 @@
 goog.require('gmf.displayquerygridComponent');
 goog.require('ol.Map');
-goog.require('ngeo.GridConfig');
+goog.require('ngeo.grid.Config');
 
 /**
  * Compare two list of objects using only the properties of the expected objects.
