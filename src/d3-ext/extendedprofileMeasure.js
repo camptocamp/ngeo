@@ -1,8 +1,5 @@
 goog.provide('ngeo.extendedProfile.measure');
 
-/***
-Height measure toolbar
-***/
 ngeo.extendedProfile.measure.clearMeasure = function () {
 
   ngeo.extendedProfile.measure.profileMeasure = {
@@ -21,29 +18,30 @@ ngeo.extendedProfile.measure.clearMeasure = function () {
 
   d3.select('#height_measure').html('');
 
-}
+};
 
 ngeo.extendedProfile.measure.startMeasure = function () {
 
   ngeo.extendedProfile.measure.clearMeasure();
   d3.select('svg#profileSVG').on('click', ngeo.extendedProfile.measure.measureHeight);
 
-}
+};
 
 ngeo.extendedProfile.measure.stopMeasure = function () {
 
   ngeo.extendedProfile.measure.clearMeasure();
-  d3.select('svg#profileSVG').on('click', null)
+  d3.select('svg#profileSVG').on('click', null);
 
-}
+};
 
 ngeo.extendedProfile.measure.measureHeight = function () {
 
+  let margin = ngeo.extendedProfile.options.profileConfig.margin;
   let canvasCoordinates = d3.mouse(d3.select('#profileCanvas').node());
   let svgCoordinates = d3.mouse(this);
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
-  let tolerance = 2; 
+  let tolerance = 2;
   let sx = ngeo.extendedProfile.options.profileConfig.scaleX;
   let sy = ngeo.extendedProfile.options.profileConfig.scaleY;
   let pointSize = 3;
@@ -105,7 +103,6 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     .attr('y2', ngeo.extendedProfile.measure.profileMeasure.pEnd.cy)
     .attr('stroke-width', 2)
     .attr('stroke', 'red');
-
 
   } else {
 

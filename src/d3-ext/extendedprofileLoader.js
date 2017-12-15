@@ -5,16 +5,9 @@ goog.require('ol.interaction.Modify');
 ngeo.extendedProfile.options = {};
 
 ngeo.extendedProfile.setOptions = function(options) {
-  console.log(options)
+
   ngeo.extendedProfile.options = options;
-  console.log(ngeo.extendedProfile.options);
-  
-  // draw lidar points on map => performance issue with OL...
-  ngeo.extendedProfile.loader.cartoPoints = new ol.layer.Vector({
-    source: new ol.source.Vector({
-    })
-  });
-  ngeo.extendedProfile.loader.cartoPoints.setMap(options.map);
+
   ngeo.extendedProfile.loader.cartoHighlight = new ol.layer.Vector({
     source: new ol.source.Vector({
     })
@@ -28,9 +21,9 @@ ngeo.extendedProfile.loader.requestsQueue = [];
 
 // Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlot, minLOD, maxLOD) {
-  ngeo.extendedProfile.loader.cartoPoints.getSource().clear()
-  ngeo.extendedProfile.options.pytreeLinestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.olLinestring);;
-  
+
+  ngeo.extendedProfile.options.pytreeLinestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.olLinestring);
+
   let uuid = ngeo.extendedProfile.utils.UUID();
   ngeo.extendedProfile.loader.lastUuid = uuid;
   let lastLOD = false;
@@ -42,7 +35,7 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
     intensity: [],
     classification: [],
     coords: []
-  }
+  };
 
   for (let i=0; i<maxLOD; i++) {
     if (i==0){
@@ -69,7 +62,6 @@ ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter,
   hurl += '&width=' + width + '&coordinates=' + coordinates;
   hurl += '&pointCloud=sitn2016';
   hurl += '&attributes=';
-  
 
   for (let i=0; i<ngeo.extendedProfile.loader.requestsQueue.length; i++) {
     if (ngeo.extendedProfile.loader.requestsQueue[i].uuid != ngeo.extendedProfile.loader.lastUuid) {
@@ -104,8 +96,8 @@ ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter,
 
 ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, distanceOffset, lastLOD, resetPlot) {
 
-  // try {
-    
+  try {
+
     let typedArrayInt32 = new Int32Array(profile, 0,4);
     let headerSize = typedArrayInt32[0];
 
@@ -201,9 +193,9 @@ ngeo.extendedProfile.loader.processBuffer = function (options, profile, iter, di
       ngeo.extendedProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.extendedProfile.options.profileConfig.currentZoom);
     }
 
-  // } catch (e) {
-    // console.log('error during buffer processing: ' + e);
-  // }
+  } catch (e) {
+    console.log('error during buffer processing: ' + e);
+  }
 }
 
 ngeo.extendedProfile.loader.updateData = function () {
