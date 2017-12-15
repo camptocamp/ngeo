@@ -1,8 +1,6 @@
 goog.provide('gmf.lidarProfileComponent');
 
 goog.require('gmf');
-goog.require('ngeo.CsvDownload');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -107,10 +105,7 @@ gmf.module.component('gmfLidarProfile', gmf.lidarProfileComponent);
  * @param {angular.JQLite} $element Element.
  * @param {angular.$filter} $filter Angular filter
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *     manager.
  * @param {string} pytreeLidarProfileJsonUrl URL of GMF service JSON profile.
- * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
  * @ngInject
@@ -118,8 +113,7 @@ gmf.module.component('gmfLidarProfile', gmf.lidarProfileComponent);
  * @ngname GmfLidarProfileController
  */
 gmf.LidarProfileController = function($scope, $http, $element, $filter,
-  gettextCatalog, ngeoFeatureOverlayMgr, pytreeLidarProfileJsonUrl,
-  ngeoCsvDownload, gmfLidarProfileConfig) {
+  gettextCatalog, pytreeLidarProfileJsonUrl, gmfLidarProfileConfig) {
 
   /**
    * @type {angular.Scope}
@@ -152,22 +146,10 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.FeatureOverlay}
-   * @private
-   */
-  this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
-
-  /**
    * @type {string}
    * @private
    */
   this.pytreeLidarProfileJsonUrl_ = pytreeLidarProfileJsonUrl;
-
-  /**
-   * @type {ngeo.CsvDownload}
-   * @private
-   */
-  this.ngeoCsvDownload_ = ngeoCsvDownload;
   
   this.gmfLidarProfileConfig_ = gmfLidarProfileConfig;
 

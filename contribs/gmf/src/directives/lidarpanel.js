@@ -1,8 +1,6 @@
 goog.provide('gmf.lidarPanelComponent');
 
 goog.require('gmf');
-goog.require('ngeo.CsvDownload');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -99,10 +97,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
  * @param {angular.JQLite} $element Element.
  * @param {angular.$filter} $filter Angular filter
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *     manager.
  * @param {string} pytreeLidarProfileJsonUrl URL of GMF service JSON profile.
- * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
  * @ngInject
