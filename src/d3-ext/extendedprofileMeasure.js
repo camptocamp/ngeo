@@ -1,6 +1,6 @@
 goog.provide('ngeo.extendedProfile.measure');
 
-ngeo.extendedProfile.measure.clearMeasure = function () {
+ngeo.extendedProfile.measure.clearMeasure = function() {
 
   ngeo.extendedProfile.measure.profileMeasure = {
     pStart: {
