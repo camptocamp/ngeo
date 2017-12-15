@@ -21,15 +21,15 @@ goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.printComponent');
 /** @suppress {extraRequire} */
+goog.require('gmf.profileComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.drawprofilelineDirective');
+/** @suppress {extraRequire} */
 goog.require('gmf.lidarProfileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.lidarPanelComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.LidarProfileConfig');
-/** @suppress {extraRequire} */
-goog.require('gmf.profileComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
 /** @suppress {extraRequire} */
@@ -246,14 +246,15 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.profileLine = null;
-
+  
   /**
    * @type {ol.geom.LineString}
    * @export
    */
   this.lidarProfileLine = null;
 
-  gmf.AbstractController.call(this, config, $scope, $injector);
+
+  gmf.AbstractAppController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
