@@ -1,5 +1,7 @@
 goog.provide('ngeo.extendedProfile.measure');
 
+/*global svg*/
+
 ngeo.extendedProfile.measure.clearMeasure = function() {
 
   ngeo.extendedProfile.measure.profileMeasure = {

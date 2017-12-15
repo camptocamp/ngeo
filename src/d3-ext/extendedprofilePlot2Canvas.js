@@ -4,6 +4,7 @@ goog.provide('ngeo.extendedProfile.plot2canvas');
 @SITN/OM 2017
 LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 ***/
+/*global svg*/
 
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
 
@@ -220,10 +221,10 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function() {
       .attr('r', pointSize + 1)
       .style('fill', 'orange');
 
-    let html = 'Distance: ' + Math.round(10 * p.distance) / 10 + '\n';
-    html += 'Altitude: ' + Math.round( 10 * p.altitude) / 10 + '\n';
-    html += 'Classification: ' + ngeo.extendedProfile.options.profileConfig.classification[p.classification].name + '\n';
-    html += 'Intensity: ' + p.intensity;
+    const html = `Distance: ${Math.round(10 * p.distance) / 10}
+    Altitude: ${Math.round(10 * p.altitude) / 10}
+    Classification: ${ngeo.extendedProfile.options.profileConfig.classification[p.classification].name}
+    Intensity: ${p.intensity}`;
 
     d3.select('#profileInfo')
       .html(html);

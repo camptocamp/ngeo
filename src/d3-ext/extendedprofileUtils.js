@@ -1,82 +1,70 @@
 goog.provide('ngeo.extendedProfile.utils');
 
-/***@SITN/OM 2017
-Utility fonctions for point cloud Profile
-***/
+ngeo.extendedProfile.utils.getLinestring = function() {
 
-ngeo.extendedProfile.utils.getLinestring = function () {
+  const linestringStr = ngeo.extendedProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
+  const linestring = [];
 
-  let linestringStr = ngeo.extendedProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
-  let linestring = [];
-
-  for (let j=0; j<linestringStr.length;j++) {
-    linestring.push([parseFloat(linestringStr[j]), parseFloat(linestringStr[j+1])]);
-    j+=1;
+  for (let j = 0; j  < linestringStr.length; j++) {
+    linestring.push([parseFloat(linestringStr[j]), parseFloat(linestringStr[j + 1])]);
+    j += 1;
   }
 
-  let lShifted = [];
+  const lShifted = [];
   let distance = 0;
-  for (let k=0; k<linestring.length - 1; k++) {
+  for (let k = 0; k < linestring.length - 1; k++) {
 
-    let shiftedX = linestring[k+1][0]-linestring[k][0];
-    let shiftedY = linestring[k+1][1]-linestring[k][1];
-    let endDistance = distance + Math.sqrt(Math.pow(shiftedX,2) + Math.pow(shiftedY,2));
+    const shiftedX = linestring[k + 1][0] - linestring[k][0];
+    const shiftedY = linestring[k + 1][1] - linestring[k][1];
+    const endDistance = distance + Math.sqrt(Math.pow(shiftedX, 2) + Math.pow(shiftedY, 2));
 
     lShifted.push({
       shiftedX: shiftedX,
       shiftedY: shiftedY,
       origX: linestring[k][0],
       origY: linestring[k][1],
-      endX: linestring[k+1][0],
-      endY: linestring[k+1][1],
-      coeffA: shiftedY/shiftedX,
+      endX: linestring[k + 1][0],
+      endY: linestring[k + 1][1],
+      coeffA: shiftedY / shiftedX,
       startD: distance,
       endD: endDistance
     });
 
-    distance += Math.sqrt(Math.pow(shiftedX,2) + Math.pow(shiftedY,2));
+    distance += Math.sqrt(Math.pow(shiftedX, 2) + Math.pow(shiftedY, 2));
 
   }
   return lShifted;
 };
 
-/***
-Interpolate the 2D coordinate from a profile distance (=measure M)
-***/
-ngeo.extendedProfile.utils.interpolatePoint = function (d, segment) {
-  let xLocal, yLocal;
+ngeo.extendedProfile.utils.interpolatePoint = function(d, segment) {
+  let xLocal;
   if (isFinite(segment.coeffA)) {
-    xLocal = Math.round(Math.sqrt(Math.pow(d,2)/(1 + Math.pow(segment.coeffA,2))));
+    xLocal = Math.round(Math.sqrt(Math.pow(d, 2) / (1 + Math.pow(segment.coeffA, 2))));
   } else {
     xLocal = d;
   }
-  yLocal = Math.round(segment.coeffA * xLocal);
-  let x = xLocal + segment.origX;
-  let y = yLocal + segment.origY;
-  return [x,y];
+  const yLocal = Math.round(segment.coeffA * xLocal);
+  const x = xLocal + segment.origX;
+  const y = yLocal + segment.origY;
+  return [x, y];
 
 };
 
-/***
-Clip a linestring to a given plot domain
-***/
-ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
-  let l = ngeo.extendedProfile.utils.getLinestring();
-  let clippedLine = [];
+ngeo.extendedProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
+  const l = ngeo.extendedProfile.utils.getLinestring();
+  const clippedLine = [];
 
-  for (let i=0; i<l.length; i++) {
+  for (let i = 0; i < l.length; i++) {
 
     if (dLeft <= l[i].endD) {
       if (dLeft >= l[i].startD) {
-
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
       }
       if (dRight <= l[i].endD) {
 
         clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
       } else {
-
-        clippedLine.push([l[i].endX,l[i].endY]);
+        clippedLine.push([l[i].endX, l[i].endY]);
       }
     }
   }
@@ -84,7 +72,7 @@ ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
   return {
     clippedLine: clippedLine,
     distanceOffset: dLeft
-  }
+  };
 };
 
 ngeo.extendedProfile.utils.getNiceLOD = function(span) {
@@ -109,70 +97,55 @@ ngeo.extendedProfile.utils.getNiceLOD = function(span) {
 
 ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {
 
-  // Construct the a element
-  let link = document.createElement('a');
+  const link = document.createElement('a');
   link.download = filename;
   link.target = '_blank';
-
-  // Construct the uri
   link.href = dataUrl;
   document.body.appendChild(link);
   link.click();
-
-  // Cleanup the DOM
   document.body.removeChild(link);
-  delete link;
 };
 
-/***
-Export chart to a png file
-@SITN/OM 2017 Adapted from http://stackoverflow.com/questions/11567668/svg-to-canvas-with-d3-js
-***/
-ngeo.extendedProfile.utils.exportToImageFile = function (format) {
-  let margin = ngeo.extendedProfile.options.profileConfig.margin;
-  let svg = d3.select('#profileSVG').node();
-  let img = new Image();
-  var DOMURL = window.URL || window.webkitURL || window;
-  let serializer = new XMLSerializer();
-  let svgStr = serializer.serializeToString(svg);
-  var svgImage = new Blob([svgStr], {type: 'image/svg+xml'});
-  let canvas = document.createElement('canvas');
-  let ctx = canvas.getContext('2d');
-  var url = DOMURL.createObjectURL(svgImage);
+ngeo.extendedProfile.utils.exportToImageFile = function(format) {
+  const margin = ngeo.extendedProfile.options.profileConfig.margin;
+  const svg = d3.select('#profileSVG').node();
+  const img = new Image();
+  const DOMURL = window.URL || window.webkitURL || window;
+  const serializer = new XMLSerializer();
+  const svgStr = serializer.serializeToString(svg);
+  const svgImage = new Blob([svgStr], {type: 'image/svg+xml'});
+  const canvas = document.createElement('canvas');
+  const url = DOMURL.createObjectURL(svgImage);
 
   img.onload = function() {
-    canvas.style.display = "none";
+    canvas.style.display = 'none';
     document.body.appendChild(canvas);
-    let w = d3.select('#profileSVG').attr('width');
-    let h = d3.select('#profileSVG').attr('height');
+    const w = d3.select('#profileSVG').attr('width');
+    const h = d3.select('#profileSVG').attr('height');
     canvas.width = w;
     canvas.height = h;
-    let ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     ctx.fillStyle = 'white';
-    ctx.fillRect(0,0,w,h);
-    let pointsCanvas = d3.select('#profileCanvas').node();
-    canvas.getContext('2d').drawImage(pointsCanvas,margin.left,margin.top,w - (margin.left + margin.right),h - (margin.top + margin.bottom));
-    ctx.drawImage(img,0,0,w,h);
-    let dataURL = canvas.toDataURL();
-    ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL)
+    ctx.fillRect(0, 0, w, h);
+    const pointsCanvas = d3.select('#profileCanvas').node();
+    canvas.getContext('2d').drawImage(pointsCanvas, margin.left, margin.top, w - (margin.left + margin.right), h - (margin.top + margin.bottom));
+    ctx.drawImage(img, 0, 0, w, h);
+    const dataURL = canvas.toDataURL();
+    ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL);
     DOMURL.revokeObjectURL(url);
-  }
+  };
   img.src = url;
 };
 
-/***
-Code adapted from Markus Schuetz @Potree
-***/
-
-ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
-  if(profilePoints.distance.length === 0){
+ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function(profilePoints) {
+  if (profilePoints.distance.length === 0) {
     return;
   }
 
   let file = 'data:text/csv;charset=utf-8,';
 
-  let points = [];
-  for (let i=0; i<profilePoints.distance.length; i++) {
+  const points = [];
+  for (let i = 0; i < profilePoints.distance.length; i++) {
 
     points.push({
       distance: profilePoints.distance[i],
@@ -180,77 +153,75 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
       color_packed: profilePoints.color_packed[i],
       intensity: profilePoints.intensity[i],
       classification: profilePoints.classification[i]
-    })
+    });
   }
 
   points.sort((a, b) => (a.distance - b.distance));
 
   {
     let header = '';
-    if(points[0].hasOwnProperty('x')){
+    if (points[0].hasOwnProperty('x')) {
       header += ', x';
     }
-    if(points[0].hasOwnProperty('y')){
+    if (points[0].hasOwnProperty('y')) {
       header += ', y';
     }
-    if(points[0].hasOwnProperty('distance')){
+    if (points[0].hasOwnProperty('distance')) {
       header += ', distance';
     }
-    if(points[0].hasOwnProperty('altitude')){
+    if (points[0].hasOwnProperty('altitude')) {
       header += ', altitude';
     }
-    if(points[0].hasOwnProperty('color_packed')){
+    if (points[0].hasOwnProperty('color_packed')) {
       header += ', r, g, b';
     }
 
-    if(points[0].hasOwnProperty('intensity')){
+    if (points[0].hasOwnProperty('intensity')) {
       header += ', intensity';
     }
 
-    if(points[0].hasOwnProperty('classification')){
+    if (points[0].hasOwnProperty('classification')) {
       header += ', classification';
     }
 
-    if(points[0].hasOwnProperty('numberOfReturns')){
+    if (points[0].hasOwnProperty('numberOfReturns')) {
       header += ', numberOfReturns';
     }
 
-    if(points[0].hasOwnProperty('pointSourceID')){
+    if (points[0].hasOwnProperty('pointSourceID')) {
       header += ', pointSourceID';
     }
 
-    if(points[0].hasOwnProperty('returnNumber')){
+    if (points[0].hasOwnProperty('returnNumber')) {
       header += ', returnNumber';
     }
-    file += header.substr(2) + '\n';
+    file += `${header.substr(2)} \n`;
   }
-
-  // actual data
-  for(let point of points){
+  for (const point of points) {
     let line = point.distance.toFixed(4) + ', ';
     line += point.altitude.toFixed(4) + ', ';
 
-    if(point.hasOwnProperty('color_packed')){
+    if (point.hasOwnProperty('color_packed')) {
       line += point.color_packed.join(', ');
     }
 
-    if(point.hasOwnProperty('intensity')){
+    if (point.hasOwnProperty('intensity')) {
       line += ', ' + point.intensity;
     }
 
-    if(point.hasOwnProperty('classification')){
+    if (point.hasOwnProperty('classification')) {
       line += ', ' + point.classification;
     }
 
-    if(point.hasOwnProperty('numberOfReturns')){
+    if (point.hasOwnProperty('numberOfReturns')) {
       line += ', ' + point.numberOfReturns;
     }
 
-    if(point.hasOwnProperty('pointSourceID')){
+    if (point.hasOwnProperty('pointSourceID')) {
       line += ', ' + point.pointSourceID;
     }
 
-    if(point.hasOwnProperty('returnNumber')){
+    if (point.hasOwnProperty('returnNumber')) {
       line += ', ' + point.returnNumber;
     }
 
@@ -259,35 +230,35 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
     file = file + line;
   }
 
-  let encodedUri = encodeURI(file);
+  const encodedUri = encodeURI(file);
   ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
 
 };
 
 ngeo.extendedProfile.utils.UUID = function() {
-    var nbr, randStr = "";
-    do {
-        randStr += (nbr = Math.random()).toString(16).substr(2);
-    } while (randStr.length < 30);
-    return [
-        randStr.substr(0, 8), "-",
-        randStr.substr(8, 4), "-4",
-        randStr.substr(12, 3), "-",
-        ((nbr*4|0)+8).toString(16),
-        randStr.substr(15, 3), "-",
-        randStr.substr(18, 12)
-        ].join("");
+  let nbr, randStr = '';
+  do {
+    randStr += (nbr = Math.random()).toString(16).substr(2);
+  } while (randStr.length < 30);
+  return [
+    randStr.substr(0, 8), '-',
+    randStr.substr(8, 4), '-4',
+    randStr.substr(12, 3), '-',
+    ((nbr * 4 | 0) + 8).toString(16),
+    randStr.substr(15, 3), '-',
+    randStr.substr(18, 12)
+  ].join('');
 };
 
 ngeo.extendedProfile.utils.getPytreeLinestring = function(line) {
-      let flat = line.flatCoordinates;
-      let pytreeLineString = '';
-      for (let i=0; i<flat.length; i++) {
-      // TODO check for projection system
-      let px = 2000000 + flat[i];
-      let py = 1000000 + flat[i+1];
-      pytreeLineString += '{' + Math.round(100*px)/100 + ',' + Math.round(100*py)/100+ '},';
-      i+= 1;
-    };
-    return pytreeLineString.substr(0,pytreeLineString.length -1)
-}
+  const flat = line.flatCoordinates;
+  let pytreeLineString = '';
+  for (let i = 0; i < flat.length; i++) {
+    // TODO check for projection system
+    const px = 2000000 + flat[i];
+    const py = 1000000 + flat[i + 1];
+    pytreeLineString += `{${Math.round(100 * px) / 100}, ${Math.round(100 * py) / 100}},`;
+    i += 1;
+  }
+  return pytreeLineString.substr(0, pytreeLineString.length - 1);
+};
