@@ -144,8 +144,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
   d3.select('svg#profileSVG').selectAll('*').remove();
 
   svg = d3.select('svg#profileSVG')
-  .attr('width', (width + margin.left + margin.right).toString())
-  .attr('height', (height + margin.top + margin.bottom).toString());
+  .attr('width', width + margin.left + margin.right)
+  .attr('height', height + margin.top + margin.bottom);
 
   d3.select('svg#profileSVG')
   .on('mousemove', ngeo.extendedProfile.plot2canvas.pointHighlight);
@@ -164,8 +164,8 @@ ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
     .attr('class', 'y axis')
     .call(yAxis);
 
-  svg.select('.y.axis').attr('transform', 'translate('+ (margin.left).toString() + ',' + margin.top.toString() + ')');
-  svg.select('.x.axis').attr('transform', 'translate(' + margin.left.toString() + ',' + (height + margin.top).toString() + ')');
+  svg.select('.y.axis').attr('transform', 'translate('+ (margin.left)+ ',' + margin.top + ')');
+  svg.select('.x.axis').attr('transform', 'translate(' + margin.left + ',' + height + margin.top + ')');
 
   svg.select('.y.axis').selectAll('g.tick line')
   .style('opacity', '0.5')

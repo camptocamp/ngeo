@@ -42,13 +42,14 @@ ngeo.extendedProfile.measure.measureHeight = function () {
   let xs = svgCoordinates[0];
   let ys = svgCoordinates[1];
   let tolerance = 2;
+  let highlightCircle;
   let sx = ngeo.extendedProfile.options.profileConfig.scaleX;
   let sy = ngeo.extendedProfile.options.profileConfig.scaleY;
   let pointSize = 3;
   let p = ngeo.extendedProfile.plot2canvas.getClosestPoint(ngeo.extendedProfile.loader.profilePoints, canvasCoordinates[0], canvasCoordinates[1], tolerance);
 
   if (!ngeo.extendedProfile.measure.profileMeasure.pStart.set) {
-    if (p != undefined) {
+    if (p !== undefined) {
 
       ngeo.extendedProfile.measure.profileMeasure.pStart.distance = p.distance;
       ngeo.extendedProfile.measure.profileMeasure.pStart.altitude = p.altitude;
@@ -65,7 +66,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     }
 
     ngeo.extendedProfile.measure.profileMeasure.pStart.set = true;
-    let highlightCircle = d3.select('svg#profileSVG').append('circle')
+    highlightCircle = d3.select('svg#profileSVG').append('circle')
     .attr('id', 'start_m')
     .attr('cx', ngeo.extendedProfile.measure.profileMeasure.pStart.cx)
     .attr('cy', ngeo.extendedProfile.measure.profileMeasure.pStart.cy)
@@ -73,7 +74,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     .style('fill', 'red');
 
   } else if (!ngeo.extendedProfile.measure.profileMeasure.pEnd.set){
-    if (p != undefined) {
+    if (p !== undefined) {
 
       ngeo.extendedProfile.measure.profileMeasure.pEnd.distance = p.distance;
       ngeo.extendedProfile.measure.profileMeasure.pEnd.altitude = p.altitude;
@@ -88,7 +89,7 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     }
 
     ngeo.extendedProfile.measure.profileMeasure.pEnd.set = true;
-    let highlightCircle = d3.select('svg#profileSVG').append('circle')
+    highlightCircle = d3.select('svg#profileSVG').append('circle')
     .attr('id', 'end_m')
     .attr('cx', ngeo.extendedProfile.measure.profileMeasure.pEnd.cx)
     .attr('cy', ngeo.extendedProfile.measure.profileMeasure.pEnd.cy)
@@ -127,4 +128,4 @@ ngeo.extendedProfile.measure.measureHeight = function () {
     .attr('fill', 'red');
   }
 
-}
+};

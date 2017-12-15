@@ -78,7 +78,7 @@ ngeo.extendedProfile.utils.clipLineByMeasure = function (dLeft, dRight) {
 
         clippedLine.push([l[i].endX,l[i].endY]);
       }
-    } 
+    }
   }
 
   return {
@@ -139,7 +139,7 @@ ngeo.extendedProfile.utils.exportToImageFile = function (format) {
   let canvas = document.createElement('canvas');
   let ctx = canvas.getContext('2d');
   var url = DOMURL.createObjectURL(svgImage);
-  
+
   img.onload = function() {
     canvas.style.display = "none";
     document.body.appendChild(canvas);
@@ -185,7 +185,7 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function (profilePoints) {
 
   points.sort((a, b) => (a.distance - b.distance));
 
-  { 
+  {
     let header = '';
     if(points[0].hasOwnProperty('x')){
       header += ', x';

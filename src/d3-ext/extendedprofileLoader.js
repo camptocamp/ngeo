@@ -18,8 +18,6 @@ ngeo.extendedProfile.setOptions = function(options) {
 
 ngeo.extendedProfile.loader.requestsQueue = [];
 
-
-// Load points by LOD
 ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlot, minLOD, maxLOD) {
 
   ngeo.extendedProfile.options.pytreeLinestring =  ngeo.extendedProfile.utils.getPytreeLinestring(ngeo.extendedProfile.options.olLinestring);
@@ -51,11 +49,6 @@ ngeo.extendedProfile.loader.getProfileByLOD = function (distanceOffset, resetPlo
 
 }
 
-
-/**
- * Provides a function that sends xhr requests to cpotree app and parses
- * its binary output format
- */
 ngeo.extendedProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
   d3.select('#profileInfo').html('Loading levels:\n' + minLOD + ' to ' + maxLOD + '...');
   let hurl = options.pytreeLidarProfileJsonUrl_ + '/get_profile?minLOD=' + minLOD + '&maxLOD=' + maxLOD;
