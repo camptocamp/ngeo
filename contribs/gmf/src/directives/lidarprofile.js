@@ -226,8 +226,8 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    * @type {ol.Feature}
    * @private
    */
-  this.snappedPoint_ = new ol.Feature();
-  this.pointHoverOverlay_.addFeature(this.snappedPoint_);
+  // this.snappedPoint_ = new ol.Feature();
+  // this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
    * @type {ngeox.profile.I18n}
@@ -315,7 +315,7 @@ gmf.LidarProfileController.prototype.$onInit = function() {
       })
     });
   }
-  this.pointHoverOverlay_.setStyle(hoverPointStyle);
+  // this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   const linesConfiguration = this['getLinesConfigurationFn']();
   goog.asserts.assertInstanceof(linesConfiguration, Object);
@@ -335,7 +335,7 @@ gmf.LidarProfileController.prototype.$onInit = function() {
   this.LidarProfileOptions = /** @type {ngeox.lidarProfile.LidarProfileOptions} */ ({
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
-    hoverCallback: this.hoverCallback_.bind(this),
+    // hoverCallback: this.hoverCallback_.bind(this),
     outCallback: this.outCallback_.bind(this),
     i18n: this.profileLabels_
   });
