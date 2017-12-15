@@ -150,7 +150,11 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    * @private
    */
   this.pytreeLidarProfileJsonUrl_ = pytreeLidarProfileJsonUrl;
-  
+
+  /**
+   * @type {string}
+   * @private
+   */
   this.gmfLidarProfileConfig_ = gmfLidarProfileConfig;
 
   /**
@@ -281,7 +285,7 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
         this.update_();
       }
     });
-    
+
   $scope.$watch(
     () => this.gmfLidarProfileConfig_,
     (newConfig, oldConfig) => {
@@ -289,7 +293,7 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
         this.update_();
       }
     }
-    );
+  );
 
   this.updateEventsListening_();
 };
