@@ -7,7 +7,7 @@ goog.require('gmf');
  * TODO
  * @constructor
  * @struct
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.$http} $http Angular http service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfLidarProfileConfig
@@ -31,42 +31,42 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
     'right': 200,
     'bottom': 40
   };
-  // snap tolerance for d3 profile highlight
-  this.profileConfig.tolerance= 5;
+
+  this.profileConfig.tolerance = 5;
   this.profileConfig.configLoaded = false;
 
 };
 
 gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
-    return this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/profile_config_gmf2').then((resp) => {
+  return this.$http_.get(`${this.pytreeLidarProfileJsonUrl_}/profile_config_gmf2`).then((resp) => {
 
     this.profileConfig.classification = resp.data['classification_colors'];
     this.profileConfig.profilWidth = resp.data['width'];
     this.profileConfig.minLOD = resp.data['minLOD'];
     // TODO: remove hard coded (for dev) parameter)
-    this.profileConfig.maxLOD = 6 ;// resp.data['maxLOD'];
+    this.profileConfig.maxLOD = 6;// resp.data['maxLOD'];
     this.profileConfig.initialLOD = resp.data['initialLOD'];
     this.profileConfig.pointSize = resp.data['point_size'];
     this.profileConfig.pointAttributes = resp.data['point_attributes'];
-    
+
     // TODO: get this from pytree config
     this.profileConfig.pointAttributes.POSITION_CARTESIAN = {
       name: 'POSITION_CARTESIAN',
       elements: 3,
       bytes: 12
-    }
+    };
 
     this.profileConfig.pointAttributes.POSITION_PROJECTED_PROFILE = {
       name: 'POSITION_PROJECTED_PROFILE',
       elements: 2,
       bytes: 8
-    }
+    };
 
     this.profileConfig.pointAttributes.COLOR_PACKED = {
       name: 'COLOR_PACKED',
       elements: 4,
       bytes: 4
-    }
+    };
 
     this.profileConfig.defaultAttribute = resp.data['default_attribute'];
     this.profileConfig.defaultPointCloud = resp.data['default_point_cloud'];
@@ -74,8 +74,7 @@ gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
     this.profileConfig.pointClouds = resp.data['pointclouds'];
 
   });
-  
-}
+};
 
 gmf.LidarProfileConfig.prototype.getConfig = function() {
 
