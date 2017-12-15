@@ -9,7 +9,7 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 Draw the points to canvas
 ***/
 ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) {
-  console.log("drawpoints");
+
   let cartoFeatures = [];
 
   let i = -1;
@@ -48,28 +48,8 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
       }
       ctx.arc(cx, cy, ngeo.extendedProfile.options.profileConfig.pointSize, 0, 2 * Math.PI, false);
       ctx.fill();
-      // TODO handle CRS
-      // let olFeature = new  ol.Feature({
-        // geometry: new ol.geom.Point([coords[0]-2000000, coords[1]-1000000])
-      // });
-      // olFeature.setStyle(new ol.style.Style({
-            // image: new ol.style.Circle({
-                // fill: new ol.style.Fill({
-                    // color: olColor
-                // }),
-                // stroke: new ol.style.Stroke({
-                    // color: olColor,
-                    // width: 1
-                // }),
-                // radius: 1
-            // })
-        // }));
-      // cartoFeatures.push(olFeature);
     }
   }
-  // ngeo.extendedProfile.loader.cartoPoints.getSource().clear();
-  // console.log(cartoFeatures);
-  // ngeo.extendedProfile.loader.cartoPoints.getSource().addFeatures(cartoFeatures);
   
 };
 
@@ -77,7 +57,7 @@ ngeo.extendedProfile.plot2canvas.drawPoints = function(points, material, scale) 
 Setup the d3 canvas & svg plot
 ***/
 ngeo.extendedProfile.plot2canvas.setupPlot = function (rangeX, rangeY) {
-  console.log("setupPlot");
+
   let canvasEl = d3.select('#profileCanvas').node();
   let ctx = d3.select('#profileCanvas')
   .node().getContext('2d');
@@ -286,10 +266,10 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
       olFeature.setStyle(new ol.style.Style({
             image: new ol.style.Circle({
                 fill: new ol.style.Fill({
-                    color: 'rgba(255,255,0,1)'
+                    color: 'rgba(3, 50, 124,1)'
                 }),
                 stroke: new ol.style.Stroke({
-                    color: 'rgba(255,255,0,1)',
+                    color: 'rgba(3, 50, 124,1)',
                     width: 2
                 }),
                 radius: 4
@@ -299,11 +279,11 @@ ngeo.extendedProfile.plot2canvas.pointHighlight = function () {
               font: '12px arial',
               text: html,
               fill: new ol.style.Fill({
-                  color: 'orange'
+                  color: 'rgba(3, 50, 124,1)'
               }),
               stroke: new ol.style.Stroke({
                   color: 'white',
-                  width: 1
+                  width: 2
               }),
               offsetX: 2
             })

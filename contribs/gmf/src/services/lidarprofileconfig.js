@@ -43,7 +43,8 @@ gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
     this.profileConfig.classification = resp.data['classification_colors'];
     this.profileConfig.profilWidth = resp.data['width'];
     this.profileConfig.minLOD = resp.data['minLOD'];
-    this.profileConfig.maxLOD = resp.data['maxLOD'];
+    // TODO: remove hard coded (for dev) parameter)
+    this.profileConfig.maxLOD = 6 ;// resp.data['maxLOD'];
     this.profileConfig.initialLOD = resp.data['initialLOD'];
     this.profileConfig.pointSize = resp.data['point_size'];
     this.profileConfig.pointAttributes = resp.data['point_attributes'];
