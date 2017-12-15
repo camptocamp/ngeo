@@ -1,4 +1,5 @@
-<div gmf-drawprofileline
+<div ng-show="$ctrl.ready"
+     gmf-drawprofileline
      gmf-drawprofileline-active="$ctrl.active"
      gmf-drawprofileline-map="::$ctrl.map"
      gmf-drawprofileline-line="$ctrl.line">
@@ -25,18 +26,17 @@
   <div>
   <hr>
     Material:
-  <div ng-repeat="(key, option) in ::$ctrl.getPointAttributes()">
-    <p>
-    toto
-    </p>
-    <!-- <input ng-model="option.checked" ng-checked="!!option.checked" type="radio"> -->
-    <!-- <span>{{option.name | translate}}toto</span> -->
+  <div ng-repeat="option in ::$ctrl.getPointAttributes()">
+    <label>
+      <input name="materialRadio" ng-model="option.checked" ng-checked="!!option.checked" type="radio" ng-change="$ctrl.setDefaultAttribute(option)">
+      {{option.name}}
+    </label>
   </div>
   </div>
   <hr>
   <div>
     Width:
-    <input type="number" pattern="^(0|[1-9][0-9]*)$" min=5 max=100 ng-init="$ctrl.getWidth()" ng-model="$ctrl.profilWidth" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
+    <input type="number" pattern="^(0|[1-9][0-9]*)$" min=5 max=100 ng-model="$ctrl.profilWidth" ng-value="$ctrl.getWidth()" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
     [m]
   </div>
   <hr>
@@ -46,4 +46,7 @@
     <input ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible" type="checkbox">
     <span>{{classification.name}}</span>
   </div>
+</div>
+<div ng-hide="$ctrl.ready">
+ <p>Initialisation en cours, merci de patienter...</p>
 </div>

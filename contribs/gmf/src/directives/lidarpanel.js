@@ -120,17 +120,17 @@ gmf.LidarPanelController = function(gmfLidarProfileConfig) {
  * Init the controller
  */
 gmf.LidarPanelController.prototype.$onInit = function() {
-  
-  this.gmfLidarProfileConfig.initProfileConfig();
-  this.line = this.line;
-  this.active = this.active;
-  this.map = this.map;
 
+  this.gmfLidarProfileConfig.initProfileConfig().then(function(resp){
+    this.ready = true;
+    this.line = this.line;
+    this.active = this.active;
+    this.map = this.map;
+  }.bind(this));
 
 };
 
 gmf.LidarPanelController.prototype.getProfileConfig = function() {
-  console.log(console.log(this.promise_));
   return this.gmfLidarProfileConfig.profileConfig;
 }
 
@@ -139,7 +139,6 @@ gmf.LidarPanelController.prototype.getClassification = function() {
 }
 
 gmf.LidarPanelController.prototype.getPointAttributes = function() {
-  console.log("getPointAttributes");
   return this.gmfLidarProfileConfig.profileConfig.pointAttributes;
 }
 
@@ -148,9 +147,9 @@ gmf.LidarPanelController.prototype.getDefaultAttribute = function() {
 }
 
 gmf.LidarPanelController.prototype.setDefaultAttribute= function(material) {
-  this.gmfLidarProfileConfig.profileConfig.defaultAttribute = material.value;
+  this.gmfLidarProfileConfig.profileConfig.defaultAttribute = material.name;
   if (this.line) {
-    ngeo.extendedProfile.plot2canvas.changeStyle(material.value);
+    ngeo.extendedProfile.plot2canvas.changeStyle(material.name);
   }
 }
 

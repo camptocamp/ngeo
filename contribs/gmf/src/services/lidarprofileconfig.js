@@ -23,7 +23,6 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
   this.profileConfig.scaleX = {};
   this.profileConfig.currentScaleY = {};
   this.profileConfig.previousDomain = [];
-  this.profileConfig.pointAttributes = {};
   this.profileConfig.currentZoom = 1;
   this.profileConfig.distanceOffset = 0;
   this.profileConfig.margin = {
@@ -39,7 +38,6 @@ gmf.LidarProfileConfig = function($http, pytreeLidarProfileJsonUrl) {
 };
 
 gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
-
     return this.$http_.get(this.pytreeLidarProfileJsonUrl_ + '/profile_config_gmf2').then((resp) => {
 
     this.profileConfig.classification = resp.data['classification_colors'];
@@ -53,7 +51,6 @@ gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
     this.profileConfig.defaultPointCloud = resp.data['default_point_cloud'];
     this.profileConfig.defaultColor = resp.data['default_color'];
     this.profileConfig.pointClouds = resp.data['pointclouds'];
-    console.log("init params ok");
 
   });
   

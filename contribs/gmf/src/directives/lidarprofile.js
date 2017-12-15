@@ -354,7 +354,6 @@ gmf.LidarProfileController.prototype.$onInit = function() {
  */
 gmf.LidarProfileController.prototype.update_ = function() {
   this.isErrored = false;
-
   if (this.line) {
     this.gmfLidarProfileConfig_.olLinestring = this.line;
     this.gmfLidarProfileConfig_.map = this.map_;
