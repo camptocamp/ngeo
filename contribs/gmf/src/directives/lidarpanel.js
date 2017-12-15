@@ -109,7 +109,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
  * @ngdoc controller
  * @ngname gmfLidarPanelController
  */
-gmf.LidarPanelController = function($q, gmfLidarProfileConfig) {
+gmf.LidarPanelController = function(gmfLidarProfileConfig) {
   this.gmfLidarProfileConfig = gmfLidarProfileConfig;
 
    /**
@@ -117,7 +117,6 @@ gmf.LidarPanelController = function($q, gmfLidarProfileConfig) {
    * @export
    */
   this.line;
-  this.$q_ = $q;
   this.profilWidth;
 };
 
@@ -127,10 +126,7 @@ gmf.LidarPanelController = function($q, gmfLidarProfileConfig) {
  */
 gmf.LidarPanelController.prototype.$onInit = function() {
   
-  this.promise_ = this.gmfLidarProfileConfig.initProfileConfig(this.$q_);
-
-  console.log("gmf.LidarPanelController.prototype.$onInit ");
-  console.log(this.promise_);
+  this.gmfLidarProfileConfig.initProfileConfig();
   this.line = this.line;
   this.active = this.active;
   this.map = this.map;
@@ -148,6 +144,7 @@ gmf.LidarPanelController.prototype.getClassification = function() {
 }
 
 gmf.LidarPanelController.prototype.getPointAttributes = function() {
+  console.log("getPointAttributes");
   return this.gmfLidarProfileConfig.profileConfig.pointAttributes;
 }
 

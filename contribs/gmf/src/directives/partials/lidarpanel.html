@@ -25,11 +25,12 @@
   <div>
   <hr>
     Material:
-    <!-- <select ng-model="option.name" ng-change="$ctrl.setDefaultAttribute(option)"> -->
-      <!-- <option ng-repeat="(key, option) in ::$ctrl.getPointAttributes()" ng-value="option.name">{{option.name}}</option> -->
-    <!-- </select> -->
   <div ng-repeat="(key, option) in ::$ctrl.getPointAttributes()">
-    <span>{{key}}</span>
+    <p>
+    toto
+    </p>
+    <!-- <input ng-model="option.checked" ng-checked="!!option.checked" type="radio"> -->
+    <!-- <span>{{option.name | translate}}toto</span> -->
   </div>
   </div>
   <hr>
@@ -42,7 +43,7 @@
   Classes:
   <br></br>
   <div ng-repeat="(key, classification) in ::$ctrl.getClassification()">
-    <input ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible"type="checkbox">
+    <input ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible" type="checkbox">
     <span>{{classification.name | translate}}</span>
   </div>
 </div>
