@@ -2,12 +2,9 @@ goog.provide('gmfapp.search');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.searchDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -17,18 +14,30 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('gmf.search.module');
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.search.module.name,
+  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
 gmfapp.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
+gmfapp.module.value('fulltextsearchUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+
+gmfapp.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 /**
  * @param {gmf.Themes} gmfThemes Themes service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
@@ -40,7 +49,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
-   * @type {Array.<gmfx.SearchDirectiveDatasource>}
+   * @type {Array.<gmfx.SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{
@@ -86,7 +95,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
    * @type {string}
    * @export
    */
-  this.inputValue;
+  this.inputValue = '';
 
   /**
    * @type {ol.Map}
@@ -105,23 +114,16 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
   });
 
   /**
-   * @type {ngeo.Notification}
-   * @private
+   * @type {function()}
+   * @export
    */
-  this.notification_ = ngeoNotification;
+  this.searchIsReady = () => {
+    ngeoNotification.notify({
+      msg: 'gmf-search initialized',
+      target: angular.element('#message'),
+      type: ngeo.MessageType.SUCCESS
+    });
+  };
 };
-
-
-/**
- * @export
- */
-gmfapp.MainController.prototype.searchIsReady = function() {
-  this.notification_.notify({
-    msg: 'gmf-search initialized',
-    target: angular.element('#message'),
-    type: ngeo.MessageType.SUCCESS
-  });
-};
-
 
 gmfapp.module.controller('MainController', gmfapp.MainController);

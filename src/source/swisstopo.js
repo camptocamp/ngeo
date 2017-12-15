@@ -3,7 +3,6 @@ goog.module.declareLegacyNamespace();
 
 goog.require('goog.asserts');
 
-goog.require('ol');
 goog.require('ol.source.WMTS');
 goog.require('ol.tilegrid.WMTS');
 
@@ -77,36 +76,36 @@ const swisstopoCreateUrl = function(projection, format) {
  * WARNING: This tile server is not publicly available: you have to be
  *          registered by Swisstopo to use the service.
  * @see https://api3.geo.admin.ch/services/sdiservices.html#wmts
- *
- * @constructor
- * @extends {ol.source.WMTS}
- * @param {ngeox.source.SwisstopoOptions} options WMTS options.
- * @export
  */
-exports = function(options) {
-  const format = options.format || 'image/png';
-  const projection = options.projection;
-  goog.asserts.assert(projection === 'EPSG:21781' || projection === 'EPSG:2056');
-  const tilegrid = swisstopoTileGrids[projection];
-  const projectionCode = projection.split(':')[1];
-  const extension = format.split('/')[1];
-  goog.asserts.assert(projectionCode);
-  goog.asserts.assert(extension);
+exports = class extends ol.source.WMTS {
 
-  ol.source.WMTS.call(this, {
-    attributions: '&copy; <a href="http://www.swisstopo.admin.ch">swisstopo</a>',
-    url: swisstopoCreateUrl(projection, extension),
-    dimensions: {
-      'Time': options.timestamp
-    },
-    projection: projection,
-    requestEncoding: 'REST',
-    layer: options.layer,
-    style: 'default',
-    matrixSet: projectionCode,
-    format: format,
-    tileGrid: tilegrid,
-    crossOrigin: options.crossOrigin
-  });
+  /**
+   * @param {ngeox.source.SwisstopoOptions} options WMTS options.
+   */
+  constructor(options) {
+    const format = options.format || 'image/png';
+    const projection = options.projection;
+    goog.asserts.assert(projection === 'EPSG:21781' || projection === 'EPSG:2056');
+    const tilegrid = swisstopoTileGrids[projection];
+    const projectionCode = projection.split(':')[1];
+    const extension = format.split('/')[1];
+    goog.asserts.assert(projectionCode);
+    goog.asserts.assert(extension);
+
+    super({
+      attributions: '&copy; <a href="http://www.swisstopo.admin.ch">swisstopo</a>',
+      url: swisstopoCreateUrl(projection, extension),
+      dimensions: {
+        'Time': options.timestamp
+      },
+      projection: projection,
+      requestEncoding: 'REST',
+      layer: options.layer,
+      style: 'default',
+      matrixSet: projectionCode,
+      format: format,
+      tileGrid: tilegrid,
+      crossOrigin: options.crossOrigin
+    });
+  }
 };
-ol.inherits(exports, ol.source.WMTS);

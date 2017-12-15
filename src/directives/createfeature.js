@@ -9,9 +9,7 @@ goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.utils');
 goog.require('ol.events');
 goog.require('ol.Feature');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 goog.require('ol.style.Style');
 
 
@@ -55,7 +53,7 @@ goog.require('ol.style.Style');
  */
 ngeo.createfeatureDirective = function() {
   return {
-    controller: 'ngeoCreatefeatureController as cfCtrl',
+    controller: ngeo.CreatefeatureController,
     bindToController: true,
     scope: {
       'active': '=ngeoCreatefeatureActive',
@@ -178,7 +176,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
       this.geomType === ngeo.GeometryType.MULTI_POINT
   ) {
     interaction = new ol.interaction.Draw({
-      type: ol.geom.GeometryType.POINT
+      type: /** @type {ol.geom.GeometryType} */ ('Point')
     });
   } else if (this.geomType === ngeo.GeometryType.LINE_STRING ||
       this.geomType === ngeo.GeometryType.MULTI_LINE_STRING
@@ -228,7 +226,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
       uid,
       ol.events.listen(
         interaction,
-        ol.interaction.DrawEventType.DRAWEND,
+        'drawend',
         this.handleDrawEnd_,
         this
       )
@@ -239,7 +237,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
       uid,
       ol.events.listen(
         interaction,
-        ngeo.MeasureEventType.MEASUREEND,
+        'measureend',
         this.handleDrawEnd_,
         this
       )
@@ -251,12 +249,22 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {ol.interaction.Draw.Event|ngeo.MeasureEvent} event Event.
+ * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
 ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
+  let sketch;
+  if (event.feature) {
+    // ol.interaction.Draw.Event
+    sketch = event.feature;
+  } else {
+    // ngeox.MeasureEvent
+    sketch = event.detail.feature;
+  }
+  goog.asserts.assert(sketch);
+
   // convert to multi if geomType is multi and feature is not
-  let geometry = event.feature.getGeometry();
+  let geometry = sketch.getGeometry();
   const type = geometry.getType();
   if (this.geomType.indexOf('Multi') != type.indexOf('Multi')) {
     geometry = ngeo.utils.toMulti(geometry);
@@ -281,7 +289,3 @@ ngeo.CreatefeatureController.prototype.$onDestroy = function() {
     this.map.removeInteraction(this.interaction_);
   }, 0);
 };
-
-
-ngeo.module.controller(
-  'ngeoCreatefeatureController', ngeo.CreatefeatureController);

@@ -1,19 +1,20 @@
 goog.provide('app.scaleselector');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.scaleselectorDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**

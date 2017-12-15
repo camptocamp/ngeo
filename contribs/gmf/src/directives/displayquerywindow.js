@@ -1,8 +1,6 @@
 goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
 /** @suppress {extraRequire} */
@@ -12,6 +10,12 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
@@ -41,7 +45,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 
 /**
  * Provide a component to display results of the {@link ngeo.queryResult}
- * and shows related features on the map using the {@link ngeo.FeatureOverlayMgr}.
+ * and shows related features on the map using the {@link ngeo.map.FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.
@@ -73,6 +77,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 gmf.displayquerywindowComponent = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
+    'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
     'featuresStyleFn': '&gmfDisplayquerywindowFeaturesstyle',
     'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
     'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
@@ -90,7 +95,8 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @param {!jQuery} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @private
@@ -98,8 +104,14 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
+gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr) {
+
+  /**
+   * @type {Element|string}
+   * @export
+   */
+  this.draggableContainment;
 
   /**
    * @type {boolean}
@@ -139,6 +151,12 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
   };
 
   /**
+   * @type {ngeo.MapQuerent}
+   * @private
+   */
+  this.ngeoMapQuerent_ = ngeoMapQuerent;
+
+  /**
    * @type {?ngeox.QueryResultSource}
    * @export
    */
@@ -151,13 +169,13 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
   this.features_ = new ol.Collection();
 
   /**
-   * @type {!ngeo.FeatureOverlayMgr}
+   * @type {!ngeo.map.FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {ngeo.map.FeatureOverlay}
    * @private
    */
   this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -227,6 +245,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult,
  * Initialise the controller.
  */
 gmf.DisplayquerywindowController.prototype.$onInit = function() {
+  this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
   this.collapsed = this['defaultCollapsedFn'] ?
     this['defaultCollapsedFn']() === true : !this.desktop;
@@ -263,7 +282,10 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
 
   if (this.desktop) {
-    this.element_.find('.gmf-displayquerywindow').draggable();
+    this.element_.find('.gmf-displayquerywindow-container').draggable({
+      'cancel': 'input,textarea,button,select,option,tr',
+      'containment': this.draggableContainment
+    });
     this.element_.find('.gmf-displayquerywindow-container').resizable({
       'minHeight': 240,
       'minWidth': 240
@@ -498,6 +520,7 @@ function(opt_lastFeature) {
 gmf.DisplayquerywindowController.prototype.close = function() {
   this.open = false;
   this.clear();
+  this.ngeoMapQuerent_.clear();
 };
 
 

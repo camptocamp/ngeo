@@ -1,21 +1,12 @@
 goog.provide('gmf.Themes');
-goog.provide('gmf.ThemesEventType');
 
 goog.require('goog.asserts');
 goog.require('gmf');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ol.array');
 goog.require('ol.Collection');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
-
-
-/**
- * @enum {string}
- */
-gmf.ThemesEventType = {
-  CHANGE: 'change'
-};
 
 
 gmf.module.value('gmfThemesOptions', {});
@@ -32,7 +23,7 @@ gmf.module.value('gmfThemesOptions', {});
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
  * @param {angular.$q} $q Angular q service
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
@@ -79,7 +70,7 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
   }
 
   /**
-   * @type {ngeo.Location}
+   * @type {?ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = null;
@@ -88,7 +79,7 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
   }
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
@@ -498,6 +489,44 @@ gmf.Themes.getSnappingConfig = function(node) {
 
 
 /**
+ * Get the maximal resolution defined for this layer. Looks in the
+ *     layer itself before to look into its metadata.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a maxResolutionHint property can exist
+ *     on the node).
+ * @return {number|undefined} the max resolution or undefined if any.
+ */
+gmf.Themes.getNodeMaxResolution = function(gmfLayer) {
+  const metadata = gmfLayer.metadata;
+  let maxResolution = gmfLayer.maxResolutionHint;
+  if (maxResolution === undefined && metadata !== undefined) {
+    maxResolution = metadata.maxResolution;
+  }
+  return maxResolution;
+};
+
+
+/**
+ * Get the minimal resolution defined for this layer. Looks in the
+ *     layer itself before to look into its metadata.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a minResolutionHint property can exist
+ *     on the node).
+ * @return {number|undefined} the min resolution or undefined if any.
+ */
+gmf.Themes.getNodeMinResolution = function(gmfLayer) {
+  const metadata = gmfLayer.metadata;
+  let minResolution = gmfLayer.minResolutionHint;
+  if (minResolution === undefined && metadata !== undefined) {
+    minResolution = metadata.minResolution;
+  }
+  return minResolution;
+};
+
+
+/**
  * @param {number=} opt_roleId The role id to send in the request.
  * Load themes from the "themes" service.
  * @export
@@ -533,7 +562,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
       }
     }
     this.deferred_.resolve(response.data);
-    this.dispatchEvent(gmf.ThemesEventType.CHANGE);
+    this.dispatchEvent('change');
     this.loaded_ = true;
   }, (response) => {
     this.deferred_.reject(response);

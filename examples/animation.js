@@ -1,43 +1,37 @@
 goog.provide('app.animation');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.resizemapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
- * App-specific directive wrapping the ngeo map directive. The directive's
+ * App-specific component wrapping the ngeo map component. The component's
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.mapDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appMap',
-      'class': '=appMapClass'
-    },
-    controller: () => {},
-    controllerAs: 'ctrl',
-    bindToController: true,
-    template: '<div ngeo-map="ctrl.map"></div>'
-  };
+app.mapComponent = {
+  bindings: {
+    'map': '=appMap',
+    'class': '=appMapClass'
+  },
+  template: '<div ngeo-map="$ctrl.map"></div>'
 };
 
 
-app.module.directive('appMap', app.mapDirective);
+app.module.component('appMap', app.mapComponent);
 
 
 /**

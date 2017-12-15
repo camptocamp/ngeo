@@ -1,11 +1,11 @@
-goog.provide('gmf.shareDirective');
+goog.provide('gmf.shareComponent');
 
 goog.require('gmf');
 goog.require('gmf.ShareService');
 
 
 /**
- * Directive to display a shortened permalink and share it by email
+ * Component to display a shortened permalink and share it by email
  * Example:
  *
  *      <gmf-share
@@ -13,24 +13,22 @@ goog.require('gmf.ShareService');
  *      </gmf-share>
  *
  * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
- * @return {angular.Directive}  The directive specs.
- * @ngInject
- * @ngdoc directive
- * @ngname gmfShare
+ * @type {!angular.Component}
  */
-gmf.shareDirective = function() {
-  return {
-    restrict: 'E',
-    controller: 'GmfShareController as shareCtrl',
-    templateUrl: `${gmf.baseTemplateUrl}/share.html`
-  };
+gmf.shareComponent = {
+  bindings: {
+    'enableEmail': '<gmfShareEmail'
+  },
+  controller: 'GmfShareController',
+  templateUrl: () => `${gmf.baseTemplateUrl}/share.html`
 };
+gmf.module.component('gmfShare', gmf.shareComponent);
 
 
 /**
- * The controller for the share directive
+ * The controller for the share component
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @param {gmf.ShareService} gmfShareService service for sharing map.
  * @param {angular.$q} $q Angular q service
  * @param {angular.Attributes} $attrs Attributes.
@@ -61,7 +59,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
   this.$q_ = $q;
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -70,7 +68,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
    * @type {boolean}
    * @export
    */
-  this.enableEmail = $attrs['gmfShareEmail'] === 'true';
+  this.enableEmail;
 
   /**
    * @type {string}
@@ -101,7 +99,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
    * @type {boolean}
    * @export
    */
-  this.showLenghtWarning = this.permalink.length > gmf.ShareService.URL_MAX_LEN ||
+  this.showLengthWarning = this.permalink.length > gmf.ShareService.URL_MAX_LEN ||
   ngeoLocation.getPath() > gmf.ShareService.URL_PATH_MAX_LEN;
 
   /**
@@ -120,7 +118,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
    * @type {boolean}
    * @export
    */
-  this.errorOnGetShortUrl;
+  this.errorOnGetShortUrl = false;
 
   this.getShortUrl();
 
@@ -188,11 +186,9 @@ gmf.ShareController.prototype.sendShortUrl = function() {
    * @private
    */
   function onError_(resp) {
-    this.errorOnsend_ = true;
+    this.errorOnsend = true;
   }
 
 };
 
-
-gmf.module.directive('gmfShare', gmf.shareDirective);
 gmf.module.controller('GmfShareController', gmf.ShareController);

@@ -71,6 +71,13 @@ ngeox.Attribute.prototype.name;
 
 
 /**
+ * The attribute alias.
+ * @type {string|null}
+ */
+ngeox.Attribute.prototype.alias;
+
+
+/**
  * Whether the attribute required to have a value set or not. Defaults to
  * `false`.
  * @type {boolean|undefined}
@@ -155,6 +162,12 @@ ngeox.Dimensions;
  * @typedef {Object.<string, string>}
  */
 ngeox.DimensionsActive;
+
+
+/**
+ * @typedef {function(string, string, string=)}
+ */
+ngeox.Download;
 
 
 /**
@@ -252,6 +265,15 @@ ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
 
 
 /**
+ * @typedef {{
+ *  styleFunction: ol.StyleFunction,
+ *  features: Object.<string, ol.Feature>
+ * }}
+ */
+ngeox.MapFeatureOverlayGroup;
+
+
+/**
  * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
  * The same data source can only be in one of the two lists. The `wfs` list
  * has priority, i.e. if the data source supports WFS, it's put in the
@@ -325,18 +347,6 @@ ngeox.QuerentResultItem.prototype.tooManyFeatures;
  * @type {number|undefined}
  */
 ngeox.QuerentResultItem.prototype.totalFeatureCount;
-
-
-/**
- * @interface
- */
-ngeox.MenuEvent = function() {};
-
-
-/**
- * @type {string}
- */
-ngeox.MenuEvent.prototype.action;
 
 
 /**
@@ -847,6 +857,15 @@ ngeox.ScaleselectorOptions;
  * @type {boolean|undefined}
  */
 ngeox.ScaleselectorOptions.prototype.dropup;
+
+
+/**
+ * @typedef {{
+ *     handleClassName: (string|undefined),
+ *     draggerClassName: (string|undefined)
+ * }}
+ */
+ngeox.SortableOptions;
 
 
 /**
@@ -1940,30 +1959,6 @@ ngeox.profile.I18n.prototype.yAxis;
 
 
 /**
- * @interface
- */
-ngeox.MeasureEvent = function() {};
-
-
-/**
- * @type {ol.Feature}
- */
-ngeox.MeasureEvent.prototype.feature;
-
-
-/**
- * @interface
- */
-ngeox.RotateEvent = function() {};
-
-
-/**
- * @type {ol.Feature}
- */
-ngeox.RotateEvent.prototype.feature;
-
-
-/**
  * Options for the mobile geolocations directive.
  * @typedef {{
  *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
@@ -2139,17 +2134,6 @@ ngeox.TimeProperty;
  */
 ngeox.TimeRange;
 
-
-/**
- * @interface
- */
-ngeox.BackgroundEvent = function() {};
-
-
-/**
- * @type {ol.layer.Base}
- */
-ngeox.BackgroundEvent.prototype.previous;
 
 /**
  * Format a number with a precision.
@@ -2610,3 +2594,62 @@ ngeox.ImportWmsGetCapItemOptions;
  * }}
  */
 ngeox.ImportWmtsGetCapItemOptions;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   action: string
+ * }>}
+ */
+ngeox.MenuEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   current: ol.layer.Base,
+ *   previous: ol.layer.Base
+ * }>}
+ */
+ngeox.BackgroundEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>}
+ */
+ngeox.MeasureEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>}
+ */
+ngeox.RotateEvent;
+
+/**
+ * @typedef {{
+ *     property: (string),
+ *     condition: (string|Array.<string>)
+ * }}
+ */
+ngeox.WfsPermalinkFilter;
+
+/**
+ * @typedef {{
+ *     filters: (Array.<ngeox.WfsPermalinkFilter>)
+ * }}
+ */
+ngeox.WfsPermalinkFilterGroup;
+
+/**
+ * @typedef {{
+ *     wfsType: (string),
+ *     filterGroups: (Array.<ngeox.WfsPermalinkFilterGroup>),
+ *     showFeatures: (boolean)
+ * }}
+ */
+ngeox.WfsPermalinkData;
+
+
+/**
+ * @typedef {function(string):!ngeo.print.Service}
+ */
+ngeox.CreatePrint;

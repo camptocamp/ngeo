@@ -1,7 +1,8 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
+ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
-NGEO_MODULES_PARTIALS_FILES := $(shell find src/modules/ -name '*.html')
+NGEO_MODULES_PARTIALS_FILES := $(filter-out $(NGEO_DIRECTIVES_PARTIALS_FILES), $(shell find src/ -name '*.html'))
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
@@ -21,7 +22,7 @@ GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type 
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
-GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less src/modules -type f -name '*.less')
+GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 DEVELOPMENT ?= FALSE
 ifeq ($(DEVELOPMENT), TRUE)
 CLOSURE_VARS += --var development=true
@@ -43,9 +44,11 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/d3/build/d3.js \
 	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
-	node_modules/jsts/dist/jsts.min.js \
+	node_modules/jsts/dist/jsts.js \
 	node_modules/moment/moment.js \
+	node_modules/url-polyfill/url-polyfill.js \
 	third-party/jquery-ui/jquery-ui.js \
+	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
 	node_modules/google-closure-library/closure/goog/transpile.js
 else
 GMF_APPS_LIBS_JS_FILES += \
@@ -68,7 +71,9 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
 	node_modules/moment/min/moment.min.js \
-	third-party/jquery-ui/jquery-ui.min.js
+	node_modules/url-polyfill/url-polyfill.min.js \
+	third-party/jquery-ui/jquery-ui.min.js \
+	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
 endif
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
@@ -102,6 +107,7 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/transpile.js \
 	.build/examples-hosted/https.js \
 	.build/examples-hosted/lib/font-awesome.min.css \
+	.build/examples-hosted/lib/url-polyfill.min.js \
 	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
 	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
 NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
@@ -196,10 +202,14 @@ help:
 apidoc: .build/apidoc
 
 .PHONY: dist
-dist: dist/ngeo.js dist/ngeo-debug.js dist/gmf.js
+dist: dist/ngeo.js dist/gmf.js
 
 .PHONY: check
-check: git-attributes eof-newline lint check-examples test dist build-gmf-apps check-ngeox
+check: lint check-googs check-examples test dist build-gmf-apps
+
+.PHONY: check-googs
+check-googs:
+	buildtools/check-no-goog.sh
 
 .PHONY: check-ngeox
 check-ngeox: options/ngeox.js
@@ -214,7 +224,10 @@ build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp
+lint: .build/eslint.timestamp git-attributes eof-newline check-ngeox
+
+.PHONY: eslint
+eslint: .build/eslint.timestamp
 
 .PHONY: git-attributes
 git-attributes:
@@ -245,9 +258,9 @@ serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGUL
 
 .PHONY: examples-hosted
 examples-hosted: \
-		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
-		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
-		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
+		examples-hosted-ngeo \
+		examples-hosted-gmf \
+		examples-hosted-apps
 
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: \
@@ -281,7 +294,7 @@ gh-pages:
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages:
 	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
-.build/eslint.timestamp: .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml \
+.build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
 		$(SRC_JS_FILES) \
 		$(TEST_JS_FILES) \
 		$(GMF_TEST_JS_FILES) \
@@ -289,7 +302,7 @@ gh-pages:
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp .eslintrc.yaml .eslintrc-es6.yaml, $?)
+	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
 dist/ngeo.js: .build/ngeo.json \
@@ -307,19 +320,6 @@ dist/ngeo.js: .build/ngeo.json \
 	@rm /tmp/ngeo.js.gz
 
 dist/ngeo.js.map: dist/ngeo.js
-
-dist/ngeo-debug.js: buildtools/ngeo-debug.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/ngeo-debug.js
-	@$(STAT_COMPRESSED) /tmp/ngeo-debug.js.gz
-	@rm /tmp/ngeo-debug.js.gz
 
 # At this point ngeo does not include its own CSS, so dist/ngeo.css is just
 # a minified version of ol.css. This will change in the future.
@@ -436,6 +436,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/jquery.ui.touch-punch.min.js: node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/jquery-ui.min.css: third-party/jquery-ui/jquery-ui.min.css
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -477,6 +481,10 @@ dist/gmf.js.map: dist/gmf.js
 	cp $< $@
 
 .build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/lib/url-polyfill.min.js: node_modules/url-polyfill/url-polyfill.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -544,6 +552,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
+		-e 's|\.\./node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js|lib/jquery.ui.touch-punch.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
@@ -560,6 +569,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
+		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
 		-e 's|/@?main=$*.js|lib/transpile.js|' \
 		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
@@ -575,6 +585,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
 		-e 's|\.\./node_modules/jquery/dist/jquery\.js|lib/jquery.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
+		-e 's|\.\./node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js|lib/jquery.ui.touch-punch.min.js|' \
 		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
 		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap\.js|lib/bootstrap.min.js|' \
 		-e 's|\.\./node_modules/angular/angular\.js|lib/angular.min.js|' \
@@ -593,6 +604,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
 		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
 		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
+		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
 		-e 's|/@?main=$*\.js|../../lib/transpile.js|' \
 		-e 's|default\.js|$*.js|' \
 		-e 's|\.\./utils/watchwatchers\.js|lib/watchwatchers.js|' \
@@ -747,15 +759,6 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/closure-compiler/compiler.jar: .build/closure-compiler/compiler-latest.zip
-	unzip $< -d .build/closure-compiler
-	touch $@
-
-.build/closure-compiler/compiler-latest.zip:
-	mkdir -p $(dir $@)
-	wget -O $@ http://closure-compiler.googlecode.com/files/compiler-latest.zip
-	touch $@
-
 .PRECIOUS: .build/examples/%.json
 .build/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
 	mkdir -p $(dir $@)
@@ -798,7 +801,7 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		$(CLOSURE_VARS) \
 		--var 'src=contribs/gmf/apps/**/js/*.js,contribs/gmf/apps/appmodule.js' \
 		--var src_set=contribs_gmf \
-		--var entry_point=app_$* \
+		--var entry_point=app.$*.Controller \
 		--var source_map=contribs/gmf/build/$*.js.map $< > $@
 
 contribs/gmf/build/angular-locale_%.js: github_versions
@@ -839,11 +842,6 @@ $(EXTERNS_JQUERY): github_versions
 	.build/python-venv/bin/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
-.build/closure-library: github_versions
-	mkdir -p $(dir $@)
-	git clone http://github.com/google/closure-library/ $@
-	cd $@; git checkout `grep ^closure-library= $< | cut -d = -f 2`
-
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="node_modules/openlayers/src ../../../openlayers/src" \
@@ -871,7 +869,7 @@ $(EXTERNS_JQUERY): github_versions
 		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
 		$(NGEO_MODULES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src" \
 		--var "app=ngeo" $< > $@
 
 .PRECIOUS: .build/gmftemplatecache.js
@@ -882,7 +880,7 @@ $(EXTERNS_JQUERY): github_versions
 		$(NGEO_MODULES_PARTIALS_FILES) \
 		$(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials ngeomodule:src/modules gmf:contribs/gmf/src/directives/partials" \
+		--var "partials=ngeo:src/directives/partials ngeomodule:src gmfmodule:contribs/gmf/src gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp

@@ -4,10 +4,15 @@ goog.require('gmf');
 goog.require('ol.Collection');
 goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
-goog.require('ol.interaction.DrawEventType');
 goog.require('ol.style.Style');
 goog.require('ol.style.Stroke');
 goog.require('ngeo.DecorateInteraction');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 /**
@@ -64,7 +69,7 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
  * @param {!angular.Scope} $scope Scope.
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service
@@ -124,32 +129,28 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
    * @type {!ol.interaction.Draw}
    * @export
    */
-  this.interaction = new ol.interaction.Draw(
-    /** @type {olx.interaction.DrawOptions} */ ({
-      type: 'LineString',
-      features: this.features_
-    }));
+  this.interaction = new ol.interaction.Draw({
+    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    features: this.features_
+  });
 
   ngeoDecorateInteraction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
-  this.interaction.on(
-    ol.Object.getChangeEventType(ol.interaction.Property.ACTIVE),
-    function() {
-      if (this.interaction.getActive()) {
-        this.clear_();
-      }
-    }, this
-  );
+  this.interaction.on('change:active', () => {
+    if (this.interaction.getActive()) {
+      this.clear_();
+    }
+  });
 
   // Update the profile with the new geometry.
-  this.interaction.on(ol.interaction.DrawEventType.DRAWEND, function(e) {
-    this.line = e.feature.getGeometry();
+  this.interaction.on('drawend', (event) => {
+    this.line = event.feature.getGeometry();
     // using timeout to prevent double click to zoom the map
     $timeout(() => {
       this.interaction.setActive(false);
     }, 0);
-  }, this);
+  });
 
   // Line may be removed from an other component
   // for example closing the chart panel

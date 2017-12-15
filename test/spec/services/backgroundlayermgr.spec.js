@@ -1,6 +1,6 @@
-goog.require('ngeo.BackgroundLayerMgr');
+goog.require('ngeo.map.BackgroundLayerMgr');
 
-describe('ngeo.BackgroundLayerMgr', () => {
+describe('ngeo.map.BackgroundLayerMgr', () => {
   let ngeoBackgroundLayerMgr;
   let map;
 

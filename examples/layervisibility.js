@@ -1,8 +1,5 @@
 goog.provide('app.layervisibility');
 
-goog.require('ngeo.DecorateLayer');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -11,13 +8,20 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.TileWMS');
 
+goog.require('ngeo.layertree.DecorateLayer');
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.layertree.DecorateLayer.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
- * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
+ * @param {ngeo.layertree.DecorateLayer} ngeoDecorateLayer Decorate layer service.
  * @constructor
  * @ngInject
  */
@@ -61,4 +65,4 @@ app.MainController = function(ngeoDecorateLayer) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+module.controller('MainController', app.MainController);

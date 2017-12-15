@@ -51,11 +51,11 @@
         ng-click="mainCtrl.toggleLeftNavVisibility()">
         <span class="gmf-icon gmf-icon-layers"></span>
       </button>
-      <gmf-search gmf-search-map="mainCtrl.map"
-        gmf-search-datasources="mainCtrl.searchDatasources"
-        gmf-search-clearbutton="true"
+      <gmf-search gmf-search-map="::mainCtrl.map"
+        gmf-search-datasources="::mainCtrl.searchDatasources"
+        gmf-search-clearbutton="::true"
         gmf-search-placeholder="{{'Search…'|translate}}"
-        gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
+        gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
@@ -85,7 +85,9 @@
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
         <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
           <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
-          <span>{{"You're using the mobile application. Check out the" | translate }} <a href="http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/?no_redirect">{{'standard application' | translate}}</a>.</span>
+          <span translate
+            translate-params-url="'http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/?no_redirect'">
+            You're using the mobile application. Check out the <a href="{{url}}">standard application</a>.</span>
         </div>
       </div>
     </main>
@@ -167,6 +169,7 @@
     </nav>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../third-party/jquery-ui/jquery-ui.js"></script>
+    <script src="../../../../node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
     <script src="../../../../node_modules/angular-animate/angular-animate.js"></script>
     <script src="../../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
@@ -184,8 +187,9 @@
     <script src="../../../../node_modules/d3/build/d3.js"></script>
     <script src="../../../../node_modules/moment/moment.js"></script>
     <script src="../../../../node_modules/file-saver/FileSaver.js"></script>
+    <script src="../../../../node_modules/url-polyfill/url-polyfill.js"></script>
     <script src="/@?main=mobile/js/controller.js"></script>
-    <script src="default.js"></script>
+    <script src="../default.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
       (function() {

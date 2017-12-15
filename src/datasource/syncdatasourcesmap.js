@@ -5,11 +5,8 @@ goog.require('ngeo.datasource.DataSource');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
 goog.require('ol.events');
-goog.require('ol.CollectionEventType');
-goog.require('ol.Object');
 goog.require('ol.Observable');
 goog.require('ol.View');
-goog.require('ol.ViewProperty');
 goog.require('goog.asserts');
 
 
@@ -54,12 +51,7 @@ ngeo.datasource.SyncDataSourcesMap = class {
      */
     this.listenerKeys_ = [];
 
-    ol.events.listen(
-      this.ngeoDataSources_,
-      ol.CollectionEventType.ADD,
-      this.handleDataSourcesAdd_,
-      this
-    );
+    ol.events.listen(this.ngeoDataSources_, 'add', this.handleDataSourcesAdd_, this);
   }
 
   /**
@@ -88,12 +80,7 @@ ngeo.datasource.SyncDataSourcesMap = class {
     // (1) Event listeners
     const view = map.getView();
     this.listenerKeys_.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-        this.handleViewResolutionChange_,
-        this
-      )
+      ol.events.listen(view, 'change:resolution', this.handleViewResolutionChange_, this)
     );
 
     // (2) Sync resolution with existing data sources

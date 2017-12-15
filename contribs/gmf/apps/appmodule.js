@@ -10,14 +10,18 @@ goog.provide('app');
 
 goog.require('gmf');
 
-goog.require('ngeo.import.importModule');
+goog.require('ngeo.utils.module');
+goog.require('gmf.search.module');
+goog.require('gmf.authentication.module');
 
 
 /**
  * @type {!angular.Module}
  */
 app.module = angular.module('app', [
-  ngeo.import.importModule.module.name,
+  ngeo.utils.module.module.name,
+  gmf.search.module.name,
+  gmf.authentication.module.name,
   gmf.module.name
 ]);
 

@@ -129,7 +129,6 @@ jobs:
     - DEVELOPMENT=TRUE
     script:
     - make dist/ngeo.js
-    - make dist/ngeo-debug.js
     - make dist/gmf.js
     if: type = pull_request
   - stage: Build and publish
@@ -137,7 +136,6 @@ jobs:
     - JOB=publish-npm
     script:
     - make dist/ngeo.js
-    - make dist/ngeo-debug.js
     - make dist/gmf.js
     - .build/python-venv/bin/pip install jsongrep
     - export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`

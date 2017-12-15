@@ -1,34 +1,28 @@
 goog.provide('app.colorpicker');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
 
-
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name
+]);
 
 
 /**
- * The application-specific color picker directive, based on the
- * ngeo-colorpicker directive.
+ * The application-specific color picker component, based on the
+ * ngeo-colorpicker component.
  *
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.colorpickerDirective = function() {
-  return {
-    restrict: 'E',
-    scope: true,
-    template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
-    bindToController: true,
-    controller: 'AppColorpickerController as ctrl'
-  };
+app.colorpickerComponent = {
+  template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
+  controller: 'AppColorpickerController',
+  controllerAs: 'ctrl'
 };
 
 
-app.module.directive('appColorpicker', app.colorpickerDirective);
+app.module.component('appColorpicker', app.colorpickerComponent);
 
 
 /**

@@ -1,9 +1,9 @@
 /* global themes */
 goog.require('gmf.Permalink');
 goog.require('gmf');
-goog.require('ngeo.LayerHelper');
-goog.require('ngeo.StateManager');
-goog.require('ngeo.Location');
+goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.statemanager.Service');
+goog.require('ngeo.statemanager.Location');
 goog.require('ol.Map');
 goog.require('ol.Collection');
 goog.require('ol.layer.Group');

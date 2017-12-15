@@ -2,7 +2,7 @@ goog.provide('gmf.filterselectorComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.Authentication');
+goog.require('gmf.authentication.Service');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesHelper');
@@ -14,7 +14,12 @@ goog.require('ngeo.modalDirective');
 goog.require('ngeo.Notification');
 goog.require('ngeo.RuleHelper');
 goog.require('ol.events');
-goog.require('ol.CollectionEventType');
+
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlayMgr.module.name
 
 
 /**
@@ -34,7 +39,7 @@ gmf.FilterselectorController = class {
    * @param {gmf.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
-   * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
@@ -143,7 +148,7 @@ gmf.FilterselectorController = class {
     this.ngeoNotification_ = ngeoNotification;
 
     /**
-     * @type {!ngeo.FeatureOverlay}
+     * @type {!ngeo.map.FeatureOverlay}
      * @export
      */
     this.featureOverlay = goog.asserts.assert(
@@ -324,20 +329,8 @@ gmf.FilterselectorController = class {
     if (register) {
       // Listen to data sources being added/removed
       keys.push(
-        ol.events.listen(
-          this.gmfDataSources_,
-          ol.CollectionEventType.ADD,
-          this.handleDataSourcesAdd_,
-          this
-        )
-      );
-      keys.push(
-        ol.events.listen(
-          this.gmfDataSources_,
-          ol.CollectionEventType.REMOVE,
-          this.handleDataSourcesRemove_,
-          this
-        )
+        ol.events.listen(this.gmfDataSources_, 'add', this.handleDataSourcesAdd_, this),
+        ol.events.listen(this.gmfDataSources_, 'remove', this.handleDataSourcesRemove_, this)
       );
 
       // Manage the data sources that are already in the collection
@@ -708,6 +701,5 @@ gmf.module.component('gmfFilterselector', {
     toolGroup: '<'
   },
   controller: gmf.FilterselectorController,
-  controllerAs: 'fsCtrl',
   templateUrl: () => `${gmf.baseTemplateUrl}/filterselector.html`
 });

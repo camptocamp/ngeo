@@ -4,11 +4,11 @@ goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.BackgroundEventType');
-goog.require('ngeo.BackgroundLayerMgr');
+goog.require('gmf.WFSAliases');
+goog.require('ngeo.map.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.WMSTime');
 goog.require('ol.events');
@@ -33,20 +33,21 @@ gmf.datasource.DataSourcesManager = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {gmf.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
-   * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+   * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
-   * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+   * @param {!gmf.WFSAliases} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
    */
   constructor($q, $rootScope, $timeout, gmfThemes, gmfTreeManager,
     ngeoBackgroundLayerMgr, ngeoDataSources, ngeoLayerHelper, ngeoRuleHelper,
-    ngeoWMSTime
+    ngeoWMSTime, gmfWFSAliases
   ) {
 
     // === Injected properties ===
@@ -82,7 +83,7 @@ gmf.datasource.DataSourcesManager = class {
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {!ngeo.BackgroundLayerMgr}
+     * @type {!ngeo.map.BackgroundLayerMgr}
      * @private
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
@@ -97,7 +98,7 @@ gmf.datasource.DataSourcesManager = class {
     this.ngeoDataSources_ = ngeoDataSources;
 
     /**
-     * @type {!ngeo.LayerHelper}
+     * @type {!ngeo.map.LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -113,6 +114,12 @@ gmf.datasource.DataSourcesManager = class {
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
+
+    /**
+     * @type {!gmf.WFSAliases}
+     * @private
+     */
+    this.gmfWFSAliases_ = gmfWFSAliases;
 
 
     // === Inner properties ===
@@ -153,12 +160,11 @@ gmf.datasource.DataSourcesManager = class {
 
     ol.events.listen(
       this.ngeoBackgroundLayerMgr_,
-      ngeo.BackgroundEventType.CHANGE,
+      'change',
       this.handleNgeoBackgroundLayerChange_,
       this
     );
-    ol.events.listen(this.gmfThemes_, gmf.ThemesEventType.CHANGE,
-      this.handleThemesChange_, this);
+    ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
   }
 
   /**
@@ -230,7 +236,7 @@ gmf.datasource.DataSourcesManager = class {
    * are added or removed, pushing it to the cache or removing it from the
    * cache.
    *
-   * @param {Array.<ngeo.LayertreeController>|undefined} value List of tree
+   * @param {Array.<ngeo.layertree.Controller>|undefined} value List of tree
    *     controllers.
    * @private
    */
@@ -494,7 +500,7 @@ gmf.datasource.DataSourcesManager = class {
    * Also, set its according data source. Finally, add the data source to
    * the ngeo collection.
    *
-   * @param {ngeo.LayertreeController} treeCtrl Layertree controller to add
+   * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to add
    * @private
    */
   addTreeCtrlToCache_(treeCtrl) {
@@ -553,6 +559,8 @@ gmf.datasource.DataSourcesManager = class {
     };
 
     this.ngeoDataSources_.push(dataSource);
+
+    this.gmfWFSAliases_.describe(dataSource);
   }
 
   /**
@@ -604,7 +612,7 @@ gmf.datasource.DataSourcesManager = class {
    * Note: The possible states can only be 'on' or 'off', because the
    * layertree controller being a 'leaf'.
    *
-   * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+   * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
    * @param {string|undefined} newVal New state value
    * @private
    */
@@ -641,7 +649,7 @@ gmf.datasource.DataSourcesManager = class {
   /**
    * Returns a layertree controller cache item, if it exists.
    *
-   * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+   * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
    * @return {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} Cache item
    * @private
    */
@@ -784,13 +792,13 @@ gmf.datasource.DataSourcesManager = class {
    * The `querySourceIds` property in the layer is used to determine the
    * data sources that are bound to the layer.
    *
-   * @param {!ngeo.BackgroundEvent} evt Event.
+   * @param {!ngeox.BackgroundEvent} evt Event.
    * @private
    */
   handleNgeoBackgroundLayerChange_(evt) {
 
-    const previousBackgroundLayer = evt.previous;
-    const currentBackgroundLayer = evt.current;
+    const previousBackgroundLayer = evt.detail.previous;
+    const currentBackgroundLayer = evt.detail.current;
     const cache = this.dataSourcesCache_;
 
     // Remove data sources linked to previous background layer
@@ -836,7 +844,7 @@ gmf.datasource.DataSourcesManager.TreeCtrlCache;
  *     stateWatcherUnregister: (Function),
  *     timeLowerValueWatcherUnregister: (Function|undefined),
  *     timeUpperValueWatcherUnregister: (Function|undefined),
- *     treeCtrl: (ngeo.LayertreeController),
+ *     treeCtrl: (ngeo.layertree.Controller),
  *     wmsLayer: (ol.layer.Image|undefined)
  * }}
  */

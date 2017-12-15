@@ -1,8 +1,6 @@
 goog.provide('app.interactiontoggle');
 
 goog.require('ngeo.DecorateInteraction');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.interaction.Draw');
@@ -11,9 +9,14 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**

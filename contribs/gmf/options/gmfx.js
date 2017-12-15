@@ -73,7 +73,7 @@ gmfx.ExternalOGCServer;
 /**
  * Configuration for a grid tab.
  * @typedef {{
- *     configuration: ngeo.GridConfig,
+ *     configuration: ngeo.grid.Config,
  *     source: ngeox.QueryResultSource
  * }}
  */
@@ -82,7 +82,7 @@ gmfx.GridSource;
 
 /**
  * Configuration used to initialize a grid.
- * @type {ngeo.GridConfig}
+ * @type {ngeo.grid.Config}
  */
 gmfx.GridSource.prototype.configuration;
 
@@ -398,7 +398,7 @@ gmfx.ProfileHoverPointInformations.prototype.yUnits;
  *    url: string
  * }}
  */
-gmfx.SearchDirectiveDatasource;
+gmfx.SearchComponentDatasource;
 
 
 /**
@@ -406,7 +406,7 @@ gmfx.SearchDirectiveDatasource;
  * See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @type {BloodhoundOptions|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.bloodhoundOptions;
+gmfx.SearchComponentDatasource.prototype.bloodhoundOptions;
 
 
 /**
@@ -414,7 +414,7 @@ gmfx.SearchDirectiveDatasource.prototype.bloodhoundOptions;
  * The bound value of this property key will be used as label.
  * @type {string|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.labelKey;
+gmfx.SearchComponentDatasource.prototype.labelKey;
 
 
 /**
@@ -422,7 +422,7 @@ gmfx.SearchDirectiveDatasource.prototype.labelKey;
  * Used to define groups of dataset.
  * @type {Array.<string>|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.groupValues;
+gmfx.SearchComponentDatasource.prototype.groupValues;
 
 
 /**
@@ -430,14 +430,14 @@ gmfx.SearchDirectiveDatasource.prototype.groupValues;
  * `add_theme`, `add_group` or `add_layer`
  * @type {Array.<string>|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.groupActions;
+gmfx.SearchComponentDatasource.prototype.groupActions;
 
 
 /**
  * The geometry's projection for this set of data.
  * @type {string|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.projection;
+gmfx.SearchComponentDatasource.prototype.projection;
 
 
 /**
@@ -446,7 +446,7 @@ gmfx.SearchDirectiveDatasource.prototype.projection;
  * doc/jquery_typeahead.md#datasets
  * @type {TypeaheadDataset|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.typeaheadDatasetOptions;
+gmfx.SearchComponentDatasource.prototype.typeaheadDatasetOptions;
 
 
 /**
@@ -454,7 +454,7 @@ gmfx.SearchDirectiveDatasource.prototype.typeaheadDatasetOptions;
  * replaced by the input string.
  * @type {string}
  */
-gmfx.SearchDirectiveDatasource.prototype.url;
+gmfx.SearchComponentDatasource.prototype.url;
 
 
 /**
@@ -691,3 +691,31 @@ cgxp.tools.openInfoWindow;
  * @param {string=} opt_height CSS height.
  */
 gmfx.openPopup_
+
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   user: gmfx.User
+ * }>}
+ */
+gmfx.AuthenticationEvent;
+
+
+/**
+ * @typedef {{
+ *     functionalities: (gmfx.AuthenticationFunctionalities|undefined),
+ *     is_password_changed: (boolean|undefined),
+ *     role_id: (number|undefined),
+ *     role_name: (string|undefined),
+ *     username: (string|undefined)
+ * }}
+ */
+gmfx.AuthenticationLoginResponse;
+
+
+/**
+ * @typedef {{
+ *     success: boolean
+ * }}
+ */
+gmfx.AuthenticationDefaultResponse;

@@ -1,49 +1,7 @@
-goog.provide('ngeo.ToolActivate');
 goog.provide('ngeo.ToolActivateMgr');
 
 goog.require('ngeo');
 goog.require('goog.asserts');
-
-
-/**
- * A simple object that can be managed by `ngeo.ToolActivateMgr`.
- *
- * See our live examples:
- * [../examples/mapquery.html](../examples/mapquery.html)
- * [../examples/toolActivate.html](../examples/toolActivate.html)
- *
- * @param {Object} toolContext An object which acts as the context for the tool.
- * @param {string} activePropertyName The name of a boolean property on
- *      `toolContext` which represents the active state of the tool.
- * @constructor
- * @struct
- * @ngdoc value
- * @ngname ngeoToolActivate
- * @export
- */
-ngeo.ToolActivate = function(toolContext, activePropertyName) {
-
-  /**
-   * A getter function to get the active state of the tool.
-   * @return {boolean} Is active.
-   * @export
-   */
-  this.getActive = function() {
-    return toolContext[activePropertyName];
-  };
-
-  /**
-   * A setter function to set the active state of the tool.
-   * @param {boolean} newVal New active state.
-   * @export
-   */
-  this.setActive = function(newVal) {
-    toolContext[activePropertyName] = newVal;
-  };
-};
-
-
-ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);
 
 
 /**
@@ -53,7 +11,7 @@ ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);
  *    defaultTool: boolean,
  *    unlisten: (function(): void)}}
  */
-ngeo.ToolMgrEntry;
+ngeo.ToolActivateMgr.ToolMgrEntry;
 
 
 /**
@@ -87,7 +45,7 @@ ngeo.ToolMgrEntry;
 ngeo.ToolActivateMgr = function($rootScope) {
 
   /**
-   * @type {!Object.<string, Array.<ngeo.ToolMgrEntry>>}
+   * @type {!Object.<string, Array.<ngeo.ToolActivateMgr.ToolMgrEntry>>}
    * @private
    */
   this.groups_ = {};
@@ -246,5 +204,6 @@ ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
   }
 };
 
-
-ngeo.module.service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
+ngeo.ToolActivateMgr.module = angular.module('ngeoToolActivateMgr', [])
+  .service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
+ngeo.module.requires.push(ngeo.ToolActivateMgr.module.name);

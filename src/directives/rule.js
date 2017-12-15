@@ -9,6 +9,7 @@ goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.Menu');
 goog.require('ngeo.RuleHelper');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
@@ -17,6 +18,12 @@ goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
 goog.require('ol.Collection');
 goog.require('ol.events');
+
+goog.require('ngeo.map.FeatureOverlay');
+
+
+// In futur module declaration, don't forget to require:
+// - ngeo.map.FeatureOverlay.module.name
 
 
 /**
@@ -47,7 +54,7 @@ ngeo.RuleController = class {
     // Binding properties
 
     /**
-     * @type {!ngeo.FeatureOverlay}
+     * @type {!ngeo.map.FeatureOverlay}
      * @export
      */
     this.featureOverlay;
@@ -612,7 +619,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.drawnFeatures,
-          ol.CollectionEventType.ADD,
+          'add',
           this.handleFeaturesAdd_,
           this
         )
@@ -630,7 +637,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.translate_,
-          ol.interaction.TranslateEventType.TRANSLATEEND,
+          'translateend',
           this.handleTranslateEnd_,
           this
         )
@@ -639,7 +646,7 @@ ngeo.RuleController = class {
       keys.push(
         ol.events.listen(
           this.rotate_,
-          ngeo.RotateEventType.ROTATEEND,
+          'rotateend',
           this.handleRotateEnd_,
           this
         )
@@ -805,7 +812,7 @@ ngeo.RuleController = class {
         actions.push({
           cls: 'fa fa-arrows',
           label: gettextCatalog.getString('Move'),
-          name: ngeo.RuleController.MenuActionType.MOVE
+          name: 'move'
         });
       }
       if (type == ngeo.GeometryType.LINE_STRING ||
@@ -814,7 +821,7 @@ ngeo.RuleController = class {
         actions.push({
           cls: 'fa fa-rotate-right',
           label: gettextCatalog.getString('Rotate'),
-          name: ngeo.RuleController.MenuActionType.ROTATE
+          name: 'rotate'
         });
       }
     }
@@ -827,7 +834,7 @@ ngeo.RuleController = class {
 
       ol.events.listen(
         this.menu_,
-        ngeo.MenuEventType.ACTION_CLICK,
+        'actionclick',
         this.handleMenuActionClick_,
         this
       );
@@ -850,7 +857,7 @@ ngeo.RuleController = class {
     if (this.menu_) {
       ol.events.unlisten(
         this.menu_,
-        ngeo.MenuEventType.ACTION_CLICK,
+        'actionclick',
         this.handleMenuActionClick_,
         this
       );
@@ -860,18 +867,18 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.MenuEvent} evt Event.
+   * @param {ngeox.MenuEvent} evt Event.
    * @private
    */
   handleMenuActionClick_(evt) {
-    const action = evt.action;
+    const action = evt.detail.action;
 
     switch (action) {
-      case ngeo.RuleController.MenuActionType.MOVE:
+      case 'move':
         this.translate_.setActive(true);
         this.scope_.$apply();
         break;
-      case ngeo.RuleController.MenuActionType.ROTATE:
+      case 'rotate':
         this.rotate_.setActive(true);
         this.scope_.$apply();
         break;
@@ -882,7 +889,7 @@ ngeo.RuleController = class {
   }
 
   /**
-   * @param {ngeo.RotateEvent} evt Event.
+   * @param {ngeox.RotateEvent} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {
@@ -903,15 +910,6 @@ ngeo.RuleController = class {
 
 
 /**
- * @enum {string}
- */
-ngeo.RuleController.MenuActionType = {
-  MOVE: 'move',
-  ROTATE: 'rotate'
-};
-
-
-/**
  * The rule component is bound to a `ngeo.rule.Rule` object and shows UI
  * components to be able to edit its properties, such as: operator, expression,
  * etc. The actual properties depend on the type of rule.
@@ -927,6 +925,5 @@ ngeo.module.component('ngeoRule', {
     'toolGroup': '<'
   },
   controller: ngeo.RuleController,
-  controllerAs: 'ruleCtrl',
   templateUrl: () => `${ngeo.baseTemplateUrl}/rule.html`
 });

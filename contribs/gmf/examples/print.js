@@ -4,7 +4,7 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.printDirective');
+goog.require('gmf.printComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -14,9 +14,14 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  ngeo.map.module.name //for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
 gmfapp.module.value(
@@ -35,10 +40,14 @@ gmfapp.module.value(
 );
 
 
+gmfapp.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+
+
 /**
  * @constructor
  * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */

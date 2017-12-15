@@ -1,7 +1,7 @@
 goog.provide('ngeo.datasource.WMSGroup');
 
 goog.require('ngeo');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.OGC');
 
@@ -35,7 +35,7 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.OGCGroup {
     this.layer_;
 
     /**
-     * @type {!ngeo.LayerHelper}
+     * @type {!ngeo.map.LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = injector.get('ngeoLayerHelper');

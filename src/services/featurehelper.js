@@ -5,7 +5,6 @@ goog.require('ngeo');
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
-goog.require('ngeo.Download');
 goog.require('ol.Feature');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiLineString');
@@ -21,6 +20,12 @@ goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+
+/** @suppress {extraRequire} */
+goog.require('ngeo.download.Service');
+
+// FIXME add me at the module dependencies:
+// - ngeo.download.Service.module.name
 
 
 /**
@@ -112,7 +117,7 @@ ngeo.FeatureHelper = function($injector, $filter) {
 
   /**
    * Download service.
-   * @type {ngeo.Download}
+   * @type {ngeox.Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
@@ -379,7 +384,8 @@ ngeo.FeatureHelper.prototype.getTextStyle_ = function(feature) {
       text: this.getNameProperty(feature),
       size: this.getSizeProperty(feature),
       angle: this.getAngleProperty(feature),
-      color: this.getRGBAColorProperty(feature)
+      color: this.getRGBAColorProperty(feature),
+      width: this.getStrokeProperty(feature)
     })
   });
 };
@@ -401,7 +407,7 @@ ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
   console.assert(geom);
   const type = geom.getType();
 
-  if (type === ol.geom.GeometryType.POINT) {
+  if (type === 'Point') {
     styles.push(
       new ol.style.Style({
         image: new ol.style.Circle({
@@ -418,7 +424,7 @@ ngeo.FeatureHelper.prototype.createEditingStyles = function(feature) {
       })
     );
   } else {
-    if (type === ol.geom.GeometryType.LINE_STRING) {
+    if (type === 'LineString') {
       styles.push(
         new ol.style.Style({
           stroke: new ol.style.Stroke({
@@ -489,7 +495,7 @@ ngeo.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
     options.geometry = function(feature) {
       const geom = feature.getGeometry();
 
-      if (geom.getType() == ol.geom.GeometryType.POINT) {
+      if (geom.getType() == 'Point') {
         return;
       }
 

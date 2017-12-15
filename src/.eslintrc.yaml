@@ -1,0 +1,30 @@
+{
+  plugins: [
+    'googshift',
+  ],
+  rules: {
+    'googshift/no-duplicate-requires': 'error',
+
+    'googshift/no-missing-requires': ['off', {
+      prefixes: ['ngeo', 'ol'],
+      exceptions: ['ngeo.module.requires.push']
+    }],
+
+    'googshift/no-unused-requires': 'off',
+
+    'googshift/one-provide-or-module': ['error', {
+      entryPoints: ['ngeo'],
+      root: 'src'
+    }],
+
+    'googshift/requires-first': 'error',
+
+    'googshift/valid-provide-and-module': ['off', {
+      entryPoints: ['ngeo'],
+      root: 'src/module',
+      replace: '..|ngeo'
+    }],
+
+    'googshift/valid-requires': 'off',
+  }
+}

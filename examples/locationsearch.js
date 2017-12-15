@@ -1,43 +1,42 @@
 goog.provide('app.locationsearch');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-/** @suppress {extraRequire} */
-goog.require('ngeo.search.createLocationSearchBloodhound');
 goog.require('goog.asserts');
+
+goog.require('ngeo.map.module');
+goog.require('ngeo.search.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [ngeo.module.name]);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name,
+  ngeo.search.module.name
+]);
 
 
 /**
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.locationSearchDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appSearchMap'
-    },
-    controller: 'AppSearchController as ctrl',
-    bindToController: true,
-    template:
-        '<input type="text" placeholder="Search…" ' +
-        'ngeo-search="ctrl.options" ' +
-        'ngeo-search-datasets="ctrl.datasets" ' +
-        'ngeo-search-listeners="ctrl.listeners">'
-  };
+app.locationSearchComponent = {
+  bindings: {
+    'map': '=appSearchMap'
+  },
+  controller: 'AppSearchController',
+  controllerAs: 'ctrl',
+  template:
+      '<input type="text" placeholder="Search…" ' +
+      'ngeo-search="ctrl.options" ' +
+      'ngeo-search-datasets="ctrl.datasets" ' +
+      'ngeo-search-listeners="ctrl.listeners">'
 };
 
 
-app.module.directive('appLocationSearch', app.locationSearchDirective);
+module.component('appLocationSearch', app.locationSearchComponent);
 
 
 /**
@@ -142,7 +141,7 @@ app.SearchController.select_ = function(event, suggestion, dataset) {
 };
 
 
-app.module.controller('AppSearchController', app.SearchController);
+module.controller('AppSearchController', app.SearchController);
 
 
 /**
@@ -169,4 +168,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+module.controller('MainController', app.MainController);

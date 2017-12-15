@@ -1,3 +1,4 @@
+goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 
 describe('ngeo.ToolActivateMgr', () => {

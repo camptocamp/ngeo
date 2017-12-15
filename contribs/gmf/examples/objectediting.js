@@ -23,7 +23,10 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  'gmf',
+  ngeo.ToolActivateMgr.module.name,
+]);
 
 
 /**

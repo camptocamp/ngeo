@@ -5,7 +5,6 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ol.events');
 goog.require('ol.Collection');
-goog.require('ol.ViewProperty');
 goog.require('ol.format.WFS');
 goog.require('ol.interaction.Snap');
 
@@ -174,31 +173,12 @@ gmf.Snapping.prototype.setMap = function(map) {
       }, 0);
     });
 
-    keys.push(
-      ol.events.listen(
-        this.gmfThemes_,
-        gmf.ThemesEventType.CHANGE,
-        this.handleThemesChange_,
-        this
-      )
-    );
-
     const view = map.getView();
+
     keys.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-        this.handleMapViewChange_,
-        this
-      )
-    );
-    keys.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-        this.handleMapViewChange_,
-        this
-      )
+      ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
+      ol.events.listen(view, 'change:center', this.handleMapViewChange_, this),
+      ol.events.listen(view, 'change:resolution', this.handleMapViewChange_, this)
     );
   }
 };
@@ -222,7 +202,7 @@ gmf.Snapping.prototype.handleThemesChange_ = function() {
  * create and add a cache item with every configuration required to do the
  * snapping. It becomes active when its state is set to 'on'.
  *
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
+ * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
  * @private
  */
 gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
@@ -305,7 +285,7 @@ gmf.Snapping.prototype.unregisterAllTreeCtrl_ = function() {
  *   b) false: then the first parent node must have an `ogcServer` property set
  * 5) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
- * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+ * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
  * @return {?gmf.Snapping.WFSConfig} The configuration object.
  * @private
  */
@@ -342,7 +322,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
-    const firstTreeCtrl = ngeo.LayertreeController.getFirstParentTree(treeCtrl);
+    const firstTreeCtrl = ngeo.layertree.Controller.getFirstParentTree(treeCtrl);
     const firstNode = /** @type {gmfThemes.GmfGroup} */ (firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
@@ -369,7 +349,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
 
 /**
- * @param {ngeo.LayertreeController} treeCtrl The layer tree controller
+ * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
  * @param {string|undefined} newVal New state value
  * @private
  */
@@ -567,7 +547,7 @@ gmf.Snapping.Cache;
  *     requestDeferred: (?angular.$q.Deferred),
  *     snappingConfig: (gmfThemes.GmfSnappingConfig),
  *     stateWatcherUnregister: (Function),
- *     treeCtrl: (ngeo.LayertreeController),
+ *     treeCtrl: (ngeo.layertree.Controller),
  *     wfsConfig: (gmf.Snapping.WFSConfig)
  * }}
  */

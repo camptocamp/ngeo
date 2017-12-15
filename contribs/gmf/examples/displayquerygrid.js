@@ -15,8 +15,6 @@ goog.require('ngeo.bboxQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.gridComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -27,9 +25,16 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.grid.module');
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  ngeo.grid.module.name,
+  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
 gmfapp.module.constant('ngeoQueryOptions', {
@@ -46,22 +51,17 @@ gmfapp.module.constant(
 
 /**
  * Demo, NOT USED.
- * A sample directive to display the result.
+ * A sample component to display the result.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-gmfapp.queryresultDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {},
-    controller: 'gmfappQueryresultController as qrCtrl',
-    bindToController: true,
-    templateUrl: 'partials/queryresult.html'
-  };
+gmfapp.queryresultComponent = {
+  controller: 'gmfappQueryresultController',
+  controllerAs: 'qrCtrl',
+  templateUrl: 'partials/queryresult.html'
 };
 
-gmfapp.module.directive('gmfappQueryresult', gmfapp.queryresultDirective);
+gmfapp.module.component('gmfappQueryresult', gmfapp.queryresultComponent);
 
 
 /**
@@ -89,7 +89,7 @@ gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultContro
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */

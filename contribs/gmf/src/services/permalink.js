@@ -2,32 +2,19 @@ goog.provide('gmf.Permalink');
 
 goog.require('gmf');
 goog.require('ngeo');
-goog.require('ngeo.AutoProjection');
-/** @suppress {extraRequire} */
-goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.ThemeManager');
-goog.require('gmf.datasource.ExternalDataSourcesManager');
-goog.require('ngeo.BackgroundEventType');
-goog.require('ngeo.BackgroundLayerMgr');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.EventHelper');
-goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.Features');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.Popover');
-goog.require('ngeo.Querent');
-goog.require('ngeo.StateManager');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
-goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -36,6 +23,12 @@ goog.require('ol.proj');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
+
+goog.require('ngeo.statemanager.module');
+
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.module.name
+ngeo.module.requires.push(ngeo.statemanager.module.name);
 
 
 /**
@@ -86,8 +79,8 @@ gmf.module.value('gmfPermalinkOptions',
 
 
 /**
- * The Permalink service for GMF, which uses the `ngeo.StateManager` to manage
- * the GMF application state. Here's the list of states are are managed:
+ * The Permalink service for GMF, which uses the `ngeo.statemanager.Service` to
+ * manage the GMF application state. Here's the list of states are are managed:
  *
  * - the map center and zoom level
  * - the current background layer selected
@@ -108,8 +101,8 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
- * @param {ngeo.Location} ngeoLocation ngeo location service.
+ * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -159,7 +152,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -172,20 +165,20 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     $injector.get('ngeoFeatures') : null;
 
   /**
-   * @type {?ngeo.BackgroundLayerMgr}
+   * @type {?ngeo.map.BackgroundLayerMgr}
    * @private
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr') ?
     $injector.get('ngeoBackgroundLayerMgr') : null;
 
   /**
-   * @type {?ngeo.FeatureOverlayMgr}
+   * @type {?ngeo.map.FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr') ?
     $injector.get('ngeoFeatureOverlayMgr') : null;
 
   /**
-   * @type {?ngeo.FeatureOverlay}
+   * @type {?ngeo.map.FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr ?
@@ -266,13 +259,13 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   // == other properties ==
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?ngeo.WfsPermalink}
+   * @type {?ngeo.statemanager.WfsPermalink}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?
@@ -385,7 +378,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   if (this.ngeoBackgroundLayerMgr_) {
     ol.events.listen(
       this.ngeoBackgroundLayerMgr_,
-      ngeo.BackgroundEventType.CHANGE,
+      'change',
       this.handleBackgroundLayerManagerChange_,
       this);
   }
@@ -437,10 +430,8 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     }, this);
 
     this.ngeoFeatures_.extend(features);
-    ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.ADD,
-      this.handleNgeoFeaturesAdd_, this);
-    ol.events.listen(this.ngeoFeatures_, ol.CollectionEventType.REMOVE,
-      this.handleNgeoFeaturesRemove_, this);
+    ol.events.listen(this.ngeoFeatures_, 'add', this.handleNgeoFeaturesAdd_, this);
+    ol.events.listen(this.ngeoFeatures_, 'remove', this.handleNgeoFeaturesRemove_, this);
   }
 
   if (this.featureHelper_) {
@@ -452,7 +443,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   }
 
   if (this.gmfThemeManager_) {
-    this.rootScope_.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
+    this.rootScope_.$on(gmf.ThemeManager.EventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_();
     });
   }
@@ -472,25 +463,25 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
       // update the url accordingly.
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
-        ol.CollectionEventType.REMOVE,
+        'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
       );
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleExternalDSGroupCollectionAdd_,
         this
       );
       ol.events.listen(
         this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
-        ol.CollectionEventType.REMOVE,
+        'remove',
         this.handleExternalDSGroupCollectionRemove_,
         this
       );
@@ -1034,7 +1025,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
         firstParent.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.getState() !== 'indeterminate') {
             this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
-            return ngeo.LayertreeController.VisitorDecision.STOP;
+            return ngeo.layertree.Controller.VisitorDecision.STOP;
           }
         });
       });
@@ -1078,7 +1069,7 @@ gmf.Permalink.prototype.addNgeoFeature_ = function(feature) {
   const uid = ol.getUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    ol.events.listen(feature, ol.events.EventType.CHANGE,
+    ol.events.listen(feature, 'change',
       this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this)
   );
 };
@@ -1117,7 +1108,7 @@ gmf.Permalink.prototype.handleNgeoFeaturesChange_ = function() {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {ngeo.WfsPermalinkData|null} The query data.
+ * @return {?ngeox.WfsPermalinkData} The query data.
  * @private
  */
 gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
@@ -1167,12 +1158,12 @@ gmf.Permalink.prototype.getWfsPermalinkData_ = function() {
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
- * @return {ngeo.WfsPermalinkFilterGroup|null} A filter group.
+ * @return {ngeox.WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
 gmf.Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
-   * @type {Array.<ngeo.WfsPermalinkFilter>}
+   * @type {Array.<ngeox.WfsPermalinkFilter>}
    */
   const filters = [];
 
@@ -1366,13 +1357,13 @@ gmf.Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
 gmf.Permalink.prototype.registerExternalDSGroup_ = function(group) {
   ol.events.listen(
     group.dataSourcesCollection,
-    ol.CollectionEventType.ADD,
+    'add',
     this.setExternalDataSourcesState_,
     this
   );
   ol.events.listen(
     group.dataSourcesCollection,
-    ol.CollectionEventType.REMOVE,
+    'remove',
     this.setExternalDataSourcesState_,
     this
   );
@@ -1398,13 +1389,13 @@ gmf.Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
 gmf.Permalink.prototype.unregisterExternalDSGroup_ = function(group) {
   ol.events.unlisten(
     group.dataSourcesCollection,
-    ol.CollectionEventType.ADD,
+    'add',
     this.setExternalDataSourcesState_,
     this
   );
   ol.events.unlisten(
     group.dataSourcesCollection,
-    ol.CollectionEventType.REMOVE,
+    'remove',
     this.setExternalDataSourcesState_,
     this
   );

@@ -3,25 +3,17 @@ goog.provide('gmf.ThemeManager');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.StateManager');
+goog.require('ngeo.statemanager.Service');
+
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.statemanager.Service.module.name
+ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
 
 
 /**
  * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.
  */
 gmf.module.value('gmfTreeManagerModeFlush', true);
-
-
-/**
- * @enum {string}
- * @export
- */
-gmf.ThemeManagerEventType = {
-  /**
-   * Triggered when the theme name change.
-   */
-  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
-};
 
 
 /**
@@ -41,7 +33,7 @@ gmf.ThemeManagerEventType = {
  * @param {gmf.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {gmf.TreeManager} gmfTreeManager the tree manager.
- * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
+ * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @struct
  * @ngdoc service
@@ -75,7 +67,7 @@ gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {ngeo.StateManager}
+   * @type {ngeo.statemanager.Service}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -126,7 +118,7 @@ gmf.ThemeManager.prototype.getThemeName = function() {
 gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
   this.themeName_ = name;
   if (!opt_stealth) {
-    this.$rootScope_.$emit(gmf.ThemeManagerEventType.THEME_NAME_SET, name);
+    this.$rootScope_.$emit(gmf.ThemeManager.EventType.THEME_NAME_SET, name);
   }
 };
 
@@ -140,3 +132,14 @@ gmf.ThemeManager.prototype.removeAll = function() {
 };
 
 gmf.module.service('gmfThemeManager', gmf.ThemeManager);
+
+
+/**
+ * @enum {string}
+ */
+gmf.ThemeManager.EventType = {
+  /**
+   * Triggered when the theme name change.
+   */
+  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
+};

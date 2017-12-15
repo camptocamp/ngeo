@@ -1,12 +1,6 @@
 goog.provide('gmf.displayquerygridComponent');
 
 goog.require('gmf');
-goog.require('ngeo.CsvDownload');
-goog.require('ngeo.GridConfig');
-/** @suppress {extraRequire} */
-goog.require('ngeo.gridComponent');
-goog.require('ngeo.FeatureOverlay');
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
 goog.require('ol.Collection');
@@ -15,13 +9,25 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+/** @suppress {extraRequire} */
+goog.require('ngeo.download.module');
+/** @suppress {extraRequire} */
+goog.require('ngeo.grid.module');
+goog.require('ngeo.map.FeatureOverlayMgr');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.download.module.name
+// - ngeo.grid.module.name
+// - ngeo.map.FeatureOverlayMgr.module.name
+
 
 ngeo.module.value('gmfDisplayquerygridTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template URL.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
@@ -45,7 +51,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 /**
  * Provides a component to display results of the {@link ngeo.queryResult} in a
  * grid and shows related features on the map using
- * the {@link ngeo.FeatureOverlayMgr}.
+ * the {@link ngeo.map.FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
@@ -75,7 +81,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *     empty columns be hidden? Default: `false`.
  * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
  *     zoom-level to use when zooming to selected features.
- * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabas Optional.
+ * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabs Optional.
  *     Configuration to merge grids with the same attributes into a single grid.
  *
  * @ngdoc component
@@ -106,10 +112,11 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
+ * @param {ngeo.download.Csv} ngeoCsvDownload CSV download service.
  * @param {angular.JQLite} $element Element.
  * @constructor
  * @private
@@ -117,7 +124,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
+gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
@@ -143,7 +150,13 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {ngeo.CsvDownload}
+   * @type {ngeo.MapQuerent}
+   * @private
+   */
+  this.ngeoMapQuerent_ = ngeoMapQuerent;
+
+  /**
+   * @type {ngeo.download.Csv}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
@@ -227,7 +240,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
   this.features_ = new ol.Collection();
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {ngeo.map.FeatureOverlay}
    * @private
    */
   this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -238,6 +251,14 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult,
    */
   this.highlightFeatures_ = new ol.Collection();
   this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
+
+  /**
+   * Filename
+   * @type {string}
+   * @private
+   */
+  this.filename_ = $injector.has('gmfCsvFilename') ?
+    $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
    * @type {ol.Map}
@@ -506,7 +527,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
       }
 
       allProperties.push(properties);
-      featuresForSource[ngeo.GridConfig.getRowUid(properties)] = feature;
+      featuresForSource[ngeo.grid.Config.getRowUid(properties)] = feature;
     }
   });
 
@@ -605,7 +626,7 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
 
 /**
  * @param {Array.<!Object>} data Grid rows.
- * @return {?ngeo.GridConfig} Grid config.
+ * @return {?ngeo.grid.Config} Grid config.
  * @private
  */
 gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
@@ -625,7 +646,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
   });
 
   if (columnDefs.length > 0) {
-    return new ngeo.GridConfig(data, columnDefs);
+    return new ngeo.grid.Config(data, columnDefs);
   } else {
     // no columns, do not show grid
     return null;
@@ -647,6 +668,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
   this.tooManyResults = false;
   this.features_.clear();
   this.highlightFeatures_.clear();
+  this.ngeoMapQuerent_.clear();
   this.featuresForSources_ = {};
   if (this.unregisterSelectWatcher_) {
     this.unregisterSelectWatcher_();
@@ -853,7 +875,7 @@ gmf.DisplayquerygridController.prototype.downloadCsv = function() {
     const selectedRows = source.configuration.getSelectedRows();
 
     this.ngeoCsvDownload_.startDownload(
-      selectedRows, columnDefs, 'query-results.csv');
+      selectedRows, columnDefs, this.filename_);
   }
 };
 

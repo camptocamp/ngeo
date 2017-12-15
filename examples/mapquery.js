@@ -9,8 +9,6 @@ goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -19,9 +17,15 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name,
+  ngeo.ToolActivateMgr.module.name,
+]);
 
 
 app.module.value('ngeoQueryOptions', {
@@ -30,22 +34,17 @@ app.module.value('ngeoQueryOptions', {
 
 
 /**
- * A sample directive to display the result.
+ * A sample component to display the result.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.queryresultDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {},
-    controller: 'AppQueryresultController as qrCtrl',
-    bindToController: true,
-    templateUrl: 'partials/queryresult.html'
-  };
+app.queryresultComponent = {
+  controller: 'AppQueryresultController',
+  controllerAs: 'qrCtrl',
+  templateUrl: 'partials/queryresult.html'
 };
 
-app.module.directive('appQueryresult', app.queryresultDirective);
+app.module.component('appQueryresult', app.queryresultComponent);
 
 
 /**

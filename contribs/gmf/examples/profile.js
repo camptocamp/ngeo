@@ -1,6 +1,5 @@
 goog.provide('gmfapp.profile');
 
-goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
@@ -20,9 +19,14 @@ goog.require('ol.source.OSM');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
 gmfapp.module.value(
@@ -31,7 +35,7 @@ gmfapp.module.value(
 
 /**
  * @param {angular.Scope} $scope Angular scope.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @constructor
  * @ngInject
@@ -103,11 +107,10 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawLine = new ol.interaction.Draw(
-    /** @type {olx.interaction.DrawOptions} */ ({
-      type: 'LineString',
-      features: features
-    }));
+  this.drawLine = new ol.interaction.Draw({
+    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    features: features
+  });
 
   this.drawLine.setActive(false);
   this.map.addInteraction(this.drawLine);

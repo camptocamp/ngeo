@@ -1,3 +1,4 @@
+goog.require('ngeo.print.Service');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.extent');
@@ -16,10 +17,8 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 goog.require('ol.tilegrid.WMTS');
-goog.require('ngeo.CreatePrint');
-goog.require('ngeo.Print');
 
-describe('ngeo.CreatePrint', () => {
+describe('ngeo.print.Service', () => {
 
   let ngeoCreatePrint;
 
@@ -30,9 +29,9 @@ describe('ngeo.CreatePrint', () => {
 
   });
 
-  it('creates an ngeo.Print instance', () => {
+  it('creates an ngeo.print.Service instance', () => {
     const print = ngeoCreatePrint('http://example.com/print');
-    expect(print instanceof ngeo.Print).toBe(true);
+    expect(print instanceof ngeo.print.Service).toBe(true);
   });
 
   describe('#createSpec', () => {

@@ -25,9 +25,14 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
 gmfapp.module.value('ngeoQueryOptions', {
@@ -43,21 +48,17 @@ gmfapp.module.value(
 
 /**
  * Demo, NOT USED.
- * A sample directive to display the result.
+ * A sample component to display the result.
  *
- * @return {angular.Directive} The directive specs.
+ * @type {!angular.Component}
  */
-gmfapp.queryresultDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {},
-    controller: 'AppQueryresultController as qrCtrl',
-    bindToController: true,
-    templateUrl: 'partials/queryresult.html'
-  };
+gmfapp.queryresultComponent = {
+  controller: 'AppQueryresultController',
+  controllerAs: 'qrCtrl',
+  templateUrl: 'partials/queryresult.html'
 };
 
-gmfapp.module.directive('appQueryresult', gmfapp.queryresultDirective);
+gmfapp.module.component('appQueryresult', gmfapp.queryresultComponent);
 
 
 /**
@@ -85,7 +86,7 @@ gmfapp.module.controller('AppQueryresultController', gmfapp.QueryresultControlle
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */

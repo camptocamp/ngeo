@@ -1,10 +1,5 @@
 goog.provide('app.desktopgeolocation');
 
-goog.require('ngeo.FeatureOverlayMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.desktopGeolocationDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -14,14 +9,21 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 
+goog.require('ngeo.map.module');
+goog.require('ngeo.geolocation.desktop');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.geolocation.desktop.name,
+  ngeo.map.module.name
+]);
 
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @ngInject

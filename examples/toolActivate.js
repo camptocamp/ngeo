@@ -1,13 +1,10 @@
 goog.provide('app.toolActivate');
 
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureOverlayMgr');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -21,13 +18,19 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name,
+  ngeo.ToolActivateMgr.module.name,
+]);
 
 
 /**
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Interaction

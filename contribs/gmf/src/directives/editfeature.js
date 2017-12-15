@@ -16,9 +16,10 @@ goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
@@ -28,11 +29,9 @@ goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.TranslateEventType');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-goog.require('ol.ObjectEventType');
 
 
 /**
@@ -60,7 +59,7 @@ goog.require('ol.ObjectEventType');
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {ngeo.LayertreeController} gmf-editfeature-editabletreectrl
+ * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
  * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
@@ -108,7 +107,7 @@ gmf.module.directive(
  *     interaction service.
  * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -134,7 +133,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.dirty;
 
   /**
-   * @type {ngeo.LayertreeController}
+   * @type {ngeo.layertree.Controller}
    * @export
    */
   this.editableTreeCtrl;
@@ -235,7 +234,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {ngeo.LayerHelper}
+   * @type {ngeo.map.LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -363,11 +362,11 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
     actions: [{
       cls: 'fa fa-arrows',
       label: gettextCatalog.getString('Move'),
-      name: gmf.EditfeatureController.MenuActionType.MOVE
+      name: 'move'
     }, {
       cls: 'fa fa-rotate-right',
       label: gettextCatalog.getString('Rotate'),
-      name: gmf.EditfeatureController.MenuActionType.ROTATE
+      name: 'rotate'
     }]
   });
 
@@ -430,15 +429,6 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
    * @export
    */
   this.serverErrorType = null;
-};
-
-
-/**
- * @enum {string}
- */
-gmf.EditfeatureController.MenuActionType = {
-  MOVE: 'move',
-  ROTATE: 'rotate'
 };
 
 
@@ -522,7 +512,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
     uid,
     ol.events.listen(
       this.features,
-      ol.CollectionEventType.ADD,
+      'add',
       this.handleFeatureAdd_,
       this
     )
@@ -785,16 +775,14 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     // FIXME
     //this.registerInteractions_();
 
-    keys.push(ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+    keys.push(ol.events.listen(this.menu_, 'actionclick',
       this.handleMenuActionClick_, this));
 
     keys.push(ol.events.listen(this.translate_,
-      ol.interaction.TranslateEventType.TRANSLATEEND,
+      'translateend',
       this.handleTranslateEnd_, this));
 
-    keys.push(ol.events.listen(this.rotate_,
-      ngeo.RotateEventType.ROTATEEND,
-      this.handleRotateEnd_, this));
+    keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
@@ -809,9 +797,8 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
     // FIXME
     //this.unregisterInteractions_();
 
-    keys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
 
     toolMgr.unregisterTool(createUid, this.createToolActivate);
     toolMgr.unregisterTool(createUid, this.mapSelectToolActivate);
@@ -1028,17 +1015,12 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
   let geom;
   if (oldFeature) {
-    ol.events.unlisten(
-      oldFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    );
+    ol.events.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = oldFeature.getGeometry();
     goog.asserts.assert(geom);
     ol.events.unlisten(
       geom,
-      ol.events.EventType.CHANGE,
+      'change',
       this.handleFeatureGeometryChange_,
       this
     );
@@ -1047,17 +1029,12 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 
   if (newFeature) {
     this.featureId = newFeature.getId();
-    ol.events.listen(
-      newFeature,
-      ol.ObjectEventType.PROPERTYCHANGE,
-      this.handleFeaturePropertyChange_,
-      this
-    );
+    ol.events.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
     goog.asserts.assert(geom);
     ol.events.listen(
       geom,
-      ol.events.EventType.CHANGE,
+      'change',
       this.handleFeatureGeometryChange_,
       this
     );
@@ -1100,18 +1077,18 @@ gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {ngeo.MenuEvent} evt Event.
+ * @param {ngeox.MenuEvent} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
-  const action = evt.action;
+  const action = evt.detail.action;
 
   switch (action) {
-    case gmf.EditfeatureController.MenuActionType.MOVE:
+    case 'move':
       this.translate_.setActive(true);
       this.scope_.$apply();
       break;
-    case gmf.EditfeatureController.MenuActionType.ROTATE:
+    case 'rotate':
       this.rotate_.setActive(true);
       this.scope_.$apply();
       break;
@@ -1132,7 +1109,7 @@ gmf.EditfeatureController.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {ngeo.RotateEvent} evt Event.
+ * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
 gmf.EditfeatureController.prototype.handleRotateEnd_ = function(evt) {

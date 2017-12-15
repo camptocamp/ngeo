@@ -1,8 +1,8 @@
 /* global wmtsCapabilities */
-goog.require('ngeo.LayerHelper');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.test.data.wmtsCapabilities');
 
-describe('ngeo.LayerHelper', () => {
+describe('ngeo.map.LayerHelper', () => {
   let ngeoLayerHelper;
   let layer;
   const wmtsSrc = 'http://fake/wmts/capabilities.xml';

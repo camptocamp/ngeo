@@ -10,14 +10,26 @@ goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.WMSTime');
-goog.require('ngeo.CreatePopup');
-goog.require('ngeo.LayerHelper');
-goog.require('ngeo.LayertreeController');
+goog.require('ngeo.Popup');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.layer.Tile');
-
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
+
+/** @suppress {extraRequire} */
+goog.require('ngeo.layertree.component');
+goog.require('ngeo.layertree.Controller');
+goog.require('ngeo.map.LayerHelper');
+
+
+// FIXME remove lines right under and add me at the module dependencies:
+// - ngeo.layertree.component.name
+// - ngeo.layertree.Controller.module.name
+// - ngeo.map.LayerHelper.module.name
+goog.require('ngeo.layertree.module');
+ngeo.module.requires.push(ngeo.layertree.module.name);
+ngeo.module.requires.push(ngeo.map.LayerHelper.module.name);
+
 
 gmf.module.value('gmfLayertreeTemplate',
   /**
@@ -115,8 +127,8 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!angular.$http} $http Angular http service.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
- * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
+ * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
@@ -172,7 +184,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
   this.$sce_ = $sce;
 
   /**
-   * @type {!ngeo.LayerHelper}
+   * @type {!ngeo.map.LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
@@ -307,7 +319,7 @@ gmf.LayertreeController.prototype.$onInit = function() {
 
 
 /**
- * @param {ngeo.LayertreeController} treeCtrl Layer tree controller.
+ * @param {ngeo.layertree.Controller} treeCtrl Layer tree controller.
  * @private
  */
 gmf.LayertreeController.prototype.updateDimensions_ = function(treeCtrl) {
@@ -362,7 +374,7 @@ gmf.LayertreeController.prototype.updateLayerDimensions_ = function(layer, node)
  * treeCtrl. The layer will be inserted into the map. The layer can be null
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
- * @param {ngeo.LayertreeController} treeCtrl tree controller of the node
+ * @param {ngeo.layertree.Controller} treeCtrl tree controller of the node
  * @return {ol.layer.Base|ol.layer.Group|null} The OpenLayers layer or group
  *     for the node.
  * @export
@@ -392,7 +404,7 @@ gmf.LayertreeController.prototype.getLayer = function(treeCtrl) {
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
  * @param {angular.Scope} scope treeCtrl scope.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -404,28 +416,9 @@ gmf.LayertreeController.prototype.listeners = function(scope, treeCtrl) {
   });
 };
 
-
-/**
- * Return 'out-of-resolution' if the current resolution of the map is out of
- * the min/max resolution in the node.
- * @param {gmfThemes.GmfLayerWMS} gmfLayerWMS the GeoMapFish Layer WMS.
- * @return {string|undefined} 'out-of-resolution' or undefined.
- * @export
- */
-gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayerWMS) {
-  let style;
-  const resolution = this.map.getView().getResolution();
-  if (gmfLayerWMS.minResolutionHint !== undefined && resolution < gmfLayerWMS.minResolutionHint ||
-      gmfLayerWMS.maxResolutionHint !== undefined && resolution > gmfLayerWMS.maxResolutionHint) {
-    style = 'out-of-resolution';
-  }
-  return style;
-};
-
-
 /**
  * Toggle the state of treeCtrl's node.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -437,7 +430,7 @@ gmf.LayertreeController.prototype.toggleActive = function(treeCtrl) {
 /**
  * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {string} 'on' or 'off' or 'indeterminate'.
  * @export
@@ -457,7 +450,7 @@ gmf.LayertreeController.prototype.getNodeState = function(treeCtrl) {
  * `gmf.datasource.DataSourcesManager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
- * @param {ngeo.LayertreeController} layertreeCtrl ngeo layertree controller
+ * @param {ngeo.layertree.Controller} layertreeCtrl ngeo layertree controller
  * @param {{start : number, end : number}} time The start
  * and optionally the end datetime (for time range selection) selected by user
  * @export
@@ -482,7 +475,7 @@ gmf.LayertreeController.prototype.updateWMSTimeLayerState = function(
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {string|undefined} The icon legend URL or undefined.
  * @export
@@ -523,7 +516,7 @@ gmf.LayertreeController.prototype.getLegendIconURL = function(treeCtrl) {
 
 /**
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {Object.<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
@@ -570,7 +563,7 @@ gmf.LayertreeController.prototype.getLegendsObject = function(treeCtrl) {
 
 /**
  * Get the number of legends object for this layertree controller.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {number} The number of Legends object.
  * @export
@@ -597,7 +590,7 @@ gmf.LayertreeController.prototype.getScale_ = function() {
 
 /**
  * Display a ngeo.infoPopup with the content of the metadata url of a node.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -682,10 +675,33 @@ gmf.LayertreeController.prototype.nodesCount = function() {
   return this.gmfTreeManager_.root.children.length;
 };
 
+/**
+ * Return 'out-of-resolution' if the current resolution of the map is out of
+ * the min/max resolution in the node.
+ * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ *     also allowed (the type is defined as GmfLayerWMS only to avoid some
+ *     useless tests to know if a minResolutionHint property can exist
+ *     on the node).
+ * @return {string|undefined} 'out-of-resolution' or undefined.
+ * @export
+ */
+gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayer) {
+  const resolution = this.map.getView().getResolution();
+  const minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  if (minResolution !== undefined && resolution < minResolution) {
+    return 'out-of-resolution';
+  }
+  const maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+  if (maxResolution !== undefined && resolution > maxResolution) {
+    return 'out-of-resolution';
+  }
+  return undefined;
+};
+
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
- * @param {ngeo.LayertreeController} treeCtrl ngeo layertree controller, from
+ * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -693,11 +709,14 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
-  if (gmfLayer.minResolutionHint !== undefined && resolution < gmfLayer.minResolutionHint) {
-    view.setResolution(view.constrainResolution(gmfLayer.minResolutionHint, 0, 1));
-  }
-  if (gmfLayer.maxResolutionHint !== undefined && resolution > gmfLayer.maxResolutionHint) {
-    view.setResolution(view.constrainResolution(gmfLayer.maxResolutionHint, 0, -1));
+  const minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  if (minResolution !== undefined && resolution < minResolution) {
+    view.setResolution(view.constrainResolution(minResolution, 0, 1));
+  } else {
+    const maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+    if (maxResolution !== undefined && resolution > maxResolution) {
+      view.setResolution(view.constrainResolution(maxResolution, 0, -1));
+    }
   }
 };
 
@@ -746,7 +765,7 @@ gmf.LayertreeController.prototype.isNodeLegendVisible = function(legendNodeId) {
  *   - it supports legend
  *   - it supports having the layer opacity being changed
  *
- * @param {!ngeo.LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {!ngeo.layertree.Controller} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports being
  *     "customized" or not.
  * @export
@@ -761,7 +780,7 @@ gmf.LayertreeController.prototype.supportsCustomization = function(treeCtrl) {
 
 
 /**
- * @param {!ngeo.LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {!ngeo.layertree.Controller} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having a
  *     legend being shown.
  * @export
@@ -775,7 +794,7 @@ gmf.LayertreeController.prototype.supportsLegend = function(treeCtrl) {
 
 
 /**
- * @param {!ngeo.LayertreeController} treeCtrl Ngeo tree controller.
+ * @param {!ngeo.layertree.Controller} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having its
  *     layer opacity being changed or not.
  * @export

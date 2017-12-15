@@ -11,13 +11,19 @@ goog.require('ngeo.drawpointDirective');
 goog.require('ngeo.drawrectangleDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawtextDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measureareaDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measureazimutDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measurelengthDirective');
 goog.require('ol.Feature');
+
+/** @suppress {extraRequire} */
+goog.require('ngeo.measure.area');
+/** @suppress {extraRequire} */
+goog.require('ngeo.measure.azimut');
+/** @suppress {extraRequire} */
+goog.require('ngeo.measure.length');
+
+// FIXME add me at the module dependencies:
+// - ngeo.module.requires.push(ngeo.measure.area.name);
+// - ngeo.module.requires.push(ngeo.measure.azimut.name);
+// - ngeo.module.requires.push(ngeo.measure.length.name);
 
 
 /**
@@ -85,6 +91,9 @@ goog.require('ol.Feature');
  *     collection in which to push the drawn features. If none is provided,
  *     then the `ngeoFeatures` collection is used.
  * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
+ * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
+ *      checkbox in order to display the feature measurements as a label.
+ *      Default to false.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -97,7 +106,8 @@ ngeo.drawfeatureDirective = function() {
     bindToController: {
       'active': '=ngeoDrawfeatureActive',
       'features': '=?ngeoDrawfeatureFeatures',
-      'map': '=ngeoDrawfeatureMap'
+      'map': '=ngeoDrawfeatureMap',
+      'showMeasure': '=?ngeoDrawfeatureShowmeasure'
     }
   };
 };
@@ -146,6 +156,12 @@ ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog,
    * @export
    */
   this.map;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.showMeasure;
 
   /**
    * @type {angularGettext.Catalog}
@@ -268,22 +284,33 @@ ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
  * Called when a feature is finished being drawn. Set the default properties
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
- * @param {ol.interaction.Draw.Event|ngeo.MeasureEvent} event Event.
+ * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
 ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
+  let sketch;
+  if (event.feature) {
+    // ol.interaction.Draw.Event
+    sketch = event.feature;
+  } else {
+    // ngeox.MeasureEvent
+    sketch = event.detail.feature;
+  }
+  goog.asserts.assert(sketch);
+
+  const azimut = sketch.get('azimut');
 
   const features = this.features || this.ngeoFeatures_;
 
-  const feature = new ol.Feature(event.feature.getGeometry());
+  const feature = new ol.Feature(sketch.getGeometry());
 
   const prop = ngeo.FeatureProperties;
 
   switch (type) {
     case ngeo.GeometryType.CIRCLE:
       feature.set(prop.IS_CIRCLE, true);
-      if (event.feature.get('azimut') !== undefined) {
-        feature.set(prop.AZIMUT, event.feature.get('azimut'));
+      if (azimut !== undefined) {
+        feature.set(prop.AZIMUT, azimut);
       }
       break;
     case ngeo.GeometryType.TEXT:
@@ -310,9 +337,9 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
 
   feature.set(prop.ANGLE, 0);
   feature.set(prop.OPACITY, 0.2);
-  feature.set(prop.SHOW_MEASURE, false);
+  feature.set(prop.SHOW_MEASURE, this.showMeasure ? true : false);
   feature.set(prop.SIZE, 10);
-  feature.set(prop.STROKE, 1);
+  feature.set(prop.STROKE, 2);
 
   // set style
   this.featureHelper_.setStyle(feature);

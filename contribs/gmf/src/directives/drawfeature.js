@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('gmf.featurestyleDirective');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
+/** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
@@ -20,7 +21,6 @@ goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-goog.require('ol.interaction.TranslateEventType');
 
 
 /**
@@ -46,7 +46,8 @@ gmf.drawfeatureDirective = function() {
     controller: 'GmfDrawfeatureController as efCtrl',
     scope: {
       'active': '=gmfDrawfeatureActive',
-      'map': '<gmfDrawfeatureMap'
+      'map': '<gmfDrawfeatureMap',
+      'showMeasure': '=?gmfDrawfeatureShowmeasure'
     },
     bindToController: true,
     templateUrl: `${gmf.baseTemplateUrl}/drawfeature.html`
@@ -319,16 +320,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
 
 
 /**
- * @enum {string}
- */
-gmf.DrawfeatureController.MenuActionType = {
-  DELETE: 'delete',
-  MOVE: 'move',
-  ROTATE: 'rotate'
-};
-
-
-/**
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
@@ -378,18 +369,16 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
   if (active) {
     // when activated
 
-    keys.push(ol.events.listen(this.features, ol.CollectionEventType.ADD,
-      this.handleFeaturesAdd_, this));
-    keys.push(ol.events.listen(this.features, ol.CollectionEventType.REMOVE,
-      this.handleFeaturesRemove_, this));
+    keys.push(
+      ol.events.listen(this.features, 'add', this.handleFeaturesAdd_, this),
+      ol.events.listen(this.features, 'remove', this.handleFeaturesRemove_, this)
+    );
 
     keys.push(ol.events.listen(this.translate_,
-      ol.interaction.TranslateEventType.TRANSLATEEND,
+      'translateend',
       this.handleTranslateEnd_, this));
 
-    keys.push(ol.events.listen(this.rotate_,
-      ngeo.RotateEventType.ROTATEEND,
-      this.handleRotateEnd_, this));
+    keys.push(ol.events.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
     toolMgr.registerTool(drawUid, this.drawToolActivate, false);
     toolMgr.registerTool(drawUid, this.mapSelectToolActivate, true);
@@ -404,9 +393,8 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
   } else {
     // when deactivated
 
-    keys.forEach((key) => {
-      ol.events.unlistenByKey(key);
-    }, this);
+    keys.forEach(ol.events.unlistenByKey);
+    keys.length = 0;
 
     toolMgr.unregisterTool(drawUid, this.drawToolActivate);
     toolMgr.unregisterTool(drawUid, this.mapSelectToolActivate);
@@ -641,25 +629,25 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
       actions = actions.concat([{
         cls: 'fa fa-arrows',
         label: gettextCatalog.getString('Move'),
-        name: gmf.DrawfeatureController.MenuActionType.MOVE
+        name: 'move'
       }, {
         cls: 'fa fa-rotate-right',
         label: gettextCatalog.getString('Rotate'),
-        name: gmf.DrawfeatureController.MenuActionType.ROTATE
+        name: 'rotate'
       }]);
     }
 
     actions = actions.concat([{
       cls: 'fa fa-trash-o',
       label: gettextCatalog.getString('Delete'),
-      name: gmf.DrawfeatureController.MenuActionType.DELETE
+      name: 'delete'
     }]);
 
     this.menu_ = new ngeo.Menu({
       actions
     });
 
-    ol.events.listen(this.menu_, ngeo.MenuEventType.ACTION_CLICK,
+    ol.events.listen(this.menu_, 'actionclick',
       this.handleMenuActionClick_, this);
     this.map.addOverlay(this.menu_);
 
@@ -683,24 +671,24 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {!ngeo.MenuEvent} evt Event.
+ * @param {!ngeox.MenuEvent} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
-  const action = evt.action;
+  const action = evt.detail.action;
 
   switch (action) {
-    case gmf.DrawfeatureController.MenuActionType.DELETE:
+    case 'delete':
       goog.asserts.assert(
         this.selectedFeature, 'Selected feature should be truthy');
       this.removeFeature(this.selectedFeature);
       this.scope_.$apply();
       break;
-    case gmf.DrawfeatureController.MenuActionType.MOVE:
+    case 'move':
       this.translate_.setActive(true);
       this.scope_.$apply();
       break;
-    case gmf.DrawfeatureController.MenuActionType.ROTATE:
+    case 'rotate':
       this.rotate_.setActive(true);
       this.scope_.$apply();
       break;
@@ -723,7 +711,7 @@ gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!ngeo.RotateEvent} evt Event.
+ * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
 gmf.DrawfeatureController.prototype.handleRotateEnd_ = function(evt) {

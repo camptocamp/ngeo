@@ -17,7 +17,7 @@ goog.require('ngeo.datasource.OGC');
 gmf.ImportdatasourceController = class {
 
   /**
-   * @param {!angular.JQLite} $element Element.
+   * @param {!jQuery} $element Element.
    * @param {!angular.$filter} $filter Angular filter.
    * @param {!angular.$injector} $injector Main injector.
    * @param {!angular.Scope} $scope Angular scope.
@@ -47,7 +47,7 @@ gmf.ImportdatasourceController = class {
     // Injected properties
 
     /**
-     * @type {!angular.JQLite}
+     * @type {!jQuery}
      * @private
      */
     this.element_ = $element;
@@ -95,7 +95,7 @@ gmf.ImportdatasourceController = class {
     // Inner properties
 
     /**
-     * @type {!angular.JQLite}
+     * @type {!jQuery}
      * @private
      */
     this.fileInput_ = $element.find('input[type=file]');
@@ -226,6 +226,7 @@ gmf.ImportdatasourceController = class {
       this.timeout_(() => {
         goog.asserts.assert(this.serversEngine_);
         const $urlInput = this.element_.find('input[name=url]');
+        const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput.typeahead({
           hint: true,
           highlight: true,
@@ -233,6 +234,12 @@ gmf.ImportdatasourceController = class {
         }, {
           name: 'url',
           source: this.serversEngine_.ttAdapter()
+        }).bind('typeahead:select', (ev, suggestion) => {
+          this.timeout_(() => {
+            this.url = suggestion;
+            this.scope_.$apply();
+            $connectBtn.focus();
+          });
         });
       });
     }

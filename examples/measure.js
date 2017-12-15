@@ -7,8 +7,6 @@ goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -20,42 +18,34 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Fill');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
- * App-specific directive wrapping the measure tools. The directive's
+ * App-specific component wrapping the measure tools. The component's
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.measuretoolsDirective = function() {
-  return {
-    restrict: 'A',
-    scope: {
-      'map': '=appMeasuretoolsMap',
-      'lang': '=appMeasuretoolsLang'
-    },
-    controller: 'AppMeasuretoolsController as ctrl',
-    bindToController: true,
-    templateUrl: 'partials/measuretools.html',
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {app.MeasuretoolsController} controller Controller.
-     */
-    link: (scope, element, attrs, controller) => {
-      controller.init();
-    }
-  };
+app.measuretoolsComponent = {
+  bindings: {
+    'map': '=appMeasuretoolsMap',
+    'lang': '=appMeasuretoolsLang'
+  },
+  controller: 'AppMeasuretoolsController',
+  controllerAs: 'ctrl',
+  templateUrl: 'partials/measuretools.html'
 };
 
-app.module.directive('appMeasuretools', app.measuretoolsDirective);
+app.module.component('appMeasuretools', app.measuretoolsComponent);
 
 
 /**
@@ -225,7 +215,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
 
 app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
 
-app.MeasuretoolsController.prototype.init = function() {
+app.MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);

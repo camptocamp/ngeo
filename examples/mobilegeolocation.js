@@ -1,10 +1,5 @@
 goog.provide('app.mobilegeolocation');
 
-goog.require('ngeo.FeatureOverlayMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mobileGeolocationDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -14,14 +9,21 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 
+goog.require('ngeo.map.module');
+goog.require('ngeo.geolocation.mobile');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.geolocation.mobile.name,
+  ngeo.map.module.name
+]);
 
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @ngInject
@@ -72,4 +74,4 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+module.controller('MainController', app.MainController);

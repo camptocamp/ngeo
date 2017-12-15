@@ -275,7 +275,7 @@ For example:
 /**
  * @typedef {function(ol.layer.Layer)}
  */
-ngeo.DecorateLayer;
+ngeo.layertree.DecorateLayer;
 ```
 
 If the service is an object a `@constructor` must be defined. For example:
@@ -284,7 +284,7 @@ If the service is an object a `@constructor` must be defined. For example:
 /**
  * The ngeo Permalink type.
  * @constructor
- * @param {!ngeo.Location} ngeoLocation Location.
+ * @param {!ngeo.statemanager.Location} ngeoLocation Location.
  * @param {!History} history History.
  */
 ngeo.Permalink = function(ngeoLocation, history) {
@@ -295,7 +295,7 @@ ngeo.Permalink = function(ngeoLocation, history) {
   this.history_ = history;
 
   /**
-   * @type {!ngeo.Location}
+   * @type {!ngeo.statemanager.Location}
    * @private
    */
   this.uri_ = ngeoLocation;
@@ -306,11 +306,11 @@ And in both cases a `goog.provide` must be added for the type. For
 example:
 
 ```js
-goog.provide('ngeo.DecorateLayer');
+goog.provide('ngeo.statemanager.DecorateLayer');
 ```
 
 ```js
-goog.provide('ngeo.Location');
+goog.provide('ngeo.statemanager.Location');
 ```
 
 ## Limit the use of `ng-controller`

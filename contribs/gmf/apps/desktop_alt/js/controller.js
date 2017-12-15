@@ -1,26 +1,22 @@
 /**
  * Application entry point.
  *
- * This file defines the "app_desktop" Closure namespace, which is be used as
- * the Closure entry point (see "closure_entry_point" in the "build.json"
- * file).
- *
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-goog.provide('app.AlternativeDesktopController');
-goog.provide('app_desktop_alt');
+goog.provide('app.desktop_alt.Controller');
 
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.importdatasourceComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.googlestreetviewComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+
+/** @suppress {extraRequire} */
+goog.require('ngeo.googlestreetview.component');
 
 
 gmf.module.value('ngeoQueryOptions', {
@@ -54,7 +50,7 @@ gmf.module.value('ngeoMeasureDecimals', 2);
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
- * @param {ngeo.File} ngeoFile The file service.
+ * @param {ngeo.utils.File} ngeoFile The file service.
  * @param {gettext} gettext The gettext service
  * @param {angular.$q} $q Angular $q.
  * @constructor
@@ -62,7 +58,7 @@ gmf.module.value('ngeoMeasureDecimals', 2);
  * @ngInject
  * @export
  */
-app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext, $q) {
+app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) {
   gmf.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -138,18 +134,18 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
 };
-ol.inherits(app.AlternativeDesktopController, gmf.AbstractDesktopController);
+ol.inherits(app.desktop_alt.Controller, gmf.AbstractDesktopController);
 
 
 /**
  * @param {jQuery.Event} event keydown event.
  * @export
  */
-app.AlternativeDesktopController.prototype.onKeydown = function(event) {
+app.desktop_alt.Controller.prototype.onKeydown = function(event) {
   if (event.ctrlKey && event.key === 'p') {
     this.printPanelActive = true;
     event.preventDefault();
   }
 };
 
-app.module.controller('AlternativeDesktopController', app.AlternativeDesktopController);
+app.module.controller('AlternativeDesktopController', app.desktop_alt.Controller);

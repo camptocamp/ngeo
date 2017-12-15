@@ -2,11 +2,8 @@ goog.provide('app.mapfishprint');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.CreatePrint');
-goog.require('ngeo.Print');
-goog.require('ngeo.PrintUtils');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
+goog.require('ngeo.print.Service');
+goog.require('ngeo.print.Utils');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.format.GeoJSON');
@@ -15,9 +12,14 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo.map.module');
+
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+const module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.map.module.name
+]);
 
 
 /**
@@ -75,8 +77,8 @@ app.PRINT_PAPER_SIZE_ = [555, 675];
 /**
  * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
- * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
+ * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+ * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @export
  */
@@ -127,13 +129,13 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {ngeo.Print}
+   * @type {ngeo.print.Service}
    * @private
    */
   this.print_ = ngeoCreatePrint(app.PRINT_URL_);
 
   /**
-   * @type {ngeo.PrintUtils}
+   * @type {ngeo.print.Utils}
    * @private
    */
   this.printUtils_ = ngeoPrintUtils;
@@ -264,4 +266,4 @@ app.MainController.prototype.handleGetStatusError_ = function(resp) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+module.controller('MainController', app.MainController);

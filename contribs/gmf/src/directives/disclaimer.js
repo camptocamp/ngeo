@@ -4,72 +4,7 @@ goog.require('ol.events');
 goog.require('gmf');
 goog.require('ngeo.Disclaimer');
 goog.require('ngeo.EventHelper');
-goog.require('ngeo.LayerHelper');
-
-
-/**
- * Provide a "disclaimer" component for GeoMapFish that is bound to the
- * layers added and removed from a map.
- *
- * Example:
- *
- *      <gmf-disclaimer
- *        gmf-disclaimer-map="::ctrl.map">
- *      </gmf-disclaimer>
- *
- * You can also display the disclaimer messages in popups or use them in another
- * context. The example below show you how to display the disclaimer messages
- * in a ngeo-modal window (external case).
- *
- * Example:
- *
- *      <gmf-disclaimer
- *        gmf-disclaimer-map="::ctrl.map"
- *        gmf-disclaimer-external="::true"
- *        gmf-disclaimer-external-msg="disclaimerMsg"
- *        gmf-disclaimer-external-visibility="disclaimerVisibility">
- *      </gmf-disclaimer>
- *      <ngeo-modal ng-model="disclaimerVisibility"
- *                  ngeo-modal-destroy-content-on-hide="true">
- *       <div class="modal-header">
- *         <button type="button" class="close" data-dismiss="modal"
- *                 aria-hidden="true">&times;</button>
- *       </div>
- *       <div class="modal-body">
- *         <div ng-bind-html="disclaimerMsg"></div>
- *       </div>
- *     </ngeo-modal>
- *
- * @htmlAttribute {boolean} gmf-disclaimer-popup Whether to show the disclaimer
- *     messages in popups or not. Defaults to `false`.
- * @htmlAttribute {boolean?} gmf-disclaimer-external Whether to use disclaimer
- *     messages elsewhere or not. Default to `false`. If true, you should use
- *     the gmf-disclaimer-external-msg and the
- *     gmf-disclaimer-external-visibility too.
- * @htmlAttribute {boolean?} gmf-disclaimer-external-visibility variable that
- *     will be set to true if the disclaimers contain a new message. To uses it,
- *     you must set the gmf-disclaimer-external to true.
- * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
- *     contains the disclaimer messages. To uses it, you must set the
- *     gmf-disclaimer-external to true.
- * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
- *
- * @ngdoc component
- * @ngname gmfDisclaimer
- */
-gmf.disclaimerComponent = {
-  controller: 'GmfDisclaimerController as dclCtrl',
-  bindings: {
-    'popup': '<?gmfDisclaimerPopup',
-    'map': '=gmfDisclaimerMap',
-    'external': '<?gmfDisclaimerExternal',
-    'visibility': '=?gmfDisclaimerExternalVisibility',
-    'msg': '=?gmfDisclaimerExternalMsg'
-  }
-};
-
-
-gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
+goog.require('ngeo.map.LayerHelper');
 
 
 /**
@@ -79,10 +14,10 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
+ * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
  * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {!ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @struct
  * @ngInject
  * @ngdoc controller
@@ -148,7 +83,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
   this.element_ = $element;
 
   /**
-   * @type {!ngeo.CreatePopup}
+   * @type {!ngeo.Popup.Factory}
    * @private
    */
   this.createPopup_ = ngeoCreatePopup;
@@ -166,7 +101,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
   this.eventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {!ngeo.LayerHelper}
+   * @type {!ngeo.map.LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -227,7 +162,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
       layerUid,
       ol.events.listen(
         layer.getLayers(),
-        ol.CollectionEventType.ADD,
+        'add',
         this.handleLayersAdd_,
         this
       )
@@ -236,7 +171,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
       layerUid,
       ol.events.listen(
         layer.getLayers(),
-        ol.CollectionEventType.REMOVE,
+        'remove',
         this.handleLayersRemove_,
         this
       )
@@ -337,4 +272,65 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
 };
 
 
-gmf.module.controller('GmfDisclaimerController', gmf.DisclaimerController);
+/**
+ * Provide a "disclaimer" component for GeoMapFish that is bound to the
+ * layers added and removed from a map.
+ *
+ * Example:
+ *
+ *      <gmf-disclaimer
+ *        gmf-disclaimer-map="::ctrl.map">
+ *      </gmf-disclaimer>
+ *
+ * You can also display the disclaimer messages in popups or use them in another
+ * context. The example below show you how to display the disclaimer messages
+ * in a ngeo-modal window (external case).
+ *
+ * Example:
+ *
+ *      <gmf-disclaimer
+ *        gmf-disclaimer-map="::ctrl.map"
+ *        gmf-disclaimer-external="::true"
+ *        gmf-disclaimer-external-msg="disclaimerMsg"
+ *        gmf-disclaimer-external-visibility="disclaimerVisibility">
+ *      </gmf-disclaimer>
+ *      <ngeo-modal ng-model="disclaimerVisibility">
+ *       <div class="modal-header">
+ *         <button type="button" class="close" data-dismiss="modal"
+ *                 aria-hidden="true">&times;</button>
+ *       </div>
+ *       <div class="modal-body">
+ *         <div ng-bind-html="disclaimerMsg"></div>
+ *       </div>
+ *     </ngeo-modal>
+ *
+ * @htmlAttribute {boolean} gmf-disclaimer-popup Whether to show the disclaimer
+ *     messages in popups or not. Defaults to `false`.
+ * @htmlAttribute {boolean?} gmf-disclaimer-external Whether to use disclaimer
+ *     messages elsewhere or not. Default to `false`. If true, you should use
+ *     the gmf-disclaimer-external-msg and the
+ *     gmf-disclaimer-external-visibility too.
+ * @htmlAttribute {boolean?} gmf-disclaimer-external-visibility variable that
+ *     will be set to true if the disclaimers contain a new message. To uses it,
+ *     you must set the gmf-disclaimer-external to true.
+ * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
+ *     contains the disclaimer messages. To uses it, you must set the
+ *     gmf-disclaimer-external to true.
+ * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
+ *
+ * @ngdoc component
+ * @ngname gmfDisclaimer
+ */
+gmf.disclaimerComponent = {
+  controller: gmf.DisclaimerController,
+  bindings: {
+    'popup': '<?gmfDisclaimerPopup',
+    'map': '=gmfDisclaimerMap',
+    'external': '<?gmfDisclaimerExternal',
+    'visibility': '=?gmfDisclaimerExternalVisibility',
+    'msg': '=?gmfDisclaimerExternalMsg'
+  }
+};
+
+
+gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);

@@ -5,7 +5,7 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.themeselectorDirective');
+goog.require('gmf.themeselectorComponent');
 
 
 /** @type {!angular.Module} **/

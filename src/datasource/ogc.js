@@ -15,11 +15,11 @@ goog.require('ol.format.WMSGetFeatureInfo');
 ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
   /**
-   * A data source contain information of a single source of data that can
+   * A data source contains information of a single source of data that can
    * show or fetch the data using an OGC server. Serveral OGC service types are
    * supported by this data source: WMS, WMTS and even WFS.
    *
-   * You can use the information stored within an OGC data source to do allo
+   * You can use the information stored within an OGC data source to do all
    * sorts of things:
    * - issue WMS/WFS queries
    * - apply filter rules on it
@@ -33,10 +33,10 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
     super(options);
 
-    // === DYNAMIC properties (i.e. that can change / be watched ===
+    // === DYNAMIC properties (i.e. that can change / be watched) ===
 
     /**
-     * The dimenions configuration for the data source.
+     * The dimensions configuration for the data source.
      * @type {?ngeox.Dimensions}
      * @private
      */

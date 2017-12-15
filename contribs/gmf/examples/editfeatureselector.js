@@ -3,7 +3,7 @@ goog.provide('gmfapp.editfeatureselector');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
+goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
@@ -25,7 +25,11 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  'gmf',
+  ngeo.ToolActivateMgr.module.name,
+  gmf.authentication.module.name,
+]);
 
 
 gmfapp.module.value('gmfTreeUrl',
