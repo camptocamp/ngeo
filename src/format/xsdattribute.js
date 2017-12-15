@@ -3,6 +3,7 @@ goog.provide('ngeo.format.XSDAttribute');
 goog.require('ngeo');
 goog.require('ngeo.Attribute');
 goog.require('ol.format.XML');
+goog.require('goog.asserts');
 
 
 /**
