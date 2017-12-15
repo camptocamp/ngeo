@@ -8,9 +8,6 @@
  * Also consider renaming the file, see https://github.com/google/closure-compiler/issues/2665.
  */
 
-/**
- * @module ngeo
- */
 goog.provide('ngeo');
 
 
@@ -42,6 +39,10 @@ goog.require('ol.render.Feature');
 goog.require('ol.source.VectorTile');
 /** @suppress {extraRequire} */
 goog.require('ol.style.AtlasManager');
+// webpack: import 'angular-gettext';
+// webpack: import 'angular-ui-date';
+// webpack: import 'floatthead';
+// webpack: import 'angular-float-thead';
 
 
 /** @type {!angular.Module} */

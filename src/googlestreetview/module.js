@@ -1,6 +1,3 @@
-/**
- * @module ngeo map namespace
- */
 goog.provide('ngeo.googlestreetview.module');
 
 goog.require('ngeo');

@@ -1,6 +1,3 @@
-/**
- * @module gmf authentication namespace
- */
 goog.provide('gmf.authentication.module');
 
 goog.require('gmf.authentication.component');

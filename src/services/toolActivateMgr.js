@@ -5,16 +5,6 @@ goog.require('goog.asserts');
 
 
 /**
- * An entry for a tool in a `ngeo.ToolActivateMgr` group.
- * @typedef {{
- *    tool: (ngeo.ToolActivate),
- *    defaultTool: boolean,
- *    unlisten: (function(): void)}}
- */
-ngeo.ToolActivateMgr.ToolMgrEntry;
-
-
-/**
  * Provides a service to manage the activation of `ngeo.toolActivate` objects.
  *
  * Example:
@@ -203,6 +193,17 @@ ngeo.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
     defaultTool.setActive(true);
   }
 };
+
+
+/**
+ * An entry for a tool in a `ngeo.ToolActivateMgr` group.
+ * @typedef {{
+ *    tool: (ngeo.ToolActivate),
+ *    defaultTool: boolean,
+ *    unlisten: (function(): void)}}
+ */
+ngeo.ToolActivateMgr.ToolMgrEntry;
+
 
 ngeo.ToolActivateMgr.module = angular.module('ngeoToolActivateMgr', [])
   .service('ngeoToolActivateMgr', ngeo.ToolActivateMgr);
