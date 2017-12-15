@@ -246,13 +246,12 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.profileLine = null;
-  
+
   /**
    * @type {ol.geom.LineString}
    * @export
    */
   this.lidarProfileLine = null;
-
 
   gmf.AbstractAppController.call(this, config, $scope, $injector);
 
