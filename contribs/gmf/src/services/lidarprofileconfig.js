@@ -47,6 +47,26 @@ gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
     this.profileConfig.initialLOD = resp.data['initialLOD'];
     this.profileConfig.pointSize = resp.data['point_size'];
     this.profileConfig.pointAttributes = resp.data['point_attributes'];
+    
+    // TODO: get this from pytree config
+    this.profileConfig.pointAttributes.POSITION_CARTESIAN = {
+      name: 'POSITION_CARTESIAN',
+      elements: 3,
+      bytes: 12
+    }
+
+    this.profileConfig.pointAttributes.POSITION_PROJECTED_PROFILE = {
+      name: 'POSITION_PROJECTED_PROFILE',
+      elements: 2,
+      bytes: 8
+    }
+
+    this.profileConfig.pointAttributes.COLOR_PACKED = {
+      name: 'COLOR_PACKED',
+      elements: 4,
+      bytes: 4
+    }
+
     this.profileConfig.defaultAttribute = resp.data['default_attribute'];
     this.profileConfig.defaultPointCloud = resp.data['default_point_cloud'];
     this.profileConfig.defaultColor = resp.data['default_color'];
