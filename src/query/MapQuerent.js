@@ -32,7 +32,7 @@ ngeo.query.MapQuerent = class {
    *     data source objects.
    * @param {ngeo.datasource.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
-   * @param {ngeo.Querent} ngeoQuerent The ngeo querent service.
+   * @param {ngeo.query.Querent} ngeoQuerent The ngeo querent service.
    * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
    * @ngname ngeoQuerent
@@ -58,7 +58,7 @@ ngeo.query.MapQuerent = class {
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
 
     /**
-     * @type {ngeo.Querent}
+     * @type {ngeo.query.Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

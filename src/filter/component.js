@@ -4,7 +4,7 @@
 goog.provide('ngeo.filter.component');
 
 goog.require('ngeo');
-goog.require('ngeo.MapQuerent');
+goog.require('ngeo.query.MapQuerent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.ruleComponent');
 /** @suppress {extraRequire} */
@@ -54,7 +54,7 @@ ngeo.filter.component.FilterController_ = class {
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {!ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+   * @param {!ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @struct
@@ -131,7 +131,7 @@ ngeo.filter.component.FilterController_ = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!ngeo.MapQuerent}
+     * @type {!ngeo.query.MapQuerent}
      * @private
      */
     this.ngeoMapQuerent_ = ngeoMapQuerent;

@@ -1,8 +1,10 @@
-goog.provide('ngeo.bboxQueryDirective');
+goog.provide('ngeo.query.bboxQueryDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.MapQuerent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.query.MapQuerent');
 goog.require('ol.interaction.DragBox');
+goog.require('ol.events.condition');
 
 
 /**
@@ -28,13 +30,13 @@ goog.require('ol.interaction.DragBox');
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
- * @param {ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
+ngeo.query.bboxQueryDirective = function(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
@@ -82,4 +84,10 @@ ngeo.bboxQueryDirective = function(ngeoMapQuerent) {
   };
 };
 
-ngeo.module.directive('ngeoBboxQuery', ngeo.bboxQueryDirective);
+ngeo.query.bboxQueryDirective.module = angular.module('ngeoBboxQuery', [
+  ngeo.query.MapQuerent.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.query.bboxQueryDirective.module.name);
+
+ngeo.query.bboxQueryDirective.module.directive('ngeoBboxQuery', ngeo.query.bboxQueryDirective);

@@ -1,7 +1,8 @@
-goog.provide('ngeo.mapQueryDirective');
+goog.provide('ngeo.query.mapQueryDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.MapQuerent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.query.MapQuerent');
 goog.require('ol.events');
 
 
@@ -27,14 +28,14 @@ goog.require('ol.events');
  *
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
- * @param {ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @param {angular.$injector} $injector Main injector.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
+ngeo.query.mapQueryDirective = function(ngeoMapQuerent, $injector) {
   return {
     restrict: 'A',
     scope: false,
@@ -119,4 +120,11 @@ ngeo.mapQueryDirective = function(ngeoMapQuerent, $injector) {
   };
 };
 
-ngeo.module.directive('ngeoMapQuery', ngeo.mapQueryDirective);
+
+ngeo.query.mapQueryDirective.module = angular.module('ngeoMapQuery', [
+  ngeo.query.MapQuerent.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.query.mapQueryDirective.module.name);
+
+ngeo.query.mapQueryDirective.module.directive('ngeoMapQuery', ngeo.query.mapQueryDirective);

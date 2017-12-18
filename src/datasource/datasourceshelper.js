@@ -3,7 +3,7 @@ goog.provide('ngeo.datasource.DataSourcesHelper');
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.Querent');
+goog.require('ngeo.query.Querent');
 goog.require('ngeo.format.WFSAttribute');
 goog.require('ol.events');
 
@@ -17,7 +17,7 @@ ngeo.datasource.DataSourcesHelper = class {
    * @param {angular.$q} $q The Angular $q service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
    *     collection.
-   * @param {ngeo.Querent} ngeoQuerent Ngeo querent service.
+   * @param {ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
    * @ngInject
@@ -39,7 +39,7 @@ ngeo.datasource.DataSourcesHelper = class {
     this.collection_ = ngeoDataSources;
 
     /**
-     * @type {ngeo.Querent}
+     * @type {ngeo.query.Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

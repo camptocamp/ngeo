@@ -4,6 +4,8 @@ goog.require('ngeo');
 goog.require('ngeo.query.Query');
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.query.MapQuerent');
+goog.require('ngeo.query.mapQueryDirective');
+goog.require('ngeo.query.bboxQueryDirective');
 
 /**
  * @type {angular.Module}
@@ -13,4 +15,6 @@ ngeo.query.module = angular.module('ngeoQueryModule', [
   ngeo.query.Query.module.name,
   ngeo.query.Querent.module.name,
   ngeo.query.MapQuerent.module.name,
+  ngeo.query.mapQueryDirective.module.name,
+  ngeo.query.bboxQueryDirective.module.name,
 ]);

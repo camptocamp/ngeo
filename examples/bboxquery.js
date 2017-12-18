@@ -6,8 +6,7 @@ goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.bboxQueryDirective');
+goog.require('ngeo.query.module');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
@@ -21,7 +20,8 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} */
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.query.module.name
 ]);
 
 

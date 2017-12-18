@@ -2,7 +2,7 @@ goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
-goog.require('ngeo.MapQuerent');
+goog.require('ngeo.query.MapQuerent');
 /** @suppress {extraRequire} */
 goog.require('gmf.swipe');
 goog.require('ol.Collection');
@@ -95,7 +95,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @param {!jQuery} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {!ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
@@ -151,7 +151,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
   };
 
   /**
-   * @type {ngeo.MapQuerent}
+   * @type {ngeo.query.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;

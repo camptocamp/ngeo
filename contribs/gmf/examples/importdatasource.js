@@ -13,9 +13,9 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.bboxQueryDirective');
+goog.require('ngeo.query.bboxQueryDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapQueryDirective');
+goog.require('ngeo.query.mapQueryDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');

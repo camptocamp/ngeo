@@ -192,7 +192,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     $injector.get('ngeoFeatureHelper') : null;
 
   /**
-   * @type {?ngeo.Querent}
+   * @type {?ngeo.query.Querent}
    * @private
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ?
