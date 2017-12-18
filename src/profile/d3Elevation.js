@@ -1,6 +1,7 @@
-goog.provide('ngeo.profile');
+goog.provide('ngeo.profile.d3Elevation');
 
 goog.require('goog.asserts');
+goog.require('ol');
 goog.require('ol.obj');
 
 
@@ -9,7 +10,7 @@ goog.require('ol.obj');
  * profile chart.
  *
  *     let selection = d3.select('#element_id');
- *     let profile = ngeo.profile({
+ *     let profile = ngeo.profile.d3Elevation({
  *       distanceExtractor: function (item) {return item['dist'];},
  *       linesConfiguration: {
  *         'lineZ1': {
@@ -52,13 +53,11 @@ goog.require('ol.obj');
  *         }, ...
  *     ]
  *
- * @constructor
- * @struct
  * @return {Object} D3js component.
  * @param {ngeox.profile.ProfileOptions} options Profile options.
  * @export
  */
-ngeo.profile = function(options) {
+ngeo.profile.d3Elevation = function(options) {
   /**
    * Whether the simplified profile should be shown.
    * @type {boolean}

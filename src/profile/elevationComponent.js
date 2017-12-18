@@ -1,10 +1,18 @@
-goog.provide('ngeo.profileDirective');
+goog.provide('ngeo.profile.elevationComponent');
 
 goog.require('goog.asserts');
 goog.require('ol.events');
+goog.require('ol.obj');
 goog.require('ngeo');
-goog.require('ngeo.profile');
 goog.require('ngeo.Debounce');
+goog.require('ngeo.profile.d3Elevation');
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.profile.elevationComponent = angular.module('ngeoProfile', []);
+
+ngeo.module.requires.push(ngeo.profile.elevationComponent.name);
 
 
 /**
@@ -36,7 +44,7 @@ goog.require('ngeo.Debounce');
  * @ngdoc directive
  * @ngname ngeoProfile
  */
-ngeo.profileDirective = function(ngeoDebounce) {
+ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
@@ -84,7 +92,7 @@ ngeo.profileDirective = function(ngeoDebounce) {
             };
           }
 
-          profile = ngeo.profile(options);
+          profile = ngeo.profile.d3Elevation(options);
           refreshData();
         }
       });
@@ -125,4 +133,4 @@ ngeo.profileDirective = function(ngeoDebounce) {
   };
 };
 
-ngeo.module.directive('ngeoProfile', ngeo.profileDirective);
+ngeo.profile.elevationComponent.directive('ngeoProfile', ngeo.profile.elevationComponent.directive_);

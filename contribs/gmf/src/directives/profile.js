@@ -1,8 +1,6 @@
 goog.provide('gmf.profileComponent');
 
 goog.require('gmf');
-/** @suppress {extraRequire} */
-goog.require('ngeo.profileDirective');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Overlay');
@@ -16,11 +14,14 @@ goog.require('ol.style.Style');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.Csv');
 goog.require('ngeo.map.FeatureOverlayMgr');
+/** @suppress {extraRequire} */
+goog.require('ngeo.profile.elevationComponent');
 
 
 // In the future module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlayMgr.module.name
 // - ngeo.download.Csv.module.name
+// - ngeo.profile.elevationComponent.name
 
 
 ngeo.module.value('gmfProfileTemplateUrl',
