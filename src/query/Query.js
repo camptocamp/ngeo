@@ -3,7 +3,6 @@
 goog.provide('ngeo.query.Query');
 
 goog.require('ngeo');
-goog.require('ngeo.query');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
@@ -14,32 +13,6 @@ goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
-
-
-/**
- * @enum {string}
- */
-ngeo.query.QueryInfoFormatType = {
-  GML: 'application/vnd.ogc.gml'
-};
-
-
-/**
- * @typedef {{
- *     resultSource: (ngeox.QueryResultSource),
- *     source: (ngeox.QuerySource)
- * }}
- */
-ngeo.query.QueryCacheItem;
-
-
-/**
- * @typedef {{
- *     wms: (Object.<string, Array.<ngeo.query.QueryCacheItem>>),
- *     wfs: (Object.<string, Array.<ngeo.query.QueryCacheItem>>)
- * }}
- */
-ngeo.query.QueryableSources;
 
 
 // Moved to mapquerent.js
@@ -165,7 +138,7 @@ ngeo.query.Query = function($http, $q, ngeoQueryResult, ngeoQueryOptions,
   this.sources_ = [];
 
   /**
-   * @type {Object.<number|string, ngeo.query.QueryCacheItem>}
+   * @type {Object.<number|string, ngeo.query.Query.QueryCacheItem>}
    * @private
    */
   this.cache_ = {};
@@ -243,10 +216,10 @@ ngeo.query.Query.prototype.addSource = function(source) {
   if (!source.format) {
     // GML is the default infoFormat if the source doesn't have one defined
     if (!source.infoFormat) {
-      source.infoFormat = ngeo.query.QueryInfoFormatType.GML;
+      source.infoFormat = ngeo.query.Query.QueryInfoFormatType.GML;
     }
 
-    if (source.infoFormat === ngeo.query.QueryInfoFormatType.GML && source.layers) {
+    if (source.infoFormat === ngeo.query.Query.QueryInfoFormatType.GML && source.layers) {
       source.format = new ol.format.WMSGetFeatureInfo({
         layers: source.layers
       });
@@ -255,7 +228,7 @@ ngeo.query.Query.prototype.addSource = function(source) {
     // == infoFormat ==
     const format = source.format;
     if (format instanceof ol.format.WMSGetFeatureInfo) {
-      source.infoFormat = ngeo.query.QueryInfoFormatType.GML;
+      source.infoFormat = ngeo.query.Query.QueryInfoFormatType.GML;
     }
   }
   goog.asserts.assert(source.format, 'format should be thruthy');
@@ -391,15 +364,15 @@ ngeo.query.Query.prototype.issueGetFeatureRequests_ = function(map, extent) {
 /**
  * @param {ol.Map} map Map.
  * @param {boolean} wfsOnly Only get sources queryable via WFS.
- * @return {ngeo.query.QueryableSources} Queryable sources.
+ * @return {ngeo.query.Query.QueryableSources} Queryable sources.
  * @private
  */
 ngeo.query.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
 
   const wmsItemsByUrl =
-      /** @type {!Object.<string, !Array.<!ngeo.query.QueryCacheItem>>} */ ({});
+      /** @type {!Object.<string, !Array.<!ngeo.query.Query.QueryCacheItem>>} */ ({});
   const wfsItemsByUrl =
-      /** @type {!Object.<string, !Array.<!ngeo.query.QueryCacheItem>>} */ ({});
+      /** @type {!Object.<string, !Array.<!ngeo.query.Query.QueryCacheItem>>} */ ({});
 
   const layers = this.ngeoLayerHelper_.getFlatLayers(map.getLayerGroup());
 
@@ -472,7 +445,7 @@ ngeo.query.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
 
         // Sources that use GML as info format are combined together if they
         // share the same server url
-        if (infoFormat === ngeo.query.QueryInfoFormatType.GML) {
+        if (infoFormat === ngeo.query.Query.QueryInfoFormatType.GML) {
           url = item.source.wmsSource.getUrl();
           goog.asserts.assertString(url);
           if (!wmsItemsByUrl[url]) {
@@ -501,8 +474,8 @@ ngeo.query.Query.prototype.getQueryableSources_ = function(map, wfsOnly) {
  * node object (in the tree). Under the wood, the 'id' property of a node is filled
  * regarding the layer attached to it. therefore, Two nodes with the same layer ,
  * attached will have the same 'id'. We must avoid multiple identical request.
- * @param  {ngeo.query.QueryCacheItem} item  The QueryCache item to push in the array
- * @param  {Array.<ngeo.query.QueryCacheItem>} array QueryCacheItem array
+ * @param  {ngeo.query.Query.QueryCacheItem} item  The QueryCache item to push in the array
+ * @param  {Array.<ngeo.query.Query.QueryCacheItem>} array QueryCacheItem array
  * @return {boolean} true if the item has been added, false otherwise.
  * @private
  */
@@ -515,7 +488,7 @@ ngeo.query.Query.prototype.pushSourceIfUnique_ = function(item, array) {
 };
 
 /**
- * @param {Object.<string, Array.<ngeo.query.QueryCacheItem>>} wmsItemsByUrl Queryable
+ * @param {Object.<string, Array.<ngeo.query.Query.QueryCacheItem>>} wmsItemsByUrl Queryable
  *    layers for GetFeatureInfo
  * @param {ol.Coordinate} coordinate Query coordinate
  * @param {ol.Map} map Map
@@ -592,7 +565,7 @@ ngeo.query.Query.prototype.getDimensionsParams_ = function(dimensions) {
 
 
 /**
- * @param {Object.<string, Array.<ngeo.query.QueryCacheItem>>} wfsItemsByUrl Queryable
+ * @param {Object.<string, Array.<ngeo.query.Query.QueryCacheItem>>} wfsItemsByUrl Queryable
  *    layers for GetFeature
  * @param {ol.Coordinate} coordinate Query coordinate
  * @param {ol.Map} map Map
@@ -607,7 +580,7 @@ ngeo.query.Query.prototype.doGetFeatureRequestsWithCoordinate_ = function(
 
 
 /**
- * @param {Object.<string, Array.<ngeo.query.QueryCacheItem>>} wfsItemsByUrl Queryable
+ * @param {Object.<string, Array.<ngeo.query.Query.QueryCacheItem>>} wfsItemsByUrl Queryable
  *    layers for GetFeature
  * @param {ol.Extent} bbox Query bbox
  * @param {ol.Map} map Map
@@ -738,7 +711,7 @@ ngeo.query.Query.prototype.getLayerSourceIds_ = function(layer) {
 
 
 /**
- * @param {!ngeo.query.QueryCacheItem} item Cache item
+ * @param {!ngeo.query.Query.QueryCacheItem} item Cache item
  * @param {number} resolution returns the layers visible at this resolution.
  * @return {!Array.<string>} Layer names
  * @private
@@ -754,7 +727,7 @@ ngeo.query.Query.prototype.getLayersForItem_ = function(item, resolution) {
 
 
 /**
- * @param {!Array.<!ngeo.query.QueryCacheItem>} items Cache items
+ * @param {!Array.<!ngeo.query.Query.QueryCacheItem>} items Cache items
  * @param {number} resolution returns the layers visible at this resolution.
  * @return {!Array.<string>} Layer names
  * @private
@@ -843,6 +816,31 @@ ngeo.query.Query.prototype.updatePendingState_ = function() {
 ngeo.query.Query.prototype.getLimit = function() {
   return this.limit_;
 };
+
+/**
+ * @enum {string}
+ */
+ngeo.query.Query.QueryInfoFormatType = {
+  GML: 'application/vnd.ogc.gml'
+};
+
+
+/**
+ * @typedef {{
+ *     resultSource: (ngeox.QueryResultSource),
+ *     source: (ngeox.QuerySource)
+ * }}
+ */
+ngeo.query.Query.QueryCacheItem;
+
+
+/**
+ * @typedef {{
+ *     wms: (Object.<string, Array.<ngeo.query.Query.QueryCacheItem>>),
+ *     wfs: (Object.<string, Array.<ngeo.query.Query.QueryCacheItem>>)
+ * }}
+ */
+ngeo.query.Query.QueryableSources;
 
 
 /**
