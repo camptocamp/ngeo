@@ -141,6 +141,11 @@ ngeo.FeatureProperties = {
    * @type {string}
    * @export
    */
+  SHOW_LABEL: 'b',
+  /**
+   * @type {string}
+   * @export
+   */
   OPACITY: 'o',
   /**
    * @type {number}

@@ -6,8 +6,22 @@
         ng-attr-placeholder="{{'Name' | translate}}"
         class="form-control"/>
   </div>
+  <div
+      ng-if="fsCtrl.type !== 'Text'"
+      class="form-group">
+        <input
+          id="gmf-featurestyle-showlabel"
+          type="checkbox"
+          ng-model="fsCtrl.getSetShowLabel"
+          ng-model-options="{getterSetter: true}"/>
+        <label
+          ng-switch="fsCtrl.type"
+          for="gmf-featurestyle-showlabel"
+          class="control-label">
+          {{'Display label' | translate}}
+        </label>
+     </div>
 </div>
-
 <div
     ng-if="fsCtrl.feature && fsCtrl.type"
     class="form-horizontal">
