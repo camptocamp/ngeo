@@ -201,7 +201,6 @@ ngeo.FeatureHelper.prototype.getStyle = function(feature) {
  * @private
  */
 ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
-
   const strokeWidth = this.getStrokeProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
@@ -213,26 +212,23 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
       width: strokeWidth
     })
   })];
-  let offset = 0;
+  //Label Style
+  const textLabelValues = [];
   if (showMeasure) {
-    offset += 25;
-    styles.push(new ol.style.Style({
-      text: this.createTextStyle_({
-        text: this.getMeasure(feature),
-        offsetY: -(offset / 2 + 4)
-      })
-    }));
+    textLabelValues.push(this.getMeasure(feature));
   }
   if (showLabel) {
-    offset += 25;
+    textLabelValues.push(this.getNameProperty(feature));
+  }
+  if (showLabel ||  showMeasure) {
+    // display both label using  \n
+    const textLabelValue = textLabelValues.join('\n');
     styles.push(new ol.style.Style({
       text: this.createTextStyle_({
-        text: this.getNameProperty(feature),
-        offsetY: -(offset / 2 + 4)
+        text: textLabelValue
       })
     }));
   }
-
   return styles;
 };
 
@@ -243,10 +239,10 @@ ngeo.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
  * @private
  */
 ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
-
   const size = this.getSizeProperty(feature);
   const color = this.getRGBAColorProperty(feature);
-
+  const showLabel = this.getShowLabelProperty(feature);
+  const showMeasure = this.getShowMeasureProperty(feature);
   const styles = [new ol.style.Style({
     image: new ol.style.Circle({
       radius: size,
@@ -255,29 +251,24 @@ ngeo.FeatureHelper.prototype.getPointStyle_ = function(feature) {
       })
     })
   })];
-
-  const showLabel = this.getShowLabelProperty(feature);
-  const showMeasure = this.getShowMeasureProperty(feature);
-  let offset = 0;
+  //Label Style
+  const textLabelValues = [];
   if (showMeasure) {
-    offset += 25;
-    styles.push(new ol.style.Style({
-      text: this.createTextStyle_({
-        text: this.getMeasure(feature),
-        offsetY: -(offset / 2 + 4)
-      })
-    }));
+    textLabelValues.push(this.getMeasure(feature));
   }
   if (showLabel) {
-    offset += 25;
+    textLabelValues.push(this.getNameProperty(feature));
+  }
+  if (showLabel ||  showMeasure) {
+    // display both label using  \n
+    const textLabelValue = textLabelValues.join('\n');
     styles.push(new ol.style.Style({
       text: this.createTextStyle_({
-        text: this.getNameProperty(feature),
-        offsetY: -(offset / 2 + 4)
+        text: textLabelValue,
+        offsetY: -(size + 10 / 2 + 4)
       })
     }));
   }
-
   return styles;
 };
 
@@ -326,13 +317,11 @@ ngeo.FeatureHelper.prototype.getNumber = function(feature, attrib) {
  * @private
  */
 ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
-
   const strokeWidth = this.getStrokeProperty(feature);
   const opacity = this.getOpacityProperty(feature);
   const color = this.getRGBAColorProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
-
 
   // fill color with opacity
   const fillColor = color.slice();
@@ -349,8 +338,7 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       width: strokeWidth
     })
   })];
-  let offset = 0;
-  if (showMeasure) {
+  if (showMeasure || showLabel) {
     if (azimut !== undefined) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
@@ -383,26 +371,26 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         })
       }));
     } else {
-      offset += 25;
-      styles.push(new ol.style.Style({
-        text: this.createTextStyle_({
-          text: this.getMeasure(feature),
-          offsetY: -(offset / 2 + 4)
-        })
-      }));
+      //Label Style
+      const textLabelValues = [];
+      if (showMeasure) {
+        textLabelValues.push(this.getMeasure(feature));
+      }
+      if (showLabel) {
+        textLabelValues.push(this.getNameProperty(feature));
+      }
+      if (showLabel ||  showMeasure) {
+        // display both label using  \n
+        const textLabelValue = textLabelValues.join('\n');
+        styles.push(new ol.style.Style({
+          text: this.createTextStyle_({
+            text: textLabelValue,
+            offsetY: -(8 / 2 + 4)
+          })
+        }));
+      }
     }
   }
-  if (showLabel) {
-    offset += 25;
-    styles.push(new ol.style.Style({
-      text: this.createTextStyle_({
-        text: this.getNameProperty(feature),
-        size: 10,
-        offsetY: -(offset / 2 + 4)
-      })
-    }));
-  }
-
   return styles;
 };
 
