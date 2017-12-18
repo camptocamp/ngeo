@@ -11,27 +11,24 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.TileWMS');
 
-goog.require('ngeo.layertree.DecorateLayer');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.layertree.DecorateLayer.module.name,
   ngeo.map.module.name
 ]);
 
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.layertree.DecorateLayer} ngeoDecorateLayer Decorate layer service.
  * @param {ngeo.SyncArrays} ngeoSyncArrays Array sync service.
  * @constructor
  * @export
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
+app.MainController = function($scope, ngeoSyncArrays) {
 
   /** @type {ol.layer.Tile} */
   const asitvd = new ol.layer.Tile({

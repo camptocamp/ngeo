@@ -1,7 +1,7 @@
 /*global describe beforeEach inject expect it */
 /*eslint no-undef: "error"*/
 
-goog.require('ngeo.layertree.DecorateLayerLoading');
+goog.require('ngeo.layertree.decorate');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Group');
 goog.require('ol.source.Image');
@@ -9,11 +9,9 @@ goog.require('ol.Collection');
 
 
 describe('ngeo.layertree.DecorateLayerLoading test suite', () => {
-  let decorateLayerLoading;
   let scope;
 
-  beforeEach(inject(($injector, $rootScope) => {
-    decorateLayerLoading = $injector.get('ngeoDecorateLayerLoading');
+  beforeEach(inject(($rootScope) => {
     scope = $rootScope.$new();
   }));
 
@@ -23,9 +21,9 @@ describe('ngeo.layertree.DecorateLayerLoading test suite', () => {
     const lg_1 = new ol.layer.Group();
     const lg_2 = new ol.layer.Group();
 
-    decorateLayerLoading(layer, scope);
-    decorateLayerLoading(lg_1, scope);
-    decorateLayerLoading(lg_2, scope);
+    ngeo.layertree.decorate.layerLoading(layer, scope);
+    ngeo.layertree.decorate.layerLoading(lg_1, scope);
+    ngeo.layertree.decorate.layerLoading(lg_2, scope);
 
     lg_1.getLayers().insertAt(0, layer);
     lg_2.getLayers().insertAt(0, lg_1);
