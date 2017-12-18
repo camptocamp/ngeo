@@ -18,6 +18,7 @@
     "ngeo-build": "buildtools/build.js"
   },
   "devDependencies": {
+    "@camptocamp/cesium": "1.39",
     "angular": "1.6.5",
     "angular-animate": "1.6.5",
     "angular-dynamic-locale": "0.1.32",
@@ -33,7 +34,7 @@
     "async": "2.5.0",
     "bootstrap": "3.3.7",
     "clean-css-cli": "4.1.6",
-    "closure-util": "camptocamp/closure-util#487fac6",
+    "closure-util": "github:camptocamp/closure-util#487fac6",
     "console-control-strings": "1.1.0",
     "corejs-typeahead": "1.1.1",
     "coveralls": "2.13.1",
@@ -59,9 +60,8 @@
     "less-plugin-clean-css": "1.5.1",
     "moment": "2.18.1",
     "nomnom": "1.8.1",
+    "ol-cesium": "github:openlayers/ol-cesium#ae925e6ca346381a5e7dba224d09894894bbd854",
     "openlayers": "openlayers/openlayers#4a6317d",
-    "ol-cesium": "openlayers/ol-cesium#3014d02de4",
-    "@camptocamp/cesium": "1.39",
     "phantomjs-prebuilt": "2.1.14",
     "proj4": "2.4.3",
     "svg2ttf": "4.1.0",
