@@ -146,7 +146,7 @@ ngeo.filter.component.FilterController_ = class {
     // === Inner properties ===
 
     /**
-     * @type {Array.<!ngeo.filter.component.Condition>}
+     * @type {Array.<!ngeox.FilterCondition>}
      * @export
      */
     this.conditions = [
@@ -325,7 +325,7 @@ ngeo.filter.component.FilterController_ = class {
 
 
   /**
-   * @param {!ngeo.filter.component.Condition} condition Condition to set.
+   * @param {!ngeox.FilterCondition} condition Condition to set.
    * @export
    */
   setCondition(condition) {
@@ -419,11 +419,3 @@ ngeo.filter.component.FilterController_ = class {
 };
 
 ngeo.filter.component.controller('ngeoFilterController', ngeo.filter.component.FilterController_);
-
-/**
- * @typedef {{
- *     text: (string),
- *     value: (string)
- * }}
- */
-ngeo.filter.component.Condition;
