@@ -47,12 +47,12 @@ const Service = class {
     this.manager_ = manager;
 
     this.manager_.on('load', () => {
-      this.setupPermalink_();
+      this.cameraToState_();
     });
 
     if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
       this.manager_.toggle3d().then(() => {
-        this.cameraFromPermalink_();
+        this.initialStateToCamera_();
       });
     }
   }
@@ -66,26 +66,9 @@ const Service = class {
   }
 
   /**
-   * @export
-   * @return {number} the min tilt.
-   */
-  getMinTilt() {
-    return 0;
-  }
-
-  /**
-   * @export
-   * Almost Pi / 2
-   * @return {number} the max tilt.
-   */
-  getMaxTilt() {
-    return 7 * Math.PI / 16;
-  }
-
-  /**
    * @private
    */
-  cameraFromPermalink_() {
+  initialStateToCamera_() {
     const manager = this.manager_;
     const stateManager = this.ngeoStateManager_;
     const scene = manager.getOl3d().getCesiumScene();
@@ -112,29 +95,26 @@ const Service = class {
   /**
    * @private
    */
-  setupPermalink_() {
+  cameraToState_() {
     const manager = this.manager_;
     const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;
-    const is3DCurrentlyEnabled = manager.getOl3d().getEnabled();
 
     camera.moveEnd.addEventListener(this.ngeoDebounce_(() => {
-      if (is3DCurrentlyEnabled) {
-        const position = camera.positionCartographic;
-        this.ngeoStateManager_.updateState({
-          '3d_enabled': true,
-          '3d_lon': Cesium.Math.toDegrees(position.longitude).toFixed(5),
-          '3d_lat': Cesium.Math.toDegrees(position.latitude).toFixed(5),
-          '3d_elevation': position.height.toFixed(0),
-          '3d_heading': Cesium.Math.toDegrees(camera.heading).toFixed(3),
-          '3d_pitch': Cesium.Math.toDegrees(camera.pitch).toFixed(3)
-        });
-      }
+      const position = camera.positionCartographic;
+      this.ngeoStateManager_.updateState({
+        '3d_enabled': true,
+        '3d_lon': Cesium.Math.toDegrees(position.longitude).toFixed(5),
+        '3d_lat': Cesium.Math.toDegrees(position.latitude).toFixed(5),
+        '3d_elevation': position.height.toFixed(0),
+        '3d_heading': Cesium.Math.toDegrees(camera.heading).toFixed(3),
+        '3d_pitch': Cesium.Math.toDegrees(camera.pitch).toFixed(3)
+      });
     }, 1000, true));
 
     this.manager_.on('toggle', (event) => {
       if (!event.target.is3dEnabled()) {
-        this.teardownPermalink_();
+        this.remove3dState_();
       }
     });
   }
@@ -142,7 +122,7 @@ const Service = class {
   /**
    * @private
    */
-  teardownPermalink_() {
+  remove3dState_() {
     this.ngeoLocation_.getParamKeysWithPrefix('3d_').forEach((key) => {
       this.ngeoStateManager_.deleteParam(key);
     });
