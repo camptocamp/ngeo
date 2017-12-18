@@ -8,8 +8,12 @@ goog.require('ngeo.map.LayerHelper');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.obj');
+goog.require('ol.has');
+goog.require('ol.extent');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
+goog.require('ol.layer.Image');
+goog.require('ol.layer.Tile');
 
 
 /**

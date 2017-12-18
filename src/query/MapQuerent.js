@@ -3,6 +3,7 @@ goog.provide('ngeo.query.MapQuerent');
 goog.require('ngeo');
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.DataSourcesHelper');
+goog.require('ol.obj');
 
 
 /**

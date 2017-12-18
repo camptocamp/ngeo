@@ -3,11 +3,14 @@ goog.provide('ngeo.query.Querent');
 goog.require('ngeo');
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.WMSTime');
+goog.require('ngeo.datasource.OGC');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.format.WMSCapabilities');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.obj');
+goog.require('ol.uri');
+goog.require('ol.extent');
 goog.require('ol.source.ImageWMS');
 
 
