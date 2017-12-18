@@ -2653,3 +2653,11 @@ ngeox.WfsPermalinkData;
  * @typedef {function(string):!ngeo.print.Service}
  */
 ngeox.CreatePrint;
+
+/**
+ * @typedef {{
+ *     text: (string),
+ *     value: (string)
+ * }}
+ */
+ngeox.FilterCondition;

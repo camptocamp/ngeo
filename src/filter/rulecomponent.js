@@ -1,4 +1,7 @@
-goog.provide('ngeo.ruleComponent');
+/**
+ * @module ngeo filter namespace
+ */
+goog.provide('ngeo.filter.ruleComponent');
 
 goog.require('ngeo');
 /** @suppress {extraRequire} */
@@ -7,17 +10,27 @@ goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.Menu');
-goog.require('ngeo.RuleHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
+goog.require('ol');
+goog.require('ol.Observable');
+goog.require('ol.Feature');
 goog.require('ol.Collection');
 goog.require('ol.events');
+goog.require('ol.array');
+goog.require('ol.style.Style');
+goog.require('ol.style.Text');
+goog.require('ol.style.Fill');
+goog.require('ol.geom.Geometry');
 
 goog.require('ngeo.map.FeatureOverlay');
 
@@ -25,11 +38,19 @@ goog.require('ngeo.map.FeatureOverlay');
 // In futur module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlay.module.name
 
+/**
+ * @type {angular.Module}
+ */
+ngeo.filter.ruleComponent = angular.module('ngeoRule', [
+  ngeo.filter.RuleHelper.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.filter.ruleComponent.name);
 
 /**
  * @private
  */
-ngeo.RuleController = class {
+ngeo.filter.ruleComponent.RuleController_ = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
@@ -38,7 +59,7 @@ ngeo.RuleController = class {
    * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
    *     interaction service.
    * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
@@ -112,7 +133,7 @@ ngeo.RuleController = class {
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!ngeo.RuleHelper}
+     * @type {!ngeo.filter.RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -917,13 +938,13 @@ ngeo.RuleController = class {
  * Also, changes are not made on-the-fly. A button must be clicked for the
  * changes to be applied to the rule.
  */
-ngeo.module.component('ngeoRule', {
+ngeo.filter.ruleComponent.component('ngeoRule', {
   bindings: {
     'featureOverlay': '<',
     'map': '<',
     'rule': '<',
     'toolGroup': '<'
   },
-  controller: ngeo.RuleController,
-  templateUrl: () => `${ngeo.baseTemplateUrl}/rule.html`
+  controller: ngeo.filter.ruleComponent.RuleController_,
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rule.html`
 });

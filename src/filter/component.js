@@ -1,13 +1,18 @@
-goog.provide('ngeo.filterComponent');
+/**
+ * @module ngeo filter namespace
+ */
+goog.provide('ngeo.filter.component');
 
 goog.require('ngeo');
 goog.require('ngeo.MapQuerent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ruleComponent');
-goog.require('ngeo.RuleHelper');
+goog.require('ngeo.filter.ruleComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.rule.Geometry');
-
 goog.require('ngeo.map.FeatureOverlay');
+goog.require('ol');
+goog.require('ol.array');
 
 
 // In futur module declaration, don't forget to require:
@@ -15,16 +20,42 @@ goog.require('ngeo.map.FeatureOverlay');
 
 
 /**
+ * @type {!angular.Module}
+ */
+ngeo.filter.component = angular.module('ngeoFilter', [
+  ngeo.filter.RuleHelper.module.name,
+  ngeo.filter.ruleComponent.name,
+]);
+
+ngeo.module.requires.push(ngeo.filter.component.name);
+
+ngeo.filter.component.component('ngeoFilter', {
+  bindings: {
+    'aRuleIsActive': '=',
+    'customRules': '<',
+    // It's 'datasource' instead of 'dataSource', because that would require
+    // the attribute to be 'data-source', and Angular strips the 'data-'.
+    'datasource': '<',
+    'directedRules': '<',
+    'featureOverlay': '<',
+    'map': '<',
+    'toolGroup': '<'
+  },
+  controller: 'ngeoFilterController',
+  templateUrl: () => `${ngeo.baseTemplateUrl}/filter.html`
+});
+
+/**
  * @private
  */
-ngeo.FilterController = class {
+ngeo.filter.component.FilterController_ = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.MapQuerent} ngeoMapQuerent The ngeo map querent service.
-   * @param {!ngeo.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @struct
    * @ngInject
@@ -106,7 +137,7 @@ ngeo.FilterController = class {
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {!ngeo.RuleHelper}
+     * @type {!ngeo.filter.RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -115,7 +146,7 @@ ngeo.FilterController = class {
     // === Inner properties ===
 
     /**
-     * @type {Array.<!ngeo.FilterController.Condition>}
+     * @type {Array.<!ngeox.FilterCondition>}
      * @export
      */
     this.conditions = [
@@ -294,7 +325,7 @@ ngeo.FilterController = class {
 
 
   /**
-   * @param {!ngeo.FilterController.Condition} condition Condition to set.
+   * @param {!ngeox.FilterCondition} condition Condition to set.
    * @export
    */
   setCondition(condition) {
@@ -387,28 +418,4 @@ ngeo.FilterController = class {
 
 };
 
-
-/**
- * @typedef {{
- *     text: (string),
- *     value: (string)
- * }}
- */
-ngeo.FilterController.Condition;
-
-
-ngeo.module.component('ngeoFilter', {
-  bindings: {
-    'aRuleIsActive': '=',
-    'customRules': '<',
-    // It's 'datasource' instead of 'dataSource', because that would require
-    // the attribute to be 'data-source', and Angular strips the 'data-'.
-    'datasource': '<',
-    'directedRules': '<',
-    'featureOverlay': '<',
-    'map': '<',
-    'toolGroup': '<'
-  },
-  controller: ngeo.FilterController,
-  templateUrl: () => `${ngeo.baseTemplateUrl}/filter.html`
-});
+ngeo.filter.component.controller('ngeoFilterController', ngeo.filter.component.FilterController_);
