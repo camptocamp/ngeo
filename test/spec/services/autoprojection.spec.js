@@ -1,5 +1,6 @@
 goog.require('ngeo.AutoProjection');
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ol.proj');
 
 describe('ngeo.AutoProjection', () => {
   let ngeoAutoProjection;

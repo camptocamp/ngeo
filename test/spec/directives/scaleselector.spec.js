@@ -1,4 +1,5 @@
 goog.require('ol.Map');
+goog.require('ol.View');
 goog.require('ngeo.map.scaleselector');
 
 describe('ngeo.map.scaleselector', () => {

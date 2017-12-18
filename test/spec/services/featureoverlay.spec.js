@@ -1,4 +1,8 @@
 goog.require('ngeo.map.FeatureOverlayMgr');
+goog.require('ol.Map');
+goog.require('ol.Collection');
+goog.require('ol.Feature');
+goog.require('ol.style.Style');
 
 describe('ngeo.map.FeatureOverlayMgr', () => {
   let ngeoFeatureOverlayMgr;
