@@ -96,8 +96,20 @@ jobs:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - make test || true
-    - make lint
     - cat .build/coverage/lcov.info || true
+    - make lint
+    - sed '/ngeo:/d' -i .eslintrc.yaml
+    - sed '/gmf:/d' -i .eslintrc.yaml
+    - sed '/ol:/d' -i .eslintrc.yaml
+    - sed '/app:/d' -i .eslintrc.yaml
+    - sed '/gmfapp:/d' -i .eslintrc.yaml
+    - node_modules/.bin/eslint src || true
+    - node_modules/.bin/eslint examples || true
+    - node_modules/.bin/eslint test || true
+    - node_modules/.bin/eslint contribs/gmf/src || true
+    - node_modules/.bin/eslint contribs/gmf/examples || true
+    - node_modules/.bin/eslint contribs/gmf/test || true
+    - node_modules/.bin/eslint contribs/gmf/apps || true
 
   - stage: Build
     env:
