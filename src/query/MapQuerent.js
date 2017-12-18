@@ -1,7 +1,7 @@
-goog.provide('ngeo.MapQuerent');
+goog.provide('ngeo.query.MapQuerent');
 
 goog.require('ngeo');
-goog.require('ngeo.Querent');
+goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.DataSourcesHelper');
 
 
@@ -16,7 +16,7 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
 }));
 
 
-ngeo.MapQuerent = class {
+ngeo.query.MapQuerent = class {
 
   /**
    * The ngeo Map Querent is the service bound to a map that issues
@@ -222,4 +222,11 @@ ngeo.MapQuerent = class {
 };
 
 
-ngeo.module.service('ngeoMapQuerent', ngeo.MapQuerent);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.query.MapQuerent.module = angular.module('ngeoMapQuerent', [
+  ngeo.query.Querent.module.name,
+]);
+ngeo.query.MapQuerent.module.service('ngeoMapQuerent', ngeo.query.MapQuerent);
+ngeo.module.requires.push(ngeo.query.MapQuerent.module.name);
