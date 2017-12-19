@@ -204,8 +204,9 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
    */
   const gmfPermalinkOptions = $injector.has('gmfPermalinkOptions') ?
     $injector.get('gmfPermalinkOptions') : {};
-  if (gmfPermalinkOptions.useLocalStorage === false) {
-    this.ngeoStateManager_.useLocalStorage = false;
+  if (gmfPermalinkOptions.useLocalStorage === true) {
+    // localStorage is deactivated by default
+    this.ngeoStateManager_.setUseLocalStorage(true);
   }
 
   /**

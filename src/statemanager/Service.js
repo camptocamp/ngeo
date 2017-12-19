@@ -36,20 +36,11 @@ ngeo.statemanager.Service = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * @type {boolean}
+   * @private
    */
-  this.useLocalStorage = false;
+  this.useLocalStorage_;
 
-  try {
-    if ('localStorage' in window) {
-      window.localStorage['test'] = '';
-      delete window.localStorage['test'];
-    } else {
-      this.useLocalStorage = false;
-    }
-  } catch (err) {
-    console.error(err);
-    this.useLocalStorage = false;
-  }
+  this.setUseLocalStorage(false);
 
   // Populate initialState with the application's initial state. The initial
   // state is read from the location URL, or from the local storage if there
@@ -58,7 +49,7 @@ ngeo.statemanager.Service = function(ngeoLocation, ngeoUsedKeyRegexp) {
   const paramKeys = ngeoLocation.getParamKeys().filter(key => key != 'debug' && key != 'no_redirect');
 
   if (paramKeys.length === 0) {
-    if (this.useLocalStorage) {
+    if (this.useLocalStorage_) {
       for (const key in window.localStorage) {
         goog.asserts.assert(key);
 
@@ -90,6 +81,30 @@ ngeo.statemanager.Service = function(ngeoLocation, ngeoUsedKeyRegexp) {
   }
 };
 
+
+/**
+ * @param {boolean} value Use localStorage
+ * @return {boolean} localStorage will be used.
+ */
+ngeo.statemanager.Service.prototype.setUseLocalStorage = function(value) {
+  this.useLocalStorage_ = value;
+
+  // check if localStorage is supported
+  if (this.useLocalStorage_) {
+    try {
+      if ('localStorage' in window) {
+        window.localStorage['test'] = '';
+        delete window.localStorage['test'];
+      } else {
+        this.useLocalStorage_ = false;
+      }
+    } catch (err) {
+      console.error(err);
+      this.useLocalStorage_ = false;
+    }
+  }
+  return this.useLocalStorage_;
+};
 
 /**
  * Get the state value for `key`.
@@ -149,7 +164,7 @@ ngeo.statemanager.Service.prototype.getInitialBooleanValue = function(key) {
  */
 ngeo.statemanager.Service.prototype.updateState = function(object) {
   this.ngeoLocation.updateParams(object);
-  if (this.useLocalStorage) {
+  if (this.useLocalStorage_) {
     for (const key in object) {
       goog.asserts.assert(key);
       const value = object[key];
@@ -166,7 +181,7 @@ ngeo.statemanager.Service.prototype.updateState = function(object) {
  */
 ngeo.statemanager.Service.prototype.deleteParam = function(key) {
   this.ngeoLocation.deleteParam(key);
-  if (this.useLocalStorage) {
+  if (this.useLocalStorage_) {
     delete window.localStorage[key];
   }
 };
