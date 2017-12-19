@@ -1,7 +1,10 @@
 goog.require('ngeo.print.Service');
+goog.require('ol');
 goog.require('ol.Feature');
 goog.require('ol.Map');
+goog.require('ol.View');
 goog.require('ol.extent');
+goog.require('ol.proj');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
@@ -16,6 +19,7 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+goog.require('ol.style.Fill');
 goog.require('ol.tilegrid.WMTS');
 
 describe('ngeo.print.Service', () => {

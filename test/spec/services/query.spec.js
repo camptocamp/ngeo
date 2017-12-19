@@ -6,7 +6,16 @@
           gmlResponseInformationHitsWfs,
           gmlResponseInformationWfs,
           gmlResponseInformationHitsWfs */
+goog.require('ol.source.ImageWMS');
+goog.require('ol.source.OSM');
+goog.require('ol.format.WMSGetFeatureInfo');
+goog.require('ol.layer.Image');
+goog.require('ol.layer.Tile');
+goog.require('ol.proj');
+goog.require('ol.Map');
+goog.require('ol.View');
 goog.require('ngeo.Query');
+//goog.require('ngeo.QueryInfoFormatType');
 goog.require('ngeo.test.data.msGMLOutputBusStop');
 goog.require('ngeo.test.data.msGMLOutputBusStopAndInformation');
 goog.require('ngeo.test.data.msGMLOutputBusStopWfs');

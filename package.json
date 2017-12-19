@@ -80,6 +80,7 @@
     "openlayers": "4.6.4",
     "ol": "4.6.4",
     "ol-cesium": "1.33.0",
+    "olcs": "0.0.1",
     "phantomjs-prebuilt": "2.1.16",
     "proj4": "2.4.4",
     "svg2ttf": "4.1.0",
