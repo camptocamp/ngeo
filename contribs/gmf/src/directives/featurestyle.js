@@ -74,6 +74,12 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
    * @type {string|undefined}
    * @export
    */
+  this.label = undefined;
+
+  /**
+   * @type {string|undefined}
+   * @export
+   */
   this.measure = undefined;
 
   $scope.$watch(
@@ -119,6 +125,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
     this.type = undefined;
     this.color = undefined;
     this.measure = undefined;
+    this.label = undefined;
   }
 
   if (newFeature) {
@@ -126,6 +133,7 @@ gmf.FeaturestyleController.prototype.handleFeatureSet_ = function(
       ngeo.FeatureProperties.ANGLE,
       ngeo.FeatureProperties.COLOR,
       ngeo.FeatureProperties.NAME,
+      ngeo.FeatureProperties.SHOW_LABEL,
       ngeo.FeatureProperties.OPACITY,
       ngeo.FeatureProperties.SHOW_MEASURE,
       ngeo.FeatureProperties.SIZE,
@@ -194,6 +202,15 @@ gmf.FeaturestyleController.prototype.getSetName = function(value) {
   return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
 };
 
+/**
+ * @param {boolean|undefined} value A value to set or undefined for the
+ *     purpose of showing the attribute labels or not.
+ * @return {boolean} Whether to show the labels or not.
+ * @export
+ */
+gmf.FeaturestyleController.prototype.getSetShowLabel = function(value) {
+  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.FeatureProperties.SHOW_LABEL, value));
+};
 
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.

@@ -331,6 +331,7 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
       'isLabel': ngeo.FeatureProperties.IS_TEXT,
       'name': ngeo.FeatureProperties.NAME,
       'pointRadius': ngeo.FeatureProperties.SIZE,
+      'showLabel': ngeo.FeatureProperties.SHOW_LABEL,
       'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
       'strokeColor': ngeo.FeatureProperties.COLOR,
       'strokeWidth': ngeo.FeatureProperties.STROKE
