@@ -15,6 +15,6 @@ ngeo.query.module = angular.module('ngeoQueryModule', [
   ngeo.query.Service.module.name,
   ngeo.query.Querent.module.name,
   ngeo.query.MapQuerent.module.name,
-  ngeo.query.mapQueryComponent.module.name,
-  ngeo.query.bboxQueryComponent.module.name,
+  ngeo.query.mapQueryComponent.name,
+  ngeo.query.bboxQueryComponent.name,
 ]);

@@ -36,7 +36,7 @@ goog.require('ol.events.condition');
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-ngeo.query.bboxQueryComponent = function(ngeoMapQuerent) {
+ngeo.query.bboxQueryComponent.directive_ = function(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
@@ -84,10 +84,10 @@ ngeo.query.bboxQueryComponent = function(ngeoMapQuerent) {
   };
 };
 
-ngeo.query.bboxQueryComponent.module = angular.module('ngeoBboxQuery', [
+ngeo.query.bboxQueryComponent = angular.module('ngeoBboxQuery', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.query.bboxQueryComponent.module.name);
+ngeo.module.requires.push(ngeo.query.bboxQueryComponent.name);
 
-ngeo.query.bboxQueryComponent.module.directive('ngeoBboxQuery', ngeo.query.bboxQueryComponent);
+ngeo.query.bboxQueryComponent.directive('ngeoBboxQuery', ngeo.query.bboxQueryComponent.directive_);
