@@ -1,11 +1,55 @@
-goog.provide('ngeo.layertree.DecorateLayerLoading');
+goog.provide('ngeo.layertree.decorate');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ol.layer.Base');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Layer');
 goog.require('ol.source.Image');
 goog.require('ol.source.Tile');
+
+
+/**
+ * Provides a function that adds properties (using
+ * `Object.defineProperty`) to the layer, making it possible to control layer
+ * properties with ngModel.
+ *
+ * Example:
+ *
+ *      <input type="checkbox" ngModel="layer.visible" />
+ *
+ * @param {ol.layer.Base} layer Layer to decorate.
+ */
+ngeo.layertree.decorate.layer = function(layer) {
+  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+
+  Object.defineProperty(layer, 'visible', {
+    configurable: true,
+    /**
+     * @return {boolean} Visible.
+     */
+    get: () => layer.getVisible(),
+    /**
+     * @param {boolean} val Visible.
+     */
+    set: (val) => {
+      layer.setVisible(val);
+    }
+  });
+
+  Object.defineProperty(layer, 'opacity', {
+    configurable: true,
+    /**
+     * @return {number} Opacity.
+     */
+    get: () => layer.getOpacity(),
+    /**
+     * @param {number} val Opacity.
+     */
+    set: (val) => {
+      layer.setOpacity(val);
+    }
+  });
+};
 
 
 /**
@@ -18,18 +62,10 @@ goog.require('ol.source.Tile');
  *
  *      <span ng-if="layer.loading">please wait</span>
  *
- * @typedef {function(ol.layer.Base, angular.Scope)}
- * @ngdoc service
- * @ngname ngeoDecorateLayerLoading
- */
-ngeo.layertree.DecorateLayerLoading;
-
-
-/**
  * @param {ol.layer.Base} layer layer.
  * @param {angular.Scope} $scope Scope.
  */
-ngeo.layertree.DecorateLayerLoading_ = function(layer, $scope) {
+ngeo.layertree.decorate.layerLoading = function(layer, $scope) {
 
   let source;
 
@@ -121,13 +157,4 @@ ngeo.layertree.DecorateLayerLoading_ = function(layer, $scope) {
       decrement_(parent);
     }
   }
-
 };
-
-
-/**
- * @type {!angular.Module}
- */
-ngeo.layertree.DecorateLayerLoading.module = angular.module('ngeoDecorateLayerLoading', []);
-ngeo.layertree.DecorateLayerLoading.module.value('ngeoDecorateLayerLoading', ngeo.layertree.DecorateLayerLoading_);
-ngeo.module.requires.push(ngeo.layertree.DecorateLayerLoading.module.name);

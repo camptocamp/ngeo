@@ -5,8 +5,7 @@ goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Layer');
-goog.require('ngeo.layertree.DecorateLayer');
-goog.require('ngeo.layertree.DecorateLayerLoading');
+goog.require('ngeo.layertree.decorate');
 
 
 /**
@@ -14,8 +13,6 @@ goog.require('ngeo.layertree.DecorateLayerLoading');
  * @param {angular.Scope} $scope Scope.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.Attributes} $attrs Attributes.
- * @param {ngeo.layertree.DecorateLayer} ngeoDecorateLayer layer decorator service.
- * @param {ngeo.layertree.DecorateLayerLoading} ngeoDecorateLayerLoading Decorate Layer service.
  * @constructor
  * @ngInject
  * @export
@@ -23,8 +20,7 @@ goog.require('ngeo.layertree.DecorateLayerLoading');
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-ngeo.layertree.Controller = function($scope, $rootScope, $attrs,
-  ngeoDecorateLayer, ngeoDecorateLayerLoading) {
+ngeo.layertree.Controller = function($scope, $rootScope, $attrs) {
 
   const isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -158,8 +154,8 @@ ngeo.layertree.Controller = function($scope, $rootScope, $attrs,
   this.dataSource_ = null;
 
   if (this.layer) {
-    ngeoDecorateLayerLoading(this.layer, $scope);
-    ngeoDecorateLayer(this.layer);
+    ngeo.layertree.decorate.layerLoading(this.layer, $scope);
+    ngeo.layertree.decorate.layer(this.layer);
 
     ol.events.listen(this.layer, 'change:opacity', () => {
       this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
@@ -392,9 +388,6 @@ ngeo.layertree.Controller.prototype.traverseDepthFirst = function(visitor) {
 /**
  * @type {!angular.Module}
  */
-ngeo.layertree.Controller.module = angular.module('ngeoLayertreeController', [
-  ngeo.layertree.DecorateLayer.module.name,
-  ngeo.layertree.DecorateLayerLoading.module.name
-]);
+ngeo.layertree.Controller.module = angular.module('ngeoLayertreeController', []);
 ngeo.layertree.Controller.module.controller('ngeoLayertreeController', ngeo.layertree.Controller);
 ngeo.module.requires.push(ngeo.layertree.Controller.module.name);
