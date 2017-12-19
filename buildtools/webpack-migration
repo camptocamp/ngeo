@@ -1,11 +1,17 @@
 #!/bin/bash -ex
 
+function jscodeshift {
+    node_modules/.bin/jscodeshift $* | tee /tmp/jscodeshift.log
+    grep --quiet '^0 errors$' /tmp/jscodeshift.log
+    rm /tmp/jscodeshift.log
+}
+
 node node_modules/googshift/filename-case-from-module.js src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
-node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
-node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
-node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js contribs/gmf/apps
+jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
+jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
+jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js contribs/gmf/apps
 git add -A  # To be removed when we use the new OpenLayers version
 buildtools/git-grep-sed " from 'ol/" "s/ from 'ol\/\(.*\)';/ from \'ol\/\L\1\';/g"  # To be removed when we use the new OpenLayers version
 buildtools/git-grep-sed 'ngInject' 's|\* @ngInject|*//* @ngInject|g'
