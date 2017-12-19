@@ -194,7 +194,7 @@ gmfx.PermalinkOptions.prototype.projectionCodes;
 
 
 /**
- * Store the values in the local storage. Default is `true`.
+ * Store the values in the local storage. Default is `false`.
  * @type {boolean|undefined}
  */
 gmfx.PermalinkOptions.prototype.useLocalStorage;
