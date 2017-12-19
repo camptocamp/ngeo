@@ -6,6 +6,13 @@ goog.require('ngeo.query.MapQuerent');
 goog.require('ol.events');
 
 
+ngeo.query.mapQueryComponent = angular.module('ngeoMapQuery', [
+  ngeo.query.MapQuerent.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.query.mapQueryComponent.name);
+
+
 /**
  * Provides a "map query" directive.
  *
@@ -119,12 +126,5 @@ ngeo.query.mapQueryComponent.directive_ = function(ngeoMapQuerent, $injector) {
     }
   };
 };
-
-
-ngeo.query.mapQueryComponent = angular.module('ngeoMapQuery', [
-  ngeo.query.MapQuerent.module.name,
-]);
-
-ngeo.module.requires.push(ngeo.query.mapQueryComponent.name);
 
 ngeo.query.mapQueryComponent.directive('ngeoMapQuery', ngeo.query.mapQueryComponent.directive_);

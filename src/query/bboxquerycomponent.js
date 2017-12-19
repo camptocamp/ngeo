@@ -7,6 +7,13 @@ goog.require('ol.interaction.DragBox');
 goog.require('ol.events.condition');
 
 
+ngeo.query.bboxQueryComponent = angular.module('ngeoBboxQuery', [
+  ngeo.query.MapQuerent.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.query.bboxQueryComponent.name);
+
+
 /**
  * Provides a "bbox query" directive.
  *
@@ -83,11 +90,5 @@ ngeo.query.bboxQueryComponent.directive_ = function(ngeoMapQuerent) {
     }
   };
 };
-
-ngeo.query.bboxQueryComponent = angular.module('ngeoBboxQuery', [
-  ngeo.query.MapQuerent.module.name,
-]);
-
-ngeo.module.requires.push(ngeo.query.bboxQueryComponent.name);
 
 ngeo.query.bboxQueryComponent.directive('ngeoBboxQuery', ngeo.query.bboxQueryComponent.directive_);
