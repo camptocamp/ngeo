@@ -3,7 +3,7 @@ goog.provide('gmf.AbstractDesktopController');
 goog.require('gmf');
 goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.bboxQueryDirective');
+goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */

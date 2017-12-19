@@ -15,7 +15,7 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.bboxQueryDirective');
+goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryDirective');
 goog.require('ngeo.ToolActivate');
