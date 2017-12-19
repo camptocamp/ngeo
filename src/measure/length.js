@@ -5,15 +5,16 @@ goog.require('ngeo');
 goog.require('ngeo.filters');
 goog.require('ol.events');
 goog.require('ol.style.Style');
-
 goog.require('ngeo.interaction.MeasureLength');
+
+goog.require('ngeo.draw.Controller');
 
 
 /**
  * @type {!angular.Module}
  */
 ngeo.measure.length = angular.module('ngeoMeasurelength', [
-  // FIXME add requires
+  ngeo.draw.Controller.module.name
 ]);
 
 ngeo.module.requires.push(ngeo.measure.length.name);
@@ -37,7 +38,7 @@ ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $in
      * @param {!angular.Scope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
+     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

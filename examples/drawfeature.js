@@ -2,10 +2,6 @@ goog.provide('app.drawfeature');
 
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.Features');
-/** @suppress {extraRequire} */
-goog.require('ngeo.drawfeatureDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -13,12 +9,14 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo.draw.module');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.draw.module.name,
   ngeo.map.module.name,
   ngeo.ToolActivateMgr.module.name,
 ]);

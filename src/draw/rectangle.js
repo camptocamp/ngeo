@@ -1,9 +1,16 @@
-goog.provide('ngeo.drawrectangleDirective');
+goog.provide('ngeo.draw.rectangle');
 
 goog.require('ngeo');
 goog.require('ol.events');
 goog.require('ol.interaction.Draw');
 goog.require('ol.geom.Polygon');
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.draw.rectangle = angular.module('ngeoDrawrectangle', []);
+
+ngeo.module.requires.push(ngeo.draw.rectangle.name);
 
 
 /**
@@ -12,7 +19,7 @@ goog.require('ol.geom.Polygon');
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
  */
-ngeo.drawrectangleDirective = function() {
+ngeo.draw.rectangle.directive_ = function() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -20,7 +27,7 @@ ngeo.drawrectangleDirective = function() {
      * @param {!angular.Scope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
+     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
@@ -61,4 +68,4 @@ ngeo.drawrectangleDirective = function() {
 };
 
 
-ngeo.module.directive('ngeoDrawrectangle', ngeo.drawrectangleDirective);
+ngeo.draw.rectangle.directive('ngeoDrawrectangle', ngeo.draw.rectangle.directive_);

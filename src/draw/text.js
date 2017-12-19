@@ -1,17 +1,24 @@
-goog.provide('ngeo.drawpointDirective');
+goog.provide('ngeo.draw.text');
 
 goog.require('ngeo');
 goog.require('ol.events');
 goog.require('ol.interaction.Draw');
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.draw.text = angular.module('ngeoDrawtext', []);
+
+ngeo.module.requires.push(ngeo.draw.text.name);
 
 
 /**
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoDrawpoint
+ * @ngname ngeoDrawtext
  */
-ngeo.drawpointDirective = function() {
+ngeo.draw.text.directive_ = function() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -19,26 +26,26 @@ ngeo.drawpointDirective = function() {
      * @param {!angular.Scope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
+     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
-      const drawPoint = new ol.interaction.Draw({
+      const drawText = new ol.interaction.Draw({
         type: /** @type {ol.geom.GeometryType} */ ('Point')
       });
 
-      drawFeatureCtrl.registerInteraction(drawPoint);
-      drawFeatureCtrl.drawPoint = drawPoint;
+      drawFeatureCtrl.registerInteraction(drawText);
+      drawFeatureCtrl.drawText = drawText;
 
       ol.events.listen(
-        drawPoint,
+        drawText,
         'drawend',
         drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeo.GeometryType.POINT),
+          drawFeatureCtrl, ngeo.GeometryType.TEXT),
         drawFeatureCtrl
       );
       ol.events.listen(
-        drawPoint,
+        drawText,
         'change:active',
         drawFeatureCtrl.handleActiveChange,
         drawFeatureCtrl
@@ -48,4 +55,4 @@ ngeo.drawpointDirective = function() {
 };
 
 
-ngeo.module.directive('ngeoDrawpoint', ngeo.drawpointDirective);
+ngeo.draw.text.directive('ngeoDrawtext', ngeo.draw.text.directive_);
