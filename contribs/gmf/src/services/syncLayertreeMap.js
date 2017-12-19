@@ -1,9 +1,12 @@
 goog.provide('gmf.SyncLayertreeMap');
 
 goog.require('gmf');
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.WMSTime');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
+
+// FIXME add me as module dependencies:
+// - ngeo.misc.WMSTime.module.name
 
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
@@ -14,7 +17,7 @@ goog.require('ol.layer.Tile');
  * @constructor
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.WMSTime} ngeoWMSTime wms time service.
+ * @param {ngeo.misc.WMSTime} ngeoWMSTime wms time service.
  * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @ngInject
  * @ngdoc service
@@ -30,7 +33,7 @@ gmf.SyncLayertreeMap = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.WMSTime}
+   * @type {ngeo.misc.WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

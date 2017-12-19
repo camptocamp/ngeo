@@ -1,8 +1,10 @@
 goog.provide('gmf.TimeSliderDirective');
 
 goog.require('gmf');
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.WMSTime');
 
+// FIXME add me as module's dependencies:
+// - ngeo.misc.WMSTime.module.name
 
 /**
  * Provide a directive to select a single date or a range of dates with a slider
@@ -79,7 +81,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
 /**
  * TimeSliderController - directive controller
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.WMSTime} ngeoWMSTime WMSTime service.
+ * @param {ngeo.misc.WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private
  * @ngInject
@@ -89,7 +91,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
 gmf.TimeSliderController = function($scope, ngeoWMSTime) {
 
   /**
-   * @type {ngeo.WMSTime}
+   * @type {ngeo.misc.WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

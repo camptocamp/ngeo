@@ -1,8 +1,8 @@
 /*global describe beforeEach inject expect it*/
 
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.WMSTime');
 
-describe('ngeoWMSTime service', () => {
+describe('ngeo.misc.WMSTime service', () => {
   let ngeoWMSTime;
 
   const wmsTime = {

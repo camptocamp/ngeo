@@ -1,8 +1,9 @@
-goog.provide('ngeo.WMSTime');
+goog.provide('ngeo.misc.WMSTime');
 
 goog.require('ngeo');
 goog.require('ngeo.misc.Time');
 goog.require('goog.asserts');
+goog.require('ol');
 
 
 /**
@@ -15,7 +16,7 @@ goog.require('goog.asserts');
  * @ngdoc service
  * @ngname ngeoWMSTime
  */
-ngeo.WMSTime  = function($filter) {
+ngeo.misc.WMSTime  = function($filter) {
 
   /**
    * @private
@@ -25,7 +26,7 @@ ngeo.WMSTime  = function($filter) {
 
   ngeo.misc.Time.call(this);
 };
-ol.inherits(ngeo.WMSTime, ngeo.misc.Time);
+ol.inherits(ngeo.misc.WMSTime, ngeo.misc.Time);
 
 
 /**
@@ -38,7 +39,7 @@ ol.inherits(ngeo.WMSTime, ngeo.misc.Time);
  * @return {string} ISO-8601 date string regarding the resolution
  * @private
  */
-ngeo.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
+ngeo.misc.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
   const date = new Date(time);
   const utc = opt_toUTC ? 'UTC' : undefined;
   switch (resolution) {
@@ -66,7 +67,7 @@ ngeo.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUT
  * WMS request
  * @export
  */
-ngeo.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
+ngeo.misc.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
   goog.asserts.assert(wmsTimeProperty.resolution !== undefined);
   if (wmsTimeProperty.mode === 'range') {
     goog.asserts.assert(times.end !== undefined);
@@ -80,7 +81,11 @@ ngeo.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt
 };
 
 
-ngeo.module.service('ngeoWMSTime', ngeo.WMSTime);
-
-// Add me as dependencies:
-// - ngeo.misc.Time.module.name
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.WMSTime.module = angular.module('ngeoWMSTime', [
+  ngeo.misc.Time.module.name,
+]);
+ngeo.misc.WMSTime.module.service('ngeoWMSTime', ngeo.misc.WMSTime);
+ngeo.module.requires.push(ngeo.misc.WMSTime.module.name);

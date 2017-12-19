@@ -11,7 +11,7 @@ goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.map.LayerHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.WMSTime');
 goog.require('ol.events');
 goog.require('ol.obj');
 goog.require('ol.layer.Image');
@@ -40,7 +40,7 @@ gmf.datasource.DataSourcesManager = class {
    *     data sources objects.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+   * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
    * @param {!gmf.WFSAliases} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
@@ -111,7 +111,7 @@ gmf.datasource.DataSourcesManager = class {
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.WMSTime}
+     * @type {!ngeo.misc.WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;

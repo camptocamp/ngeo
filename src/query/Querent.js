@@ -2,8 +2,8 @@ goog.provide('ngeo.query.Querent');
 
 goog.require('ngeo');
 goog.require('ngeo.filter.RuleHelper');
-goog.require('ngeo.WMSTime');
 goog.require('ngeo.datasource.OGC');
+goog.require('ngeo.misc.WMSTime');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.format.WMSCapabilities');
@@ -33,7 +33,7 @@ ngeo.query.Querent = class {
    * @param {angular.$http} $http Angular $http service.
    * @param {angular.$q} $q The Angular $q service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+   * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
@@ -61,7 +61,7 @@ ngeo.query.Querent = class {
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.WMSTime}
+     * @type {!ngeo.misc.WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;

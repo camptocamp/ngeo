@@ -9,7 +9,7 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.WMSTime');
 goog.require('ngeo.Popup');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.layer.Tile');
@@ -26,6 +26,7 @@ goog.require('ngeo.map.LayerHelper');
 // - ngeo.layertree.component.name
 // - ngeo.layertree.Controller.module.name
 // - ngeo.map.LayerHelper.module.name
+// - ngeo.misc.WMSTime.module.name
 goog.require('ngeo.layertree.module');
 ngeo.module.requires.push(ngeo.layertree.module.name);
 ngeo.module.requires.push(ngeo.map.LayerHelper.module.name);
@@ -139,7 +140,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {!ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
- * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+ * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
  * @param {!gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @private
@@ -229,7 +230,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {!ngeo.WMSTime}
+   * @type {!ngeo.misc.WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
