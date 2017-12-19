@@ -14,7 +14,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.proj');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ngeo.query.Query');
+goog.require('ngeo.query.Service');
 //goog.require('ngeo.QueryInfoFormatType');
 goog.require('ngeo.test.data.msGMLOutputBusStop');
 goog.require('ngeo.test.data.msGMLOutputBusStopAndInformation');
@@ -22,7 +22,7 @@ goog.require('ngeo.test.data.msGMLOutputBusStopWfs');
 goog.require('ngeo.test.data.msGMLOutputInformationWfs');
 goog.require('ngeo.test.data.msGMLOutputInformationHitsWfs');
 
-describe('ngeo.query.Query', () => {
+describe('ngeo.query.Service', () => {
 
   let ngeoQuery;
   let ngeoQueryResult;
@@ -31,7 +31,7 @@ describe('ngeo.query.Query', () => {
     module('ngeo', ($provide) => {
       // reset services and values
       $provide.value('ngeoQueryOptions', {});
-      $provide.service('ngeoQuery', ngeo.query.Query);
+      $provide.service('ngeoQuery', ngeo.query.Service);
       $provide.value('ngeoQueryResult', {
         sources: [],
         total: 0
@@ -45,7 +45,7 @@ describe('ngeo.query.Query', () => {
   });
 
   it('Create service', () => {
-    expect(ngeoQuery instanceof ngeo.query.Query).toBe(true);
+    expect(ngeoQuery instanceof ngeo.query.Service).toBe(true);
   });
 
   it('Add simple source to query', () => {
@@ -59,7 +59,7 @@ describe('ngeo.query.Query', () => {
     // defining 'url' and 'params' automatically creates the wmsSource
     expect(source.wmsSource instanceof ol.source.ImageWMS).toBe(true);
     // not defining an infoFormat should use GML by default
-    expect(source.infoFormat).toBe(ngeo.query.Query.QueryInfoFormatType.GML);
+    expect(source.infoFormat).toBe(ngeo.query.Service.QueryInfoFormatType.GML);
     // WMSGetFeatureInfo should be the default format when not defined
     expect(source.format instanceof ol.format.WMSGetFeatureInfo).toBe(true);
   });
