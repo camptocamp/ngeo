@@ -51,9 +51,7 @@ const Service = class {
     });
 
     if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
-      this.manager_.toggle3d().then(() => {
         this.initialStateToCamera_();
-      });
     }
   }
 
@@ -69,27 +67,15 @@ const Service = class {
    * @private
    */
   initialStateToCamera_() {
-    const manager = this.manager_;
     const stateManager = this.ngeoStateManager_;
-    const scene = manager.getOl3d().getCesiumScene();
-    const camera = scene.camera;
 
     const lon = stateManager.getInitialNumberValue('3d_lon');
     const lat = stateManager.getInitialNumberValue('3d_lat');
     const elevation = stateManager.getInitialNumberValue('3d_elevation');
-    const destination = Cesium.Cartesian3.fromDegrees(lon, lat, elevation);
+    const heading = stateManager.getInitialNumberValue('3d_heading') || 0;
+    const pitch = stateManager.getInitialNumberValue('3d_pitch') || 0;
 
-    const heading = Cesium.Math.toRadians(
-      stateManager.getInitialNumberValue('3d_heading') || 0);
-    const pitch = Cesium.Math.toRadians(
-      stateManager.getInitialNumberValue('3d_pitch') || 0);
-    const roll = 0;
-    const orientation = {heading, pitch, roll};
-
-    camera.setView({
-      destination,
-      orientation
-    });
+    return this.manager_.set3dWithView(lon, lat, elevation, heading, pitch);
   }
 
   /**
