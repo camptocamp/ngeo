@@ -20,7 +20,39 @@
           class="control-label">
           {{'Display label' | translate}}
         </label>
-     </div>
+  </div>
+  <div
+      ng-if="fsCtrl.type !== 'Text'"
+      class="form-group">
+      <input
+          id="gmf-featurestyle-showmeasure"
+          type="checkbox"
+          ng-model="fsCtrl.getSetShowMeasure"
+          ng-model-options="{getterSetter: true}"/>
+      <label
+          ng-switch="fsCtrl.type"
+          for="gmf-featurestyle-showmeasure"
+          class="control-label">
+        <span ng-switch-when="Circle">
+          {{'Display azimuth and radius' | translate}}
+        </span>
+        <span ng-switch-when="Polygon">
+          {{'Display surface' | translate}}
+        </span>
+        <span ng-switch-when="Rectangle">
+          {{'Display surface' | translate}}
+        </span>
+        <span ng-switch-when="LineString">
+          {{'Display length' | translate}}
+        </span>
+        <span ng-switch-when="Point">
+          {{'Display coordinates' | translate}}
+        </span>
+      </label>
+      <em class="text-muted">
+        ({{ fsCtrl.measure }})
+      </em>
+  </div>
 </div>
 <div
     ng-if="fsCtrl.feature && fsCtrl.type"
@@ -117,42 +149,6 @@
           ng-model-options="{getterSetter: true}"
           />
     </div>
-  </div>
-
-  <div
-      ng-if="fsCtrl.type !== 'Text'"
-      class="form-group">
-    <div class="col-md-12">
-      <input
-          id="gmf-featurestyle-showmeasure"
-          type="checkbox"
-          ng-model="fsCtrl.getSetShowMeasure"
-          ng-model-options="{getterSetter: true}"/>
-      <label
-          ng-switch="fsCtrl.type"
-          for="gmf-featurestyle-showmeasure"
-          class="control-label">
-        <span ng-switch-when="Circle">
-          {{'Display azimuth and radius' | translate}}
-        </span>
-        <span ng-switch-when="Polygon">
-          {{'Display surface' | translate}}
-        </span>
-        <span ng-switch-when="Rectangle">
-          {{'Display surface' | translate}}
-        </span>
-        <span ng-switch-when="LineString">
-          {{'Display length' | translate}}
-        </span>
-        <span ng-switch-when="Point">
-          {{'Display coordinates' | translate}}
-        </span>
-      </label>
-      <em class="text-muted">
-        ({{ fsCtrl.measure }})
-      </em>
-    </div>
-
   </div>
 
 </div>
