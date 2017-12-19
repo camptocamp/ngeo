@@ -13,7 +13,7 @@ goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');

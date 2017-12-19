@@ -9,7 +9,7 @@ goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');

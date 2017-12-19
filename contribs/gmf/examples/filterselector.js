@@ -17,7 +17,7 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */

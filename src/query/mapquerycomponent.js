@@ -1,4 +1,4 @@
-goog.provide('ngeo.query.mapQueryDirective');
+goog.provide('ngeo.query.mapQueryComponent');
 
 goog.require('ngeo');
 /** @suppress {extraRequire} */
@@ -35,7 +35,7 @@ goog.require('ol.events');
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-ngeo.query.mapQueryDirective = function(ngeoMapQuerent, $injector) {
+ngeo.query.mapQueryComponent = function(ngeoMapQuerent, $injector) {
   return {
     restrict: 'A',
     scope: false,
@@ -121,10 +121,10 @@ ngeo.query.mapQueryDirective = function(ngeoMapQuerent, $injector) {
 };
 
 
-ngeo.query.mapQueryDirective.module = angular.module('ngeoMapQuery', [
+ngeo.query.mapQueryComponent.module = angular.module('ngeoMapQuery', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.query.mapQueryDirective.module.name);
+ngeo.module.requires.push(ngeo.query.mapQueryComponent.module.name);
 
-ngeo.query.mapQueryDirective.module.directive('ngeoMapQuery', ngeo.query.mapQueryDirective);
+ngeo.query.mapQueryComponent.module.directive('ngeoMapQuery', ngeo.query.mapQueryComponent);

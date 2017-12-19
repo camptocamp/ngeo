@@ -15,7 +15,7 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');

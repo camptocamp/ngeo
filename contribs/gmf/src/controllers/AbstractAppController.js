@@ -24,7 +24,7 @@ goog.require('gmf.themeselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ngeo.GetBrowserLanguage');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.MapQuerent');
