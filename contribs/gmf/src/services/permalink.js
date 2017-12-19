@@ -286,7 +286,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.map_ = null;
 
   /**
-   * @type {?ngeo.AutoProjection}
+   * @type {?ngeo.misc.AutoProjection}
    * @private
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ?

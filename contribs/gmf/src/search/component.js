@@ -3,7 +3,6 @@ goog.provide('gmf.search.component');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.AutoProjection');
 /** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
 /** @suppress {extraRequire} */
@@ -23,6 +22,7 @@ goog.require('ol.style.Style');
 goog.require('ol.uri');
 
 goog.require('ngeo.map.FeatureOverlayMgr');
+goog.require('ngeo.misc.AutoProjection');
 goog.require('ngeo.search.module');
 goog.require('gmf.search.FulltextSearch');
 
@@ -31,6 +31,7 @@ goog.require('gmf.search.FulltextSearch');
  * @type {!angular.Module}
  */
 gmf.search.component = angular.module('gmfSearch', [
+  ngeo.misc.AutoProjection.module.name,
   ngeo.search.module.name,
   ngeo.map.FeatureOverlayMgr.module.name,
   gmf.search.FulltextSearch.module.name
@@ -179,7 +180,7 @@ gmf.search.component.SearchController_ = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {angular.$injector} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
+   * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
    * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -267,7 +268,7 @@ gmf.search.component.SearchController_ = class {
     }
 
     /**
-     * @type {ngeo.AutoProjection}
+     * @type {ngeo.misc.AutoProjection}
      * @private
      */
     this.ngeoAutoProjection_ = ngeoAutoProjection;
