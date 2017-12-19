@@ -1,13 +1,13 @@
 goog.provide('ngeo.WMSTime');
 
 goog.require('ngeo');
-goog.require('ngeo.Time');
+goog.require('ngeo.misc.Time');
 goog.require('goog.asserts');
 
 
 /**
  * ngeo - WMS time service
- * @extends {ngeo.Time}
+ * @extends {ngeo.misc.Time}
  * @param {angular.$filter} $filter angular filter service.
  * @constructor
  * @struct
@@ -23,9 +23,9 @@ ngeo.WMSTime  = function($filter) {
    */
   this.$filter_ = $filter;
 
-  ngeo.Time.call(this);
+  ngeo.misc.Time.call(this);
 };
-ol.inherits(ngeo.WMSTime, ngeo.Time);
+ol.inherits(ngeo.WMSTime, ngeo.misc.Time);
 
 
 /**
@@ -81,3 +81,6 @@ ngeo.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt
 
 
 ngeo.module.service('ngeoWMSTime', ngeo.WMSTime);
+
+// Add me as dependencies:
+// - ngeo.misc.Time.module.name

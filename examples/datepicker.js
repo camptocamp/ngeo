@@ -2,22 +2,25 @@ goog.provide('app.datepicker');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
-goog.require('ngeo.Time');
+goog.require('ngeo.misc.Time');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.misc.Time.module.name,
+]);
 
 
 /**
  * @constructor
- * @param {!ngeo.Time} ngeoTime time service.
+ * @param {!ngeo.misc.Time} ngeoTime time service.
  * @ngInject
  */
 app.MainController = function(ngeoTime) {
 
   /**
-   * @type {ngeo.Time}
+   * @type {ngeo.misc.Time}
    * @private
    */
   this.ngeoTime_ = ngeoTime;
