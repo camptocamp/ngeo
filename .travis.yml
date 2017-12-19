@@ -83,12 +83,11 @@ jobs:
   - stage: Tests
     env:
     - JOB=webpack
-    install: []
-    script:
+    install:
     - npm install
     - buildtools/webpack-migration
-    - git add -A
-
+    - git add -A  # for git-attributes
+    script:
     - NODE_ENV=dev node_modules/.bin/webpack
     - rm -rf dist/*
     - NODE_ENV=prod node_modules/.bin/webpack
