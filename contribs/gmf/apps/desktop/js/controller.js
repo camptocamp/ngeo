@@ -15,6 +15,7 @@ goog.require('ngeo.proj.EPSG21781');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetview.component');
+goog.require('ol');
 
 
 /**

@@ -20,6 +20,7 @@ goog.require('gmf.Themes');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');

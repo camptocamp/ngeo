@@ -1,3 +1,6 @@
+goog.require('ngeo');
+goog.require('gmf');
+
 const urlElements = window.location.pathname.split('/');
 
 const gmfUrlElements = urlElements.slice(0, urlElements.length - 3);

@@ -7,6 +7,7 @@
 goog.provide('app.desktop_alt.Controller');
 
 goog.require('app');
+goog.require('gmf');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.importdatasourceComponent');
@@ -17,6 +18,7 @@ goog.require('ngeo.proj.EPSG21781');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetview.component');
+goog.require('ol');
 
 
 gmf.module.value('ngeoQueryOptions', {

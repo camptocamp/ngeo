@@ -7,6 +7,7 @@ goog.provide('app');
 
 goog.require('gmf');
 
+goog.require('ngeo.utils');
 goog.require('ngeo.utils.module');
 goog.require('gmf.search.module');
 goog.require('gmf.authentication.module');
