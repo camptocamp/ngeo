@@ -113,9 +113,8 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
 
   /**
    * @type {boolean}
-   * @private
    */
-  this.loaded_ = false;
+  this.loaded = false;
 
   /**
    * @type {angular.$q.Promise}
@@ -531,12 +530,12 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
 
   goog.asserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
 
-  if (this.loaded_) {
+  if (this.loaded) {
     // reload the themes
     this.deferred_ = this.$q_.defer();
     this.promise_ = this.deferred_.promise;
     this.bgLayerPromise_ = null;
-    this.loaded_ = false;
+    this.loaded = false;
   }
 
   this.$http_.get(this.treeUrl_, {
@@ -559,7 +558,7 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
     }
     this.deferred_.resolve(response.data);
     this.dispatchEvent(gmf.ThemesEventType.CHANGE);
-    this.loaded_ = true;
+    this.loaded = true;
   }, (response) => {
     this.deferred_.reject(response);
   });

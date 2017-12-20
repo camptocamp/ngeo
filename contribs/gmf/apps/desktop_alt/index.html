@@ -30,12 +30,16 @@
 
       <div class="gmf-app-data-panel">
         <div class="gmf-app-header">
-          <div class="dropdown">
-            <a href class="btn btn-default btn-block btn-primary"
-              data-toggle="dropdown">
-              <span class="fa fa-grid"></span>
-              <span translate>Themes</span>
-              <span class="caret"></span>
+          <div class="dropdown" ng-cloak>
+            <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+              <span ng-if="mainCtrl.gmfThemeManager.isLoading()">
+                <span translate>Loading...</span>
+              </span>
+              <span ng-if="!mainCtrl.gmfThemeManager.isLoading()">
+                <span class="fa fa-grid"></span>
+                <span translate>Themes</span>
+                <span class="caret"></span>
+              </span>
             </a>
             <div class="import">
               <div>Local</div>
