@@ -3,7 +3,7 @@ goog.provide('gmf.elevationDirective');
 goog.require('gmf');
 goog.require('gmf.Raster');
 /** @suppress {extraRequire} */
-goog.require('ngeo.Debounce');
+goog.require('ngeo.misc.debounce');
 goog.require('ol.events');
 
 
@@ -68,7 +68,7 @@ gmf.module.directive('gmfElevation', gmf.elevationDirective);
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {ngeo.Debounce} ngeoDebounce Ngeo debounce service
+ * @param {ngeox.miscDebounce} ngeoDebounce Ngeo debounce factory
  * @param {gmf.Raster} gmfRaster Gmf Raster service
  * @constructor
  * @private
@@ -79,7 +79,7 @@ gmf.module.directive('gmfElevation', gmf.elevationDirective);
 gmf.ElevationController = function($scope, ngeoDebounce, gmfRaster) {
 
   /**
-   * @type {ngeo.Debounce}
+   * @type {ngeox.miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;

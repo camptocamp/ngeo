@@ -1,8 +1,10 @@
 goog.provide('app.permalink');
 
-goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.format.FeatureHash');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.debounce');
+goog.require('ngeo.statemanager.module');
 goog.require('ol.Map');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
@@ -13,15 +15,13 @@ goog.require('ol.source.Vector');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.map.module');
-goog.require('ngeo.statemanager.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
-  ngeo.statemanager.module.name
+  ngeo.misc.debounce.name,
+  ngeo.statemanager.module.name,
 ]);
 
 /**
@@ -48,7 +48,7 @@ app.module.component('appMap', app.mapComponent);
 
 /**
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
  */
@@ -66,7 +66,7 @@ app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {ngeo.Debounce}
+   * @type {ngeox.miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;

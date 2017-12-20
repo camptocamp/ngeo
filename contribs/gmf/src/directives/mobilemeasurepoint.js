@@ -2,10 +2,10 @@ goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
 goog.require('gmf.Raster');
-goog.require('ngeo.Debounce');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.interaction.MeasurePointMobile');
 goog.require('ngeo.interaction.MobileDraw');
+goog.require('ngeo.misc.debounce');
 goog.require('ol.events');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
@@ -99,7 +99,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$filter} $filter Angular filter service.
  * @param {gmf.Raster} gmfRaster gmf Raster service.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @constructor
@@ -118,7 +118,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {ngeo.Debounce}
+   * @type {ngeox.miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
