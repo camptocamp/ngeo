@@ -104,7 +104,7 @@ jobs:
     - sed '/gmfapp:/d' -i .eslintrc.yaml
     - node_modules/.bin/eslint src || true
     - node_modules/.bin/eslint examples || true
-    - node_modules/.bin/eslint test || true
+    - node_modules/.bin/eslint test
     - node_modules/.bin/eslint contribs/gmf/src || true
     - node_modules/.bin/eslint contribs/gmf/examples || true
     - node_modules/.bin/eslint contribs/gmf/test || true
