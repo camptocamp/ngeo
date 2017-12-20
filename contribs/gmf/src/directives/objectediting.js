@@ -11,9 +11,9 @@ goog.require('ngeo.jstsExports');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.ToolActivate');
+goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.utils');
 goog.require('ol.Collection');
 goog.require('ol.events');
@@ -107,7 +107,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -248,7 +248,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ngeo.ToolActivateMgr}
+   * @type {!ngeo.misc.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -360,10 +360,10 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @private
    */
-  this.modifyToolActivate_ = new ngeo.ToolActivate(this.modify_, 'active');
+  this.modifyToolActivate_ = new ngeo.misc.ToolActivate(this.modify_, 'active');
 
   /**
    * @type {boolean}
@@ -372,10 +372,10 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.toolsActive = false;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @private
    */
-  this.toolsToolActivate_ = new ngeo.ToolActivate(this, 'toolsActive');
+  this.toolsToolActivate_ = new ngeo.misc.ToolActivate(this, 'toolsActive');
 };
 
 /**

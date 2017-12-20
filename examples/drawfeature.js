@@ -1,7 +1,9 @@
 goog.provide('app.drawfeature');
 
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.draw.module');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -9,23 +11,20 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
-goog.require('ngeo.draw.module');
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.draw.module.name,
   ngeo.map.module.name,
-  ngeo.ToolActivateMgr.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor
@@ -68,7 +67,7 @@ app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
    */
   this.drawActive = false;
 
-  const drawToolActivate = new ngeo.ToolActivate(this, 'drawActive');
+  const drawToolActivate = new ngeo.misc.ToolActivate(this, 'drawActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawToolActivate, false);
 
   /**
@@ -77,7 +76,7 @@ app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
    */
   this.dummyActive = true;
 
-  const dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
+  const dummyToolActivate = new ngeo.misc.ToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 };
 

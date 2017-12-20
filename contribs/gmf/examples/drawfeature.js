@@ -6,8 +6,8 @@ goog.require('gmf.mapDirective');
 goog.require('ngeo.draw.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -20,7 +20,7 @@ gmfapp.module = angular.module('gmfapp', [
   ngeo.draw.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeo.misc.FeatureHelper.module.name,
-  ngeo.ToolActivateMgr.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
 
@@ -34,7 +34,7 @@ gmfapp.module.value('ngeoExportFeatureFormats', [
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager
@@ -79,7 +79,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.drawFeatureActive = true;
 
-  const drawFeatureToolActivate = new ngeo.ToolActivate(
+  const drawFeatureToolActivate = new ngeo.misc.ToolActivate(
     this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', drawFeatureToolActivate, true);
@@ -90,7 +90,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.pointerMoveActive = false;
 
-  const pointerMoveToolActivate = new ngeo.ToolActivate(
+  const pointerMoveToolActivate = new ngeo.misc.ToolActivate(
     this, 'pointerMoveActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', pointerMoveToolActivate, false);

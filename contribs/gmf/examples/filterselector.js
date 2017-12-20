@@ -2,6 +2,7 @@
 
 goog.provide('gmfapp.filterselector');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.module');
 goog.require('gmf.Themes');
@@ -18,8 +19,8 @@ goog.require('gmf.mapDirective');
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -30,8 +31,8 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
-  'gmf',
-  ngeo.ToolActivateMgr.module.name,
+  gmf.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
   gmf.authentication.module.name,
 ]);
 
@@ -63,7 +64,7 @@ gmfapp.MainController = class {
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
-   * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+   * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
    */
@@ -127,7 +128,7 @@ gmfapp.MainController = class {
      */
     this.filterSelectorActive = true;
 
-    const filterSelectorToolActivate = new ngeo.ToolActivate(
+    const filterSelectorToolActivate = new ngeo.misc.ToolActivate(
       this, 'filterSelectorActive');
     ngeoToolActivateMgr.registerTool(
       'dummyTools', filterSelectorToolActivate, true);
@@ -138,7 +139,7 @@ gmfapp.MainController = class {
      */
     this.dummyActive = false;
 
-    const dummyToolActivate = new ngeo.ToolActivate(
+    const dummyToolActivate = new ngeo.misc.ToolActivate(
       this, 'dummyActive');
     ngeoToolActivateMgr.registerTool(
       'dummyTools', dummyToolActivate, false);
@@ -149,7 +150,7 @@ gmfapp.MainController = class {
      */
     this.queryActive = true;
 
-    const queryToolActivate = new ngeo.ToolActivate(
+    const queryToolActivate = new ngeo.misc.ToolActivate(
       this, 'queryActive');
     ngeoToolActivateMgr.registerTool(
       this.toolGroup, queryToolActivate, true);

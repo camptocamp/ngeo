@@ -291,6 +291,16 @@ ngeox.miscGetBrowserLanguage;
 
 
 /**
+ * An entry for a tool in a `ngeo.misc.ToolActivateMgr` group.
+ * @typedef {{
+ *    tool: (ngeo.misc.ToolActivate),
+ *    defaultTool: boolean,
+ *    unlisten: (function(): void)}}
+ */
+ngeox.miscToolActivateMgrEntry;
+
+
+/**
  * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
  * The same data source can only be in one of the two lists. The `wfs` list
  * has priority, i.e. if the data source supports WFS, it's put in the

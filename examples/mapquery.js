@@ -4,8 +4,9 @@ goog.provide('app.mapquery');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
@@ -17,14 +18,12 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
 
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
-  ngeo.ToolActivateMgr.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
 
@@ -70,7 +69,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @param {angular.Scope} $scope Scope.
  * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject
@@ -143,10 +142,10 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
     })
   });
 
-  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.misc.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
-  const dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
+  const dummyToolActivate = new ngeo.misc.ToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
 
 };

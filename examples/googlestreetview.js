@@ -9,10 +9,10 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
-goog.require('ngeo.map.module');
 goog.require('ngeo.googlestreetview.module');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 
 
 /** @type {!angular.Module} **/
@@ -20,14 +20,14 @@ app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.googlestreetview.module.name,
-  ngeo.ToolActivateMgr.module.name
+  ngeo.misc.ToolActivateMgr.module.name
 ]);
 
 
 /**
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
@@ -78,7 +78,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    */
   this.googleStreetViewActive = true;
 
-  const googleStreetViewToolActivate = new ngeo.ToolActivate(
+  const googleStreetViewToolActivate = new ngeo.misc.ToolActivate(
     this,
     'googleStreetViewActive'
   );
@@ -94,7 +94,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.misc.ToolActivate(
     this,
     'dummyActive'
   );

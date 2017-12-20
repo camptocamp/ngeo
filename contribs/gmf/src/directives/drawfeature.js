@@ -4,9 +4,6 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.featurestyleDirective');
 goog.require('ngeo.Menu');
-goog.require('ngeo.ToolActivate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
@@ -18,6 +15,8 @@ goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.style.Fill');
@@ -73,7 +72,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
- * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -107,10 +106,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.drawActive = false;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
-  this.drawToolActivate = new ngeo.ToolActivate(this, 'drawActive');
+  this.drawToolActivate = new ngeo.misc.ToolActivate(this, 'drawActive');
 
   /**
    * @type {boolean}
@@ -125,10 +124,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.longPressTimeout_ = null;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
-  this.mapSelectToolActivate = new ngeo.ToolActivate(this, 'mapSelectActive');
+  this.mapSelectToolActivate = new ngeo.misc.ToolActivate(this, 'mapSelectActive');
 
   /**
    * @type {!angular.Scope}
@@ -155,7 +154,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.features = ngeoFeatures;
 
   /**
-   * @type {!ngeo.ToolActivateMgr}
+   * @type {!ngeo.misc.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -196,10 +195,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.menu_ = null;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
-  this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
+  this.modifyToolActivate = new ngeo.misc.ToolActivate(this.modify_, 'active');
 
   /**
    * @type {!ngeo.interaction.Translate}
@@ -240,16 +239,16 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   this.initializeInteractions_();
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
-  this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
+  this.rotateToolActivate = new ngeo.misc.ToolActivate(this.rotate_, 'active');
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
-  this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
+  this.translateToolActivate = new ngeo.misc.ToolActivate(this.translate_, 'active');
 
   /**
    * @type {!Array.<!ol.EventsKey>}

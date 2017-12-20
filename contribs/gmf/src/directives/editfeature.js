@@ -13,16 +13,16 @@ goog.require('ngeo.attributesComponent');
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
+goog.require('ngeo.interaction.Rotate');
+goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.Menu');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.Menu');
-goog.require('ngeo.ToolActivate');
+goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
-goog.require('ngeo.interaction.Rotate');
-goog.require('ngeo.interaction.Translate');
+goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
 goog.require('ol.Collection');
@@ -107,7 +107,7 @@ gmf.module.directive(
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -232,7 +232,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.misc.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -288,10 +288,10 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.createActive = false;
 
   /**
-   * @type {ngeo.ToolActivate}
+   * @type {ngeo.misc.ToolActivate}
    * @export
    */
-  this.createToolActivate = new ngeo.ToolActivate(this, 'createActive');
+  this.createToolActivate = new ngeo.misc.ToolActivate(this, 'createActive');
 
   /**
    * @type {boolean}
@@ -300,10 +300,10 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.mapSelectActive = true;
 
   /**
-   * @type {ngeo.ToolActivate}
+   * @type {ngeo.misc.ToolActivate}
    * @export
    */
-  this.mapSelectToolActivate = new ngeo.ToolActivate(this, 'mapSelectActive');
+  this.mapSelectToolActivate = new ngeo.misc.ToolActivate(this, 'mapSelectActive');
 
   /**
    * @type {?ol.Feature}
@@ -341,7 +341,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.modify_;
 
   /**
-   * @type {ngeo.ToolActivate}
+   * @type {ngeo.misc.ToolActivate}
    * @export
    */
   this.modifyToolActivate;
@@ -375,13 +375,13 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.rotate_;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
   this.rotateToolActivate;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @export
    */
   this.translateToolActivate;
@@ -479,9 +479,9 @@ gmf.EditfeatureController.prototype.$onInit = function() {
 
   this.initializeInteractions_();
 
-  this.modifyToolActivate = new ngeo.ToolActivate(this.modify_, 'active');
-  this.rotateToolActivate = new ngeo.ToolActivate(this.rotate_, 'active');
-  this.translateToolActivate = new ngeo.ToolActivate(this.translate_, 'active');
+  this.modifyToolActivate = new ngeo.misc.ToolActivate(this.modify_, 'active');
+  this.rotateToolActivate = new ngeo.misc.ToolActivate(this.rotate_, 'active');
+  this.translateToolActivate = new ngeo.misc.ToolActivate(this.translate_, 'active');
 
   // (1.3) Add menu to map
   this.map.addOverlay(this.menu_);
