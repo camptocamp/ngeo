@@ -14,9 +14,9 @@ goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
@@ -105,7 +105,7 @@ gmf.module.directive(
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -222,7 +222,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
-   * @type {ngeo.EventHelper}
+   * @type {ngeo.misc.EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

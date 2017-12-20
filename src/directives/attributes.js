@@ -2,7 +2,9 @@ goog.provide('ngeo.attributesComponent');
 
 goog.require('ol.events');
 goog.require('ngeo');
-goog.require('ngeo.EventHelper');
+goog.require('ngeo.misc.EventHelper');
+
+// FIXME Dont' forget to add ngeo.misc.EventHelper to the module
 
 
 /**
@@ -42,7 +44,7 @@ ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
@@ -89,7 +91,7 @@ ngeo.AttributesController = function($scope, ngeoEventHelper, gettextCatalog) {
   this.scope_ = $scope;
 
   /**
-   * @type {!ngeo.EventHelper}
+   * @type {!ngeo.misc.EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

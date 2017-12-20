@@ -1,4 +1,4 @@
-goog.provide('ngeo.EventHelper');
+goog.provide('ngeo.misc.EventHelper');
 
 goog.require('ngeo');
 goog.require('ol.events');
@@ -13,7 +13,7 @@ goog.require('ol.events');
  * @ngname ngeoEventHelper
  * @ngInject
  */
-ngeo.EventHelper = function() {
+ngeo.misc.EventHelper = function() {
 
   /**
    * @type {Object.<number|string, Array.<ol.EventsKey>>}
@@ -31,7 +31,7 @@ ngeo.EventHelper = function() {
  * @param {ol.EventsKey} key Key.
  * @export
  */
-ngeo.EventHelper.prototype.addListenerKey = function(uid, key) {
+ngeo.misc.EventHelper.prototype.addListenerKey = function(uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
@@ -44,7 +44,7 @@ ngeo.EventHelper.prototype.addListenerKey = function(uid, key) {
  * @param {number|string} uid Unique id.
  * @export
  */
-ngeo.EventHelper.prototype.clearListenerKey = function(uid) {
+ngeo.misc.EventHelper.prototype.clearListenerKey = function(uid) {
   this.initListenerKey_(uid);
 };
 
@@ -58,7 +58,7 @@ ngeo.EventHelper.prototype.clearListenerKey = function(uid) {
  * @param {number|string} uid Unique id.
  * @private
  */
-ngeo.EventHelper.prototype.initListenerKey_ = function(uid) {
+ngeo.misc.EventHelper.prototype.initListenerKey_ = function(uid) {
   if (!this.listenerKeys_[uid]) {
     this.listenerKeys_[uid] = [];
   } else {
@@ -69,4 +69,10 @@ ngeo.EventHelper.prototype.initListenerKey_ = function(uid) {
   }
 };
 
-ngeo.module.service('ngeoEventHelper', ngeo.EventHelper);
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.EventHelper.module = angular.module('ngeoEventHelper', []);
+ngeo.misc.EventHelper.module.service('ngeoEventHelper', ngeo.misc.EventHelper);
+ngeo.module.requires.push(ngeo.misc.EventHelper.module.name);
