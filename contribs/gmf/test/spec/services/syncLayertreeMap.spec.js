@@ -1,6 +1,11 @@
 /* global themes capabilities */
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.test.data.themes');
+goog.require('ol.Map');
+goog.require('ol.View');
+goog.require('ol.layer.Group');
+goog.require('ol.layer.Image');
+
 
 describe('gmf.SyncLayertreeMap', () => {
   let $httpBackend_;

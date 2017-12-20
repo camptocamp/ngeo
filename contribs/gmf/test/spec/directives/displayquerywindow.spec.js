@@ -1,4 +1,6 @@
 goog.require('gmf.displayquerywindowComponent');
+goog.require('ol.style.Style');
+goog.require('ol.Feature');
 
 describe('gmf.displayquerywindowComponent', () => {
 

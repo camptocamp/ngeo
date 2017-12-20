@@ -1,6 +1,8 @@
 /* global printCapabilities */
 goog.require('gmf.printComponent');
 goog.require('gmf.test.data.printcapabilities');
+goog.require('ol.Map');
+goog.require('ol.View');
 
 describe('GmfPrintController', () => {
 

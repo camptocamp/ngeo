@@ -107,7 +107,7 @@ jobs:
     - node_modules/.bin/eslint test
     - node_modules/.bin/eslint contribs/gmf/src || true
     - node_modules/.bin/eslint contribs/gmf/examples || true
-    - node_modules/.bin/eslint contribs/gmf/test || true
+    - node_modules/.bin/eslint contribs/gmf/test
     - node_modules/.bin/eslint contribs/gmf/apps
 
   - stage: Build
