@@ -106,6 +106,7 @@ gmf.module.component('gmfLidarProfile', gmf.lidarProfileComponent);
  * @param {angular.$filter} $filter Angular filter
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {string} pytreeLidarProfileJsonUrl URL of GMF service JSON profile.
+ * @param {gmf.gmfLidarProfileConfig} gmfLidarProfileConfig LiDAR Profile Configuration Service
  * @constructor
  * @private
  * @ngInject

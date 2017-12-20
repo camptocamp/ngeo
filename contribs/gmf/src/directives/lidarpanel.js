@@ -92,6 +92,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
 
 
 /**
+ * @param {gmf.gmfLidarProfileConfig} gmfLidarProfileConfig gmf gmfLidarProfileConfig.
  * @param {angular.Scope} $scope Angular scope.
  * @param {angular.$http} $http Angular http service.
  * @param {angular.JQLite} $element Element.
