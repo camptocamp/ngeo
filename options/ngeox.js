@@ -282,6 +282,15 @@ ngeox.miscDebounce;
 
 
 /**
+ * Provides a function that returns the most appropriate 2-letter
+ * language code depending on the list of available languages and the browser
+ * languages settings.
+ * @typedef {function(Array.<string>):string}
+ */
+ngeox.miscGetBrowserLanguage;
+
+
+/**
  * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
  * The same data source can only be in one of the two lists. The `wfs` list
  * has priority, i.e. if the data source supports WFS, it's put in the

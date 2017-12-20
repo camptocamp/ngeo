@@ -10,8 +10,11 @@ goog.require('ngeo.Popover');
 goog.require('ngeo.draw.features');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
+/** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
+/** @suppress {extraRequire} */
 goog.require('ngeo.format.FeatureHash');
+/** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.statemanager.module');

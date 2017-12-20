@@ -29,7 +29,8 @@ goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.query.mapQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.GetBrowserLanguage');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.getBrowserLanguage');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
@@ -338,7 +339,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   });
 
   /**
-   * @type {ngeo.GetBrowserLanguage}
+   * @type {ngeox.miscGetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 

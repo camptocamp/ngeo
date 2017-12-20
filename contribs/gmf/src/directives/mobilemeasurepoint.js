@@ -5,6 +5,8 @@ goog.require('gmf.Raster');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.interaction.MeasurePointMobile');
 goog.require('ngeo.interaction.MobileDraw');
+
+/** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
 goog.require('ol.events');
 goog.require('ol.style.Fill');
