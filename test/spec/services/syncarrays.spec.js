@@ -1,6 +1,6 @@
-goog.require('ngeo.SyncArrays');
+goog.require('ngeo.misc.syncArrays');
 
-describe('ngeo.SyncArrays', () => {
+describe('ngeo.misc.syncArrays', () => {
   let $rootScope;
 
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe('ngeo.SyncArrays', () => {
 
     beforeEach(() => {
       inject(($injector) => {
-        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+        const ngeoSyncArrays = ngeo.misc.syncArrays;
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
         const filter = function(n) {
@@ -66,7 +66,7 @@ describe('ngeo.SyncArrays', () => {
 
     beforeEach(() => {
       inject(($injector) => {
-        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+        const ngeoSyncArrays = ngeo.misc.syncArrays;
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
         const filter = function(n) {

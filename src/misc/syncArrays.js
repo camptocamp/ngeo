@@ -1,4 +1,4 @@
-goog.provide('ngeo.SyncArrays');
+goog.provide('ngeo.misc.syncArrays');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -23,15 +23,6 @@ goog.require('ngeo');
  *
  * This will return a function that can be called to cancel synchronization.
  *
- * @typedef {function(Array, Array, boolean, angular.Scope,
- *     function(?):boolean)}
- * @ngdoc service
- * @ngname ngeoSyncArrays
- */
-ngeo.SyncArrays;
-
-
-/**
  * @param {Array.<T>} arr1 Array 1.
  * @param {Array.<T>} arr2 Array 2.
  * @param {boolean} reverse `true` if arr2 is in reverse order, `false`
@@ -42,7 +33,7 @@ ngeo.SyncArrays;
  * @return {function()} Function to call to stop synchronization
  * @template T
  */
-ngeo.syncArrays = function(arr1, arr2, reverse, scope, filter) {
+ngeo.misc.syncArrays = function(arr1, arr2, reverse, scope, filter) {
 
 
   // Update arr2 when elements are added to, or removed from, arr1.
@@ -92,6 +83,3 @@ ngeo.syncArrays = function(arr1, arr2, reverse, scope, filter) {
     dereg2();
   };
 };
-
-
-ngeo.module.value('ngeoSyncArrays', ngeo.syncArrays);
