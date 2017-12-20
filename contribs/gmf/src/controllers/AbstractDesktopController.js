@@ -33,8 +33,6 @@ goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.FeatureHelper');
-/** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivate');

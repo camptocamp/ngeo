@@ -4,6 +4,7 @@ goog.provide('gmfapp.featurestyle');
 goog.require('gmf.featurestyleDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -18,7 +19,10 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  ngeo.misc.FeatureHelper.module.name,
+]);
 
 
 gmfapp.module.value('ngeoMeasureDecimals', 2);
@@ -27,7 +31,7 @@ gmfapp.module.value('ngeoMeasureDecimals', 2);
 /**
  * @constructor
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
 gmfapp.MainController = function($scope, ngeoFeatureHelper) {
@@ -39,7 +43,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

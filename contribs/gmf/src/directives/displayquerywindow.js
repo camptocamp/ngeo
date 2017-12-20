@@ -1,21 +1,21 @@
 goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
-goog.require('ngeo.query.MapQuerent');
 /** @suppress {extraRequire} */
 goog.require('gmf.swipe');
+/** @suppress {extraRequire} - required for `ngeoQueryResult` */
+goog.require('ngeo.query.MapQuerent');
+goog.require('ngeo.map.FeatureOverlayMgr');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Collection');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.map.FeatureOverlayMgr');
-
-
 // In the future module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlayMgr.module.name
+// - ngeo.misc.FeatureHelper.module.name
 
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
@@ -405,7 +405,7 @@ gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryRe
     const source = queryResult.sources[i];
     source.features = source.features.filter((feature) => {
       goog.asserts.assert(feature);
-      return !ol.obj.isEmpty(ngeo.FeatureHelper.getFilteredFeatureValues(feature));
+      return !ol.obj.isEmpty(ngeo.misc.FeatureHelper.getFilteredFeatureValues(feature));
     });
     this.ngeoQueryResult.sources.push(source);
     this.ngeoQueryResult.total += source.features.length;
@@ -455,7 +455,7 @@ gmf.DisplayquerywindowController.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
-  return ngeo.FeatureHelper.getFilteredFeatureValues(this.feature);
+  return ngeo.misc.FeatureHelper.getFilteredFeatureValues(this.feature);
 };
 
 

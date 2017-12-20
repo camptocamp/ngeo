@@ -3,20 +3,20 @@ goog.provide('gmf.printComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
+goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.map.FeatureOverlayMgr');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
-goog.require('ngeo.FeatureHelper');
 goog.require('ol.Observable');
 goog.require('ol.math');
 goog.require('ol.Map');
 goog.require('ol.layer.Group');
 
-goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.map.FeatureOverlayMgr');
-
 // In the future module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlayMgr.module.name
 // - ngeo.map.LayerHelper.module.name (extra from the map module)
+// - ngeo.misc.FeatureHelper.module.name
 
 
 /**
@@ -913,7 +913,7 @@ gmf.PrintController = class {
       columns = [];
       source.features.forEach(function(feature, i) {
         goog.asserts.assert(feature);
-        const properties = ngeo.FeatureHelper.getFilteredFeatureValues(feature);
+        const properties = ngeo.misc.FeatureHelper.getFilteredFeatureValues(feature);
         if (i === 0) {
           columns = Object.keys(properties).map(function tanslateColumns(prop) {
             return this.translate_(prop);

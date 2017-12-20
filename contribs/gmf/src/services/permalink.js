@@ -185,7 +185,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
-   * @type {?ngeo.FeatureHelper}
+   * @type {?ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = $injector.has('ngeoFeatureHelper') ?

@@ -2,10 +2,11 @@ goog.provide('gmf.featurestyleDirective');
 
 goog.require('gmf');
 goog.require('ol.events');
-goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.misc.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.colorpickerDirective');
 
+// FIXME add requires to the future module dependencies
 
 /**
  * Directive used to set the style of a vector feature. The options depend
@@ -38,7 +39,7 @@ gmf.module.directive('gmfFeaturestyle', gmf.featurestyleDirective);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
  * @ngInject
@@ -60,7 +61,7 @@ gmf.FeaturestyleController = function($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

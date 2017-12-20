@@ -14,9 +14,9 @@ goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.EventHelper');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
@@ -33,6 +33,7 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
+// FIXME add dependencies to the future module
 
 /**
  * Directive used to insert, modify and delete features from a single layer.
@@ -106,7 +107,7 @@ gmf.module.directive(
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
@@ -228,7 +229,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;

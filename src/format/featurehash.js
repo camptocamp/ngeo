@@ -560,7 +560,7 @@ ngeo.format.FeatureHash.readMultiPolygonGeometry_ = function(text) {
 
 
 /**
- * DEPRECATED - Use the `ngeo.FeatureHelper` instead in combination with the
+ * DEPRECATED - Use the `ngeo.misc.FeatureHelper` instead in combination with the
  * `setStyle: false` option.
  *
  * Read a logical sequence of characters and apply the decoded style on the

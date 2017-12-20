@@ -24,10 +24,12 @@ goog.require('gmf.themeselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryComponent');
-goog.require('ngeo.GetBrowserLanguage');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.MapQuerent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.query.mapQueryComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.GetBrowserLanguage');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
@@ -42,8 +44,8 @@ goog.require('ngeo.statemanager.module');
 
 
 gmf.module.value('ngeoExportFeatureFormats', [
-  ngeo.FeatureHelper.FormatType.KML,
-  ngeo.FeatureHelper.FormatType.GPX
+  ngeo.misc.FeatureHelper.FormatType.KML,
+  ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
 
 
@@ -77,7 +79,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Ngeo FeatureHelper service
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(goog.asserts.assert(this.map.getView().getProjection()));

@@ -5,16 +5,17 @@ goog.require('ngeo');
 goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.Menu');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.draw.component');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.FeatureOverlay');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
@@ -29,9 +30,6 @@ goog.require('ol.style.Text');
 goog.require('ol.style.Fill');
 goog.require('ol.geom.Geometry');
 
-// In futur module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlay.module.name
-// and others
 
 /**
  * @type {angular.Module}
@@ -39,9 +37,12 @@ goog.require('ol.geom.Geometry');
 ngeo.filter.ruleComponent = angular.module('ngeoRule', [
   ngeo.draw.component.name,
   ngeo.filter.RuleHelper.module.name,
+  ngeo.map.FeatureOverlay.module.name,
+  ngeo.misc.FeatureHelper.module.name,
 ]);
 
 ngeo.module.requires.push(ngeo.filter.ruleComponent.name);
+
 
 /**
  * @private
@@ -54,7 +55,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
    *     interaction service.
-   * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
@@ -123,7 +124,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
     /**
-     * @type {!ngeo.FeatureHelper}
+     * @type {!ngeo.misc.FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
