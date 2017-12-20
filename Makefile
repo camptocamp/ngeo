@@ -49,7 +49,8 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/url-polyfill/url-polyfill.js \
 	third-party/jquery-ui/jquery-ui.js \
 	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
-	node_modules/google-closure-library/closure/goog/transpile.js
+	node_modules/google-closure-library/closure/goog/transpile.js \
+	utils/ios-overlap-fix.js
 else
 GMF_APPS_LIBS_JS_FILES += \
 	examples/https.js \
@@ -73,7 +74,8 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/moment/min/moment.min.js \
 	node_modules/url-polyfill/url-polyfill.min.js \
 	third-party/jquery-ui/jquery-ui.min.js \
-	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
+	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
+	utils/ios-overlap-fix.js
 endif
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
@@ -464,6 +466,10 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
+.build/examples-hosted/lib/ios-overlap-fix.js: utils/ios-overlap-fix.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
 .build/examples-hosted/lib/typeahead.bundle.min.js: node_modules/corejs-typeahead/dist/typeahead.bundle.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
@@ -619,6 +625,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/build/%.js \
 		.build/examples-hosted/contribs/gmf/build/%.css \
 		.build/examples-hosted/lib/watchwatchers.js \
+		.build/examples-hosted/lib/ios-overlap-fix.js \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
@@ -629,6 +636,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		-e '/\/node_modules\//d' \
 		-e '/\/third-party\//d' \
 		-e '/default\.js/d' \
+		-e '/utils\/ios-overlap-fix\.js/d' \
 		-e "s/var cacheVersion = '0';/var cacheVersion = '`git rev-parse HEAD`';/g" \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@

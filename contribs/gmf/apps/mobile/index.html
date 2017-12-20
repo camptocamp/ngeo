@@ -190,6 +190,7 @@
     <script src="../../../../node_modules/url-polyfill/url-polyfill.js"></script>
     <script src="/@?main=mobile/js/controller.js"></script>
     <script src="../default.js"></script>
+    <script src="../../../../utils/ios-overlap-fix.js"></script>
     <script src="../../../../utils/watchwatchers.js"></script>
     <script>
       (function() {
@@ -204,9 +205,9 @@
 
         var langUrls = {};
         ['en', 'fr', 'de'].forEach(function(lang) {
-            var langUrlElements = urlElements.slice(0, urlElements.length - 3);
-            langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
-            langUrls[lang] = langUrlElements.join('/')
+          var langUrlElements = urlElements.slice(0, urlElements.length - 3);
+          langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
+          langUrls[lang] = langUrlElements.join('/')
         });
 
         var module = angular.module('app');
