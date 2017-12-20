@@ -7,14 +7,15 @@ goog.require('gmf.Themes');
 goog.require('gmf.ThemeManager');
 goog.require('ngeo.Debounce');
 goog.require('ngeo.EventHelper');
-/** @suppress {extraRequire} */
-goog.require('ngeo.Features');
 goog.require('ngeo.Popover');
+/** @suppress {extraRequire} */
+goog.require('ngeo.draw.features');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
+goog.require('ngeo.statemanager.module');
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -24,7 +25,6 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.statemanager.module');
 
 // FIXME remove lines right under and add me at the module dependencies:
 // - ngeo.statemanager.module.name

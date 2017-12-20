@@ -3,15 +3,16 @@ goog.provide('ngeo.measure.area');
 goog.require('ngeo');
 goog.require('ol.events');
 goog.require('ol.style.Style');
-
 goog.require('ngeo.interaction.MeasureArea');
+
+goog.require('ngeo.draw.Controller');
 
 
 /**
  * @type {!angular.Module}
  */
 ngeo.measure.area = angular.module('ngeoMeasurearea', [
-  // FIXME add requires
+  ngeo.draw.Controller.module.name
 ]);
 
 ngeo.module.requires.push(ngeo.measure.area.name);
@@ -35,7 +36,7 @@ ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $inje
      * @param {!angular.Scope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
+     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

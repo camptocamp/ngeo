@@ -35,7 +35,7 @@ goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
-goog.require('ngeo.Features');
+goog.require('ngeo.draw.features');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivate');
 goog.require('ol.Collection');

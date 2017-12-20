@@ -1,119 +1,14 @@
-goog.provide('ngeo.drawfeatureDirective');
+goog.provide('ngeo.draw.Controller');
 
 goog.require('ngeo');
 goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.drawpointDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.drawrectangleDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.drawtextDirective');
 goog.require('ol.Feature');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.measure.area');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measure.azimut');
-/** @suppress {extraRequire} */
-goog.require('ngeo.measure.length');
-
-// FIXME add me at the module dependencies:
-// - ngeo.module.requires.push(ngeo.measure.area.name);
-// - ngeo.module.requires.push(ngeo.measure.azimut.name);
-// - ngeo.module.requires.push(ngeo.measure.length.name);
-
-
-/**
- * Directive used to draw vector features on a map.
- * Example:
- *
- *     <ngeo-drawfeature
- *         ngeo-btn-group
- *         class="btn-group"
- *         ngeo-drawfeature-active="ctrl.drawActive"
- *         ngeo-drawfeature-map="::ctrl.map">
- *       <a
- *         href
- *         translate
- *         ngeo-btn
- *         ngeo-drawpoint
- *         class="btn btn-default ngeo-drawfeature-point"
- *         ng-class="{active: dfCtrl.drawPoint.active}"
- *         ng-model="dfCtrl.drawPoint.active"></a>
- *       <a
- *         href
- *         translate
- *         ngeo-btn
- *         ngeo-measurelength
- *         class="btn btn-default ngeo-drawfeature-linestring"
- *         ng-class="{active: dfCtrl.measureLength.active}"
- *         ng-model="dfCtrl.measureLength.active"></a>
- *       <a
- *         href
- *         translate
- *         ngeo-btn
- *         ngeo-measurearea
- *         class="btn btn-default ngeo-drawfeature-polygon"
- *         ng-class="{active: dfCtrl.measureArea.active}"
- *         ng-model="dfCtrl.measureArea.active"></a>
- *       <a
- *         href
- *         translate
- *         ngeo-btn
- *         ngeo-measureazimut
- *         class="btn btn-default ngeo-drawfeature-circle"
- *         ng-class="{active: dfCtrl.measureAzimut.active}"
- *         ng-model="dfCtrl.measureAzimut.active"></a>
- *       <a
- *         href
- *         translate
- *         ngeo-btn
- *         ngeo-drawrectangle
- *         class="btn btn-default ngeo-drawfeature-rectangle"
- *         ng-class="{active: dfCtrl.drawRectangle.active}"
- *         ng-model="dfCtrl.drawRectangle.active"></a>
- *       <a
- *         href
- *         translate
- *         ngeo-btn
- *         ngeo-drawtext
- *         class="btn btn-default ngeo-drawfeature-text"
- *         ng-class="{active: dfCtrl.drawText.active}"
- *         ng-model="dfCtrl.drawText.active"></a>
- *     </ngeo-drawfeature>
- *
- * @htmlAttribute {boolean} ngeo-drawfeature-active Whether the directive is
- *     active or not.
- * @htmlAttribute {!ol.Collection=} ngeo-drawfeature-features The features
- *     collection in which to push the drawn features. If none is provided,
- *     then the `ngeoFeatures` collection is used.
- * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
- * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
- *      checkbox in order to display the feature measurements as a label.
- *      Default to false.
- * @return {angular.Directive} The directive specs.
- * @ngInject
- * @ngdoc directive
- * @ngname ngeoDrawfeature
- */
-ngeo.drawfeatureDirective = function() {
-  return {
-    controller: 'ngeoDrawfeatureController as dfCtrl',
-    scope: true,
-    bindToController: {
-      'active': '=ngeoDrawfeatureActive',
-      'features': '=?ngeoDrawfeatureFeatures',
-      'map': '=ngeoDrawfeatureMap',
-      'showMeasure': '=?ngeoDrawfeatureShowmeasure'
-    }
-  };
-};
-
-ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
-
+goog.require('ngeo.draw.features');
 
 /**
  * @param {!angular.Scope} $scope Scope.
@@ -130,7 +25,7 @@ ngeo.module.directive('ngeoDrawfeature', ngeo.drawfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog,
+ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
   ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -259,7 +154,7 @@ ngeo.DrawfeatureController = function($scope, $sce, gettextCatalog,
  * @param {ol.interaction.Interaction} interaction Interaction to register.
  * @export
  */
-ngeo.DrawfeatureController.prototype.registerInteraction = function(
+ngeo.draw.Controller.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
@@ -275,7 +170,7 @@ ngeo.DrawfeatureController.prototype.registerInteraction = function(
  * @param {ol.Object.Event} event Event.
  * @export
  */
-ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
+ngeo.draw.Controller.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
@@ -287,7 +182,7 @@ ngeo.DrawfeatureController.prototype.handleActiveChange = function(event) {
  * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
-ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
+ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
@@ -349,4 +244,12 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
   features.push(feature);
 };
 
-ngeo.module.controller('ngeoDrawfeatureController', ngeo.DrawfeatureController);
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.draw.Controller.module = angular.module('ngeoDrawfeatureController', [
+  ngeo.draw.features.name,
+]);
+ngeo.draw.Controller.module.controller('ngeoDrawfeatureController', ngeo.draw.Controller);
+ngeo.module.requires.push(ngeo.draw.Controller.module.name);

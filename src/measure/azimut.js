@@ -7,15 +7,16 @@ goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
 goog.require('ol.style.Style');
-
 goog.require('ngeo.interaction.MeasureAzimut');
+
+goog.require('ngeo.draw.Controller');
 
 
 /**
  * @type {!angular.Module}
  */
 ngeo.measure.azimut = angular.module('ngeoMeasureazimut', [
-  // FIXME add requires
+  ngeo.draw.Controller.module.name
 ]);
 
 ngeo.module.requires.push(ngeo.measure.azimut.name);
@@ -39,7 +40,7 @@ ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $in
      * @param {!angular.Scope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.DrawfeatureController} drawFeatureCtrl Controller.
+     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

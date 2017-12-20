@@ -4,17 +4,17 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.DecorateInteraction');
-/** @suppress {extraRequire} */
-goog.require('ngeo.drawfeatureDirective');
 goog.require('ngeo.Menu');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.draw.component');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+goog.require('ngeo.map.FeatureOverlay');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
@@ -29,16 +29,15 @@ goog.require('ol.style.Text');
 goog.require('ol.style.Fill');
 goog.require('ol.geom.Geometry');
 
-goog.require('ngeo.map.FeatureOverlay');
-
-
 // In futur module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlay.module.name
+// and others
 
 /**
  * @type {angular.Module}
  */
 ngeo.filter.ruleComponent = angular.module('ngeoRule', [
+  ngeo.draw.component.name,
   ngeo.filter.RuleHelper.module.name,
 ]);
 

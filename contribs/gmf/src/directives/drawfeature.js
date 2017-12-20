@@ -10,9 +10,9 @@ goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.drawfeatureDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.exportfeaturesDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.draw.component');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
@@ -21,6 +21,13 @@ goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+
+
+// In the future module declaration, don't forget to require:
+// - ngeo.draw.component.name
+// - ngeo.interaction.Modify.module.name
+// - ngeo.interaction.Rotate.module.name
+// - ngeo.interaction.Translate.module.name
 
 
 /**
