@@ -86,7 +86,7 @@ gmf.displayquerygridComponent = {
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
     'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
-    'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
+    'selectedFeatureStyleFn': '&gmfDisplayquerygridSelectedfeaturestyle',
     'getMapFn': '&gmfDisplayquerygridMap',
     'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
     'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
