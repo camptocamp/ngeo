@@ -1,8 +1,9 @@
-goog.provide('ngeo.MapQuerent');
+goog.provide('ngeo.query.MapQuerent');
 
 goog.require('ngeo');
-goog.require('ngeo.Querent');
+goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.DataSourcesHelper');
+goog.require('ol.obj');
 
 
 /**
@@ -16,7 +17,7 @@ ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
 }));
 
 
-ngeo.MapQuerent = class {
+ngeo.query.MapQuerent = class {
 
   /**
    * The ngeo Map Querent is the service bound to a map that issues
@@ -31,7 +32,7 @@ ngeo.MapQuerent = class {
    *     data source objects.
    * @param {ngeo.datasource.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
-   * @param {ngeo.Querent} ngeoQuerent The ngeo querent service.
+   * @param {ngeo.query.Querent} ngeoQuerent The ngeo querent service.
    * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
    * @ngname ngeoQuerent
@@ -57,7 +58,7 @@ ngeo.MapQuerent = class {
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
 
     /**
-     * @type {ngeo.Querent}
+     * @type {ngeo.query.Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -222,4 +223,11 @@ ngeo.MapQuerent = class {
 };
 
 
-ngeo.module.service('ngeoMapQuerent', ngeo.MapQuerent);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.query.MapQuerent.module = angular.module('ngeoMapQuerent', [
+  ngeo.query.Querent.module.name,
+]);
+ngeo.query.MapQuerent.module.service('ngeoMapQuerent', ngeo.query.MapQuerent);
+ngeo.module.requires.push(ngeo.query.MapQuerent.module.name);

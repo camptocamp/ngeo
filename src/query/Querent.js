@@ -1,17 +1,20 @@
-goog.provide('ngeo.Querent');
+goog.provide('ngeo.query.Querent');
 
 goog.require('ngeo');
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.WMSTime');
+goog.require('ngeo.datasource.OGC');
 goog.require('ol.format.WFS');
 goog.require('ol.format.WFSDescribeFeatureType');
 goog.require('ol.format.WMSCapabilities');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.obj');
+goog.require('ol.uri');
+goog.require('ol.extent');
 goog.require('ol.source.ImageWMS');
 
 
-ngeo.Querent = class {
+ngeo.query.Querent = class {
 
   /**
    * The ngeo Querent is a service that issues all sorts of queries using
@@ -470,7 +473,7 @@ ngeo.Querent = class {
    * Issue WFS GetFeature requests using the given combined data sources, map
    * and optional filters.
    *
-   * @param {!ngeo.Querent.CombinedDataSources} combinedDataSources Combined
+   * @param {!ngeo.query.Querent.CombinedDataSources} combinedDataSources Combined
    *     data sources.
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
    * @return {angular.$q.Promise} Promise.
@@ -676,7 +679,7 @@ ngeo.Querent = class {
    * Issue WMS GetFeatureInfo requests using the given combined data sources,
    * map and optional filters.
    *
-   * @param {!ngeo.Querent.CombinedDataSources} combinedDataSources Combined
+   * @param {!ngeo.query.Querent.CombinedDataSources} combinedDataSources Combined
    *     data sources.
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
    * @return {angular.$q.Promise} Promise.
@@ -822,7 +825,7 @@ ngeo.Querent = class {
   /**
    * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
    *     queryable data sources that supports WFS.
-   * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
+   * @return {ngeo.query.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
   getCombinableWFSDataSources_(dataSources) {
@@ -852,7 +855,7 @@ ngeo.Querent = class {
   /**
    * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
    *     queryable data sources that supports WMS.
-   * @return {ngeo.Querent.CombinedDataSources} Combined lists of data sources.
+   * @return {ngeo.query.Querent.CombinedDataSources} Combined lists of data sources.
    * @private
    */
   getCombinableWMSDataSources_(dataSources) {
@@ -942,7 +945,12 @@ ngeo.Querent = class {
 /**
  * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>}
  */
-ngeo.Querent.CombinedDataSources;
+ngeo.query.Querent.CombinedDataSources;
 
 
-ngeo.module.service('ngeoQuerent', ngeo.Querent);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.query.Querent.module = angular.module('ngeoQuerent', []);
+ngeo.query.Querent.module.service('ngeoQuerent', ngeo.query.Querent);
+ngeo.module.requires.push(ngeo.query.Querent.module.name);

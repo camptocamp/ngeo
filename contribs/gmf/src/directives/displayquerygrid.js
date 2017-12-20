@@ -2,7 +2,7 @@ goog.provide('gmf.displayquerygridComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
-goog.require('ngeo.MapQuerent');
+goog.require('ngeo.query.MapQuerent');
 goog.require('ol.Collection');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -112,7 +112,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -150,7 +150,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {ngeo.MapQuerent}
+   * @type {ngeo.query.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;

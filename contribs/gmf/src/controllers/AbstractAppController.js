@@ -24,10 +24,10 @@ goog.require('gmf.themeselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ngeo.GetBrowserLanguage');
 /** @suppress {extraRequire} */
-goog.require('ngeo.MapQuerent');
+goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.ToolActivateMgr');
@@ -280,7 +280,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   this.printActive = false;
 
   /**
-   * @type {ngeo.MapQuerent}
+   * @type {ngeo.query.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');

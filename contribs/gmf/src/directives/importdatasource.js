@@ -7,7 +7,7 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.wmscapabilitylayertreenodeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.wmtscapabilitylayertreeComponent');
-goog.require('ngeo.Querent');
+goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.OGC');
 
 
@@ -25,7 +25,7 @@ gmf.ImportdatasourceController = class {
    * @param {!gmf.datasource.ExternalDataSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
-   * @param {!ngeo.Querent} ngeoQuerent Ngeo querent service.
+   * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @private
    * @struct
    * @ngInject
@@ -71,7 +71,7 @@ gmf.ImportdatasourceController = class {
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {!ngeo.Querent}
+     * @type {!ngeo.query.Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

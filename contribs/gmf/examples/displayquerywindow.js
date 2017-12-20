@@ -11,11 +11,11 @@ goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
-goog.require('ngeo.bboxQueryDirective');
+goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapQueryDirective');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
