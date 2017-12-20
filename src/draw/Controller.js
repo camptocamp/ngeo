@@ -249,7 +249,7 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
  */
 ngeo.draw.Controller.module = angular.module('ngeoDrawfeatureController', [
   ngeo.draw.features.name,
-  ngeo.misc.FeatureHelper.name,
+  ngeo.misc.FeatureHelper.module.name,
 ]);
 ngeo.draw.Controller.module.controller('ngeoDrawfeatureController', ngeo.draw.Controller);
 ngeo.module.requires.push(ngeo.draw.Controller.module.name);

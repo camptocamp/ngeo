@@ -1,9 +1,11 @@
 goog.provide('gmfapp.featurestyle');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.featurestyleDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+goog.require('ngeo');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Feature');
 goog.require('ol.Map');
@@ -21,6 +23,7 @@ goog.require('ol.source.Vector');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  ngeo.module.name,
   ngeo.misc.FeatureHelper.module.name,
 ]);
 
@@ -67,6 +70,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   textProperties[ngeo.FeatureProperties.IS_TEXT] = true;
   textProperties[ngeo.FeatureProperties.NAME] = 'Text 1';
   textProperties[ngeo.FeatureProperties.SIZE] = '16';
+  textProperties[ngeo.FeatureProperties.STROKE] = '2';
   features.push(new ol.Feature(textProperties));
 
   const lineProperties = {

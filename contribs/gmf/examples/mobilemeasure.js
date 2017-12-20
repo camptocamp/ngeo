@@ -1,5 +1,6 @@
 goog.provide('gmfapp.mobilemeasure');
 
+goog.require('gmf');
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasurelengthDirective');
@@ -19,7 +20,9 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+]);
 
 
 gmfapp.module.value(

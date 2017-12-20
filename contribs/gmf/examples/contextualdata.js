@@ -1,9 +1,12 @@
 goog.provide('gmfapp.contextualdata');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdataDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -13,7 +16,9 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+]);
 
 
 gmfapp.module.value(

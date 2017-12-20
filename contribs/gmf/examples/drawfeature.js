@@ -1,5 +1,6 @@
 goog.provide('gmfapp.drawfeature');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.draw.module');

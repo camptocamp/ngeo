@@ -1,5 +1,6 @@
 goog.provide('gmfapp.datepicker');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.misc.WMSTime');
