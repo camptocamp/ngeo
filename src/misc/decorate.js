@@ -1,7 +1,8 @@
-goog.provide('ngeo.DecorateInteraction');
+goog.provide('ngeo.misc.decorate');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ol.interaction.Interaction');
 
 
 /**
@@ -15,17 +16,9 @@ goog.require('ngeo');
  *
  * See our live example: [../examples/interactiontoggle.html](../examples/interactiontoggle.html)
  *
- * @typedef {function(ol.interaction.Interaction)}
- * @ngdoc service
- * @ngname ngeoDecorateInteraction
- */
-ngeo.DecorateInteraction;
-
-
-/**
  * @param {ol.interaction.Interaction} interaction Interaction to decorate.
  */
-ngeo.decorateInteraction = function(interaction) {
+ngeo.misc.decorate.interaction = function(interaction) {
   goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
 
   Object.defineProperty(interaction, 'active', {
@@ -35,6 +28,3 @@ ngeo.decorateInteraction = function(interaction) {
     }
   });
 };
-
-
-ngeo.module.value('ngeoDecorateInteraction', ngeo.decorateInteraction);

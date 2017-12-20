@@ -13,8 +13,8 @@ goog.require('ngeo.attributesComponent');
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
-goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.Menu');
@@ -104,8 +104,6 @@ gmf.module.directive(
  * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
  * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -119,8 +117,7 @@ gmf.module.directive(
  */
 gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
-  ngeoDecorateInteraction, ngeoEventHelper, ngeoFeatureHelper,
-  ngeoLayerHelper, ngeoToolActivateMgr) {
+  ngeoEventHelper, ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
 
   // === Binding properties ===
@@ -215,12 +212,6 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
-
-  /**
-   * @type {ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
    * @type {ngeo.misc.EventHelper}
@@ -976,10 +967,10 @@ gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
  * @private
  */
 gmf.EditfeatureController.prototype.initializeInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
-    this.ngeoDecorateInteraction_(interaction);
-  }, this);
+    ngeo.misc.decorate.interaction(interaction);
+  });
 };
 
 

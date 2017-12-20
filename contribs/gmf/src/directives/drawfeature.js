@@ -16,6 +16,7 @@ goog.require('ngeo.draw.component');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.events');
 goog.require('ol.Collection');
@@ -70,8 +71,6 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
  * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -82,7 +81,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
-gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecorateInteraction,
+gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
@@ -142,12 +141,6 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
    * @private
    */
   this.timeout_ = $timeout;
-
-  /**
-   * @type {!ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
    * @type {!ngeo.misc.FeatureHelper}
@@ -333,10 +326,10 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
  * @private
  */
 gmf.DrawfeatureController.prototype.initializeInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
-    this.ngeoDecorateInteraction_(interaction);
-  }, this);
+    ngeo.misc.decorate.interaction(interaction);
+  });
 };
 
 

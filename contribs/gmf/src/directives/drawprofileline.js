@@ -6,7 +6,7 @@ goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
 goog.require('ol.style.Style');
 goog.require('ol.style.Stroke');
-goog.require('ngeo.DecorateInteraction');
+goog.require('ngeo.misc.decorate');
 
 goog.require('ngeo.map.FeatureOverlayMgr');
 
@@ -71,8 +71,6 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service
  * @constructor
  * @private
  * @ngInject
@@ -80,7 +78,7 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
  * @ngname gmfDrawprofilelineController
  */
 gmf.DrawprofilelineController = function($scope, $element, $timeout,
-  ngeoFeatureOverlayMgr, ngeoDecorateInteraction) {
+  ngeoFeatureOverlayMgr) {
 
   /**
    * @type {?ol.geom.LineString}
@@ -134,7 +132,7 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
     features: this.features_
   });
 
-  ngeoDecorateInteraction(this.interaction);
+  ngeo.misc.decorate.interaction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
   this.interaction.on('change:active', () => {

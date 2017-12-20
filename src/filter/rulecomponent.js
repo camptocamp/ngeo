@@ -3,7 +3,6 @@ goog.provide('ngeo.filter.ruleComponent');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
-goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
@@ -16,6 +15,7 @@ goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.FeatureOverlay');
 goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.decorate');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
@@ -53,8 +53,6 @@ ngeo.filter.ruleComponent.RuleController_ = class {
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
-   *     interaction service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
@@ -65,9 +63,8 @@ ngeo.filter.ruleComponent.RuleController_ = class {
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
-  constructor(gettextCatalog, $scope, $timeout, ngeoDecorateInteraction,
-    ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
-  ) {
+  constructor(gettextCatalog, $scope, $timeout, ngeoFeatureHelper,
+    ngeoRuleHelper, ngeoToolActivateMgr) {
 
     // Binding properties
 
@@ -116,12 +113,6 @@ ngeo.filter.ruleComponent.RuleController_ = class {
      * @private
      */
     this.timeout_ = $timeout;
-
-    /**
-     * @type {!ngeo.DecorateInteraction}
-     * @private
-     */
-    this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
     /**
      * @type {!ngeo.misc.FeatureHelper}
@@ -718,7 +709,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
   initializeInteractions_() {
     this.interactions_.forEach((interaction) => {
       interaction.setActive(false);
-      this.ngeoDecorateInteraction_(interaction);
+      ngeo.misc.decorate.interaction(interaction);
     });
   }
 

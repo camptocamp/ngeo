@@ -1,9 +1,9 @@
 goog.provide('app.permalink');
 
-goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.debounce');
+goog.require('ngeo.misc.decorate');
 goog.require('ngeo.statemanager.module');
 goog.require('ol.Map');
 goog.require('ol.geom.GeometryType');
@@ -134,14 +134,12 @@ app.module.component('appDraw', app.drawComponent);
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {!ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
  */
-app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLocation) {
+app.DrawComponentController = function($scope, ngeoLocation) {
 
   /**
    * @type {ol.Map}
@@ -173,12 +171,6 @@ app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLoca
   this.featureSeq_ = 0;
 
   /**
-   * @type {!ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
-
-  /**
    * @type {ol.interaction.Draw}
    * @export
    */
@@ -195,7 +187,7 @@ app.DrawComponentController.prototype.$onInit = function() {
 
   this.interaction.setActive(false);
   this.map.addInteraction(this.interaction);
-  this.ngeoDecorateInteraction_(this.interaction);
+  ngeo.misc.decorate.interaction(this.interaction);
 
   this.interaction.on('drawend', function(e) {
     e.feature.set('id', ++this.featureSeq_);
