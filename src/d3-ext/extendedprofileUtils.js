@@ -198,31 +198,31 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function(profilePoints) {
     file += `${header.substr(2)} \n`;
   }
   for (const point of points) {
-    let line = point.distance.toFixed(4) + ', ';
-    line += point.altitude.toFixed(4) + ', ';
+    let line = `${point.distance.toFixed(4)}, `;
+    line += `${point.altitude.toFixed(4)}, `;
 
     if (point.hasOwnProperty('color_packed')) {
       line += point.color_packed.join(', ');
     }
 
     if (point.hasOwnProperty('intensity')) {
-      line += ', ' + point.intensity;
+      line += `, ${point.intensity}`;
     }
 
     if (point.hasOwnProperty('classification')) {
-      line += ', ' + point.classification;
+      line += `, ${point.classification}`;
     }
 
     if (point.hasOwnProperty('numberOfReturns')) {
-      line += ', ' + point.numberOfReturns;
+      line += `, ${point.numberOfReturns}`;
     }
 
     if (point.hasOwnProperty('pointSourceID')) {
-      line += ', ' + point.pointSourceID;
+      line += `, ${point.pointSourceID}`;
     }
 
     if (point.hasOwnProperty('returnNumber')) {
-      line += ', ' + point.returnNumber;
+      line += `, ${point.returnNumber}`;
     }
 
     line += '\n';
