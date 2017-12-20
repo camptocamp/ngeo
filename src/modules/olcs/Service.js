@@ -51,7 +51,7 @@ const Service = class {
     });
 
     if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
-        this.initialStateToCamera_();
+      this.initialStateToCamera_();
     }
   }
 
@@ -65,6 +65,7 @@ const Service = class {
 
   /**
    * @private
+   * @return {Promise<undefined>} A promise after load & enabled.
    */
   initialStateToCamera_() {
     const stateManager = this.ngeoStateManager_;
@@ -75,6 +76,9 @@ const Service = class {
     const heading = stateManager.getInitialNumberValue('3d_heading') || 0;
     const pitch = stateManager.getInitialNumberValue('3d_pitch') || 0;
 
+    goog.asserts.assert(lon !== undefined);
+    goog.asserts.assert(lat !== undefined);
+    goog.asserts.assert(elevation !== undefined);
     return this.manager_.set3dWithView(lon, lat, elevation, heading, pitch);
   }
 
