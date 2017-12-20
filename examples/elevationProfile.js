@@ -1,7 +1,5 @@
-goog.provide('app.profile');
+goog.provide('app.elevationProfile');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.profileDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Feature');
@@ -16,12 +14,14 @@ goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
 
 goog.require('ngeo.map.module');
+goog.require('ngeo.profile.elevationComponent');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.profile.elevationComponent.name,
 ]);
 
 
