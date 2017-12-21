@@ -326,7 +326,7 @@ ngeo.geolocation.mobile.Controller_.prototype.autorotateListener = function() {
  * @private
  */
 ngeo.geolocation.mobile.Controller_.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
-  if (Math.abs(eventAlpha - currentAlpha) > 0.2) {
+  if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
     currentAlpha = eventAlpha;
     const radAlpha = currentAlpha * Math.PI / 180;
     this.map_.getView().animate({
