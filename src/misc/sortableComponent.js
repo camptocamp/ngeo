@@ -1,16 +1,14 @@
-goog.provide('ngeo.sortableDirective');
+goog.provide('ngeo.misc.sortableComponent');
 
 goog.require('ngeo');
 
 
 /**
- * @typedef {{
- *     handleClassName: (string|undefined),
- *     draggerClassName: (string|undefined),
- *     placeholderClassName: (string|undefined)
- * }}
+ * @type {!angular.Module}
  */
-ngeo.SortableOptions;
+ngeo.misc.sortableComponent = angular.module('ngeoSortable', []);
+
+ngeo.module.requires.push(ngeo.misc.sortableComponent.name);
 
 
 /**
@@ -43,7 +41,7 @@ ngeo.SortableOptions;
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
  * @htmlAttribute {Array.<ol.layer.Base>} ngeo-sortable The layers to sort.
- * @htmlAttribute {!ngeox.SortableOptions} ngeo-sortable-options The options.
+ * @htmlAttribute {!ngeox.miscSortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(angular.JQLite, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called
  *     with the element and the sort array as arguments.
@@ -55,7 +53,7 @@ ngeo.SortableOptions;
  * @ngdoc directive
  * @ngname ngeoSortable
  */
-ngeo.sortableDirective = function($timeout) {
+ngeo.misc.sortableComponent.component_ = function($timeout) {
   return {
     restrict: 'A',
     /**
@@ -136,7 +134,7 @@ ngeo.sortableDirective = function($timeout) {
 
       /**
        * @param {?} options Options after expression evaluation.
-       * @return {!ngeox.SortableOptions} Options object.
+       * @return {!ngeox.miscSortableOptions} Options object.
        * @private
        */
       function getOptions(options) {
@@ -148,7 +146,7 @@ ngeo.sortableDirective = function($timeout) {
           if (options['handleClassName'] === undefined) {
             options['handleClassName'] = defaultHandleClassName;
           }
-          ret = /** @type {ngeox.SortableOptions} */ (options);
+          ret = /** @type {ngeox.miscSortableOptions} */ (options);
         }
         return ret;
       }
@@ -157,4 +155,4 @@ ngeo.sortableDirective = function($timeout) {
   };
 };
 
-ngeo.module.directive('ngeoSortable', ngeo.sortableDirective);
+ngeo.misc.sortableComponent.directive('ngeoSortable', ngeo.misc.sortableComponent.component_);

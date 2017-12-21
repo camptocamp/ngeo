@@ -35,6 +35,8 @@ goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 /** @suppress {extraRequire} */
+goog.require('ngeo.misc.sortableComponent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
@@ -50,9 +52,6 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.sortableDirective');
 
 
 gmf.module.value('isDesktop', true);

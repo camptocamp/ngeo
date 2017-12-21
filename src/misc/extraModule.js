@@ -8,6 +8,7 @@ goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.getBrowserLanguage');
+goog.require('ngeo.misc.sortableComponent');
 goog.require('ngeo.misc.Time');
 goog.require('ngeo.misc.WMSTime');
 
@@ -23,6 +24,7 @@ ngeo.misc.extaModule = angular.module('ngeoMiscExtraModule', [
   ngeo.misc.EventHelper.module.name,
   ngeo.misc.FeatureHelper.module.name,
   ngeo.misc.getBrowserLanguage.name,
+  ngeo.misc.sortableComponent.name,
   ngeo.misc.Time.module.name,
   ngeo.misc.WMSTime.module.name,
 ]);

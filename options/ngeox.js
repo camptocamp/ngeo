@@ -291,6 +291,16 @@ ngeox.miscGetBrowserLanguage;
 
 
 /**
+ * @typedef {{
+ *     handleClassName: (string|undefined),
+ *     draggerClassName: (string|undefined),
+ *     placeholderClassName: (string|undefined)
+ * }}
+ */
+ngeox.miscSortableOptions;
+
+
+/**
  * An entry for a tool in a `ngeo.misc.ToolActivateMgr` group.
  * @typedef {{
  *    tool: (ngeo.misc.ToolActivate),
