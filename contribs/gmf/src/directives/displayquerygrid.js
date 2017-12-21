@@ -5,7 +5,6 @@ goog.require('ngeo.CsvDownload');
 goog.require('ngeo.GridConfig');
 /** @suppress {extraRequire} */
 goog.require('ngeo.gridComponent');
-goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
@@ -103,15 +102,15 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
 /**
  * Controller for the query grid.
  *
- * @param {angular.$injector} $injector Main injector.
+ * @param {!angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!ngeo.MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.CsvDownload} ngeoCsvDownload CSV download service.
- * @param {angular.JQLite} $element Element.
+ * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!ngeo.CsvDownload} ngeoCsvDownload CSV download service.
+ * @param {!angular.JQLite} $element Element.
  * @constructor
  * @private
  * @ngInject
@@ -132,31 +131,31 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
   this.$scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {!angular.$timeout}
    * @private
    */
   this.$timeout_ = $timeout;
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {!ngeox.QueryResult}
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {ngeo.MapQuerent}
+   * @type {!ngeo.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {ngeo.CsvDownload}
+   * @type {!ngeo.CsvDownload}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {angular.JQLite}
+   * @type {!angular.JQLite}
    * @private
    */
   this.$element_ = $element;
@@ -187,7 +186,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
 
   /**
    * IDs of the grid sources in the order they were loaded.
-   * @type {Array.<string>}
+   * @type {!Array.<string>}
    * @export
    */
   this.loadedGridSources = [];
@@ -228,23 +227,22 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.features_ = new ol.Collection();
 
   /**
-   * @type {ngeo.FeatureOverlay}
+   * @type {!ngeo.FeatureOverlayMgr}
    * @private
    */
-  this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.highlightFeatures_ = new ol.Collection();
-  this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
   /**
    * @type {ol.Map}
@@ -278,13 +276,16 @@ gmf.DisplayquerygridController.prototype.$onInit = function() {
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
   this.mergeTabs_ = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
 
+  const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
-    this.highlightFeatureOverlay_.setStyle(featuresStyle);
+    featuresOverlay.setStyle(featuresStyle);
   }
-  this.highlightFeatureOverlay_.setFeatures(this.features_);
 
+  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
     goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
@@ -298,7 +299,7 @@ gmf.DisplayquerygridController.prototype.$onInit = function() {
       zIndex: 10
     });
   }
-  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+  highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
 
   const mapFn = this['getMapFn'];
   if (mapFn) {
