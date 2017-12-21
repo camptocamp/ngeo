@@ -1,7 +1,15 @@
 "use strict";
 let fs = require('fs');
 let path = require('path');
-let spawn = require('child_process').spawn;
+let spawn;
+let os = require('os');
+
+if (os.type().toString() == "Windows_NT") {
+  spawn = require('cross-spawn');
+} else {
+  spawn = require('child_process').spawn;
+}
+
 
 let async = require('async');
 let fse = require('fs-extra');
@@ -155,7 +163,23 @@ function spawnJSDoc(info, newerSources, callback) {
 
   let output = '';
   let errors = '';
-  let child = spawn(jsdoc, ['-c', jsdocConfig].concat(newerSources));
+  let child;
+
+  if (os.type().toString() == "Windows_NT") {
+
+    let jsdocConfigFile = JSON.parse(fs.readFileSync(jsdocConfig, 'utf8'));
+    jsdocConfigFile.source.include = [];
+
+    for (let i = 0; i < newerSources.length; i++) {
+      jsdocConfigFile.source.include.push(newerSources[i].replace('\\', '/'));
+    }
+
+    fse.outputFile(jsdocConfig, JSON.stringify(jsdocConfigFile));
+    child = spawn(jsdoc, ['-c', jsdocConfig]);
+
+  } else {
+    child = spawn(jsdoc, ['-c', jsdocConfig].concat(newerSources));
+  }
 
   child.stdout.on('data', function(data) {
     output += String(data);
