@@ -7,7 +7,6 @@ LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 /*global svg*/
 
 ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
-
   let i = -1;
   const n = points.distance.length;
   let cx, cy;

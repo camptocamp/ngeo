@@ -152,9 +152,9 @@ gmf.LidarPanelController.prototype.getDefaultAttribute = function() {
 };
 
 gmf.LidarPanelController.prototype.setDefaultAttribute = function(material) {
-  this.gmfLidarProfileConfig.profileConfig.defaultAttribute = material.name;
+  this.gmfLidarProfileConfig.profileConfig.defaultAttribute = material;
   if (this.line) {
-    ngeo.lidarProfile.plot2canvas.changeStyle(material.name);
+    ngeo.lidarProfile.plot2canvas.changeStyle(material);
   }
 };
 
@@ -166,7 +166,8 @@ gmf.LidarPanelController.prototype.getWidth = function() {
 gmf.LidarPanelController.prototype.setClassification = function(classification, key) {
   this.gmfLidarProfileConfig.profileConfig.classification[key].visible = classification.visible;
   if (this.line) {
-    ngeo.lidarProfile.plot2canvas.setClassActive(this.gmfLidarProfileConfig.profileConfig.classification, this.gmfLidarProfileConfig.profileConfig.defaultAttribute);
+    ngeo.lidarProfile.plot2canvas.setClassActive(this.gmfLidarProfileConfig.profileConfig.classification,
+      this.gmfLidarProfileConfig.profileConfig.defaultAttribute);
   }
 };
 

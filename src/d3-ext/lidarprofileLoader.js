@@ -178,10 +178,12 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
 
     if (iter == 0 && resetPlot) {
       ngeo.lidarProfile.plot2canvas.setupPlot(rangeX, rangeY);
-      ngeo.lidarProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.lidarProfile.options.profileConfig.currentZoom);
+      ngeo.lidarProfile.plot2canvas.drawPoints(points, options.profileConfig.defaultAttribute,
+        ngeo.lidarProfile.options.profileConfig.currentZoom);
 
     } else {
-      ngeo.lidarProfile.plot2canvas.drawPoints(points, options.defaultMaterial, ngeo.lidarProfile.options.profileConfig.currentZoom);
+      ngeo.lidarProfile.plot2canvas.drawPoints(points, options.profileConfig.defaultAttribute,
+        ngeo.lidarProfile.options.profileConfig.currentZoom);
     }
 
   } catch (e) {
