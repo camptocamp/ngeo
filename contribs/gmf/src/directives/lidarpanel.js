@@ -154,7 +154,7 @@ gmf.LidarPanelController.prototype.getDefaultAttribute = function() {
 gmf.LidarPanelController.prototype.setDefaultAttribute = function(material) {
   this.gmfLidarProfileConfig.profileConfig.defaultAttribute = material.name;
   if (this.line) {
-    ngeo.extendedProfile.plot2canvas.changeStyle(material.name);
+    ngeo.lidarProfile.plot2canvas.changeStyle(material.name);
   }
 };
 
@@ -166,7 +166,7 @@ gmf.LidarPanelController.prototype.getWidth = function() {
 gmf.LidarPanelController.prototype.setClassification = function(classification, key) {
   this.gmfLidarProfileConfig.profileConfig.classification[key].visible = classification.visible;
   if (this.line) {
-    ngeo.extendedProfile.plot2canvas.setClassActive(this.gmfLidarProfileConfig.profileConfig.classification, this.gmfLidarProfileConfig.profileConfig.defaultAttribute);
+    ngeo.lidarProfile.plot2canvas.setClassActive(this.gmfLidarProfileConfig.profileConfig.classification, this.gmfLidarProfileConfig.profileConfig.defaultAttribute);
   }
 };
 
@@ -175,20 +175,20 @@ gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
   if (this.line) {
     this.gmfLidarProfileConfig.olLinestring = this.line;
     this.gmfLidarProfileConfig.map = this.map;
-    ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig.profileConfig.minLOD, this.gmfLidarProfileConfig.profileConfig.maxLOD);
+    ngeo.lidarProfile.setOptions(this.gmfLidarProfileConfig);
+    ngeo.lidarProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig.profileConfig.minLOD, this.gmfLidarProfileConfig.profileConfig.maxLOD);
   }
 };
 
 gmf.LidarPanelController.prototype.csvExport = function() {
   if (this.line) {
-    ngeo.extendedProfile.utils.getPointsInProfileAsCSV(ngeo.extendedProfile.loader.profilePoints);
+    ngeo.lidarProfile.utils.getPointsInProfileAsCSV(ngeo.lidarProfile.loader.profilePoints);
   }
 };
 
 gmf.LidarPanelController.prototype.pngExport = function() {
   if (this.line) {
-    ngeo.extendedProfile.utils.exportToImageFile('png');
+    ngeo.lidarProfile.utils.exportToImageFile('png');
   }
 };
 

@@ -1,8 +1,8 @@
-goog.provide('ngeo.extendedProfile.utils');
+goog.provide('ngeo.lidarProfile.utils');
 
-ngeo.extendedProfile.utils.getLinestring = function() {
+ngeo.lidarProfile.utils.getLinestring = function() {
 
-  const linestringStr = ngeo.extendedProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
+  const linestringStr = ngeo.lidarProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
   const linestring = [];
 
   for (let j = 0; j  < linestringStr.length; j++) {
@@ -36,7 +36,7 @@ ngeo.extendedProfile.utils.getLinestring = function() {
   return lShifted;
 };
 
-ngeo.extendedProfile.utils.interpolatePoint = function(d, segment) {
+ngeo.lidarProfile.utils.interpolatePoint = function(d, segment) {
   let xLocal;
   if (isFinite(segment.coeffA)) {
     xLocal = Math.round(Math.sqrt(Math.pow(d, 2) / (1 + Math.pow(segment.coeffA, 2))));
@@ -50,19 +50,19 @@ ngeo.extendedProfile.utils.interpolatePoint = function(d, segment) {
 
 };
 
-ngeo.extendedProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
-  const l = ngeo.extendedProfile.utils.getLinestring();
+ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
+  const l = ngeo.lidarProfile.utils.getLinestring();
   const clippedLine = [];
 
   for (let i = 0; i < l.length; i++) {
 
     if (dLeft <= l[i].endD) {
       if (dLeft >= l[i].startD) {
-        clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dLeft, l[i]));
+        clippedLine.push(ngeo.lidarProfile.utils.interpolatePoint(dLeft, l[i]));
       }
       if (dRight <= l[i].endD) {
 
-        clippedLine.push(ngeo.extendedProfile.utils.interpolatePoint(dRight, l[i]));
+        clippedLine.push(ngeo.lidarProfile.utils.interpolatePoint(dRight, l[i]));
       } else {
         clippedLine.push([l[i].endX, l[i].endY]);
       }
@@ -75,7 +75,7 @@ ngeo.extendedProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
   };
 };
 
-ngeo.extendedProfile.utils.getNiceLOD = function(span) {
+ngeo.lidarProfile.utils.getNiceLOD = function(span) {
   let maxLOD = 0;
   if (span < 200) {
     maxLOD = 10;
@@ -95,7 +95,7 @@ ngeo.extendedProfile.utils.getNiceLOD = function(span) {
   return maxLOD;
 };
 
-ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {
+ngeo.lidarProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {
 
   const link = document.createElement('a');
   link.download = filename;
@@ -106,8 +106,8 @@ ngeo.extendedProfile.utils.downloadDataUrlFromJavascript = function(filename, da
   document.body.removeChild(link);
 };
 
-ngeo.extendedProfile.utils.exportToImageFile = function(format) {
-  const margin = ngeo.extendedProfile.options.profileConfig.margin;
+ngeo.lidarProfile.utils.exportToImageFile = function(format) {
+  const margin = ngeo.lidarProfile.options.profileConfig.margin;
   const svg = d3.select('#profileSVG').node();
   const img = new Image();
   const DOMURL = window.URL || window.webkitURL || window;
@@ -131,13 +131,13 @@ ngeo.extendedProfile.utils.exportToImageFile = function(format) {
     canvas.getContext('2d').drawImage(pointsCanvas, margin.left, margin.top, w - (margin.left + margin.right), h - (margin.top + margin.bottom));
     ctx.drawImage(img, 0, 0, w, h);
     const dataURL = canvas.toDataURL();
-    ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL);
+    ngeo.lidarProfile.utils.downloadDataUrlFromJavascript('sitn_profile.png', dataURL);
     DOMURL.revokeObjectURL(url);
   };
   img.src = url;
 };
 
-ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function(profilePoints) {
+ngeo.lidarProfile.utils.getPointsInProfileAsCSV = function(profilePoints) {
   if (profilePoints.distance.length === 0) {
     return;
   }
@@ -231,11 +231,11 @@ ngeo.extendedProfile.utils.getPointsInProfileAsCSV = function(profilePoints) {
   }
 
   const encodedUri = encodeURI(file);
-  ngeo.extendedProfile.utils.downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
+  ngeo.lidarProfile.utils.downloadDataUrlFromJavascript('sitn_profile.csv', encodedUri);
 
 };
 
-ngeo.extendedProfile.utils.UUID = function() {
+ngeo.lidarProfile.utils.UUID = function() {
   let nbr, randStr = '';
   do {
     randStr += (nbr = Math.random()).toString(16).substr(2);
@@ -250,7 +250,7 @@ ngeo.extendedProfile.utils.UUID = function() {
   ].join('');
 };
 
-ngeo.extendedProfile.utils.getPytreeLinestring = function(line) {
+ngeo.lidarProfile.utils.getPytreeLinestring = function(line) {
   const flat = line.flatCoordinates;
   let pytreeLineString = '';
   for (let i = 0; i < flat.length; i++) {

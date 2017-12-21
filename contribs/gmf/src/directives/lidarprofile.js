@@ -12,10 +12,10 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.extendedProfile.loader');
-goog.require('ngeo.extendedProfile.utils');
-goog.require('ngeo.extendedProfile.measure');
-goog.require('ngeo.extendedProfile.plot2canvas');
+goog.require('ngeo.lidarProfile.loader');
+goog.require('ngeo.lidarProfile.utils');
+goog.require('ngeo.lidarProfile.measure');
+goog.require('ngeo.lidarProfile.plot2canvas');
 
 ngeo.module.value('gmfLidarProfileTemplateUrl',
   /**
@@ -362,8 +362,8 @@ gmf.LidarProfileController.prototype.update_ = function() {
   if (this.line) {
     this.gmfLidarProfileConfig_.olLinestring = this.line;
     this.gmfLidarProfileConfig_.map = this.map_;
-    ngeo.extendedProfile.setOptions(this.gmfLidarProfileConfig_);
-    ngeo.extendedProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
+    ngeo.lidarProfile.setOptions(this.gmfLidarProfileConfig_);
+    ngeo.lidarProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
   } else {
     this.profileData = [];
   }
