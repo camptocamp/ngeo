@@ -1,6 +1,6 @@
-goog.require('ngeo.filereaderDirective');
+goog.require('ngeo.misc.filereaderComponent');
 
-describe('ngeo.filereaderDirective', () => {
+describe('ngeo.misc.filereaderComponent', () => {
   let element, rootScope;
 
   beforeEach(() => {

@@ -1,6 +1,14 @@
-goog.provide('ngeo.filereaderDirective');
+goog.provide('ngeo.misc.filereaderComponent');
 
 goog.require('ngeo');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.filereaderComponent = angular.module('ngeoFilereader', []);
+
+ngeo.module.requires.push(ngeo.misc.filereaderComponent.name);
 
 
 /**
@@ -25,7 +33,7 @@ goog.require('ngeo');
  * @ngdoc directive
  * @ngname ngeoFilereader
  */
-ngeo.filereaderDirective = function($window) {
+ngeo.misc.filereaderComponent.component_ = function($window) {
   return {
     restrict: 'A',
     scope: {
@@ -62,4 +70,5 @@ ngeo.filereaderDirective = function($window) {
 };
 
 
-ngeo.module.directive('ngeoFilereader', ngeo.filereaderDirective);
+ngeo.misc.filereaderComponent.directive('ngeoFilereader',
+  ngeo.misc.filereaderComponent.component_);

@@ -34,7 +34,7 @@ ngeo.module.requires.push(ngeo.misc.controlComponent.name);
  * @ngdoc directive
  * @ngname ngeoControl
  */
-ngeo.controlComponent.controlDirective.component_ = function() {
+ngeo.misc.controlComponent.component_ = function() {
   return {
     restrict: 'A',
     /**
