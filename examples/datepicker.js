@@ -1,13 +1,14 @@
 goog.provide('app.datepicker');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.DatePickerDirective');
+goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.Time');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.misc.datepickerComponent.name,
   ngeo.misc.Time.module.name,
 ]);
 

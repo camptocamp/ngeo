@@ -1,13 +1,21 @@
-goog.provide('ngeo.DatePickerDirective');
+goog.provide('ngeo.misc.datepickerComponent');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.misc.Time');
 
-// add me to module dependencies:
-// - ngeo.misc.Time.module.name
 
-ngeo.module.value('ngeoDatePickerTemplateUrl',
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.datepickerComponent = angular.module('ngeoDatePicker', [
+  ngeo.misc.Time.module.name,
+]);
+
+ngeo.module.requires.push(ngeo.misc.datepickerComponent.name);
+
+
+ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -16,7 +24,7 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseTemplateUrl}/datepicker.html`;
+      `${ngeo.baseModuleTemplateUrl}/misc/datepickerComponent.html`;
   });
 
 
@@ -32,7 +40,7 @@ ngeo.module.value('ngeoDatePickerTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
-ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
+ngeo.misc.datepickerComponent.component_ = function(ngeoDatePickerTemplateUrl,  $timeout) {
   return {
     scope: {
       onDateSelected: '&',
@@ -80,7 +88,7 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
   };
 };
 
-ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
+ngeo.misc.datepickerComponent.directive('ngeoDatePicker', ngeo.misc.datepickerComponent.component_);
 
 
 /**
@@ -96,7 +104,8 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-ngeo.DatePickerController = function($scope, $injector, ngeoTime, gettextCatalog) {
+ngeo.misc.datepickerComponent.Controller_ = function($scope, $injector,
+  ngeoTime, gettextCatalog) {
 
   /**
    * @type {!ngeo.misc.Time}
@@ -202,7 +211,7 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime, gettextCatalog
 /**
  * Initialise the controller.
  */
-ngeo.DatePickerController.prototype.init = function() {
+ngeo.misc.datepickerComponent.Controller_.prototype.init = function() {
   //fetch the initial options for the component
   const initialOptions_ = this.ngeoTime_.getOptions(this.time);
   this.initialMinDate = new Date(initialOptions_.minDate);
@@ -219,4 +228,5 @@ ngeo.DatePickerController.prototype.init = function() {
   }
 };
 
-ngeo.module.controller('ngeoDatePickerController', ngeo.DatePickerController);
+ngeo.misc.datepickerComponent.controller('ngeoDatePickerController',
+  ngeo.misc.datepickerComponent.Controller_);

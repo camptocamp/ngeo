@@ -5,6 +5,7 @@ goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.control.Control');
 
+
 /**
  * @type {!angular.Module}
  */

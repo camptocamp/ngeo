@@ -25,8 +25,6 @@ goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.DatePickerDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareComponent');
@@ -34,6 +32,8 @@ goog.require('gmf.shareComponent');
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.datepickerComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.sortableComponent');
 /** @suppress {extraRequire} */
