@@ -2,13 +2,12 @@ goog.provide('ngeo.draw.Controller');
 
 goog.require('ngeo');
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.draw.features');
+goog.require('ngeo.misc.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 goog.require('ol.Feature');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.draw.features');
 
 /**
  * @param {!angular.Scope} $scope Scope.
@@ -16,7 +15,7 @@ goog.require('ngeo.draw.features');
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
  * @private
@@ -78,7 +77,7 @@ ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -250,6 +249,7 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
  */
 ngeo.draw.Controller.module = angular.module('ngeoDrawfeatureController', [
   ngeo.draw.features.name,
+  ngeo.misc.FeatureHelper.module.name,
 ]);
 ngeo.draw.Controller.module.controller('ngeoDrawfeatureController', ngeo.draw.Controller);
 ngeo.module.requires.push(ngeo.draw.Controller.module.name);

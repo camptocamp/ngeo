@@ -1,7 +1,9 @@
 goog.provide('ngeo.exportfeaturesDirective');
 
 goog.require('ngeo');
+goog.require('ngeo.misc.FeatureHelper');
 
+// FIXME add ngeo.misc.FeatureHelper as module dependency
 
 /**
  * Directive used to export vector features in different types of format.
@@ -9,8 +11,8 @@ goog.require('ngeo');
  * value, as such:
  *
  *     app.module.value('ngeoExportFeatureFormats', [
- *         ngeo.FeatureHelper.FormatType.KML,
- *         ngeo.FeatureHelper.FormatType.GPX
+ *         ngeo.misc.FeatureHelper.FormatType.KML,
+ *         ngeo.misc.FeatureHelper.FormatType.GPX
  *     ]);
  *
  * Example:
@@ -45,7 +47,7 @@ ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
  * @param {angular.JQLite} $element Element.
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
  * @private
  * @struct
@@ -78,7 +80,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
   this.id_ = id;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -87,7 +89,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
   if ($injector.has('ngeoExportFeatureFormats')) {
     formats = $injector.get('ngeoExportFeatureFormats');
   } else {
-    formats = [ngeo.FeatureHelper.FormatType.KML];
+    formats = [ngeo.misc.FeatureHelper.FormatType.KML];
   }
 
   /**
@@ -164,7 +166,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
     let $item;
     this.formats_.forEach((format, i) => {
       $item = this.items_[i];
-      if (format === ngeo.FeatureHelper.FormatType.GPX) {
+      if (format === ngeo.misc.FeatureHelper.FormatType.GPX) {
         if (geom instanceof ol.geom.Point ||
             geom instanceof ol.geom.LineString) {
           $item.removeClass('disabled');

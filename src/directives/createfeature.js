@@ -1,16 +1,18 @@
 goog.provide('ngeo.createfeatureDirective');
 
 goog.require('ngeo');
-goog.require('ngeo.EventHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
+goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.utils');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.interaction.Draw');
 goog.require('ol.style.Style');
+
+// Don't forget to add module dependencies
 
 
 /**
@@ -73,7 +75,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @param {!angular.$filter} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
  * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @struct
@@ -139,7 +141,7 @@ ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scop
   this.timeout_ = $timeout;
 
   /**
-   * @type {!ngeo.EventHelper}
+   * @type {!ngeo.misc.EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

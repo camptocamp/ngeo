@@ -3,7 +3,7 @@ goog.provide('gmf.disclaimerComponent');
 goog.require('ol.events');
 goog.require('gmf');
 goog.require('ngeo.Disclaimer');
-goog.require('ngeo.EventHelper');
+goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.map.LayerHelper');
 
 
@@ -16,7 +16,7 @@ goog.require('ngeo.map.LayerHelper');
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
  * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
- * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @struct
  * @ngInject
@@ -95,7 +95,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
-   * @type {!ngeo.EventHelper}
+   * @type {!ngeo.misc.EventHelper}
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;

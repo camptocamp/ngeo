@@ -1628,7 +1628,7 @@ ngeox.format.FeatureHashOptions.prototype.properties;
  * into:
  *   A) an `ol.style.Style` object set in the feature, or
  *   B) an object with key:values that defines the style properties set in
- *      the feature and for the `ngeo.FeatureHelper` to use to style the
+ *      the feature and for the `ngeo.misc.FeatureHelper` to use to style the
  *      feature with.
  * Default is `true`, i.e. A).
  * @type {boolean|undefined}

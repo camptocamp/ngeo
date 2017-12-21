@@ -6,7 +6,6 @@ goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.ThemeManager');
 goog.require('ngeo.Debounce');
-goog.require('ngeo.EventHelper');
 goog.require('ngeo.Popover');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
@@ -15,6 +14,7 @@ goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.format.FeatureHash');
+goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.statemanager.module');
 goog.require('goog.asserts');
 goog.require('ol.events');
@@ -100,7 +100,7 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
- * @param {ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
@@ -146,7 +146,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {ngeo.EventHelper}
+   * @type {ngeo.misc.EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
@@ -185,7 +185,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
-   * @type {?ngeo.FeatureHelper}
+   * @type {?ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = $injector.has('ngeoFeatureHelper') ?
@@ -286,7 +286,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.map_ = null;
 
   /**
-   * @type {?ngeo.AutoProjection}
+   * @type {?ngeo.misc.AutoProjection}
    * @private
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ?

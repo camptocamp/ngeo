@@ -1,7 +1,8 @@
-goog.provide('ngeo.AutoProjection');
+goog.provide('ngeo.misc.AutoProjection');
 
 goog.require('ngeo');
 goog.require('ol.proj');
+goog.require('ol.extent');
 
 /**
  * @constructor
@@ -9,7 +10,7 @@ goog.require('ol.proj');
  * @ngdoc service
  * @ngname ngeoAutoProjection
  */
-ngeo.AutoProjection = function() {};
+ngeo.misc.AutoProjection = function() {};
 
 
 /**
@@ -19,7 +20,7 @@ ngeo.AutoProjection = function() {};
  * @return {?ol.Coordinate} A coordinate or null if the format is not valid.
  * @export
  */
-ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
+ngeo.misc.AutoProjection.prototype.stringToCoordinates = function(str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
     const x = parseFloat(coords[1].replace('\'', ''));
@@ -40,7 +41,7 @@ ngeo.AutoProjection.prototype.stringToCoordinates = function(str) {
  * @return {Array.<ol.proj.Projection>} An array of projections.
  * @export
  */
-ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
+ngeo.misc.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
   const projections = [];
   projectionsCodes.forEach((projection) => {
@@ -72,7 +73,7 @@ ngeo.AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
  *     in one of the given projections, or null else.
  * @export
  */
-ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
+ngeo.misc.AutoProjection.prototype.tryProjections = function(coordinates,
   extent, viewProjection, opt_projections) {
   let position;
   if (opt_projections === undefined) {
@@ -107,7 +108,7 @@ ngeo.AutoProjection.prototype.tryProjections = function(coordinates,
  *     in one of the given projections, or null else.
  * @export
  */
-ngeo.AutoProjection.prototype.tryProjectionsWithInversion = function(
+ngeo.misc.AutoProjection.prototype.tryProjectionsWithInversion = function(
   coordinates, extent, viewProjection, opt_projections) {
   let position = this.tryProjections(coordinates, extent, viewProjection,
     opt_projections);
@@ -119,4 +120,9 @@ ngeo.AutoProjection.prototype.tryProjectionsWithInversion = function(
 };
 
 
-ngeo.module.service('ngeoAutoProjection', ngeo.AutoProjection);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.AutoProjection.module = angular.module('ngeoAutoProjection', []);
+ngeo.misc.AutoProjection.module.service('ngeoAutoProjection', ngeo.misc.AutoProjection);
+ngeo.module.requires.push(ngeo.misc.AutoProjection.module.name);

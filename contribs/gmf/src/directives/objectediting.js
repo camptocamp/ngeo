@@ -6,7 +6,7 @@ goog.require('gmf.objecteditingtoolsDirective');
 goog.require('gmf.EditFeature');
 goog.require('gmf.ObjectEditingQuery');
 goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.geom');
 /** @suppress {extraRequire} */
 goog.require('ngeo.jstsExports');
@@ -24,6 +24,8 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+
+// FIXME add requires to the future module dependencies
 
 
 gmf.module.value('gmfObjecteditingTemplateUrl',
@@ -104,7 +106,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -249,7 +251,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
-   * @type {!ngeo.FeatureHelper}
+   * @type {!ngeo.misc.FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;

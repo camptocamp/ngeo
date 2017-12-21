@@ -2,7 +2,10 @@ goog.provide('ngeo.DatePickerDirective');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-goog.require('ngeo.Time');
+goog.require('ngeo.misc.Time');
+
+// add me to module dependencies:
+// - ngeo.misc.Time.module.name
 
 ngeo.module.value('ngeoDatePickerTemplateUrl',
   /**
@@ -84,7 +87,7 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
  * DatePickerController - directive conttroller
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$injector} $injector injector.
- * @param {!ngeo.Time} ngeoTime time service.
+ * @param {!ngeo.misc.Time} ngeoTime time service.
  * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
@@ -96,7 +99,7 @@ ngeo.module.directive('ngeoDatePicker', ngeo.DatePicker);
 ngeo.DatePickerController = function($scope, $injector, ngeoTime, gettextCatalog) {
 
   /**
-   * @type {!ngeo.Time}
+   * @type {!ngeo.misc.Time}
    * @private
    */
   this.ngeoTime_ = ngeoTime;

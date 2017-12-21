@@ -16,6 +16,7 @@ goog.require('ngeo.draw.component');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.style.Fill');
@@ -28,6 +29,7 @@ goog.require('ol.style.Text');
 // - ngeo.interaction.Modify.module.name
 // - ngeo.interaction.Rotate.module.name
 // - ngeo.interaction.Translate.module.name
+// - ngeo.misc.FeatureHelper.module.name
 
 
 /**
@@ -70,7 +72,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
  *     interaction service.
- * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
  * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
@@ -148,7 +150,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog, ngeoDecor
   this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
-   * @type {!ngeo.FeatureHelper}
+   * @type {!ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

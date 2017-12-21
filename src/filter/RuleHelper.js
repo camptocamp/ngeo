@@ -1,8 +1,8 @@
 goog.provide('ngeo.filter.RuleHelper');
 
 goog.require('ngeo');
-goog.require('ngeo.FeatureHelper');
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.WMSTime');
 goog.require('ngeo.rule.Date');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Rule');
@@ -20,8 +20,8 @@ ngeo.filter.RuleHelper = class {
    * objects.
    *
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
-   * @param {!ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-   * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+   * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
    * @struct
    * @ngdoc service
    * @ngname ngeoRuleHelper
@@ -36,13 +36,13 @@ ngeo.filter.RuleHelper = class {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!ngeo.FeatureHelper}
+     * @type {!ngeo.misc.FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!ngeo.WMSTime}
+     * @type {!ngeo.misc.WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
@@ -715,6 +715,9 @@ ngeo.filter.RuleHelper = class {
 /**
  * @type {!angular.Module}
  */
-ngeo.filter.RuleHelper.module = angular.module('ngeoRuleHelper', []);
+ngeo.filter.RuleHelper.module = angular.module('ngeoRuleHelper', [
+  ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.WMSTime.module.name,
+]);
 ngeo.filter.RuleHelper.module.service('ngeoRuleHelper', ngeo.filter.RuleHelper);
 ngeo.module.requires.push(ngeo.filter.RuleHelper.module.name);

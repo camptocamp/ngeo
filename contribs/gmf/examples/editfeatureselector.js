@@ -10,7 +10,7 @@ goog.require('gmf.editfeatureselectorDirective');
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
@@ -54,7 +54,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
@@ -76,7 +76,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   this.gmfUser = gmfUser;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

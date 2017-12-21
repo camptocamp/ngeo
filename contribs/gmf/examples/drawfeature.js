@@ -1,8 +1,11 @@
 goog.provide('gmfapp.drawfeature');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureHelper');
+goog.require('ngeo.draw.module');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Map');
@@ -10,28 +13,26 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-goog.require('ngeo.draw.module');
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   ngeo.draw.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.misc.FeatureHelper.module.name,
   ngeo.ToolActivateMgr.module.name,
 ]);
 
 
 gmfapp.module.value('ngeoExportFeatureFormats', [
-  ngeo.FeatureHelper.FormatType.KML,
-  ngeo.FeatureHelper.FormatType.GPX
+  ngeo.misc.FeatureHelper.FormatType.KML,
+  ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.

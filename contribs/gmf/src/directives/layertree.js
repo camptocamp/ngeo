@@ -1,6 +1,5 @@
 goog.provide('gmf.layertreeComponent');
 
-goog.require('ngeo.SyncArrays');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasourcegrouptreeComponent');
@@ -9,7 +8,8 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.WMSTime');
+goog.require('ngeo.misc.syncArrays');
+goog.require('ngeo.misc.WMSTime');
 goog.require('ngeo.Popup');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.layer.Tile');
@@ -26,6 +26,7 @@ goog.require('ngeo.map.LayerHelper');
 // - ngeo.layertree.component.name
 // - ngeo.layertree.Controller.module.name
 // - ngeo.map.LayerHelper.module.name
+// - ngeo.misc.WMSTime.module.name
 goog.require('ngeo.layertree.module');
 ngeo.module.requires.push(ngeo.layertree.module.name);
 ngeo.module.requires.push(ngeo.map.LayerHelper.module.name);
@@ -138,8 +139,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
- * @param {!ngeo.SyncArrays} ngeoSyncArrays ngeoSyncArrays service.
- * @param {!ngeo.WMSTime} ngeoWMSTime wms time service.
+ * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
  * @param {!gmf.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @private
@@ -151,7 +151,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
 gmf.LayertreeController = function($element, $http, $sce, $scope,
   ngeoCreatePopup, ngeoLayerHelper, gmfDataSourceBeingFiltered,
   gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager,
-  gmfSyncLayertreeMap, ngeoSyncArrays, ngeoWMSTime, gmfThemes) {
+  gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
 
   /**
    * @type {?ol.Map}
@@ -229,7 +229,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {!ngeo.WMSTime}
+   * @type {!ngeo.misc.WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
@@ -276,12 +276,6 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
    */
   this.gmfThemes_ = gmfThemes;
 
-  /**
-   * @type {!ngeo.SyncArrays}
-   * @private
-   */
-  this.ngeoSyncArrays_ = ngeoSyncArrays;
-
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
@@ -297,7 +291,7 @@ gmf.LayertreeController.prototype.$onInit = function() {
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
     gmf.DATALAYERGROUP_NAME);
 
-  this.ngeoSyncArrays_(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
+  ngeo.misc.syncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
   this.scope_.$watchCollection(() => this.layers,
