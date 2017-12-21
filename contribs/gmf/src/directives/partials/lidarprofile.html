@@ -9,7 +9,10 @@
     <canvas id="profileCanvas"></canvas>
     <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
   </div>
-  <div id="profileInfo" class="gmf-lidar-profile-legend"></div>
+  <div class="gmf-lidar-profile-legend">
+  <input type="checkbox" class="gmf-lidar-profile-measure-button">
+  <div id="profileInfo"></div>
+  </div>
   <div
     class="close"
     ng-click="$ctrl.line = null">&times;

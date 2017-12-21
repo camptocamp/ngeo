@@ -52,9 +52,11 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
 
   const containerWidth = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().width;
   const containerHeight = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().height;
+  console.log(containerWidth);
+  console.log(margin);
   const width = containerWidth - (margin.left + margin.right);
   const height = containerHeight - (margin.top + margin.bottom);
-
+  console.log(width);
   d3.select('#profileCanvas')
     .attr('height', height)
     .attr('width', width)
@@ -126,7 +128,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   d3.select('svg#profileSVG').selectAll('*').remove();
 
   svg = d3.select('svg#profileSVG')
-    .attr('width', width + margin.left + margin.right)
+    .attr('width', width + margin.left)
     .attr('height', height + margin.top + margin.bottom);
 
   d3.select('svg#profileSVG')
