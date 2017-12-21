@@ -99,6 +99,8 @@ jobs:
     - make lint
     - make check-examples-webpack
     - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples buildtools/deploy.sh; fi
+    after_success:
+    - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
 
   - stage: Build
     env:

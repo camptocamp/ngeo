@@ -1,7 +1,7 @@
 const path = require('path');
 
 var isDebug = process.argv.some(function(argument) {
-    return argument === '--debug';
+  return argument === '--debug';
 });
 
 const webpackMerge = require('webpack-merge');
@@ -10,6 +10,17 @@ let webpackConfig = commons.config;
 webpackConfig = webpackMerge(webpackConfig, require('./buildtools/webpack.dev'));
 webpackConfig = webpackMerge(webpackConfig, {
   devtool: 'inline-source-map',
+  module: {
+    rules: [{
+      test: /\.js$/,
+      use: {
+        loader: 'istanbul-instrumenter-loader' ,
+        options: { esModules: true }
+      },
+      enforce: 'post',
+      exclude: /node_modules|\.spec\.js$/,
+    }]
+  }
 });
 
 module.exports = function(config) {
@@ -38,7 +49,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: isDebug ? ['progress'] : ['progress', 'coverage'],
+    reporters: isDebug ? ['progress', 'coverage-istanbul'] : ['coverage-istanbul'],
 
     // web server port
     port: 9876,
@@ -68,13 +79,32 @@ module.exports = function(config) {
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false,
 
-    coverageReporter: {
-      includeAllSources: true,
-      dir : '.build/coverage/',
-      reporters: [
-        {type: 'lcov', subdir: './'},
-        {type: 'text-summary', subdir: './', file: 'coverage.txt'}
-      ]
+    // any of these options are valid: https://github.com/istanbuljs/istanbuljs/blob/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-api/lib/config.js#L33-L39
+    coverageIstanbulReporter: {
+
+       // reports can be any that are listed here: https://github.com/istanbuljs/istanbuljs/tree/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib
+      reports: isDebug ? ['lcovonly', 'text-summary', 'html'] : ['lcovonly', 'text-summary'],
+
+       // base output directory. If you include %browser% in the path it will be replaced with the karma browser name
+      dir: path.resolve(__dirname, '.build/coverage'),
+
+       // if using webpack and pre-loaders, work around webpack breaking the source path
+      fixWebpackSourcePaths: true,
+
+      // stop istanbul outputting messages like `File [${filename}] ignored, nothing could be mapped`
+      skipFilesWithNoCoverage: true,
+
+       // enforce percentage thresholds
+       // anything under these percentages will cause karma to fail with an exit code of 1 if not running in watch mode
+      thresholds: {
+        emitWarning: false, // set to `true` to not fail the test command when thresholds are not met
+        global: { // thresholds for all files
+          statements: 40,
+          lines: 40,
+          branches: 25,
+          functions: 30,
+        }
+      }
     }
   });
 };
