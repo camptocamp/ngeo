@@ -4,13 +4,15 @@ goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.obj');
 goog.require('ngeo');
-goog.require('ngeo.Debounce');
+goog.require('ngeo.misc.debounce');
 goog.require('ngeo.profile.d3Elevation');
 
 /**
  * @type {!angular.Module}
  */
-ngeo.profile.elevationComponent = angular.module('ngeoProfile', []);
+ngeo.profile.elevationComponent = angular.module('ngeoProfile', [
+  ngeo.misc.debounce.name
+]);
 
 ngeo.module.requires.push(ngeo.profile.elevationComponent.name);
 
@@ -38,7 +40,7 @@ ngeo.module.requires.push(ngeo.profile.elevationComponent.name);
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

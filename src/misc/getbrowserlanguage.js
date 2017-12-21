@@ -1,33 +1,33 @@
-goog.provide('ngeo.GetBrowserLanguage');
+goog.provide('ngeo.misc.getBrowserLanguage');
 
 goog.require('ngeo');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.getBrowserLanguage = angular.module('ngeoGetBrowserLanguage', []);
+
+ngeo.module.requires.push(ngeo.misc.getBrowserLanguage.name);
 
 
 /**
  * Provides a function that returns the most appropriate 2-letter
  * language code depending on the list of available languages and the browser
  * languages settings.
- * If you compile your code with the Closure Compiler, the externs file
- * `ngeo/externs/closure-compiler.js` has to be included.
  *
- * @typedef {function(Array.<string>):string}
- */
-ngeo.GetBrowserLanguage;
-
-
-/**
  * @param {angular.$window} $window Angular $window service.
- * @return {ngeo.GetBrowserLanguage} The "GetBrowserLanguage" function.
- * @ngInject
+ * @return {ngeox.miscGetBrowserLanguage} The "GetBrowserLanguage" function.
+ *
  * @ngdoc service
  * @ngname ngeoGetBrowserLanguage
  */
-ngeo.getBrowserLanguageFactory = function($window) {
+ngeo.misc.getBrowserLanguage.factory_ = function($window) {
   return (
-  /**
-       * @param {Array.<string>} availableLanguages Available languages.
-       * @return {string} The "best" language code.
-       */
+    /**
+     * @param {Array.<string>} availableLanguages Available languages.
+     * @return {string} The "best" language code.
+     */
     function(availableLanguages) {
       const nav = $window.navigator;
       let browserLanguages = nav.languages || nav.language ||
@@ -43,5 +43,4 @@ ngeo.getBrowserLanguageFactory = function($window) {
     });
 };
 
-
-ngeo.module.factory('ngeoGetBrowserLanguage', ngeo.getBrowserLanguageFactory);
+ngeo.misc.getBrowserLanguage.factory('ngeoGetBrowserLanguage', ngeo.misc.getBrowserLanguage.factory_);

@@ -1,11 +1,12 @@
 goog.provide('app.measure');
 
-goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.decorate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
@@ -17,9 +18,6 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Fill');
-
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
@@ -53,13 +51,11 @@ app.module.component('appMeasuretools', app.measuretoolsComponent);
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angular.$filter} $filter Angular filter service.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @constructor
  * @ngInject
  */
 app.MeasuretoolsController = function($scope, $compile, $sce,
-  $filter, ngeoDecorateInteraction) {
+  $filter) {
 
   /**
    * @type {ol.Map}
@@ -174,7 +170,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   });
 
   this.measureLength.setActive(false);
-  ngeoDecorateInteraction(this.measureLength);
+  ngeo.misc.decorate.interaction(this.measureLength);
 
   /**
    * @type {ngeo.interaction.MeasureArea}
@@ -187,7 +183,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   });
 
   this.measureArea.setActive(false);
-  ngeoDecorateInteraction(this.measureArea);
+  ngeo.misc.decorate.interaction(this.measureArea);
 
   /**
    * @type {ngeo.interaction.MeasureAzimut}
@@ -201,7 +197,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     });
 
   this.measureAzimut.setActive(false);
-  ngeoDecorateInteraction(this.measureAzimut);
+  ngeo.misc.decorate.interaction(this.measureAzimut);
 
 
   // the following code shows how one can add additional information to the

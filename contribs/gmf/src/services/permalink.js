@@ -5,7 +5,6 @@ goog.require('ngeo');
 goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.ThemeManager');
-goog.require('ngeo.Debounce');
 goog.require('ngeo.Popover');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
@@ -13,7 +12,10 @@ goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
+/** @suppress {extraRequire} */
 goog.require('ngeo.format.FeatureHash');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.statemanager.module');
 goog.require('goog.asserts');
@@ -27,7 +29,6 @@ goog.require('ol.style.Style');
 
 
 // FIXME remove lines right under and add me at the module dependencies:
-// - ngeo.statemanager.module.name
 ngeo.module.requires.push(ngeo.statemanager.module.name);
 
 
@@ -99,7 +100,7 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
@@ -140,7 +141,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   // == properties from params ==
 
   /**
-   * @type {ngeo.Debounce}
+   * @type {ngeox.miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;

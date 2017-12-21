@@ -29,10 +29,11 @@ goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.query.mapQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.GetBrowserLanguage');
-goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.getBrowserLanguage');
+goog.require('ngeo.misc.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.events');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -338,7 +339,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   });
 
   /**
-   * @type {ngeo.GetBrowserLanguage}
+   * @type {ngeox.miscGetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 
@@ -400,26 +401,26 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.misc.ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.misc.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
 
-  const measurePointActivate = new ngeo.ToolActivate(this, 'measurePointActive');
+  const measurePointActivate = new ngeo.misc.ToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
 
-  const measureLengthActivate = new ngeo.ToolActivate(this, 'measureLengthActive');
+  const measureLengthActivate = new ngeo.misc.ToolActivate(this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool(mapTools, measureLengthActivate, false);
 
-  const drawFeatureActivate = new ngeo.ToolActivate(this, 'drawFeatureActive');
+  const drawFeatureActivate = new ngeo.misc.ToolActivate(this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawFeatureActivate, false);
 
-  const drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
+  const drawProfilePanelActivate = new ngeo.misc.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
 
-  const printPanelActivate = new ngeo.ToolActivate(this, 'printPanelActive');
+  const printPanelActivate = new ngeo.misc.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
   $scope.$root.$on(gmf.ThemeManager.EventType.THEME_NAME_SET, (event, name) => {

@@ -1,10 +1,11 @@
 goog.provide('app.toolActivate');
 
-goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+goog.require('ngeo.map.module');
+goog.require('ngeo.misc.decorate');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -18,28 +19,22 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.map.module');
-
-
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
-  ngeo.ToolActivateMgr.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
 
 /**
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Interaction
-  *    decorator.
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
-  ngeoDecorateInteraction) {
+app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {ol.Map}
@@ -98,7 +93,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
     }
   });
 
-  const mapClickTool = new ngeo.ToolActivate(this, 'mapClickIsEnabled');
+  const mapClickTool = new ngeo.misc.ToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);
 
 
@@ -113,10 +108,10 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
       features: features
     }));
   this.drawPoint.setActive(false);
-  ngeoDecorateInteraction(this.drawPoint);
+  ngeo.misc.decorate.interaction(this.drawPoint);
   map.addInteraction(this.drawPoint);
 
-  const drawPointTool = new ngeo.ToolActivate(this.drawPoint, 'active');
+  const drawPointTool = new ngeo.misc.ToolActivate(this.drawPoint, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPointTool);
 
   // draw line interaction
@@ -130,10 +125,10 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
       features: features
     }));
   this.drawLine.setActive(false);
-  ngeoDecorateInteraction(this.drawLine);
+  ngeo.misc.decorate.interaction(this.drawLine);
   map.addInteraction(this.drawLine);
 
-  const drawLineTool = new ngeo.ToolActivate(this.drawLine, 'active');
+  const drawLineTool = new ngeo.misc.ToolActivate(this.drawLine, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawLineTool);
 
   // draw polygon interaction
@@ -147,10 +142,10 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
       features: features
     }));
   this.drawPolygon.setActive(false);
-  ngeoDecorateInteraction(this.drawPolygon);
+  ngeo.misc.decorate.interaction(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
 
-  const drawPolygonTool = new ngeo.ToolActivate(this.drawPolygon, 'active');
+  const drawPolygonTool = new ngeo.misc.ToolActivate(this.drawPolygon, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 };
 

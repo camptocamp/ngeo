@@ -1,11 +1,11 @@
 goog.provide('app.createfeature');
 
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -21,12 +21,12 @@ goog.require('ngeo.map.module');
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
-  ngeo.ToolActivateMgr.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
 
 /**
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
@@ -87,7 +87,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createPointActive = false;
 
-  const createPointToolActivate = new ngeo.ToolActivate(
+  const createPointToolActivate = new ngeo.misc.ToolActivate(
     this,
     'createPointActive'
   );
@@ -103,7 +103,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createLineStringActive = false;
 
-  const createLineStringToolActivate = new ngeo.ToolActivate(
+  const createLineStringToolActivate = new ngeo.misc.ToolActivate(
     this,
     'createLineStringActive'
   );
@@ -119,7 +119,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createPolygonActive = false;
 
-  const createPolygonToolActivate = new ngeo.ToolActivate(
+  const createPolygonToolActivate = new ngeo.misc.ToolActivate(
     this,
     'createPolygonActive'
   );
@@ -135,7 +135,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.dummyActive = true;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.misc.ToolActivate(
     this,
     'dummyActive'
   );

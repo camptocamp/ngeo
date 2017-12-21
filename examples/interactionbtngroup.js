@@ -1,8 +1,8 @@
 goog.provide('app.interactionbtngroup');
 
-goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.decorate');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -25,14 +25,12 @@ app.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
+app.MainController = function(ngeoFeatureOverlayMgr) {
 
   /**
    * Collection shared between the drawing interactions and the feature
@@ -93,7 +91,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
   const drawPolygon = this.drawPolygon;
 
   drawPolygon.setActive(false);
-  ngeoDecorateInteraction(drawPolygon);
+  ngeo.misc.decorate.interaction(drawPolygon);
   map.addInteraction(drawPolygon);
 
   /**
@@ -108,7 +106,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
 
   const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
-  ngeoDecorateInteraction(drawPoint);
+  ngeo.misc.decorate.interaction(drawPoint);
   map.addInteraction(drawPoint);
 
   /**
@@ -123,7 +121,7 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
 
   const drawLine = this.drawLine;
   drawLine.setActive(false);
-  ngeoDecorateInteraction(drawLine);
+  ngeo.misc.decorate.interaction(drawLine);
   map.addInteraction(drawLine);
 
 };

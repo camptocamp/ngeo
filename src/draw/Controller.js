@@ -1,10 +1,10 @@
 goog.provide('ngeo.draw.Controller');
 
 goog.require('ngeo');
-goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.decorate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.btnDirective');
 goog.require('ol.Feature');
@@ -13,8 +13,6 @@ goog.require('ol.Feature');
  * @param {!angular.Scope} $scope Scope.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
@@ -25,7 +23,7 @@ goog.require('ol.Feature');
  * @ngname ngeoDrawfeatureController
  */
 ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
-  ngeoDecorateInteraction, ngeoFeatureHelper, ngeoFeatures) {
+  ngeoFeatureHelper, ngeoFeatures) {
 
   /**
    * @type {boolean}
@@ -69,12 +67,6 @@ ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
   gettextCatalog.getString('Circle');
   gettextCatalog.getString('Rectangle');
   gettextCatalog.getString('Text');
-
-  /**
-   * @type {ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
 
   /**
    * @type {ngeo.misc.FeatureHelper}
@@ -157,7 +149,7 @@ ngeo.draw.Controller.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
-  this.ngeoDecorateInteraction_(interaction);
+  ngeo.misc.decorate.interaction(interaction);
   this.map.addInteraction(interaction);
 };
 

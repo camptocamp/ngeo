@@ -3,11 +3,7 @@ goog.provide('ngeo.filter.ruleComponent');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
-goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.Menu');
-goog.require('ngeo.ToolActivate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
 goog.require('ngeo.draw.component');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
@@ -15,7 +11,10 @@ goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.FeatureOverlay');
+goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
@@ -53,11 +52,9 @@ ngeo.filter.ruleComponent.RuleController_ = class {
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
-   *     interaction service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
    * @struct
@@ -65,9 +62,8 @@ ngeo.filter.ruleComponent.RuleController_ = class {
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
-  constructor(gettextCatalog, $scope, $timeout, ngeoDecorateInteraction,
-    ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr
-  ) {
+  constructor(gettextCatalog, $scope, $timeout, ngeoFeatureHelper,
+    ngeoRuleHelper, ngeoToolActivateMgr) {
 
     // Binding properties
 
@@ -118,12 +114,6 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!ngeo.DecorateInteraction}
-     * @private
-     */
-    this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
-
-    /**
      * @type {!ngeo.misc.FeatureHelper}
      * @private
      */
@@ -136,7 +126,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.ToolActivateMgr}
+     * @type {!ngeo.misc.ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -213,10 +203,10 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     };
 
     /**
-     * @type {!ngeo.ToolActivate}
+     * @type {!ngeo.misc.ToolActivate}
      * @private
      */
-    this.toolActivate_;// = new ngeo.ToolActivate(this.rule, 'active');
+    this.toolActivate_;// = new ngeo.misc.ToolActivate(this.rule, 'active');
 
     /**
      * @type {!Array.<Function>}
@@ -234,10 +224,10 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     this.drawActive = false;
 
     /**
-     * @type {!ngeo.ToolActivate}
+     * @type {!ngeo.misc.ToolActivate}
      * @export
      */
-    this.drawToolActivate = new ngeo.ToolActivate(this, 'drawActive');
+    this.drawToolActivate = new ngeo.misc.ToolActivate(this, 'drawActive');
 
     /**
      * @type {!ol.Collection.<!ol.Feature>}
@@ -318,28 +308,28 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     this.initializeInteractions_();
 
     /**
-     * @type {!ngeo.ToolActivate}
+     * @type {!ngeo.misc.ToolActivate}
      * @export
      */
-    this.modifyToolActivate = new ngeo.ToolActivate(
+    this.modifyToolActivate = new ngeo.misc.ToolActivate(
       this.modify_,
       'active'
     );
 
     /**
-     * @type {ngeo.ToolActivate}
+     * @type {ngeo.misc.ToolActivate}
      * @export
      */
-    this.rotateToolActivate = new ngeo.ToolActivate(
+    this.rotateToolActivate = new ngeo.misc.ToolActivate(
       this.rotate_,
       'active'
     );
 
     /**
-     * @type {ngeo.ToolActivate}
+     * @type {ngeo.misc.ToolActivate}
      * @export
      */
-    this.translateToolActivate = new ngeo.ToolActivate(
+    this.translateToolActivate = new ngeo.misc.ToolActivate(
       this.translate_,
       'active'
     );
@@ -360,7 +350,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
   $onInit() {
     this.clone = this.ngeoRuleHelper_.cloneRule(this.rule);
 
-    this.toolActivate_ = new ngeo.ToolActivate(this.rule, 'active');
+    this.toolActivate_ = new ngeo.misc.ToolActivate(this.rule, 'active');
 
     this.ngeoToolActivateMgr_.registerTool(
       this.toolGroup, this.toolActivate_);
@@ -718,7 +708,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
   initializeInteractions_() {
     this.interactions_.forEach((interaction) => {
       interaction.setActive(false);
-      this.ngeoDecorateInteraction_(interaction);
+      ngeo.misc.decorate.interaction(interaction);
     });
   }
 

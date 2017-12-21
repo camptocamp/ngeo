@@ -5,15 +5,15 @@ goog.require('gmf');
 goog.require('gmf.objecteditingtoolsDirective');
 goog.require('gmf.EditFeature');
 goog.require('gmf.ObjectEditingQuery');
-goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.geom');
 /** @suppress {extraRequire} */
 goog.require('ngeo.jstsExports');
 goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.ToolActivate');
+goog.require('ngeo.misc.decorate');
+goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.utils');
 goog.require('ol.Collection');
 goog.require('ol.events');
@@ -104,12 +104,10 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!gmf.ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
  * @param {!gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
- * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -119,8 +117,7 @@ goog.require('ngeo.map.LayerHelper');
  */
 gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   gmfEditFeature, gmfObjectEditingQuery, gmfTreeManager,
-  ngeoDecorateInteraction, ngeoFeatureHelper, ngeoLayerHelper,
-  ngeoToolActivateMgr) {
+  ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -245,19 +242,13 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {!ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
-
-  /**
    * @type {!ngeo.misc.FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ngeo.ToolActivateMgr}
+   * @type {!ngeo.misc.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -369,10 +360,10 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @private
    */
-  this.modifyToolActivate_ = new ngeo.ToolActivate(this.modify_, 'active');
+  this.modifyToolActivate_ = new ngeo.misc.ToolActivate(this.modify_, 'active');
 
   /**
    * @type {boolean}
@@ -381,10 +372,10 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.toolsActive = false;
 
   /**
-   * @type {!ngeo.ToolActivate}
+   * @type {!ngeo.misc.ToolActivate}
    * @private
    */
-  this.toolsToolActivate_ = new ngeo.ToolActivate(this, 'toolsActive');
+  this.toolsToolActivate_ = new ngeo.misc.ToolActivate(this, 'toolsActive');
 };
 
 /**
@@ -606,7 +597,7 @@ gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
 gmf.ObjecteditingController.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
-    this.ngeoDecorateInteraction_(interaction);
+    ngeo.misc.decorate.interaction(interaction);
   });
 };
 

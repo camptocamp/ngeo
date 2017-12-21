@@ -1,10 +1,10 @@
-goog.provide('ngeo.ToolActivate');
+goog.provide('ngeo.misc.ToolActivate');
 
 goog.require('ngeo');
 
 
 /**
- * A simple object that can be managed by `ngeo.ToolActivateMgr`.
+ * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.
  *
  * See our live examples:
  * [../examples/mapquery.html](../examples/mapquery.html)
@@ -15,11 +15,10 @@ goog.require('ngeo');
  *      `toolContext` which represents the active state of the tool.
  * @constructor
  * @struct
- * @ngdoc value
  * @ngname ngeoToolActivate
  * @export
  */
-ngeo.ToolActivate = function(toolContext, activePropertyName) {
+ngeo.misc.ToolActivate = function(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
@@ -39,6 +38,3 @@ ngeo.ToolActivate = function(toolContext, activePropertyName) {
     toolContext[activePropertyName] = newVal;
   };
 };
-
-
-ngeo.module.value('ngeoToolActivate', ngeo.ToolActivate);

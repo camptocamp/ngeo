@@ -1,11 +1,11 @@
 goog.provide('gmf.mobileMeasurelengthDirective');
 
 goog.require('gmf');
-goog.require('ngeo.DecorateInteraction');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.interaction.MeasureLengthMobile');
 goog.require('ngeo.interaction.MobileDraw');
+goog.require('ngeo.misc.decorate');
 goog.require('ol.events');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
@@ -81,8 +81,6 @@ gmf.module.directive('gmfMobileMeasurelength',
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
  * @param {angular.$filter} $filter Angular filter
  * @constructor
  * @private
@@ -91,7 +89,7 @@ gmf.module.directive('gmfMobileMeasurelength',
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
  */
-gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $filter) {
+gmf.MobileMeasureLengthController = function($scope, $filter) {
 
   /**
    * @type {ol.Map}
@@ -154,7 +152,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
   });
 
   this.measure.setActive(this.active);
-  ngeoDecorateInteraction(this.measure);
+  ngeo.misc.decorate.interaction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
@@ -164,7 +162,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
     this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;
-  ngeoDecorateInteraction(drawInteraction);
+  ngeo.misc.decorate.interaction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
     get() {

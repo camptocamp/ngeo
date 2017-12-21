@@ -1,5 +1,6 @@
 goog.provide('gmfapp.editfeatureselector');
 
+goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
@@ -11,8 +12,8 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
@@ -26,8 +27,8 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
-  'gmf',
-  ngeo.ToolActivateMgr.module.name,
+  gmf.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
   gmf.authentication.module.name,
 ]);
 
@@ -55,7 +56,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor
@@ -141,7 +142,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.editFeatureSelectorActive = true;
 
-  const editFeatureSelectorToolActivate = new ngeo.ToolActivate(
+  const editFeatureSelectorToolActivate = new ngeo.misc.ToolActivate(
     this, 'editFeatureSelectorActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', editFeatureSelectorToolActivate, true);
@@ -152,7 +153,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeo.misc.ToolActivate(
     this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', dummyToolActivate, false);

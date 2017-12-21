@@ -35,7 +35,9 @@ goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivate');
+goog.require('ngeo.misc.ToolActivate');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -212,14 +214,14 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.misc.ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  const editFeatureActivate = new ngeo.ToolActivate(this, 'editFeatureActive');
+  const editFeatureActivate = new ngeo.misc.ToolActivate(this, 'editFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
-  const googleStreetViewActivate = new ngeo.ToolActivate(
+  const googleStreetViewActivate = new ngeo.misc.ToolActivate(
     this,
     'googleStreetViewActive'
   );

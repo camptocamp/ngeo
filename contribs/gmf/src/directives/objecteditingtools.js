@@ -8,10 +8,10 @@ goog.require('ngeo.btnDirective');
 goog.require('ngeo.createfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createregularpolygonfromclickDirective');
-goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.ToolActivate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.decorate');
+goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.misc.ToolActivateMgr');
 
 
 /**
@@ -91,9 +91,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
 /**
  * @param {angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -101,8 +99,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-gmf.ObjecteditingtoolsController = function($injector, $scope,
-  ngeoDecorateInteraction, ngeoToolActivateMgr) {
+gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -176,13 +173,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
-
-  /**
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.misc.ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -263,7 +254,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
  *    main active property, i.e the directive is considered active when one
  *    of the tools is active,  otherwise it's not active.
  *
- *  - creates a `ngeo.ToolActivate` object and registers it in a group so
+ *  - creates a `ngeo.misc.ToolActivate` object and registers it in a group so
  *    that only one tool can be active at a time
  *
  * @param {string} toolActiveName The name of the active property for the tool.
@@ -285,7 +276,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
   );
 
   const group = `${gmf.ObjecteditingtoolsController.NAMESPACE_}-${ol.getUid(this)}`;
-  const toolActivate = new ngeo.ToolActivate(this, toolActiveName);
+  const toolActivate = new ngeo.misc.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 
   this.toolActiveNames_.push(toolActiveName);

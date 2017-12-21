@@ -17,9 +17,9 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.objecteditingComponent');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.Themes');
-goog.require('ngeo.ToolActivate');
+goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.layer.Vector');
@@ -53,16 +53,16 @@ app.oeedit.Controller = function($scope, $injector, $timeout) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.ToolActivateMgr}
+   * @type {ngeo.misc.ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
   ngeoToolActivateMgr.unregisterGroup('mapTools');
 
-  const oeEditToolActivate = new ngeo.ToolActivate(this, 'oeEditActive');
+  const oeEditToolActivate = new ngeo.misc.ToolActivate(this, 'oeEditActive');
   ngeoToolActivateMgr.registerTool('mapTools', oeEditToolActivate, true);
 
-  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeo.misc.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
 
   // Set edit tool as default active one

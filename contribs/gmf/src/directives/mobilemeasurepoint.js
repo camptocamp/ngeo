@@ -2,10 +2,12 @@ goog.provide('gmf.mobileMeasurepointDirective');
 
 goog.require('gmf');
 goog.require('gmf.Raster');
-goog.require('ngeo.Debounce');
-goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.interaction.MeasurePointMobile');
 goog.require('ngeo.interaction.MobileDraw');
+
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.debounce');
+goog.require('ngeo.misc.decorate');
 goog.require('ol.events');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
@@ -99,9 +101,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$filter} $filter Angular filter service.
  * @param {gmf.Raster} gmfRaster gmf Raster service.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
  * @ngInject
@@ -109,7 +109,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @ngname GmfMobileMeasurePointController
  */
 gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
-  gmfRaster, ngeoDebounce, ngeoDecorateInteraction) {
+  gmfRaster, ngeoDebounce) {
 
   /**
    * @type {gmf.Raster}
@@ -118,7 +118,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {ngeo.Debounce}
+   * @type {ngeox.miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -206,7 +206,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
     });
 
   this.measure.setActive(this.active);
-  ngeoDecorateInteraction(this.measure);
+  ngeo.misc.decorate.interaction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
@@ -215,7 +215,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
     this.measure.getDrawInteraction());
 
-  ngeoDecorateInteraction(this.drawInteraction);
+  ngeo.misc.decorate.interaction(this.drawInteraction);
 
   /**
    * The key for map view 'propertychange' event.
