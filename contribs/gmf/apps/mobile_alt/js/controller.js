@@ -12,6 +12,7 @@ goog.require('gmf.AbstractMobileController');
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ol');
 
 
 /**
