@@ -1,7 +1,7 @@
 goog.provide('app.createfeature');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureDirective');
+goog.require('ngeo.editing.createfeatureComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.ToolActivate');
@@ -23,6 +23,7 @@ app.module = angular.module('app', [
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,
+  ngeo.editing.createfeatureComponent.name,
 ]);
 
 
