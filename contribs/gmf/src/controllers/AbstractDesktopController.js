@@ -31,7 +31,7 @@ goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 /** @suppress {extraRequire} */

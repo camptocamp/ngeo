@@ -1,11 +1,11 @@
 goog.provide('app.measure');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.map.module');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
@@ -22,7 +22,8 @@ goog.require('ol.style.Fill');
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.misc.btnComponent.name,
 ]);
 
 

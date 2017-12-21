@@ -210,15 +210,15 @@ For example:
  *  * theMetadata: Description.
  *
  * @return {angular.Directive} The directive specs.
- * @htmlAttribute {ol.Map} ngeo-control-map The map.
+ * @htmlAttribute {ol.Map} ngeo-misc-control-map The map.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoControl
  */
-ngeo.controlDirective = function() {
+ngeo.misc.controlComponent.component_ = function() {
   // …
 };
-ngeo.module.directive('ngeoControl', ngeo.controlDirective);
+ngeo.misc.controlComponent.directive('ngeoMiscControl', ngeo.misc.controlComponent.component_);
 ```
 
 

@@ -1,7 +1,8 @@
 goog.provide('app.interactionbtngroup');
 
+goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 goog.require('ol.Collection');
 goog.require('ol.Map');
@@ -14,13 +15,12 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.misc.btnComponent.name,
 ]);
 
 

@@ -5,10 +5,10 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.map.module');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
@@ -23,6 +23,7 @@ goog.require('ol.source.OSM');
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
+  ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 

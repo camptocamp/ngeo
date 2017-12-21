@@ -1,8 +1,8 @@
 goog.provide('app.toolActivate');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
 goog.require('ngeo.map.module');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
@@ -23,6 +23,7 @@ goog.require('ol.style.Style');
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
+  ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 

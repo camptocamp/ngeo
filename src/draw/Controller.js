@@ -3,10 +3,10 @@ goog.provide('ngeo.draw.Controller');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
-goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.misc.decorate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
+goog.require('ngeo.misc.decorate');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Feature');
 
 /**

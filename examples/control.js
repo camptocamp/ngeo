@@ -1,20 +1,20 @@
 goog.provide('app.control');
 
+goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
-goog.require('ngeo.controlDirective');
+goog.require('ngeo.misc.controlComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.MousePosition');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.misc.controlComponent.name,
 ]);
 
 

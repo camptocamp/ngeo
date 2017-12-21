@@ -1,9 +1,16 @@
-goog.provide('ngeo.controlDirective');
+goog.provide('ngeo.misc.controlComponent');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.control.Control');
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.controlComponent = angular.module('ngeoControl', []);
+
+ngeo.module.requires.push(ngeo.misc.controlComponent.name);
 
 
 /**
@@ -26,7 +33,7 @@ goog.require('ol.control.Control');
  * @ngdoc directive
  * @ngname ngeoControl
  */
-ngeo.controlDirective = function() {
+ngeo.controlComponent.controlDirective.component_ = function() {
   return {
     restrict: 'A',
     /**
@@ -51,4 +58,4 @@ ngeo.controlDirective = function() {
 };
 
 
-ngeo.module.directive('ngeoControl', ngeo.controlDirective);
+ngeo.misc.controlComponent.directive('ngeoControl', ngeo.misc.controlComponent.component_);
