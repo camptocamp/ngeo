@@ -1,11 +1,12 @@
 goog.provide('app.colorpicker');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.colorpickerDirective');
+goog.require('ngeo.misc.colorpickerComponent');
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
-  ngeo.module.name
+  ngeo.module.name,
+  ngeo.misc.colorpickerComponent.name,
 ]);
 
 
