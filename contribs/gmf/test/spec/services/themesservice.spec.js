@@ -1,6 +1,7 @@
 /* global themes capabilities */
 goog.require('gmf.Themes');
 goog.require('gmf.test.data.themes');
+goog.require('ol.events');
 
 describe('gmf.Themes', () => {
   let gmfThemes;

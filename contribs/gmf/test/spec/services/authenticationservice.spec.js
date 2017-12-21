@@ -1,4 +1,5 @@
 goog.require('gmf.authentication.Service');
+goog.require('ol.events');
 
 describe('gmf.authentication.Service', () => {
   let gmfAuthentication;
