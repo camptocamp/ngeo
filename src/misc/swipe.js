@@ -1,6 +1,13 @@
-goog.provide('gmf.swipe');
+goog.provide('ngeo.misc.swipe');
 
-goog.require('gmf');
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.swipe = angular.module('ngeoMiscSwipe', []);
+
+ngeo.module.requires.push(ngeo.misc.swipe.name);
+
 
 /**
  * ===========================================
@@ -22,7 +29,7 @@ goog.require('gmf');
  *
  * Requires the {@link ngTouch `ngTouch`} module to be installed.
  *
- * `$verticalSwipe` is used by the `gmfSwipeUp` and `gmfSwipeDown` directives.
+ * `$verticalSwipe` is used by the `ngeoSwipeUp` and `ngeoSwipeDown` directives.
  *
  * # Usage
  * The `$verticalSwipe` service is an object with a single method: `bind`. `bind` takes an element
@@ -30,7 +37,7 @@ goog.require('gmf');
  * documentation for `bind` below.
  */
 
-gmf.module.factory('$verticalSwipe', [function() {
+ngeo.misc.swipe.factory('$verticalSwipe', [function() {
   // The total distance in any direction before we make the call on swipe vs. scroll.
   const MOVE_BUFFER_RADIUS = 10;
 
@@ -199,8 +206,8 @@ gmf.module.factory('$verticalSwipe', [function() {
   };
 }]);
 
-function makeSwipeDirective(directiveName, direction, eventName) {
-  gmf.module.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
+ngeo.misc.swipe.makeSwipeDirective_ = function(directiveName, direction, eventName) {
+  ngeo.misc.swipe.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
     // The maximum horizontal delta for a swipe should be less than 75px.
     const MAX_HORIZONTAL_DISTANCE = 75;
     // Horizontal distance should not be more than a fraction of the vertical distance.
@@ -235,7 +242,7 @@ function makeSwipeDirective(directiveName, direction, eventName) {
       }
 
       const pointerTypes = ['touch'];
-      if (!angular.isDefined(attr['gmfSwipeDisableMouse'])) {
+      if (!angular.isDefined(attr['ngeoSwipeDisableMouse'])) {
         pointerTypes.push('mouse');
       }
       $verticalSwipe.bind(element, {
@@ -257,8 +264,8 @@ function makeSwipeDirective(directiveName, direction, eventName) {
       }, pointerTypes);
     };
   }]);
-}
+};
 
 // Down is negative Y-coordinate, up is positive.
-makeSwipeDirective('gmfSwipeDown', 1, 'swipedown');
-makeSwipeDirective('gmfSwipeUp', -1, 'swipeup');
+ngeo.misc.swipe.makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
+ngeo.misc.swipe.makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
