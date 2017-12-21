@@ -1,6 +1,14 @@
-goog.provide('ngeo.btnDirective');
+goog.provide('ngeo.misc.btnComponent');
 
 goog.require('ngeo');
+
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.btnComponent = angular.module('ngeoBtnComponent', []);
+
+ngeo.module.requires.push(ngeo.misc.btnComponent.name);
 
 
 /**
