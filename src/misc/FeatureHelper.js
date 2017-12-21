@@ -4,7 +4,7 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
-goog.require('ngeo.download.Service');
+goog.require('ngeo.download.service');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.array');
@@ -1093,7 +1093,7 @@ ngeo.misc.FeatureHelper.FormatType = {
  * @type {!angular.Module}
  */
 ngeo.misc.FeatureHelper.module = angular.module('ngeoFeatureHelper', [
-  ngeo.download.Service.module.name
+  ngeo.download.service.name
 ]);
 ngeo.misc.FeatureHelper.module.service('ngeoFeatureHelper', ngeo.misc.FeatureHelper);
 ngeo.module.requires.push(ngeo.misc.FeatureHelper.module.name);

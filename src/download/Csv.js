@@ -1,7 +1,7 @@
 goog.provide('ngeo.download.Csv');
 
 goog.require('ngeo');
-goog.require('ngeo.download.Service');
+goog.require('ngeo.download.service');
 
 
 /**
@@ -139,7 +139,7 @@ ngeo.download.Csv.prototype.startDownload = function(data, columnDefs, fileName)
  * @type {!angular.Module}
  */
 ngeo.download.Csv.module = angular.module('ngeoCsvDownload', [
-  ngeo.download.Service.module.name
+  ngeo.download.service.name
 ]);
 ngeo.download.Csv.module.service('ngeoCsvDownload', ngeo.download.Csv);
 ngeo.module.requires.push(ngeo.download.Csv.module.name);
