@@ -158,23 +158,6 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    */
   this.map_ = null;
 
-  /**
-   * @type {?Object<string, !gmfx.LidarProfileLineConfiguration>}
-   * @private
-   */
-  this.linesConfiguration_ = null;
-
-  /**
-   * @type {!Array.<string>}
-   * @private
-   */
-  this.layersNames_ = [];
-
-  /**
-   * @type {number}
-   * @private
-   */
-  this.nbPoints_ = 1000;
 
   /**
    * @type {ol.geom.LineString}
@@ -182,23 +165,6 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    */
   this.line;
 
-  /**
-   * @type {Array.<Object>}
-   * @export
-   */
-  this.profileData = [];
-
-  /**
-   * @type {gmfx.ProfileHoverPointInformations}
-   * @export
-   */
-  this.currentPoint = {
-    coordinate: undefined,
-    distance: undefined,
-    elevations: {},
-    xUnits: undefined,
-    yUnits: undefined
-  };
 
   /**
    * Distance to highlight on the profile. (Property used in ngeo.Profile.)
@@ -231,8 +197,6 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    * @type {ol.Feature}
    * @private
    */
-  // this.snappedPoint_ = new ol.Feature();
-  // this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
    * @type {ngeox.profile.I18n}
@@ -261,13 +225,6 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    * @private
    */
   this.pointerMoveKey_;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.isErrored = false;
-
 
   // Watch the active value to activate/deactive events listening.
   $scope.$watch(
@@ -375,7 +332,10 @@ gmf.LidarProfileController.prototype.onPointerMove_ = function(e) {
   const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
+    console.log('mieux');
+
     this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
+    console.log(this.profileHighlight);
   } else {
     this.profileHighlight = -1;
   }
@@ -416,195 +376,6 @@ gmf.LidarProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
     }
   });
   return distOnLine;
-};
-
-
-/**
- * @param {Object} point Point.
- * @param {number} dist distance on the line.
- * @param {string} xUnits X units label.
- * @param {Object.<string, number>} elevationsRef Elevations references.
- *  @param {string} yUnits Y units label.
- * @private
- */
-gmf.LidarProfileController.prototype.hoverCallback_ = function(point, dist, xUnits,
-  elevationsRef, yUnits) {
-  // Update information point.
-  let ref;
-  const coordinate = [point.x, point.y];
-  for (ref in elevationsRef) {
-    this.currentPoint.elevations[ref] = elevationsRef[ref];
-  }
-  this.currentPoint.distance = dist;
-  this.currentPoint.xUnits = xUnits;
-  this.currentPoint.yUnits = yUnits;
-  this.currentPoint.coordinate = coordinate;
-
-  // Update hover.
-  const geom = new ol.geom.Point(coordinate);
-  this.createMeasureTooltip_();
-  this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
-  this.measureTooltip_.setPosition(coordinate);
-  this.snappedPoint_.setGeometry(geom);
-};
-
-
-/**
- * @private
- */
-gmf.LidarProfileController.prototype.outCallback_ = function() {
-  // Reset information point.
-  this.currentPoint.coordinate = undefined;
-  this.currentPoint.distance = undefined;
-  this.currentPoint.elevations = {};
-  this.currentPoint.xUnits = undefined;
-  this.currentPoint.yUnits = undefined;
-
-  // Reset hover.
-  this.removeMeasureTooltip_();
-  this.snappedPoint_.setGeometry(null);
-};
-
-
-/**
- * @return {string} A texte formatted to a tooltip.
- * @private
- */
-gmf.LidarProfileController.prototype.getTooltipHTML_ = function() {
-  const separator = ' : ';
-  let elevationName, translatedElevationName;
-  const innerHTML = [];
-  const number = this.$filter_('number');
-  const DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
-  innerHTML.push(
-    `${this.profileLabels_.xAxis +
-      separator +
-      number(this.currentPoint.distance, DistDecimal)
-    } ${
-      this.currentPoint.xUnits}`
-  );
-  for (elevationName in this.currentPoint.elevations) {
-    translatedElevationName = this.gettextCatalog_.getString(elevationName);
-    innerHTML.push(
-      `${translatedElevationName +
-        separator +
-        number(this.currentPoint.elevations[elevationName], 0)
-      } ${this.currentPoint.yUnits}`
-    );
-  }
-  return innerHTML.join('</br>');
-};
-
-
-/**
- * Creates a new 'hover' tooltip
- * @private
- */
-gmf.LidarProfileController.prototype.createMeasureTooltip_ = function() {
-  this.removeMeasureTooltip_();
-  this.measureTooltipElement_ = document.createElement('div');
-  this.measureTooltipElement_.className += 'tooltip ngeo-tooltip-measure';
-  this.measureTooltip_ = new ol.Overlay({
-    element: this.measureTooltipElement_,
-    offset: [0, -15],
-    positioning: 'bottom-center'
-  });
-  this.map_.addOverlay(this.measureTooltip_);
-};
-
-
-/**
- * Destroy the 'hover' tooltip
- * @private
- */
-gmf.LidarProfileController.prototype.removeMeasureTooltip_ = function() {
-  if (this.measureTooltipElement_ !== null) {
-    this.measureTooltipElement_.parentNode.removeChild(
-      this.measureTooltipElement_);
-    this.measureTooltipElement_ = null;
-    this.map_.removeOverlay(this.measureTooltip_);
-  }
-};
-
-
-/**
- * Return the color value of a gmfx.ProfileLineConfiguration.
- * @param {string} layerName name of the elevation layer.
- * @return {string|undefined} A HEX color or undefined is nothing is found.
- * @export
- */
-gmf.LidarProfileController.prototype.getColor = function(layerName) {
-  const lineConfiguration = this.linesConfiguration_[layerName];
-  if (!lineConfiguration) {
-    return undefined;
-  }
-  return lineConfiguration.color;
-};
-
-
-/**
- * Return a copy of the existing layer names.
- * @return {Array.<string>} The names of layers.
- * @export
- */
-gmf.LidarProfileController.prototype.getLayersNames = function() {
-  return this.layersNames_.slice(0);
-};
-
-
-/**
- * @param {string} layerName name of the elevation layer.
- * @return {function(Object):number} Z extractor function.
- * @private
- */
-gmf.LidarProfileController.prototype.getZFactory_ = function(layerName) {
-  /**
-   * Generic GMF extractor for the 'given' value in 'values' in profileData.
-   * @param {Object} item The item.
-   * @return {number} The elevation.
-   * @private
-   */
-  const getZFn = function(item) {
-    if ('values' in item && layerName in item['values']) {
-      return parseFloat(item['values'][layerName]);
-    }
-    return 0;
-  };
-  return getZFn;
-};
-
-
-/**
- * Extractor for the 'dist' value in profileData.
- * @param {Object} item The item.
- * @return {number} The distance.
- * @private
- */
-gmf.LidarProfileController.prototype.getDist_ = function(item) {
-  if ('dist' in item) {
-    return item['dist'];
-  }
-  return 0;
-};
-
-/**
- * @param {!angular.$http.Response} resp Response.
- * @private
- */
-gmf.LidarProfileController.prototype.getProfileDataSuccess_ = function(resp) {
-  const profileData = resp.data['profile'];
-  if (profileData instanceof Array) {
-    this.profileData = profileData;
-  }
-};
-
-
-/**
- * @param {!angular.$http.Response} resp Response.
- * @private
- */
-gmf.LidarProfileController.prototype.getProfileDataError_ = function(resp) {
-  this.isErrored = true;
 };
 
 
