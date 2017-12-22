@@ -26,15 +26,9 @@
   <div>
   <hr>
     Material:
-  <select name="repeatSelect" id="repeatSelect" ng-model="data.model" ng-change="$ctrl.setDefaultAttribute(data.model)">
-    <option ng-repeat="option in ::$ctrl.getPointAttributes()" value="{{option.name}}">{{option.name}}</option>
+  <select ng-model="data.model" ng-change="$ctrl.setDefaultAttribute(data.model)">
+    <option ng-repeat="option in ::$ctrl.getPointAttributes()" value="{{option.name}}" selected>{{option.name}}</option>
   </select>
-  <!-- <div ng-repeat="option in ::$ctrl.getPointAttributes()">
-    <label>
-      <input name="materialRadio" ng-model="option.checked" ng-checked="!!option.checked" type="radio" ng-change="$ctrl.setDefaultAttribute(option)">
-      {{option.name}}
-    </label>
-  </div> -->
   </div>
   <hr>
   <div>

@@ -10,7 +10,11 @@
     <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1"></svg>
   </div>
   <div class="gmf-lidar-profile-legend">
-  <input type="checkbox" class="gmf-lidar-profile-measure-button">
+  <button class="btn btn-default"
+    ngeo-btn ng-model="ctrl.lidarProfileMeasureActive" onclick="ngeo.lidarProfile.measure.setMeasureActive(this)"
+    translate> Measure distance
+  </button>
+  <hr>
   <div id="profileInfo"></div>
   </div>
   <div

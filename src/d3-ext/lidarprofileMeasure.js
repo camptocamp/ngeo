@@ -22,19 +22,17 @@ ngeo.lidarProfile.measure.clearMeasure = function() {
 
 };
 
-ngeo.lidarProfile.measure.startMeasure = function() {
-
-  ngeo.lidarProfile.measure.clearMeasure();
-  d3.select('svg#profileSVG').on('click', ngeo.lidarProfile.measure.measureHeight);
-
+ngeo.lidarProfile.measure.setMeasureActive = function(el) {
+  // TODO: watch the lidarProfileMeasureActive variable
+  if (el.className.indexOf('active') == -1) {
+    ngeo.lidarProfile.measure.clearMeasure();
+    d3.select('svg#profileSVG').on('click', ngeo.lidarProfile.measure.measureHeight);
+  } else {
+    ngeo.lidarProfile.measure.clearMeasure();
+    d3.select('svg#profileSVG').on('click', null);
+  }
 };
 
-ngeo.lidarProfile.measure.stopMeasure = function() {
-
-  ngeo.lidarProfile.measure.clearMeasure();
-  d3.select('svg#profileSVG').on('click', null);
-
-};
 
 ngeo.lidarProfile.measure.measureHeight = function() {
 

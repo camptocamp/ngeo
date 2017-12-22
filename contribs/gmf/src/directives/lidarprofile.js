@@ -212,6 +212,12 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    * @export
    */
   this.profileHighlight = -1;
+  /**
+   * Measure tool state
+   * @type {boolean}
+   * @export
+   */
+  this.lidarProfileMeasureActive = false;
 
   /**
    * Overlay to show the measurement.
