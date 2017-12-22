@@ -3,11 +3,11 @@ goog.provide('gmf.objecteditingtoolsDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.objecteditinggetwmsfeatureDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.createregularpolygonfromclickDirective');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.ToolActivate');

@@ -2,13 +2,14 @@ goog.provide('gmfapp.datepicker');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('ngeo.DatePickerDirective');
+goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.WMSTime');
 
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  ngeo.misc.datepickerComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
 

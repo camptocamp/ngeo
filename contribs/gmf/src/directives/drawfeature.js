@@ -5,7 +5,7 @@ goog.require('gmf');
 goog.require('gmf.featurestyleDirective');
 goog.require('ngeo.Menu');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.exportfeaturesDirective');
 /** @suppress {extraRequire} */

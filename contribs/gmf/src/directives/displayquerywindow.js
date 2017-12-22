@@ -1,12 +1,12 @@
 goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
-/** @suppress {extraRequire} */
-goog.require('gmf.swipe');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.FeatureHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.swipe');
 goog.require('ol.Collection');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
@@ -16,6 +16,7 @@ goog.require('ol.style.Style');
 // In the future module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlayMgr.module.name
 // - ngeo.misc.FeatureHelper.module.name
+// - ngeo.misc.swipe.name
 
 
 ngeo.module.value('gmfDisplayquerywindowTemplateUrl',

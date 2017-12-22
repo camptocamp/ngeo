@@ -3,10 +3,14 @@ goog.provide('gmf.search.component');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
+goog.require('gmf.search.FulltextSearch');
+goog.require('ngeo.map.FeatureOverlayMgr');
+goog.require('ngeo.misc.AutoProjection');
 /** @suppress {extraRequire} */
-goog.require('ngeo.colorpickerDirective');
+goog.require('ngeo.misc.colorpickerComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.popoverDirective');
+goog.require('ngeo.search.module');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.color');
@@ -21,17 +25,13 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.uri');
 
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.misc.AutoProjection');
-goog.require('ngeo.search.module');
-goog.require('gmf.search.FulltextSearch');
-
 
 /**
  * @type {!angular.Module}
  */
 gmf.search.component = angular.module('gmfSearch', [
   ngeo.misc.AutoProjection.module.name,
+  ngeo.misc.colorpickerComponent.name,
   ngeo.search.module.name,
   ngeo.map.FeatureOverlayMgr.module.name,
   gmf.search.FulltextSearch.module.name

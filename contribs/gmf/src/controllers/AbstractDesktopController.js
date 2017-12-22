@@ -25,15 +25,17 @@ goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.DatePickerDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.datepickerComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.sortableComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
@@ -50,9 +52,6 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.sortableDirective');
 
 
 gmf.module.value('isDesktop', true);

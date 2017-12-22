@@ -11,7 +11,7 @@ goog.require('gmf.mobileMeasurepointDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');

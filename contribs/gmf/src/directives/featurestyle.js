@@ -2,9 +2,9 @@ goog.provide('gmf.featurestyleDirective');
 
 goog.require('gmf');
 goog.require('ol.events');
-goog.require('ngeo.misc.FeatureHelper');
 /** @suppress {extraRequire} */
-goog.require('ngeo.colorpickerDirective');
+goog.require('ngeo.misc.colorpickerComponent');
+goog.require('ngeo.misc.FeatureHelper');
 
 // FIXME add requires to the future module dependencies
 

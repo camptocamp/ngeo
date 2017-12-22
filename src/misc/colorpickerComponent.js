@@ -1,9 +1,17 @@
-goog.provide('ngeo.colorpickerDirective');
+goog.provide('ngeo.misc.colorpickerComponent');
 
 goog.require('ngeo');
 
 
-ngeo.module.value('ngeoColorpickerTemplateUrl',
+/**
+ * @type {!angular.Module}
+ */
+ngeo.misc.colorpickerComponent = angular.module('ngeoColorpicker', []);
+
+ngeo.module.requires.push(ngeo.misc.colorpickerComponent.name);
+
+
+ngeo.misc.colorpickerComponent.value('ngeoColorpickerTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -12,7 +20,7 @@ ngeo.module.value('ngeoColorpickerTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoColorpickerTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseTemplateUrl}/colorpicker.html`;
+      `${ngeo.baseModuleTemplateUrl}/misc/colorpickerComponent.html`;
   });
 
 /**
@@ -32,7 +40,7 @@ ngeo.module.value('ngeoColorpickerTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoColorpicker
  */
-ngeo.colorpickerDirective = function(ngeoColorpickerTemplateUrl) {
+ngeo.misc.colorpickerComponent.component_ = function(ngeoColorpickerTemplateUrl) {
   return {
     restrict: 'A',
     scope: {
@@ -45,14 +53,16 @@ ngeo.colorpickerDirective = function(ngeoColorpickerTemplateUrl) {
   };
 };
 
-
-ngeo.module.directive('ngeoColorpicker', ngeo.colorpickerDirective);
+ngeo.misc.colorpickerComponent.directive('ngeoColorpicker',
+  ngeo.misc.colorpickerComponent.component_);
 
 /**
+ * Fefault colors for the colorpicker
  * @type {Array.<Array.<string>>}
  * @const
+ * @export
  */
-const defaultColors = [
+ngeo.misc.colorpickerComponent.DEFAULT_COLORS = [
   ['#F4EB37', '#CDDC39', '#62AF44', '#009D57', '#0BA9CC', '#4186F0', '#3F5BA9', '#7C3592', '#A61B4A', '#DB4436', '#F8971B', '#F4B400', '#795046'],
   ['#F9F7A6', '#E6EEA3', '#B7DBAB', '#7CCFA9', '#93D7E8', '#9FC3FF', '#A7B5D7', '#C6A4CF', '#D698AD', '#EE9C96', '#FAD199', '#FFDD5E', '#B29189'],
   ['#ffffff', '#CCCCCC', '#777', '#000000']
@@ -69,14 +79,14 @@ const defaultColors = [
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
  */
-ngeo.ColorpickerController = function($scope, $element, $attrs) {
+ngeo.misc.colorpickerComponent.Controller_ = function($scope, $element, $attrs) {
 
   /**
    * The set of color
    * @type {Array.<Array.<string>>}
    * @export
    */
-  this.colors = this.colors || defaultColors;
+  this.colors = this.colors || ngeo.misc.colorpickerComponent.DEFAULT_COLORS;
 
   /**
    * The selected color
@@ -89,10 +99,9 @@ ngeo.ColorpickerController = function($scope, $element, $attrs) {
  * @param {string} color The color to select.
  * @export
  */
-ngeo.ColorpickerController.prototype.setColor = function(color) {
+ngeo.misc.colorpickerComponent.Controller_.prototype.setColor = function(color) {
   this.color = color;
 };
 
-
-ngeo.module.controller('NgeoColorpickerController',
-  ngeo.ColorpickerController);
+ngeo.misc.colorpickerComponent.controller('NgeoColorpickerController',
+  ngeo.misc.colorpickerComponent.Controller_);

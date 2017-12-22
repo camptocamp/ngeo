@@ -19,8 +19,6 @@ goog.require('ol.source.Tile');
  *
  *      <input type="checkbox" ngModel="interaction.active" />
  *
- * See our live example: [../examples/interactiontoggle.html](../examples/interactiontoggle.html)
- *
  * @param {ol.interaction.Interaction} interaction Interaction to decorate.
  */
 ngeo.misc.decorate.interaction = function(interaction) {

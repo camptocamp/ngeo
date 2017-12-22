@@ -1,9 +1,9 @@
 goog.provide('app.layerorder');
 
 goog.require('ngeo.map.module');
-goog.require('ngeo.misc.syncArrays');
 /** @suppress {extraRequire} */
-goog.require('ngeo.sortableDirective');
+goog.require('ngeo.misc.sortableComponent');
+goog.require('ngeo.misc.syncArrays');
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -17,6 +17,7 @@ goog.require('ol.source.TileWMS');
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
+  ngeo.misc.sortableComponent.name,
 ]);
 
 

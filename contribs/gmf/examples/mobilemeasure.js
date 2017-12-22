@@ -7,9 +7,9 @@ goog.require('gmf.mobileMeasurelengthDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileMeasurepointDirective');
 /** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ol.Map');
@@ -22,6 +22,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  ngeo.misc.btnComponent.name,
 ]);
 
 

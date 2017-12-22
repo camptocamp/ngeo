@@ -1,7 +1,8 @@
 goog.provide('app.importfeatures');
 
+goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filereaderDirective');
+goog.require('ngeo.misc.filereaderComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.extent');
@@ -11,13 +12,12 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.misc.filereaderComponent.name,
 ]);
 
 

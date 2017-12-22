@@ -4,8 +4,9 @@ goog.provide('app.bboxquery');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
+goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
+goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.query.module');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -14,13 +15,12 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
 
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} */
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
+  ngeo.misc.btnComponent.name,
   ngeo.query.module.name
 ]);
 

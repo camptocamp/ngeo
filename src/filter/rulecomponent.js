@@ -1,8 +1,6 @@
 goog.provide('ngeo.filter.ruleComponent');
 
 goog.require('ngeo');
-/** @suppress {extraRequire} */
-goog.require('ngeo.DatePickerDirective');
 goog.require('ngeo.Menu');
 goog.require('ngeo.draw.component');
 /** @suppress {extraRequire} */
@@ -11,6 +9,8 @@ goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.FeatureOverlay');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
@@ -37,6 +37,7 @@ ngeo.filter.ruleComponent = angular.module('ngeoRule', [
   ngeo.draw.component.name,
   ngeo.filter.RuleHelper.module.name,
   ngeo.map.FeatureOverlay.module.name,
+  ngeo.misc.datepickerComponent.name,
   ngeo.misc.FeatureHelper.module.name,
 ]);
 

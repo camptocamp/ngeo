@@ -10,13 +10,13 @@ goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.attributesComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
 goog.require('ngeo.createfeatureDirective');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.Menu');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.misc.FeatureHelper');
