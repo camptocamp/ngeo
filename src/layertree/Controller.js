@@ -5,7 +5,7 @@ goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Layer');
-goog.require('ngeo.layertree.decorate');
+goog.require('ngeo.misc.decorate');
 
 
 /**
@@ -154,8 +154,8 @@ ngeo.layertree.Controller = function($scope, $rootScope, $attrs) {
   this.dataSource_ = null;
 
   if (this.layer) {
-    ngeo.layertree.decorate.layerLoading(this.layer, $scope);
-    ngeo.layertree.decorate.layer(this.layer);
+    ngeo.misc.decorate.layerLoading(this.layer, $scope);
+    ngeo.misc.decorate.layer(this.layer);
 
     ol.events.listen(this.layer, 'change:opacity', () => {
       this.rootScope_.$broadcast('ngeo-layertree-opacity', this);

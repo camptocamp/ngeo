@@ -1,7 +1,14 @@
-goog.provide('ngeo.download.Service');
+goog.provide('ngeo.download.service');
 
 goog.require('ngeo');
 goog.require('ngeo.utils');
+
+/**
+ * @type {!angular.Module}
+ */
+ngeo.download.service = angular.module('ngeoDownload', []);
+
+ngeo.module.requires.push(ngeo.download.service.name);
 
 /**
  * A service to start a download for a file.
@@ -10,7 +17,7 @@ goog.require('ngeo.utils');
  * @ngdoc service
  * @ngname ngeoDownload
  */
-ngeo.download.Service = function() {
+ngeo.download.service.factory_ = function() {
   /**
    * @param {string} content The file content.
    * @param {string} fileName The file name.
@@ -33,10 +40,4 @@ ngeo.download.Service = function() {
   return download;
 };
 
-/**
- * @type {!angular.Module}
- * FIXME add utils dependencies.
- */
-ngeo.download.Service.module = angular.module('ngeoDownload', []);
-ngeo.download.Service.module.factory('ngeoDownload', ngeo.download.Service);
-ngeo.module.requires.push(ngeo.download.Service.module.name);
+ngeo.download.service.factory('ngeoDownload', ngeo.download.service.factory_);
