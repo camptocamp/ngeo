@@ -890,9 +890,9 @@ ngeo.print.Service.prototype.getCapabilities = function(opt_httpConfig) {
  */
 ngeo.print.Service.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
-  /**
-       * @param {string} url URL to MapFish print service.
-       */
+    /**
+     * @param {string} url URL to MapFish print service.
+     */
     function(url) {
       return new ngeo.print.Service(url, $http, ngeoLayerHelper);
     });
