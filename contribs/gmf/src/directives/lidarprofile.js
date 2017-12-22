@@ -293,7 +293,7 @@ gmf.LidarProfileController.prototype.update_ = function() {
       this.gmfLidarProfileConfig_.profileConfig.minLOD,
       this.gmfLidarProfileConfig_.profileConfig.maxLOD);
   } else {
-    this.profileData = [];
+    ngeo.lidarProfile.loader.cartoHighlight.setPosition(undefined);
   }
   this.active = !!this.line;
 };
