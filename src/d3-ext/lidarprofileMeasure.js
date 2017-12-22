@@ -33,6 +33,10 @@ ngeo.lidarProfile.measure.setMeasureActive = function(el) {
   }
 };
 
+ngeo.lidarProfile.measure.startMeasure = function() {
+  ngeo.lidarProfile.measure.clearMeasure();
+  d3.select('svg#profileSVG').on('click', ngeo.lidarProfile.measure.measureHeight);
+};
 
 ngeo.lidarProfile.measure.measureHeight = function() {
 

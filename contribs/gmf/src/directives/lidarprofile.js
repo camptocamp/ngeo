@@ -43,9 +43,7 @@ function gmfLidarProfileTemplateUrl($element, $attrs, gmfLidarProfileTemplateUrl
 
 
 /**
- * Provide a component that display a profile panel. This profile use the given
- * LineString geometry to request the c2cgeoportal profile.json service. The
- * raster used in the request are the keys of the 'linesconfiguration' object.
+ * Provide a component that display a lidar profile panel. This profile use the given
  * The 'map' attribute is optional and are only used to display on the map the
  * information that concern the hovered point (in the profile and on the map)
  * of the line.
@@ -57,7 +55,6 @@ function gmfLidarProfileTemplateUrl($element, $attrs, gmfLidarProfileTemplateUrl
  *        gmf-profile-active="ctrl.profileActive"
  *        gmf-profile-line="ctrl.profileLine"
  *        gmf-profile-map="::ctrl.map"
- *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration">
  *      </gmf-profile>
  *
  *
@@ -65,9 +62,6 @@ function gmfLidarProfileTemplateUrl($element, $attrs, gmfLidarProfileTemplateUrl
  * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
- * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
- *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
- *     will be used to request elevation layers.
  * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
@@ -75,7 +69,7 @@ function gmfLidarProfileTemplateUrl($element, $attrs, gmfLidarProfileTemplateUrl
  * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
  *     object like {@link ngeox.profile.ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
- *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
+ *     'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
  *
  * @ngdoc component
@@ -326,30 +320,6 @@ gmf.LidarProfileController.prototype.$onInit = function() {
       })
     });
   }
-  // this.pointHoverOverlay_.setStyle(hoverPointStyle);
-
-  const linesConfiguration = this['getLinesConfigurationFn']();
-  goog.asserts.assertInstanceof(linesConfiguration, Object);
-
-  this.linesConfiguration_ = linesConfiguration;
-
-  for (const name in this.linesConfiguration_) {
-    // Keep an array of all layer names.
-    this.layersNames_.push(name);
-    // Add generic zExtractor to lineConfiguration object that doesn't have one.
-    const lineConfig = this.linesConfiguration_[name];
-    if (!lineConfig.zExtractor) {
-      this.linesConfiguration_[name].zExtractor = this.getZFactory_(name);
-    }
-  }
-
-  this.LidarProfileOptions = /** @type {ngeox.lidarProfile.LidarProfileOptions} */ ({
-    linesConfiguration: this.linesConfiguration_,
-    distanceExtractor: this.getDist_,
-    // hoverCallback: this.hoverCallback_.bind(this),
-    outCallback: this.outCallback_.bind(this),
-    i18n: this.profileLabels_
-  });
 
   const optionsFn = this['getOptionsFn'];
   if (optionsFn) {
