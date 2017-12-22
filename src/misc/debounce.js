@@ -15,13 +15,12 @@ ngeo.module.requires.push(ngeo.misc.debounce.name);
  * Provides a debounce service. That service is a function
  * used to debounce calls to a user-provided function.
  *
- * See our live example: [../examples/permalink.html](../examples/permalink.html)
- *
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @return {ngeox.miscDebounce} The debounce function.
  *
  * @ngdoc service
  * @ngname ngeoDebounce
+ * @ngInject
  */
 ngeo.misc.debounce.factory_ = function($timeout) {
   return (

@@ -21,6 +21,7 @@ ngeo.module.requires.push(ngeo.misc.getBrowserLanguage.name);
  *
  * @ngdoc service
  * @ngname ngeoGetBrowserLanguage
+ * @ngInject
  */
 ngeo.misc.getBrowserLanguage.factory_ = function($window) {
   return (

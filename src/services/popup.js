@@ -256,12 +256,11 @@ ngeo.Popup.Factory;
  * @return {ngeo.Popup.Factory} The function to create a popup.
  * @ngInject
  */
-ngeo.createPopupServiceFactory = function($compile, $rootScope, $sce,
-  $timeout) {
+ngeo.createPopupServiceFactory = function($compile, $rootScope, $sce, $timeout) {
   return (
-  /**
-       * @return {!ngeo.Popup} The popup instance.
-       */
+    /**
+     * @return {!ngeo.Popup} The popup instance.
+     */
     function() {
       return new ngeo.Popup($compile, $rootScope, $sce, $timeout);
     });
