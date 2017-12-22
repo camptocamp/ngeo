@@ -62,15 +62,10 @@ function gmfLidarProfileTemplateUrl($element, $attrs, gmfLidarProfileTemplateUrl
  * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
- * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
- *     for the 'on Hover' point on the line.
- * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
- *     points to request. Default to 100.
- * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
+ * @htmlAttribute {Object.<string, *>?} gmf-lidar-profile-options Optional options
  *     object like {@link ngeox.profile.ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
- *     'distanceExtractor', hoverCallback, outCallback
- *     or i18n will override native gmf profile values.
+*     i18n will override native gmf profile values.
  *
  * @ngdoc component
  * @ngname gmfLidarProfile
