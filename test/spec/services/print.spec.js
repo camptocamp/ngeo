@@ -236,7 +236,7 @@ describe('ngeo.print.Service', () => {
               rotation: 0,
               scale: 500,
               layers: [{
-                baseURL: 'http://example.com/wmts/layer/{Style}/' +
+                baseURL: 'http://example.com/wmts/{Layer}/{Style}/' +
                     '{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpeg',
                 dimensions: ['TIME'],
                 dimensionParams: {'TIME': 'time'},

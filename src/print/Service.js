@@ -814,14 +814,7 @@ ngeo.print.Service.prototype.encodeTextStyle_ = function(symbolizers, textStyle)
 ngeo.print.Service.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
   goog.asserts.assert(urls.length > 0);
-  let url = urls[0];
-  // Replace {Layer} in the URL
-  // See <https://github.com/mapfish/mapfish-print/issues/236>
-  const layer = source.getLayer();
-  if (url.indexOf('{Layer}') >= 0) {
-    url = url.replace('{Layer}', layer);
-  }
-  return ngeo.print.Service.getAbsoluteUrl_(url);
+  return ngeo.print.Service.getAbsoluteUrl_(urls[0]);
 };
 
 
