@@ -81,9 +81,6 @@ gmf.lidarProfileComponent = {
     'active': '=gmfLidarProfileActive',
     'line': '=gmfLidarProfileLine',
     'getMapFn': '&?gmfLidarProfileMap',
-    'getLinesConfigurationFn': '&gmfLidarProfileLinesconfiguration',
-    'getHoverPointStyleFn': '&?gmfLidarProfileHoverpointstyle',
-    'getNbPointsFn': '&?gmfLidarProfileNumberofpoints',
     'getOptionsFn': '&?gmfLidarProfileOptions'
   },
   templateUrl: gmfLidarProfileTemplateUrl
@@ -327,7 +324,6 @@ gmf.LidarProfileController.prototype.onPointerMove_ = function(e) {
   }
   const coordinate = this.map_.getEventCoordinate(e.originalEvent);
   const closestPoint = this.line.getClosestPoint(coordinate);
-  // compute distance to line in pixels
   const eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
   const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
@@ -364,14 +360,11 @@ gmf.LidarProfileController.prototype.getDistanceOnALine_ = function(pointOnLine,
   ];
   this.line.forEachSegment((firstPoint, lastPoint) => {
     segment = new ol.geom.LineString([firstPoint, lastPoint]);
-    // Is the pointOnLine on this swegement ?
     if (segment.intersectsExtent(fakeExtent)) {
-      // If the closestPoint is on the line, add the distance between the first
-      // point of this segment and the pointOnLine.
+
       segment.setCoordinates([firstPoint, pointOnLine]);
-      return distOnLine += segment.getLength(); // Assign value and break;
+      return distOnLine += segment.getLength();
     } else {
-      // Do the sum of the length of each eventual previous segment.
       distOnLine += segment.getLength();
     }
   });
