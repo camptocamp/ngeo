@@ -78,20 +78,21 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
 ngeo.lidarProfile.utils.getNiceLOD = function(span) {
   let maxLOD = 0;
   if (span < 200) {
-    maxLOD = 10;
-  } else if (span < 250) {
+    maxLOD = 14;
+  } else if (span < 250 && span >= 200) {
     maxLOD = 9;
-  } else if (span < 500) {
+  } else if (span < 500 && span >= 250) {
     maxLOD = 8;
-  } else if (span < 1000) {
+  } else if (span < 1000 && span >= 500) {
     maxLOD = 7;
-  } else if (span < 1500) {
+  } else if (span < 1500 && span >= 1000) {
     maxLOD = 7;
-  } else if (span < 2000) {
+  } else if (span < 2000 && span >= 1500) {
     maxLOD = 6;
   } else {
     maxLOD = 6;
   }
+  console.log(maxLOD)
   return maxLOD;
 };
 

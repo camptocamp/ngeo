@@ -20,10 +20,13 @@ ngeo.lidarProfile.loader.requestsQueue = [];
 
 ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, minLOD, maxLOD) {
 
+  // TODO get nicely calibrated max lod function from pytree config and remove default LOD config parameter
   ngeo.lidarProfile.options.pytreeLinestring =  ngeo.lidarProfile.utils.getPytreeLinestring(ngeo.lidarProfile.options.olLinestring);
   let profileLine;
   if (distanceOffset == 0) {
     profileLine = ngeo.lidarProfile.options.pytreeLinestring;
+    maxLOD = ngeo.lidarProfile.utils.getNiceLOD(ngeo.lidarProfile.options.olLinestring.getLength());
+
   } else {
     const domain = ngeo.lidarProfile.options.profileConfig.scaleX.domain();
     const clip = ngeo.lidarProfile.utils.clipLineByMeasure(domain[0], domain[1]);
