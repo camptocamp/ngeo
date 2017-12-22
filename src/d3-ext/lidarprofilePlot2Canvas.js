@@ -96,6 +96,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
         domainHeightCentroid + domainScaledHeight / 2])
       .range([height, 0]);
   }
+
   ngeo.lidarProfile.options.profileConfig.scaleX = sx;
   ngeo.lidarProfile.options.profileConfig.scaleY = sy;
 
