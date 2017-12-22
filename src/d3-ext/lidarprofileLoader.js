@@ -8,9 +8,9 @@ ngeo.lidarProfile.setOptions = function(options) {
 
   ngeo.lidarProfile.options = options;
 
-  ngeo.lidarProfile.loader.cartoHighlight = new ol.layer.Vector({
-    source: new ol.source.Vector({
-    })
+  ngeo.lidarProfile.loader.cartoHighlight = new ol.Overlay({
+    offset: [0, -15],
+    positioning: 'bottom-center'
   });
   ngeo.lidarProfile.loader.cartoHighlight.setMap(options.map);
 

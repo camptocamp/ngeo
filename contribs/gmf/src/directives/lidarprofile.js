@@ -288,7 +288,10 @@ gmf.LidarProfileController.prototype.update_ = function() {
     this.gmfLidarProfileConfig_.olLinestring = this.line;
     this.gmfLidarProfileConfig_.map = this.map_;
     ngeo.lidarProfile.setOptions(this.gmfLidarProfileConfig_);
-    ngeo.lidarProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig_.profileConfig.minLOD, this.gmfLidarProfileConfig_.profileConfig.maxLOD);
+    ngeo.lidarProfile.loader.getProfileByLOD(0,
+      true,
+      this.gmfLidarProfileConfig_.profileConfig.minLOD,
+      this.gmfLidarProfileConfig_.profileConfig.maxLOD);
   } else {
     this.profileData = [];
   }
@@ -323,8 +326,6 @@ gmf.LidarProfileController.prototype.onPointerMove_ = function(e) {
   const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
-    console.log('mieux');
-
     this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
     console.log(this.profileHighlight);
   } else {

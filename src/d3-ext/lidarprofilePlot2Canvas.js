@@ -198,7 +198,6 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
   const pointSize = ngeo.lidarProfile.options.profileConfig.pointSize;
   const margin = ngeo.lidarProfile.options.profileConfig.margin;
   const tolerance = ngeo.lidarProfile.options.profileConfig.tolerance;
-  ngeo.lidarProfile.loader.cartoHighlight.getSource().clear();
 
   const canvasCoordinates = d3.mouse(d3.select('#profileCanvas').node());
   const sx = ngeo.lidarProfile.options.profileConfig.scaleX;
@@ -219,53 +218,26 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
       .attr('r', pointSize + 1)
       .style('fill', 'orange');
 
-    const html = `Distance: ${Math.round(10 * p.distance) / 10}
-    Altitude: ${Math.round(10 * p.altitude) / 10}
-    Classification: ${ngeo.lidarProfile.options.profileConfig.classification[p.classification].name}
-    Intensity: ${p.intensity}`;
+    const html = `Distance: ${Math.round(10 * p.distance) / 10}<br>
+    Altitude: ${Math.round(10 * p.altitude) / 10}<br>
+    Classification: ${ngeo.lidarProfile.options.profileConfig.classification[p.classification].name}<br>
+    Intensity: ${p.intensity}<br>`;
 
     d3.select('#profileInfo')
       .html(html);
 
-    // TODO handle CRS
-    const olFeature = new  ol.Feature({
-      geometry: new ol.geom.Point([p.coords[0] - 2000000, p.coords[1] - 1000000])
-    });
+    const el = document.createElement('div');
+    el.className += 'tooltip ngeo-tooltip-measure';
+    el.innerHTML = html;
 
-    olFeature.setStyle(new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({
-          color: 'rgba(3, 50, 124,1)'
-        }),
-        stroke: new ol.style.Stroke({
-          color: 'rgba(3, 50, 124,1)',
-          width: 2
-        }),
-        radius: 4
-      }),
-      text: new ol.style.Text({
-        textAlign: 'left',
-        font: '12px arial',
-        text: html,
-        fill: new ol.style.Fill({
-          color: 'rgba(3, 50, 124,1)'
-        }),
-        stroke: new ol.style.Stroke({
-          color: 'white',
-          width: 2
-        }),
-        offsetX: 2
-      })
-    })
-    );
-
-
-    ngeo.lidarProfile.loader.cartoHighlight.getSource().addFeature(olFeature);
+    ngeo.lidarProfile.loader.cartoHighlight.setElement(el);
+    // TODO: handle CRS
+    ngeo.lidarProfile.loader.cartoHighlight.setPosition([p.coords[0] - 2000000, p.coords[1] - 1000000]);
 
   } else {
     svg.select('#highlightCircle').remove();
     d3.select('#profileInfo').html('');
-    ngeo.lidarProfile.loader.cartoHighlight.getSource().clear();
+    ngeo.lidarProfile.loader.cartoHighlight.setPosition(undefined);
   }
 };
 
