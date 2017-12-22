@@ -192,6 +192,7 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
 };
 
 ngeo.lidarProfile.loader.updateData = function() {
+  console.log('updatedata function called');
   const domain = ngeo.lidarProfile.options.profileConfig.scaleX.domain();
   const clip = ngeo.lidarProfile.utils.clipLineByMeasure(domain[0], domain[1]);
   const span = domain[1] - domain[0];

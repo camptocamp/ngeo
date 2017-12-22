@@ -47,12 +47,13 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   const ctx = d3.select('#profileCanvas')
     .node().getContext('2d');
   ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
-  const margin = ngeo.lidarProfile.options.profileConfig.margin;
 
+  const margin = ngeo.lidarProfile.options.profileConfig.margin;
   const containerWidth = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().width;
   const containerHeight = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().height;
   const width = containerWidth - (margin.left + margin.right);
   const height = containerHeight - (margin.top + margin.bottom);
+
   d3.select('#profileCanvas')
     .attr('height', height)
     .attr('width', width)
@@ -61,15 +62,16 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     .style('position', 'absolute')
     .style('margin-left', `${margin.left.toString()}px`)
     .style('margin-top', `${margin.top.toString()}px`);
+
   const domainProfileWidth = rangeX[1] - rangeX[0];
   const domainProfileHeight = rangeY[1] - rangeY[0];
-
   const domainRatio = domainProfileWidth / domainProfileHeight;
   const rangeProfileWidth = width;
   const rangeProfileHeight = height;
   const rangeRatio = rangeProfileWidth / rangeProfileHeight;
-  let sx, sy, domainScale;
 
+  let sx, sy, domainScale;
+  // TODO: FIX PAN
   if (domainRatio < rangeRatio) {
     const domainScale = rangeRatio / domainRatio;
     const domainScaledWidth = domainProfileWidth * domainScale;
@@ -142,8 +144,12 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     .attr('class', 'y axis')
     .call(yAxis);
 
+  svg.append('g')
+    .attr('class', 'x axis')
+    .call(xAxis);
+
   svg.select('.y.axis').attr('transform', `translate(${margin.left}, ${margin.top})`);
-  svg.select('.x.axis').attr('transform', `translate(${margin.left}, ${margin.top})`);
+  svg.select('.x.axis').attr('transform', `translate(${margin.left}, ${height + margin.top})`);
 
   svg.select('.y.axis').selectAll('g.tick line')
     .style('opacity', '0.5')
@@ -244,7 +250,7 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
   }
 };
 
-ngeo.lidarProfile.drawProfilePosition = function(distance) {
+ngeo.lidarProfile.drawProfilePosition = function(distance, closestPoint) {
 
   const margin = ngeo.lidarProfile.options.profileConfig.margin;
   const sx = ngeo.lidarProfile.options.profileConfig.scaleX;
