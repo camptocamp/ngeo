@@ -99,6 +99,8 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
 
   function zoomed() {
     const tr = d3.event.transform;
+    const svg = d3.select('svg#profileSVG');
+
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
 
@@ -123,7 +125,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
 
   d3.select('svg#profileSVG').selectAll('*').remove();
 
-  svg = d3.select('svg#profileSVG')
+  const svg = d3.select('svg#profileSVG')
     .attr('width', width + margin.left)
     .attr('height', height + margin.top + margin.bottom);
 
@@ -195,6 +197,7 @@ Find the closest neighboor of the mouse coordinates within tolerance
 ***/
 ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
 
+  const svg = d3.select('svg#profileSVG');
   const pointSize = ngeo.lidarProfile.options.profileConfig.pointSize;
   const margin = ngeo.lidarProfile.options.profileConfig.margin;
   const tolerance = ngeo.lidarProfile.options.profileConfig.tolerance;

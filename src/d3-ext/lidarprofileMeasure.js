@@ -1,7 +1,5 @@
 goog.provide('ngeo.lidarProfile.measure');
 
-/*global svg*/
-
 ngeo.lidarProfile.measure.clearMeasure = function() {
 
   ngeo.lidarProfile.measure.profileMeasure = {
@@ -13,6 +11,7 @@ ngeo.lidarProfile.measure.clearMeasure = function() {
     }
   };
 
+  const svg = d3.select('svg#profileSVG');
   svg.selectAll('#text_m').remove();
   svg.selectAll('#start_m').remove();
   svg.selectAll('#end_m').remove();
