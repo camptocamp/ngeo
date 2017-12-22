@@ -327,9 +327,10 @@ gmf.LidarProfileController.prototype.onPointerMove_ = function(e) {
 
   if (pixelDist < 16) {
     this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
-    console.log(this.profileHighlight);
+    ngeo.lidarProfile.drawProfilePosition(this.profileHighlight);
   } else {
     this.profileHighlight = -1;
+    ngeo.lidarProfile.clearProfilePosition();
   }
   this.$scope_.$apply();
 };

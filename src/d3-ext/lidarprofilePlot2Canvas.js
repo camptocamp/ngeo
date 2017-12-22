@@ -241,6 +241,28 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
   }
 };
 
+ngeo.lidarProfile.drawProfilePosition = function(distance) {
+
+  const margin = ngeo.lidarProfile.options.profileConfig.margin;
+  const sx = ngeo.lidarProfile.options.profileConfig.scaleX;
+  const cx = sx(distance) + margin.left;
+  const svgHeight = d3.select('svg#profileSVG').node().getBoundingClientRect().height;
+  d3.select('svg#profileSVG').selectAll('#highlightBar').remove();
+
+  d3.select('svg#profileSVG').append('line')
+    .attr('id', 'highlightBar')
+    .attr('x1', cx)
+    .attr('y1', margin.top)
+    .attr('x2', cx)
+    .attr('y2', svgHeight - margin.bottom)
+    .attr('stroke-width', 2)
+    .attr('stroke', 'gray');
+};
+
+ngeo.lidarProfile.clearProfilePosition = function() {
+  d3.select('svg#profileSVG').selectAll('#highlightBar').remove();
+};
+
 ngeo.lidarProfile.plot2canvas.changeStyle = function(material) {
   const ctx = d3.select('#profileCanvas')
     .node().getContext('2d');
