@@ -39,13 +39,12 @@ function gmfLidarPanelTemplateUrl($element, $attrs, gmfLidarPanelTemplateUrl) {
 
 
 /**
- * Provide a component that display a profile panel. This profile use the given
- * LineString geometry to request the c2cgeoportal profile.json service. The
- * raster used in the request are the keys of the 'linesconfiguration' object.
- * The 'map' attribute is optional and are only used to display on the map the
+ * Provide a component that display a lidar profile panel. This profile use the given
+ * LineString geometry to request the pytree get_profile service.
+ * The 'map' attribute is used to display on the map the
  * information that concern the hovered point (in the profile and on the map)
  * of the line.
- * This profile relies on the ngeo.profile (d3) and ngeo.ProfileComponent.
+ * This lidar profile relies on the ngeo.lidarprofile (d3)
  *
  * Example:
  *
@@ -53,25 +52,19 @@ function gmfLidarPanelTemplateUrl($element, $attrs, gmfLidarPanelTemplateUrl) {
  *        gmf-profile-active="ctrl.profileActive"
  *        gmf-profile-line="ctrl.profileLine"
  *        gmf-profile-map="::ctrl.map"
- *        gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration">
  *      </gmf-profile>
  *
  *
- * @htmlAttribute {boolean} gmf-profile-active Active the component.
+ * @htmlAttribute {boolean} gmf-lidar-profile-active Active the component.
  * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
- * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
- *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
- *     will be used to request elevation layers.
  * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
- * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
- *     points to request. Default to 100.
  * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
  *     object like {@link ngeox.profile.ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
- *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
+ *     'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
  *
  * @ngdoc component
@@ -98,7 +91,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
  * @param {angular.JQLite} $element Element.
  * @param {angular.$filter} $filter Angular filter
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {string} pytreeLidarProfileJsonUrl URL of GMF service JSON profile.
+ * @param {string} pytreeLidarProfileJsonUrl URL of Pytree service arraybuffer profile.
  * @constructor
  * @private
  * @ngInject
