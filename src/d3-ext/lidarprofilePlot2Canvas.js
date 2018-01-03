@@ -235,7 +235,7 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
 
     d3.select('#profileInfo')
       .html(html);
-
+    ngeo.lidarProfile.loader.cartoHighlight.setElement('');
     const el = document.createElement('div');
     el.className += 'tooltip ngeo-tooltip-measure';
     el.innerHTML = html;
@@ -243,8 +243,25 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
     ngeo.lidarProfile.loader.cartoHighlight.setElement(el);
     // TODO: handle CRS
     ngeo.lidarProfile.loader.cartoHighlight.setPosition([p.coords[0] - 2000000, p.coords[1] - 1000000]);
+    const classifColor = ngeo.lidarProfile.options.profileConfig.classification[p.classification].color;
+    ngeo.lidarProfile.loader.lidarPointHighlight.getSource().clear();
+    const lidarPointGeom = new ol.geom.Point([p.coords[0] - 2000000, p.coords[1] - 1000000]);
+    const lidarPointFeature = new ol.Feature(lidarPointGeom);
+    if (typeof (classifColor) !== undefined) {
 
+      lidarPointFeature.setStyle(new ol.style.Style({
+        image: new ol.style.Circle({
+          fill: new ol.style.Fill({
+            color: `rgba(${classifColor}, 1)`
+          }),
+          radius: 3
+        })
+      }));
+    }
+
+    ngeo.lidarProfile.loader.lidarPointHighlight.getSource().addFeature(lidarPointFeature);
   } else {
+    ngeo.lidarProfile.loader.lidarPointHighlight.getSource().clear();
     svg.select('#highlightCircle').remove();
     d3.select('#profileInfo').html('');
     ngeo.lidarProfile.loader.cartoHighlight.setPosition(undefined);

@@ -14,6 +14,21 @@ ngeo.lidarProfile.setOptions = function(options) {
   });
   ngeo.lidarProfile.loader.cartoHighlight.setMap(options.map);
 
+  ngeo.lidarProfile.loader.lidarPointHighlight = new ol.layer.Vector({
+    source: new ol.source.Vector({
+    }),
+    style: new ol.style.Style({
+      image: new ol.style.Circle({
+        fill: new ol.style.Fill({
+          color: 'rgba(0, 0, 255, 0.5)'
+        }),
+        radius: 3
+      })
+    })
+  });
+
+  ngeo.lidarProfile.loader.lidarPointHighlight.setMap(options.map);
+
 };
 
 ngeo.lidarProfile.loader.requestsQueue = [];
@@ -49,7 +64,7 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
     classification: [],
     coords: []
   };
-
+  d3.select('#profileInfo').html('');
   for (let i = 0; i < maxLOD; i++) {
     if (i == 0) {
       ngeo.lidarProfile.loader.xhrRequest(ngeo.lidarProfile.options, minLOD, ngeo.lidarProfile.options.profileConfig.initialLOD, i, profileLine, distanceOffset, lastLOD, ngeo.lidarProfile.options.profileConfig.profilWidth, resetPlot, uuid);
@@ -65,7 +80,9 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
 };
 
 ngeo.lidarProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
-  d3.select('#profileInfo').html(`Loading levels:\n ${minLOD}  to ${maxLOD} ...`);
+  let html = d3.select('#profileInfo').html();
+  html += `Loading LOD: ${minLOD}-${maxLOD}...<br>`;
+  d3.select('#profileInfo').html(html);
   // TODO get pointCloud from pytree config
   const hurl = `${options.pytreeLidarProfileJsonUrl_}/get_profile?minLOD=${minLOD}&maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=sitn2016&attributes='`;
 
@@ -85,7 +102,9 @@ ngeo.lidarProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, co
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         if (this.uuid == ngeo.lidarProfile.loader.lastUuid) {
-          d3.select('#profileInfo').html(`Levels loaded:<br> ${minLOD} to ${maxLOD}`);
+          let html = d3.select('#profileInfo').html();
+          html += `LOD: ${minLOD}-${maxLOD} loaded <br>`;
+          d3.select('#profileInfo').html(html);
           ngeo.lidarProfile.loader.processBuffer(options, xhr.response, iter, distanceOffset, lastLOD, resetPlot);
         }
       }
