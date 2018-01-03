@@ -77,9 +77,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     const domainScale = rangeRatio / domainRatio;
     const domainScaledWidth = domainProfileWidth * domainScale;
     sx = d3.scaleLinear()
-      .domain([
-        domainProfileWidth / 2 - domainScaledWidth / 2,
-        domainProfileWidth / 2 + domainScaledWidth / 2])
+      .domain([0, domainScaledWidth])
       .range([0, width]);
     sy = d3.scaleLinear()
       .domain(rangeY)
