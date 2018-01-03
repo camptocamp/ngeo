@@ -10,7 +10,6 @@ goog.require('ngeo.map.scaleselector');
 
 /**
  * Also related to the map but not included in the module:
- *  - ngeo.map.LayerHelper (require it manually)
  *  - ngeo.map.FeatureOverlay (already required by ngeo.map.FeatureOverlayMgr)
  *
  * @type {!angular.Module}

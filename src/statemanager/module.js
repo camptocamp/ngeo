@@ -5,9 +5,6 @@ goog.require('ngeo.statemanager.Location');
 goog.require('ngeo.statemanager.Service');
 
 /**
- * Also related to the statemanager but not included in the module:
- *  - ngeo.statemanager.Wfspermalink (require it manually)
- *
  * @type {!angular.Module}
  */
 ngeo.statemanager.module = angular.module('ngeoStatemanagerModule', [
