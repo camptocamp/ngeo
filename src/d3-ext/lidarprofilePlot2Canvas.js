@@ -42,8 +42,7 @@ ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
 };
 
 ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
-  console.log('ranges');
-  console.log(rangeX, rangeY);
+
   const canvasEl = d3.select('#profileCanvas').node();
   const ctx = d3.select('#profileCanvas')
     .node().getContext('2d');

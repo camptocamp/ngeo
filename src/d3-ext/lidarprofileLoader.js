@@ -158,7 +158,6 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
     };
     const bytesPerPoint = jHeader.bytesPerPoint;
     const buffer = profile.slice(4 + headerSize);
-    console.log(jHeader)
     for (let i = 0; i < jHeader.points; i++) {
 
       const byteOffset = bytesPerPoint * i;
@@ -209,12 +208,14 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
     const initialProfile = ngeo.lidarProfile.utils.getLinestring();
     const lastSegment = initialProfile[initialProfile.length - 1];
     const rangeX = [0, lastSegment.endD];
-    let rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
+    // let rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
+    let rangeY = [jHeader.boundingBox.lz, jHeader.boundingBox.uz];
 
-    for (let b = 0; b < points.altitude.length; b++) {
-      points.altitude[b] = points.altitude[b] - rangeY[0] + jHeader.boundingBox.lz;
-      ngeo.lidarProfile.loader.profilePoints.altitude[b] = ngeo.lidarProfile.loader.profilePoints.altitude[b] - rangeY[0] + jHeader.boundingBox.lz;
-    }
+    // TODO fix z offset issue in cPotree here is an hugly fix:
+    // for (let b = 0; b < points.altitude.length; b++) {
+    //   points.altitude[b] = points.altitude[b] - rangeY[0] + jHeader.boundingBox.lz;
+    //   ngeo.lidarProfile.loader.profilePoints.altitude[b] = ngeo.lidarProfile.loader.profilePoints.altitude[b] - rangeY[0] + jHeader.boundingBox.lz;
+    // }
 
     rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
 
