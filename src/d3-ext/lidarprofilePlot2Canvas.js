@@ -42,7 +42,8 @@ ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
 };
 
 ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
-
+  console.log('ranges');
+  console.log(rangeX, rangeY);
   const canvasEl = d3.select('#profileCanvas').node();
   const ctx = d3.select('#profileCanvas')
     .node().getContext('2d');
@@ -103,7 +104,9 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   function zoomed() {
     const tr = d3.event.transform;
     const svg = d3.select('svg#profileSVG');
-
+    const xAxis = d3.axisBottom(sx);
+    const yAxis = d3.axisLeft(sy)
+      .tickSize(-width);
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
 
@@ -121,7 +124,9 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   }
 
   const zoom = d3.zoom()
-    .scaleExtent([1, 100])
+    .scaleExtent([1, 32])
+    .translateExtent([[0, 0], [width, height]])
+    .extent([[0, 0], [width, height]])
     .on('zoom', zoomed);
 
   d3.select('svg#profileSVG').call(zoom);
@@ -156,7 +161,8 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     .style('opacity', '0.5')
     .style('stroke', '#b7cff7');
 
-  ngeo.lidarProfile.options.profileConfig.previousDomain = sx.domain();
+  ngeo.lidarProfile.options.profileConfig.previousDomainX = sx.domain();
+  ngeo.lidarProfile.options.profileConfig.previousDomainY = sy.domain();
 
 };
 
