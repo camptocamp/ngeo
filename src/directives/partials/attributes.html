@@ -15,7 +15,6 @@
           <label>
             <input
                 name="{{::attribute.name}}"
-                ng-required="attribute.required"
                 ng-model="attrCtrl.properties[attribute.name]"
                 ng-change="attrCtrl.handleInputChange(attribute.name);"
                 type="checkbox">
