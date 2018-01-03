@@ -1,9 +1,16 @@
-goog.provide('ngeo.exportfeaturesDirective');
+goog.provide('ngeo.editing.exportfeaturesComponent');
 
 goog.require('ngeo');
 goog.require('ngeo.misc.FeatureHelper');
+goog.require('ol');
+goog.require('ol.geom.Point');
+goog.require('ol.geom.LineString');
 
-// FIXME add ngeo.misc.FeatureHelper as module dependency
+ngeo.editing.exportfeaturesComponent = angular.module('ngeoExportfeatures', [
+  ngeo.misc.FeatureHelper.module.name
+]);
+
+ngeo.module.requires.push(ngeo.editing.exportfeaturesComponent.name);
 
 /**
  * Directive used to export vector features in different types of format.
@@ -29,7 +36,7 @@ goog.require('ngeo.misc.FeatureHelper');
  * @ngdoc directive
  * @ngname ngeoExportfeatures
  */
-ngeo.exportfeaturesDirective = function() {
+ngeo.editing.exportfeaturesComponent.directive_ = function() {
   return {
     controller: 'ngeoExportfeaturesController as efCtrl',
     scope: true,
@@ -40,7 +47,7 @@ ngeo.exportfeaturesDirective = function() {
 };
 
 
-ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
+ngeo.module.directive('ngeoExportfeatures', ngeo.editing.exportfeaturesComponent.directive_);
 
 
 /**
@@ -55,7 +62,7 @@ ngeo.module.directive('ngeoExportfeatures', ngeo.exportfeaturesDirective);
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController
  */
-ngeo.ExportfeaturesController = function($element, $injector, $scope,
+ngeo.editing.exportfeaturesComponent.Controller_ = function($element, $injector, $scope,
   ngeoFeatureHelper) {
 
   /**
@@ -154,7 +161,7 @@ ngeo.ExportfeaturesController = function($element, $injector, $scope,
  * that doesn't support the type of geometry.
  * @private
  */
-ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
+ngeo.editing.exportfeaturesComponent.Controller_.prototype.handleElementClick_ = function() {
 
   const features = this.features.getArray();
 
@@ -186,7 +193,7 @@ ngeo.ExportfeaturesController.prototype.handleElementClick_ = function() {
  * @param {jQuery.Event} event Event.
  * @private
  */
-ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, event) {
+ngeo.editing.exportfeaturesComponent.Controller_.prototype.handleMenuItemClick_ = function(format, event) {
   if (!$(event.target.parentElement).hasClass('disabled')) {
     const features = this.features.getArray();
     this.featureHelper_.export(features, format);
@@ -198,7 +205,7 @@ ngeo.ExportfeaturesController.prototype.handleMenuItemClick_ = function(format, 
  * Cleanup event listeners and remove the menu from DOM, if any.
  * @private
  */
-ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
+ngeo.editing.exportfeaturesComponent.Controller_.prototype.handleDestroy_ = function() {
   const id = this.id_;
 
   this.element_.off(['click', id].join('.'));
@@ -214,5 +221,5 @@ ngeo.ExportfeaturesController.prototype.handleDestroy_ = function() {
 };
 
 
-ngeo.module.controller(
-  'ngeoExportfeaturesController', ngeo.ExportfeaturesController);
+ngeo.editing.exportfeaturesComponent.controller(
+  'ngeoExportfeaturesController', ngeo.editing.exportfeaturesComponent.Controller_);

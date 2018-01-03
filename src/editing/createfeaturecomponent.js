@@ -13,10 +13,9 @@ goog.require('ol.Feature');
 goog.require('ol.interaction.Draw');
 goog.require('ol.style.Style');
 
-// Don't forget to add module dependencies
-
 
 ngeo.editing.createfeatureComponent = angular.module('ngeoCreatefeature', [
+  ngeo.misc.EventHelper.module.name
 ]);
 
 ngeo.module.requires.push(ngeo.editing.createfeatureComponent.name);

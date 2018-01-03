@@ -42,7 +42,7 @@ ngeo.editing.attributesComponent.component_ = {
   require: {
     'form': '^'
   },
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/editing/attributes.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/editing/attributescomponent.html`
 };
 
 ngeo.editing.attributesComponent.component('ngeoAttributes', ngeo.editing.attributesComponent.component_);
