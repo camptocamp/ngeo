@@ -934,5 +934,5 @@ ngeo.filter.ruleComponent.component('ngeoRule', {
     'toolGroup': '<'
   },
   controller: ngeo.filter.ruleComponent.RuleController_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rule.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rulecomponent.html`
 });

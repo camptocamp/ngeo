@@ -39,7 +39,7 @@ ngeo.filter.component.component('ngeoFilter', {
     'toolGroup': '<'
   },
   controller: 'ngeoFilterController',
-  templateUrl: () => `${ngeo.baseTemplateUrl}/filter.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/component.html`
 });
 
 /**
