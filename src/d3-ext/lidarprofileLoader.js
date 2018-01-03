@@ -45,7 +45,6 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
   } else {
 
     const domain = ngeo.lidarProfile.options.profileConfig.scaleX.domain();
-    console.log(domain);
     const clip = ngeo.lidarProfile.utils.clipLineByMeasure(domain[0], domain[1]);
     profileLine = '';
     for (const i in clip.clippedLine) {
@@ -159,7 +158,7 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
     };
     const bytesPerPoint = jHeader.bytesPerPoint;
     const buffer = profile.slice(4 + headerSize);
-
+    console.log(jHeader)
     for (let i = 0; i < jHeader.points; i++) {
 
       const byteOffset = bytesPerPoint * i;
@@ -171,14 +170,14 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
 
         if (attribute.name == 'POSITION_PROJECTED_PROFILE') {
 
-          const ux = view.getUint32(aoffset, true);
-          const uy = view.getUint32(aoffset + 4, true);
-          const x = ux * scale;
-          const y = uy * scale;
-          points.distance.push(Math.round(100 * (distanceOffset + x)) / 100);
-          points.altitude.push(Math.round(100 * y) / 100);
-          ngeo.lidarProfile.loader.profilePoints.distance.push(Math.round(100 * (distanceOffset + x)) / 100);
-          ngeo.lidarProfile.loader.profilePoints.altitude.push(Math.round(100 * y) / 100);
+          const udist = view.getUint32(aoffset, true);
+          const ualti = view.getUint32(aoffset + 4, true);
+          const dist = udist * scale;
+          const alti = ualti * scale;
+          points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
+          ngeo.lidarProfile.loader.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
+          points.altitude.push(Math.round(100 * alti) / 100);
+          ngeo.lidarProfile.loader.profilePoints.altitude.push(Math.round(100 * alti) / 100);
 
         } else if (attribute.name == 'CLASSIFICATION') {
           const classif = view.getUint8(aoffset, true);
@@ -210,7 +209,14 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
     const initialProfile = ngeo.lidarProfile.utils.getLinestring();
     const lastSegment = initialProfile[initialProfile.length - 1];
     const rangeX = [0, lastSegment.endD];
-    const rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
+    let rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
+
+    for (let b = 0; b < points.altitude.length; b++) {
+      points.altitude[b] = points.altitude[b] - rangeY[0] + jHeader.boundingBox.lz;
+      ngeo.lidarProfile.loader.profilePoints.altitude[b] = ngeo.lidarProfile.loader.profilePoints.altitude[b] - rangeY[0] + jHeader.boundingBox.lz;
+    }
+
+    rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
 
     if (iter == 0 && resetPlot) {
       ngeo.lidarProfile.plot2canvas.setupPlot(rangeX, rangeY);

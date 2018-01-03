@@ -74,6 +74,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   let sx, sy, domainScale;
   // TODO: FIX PAN
   if (domainRatio < rangeRatio) {
+    console.log('par la');
     const domainScale = rangeRatio / domainRatio;
     const domainScaledWidth = domainProfileWidth * domainScale;
     sx = d3.scaleLinear()
@@ -85,6 +86,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
       .domain(rangeY)
       .range([height, 0]);
   } else {
+    console.log('ici');
     domainScale =  domainRatio / rangeRatio;
     const domainScaledHeight = domainProfileHeight * domainScale;
     const domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
@@ -140,8 +142,8 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   d3.select('svg#profileSVG')
     .on('mousemove', ngeo.lidarProfile.plot2canvas.pointHighlight);
 
-  let xAxis = d3.axisBottom(sx);
-  let yAxis = d3.axisLeft(sy)
+  const xAxis = d3.axisBottom(sx);
+  const yAxis = d3.axisLeft(sy)
     .tickSize(-width);
 
   svg.select('.y.axis').selectAll('g.tick line').style('stroke', '#b7cff7');
