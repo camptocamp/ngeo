@@ -1,9 +1,20 @@
-goog.provide('gmf.themeselectorComponent');
+goog.provide('gmf.theme.selectorComponent');
 
 goog.require('gmf');
-goog.require('gmf.ThemeManager');
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Manager');
+goog.require('gmf.theme.Themes');
 goog.require('ol.events');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.theme.selectorComponent = angular.module('gmfThemeSelectorComponent', [
+  gmf.theme.Manager.module.name,
+  gmf.theme.Themes.module.name,
+]);
+
+gmf.module.requires.push(gmf.theme.selectorComponent.name);
 
 
 /**
@@ -29,12 +40,6 @@ goog.require('ol.events');
  *         data-header-title="Themes"
  *         gmf-themeselector-filter="::mainCtrl.filter">
  *      </gmf-themeselector>
- *      <script>
- *        (function() {
- *          let module = angular.module('app');
- *          module.value('gmfTreeManagerModeFlush', true);
- *        })();
- *      </script>
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
  * about these modes, refer to the documentation of {@link gmf.TreeManager}.
@@ -62,37 +67,37 @@ goog.require('ol.events');
  *
  * @type {!angular.Component}
  */
-gmf.themeselectorComponent = {
+gmf.theme.selectorComponent.component_ = {
   bindings: {
     'filter': '<gmfThemeselectorFilter'
   },
   controller: 'gmfThemeselectorController',
-  templateUrl: () => `${gmf.baseTemplateUrl}/themeselector.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/theme/selectorComponent.html`
 };
 
-gmf.module.component('gmfThemeselector', gmf.themeselectorComponent);
+gmf.theme.selectorComponent.component('gmfThemeselector', gmf.theme.selectorComponent.component_);
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.ThemeManager} gmfThemeManager Tree manager service.
- * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {gmf.theme.Manager} gmfThemeManager Tree manager service.
+ * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */
-gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
+gmf.theme.selectorComponent.Controller_ = function($scope, gmfThemeManager, gmfThemes) {
 
   /**
-   * @type {gmf.ThemeManager}
+   * @type {gmf.theme.Manager}
    * @export
    */
   this.gmfThemeManager = gmfThemeManager;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -126,7 +131,7 @@ gmf.ThemeselectorController = function($scope, gmfThemeManager, gmfThemes) {
  * current theme.
  * @private
  */
-gmf.ThemeselectorController.prototype.setThemes_ = function() {
+gmf.theme.selectorComponent.Controller_.prototype.setThemes_ = function() {
   this.gmfThemes_.getThemesObject().then((themes) => {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;
@@ -140,7 +145,7 @@ gmf.ThemeselectorController.prototype.setThemes_ = function() {
  *     the theme should be added but it's already added.
  * @export
  */
-gmf.ThemeselectorController.prototype.setTheme = function(theme, opt_silent) {
+gmf.theme.selectorComponent.Controller_.prototype.setTheme = function(theme, opt_silent) {
   if (theme) {
     this.gmfThemeManager.addTheme(theme, opt_silent);
   }
@@ -150,10 +155,11 @@ gmf.ThemeselectorController.prototype.setTheme = function(theme, opt_silent) {
 /**
  * @private
  */
-gmf.ThemeselectorController.prototype.handleDestroy_ = function() {
+gmf.theme.selectorComponent.Controller_.prototype.handleDestroy_ = function() {
   this.listenerKeys_.forEach(ol.events.unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 
 
-gmf.module.controller('gmfThemeselectorController', gmf.ThemeselectorController);
+gmf.theme.selectorComponent.controller('gmfThemeselectorController',
+  gmf.theme.selectorComponent.Controller_);

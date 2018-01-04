@@ -1,10 +1,10 @@
 goog.provide('gmf.Permalink');
 
 goog.require('gmf');
-goog.require('ngeo');
-goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
-goog.require('gmf.ThemeManager');
+goog.require('gmf.theme.Manager');
+goog.require('gmf.theme.Themes');
+goog.require('ngeo');
 goog.require('ngeo.Popover');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
@@ -225,7 +225,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
       $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
-   * @type {?gmf.Themes}
+   * @type {?gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = $injector.has('gmfThemes') ? $injector.get('gmfThemes') : null;
@@ -238,7 +238,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     $injector.get('gmfObjectEditingManager') : null;
 
   /**
-   * @type {?gmf.ThemeManager}
+   * @type {?gmf.theme.Manager}
    * @private
    */
   this.gmfThemeManager_ = $injector.has('gmfThemeManager') ?
@@ -446,7 +446,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   }
 
   if (this.gmfThemeManager_) {
-    this.rootScope_.$on(gmf.ThemeManager.EventType.THEME_NAME_SET, (event, name) => {
+    this.rootScope_.$on(gmf.theme.Manager.EventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_();
     });
   }
@@ -963,13 +963,13 @@ gmf.Permalink.prototype.initLayers_ = function() {
     const groupsNames = this.ngeoLocation_.getParam(gmf.PermalinkParam.TREE_GROUPS);
     if (!groupsNames) {
       goog.asserts.assertString(themeName);
-      theme = gmf.Themes.findThemeByName(themes, themeName);
+      theme = gmf.theme.Themes.findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;
       }
     } else {
       groupsNames.split(',').forEach((groupName) => {
-        const group = gmf.Themes.findGroupByName(themes, groupName);
+        const group = gmf.theme.Themes.findGroupByName(themes, groupName);
         if (group) {
           firstLevelGroups.push(group);
         }

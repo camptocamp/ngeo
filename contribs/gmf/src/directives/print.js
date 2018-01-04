@@ -3,6 +3,7 @@ goog.provide('gmf.printComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.FeatureHelper');
@@ -171,7 +172,7 @@ gmf.PrintController = class {
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.$filter} $filter Angular $filter service.
    * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
-   * @param {gmf.Themes} gmfThemes The gmf Themes service.
+   * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -291,7 +292,7 @@ gmf.PrintController = class {
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {gmf.Themes}
+     * @type {gmf.theme.Themes}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
@@ -1093,10 +1094,10 @@ gmf.PrintController = class {
    * @private
    */
   getMetadataLegendImage_(layerName) {
-    const groupNode = gmf.Themes.findGroupByLayerNodeName(this.currentThemes_, layerName);
+    const groupNode = gmf.theme.Themes.findGroupByLayerNodeName(this.currentThemes_, layerName);
     let node;
     if (groupNode && groupNode.children) {
-      node = gmf.Themes.findObjectByName(groupNode.children, layerName);
+      node = gmf.theme.Themes.findObjectByName(groupNode.children, layerName);
     }
     let legendImage;
     if (node && node.metadata) {

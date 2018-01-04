@@ -1,19 +1,9 @@
-goog.provide('gmf.ThemeManager');
+goog.provide('gmf.theme.Manager');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ngeo.statemanager.Service');
-
-// FIXME remove lines right under and add me at the module dependencies:
-// - ngeo.statemanager.Service.module.name
-ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
-
-
-/**
- * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.
- */
-gmf.module.value('gmfTreeManagerModeFlush', true);
 
 
 /**
@@ -30,7 +20,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {angular.Scope} $rootScope Angular rootScope.
- * @param {gmf.Themes} gmfThemes gmf Themes service.
+ * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {gmf.TreeManager} gmfTreeManager the tree manager.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
@@ -39,7 +29,7 @@ gmf.module.value('gmfTreeManagerModeFlush', true);
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
+gmf.theme.Manager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   gmfTreeManager, ngeoStateManager) {
 
   /**
@@ -49,7 +39,7 @@ gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.$rootScope_ = $rootScope;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -88,7 +78,7 @@ gmf.ThemeManager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
  *     the theme should be added but it's already added.
  * @export
  */
-gmf.ThemeManager.prototype.addTheme = function(theme, opt_silent) {
+gmf.theme.Manager.prototype.addTheme = function(theme, opt_silent) {
   if (this.modeFlush) {
     this.ngeoStateManager_.updateState({
       'theme': theme.name
@@ -105,7 +95,7 @@ gmf.ThemeManager.prototype.addTheme = function(theme, opt_silent) {
  * @return {string} The theme name. Will be empty on 'not flush' mode.
  * @export
  */
-gmf.ThemeManager.prototype.getThemeName = function() {
+gmf.theme.Manager.prototype.getThemeName = function() {
   return this.themeName_;
 };
 
@@ -115,10 +105,10 @@ gmf.ThemeManager.prototype.getThemeName = function() {
  * @param {boolean=} opt_stealth Don't emit an event is true
  * @export
  */
-gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
+gmf.theme.Manager.prototype.setThemeName = function(name, opt_stealth) {
   this.themeName_ = name;
   if (!opt_stealth) {
-    this.$rootScope_.$emit(gmf.ThemeManager.EventType.THEME_NAME_SET, name);
+    this.$rootScope_.$emit(gmf.theme.Manager.EventType.THEME_NAME_SET, name);
   }
 };
 
@@ -127,19 +117,33 @@ gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
  * Remove all groups.
  * @export
  */
-gmf.ThemeManager.prototype.removeAll = function() {
+gmf.theme.Manager.prototype.removeAll = function() {
   this.gmfTreeManager_.removeAll();
 };
-
-gmf.module.service('gmfThemeManager', gmf.ThemeManager);
 
 
 /**
  * @enum {string}
  */
-gmf.ThemeManager.EventType = {
+gmf.theme.Manager.EventType = {
   /**
    * Triggered when the theme name change.
    */
   THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
 };
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.theme.Manager.module = angular.module('gmfThemeManager', [
+  ngeo.statemanager.Service.module.name,
+]);
+
+/**
+ * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.
+ */
+gmf.theme.Manager.module.value('gmfTreeManagerModeFlush', true);
+
+gmf.theme.Manager.module.service('gmfThemeManager', gmf.theme.Manager);
+gmf.module.requires.push(gmf.theme.Manager.module.name);

@@ -8,18 +8,19 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.Permalink');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
-goog.require('ngeo.misc.syncArrays');
-goog.require('ngeo.misc.WMSTime');
-goog.require('ngeo.Popup');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.datasource.OGC');
-goog.require('ol.layer.Tile');
-/** @suppress {extraRequire} */
-goog.require('ngeo.popoverDirective');
-
 /** @suppress {extraRequire} */
 goog.require('ngeo.layertree.component');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.map.LayerHelper');
+goog.require('ngeo.misc.syncArrays');
+goog.require('ngeo.misc.WMSTime');
+/** @suppress {extraRequire} */
+goog.require('ngeo.Popup');
+goog.require('ol.layer.Tile');
+/** @suppress {extraRequire} */
+goog.require('ngeo.popoverDirective');
 
 
 // FIXME remove lines right under and add me at the module dependencies:
@@ -140,7 +141,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
- * @param {!gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {!gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @private
  * @struct
@@ -271,7 +272,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
   this.layers = [];
 
   /**
-   * @type {!gmf.Themes}
+   * @type {!gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -681,11 +682,11 @@ gmf.LayertreeController.prototype.nodesCount = function() {
  */
 gmf.LayertreeController.prototype.getResolutionStyle = function(gmfLayer) {
   const resolution = this.map.getView().getResolution();
-  const minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  const minResolution = gmf.theme.Themes.getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     return 'out-of-resolution';
   }
-  const maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+  const maxResolution = gmf.theme.Themes.getNodeMaxResolution(gmfLayer);
   if (maxResolution !== undefined && resolution > maxResolution) {
     return 'out-of-resolution';
   }
@@ -703,11 +704,11 @@ gmf.LayertreeController.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
-  const minResolution = gmf.Themes.getNodeMinResolution(gmfLayer);
+  const minResolution = gmf.theme.Themes.getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     view.setResolution(view.constrainResolution(minResolution, 0, 1));
   } else {
-    const maxResolution = gmf.Themes.getNodeMaxResolution(gmfLayer);
+    const maxResolution = gmf.theme.Themes.getNodeMaxResolution(gmfLayer);
     if (maxResolution !== undefined && resolution > maxResolution) {
       view.setResolution(view.constrainResolution(maxResolution, 0, -1));
     }

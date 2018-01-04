@@ -1,8 +1,8 @@
 /* global themes */
-goog.require('gmf.ThemeManager');
+goog.require('gmf.theme.Manager');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.ThemeManager', () => {
+describe('gmf.theme.Manager', () => {
   let gmfThemeManager_;
   //var gmfTreeManager_;
 

@@ -1,6 +1,7 @@
 goog.provide('gmf.SyncLayertreeMap');
 
 goog.require('gmf');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
@@ -18,7 +19,7 @@ goog.require('ol.layer.Tile');
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.misc.WMSTime} ngeoWMSTime wms time service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap

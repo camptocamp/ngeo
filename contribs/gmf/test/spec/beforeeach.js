@@ -1,3 +1,7 @@
+/*eslint valid-jsdoc: 0 */
+
+goog.require('gmf.theme.module');
+
 beforeEach(() => {
   const gmfModule = angular.module('gmf');
   gmfModule.constant('angularLocaleScript', 'http://fake');

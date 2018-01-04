@@ -2,9 +2,12 @@ goog.provide('gmfapp.search');
 
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+goog.require('gmf.search.module');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.map.module');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -14,14 +17,12 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-goog.require('gmf.search.module');
-goog.require('ngeo.map.module');
-
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.search.module.name,
+  gmf.theme.Themes.module.name,
   ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
@@ -36,7 +37,7 @@ gmfapp.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
 /**
- * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
  * @constructor

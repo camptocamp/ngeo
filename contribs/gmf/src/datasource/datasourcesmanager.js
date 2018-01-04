@@ -4,13 +4,14 @@ goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.TreeManager');
+goog.require('gmf.theme.Themes');
 goog.require('gmf.WFSAliases');
-goog.require('ngeo.map.BackgroundLayerMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.map.LayerHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
+goog.require('ngeo.map.BackgroundLayerMgr');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ol.events');
 goog.require('ol.obj');
@@ -32,7 +33,7 @@ gmf.datasource.DataSourcesManager = class {
    * @param {angular.$q} $q Angular q service
    * @param {!angular.Scope} $rootScope Angular rootScope.
    * @param {angular.$timeout} $timeout Angular timeout service.
-   * @param {gmf.Themes} gmfThemes The gmf Themes service.
+   * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
@@ -72,7 +73,7 @@ gmf.datasource.DataSourcesManager = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {gmf.Themes}
+     * @type {gmf.theme.Themes}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
@@ -356,7 +357,7 @@ gmf.datasource.DataSourcesManager = class {
     let ogcImageType;
     let timeProperty;
 
-    if (ogcType === gmf.Themes.NodeType.WMTS) {
+    if (ogcType === gmf.theme.Themes.NodeType.WMTS) {
       // (3) Manage WMTS
       const gmfLayerWMTS = /** @type {gmfThemes.GmfLayerWMTS} */ (gmfLayer);
 
@@ -384,7 +385,7 @@ gmf.datasource.DataSourcesManager = class {
         ogcServer = ogcServers[meta.ogcServer];
       }
       ogcImageType = gmfLayerWMTS.imageType;
-    } else if (ogcType === gmf.Themes.NodeType.WMS) {
+    } else if (ogcType === gmf.theme.Themes.NodeType.WMS) {
       // (4) Manage WMS
       const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
 
