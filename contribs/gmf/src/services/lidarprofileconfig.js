@@ -51,22 +51,28 @@ gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
     this.profileConfig.maxPoints = 50000; // resp.data['max_points']; // TODO: setup in pytree yaml
     this.profileConfig.pointSum = 0;
     // TODO: get this from pytree config
+    this.profileConfig.pointAttributes.RGB.checked = 0;
+    this.profileConfig.pointAttributes.INTENSITY.checked = 1;
+    this.profileConfig.pointAttributes.CLASSIFICATION.checked = 1;
     this.profileConfig.pointAttributes.POSITION_CARTESIAN = {
       name: 'POSITION_CARTESIAN',
       elements: 3,
-      bytes: 12
+      bytes: 12,
+      checked: 0
     };
 
     this.profileConfig.pointAttributes.POSITION_PROJECTED_PROFILE = {
       name: 'POSITION_PROJECTED_PROFILE',
       elements: 2,
-      bytes: 8
+      bytes: 8,
+      checked: 0
     };
 
     this.profileConfig.pointAttributes.COLOR_PACKED = {
       name: 'COLOR_PACKED',
       elements: 4,
-      bytes: 4
+      bytes: 4,
+      checked: 1
     };
 
     this.profileConfig.defaultAttribute = resp.data['default_attribute'];

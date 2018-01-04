@@ -20,7 +20,7 @@ ngeo.lidarProfile.setOptions = function(options) {
     style: new ol.style.Style({
       image: new ol.style.Circle({
         fill: new ol.style.Fill({
-          color: 'rgba(0, 0, 255, 0.5)'
+          color: 'rgba(0, 0, 255, 1)'
         }),
         radius: 3
       })
@@ -88,7 +88,8 @@ ngeo.lidarProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, co
   html += `Loading LOD: ${minLOD}-${maxLOD}...<br>`;
   d3.select('#profileInfo').html(html);
   const pointCloudName = ngeo.lidarProfile.options.profileConfig.defaultPointCloud;
-  const hurl = `${options.pytreeLidarProfileJsonUrl_}/get_profile?minLOD=${minLOD}&maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes='`;
+  const hurl = `${options.pytreeLidarProfileJsonUrl_}/get_profile?minLOD=${minLOD}
+    &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes='`;
 
   for (let i = 0; i < ngeo.lidarProfile.loader.requestsQueue.length; i++) {
     if (ngeo.lidarProfile.loader.requestsQueue[i].uuid != ngeo.lidarProfile.loader.lastUuid) {
@@ -192,7 +193,7 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
           ngeo.lidarProfile.loader.profilePoints.classification.push(classif);
 
         } else if (attribute.name == 'INTENSITY') {
-          const intensity = view.getUint16(aoffset, true);
+          const intensity = view.getUint8(aoffset, true);
           points.intensity.push(intensity);
           ngeo.lidarProfile.loader.profilePoints.intensity.push(intensity);
 

@@ -27,7 +27,7 @@
   <hr>
     Material:
   <select ng-model="data.model" ng-change="$ctrl.setDefaultAttribute(data.model)">
-    <option ng-repeat="option in ::$ctrl.getPointAttributes()" value="{{option.name}}" selected>{{option.name}}</option>
+    <option ng-repeat="option in ::$ctrl.getPointAttributes()" value="{{option.name}}" ng-if="!!option.checked">{{option.name}}</option>
   </select>
   </div>
   <hr>

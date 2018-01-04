@@ -137,6 +137,13 @@ gmf.LidarPanelController.prototype.getClassification = function() {
 };
 
 gmf.LidarPanelController.prototype.getPointAttributes = function() {
+  // const result = {};
+  // for (const key in this.gmfLidarProfileConfig.profileConfig.pointAttributes) {
+  //   if (this.gmfLidarProfileConfig.profileConfig.pointAttributes[key].checked == 1) {
+  //     result[key] = this.gmfLidarProfileConfig.profileConfig.pointAttributes[key];
+  //   }
+  // }
+  // console.log(re)
   return this.gmfLidarProfileConfig.profileConfig.pointAttributes;
 };
 

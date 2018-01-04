@@ -122,7 +122,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   }
 
   const zoom = d3.zoom()
-    .scaleExtent([1, 32])
+    .scaleExtent([1, 100])
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
     .on('zoom', zoomed);
