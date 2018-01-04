@@ -1,19 +1,19 @@
 goog.provide('gmfapp.displayquerywindow');
 
 goog.require('gmf.datasource.DataSourcesManager');
-goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+goog.require('gmf.theme.Themes');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
@@ -31,6 +31,7 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.theme.Themes.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeo.misc.btnComponent.name,
 ]);
@@ -84,7 +85,7 @@ gmfapp.module.controller('AppQueryresultController', gmfapp.QueryresultControlle
 
 /**
  * @constructor
- * @param {gmf.Themes} gmfThemes The gmf themes service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature

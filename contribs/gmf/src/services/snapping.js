@@ -1,7 +1,7 @@
 goog.provide('gmf.Snapping');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Themes');
 goog.require('gmf.TreeManager');
 goog.require('ol.events');
 goog.require('ol.Collection');
@@ -25,7 +25,7 @@ goog.require('ol.interaction.Snap');
  * @param {angular.$q} $q The Angular $q service.
  * @param {!angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @ngInject
  * @ngdoc service
@@ -61,7 +61,7 @@ gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.timeout_ = $timeout;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -216,7 +216,7 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
   // If treeCtrl is snappable and supports WFS, listen to its state change.
   // When it becomes visible, it's added to the list of snappable tree ctrls.
   node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
-  const snappingConfig = gmf.Themes.getSnappingConfig(node);
+  const snappingConfig = gmf.theme.Themes.getSnappingConfig(node);
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
@@ -299,7 +299,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
 
   // (2)
-  if (gmfLayer.type !== gmf.Themes.NodeType.WMS) {
+  if (gmfLayer.type !== gmf.theme.Themes.NodeType.WMS) {
     return null;
   }
 

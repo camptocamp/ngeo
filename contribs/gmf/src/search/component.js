@@ -1,9 +1,9 @@
 goog.provide('gmf.search.component');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
 goog.require('gmf.search.FulltextSearch');
+goog.require('gmf.theme.Themes');
+goog.require('gmf.TreeManager');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.AutoProjection');
 /** @suppress {extraRequire} */
@@ -30,11 +30,12 @@ goog.require('ol.uri');
  * @type {!angular.Module}
  */
 gmf.search.component = angular.module('gmfSearch', [
+  gmf.search.FulltextSearch.module.name,
+  gmf.theme.Themes.module.name,
   ngeo.misc.AutoProjection.module.name,
   ngeo.misc.colorpickerComponent.name,
   ngeo.search.module.name,
   ngeo.map.FeatureOverlayMgr.module.name,
-  gmf.search.FulltextSearch.module.name
 ]);
 
 gmf.module.requires.push(gmf.search.component.name);
@@ -185,7 +186,7 @@ gmf.search.component.SearchController_ = class {
    *     create GeoJSON Bloodhound service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
-   * @param {gmf.Themes} gmfThemes gmf Themes service.
+   * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
    * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
    * @param {gmf.search.FulltextSearch} gmfSearchFulltextSearch gmf Full text search service.
    * @ngInject
@@ -228,7 +229,7 @@ gmf.search.component.SearchController_ = class {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {gmf.Themes}
+     * @type {gmf.theme.Themes}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
@@ -919,7 +920,7 @@ gmf.search.component.SearchController_ = class {
         const actionData = action['data'];
         if (actionName == 'add_theme') {
           this.gmfThemes_.getThemesObject().then((themes) => {
-            const theme = gmf.Themes.findThemeByName(themes, actionData);
+            const theme = gmf.theme.Themes.findThemeByName(themes, actionData);
             if (theme) {
               this.gmfTreeManager_.addFirstLevelGroups(theme.children);
             }

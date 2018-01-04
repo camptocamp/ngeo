@@ -2,10 +2,10 @@ goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('goog.asserts');
 goog.require('gmf');
-goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
+goog.require('gmf.theme.Themes');
+goog.require('gmf.TreeManager');
 
 
 /**
@@ -54,7 +54,7 @@ gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective)
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @private
@@ -112,7 +112,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
   this.$timeout_ = $timeout;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;

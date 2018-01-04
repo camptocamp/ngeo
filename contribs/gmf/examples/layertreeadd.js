@@ -1,8 +1,5 @@
 goog.provide('gmfapp.layertreeadd');
 
-goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
-goog.require('gmf.ThemeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.disclaimerComponent');
 /** @suppress {extraRequire} */
@@ -10,18 +7,23 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
+goog.require('gmf.theme.Themes');
+goog.require('gmf.theme.Manager');
+goog.require('gmf.TreeManager');
+/** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.statemanager.Location');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-goog.require('ngeo.statemanager.Location');
-
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me other dependencies are in a module
-  ngeo.statemanager.Location.module.name
+  gmf.theme.Manager.module.name,
+  gmf.theme.Themes.module.name,
+  ngeo.statemanager.Location.module.name,
 ]);
 
 
@@ -31,13 +33,13 @@ gmfapp.module.value('gmfTreeUrl',
 
 /**
  * @constructor
- * @param {gmf.Themes} gmfThemes The gmf themes service.
  * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {gmf.ThemeManager} gmfThemeManager gmf Tree Manager service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, ngeoLocation) {
+gmfapp.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -75,7 +77,7 @@ gmfapp.MainController = function(gmfThemes, gmfTreeManager, gmfThemeManager, nge
   this.gmfTreeManager = gmfTreeManager;
 
   /**
-   * @type {gmf.ThemeManager}
+   * @type {gmf.theme.Manager}
    * @export
    */
   this.gmfThemeManager = gmfThemeManager;

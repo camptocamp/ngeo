@@ -1,12 +1,11 @@
 goog.provide('gmf.TreeManager');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
-goog.require('ngeo.Notification');
-goog.require('ol.events');
-
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.layertree.Controller');
+goog.require('ngeo.Notification');
 goog.require('ngeo.statemanager.Service');
+goog.require('ol.events');
 
 // FIXME remove lines right under and add me at the module dependencies:
 // - ngeo.layertree.Controller.module.name
@@ -33,7 +32,7 @@ ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
- * @param {gmf.Themes} gmfThemes gmf Themes service.
+ * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
@@ -67,7 +66,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.ngeoNotification_ = ngeoNotification;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -267,7 +266,7 @@ gmf.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
  */
 gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then((themes) => {
-    const group = gmf.Themes.findGroupByName(themes, groupName);
+    const group = gmf.theme.Themes.findGroupByName(themes, groupName);
     if (group) {
       this.addFirstLevelGroups([group], opt_add, false);
     }
@@ -286,7 +285,7 @@ gmf.TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
  */
 gmf.TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {
-    const group = gmf.Themes.findGroupByLayerNodeName(themes, layerName);
+    const group = gmf.theme.Themes.findGroupByLayerNodeName(themes, layerName);
     if (group) {
       const groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
       this.$timeout_(() => {
@@ -480,7 +479,7 @@ gmf.TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
     const name = node.name;
 
     // Find the right firstlevelgroup in the new theme.
-    const nodeToRestore = gmf.Themes.findGroupByName(themes, name);
+    const nodeToRestore = gmf.theme.Themes.findGroupByName(themes, name);
     if (nodeToRestore) {
       // Restore state.
       const fullState = firstLevelGroupsFullState[name];

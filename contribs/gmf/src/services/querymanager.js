@@ -2,7 +2,7 @@ goog.provide('gmf.QueryManager');
 
 goog.require('ol.events');
 goog.require('gmf');
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.query.Service');
 
 
@@ -21,7 +21,7 @@ goog.require('ngeo.query.Service');
  * @constructor
  * @struct
  * @param {!ngeo.query.Service} ngeoQuery The ngeo Query service.
- * @param {!gmf.Themes} gmfThemes The gmf Themes service.
+ * @param {!gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {!angular.$q} $q Angular q service
  * @ngInject
  * @ngdoc service
@@ -36,7 +36,7 @@ gmf.QueryManager = function(ngeoQuery, gmfThemes, $q) {
   this.ngeoQuery_ = ngeoQuery;
 
   /**
-   * @type {!gmf.Themes}
+   * @type {!gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;

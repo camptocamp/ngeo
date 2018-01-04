@@ -1,10 +1,10 @@
 goog.provide('gmfapp.backgroundlayerselector');
 
-goog.require('gmf.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+goog.require('gmf.theme.Themes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -12,7 +12,10 @@ goog.require('ol.View');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.theme.Themes.module.name,
+]);
 
 
 gmfapp.module.value(
@@ -22,7 +25,7 @@ gmfapp.module.value(
 
 
 /**
- * @param {gmf.Themes} gmfThemes Themes service.
+ * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @constructor
  * @ngInject
  */

@@ -1,9 +1,9 @@
 /* global themes capabilities */
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Themes');
 goog.require('gmf.test.data.themes');
 goog.require('ol.events');
 
-describe('gmf.Themes', () => {
+describe('gmf.theme.Themes', () => {
   let gmfThemes;
   let treeUrl;
   let $httpBackend;

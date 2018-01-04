@@ -1,6 +1,6 @@
 /* global themes */
-goog.require('gmf.Themes');
 goog.require('gmf.QueryManager');
+goog.require('gmf.theme.Themes');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.QueryManager', () => {
@@ -52,7 +52,7 @@ describe('gmf.QueryManager', () => {
 
   describe('#createSources_', () => {
     it('Creates sources on queryable layers with WFS support', () => {
-      const osmTheme = gmf.Themes.findThemeByName(themes.themes, 'OSM');
+      const osmTheme = gmf.theme.Themes.findThemeByName(themes.themes, 'OSM');
       const firstLevelGroup = osmTheme.children[3]; // OSM Function
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
       let children, osmSource;
@@ -71,7 +71,7 @@ describe('gmf.QueryManager', () => {
     });
 
     it('Creates sources on queryable layer without WFS support', () => {
-      const osmTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
+      const osmTheme = gmf.theme.Themes.findThemeByName(themes.themes, 'Cadastre');
       const firstLevelGroup = osmTheme.children[0]; // 'Cadastre'
       queryManager.createSources_(firstLevelGroup, firstLevelGroup, themes.ogcServers);
       const osmSource = getSourceById(queryManager.sources_, 115);
@@ -80,7 +80,7 @@ describe('gmf.QueryManager', () => {
     });
 
     it('Creates a source for queryable WMTS overlay layers', () => {
-      const cadasterTheme = gmf.Themes.findThemeByName(themes.themes, 'Cadastre');
+      const cadasterTheme = gmf.theme.Themes.findThemeByName(themes.themes, 'Cadastre');
       cadasterTheme.children.forEach((group) => {
         queryManager.createSources_(group, group, themes.ogcServers);
       });

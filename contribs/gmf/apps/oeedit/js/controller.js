@@ -16,7 +16,7 @@ goog.require('ngeo.proj.EPSG21781');
 /** @suppress {extraRequire} */
 goog.require('gmf.objecteditingComponent');
 goog.require('gmf.ObjectEditingManager');
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
@@ -104,7 +104,7 @@ app.oeedit.Controller = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {gmf.Themes} gmfObjectEditingManager The gmf theme service
+   * @type {gmf.theme.Themes} gmfObjectEditingManager The gmf theme service
    */
   const gmfThemes = $injector.get('gmfThemes');
 

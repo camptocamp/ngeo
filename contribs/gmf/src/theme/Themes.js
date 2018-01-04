@@ -1,15 +1,13 @@
-goog.provide('gmf.Themes');
+goog.provide('gmf.theme.Themes');
 
 goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('ngeo.map.LayerHelper');
+goog.require('ol');
 goog.require('ol.array');
 goog.require('ol.Collection');
 goog.require('ol.events.EventTarget');
 goog.require('ol.layer.Tile');
-
-
-gmf.module.value('gmfThemesOptions', {});
 
 
 /**
@@ -30,7 +28,7 @@ gmf.module.value('gmfThemesOptions', {});
  * @ngdoc service
  * @ngname gmfThemes
  */
-gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions) {
+gmf.theme.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions) {
 
   ol.events.EventTarget.call(this);
 
@@ -114,7 +112,7 @@ gmf.Themes = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmf
    */
   this.bgLayerPromise_ = null;
 };
-ol.inherits(gmf.Themes, ol.events.EventTarget);
+ol.inherits(gmf.theme.Themes, ol.events.EventTarget);
 
 
 /**
@@ -122,14 +120,14 @@ ol.inherits(gmf.Themes, ol.events.EventTarget);
  * @param {string} name The layer name.
  * @return {gmfThemes.GmfGroup} The group.
  */
-gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
+gmf.theme.Themes.findGroupByLayerNodeName = function(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
       const childNodes = [];
-      gmf.Themes.getFlatNodes(group, childNodes);
-      if (gmf.Themes.findObjectByName(childNodes, name)) {
+      gmf.theme.Themes.getFlatNodes(group, childNodes);
+      if (gmf.theme.Themes.findObjectByName(childNodes, name)) {
         return group;
       }
     }
@@ -143,14 +141,14 @@ gmf.Themes.findGroupByLayerNodeName = function(themes, name) {
  * @param {string} name The group name.
  * @return {gmfThemes.GmfGroup} The group.
  */
-gmf.Themes.findGroupByName = function(themes, name) {
+gmf.theme.Themes.findGroupByName = function(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
       const internalNodes = [];
-      gmf.Themes.getFlatInternalNodes(group, internalNodes);
-      if (gmf.Themes.findObjectByName(internalNodes, name)) {
+      gmf.theme.Themes.getFlatInternalNodes(group, internalNodes);
+      if (gmf.theme.Themes.findObjectByName(internalNodes, name)) {
         return group;
       }
     }
@@ -166,7 +164,7 @@ gmf.Themes.findGroupByName = function(themes, name) {
  * @return {T} The object or null.
  * @template T
  */
-gmf.Themes.findObjectByName = function(objects, objectName) {
+gmf.theme.Themes.findObjectByName = function(objects, objectName) {
   return ol.array.find(objects, object => object['name'] === objectName);
 };
 
@@ -177,8 +175,8 @@ gmf.Themes.findObjectByName = function(objects, objectName) {
  * @param {string} themeName The theme name.
  * @return {gmfThemes.GmfTheme} The theme object or null.
  */
-gmf.Themes.findThemeByName = function(themes, themeName) {
-  return gmf.Themes.findObjectByName(themes, themeName);
+gmf.theme.Themes.findThemeByName = function(themes, themeName) {
+  return gmf.theme.Themes.findObjectByName(themes, themeName);
 };
 
 
@@ -189,12 +187,12 @@ gmf.Themes.findThemeByName = function(themes, themeName) {
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
  * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
  */
-gmf.Themes.getFlatInternalNodes = function(node, nodes) {
+gmf.theme.Themes.getFlatInternalNodes = function(node, nodes) {
   const children = node.children;
   if (children !== undefined) {
     nodes.push(node);
     for (let i = 0; i < children.length; i++) {
-      gmf.Themes.getFlatInternalNodes(children[i], nodes);
+      gmf.theme.Themes.getFlatInternalNodes(children[i], nodes);
     }
   }
 };
@@ -206,12 +204,12 @@ gmf.Themes.getFlatInternalNodes = function(node, nodes) {
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
  * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
  */
-gmf.Themes.getFlatNodes = function(node, nodes) {
+gmf.theme.Themes.getFlatNodes = function(node, nodes) {
   let i;
   const children = node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
-      gmf.Themes.getFlatNodes(children[i], nodes);
+      gmf.theme.Themes.getFlatNodes(children[i], nodes);
     }
   } else {
     nodes.push(node);
@@ -224,7 +222,7 @@ gmf.Themes.getFlatNodes = function(node, nodes) {
  * @param {!Object.<string, string>} appDimensions Dimensions.
  * @return {!angular.$q.Promise.<!Array.<!ol.layer.Base>>} Promise.
  */
-gmf.Themes.prototype.getBgLayers = function(appDimensions) {
+gmf.theme.Themes.prototype.getBgLayers = function(appDimensions) {
   const gettextCatalog = this.gettextCatalog;
   if (this.bgLayerPromise_) {
     return this.bgLayerPromise_;
@@ -372,7 +370,7 @@ gmf.Themes.prototype.getBgLayers = function(appDimensions) {
  * @return {angular.$q.Promise.<gmfThemes.GmfTheme>} Promise.
  * @export
  */
-gmf.Themes.prototype.getThemeObject = function(themeName) {
+gmf.theme.Themes.prototype.getThemeObject = function(themeName) {
   return this.promise_.then(
     /**
        * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
@@ -380,7 +378,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
        * @return {gmfThemes.GmfTheme?} The theme object for themeName, or null
        *     if not found.
        */
-    data => gmf.Themes.findThemeByName(data.themes, themeName));
+    data => gmf.theme.Themes.findThemeByName(data.themes, themeName));
 };
 
 
@@ -389,7 +387,7 @@ gmf.Themes.prototype.getThemeObject = function(themeName) {
  * @return {angular.$q.Promise.<!Array.<!gmfThemes.GmfTheme>>} Promise.
  * @export
  */
-gmf.Themes.prototype.getThemesObject = function() {
+gmf.theme.Themes.prototype.getThemesObject = function() {
   return this.promise_.then(
     /**
        * @param {!gmfThemes.GmfThemesResponse} data The "themes" web service
@@ -404,7 +402,7 @@ gmf.Themes.prototype.getThemesObject = function() {
  * Get an array of background layer objects.
  * @return {angular.$q.Promise.<!Array.<!gmfThemes.GmfLayer>>} Promise.
  */
-gmf.Themes.prototype.getBackgroundLayersObject = function() {
+gmf.theme.Themes.prototype.getBackgroundLayersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
     /**
@@ -422,7 +420,7 @@ gmf.Themes.prototype.getBackgroundLayersObject = function() {
  * @return {angular.$q.Promise.<!gmfThemes.GmfOgcServers>} Promise.
  * @export
  */
-gmf.Themes.prototype.getOgcServersObject = function() {
+gmf.theme.Themes.prototype.getOgcServersObject = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(
     /**
@@ -438,7 +436,7 @@ gmf.Themes.prototype.getOgcServersObject = function() {
  * Returns a promise to check if one of the layers in the themes is editable.
  * @return {angular.$q.Promise.<boolean>} Promise.
  */
-gmf.Themes.prototype.hasEditableLayers = function() {
+gmf.theme.Themes.prototype.hasEditableLayers = function() {
   goog.asserts.assert(this.promise_ !== null);
   return this.promise_.then(this.hasEditableLayers_.bind(this));
 };
@@ -449,7 +447,7 @@ gmf.Themes.prototype.hasEditableLayers = function() {
  * @param {gmfThemes.GmfThemesResponse} data The "themes" web service response.
  * @return {boolean} Editable layers?
  */
-gmf.Themes.prototype.hasEditableLayers_ = function(data) {
+gmf.theme.Themes.prototype.hasEditableLayers_ = function(data) {
   return data.themes.some((theme) => {
     const hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
     return hasEditableLayers;
@@ -461,7 +459,7 @@ gmf.Themes.prototype.hasEditableLayers_ = function(data) {
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Theme node
  * @return {boolean} Editable layers?
  */
-gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
+gmf.theme.Themes.prototype.hasNodeEditableLayers_ = function(node) {
   if (node.editable) {
     return true;
   }
@@ -481,7 +479,7 @@ gmf.Themes.prototype.hasNodeEditableLayers_ = function(node) {
  * @return {?gmfThemes.GmfSnappingConfig} Snapping configuration, if found.
  * @export
  */
-gmf.Themes.getSnappingConfig = function(node) {
+gmf.theme.Themes.getSnappingConfig = function(node) {
   const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
     node.metadata.snappingConfig : null;
   return config;
@@ -497,7 +495,7 @@ gmf.Themes.getSnappingConfig = function(node) {
  *     on the node).
  * @return {number|undefined} the max resolution or undefined if any.
  */
-gmf.Themes.getNodeMaxResolution = function(gmfLayer) {
+gmf.theme.Themes.getNodeMaxResolution = function(gmfLayer) {
   const metadata = gmfLayer.metadata;
   let maxResolution = gmfLayer.maxResolutionHint;
   if (maxResolution === undefined && metadata !== undefined) {
@@ -516,7 +514,7 @@ gmf.Themes.getNodeMaxResolution = function(gmfLayer) {
  *     on the node).
  * @return {number|undefined} the min resolution or undefined if any.
  */
-gmf.Themes.getNodeMinResolution = function(gmfLayer) {
+gmf.theme.Themes.getNodeMinResolution = function(gmfLayer) {
   const metadata = gmfLayer.metadata;
   let minResolution = gmfLayer.minResolutionHint;
   if (minResolution === undefined && metadata !== undefined) {
@@ -531,7 +529,7 @@ gmf.Themes.getNodeMinResolution = function(gmfLayer) {
  * Load themes from the "themes" service.
  * @export
  */
-gmf.Themes.prototype.loadThemes = function(opt_roleId) {
+gmf.theme.Themes.prototype.loadThemes = function(opt_roleId) {
 
   goog.asserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
 
@@ -570,15 +568,23 @@ gmf.Themes.prototype.loadThemes = function(opt_roleId) {
 };
 
 
-gmf.module.service('gmfThemes', gmf.Themes);
-
-
 /**
  * @enum {string}
  */
-gmf.Themes.NodeType = {
+gmf.theme.Themes.NodeType = {
   MIXED_GROUP: 'MixedGroup',
   NOT_MIXED_GROUP: 'NotMixedGroup',
   WMTS: 'WMTS',
   WMS: 'WMS'
 };
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.theme.Themes.module = angular.module('gmfThemes', [
+  ngeo.map.LayerHelper.module.name,
+]);
+gmf.theme.Themes.module.value('gmfThemesOptions', {});
+gmf.theme.Themes.module.service('gmfThemes', gmf.theme.Themes);
+gmf.theme.Themes.module.requires.push(gmf.theme.Themes.module.name);

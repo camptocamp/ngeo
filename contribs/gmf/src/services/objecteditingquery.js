@@ -1,7 +1,7 @@
 goog.provide('gmf.ObjectEditingQuery');
 
 goog.require('gmf');
-goog.require('gmf.Themes');
+goog.require('gmf.theme.Themes');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.format.WMSGetFeatureInfo');
 goog.require('ol.source.ImageWMS');
@@ -15,7 +15,7 @@ goog.require('ol.source.ImageWMS');
  *
  * @param {angular.$http} $http Angular $http service.
  * @param {angular.$q} $q Angular $q service.
- * @param {gmf.Themes} gmfThemes The gmf themes service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @constructor
  * @struct
  * @ngInject
@@ -35,7 +35,7 @@ gmf.ObjectEditingQuery = function($http, $q, gmfThemes) {
   this.q_ = $q;
 
   /**
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -119,7 +119,7 @@ gmf.ObjectEditingQuery.getQueryableLayersInfoFromThemes = function(
       }
 
       nodes = [];
-      gmf.Themes.getFlatNodes(group, nodes);
+      gmf.theme.Themes.getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
         node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayerWMS} */ (

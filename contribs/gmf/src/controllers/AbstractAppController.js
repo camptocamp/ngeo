@@ -10,8 +10,6 @@ goog.require('gmf.displaywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.Themes');
-/** @suppress {extraRequire} */
 goog.require('gmf.disclaimerComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
@@ -20,7 +18,11 @@ goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.themeselectorComponent');
+goog.require('gmf.theme.Manager');
+/** @suppress {extraRequire} */
+goog.require('gmf.theme.Themes');
+/** @suppress {extraRequire} */
+goog.require('gmf.theme.selectorComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
@@ -34,14 +36,13 @@ goog.require('ngeo.misc.getBrowserLanguage');
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
+/** @suppress {extraRequire} */
+goog.require('ngeo.statemanager.module');
 goog.require('ol.events');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.statemanager.module');
 
 
 gmf.module.value('ngeoExportFeatureFormats', [
@@ -86,7 +87,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   ngeoFeatureHelper.setProjection(goog.asserts.assert(this.map.getView().getProjection()));
 
   /**
-   * @type {gmf.ThemeManager}
+   * @type {gmf.theme.Manager}
    * @export
    */
   this.gmfThemeManager = $injector.get('gmfThemeManager');
@@ -99,7 +100,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Themes service
-   * @type {gmf.Themes}
+   * @type {gmf.theme.Themes}
    * @private
    */
   this.gmfThemes_ = $injector.get('gmfThemes');
@@ -423,7 +424,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   const printPanelActivate = new ngeo.misc.ToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
-  $scope.$root.$on(gmf.ThemeManager.EventType.THEME_NAME_SET, (event, name) => {
+  $scope.$root.$on(gmf.theme.Manager.EventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
         this.setDefaultBackground_(theme, false);
@@ -693,7 +694,7 @@ gmf.AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackTheme
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
-      const theme = gmf.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
+      const theme = gmf.theme.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }
