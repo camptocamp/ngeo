@@ -5,10 +5,9 @@ goog.require('ol.events');
 goog.require('ngeo');
 goog.require('ngeo.misc.EventHelper');
 
-// FIXME Dont' forget to add ngeo.misc.EventHelper to the module
-
 
 ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
+  ngeo.misc.EventHelper.module.name,
 ]);
 
 ngeo.module.requires.push(ngeo.editing.attributesComponent.name);
