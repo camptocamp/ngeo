@@ -83,7 +83,6 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
       .domain(rangeY)
       .range([height, 0]);
   } else {
-    console.log('ici');
     domainScale =  domainRatio / rangeRatio;
     const domainScaledHeight = domainProfileHeight * domainScale;
     const domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
@@ -129,6 +128,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     .on('zoom', zoomed);
 
   zoom.on('end', ngeo.lidarProfile.loader.updateData);
+  zoom.on('start', ngeo.lidarProfile.loader.abortPendingRequests);
 
   d3.select('svg#profileSVG').call(zoom);
 

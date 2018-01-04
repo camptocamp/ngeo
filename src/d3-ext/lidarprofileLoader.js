@@ -33,11 +33,11 @@ ngeo.lidarProfile.setOptions = function(options) {
 
 ngeo.lidarProfile.loader.requestsQueue = [];
 
-ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, minLOD, maxLOD) {
+ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, minLOD) {
 
-  // TODO get nicely calibrated max lod function from pytree config and remove default LOD config parameter
   ngeo.lidarProfile.options.pytreeLinestring =  ngeo.lidarProfile.utils.getPytreeLinestring(ngeo.lidarProfile.options.olLinestring);
   let profileLine;
+  let maxLOD;
   if (distanceOffset == 0) {
     profileLine = ngeo.lidarProfile.options.pytreeLinestring;
     maxLOD = ngeo.lidarProfile.utils.getNiceLOD(ngeo.lidarProfile.options.olLinestring.getLength());
@@ -51,6 +51,8 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
       profileLine += `{${clip.clippedLine[i][0]},${clip.clippedLine[i][1]}},`;
     }
     profileLine = profileLine.substr(0, profileLine.length - 1);
+    maxLOD = ngeo.lidarProfile.utils.getNiceLOD(domain[1] - domain[0]);
+
   }
 
   const uuid = ngeo.lidarProfile.utils.UUID();
@@ -242,7 +244,7 @@ ngeo.lidarProfile.loader.updateData = function() {
   const clip = ngeo.lidarProfile.utils.clipLineByMeasure(domainX[0], domainX[1]);
   const span = domainX[1] - domainX[0];
   const niceLOD = ngeo.lidarProfile.utils.getNiceLOD(span);
-  const xTolerance = 0.1;
+  const xTolerance = 0.2;
 
   if (Math.abs(domainX[0] - ngeo.lidarProfile.options.profileConfig.previousDomainX[0]) < xTolerance &&
       Math.abs(domainX[1] - ngeo.lidarProfile.options.profileConfig.previousDomainX[1]) < xTolerance) {
@@ -264,7 +266,7 @@ ngeo.lidarProfile.loader.updateData = function() {
         cPotreeLineStr += `{${clip.clippedLine[i][0]} + ',' + ${clip.clippedLine[i][1]}},`;
       }
       cPotreeLineStr = cPotreeLineStr.substr(0, cPotreeLineStr.length - 1);
-      ngeo.lidarProfile.loader.getProfileByLOD(clip.distanceOffset, false, 0, niceLOD);
+      ngeo.lidarProfile.loader.getProfileByLOD(clip.distanceOffset, false, 0);
 
     }
   }
@@ -272,4 +274,11 @@ ngeo.lidarProfile.loader.updateData = function() {
   ngeo.lidarProfile.options.profileConfig.previousDomainX = domainX;
   ngeo.lidarProfile.options.profileConfig.previousDomainY = domainY;
 
+};
+
+ngeo.lidarProfile.loader.abortPendingRequests = function() {
+  for (let i = 0; i < ngeo.lidarProfile.loader.requestsQueue.length; i++) {
+    ngeo.lidarProfile.loader.requestsQueue[i].abort();
+    ngeo.lidarProfile.loader.requestsQueue.splice(i, 1);
+  }
 };
