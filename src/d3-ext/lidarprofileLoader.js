@@ -68,6 +68,7 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
     coords: []
   };
   d3.select('#profileInfo').html('');
+  ngeo.lidarProfile.options.profileConfig.pointSum = 0;
   for (let i = 0; i < maxLOD; i++) {
     if (i == 0) {
       ngeo.lidarProfile.loader.xhrRequest(ngeo.lidarProfile.options, minLOD, ngeo.lidarProfile.options.profileConfig.initialLOD, i, profileLine, distanceOffset, lastLOD, ngeo.lidarProfile.options.profileConfig.profilWidth, resetPlot, uuid);
@@ -139,8 +140,13 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
     if (isEmpty != -1) {
       return;
     }
-
     const jHeader = JSON.parse(strHeaderLocal);
+    ngeo.lidarProfile.options.profileConfig.pointSum += jHeader.points;
+    console.log(ngeo.lidarProfile.options.profileConfig.pointSum);
+    if (ngeo.lidarProfile.options.profileConfig.pointSum > ngeo.lidarProfile.options.profileConfig.maxPoints) {
+      ngeo.lidarProfile.loader.abortPendingRequests();
+      console.log('points limit reached. canceling pending requests');
+    }
     const attr = jHeader.pointAttributes;
     const attributes = [];
     for (let j = 0; j < attr.length; j++) {

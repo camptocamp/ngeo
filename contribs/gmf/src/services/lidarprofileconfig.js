@@ -48,7 +48,8 @@ gmf.LidarProfileConfig.prototype.initProfileConfig = function() {
     this.profileConfig.pointSize = resp.data['point_size'];
     this.profileConfig.pointAttributes = resp.data['point_attributes'];
     this.profileConfig.maxLevels = resp.data['max_levels'];
-
+    this.profileConfig.maxPoints = 50000; // resp.data['max_points']; // TODO: setup in pytree yaml
+    this.profileConfig.pointSum = 0;
     // TODO: get this from pytree config
     this.profileConfig.pointAttributes.POSITION_CARTESIAN = {
       name: 'POSITION_CARTESIAN',
