@@ -291,7 +291,7 @@ gmf.LidarProfileController.prototype.update_ = function() {
     ngeo.lidarProfile.loader.getProfileByLOD(0,
       true,
       this.gmfLidarProfileConfig_.profileConfig.minLOD,
-      this.gmfLidarProfileConfig_.profileConfig.maxLOD);
+      this.gmfLidarProfileConfig_.profileConfig.initialLOD);
   } else {
     ngeo.lidarProfile.loader.cartoHighlight.setPosition(undefined);
   }
