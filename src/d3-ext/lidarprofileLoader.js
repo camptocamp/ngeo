@@ -84,8 +84,8 @@ ngeo.lidarProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, co
   let html = d3.select('#profileInfo').html();
   html += `Loading LOD: ${minLOD}-${maxLOD}...<br>`;
   d3.select('#profileInfo').html(html);
-  // TODO get pointCloud from pytree config
-  const hurl = `${options.pytreeLidarProfileJsonUrl_}/get_profile?minLOD=${minLOD}&maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=sitn2016&attributes='`;
+  const pointCloudName = ngeo.lidarProfile.options.profileConfig.defaultPointCloud;
+  const hurl = `${options.pytreeLidarProfileJsonUrl_}/get_profile?minLOD=${minLOD}&maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes='`;
 
   for (let i = 0; i < ngeo.lidarProfile.loader.requestsQueue.length; i++) {
     if (ngeo.lidarProfile.loader.requestsQueue[i].uuid != ngeo.lidarProfile.loader.lastUuid) {
@@ -198,7 +198,6 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
         } else if (attribute.name == 'POSITION_CARTESIAN') {
           const x = view.getInt32(aoffset, true) * scale + jHeader.boundingBox.lx;
           const y = view.getInt32(aoffset + 4, true) * scale + jHeader.boundingBox.ly;
-          // TODO handle CRS
           points.coords.push([x, y]);
           ngeo.lidarProfile.loader.profilePoints.coords.push([x, y]);
         }

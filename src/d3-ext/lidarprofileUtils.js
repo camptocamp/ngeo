@@ -76,6 +76,7 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
 };
 
 ngeo.lidarProfile.utils.getNiceLOD = function(span) {
+  console.log(ngeo.lidarProfile.options);
   let maxLOD = 0;
   if (span < 200) {
     maxLOD = 14;
@@ -255,9 +256,8 @@ ngeo.lidarProfile.utils.getPytreeLinestring = function(line) {
   const flat = line.flatCoordinates;
   let pytreeLineString = '';
   for (let i = 0; i < flat.length; i++) {
-    // TODO check for projection system
-    const px = 2000000 + flat[i];
-    const py = 1000000 + flat[i + 1];
+    const px = flat[i];
+    const py = flat[i + 1];
     pytreeLineString += `{${Math.round(100 * px) / 100}, ${Math.round(100 * py) / 100}},`;
     i += 1;
   }

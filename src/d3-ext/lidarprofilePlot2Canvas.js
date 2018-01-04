@@ -4,13 +4,13 @@ goog.provide('ngeo.lidarProfile.plot2canvas');
 @SITN/OM 2017
 LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
 ***/
-/*global svg*/
 
 ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
   let i = -1;
   const n = points.distance.length;
   let cx, cy;
   const ctx = d3.select('#profileCanvas').node().getContext('2d');
+  const profileConfig = ngeo.lidarProfile.options.profileConfig;
 
   while (++i < n) {
 
@@ -19,10 +19,10 @@ ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
     const rgb = points.color_packed[i];
     const intensity = points.intensity[i];
     const classification = points.classification[i];
-    if (ngeo.lidarProfile.options.profileConfig.classification[classification] && ngeo.lidarProfile.options.profileConfig.classification[classification].visible) {
+    if (profileConfig.classification[classification] && profileConfig.classification[classification].visible) {
 
-      cx = ngeo.lidarProfile.options.profileConfig.scaleX(distance);
-      cy = ngeo.lidarProfile.options.profileConfig.scaleY(altitude);
+      cx = profileConfig.scaleX(distance);
+      cy = profileConfig.scaleY(altitude);
 
       ctx.beginPath();
       ctx.moveTo(cx, cy);
@@ -31,11 +31,11 @@ ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
       } else if (material == 'INTENSITY') {
         ctx.fillStyle = `RGB(${intensity}, ${intensity}, ${intensity})`;
       } else if (material == 'CLASSIFICATION') {
-        ctx.fillStyle = `RGB(${ngeo.lidarProfile.options.profileConfig.classification[classification].color})`;
+        ctx.fillStyle = `RGB(${profileConfig.classification[classification].color})`;
       } else {
-        ctx.fillStyle = ngeo.lidarProfile.options.profileConfig.defaultColor;
+        ctx.fillStyle = profileConfig.defaultColor;
       }
-      ctx.arc(cx, cy, ngeo.lidarProfile.options.profileConfig.pointSize, 0, 2 * Math.PI, false);
+      ctx.arc(cx, cy, profileConfig.pointSize, 0, 2 * Math.PI, false);
       ctx.fill();
     }
   }
@@ -127,6 +127,8 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
     .on('zoom', zoomed);
+
+  zoom.on('end', ngeo.lidarProfile.loader.updateData);
 
   d3.select('svg#profileSVG').call(zoom);
 
@@ -246,11 +248,10 @@ ngeo.lidarProfile.plot2canvas.pointHighlight = function() {
     el.innerHTML = html;
 
     ngeo.lidarProfile.loader.cartoHighlight.setElement(el);
-    // TODO: handle CRS
-    ngeo.lidarProfile.loader.cartoHighlight.setPosition([p.coords[0] - 2000000, p.coords[1] - 1000000]);
+    ngeo.lidarProfile.loader.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
     const classifColor = ngeo.lidarProfile.options.profileConfig.classification[p.classification].color;
     ngeo.lidarProfile.loader.lidarPointHighlight.getSource().clear();
-    const lidarPointGeom = new ol.geom.Point([p.coords[0] - 2000000, p.coords[1] - 1000000]);
+    const lidarPointGeom = new ol.geom.Point([p.coords[0], p.coords[1]]);
     const lidarPointFeature = new ol.Feature(lidarPointGeom);
     if (typeof (classifColor) !== undefined) {
 
