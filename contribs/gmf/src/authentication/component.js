@@ -3,16 +3,17 @@ goog.provide('gmf.authentication.component');
 goog.require('gmf');
 goog.require('gmf.authentication.Service');
 goog.require('ngeo');
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
-goog.require('ngeo.modalDirective');
+goog.require('ngeo.message.modalComponent');
 
 
 /**
  * @type {angular.Module}
  */
 gmf.authentication.component = angular.module('gmfAuthentication', [
-  gmf.authentication.Service.module.name
+  gmf.authentication.Service.module.name,
+  ngeo.message.modalComponent.name,
 ]);
 
 gmf.module.requires.push(gmf.authentication.component.name);
@@ -93,7 +94,7 @@ gmf.authentication.component.AuthenticationController_ = class {
    * @param {angular.Scope} $scope The directive's scope.
    * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
-   * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+   * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
@@ -125,7 +126,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {ngeo.Notification}
+     * @type {ngeo.message.Notification}
      * @private
      */
     this.notification_ = ngeoNotification;
@@ -366,7 +367,7 @@ gmf.authentication.component.AuthenticationController_ = class {
       this.notification_.notify({
         msg: error,
         target: container,
-        type: ngeo.MessageType.ERROR
+        type: ngeo.message.Message.MessageType.ERROR
       });
     }, this);
   }

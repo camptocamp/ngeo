@@ -4,7 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('ngeo.Popup');
+goog.require('ngeo.message.Popup');
 
 
 /**

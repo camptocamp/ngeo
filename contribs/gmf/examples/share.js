@@ -3,11 +3,14 @@ goog.provide('gmfapp.share');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.modalDirective');
+goog.require('ngeo.message.modalComponent');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  'gmf',
+  ngeo.message.modalComponent.name
+]);
 
 
 /**

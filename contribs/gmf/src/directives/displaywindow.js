@@ -9,7 +9,7 @@ goog.require('gmf');
 gmf.DisplaywindowController = class {
 
   /**
-   * The `gmf-displaywindow` component is an alternative to the `ngeo.Popup`.
+   * The `gmf-displaywindow` component is an alternative to the `ngeo.message.Popup`.
    * What they have in common:
    *
    * - support title
@@ -18,7 +18,7 @@ gmf.DisplaywindowController = class {
    * - support sizing, i.e. height and width.
    * - support being opened/closed
    *
-   * The differences with the `ngeo.Popup` are:
+   * The differences with the `ngeo.message.Popup` are:
    *
    * - it supports being dragged
    * - it supports being resized

@@ -17,10 +17,10 @@ goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.syncArrays');
 goog.require('ngeo.misc.WMSTime');
 /** @suppress {extraRequire} */
-goog.require('ngeo.Popup');
+goog.require('ngeo.message.Popup');
 goog.require('ol.layer.Tile');
 /** @suppress {extraRequire} */
-goog.require('ngeo.popoverDirective');
+goog.require('ngeo.message.popupComponent');
 
 
 // FIXME remove lines right under and add me at the module dependencies:
@@ -28,6 +28,7 @@ goog.require('ngeo.popoverDirective');
 // - ngeo.layertree.Controller.module.name
 // - ngeo.map.LayerHelper.module.name
 // - ngeo.misc.WMSTime.module.name
+// - ngeo.message.popupComponent.name
 goog.require('ngeo.layertree.module');
 ngeo.module.requires.push(ngeo.layertree.module.name);
 ngeo.module.requires.push(ngeo.map.LayerHelper.module.name);
@@ -129,7 +130,7 @@ gmf.module.component('gmfLayertree', gmf.layertreeComponent);
  * @param {!angular.$http} $http Angular http service.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
+ * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
@@ -237,7 +238,7 @@ gmf.LayertreeController = function($element, $http, $sce, $scope,
 
   /**
    * @private
-   * @type {!ngeo.Popup}
+   * @type {!ngeo.message.Popup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 

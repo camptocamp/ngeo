@@ -3,7 +3,7 @@ goog.provide('gmf.TreeManager');
 goog.require('gmf');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.layertree.Controller');
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.Notification');
 goog.require('ngeo.statemanager.Service');
 goog.require('ol.events');
 
@@ -12,6 +12,7 @@ goog.require('ol.events');
 // - ngeo.statemanager.Service.module.name
 ngeo.module.requires.push(ngeo.layertree.Controller.module.name);
 ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
+ngeo.module.requires.push(ngeo.message.Notification.module.name);
 
 
 /**
@@ -31,7 +32,7 @@ ngeo.module.requires.push(ngeo.statemanager.Service.module.name);
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
@@ -60,7 +61,7 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.Notification}
+   * @type {ngeo.message.Notification}
    * @private
    */
   this.ngeoNotification_ = ngeoNotification;
@@ -406,7 +407,7 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
     gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
     msg: `${names.join(', ')} ${msg}`,
-    type: ngeo.MessageType.INFORMATION
+    type: ngeo.message.Message.MessageType.INFORMATION
   });
 };
 

@@ -2,7 +2,7 @@ goog.provide('gmf.disclaimerComponent');
 
 goog.require('ol.events');
 goog.require('gmf');
-goog.require('ngeo.Disclaimer');
+goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.map.LayerHelper');
 
@@ -14,8 +14,8 @@ goog.require('ngeo.map.LayerHelper');
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!ngeo.Popup.Factory} ngeoCreatePopup Popup service.
- * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
+ * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
+ * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @struct
@@ -83,13 +83,13 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
   this.element_ = $element;
 
   /**
-   * @type {!ngeo.Popup.Factory}
+   * @type {!ngeox.PopupFactory}
    * @private
    */
   this.createPopup_ = ngeoCreatePopup;
 
   /**
-   * @type {!ngeo.Disclaimer}
+   * @type {!ngeo.message.Disclaimer}
    * @private
    */
   this.disclaimer_ = ngeoDisclaimer;
@@ -246,7 +246,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeo.MessageType.WARNING
+      type: ngeo.message.Message.MessageType.WARNING
     });
   }
 };
@@ -266,7 +266,7 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeo.MessageType.WARNING
+      type: ngeo.message.Message.MessageType.WARNING
     });
   }
 };

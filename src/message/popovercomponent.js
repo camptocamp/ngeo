@@ -1,6 +1,13 @@
-goog.provide('ngeo.popoverDirective');
+goog.provide('ngeo.message.popoverComponent');
 
 goog.require('ngeo');
+
+/**
+ * @type {angular.Module}
+ */
+ngeo.message.popoverComponent = angular.module('ngeoPopover', []);
+ngeo.module.requires.push(ngeo.message.popoverComponent.name);
+
 
 /**
  * Provides a directive used to display a Bootstrap popover.
@@ -20,7 +27,7 @@ goog.require('ngeo');
  * @ngname ngeoPopover
  * @return {angular.Directive} The Directive Definition Object.
  */
-ngeo.popoverDirective = function() {
+ngeo.message.popoverComponent.component_ = function() {
   return {
     restrict: 'A',
     scope: true,
@@ -67,7 +74,7 @@ ngeo.popoverDirective = function() {
  * @ngname ngeoPopoverAnchor
  * @return {angular.Directive} The Directive Definition Object
  */
-ngeo.popoverAnchorDirective = function() {
+ngeo.message.popoverComponent.anchorComponent = function() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -83,7 +90,7 @@ ngeo.popoverAnchorDirective = function() {
  * @ngname ngeoPopoverContent
  * @return {angular.Directive} The Directive Definition Object
  */
-ngeo.popoverContentDirective = function() {
+ngeo.message.popoverComponent.contentComponent = function() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -104,7 +111,7 @@ ngeo.popoverContentDirective = function() {
  * @ngname NgeoPopoverController
  * @param {angular.Scope} $scope Scope.
  */
-ngeo.PopoverController = function($scope) {
+ngeo.message.popoverComponent.PopoverController_ = function($scope) {
   /**
    * The state of the popover (displayed or not)
    * @type {boolean}
@@ -144,12 +151,13 @@ ngeo.PopoverController = function($scope) {
  * Dissmiss popover function
  * @export
  */
-ngeo.PopoverController.prototype.dismissPopover = function() {
+ngeo.message.popoverComponent.PopoverController_.prototype.dismissPopover = function() {
   this.shown = false;
   this.anchorElm.popover('hide');
 };
 
-ngeo.module.controller('NgeoPopoverController', ngeo.PopoverController);
-ngeo.module.directive('ngeoPopover', ngeo.popoverDirective);
-ngeo.module.directive('ngeoPopoverAnchor', ngeo.popoverAnchorDirective);
-ngeo.module.directive('ngeoPopoverContent', ngeo.popoverContentDirective);
+
+ngeo.message.popoverComponent.controller('NgeoPopoverController', ngeo.message.popoverComponent.PopoverController_);
+ngeo.message.popoverComponent.directive('ngeoPopover', ngeo.message.popoverComponent.component_);
+ngeo.message.popoverComponent.directive('ngeoPopoverAnchor', ngeo.message.popoverComponent.anchorComponent);
+ngeo.message.popoverComponent.directive('ngeoPopoverContent', ngeo.message.popoverComponent.contentComponent);

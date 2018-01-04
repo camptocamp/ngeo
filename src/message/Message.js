@@ -1,32 +1,4 @@
-goog.provide('ngeo.Message');
-
-
-/**
- * @enum {string}
- * @export
- */
-ngeo.MessageType = {
-  /**
-   * @type {string}
-   * @export
-   */
-  ERROR: 'error',
-  /**
-   * @type {string}
-   * @export
-   */
-  INFORMATION: 'information',
-  /**
-   * @type {string}
-   * @export
-   */
-  SUCCESS: 'success',
-  /**
-   * @type {string}
-   * @export
-   */
-  WARNING: 'warning'
-};
+goog.provide('ngeo.message.Message');
 
 
 /**
@@ -36,7 +8,7 @@ ngeo.MessageType = {
  * @struct
  * @abstract
  */
-ngeo.Message = function() {};
+ngeo.message.Message = function() {};
 
 
 /**
@@ -46,7 +18,7 @@ ngeo.Message = function() {};
  * @param {ngeox.Message} message Message.
  * @protected
  */
-ngeo.Message.prototype.showMessage = function(message) {};
+ngeo.message.Message.prototype.showMessage = function(message) {};
 
 
 /**
@@ -57,7 +29,7 @@ ngeo.Message.prototype.showMessage = function(message) {};
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-ngeo.Message.prototype.show = function(object) {
+ngeo.message.Message.prototype.show = function(object) {
   const msgObjects = this.getMessageObjects(object);
   msgObjects.forEach(this.showMessage, this);
 };
@@ -69,8 +41,8 @@ ngeo.Message.prototype.show = function(object) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-ngeo.Message.prototype.error = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.MessageType.ERROR));
+ngeo.message.Message.prototype.error = function(message) {
+  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.ERROR));
 };
 
 
@@ -79,8 +51,8 @@ ngeo.Message.prototype.error = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-ngeo.Message.prototype.info = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.MessageType.INFORMATION));
+ngeo.message.Message.prototype.info = function(message) {
+  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.INFORMATION));
 };
 
 
@@ -89,8 +61,8 @@ ngeo.Message.prototype.info = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-ngeo.Message.prototype.success = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.MessageType.SUCCESS));
+ngeo.message.Message.prototype.success = function(message) {
+  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.SUCCESS));
 };
 
 
@@ -99,8 +71,8 @@ ngeo.Message.prototype.success = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-ngeo.Message.prototype.warn = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.MessageType.WARNING));
+ngeo.message.Message.prototype.warn = function(message) {
+  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.WARNING));
 };
 
 
@@ -115,10 +87,10 @@ ngeo.Message.prototype.warn = function(message) {
  * @return {Array.<ngeox.Message>} List of message objects.
  * @protected
  */
-ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
+ngeo.message.Message.prototype.getMessageObjects = function(object, opt_type) {
   const msgObjects = [];
   let msgObject = null;
-  const defaultType = ngeo.MessageType.INFORMATION;
+  const defaultType = ngeo.message.Message.MessageType.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({
@@ -152,4 +124,32 @@ ngeo.Message.prototype.getMessageObjects = function(object, opt_type) {
   }
 
   return msgObjects;
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.message.Message.MessageType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  ERROR: 'error',
+  /**
+   * @type {string}
+   * @export
+   */
+  INFORMATION: 'information',
+  /**
+   * @type {string}
+   * @export
+   */
+  SUCCESS: 'success',
+  /**
+   * @type {string}
+   * @export
+   */
+  WARNING: 'warning'
 };

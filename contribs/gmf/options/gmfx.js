@@ -685,7 +685,7 @@ cgxp.tools.openInfoWindow;
 
 
 /**
- * @param {ngeo.Popup!} popup a ngeoPopup.
+ * @param {ngeo.message.Popup!} popup a ngeoPopup.
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.

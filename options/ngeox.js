@@ -503,6 +503,12 @@ ngeox.Message.prototype.type;
 
 
 /**
+ * @typedef {function():!ngeo.message.Popup}
+ */
+ngeox.PopupFactory;
+
+
+/**
  * The options for a popup created by the popup factory.
  * @typedef {{
  *     autoDestroy: (boolean|undefined),

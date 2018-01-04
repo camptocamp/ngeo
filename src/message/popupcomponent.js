@@ -1,9 +1,11 @@
-goog.provide('ngeo.popupDirective');
+goog.provide('ngeo.message.popupComponent');
 
 goog.require('ngeo');
 
+ngeo.message.popupComponent = angular.module('ngeoPopup', []);
+ngeo.module.requires.push(ngeo.message.popupComponent.name);
 
-ngeo.module.value('ngeoPopupTemplateUrl',
+ngeo.message.popupComponent.value('ngeoPopupTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -12,7 +14,7 @@ ngeo.module.value('ngeoPopupTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoPopupTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseTemplateUrl}/popup.html`;
+      `${ngeo.baseModuleTemplateUrl}/message/popupcomponent.html`;
   });
 
 
@@ -38,7 +40,7 @@ ngeo.module.value('ngeoPopupTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoPopup
  */
-ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
+ngeo.message.popupComponent.directive_ = function(ngeoPopupTemplateUrl) {
   return {
     restrict: 'A',
     templateUrl: ngeoPopupTemplateUrl,
@@ -69,4 +71,4 @@ ngeo.popupDirective = function(ngeoPopupTemplateUrl) {
   };
 };
 
-ngeo.module.directive('ngeoPopup', ngeo.popupDirective);
+ngeo.message.popupComponent.directive('ngeoPopup', ngeo.message.popupComponent.directive_);
