@@ -10,7 +10,6 @@
     <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1;"></svg>
   </div>
   <div class="gmf-lidar-profile-legend">
-  <!-- TODO: FIX THIS! -->
   <button class="btn btn-default"
     onclick="ngeo.lidarProfile.loader.getProfileByLOD(0, true,0)"
     data-toggle="tooltip" data-placement="left" data-original-title="{{'Reset'|translate}}">
@@ -20,6 +19,9 @@
     ngeo-btn ng-model="ctrl.lidarProfileMeasureActive" onclick="ngeo.lidarProfile.measure.setMeasureActive(this)"
     translate> Measure
   </button>
+  <hr>
+  <div id="widthInfo"></div>
+  <div id="lodInfo"></div>
   <hr>
   <div id="profileInfo"></div>
   </div>

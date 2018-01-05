@@ -64,7 +64,7 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
     classification: [],
     coords: []
   };
-  d3.select('#profileInfo').html('');
+  d3.select('#lodInfo').html('');
   ngeo.lidarProfile.options.profileConfig.pointSum = 0;
   let profileWidth = 0;
   if (ngeo.lidarProfile.options.profileConfig.autoWidth) {
@@ -72,6 +72,8 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
   } else {
     profileWidth = ngeo.lidarProfile.options.profileConfig.profilWidth;
   }
+
+  d3.select('#widthInfo').html(`Profile width: ${profileWidth}m`);
 
   for (let i = 0; i < maxLODWith.maxLOD; i++) {
     if (i == 0) {
@@ -88,9 +90,9 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
 };
 
 ngeo.lidarProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot, uuid) {
-  let html = d3.select('#profileInfo').html();
+  let html = d3.select('#lodInfo').html();
   html += `Loading LOD: ${minLOD}-${maxLOD}...<br>`;
-  d3.select('#profileInfo').html(html);
+  d3.select('#lodInfo').html(html);
   const pointCloudName = ngeo.lidarProfile.options.profileConfig.defaultPointCloud;
   const hurl = `${options.pytreeLidarProfileJsonUrl_}/get_profile?minLOD=${minLOD}
     &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes='`;
@@ -111,9 +113,9 @@ ngeo.lidarProfile.loader.xhrRequest = function(options, minLOD, maxLOD, iter, co
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
         if (this.uuid == ngeo.lidarProfile.loader.lastUuid) {
-          let html = d3.select('#profileInfo').html();
+          let html = d3.select('#lodInfo').html();
           html += `LOD: ${minLOD}-${maxLOD} loaded <br>`;
-          d3.select('#profileInfo').html(html);
+          d3.select('#lodInfo').html(html);
           ngeo.lidarProfile.loader.processBuffer(options, xhr.response, iter, distanceOffset, lastLOD, resetPlot);
         }
       }
