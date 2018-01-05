@@ -77,13 +77,18 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
 
 ngeo.lidarProfile.utils.getNiceLOD = function(span) {
   let maxLOD = 0;
+  let width;
   const levels = ngeo.lidarProfile.options.profileConfig.maxLevels;
   for (const key in levels) {
     if (span < key && levels[key].max > maxLOD) {
       maxLOD = levels[key].max;
+      width = levels[key].width;
     }
   }
-  return maxLOD;
+  return {
+    maxLOD: maxLOD,
+    width: width
+  };
 };
 
 ngeo.lidarProfile.utils.downloadDataUrlFromJavascript = function(filename, dataUrl) {

@@ -192,6 +192,16 @@ gmf.LidarPanelController.prototype.setWidth = function(profileWidth) {
   }
 };
 
+gmf.LidarPanelController.prototype.setAutoWidth = function(autoWidth) {
+  this.gmfLidarProfileConfig.profileConfig.autoWidth = autoWidth;
+  if (this.line) {
+    this.gmfLidarProfileConfig.olLinestring = this.line;
+    this.gmfLidarProfileConfig.map = this.map;
+    ngeo.lidarProfile.setOptions(this.gmfLidarProfileConfig);
+    ngeo.lidarProfile.loader.getProfileByLOD(0, true, this.gmfLidarProfileConfig.profileConfig.minLOD);
+  }
+};
+
 gmf.LidarPanelController.prototype.csvExport = function() {
   if (this.line) {
     ngeo.lidarProfile.utils.getPointsInProfileAsCSV(ngeo.lidarProfile.loader.profilePoints);
