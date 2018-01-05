@@ -1,7 +1,6 @@
 goog.provide('ngeo.lidarProfile.measure');
 
 ngeo.lidarProfile.measure.clearMeasure = function() {
-  console.log('cleared measure');
   ngeo.lidarProfile.measure.profileMeasure = {
     pStart: {
       set: false

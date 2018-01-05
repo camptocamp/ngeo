@@ -42,7 +42,6 @@ ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
 };
 
 ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
-  console.log('icisetupPlot');
   const canvasEl = d3.select('#profileCanvas').node();
   const ctx = d3.select('#profileCanvas')
     .node().getContext('2d');
@@ -99,10 +98,8 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   ngeo.lidarProfile.options.profileConfig.scaleY = sy;
 
   function zoomed() {
-
     if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'mousemove') {
       if (d3.event.sourceEvent.movementX == 0 && d3.event.sourceEvent.movementY == 0) {
-        d3.event.stopPropagation();
         return;
       }
     }
@@ -130,10 +127,9 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     .scaleExtent([1, 100])
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
-    .on('zoom', zoomed)
+    .on('zoom', zoomed);
 
   function zoomEnd() {
-    console.log('zoom end');
     ctx.clearRect(0, 0, width, height);
     ngeo.lidarProfile.loader.updateData();
   }
@@ -141,8 +137,9 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   zoom.on('start', ngeo.lidarProfile.loader.abortPendingRequests);
 
   d3.select('svg#profileSVG')
-    .call(zoom);
-    // .on('dblclick.zoom', null);
+    .call(zoom)
+    .on('dblclick.zoom', null);
+
 
   d3.select('svg#profileSVG').selectAll('*').remove();
 

@@ -229,6 +229,7 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,  $window
     () => this.active,
     (newValue, oldValue) => {
       if (oldValue !== newValue) {
+        ngeo.lidarProfile.loader.lidarBuffer.getSource().clear();
         this.updateEventsListening_();
       }
     });

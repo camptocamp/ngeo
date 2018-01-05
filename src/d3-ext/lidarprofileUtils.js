@@ -1,7 +1,6 @@
 goog.provide('ngeo.lidarProfile.utils');
 
 ngeo.lidarProfile.utils.getLinestring = function() {
-
   const linestringStr = ngeo.lidarProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
   const linestring = [];
 
@@ -61,14 +60,17 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
         clippedLine.push(ngeo.lidarProfile.utils.interpolatePoint(dLeft, l[i]));
       }
       if (dRight <= l[i].endD) {
-
         clippedLine.push(ngeo.lidarProfile.utils.interpolatePoint(dRight, l[i]));
       } else {
         clippedLine.push([l[i].endX, l[i].endY]);
       }
     }
   }
-
+  ngeo.lidarProfile.loader.lidarBuffer.getSource().clear();
+  const feat = new ol.Feature({
+    geometry: new ol.geom.LineString(clippedLine)
+  });
+  ngeo.lidarProfile.loader.lidarBuffer.getSource().addFeature(feat);
   return {
     clippedLine: clippedLine,
     distanceOffset: dLeft
