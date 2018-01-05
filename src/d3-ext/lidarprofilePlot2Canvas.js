@@ -107,7 +107,6 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
       .tickSize(-width);
     svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(sx)));
     svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(sy)));
-
     ctx.clearRect(0, 0, width, height);
 
     svg.select('.y.axis').selectAll('g.tick line')
@@ -118,7 +117,7 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
     ngeo.lidarProfile.options.profileConfig.currentZoom = tr.k;
     ngeo.lidarProfile.options.profileConfig.scaleX = tr.rescaleX(sx);
     ngeo.lidarProfile.options.profileConfig.scaleY = tr.rescaleY(sy);
-    ngeo.lidarProfile.loader.updateData();
+    // ngeo.lidarProfile.loader.updateData();
   }
 
   const zoom = d3.zoom()

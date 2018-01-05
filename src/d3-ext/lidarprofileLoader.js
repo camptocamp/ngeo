@@ -5,7 +5,6 @@ goog.require('ol.interaction.Modify');
 ngeo.lidarProfile.options = {};
 
 ngeo.lidarProfile.setOptions = function(options) {
-  console.log(options);
   ngeo.lidarProfile.options = options;
 
   ngeo.lidarProfile.loader.cartoHighlight = new ol.Overlay({
@@ -68,8 +67,6 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
   d3.select('#profileInfo').html('');
   ngeo.lidarProfile.options.profileConfig.pointSum = 0;
   let profileWidth = 0;
-  console.log(ngeo.lidarProfile.options.profileConfig.autoWidth);
-  console.log(maxLODWith);
   if (ngeo.lidarProfile.options.profileConfig.autoWidth) {
     profileWidth = maxLODWith.width;
   } else {

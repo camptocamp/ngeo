@@ -29,7 +29,8 @@
     Material:
   <select
     ng-options="option.name for option in $ctrl.pointAttributes.availableOptions"
-    ng-model="$ctrl.pointAttributes.selectedOption">
+    ng-model="$ctrl.pointAttributes.selectedOption"
+    ng-change="$ctrl.setDefaultAttribute($ctrl.pointAttributes.selectedOption.value)">
   </select>
   </div>
   <hr>
