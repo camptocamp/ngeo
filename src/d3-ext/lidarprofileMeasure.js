@@ -1,7 +1,7 @@
 goog.provide('ngeo.lidarProfile.measure');
 
 ngeo.lidarProfile.measure.clearMeasure = function() {
-
+  console.log('cleared measure');
   ngeo.lidarProfile.measure.profileMeasure = {
     pStart: {
       set: false
@@ -22,7 +22,6 @@ ngeo.lidarProfile.measure.clearMeasure = function() {
 };
 
 ngeo.lidarProfile.measure.setMeasureActive = function(el) {
-  // TODO: watch the lidarProfileMeasureActive variable
   if (el.className.indexOf('active') == -1) {
     ngeo.lidarProfile.measure.clearMeasure();
     d3.select('svg#profileSVG').on('click', ngeo.lidarProfile.measure.measureHeight);

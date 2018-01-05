@@ -90,6 +90,7 @@ gmf.module.component('gmfLidarProfile', gmf.lidarProfileComponent);
  * @param {angular.$http} $http Angular http service.
  * @param {angular.JQLite} $element Element.
  * @param {angular.$filter} $filter Angular filter
+ * @param {angular.$window} $window Angular window service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {string} pytreeLidarProfileJsonUrl URL of GMF service JSON profile.
  * @param {gmf.gmfLidarProfileConfig} gmfLidarProfileConfig LiDAR Profile Configuration Service
@@ -99,7 +100,7 @@ gmf.module.component('gmfLidarProfile', gmf.lidarProfileComponent);
  * @ngdoc controller
  * @ngname GmfLidarProfileController
  */
-gmf.LidarProfileController = function($scope, $http, $element, $filter,
+gmf.LidarProfileController = function($scope, $http, $element, $filter,  $window,
   gettextCatalog, pytreeLidarProfileJsonUrl, gmfLidarProfileConfig) {
 
   /**
@@ -125,6 +126,11 @@ gmf.LidarProfileController = function($scope, $http, $element, $filter,
    * @export
    */
   this.$filter_ = $filter;
+  /**
+   * @type {angular.$window}
+   * @export
+   */
+  this.$window_ = $window;
 
   /**
    * @type {angularGettext.Catalog}
@@ -276,6 +282,7 @@ gmf.LidarProfileController.prototype.$onInit = function() {
     goog.asserts.assertObject(options);
     ol.obj.assign(this.profileOptions, options);
   }
+
 };
 
 

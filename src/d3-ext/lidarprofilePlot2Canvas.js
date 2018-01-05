@@ -42,7 +42,7 @@ ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
 };
 
 ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
-
+  console.log('icisetupPlot');
   const canvasEl = d3.select('#profileCanvas').node();
   const ctx = d3.select('#profileCanvas')
     .node().getContext('2d');
@@ -73,7 +73,6 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   let sx, sy, domainScale;
   // TODO: FIX PAN
   if (domainRatio < rangeRatio) {
-    console.log('par la');
     const domainScale = rangeRatio / domainRatio;
     const domainScaledWidth = domainProfileWidth * domainScale;
     sx = d3.scaleLinear()
@@ -100,6 +99,15 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
   ngeo.lidarProfile.options.profileConfig.scaleY = sy;
 
   function zoomed() {
+
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'mousemove') {
+      if (d3.event.sourceEvent.movementX == 0 && d3.event.sourceEvent.movementY == 0) {
+        d3.event.stopPropagation();
+        return;
+      }
+    }
+    ngeo.lidarProfile.measure.clearMeasure();
+
     const tr = d3.event.transform;
     const svg = d3.select('svg#profileSVG');
     const xAxis = d3.axisBottom(sx);
@@ -113,23 +121,28 @@ ngeo.lidarProfile.plot2canvas.setupPlot = function(rangeX, rangeY) {
       .style('opacity', '0.5')
       .style('stroke', '#b7cff7');
 
-    ngeo.lidarProfile.measure.clearMeasure();
     ngeo.lidarProfile.options.profileConfig.currentZoom = tr.k;
     ngeo.lidarProfile.options.profileConfig.scaleX = tr.rescaleX(sx);
     ngeo.lidarProfile.options.profileConfig.scaleY = tr.rescaleY(sy);
-    // ngeo.lidarProfile.loader.updateData();
   }
 
   const zoom = d3.zoom()
     .scaleExtent([1, 100])
     .translateExtent([[0, 0], [width, height]])
     .extent([[0, 0], [width, height]])
-    .on('zoom', zoomed);
+    .on('zoom', zoomed)
 
-  zoom.on('end', ngeo.lidarProfile.loader.updateData);
+  function zoomEnd() {
+    console.log('zoom end');
+    ctx.clearRect(0, 0, width, height);
+    ngeo.lidarProfile.loader.updateData();
+  }
+  zoom.on('end', zoomEnd);
   zoom.on('start', ngeo.lidarProfile.loader.abortPendingRequests);
 
-  d3.select('svg#profileSVG').call(zoom);
+  d3.select('svg#profileSVG')
+    .call(zoom);
+    // .on('dblclick.zoom', null);
 
   d3.select('svg#profileSVG').selectAll('*').remove();
 

@@ -246,7 +246,7 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
 };
 
 ngeo.lidarProfile.loader.updateData = function() {
-
+  console.log('updatedata');
   const scaleX = ngeo.lidarProfile.options.profileConfig.scaleX;
   const scaleY = ngeo.lidarProfile.options.profileConfig.scaleY;
   const domainX = scaleX.domain();
@@ -258,19 +258,16 @@ ngeo.lidarProfile.loader.updateData = function() {
 
   if (Math.abs(domainX[0] - ngeo.lidarProfile.options.profileConfig.previousDomainX[0]) < xTolerance &&
       Math.abs(domainX[1] - ngeo.lidarProfile.options.profileConfig.previousDomainX[1]) < xTolerance) {
-    console.log('vertical pan');
     ngeo.lidarProfile.plot2canvas.drawPoints(ngeo.lidarProfile.loader.profilePoints,
       ngeo.lidarProfile.options.profileConfig.defaultAttribute,
       ngeo.lidarProfile.options.profileConfig.currentZoom);
   } else {
 
     if (niceLOD <= ngeo.lidarProfile.options.profileConfig.initialLOD) {
-      console.log('no new LOD');
       ngeo.lidarProfile.plot2canvas.drawPoints(ngeo.lidarProfile.loader.profilePoints,
         ngeo.lidarProfile.options.profileConfig.defaultAttribute,
         ngeo.lidarProfile.options.profileConfig.currentZoom);
     } else {
-      console.log('new LOD');
       let cPotreeLineStr = '';
       for (const i in clip.clippedLine) {
         cPotreeLineStr += `{${clip.clippedLine[i][0]} + ',' + ${clip.clippedLine[i][1]}},`;
@@ -287,6 +284,7 @@ ngeo.lidarProfile.loader.updateData = function() {
 };
 
 ngeo.lidarProfile.loader.abortPendingRequests = function() {
+
   for (let i = 0; i < ngeo.lidarProfile.loader.requestsQueue.length; i++) {
     ngeo.lidarProfile.loader.requestsQueue[i].abort();
     ngeo.lidarProfile.loader.requestsQueue.splice(i, 1);
