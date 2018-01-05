@@ -98,7 +98,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
  * @ngdoc controller
  * @ngname gmfLidarPanelController
  */
-gmf.LidarPanelController = function(gmfLidarProfileConfig, $scope) {
+gmf.LidarPanelController = function(gmfLidarProfileConfig) {
   this.gmfLidarProfileConfig = gmfLidarProfileConfig;
 
   /**
@@ -113,7 +113,11 @@ gmf.LidarPanelController = function(gmfLidarProfileConfig, $scope) {
   */
   this.profilWidth;
 
-  this.$scope_ = $scope;
+  /**
+  * @type {boolean}
+  * @export
+  */
+  this.autoWidth = true;
 
 };
 
@@ -148,7 +152,7 @@ gmf.LidarPanelController.prototype.getPointAttributes = function() {
       attr.push(this.gmfLidarProfileConfig.profileConfig.pointAttributes[key]);
     }
   }
-  this.$scope_.pointAttributes = {
+  this.pointAttributes = {
     availableOptions: attr,
     selectedOption: this.gmfLidarProfileConfig.profileConfig.pointAttributes[this.gmfLidarProfileConfig.profileConfig.defaultPointAttribute]
   };

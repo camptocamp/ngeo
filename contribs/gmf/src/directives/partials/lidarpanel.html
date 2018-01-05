@@ -28,15 +28,21 @@
   <hr>
     Material:
   <select
-    ng-options="option.name for option in pointAttributes.availableOptions"
-    ng-model="pointAttributes.selectedOption">
+    ng-options="option.name for option in $ctrl.pointAttributes.availableOptions"
+    ng-model="$ctrl.pointAttributes.selectedOption">
   </select>
   </div>
   <hr>
   <div>
-    Width:
-    <input type="number" pattern="^(0|[1-9][0-9]*)$" min=1 max=100 step=1 ng-model="$ctrl.profilWidth" ng-value="$ctrl.getWidth()" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
-    [m]
+    <span>Automatic Width:</span>
+    <input type="checkbox" ng-model="$ctrl.autoWidth" checked><br><br>
+    </input>
+    <!-- <p ng-class="[style4, {orange: warning}]">Using Array and Map Syntax</p> -->
+    <div ng-class="[{gmf_lidar_profile_automatic_width:$ctrl.autoWidth}]">
+      <span>Manual Width:</span>
+      <input ng-disabled="$ctrl.autoWidth" type="number" pattern="^(0|[1-9][0-9]*)$" min=1 max=100 step=1 ng-model="$ctrl.profilWidth" ng-value="$ctrl.getWidth()" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
+      [m]
+    </div>
   </div>
   <hr>
   Classes:
