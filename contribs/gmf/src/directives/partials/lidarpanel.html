@@ -2,7 +2,8 @@
      gmf-drawprofileline
      gmf-drawprofileline-active="$ctrl.active"
      gmf-drawprofileline-map="::$ctrl.map"
-     gmf-drawprofileline-line="$ctrl.line">
+     gmf-drawprofileline-line="$ctrl.line"
+     gmf-drawprofileline-attributes-options="$ctrl.attributes_options">
    <p>
     <button class="btn btn-default"
       ngeo-btn ng-model="ctrl.interaction.active"
@@ -26,14 +27,15 @@
   <div>
   <hr>
     Material:
-  <select ng-model="data.model" ng-change="$ctrl.setDefaultAttribute(data.model)">
-    <option ng-repeat="option in ::$ctrl.getPointAttributes()" value="{{option.name}}" ng-if="!!option.checked">{{option.name}}</option>
+  <select
+    ng-options="option.name for option in pointAttributes.availableOptions"
+    ng-model="pointAttributes.selectedOption">
   </select>
   </div>
   <hr>
   <div>
     Width:
-    <input type="number" pattern="^(0|[1-9][0-9]*)$" min=5 max=100 ng-model="$ctrl.profilWidth" ng-value="$ctrl.getWidth()" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
+    <input type="number" pattern="^(0|[1-9][0-9]*)$" min=1 max=100 step=1 ng-model="$ctrl.profilWidth" ng-value="$ctrl.getWidth()" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
     [m]
   </div>
   <hr>

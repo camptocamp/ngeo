@@ -98,7 +98,7 @@ gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
  * @ngdoc controller
  * @ngname gmfLidarPanelController
  */
-gmf.LidarPanelController = function(gmfLidarProfileConfig) {
+gmf.LidarPanelController = function(gmfLidarProfileConfig, $scope) {
   this.gmfLidarProfileConfig = gmfLidarProfileConfig;
 
   /**
@@ -112,6 +112,9 @@ gmf.LidarPanelController = function(gmfLidarProfileConfig) {
   * @export
   */
   this.profilWidth;
+
+  this.$scope_ = $scope;
+
 };
 
 /**
@@ -124,6 +127,8 @@ gmf.LidarPanelController.prototype.$onInit = function() {
     this.line = this.line;
     this.active = this.active;
     this.map = this.map;
+    this.getPointAttributes();
+
   }.bind(this));
 
 };
@@ -137,14 +142,16 @@ gmf.LidarPanelController.prototype.getClassification = function() {
 };
 
 gmf.LidarPanelController.prototype.getPointAttributes = function() {
-  // const result = {};
-  // for (const key in this.gmfLidarProfileConfig.profileConfig.pointAttributes) {
-  //   if (this.gmfLidarProfileConfig.profileConfig.pointAttributes[key].checked == 1) {
-  //     result[key] = this.gmfLidarProfileConfig.profileConfig.pointAttributes[key];
-  //   }
-  // }
-  // console.log(re)
-  return this.gmfLidarProfileConfig.profileConfig.pointAttributes;
+  const attr = [];
+  for (const key in this.gmfLidarProfileConfig.profileConfig.pointAttributes) {
+    if (this.gmfLidarProfileConfig.profileConfig.pointAttributes[key].visible == 1) {
+      attr.push(this.gmfLidarProfileConfig.profileConfig.pointAttributes[key]);
+    }
+  }
+  this.$scope_.pointAttributes = {
+    availableOptions: attr,
+    selectedOption: this.gmfLidarProfileConfig.profileConfig.pointAttributes[this.gmfLidarProfileConfig.profileConfig.defaultPointAttribute]
+  };
 };
 
 gmf.LidarPanelController.prototype.getDefaultAttribute = function() {
