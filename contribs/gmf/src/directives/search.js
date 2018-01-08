@@ -303,7 +303,7 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
   this.placeholder;
 
   /**
-   * @type {string}
+   * @type {number}
    * @export
    */
   this.delay = parseInt(this.scope_['delay'], 10) || 50;
