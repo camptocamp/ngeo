@@ -2,6 +2,7 @@ goog.module('ngeo.olcs.Service');
 
 goog.require('ngeo.Debounce');
 goog.require('ngeo.Location');
+goog.require('ngeo.olcs.constants');
 goog.require('ngeo.StateManager');
 
 const Service = class {
@@ -70,11 +71,11 @@ const Service = class {
   initialStateToCamera_() {
     const stateManager = this.ngeoStateManager_;
 
-    const lon = stateManager.getInitialNumberValue('3d_lon');
-    const lat = stateManager.getInitialNumberValue('3d_lat');
-    const elevation = stateManager.getInitialNumberValue('3d_elevation');
-    const heading = stateManager.getInitialNumberValue('3d_heading') || 0;
-    const pitch = stateManager.getInitialNumberValue('3d_pitch') || 0;
+    const lon = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.LON);
+    const lat = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.LAT);
+    const elevation = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.ELEVATION);
+    const heading = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.HEADING) || 0;
+    const pitch = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.PITCH) || 0;
 
     goog.asserts.assert(lon !== undefined);
     goog.asserts.assert(lat !== undefined);
@@ -93,12 +94,12 @@ const Service = class {
     camera.moveEnd.addEventListener(this.ngeoDebounce_(() => {
       const position = camera.positionCartographic;
       this.ngeoStateManager_.updateState({
-        '3d_enabled': true,
-        '3d_lon': Cesium.Math.toDegrees(position.longitude).toFixed(5),
-        '3d_lat': Cesium.Math.toDegrees(position.latitude).toFixed(5),
-        '3d_elevation': position.height.toFixed(0),
-        '3d_heading': Cesium.Math.toDegrees(camera.heading).toFixed(3),
-        '3d_pitch': Cesium.Math.toDegrees(camera.pitch).toFixed(3)
+        [ngeo.olcs.constants.Permalink3dParam.ENABLED]: true,
+        [ngeo.olcs.constants.Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
+        [ngeo.olcs.constants.Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
+        [ngeo.olcs.constants.Permalink3dParam.ELEVATION]: position.height.toFixed(0),
+        [ngeo.olcs.constants.Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
+        [ngeo.olcs.constants.Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3)
       });
     }, 1000, true));
 
@@ -113,7 +114,7 @@ const Service = class {
    * @private
    */
   remove3dState_() {
-    this.ngeoLocation_.getParamKeysWithPrefix('3d_').forEach((key) => {
+    this.ngeoLocation_.getParamKeysWithPrefix(ngeo.olcs.constants.Permalink3dParam.PREFIX).forEach((key) => {
       this.ngeoStateManager_.deleteParam(key);
     });
   }
