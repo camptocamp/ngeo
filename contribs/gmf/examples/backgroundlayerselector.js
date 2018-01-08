@@ -1,7 +1,7 @@
 goog.provide('gmfapp.backgroundlayerselector');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorComponent');
+goog.require('gmf.backgroundlayerselector.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('gmf.theme.Themes');
@@ -13,7 +13,7 @@ goog.require('ol.View');
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
-  gmf.module.name,
+  gmf.backgroundlayerselector.module.name,
   gmf.theme.Themes.module.name,
 ]);
 
