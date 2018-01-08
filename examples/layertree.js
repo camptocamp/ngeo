@@ -13,6 +13,7 @@ goog.require('ol.source.Stamen');
 
 goog.require('ngeo.layertree.module');
 goog.require('ngeo.map.module');
+goog.require('ngeo.message.Popup');
 
 
 /** @type {!angular.Module} **/
