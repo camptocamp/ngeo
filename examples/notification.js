@@ -6,7 +6,7 @@ goog.require('ngeo.message.Notification');
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
-  'ngeo',
+  ngeo.module.name,
   ngeo.message.Notification.module.name,
 ]);
 

@@ -6,6 +6,6 @@ goog.require('ngeo.message.popoverComponent');
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
-  'ngeo',
+  ngeo.module.name,
   ngeo.message.popoverComponent.name,
 ]);

@@ -3,6 +3,7 @@ goog.provide('gmf.authentication.component');
 goog.require('gmf');
 goog.require('gmf.authentication.Service');
 goog.require('ngeo');
+goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
@@ -13,6 +14,7 @@ goog.require('ngeo.message.modalComponent');
  */
 gmf.authentication.component = angular.module('gmfAuthentication', [
   gmf.authentication.Service.module.name,
+  ngeo.message.Notification.module.name,
   ngeo.message.modalComponent.name,
 ]);
 

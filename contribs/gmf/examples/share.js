@@ -8,7 +8,7 @@ goog.require('ngeo.message.modalComponent');
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
-  'gmf',
+  gmf.module.name,
   ngeo.message.modalComponent.name
 ]);
 

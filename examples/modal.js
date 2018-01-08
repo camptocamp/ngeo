@@ -6,7 +6,7 @@ goog.require('ngeo.message.modalComponent');
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
-  'ngeo',
+  ngeo.module.name,
   ngeo.message.modalComponent.name,
 ]);
 
