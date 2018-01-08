@@ -1,7 +1,6 @@
 goog.provide('gmfapp.layertreeadd');
 
-/** @suppress {extraRequire} */
-goog.require('gmf.disclaimerComponent');
+goog.require('gmf.disclaimer.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
@@ -24,6 +23,7 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.theme.Manager.module.name,
   gmf.theme.Themes.module.name,
   ngeo.statemanager.Location.module.name,
+  gmf.disclaimer.module.name,
 ]);
 
 
