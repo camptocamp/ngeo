@@ -97,7 +97,7 @@ gmf.module.directive(
 
 
 /**
- * @param {angular.JQLite} $element Element.
+ * @param {jQuery} $element Element.
  * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -167,7 +167,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   // === Injected properties ===
 
   /**
-   * @type {angular.JQLite}
+   * @type {jQuery}
    * @private
    */
   this.element_ = $element;
