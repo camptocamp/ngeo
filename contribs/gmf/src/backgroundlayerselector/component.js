@@ -1,18 +1,24 @@
-goog.provide('gmf.backgroundlayerselectorComponent');
+goog.provide('gmf.backgroundlayerselector.component');
 
 goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('gmf.theme.Themes');
+goog.require('ngeo.map.BackgroundLayerMgr');
 goog.require('ol.events');
 
-goog.require('ngeo.map.BackgroundLayerMgr');
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.backgroundlayerselector.component = angular.module('gmfBackgroundlayerselector', [
+  gmf.theme.Themes.module.name,
+  ngeo.map.BackgroundLayerMgr.module.name,
+]);
+
+gmf.module.requires.push(gmf.backgroundlayerselector.component.name);
 
 
-// In the future module declaration, don't forget to require:
-// - ngeo.map.BackgroundLayerMgr.module.name
-
-
-gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
+gmf.backgroundlayerselector.component.value('gmfBackgroundlayerselectorTemplateUrl',
   /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
@@ -21,7 +27,7 @@ gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/backgroundlayerselector.html`;
+      `${gmf.baseModuleTemplateUrl}/backgroundlayerselector/component.html`;
   }
 );
 
@@ -62,7 +68,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
-gmf.backgroundlayerselectorComponent = {
+gmf.backgroundlayerselector.component.component_ = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
     'dimensions': '=gmfBackgroundlayerselectorDimensions',
@@ -73,7 +79,8 @@ gmf.backgroundlayerselectorComponent = {
 };
 
 
-gmf.module.component('gmfBackgroundlayerselector', gmf.backgroundlayerselectorComponent);
+gmf.backgroundlayerselector.component.component('gmfBackgroundlayerselector',
+  gmf.backgroundlayerselector.component.component_);
 
 
 /**
@@ -87,7 +94,7 @@ gmf.module.component('gmfBackgroundlayerselector', gmf.backgroundlayerselectorCo
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
+gmf.backgroundlayerselector.component.Controller_ = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
    * @type {!Object.<string, string>}
@@ -150,14 +157,12 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
-gmf.module.controller('GmfBackgroundlayerselectorController',
-  gmf.BackgroundlayerselectorController);
 
 
 /**
  * Initialise the controller.
  */
-gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
+gmf.backgroundlayerselector.component.Controller_.prototype.$onInit = function() {
   goog.asserts.assert(this.dimensions, 'The dimensions object is required');
   this.handleThemesChange_();
 };
@@ -167,7 +172,7 @@ gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
  * Called when the themes changes. Set (or reset) the backround layers.
  * @private
  */
-gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function() {
+gmf.backgroundlayerselector.component.Controller_.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
     this.bgLayers = layers;
   });
@@ -179,7 +184,7 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
-gmf.BackgroundlayerselectorController.prototype.setLayer = function(layer, opt_silent) {
+gmf.backgroundlayerselector.component.Controller_.prototype.setLayer = function(layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
   if (!opt_silent && this.select) {
@@ -191,7 +196,11 @@ gmf.BackgroundlayerselectorController.prototype.setLayer = function(layer, opt_s
 /**
  * @private
  */
-gmf.BackgroundlayerselectorController.prototype.handleDestroy_ = function() {
+gmf.backgroundlayerselector.component.Controller_.prototype.handleDestroy_ = function() {
   this.listenerKeys_.forEach(ol.events.unlistenByKey);
   this.listenerKeys_.length = 0;
 };
+
+
+gmf.backgroundlayerselector.component.controller('GmfBackgroundlayerselectorController',
+  gmf.backgroundlayerselector.component.Controller_);

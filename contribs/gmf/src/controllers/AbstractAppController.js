@@ -2,7 +2,7 @@ goog.provide('gmf.AbstractAppController');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.backgroundlayerselectorComponent');
+goog.require('gmf.backgroundlayerselector.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
