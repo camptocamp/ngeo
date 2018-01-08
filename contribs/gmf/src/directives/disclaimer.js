@@ -246,7 +246,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeo.message.Message.MessageType.WARNING
+      type: ngeo.message.Message.Type.WARNING
     });
   }
 };
@@ -266,7 +266,7 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeo.message.Message.MessageType.WARNING
+      type: ngeo.message.Message.Type.WARNING
     });
   }
 };

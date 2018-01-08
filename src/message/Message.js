@@ -42,7 +42,7 @@ ngeo.message.Message.prototype.show = function(object) {
  * @export
  */
 ngeo.message.Message.prototype.error = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.ERROR));
+  this.show(this.getMessageObjects(message, ngeo.message.Message.Type.ERROR));
 };
 
 
@@ -52,7 +52,7 @@ ngeo.message.Message.prototype.error = function(message) {
  * @export
  */
 ngeo.message.Message.prototype.info = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.INFORMATION));
+  this.show(this.getMessageObjects(message, ngeo.message.Message.Type.INFORMATION));
 };
 
 
@@ -62,7 +62,7 @@ ngeo.message.Message.prototype.info = function(message) {
  * @export
  */
 ngeo.message.Message.prototype.success = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.SUCCESS));
+  this.show(this.getMessageObjects(message, ngeo.message.Message.Type.SUCCESS));
 };
 
 
@@ -72,7 +72,7 @@ ngeo.message.Message.prototype.success = function(message) {
  * @export
  */
 ngeo.message.Message.prototype.warn = function(message) {
-  this.show(this.getMessageObjects(message, ngeo.message.Message.MessageType.WARNING));
+  this.show(this.getMessageObjects(message, ngeo.message.Message.Type.WARNING));
 };
 
 
@@ -90,7 +90,7 @@ ngeo.message.Message.prototype.warn = function(message) {
 ngeo.message.Message.prototype.getMessageObjects = function(object, opt_type) {
   const msgObjects = [];
   let msgObject = null;
-  const defaultType = ngeo.message.Message.MessageType.INFORMATION;
+  const defaultType = ngeo.message.Message.Type.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({
@@ -131,7 +131,7 @@ ngeo.message.Message.prototype.getMessageObjects = function(object, opt_type) {
  * @enum {string}
  * @export
  */
-ngeo.message.Message.MessageType = {
+ngeo.message.Message.Type = {
   /**
    * @type {string}
    * @export

@@ -367,7 +367,7 @@ gmf.authentication.component.AuthenticationController_ = class {
       this.notification_.notify({
         msg: error,
         target: container,
-        type: ngeo.message.Message.MessageType.ERROR
+        type: ngeo.message.Message.Type.ERROR
       });
     }, this);
   }

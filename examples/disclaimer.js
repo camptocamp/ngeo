@@ -131,7 +131,7 @@ app.MainController.prototype.inMap = function() {
     this.disclaimer.alert({
       msg: message,
       target: angular.element('#disclaimers-in-map'),
-      type: ngeo.message.Message.MessageType.WARNING
+      type: ngeo.message.Message.Type.WARNING
     });
   }, this);
 };
@@ -146,28 +146,28 @@ app.MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.successMsg_,
-    type: ngeo.message.Message.MessageType.SUCCESS
+    type: ngeo.message.Message.Type.SUCCESS
   });
 
   this.disclaimer.close({
     msg: this.infoMsg_,
-    type: ngeo.message.Message.MessageType.INFORMATION
+    type: ngeo.message.Message.Type.INFORMATION
   });
 
   this.disclaimer.close({
     msg: this.warningMsg_,
-    type: ngeo.message.Message.MessageType.WARNING
+    type: ngeo.message.Message.Type.WARNING
   });
 
   this.disclaimer.close({
     msg: this.errorMsg_,
-    type: ngeo.message.Message.MessageType.ERROR
+    type: ngeo.message.Message.Type.ERROR
   });
 
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.close({
       msg: message,
-      type: ngeo.message.Message.MessageType.WARNING
+      type: ngeo.message.Message.Type.WARNING
     });
   }, this);
 

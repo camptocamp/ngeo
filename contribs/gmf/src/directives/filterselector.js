@@ -493,7 +493,7 @@ gmf.FilterselectorController = class {
         console.warn(msgs.join(' '));
         this.ngeoNotification_.notify({
           msg: msgs.join(' '),
-          type: ngeo.message.Message.MessageType.WARNING
+          type: ngeo.message.Message.Type.WARNING
         });
       }
     } else {

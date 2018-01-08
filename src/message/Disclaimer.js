@@ -131,16 +131,16 @@ ngeo.message.Disclaimer.prototype.showMessage = function(message) {
     // display the message using a boostrap dismissible alert
     const classNames = ['alert', 'fade', 'alert-dismissible'];
     switch (type) {
-      case ngeo.message.Message.MessageType.ERROR:
+      case ngeo.message.Message.Type.ERROR:
         classNames.push('alert-danger');
         break;
-      case ngeo.message.Message.MessageType.INFORMATION:
+      case ngeo.message.Message.Type.INFORMATION:
         classNames.push('alert-info');
         break;
-      case ngeo.message.Message.MessageType.SUCCESS:
+      case ngeo.message.Message.Type.SUCCESS:
         classNames.push('alert-success');
         break;
-      case ngeo.message.Message.MessageType.WARNING:
+      case ngeo.message.Message.Type.WARNING:
         classNames.push('alert-warning');
         break;
       default:

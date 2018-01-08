@@ -47,16 +47,16 @@ app.MainController = function(ngeoNotification) {
 app.MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
-    type: ngeo.message.Message.MessageType.ERROR
+    type: ngeo.message.Message.Type.ERROR
   }, {
     msg: ['Warning #', this.i_++].join(''),
-    type: ngeo.message.Message.MessageType.WARNING
+    type: ngeo.message.Message.Type.WARNING
   }, {
     msg: ['Information #', this.i_++].join(''),
-    type: ngeo.message.Message.MessageType.INFORMATION
+    type: ngeo.message.Message.Type.INFORMATION
   }, {
     msg: ['Success #', this.i_++].join(''),
-    type: ngeo.message.Message.MessageType.SUCCESS
+    type: ngeo.message.Message.Type.SUCCESS
   }]);
 };
 
@@ -70,7 +70,7 @@ app.MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
-    type: ngeo.message.Message.MessageType.ERROR
+    type: ngeo.message.Message.Type.ERROR
   });
 };
 
@@ -82,7 +82,7 @@ app.MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',
-    type: ngeo.message.Message.MessageType.SUCCESS
+    type: ngeo.message.Message.Type.SUCCESS
   });
 };
 

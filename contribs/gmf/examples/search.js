@@ -122,7 +122,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
     ngeoNotification.notify({
       msg: 'gmf-search initialized',
       target: angular.element('#message'),
-      type: ngeo.message.Message.MessageType.SUCCESS
+      type: ngeo.message.Message.Type.SUCCESS
     });
   };
 };

@@ -407,7 +407,7 @@ gmf.TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
     gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
     msg: `${names.join(', ')} ${msg}`,
-    type: ngeo.message.Message.MessageType.INFORMATION
+    type: ngeo.message.Message.Type.INFORMATION
   });
 };
 
