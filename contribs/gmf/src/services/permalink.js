@@ -30,6 +30,8 @@ goog.require('ol.style.Style');
 
 // FIXME remove lines right under and add me at the module dependencies:
 ngeo.module.requires.push(ngeo.statemanager.module.name);
+gmf.module.requires.push(gmf.theme.Themes.module.name);
+gmf.module.requires.push(gmf.theme.Manager.module.name);
 
 
 /**
