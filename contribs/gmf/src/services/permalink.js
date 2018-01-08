@@ -15,6 +15,7 @@ goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.Features');
 goog.require('ngeo.FeatureOverlay');
 goog.require('ngeo.FeatureOverlayMgr');
+goog.require('ngeo.olcs.constants');
 goog.require('ngeo.Popover');
 goog.require('ngeo.StateManager');
 goog.require('ngeo.format.FeatureHash');
@@ -695,13 +696,16 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     goog.asserts.assert(size);
     view.fit(oeFeature.getGeometry().getExtent(), size);
   } else {
-    center = this.getMapCenter();
-    if (center) {
-      view.setCenter(center);
-    }
-    const zoom = this.getMapZoom();
-    if (zoom !== undefined) {
-      view.setZoom(zoom);
+    const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(ngeo.olcs.constants.Permalink3dParam.ENABLED);
+    if (!enabled3d) {
+      center = this.getMapCenter();
+      if (center) {
+        view.setCenter(center);
+      }
+      const zoom = this.getMapZoom();
+      if (zoom !== undefined) {
+        view.setZoom(zoom);
+      }
     }
   }
 
