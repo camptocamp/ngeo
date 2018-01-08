@@ -64,6 +64,12 @@ gmf.MousepositionController = function($element, $filter, gettextCatalog) {
    */
   this.projection;
 
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
+
   // function that apply the filter.
   const formatFn = function(coordinates) {
     const filterAndArgs = this.projection.filter.split(':');
@@ -78,7 +84,7 @@ gmf.MousepositionController = function($element, $filter, gettextCatalog) {
     className: 'gmf-mouseposition-control',
     coordinateFormat: formatFn.bind(this),
     target: angular.element('.gmf-mouseposition-control-target', $element)[0],
-    undefinedHTML: gettextCatalog.getString('Coordinates')
+    undefinedHTML: this.gettextCatalog_.getString('Coordinates')
   });
 };
 
