@@ -2,7 +2,7 @@ goog.provide('app.attributes');
 
 goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesComponent');
+goog.require('ngeo.editing.attributesComponent');
 goog.require('ol.Feature');
 
 goog.require('ngeo.map.module');
@@ -11,7 +11,8 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} */
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.editing.attributesComponent.name,
 ]);
 
 

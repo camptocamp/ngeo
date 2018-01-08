@@ -3,7 +3,7 @@ goog.provide('gmfapp.xsdattributes');
 goog.require('gmf.theme.Themes');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesComponent');
+goog.require('ngeo.editing.attributesComponent');
 goog.require('ol.Feature');
 
 
@@ -11,6 +11,7 @@ goog.require('ol.Feature');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.theme.Themes.module.name,
+  ngeo.editing.attributesComponent.name,
 ]);
 
 

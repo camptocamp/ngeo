@@ -1,9 +1,15 @@
-goog.provide('ngeo.createregularpolygonfromclickDirective');
+goog.provide('ngeo.editing.createregularpolygonfromclickComponent');
 
 goog.require('ngeo');
 goog.require('ngeo.interaction.DrawRegularPolygonFromClick');
 goog.require('ol.events');
 goog.require('ol.Feature');
+
+
+ngeo.editing.createregularpolygonfromclickComponent = angular.module('ngeoCreateregularpolygonfromclick', [
+]);
+
+ngeo.module.requires.push(ngeo.editing.createregularpolygonfromclickComponent.name);
 
 
 /**
@@ -51,9 +57,9 @@ goog.require('ol.Feature');
  * @ngdoc directive
  * @ngname ngeoCreateregularpolygonfromclick
  */
-ngeo.createregularpolygonfromclickDirective = function() {
+ngeo.editing.createregularpolygonfromclickComponent.directive_ = function() {
   return {
-    controller: ngeo.CreateregularpolygonfromclickController,
+    controller: 'ngeoCreateregularpolygonfromclickController',
     bindToController: true,
     scope: {
       'active': '=ngeoCreateregularpolygonfromclickActive',
@@ -66,9 +72,10 @@ ngeo.createregularpolygonfromclickDirective = function() {
   };
 };
 
-ngeo.module.directive(
+ngeo.editing.createregularpolygonfromclickComponent.directive(
   'ngeoCreateregularpolygonfromclick',
-  ngeo.createregularpolygonfromclickDirective);
+  ngeo.editing.createregularpolygonfromclickComponent.directive_
+);
 
 
 /**
@@ -80,7 +87,7 @@ ngeo.module.directive(
  * @ngdoc controller
  * @ngname ngeoCreateregularpolygonfromclickController
  */
-ngeo.CreateregularpolygonfromclickController = function($scope) {
+ngeo.editing.createregularpolygonfromclickComponent.Controller_ = function($scope) {
 
   // == Scope properties ==
 
@@ -149,7 +156,7 @@ ngeo.CreateregularpolygonfromclickController = function($scope) {
 /**
  * Initialize the directive.
  */
-ngeo.CreateregularpolygonfromclickController.prototype.$onInit = function() {
+ngeo.editing.createregularpolygonfromclickComponent.Controller_.prototype.$onInit = function() {
 
   this.interaction_ = new ngeo.interaction.DrawRegularPolygonFromClick({
     angle: this.angle,
@@ -175,7 +182,7 @@ ngeo.CreateregularpolygonfromclickController.prototype.$onInit = function() {
  * @param {ol.interaction.Draw.Event} evt Event.
  * @private
  */
-ngeo.CreateregularpolygonfromclickController.prototype.handleDrawEnd_ = function(evt) {
+ngeo.editing.createregularpolygonfromclickComponent.Controller_.prototype.handleDrawEnd_ = function(evt) {
   const feature = new ol.Feature(evt.feature.getGeometry());
   this.features.push(feature);
 };
@@ -185,8 +192,14 @@ ngeo.CreateregularpolygonfromclickController.prototype.handleDrawEnd_ = function
  * Cleanup event listeners and remove the interaction from the map.
  * @private
  */
-ngeo.CreateregularpolygonfromclickController.prototype.handleDestroy_ = function() {
+ngeo.editing.createregularpolygonfromclickComponent.Controller_.prototype.handleDestroy_ = function() {
   ol.events.unlistenByKey(this.interactionListenerKey_);
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);
 };
+
+
+ngeo.editing.createregularpolygonfromclickComponent.controller(
+  'ngeoCreateregularpolygonfromclickController',
+  ngeo.editing.createregularpolygonfromclickComponent.Controller_
+);

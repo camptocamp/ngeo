@@ -7,7 +7,7 @@ goog.require('ngeo.Menu');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.exportfeaturesDirective');
+goog.require('ngeo.editing.exportfeaturesComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.component');
 goog.require('ngeo.interaction.Modify');
@@ -30,6 +30,7 @@ goog.require('ol.style.Text');
 // - ngeo.interaction.Rotate.module.name
 // - ngeo.interaction.Translate.module.name
 // - ngeo.misc.FeatureHelper.module.name
+// - ngeo.editing.exportfeaturesComponent.name
 
 
 /**

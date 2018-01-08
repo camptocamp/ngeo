@@ -1,4 +1,4 @@
-goog.provide('ngeo.createfeatureDirective');
+goog.provide('ngeo.editing.createfeatureComponent');
 
 goog.require('ngeo');
 /** @suppress {extraRequire} */
@@ -7,12 +7,18 @@ goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.utils');
+goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.interaction.Draw');
 goog.require('ol.style.Style');
 
-// Don't forget to add module dependencies
+
+ngeo.editing.createfeatureComponent = angular.module('ngeoCreatefeature', [
+  ngeo.misc.EventHelper.module.name
+]);
+
+ngeo.module.requires.push(ngeo.editing.createfeatureComponent.name);
 
 
 /**
@@ -53,9 +59,9 @@ goog.require('ol.style.Style');
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
-ngeo.createfeatureDirective = function() {
+ngeo.editing.createfeatureComponent.directive_ = function() {
   return {
-    controller: ngeo.CreatefeatureController,
+    controller: 'ngeoCreatefeatureController',
     bindToController: true,
     scope: {
       'active': '=ngeoCreatefeatureActive',
@@ -66,7 +72,7 @@ ngeo.createfeatureDirective = function() {
   };
 };
 
-ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
+ngeo.editing.createfeatureComponent.directive('ngeoCreatefeature', ngeo.editing.createfeatureComponent.directive_);
 
 
 /**
@@ -83,7 +89,7 @@ ngeo.module.directive('ngeoCreatefeature', ngeo.createfeatureDirective);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scope,
+ngeo.editing.createfeatureComponent.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   $timeout, ngeoEventHelper) {
 
   /**
@@ -168,7 +174,7 @@ ngeo.CreatefeatureController = function(gettextCatalog, $compile, $filter, $scop
 /**
  * Initialize the directive.
  */
-ngeo.CreatefeatureController.prototype.$onInit = function() {
+ngeo.editing.createfeatureComponent.Controller_.prototype.$onInit = function() {
   this.active = this.active === true;
   const gettextCatalog = this.gettextCatalog_;
 
@@ -254,7 +260,7 @@ ngeo.CreatefeatureController.prototype.$onInit = function() {
  * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
-ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
+ngeo.editing.createfeatureComponent.Controller_.prototype.handleDrawEnd_ = function(event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
@@ -283,7 +289,7 @@ ngeo.CreatefeatureController.prototype.handleDrawEnd_ = function(event) {
 /**
  * Cleanup event listeners and remove the interaction from the map.
  */
-ngeo.CreatefeatureController.prototype.$onDestroy = function() {
+ngeo.editing.createfeatureComponent.Controller_.prototype.$onDestroy = function() {
   this.timeout_(() => {
     const uid = ol.getUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
@@ -291,3 +297,5 @@ ngeo.CreatefeatureController.prototype.$onDestroy = function() {
     this.map.removeInteraction(this.interaction_);
   }, 0);
 };
+
+ngeo.editing.createfeatureComponent.controller('ngeoCreatefeatureController', ngeo.editing.createfeatureComponent.Controller_);

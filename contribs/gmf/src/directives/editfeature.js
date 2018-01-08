@@ -8,9 +8,9 @@ goog.require('gmf.Snapping');
 goog.require('gmf.SyncLayertreeMap');
 goog.require('gmf.XSDAttributes');
 /** @suppress {extraRequire} */
-goog.require('ngeo.attributesComponent');
+goog.require('ngeo.editing.attributesComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureDirective');
+goog.require('ngeo.editing.createfeatureComponent');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.LayerHelper');
