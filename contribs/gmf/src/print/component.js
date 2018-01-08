@@ -1,4 +1,4 @@
-goog.provide('gmf.printComponent');
+goog.provide('gmf.print.component');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -9,22 +9,37 @@ goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
-goog.require('ol.Observable');
-goog.require('ol.math');
-goog.require('ol.Map');
+goog.require('ngeo.query.MapQuerent');
+goog.require('ol.array');
+goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
+goog.require('ol.Observable');
+goog.require('ol.Map');
+goog.require('ol.math');
 
-// In the future module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlayMgr.module.name
-// - ngeo.map.LayerHelper.module.name (extra from the map module)
-// - ngeo.misc.FeatureHelper.module.name
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.print.component = angular.module('gmfPrintComponent', [
+  gmf.authentication.Service.module.name,
+  gmf.theme.Themes.module.name,
+  ngeo.map.LayerHelper.module.name,
+  ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.misc.FeatureHelper.module.name,
+  ngeo.print.Service.module.name,
+  ngeo.print.Utils.module.name,
+  ngeo.query.MapQuerent.module.name,
+]);
+
+gmf.module.requires.push(gmf.print.component.name);
 
 
 /**
  * @enum {string}
  * @export
  */
-gmf.PrintStateEnum = {
+gmf.print.component.PrintStateEnum = {
 
   /**
    * @type {string}
@@ -57,11 +72,13 @@ gmf.PrintStateEnum = {
   ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
 };
 
-gmf.module.value('gmfPrintState', {
-  'state': gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED
+
+gmf.print.component.value('gmfPrintState', {
+  'state': gmf.print.component.PrintStateEnum.CAPABILITIES_NOT_LOADED
 });
 
-gmf.module.value('gmfPrintTemplateUrl',
+
+gmf.print.component.value('gmfPrintTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -70,8 +87,9 @@ gmf.module.value('gmfPrintTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['gmfPrintTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/print.html`;
+      `${gmf.baseModuleTemplateUrl}/print/component.html`;
   });
+
 
 /**
  * @param {!angular.JQLite} $element Element.
@@ -132,7 +150,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * @ngdoc component
  * @ngname gmfPrint
  */
-gmf.printComponent = {
+gmf.print.component.component_ = {
   bindings: {
     'map': '<gmfPrintMap',
     'active': '=gmfPrintActive',
@@ -147,13 +165,13 @@ gmf.printComponent = {
 };
 
 
-gmf.module.component('gmfPrint', gmf.printComponent);
+gmf.print.component.component('gmfPrint', gmf.print.component.component_);
 
 
 /**
  * @private
  */
-gmf.PrintController = class {
+gmf.print.component.Controller_ = class {
 
   /**
    * @param {angular.Scope} $rootScope Angular root scope.
@@ -171,7 +189,7 @@ gmf.PrintController = class {
    * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.$filter} $filter Angular $filter service.
-   * @param {gmf.PrintStateEnum} gmfPrintState GMF print state.
+   * @param {gmf.print.component.PrintStateEnum} gmfPrintState GMF print state.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @private
    * @ngInject
@@ -184,7 +202,7 @@ gmf.PrintController = class {
     $filter, gmfPrintState, gmfThemes) {
 
     /**
-     * @type {gmf.PrintStateEnum}
+     * @type {gmf.print.component.PrintStateEnum}
      * @private
      */
     this.gmfPrintState_ = gmfPrintState;
@@ -431,7 +449,7 @@ gmf.PrintController = class {
   $onInit() {
     // Clear the capabilities if the roleId changes
     this.$scope_.$watch(() => this.gmfAuthenticationService_.getRoleId(), () => {
-      this.gmfPrintState_.state = gmf.PrintStateEnum.CAPABILITIES_NOT_LOADED;
+      this.gmfPrintState_.state = gmf.print.component.PrintStateEnum.CAPABILITIES_NOT_LOADED;
       this.capabilities_ = null;
     });
 
@@ -509,7 +527,7 @@ gmf.PrintController = class {
         if (!this.active) {
           return;
         }
-        this.gmfPrintState_.state = gmf.PrintStateEnum.NOT_IN_USE;
+        this.gmfPrintState_.state = gmf.print.component.PrintStateEnum.NOT_IN_USE;
         // Get capabilities - On success
         this.parseCapabilities_(resp);
         this.postComposeListenerKey_ = this.map.on('postcompose',
@@ -519,7 +537,7 @@ gmf.PrintController = class {
         this.map.render();
       }, (resp) => {
         // Get capabilities - On error
-        this.gmfPrintState_.state = gmf.PrintStateEnum.ERROR_ON_GETCAPABILITIES;
+        this.gmfPrintState_.state = gmf.print.component.PrintStateEnum.ERROR_ON_GETCAPABILITIES;
         this.capabilities_ = null;
       });
     } else {
@@ -776,11 +794,11 @@ gmf.PrintController = class {
    */
   print(format) {
     // Do not print if a print task is already processing.
-    if (this.gmfPrintState_.state === gmf.PrintStateEnum.PRINTING) {
+    if (this.gmfPrintState_.state === gmf.print.component.PrintStateEnum.PRINTING) {
       return;
     }
     this.requestCanceler_ = this.$q_.defer();
-    this.gmfPrintState_.state = gmf.PrintStateEnum.PRINTING;
+    this.gmfPrintState_.state = gmf.print.component.PrintStateEnum.PRINTING;
 
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution() || 0;
@@ -890,11 +908,11 @@ gmf.PrintController = class {
 
 
   /**
-   * @param {gmf.PrintStateEnum=} opt_printState the print state.
+   * @param {gmf.print.component.PrintStateEnum=} opt_printState the print state.
    * @private
    */
   resetPrintStates_(opt_printState) {
-    this.gmfPrintState_.state = opt_printState || gmf.PrintStateEnum.NOT_IN_USE;
+    this.gmfPrintState_.state = opt_printState || gmf.print.component.PrintStateEnum.NOT_IN_USE;
     this.curRef_ = '';
   }
 
@@ -1016,7 +1034,7 @@ gmf.PrintController = class {
    * @private
    */
   handleCreateReportError_() {
-    this.resetPrintStates_(gmf.PrintStateEnum.ERROR_ON_REPORT);
+    this.resetPrintStates_(gmf.print.component.PrintStateEnum.ERROR_ON_REPORT);
   }
 
 
@@ -1156,14 +1174,14 @@ gmf.PrintController = class {
 
   /**
    * Check the current state of the print.
-   * @param {string} stateEnumKey An enum key from gmf.PrintStateEnum.
+   * @param {string} stateEnumKey An enum key from gmf.print.component.PrintStateEnum.
    * @return {boolean} True if the given state matches with the current print
    *     state. False otherwise.
    * @export
    */
   isState(stateEnumKey) {
-    return this.gmfPrintState_.state === gmf.PrintStateEnum[stateEnumKey];
+    return this.gmfPrintState_.state === gmf.print.component.PrintStateEnum[stateEnumKey];
   }
 };
 
-gmf.module.controller('GmfPrintController', gmf.PrintController);
+gmf.print.component.controller('GmfPrintController', gmf.print.component.Controller_);

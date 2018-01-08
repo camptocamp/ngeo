@@ -3,9 +3,9 @@ goog.provide('gmfapp.print');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.printComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.print.component');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
@@ -19,6 +19,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.print.component.name,
   gmf.theme.Themes.module.name,
   ngeo.map.module.name //for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
