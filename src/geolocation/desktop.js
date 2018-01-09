@@ -1,7 +1,7 @@
 goog.provide('ngeo.geolocation.desktop');
 
 goog.require('ngeo');
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.Notification');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Geolocation');
@@ -15,7 +15,8 @@ goog.require('ngeo.map.FeatureOverlayMgr');
  * @type {!angular.Module}
  */
 ngeo.geolocation.desktop = angular.module('ngeoDesktopGeolocation', [
-  ngeo.map.FeatureOverlayMgr.module.name
+  ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.message.Notification.module.name,
 ]);
 
 ngeo.module.requires.push(ngeo.geolocation.desktop.name);
@@ -74,7 +75,7 @@ ngeo.geolocation.desktop.directive('ngeoDesktopGeolocation', ngeo.geolocation.de
  * @param {angular.JQLite} $element Element.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
@@ -103,7 +104,7 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
   this.$scope_ = $scope;
 
   /**
-   * @type {ngeo.Notification}
+   * @type {ngeo.message.Notification}
    * @private
    */
   this.notification_ = ngeoNotification;

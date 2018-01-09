@@ -24,7 +24,7 @@ goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
-goog.require('ngeo.modalDirective');
+goog.require('ngeo.message.modalComponent');
 goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
@@ -34,6 +34,7 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
 // FIXME add dependencies to the future module
+// - ngeo.message.modalComponent.name
 
 /**
  * Directive used to insert, modify and delete features from a single layer.
@@ -96,7 +97,7 @@ gmf.module.directive(
 
 
 /**
- * @param {angular.JQLite} $element Element.
+ * @param {jQuery} $element Element.
  * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -166,7 +167,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   // === Injected properties ===
 
   /**
-   * @type {angular.JQLite}
+   * @type {jQuery}
    * @private
    */
   this.element_ = $element;

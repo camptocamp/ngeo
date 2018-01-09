@@ -4,7 +4,7 @@ goog.provide('gmfapp.search');
 goog.require('gmf.mapDirective');
 goog.require('gmf.search.module');
 goog.require('gmf.theme.Themes');
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.map.module');
@@ -39,7 +39,7 @@ gmfapp.module.value('gmfLayersUrl',
 /**
  * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
  */
@@ -122,7 +122,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
     ngeoNotification.notify({
       msg: 'gmf-search initialized',
       target: angular.element('#message'),
-      type: ngeo.MessageType.SUCCESS
+      type: ngeo.message.Message.Type.SUCCESS
     });
   };
 };

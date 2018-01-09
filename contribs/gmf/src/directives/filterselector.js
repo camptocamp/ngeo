@@ -10,8 +10,8 @@ goog.require('gmf.SavedFilters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.module');
 /** @suppress {extraRequire} */
-goog.require('ngeo.modalDirective');
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.modalComponent');
+goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ol.events');
@@ -21,6 +21,8 @@ goog.require('ngeo.map.FeatureOverlayMgr');
 
 // In the future module declaration, don't forget to require:
 // - ngeo.map.FeatureOverlayMgr.module.name
+// - ngeo.message.Notification.module.name
+// - ngeo.message.modalComponent.name
 
 /**
  * @private
@@ -38,7 +40,7 @@ gmf.FilterselectorController = class {
    *     sources helper service.
    * @param {gmf.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
-   * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+   * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
    * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
@@ -142,7 +144,7 @@ gmf.FilterselectorController = class {
     );
 
     /**
-     * @type {ngeo.Notification}
+     * @type {ngeo.message.Notification}
      * @private
      */
     this.ngeoNotification_ = ngeoNotification;
@@ -491,7 +493,7 @@ gmf.FilterselectorController = class {
         console.warn(msgs.join(' '));
         this.ngeoNotification_.notify({
           msg: msgs.join(' '),
-          type: ngeo.MessageType.WARNING
+          type: ngeo.message.Message.Type.WARNING
         });
       }
     } else {

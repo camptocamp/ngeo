@@ -5,9 +5,6 @@
 
 goog.provide('app.layertree');
 
-goog.require('ngeo.Popup');
-/** @suppress {extraRequire} */
-goog.require('ngeo.popupDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -16,13 +13,15 @@ goog.require('ol.source.Stamen');
 
 goog.require('ngeo.layertree.module');
 goog.require('ngeo.map.module');
+goog.require('ngeo.message.Popup');
 
 
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
   ngeo.layertree.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.message.Popup.module.name,
 ]);
 
 
@@ -57,7 +56,7 @@ app.module.component('appLayertree', app.layertreeComponent);
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
- * @param {ngeo.Popup.Factory} ngeoCreatePopup Popup service.
+ * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  * @export
  */
@@ -93,7 +92,7 @@ app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {ngeo.Popup}
+   * @type {ngeo.message.Popup}
    */
   this.infoPopup_ = ngeoCreatePopup();
 

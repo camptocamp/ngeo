@@ -9,7 +9,7 @@ goog.require('ngeo.misc.AutoProjection');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.colorpickerComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.popoverDirective');
+goog.require('ngeo.message.popoverComponent');
 goog.require('ngeo.search.module');
 goog.require('ol.Feature');
 goog.require('ol.Map');
@@ -36,6 +36,7 @@ gmf.search.component = angular.module('gmfSearch', [
   ngeo.misc.colorpickerComponent.name,
   ngeo.search.module.name,
   ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.message.popoverComponent.name,
 ]);
 
 gmf.module.requires.push(gmf.search.component.name);

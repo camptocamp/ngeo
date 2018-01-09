@@ -1,8 +1,13 @@
-goog.provide('ngeo.modalDirective');
+goog.provide('ngeo.message.modalComponent');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
 
+/**
+ * @type {angular.Module}
+ */
+ngeo.message.modalComponent = angular.module('ngeoModal', []);
+ngeo.module.requires.push(ngeo.message.modalComponent.name);
 
 /**
  * Provides the "ngeoModal" component.
@@ -35,10 +40,29 @@ goog.require('ngeo');
  *     resized or not. Defaults to `false`.
  * @ngdoc component
  * @ngname ngeoModal
+ * @type {!angular.Component}
  */
-ngeo.modalDirective;
+ngeo.message.modalComponent.component_ = {
+  template: `<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <ng-transclude></ng-transclude>
+      </div>
+    </div>
+  </div>`,
+  require: {
+    'ngModel': 'ngModel'
+  },
+  transclude: true,
+  controller: 'ngeoModalController',
+  bindings: {
+    'resizable': '<ngeoModalResizable'
+  }
+};
 
-ngeo.modalDirective.Controller = class {
+ngeo.message.modalComponent.component('ngeoModal', ngeo.message.modalComponent.component_);
+
+ngeo.message.modalComponent.Controller_ = class {
   /**
    * @ngInject
    * @param {!angular.Scope} $scope Scope.
@@ -109,25 +133,4 @@ ngeo.modalDirective.Controller = class {
   }
 };
 
-/**
- * @type {!angular.Component}
- */
-ngeo.modalDirective.Component = {
-  template: `<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <ng-transclude></ng-transclude>
-      </div>
-    </div>
-  </div>`,
-  require: {
-    'ngModel': 'ngModel'
-  },
-  transclude: true,
-  controller: ngeo.modalDirective.Controller,
-  bindings: {
-    'resizable': '<ngeoModalResizable'
-  }
-};
-
-ngeo.module.component('ngeoModal', ngeo.modalDirective.Component);
+ngeo.message.modalComponent.controller('ngeoModalController', ngeo.message.modalComponent.Controller_);

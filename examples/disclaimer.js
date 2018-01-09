@@ -1,6 +1,7 @@
 goog.provide('app.disclaimer');
 
-goog.require('ngeo.Disclaimer');
+goog.require('ngeo.message.Disclaimer');
+goog.require('ngeo.message.Message');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -12,19 +13,20 @@ goog.require('ngeo.map.module');
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
-  ngeo.map.module.name
+  ngeo.map.module.name,
+  ngeo.message.Disclaimer.module.name,
 ]);
 
 
 /**
- * @param {ngeo.Disclaimer} ngeoDisclaimer Ngeo disclaimer service.
+ * @param {ngeo.message.Disclaimer} ngeoDisclaimer Ngeo disclaimer service.
  * @ngInject
  * @constructor
  */
 app.MainController = function(ngeoDisclaimer) {
 
   /**
-   * @type {ngeo.Disclaimer}
+   * @type {ngeo.message.Disclaimer}
    * @export
    */
   this.disclaimer = ngeoDisclaimer;
@@ -129,7 +131,7 @@ app.MainController.prototype.inMap = function() {
     this.disclaimer.alert({
       msg: message,
       target: angular.element('#disclaimers-in-map'),
-      type: ngeo.MessageType.WARNING
+      type: ngeo.message.Message.Type.WARNING
     });
   }, this);
 };
@@ -144,28 +146,28 @@ app.MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.successMsg_,
-    type: ngeo.MessageType.SUCCESS
+    type: ngeo.message.Message.Type.SUCCESS
   });
 
   this.disclaimer.close({
     msg: this.infoMsg_,
-    type: ngeo.MessageType.INFORMATION
+    type: ngeo.message.Message.Type.INFORMATION
   });
 
   this.disclaimer.close({
     msg: this.warningMsg_,
-    type: ngeo.MessageType.WARNING
+    type: ngeo.message.Message.Type.WARNING
   });
 
   this.disclaimer.close({
     msg: this.errorMsg_,
-    type: ngeo.MessageType.ERROR
+    type: ngeo.message.Message.Type.ERROR
   });
 
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.close({
       msg: message,
-      type: ngeo.MessageType.WARNING
+      type: ngeo.message.Message.Type.WARNING
     });
   }, this);
 

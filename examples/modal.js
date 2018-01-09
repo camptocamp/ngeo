@@ -1,11 +1,14 @@
 goog.provide('app.modal');
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.modalDirective');
+goog.require('ngeo.message.modalComponent');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.message.modalComponent.name,
+]);
 
 
 /**

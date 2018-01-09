@@ -1,7 +1,7 @@
 goog.provide('ngeo.geolocation.mobile');
 
 goog.require('ngeo');
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.Notification');
 goog.require('ol.easing');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -16,7 +16,8 @@ goog.require('ngeo.map.FeatureOverlayMgr');
  * @type {!angular.Module}
  */
 ngeo.geolocation.mobile = angular.module('ngeoMobileGeolocation', [
-  ngeo.map.FeatureOverlayMgr.module.name
+  ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.message.Notification.module.name,
 ]);
 
 ngeo.module.requires.push(ngeo.geolocation.mobile.name);
@@ -75,7 +76,7 @@ ngeo.geolocation.mobile.directive('ngeoMobileGeolocation', ngeo.geolocation.mobi
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController
@@ -104,7 +105,7 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
   goog.asserts.assertObject(options);
 
   /**
-   * @type {ngeo.Notification}
+   * @type {ngeo.message.Notification}
    * @private
    */
   this.notification_ = ngeoNotification;

@@ -1,21 +1,25 @@
 goog.provide('app.notification');
 
-goog.require('ngeo.Notification');
+goog.require('ngeo.message.Message');
+goog.require('ngeo.message.Notification');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+app.module = angular.module('app', [
+  ngeo.module.name,
+  ngeo.message.Notification.module.name,
+]);
 
 
 /**
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @ngInject
  * @constructor
  */
 app.MainController = function(ngeoNotification) {
 
   /**
-   * @type {ngeo.Notification}
+   * @type {ngeo.message.Notification}
    * @export
    */
   this.notification = ngeoNotification;
@@ -43,16 +47,16 @@ app.MainController = function(ngeoNotification) {
 app.MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
-    type: ngeo.MessageType.ERROR
+    type: ngeo.message.Message.Type.ERROR
   }, {
     msg: ['Warning #', this.i_++].join(''),
-    type: ngeo.MessageType.WARNING
+    type: ngeo.message.Message.Type.WARNING
   }, {
     msg: ['Information #', this.i_++].join(''),
-    type: ngeo.MessageType.INFORMATION
+    type: ngeo.message.Message.Type.INFORMATION
   }, {
     msg: ['Success #', this.i_++].join(''),
-    type: ngeo.MessageType.SUCCESS
+    type: ngeo.message.Message.Type.SUCCESS
   }]);
 };
 
@@ -66,7 +70,7 @@ app.MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
-    type: ngeo.MessageType.ERROR
+    type: ngeo.message.Message.Type.ERROR
   });
 };
 
@@ -78,7 +82,7 @@ app.MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',
-    type: ngeo.MessageType.SUCCESS
+    type: ngeo.message.Message.Type.SUCCESS
   });
 };
 
