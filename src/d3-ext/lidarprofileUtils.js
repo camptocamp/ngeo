@@ -66,7 +66,7 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
       }
     }
   }
-  ngeo.lidarProfile.loader.lidarBuffer.getSource().clear();
+  ngeo.lidarProfile.loader.clearBuffer();
   const feat = new ol.Feature({
     geometry: new ol.geom.LineString(clippedLine)
   });

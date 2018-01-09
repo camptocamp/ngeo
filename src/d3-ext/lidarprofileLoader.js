@@ -41,10 +41,16 @@ ngeo.lidarProfile.setOptions = function(options) {
   ngeo.lidarProfile.loader.lidarBuffer.setMap(options.map);
 };
 
+ngeo.lidarProfile.loader.clearBuffer = function() {
+  if (ngeo.lidarProfile.loader.lidarBuffer) {
+    ngeo.lidarProfile.loader.lidarBuffer.getSource().clear();
+  }
+};
+
 ngeo.lidarProfile.loader.requestsQueue = [];
 
 ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, minLOD) {
-
+  ngeo.lidarProfile.loader.clearBuffer();
   ngeo.lidarProfile.options.pytreeLinestring =  ngeo.lidarProfile.utils.getPytreeLinestring(ngeo.lidarProfile.options.olLinestring);
   let profileLine;
   let maxLODWith;
