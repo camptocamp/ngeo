@@ -714,5 +714,5 @@ gmf.filters.filterselectorComponent.component('gmfFilterselector', {
     toolGroup: '<'
   },
   controller: gmf.filters.filterselectorComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/filtes/filterselectorcomponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/filters/filterselectorcomponent.html`
 });
