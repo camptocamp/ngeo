@@ -1,10 +1,10 @@
-goog.require('gmf.contextualdataDirective');
+goog.require('gmf.contextualdata.component');
 goog.require('gmf.mapDirective');
 goog.require('gmf.raster.RasterService');
 goog.require('ol.Map');
 goog.require('ol.View');
 
-describe('gmf.contextualdataDirective', () => {
+describe('gmf.contextualdata.component', () => {
 
   let $compile;
   let $document;

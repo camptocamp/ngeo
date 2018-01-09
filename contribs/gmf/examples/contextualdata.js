@@ -2,7 +2,7 @@ goog.provide('gmfapp.contextualdata');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.contextualdataDirective');
+goog.require('gmf.contextualdata.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -18,6 +18,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.contextualdata.module.name,
 ]);
 
 

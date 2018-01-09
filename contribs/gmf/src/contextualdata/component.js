@@ -1,9 +1,21 @@
-goog.provide('gmf.contextualdataDirective');
+goog.provide('gmf.contextualdata.component');
 
 goog.require('gmf');
 goog.require('gmf.raster.RasterService');
 goog.require('ol.Overlay');
 goog.require('ol.proj');
+goog.require('ol.events');
+goog.require('ol.obj');
+
+
+/**
+ * @type {angular.Module}
+ */
+gmf.contextualdata.component = angular.module('gmfContextualdata', [
+  gmf.raster.RasterService.module.name,
+]);
+
+gmf.module.requires.push(gmf.contextualdata.component.name);
 
 
 /**
@@ -41,7 +53,7 @@ goog.require('ol.proj');
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
-gmf.contextualdataDirective = function() {
+gmf.contextualdata.component.directive_ = function() {
   return {
     restrict: 'A',
     scope: false,
@@ -55,7 +67,7 @@ gmf.contextualdataDirective = function() {
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.ContextualdataController} controller Controller.
+     * @param {gmf.contextualdata.component.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -63,7 +75,8 @@ gmf.contextualdataDirective = function() {
   };
 };
 
-gmf.module.directive('gmfContextualdata', gmf.contextualdataDirective);
+gmf.contextualdata.component.directive('gmfContextualdata',
+  gmf.contextualdata.component.directive_);
 
 
 /**
@@ -77,7 +90,7 @@ gmf.module.directive('gmfContextualdata', gmf.contextualdataDirective);
  * @ngdoc controller
  * @ngInject
  */
-gmf.ContextualdataController = function($compile, $scope, gmfRaster) {
+gmf.contextualdata.component.Controller_ = function($compile, $scope, gmfRaster) {
 
   /**
    * @type {ol.Map}
@@ -127,7 +140,7 @@ gmf.ContextualdataController = function($compile, $scope, gmfRaster) {
 /**
  *
  */
-gmf.ContextualdataController.prototype.init = function() {
+gmf.contextualdata.component.Controller_.prototype.init = function() {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
@@ -141,7 +154,7 @@ gmf.ContextualdataController.prototype.init = function() {
  * @param {!Event} event Event.
  * @private
  */
-gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
+gmf.contextualdata.component.Controller_.prototype.handleMapContextMenu_ = function(event) {
   this.$scope_.$apply(() => {
     const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -153,8 +166,7 @@ gmf.ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
   });
 };
 
-
-gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
+gmf.contextualdata.component.Controller_.prototype.setContent_ = function(coordinate) {
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
@@ -185,7 +197,7 @@ gmf.ContextualdataController.prototype.setContent_ = function(coordinate) {
 /**
  * @private
  */
-gmf.ContextualdataController.prototype.preparePopover_ = function() {
+gmf.contextualdata.component.Controller_.prototype.preparePopover_ = function() {
 
   const container = document.createElement('DIV');
   container.classList.add('popover');
@@ -212,17 +224,17 @@ gmf.ContextualdataController.prototype.preparePopover_ = function() {
   this.map.addOverlay(this.overlay_);
 };
 
-gmf.ContextualdataController.prototype.showPopover = function() {
+gmf.contextualdata.component.Controller_.prototype.showPopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'block');
 };
 
-gmf.ContextualdataController.prototype.hidePopover = function() {
+gmf.contextualdata.component.Controller_.prototype.hidePopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'none');
 };
 
-gmf.module.controller('GmfContextualdataController', gmf.ContextualdataController);
+gmf.contextualdata.component.controller('GmfContextualdataController', gmf.contextualdata.component.Controller_);
 
 
 /**
@@ -253,7 +265,7 @@ gmf.module.controller('GmfContextualdataController', gmf.ContextualdataControlle
  * @ngdoc directive
  * @ngname gmfContextualdatacontent
  */
-gmf.contextualdatacontentDirective = function(
+gmf.contextualdata.component.contentDirective_ = function(
   gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
@@ -262,4 +274,4 @@ gmf.contextualdatacontentDirective = function(
   };
 };
 
-gmf.module.directive('gmfContextualdatacontent', gmf.contextualdatacontentDirective);
+gmf.contextualdata.component.directive('gmfContextualdatacontent', gmf.contextualdata.component.contentDirective_);
