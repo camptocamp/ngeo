@@ -37,7 +37,8 @@ gmf.module.component('gmfMouseposition', gmf.mousepositionComponent);
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.$filter} $filter Angular filter
+ * @param {!angular.$filter} $filter Angular filter.
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
@@ -45,7 +46,7 @@ gmf.module.component('gmfMouseposition', gmf.mousepositionComponent);
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-gmf.MousepositionController = function($element, $filter, gettextCatalog) {
+gmf.MousepositionController = function($element, $filter, $scope, gettextCatalog) {
   /**
    * @type {!ol.Map}
    * @export
@@ -63,6 +64,12 @@ gmf.MousepositionController = function($element, $filter, gettextCatalog) {
    * @export
    */
   this.projection;
+
+  /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.$scope_ = $scope;
 
   /**
    * @type {angularGettext.Catalog}
@@ -98,17 +105,24 @@ gmf.MousepositionController.prototype.$onInit = function() {
     return filter.apply(this, args);
   };
 
-  const gettextCatalog_ = this.gettextCatalog_;
-  this.control = new ol.control.MousePosition({
-    className: 'gmf-mouseposition-control',
-    coordinateFormat: formatFn.bind(this),
-    target: angular.element('.gmf-mouseposition-control-target', this.$element_)[0],
-    undefinedHTML: gettextCatalog_.getString('Coordinates')
+  this.control = null;
+  this.$scope_.$on('gettextLanguageChanged', () => {
+    if (this.control !== null) {
+      this.map.removeControl(this.control);
+    }
+
+    const gettextCatalog = this.gettextCatalog_;
+    this.control = new ol.control.MousePosition({
+      className: 'gmf-mouseposition-control',
+      coordinateFormat: formatFn.bind(this),
+      target: angular.element('.gmf-mouseposition-control-target', this.$element_)[0],
+      undefinedHTML: gettextCatalog.getString('Coordinates')
+    });
+
+    this.setProjection(this.projections[0]);
+
+    this.map.addControl(this.control);
   });
-
-  this.setProjection(this.projections[0]);
-
-  this.map.addControl(this.control);
 };
 
 
