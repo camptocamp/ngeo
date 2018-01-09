@@ -4,7 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
-goog.require('gmf.editfeatureselectorDirective');
+goog.require('gmf.editing.editFeatureSelectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertreeComponent');
 /** @suppress {extraRequire} */
@@ -29,6 +29,7 @@ goog.require('ol.source.Vector');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
+  gmf.editing.editFeatureSelectorComponent.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);

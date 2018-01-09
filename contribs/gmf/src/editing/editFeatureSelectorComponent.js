@@ -1,11 +1,22 @@
-goog.provide('gmf.editfeatureselectorDirective');
+goog.provide('gmf.editing.editFeatureSelectorComponent');
 
 goog.require('goog.asserts');
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.editfeatureDirective');
+goog.require('gmf.editing.editFeatureComponent');
 goog.require('gmf.theme.Themes');
 goog.require('gmf.TreeManager');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.editing.editFeatureSelectorComponent = angular.module('GmfEditingFeatureSelectorComponent', [
+  gmf.editing.editFeatureComponent.name,
+  gmf.theme.Themes.module.name,
+]);
+
+gmf.module.requires.push(gmf.editing.editFeatureSelectorComponent.name);
 
 
 /**
@@ -34,7 +45,7 @@ goog.require('gmf.TreeManager');
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
  */
-gmf.editfeatureselectorDirective = function() {
+gmf.editing.editFeatureSelectorComponent.component_ = function() {
   return {
     controller: 'GmfEditfeatureselectorController as efsCtrl',
     scope: {
@@ -44,11 +55,12 @@ gmf.editfeatureselectorDirective = function() {
       'vectorLayer': '<gmfEditfeatureselectorVector'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/editfeatureselector.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureSelectorComponent.html`
   };
 };
 
-gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective);
+gmf.editing.editFeatureSelectorComponent.directive('gmfEditfeatureselector',
+  gmf.editing.editFeatureSelectorComponent.component_);
 
 
 /**
@@ -62,7 +74,7 @@ gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective)
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
+gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout, gmfThemes,
   gmfTreeManager) {
 
   // === Directive options ===
@@ -183,7 +195,7 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
     () => this.selectedEditableTreeCtrl,
     (newValue, oldValue) => {
       this.dirty = false;
-      this.state = gmf.EditfeatureController.State.IDLE;
+      this.state = gmf.editing.editFeatureComponent.State.IDLE;
     }
   );
 
@@ -196,16 +208,16 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
    * @type {string}
    * @export
    */
-  this.state = gmf.EditfeatureController.State.IDLE;
+  this.state = gmf.editing.editFeatureComponent.State.IDLE;
 
   $scope.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      if (newValue === gmf.EditfeatureController.State.STOP_EDITING_EXECUTE ||
-          newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
+      if (newValue === gmf.editing.editFeatureComponent.State.STOP_EDITING_EXECUTE ||
+          newValue === gmf.editing.editFeatureComponent.State.DEACTIVATE_EXECUTE) {
         this.selectedEditableTreeCtrl = null;
       }
-      if (newValue === gmf.EditfeatureController.State.DEACTIVATE_EXECUTE) {
+      if (newValue === gmf.editing.editFeatureComponent.State.DEACTIVATE_EXECUTE) {
         this.active = false;
       }
     }
@@ -222,8 +234,8 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
  * stop or if it requires confirmation due to unsaved modifications.
  * @export
  */
-gmf.EditfeatureselectorController.prototype.stopEditing = function() {
-  this.state = gmf.EditfeatureController.State.STOP_EDITING_PENDING;
+gmf.editing.editFeatureSelectorComponent.Controller_.prototype.stopEditing = function() {
+  this.state = gmf.editing.editFeatureComponent.State.STOP_EDITING_PENDING;
 };
 
 
@@ -233,7 +245,7 @@ gmf.EditfeatureselectorController.prototype.stopEditing = function() {
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(active) {
+gmf.editing.editFeatureSelectorComponent.Controller_.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     if (!this.dirty) {
       this.selectedEditableNode = null;
@@ -255,9 +267,10 @@ gmf.EditfeatureselectorController.prototype.handleActiveChange_ = function(activ
 /**
  * @private
  */
-gmf.EditfeatureselectorController.prototype.handleDestroy_ = function() {
+gmf.editing.editFeatureSelectorComponent.Controller_.prototype.handleDestroy_ = function() {
   this.treeCtrlsWatcherUnregister_();
 };
 
 
-gmf.module.controller('GmfEditfeatureselectorController', gmf.EditfeatureselectorController);
+gmf.editing.editFeatureSelectorComponent.controller('GmfEditfeatureselectorController',
+  gmf.editing.editFeatureSelectorComponent.Controller_);

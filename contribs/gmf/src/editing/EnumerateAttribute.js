@@ -1,9 +1,9 @@
-goog.provide('gmf.EnumerateAttribute');
+goog.provide('gmf.editing.EnumerateAttribute');
 
 goog.require('gmf');
 
 
-gmf.EnumerateAttribute = class {
+gmf.editing.EnumerateAttribute = class {
 
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
@@ -70,4 +70,9 @@ gmf.EnumerateAttribute = class {
 };
 
 
-gmf.module.service('gmfEnumerateAttribute', gmf.EnumerateAttribute);
+/**
+ * @type {!angular.Module}
+ */
+gmf.editing.EnumerateAttribute.module = angular.module('gmfEnumerateAttribute', []);
+gmf.editing.EnumerateAttribute.module.service('gmfEnumerateAttribute', gmf.editing.EnumerateAttribute);
+gmf.module.requires.push(gmf.editing.EnumerateAttribute.module.name);

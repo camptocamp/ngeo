@@ -1,7 +1,8 @@
-goog.provide('gmf.EditFeature');
+goog.provide('gmf.editing.EditFeature');
 
 goog.require('gmf');
 goog.require('ol.format.GeoJSON');
+goog.require('ol.uri');
 
 
 /**
@@ -16,7 +17,7 @@ goog.require('ol.format.GeoJSON');
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-gmf.EditFeature = function($http, gmfLayersUrl) {
+gmf.editing.EditFeature = function($http, gmfLayersUrl) {
 
   /**
    * @type {angular.$http}
@@ -46,7 +47,7 @@ gmf.EditFeature = function($http, gmfLayersUrl) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
+gmf.editing.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
   const url = ol.uri.appendParams(
     `${this.baseUrl_}/${layerIds.join(',')}`,
     {
@@ -70,7 +71,7 @@ gmf.EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * @param {!Array.<!gmfx.ComparisonFilter>} filters List of comparison filters
  * @return {angular.$q.Promise} Promise.
  */
-gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
+gmf.editing.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
 ) {
   const properties = [];
@@ -93,7 +94,7 @@ gmf.EditFeature.prototype.getFeaturesWithComparisonFilters = function(
  * @return {Array.<ol.Feature>} List of features.
  * @private
  */
-gmf.EditFeature.prototype.handleGetFeatures_ = function(resp) {
+gmf.editing.EditFeature.prototype.handleGetFeatures_ = function(resp) {
   return new ol.format.GeoJSON().readFeatures(resp.data);
 };
 
@@ -104,7 +105,7 @@ gmf.EditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
+gmf.editing.EditFeature.prototype.insertFeatures = function(layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
   const geoJSON = new ol.format.GeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
@@ -120,7 +121,7 @@ gmf.EditFeature.prototype.insertFeatures = function(layerId, features) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
+gmf.editing.EditFeature.prototype.updateFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   const geoJSON = new ol.format.GeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
@@ -136,7 +137,7 @@ gmf.EditFeature.prototype.updateFeature = function(layerId, feature) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
+gmf.editing.EditFeature.prototype.deleteFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   return this.http_.delete(url, {
     headers: {'Content-Type': 'application/json'},
@@ -145,4 +146,9 @@ gmf.EditFeature.prototype.deleteFeature = function(layerId, feature) {
 };
 
 
-gmf.module.service('gmfEditFeature', gmf.EditFeature);
+/**
+ * @type {!angular.Module}
+ */
+gmf.editing.EditFeature.module = angular.module('gmfEditFeature', []);
+gmf.editing.EditFeature.module.service('gmfEditFeature', gmf.editing.EditFeature);
+gmf.module.requires.push(gmf.editing.EditFeature.module.name);

@@ -2,7 +2,7 @@ goog.provide('gmf.mapDirective');
 
 goog.require('gmf');
 goog.require('gmf.Permalink');
-goog.require('gmf.Snapping');
+goog.require('gmf.editing.Snapping');
 
 goog.require('ngeo.map.FeatureOverlayMgr');
 
@@ -58,7 +58,7 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
 /**
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
- * @param {!gmf.Snapping} gmfSnapping The gmf snapping service.
+ * @param {!gmf.editing.Snapping} gmfSnapping The gmf snapping service.
  * @constructor
  * @private
  * @ngInject
@@ -103,7 +103,7 @@ gmf.MapController = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!gmf.Snapping}
+   * @type {!gmf.editing.Snapping}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;

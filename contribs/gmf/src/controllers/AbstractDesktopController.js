@@ -11,7 +11,7 @@ goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawing.drawFeatureComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.editfeatureselectorDirective');
+goog.require('gmf.editing.editFeatureSelectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */

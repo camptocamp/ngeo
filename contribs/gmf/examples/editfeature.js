@@ -5,7 +5,7 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('gmf.EditFeature');
+goog.require('gmf.editing.EditFeature');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -20,7 +20,8 @@ goog.require('ol.source.ImageWMS');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
-  gmf.authentication.module.name
+  gmf.authentication.module.name,
+  gmf.editing.EditFeature.module.name
 ]);
 
 
@@ -35,7 +36,7 @@ gmfapp.module.value('gmfLayersUrl',
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmfx.User} gmfUser User.
  * @constructor
  * @ngInject
@@ -49,7 +50,7 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.scope_ = $scope;
 
   /**
-   * @type {gmf.EditFeature}
+   * @type {gmf.editing.EditFeature}
    * @export
    */
   this.editFeature_ = gmfEditFeature;

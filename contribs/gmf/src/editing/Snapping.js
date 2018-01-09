@@ -1,8 +1,10 @@
-goog.provide('gmf.Snapping');
+goog.provide('gmf.editing.Snapping');
 
 goog.require('gmf');
 goog.require('gmf.theme.Themes');
 goog.require('gmf.TreeManager');
+goog.require('ngeo.layertree.Controller');
+goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.format.WFS');
@@ -31,7 +33,7 @@ goog.require('ol.interaction.Snap');
  * @ngdoc service
  * @ngname gmfSnapping
  */
-gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
+gmf.editing.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
   gmfTreeManager) {
 
   // === Injected services ===
@@ -78,7 +80,7 @@ gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
   /**
    * A cache containing all available snappable items, in which the listening
    * of the state of the `treeCtrl` is registered and unregistered.
-   * @type {gmf.Snapping.Cache}
+   * @type {gmf.editing.Snapping.Cache}
    * @private
    */
   this.cache_ = {};
@@ -123,7 +125,7 @@ gmf.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
  *
  * @export
  */
-gmf.Snapping.prototype.ensureSnapInteractionsOnTop = function() {
+gmf.editing.Snapping.prototype.ensureSnapInteractionsOnTop = function() {
   const map = this.map_;
   goog.asserts.assert(map);
 
@@ -144,7 +146,7 @@ gmf.Snapping.prototype.ensureSnapInteractionsOnTop = function() {
  * @param {?ol.Map} map Map
  * @export
  */
-gmf.Snapping.prototype.setMap = function(map) {
+gmf.editing.Snapping.prototype.setMap = function(map) {
 
   const keys = this.listenerKeys_;
 
@@ -189,7 +191,7 @@ gmf.Snapping.prototype.setMap = function(map) {
  * tree manager Layertree controllers array changes.
  * @private
  */
-gmf.Snapping.prototype.handleThemesChange_ = function() {
+gmf.editing.Snapping.prototype.handleThemesChange_ = function() {
   this.ogcServers_ = null;
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
@@ -205,7 +207,7 @@ gmf.Snapping.prototype.handleThemesChange_ = function() {
  * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
  * @private
  */
-gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
+gmf.editing.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
@@ -257,7 +259,7 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
  *
  * @private
  */
-gmf.Snapping.prototype.unregisterAllTreeCtrl_ = function() {
+gmf.editing.Snapping.prototype.unregisterAllTreeCtrl_ = function() {
   for (const uid in this.cache_) {
     const item = this.cache_[+uid];
     if (item) {
@@ -286,10 +288,10 @@ gmf.Snapping.prototype.unregisterAllTreeCtrl_ = function() {
  * 5) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
  * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
- * @return {?gmf.Snapping.WFSConfig} The configuration object.
+ * @return {?gmf.editing.Snapping.WFSConfig} The configuration object.
  * @private
  */
-gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
+gmf.editing.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
   // (1)
   if (this.ogcServers_ === null) {
@@ -353,7 +355,7 @@ gmf.Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
  * @param {string|undefined} newVal New state value
  * @private
  */
-gmf.Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
+gmf.editing.Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
 
   const uid = ol.getUid(treeCtrl);
   const item = this.cache_[uid];
@@ -372,10 +374,10 @@ gmf.Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
  * Activate a cache item by adding a Snap interaction to the map and launch
  * the initial request to get the features.
  *
- * @param {gmf.Snapping.CacheItem} item Cache item.
+ * @param {gmf.editing.Snapping.CacheItem} item Cache item.
  * @private
  */
-gmf.Snapping.prototype.activateItem_ = function(item) {
+gmf.editing.Snapping.prototype.activateItem_ = function(item) {
 
   // No need to do anything if item is already active
   if (item.active) {
@@ -406,10 +408,10 @@ gmf.Snapping.prototype.activateItem_ = function(item) {
  * Deactivate a cache item by removing the snap interaction and clearing any
  * existing features.
  *
- * @param {gmf.Snapping.CacheItem} item Cache item.
+ * @param {gmf.editing.Snapping.CacheItem} item Cache item.
  * @private
  */
-gmf.Snapping.prototype.deactivateItem_ = function(item) {
+gmf.editing.Snapping.prototype.deactivateItem_ = function(item) {
 
   // No need to do anything if item is already inactive
   if (!item.active) {
@@ -438,7 +440,7 @@ gmf.Snapping.prototype.deactivateItem_ = function(item) {
 /**
  * @private
  */
-gmf.Snapping.prototype.loadAllItems_ = function() {
+gmf.editing.Snapping.prototype.loadAllItems_ = function() {
   this.mapViewChangePromise_ = null;
   let item;
   for (const uid in this.cache_) {
@@ -455,10 +457,10 @@ gmf.Snapping.prototype.loadAllItems_ = function() {
  * features set in the item collection of features (they replace any existing
  * ones first).
  *
- * @param {gmf.Snapping.CacheItem} item Cache item.
+ * @param {gmf.editing.Snapping.CacheItem} item Cache item.
  * @private
  */
-gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
+gmf.editing.Snapping.prototype.loadItemFeatures_ = function(item) {
 
   // If a previous request is still running, cancel it.
   if (item.requestDeferred) {
@@ -518,7 +520,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
  * delay. Cancel any currently delayed call, if required.
  * @private
  */
-gmf.Snapping.prototype.handleMapViewChange_ = function() {
+gmf.editing.Snapping.prototype.handleMapViewChange_ = function() {
   if (this.mapViewChangePromise_) {
     this.timeout_.cancel(this.mapViewChangePromise_);
   }
@@ -530,9 +532,9 @@ gmf.Snapping.prototype.handleMapViewChange_ = function() {
 
 
 /**
- * @typedef {Object<number, gmf.Snapping.CacheItem>}
+ * @typedef {Object<number, gmf.editing.Snapping.CacheItem>}
  */
-gmf.Snapping.Cache;
+gmf.editing.Snapping.Cache;
 
 
 /**
@@ -548,10 +550,10 @@ gmf.Snapping.Cache;
  *     snappingConfig: (gmfThemes.GmfSnappingConfig),
  *     stateWatcherUnregister: (Function),
  *     treeCtrl: (ngeo.layertree.Controller),
- *     wfsConfig: (gmf.Snapping.WFSConfig)
+ *     wfsConfig: (gmf.editing.Snapping.WFSConfig)
  * }}
  */
-gmf.Snapping.CacheItem;
+gmf.editing.Snapping.CacheItem;
 
 
 /**
@@ -560,7 +562,15 @@ gmf.Snapping.CacheItem;
  *     url: (string)
  * }}
  */
-gmf.Snapping.WFSConfig;
+gmf.editing.Snapping.WFSConfig;
 
 
-gmf.module.service('gmfSnapping', gmf.Snapping);
+/**
+ * @type {!angular.Module}
+ */
+gmf.editing.Snapping.module = angular.module('gmfSnapping', [
+  gmf.theme.Themes.module.name,
+  ngeo.layertree.Controller.module.name,
+]);
+gmf.editing.Snapping.module.service('gmfSnapping', gmf.editing.Snapping);
+gmf.module.requires.push(gmf.editing.Snapping.module.name);

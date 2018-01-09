@@ -12,7 +12,6 @@ goog.require('ngeo.misc.colorpickerComponent');
 goog.require('ngeo.message.popoverComponent');
 goog.require('ngeo.search.module');
 goog.require('ol.Feature');
-goog.require('ol.Map');
 goog.require('ol.color');
 goog.require('ol.geom.Point');
 goog.require('ol.obj');

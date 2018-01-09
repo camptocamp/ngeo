@@ -1,20 +1,24 @@
-goog.provide('gmf.editfeatureDirective');
+goog.provide('gmf.editing.editFeatureComponent');
 
 
 goog.require('gmf');
-goog.require('gmf.EditFeature');
+goog.require('gmf.editing.EditFeature');
 /** @suppress {extraRequire} */
-goog.require('gmf.Snapping');
+goog.require('gmf.editing.Snapping');
+goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.SyncLayertreeMap');
-goog.require('gmf.XSDAttributes');
+goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
+goog.require('ngeo.format.XSDAttribute');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.Menu');
+/** @suppress {extraRequire} */
+goog.require('ngeo.message.modalComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
@@ -23,15 +27,40 @@ goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.message.modalComponent');
+goog.require('ol');
+goog.require('ol.array');
 goog.require('ol.Collection');
 goog.require('ol.events');
+goog.require('ol.extent');
+goog.require('ol.Feature');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.interaction.Modify');
+goog.require('ol.layer.Image');
+goog.require('ol.layer.Tile');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.editing.editFeatureComponent = angular.module('GmfEditingFeatureComponent', [
+  gmf.editing.EditFeature.module.name,
+  gmf.editing.Snapping.module.name,
+  gmf.editing.XSDAttributes.module.name,
+  ngeo.editing.attributesComponent.name,
+  ngeo.editing.createfeatureComponent.name,
+  ngeo.map.LayerHelper.module.name,
+  ngeo.message.modalComponent.name,
+  ngeo.misc.btnComponent.name,
+  ngeo.misc.EventHelper.module.name,
+  ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
+]);
+
+gmf.module.requires.push(gmf.editing.editFeatureComponent.name);
+
 
 // FIXME add dependencies to the future module
 // - ngeo.message.modalComponent.name
@@ -76,7 +105,7 @@ goog.require('ol.style.Text');
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
-gmf.editfeatureDirective = function() {
+gmf.editing.editFeatureComponent.component_ = function() {
   return {
     controller: 'GmfEditfeatureController as efCtrl',
     scope: {
@@ -88,12 +117,12 @@ gmf.editfeatureDirective = function() {
       'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/editfeature.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureComponent.html`
   };
 };
 
-gmf.module.directive(
-  'gmfEditfeature', gmf.editfeatureDirective);
+gmf.editing.editFeatureComponent.directive('gmfEditfeature',
+  gmf.editing.editFeatureComponent.component_);
 
 
 /**
@@ -102,9 +131,9 @@ gmf.module.directive(
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {gmf.Snapping} gmfSnapping The gmf snapping service.
- * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {gmf.editing.Snapping} gmfSnapping The gmf snapping service.
+ * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -116,7 +145,7 @@ gmf.module.directive(
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-gmf.EditfeatureController = function($element, $q, $scope, $timeout,
+gmf.editing.editFeatureComponent.Controller_ = function($element, $q, $scope, $timeout,
   gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
   ngeoEventHelper, ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
@@ -197,19 +226,19 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.EditFeature}
+   * @type {gmf.editing.EditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {gmf.Snapping}
+   * @type {gmf.editing.Snapping}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {gmf.XSDAttributes}
+   * @type {gmf.editing.XSDAttributes}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
@@ -428,7 +457,7 @@ gmf.EditfeatureController = function($element, $q, $scope, $timeout,
 /**
  * Called on initialization of the controller.
  */
-gmf.EditfeatureController.prototype.$onInit = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.$onInit = function() {
 
   // (1) Set default values and other properties
   this.dirty = this.dirty === true;
@@ -519,7 +548,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
   this.scope_.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      const state = gmf.EditfeatureController.State;
+      const state = gmf.editing.editFeatureComponent.State;
       if (newValue === state.STOP_EDITING_PENDING) {
         this.confirmCancel().then(() => {
           this.state = state.STOP_EDITING_EXECUTE;
@@ -537,7 +566,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
     (newValue, oldValue) => {
       // Reset stop request when closing the confirmation modal
       if (oldValue && !newValue) {
-        this.state = gmf.EditfeatureController.State.IDLE;
+        this.state = gmf.editing.editFeatureComponent.State.IDLE;
       }
     }
   );
@@ -558,7 +587,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
  * Save the currently selected feature modifications.
  * @export
  */
-gmf.EditfeatureController.prototype.save = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.save = function() {
   const feature = this.feature;
   const id = this.featureId;
 
@@ -592,7 +621,7 @@ gmf.EditfeatureController.prototype.save = function() {
 /**
  * @export
  */
-gmf.EditfeatureController.prototype.cancel = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.cancel = function() {
   this.dirty = false;
   this.feature = null;
   this.features.clear();
@@ -608,7 +637,7 @@ gmf.EditfeatureController.prototype.cancel = function() {
  *     object.
  * @export
  */
-gmf.EditfeatureController.prototype.confirmCancel = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.confirmCancel = function() {
   return this.checkForModifications_().then(() => {
     this.cancel();
   });
@@ -624,7 +653,7 @@ gmf.EditfeatureController.prototype.confirmCancel = function() {
  *     object.
  * @private
  */
-gmf.EditfeatureController.prototype.checkForModifications_ = function(
+gmf.editing.editFeatureComponent.Controller_.prototype.checkForModifications_ = function(
   scopeApply) {
   this.confirmDeferred_ = this.q_.defer();
   if (this.feature && this.dirty) {
@@ -643,7 +672,7 @@ gmf.EditfeatureController.prototype.checkForModifications_ = function(
 /**
  * @export
  */
-gmf.EditfeatureController.prototype.continueWithoutSaving = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.continueWithoutSaving = function() {
   this.cancel();
   this.confirmDeferred_.resolve();
 };
@@ -652,7 +681,7 @@ gmf.EditfeatureController.prototype.continueWithoutSaving = function() {
 /**
  * @export
  */
-gmf.EditfeatureController.prototype.delete = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.delete = function() {
   const msg = this.gettextCatalog_.getString(
     'Do you really want to delete the selected feature?');
   // Confirm deletion first
@@ -690,7 +719,7 @@ gmf.EditfeatureController.prototype.delete = function() {
  * to be validated.
  * @export
  */
-gmf.EditfeatureController.prototype.submit = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.submit = function() {
   // Use timeout to prevent the digest already in progress
   // due to clicking on the modal button to throw an error.
   this.timeout_(() => {
@@ -703,7 +732,7 @@ gmf.EditfeatureController.prototype.submit = function() {
  * @param {angular.$http.Response} resp Ajax response.
  * @private
  */
-gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleEditFeature_ = function(resp) {
   const features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
@@ -719,7 +748,7 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
  * @param {Array.<ngeox.Attribute>} attributes Attributes.
  * @private
  */
-gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
+gmf.editing.editFeatureComponent.Controller_.prototype.setAttributes_ = function(attributes) {
   // Set attributes
   this.attributes = attributes;
 
@@ -737,7 +766,7 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleFeatureAdd_ = function(evt) {
   this.timeout_(() => {
     const feature = evt.element;
     goog.asserts.assertInstanceof(feature, ol.Feature);
@@ -756,7 +785,7 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
  * @param {boolean} active Whether to activate this directive or not.
  * @private
  */
-gmf.EditfeatureController.prototype.toggle_ = function(active) {
+gmf.editing.editFeatureComponent.Controller_.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
   const createUid = ['create-', ol.getUid(this)].join('-');
@@ -817,7 +846,7 @@ gmf.EditfeatureController.prototype.toggle_ = function(active) {
  * @param {boolean} active Whether the map select is active or not.
  * @private
  */
-gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
+gmf.editing.editFeatureComponent.Controller_.prototype.handleMapSelectActiveChange_ = function(
   active) {
 
   const mapDiv = this.map.getViewport();
@@ -857,7 +886,7 @@ gmf.EditfeatureController.prototype.handleMapSelectActiveChange_ = function(
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleMapClick_ = function(evt) {
   const coordinate = evt.coordinate;
   const pixel = evt.pixel;
 
@@ -913,7 +942,7 @@ gmf.EditfeatureController.prototype.handleMapClick_ = function(evt) {
  * @param {Event} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleMapContextMenu_ = function(evt) {
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
 
@@ -950,7 +979,7 @@ gmf.EditfeatureController.prototype.handleMapContextMenu_ = function(evt) {
  * @param {Array.<ol.Feature>} features Features.
  * @private
  */
-gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   this.timeout_(() => {
@@ -967,7 +996,7 @@ gmf.EditfeatureController.prototype.handleGetFeatures_ = function(features) {
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-gmf.EditfeatureController.prototype.initializeInteractions_ = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeo.misc.decorate.interaction(interaction);
@@ -979,7 +1008,7 @@ gmf.EditfeatureController.prototype.initializeInteractions_ = function() {
  * Register interactions by adding them to the map
  * @private
  */
-gmf.EditfeatureController.prototype.registerInteractions_ = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.registerInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.addInteraction(interaction);
   }, this);
@@ -990,7 +1019,7 @@ gmf.EditfeatureController.prototype.registerInteractions_ = function() {
  * Unregister interactions, i.e. set them inactive and remove them from the map
  * @private
  */
-gmf.EditfeatureController.prototype.unregisterInteractions_ = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.removeInteraction(interaction);
   }, this);
@@ -1002,7 +1031,7 @@ gmf.EditfeatureController.prototype.unregisterInteractions_ = function() {
  * @param {?ol.Feature} oldFeature The old feature.
  * @private
  */
-gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
+gmf.editing.editFeatureComponent.Controller_.prototype.handleFeatureChange_ = function(
   newFeature, oldFeature
 ) {
 
@@ -1055,7 +1084,7 @@ gmf.EditfeatureController.prototype.handleFeatureChange_ = function(
 /**
  * @private
  */
-gmf.EditfeatureController.prototype.handleFeaturePropertyChange_ = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleFeaturePropertyChange_ = function() {
   this.dirty = true;
 };
 
@@ -1063,7 +1092,7 @@ gmf.EditfeatureController.prototype.handleFeaturePropertyChange_ = function() {
 /**
  * @private
  */
-gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleFeatureGeometryChange_ = function() {
   this.dirty = true;
   this.scope_.$apply();
 };
@@ -1073,7 +1102,7 @@ gmf.EditfeatureController.prototype.handleFeatureGeometryChange_ = function() {
  * @param {ngeox.MenuEvent} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleMenuActionClick_ = function(evt) {
   const action = evt.detail.action;
 
   switch (action) {
@@ -1095,7 +1124,7 @@ gmf.EditfeatureController.prototype.handleMenuActionClick_ = function(evt) {
  * @param {ol.interaction.Translate.Event} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleTranslateEnd_ = function(evt) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleTranslateEnd_ = function(evt) {
   this.translate_.setActive(false);
   this.scope_.$apply();
 };
@@ -1105,7 +1134,7 @@ gmf.EditfeatureController.prototype.handleTranslateEnd_ = function(evt) {
  * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
-gmf.EditfeatureController.prototype.handleRotateEnd_ = function(evt) {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleRotateEnd_ = function(evt) {
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
@@ -1114,7 +1143,7 @@ gmf.EditfeatureController.prototype.handleRotateEnd_ = function(evt) {
 /**
  * @private
  */
-gmf.EditfeatureController.prototype.handleDestroy_ = function() {
+gmf.editing.editFeatureComponent.Controller_.prototype.handleDestroy_ = function() {
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
@@ -1126,15 +1155,15 @@ gmf.EditfeatureController.prototype.handleDestroy_ = function() {
 };
 
 
-gmf.module.controller(
-  'GmfEditfeatureController', gmf.EditfeatureController);
+gmf.editing.editFeatureComponent.controller('GmfEditfeatureController',
+  gmf.editing.editFeatureComponent.Controller_);
 
 
 /**
  * The different possible values of the `state` inner property.
  * @enum {string}
  */
-gmf.EditfeatureController.State = {
+gmf.editing.editFeatureComponent.State = {
   /**
    * The default state. While idle, nothing happens.
    * @type {string}

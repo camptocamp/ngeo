@@ -1,17 +1,16 @@
 goog.provide('gmfapp.objecteditinghub');
 
 goog.require('goog.asserts');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.XSDAttributes');
 goog.require('ol.format.WFS');
 
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.editing.XSDAttributes.module.name,
   gmf.theme.Themes.module.name,
 ]);
 
@@ -29,7 +28,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */
@@ -54,7 +53,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.XSDAttributes}
+   * @type {gmf.editing.XSDAttributes}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;

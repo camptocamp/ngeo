@@ -3,11 +3,10 @@ goog.provide('gmfapp.profile');
 /** @suppress {extraRequire} */
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
-goog.require('gmf.Snapping');
-/** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.profileComponent');
+goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
@@ -18,8 +17,6 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
