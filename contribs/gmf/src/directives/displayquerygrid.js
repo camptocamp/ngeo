@@ -348,6 +348,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     if (source.tooManyResults) {
       this.makeGrid_(null, source);
     } else {
+      source.id = this.escapeValue_(source.id);
       const features = source.features;
       if (features.length > 0) {
         this.collectData_(source);
@@ -355,7 +356,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     }
   });
 
-  if (this.loadedGridSources.length == 0) {
+  if (this.loadedGridSources.length === 0) {
     // if no grids were created, do not show
     this.active = false;
     return;
@@ -379,6 +380,20 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
  */
 gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() {
   return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
+};
+
+gmf.DisplayquerygridController.prototype.escapeValue_ = function(value) {
+  if (Number.isInteger(value)) {
+    return value;
+  } else {
+    const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
+    if (value.match(toEscape) !== null) {
+      const escapedValue = value.replace(toEscape, '_');
+      return escapedValue;
+    } else {
+      return value;
+    }
+  }
 };
 
 
@@ -684,32 +699,21 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
   }
   this.updateFeatures_(gridSource);
 
-  this.reflowGrid_(this.selectedTab);
+  this.reflowGrid_(source.id);
 };
 
 
 /**
  * @private
- * @param {string|number} sourceLabel Id of the source that should be refreshed.
+ * @param {string|number} sourceId Id of the source that should be refreshed.
  */
-gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceLabel) {
-  // This escapes the sourceLabel id if there is some unauthorized values.
-  // Replace the id to be a valid selector. This work-around allows all
-  // tabs to work if it is not set correctly in the ctrl.mergeTabs array,
-  // in example: value with spaces, brackets, parentheses, etc.
-  const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
-  if (sourceLabel.match(toEscape) !== null) {
-    const escapedSourceLabel = sourceLabel.replace(toEscape, '_');
-    this.$element_.find(`div.tab-pane[id='${sourceLabel}']`).attr('id', escapedSourceLabel);
-    sourceLabel = escapedSourceLabel;
-  }
-
+gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceId) {
   // This is a "work-around" to make sure that the grid is rendered correctly.
   // When a pane is activated by setting `this.selectedTab`, the class `active`
   // is not yet set on the pane. That's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
-  const activePane = this.$element_.find(`div.tab-pane#${sourceLabel}`);
+  const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
   activePane.removeClass('active').addClass('active');
   this.$timeout_(() => {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');
