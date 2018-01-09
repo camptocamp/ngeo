@@ -13,8 +13,6 @@ goog.require('gmf.drawfeatureDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.elevationDirective');
-/** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mousepositionComponent');
@@ -22,6 +20,8 @@ goog.require('gmf.mousepositionComponent');
 goog.require('gmf.print.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.profileComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.raster.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
