@@ -8,13 +8,13 @@ goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.displaywindowComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.TreeManager');
-/** @suppress {extraRequire} */
 goog.require('gmf.disclaimer.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+goog.require('gmf.layertree.component');
+/** @suppress {extraRequire} */
+goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -93,7 +93,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   this.gmfThemeManager = $injector.get('gmfThemeManager');
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');

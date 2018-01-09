@@ -1,5 +1,5 @@
 /* global themes capabilities */
-goog.require('gmf.SyncLayertreeMap');
+goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('gmf.test.data.themes');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -7,7 +7,7 @@ goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
 
 
-describe('gmf.SyncLayertreeMap', () => {
+describe('gmf.layertree.SyncLayertreeMap', () => {
   let $httpBackend_;
   let gmfSyncLayertreeMap_;
   let element;
@@ -69,7 +69,7 @@ describe('gmf.SyncLayertreeMap', () => {
     const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const treeLayer = treeGroup.children[0]; // Leaf 'cinema'
-    const layer = gmf.SyncLayertreeMap.getLayer(treeLayer);
+    const layer = gmf.layertree.SyncLayertreeMap.getLayer(treeLayer);
 
     expect(treeLayer.layer).toBe(null);
     expect(layer.constructor).toBe(ol.layer.Image);

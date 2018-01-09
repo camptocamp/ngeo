@@ -254,7 +254,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
     $injector.get('defaultTheme') : undefined;
 
   /**
-   * @type {?gmf.TreeManager}
+   * @type {?gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = $injector.has('gmfTreeManager') ?

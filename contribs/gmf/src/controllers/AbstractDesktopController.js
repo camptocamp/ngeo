@@ -25,7 +25,7 @@ goog.require('gmf.raster.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.TimeSliderDirective');
+goog.require('gmf.layertree.timeSliderComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.shareComponent');
 /** @suppress {extraRequire} */

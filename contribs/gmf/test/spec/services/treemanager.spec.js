@@ -1,10 +1,10 @@
 /* global themes */
-goog.require('gmf.TreeManager');
+goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Manager');
 goog.require('gmf.theme.Themes');
 goog.require('gmf.test.data.themes');
 
-describe('gmf.TreeManager', () => {
+describe('gmf.layertree.TreeManager', () => {
   let gmfTreeManager;
   let gmfThemes;
   let treeUrl;

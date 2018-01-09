@@ -1,9 +1,9 @@
 goog.provide('gmf.search.component');
 
 goog.require('gmf');
+goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.search.FulltextSearch');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.AutoProjection');
 /** @suppress {extraRequire} */
@@ -29,6 +29,7 @@ goog.require('ol.uri');
  * @type {!angular.Module}
  */
 gmf.search.component = angular.module('gmfSearch', [
+  gmf.layertree.TreeManager.module.name,
   gmf.search.FulltextSearch.module.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.AutoProjection.module.name,
@@ -188,7 +189,7 @@ gmf.search.component.SearchController_ = class {
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
    * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
-   * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
    * @param {gmf.search.FulltextSearch} gmfSearchFulltextSearch gmf Full text search service.
    * @ngInject
    * @ngdoc controller
@@ -236,7 +237,7 @@ gmf.search.component.SearchController_ = class {
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {gmf.TreeManager}
+     * @type {gmf.layertree.TreeManager}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;

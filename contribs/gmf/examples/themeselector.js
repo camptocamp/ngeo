@@ -3,7 +3,7 @@ goog.provide('gmfapp.themeselector');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.module');
 /** @suppress {extraRequire} */
-goog.require('gmf.TreeManager');
+goog.require('gmf.layertree.TreeManager');
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [

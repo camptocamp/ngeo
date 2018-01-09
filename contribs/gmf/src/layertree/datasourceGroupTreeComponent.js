@@ -1,13 +1,23 @@
-goog.provide('gmf.datasourcegrouptreeComponent');
+goog.provide('gmf.layertree.datasourceGroupTreeComponent');
 
 goog.require('gmf');
 goog.require('ngeo.datasource.DataSources');
+goog.require('ol');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.layertree.datasourceGroupTreeComponent = angular.module(
+  'gmfLayertreeDatasourceGroupTreeComponent', []);
+
+gmf.module.requires.push(gmf.layertree.datasourceGroupTreeComponent.name);
 
 
 /**
  * @private
  */
-gmf.DatasourcegrouptreeController = class {
+gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -94,10 +104,10 @@ gmf.DatasourcegrouptreeController = class {
 };
 
 
-gmf.module.component('gmfDatasourcegrouptree', {
+gmf.layertree.datasourceGroupTreeComponent.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<'
   },
-  controller: gmf.DatasourcegrouptreeController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/datasourcegrouptree.html`
+  controller: gmf.layertree.datasourceGroupTreeComponent.Controller_,
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/layertree/datasourceGroupTreeComponent.html`
 });

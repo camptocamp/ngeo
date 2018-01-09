@@ -18,8 +18,9 @@ gmf.module.requires.push(gmf.theme.selectorComponent.name);
 
 
 /**
- * Note that this component works with the {@link gmf.TreeManager}. Setting the
- * theme will update the "tree" object of this {@link gmf.TreeManager}.
+ * Note that this component works with the {@link gmf.layertree.TreeManager}.
+ * Setting the theme will update the "tree" object of
+ * this {@link gmf.layertree.TreeManager}.
  *
  * Example:
  *
@@ -42,7 +43,7 @@ gmf.module.requires.push(gmf.theme.selectorComponent.name);
  *      </gmf-themeselector>
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
- * about these modes, refer to the documentation of {@link gmf.TreeManager}.
+ * about these modes, refer to the documentation of {@link gmf.layertree.TreeManager}.
  *
  * Example in 'add' mode:
  *

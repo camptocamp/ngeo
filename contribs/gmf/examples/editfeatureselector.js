@@ -6,11 +6,11 @@ goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.editFeatureSelectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+goog.require('gmf.layertree.component');
+goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
@@ -30,6 +30,8 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
   gmf.editing.editFeatureSelectorComponent.name,
+  gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
@@ -55,7 +57,7 @@ gmfapp.module.value('gmfLayersUrl',
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -87,7 +89,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   gmfThemes.loadThemes();
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;

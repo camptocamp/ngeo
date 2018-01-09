@@ -4,8 +4,8 @@ goog.require('goog.asserts');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.editFeatureComponent');
+goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 
 
 /**
@@ -13,6 +13,7 @@ goog.require('gmf.TreeManager');
  */
 gmf.editing.editFeatureSelectorComponent = angular.module('GmfEditingFeatureSelectorComponent', [
   gmf.editing.editFeatureComponent.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.theme.Themes.module.name,
 ]);
 
@@ -67,7 +68,7 @@ gmf.editing.editFeatureSelectorComponent.directive('gmfEditfeatureselector',
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @private
  * @ngInject
@@ -130,7 +131,7 @@ gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

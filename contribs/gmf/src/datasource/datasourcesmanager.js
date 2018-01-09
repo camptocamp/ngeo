@@ -2,8 +2,8 @@ goog.provide('gmf.datasource.DataSourcesManager');
 
 goog.require('gmf');
 goog.require('gmf.datasource.OGC');
-goog.require('gmf.SyncLayertreeMap');
-goog.require('gmf.TreeManager');
+goog.require('gmf.layertree.SyncLayertreeMap');
+goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
 goog.require('gmf.WFSAliases');
 /** @suppress {extraRequire} */
@@ -34,7 +34,7 @@ gmf.datasource.DataSourcesManager = class {
    * @param {!angular.Scope} $rootScope Angular rootScope.
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
-   * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+   * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
@@ -79,7 +79,7 @@ gmf.datasource.DataSourcesManager = class {
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {gmf.TreeManager}
+     * @type {gmf.layertree.TreeManager}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
@@ -546,7 +546,7 @@ gmf.datasource.DataSourcesManager = class {
       }
 
       wmsLayer = goog.asserts.assertInstanceof(
-        gmf.SyncLayertreeMap.getLayer(treeCtrl),
+        gmf.layertree.SyncLayertreeMap.getLayer(treeCtrl),
         ol.layer.Image
       );
     }
@@ -630,7 +630,7 @@ gmf.datasource.DataSourcesManager = class {
     //
     // Note: we only need to do this ONCE, as there can be only one
     // data source being filtered at a time
-    const siblingDataSourceIds = gmf.SyncLayertreeMap.getLayer(
+    const siblingDataSourceIds = gmf.layertree.SyncLayertreeMap.getLayer(
       treeCtrl).get('querySourceIds');
     if (Array.isArray(siblingDataSourceIds)) {
       const ngeoDataSources = this.ngeoDataSources_.getArray();
@@ -687,7 +687,7 @@ gmf.datasource.DataSourcesManager = class {
     goog.asserts.assert(item);
     const treeCtrl = item.treeCtrl;
 
-    const layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
+    const layer = gmf.layertree.SyncLayertreeMap.getLayer(treeCtrl);
     goog.asserts.assert(
       layer instanceof ol.layer.Image ||
       layer instanceof ol.layer.Tile

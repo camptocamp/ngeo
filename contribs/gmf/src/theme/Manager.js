@@ -1,8 +1,8 @@
 goog.provide('gmf.theme.Manager');
 
 goog.require('gmf');
+goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 goog.require('ngeo.statemanager.Service');
 
 
@@ -22,7 +22,7 @@ goog.require('ngeo.statemanager.Service');
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
- * @param {gmf.TreeManager} gmfTreeManager the tree manager.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager the tree manager.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @struct
@@ -51,7 +51,7 @@ gmf.theme.Manager = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.modeFlush = gmfTreeManagerModeFlush;
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -137,11 +137,12 @@ gmf.theme.Manager.EventType = {
  * @type {!angular.Module}
  */
 gmf.theme.Manager.module = angular.module('gmfThemeManager', [
+  gmf.layertree.TreeManager.module.name,
   ngeo.statemanager.Service.module.name,
 ]);
 
 /**
- * The default value for `modeFlush` that `gmf.TreeManager` is initialized with.
+ * The default value for `modeFlush` that `gmf.layertree.TreeManager` is initialized with.
  */
 gmf.theme.Manager.module.value('gmfTreeManagerModeFlush', true);
 
