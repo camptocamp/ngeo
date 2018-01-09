@@ -114,13 +114,13 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
    * @export
    */
   this.gridMergeTabs = {
-    'OSM time merged': ['osm_time', 'osm_time2']
+    'OSM_time_merged': ['osm_time', 'osm_time2']
   };
 
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
   const gettextCatalog = $injector.get('gettextCatalog');
-  gettextCatalog.getString('OSM time merged');
+  gettextCatalog.getString('OSM_time_merged');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');

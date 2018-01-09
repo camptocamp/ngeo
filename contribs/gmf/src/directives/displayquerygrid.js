@@ -693,9 +693,20 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
  * @param {string|number} sourceLabel Id of the source that should be refreshed.
  */
 gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceLabel) {
-  // this is a "work-around" to make sure that the grid is rendered correctly.
-  // when a pane is activated by setting `this.selectedTab`, the class `active`
-  // is not yet set on the pane. that's why the class is set manually, and
+  // This escapes the sourceLabel id if there is some unauthorized values.
+  // Replace the id to be a valid selector. This work-around allows all
+  // tabs to work if it is not set correctly in the ctrl.mergeTabs array,
+  // in example: value with spaces, brackets, parentheses, etc.
+  const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
+  if (sourceLabel.match(toEscape) !== null) {
+    const escapedSourceLabel = sourceLabel.replace(toEscape, '_');
+    this.$element_.find(`div.tab-pane[id='${sourceLabel}']`).attr('id', escapedSourceLabel);
+    sourceLabel = escapedSourceLabel;
+  }
+
+  // This is a "work-around" to make sure that the grid is rendered correctly.
+  // When a pane is activated by setting `this.selectedTab`, the class `active`
+  // is not yet set on the pane. That's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
   const activePane = this.$element_.find(`div.tab-pane#${sourceLabel}`);
