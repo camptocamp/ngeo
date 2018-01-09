@@ -13,7 +13,7 @@ goog.require('gmf.drawing.drawFeatureComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.editFeatureSelectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.filterselectorComponent');
+goog.require('gmf.filters.filterselectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
