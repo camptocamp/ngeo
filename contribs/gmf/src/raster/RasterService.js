@@ -1,15 +1,6 @@
-goog.provide('gmf.Raster');
+goog.provide('gmf.raster.RasterService');
 
 goog.require('gmf');
-
-
-/**
- * @enum {string}
- */
-gmf.RasterParam = {
-  X: 'lon',
-  Y: 'lat'
-};
 
 
 /**
@@ -24,7 +15,7 @@ gmf.RasterParam = {
  * @ngdoc service
  * @ngname gmfRaster
  */
-gmf.Raster = function($http, gmfRasterUrl) {
+gmf.raster.RasterService = function($http, gmfRasterUrl) {
 
   /**
    * @type {angular.$http}
@@ -46,11 +37,11 @@ gmf.Raster = function($http, gmfRasterUrl) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.Raster.prototype.getRaster = function(coordinate, opt_params) {
+gmf.raster.RasterService.prototype.getRaster = function(coordinate, opt_params) {
 
   const params = opt_params || {};
-  params[gmf.RasterParam.X] = coordinate[0];
-  params[gmf.RasterParam.Y] = coordinate[1];
+  params[gmf.raster.RasterService.Param.X] = coordinate[0];
+  params[gmf.raster.RasterService.Param.Y] = coordinate[1];
 
   return this.$http_.get(this.url_, {
     params
@@ -63,9 +54,23 @@ gmf.Raster.prototype.getRaster = function(coordinate, opt_params) {
  * @return {Object.<string, number>} The response object.
  * @private
  */
-gmf.Raster.prototype.handleGetRaster_ = function(resp) {
+gmf.raster.RasterService.prototype.handleGetRaster_ = function(resp) {
   return resp.data;
 };
 
 
-gmf.module.service('gmfRaster', gmf.Raster);
+/**
+ * @enum {string}
+ */
+gmf.raster.RasterService.Param = {
+  X: 'lon',
+  Y: 'lat'
+};
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.raster.RasterService.module = angular.module('gmfRaster', []);
+gmf.raster.RasterService.module.service('gmfRaster', gmf.raster.RasterService);
+gmf.module.requires.push(gmf.raster.RasterService.module.name);

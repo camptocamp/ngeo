@@ -1,7 +1,7 @@
 goog.provide('gmfapp.elevation');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.elevationDirective');
+goog.require('gmf.raster.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
@@ -13,7 +13,10 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.raster.module.name,
+]);
 
 
 gmfapp.module.value(

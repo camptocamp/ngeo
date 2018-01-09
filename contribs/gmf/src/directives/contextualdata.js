@@ -1,7 +1,7 @@
 goog.provide('gmf.contextualdataDirective');
 
 goog.require('gmf');
-goog.require('gmf.Raster');
+goog.require('gmf.raster.RasterService');
 goog.require('ol.Overlay');
 goog.require('ol.proj');
 
@@ -70,7 +70,7 @@ gmf.module.directive('gmfContextualdata', gmf.contextualdataDirective);
  *
  * @param {angular.$compile} $compile Angular compile service.
  * @param {!angular.Scope} $scope Scope.
- * @param {gmf.Raster} gmfRaster Gmf Raster service
+ * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
  *
  * @constructor
  * @private
@@ -116,7 +116,7 @@ gmf.ContextualdataController = function($compile, $scope, gmfRaster) {
   this.$scope_ = $scope;
 
   /**
-   * @type {gmf.Raster}
+   * @type {gmf.raster.RasterService}
    * @private
    */
   this.gmfRaster_ = gmfRaster;

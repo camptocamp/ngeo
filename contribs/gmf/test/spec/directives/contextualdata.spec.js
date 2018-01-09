@@ -1,6 +1,6 @@
 goog.require('gmf.contextualdataDirective');
 goog.require('gmf.mapDirective');
-goog.require('gmf.Raster');
+goog.require('gmf.raster.RasterService');
 goog.require('ol.Map');
 goog.require('ol.View');
 
