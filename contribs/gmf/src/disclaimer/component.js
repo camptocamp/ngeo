@@ -1,10 +1,22 @@
-goog.provide('gmf.disclaimerComponent');
+goog.provide('gmf.disclaimer.component');
 
+goog.require('ol');
 goog.require('ol.events');
+goog.require('ol.layer.Base');
+goog.require('ol.layer.Group');
 goog.require('gmf');
+goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.map.LayerHelper');
+
+/**
+ * @type {angular.Module}
+ */
+gmf.disclaimer.component = angular.module('gmfDisclaimer', [
+]);
+
+gmf.module.requires.push(gmf.disclaimer.component.name);
 
 
 /**
@@ -23,7 +35,7 @@ goog.require('ngeo.map.LayerHelper');
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
+gmf.disclaimer.component.Controller_ = function($element, $scope, $sce, $timeout,
   ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
@@ -117,7 +129,7 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
 /**
  * Initialise the controller.
  */
-gmf.DisclaimerController.prototype.$onInit = function() {
+gmf.disclaimer.component.Controller_.prototype.$onInit = function() {
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
     gmf.DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
@@ -127,7 +139,7 @@ gmf.DisclaimerController.prototype.$onInit = function() {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
+gmf.disclaimer.component.Controller_.prototype.handleLayersAdd_ = function(evt) {
   this.timeout_(() => {
     const layer = evt.element;
     goog.asserts.assertInstanceof(layer, ol.layer.Base);
@@ -140,7 +152,7 @@ gmf.DisclaimerController.prototype.handleLayersAdd_ = function(evt) {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-gmf.DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
+gmf.disclaimer.component.Controller_.prototype.handleLayersRemove_ = function(evt) {
   const layer = evt.element;
   goog.asserts.assertInstanceof(layer, ol.layer.Base);
   this.unregisterLayer_(layer);
@@ -151,7 +163,7 @@ gmf.DisclaimerController.prototype.handleLayersRemove_ = function(evt) {
  * @param {ol.layer.Base} layer Layer.
  * @private
  */
-gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
+gmf.disclaimer.component.Controller_.prototype.registerLayer_ = function(layer) {
 
   const layerUid = ol.getUid(layer);
 
@@ -199,7 +211,7 @@ gmf.DisclaimerController.prototype.registerLayer_ = function(layer) {
  * @param {ol.layer.Base} layer Layer.
  * @private
  */
-gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
+gmf.disclaimer.component.Controller_.prototype.unregisterLayer_ = function(layer) {
 
   const layerUid = ol.getUid(layer);
 
@@ -225,7 +237,7 @@ gmf.DisclaimerController.prototype.unregisterLayer_ = function(layer) {
 };
 
 
-gmf.DisclaimerController.prototype.$onDestroy = function() {
+gmf.disclaimer.component.Controller_.prototype.$onDestroy = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
 };
 
@@ -234,7 +246,7 @@ gmf.DisclaimerController.prototype.$onDestroy = function() {
  * @param {string} msg Disclaimer message.
  * @private
  */
-gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
+gmf.disclaimer.component.Controller_.prototype.showDisclaimerMessage_ = function(msg) {
   if (this.external) {
     if (this.msgs_.indexOf(msg) < 0) {
       this.msgs_.push(msg);
@@ -256,7 +268,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
  * @param {string} msg Disclaimer message.
  * @private
  */
-gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
+gmf.disclaimer.component.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
   if (this.external) {
     this.visibility = false;
     this.msgs_.length = 0;
@@ -321,8 +333,8 @@ gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-gmf.disclaimerComponent = {
-  controller: gmf.DisclaimerController,
+gmf.disclaimer.component.component_ = {
+  controller: gmf.disclaimer.component.Controller_,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
     'map': '=gmfDisclaimerMap',
@@ -333,4 +345,4 @@ gmf.disclaimerComponent = {
 };
 
 
-gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
+gmf.disclaimer.component.component('gmfDisclaimer', gmf.disclaimer.component.component_);

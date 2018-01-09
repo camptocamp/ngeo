@@ -10,7 +10,7 @@ goog.require('gmf.displaywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.disclaimerComponent');
+goog.require('gmf.disclaimer.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
