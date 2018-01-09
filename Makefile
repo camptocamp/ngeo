@@ -48,6 +48,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/moment/moment.js \
 	node_modules/url-polyfill/url-polyfill.js \
 	third-party/jquery-ui/jquery-ui.js \
+	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js \
 	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js
 else
 GMF_APPS_LIBS_JS_FILES += \
@@ -71,7 +72,8 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/jsts/dist/jsts.min.js \
 	node_modules/moment/min/moment.min.js \
 	node_modules/url-polyfill/url-polyfill.min.js \
-	third-party/jquery-ui/jquery-ui.min.js
+	third-party/jquery-ui/jquery-ui.min.js \
+	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js
 endif
 
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \

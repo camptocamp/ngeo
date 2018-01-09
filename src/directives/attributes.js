@@ -3,6 +3,9 @@ goog.provide('ngeo.attributesComponent');
 goog.require('ol.ObjectEventType');
 goog.require('ngeo');
 goog.require('ngeo.EventHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.datetimepickerDirective');
+
 
 /**
  * Component used to render the attributes of a feature into a form.
@@ -42,7 +45,6 @@ ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
  * @struct
@@ -50,7 +52,7 @@ ngeo.module.component('ngeoAttributes', ngeo.attributesComponent);
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */
-ngeo.AttributesController = function($scope, ngeoEventHelper, gettextCatalog) {
+ngeo.AttributesController = function($scope, ngeoEventHelper) {
 
   /**
    * The list of attributes to create the form with.
@@ -94,23 +96,6 @@ ngeo.AttributesController = function($scope, ngeoEventHelper, gettextCatalog) {
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * The gettext catalog
-   * @type {!angularGettext.Catalog}
-   * @private
-   */
-  this.gettextCatalog_ = gettextCatalog;
-
-  /**
-   * Datepicker options
-   * @type {Object}
-   * @export
-   */
-  this.dateOptions = {
-    'changeMonth': true,
-    'changeYear': true
-  };
-
-  /**
    * While changes happen from the form (from the template), they are applied
    * to the feature inner properties. The 'propertychange' event registered
    * above does the opposite, i.e. it listens to the feature inner properties
@@ -142,9 +127,6 @@ ngeo.AttributesController.prototype.$onInit = function() {
     ),
     true
   );
-
-  const lang = this.gettextCatalog_.getCurrentLanguage();
-  $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 };
 
 

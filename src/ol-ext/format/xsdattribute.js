@@ -168,6 +168,8 @@ ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
     attribute.type = ngeo.AttributeType.DATE;
   } else if (type === 'xsd:dateTime') {
     attribute.type = ngeo.AttributeType.DATETIME;
+  } else if (type === 'xsd:time') {
+    attribute.type = ngeo.AttributeType.TIME;
   } else if (type === 'xsd:decimal') {
     attribute.type = ngeo.AttributeType.NUMBER;
     attribute.numType = ngeo.NumberType.FLOAT;

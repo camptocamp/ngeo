@@ -1,6 +1,7 @@
 *.pyc
 .*.swp
-.transifexrc
+/.transifexrc
+/package-lock.json
 /.build
 /node_modules
 /dist
