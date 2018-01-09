@@ -5,7 +5,7 @@ goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.contextualdataDirective');
+goog.require('gmf.contextualdata.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
