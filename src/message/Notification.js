@@ -172,7 +172,7 @@ ngeo.message.Notification.CacheItem;
 /**
  * @type {angular.Module}
  */
-ngeo.message.Notification.module = angular.module('ngeoDisclaimer', [
+ngeo.message.Notification.module = angular.module('ngeoNotification', [
 ]);
 
 ngeo.message.Notification.module.service('ngeoNotification', ngeo.message.Notification);
