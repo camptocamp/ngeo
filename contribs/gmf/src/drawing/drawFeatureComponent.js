@@ -1,13 +1,14 @@
-goog.provide('gmf.drawfeatureDirective');
+goog.provide('gmf.drawing.drawFeatureComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.featurestyleDirective');
+goog.require('gmf.drawing.featureStyleComponent');
+goog.require('ngeo');
 goog.require('ngeo.Menu');
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.editing.exportfeaturesComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.component');
 goog.require('ngeo.interaction.Modify');
@@ -17,6 +18,8 @@ goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
+goog.require('ol');
+goog.require('ol.array');
 goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.style.Fill');
@@ -24,13 +27,19 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
 
-// In the future module declaration, don't forget to require:
-// - ngeo.draw.component.name
-// - ngeo.interaction.Modify.module.name
-// - ngeo.interaction.Rotate.module.name
-// - ngeo.interaction.Translate.module.name
-// - ngeo.misc.FeatureHelper.module.name
-// - ngeo.editing.exportfeaturesComponent.name
+/**
+ * @type {!angular.Module}
+ */
+gmf.drawing.drawFeatureComponent = angular.module('GmfDrawFeatureComponent', [
+  gmf.drawing.featureStyleComponent.name,
+  ngeo.editing.exportfeaturesComponent.name,
+  ngeo.misc.btnComponent.name,
+  ngeo.draw.component.name,
+  ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
+]);
+
+gmf.module.requires.push(gmf.drawing.drawFeatureComponent.name);
 
 
 /**
@@ -51,7 +60,7 @@ goog.require('ol.style.Text');
  * @ngdoc directive
  * @ngname gmfDrawfeature
  */
-gmf.drawfeatureDirective = function() {
+gmf.drawing.drawFeatureComponent.component_ = function() {
   return {
     controller: 'GmfDrawfeatureController as efCtrl',
     scope: {
@@ -60,11 +69,12 @@ gmf.drawfeatureDirective = function() {
       'showMeasure': '=?gmfDrawfeatureShowmeasure'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/drawfeature.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/drawing/drawFeatureComponent.html`
   };
 };
 
-gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
+gmf.drawing.drawFeatureComponent.directive('gmfDrawfeature',
+  gmf.drawing.drawFeatureComponent.component_);
 
 
 /**
@@ -81,7 +91,7 @@ gmf.module.directive('gmfDrawfeature', gmf.drawfeatureDirective);
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
-gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
+gmf.drawing.drawFeatureComponent.Controller_ = function($scope, $timeout, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
@@ -325,7 +335,7 @@ gmf.DrawfeatureController = function($scope, $timeout, gettextCatalog,
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-gmf.DrawfeatureController.prototype.initializeInteractions_ = function() {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeo.misc.decorate.interaction(interaction);
@@ -337,7 +347,7 @@ gmf.DrawfeatureController.prototype.initializeInteractions_ = function() {
  * Register interactions by adding them to the map
  * @private
  */
-gmf.DrawfeatureController.prototype.registerInteractions_ = function() {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.registerInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.addInteraction(interaction);
   }, this);
@@ -348,7 +358,7 @@ gmf.DrawfeatureController.prototype.registerInteractions_ = function() {
  * Register interactions by removing them to the map
  * @private
  */
-gmf.DrawfeatureController.prototype.unregisterInteractions_ = function() {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach(function(interaction) {
     this.map.removeInteraction(interaction);
   }, this);
@@ -361,7 +371,7 @@ gmf.DrawfeatureController.prototype.unregisterInteractions_ = function() {
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleActiveChange_ = function(active) {
 
   const keys = this.listenerKeys_;
   const drawUid = ['draw-', ol.getUid(this)].join('-');
@@ -427,7 +437,7 @@ gmf.DrawfeatureController.prototype.handleActiveChange_ = function(active) {
  * @param {!ol.Feature} feature Feature to select.
  * @export
  */
-gmf.DrawfeatureController.prototype.selectFeatureFromList = function(feature) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.selectFeatureFromList = function(feature) {
   this.listSelectionInProgress_ = true;
   this.selectedFeature = feature;
   this.drawActive = false;
@@ -438,7 +448,7 @@ gmf.DrawfeatureController.prototype.selectFeatureFromList = function(feature) {
  * @return {!Array.<!ol.Feature>} Array.
  * @export
  */
-gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.getFeaturesArray = function() {
   return this.features.getArray();
 };
 
@@ -446,7 +456,7 @@ gmf.DrawfeatureController.prototype.getFeaturesArray = function() {
 /**
  * @export
  */
-gmf.DrawfeatureController.prototype.clearFeatures = function() {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.clearFeatures = function() {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
     'Do you really want to delete all the features?');
@@ -460,7 +470,7 @@ gmf.DrawfeatureController.prototype.clearFeatures = function() {
  * @param {!ol.Feature} feature The feature to remove from the selection.
  * @export
  */
-gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.removeFeature = function(feature) {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
     'Do you really want to delete the selected feature?');
@@ -474,7 +484,7 @@ gmf.DrawfeatureController.prototype.removeFeature = function(feature) {
  * @param {!ol.Collection.Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleFeaturesAdd_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleFeaturesAdd_ = function(evt) {
   // timeout to prevent double-click to zoom the map
   this.timeout_(() => {
     this.selectedFeature = /** @type {ol.Feature} */ (evt.element);
@@ -488,7 +498,7 @@ gmf.DrawfeatureController.prototype.handleFeaturesAdd_ = function(evt) {
  * @param {!ol.Collection.Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleFeaturesRemove_ = function(evt) {
   this.selectedFeature = null;
 };
 
@@ -498,7 +508,7 @@ gmf.DrawfeatureController.prototype.handleFeaturesRemove_ = function(evt) {
  * @param {boolean} active Whether the map select is active or not.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleMapSelectActiveChange_ = function(
   active) {
 
   const mapDiv = this.map.getViewport();
@@ -543,7 +553,7 @@ gmf.DrawfeatureController.prototype.handleMapSelectActiveChange_ = function(
  * @param {!ol.MapBrowserEvent} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleMapClick_ = function(evt) {
 
   const pixel = evt.pixel;
 
@@ -578,7 +588,7 @@ gmf.DrawfeatureController.prototype.handleMapClick_ = function(evt) {
  * @param {!Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMapTouchStart_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleMapTouchStart_ = function(evt) {
   this.longPressTimeout_ = setTimeout(() => {
     this.handleMapContextMenu_(evt);
   }, 500);
@@ -589,7 +599,7 @@ gmf.DrawfeatureController.prototype.handleMapTouchStart_ = function(evt) {
  * @param {!Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleMapTouchEnd_ = function(evt) {
   clearTimeout(this.longPressTimeout_);
 };
 
@@ -598,7 +608,7 @@ gmf.DrawfeatureController.prototype.handleMapTouchEnd_ = function(evt) {
  * @param {!Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleMapContextMenu_ = function(evt) {
   const gettextCatalog = this.gettextCatalog_;
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -676,7 +686,7 @@ gmf.DrawfeatureController.prototype.handleMapContextMenu_ = function(evt) {
  * @param {!ngeox.MenuEvent} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleMenuActionClick_ = function(evt) {
   const action = evt.detail.action;
 
   switch (action) {
@@ -706,7 +716,7 @@ gmf.DrawfeatureController.prototype.handleMenuActionClick_ = function(evt) {
  * @param {!ol.interaction.Translate.Event} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleTranslateEnd_ = function(evt) {
   this.translate_.setActive(false);
   this.scope_.$apply();
 };
@@ -716,10 +726,11 @@ gmf.DrawfeatureController.prototype.handleTranslateEnd_ = function(evt) {
  * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
-gmf.DrawfeatureController.prototype.handleRotateEnd_ = function(evt) {
+gmf.drawing.drawFeatureComponent.Controller_.prototype.handleRotateEnd_ = function(evt) {
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
 
 
-gmf.module.controller('GmfDrawfeatureController', gmf.DrawfeatureController);
+gmf.drawing.drawFeatureComponent.controller('GmfDrawfeatureController',
+  gmf.drawing.drawFeatureComponent.Controller_);

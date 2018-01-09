@@ -3,7 +3,7 @@ goog.provide('gmfapp.drawfeature');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-goog.require('ngeo.draw.module');
+goog.require('gmf.drawing.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
@@ -17,7 +17,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
-  ngeo.draw.module.name,
+  gmf.drawing.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeo.misc.FeatureHelper.module.name,
   ngeo.misc.ToolActivateMgr.module.name,

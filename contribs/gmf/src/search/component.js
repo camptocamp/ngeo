@@ -41,6 +41,7 @@ gmf.search.component = angular.module('gmfSearch', [
 
 gmf.module.requires.push(gmf.search.component.name);
 
+
 /**
  * @param {angular.JQLite} element Element.
  * @param {angular.Attributes} attrs Attributes.

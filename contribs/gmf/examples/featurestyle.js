@@ -2,7 +2,7 @@ goog.provide('gmfapp.featurestyle');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.featurestyleDirective');
+goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('ngeo');
@@ -23,6 +23,7 @@ goog.require('ol.source.Vector');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.drawing.featureStyleComponent.name,
   ngeo.module.name,
   ngeo.misc.FeatureHelper.module.name,
 ]);
