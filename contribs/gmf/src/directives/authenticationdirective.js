@@ -5,6 +5,7 @@ goog.require('gmf.Authentication');
 goog.require('ngeo.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.modalDirective');
+goog.require('ol.events');
 
 
 gmf.module.value('gmfAuthenticationTemplateUrl',
@@ -37,15 +38,17 @@ gmf.module.value('gmfAuthenticationTemplateUrl',
  * Example:
  *
  *      <gmf-authentication
- *        gmf-authentication-allow-password-reset="true"
- *        gmf-authentication-allow-password-change="true">
+ *        gmf-authentication-force-password-change="::true">
  *      </gmf-authentication>
  *
  * @param {string} gmfAuthenticationTemplateUrl Url to template.
- * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true.
  * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
  *     show the password forgotten link. Default to true.
+ * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
+ *     show the change password button. Default to true.
+ * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
+ *     user to change its password. Default to false. If you set it to true, you
+ *     should also allow the user to change its password.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -56,7 +59,8 @@ gmf.authenticationDirective = function(gmfAuthenticationTemplateUrl) {
     bindToController: true,
     scope: {
       'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
-      'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange'
+      'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
+      'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange'
     },
     controller: 'GmfAuthenticationController as authCtrl',
     templateUrl: gmfAuthenticationTemplateUrl
@@ -128,6 +132,12 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    * @type {boolean}
    * @export
    */
+  this.forcePasswordChange;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
   this.changingPassword = false;
 
   /**
@@ -182,6 +192,8 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
    */
   this.newPwdConfVal = '';
 
+  ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY,
+    this.onLoginReady_.bind(this));
 };
 
 
@@ -189,12 +201,9 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
  * Initialise the controller.
  */
 gmf.AuthenticationController.prototype.$onInit = function() {
-  if (this.allowPasswordReset === undefined) {
-    this.allowPasswordReset = true;
-  }
-  if (this.allowPasswordChange === undefined) {
-    this.allowPasswordChange = true;
-  }
+  this.allowPasswordReset = this.allowPasswordReset !== false;
+  this.allowPasswordChange = this.allowPasswordChange !== false;
+  this.forcePasswordChange = this.forcePasswordChange === true;
 };
 
 
@@ -332,6 +341,22 @@ gmf.AuthenticationController.prototype.changePasswordReset = function() {
   this.oldPwdVal = '';
   this.newPwdVal = '';
   this.newPwdConfVal = '';
+};
+
+
+/**
+ * @param {gmf.AuthenticationEvent} e GMF Authentification event.
+ * @private
+ */
+gmf.AuthenticationController.prototype.onLoginReady_ = function(e) {
+  if (e.user.is_password_changed === false && this.forcePasswordChange) {
+    const gettextCatalog = this.gettextCatalog;
+    const msg = gettextCatalog.getString('You must change your password.');
+    this.notification_.notify({
+      msg,
+      type: ngeo.MessageType.WARNING
+    });
+  }
 };
 
 
