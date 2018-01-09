@@ -624,7 +624,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
         this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
-      const item = /** @type {!gmf.filters.SavedFilters.FilterItem} */ ({
+      const item = /** @type {!gmf.filters.SavedFilters.Item} */ ({
         condition,
         customRules,
         dataSourceId,
@@ -640,7 +640,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
 
   /**
    * Load a saved filter item, replacing the current rules.
-   * @param {!gmf.filters.SavedFilters.FilterItem} filterItem Filter item.
+   * @param {!gmf.filters.SavedFilters.Item} filterItem Filter item.
    * @export
    */
   saveFilterLoadItem(filterItem) {
@@ -682,7 +682,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
 
   /**
    * Remove a saved filter item.
-   * @param {!gmf.filters.SavedFilters.FilterItem} item Filter item.
+   * @param {!gmf.filters.SavedFilters.Item} item Filter item.
    * @export
    */
   saveFilterRemoveItem(item) {

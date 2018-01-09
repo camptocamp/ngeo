@@ -228,7 +228,7 @@ gmf.filters.SavedFilters.module.service('gmfSavedFilters', gmf.filters.SavedFilt
  * @struct
  * @export
  */
-gmf.filters.SavedFilters.FilterItem = function() {};
+gmf.filters.SavedFilters.Item = function() {};
 
 
 /**
@@ -236,7 +236,7 @@ gmf.filters.SavedFilters.FilterItem = function() {};
  * @type {string}
  * @export
  */
-gmf.filters.SavedFilters.FilterItem.prototype.condition;
+gmf.filters.SavedFilters.Item.prototype.condition;
 
 
 /**
@@ -244,7 +244,7 @@ gmf.filters.SavedFilters.FilterItem.prototype.condition;
  * @type {!Array.<!ngeox.rule.AnyOptions>}
  * @export
  */
-gmf.filters.SavedFilters.FilterItem.prototype.customRules;
+gmf.filters.SavedFilters.Item.prototype.customRules;
 
 
 /**
@@ -252,7 +252,7 @@ gmf.filters.SavedFilters.FilterItem.prototype.customRules;
  * @type {number}
  * @export
  */
-gmf.filters.SavedFilters.FilterItem.prototype.dataSourceId;
+gmf.filters.SavedFilters.Item.prototype.dataSourceId;
 
 
 /**
@@ -260,7 +260,7 @@ gmf.filters.SavedFilters.FilterItem.prototype.dataSourceId;
  * @type {!Array.<!ngeox.rule.AnyOptions>}
  * @export
  */
-gmf.filters.SavedFilters.FilterItem.prototype.directedRules;
+gmf.filters.SavedFilters.Item.prototype.directedRules;
 
 
 /**
@@ -268,4 +268,4 @@ gmf.filters.SavedFilters.FilterItem.prototype.directedRules;
  * @type {string}
  * @export
  */
-gmf.filters.SavedFilters.FilterItem.prototype.name;
+gmf.filters.SavedFilters.Item.prototype.name;
