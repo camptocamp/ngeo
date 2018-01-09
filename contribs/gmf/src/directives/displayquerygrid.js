@@ -382,6 +382,12 @@ gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() 
   return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
 };
 
+/**
+ * Returns an escaped value.
+ * @param {string|number} value A value to escape.
+ * @returns {string|number} value An escaped value.
+ * @private
+ */
 gmf.DisplayquerygridController.prototype.escapeValue_ = function(value) {
   if (Number.isInteger(value)) {
     return value;
