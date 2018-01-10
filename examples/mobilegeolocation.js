@@ -1,5 +1,7 @@
 goog.provide('app.mobilegeolocation');
 
+// webpack: import './mobilegeolocation.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -9,6 +11,7 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.geolocation.mobile');
 
@@ -28,7 +31,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoFeatureOverlayMgr) {
+app.mobilegeolocation.MainController = function($scope, ngeoFeatureOverlayMgr) {
 
   const positionFeatureStyle = new ol.style.Style({
     image: new ol.style.Circle({
@@ -74,4 +77,4 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-module.controller('MainController', app.MainController);
+module.controller('MainController', app.mobilegeolocation.MainController);

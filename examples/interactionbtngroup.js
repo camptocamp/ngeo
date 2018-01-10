@@ -1,5 +1,8 @@
 goog.provide('app.interactionbtngroup');
 
+// webpack: import './interactionbtngroup.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -17,7 +20,7 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.interactionbtngroup.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
@@ -30,7 +33,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr) {
+app.interactionbtngroup.MainController = function(ngeoFeatureOverlayMgr) {
 
   /**
    * Collection shared between the drawing interactions and the feature
@@ -127,4 +130,4 @@ app.MainController = function(ngeoFeatureOverlayMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.interactionbtngroup.module.controller('MainController', app.interactionbtngroup.MainController);

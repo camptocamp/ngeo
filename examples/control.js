@@ -1,5 +1,8 @@
 goog.provide('app.control');
 
+// webpack: import './control.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.controlComponent');
@@ -11,7 +14,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.control.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.controlComponent.name,
@@ -22,7 +25,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.control.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -50,4 +53,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.control.module.controller('MainController', app.control.MainController);

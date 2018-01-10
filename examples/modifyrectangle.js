@@ -1,5 +1,7 @@
 goog.provide('app.modifyrectangle');
 
+// webpack: import './modifyrectangle.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.ModifyRectangle');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -15,6 +17,7 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
@@ -29,7 +32,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.modifyrectangle.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -136,4 +139,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+module.controller('MainController', app.modifyrectangle.MainController);

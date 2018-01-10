@@ -3,13 +3,17 @@ goog.provide('ngeo.interaction.Rotate');
 goog.require('ngeo.CustomEvent');
 goog.require('goog.asserts');
 goog.require('ol');
+goog.require('ol.extent');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
 goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.Pointer');
+goog.require('ol.geom.Geometry');
 goog.require('ol.geom.Point');
+goog.require('ol.geom.LineString');
+goog.require('ol.geom.Polygon');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 

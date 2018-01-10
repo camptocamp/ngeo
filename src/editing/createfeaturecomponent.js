@@ -8,6 +8,7 @@ goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.utils');
 goog.require('ol');
+goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.interaction.Draw');

@@ -5,19 +5,22 @@
 
 goog.provide('app.layertree');
 
+// webpack: import './layertree.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Stamen');
 
+goog.require('ngeo');
 goog.require('ngeo.layertree.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.message.Popup');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.layertree.module = angular.module('app', [
   ngeo.module.name,
   ngeo.layertree.module.name,
   ngeo.map.module.name,
@@ -31,7 +34,7 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.layertreeComponent = {
+app.layertree.layertreeComponent = {
   bindings: {
     'map': '=appLayertreeMap'
   },
@@ -48,7 +51,7 @@ app.layertreeComponent = {
 };
 
 
-app.module.component('appLayertree', app.layertreeComponent);
+app.layertree.module.component('appLayertree', app.layertree.layertreeComponent);
 
 
 /**
@@ -60,7 +63,7 @@ app.module.component('appLayertree', app.layertreeComponent);
  * @ngInject
  * @export
  */
-app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
+app.layertree.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @type {Object|undefined}
@@ -112,7 +115,7 @@ app.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
  * @return {ol.layer.Layer} The layer for this node.
  * @export
  */
-app.LayertreeController.prototype.getLayer = function(node) {
+app.layertree.LayertreeController.prototype.getLayer = function(node) {
   return this.getLayer_(node);
 };
 
@@ -122,7 +125,7 @@ app.LayertreeController.prototype.getLayer = function(node) {
  * @param {ol.layer.Layer} layer Layer.
  * @export
  */
-app.LayertreeController.prototype.onButtonClick = function(node, layer) {
+app.layertree.LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
@@ -141,7 +144,7 @@ app.LayertreeController.prototype.onButtonClick = function(node, layer) {
 };
 
 
-app.module.controller('AppLayertreeController', app.LayertreeController);
+app.layertree.module.controller('AppLayertreeController', app.layertree.LayertreeController);
 
 
 /**
@@ -153,7 +156,7 @@ app.module.controller('AppLayertreeController', app.LayertreeController);
  * @param {Object} node Layer tree node.
  * @return {ol.layer.Layer} Layer.
  */
-app.getLayer = (function() {
+app.layertree.getLayer = (function() {
   /**
    * @type {Object.<string, ol.layer.Layer>}
    */
@@ -205,7 +208,7 @@ app.getLayer = (function() {
 })();
 
 
-app.module.value('appGetLayer', app.getLayer);
+app.layertree.module.value('appGetLayer', app.layertree.getLayer);
 
 
 /**
@@ -213,7 +216,7 @@ app.module.value('appGetLayer', app.getLayer);
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.layertree.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -233,4 +236,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.layertree.module.controller('MainController', app.layertree.MainController);

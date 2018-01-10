@@ -1,5 +1,7 @@
 goog.provide('app.elevationProfile');
 
+// webpack: import './elevationProfile.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Feature');
@@ -13,12 +15,13 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.profile.elevationComponent');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.elevationProfile.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.profile.elevationComponent.name,
@@ -31,7 +34,7 @@ app.module = angular.module('app', [
  * @param {angular.Scope} $scope The $scope angular service.
  * @ngInject
  */
-app.MainController = function($http, $scope) {
+app.elevationProfile.MainController = function($http, $scope) {
 
   /**
    * @type {angular.Scope}
@@ -237,7 +240,7 @@ app.MainController = function($http, $scope) {
  * @param {ol.Coordinate} coordinate The current pointer coordinate.
  * @param {ol.geom.Geometry|undefined} geometry The geometry to snap to.
  */
-app.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
+app.elevationProfile.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   const closestPoint = geometry.getClosestPoint(coordinate);
   // compute distance to line in pixels
   const dx = closestPoint[0] - coordinate[0];
@@ -254,4 +257,4 @@ app.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.elevationProfile.module.controller('MainController', app.elevationProfile.MainController);

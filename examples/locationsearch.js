@@ -1,12 +1,14 @@
 goog.provide('app.locationsearch');
 
-goog.require('ngeo');
+// webpack: import './locationsearch.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 goog.require('goog.asserts');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.search.module');
 
@@ -22,7 +24,7 @@ const module = angular.module('app', [
 /**
  * @type {!angular.Component}
  */
-app.locationSearchComponent = {
+app.locationsearch.locationSearchComponent = {
   bindings: {
     'map': '=appSearchMap'
   },
@@ -36,7 +38,7 @@ app.locationSearchComponent = {
 };
 
 
-module.component('appLocationSearch', app.locationSearchComponent);
+module.component('appLocationSearch', app.locationsearch.locationSearchComponent);
 
 
 /**
@@ -44,7 +46,7 @@ module.component('appLocationSearch', app.locationSearchComponent);
  * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
-app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
+app.locationsearch.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {ol.Map}
@@ -92,7 +94,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: app.SearchController.select_.bind(this)
+    select: app.locationsearch.SearchController.select_.bind(this)
   });
 
 };
@@ -105,7 +107,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+app.locationsearch.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = ol.proj.get('EPSG:3857');
   goog.asserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
@@ -128,10 +130,10 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLoc
  * @param {jQuery.Event} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
- * @this {app.SearchController}
+ * @this {app.locationsearch.SearchController}
  * @private
  */
-app.SearchController.select_ = function(event, suggestion, dataset) {
+app.locationsearch.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
   const bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
@@ -141,14 +143,14 @@ app.SearchController.select_ = function(event, suggestion, dataset) {
 };
 
 
-module.controller('AppSearchController', app.SearchController);
+module.controller('AppSearchController', app.locationsearch.SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.locationsearch.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -168,4 +170,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+module.controller('MainController', app.locationsearch.MainController);

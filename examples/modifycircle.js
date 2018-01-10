@@ -1,5 +1,7 @@
 goog.provide('app.modifycircle');
 
+// webpack: import './modifycircle.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -11,6 +13,7 @@ goog.require('ol.geom.Circle');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
@@ -25,7 +28,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.modifycircle.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -91,4 +94,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+module.controller('MainController', app.modifycircle.MainController);

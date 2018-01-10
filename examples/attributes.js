@@ -1,15 +1,18 @@
 goog.provide('app.attributes');
 
+// webpack: import './attributes.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
 goog.require('ol.Feature');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', [
+app.attributes.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.editing.attributesComponent.name,
@@ -23,7 +26,7 @@ app.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.MainController = function($http, $timeout, $scope) {
+app.attributes.MainController = function($http, $timeout, $scope) {
 
   /**
    * @type {angular.$timeout}
@@ -89,7 +92,7 @@ app.MainController = function($http, $timeout, $scope) {
  * @return {Array.<ngeox.Attribute>} List of attributes.
  * @private
  */
-app.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
+app.attributes.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
   const format = new ngeo.format.XSDAttribute();
   const attributes = format.read(resp.data);
   this.attributes = attributes;
@@ -100,7 +103,7 @@ app.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
 /**
  * @export
  */
-app.MainController.prototype.updateName = function() {
+app.attributes.MainController.prototype.updateName = function() {
   this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
   }, 0);
@@ -109,9 +112,9 @@ app.MainController.prototype.updateName = function() {
 /**
  * @param {string} newMessage New message to add to log.
  */
-app.MainController.prototype.appendLog = function(newMessage) {
+app.attributes.MainController.prototype.appendLog = function(newMessage) {
   this.log = `${newMessage}\n${this.log}`;
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.attributes.module.controller('MainController', app.attributes.MainController);

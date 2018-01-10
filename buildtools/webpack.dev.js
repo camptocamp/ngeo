@@ -1,6 +1,4 @@
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
-const commons = require('./webpack.commons.js');
 
 
 const resourcesRule = {
@@ -18,7 +16,7 @@ const loaderOptionsPlugin = new webpack.LoaderOptionsPlugin({
 });
 
 
-module.exports = webpackMerge(commons.config, {
+module.exports = {
   output: {
     filename: '[name].js'
   },
@@ -27,4 +25,4 @@ module.exports = webpackMerge(commons.config, {
       resourcesRule,
     ]
   },
-});
+};

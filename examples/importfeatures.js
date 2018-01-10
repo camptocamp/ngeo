@@ -1,5 +1,8 @@
 goog.provide('app.importfeatures');
 
+// webpack: import './importfeatures.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.filereaderComponent');
@@ -14,7 +17,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.importfeatures.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.filereaderComponent.name,
@@ -27,7 +30,7 @@ app.module = angular.module('app', [
  * @export
  * @ngInject
  */
-app.MainController = function($scope) {
+app.importfeatures.MainController = function($scope) {
 
   /**
    * @private
@@ -82,7 +85,7 @@ app.MainController = function($scope) {
  * @param {string} kml KML document.
  * @private
  */
-app.MainController.prototype.importKml_ = function(kml) {
+app.importfeatures.MainController.prototype.importKml_ = function(kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
   const features = this.kmlFormat_.readFeatures(kml, {
@@ -98,4 +101,4 @@ app.MainController.prototype.importKml_ = function(kml) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.importfeatures.module.controller('MainController', app.importfeatures.MainController);

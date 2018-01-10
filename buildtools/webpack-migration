@@ -9,11 +9,15 @@ function jscodeshift {
 node node_modules/googshift/filename-case-from-module.js src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
-jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
-jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
-jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js contribs/gmf/apps
+JSCS_ARGS="--non-default-import=ol,ol/proj,ol/proj/proj4,ol/dom,ol/array,ol/math,ol/extent,ol/easing,ol/color,ol/obj,ol/uri,ol/functions,ol/Sphere --package=ngeo,ol"
+jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js $JSCS_ARGS src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
+jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
+jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS contribs/gmf/apps
+sed -i '/^if/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
+sed -i '/^  ol/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
+sed -i '/^}$/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
 git add -A  # To be removed when we use the new OpenLayers version
-buildtools/git-grep-sed " from 'ol/" "s/ from 'ol\/\(.*\)';/ from \'ol\/\L\1\';/g"  # To be removed when we use the new OpenLayers version
+buildtools/git-grep-sed 'Sphere' 's|ol/Sphere|ol/sphere|g'
 buildtools/git-grep-sed 'ngInject' 's|\* @ngInject|*//* @ngInject|g'
 find -name node_modules -prune -or -name '*.js' -print | xargs sed -i 's|^// webpack: ||g'
 node_modules/.bin/eslint --fix src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps || true

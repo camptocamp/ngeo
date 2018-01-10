@@ -1,10 +1,13 @@
 goog.provide('app.recenter');
 
+// webpack: import './recenter.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
@@ -19,7 +22,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.recenter.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -39,4 +42,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+module.controller('MainController', app.recenter.MainController);

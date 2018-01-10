@@ -5,7 +5,7 @@ goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ol.format.WFS');
-goog.require('ol.format.WFSDescribeFeatureType');
+goog.require('ngeo.WFSDescribeFeatureType');
 goog.require('ol.format.WMSCapabilities');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.obj');
@@ -210,7 +210,7 @@ ngeo.query.Querent = class {
     );
 
     return this.http_.get(url).then((response) => {
-      const format = new ol.format.WFSDescribeFeatureType();
+      const format = new ngeo.WFSDescribeFeatureType();
       return format.read(response.data);
     });
   }

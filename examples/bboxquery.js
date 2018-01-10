@@ -1,9 +1,12 @@
 goog.provide('app.bboxquery');
 
+// webpack: import './bboxquery.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -17,7 +20,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', [
+app.bboxquery.module = angular.module('app', [
   ngeo.module.name,
   ngeo.datasource.DataSources.module.name,
   ngeo.map.module.name,
@@ -26,7 +29,7 @@ app.module = angular.module('app', [
 ]);
 
 
-app.module.value('ngeoQueryOptions', {
+app.bboxquery.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -36,13 +39,13 @@ app.module.value('ngeoQueryOptions', {
  *
  * @type {!angular.Component}
  */
-app.queryresultComponent = {
+app.bboxquery.queryresultComponent = {
   controller: 'AppQueryresultController',
   controllerAs: 'qrCtrl',
   templateUrl: 'partials/queryresult.html'
 };
 
-app.module.component('appQueryresult', app.queryresultComponent);
+app.bboxquery.module.component('appQueryresult', app.bboxquery.queryresultComponent);
 
 
 /**
@@ -50,7 +53,7 @@ app.module.component('appQueryresult', app.queryresultComponent);
  * @constructor
  * @ngInject
  */
-app.QueryresultController = function(ngeoQueryResult) {
+app.bboxquery.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -61,7 +64,7 @@ app.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-app.module.controller('AppQueryresultController', app.QueryresultController);
+app.bboxquery.module.controller('AppQueryresultController', app.bboxquery.QueryresultController);
 
 
 /**
@@ -71,7 +74,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDataSources) {
+app.bboxquery.MainController = function($scope, ngeoDataSources) {
 
   /**
    * @type {boolean}
@@ -135,4 +138,4 @@ app.MainController = function($scope, ngeoDataSources) {
 
 };
 
-app.module.controller('MainController', app.MainController);
+app.bboxquery.module.controller('MainController', app.bboxquery.MainController);

@@ -1,11 +1,14 @@
 goog.provide('app.modal');
 
+// webpack: import './modal.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.modal.module = angular.module('app', [
   ngeo.module.name,
   ngeo.message.modalComponent.name,
 ]);
@@ -15,7 +18,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.modal.MainController = function() {
 
   /**
    * @type {boolean}
@@ -25,4 +28,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.modal.module.controller('MainController', app.modal.MainController);

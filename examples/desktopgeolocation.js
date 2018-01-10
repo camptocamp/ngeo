@@ -1,5 +1,7 @@
 goog.provide('app.desktopgeolocation');
 
+// webpack: import './desktopgeolocation.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -9,12 +11,13 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.geolocation.desktop');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.desktopgeolocation.module = angular.module('app', [
   ngeo.module.name,
   ngeo.geolocation.desktop.name,
   ngeo.map.module.name
@@ -28,7 +31,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoFeatureOverlayMgr) {
+app.desktopgeolocation.MainController = function($scope, ngeoFeatureOverlayMgr) {
 
   const positionFeatureStyle = new ol.style.Style({
     image: new ol.style.Circle({
@@ -73,4 +76,4 @@ app.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.desktopgeolocation.module.controller('MainController', app.desktopgeolocation.MainController);

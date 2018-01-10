@@ -1,8 +1,11 @@
 goog.provide('app.measure');
 
+// webpack: import './measure.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -20,7 +23,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Fill');
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.measure.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
@@ -34,7 +37,7 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.measuretoolsComponent = {
+app.measure.measuretoolsComponent = {
   bindings: {
     'map': '=appMeasuretoolsMap',
     'lang': '=appMeasuretoolsLang'
@@ -44,7 +47,7 @@ app.measuretoolsComponent = {
   templateUrl: 'partials/measuretools.html'
 };
 
-app.module.component('appMeasuretools', app.measuretoolsComponent);
+app.measure.module.component('appMeasuretools', app.measure.measuretoolsComponent);
 
 
 /**
@@ -55,7 +58,7 @@ app.module.component('appMeasuretools', app.measuretoolsComponent);
  * @constructor
  * @ngInject
  */
-app.MeasuretoolsController = function($scope, $compile, $sce,
+app.measure.MeasuretoolsController = function($scope, $compile, $sce,
   $filter) {
 
   /**
@@ -210,9 +213,9 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   });
 };
 
-app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
+app.measure.module.controller('AppMeasuretoolsController', app.measure.MeasuretoolsController);
 
-app.MeasuretoolsController.prototype.$onInit = function() {
+app.measure.MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);
@@ -222,7 +225,7 @@ app.MeasuretoolsController.prototype.$onInit = function() {
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.measure.MainController = function() {
 
   /**
    * @type {string}
@@ -250,4 +253,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.measure.module.controller('MainController', app.measure.MainController);

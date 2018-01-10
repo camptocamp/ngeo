@@ -4,8 +4,6 @@ goog.provide('app.search');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -15,6 +13,7 @@ goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 goog.require('goog.asserts');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.search.module');
 

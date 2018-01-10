@@ -1,15 +1,18 @@
 goog.provide('app.simple');
 
+// webpack: import './simple.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.simple.module = angular.module('app', [
   ngeo.map.module.name
 ]);
 
@@ -18,7 +21,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.simple.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -38,4 +41,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.simple.module.controller('MainController', app.simple.MainController);

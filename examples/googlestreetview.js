@@ -1,5 +1,7 @@
 goog.provide('app.googlestreetview');
 
+// webpack: import './googlestreetview.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -9,6 +11,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
+goog.require('ngeo');
 goog.require('ngeo.googlestreetview.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.ToolActivate');
@@ -16,7 +19,7 @@ goog.require('ngeo.misc.ToolActivateMgr');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.googlestreetview.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.googlestreetview.module.name,
@@ -32,7 +35,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+app.googlestreetview.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {number}
@@ -106,4 +109,4 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.googlestreetview.module.controller('MainController', app.googlestreetview.MainController);

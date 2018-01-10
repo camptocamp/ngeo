@@ -1,11 +1,14 @@
 goog.provide('app.notification');
 
+// webpack: import './notification.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.notification.module = angular.module('app', [
   ngeo.module.name,
   ngeo.message.Notification.module.name,
 ]);
@@ -16,7 +19,7 @@ app.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.MainController = function(ngeoNotification) {
+app.notification.MainController = function(ngeoNotification) {
 
   /**
    * @type {ngeo.message.Notification}
@@ -44,7 +47,7 @@ app.MainController = function(ngeoNotification) {
  * service.
  * @export
  */
-app.MainController.prototype.notifyMulti = function() {
+app.notification.MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
     type: ngeo.message.Message.Type.ERROR
@@ -66,7 +69,7 @@ app.MainController.prototype.notifyMulti = function() {
  * one defined by the notification service.
  * @export
  */
-app.MainController.prototype.notifyTarget = function() {
+app.notification.MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
@@ -78,7 +81,7 @@ app.MainController.prototype.notifyTarget = function() {
  * Demonstrates how to display a message for a specific number of seconds.
  * @export
  */
-app.MainController.prototype.notifyQuick = function() {
+app.notification.MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',
@@ -87,4 +90,4 @@ app.MainController.prototype.notifyQuick = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.notification.module.controller('MainController', app.notification.MainController);
