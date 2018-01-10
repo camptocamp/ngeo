@@ -1,8 +1,7 @@
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
-NGEO_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 src/directives/partials/*.html)
-NGEO_MODULES_PARTIALS_FILES := $(filter-out $(NGEO_DIRECTIVES_PARTIALS_FILES), $(shell find src/ -name '*.html'))
+NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
 NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
@@ -867,28 +866,23 @@ $(EXTERNS_JQUERY): github_versions
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="contribs/gmf/src ../../../../contribs/gmf/src" --output_file=$@
 
-# The keys in the template cache begin with "../src/directives/partials". This
-# is done so ngeo.js works for the examples on github.io. If another key
-# pattern is needed this should be changed.
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
-		$(NGEO_MODULES_PARTIALS_FILES)
+		$(NGEO_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials ngeomodule:src" \
+		--var "partials=ngeomodule:src" \
 		--var "app=ngeo" $< > $@
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) \
-		$(NGEO_MODULES_PARTIALS_FILES) \
+		$(NGEO_PARTIALS_FILES) \
 		$(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src/directives/partials ngeomodule:src gmfmodule:contribs/gmf/src gmf:contribs/gmf/src/directives/partials" \
+		--var "partials=ngeomodule:src gmfmodule:contribs/gmf/src gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
@@ -953,9 +947,9 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
-		$(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES)
+		$(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(NGEO_DIRECTIVES_PARTIALS_FILES) $(NGEO_MODULES_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
+	node buildtools/extract-messages $(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES)
