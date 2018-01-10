@@ -18,9 +18,8 @@ goog.require('ngeo.utils');
 ngeo.print.VectorEncoder = function() {
   /**
    * @type {ol.format.GeoJSON}
-   * @private
    */
-  this.geojsonFormat_ = new ol.format.GeoJSON();
+  this.geojsonFormat = new ol.format.GeoJSON();
 };
 
 
@@ -59,8 +58,6 @@ ngeo.print.VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, reso
 
   const features = source.getFeatures();
 
-  const geojsonFormat = new ol.format.GeoJSON();
-
   const /** @type {Array.<GeoJSONFeature>} */ geojsonFeatures = [];
   const mapfishStyleObject = /** @type {MapFishPrintVectorStyle} */ ({
     version: 2
@@ -79,7 +76,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, reso
         styleData = styleFunction.call(layer, originalFeature, resolution);
       }
     }
-    const origGeojsonFeature = geojsonFormat.writeFeatureObject(originalFeature);
+    const origGeojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     /**
      * @type {Array<ol.style.Style>}
      */
@@ -107,7 +104,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, reso
         } else {
           let styledFeature = originalFeature.clone();
           styledFeature.setGeometry(geometry);
-          geojsonFeature = geojsonFormat.writeFeatureObject(styledFeature);
+          geojsonFeature = this.geojsonFormat.writeFeatureObject(styledFeature);
           geometry = styledFeature.getGeometry();
           styledFeature = null;
           geojsonFeatures.push(geojsonFeature);
@@ -172,16 +169,16 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyle = function(object, geometry
   const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
   const textStyle = style.getText();
-  if (styleType == ngeo.print.VectorEncoder.PrintStyleType.POLYGON) {
+  if (styleType === ngeo.print.VectorEncoder.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon_(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
-  } else if (styleType == ngeo.print.VectorEncoder.PrintStyleType.LINE_STRING) {
+  } else if (styleType === ngeo.print.VectorEncoder.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
     }
-  } else if (styleType == ngeo.print.VectorEncoder.PrintStyleType.POINT) {
+  } else if (styleType === ngeo.print.VectorEncoder.PrintStyleType.POINT) {
     if (imageStyle !== null) {
       this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
     }
@@ -360,6 +357,10 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleStroke_ = function(symbolize
   const strokeWidth = strokeStyle.getWidth();
   if (strokeWidth !== undefined) {
     symbolizer.strokeWidth = strokeWidth;
+  }
+  const strokeLineCap = strokeStyle.getLineCap();
+  if (strokeLineCap) {
+    symbolizer.strokeLinecap = strokeStyle.getLineCap();
   }
 };
 
