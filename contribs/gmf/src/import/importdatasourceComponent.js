@@ -1,20 +1,28 @@
-goog.provide('gmf.importdatasourceComponent');
+goog.provide('gmf.import.importdatasourceComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.wmscapabilitylayertreenodeComponent');
+goog.require('gmf.import.wmsCapabilityLayertreeComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.wmtscapabilitylayertreeComponent');
+goog.require('gmf.import.wmtsCapabilityLayertreeComponent');
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.OGC');
 
+gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
+  // todo: add gmf.datasource.ExternalDataSourcesManager
+  ngeo.query.Querent.module.name,
+  gmf.import.wmsCapabilityLayertreeComponent.name,
+  gmf.import.wmtsCapabilityLayertreeComponent.name,
+]);
+
+gmf.module.requires.push(gmf.import.importdatasourceComponent.name);
 
 /**
  * @private
  */
-gmf.ImportdatasourceController = class {
+gmf.import.importdatasourceComponent.Controller_ = class {
 
   /**
    * @param {!jQuery} $element Element.
@@ -116,15 +124,15 @@ gmf.ImportdatasourceController = class {
      * @type {string}
      * @export
      */
-    this.mode = gmf.ImportdatasourceController.Mode.ONLINE;
+    this.mode = gmf.import.importdatasourceComponent.Controller_.Mode.ONLINE;
 
     /**
      * @type {!Array.<string>}
      * @export
      */
     this.modes = [
-      gmf.ImportdatasourceController.Mode.LOCAL,
-      gmf.ImportdatasourceController.Mode.ONLINE
+      gmf.import.importdatasourceComponent.Controller_.Mode.LOCAL,
+      gmf.import.importdatasourceComponent.Controller_.Mode.ONLINE
     ];
 
     /**
@@ -356,16 +364,16 @@ gmf.ImportdatasourceController = class {
 /**
  * @enum {string}
  */
-gmf.ImportdatasourceController.Mode = {
+gmf.import.importdatasourceComponent.Controller_.Mode = {
   LOCAL: 'Local',
   ONLINE: 'Online'
 };
 
 
-gmf.module.component('gmfImportdatasource', {
+gmf.import.importdatasourceComponent.component('gmfImportdatasource', {
   bindings: {
     'map': '<'
   },
-  controller: gmf.ImportdatasourceController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/importdatasource.html`
+  controller: gmf.import.importdatasourceComponent.Controller_,
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/importdatasourceComponent.html`
 });

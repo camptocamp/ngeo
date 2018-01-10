@@ -5,7 +5,7 @@ goog.provide('gmfapp.importdatasource');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.importdatasourceComponent');
+goog.require('gmf.import.importdatasourceComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
@@ -27,6 +27,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.import.importdatasourceComponent.name,
   gmf.layertree.component.name,
   gmf.theme.Themes.module.name,
   ngeo.query.bboxQueryComponent.name,

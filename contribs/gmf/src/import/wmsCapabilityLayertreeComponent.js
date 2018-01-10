@@ -1,16 +1,25 @@
-goog.provide('gmf.wmscapabilitylayertreenodeComponent');
+goog.provide('gmf.import.wmsCapabilityLayertreeComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.Popup');
+goog.require('ol');
+
+gmf.import.wmsCapabilityLayertreeComponent =
+  angular.module('gmfWmscapabilitylayertreenode', [
+    // todo: add gmf.datasource.ExternalDataSourcesManager
+    ngeo.message.Popup.module.name,
+  ]);
+
+gmf.module.requires.push(gmf.import.wmsCapabilityLayertreeComponent.name);
 
 
 /**
  * @private
  */
-gmf.WmscapabilitylayertreenodeController = class {
+gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
 
   /**
    * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -81,12 +90,12 @@ gmf.WmscapabilitylayertreenodeController = class {
 };
 
 
-gmf.module.component('gmfWmscapabilitylayertreenode', {
+gmf.import.wmsCapabilityLayertreeComponent.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
     'layer': '<',
     'url': '<'
   },
-  controller: gmf.WmscapabilitylayertreenodeController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/wmscapabilitylayertreenode.html`
+  controller: gmf.import.wmsCapabilityLayertreeComponent.Controller_,
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmsCapabilityLayertreeComponent.html`
 });
