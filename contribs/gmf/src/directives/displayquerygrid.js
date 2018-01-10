@@ -348,6 +348,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     if (source.tooManyResults) {
       this.makeGrid_(null, source);
     } else {
+      source.id = this.escapeValue_(source.id);
       const features = source.features;
       if (features.length > 0) {
         this.collectData_(source);
@@ -355,7 +356,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
     }
   });
 
-  if (this.loadedGridSources.length == 0) {
+  if (this.loadedGridSources.length === 0) {
     // if no grids were created, do not show
     this.active = false;
     return;
@@ -379,6 +380,26 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
  */
 gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() {
   return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
+};
+
+/**
+ * Returns an escaped value.
+ * @param {string|number} value A value to escape.
+ * @returns {string|number} value An escaped value.
+ * @private
+ */
+gmf.DisplayquerygridController.prototype.escapeValue_ = function(value) {
+  // Work-around for Number.isInteger() when not always getting a number ...
+  if (Number.isInteger(/** @type {number} */ (value))) {
+    return value;
+  } else {
+    const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
+    if (value.match(toEscape) !== null) {
+      return value.replace(toEscape, '_');
+    } else {
+      return value;
+    }
+  }
 };
 
 
@@ -684,21 +705,21 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
   }
   this.updateFeatures_(gridSource);
 
-  this.reflowGrid_(this.selectedTab);
+  this.reflowGrid_(source.id);
 };
 
 
 /**
  * @private
- * @param {string|number} sourceLabel Id of the source that should be refreshed.
+ * @param {string|number} sourceId Id of the source that should be refreshed.
  */
-gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceLabel) {
-  // this is a "work-around" to make sure that the grid is rendered correctly.
-  // when a pane is activated by setting `this.selectedTab`, the class `active`
-  // is not yet set on the pane. that's why the class is set manually, and
+gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceId) {
+  // This is a "work-around" to make sure that the grid is rendered correctly.
+  // When a pane is activated by setting `this.selectedTab`, the class `active`
+  // is not yet set on the pane. That's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
-  const activePane = this.$element_.find(`div.tab-pane#${sourceLabel}`);
+  const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
   activePane.removeClass('active').addClass('active');
   this.$timeout_(() => {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');

@@ -10,15 +10,15 @@
     role="tablist">
 
     <li
-      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.label"
+      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id"
       role="presentation"
       ng-class="{'active' : ctrl.isSelected(gridSource)}"
       ng-click="ctrl.selectTab(gridSource)">
 
       <a
-        href="#{{gridSource.source.label}}"
-        data-target="#{{gridSource.source.label}}"
-        aria-controls="{{gridSource.source.label}}"
+        href="#{{gridSource.source.id}}"
+        data-target="#{{gridSource.source.id}}"
+        aria-controls="{{gridSource.source.id}}"
         role="tab"
         data-toggle="tab">
 
@@ -34,11 +34,11 @@
 
   <div class="tab-content">
     <div
-      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.label"
+      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id"
       role="tabpanel"
       class="tab-pane"
       ng-class="{'active' : ctrl.isSelected(gridSource)}"
-      id="{{gridSource.source.label}}">
+      id="{{gridSource.source.id}}">
 
       <ngeo-grid
         ngeo-grid-configuration="gridSource.configuration"
