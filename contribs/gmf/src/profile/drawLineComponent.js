@@ -54,15 +54,6 @@ gmf.profile.drawLineComponent.directive_ = function() {
       'line': '=gmfDrawprofilelineLine',
       'active': '=gmfDrawprofilelineActive',
       'getStyleFn': '&?gmfDrawprofilelineStyle'
-    },
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.DrawprofilelineController} controller Controller.
-     */
-    link: (scope, element, attrs, controller) => {
-      controller.init();
     }
   };
 };
@@ -182,7 +173,7 @@ gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
 /**
  * Initialise the controller.
  */
-gmf.profile.drawLineComponent.Controller_.prototype.init = function() {
+gmf.profile.drawLineComponent.Controller_.prototype.$onInit = function() {
   const map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
   this.map_ = map;
