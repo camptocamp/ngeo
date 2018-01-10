@@ -42,7 +42,7 @@ gmf.filters.SavedFilters = class {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {!Array.<!gmf.filters.SavedFilters.FilterItem>}
+     * @type {!Array.<!gmf.filters.SavedFilters.Item>}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -73,7 +73,7 @@ gmf.filters.SavedFilters = class {
     }
 
     /**
-     * @type {!Array.<!gmf.filters.SavedFilters.FilterItem>}
+     * @type {!Array.<!gmf.filters.SavedFilters.Item>}
      * @private
      */
     this.items_ = [];
@@ -92,7 +92,7 @@ gmf.filters.SavedFilters = class {
   }
 
   /**
-   * @return {!Array.<!gmf.filters.SavedFilters.FilterItem>} Items
+   * @return {!Array.<!gmf.filters.SavedFilters.Item>} Items
    * @export
    */
   get currentDataSourceItems() {
@@ -109,7 +109,7 @@ gmf.filters.SavedFilters = class {
   }
 
   /**
-   * @return {!Array.<!gmf.filters.SavedFilters.FilterItem>} Items
+   * @return {!Array.<!gmf.filters.SavedFilters.Item>} Items
    * @export
    */
   get items() {
@@ -153,7 +153,7 @@ gmf.filters.SavedFilters = class {
   }
 
   /**
-   * @param {!gmf.filters.SavedFilters.FilterItem} item Item.
+   * @param {!gmf.filters.SavedFilters.Item} item Item.
    * @export
    */
   save(item) {
@@ -173,7 +173,7 @@ gmf.filters.SavedFilters = class {
   }
 
   /**
-   * @param {!gmf.filters.SavedFilters.FilterItem} item Item.
+   * @param {!gmf.filters.SavedFilters.Item} item Item.
    * @export
    */
   remove(item) {

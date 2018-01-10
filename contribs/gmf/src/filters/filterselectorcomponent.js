@@ -9,13 +9,12 @@ goog.require('gmf.datasource.DataSourcesHelper');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.filters.SavedFilters');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filter.module');
-/** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
 goog.require('ngeo.message.Notification');
 goog.require('ngeo.message.Message');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
+goog.require('ngeo.filter.component');
 goog.require('ol.events');
 goog.require('ol.Observable');
 goog.require('ol.array');
@@ -28,7 +27,8 @@ gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
   ngeo.map.FeatureOverlayMgr.module.name,
   ngeo.message.Notification.module.name,
   ngeo.message.modalComponent.name,
-  ngeo.filter.module.name,
+  ngeo.filter.RuleHelper.module.name,
+  ngeo.filter.component.name,
   gmf.filters.SavedFilters.module.name,
 ]);
 
