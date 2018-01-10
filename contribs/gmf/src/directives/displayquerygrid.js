@@ -389,13 +389,13 @@ gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() 
  * @private
  */
 gmf.DisplayquerygridController.prototype.escapeValue_ = function(value) {
-  if (Number.isInteger(value)) {
+  // Work-around for Number.isInteger() when not always getting a number ...
+  if (Number.isInteger(/** @type {number} */ (value))) {
     return value;
   } else {
     const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
     if (value.match(toEscape) !== null) {
-      const escapedValue = value.replace(toEscape, '_');
-      return escapedValue;
+      return value.replace(toEscape, '_');
     } else {
       return value;
     }
