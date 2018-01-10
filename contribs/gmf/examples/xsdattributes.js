@@ -1,7 +1,7 @@
 goog.provide('gmfapp.xsdattributes');
 
 goog.require('gmf.theme.Themes');
-goog.require('gmf.XSDAttributes');
+goog.require('gmf.editing.XSDAttributes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
 goog.require('ol.Feature');
@@ -10,6 +10,7 @@ goog.require('ol.Feature');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.editing.XSDAttributes.module.name,
   gmf.theme.Themes.module.name,
   ngeo.editing.attributesComponent.name,
 ]);
@@ -26,7 +27,7 @@ gmfapp.module.value('gmfLayersUrl',
 /**
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */
@@ -39,7 +40,7 @@ gmfapp.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {gmf.XSDAttributes}
+   * @type {gmf.editing.XSDAttributes}
    * @private
    */
   this.xsdAttributes_ = gmfXSDAttributes;

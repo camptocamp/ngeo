@@ -1,9 +1,8 @@
 goog.provide('gmf.ObjectEditingManager');
 
-goog.require('gmf.EditFeature');
-goog.require('ol.Feature');
-
+goog.require('gmf.editing.EditFeature');
 goog.require('ngeo.statemanager.Location');
+goog.require('ol.Feature');
 
 // FIXME remove lines right under and add me at the module dependencies:
 // - ngeo.statemanager.Location.module.name
@@ -15,7 +14,7 @@ ngeo.module.requires.push(ngeo.statemanager.Location.module.name);
  * a feature using the GMF protocol.
  *
  * @param {angular.$q} $q Angular $q service.
- * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @constructor
  * @struct
@@ -30,7 +29,7 @@ gmf.ObjectEditingManager = function($q, gmfEditFeature, ngeoLocation) {
   this.q_ = $q;
 
   /**
-   * @type {gmf.EditFeature}
+   * @type {gmf.editing.EditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;

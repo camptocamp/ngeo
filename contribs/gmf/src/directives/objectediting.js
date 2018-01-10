@@ -3,7 +3,7 @@ goog.provide('gmf.objecteditingComponent');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.objecteditingtoolsDirective');
-goog.require('gmf.EditFeature');
+goog.require('gmf.editing.EditFeature');
 goog.require('gmf.ObjectEditingQuery');
 goog.require('ngeo.geom');
 /** @suppress {extraRequire} */
@@ -100,7 +100,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {!gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {!gmf.ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
  * @param {!gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
@@ -179,7 +179,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!gmf.EditFeature}
+   * @type {!gmf.editing.EditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
