@@ -9,7 +9,7 @@ goog.require('gmf.contextualdata.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerygridComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.drawfeatureDirective');
+goog.require('gmf.drawing.drawFeatureComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureselectorDirective');
 /** @suppress {extraRequire} */
