@@ -19,11 +19,11 @@ goog.require('gmf.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.print.component');
 /** @suppress {extraRequire} */
-goog.require('gmf.profileComponent');
+goog.require('gmf.profile.component');
+/** @suppress {extraRequire} */
+goog.require('gmf.profile.drawLineComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.raster.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.TimeSliderDirective');
 /** @suppress {extraRequire} */

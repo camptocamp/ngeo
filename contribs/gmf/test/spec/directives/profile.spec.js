@@ -1,4 +1,4 @@
-goog.require('gmf.profileComponent');
+goog.require('gmf.profile.component');
 
 
 describe('gmf.GmfProfileController', () => {

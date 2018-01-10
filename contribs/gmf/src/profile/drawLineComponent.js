@@ -1,18 +1,23 @@
-goog.provide('gmf.drawprofilelineDirective');
+goog.provide('gmf.profile.drawLineComponent');
 
 goog.require('gmf');
 goog.require('ol.Collection');
-goog.require('ol.geom.LineString');
 goog.require('ol.interaction.Draw');
+goog.require('ol.Map');
 goog.require('ol.style.Style');
 goog.require('ol.style.Stroke');
+goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.decorate');
 
-goog.require('ngeo.map.FeatureOverlayMgr');
 
+/**
+ * @type {!angular.Module}
+ */
+gmf.profile.drawLineComponent = angular.module('gmfDrawProfileLine', [
+  ngeo.map.FeatureOverlayMgr.module.name,
+]);
 
-// In the future module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlayMgr.module.name
+gmf.module.requires.push(gmf.profile.drawLineComponent.name);
 
 
 /**
@@ -39,7 +44,7 @@ goog.require('ngeo.map.FeatureOverlayMgr');
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
-gmf.drawprofilelineDirective = function() {
+gmf.profile.drawLineComponent.directive_ = function() {
   return {
     scope: true,
     controller: 'GmfDrawprofilelineController as ctrl',
@@ -49,21 +54,13 @@ gmf.drawprofilelineDirective = function() {
       'line': '=gmfDrawprofilelineLine',
       'active': '=gmfDrawprofilelineActive',
       'getStyleFn': '&?gmfDrawprofilelineStyle'
-    },
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.DrawprofilelineController} controller Controller.
-     */
-    link: (scope, element, attrs, controller) => {
-      controller.init();
     }
   };
 };
 
 
-gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
+gmf.profile.drawLineComponent.directive('gmfDrawprofileline',
+  gmf.profile.drawLineComponent.directive_);
 
 /**
  * @param {!angular.Scope} $scope Scope.
@@ -77,7 +74,7 @@ gmf.module.directive('gmfDrawprofileline', gmf.drawprofilelineDirective);
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-gmf.DrawprofilelineController = function($scope, $element, $timeout,
+gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
   ngeoFeatureOverlayMgr) {
 
   /**
@@ -172,10 +169,11 @@ gmf.DrawprofilelineController = function($scope, $element, $timeout,
   );
 };
 
+
 /**
  * Initialise the controller.
  */
-gmf.DrawprofilelineController.prototype.init = function() {
+gmf.profile.drawLineComponent.Controller_.prototype.$onInit = function() {
   const map = this['getMapFn']();
   goog.asserts.assertInstanceof(map, ol.Map);
   this.map_ = map;
@@ -187,11 +185,11 @@ gmf.DrawprofilelineController.prototype.init = function() {
  * Clear the overlay and profile line.
  * @private
  */
-gmf.DrawprofilelineController.prototype.clear_ = function() {
+gmf.profile.drawLineComponent.Controller_.prototype.clear_ = function() {
   this.features_.clear();
   this.line = null;
 };
 
 
-gmf.module.controller('GmfDrawprofilelineController',
-  gmf.DrawprofilelineController);
+gmf.profile.drawLineComponent.controller('GmfDrawprofilelineController',
+  gmf.profile.drawLineComponent.Controller_);

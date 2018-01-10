@@ -4,8 +4,7 @@ goog.provide('gmfapp.profile');
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.profileComponent');
+goog.require('gmf.profile.module');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -22,6 +21,7 @@ goog.require('ol.style.Style');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.profile.module.name,
   ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
