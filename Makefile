@@ -872,7 +872,7 @@ $(EXTERNS_JQUERY): github_versions
 		.build/python-venv/bin/mako-render \
 		$(NGEO_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeomodule:src" \
+		--var "partials=ngeo:src" \
 		--var "app=ngeo" $< > $@
 
 .PRECIOUS: .build/gmftemplatecache.js
@@ -882,7 +882,7 @@ $(EXTERNS_JQUERY): github_versions
 		$(NGEO_PARTIALS_FILES) \
 		$(GMF_DIRECTIVES_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeomodule:src gmfmodule:contribs/gmf/src gmf:contribs/gmf/src/directives/partials" \
+		--var "partials=ngeo:src gmfmodule:contribs/gmf/src gmf:contribs/gmf/src/directives/partials" \
 		--var "app=gmf" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
