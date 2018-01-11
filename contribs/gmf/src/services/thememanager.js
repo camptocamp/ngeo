@@ -111,6 +111,14 @@ gmf.ThemeManager.prototype.getThemeName = function() {
 
 
 /**
+ * @return {boolean} true if the theme is loading.
+ * @export
+ */
+gmf.ThemeManager.prototype.isLoading = function() {
+  return !this.gmfThemes_.loaded;
+};
+
+/**
  * @param {string} name The new theme name.
  * @param {boolean=} opt_stealth Don't emit an event is true
  * @export

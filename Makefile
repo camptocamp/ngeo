@@ -977,9 +977,7 @@ transifex-send: .build/python-venv/bin/tx \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
 	.build/python-venv/bin/tx push --source
-	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx push --source
-	cd -
+	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --source
 
 .PHONY: transifex-init
 transifex-init: .build/python-venv/bin/tx \
@@ -991,10 +989,15 @@ transifex-init: .build/python-venv/bin/tx \
 	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
+<<<<<<< HEAD
 	cd contribs/gmf/apps/
 	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 	cd -
+=======
+	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --source --force
+	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --translations --force --no-interactive
+>>>>>>> aad6d56087ec4add559afe332bd3944adcb2e2ea
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed

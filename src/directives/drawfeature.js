@@ -337,7 +337,12 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
 
   feature.set(prop.ANGLE, 0);
   feature.set(prop.OPACITY, 0.2);
+<<<<<<< HEAD
   feature.set(prop.SHOW_MEASURE, this.showMeasure ? true : false);
+=======
+  feature.set(prop.SHOW_MEASURE, false);
+  feature.set(prop.SHOW_LABEL, false);
+>>>>>>> aad6d56087ec4add559afe332bd3944adcb2e2ea
   feature.set(prop.SIZE, 10);
   feature.set(prop.STROKE, 2);
 

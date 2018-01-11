@@ -48,7 +48,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurepoint-Coordinatedecimals number
+ * @htmlAttribute {number=} gmf-mobile-measurepoint-coordinatedecimals number
  *     of decimal to display for the coordinate.
  * @htmlAttribute {Array.<gmf.MobileMeasurePointController.LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get

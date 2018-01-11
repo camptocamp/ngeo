@@ -31,8 +31,8 @@
               <span class="fa fa-grid"></span>
               <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
                 <span translate>Theme:</span>
-                <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading...</b>
-                <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
+                <b ng-if="mainCtrl.gmfThemeManager.isLoading()" translate>Loading...</b>
+                <b ng-if="!mainCtrl.gmfThemeManager.isLoading()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
               </span>
               <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
                 <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
@@ -107,7 +107,9 @@
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
-              <gmf-authentication></gmf-authentication>
+              <gmf-authentication
+                  gmf-authentication-force-password-change="::true">
+              </gmf-authentication>
             </div>
           </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">
@@ -165,6 +167,19 @@
                     gmf-editfeatureselector-vector="::mainCtrl.editFeatureVectorLayer">
                 </gmf-editfeatureselector>
               </div>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.drawLidarProfilePanelActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Profile'|translate}}
+                <a class="btn close" ng-click="mainCtrl.drawLidarProfilePanelActive = false">&times;</a>
+              </div>
+              <gmf-lidar-panel
+               gmf-lidar-panel-active="mainCtrl.drawLidarProfilePanelActive"
+               gmf-lidar-panel-map="::mainCtrl.map"
+               gmf-lidar-panel-line="mainCtrl.lidarProfileLine">
+              </gmf-lidar-panel>
             </div>
           </div>
           <div ng-show="mainCtrl.drawProfilePanelActive" class="row">
@@ -370,6 +385,7 @@
         module.constant('defaultTheme', 'Demo');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
+        module.constant('pytreeLidarProfileJsonUrl', 'https://sitn.ne.ch/pytree/pytree_dev/');
         module.constant('cacheVersion', cacheVersion);
         module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
         module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');

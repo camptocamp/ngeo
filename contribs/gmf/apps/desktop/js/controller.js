@@ -29,7 +29,11 @@ app.desktop.Controller = function($scope, $injector) {
   gmf.AbstractDesktopController.call(this, {
     srid: 2056,
     mapViewConfig: {
+<<<<<<< HEAD
       center: [2632464, 1185457],
+=======
+      center: [2551894, 1202362],
+>>>>>>> aad6d56087ec4add559afe332bd3944adcb2e2ea
       zoom: 3,
       resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
     }

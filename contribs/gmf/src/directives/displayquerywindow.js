@@ -1,6 +1,10 @@
 goog.provide('gmf.displayquerywindowComponent');
 
 goog.require('gmf');
+<<<<<<< HEAD
+=======
+goog.require('ngeo.FeatureOverlayMgr');
+>>>>>>> aad6d56087ec4add559afe332bd3944adcb2e2ea
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.MapQuerent');
 /** @suppress {extraRequire} */
@@ -151,7 +155,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
   };
 
   /**
-   * @type {ngeo.MapQuerent}
+   * @type {!ngeo.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
@@ -163,7 +167,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
   this.selectedSource = null;
 
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.features_ = new ol.Collection();
@@ -175,6 +179,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
+<<<<<<< HEAD
    * @type {ngeo.map.FeatureOverlay}
    * @private
    */
@@ -182,19 +187,21 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
 
   /**
    * @type {ol.Collection}
+=======
+   * @type {!ol.Collection}
+>>>>>>> aad6d56087ec4add559afe332bd3944adcb2e2ea
    * @private
    */
   this.highlightFeatures_ = new ol.Collection();
-  this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
   /**
-   * @type {ngeox.QueryResultSource?}
+   * @type {?ngeox.QueryResultSource}
    * @export
    */
   this.source = null;
 
   /**
-   * @type {ol.Feature}
+   * @type {?ol.Feature}
    * @export
    */
   this.feature = null;
@@ -256,13 +263,15 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
   this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
     featuresOverlay.setStyle(featuresStyle);
   }
-  featuresOverlay.setFeatures(this.features_);
 
+  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
     goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
@@ -279,6 +288,7 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
       stroke: stroke
     });
   }
+<<<<<<< HEAD
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
 
   if (this.desktop) {
@@ -291,6 +301,9 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
       'minWidth': 240
     });
   }
+=======
+  highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
+>>>>>>> aad6d56087ec4add559afe332bd3944adcb2e2ea
 };
 
 

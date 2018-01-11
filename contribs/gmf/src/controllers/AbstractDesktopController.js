@@ -23,6 +23,12 @@ goog.require('gmf.printComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.profileComponent');
 /** @suppress {extraRequire} */
+goog.require('gmf.lidarProfileComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.lidarPanelComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.LidarProfileConfig');
+/** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.lidarProfileComponent');
