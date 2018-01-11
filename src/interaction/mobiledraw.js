@@ -13,16 +13,6 @@ goog.require('ol.source.Vector');
 
 
 /**
- * @enum {string}
- */
-ngeo.interaction.MobileDrawProperty = {
-  DIRTY: 'dirty',
-  DRAWING: 'drawing',
-  VALID: 'valid'
-};
-
-
-/**
  * @classdesc
  * Interaction for drawing feature geometries from a mobile device using the
  * center of the map view as entry for points added.
@@ -107,9 +97,9 @@ ngeo.interaction.MobileDraw = function(options) {
 
   ol.events.listen(this, 'change:active', this.updateState_, this);
 
-  this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
-  this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);
-  this.set(ngeo.interaction.MobileDrawProperty.VALID, false);
+  this.set('dirty', false);
+  this.set('drawing', false);
+  this.set('valid', false);
 
 };
 ol.inherits(ngeo.interaction.MobileDraw, ol.interaction.Interaction);
@@ -151,7 +141,7 @@ ngeo.interaction.MobileDraw.prototype.setMap = function(map) {
  */
 ngeo.interaction.MobileDraw.prototype.getDirty = function() {
   return /** @type {boolean} */ (
-    this.get(ngeo.interaction.MobileDrawProperty.DIRTY));
+    this.get('dirty'));
 };
 
 
@@ -162,7 +152,7 @@ ngeo.interaction.MobileDraw.prototype.getDirty = function() {
  */
 ngeo.interaction.MobileDraw.prototype.getDrawing = function() {
   return /** @type {boolean} */ (
-    this.get(ngeo.interaction.MobileDrawProperty.DRAWING));
+    this.get('drawing'));
 };
 
 
@@ -175,7 +165,7 @@ ngeo.interaction.MobileDraw.prototype.getDrawing = function() {
  */
 ngeo.interaction.MobileDraw.prototype.getValid = function() {
   return /** @type {boolean} */ (
-    this.get(ngeo.interaction.MobileDrawProperty.VALID));
+    this.get('valid'));
 };
 
 
@@ -242,7 +232,7 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
 
   const dirty = this.getDirty();
   if (dirty) {
-    this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
+    this.set('dirty', false);
   }
 
   // minPoints validation
@@ -250,11 +240,11 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
   if (this.type_ === 'LineString') {
     if (coordinates.length >= this.minPoints_) {
       if (!valid) {
-        this.set(ngeo.interaction.MobileDrawProperty.VALID, true);
+        this.set('valid', true);
       }
     } else {
       if (valid) {
-        this.set(ngeo.interaction.MobileDrawProperty.VALID, false);
+        this.set('valid', false);
       }
     }
   }
@@ -293,7 +283,7 @@ ngeo.interaction.MobileDraw.prototype.finishDrawing = function() {
     this.addToDrawing();
   }
 
-  this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);
+  this.set('drawing', false);
 
   this.dispatchEvent(new ol.interaction.Draw.Event(
     /** @type {ol.interaction.DrawEventType} */ ('drawend'), this.sketchFeature_));
@@ -308,7 +298,7 @@ ngeo.interaction.MobileDraw.prototype.finishDrawing = function() {
  * @private
  */
 ngeo.interaction.MobileDraw.prototype.startDrawing_ = function() {
-  this.set(ngeo.interaction.MobileDrawProperty.DRAWING, true);
+  this.set('drawing', true);
   this.createOrUpdateSketchPoint_();
   this.updateSketchFeatures_();
 
@@ -341,7 +331,7 @@ ngeo.interaction.MobileDraw.prototype.modifyDrawing_ = function() {
 
   const dirty = this.getDirty();
   if (!dirty) {
-    this.set(ngeo.interaction.MobileDrawProperty.DIRTY, true);
+    this.set('dirty', true);
   }
 
 };
@@ -360,9 +350,9 @@ ngeo.interaction.MobileDraw.prototype.abortDrawing_ = function() {
     this.overlay_.getSource().clear(true);
   }
   this.sketchPoints_ = [];
-  this.set(ngeo.interaction.MobileDrawProperty.DIRTY, false);
-  this.set(ngeo.interaction.MobileDrawProperty.DRAWING, false);
-  this.set(ngeo.interaction.MobileDrawProperty.VALID, false);
+  this.set('dirty', false);
+  this.set('drawing', false);
+  this.set('valid', false);
   return sketchFeature;
 };
 

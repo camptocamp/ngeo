@@ -183,8 +183,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
 
   ol.events.listen(
     drawInteraction,
-    ol.Object.getChangeEventType(
-      ngeo.interaction.MobileDrawProperty.DIRTY),
+    ol.Object.getChangeEventType('dirty'),
     function() {
       this.dirty = drawInteraction.getDirty();
 
@@ -206,8 +205,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
 
   ol.events.listen(
     drawInteraction,
-    ol.Object.getChangeEventType(
-      ngeo.interaction.MobileDrawProperty.DRAWING),
+    ol.Object.getChangeEventType('drawing'),
     function() {
       this.drawing = drawInteraction.getDrawing();
     },
@@ -222,8 +220,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
 
   ol.events.listen(
     drawInteraction,
-    ol.Object.getChangeEventType(
-      ngeo.interaction.MobileDrawProperty.VALID),
+    ol.Object.getChangeEventType('valid'),
     function() {
       this.valid = drawInteraction.getValid();
     },
