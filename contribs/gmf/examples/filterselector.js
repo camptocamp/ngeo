@@ -8,7 +8,7 @@ goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.filterselectorComponent');
+goog.require('gmf.filters.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
@@ -34,6 +34,7 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
   gmf.layertree.component.name,
+  gmf.filters.module.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);

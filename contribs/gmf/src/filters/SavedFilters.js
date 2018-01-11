@@ -1,9 +1,10 @@
-goog.provide('gmf.SavedFilters');
+goog.provide('gmf.filters.SavedFilters');
 
 goog.require('gmf');
+goog.require('ol.array');
 
 
-gmf.SavedFilters = class {
+gmf.filters.SavedFilters = class {
 
   /**
    * The GeoMapFish service responsible of storing filters that can be applied
@@ -41,7 +42,7 @@ gmf.SavedFilters = class {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {!Array.<!gmf.SavedFilters.FilterItem>}
+     * @type {!Array.<!gmf.filters.SavedFilters.Item>}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -72,7 +73,7 @@ gmf.SavedFilters = class {
     }
 
     /**
-     * @type {!Array.<!gmf.SavedFilters.FilterItem>}
+     * @type {!Array.<!gmf.filters.SavedFilters.Item>}
      * @private
      */
     this.items_ = [];
@@ -91,7 +92,7 @@ gmf.SavedFilters = class {
   }
 
   /**
-   * @return {!Array.<!gmf.SavedFilters.FilterItem>} Items
+   * @return {!Array.<!gmf.filters.SavedFilters.Item>} Items
    * @export
    */
   get currentDataSourceItems() {
@@ -108,7 +109,7 @@ gmf.SavedFilters = class {
   }
 
   /**
-   * @return {!Array.<!gmf.SavedFilters.FilterItem>} Items
+   * @return {!Array.<!gmf.filters.SavedFilters.Item>} Items
    * @export
    */
   get items() {
@@ -152,7 +153,7 @@ gmf.SavedFilters = class {
   }
 
   /**
-   * @param {!gmf.SavedFilters.FilterItem} item Item.
+   * @param {!gmf.filters.SavedFilters.Item} item Item.
    * @export
    */
   save(item) {
@@ -172,7 +173,7 @@ gmf.SavedFilters = class {
   }
 
   /**
-   * @param {!gmf.SavedFilters.FilterItem} item Item.
+   * @param {!gmf.filters.SavedFilters.Item} item Item.
    * @export
    */
   remove(item) {
@@ -214,7 +215,11 @@ gmf.SavedFilters = class {
 };
 
 
-gmf.module.service('gmfSavedFilters', gmf.SavedFilters);
+gmf.filters.SavedFilters.module = angular.module('gmfSavedFilters', []);
+
+gmf.module.requires.push(gmf.filters.SavedFilters.module.name);
+
+gmf.filters.SavedFilters.module.service('gmfSavedFilters', gmf.filters.SavedFilters);
 
 
 /**
@@ -223,7 +228,7 @@ gmf.module.service('gmfSavedFilters', gmf.SavedFilters);
  * @struct
  * @export
  */
-gmf.SavedFilters.FilterItem = function() {};
+gmf.filters.SavedFilters.Item = function() {};
 
 
 /**
@@ -231,7 +236,7 @@ gmf.SavedFilters.FilterItem = function() {};
  * @type {string}
  * @export
  */
-gmf.SavedFilters.FilterItem.prototype.condition;
+gmf.filters.SavedFilters.Item.prototype.condition;
 
 
 /**
@@ -239,7 +244,7 @@ gmf.SavedFilters.FilterItem.prototype.condition;
  * @type {!Array.<!ngeox.rule.AnyOptions>}
  * @export
  */
-gmf.SavedFilters.FilterItem.prototype.customRules;
+gmf.filters.SavedFilters.Item.prototype.customRules;
 
 
 /**
@@ -247,7 +252,7 @@ gmf.SavedFilters.FilterItem.prototype.customRules;
  * @type {number}
  * @export
  */
-gmf.SavedFilters.FilterItem.prototype.dataSourceId;
+gmf.filters.SavedFilters.Item.prototype.dataSourceId;
 
 
 /**
@@ -255,7 +260,7 @@ gmf.SavedFilters.FilterItem.prototype.dataSourceId;
  * @type {!Array.<!ngeox.rule.AnyOptions>}
  * @export
  */
-gmf.SavedFilters.FilterItem.prototype.directedRules;
+gmf.filters.SavedFilters.Item.prototype.directedRules;
 
 
 /**
@@ -263,4 +268,4 @@ gmf.SavedFilters.FilterItem.prototype.directedRules;
  * @type {string}
  * @export
  */
-gmf.SavedFilters.FilterItem.prototype.name;
+gmf.filters.SavedFilters.Item.prototype.name;

@@ -1,4 +1,4 @@
-goog.provide('gmf.filterselectorComponent');
+goog.provide('gmf.filters.filterselectorComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -6,28 +6,39 @@ goog.require('gmf.authentication.Service');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesHelper');
-goog.require('gmf.SavedFilters');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filter.module');
+goog.require('gmf.datasource.OGC');
+goog.require('gmf.filters.SavedFilters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
 goog.require('ngeo.message.Notification');
+goog.require('ngeo.message.Message');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
+goog.require('ngeo.filter.component');
 goog.require('ol.events');
+goog.require('ol.Observable');
+goog.require('ol.array');
 
 goog.require('ngeo.map.FeatureOverlayMgr');
 
 
-// In the future module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlayMgr.module.name
-// - ngeo.message.Notification.module.name
-// - ngeo.message.modalComponent.name
+gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
+  gmf.authentication.Service.module.name,
+  ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.message.Notification.module.name,
+  ngeo.message.modalComponent.name,
+  ngeo.filter.RuleHelper.module.name,
+  ngeo.filter.component.name,
+  gmf.filters.SavedFilters.module.name,
+]);
+
+gmf.module.requires.push(gmf.filters.filterselectorComponent.name);
+
 
 /**
  * @private
  */
-gmf.FilterselectorController = class {
+gmf.filters.filterselectorComponent.Controller_ = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -38,7 +49,7 @@ gmf.FilterselectorController = class {
    *     filtered.
    * @param {gmf.datasource.DataSourcesHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
-   * @param {gmf.SavedFilters} gmfSavedFilters Gmf saved filters service.
+   * @param {gmf.filters.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
    * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
@@ -116,7 +127,7 @@ gmf.FilterselectorController = class {
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
 
     /**
-     * @type {gmf.SavedFilters}
+     * @type {gmf.filters.SavedFilters}
      * @export
      */
     this.gmfSavedFilters = gmfSavedFilters;
@@ -217,7 +228,7 @@ gmf.FilterselectorController = class {
     this.readyDataSource = null;
 
     /**
-     * @type {!gmf.FilterselectorController.RuleCache}
+     * @type {!gmf.filters.filterselectorComponent.Controller_.RuleCache}
      * @private
      */
     this.ruleCache_ = {};
@@ -566,7 +577,7 @@ gmf.FilterselectorController = class {
 
   /**
    * @param {ngeo.datasource.DataSource} dataSource Data source.
-   * @return {?gmf.FilterselectorController.RuleCacheItem} Rule cache item.
+   * @return {?gmf.filters.filterselectorComponent.Controller_.RuleCacheItem} Rule cache item.
    * @private
    */
   getRuleCacheItem_(dataSource) {
@@ -575,7 +586,7 @@ gmf.FilterselectorController = class {
 
   /**
    * @param {ngeo.datasource.DataSource} dataSource Data source.
-   * @param {gmf.FilterselectorController.RuleCacheItem} item Rule cache item.
+   * @param {gmf.filters.filterselectorComponent.Controller_.RuleCacheItem} item Rule cache item.
    * @private
    */
   setRuleCacheItem_(dataSource, item) {
@@ -613,7 +624,7 @@ gmf.FilterselectorController = class {
         this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
-      const item = /** @type {!gmf.SavedFilters.FilterItem} */ ({
+      const item = /** @type {!gmf.filters.SavedFilters.Item} */ ({
         condition,
         customRules,
         dataSourceId,
@@ -629,7 +640,7 @@ gmf.FilterselectorController = class {
 
   /**
    * Load a saved filter item, replacing the current rules.
-   * @param {!gmf.SavedFilters.FilterItem} filterItem Filter item.
+   * @param {!gmf.filters.SavedFilters.Item} filterItem Filter item.
    * @export
    */
   saveFilterLoadItem(filterItem) {
@@ -671,7 +682,7 @@ gmf.FilterselectorController = class {
 
   /**
    * Remove a saved filter item.
-   * @param {!gmf.SavedFilters.FilterItem} item Filter item.
+   * @param {!gmf.filters.SavedFilters.Item} item Filter item.
    * @export
    */
   saveFilterRemoveItem(item) {
@@ -682,9 +693,9 @@ gmf.FilterselectorController = class {
 
 
 /**
- * @typedef {Object.<number, !gmf.FilterselectorController.RuleCacheItem>}
+ * @typedef {Object.<number, !gmf.filters.filterselectorComponent.Controller_.RuleCacheItem>}
  */
-gmf.FilterselectorController.RuleCache;
+gmf.filters.filterselectorComponent.Controller_.RuleCache;
 
 
 /**
@@ -693,15 +704,15 @@ gmf.FilterselectorController.RuleCache;
  *     directedRules: (Array.<ngeo.rule.Rule>)
  * }}
  */
-gmf.FilterselectorController.RuleCacheItem;
+gmf.filters.filterselectorComponent.Controller_.RuleCacheItem;
 
 
-gmf.module.component('gmfFilterselector', {
+gmf.filters.filterselectorComponent.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',
     toolGroup: '<'
   },
-  controller: gmf.FilterselectorController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/filterselector.html`
+  controller: gmf.filters.filterselectorComponent.Controller_,
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/filters/filterselectorcomponent.html`
 });
