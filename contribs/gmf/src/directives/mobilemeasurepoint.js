@@ -71,7 +71,8 @@ gmf.mobileMeasurePointDirective =
           'getCoordinateDecimalsFn': '&?gmfMobileMeasurepointCoordinatedecimals',
           'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
           'map': '=gmfMobileMeasurepointMap',
-          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
+          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle',
+          'format': '<gmfMobileMeasurepointFormat'
         },
         controller: 'GmfMobileMeasurePointController as ctrl',
         bindToController: true,
@@ -135,6 +136,12 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.$filter_ = $filter;
 
   /**
+   * @type {ngeo.DecorateInteraction}
+   * @private
+   */
+  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -195,26 +202,21 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   }
 
   /**
+   * @type {string}
+   */
+  this.format;
+
+  /**
    * @type {ngeo.interaction.MeasurePointMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasurePointMobile(
-    /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')), {
-      decimals: this.coordinateDecimals,
-      sketchStyle: this.sketchStyle
-    });
-
-  this.measure.setActive(this.active);
-  ngeoDecorateInteraction(this.measure);
+  this.measure;
 
   /**
    * @type {ngeo.interaction.MobileDraw}
    * @export
    */
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
-    this.measure.getDrawInteraction());
-
-  ngeoDecorateInteraction(this.drawInteraction);
+  this.drawInteraction;
 
   /**
    * The key for map view 'propertychange' event.
@@ -229,6 +231,19 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
  * Initialise the controller.
  */
 gmf.MobileMeasurePointController.prototype.init = function() {
+  this.measure = new ngeo.interaction.MeasurePointMobile(
+    /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
+    this.format || '{x}, {y}',
+    {
+      decimals: this.coordinateDecimals,
+      sketchStyle: this.sketchStyle
+    }
+  );
+  this.measure.setActive(this.active);
+  this.ngeoDecorateInteraction_(this.measure);
+  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (this.measure.getDrawInteraction());
+  this.ngeoDecorateInteraction_(this.drawInteraction);
+
   const layersConfig = this['getLayersConfigFn']();
   goog.asserts.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
