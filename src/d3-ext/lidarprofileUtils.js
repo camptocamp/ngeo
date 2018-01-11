@@ -10,12 +10,10 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
   const fractionStart = dLeft / totalLength;
   const fractionEnd = dRight / totalLength;
 
-
   ngeo.lidarProfile.options.olLinestring.forEachSegment((segStart, segEnd) => {
 
     const segLine = new ol.geom.LineString([segStart, segEnd]);
     mileage_end += segLine.getLength();
-    console.log('dLeft', dLeft, 'dRight', dRight, 'mileage_start', mileage_start, 'mileage_end', mileage_end);
 
     if (dLeft == mileage_start) {
       clippedLine.appendCoordinate(segStart);
@@ -23,7 +21,7 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
       clippedLine.appendCoordinate(ngeo.lidarProfile.options.olLinestring.getCoordinateAt(fractionStart));
     }
 
-    if (mileage_start > dLeft) {
+    if (mileage_start > dLeft && mileage_start < dRight) {
       clippedLine.appendCoordinate(segStart);
     }
 
@@ -37,13 +35,93 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
 
   });
 
-  console.log('map line length', clippedLine.getLength(), 'd3 domain length', dRight - dLeft);
-
-  ngeo.lidarProfile.loader.clearBuffer();
+  let profileWidth;
+  if (ngeo.lidarProfile.options.profileConfig.autoWidth) {
+    profileWidth = ngeo.lidarProfile.utils.getNiceLOD(clippedLine.getLength()).width;
+  } else {
+    profileWidth = ngeo.lidarProfile.options.profileConfig.profilWidth;
+  }
   const feat = new ol.Feature({
     geometry: clippedLine
   });
-  ngeo.lidarProfile.loader.lidarBuffer.getSource().addFeature(feat);
+
+  const widthInMapsUnits = profileWidth / ngeo.lidarProfile.options.map.getView().getResolution();
+
+  const lineStyle = new ol.style.Style({
+    stroke: new ol.style.Stroke({
+      color: 'rgba(255,0,0,1)',
+      width: widthInMapsUnits,
+      lineCap: 'square'
+    })
+  });
+
+  let firstSegmentAngle = 0;
+  let lastSegementAngle = 0;
+  const segNumber = clippedLine.getCoordinates.length -1;
+  let segCounter = 0;
+  clippedLine.forEachSegment((end, start) => {
+    if (segCounter == 0) {
+      const dx = end[0] - start[0];
+      const dy = end[1] - start[1];
+      firstSegmentAngle = Math.atan2(dy, dx);
+    }
+    if (segCounter == segNumber) {
+      const dx = end[0] - start[0];
+      const dy = end[1] - start[1];
+      lastSegementAngle = Math.atan2(dy, dx);
+    }
+    segCounter += 1;
+  });
+
+  const styles = [lineStyle];
+  const lineEnd = clippedLine.getLastCoordinate();
+  const lineStart = clippedLine.getFirstCoordinate();
+  console.log(lineEnd);
+  console.log(firstSegmentAngle, lastSegementAngle);
+  styles.push(
+    new ol.style.Style({
+      geometry: new ol.geom.Point(lineEnd),
+      image: new ol.style.RegularShape({
+        fill: new ol.style.Fill({
+          color: 'rgba(255, 0, 0, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgba(255,0,0,1)',
+          width: 1,
+          lineCap: 'square'
+        }),
+        points: 3,
+        radius: 5,
+        rotation: firstSegmentAngle,
+        angle: 0
+      })
+    }),
+    new ol.style.Style({
+      geometry: new ol.geom.Point(lineStart),
+      image: new ol.style.RegularShape({
+        fill: new ol.style.Fill({
+          color: 'rgba(255, 0, 0, 1)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgba(255,0,0,1)',
+          width: 1,
+          lineCap: 'square'
+        }),
+        points: 3,
+        radius: 5,
+        rotation: lastSegementAngle,
+        angle: 0
+      })
+    })
+  );
+  console.log('icirr')
+  const vectorSource = new ol.source.Vector({
+    features: [feat]
+  });
+  ngeo.lidarProfile.loader.lidarBuffer.setSource(null);
+  ngeo.lidarProfile.loader.lidarBuffer.setSource(vectorSource);
+  ngeo.lidarProfile.loader.lidarBuffer.setStyle(styles);
+
   return {
     clippedLine: clippedLine.getCoordinates(),
     distanceOffset: dLeft

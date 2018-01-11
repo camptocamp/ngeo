@@ -26,16 +26,7 @@ ngeo.lidarProfile.setOptions = function(options) {
     })
   });
 
-  ngeo.lidarProfile.loader.lidarBuffer = new ol.layer.Vector({
-    source: new ol.source.Vector({
-    }),
-    style: new ol.style.Style({
-      stroke: new ol.style.Stroke({
-        color: 'rgba(0,0,255,0.4)',
-        width: 10
-      })
-    })
-  });
+  ngeo.lidarProfile.loader.lidarBuffer = new ol.layer.Vector({});
 
   ngeo.lidarProfile.loader.lidarPointHighlight.setMap(options.map);
   ngeo.lidarProfile.loader.lidarBuffer.setMap(options.map);
@@ -43,7 +34,7 @@ ngeo.lidarProfile.setOptions = function(options) {
 
 ngeo.lidarProfile.loader.clearBuffer = function() {
   if (ngeo.lidarProfile.loader.lidarBuffer) {
-    ngeo.lidarProfile.loader.lidarBuffer.getSource().clear();
+    ngeo.lidarProfile.loader.lidarBuffer.setSource(null);
   }
 };
 
