@@ -321,7 +321,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
    * @export
    */
   this.drawProfilePanelActive = false;
-  
+
   /**
    * @type {boolean}
    * @export
@@ -422,7 +422,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   const drawProfilePanelActivate = new ngeo.ToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
-  
+
   const drawLidarProfilePanelActivate = new ngeo.ToolActivate(this, 'drawLidarProfilePanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawLidarProfilePanelActivate, false);
 

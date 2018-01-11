@@ -8,6 +8,7 @@ goog.require('gmf');
  * @constructor
  * @struct
  * @param {angular.$http} $http Angular http service.
+ * @param {string} pytreeLidarProfileJsonUrl pytree Lidar profile URL.
  * @ngInject
  * @ngdoc service
  * @ngname gmfLidarProfileConfig

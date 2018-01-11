@@ -284,11 +284,11 @@ ngeo.lidarProfile.loader.updateData = function() {
     } else {
       console.log('get more lod');
 
-      let cPotreeLineStr = '';
-      for (const i in clip.clippedLine) {
-        cPotreeLineStr += `{${clip.clippedLine[i][0]} + ',' + ${clip.clippedLine[i][1]}},`;
-      }
-      cPotreeLineStr = cPotreeLineStr.substr(0, cPotreeLineStr.length - 1);
+      //let cPotreeLineStr = '';
+      //for (const i in clip.clippedLine) {
+      //  cPotreeLineStr += `{${clip.clippedLine[i][0]} + ',' + ${clip.clippedLine[i][1]}},`;
+      //}
+      //cPotreeLineStr = cPotreeLineStr.substr(0, cPotreeLineStr.length - 1);
       ngeo.lidarProfile.loader.getProfileByLOD(clip.distanceOffset, false, 0);
 
     }

@@ -57,7 +57,7 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
 
   let firstSegmentAngle = 0;
   let lastSegementAngle = 0;
-  const segNumber = clippedLine.getCoordinates.length -1;
+  const segNumber = clippedLine.getCoordinates.length - 1;
   let segCounter = 0;
   clippedLine.forEachSegment((end, start) => {
     if (segCounter == 0) {
@@ -114,7 +114,7 @@ ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
       })
     })
   );
-  console.log('icirr')
+  console.log('icirr');
   const vectorSource = new ol.source.Vector({
     features: [feat]
   });

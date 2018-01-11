@@ -125,16 +125,13 @@ gmf.LidarPanelController = function(gmfLidarProfileConfig) {
  * Init the controller
  */
 gmf.LidarPanelController.prototype.$onInit = function() {
-
-  this.gmfLidarProfileConfig.initProfileConfig().then(function(resp) {
+  this.gmfLidarProfileConfig.initProfileConfig().then((resp) => {
     this.ready = true;
     this.line = this.line;
     this.active = this.active;
     this.map = this.map;
     this.getPointAttributes();
-
-  }.bind(this));
-
+  });
 };
 
 gmf.LidarPanelController.prototype.getProfileConfig = function() {

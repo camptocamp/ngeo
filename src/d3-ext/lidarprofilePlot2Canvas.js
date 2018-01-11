@@ -1,9 +1,9 @@
 goog.provide('ngeo.lidarProfile.plot2canvas');
 
-/***
-@SITN/OM 2017
-LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
-***/
+/*
+ * @SITN/OM 2017
+ * LiDAR profile from protreeViewer adapated for new d3 API after d3 4.0 API break
+*/
 
 ngeo.lidarProfile.plot2canvas.drawPoints = function(points, material, scale) {
   let i = -1;
