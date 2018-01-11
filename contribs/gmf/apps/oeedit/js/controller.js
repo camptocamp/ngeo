@@ -9,21 +9,21 @@ goog.provide('app.oeedit.Controller');
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG2056');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-
-/** @suppress {extraRequire} */
-goog.require('gmf.objecteditingComponent');
-goog.require('gmf.ObjectEditingManager');
+goog.require('gmf.objectediting.component');
+goog.require('gmf.objectediting.Manager');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG2056');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
+
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -117,7 +117,7 @@ app.oeedit.Controller = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
+   * @type {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
    *     ObjectEditing manager service.
    */
   const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');

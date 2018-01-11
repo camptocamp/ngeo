@@ -2,7 +2,7 @@ goog.provide('gmfapp.objecteditinghub');
 
 goog.require('goog.asserts');
 goog.require('gmf.editing.XSDAttributes');
-goog.require('gmf.ObjectEditingManager');
+goog.require('gmf.objectediting.Manager');
 goog.require('gmf.theme.Themes');
 goog.require('ol.format.WFS');
 
@@ -11,6 +11,7 @@ goog.require('ol.format.WFS');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.editing.XSDAttributes.module.name,
+  gmf.objectediting.Manager.module.name,
   gmf.theme.Themes.module.name,
 ]);
 
@@ -243,11 +244,11 @@ gmfapp.MainController.prototype.runEditor = function() {
   const id = feature.get(property);
 
   const params = {};
-  params[gmf.ObjectEditingManager.Param.GEOM_TYPE] = geomType;
-  params[gmf.ObjectEditingManager.Param.ID] = id;
-  params[gmf.ObjectEditingManager.Param.LAYER] = layer;
-  params[gmf.ObjectEditingManager.Param.THEME] = this.themeName;
-  params[gmf.ObjectEditingManager.Param.PROPERTY] = property;
+  params[gmf.objectediting.Manager.Param.GEOM_TYPE] = geomType;
+  params[gmf.objectediting.Manager.Param.ID] = id;
+  params[gmf.objectediting.Manager.Param.LAYER] = layer;
+  params[gmf.objectediting.Manager.Param.THEME] = this.themeName;
+  params[gmf.objectediting.Manager.Param.PROPERTY] = property;
 
   const url = gmfapp.MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);

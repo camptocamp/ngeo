@@ -1,8 +1,18 @@
-goog.provide('gmf.objecteditinggetwmsfeatureDirective');
+goog.provide('gmf.objectediting.getWMSFeatureComponent');
 
 goog.require('gmf');
-goog.require('gmf.ObjectEditingQuery');
+goog.require('gmf.objectediting.Query');
 goog.require('ol.events');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.objectediting.getWMSFeatureComponent = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
+  gmf.objectediting.Query.module.name,
+]);
+
+gmf.module.requires.push(gmf.objectediting.getWMSFeatureComponent.name);
 
 
 /**
@@ -23,16 +33,16 @@ goog.require('ol.events');
  *     directive is active or not.
  * @htmlAttribute {ol.Collection} gmf-objecteditinggetwmsfeature-features
  *     The collection of features where to add those created by this directive.
- * @htmlAttribute {gmf.ObjectEditingQuery.QueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
+ * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
  * @htmlAttribute {ol.Map} gmf-objecteditinggetwmsfeature-map The map.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
  */
-gmf.objecteditinggetwmsfeatureDirective = function() {
+gmf.objectediting.getWMSFeatureComponent.directive_ = function() {
   return {
-    controller: gmf.ObjecteditinggetwmsfeatureController,
+    controller: 'gmfObjecteditinggetwmsfeatureController',
     scope: {
       'active': '=gmfObjecteditinggetwmsfeatureActive',
       'features': '<gmfObjecteditinggetwmsfeatureFeatures',
@@ -43,14 +53,13 @@ gmf.objecteditinggetwmsfeatureDirective = function() {
   };
 };
 
-gmf.module.directive(
-  'gmfObjecteditinggetwmsfeature',
-  gmf.objecteditinggetwmsfeatureDirective);
+gmf.objectediting.getWMSFeatureComponent.directive('gmfObjecteditinggetwmsfeature',
+  gmf.objectediting.getWMSFeatureComponent.directive_);
 
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {gmf.ObjectEditingQuery} gmfObjectEditingQuery GMF ObjectEditing
+ * @param {gmf.objectediting.Query} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor
  * @private
@@ -58,7 +67,7 @@ gmf.module.directive(
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
-gmf.ObjecteditinggetwmsfeatureController = function($scope,
+gmf.objectediting.getWMSFeatureComponent.Controller_ = function($scope,
   gmfObjectEditingQuery) {
 
   // Scope properties
@@ -81,7 +90,7 @@ gmf.ObjecteditinggetwmsfeatureController = function($scope,
   this.features;
 
   /**
-   * @type {gmf.ObjectEditingQuery.QueryableLayerInfo}
+   * @type {gmfx.ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.layerInfo;
@@ -96,7 +105,7 @@ gmf.ObjecteditinggetwmsfeatureController = function($scope,
   // Injected properties
 
   /**
-   * @type {gmf.ObjectEditingQuery}
+   * @type {gmf.objectediting.Query}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
@@ -108,8 +117,7 @@ gmf.ObjecteditinggetwmsfeatureController = function($scope,
  * @param {boolean} active Active.
  * @private
  */
-gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = function(active) {
-
+gmf.objectediting.getWMSFeatureComponent.Controller_.prototype.handleActiveChange_ = function(active) {
   if (active) {
     ol.events.listen(
       this.map,
@@ -125,7 +133,6 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = functio
       this
     );
   }
-
 };
 
 
@@ -133,10 +140,7 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleActiveChange_ = functio
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
-gmf.ObjecteditinggetwmsfeatureController.prototype.handleMapClick_ = function(
-  evt
-) {
-
+gmf.objectediting.getWMSFeatureComponent.Controller_.prototype.handleMapClick_ = function(evt) {
   this.gmfObjectEditingQuery_.getFeatureInfo(
     this.layerInfo,
     evt.coordinate,
@@ -146,5 +150,7 @@ gmf.ObjecteditinggetwmsfeatureController.prototype.handleMapClick_ = function(
       this.features.push(feature);
     }
   });
-
 };
+
+gmf.objectediting.getWMSFeatureComponent.controller('gmfObjecteditinggetwmsfeatureController',
+  gmf.objectediting.getWMSFeatureComponent.Controller_);

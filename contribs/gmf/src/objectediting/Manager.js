@@ -1,12 +1,8 @@
-goog.provide('gmf.ObjectEditingManager');
+goog.provide('gmf.objectediting.Manager');
 
 goog.require('gmf.editing.EditFeature');
 goog.require('ngeo.statemanager.Location');
 goog.require('ol.Feature');
-
-// FIXME remove lines right under and add me at the module dependencies:
-// - ngeo.statemanager.Location.module.name
-ngeo.module.requires.push(ngeo.statemanager.Location.module.name);
 
 
 /**
@@ -20,7 +16,7 @@ ngeo.module.requires.push(ngeo.statemanager.Location.module.name);
  * @struct
  * @ngInject
  */
-gmf.ObjectEditingManager = function($q, gmfEditFeature, ngeoLocation) {
+gmf.objectediting.Manager = function($q, gmfEditFeature, ngeoLocation) {
 
   /**
    * @type {angular.$q}
@@ -60,21 +56,21 @@ gmf.ObjectEditingManager = function($q, gmfEditFeature, ngeoLocation) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.ObjectEditingManager.prototype.getFeature = function() {
+gmf.objectediting.Manager.prototype.getFeature = function() {
 
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
     const geomType = this.ngeoLocation_.getParam(
-      gmf.ObjectEditingManager.Param.GEOM_TYPE);
+      gmf.objectediting.Manager.Param.GEOM_TYPE);
     const id = this.ngeoLocation_.getParam(
-      gmf.ObjectEditingManager.Param.ID);
+      gmf.objectediting.Manager.Param.ID);
     const layer = this.ngeoLocation_.getParam(
-      gmf.ObjectEditingManager.Param.LAYER);
+      gmf.objectediting.Manager.Param.LAYER);
     const property = this.ngeoLocation_.getParam(
-      gmf.ObjectEditingManager.Param.PROPERTY);
+      gmf.objectediting.Manager.Param.PROPERTY);
     const theme = this.ngeoLocation_.getParam(
-      gmf.ObjectEditingManager.Param.THEME);
+      gmf.objectediting.Manager.Param.THEME);
 
     if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_.getFeaturesWithComparisonFilters(
@@ -99,9 +95,9 @@ gmf.ObjectEditingManager.prototype.getFeature = function() {
  * @return {string|undefined} The geometry type.
  * @export
  */
-gmf.ObjectEditingManager.prototype.getGeomType = function() {
+gmf.objectediting.Manager.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
-    gmf.ObjectEditingManager.Param.GEOM_TYPE);
+    gmf.objectediting.Manager.Param.GEOM_TYPE);
 };
 
 
@@ -109,9 +105,9 @@ gmf.ObjectEditingManager.prototype.getGeomType = function() {
  * @return {number|undefined} The gmf layer node id.
  * @export
  */
-gmf.ObjectEditingManager.prototype.getLayerNodeId = function() {
+gmf.objectediting.Manager.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
-    gmf.ObjectEditingManager.Param.LAYER);
+    gmf.objectediting.Manager.Param.LAYER);
 };
 
 
@@ -126,10 +122,7 @@ gmf.ObjectEditingManager.prototype.getLayerNodeId = function() {
  * @param {Array.<ol.Feature>} features List of features.
  * @private
  */
-gmf.ObjectEditingManager.prototype.handleGetFeatures_ = function(
-  key, value, features
-) {
-
+gmf.objectediting.Manager.prototype.handleGetFeatures_ = function(key, value, features) {
   let feature;
 
   if (features.length) {
@@ -145,14 +138,11 @@ gmf.ObjectEditingManager.prototype.handleGetFeatures_ = function(
 };
 
 
-gmf.module.service('gmfObjectEditingManager', gmf.ObjectEditingManager);
-
-
 /**
  * @enum {string}
  * @export
  */
-gmf.ObjectEditingManager.Param = {
+gmf.objectediting.Manager.Param = {
   /**
    * @type {string}
    * @export
@@ -179,3 +169,14 @@ gmf.ObjectEditingManager.Param = {
    */
   THEME: 'objectediting_theme'
 };
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.objectediting.Manager.module = angular.module('gmfObjectEditingManager', [
+  gmf.editing.EditFeature.module.name,
+  ngeo.statemanager.Location.module.name,
+]);
+gmf.objectediting.Manager.module.service('gmfObjectEditingManager', gmf.objectediting.Manager);
+gmf.module.requires.push(gmf.objectediting.Manager.module.name);
