@@ -19,12 +19,6 @@ ngeoModuleUrlElements.push('src');
  * The default ngeo template base URL, used as-is by the template cache.
  * @type {string}
  */
-ngeo.baseTemplateUrl = window.location.origin + ngeoUrlElements.join('/');
-
-/**
- * The default ngeo template base URL, used as-is by the template cache.
- * @type {string}
- */
 ngeo.baseModuleTemplateUrl = window.location.origin + ngeoModuleUrlElements.join('/');
 
 /**

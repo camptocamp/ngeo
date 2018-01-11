@@ -54,16 +54,10 @@ ngeo.module = angular.module('ngeo', [
 
 
 /**
- * The default template base URL for directive partials, used as-is by the template cache.
- * @type {string}
- */
-ngeo.baseTemplateUrl = 'ngeo';
-
-/**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
-ngeo.baseModuleTemplateUrl = 'ngeomodule';
+ngeo.baseModuleTemplateUrl = 'ngeo';
 
 
 /**

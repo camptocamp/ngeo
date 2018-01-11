@@ -584,14 +584,7 @@ If the template looks too complex, please put it in an extern file and use the
 `templateUrl` attribute to point on it. In that case, the path of the template
 file should follow the following rule:
 
-All directives templates must be stored in the sub `partials/` folder of the
-directive folder:
-- `src/directives/partials` for `ngeo` directives.
-- `contribs/gmf/src/directives/partials` for `gmf` directives.
-
 ### Template URL
-
-First of all the partials should be in the folder `src/directives/partials`.
 
 When we use a template URL it should be overwritten by an attribute.
 
@@ -606,7 +599,7 @@ ngeo.module.value('ngeo<Name>TemplateUrl',
     function(element, attrs) {
       let templateUrl = attrs['ngeo<Name>Templateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/<name>.html';
+          ngeo.baseModuleTemplateUrl + '/<name>.html';
     });
 
 ngeo.<name>Directive = function(ngeo<Name>TemplateUrl) {
@@ -641,7 +634,7 @@ Those generated files are attached to the build of `ngeo` and `gmf` distribs.
 
 For this to work in any case (examples, applications, built or not), just refer
 the `templateUrl` as a relative path to the directive. The definition of the
-variable `ngeo.baseTemplateUrl` and `gmf.baseTemplateUrl` will resolve,
+variable `ngeo.baseModuleTemplateUrl` and `gmf.baseTemplateUrl` will resolve,
 depending on the case, the correct paths.
 
 ## Directive scoping
