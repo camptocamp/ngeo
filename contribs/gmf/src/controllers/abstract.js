@@ -533,6 +533,19 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
 
 /**
+ * @param {Array.<ol.layer.Base>} layers Layers list.
+ * @param {Array.<string>} labels default_basemap list.
+ * @return {ol.layer.Base} layer or null
+ */
+gmf.AbstractController.getLayerByLabels = function(layers, labels) {
+  if (labels && labels.length > 0) {
+    return ol.array.find(layers, layer => layer.get('label') === labels[0]);
+  }
+  return null;
+};
+
+
+/**
  * @param {string} lang Language code.
  * @export
  */
@@ -582,7 +595,6 @@ gmf.AbstractController.prototype.initLanguage = function() {
  */
 gmf.AbstractController.prototype.setDefaultBackground_ = function(theme, use_permalink) {
   this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
-    let default_basemap;
     let layer;
 
     if (use_permalink) {
@@ -590,19 +602,17 @@ gmf.AbstractController.prototype.setDefaultBackground_ = function(theme, use_per
       layer = this.permalink_.getBackgroundLayer(layers);
     }
     if (!layer) {
-      if (this.gmfUser.functionalities) {
-        // get the background from the user settings
-        default_basemap = this.gmfUser.functionalities.default_basemap;
-      } else if (theme) {
+      // get the background from the user settings
+      layer = gmf.AbstractController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
+      if (!layer && theme) {
         // get the background from the theme
-        default_basemap = theme.functionalities.default_basemap;
+        layer = gmf.AbstractController.getLayerByLabels(layers, theme.functionalities.default_basemap);
       }
-      if (default_basemap && default_basemap.length > 0) {
-        layer = ol.array.find(layers, layer => layer.get('label') === default_basemap[0]);
+      if (!layer) {
+        // fallback to the layers list, use the second one because the first is the blank layer.
+        layer = layers[1];
       }
     }
-    // fallback to the layers list, use the second one because the first is the blank layer.
-    layer = layer || layers[1];
     goog.asserts.assert(layer);
 
     this.backgroundLayerMgr_.set(this.map, layer);
