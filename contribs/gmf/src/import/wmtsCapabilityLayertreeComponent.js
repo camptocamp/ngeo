@@ -1,16 +1,26 @@
-goog.provide('gmf.wmscapabilitylayertreenodeComponent');
+goog.provide('gmf.import.wmtsCapabilityLayertreeComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.Popup');
+goog.require('ol');
+
+
+gmf.import.wmtsCapabilityLayertreeComponent =
+  angular.module('gmfWmtscapabilitylayertree', [
+    // todo: add gmf.datasource.ExternalDataSourcesManager
+    ngeo.message.Popup.module.name,
+  ]);
+
+gmf.module.requires.push(gmf.import.wmtsCapabilityLayertreeComponent.name);
 
 
 /**
  * @private
  */
-gmf.WmscapabilitylayertreenodeController = class {
+gmf.import.wmtsCapabilityLayertreeComponent.Controller_ = class {
 
   /**
    * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -20,7 +30,7 @@ gmf.WmscapabilitylayertreenodeController = class {
    * @struct
    * @ngInject
    * @ngdoc controller
-   * @ngname GmfWmscapabilitylayertreenodeController
+   * @ngname GmfWmtscapabilitylayertreeController
    */
   constructor(gmfExternalDataSourcesManager) {
 
@@ -34,15 +44,15 @@ gmf.WmscapabilitylayertreenodeController = class {
     this.capabilities;
 
     /**
-     * WMS Capability Layer object.
-     * @type {!Object}
+     * List of WMTS Capability Layer objects.
+     * @type {!Array.<!Object>}
      * @export
      */
-    this.layer;
+    this.layers;
 
     /**
-     * The original server url that was used to build the WMS GetCapabilities
-     * request.
+     * The original WMTS GetCapabilities url that was used to fetch the
+     * capability layers.
      * @type {string}
      * @export
      */
@@ -59,11 +69,12 @@ gmf.WmscapabilitylayertreenodeController = class {
   }
 
   /**
-   * @param {!Object} layer WMS Capability Layer object
+   * @param {!Object} layer WMTS Capability Layer object
    * @export
    */
   createAndAddDataSource(layer) {
-    this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromWMSCapability(
+    const manager = this.gmfExternalDataSourcesManager_;
+    manager.createAndAddDataSourceFromWMTSCapability(
       layer,
       this.capabilities,
       this.url
@@ -71,7 +82,7 @@ gmf.WmscapabilitylayertreenodeController = class {
   }
 
   /**
-   * @param {!Object} layer WMS Capability Layer object
+   * @param {!Object} layer WMTS Capability Layer object
    * @return {number} Unique id for the Capability Layer.
    * @export
    */
@@ -81,12 +92,12 @@ gmf.WmscapabilitylayertreenodeController = class {
 };
 
 
-gmf.module.component('gmfWmscapabilitylayertreenode', {
+gmf.import.wmtsCapabilityLayertreeComponent.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
-    'layer': '<',
+    'layers': '<',
     'url': '<'
   },
-  controller: gmf.WmscapabilitylayertreenodeController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/wmscapabilitylayertreenode.html`
+  controller: gmf.import.wmtsCapabilityLayertreeComponent.Controller_,
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmtsCapabilityLayertreeComponent.html`
 });

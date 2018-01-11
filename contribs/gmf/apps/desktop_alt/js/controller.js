@@ -10,7 +10,7 @@ goog.require('app');
 goog.require('gmf');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
-goog.require('gmf.importdatasourceComponent');
+goog.require('gmf.import.importdatasourceComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
