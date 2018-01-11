@@ -1,4 +1,4 @@
-goog.provide('gmf.mobileMeasurelengthDirective');
+goog.provide('gmf.mobile.measure.lengthComponent');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
@@ -7,13 +7,18 @@ goog.require('ngeo.interaction.MeasureLengthMobile');
 goog.require('ngeo.interaction.MobileDraw');
 goog.require('ngeo.misc.decorate');
 goog.require('ol.events');
+goog.require('ol.Object');
 goog.require('ol.style.Fill');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+gmf.mobile.measure.lengthComponent = angular.module('', []);
 
-gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
+gmf.module.requires.push(gmf.mobile.measure.lengthComponent.name);
+
+
+gmf.mobile.measure.lengthComponent.value('gmfMobileMeasureLengthTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -22,7 +27,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/mobilemeasurelength.html`;
+      `${gmf.baseModuleTemplateUrl}/mobile/measure/lengthComponent.html`;
   });
 
 
@@ -49,7 +54,7 @@ gmf.module.value('gmfMobileMeasureLengthTemplateUrl',
  * @ngdoc directive
  * @ngname gmfMobileMeasureLength
  */
-gmf.mobileMeasureLengthDirective =
+gmf.mobile.measure.lengthComponent.component_ =
     function(gmfMobileMeasureLengthTemplateUrl) {
       return {
         restrict: 'A',
@@ -66,7 +71,7 @@ gmf.mobileMeasureLengthDirective =
          * @param {angular.Scope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Attributes.
-         * @param {gmf.MobileMeasureLengthController} controller Controller.
+         * @param {gmf.mobile.measure.lengthComponent.Controller_} controller Controller.
          */
         link: (scope, element, attrs, controller) => {
           controller.init();
@@ -75,8 +80,8 @@ gmf.mobileMeasureLengthDirective =
     };
 
 
-gmf.module.directive('gmfMobileMeasurelength',
-  gmf.mobileMeasureLengthDirective);
+gmf.mobile.measure.lengthComponent.directive('gmfMobileMeasurelength',
+  gmf.mobile.measure.lengthComponent.component_);
 
 
 /**
@@ -89,7 +94,7 @@ gmf.module.directive('gmfMobileMeasurelength',
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
  */
-gmf.MobileMeasureLengthController = function($scope, $filter) {
+gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
 
   /**
    * @type {ol.Map}
@@ -229,7 +234,7 @@ gmf.MobileMeasureLengthController = function($scope, $filter) {
 /**
  * Initialise the controller.
  */
-gmf.MobileMeasureLengthController.prototype.init = function() {
+gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
   this.map.addInteraction(this.measure);
 };
 
@@ -237,7 +242,7 @@ gmf.MobileMeasureLengthController.prototype.init = function() {
  * Add current sketch point to line measure
  * @export
  */
-gmf.MobileMeasureLengthController.prototype.addPoint = function() {
+gmf.mobile.measure.lengthComponent.Controller_.prototype.addPoint = function() {
   this.drawInteraction.addToDrawing();
 };
 
@@ -246,7 +251,7 @@ gmf.MobileMeasureLengthController.prototype.addPoint = function() {
  * Clear the sketch feature
  * @export
  */
-gmf.MobileMeasureLengthController.prototype.clear = function() {
+gmf.mobile.measure.lengthComponent.Controller_.prototype.clear = function() {
   this.drawInteraction.clearDrawing();
 };
 
@@ -255,7 +260,7 @@ gmf.MobileMeasureLengthController.prototype.clear = function() {
  * Finish line measure
  * @export
  */
-gmf.MobileMeasureLengthController.prototype.finish = function() {
+gmf.mobile.measure.lengthComponent.Controller_.prototype.finish = function() {
   this.drawInteraction.finishDrawing();
 };
 
@@ -264,10 +269,10 @@ gmf.MobileMeasureLengthController.prototype.finish = function() {
  * Deactivate the directive.
  * @export
  */
-gmf.MobileMeasureLengthController.prototype.deactivate = function() {
+gmf.mobile.measure.lengthComponent.Controller_.prototype.deactivate = function() {
   this.active = false;
 };
 
 
-gmf.module.controller('GmfMobileMeasureLengthController',
-  gmf.MobileMeasureLengthController);
+gmf.mobile.measure.lengthComponent.controller('GmfMobileMeasureLengthController',
+  gmf.mobile.measure.lengthComponent.Controller_);

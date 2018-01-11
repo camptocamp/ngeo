@@ -5,9 +5,9 @@ goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('gmf.displayquerywindowComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileMeasurelengthDirective');
+goog.require('gmf.mobile.measure.lengthComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileMeasurepointDirective');
+goog.require('gmf.mobile.measure.pointComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobileNavDirective');
 /** @suppress {extraRequire} */

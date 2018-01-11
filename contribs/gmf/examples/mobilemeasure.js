@@ -3,9 +3,9 @@ goog.provide('gmfapp.mobilemeasure');
 goog.require('gmf');
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileMeasurelengthDirective');
+goog.require('gmf.mobile.measure.lengthComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileMeasurepointDirective');
+goog.require('gmf.mobile.measure.pointComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
@@ -23,6 +23,8 @@ goog.require('ol.source.OSM');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   ngeo.misc.btnComponent.name,
+  gmf.mobile.measure.lengthComponent.name,
+  gmf.mobile.measure.pointComponent.name,
 ]);
 
 
@@ -68,7 +70,7 @@ gmfapp.MainController = function(gmfPermalink) {
   this.measureLengthActive = false;
 
   /**
-   * @type {Object.<string, gmf.MobileMeasurePointController.LayerConfig>}
+   * @type {Object.<string, gmf.mobile.measure.pointComponent.LayerConfig>}
    * @export
    */
   this.measurePointLayersConfig = {
