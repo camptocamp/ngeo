@@ -472,6 +472,7 @@ ngeo.Querent = class {
           featureCountRequest,
           {
             params,
+            headers: {'Content-Type': 'text/xml; charset=UTF-8'},
             timeout: canceler.promise
           }
         ).then(((response) => {
@@ -510,6 +511,7 @@ ngeo.Querent = class {
             featureRequest,
             {
               params,
+              headers: {'Content-Type': 'text/xml; charset=UTF-8'},
               timeout: canceler.promise
             }
           ).then((response) => {
