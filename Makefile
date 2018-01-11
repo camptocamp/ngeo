@@ -7,7 +7,7 @@ NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
-CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("closure-util").getLibraryPath())' 2> /dev/null)
+CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("@camptocamp/closure-util").getLibraryPath())' 2> /dev/null)
 
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
@@ -861,20 +861,20 @@ $(EXTERNS_JQUERY): github_versions
 
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="node_modules/openlayers/src ../../../../../../openlayers/src" \
-		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../openlayers/build/ol.ext" \
+		--root_with_prefix="node_modules/openlayers/src ../../../../../../../openlayers/src" \
+		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../../../../../openlayers/build/ol.ext" \
 		--output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv .build/node_modules.timestamp
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="src ../../../../../../../src" --output_file=$@
+		--root_with_prefix="src ../../../../../../../../src" --output_file=$@
 
 .build/gmf-deps.js: .build/python-venv \
 		.build/node_modules.timestamp \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES)
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="contribs/gmf/src ../../../../../../../contribs/gmf/src" --output_file=$@
+		--root_with_prefix="contribs/gmf/src ../../../../../../../../contribs/gmf/src" --output_file=$@
 
 # The keys in the template cache begin with "../src/directives/partials". This
 # is done so ngeo.js works for the examples on github.io. If another key

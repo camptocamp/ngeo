@@ -3,7 +3,7 @@
 let path = require('path');
 let url = require('url');
 
-let closure = require('closure-util');
+let closure = require('@camptocamp/closure-util');
 let nomnom = require('nomnom');
 let gaze = require('gaze');
 let exec = require('child_process').exec;
