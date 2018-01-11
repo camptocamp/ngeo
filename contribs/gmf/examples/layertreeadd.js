@@ -2,13 +2,13 @@ goog.provide('gmfapp.layertreeadd');
 
 goog.require('gmf.disclaimer.module');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+goog.require('gmf.layertree.component');
+goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.Themes');
 goog.require('gmf.theme.Manager');
-goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.statemanager.Location');
@@ -20,6 +20,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me other dependencies are in a module
+  gmf.layertree.component.name,
   gmf.theme.Manager.module.name,
   gmf.theme.Themes.module.name,
   ngeo.statemanager.Location.module.name,
@@ -33,7 +34,7 @@ gmfapp.module.value('gmfTreeUrl',
 
 /**
  * @constructor
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
@@ -71,7 +72,7 @@ gmfapp.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, nge
   this.modal = modal === 'true';
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;

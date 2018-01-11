@@ -552,7 +552,7 @@ include the `ngeo-layertree` directive.
  * @return {angular.Directive} The directive Definition Object.
  * @ngInject
  */
-gmf.layertreeComponent = function() {
+gmf.layertree.component.component_ = function() {
   return {
     ...
     template:

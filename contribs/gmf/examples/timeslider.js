@@ -1,13 +1,14 @@
 goog.provide('gmfapp.timeslider');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.TimeSliderDirective');
+goog.require('gmf.layertree.timeSliderComponent');
 goog.require('ngeo.misc.WMSTime');
 
 
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.layertree.timeSliderComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
 

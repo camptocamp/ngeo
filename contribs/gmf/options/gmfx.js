@@ -458,6 +458,17 @@ gmfx.SearchComponentDatasource.prototype.url;
 
 
 /**
+ * @typedef {{
+ *     children: (Object.<string, gmfx.TreeManagerFullState>|undefined),
+ *     isChecked: (boolean|undefined),
+ *     isExpanded: (boolean|undefined),
+ *     isLegendExpanded: (boolean|undefined)
+ * }}
+ */
+gmfx.TreeManagerFullState;
+
+
+/**
  * Availables functionalities.
  * @typedef {{
  *     default_basemap: Array.<string>,

@@ -2,14 +2,14 @@ goog.provide('gmfapp.objectediting');
 
 goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+goog.require('gmf.layertree.component');
+goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
 goog.require('gmf.objecteditingComponent');
 goog.require('gmf.ObjectEditingManager');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
@@ -26,6 +26,7 @@ goog.require('ol.source.Vector');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.layertree.component.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
@@ -35,7 +36,7 @@ gmfapp.module = angular.module('gmfapp', [
  * @param {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
  *     ObjectEditing manager service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -45,7 +46,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
   gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

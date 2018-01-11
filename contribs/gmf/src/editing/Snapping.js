@@ -1,8 +1,8 @@
 goog.provide('gmf.editing.Snapping');
 
 goog.require('gmf');
+goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 goog.require('ngeo.layertree.Controller');
 goog.require('ol');
 goog.require('ol.events');
@@ -28,7 +28,7 @@ goog.require('ol.interaction.Snap');
  * @param {!angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
@@ -69,7 +69,7 @@ gmf.editing.Snapping = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

@@ -10,11 +10,11 @@ goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.filterselectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+goog.require('gmf.layertree.component');
+goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
@@ -33,6 +33,7 @@ goog.require('ol.source.OSM');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
+  gmf.layertree.component.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
@@ -62,7 +63,7 @@ gmfapp.MainController = class {
    * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
    *     data sources manager service.
    * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
-   * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -82,7 +83,7 @@ gmfapp.MainController = class {
     gmfThemes.loadThemes();
 
     /**
-     * @type {gmf.TreeManager}
+     * @type {gmf.layertree.TreeManager}
      * @export
      */
     this.gmfTreeManager = gmfTreeManager;

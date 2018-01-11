@@ -1,10 +1,18 @@
-goog.provide('gmf.TimeSliderDirective');
+goog.provide('gmf.layertree.timeSliderComponent');
 
 goog.require('gmf');
 goog.require('ngeo.misc.WMSTime');
 
-// FIXME add me as module's dependencies:
-// - ngeo.misc.WMSTime.module.name
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.layertree.timeSliderComponent = angular.module('gmfLayertreeTimeSliderComponent', [
+  ngeo.misc.WMSTime.module.name,
+]);
+
+gmf.module.requires.push(gmf.layertree.timeSliderComponent.name);
+
 
 /**
  * Provide a directive to select a single date or a range of dates with a slider
@@ -28,7 +36,7 @@ goog.require('ngeo.misc.WMSTime');
  * @ngdoc directive
  * @ngname gmfTimeSlider
  */
-gmf.timeSliderDirective = function($timeout, $filter) {
+gmf.layertree.timeSliderComponent.directive_ = function($timeout, $filter) {
   return {
     scope: {
       onDateSelected: '&gmfTimeSliderOnDateSelected',
@@ -78,6 +86,10 @@ gmf.timeSliderDirective = function($timeout, $filter) {
 };
 
 
+gmf.layertree.timeSliderComponent.directive('gmfTimeSlider',
+  gmf.layertree.timeSliderComponent.directive_);
+
+
 /**
  * TimeSliderController - directive controller
  * @param {!angular.Scope} $scope Angular scope.
@@ -88,7 +100,7 @@ gmf.timeSliderDirective = function($timeout, $filter) {
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-gmf.TimeSliderController = function($scope, ngeoWMSTime) {
+gmf.layertree.timeSliderComponent.Controller_ = function($scope, ngeoWMSTime) {
 
   /**
    * @type {ngeo.misc.WMSTime}
@@ -161,7 +173,7 @@ gmf.TimeSliderController = function($scope, ngeoWMSTime) {
 /**
  * Initialise the controller.
  */
-gmf.TimeSliderController.prototype.init = function() {
+gmf.layertree.timeSliderComponent.Controller_.prototype.init = function() {
   this.timeValueList = this.getTimeValueList_();
 
   // Fetch the initial options for the component
@@ -184,7 +196,7 @@ gmf.TimeSliderController.prototype.init = function() {
  * @private
  * @return {Array<number>}  - List of timestamp representing possible values
  */
-gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
+gmf.layertree.timeSliderComponent.Controller_.prototype.getTimeValueList_ = function() {
   const wmsTime = this.time;
   let timeValueList = null;
   const minDate = new Date(this.minValue);
@@ -231,7 +243,7 @@ gmf.TimeSliderController.prototype.getTimeValueList_ = function() {
  * @return {number} the closest available datetime (in ms format) from the timestamp
  * @private
  */
-gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
+gmf.layertree.timeSliderComponent.Controller_.prototype.getClosestValue_ = function(timestamp) {
   if (timestamp <= this.minValue) {
     return this.minValue;
   }
@@ -294,5 +306,5 @@ gmf.TimeSliderController.prototype.getClosestValue_ = function(timestamp) {
   }
 };
 
-gmf.module.controller('gmfTimeSliderController', gmf.TimeSliderController);
-gmf.module.directive('gmfTimeSlider', gmf.timeSliderDirective);
+gmf.layertree.timeSliderComponent.controller('gmfTimeSliderController',
+  gmf.layertree.timeSliderComponent.Controller_);

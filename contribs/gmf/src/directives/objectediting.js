@@ -1,10 +1,12 @@
 goog.provide('gmf.objecteditingComponent');
 
 goog.require('gmf');
+goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.objecteditingtoolsDirective');
 goog.require('gmf.editing.EditFeature');
 goog.require('gmf.ObjectEditingQuery');
+goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('ngeo.geom');
 /** @suppress {extraRequire} */
 goog.require('ngeo.jstsExports');
@@ -103,7 +105,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {!gmf.ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {!gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {!gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
 goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -236,7 +238,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {!gmf.TreeManager}
+   * @type {!gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -913,7 +915,7 @@ gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Set editable WMS layer for refresh purpose
   if (node.id === this.layerNodeId) {
-    const layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
+    const layer = gmf.layertree.SyncLayertreeMap.getLayer(treeCtrl);
     goog.asserts.assert(
       layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
     this.editableWMSLayer_ = layer;

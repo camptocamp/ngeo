@@ -6,7 +6,7 @@ goog.require('gmf.editing.EditFeature');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.Snapping');
 goog.require('gmf.editing.XSDAttributes');
-goog.require('gmf.SyncLayertreeMap');
+goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
@@ -467,7 +467,7 @@ gmf.editing.editFeatureComponent.Controller_.prototype.$onInit = function() {
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
   // (1.1) Set editable WMS layer
-  const layer = gmf.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
+  const layer = gmf.layertree.SyncLayertreeMap.getLayer(this.editableTreeCtrl);
   goog.asserts.assert(
     layer instanceof ol.layer.Image || layer instanceof ol.layer.Tile);
   this.editableWMSLayer_ = layer;
