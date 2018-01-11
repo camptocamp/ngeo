@@ -1,0 +1,40 @@
+@lidar-profile-height: 35rem;
+.gmf-lidar-profile-container {
+  position: relative;
+  overflow: hidden;
+  @profile-legend-width: 15rem;
+  padding: @app-margin;
+  border-top: solid 1px black;
+  background-color: white;
+  height: @lidar-profile-height;
+  display: flex;
+
+  .ngeo-lidar-profile {
+    width: ~"calc(100% - @{profile-legend-width})";
+    background-color: #f5f5f5;
+  }
+
+  .gmf-lidar-profile-legend {
+    list-style-type: none;
+    width: @profile-legend-width;
+    padding: @app-margin;
+  }
+
+  .close {
+    height: 1rem;
+  }
+
+}
+
+#lodInfo {
+  max-height: 90px;
+  overflow-y: auto;
+}
+
+.gmf_lidar_profile_automatic_width {
+  color: gray;
+}
+
+.gmf-lidar-profile-chart-active main {
+  height: calc(~'100%' - @lidar-profile-height);
+}

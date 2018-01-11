@@ -1,0 +1,58 @@
+<div ng-show="$ctrl.ready"
+     gmf-drawprofileline
+     gmf-drawprofileline-active="$ctrl.active"
+     gmf-drawprofileline-map="::$ctrl.map"
+     gmf-drawprofileline-line="$ctrl.line"
+     gmf-drawprofileline-attributes-options="$ctrl.attributes_options">
+   <p>
+    <button class="btn btn-default"
+      ngeo-btn ng-model="ctrl.interaction.active"
+      translate> Draw profile line
+    </button>
+  </p>
+  <p>
+    <em translate ng-if="ctrl.interaction.active" class="text-muted small">
+      Draw a line on the map to display the corresponding elevation profile.
+      Use double-click to finish the drawing.
+    </em>
+  </p>
+  <div>
+    <button class="btn btn-default" ng-click="$ctrl.csvExport()">
+      CSV export
+    </button>
+    <button class="btn btn-default" ng-click="$ctrl.pngExport()">
+      PNG export
+    </button>
+  </div>
+  <div>
+  <hr>
+    Material:
+  <select
+    ng-options="option.name for option in $ctrl.pointAttributes.availableOptions"
+    ng-model="$ctrl.pointAttributes.selectedOption"
+    ng-change="$ctrl.setDefaultAttribute($ctrl.pointAttributes.selectedOption.value)">
+  </select>
+  </div>
+  <hr>
+  <div>
+    <span>Automatic Width:</span>
+    <input type="checkbox" ng-model="$ctrl.autoWidth" ng-change="$ctrl.setAutoWidth($ctrl.autoWidth)" checked>
+    <br><br>
+    </input>
+    <div ng-class="[{gmf_lidar_profile_automatic_width:$ctrl.autoWidth}]">
+      <span>Manual Width:</span>
+      <input ng-disabled="$ctrl.autoWidth" type="number" pattern="^(0|[1-9][0-9]*)$" min=1 max=100 step=1 ng-model="$ctrl.profilWidth" ng-value="$ctrl.getWidth()" ng-change="$ctrl.setWidth($ctrl.profilWidth)"></input>
+      [m]
+    </div>
+  </div>
+  <hr>
+  Classes:
+  <br></br>
+  <div ng-repeat="(key, classification) in ::$ctrl.getClassification()">
+    <input ng-true-value="1" ng-false-value="0" ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible" type="checkbox">
+    <span>{{classification.name}}</span>
+  </div>
+</div>
+<div ng-hide="$ctrl.ready">
+ <p>Initialisation en cours, merci de patienter...</p>
+</div>

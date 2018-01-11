@@ -1,0 +1,32 @@
+<div
+  class="gmf-lidar-profile-container panel"
+  ng-show="$ctrl.active">
+  <div class="ngeo-lidar-profile"
+      ngeo-lidar-profile="::ctrl.profileData"
+       ngeo-lidar-profile-options="::ctrl.profileOptions"
+       ngeo-lidar-profile-pois="::ctrl.profilePoisData"
+       ngeo-lidar-profile-highlight="ctrl.profileHighlight">
+    <canvas id="profileCanvas"></canvas>
+    <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1;"></svg>
+  </div>
+  <div class="gmf-lidar-profile-legend">
+  <button class="btn btn-default"
+    onclick="ngeo.lidarProfile.loader.getProfileByLOD(0, true,0)"
+    data-toggle="tooltip" data-placement="left" data-original-title="{{'Reset'|translate}}">
+    <span class="fa fa-refresh"></span>
+  </button>
+  <button class="btn btn-default"
+    ngeo-btn ng-model="ctrl.lidarProfileMeasureActive" onclick="ngeo.lidarProfile.measure.setMeasureActive(this)"
+    translate> Measure
+  </button>
+  <hr>
+  <div id="widthInfo"></div>
+  <div id="lodInfo"></div>
+  <hr>
+  <div id="profileInfo"></div>
+  </div>
+  <div
+    class="close"
+    ng-click="$ctrl.line = null">&times;
+  </div>
+</div>
