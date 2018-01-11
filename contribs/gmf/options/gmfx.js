@@ -106,6 +106,143 @@ gmfx.GridSource.prototype.source;
  */
 gmfx.GridMergeTabs;
 
+/**
+ * The object containing all points in profile
+ * @typedef {{
+ * distance:(Array.<number>|undefined),
+ * altitude: (Array.<number>|undefined),
+ * color_packed: (Array.<Array<number>>|undefined),
+ * intensity: (Array.<number>|undefined),
+ * classification: (Array.<number>|undefined),
+ * coords: (Array.<Array<number>>|undefined)
+ * }}
+ */
+gmfx.LidarProfilePoints;
+
+/**
+ * Profile point after parsing of the binary array returned by Pytree
+ * @typedef {{
+ * distance: (number|undefined),
+ * altitude: (number|undefined),
+ * color_packed: Array<(number|undefined)>,
+ * coords: Array<(number|undefined)>,
+ * intensity: (number|undefined),
+ * classification: (number|undefined),
+ * }}
+ */
+gmfx.lidarPoint;
+
+/**
+ * Profile measure
+ * @typedef {{
+ * pStart: {
+ * distance: (number|undefined),
+ * altitude: (number|undefined),
+ * color_packed: Array<(number|undefined)>,
+ * coords: Array<(number|undefined)>,
+ * intensity: (number|undefined),
+ * classification: (number|undefined),
+ * set: (boolean|undefined)
+ * },
+ * pEnd: {
+ * distance: (number|undefined),
+ * altitude: (number|undefined),
+ * color_packed: Array<(number|undefined)>,
+ * coords: Array<(number|undefined)>,
+ * intensity: (number|undefined),
+ * classification: (number|undefined),
+ * set: (boolean|undefined)
+ * }
+ * }}
+ */
+gmfx.lidarMeasure;
+
+/**
+ * The lidar point attribute: describes the point binary property, material, visibility, ...
+ * @typedef {{
+ *   bytes: (string|undefined),
+ *   elements: (number|undefined),
+ *   name: (string|undefined),
+ *   value: (string|undefined),
+ *   visible: (number|undefined)
+ * }}
+ */
+gmfx.lidarPointAttribute;
+
+/**
+ * The lidar point attribute list width default option
+ * @typedef {{
+ *   availableOptions: (Array.<gmfx.lidarPointAttribute>|undefined),
+ *   selectedOption: (gmfx.lidarPointAttribute|undefined)
+ * }}
+ */
+gmfx.lidarPointAttributeList;
+
+/**
+* @typedef {{
+*  color: (string|undefined),
+*  name: (string|undefined),
+*  value: (string|undefined),
+*  visible: (boolean|undefined)
+*}}
+*/
+gmfx.lidarClassification;
+
+/**
+* @typedef {{
+*   number: gmfx.lidarClassification
+}}
+*/
+gmfx.lidarClassificationObjects;
+
+/**
+ * The lidar point classification: describes the point binary property, material, visibility, ...
+ * @typedef {{
+ *   color: (Array.<number>|undefined),
+ *   name: (string|undefined),
+ *   value: (string|undefined),
+ *   visible: (number|undefined)
+ * }}
+ */
+gmfx.lidarPointClassification;
+
+
+// /**
+//  * The object containing all points in profile
+//  * @typedef {{
+//  * scaleX: (Object|undefined),
+//  * currentScaleY: (Object|undefined),
+//  * previousDomainX: (Array.<number>|undefined),
+//  * previousDomainY: (Array.<number>|undefined),
+//  * currentZoom: (number|undefined),
+//  * distanceOffset: (number|undefined),
+//  * margin: {
+//  *  left: (number|undefined),
+//  *  top: (number|undefined),
+//  *  right: (number|undefined),
+//  *  bottom: (number|undefined)
+//  * },
+//  * tolerance: (number|undefined),
+//  * configLoaded: (boolean),
+//  * pointAttributes: (gmfx.lidarPointAttributeList),
+//  * classification: Object,
+//  * profilWidth: (number|undefined),
+//  * autoWidth: (boolean|undefined),
+//  * minLOD: (number),
+//  * initialLOD: (number|undefined),
+//  * pointSize: (number|undefined),
+//  * maxLevels: (Object|undefined),
+//  * maxPoints: (number|undefined),
+//  * defaultColor: (string|undefined),
+//  * pointClouds: (Object|undefined),
+//  * pointAttributesRaw: (gmfx.lidarPointAttributeList),
+//  * defaultAttribute: (gmfx.lidarPointAttribute),
+//  * defaultPointAttribute: (string|undefined),
+//  * debug: (boolean|undefined),
+//  * pytreeLinestring: (string|undefined)
+//  * }}
+//  */
+// gmfx.LidarProfileConfig;
 
 /**
  * Projection object for the MousePositionDirective. Define a label and a filter
@@ -785,7 +922,7 @@ cgxp.tools.openInfoWindow;
  * @param {string=} opt_height CSS height.
  * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
-gmfx.openPopup_
+gmfx.openPopup_;
 
 
 /**
