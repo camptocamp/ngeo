@@ -33,7 +33,7 @@ gmf.EnumerateAttribute = class {
     this.baseUrl_ = gmfLayersUrl;
 
     /**
-     * @type {Object.<number, !angular.$q.Promise>}
+     * @type {Object.<string, !angular.$q.Promise>}
      * @private
      */
     this.promises_ = {};
@@ -45,14 +45,14 @@ gmf.EnumerateAttribute = class {
    * @return {angular.$q.Promise} Promise.
    */
   getAttributeValues(dataSource, attribute) {
-    const id = dataSource.id;
+    const promiseId = `${dataSource.id}_${attribute}`;
     const name = dataSource.name;
-    if (!this.promises_[id]) {
+    if (!this.promises_[promiseId]) {
       const url = `${this.baseUrl_}/${name}/values/${attribute}`;
-      this.promises_[id] = this.http_.get(url).then(
+      this.promises_[promiseId] = this.http_.get(url).then(
         this.handleGetAttributeValues_.bind(this));
     }
-    return this.promises_[id];
+    return this.promises_[promiseId];
   }
 
   /**
