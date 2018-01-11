@@ -1,78 +1,51 @@
 goog.provide('ngeo.lidarProfile.utils');
 
-ngeo.lidarProfile.utils.getLinestring = function() {
-  const linestringStr = ngeo.lidarProfile.options.pytreeLinestring.replace(/{/g, '').replace(/}/g, '').split(',');
-  const linestring = [];
-
-  for (let j = 0; j  < linestringStr.length; j++) {
-    linestring.push([parseFloat(linestringStr[j]), parseFloat(linestringStr[j + 1])]);
-    j += 1;
-  }
-
-  const lShifted = [];
-  let distance = 0;
-  for (let k = 0; k < linestring.length - 1; k++) {
-
-    const shiftedX = linestring[k + 1][0] - linestring[k][0];
-    const shiftedY = linestring[k + 1][1] - linestring[k][1];
-    const endDistance = distance + Math.sqrt(Math.pow(shiftedX, 2) + Math.pow(shiftedY, 2));
-
-    lShifted.push({
-      shiftedX: shiftedX,
-      shiftedY: shiftedY,
-      origX: linestring[k][0],
-      origY: linestring[k][1],
-      endX: linestring[k + 1][0],
-      endY: linestring[k + 1][1],
-      coeffA: shiftedY / shiftedX,
-      startD: distance,
-      endD: endDistance
-    });
-
-    distance += Math.sqrt(Math.pow(shiftedX, 2) + Math.pow(shiftedY, 2));
-
-  }
-  return lShifted;
-};
-
-ngeo.lidarProfile.utils.interpolatePoint = function(d, segment) {
-  let xLocal;
-  if (isFinite(segment.coeffA)) {
-    xLocal = Math.round(Math.sqrt(Math.pow(d, 2) / (1 + Math.pow(segment.coeffA, 2))));
-  } else {
-    xLocal = d;
-  }
-  const yLocal = Math.round(segment.coeffA * xLocal);
-  const x = xLocal + segment.origX;
-  const y = yLocal + segment.origY;
-  return [x, y];
-
-};
-
 ngeo.lidarProfile.utils.clipLineByMeasure = function(dLeft, dRight) {
-  const l = ngeo.lidarProfile.utils.getLinestring();
-  const clippedLine = [];
 
-  for (let i = 0; i < l.length; i++) {
+  const clippedLine = new ol.geom.LineString();
+  let mileage_start = 0;
+  let mileage_end = 0;
 
-    if (dLeft <= l[i].endD) {
-      if (dLeft >= l[i].startD) {
-        clippedLine.push(ngeo.lidarProfile.utils.interpolatePoint(dLeft, l[i]));
-      }
-      if (dRight <= l[i].endD) {
-        clippedLine.push(ngeo.lidarProfile.utils.interpolatePoint(dRight, l[i]));
-      } else {
-        clippedLine.push([l[i].endX, l[i].endY]);
-      }
+  const totalLength = ngeo.lidarProfile.options.olLinestring.getLength();
+  const fractionStart = dLeft / totalLength;
+  const fractionEnd = dRight / totalLength;
+
+
+  ngeo.lidarProfile.options.olLinestring.forEachSegment((segStart, segEnd) => {
+
+    const segLine = new ol.geom.LineString([segStart, segEnd]);
+    mileage_end += segLine.getLength();
+    console.log('dLeft', dLeft, 'dRight', dRight, 'mileage_start', mileage_start, 'mileage_end', mileage_end);
+
+    if (dLeft == mileage_start) {
+      clippedLine.appendCoordinate(segStart);
+    } else if (dLeft > mileage_start && dLeft < mileage_end) {
+      clippedLine.appendCoordinate(ngeo.lidarProfile.options.olLinestring.getCoordinateAt(fractionStart));
     }
-  }
+
+    if (mileage_start > dLeft) {
+      clippedLine.appendCoordinate(segStart);
+    }
+
+    if (dRight == mileage_end) {
+      clippedLine.appendCoordinate(segEnd);
+    } else if (dRight > mileage_start && dRight < mileage_end) {
+      clippedLine.appendCoordinate(ngeo.lidarProfile.options.olLinestring.getCoordinateAt(fractionEnd));
+    }
+
+    mileage_start += segLine.getLength();
+
+  });
+
+  console.log('map line length', clippedLine.getLength(), 'd3 domain length', dRight - dLeft);
+
   ngeo.lidarProfile.loader.clearBuffer();
   const feat = new ol.Feature({
-    geometry: new ol.geom.LineString(clippedLine)
+    geometry: clippedLine
   });
   ngeo.lidarProfile.loader.lidarBuffer.getSource().addFeature(feat);
   return {
-    clippedLine: clippedLine,
+    clippedLine: clippedLine.getCoordinates(),
     distanceOffset: dLeft
   };
 };

@@ -60,6 +60,7 @@ ngeo.lidarProfile.loader.getProfileByLOD = function(distanceOffset, resetPlot, m
   } else {
 
     const domain = ngeo.lidarProfile.options.profileConfig.scaleX.domain();
+    console.log('initial clip');
     const clip = ngeo.lidarProfile.utils.clipLineByMeasure(domain[0], domain[1]);
     profileLine = '';
     for (const i in clip.clippedLine) {
@@ -235,9 +236,8 @@ ngeo.lidarProfile.loader.processBuffer = function(options, profile, iter, distan
         aoffset = aoffset + attribute.bytes;
       }
     }
-    const initialProfile = ngeo.lidarProfile.utils.getLinestring();
-    const lastSegment = initialProfile[initialProfile.length - 1];
-    const rangeX = [0, lastSegment.endD];
+
+    const rangeX = [0, ngeo.lidarProfile.options.olLinestring.getLength()];
     // let rangeY = [ngeo.lidarProfile.plot2canvas.arrayMin(points.altitude), ngeo.lidarProfile.plot2canvas.arrayMax(points.altitude)];
     let rangeY = [jHeader.boundingBox.lz, jHeader.boundingBox.uz];
 
@@ -269,6 +269,8 @@ ngeo.lidarProfile.loader.updateData = function() {
   const scaleY = ngeo.lidarProfile.options.profileConfig.scaleY;
   const domainX = scaleX.domain();
   const domainY = scaleY.domain();
+  console.log('updateData clip', domainX[0], domainX[1]);
+
   const clip = ngeo.lidarProfile.utils.clipLineByMeasure(domainX[0], domainX[1]);
   const span = domainX[1] - domainX[0];
   const maxLODWidth = ngeo.lidarProfile.utils.getNiceLOD(span);
