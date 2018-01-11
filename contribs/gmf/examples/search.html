@@ -163,7 +163,8 @@
         gmf-search-colorchooser="true"
         gmf-search-placeholder="Search for « Laus » for example…"
         gmf-search-clearbutton="true"
-        gmf-search-on-init="ctrl.searchIsReady()">
+        gmf-search-on-init="ctrl.searchIsReady()"
+        gmf-search-delay="50">
       </gmf-search>
       <p id="desc">This example shows how to use the <code>gmf-search</code> directive, which
       is based on Twitter's <code>typeahead</code> component.</p>
@@ -192,6 +193,7 @@
       var gmfModule = angular.module('gmf');
       gmfModule.constant('defaultTheme', 'Demo');
       gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+      gmfModule.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
     </script>
   </body>
 </html>

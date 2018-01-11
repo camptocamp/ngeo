@@ -66,6 +66,12 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
   /**
+   * @type {number}
+   * @export
+   */
+  this.searchDelay = 500;
+
+  /**
    * @type {boolean}
    * @export
    */

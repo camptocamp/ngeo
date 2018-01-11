@@ -59,6 +59,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
+ *        gmf-search-delay="mainCtrl.searchDelay"
  *        gmf-search-clearbutton="true">
  *      </gmf-search>
  *      <script>
@@ -81,7 +82,8 @@ gmf.module.value('gmfSearchTemplateUrl',
  *        gmf-search-styles="ctrl.searchStyles"
  *        gmf-search-datasources="ctrl.searchDatasources"
  *        gmf-search-coordinatesprojections="ctrl.searchCoordinatesProjections"
- *        gmf-search-clearbutton="true">
+ *        gmf-search-clearbutton="true"
+ *        gmf-search-delay="mainCtrl.searchDelay"
  *        gmf-search-colorchooser="true">
  *      </gmf-search>
  *      <script>
@@ -110,6 +112,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      defined in ol3). If not provided, only the map's view projection
  *      format will be supported.
  * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
+ * @htmlAttribute {boolean} gmf-search-delay The bloodhound request delay.
  * @htmlAttribute {boolean} gmf-search-colorchooser Whether to let the user
  *      change the style of the feature on the map. Default is false.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} gmf-search-listeners
@@ -138,6 +141,7 @@ gmf.searchDirective = function(gmfSearchTemplateUrl) {
       'coordinatesProjections': '=?gmfSearchCoordinatesprojections',
       'additionalListeners': '=gmfSearchListeners',
       'maxZoom': '<gmfSearchMaxzoom',
+      'delay': '<gmfSearchDelay',
       'onInitCallback': '&?gmfSearchOnInit'
     },
     controller: 'GmfSearchController as ctrl',
@@ -297,6 +301,12 @@ gmf.SearchController = function($scope, $compile, $timeout, $injector, gettextCa
    * @export
    */
   this.placeholder;
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.delay = parseInt(this.scope_['delay'], 10) || 50;
 
   /**
    * The maximum zoom we will zoom on result.
@@ -635,7 +645,7 @@ gmf.SearchController.prototype.createAndInitBloodhound_ = function(config,
 gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
   const gettextCatalog = this.gettextCatalog_;
   return {
-    rateLimitWait: 50,
+    rateLimitWait: this.delay,
     prepare(query, settings) {
       const url = settings.url;
       const lang = gettextCatalog.currentLanguage;
