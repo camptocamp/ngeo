@@ -24,3 +24,4 @@ globals:
     inject: false
     jsts: false
     moment: false
+    DateFormatter: false

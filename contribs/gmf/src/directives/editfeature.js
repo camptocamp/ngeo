@@ -563,10 +563,37 @@ gmf.EditfeatureController.prototype.$onInit = function() {
  * @export
  */
 gmf.EditfeatureController.prototype.save = function() {
-  const feature = this.feature;
+  goog.asserts.assert(this.attributes);
+
+  const feature = this.feature.clone();
+  feature.setId(this.feature.getId());
   const id = this.featureId;
 
   this.pending = true;
+
+  const dateFormatter = new DateFormatter();
+  for (const attribute of this.attributes) {
+    if (attribute.format) {
+      if (this.feature.get(attribute.name)) {
+        const name = this.feature.get(attribute.name);
+        goog.asserts.assertString(name);
+        const value = dateFormatter.parseDate(name, attribute.format);
+        let jsonFormat = 'Y-m-d\\TH:i:s';
+        if (attribute.type === 'date') {
+          jsonFormat = 'Y-m-d';
+        } else if (attribute.type === 'time') {
+          jsonFormat = 'H:i:s';
+        } else if (attribute.type === 'datetime') {
+          // Time zone correction
+          value.setMinutes(value.getMinutes() + value.getTimezoneOffset());
+        }
+        feature.set(attribute.name, dateFormatter.formatDate(value, jsonFormat));
+      } else {
+        // Shouldn't be set to an empty string
+        feature.set(attribute.name, null);
+      }
+    }
+  }
 
   const promise = id ?
     this.gmfEditFeature_.updateFeature(
@@ -716,12 +743,24 @@ gmf.EditfeatureController.prototype.handleEditFeature_ = function(resp) {
 
 
 /**
- * @param {Array.<ngeox.Attribute>} attributes Attributes.
+ * @param {!Array.<ngeox.Attribute>} attributes Attributes.
  * @private
  */
 gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
   // Set attributes
   this.attributes = attributes;
+  for (const attribute of attributes) {
+    if (attribute.type == 'date') {
+      attribute.format = 'Y-m-d';
+      attribute.mask = '9999-19-39';
+    } else if (attribute.type == 'time') {
+      attribute.format = 'H:i';
+      attribute.mask = '29:59';
+    } else if (attribute.type == 'datetime') {
+      attribute.format = 'Y-m-d H:i';
+      attribute.mask = '9999-19-39 29:59';
+    }
+  }
 
   // Get geom type from attributes and set
   const geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
@@ -738,9 +777,38 @@ gmf.EditfeatureController.prototype.setAttributes_ = function(attributes) {
  * @private
  */
 gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
+  this.feature = null;
   this.timeout_(() => {
+    goog.asserts.assert(this.attributes);
     const feature = evt.element;
     goog.asserts.assertInstanceof(feature, ol.Feature);
+    const dateFormatter = new DateFormatter();
+    for (const attribute of this.attributes) {
+      if (attribute.format) {
+        if (feature.get(attribute.name)) {
+          let value;
+          if (attribute.type === 'datetime') {
+            value = new Date(feature.get(attribute.name));
+            // Time zone correction
+            value.setMinutes(value.getMinutes() - value.getTimezoneOffset());
+          } else {
+            let jsonFormat = '';
+            if (attribute.type === 'date') {
+              jsonFormat = 'Y-m-d';
+            } else if (attribute.type === 'time') {
+              jsonFormat = 'H:i:s';
+            }
+            const name = this.feature.get(attribute.name);
+            goog.asserts.assertString(name);
+            value = dateFormatter.parseDate(name, jsonFormat);
+          }
+          feature.set(attribute.name, dateFormatter.formatDate(value, attribute.format));
+        } else {
+          // Shouldn't be set to an empty string
+          feature.set(attribute.name, null);
+        }
+      }
+    }
     this.feature = feature;
     this.createActive = false;
     if (!feature.getId()) {

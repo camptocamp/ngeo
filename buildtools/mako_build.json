@@ -67,6 +67,8 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       "${_ngeo_folder}externs/jsts.js",
       "${_ngeo_folder}externs/moment.js",
       "${_ngeo_folder}externs/geo-admin-api.js",
+      "${_ngeo_folder}externs/php-date-formatter.js",
+      "${_ngeo_folder}externs/datetimepicker.js",
       ".build/externs/angular-1.6.js",
       ".build/externs/angular-1.6-q_templated.js",
       ".build/externs/angular-1.6-http-promise_templated.js",

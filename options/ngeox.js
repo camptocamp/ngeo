@@ -86,7 +86,21 @@ ngeox.Attribute.prototype.type;
 
 
 /**
- * The options to use when creating a filter uwing the `ngeo.RuleHelper`
+ * The format used in the date, time and datetime type.
+ * @type {string|undefined}
+ */
+ngeox.Attribute.prototype.format;
+
+
+/**
+ * The mask used in the date, time and datetime type.
+ * @type {string|undefined}
+ */
+ngeox.Attribute.prototype.mask;
+
+
+/**
+ * The options to use when creating a filter using the `ngeo.RuleHelper`
  * service.
  *
  * @typedef {{

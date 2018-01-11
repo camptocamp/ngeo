@@ -78,6 +78,10 @@ ngeo.AttributeType = {
   /**
    * @type {string}
    */
+  TIME: 'time',
+  /**
+   * @type {string}
+   */
   GEOMETRY: 'geometry',
   /**
    * @type {string}
