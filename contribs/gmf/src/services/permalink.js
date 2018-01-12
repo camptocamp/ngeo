@@ -411,7 +411,7 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
 
   if (this.gmfThemeManager_) {
     this.rootScope_.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
-      this.setThemeInUrl_();
+      this.setThemeInUrl_(name);
     });
   }
 
@@ -835,10 +835,10 @@ gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
 
 
 /**
+ * @param {string} themeName Theme name.
  * @private
  */
-gmf.Permalink.prototype.setThemeInUrl_ = function() {
-  const themeName = this.gmfThemeManager_ ? this.gmfThemeManager_.getThemeName() : null;
+gmf.Permalink.prototype.setThemeInUrl_ = function(themeName) {
   if (themeName) {
     const pathElements = this.ngeoLocation_.getPath().split('/');
     goog.asserts.assert(pathElements.length > 1);
@@ -920,10 +920,10 @@ gmf.Permalink.prototype.initLayers_ = function() {
   }
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.defaultThemeName();
+    goog.asserts.assert(themeName !== null);
 
     if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
-      // Set theme in stealth mode, we just want to set the theme name, not more.
-      this.gmfThemeManager_.setThemeName(`${themeName}`, true);
+      this.gmfThemeManager_.setThemeName(themeName);
     }
 
     /**
