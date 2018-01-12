@@ -22,6 +22,7 @@ goog.require('ngeo.LayertreeController');
  * @constructor
  * @struct
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.$injector} $injector Angular injector service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
@@ -31,7 +32,7 @@ goog.require('ngeo.LayertreeController');
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
+gmf.TreeManager = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   ngeoNotification, gmfThemes, ngeoStateManager) {
 
   /**
@@ -39,6 +40,12 @@ gmf.TreeManager = function($timeout, gettextCatalog, ngeoLayerHelper,
    * @private
    */
   this.$timeout_ = $timeout;
+
+  /**
+   * @type {angular.$injector}
+   * @private
+   */
+  this.$injector_ = $injector;
 
   /**
    * @type {angularGettext.Catalog}
@@ -194,6 +201,9 @@ gmf.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
   const treeGroupsParam = {};
   treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
+  if (this.$injector_.has('gmfPermalink')) {
+    /** @type {gmf.Permalink} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
+  }
 };
 
 
