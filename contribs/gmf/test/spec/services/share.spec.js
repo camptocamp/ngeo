@@ -1,6 +1,6 @@
-goog.require('gmf.ShareService');
+goog.require('gmf.permalink.ShareService');
 
-describe('gmf.ShareService', () => {
+describe('gmf.permalink.ShareService', () => {
   let $httpBackend;
   const successResponse = {
     short_url: 'http://fake/gmf'

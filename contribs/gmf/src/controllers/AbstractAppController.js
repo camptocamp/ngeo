@@ -107,7 +107,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Permalink service
-   * @type {gmf.Permalink}
+   * @type {gmf.permalink.Permalink}
    * @private
    */
   this.permalink_ = $injector.get('gmfPermalink');

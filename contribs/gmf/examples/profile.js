@@ -1,7 +1,7 @@
 goog.provide('gmfapp.profile');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.Permalink');
+goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.profile.module');
@@ -21,6 +21,7 @@ goog.require('ol.style.Style');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.permalink.Permalink.module.name,
   gmf.map.component.name,
   gmf.profile.module.name,
   ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me

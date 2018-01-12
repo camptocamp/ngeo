@@ -201,7 +201,7 @@ gmf.layertree.TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
   treeGroupsParam[gmf.PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
-    /** @type {gmf.Permalink} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
+    /** @type {gmf.permalink.Permalink} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
   }
 };
 

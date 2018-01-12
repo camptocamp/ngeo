@@ -1,7 +1,7 @@
 goog.provide('gmf.map.component');
 
 goog.require('gmf');
-goog.require('gmf.Permalink');
+goog.require('gmf.permalink.Permalink');
 goog.require('gmf.editing.Snapping');
 goog.require('ngeo.map.directive');
 goog.require('ngeo.map.FeatureOverlayMgr');
@@ -12,6 +12,7 @@ goog.require('ol.Map');
  * @type {!angular.Module}
  */
 gmf.map.component = angular.module('gmfMapComponent', [
+  gmf.permalink.Permalink.module.name,
   gmf.editing.Snapping.module.name,
   ngeo.map.directive.name,
   ngeo.map.FeatureOverlayMgr.module.name,
@@ -57,7 +58,7 @@ gmf.map.component.directive('gmfMap', gmf.map.component.directive_);
 
 /**
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {!gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.editing.Snapping} gmfSnapping The gmf snapping service.
  * @constructor
  * @private
@@ -97,7 +98,7 @@ gmf.map.component.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gm
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!gmf.Permalink}
+   * @type {!gmf.permalink.Permalink}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;

@@ -3,7 +3,7 @@ goog.provide('gmf.layertree.component');
 goog.require('gmf');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
 goog.require('gmf.datasource.ExternalDataSourcesManager');
-goog.require('gmf.Permalink');
+goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.datasourceGroupTreeComponent');
 goog.require('gmf.layertree.SyncLayertreeMap');
@@ -34,6 +34,7 @@ goog.require('ol.source.WMTS');
 gmf.layertree.component = angular.module('gmfLayertreeComponent', [
   gmf.datasource.DataSourceBeingFiltered.module.name,
   gmf.datasource.ExternalDataSourcesManager.module.name,
+  gmf.permalink.Permalink.module.name,
   gmf.layertree.datasourceGroupTreeComponent.name,
   gmf.layertree.SyncLayertreeMap.module.name,
   gmf.layertree.TreeManager.module.name,
@@ -153,7 +154,7 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
  * @param {!gmf.datasource.ExternalDataSourcesManager}
  *     gmfExternalDataSourcesManager The Gmf external data sources manager
  *     service. Used here to fetch the external WMS groups.
- * @param {!gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {!gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
  * @param {!gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {!gmf.layertree.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
@@ -219,7 +220,7 @@ gmf.layertree.component.Controller_ = function($element, $http, $sce, $scope,
   this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
-   * @type {!gmf.Permalink}
+   * @type {!gmf.permalink.Permalink}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
