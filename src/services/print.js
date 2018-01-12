@@ -307,7 +307,8 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     serverType: params['SERVERTYPE'],
     type: 'wms',
     opacity,
-    version: params['VERSION']
+    version: params['VERSION'],
+    useNativeAngle: false
   });
   arr.push(object);
 };
