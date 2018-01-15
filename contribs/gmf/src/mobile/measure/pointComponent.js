@@ -1,4 +1,4 @@
-goog.provide('gmf.mobileMeasurepointDirective');
+goog.provide('gmf.mobile.measure.pointComponent');
 
 goog.require('gmf');
 goog.require('gmf.raster.RasterService');
@@ -15,7 +15,14 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-gmf.module.value('gmfMobileMeasurePointTemplateUrl',
+gmf.mobile.measure.pointComponent = angular.module('', [
+  gmf.raster.RasterService.module.name,
+]);
+
+gmf.module.requires.push(gmf.mobile.measure.pointComponent.name);
+
+
+gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -24,7 +31,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/mobilemeasurepoint.html`;
+      `${gmf.baseModuleTemplateUrl}/mobile/measure/pointComponent.html`;
   });
 
 
@@ -52,7 +59,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurepoint-Coordinatedecimals number
  *     of decimal to display for the coordinate.
- * @htmlAttribute {Array.<gmf.MobileMeasurePointController.LayerConfig>}
+ * @htmlAttribute {Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
@@ -65,7 +72,7 @@ gmf.module.value('gmfMobileMeasurePointTemplateUrl',
  * @ngdoc directive
  * @ngname gmfMobileMeasurePoint
  */
-gmf.mobileMeasurePointDirective =
+gmf.mobile.measure.pointComponent.component_ =
     function(gmfMobileMeasurePointTemplateUrl) {
       return {
         restrict: 'A',
@@ -83,7 +90,7 @@ gmf.mobileMeasurePointDirective =
          * @param {!angular.Scope} scope Scope.
          * @param {!angular.JQLite} element Element.
          * @param {!angular.Attributes} attrs Attributes.
-         * @param {!gmf.MobileMeasurePointController} controller Controller.
+         * @param {!gmf.mobile.measure.pointComponent.Controller_} controller Controller.
          */
         link: (scope, element, attrs, controller) => {
           controller.init();
@@ -92,8 +99,8 @@ gmf.mobileMeasurePointDirective =
     };
 
 
-gmf.module.directive('gmfMobileMeasurepoint',
-  gmf.mobileMeasurePointDirective);
+gmf.mobile.measure.pointComponent.directive('gmfMobileMeasurepoint',
+  gmf.mobile.measure.pointComponent.component_);
 
 
 /**
@@ -108,7 +115,7 @@ gmf.module.directive('gmfMobileMeasurepoint',
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
  */
-gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
+gmf.mobile.measure.pointComponent.Controller_ = function(gettextCatalog, $scope, $filter,
   gmfRaster, ngeoDebounce) {
 
   /**
@@ -161,7 +168,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
-   * @type {!Array.<gmf.MobileMeasurePointController.LayerConfig>}
+   * @type {!Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
    * @private
    */
   this.layersConfig;
@@ -229,7 +236,7 @@ gmf.MobileMeasurePointController = function(gettextCatalog, $scope, $filter,
 /**
  * Initialise the controller.
  */
-gmf.MobileMeasurePointController.prototype.init = function() {
+gmf.mobile.measure.pointComponent.Controller_.prototype.init = function() {
   const layersConfig = this['getLayersConfigFn']();
   goog.asserts.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
@@ -242,7 +249,7 @@ gmf.MobileMeasurePointController.prototype.init = function() {
  * Deactivate the directive.
  * @export
  */
-gmf.MobileMeasurePointController.prototype.deactivate = function() {
+gmf.mobile.measure.pointComponent.Controller_.prototype.deactivate = function() {
   this.active = false;
 };
 
@@ -252,7 +259,7 @@ gmf.MobileMeasurePointController.prototype.deactivate = function() {
  * @return {string} The translated text.
  * @export
  */
-gmf.MobileMeasurePointController.prototype.translate = function(str) {
+gmf.mobile.measure.pointComponent.Controller_.prototype.translate = function(str) {
   return this.gettextCatalog_.getString(str);
 };
 
@@ -264,7 +271,7 @@ gmf.MobileMeasurePointController.prototype.translate = function(str) {
  * - on deactivate, unlisten
  * @private
  */
-gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
+gmf.mobile.measure.pointComponent.Controller_.prototype.handleMeasureActiveChange_ =
     function() {
       if (this.measure.getActive()) {
         const view = this.map.getView();
@@ -287,7 +294,7 @@ gmf.MobileMeasurePointController.prototype.handleMeasureActiveChange_ =
  * the current map center location.
  * @private
  */
-gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
+gmf.mobile.measure.pointComponent.Controller_.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
   goog.asserts.assertArray(center);
   const params = {
@@ -323,8 +330,8 @@ gmf.MobileMeasurePointController.prototype.getMeasure_ = function() {
 };
 
 
-gmf.module.controller('GmfMobileMeasurePointController',
-  gmf.MobileMeasurePointController);
+gmf.mobile.measure.pointComponent.controller('GmfMobileMeasurePointController',
+  gmf.mobile.measure.pointComponent.Controller_);
 
 /**
  * @typedef {{
@@ -333,4 +340,4 @@ gmf.module.controller('GmfMobileMeasurePointController',
  *     unit: (string|undefined)
  * }}
  */
-gmf.MobileMeasurePointController.LayerConfig;
+gmf.mobile.measure.pointComponent.LayerConfig;

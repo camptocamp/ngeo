@@ -35,7 +35,7 @@ app.mobile.Controller = function($scope, $injector) {
   }, $scope, $injector);
 
   /**
-   * @type {Array.<gmf.MobileMeasurePointController.LayerConfig>}
+   * @type {Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
    * @export
    */
   this.elevationLayersConfig = [
