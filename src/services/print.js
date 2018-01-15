@@ -125,6 +125,12 @@ ngeo.Print = function(url, $http, ngeoLayerHelper) {
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.printNativeAngle_ = true;
 };
 
 
@@ -214,6 +220,15 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
+  // (1.) We loop on every layers and if one of them doesn't use native angle,
+  // this set the global value to use for the print (default is true)
+  layers.forEach((layer) => {
+    if (layer.getProperties()['printNativeAngle'] === false) {
+      this.printNativeAngle_ = false;
+    }
+  });
+
+  // (2.) We encode the layers
   layers.forEach((layer) => {
     if (layer.getVisible()) {
       goog.asserts.assert(viewResolution !== undefined);
@@ -308,7 +323,7 @@ ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     type: 'wms',
     opacity,
     version: params['VERSION'],
-    useNativeAngle: false
+    useNativeAngle: this.printNativeAngle_
   });
   arr.push(object);
 };
