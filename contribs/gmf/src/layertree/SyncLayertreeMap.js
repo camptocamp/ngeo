@@ -11,7 +11,7 @@ goog.require('ol.layer.Tile');
 
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
- * GMFThemesGroup ou GMFThemesLeaf as node object.
+ * GMFThemesGroup or a GMFThemesLeaf as node object.
  * This layer is also used to synchronise a state of ngeo.layertree.Controller
  * and its corresponding layer in the map.
  *

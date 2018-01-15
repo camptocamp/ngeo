@@ -233,7 +233,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
   this.gmfThemes_ = $injector.has('gmfThemes') ? $injector.get('gmfThemes') : null;
 
   /**
-   * @type {?gmf.ObjectEditingManager}
+   * @type {?gmf.objectediting.Manager}
    * @private
    */
   this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?

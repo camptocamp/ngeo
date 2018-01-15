@@ -141,6 +141,27 @@ gmfx.MousePositionProjection.prototype.filter;
 
 
 /**
+ * @typedef {{
+ *     ogcServer: (gmfThemes.GmfOgcServer),
+ *     layerNode: (gmfThemes.GmfLayerWMS)
+ * }}
+ */
+gmfx.ObjectEditingQueryableLayerInfo;
+
+
+/**
+ * @type {gmfThemes.GmfOgcServer}
+ */
+gmfx.ObjectEditingQueryableLayerInfo.prototype.ogcServer;
+
+
+/**
+ * @type {gmfThemes.GmfLayerWMS}
+ */
+gmfx.ObjectEditingQueryableLayerInfo.prototype.layerNode;
+
+
+/**
  * Additional configuration options for the object editing tools directive.
  * @typedef {{
  *     regularPolygonRadius: (number|undefined)
@@ -155,7 +176,6 @@ gmfx.ObjectEditingToolsOptions;
  * @type {number|undefined}
  */
 gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
-
 
 
 /**
@@ -455,6 +475,12 @@ gmfx.SearchComponentDatasource.prototype.typeaheadDatasetOptions;
  * @type {string}
  */
 gmfx.SearchComponentDatasource.prototype.url;
+
+
+/**
+ * @typedef {Object.<string, ol.style.Style|Array.<ol.style.Style>>}
+ */
+gmfx.StylesObject;
 
 
 /**

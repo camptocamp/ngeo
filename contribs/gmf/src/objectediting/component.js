@@ -1,13 +1,13 @@
-goog.provide('gmf.objecteditingComponent');
+goog.provide('gmf.objectediting.component');
 
 goog.require('gmf');
-goog.require('gmf.layertree.TreeManager');
-/** @suppress {extraRequire} */
-goog.require('gmf.objecteditingtoolsDirective');
 goog.require('gmf.editing.EditFeature');
-goog.require('gmf.ObjectEditingQuery');
 goog.require('gmf.layertree.SyncLayertreeMap');
-goog.require('ngeo.geom');
+goog.require('gmf.layertree.TreeManager');
+goog.require('gmf.objectediting.geom');
+goog.require('gmf.objectediting.Query');
+/** @suppress {extraRequire} */
+goog.require('gmf.objectediting.toolsComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.jstsExports');
 goog.require('ngeo.map.LayerHelper');
@@ -17,20 +17,39 @@ goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.utils');
+goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.MultiPolygon');
+goog.require('ol.layer.Image');
+goog.require('ol.layer.Tile');
 goog.require('ol.interaction.Modify');
+goog.require('ol.Object');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-// FIXME add requires to the future module dependencies
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.objectediting.component = angular.module('gmfObjectEditingComponent', [
+  gmf.editing.EditFeature.module.name,
+  gmf.layertree.SyncLayertreeMap.module.name,
+  gmf.layertree.TreeManager.module.name,
+  gmf.objectediting.Query.module.name,
+  gmf.objectediting.toolsComponent.name,
+  ngeo.map.LayerHelper.module.name,
+  ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
+]);
+
+gmf.module.requires.push(gmf.objectediting.component.name);
 
 
-gmf.module.value('gmfObjecteditingTemplateUrl',
+gmf.objectediting.component.value('gmfObjecteditingTemplateUrl',
   /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
@@ -39,7 +58,7 @@ gmf.module.value('gmfObjecteditingTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfObjecteditingTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/objectediting.html`;
+      `${gmf.baseModuleTemplateUrl}/objectediting/component.html`;
   }
 );
 
@@ -82,7 +101,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @ngdoc component
  * @ngname gmfObjectediting
  */
-gmf.objecteditingComponent = {
+gmf.objectediting.component.component_ = {
   controller: 'GmfObjecteditingController as oeCtrl',
   bindings: {
     'active': '=gmfObjecteditingActive',
@@ -95,7 +114,7 @@ gmf.objecteditingComponent = {
   templateUrl: gmfObjecteditingTemplateUrl
 };
 
-gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
+gmf.objectediting.component.component('gmfObjectediting', gmf.objectediting.component.component_);
 
 
 /**
@@ -103,7 +122,7 @@ gmf.module.component('gmfObjectediting', gmf.objecteditingComponent);
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {!gmf.ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
+ * @param {!gmf.objectediting.Query} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
  * @param {!gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
@@ -117,7 +136,7 @@ goog.require('ngeo.map.LayerHelper');
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */
-gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
+gmf.objectediting.component.Controller = function($scope, $timeout, gettextCatalog,
   gmfEditFeature, gmfObjectEditingQuery, gmfTreeManager,
   ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
@@ -187,19 +206,19 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {!gmf.ObjectEditingQuery}
+   * @type {!gmf.objectediting.Query}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
   /**
-   * @type {Array.<!gmf.ObjectEditingQuery.QueryableLayerInfo>}
+   * @type {Array.<!gmfx.ObjectEditingQueryableLayerInfo>}
    * @export
    */
   this.queryableLayersInfo;
 
   /**
-   * @type {gmf.ObjectEditingQuery.QueryableLayerInfo}
+   * @type {gmfx.ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.selectedQueryableLayerInfo;
@@ -268,7 +287,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
    * @type {string}
    * @export
    */
-  this.process = gmf.ObjecteditingtoolsController.ProcessType.ADD;
+  this.process = gmf.objectediting.toolsComponent.ProcessType.ADD;
 
   /**
    * @type {?ol.layer.Image|ol.layer.Tile}
@@ -297,25 +316,25 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
   this.geometryChanges_ = [];
 
   /**
-   * @type {!gmf.ObjecteditingController.Styles}
+   * @type {!gmfx.StylesObject}
    * @private
    */
   this.defaultStyles_ = {};
 
   /**
-   * @type {!gmf.ObjecteditingController.Styles}
+   * @type {!gmfx.StylesObject}
    * @private
    */
   this.defaultStylesWoVertice_ = {};
 
   /**
-   * @type {!gmf.ObjecteditingController.Styles}
+   * @type {!gmfx.StylesObject}
    * @private
    */
   this.dirtyStyles_ = {};
 
   /**
-   * @type {!gmf.ObjecteditingController.Styles}
+   * @type {!gmfx.StylesObject}
    * @private
    */
   this.dirtyStylesWoVertice_ = {};
@@ -383,7 +402,7 @@ gmf.ObjecteditingController = function($scope, $timeout, gettextCatalog,
 /**
  * Init the controller
  */
-gmf.ObjecteditingController.prototype.$onInit = function() {
+gmf.objectediting.component.Controller.prototype.$onInit = function() {
   this.gmfObjectEditingQuery_.getQueryableLayersInfo().then(
     this.handleGetQueryableLayersInfo_.bind(this)
   );
@@ -409,8 +428,8 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
   );
 
   const geometry = this.feature.getGeometry();
-  this.state_ = geometry ? gmf.ObjecteditingController.State.UPDATE :
-    gmf.ObjecteditingController.State.INSERT;
+  this.state_ = geometry ? gmf.objectediting.component.Controller.State.UPDATE :
+    gmf.objectediting.component.Controller.State.INSERT;
 
   this.scope_.$watchCollection(
     () => this.geometryChanges_,
@@ -439,7 +458,7 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
 
   this.features_.push(this.feature);
 
-  this.featureHasGeom = !ngeo.geom.isEmpty(geometry);
+  this.featureHasGeom = !gmf.objectediting.geom.isEmpty(geometry);
 
   // Toggle on
   this.initializeInteractions_();
@@ -458,7 +477,7 @@ gmf.ObjecteditingController.prototype.$onInit = function() {
  * Delete the feature after asking for a confirmation.
  * @export
  */
-gmf.ObjecteditingController.prototype.delete = function() {
+gmf.objectediting.component.Controller.prototype.delete = function() {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
     'Do you really want to delete the feature?');
@@ -482,7 +501,7 @@ gmf.ObjecteditingController.prototype.delete = function() {
  * Save the current modifications.
  * @export
  */
-gmf.ObjecteditingController.prototype.save = function() {
+gmf.objectediting.component.Controller.prototype.save = function() {
 
   this.pending = true;
 
@@ -496,17 +515,17 @@ gmf.ObjecteditingController.prototype.save = function() {
   feature.setId(this.feature.getId());
   const geometry = feature.getGeometry();
   if (geometry) {
-    ngeo.geom.toXY(geometry);
+    gmf.objectediting.geom.toXY(geometry);
   }
 
-  if (this.state_ === gmf.ObjecteditingController.State.INSERT) {
+  if (this.state_ === gmf.objectediting.component.Controller.State.INSERT) {
     this.gmfEditFeature_.insertFeatures(
       this.layerNodeId,
       [feature]
     ).then(
       this.handleEditFeature_.bind(this)
     );
-  } else if (this.state_ === gmf.ObjecteditingController.State.UPDATE) {
+  } else if (this.state_ === gmf.objectediting.component.Controller.State.UPDATE) {
     this.gmfEditFeature_.updateFeature(
       this.layerNodeId,
       feature
@@ -521,7 +540,7 @@ gmf.ObjecteditingController.prototype.save = function() {
  * Undo the latest modifications.
  * @export
  */
-gmf.ObjecteditingController.prototype.undo = function() {
+gmf.objectediting.component.Controller.prototype.undo = function() {
 
   if (this.geometryChanges_.length <= 1) {
     return;
@@ -530,7 +549,7 @@ gmf.ObjecteditingController.prototype.undo = function() {
   this.skipGeometryChange_ = true;
 
   this.geometryChanges_.pop();
-  const clone = gmf.ObjecteditingController.cloneGeometry_(
+  const clone = gmf.objectediting.component.Controller.cloneGeometry_(
     this.geometryChanges_[this.geometryChanges_.length - 1]);
 
   this.feature.setGeometry(clone);
@@ -544,8 +563,8 @@ gmf.ObjecteditingController.prototype.undo = function() {
  * @return {boolean} Whether the state is INSERT or not.
  * @export
  */
-gmf.ObjecteditingController.prototype.isStateInsert = function() {
-  return this.state_ === gmf.ObjecteditingController.State.INSERT;
+gmf.objectediting.component.Controller.prototype.isStateInsert = function() {
+  return this.state_ === gmf.objectediting.component.Controller.State.INSERT;
 };
 
 
@@ -557,10 +576,10 @@ gmf.ObjecteditingController.prototype.isStateInsert = function() {
  * @param {angular.$http.Response} resp Ajax response.
  * @private
  */
-gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
+gmf.objectediting.component.Controller.prototype.handleDeleteFeature_ = function(resp) {
   this.feature.setGeometry(null);
   this.resetGeometryChanges_();
-  this.state_ = gmf.ObjecteditingController.State.INSERT;
+  this.state_ = gmf.objectediting.component.Controller.State.INSERT;
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -571,7 +590,7 @@ gmf.ObjecteditingController.prototype.handleDeleteFeature_ = function(resp) {
  * @param {angular.$http.Response} resp Ajax response.
  * @private
  */
-gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
+gmf.objectediting.component.Controller.prototype.handleEditFeature_ = function(resp) {
   // (1) Update the id
   const features = new ol.format.GeoJSON().readFeatures(resp.data);
   if (features.length) {
@@ -581,9 +600,9 @@ gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
   this.resetGeometryChanges_();
   // (3) Update state
   if (this.feature.getGeometry()) {
-    this.state_ = gmf.ObjecteditingController.State.UPDATE;
+    this.state_ = gmf.objectediting.component.Controller.State.UPDATE;
   } else {
-    this.state_ = gmf.ObjecteditingController.State.INSERT;
+    this.state_ = gmf.objectediting.component.Controller.State.INSERT;
   }
   // (4) No longer pending
   this.pending = false;
@@ -596,7 +615,7 @@ gmf.ObjecteditingController.prototype.handleEditFeature_ = function(resp) {
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-gmf.ObjecteditingController.prototype.initializeInteractions_ = function() {
+gmf.objectediting.component.Controller.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeo.misc.decorate.interaction(interaction);
@@ -608,7 +627,7 @@ gmf.ObjecteditingController.prototype.initializeInteractions_ = function() {
  * Register interactions by adding them to the map
  * @private
  */
-gmf.ObjecteditingController.prototype.registerInteractions_ = function() {
+gmf.objectediting.component.Controller.prototype.registerInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
   });
@@ -619,7 +638,7 @@ gmf.ObjecteditingController.prototype.registerInteractions_ = function() {
  * Unregister interactions, i.e. remove them from the map
  * @private
  */
-gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
+gmf.objectediting.component.Controller.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
   });
@@ -631,10 +650,10 @@ gmf.ObjecteditingController.prototype.unregisterInteractions_ = function() {
  * @param {boolean} active Whether to activate this component or not.
  * @private
  */
-gmf.ObjecteditingController.prototype.toggle_ = function(active) {
+gmf.objectediting.component.Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = `${gmf.ObjecteditingController.NAMESPACE_}-${ol.getUid(this)}`;
+  const uid = `${gmf.objectediting.component.Controller.NAMESPACE_}-${ol.getUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -707,8 +726,8 @@ gmf.ObjecteditingController.prototype.toggle_ = function(active) {
  * Undo all current changes.
  * @private
  */
-gmf.ObjecteditingController.prototype.undoAllChanges_ = function() {
-  const clone = gmf.ObjecteditingController.cloneGeometry_(
+gmf.objectediting.component.Controller.prototype.undoAllChanges_ = function() {
+  const clone = gmf.objectediting.component.Controller.cloneGeometry_(
     this.geometryChanges_[0]);
   this.feature.setGeometry(clone);
 
@@ -724,13 +743,13 @@ gmf.ObjecteditingController.prototype.undoAllChanges_ = function() {
  * as the first entry. One entry means that there's no changes.
  * @private
  */
-gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
+gmf.objectediting.component.Controller.prototype.resetGeometryChanges_ = function() {
   if (this.geometryChanges_.length > 1) {
     this.geometryChanges_.length = 0;
   }
   if (this.geometryChanges_.length === 0) {
     const geometry = this.feature.getGeometry();
-    const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+    const clone = gmf.objectediting.component.Controller.cloneGeometry_(geometry);
     this.geometryChanges_.push(clone);
   }
 };
@@ -746,7 +765,7 @@ gmf.ObjecteditingController.prototype.resetGeometryChanges_ = function() {
  * @param {ol.interaction.Modify.Event} evt Event.
  * @private
  */
-gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = function(
+gmf.objectediting.component.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
   evt
 ) {
   let geometry = this.feature.getGeometry();
@@ -760,7 +779,7 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
     this.skipGeometryChange_ = false;
   }
 
-  const clone = gmf.ObjecteditingController.cloneGeometry_(geometry);
+  const clone = gmf.objectediting.component.Controller.cloneGeometry_(geometry);
   goog.asserts.assert(clone);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
@@ -768,13 +787,13 @@ gmf.ObjecteditingController.prototype.handleModifyInteractionModifyEnd_ = functi
 
 
 /**
- * @param {gmf.ObjecteditingController.Styles} styles Hash of style.
+ * @param {gmfx.StylesObject} styles Hash of style.
  * @param {ol.Color} color Color.
  * @param {boolean=} opt_incVertice Whether to include vertice or not. Defaults
  *     to `true`.
  * @private
  */
-gmf.ObjecteditingController.prototype.initializeStyles_ = function(
+gmf.objectediting.component.Controller.prototype.initializeStyles_ = function(
   styles, color, opt_incVertice
 ) {
 
@@ -869,7 +888,7 @@ gmf.ObjecteditingController.prototype.initializeStyles_ = function(
  *
  * @private
  */
-gmf.ObjecteditingController.prototype.setFeatureStyle_ = function() {
+gmf.objectediting.component.Controller.prototype.setFeatureStyle_ = function() {
   const geometry = this.feature.getGeometry();
   if (geometry) {
     const geomType = geometry.getType();
@@ -904,7 +923,7 @@ gmf.ObjecteditingController.prototype.setFeatureStyle_ = function() {
  * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
  * @private
  */
-gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
+gmf.objectediting.component.Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
@@ -932,7 +951,7 @@ gmf.ObjecteditingController.prototype.registerTreeCtrl_ = function(treeCtrl) {
  *
  * @private
  */
-gmf.ObjecteditingController.prototype.unregisterAllTreeCtrl_ = function() {
+gmf.objectediting.component.Controller.prototype.unregisterAllTreeCtrl_ = function() {
   this.editableWMSLayer_ = null;
 };
 
@@ -941,7 +960,7 @@ gmf.ObjecteditingController.prototype.unregisterAllTreeCtrl_ = function() {
  * Refresh the WMS layer, if set.
  * @private
  */
-gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
+gmf.objectediting.component.Controller.prototype.refreshWMSLayer_ = function() {
   if (this.editableWMSLayer_) {
     this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
   }
@@ -955,7 +974,7 @@ gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
  * @return {string} Message
  * @private
  */
-gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
+gmf.objectediting.component.Controller.prototype.handleWindowBeforeUnload_ = function(e) {
   const gettextCatalog = this.gettextCatalog_;
   if (this.dirty) {
     const msg = gettextCatalog.getString('There are unsaved changes.');
@@ -974,7 +993,7 @@ gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
+gmf.objectediting.component.Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
   const sketchFeature = /** @type {ol.Feature} */ (evt.element);
   const sketchGeom = /** @type {ol.geom.Geometry} */ (
     sketchFeature.getGeometry());
@@ -986,7 +1005,7 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
     const jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
     let jstsProcessedGeom;
 
-    if (this.process === gmf.ObjecteditingtoolsController.ProcessType.ADD) {
+    if (this.process === gmf.objectediting.toolsComponent.ProcessType.ADD) {
       jstsProcessedGeom = jstsGeom.union(jstsSketchGeom);
     } else {
       if (jstsGeom.intersects(jstsSketchGeom)) {
@@ -1000,7 +1019,7 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
       this.feature.setGeometry(multiGeom.clone());
     }
 
-  } else if (this.process === gmf.ObjecteditingtoolsController.ProcessType.ADD) {
+  } else if (this.process === gmf.objectediting.toolsComponent.ProcessType.ADD) {
     this.feature.setGeometry(ngeo.utils.toMulti(sketchGeom.clone()));
   }
 
@@ -1019,11 +1038,10 @@ gmf.ObjecteditingController.prototype.handleSketchFeaturesAdd_ = function(evt) {
  *
  * @private
  */
-gmf.ObjecteditingController.prototype.handleFeatureGeometryChange_ = function() {
-
+gmf.objectediting.component.Controller.prototype.handleFeatureGeometryChange_ = function() {
   const geom = this.feature.getGeometry();
   this.timeout_(() => {
-    this.featureHasGeom = !ngeo.geom.isEmpty(geom);
+    this.featureHasGeom = !gmf.objectediting.geom.isEmpty(geom);
   });
 
   if (this.skipGeometryChange_) {
@@ -1045,13 +1063,11 @@ gmf.ObjecteditingController.prototype.handleFeatureGeometryChange_ = function() 
 
 
 /**
- * @param {Array.<gmf.ObjectEditingQuery.QueryableLayerInfo>} layersInfo List
+ * @param {Array.<gmfx.ObjectEditingQueryableLayerInfo>} layersInfo List
  *     of queryable layers information, which contains the node and ogcServer.
  * @private
  */
-gmf.ObjecteditingController.prototype.handleGetQueryableLayersInfo_ = function(
-  layersInfo
-) {
+gmf.objectediting.component.Controller.prototype.handleGetQueryableLayersInfo_ = function(layersInfo) {
   this.queryableLayersInfo = layersInfo;
   if (this.queryableLayersInfo.length) {
     this.selectedQueryableLayerInfo = this.queryableLayersInfo[0];
@@ -1062,7 +1078,7 @@ gmf.ObjecteditingController.prototype.handleGetQueryableLayersInfo_ = function(
 /**
  * @private
  */
-gmf.ObjecteditingController.prototype.handleDestroy_ = function() {
+gmf.objectediting.component.Controller.prototype.handleDestroy_ = function() {
   this.features_.clear();
   this.toggle_(false);
   this.unregisterInteractions_();
@@ -1081,7 +1097,7 @@ gmf.ObjecteditingController.prototype.handleDestroy_ = function() {
  * @return {?ol.geom.Geometry} A geometry clone or null value.
  * @private
  */
-gmf.ObjecteditingController.cloneGeometry_ = function(geometry) {
+gmf.objectediting.component.Controller.cloneGeometry_ = function(geometry) {
   let clone = null;
   if (geometry) {
     clone = geometry.clone();
@@ -1094,22 +1110,17 @@ gmf.ObjecteditingController.cloneGeometry_ = function(geometry) {
  * @const
  * @private
  */
-gmf.ObjecteditingController.NAMESPACE_ = 'oe';
+gmf.objectediting.component.Controller.NAMESPACE_ = 'oe';
 
 
 /**
  * @enum {string}
  */
-gmf.ObjecteditingController.State = {
+gmf.objectediting.component.Controller.State = {
   INSERT: 'insert',
   UPDATE: 'update'
 };
 
 
-/**
- * @typedef {Object.<string, ol.style.Style|Array.<ol.style.Style>>}
- */
-gmf.ObjecteditingController.Styles;
-
-
-gmf.module.controller('GmfObjecteditingController', gmf.ObjecteditingController);
+gmf.objectediting.component.controller('GmfObjecteditingController',
+  gmf.objectediting.component.Controller);

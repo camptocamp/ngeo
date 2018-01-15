@@ -1,7 +1,8 @@
-goog.provide('gmf.objecteditingtoolsDirective');
+goog.provide('gmf.objectediting.toolsComponent');
 
+goog.require('gmf');
 /** @suppress {extraRequire} */
-goog.require('gmf.objecteditinggetwmsfeatureDirective');
+goog.require('gmf.objectediting.getWMSFeatureComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
 /** @suppress {extraRequire} */
@@ -12,6 +13,21 @@ goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
+goog.require('ol');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.objectediting.toolsComponent = angular.module('gmfObjecteditingToolsComponent', [
+  gmf.objectediting.getWMSFeatureComponent.name,
+  ngeo.editing.createfeatureComponent.name,
+  ngeo.editing.createregularpolygonfromclickComponent.name,
+  ngeo.misc.btnComponent.name,
+  ngeo.misc.ToolActivateMgr.module.name,
+]);
+
+gmf.module.requires.push(gmf.objectediting.toolsComponent.name);
 
 
 /**
@@ -20,7 +36,7 @@ goog.require('ngeo.misc.ToolActivateMgr');
  * of keys and their possible values, see in gmfx.js, under:
  * `gmfx.ObjectEditingToolsOptions`.
  */
-gmf.module.value('gmfObjectEditingToolsOptions', {});
+gmf.objectediting.toolsComponent.value('gmfObjectEditingToolsOptions', {});
 
 
 /**
@@ -54,7 +70,7 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  * @htmlAttribute {ol.Map} gmf-objecteditingtools-map The map.
  * @htmlAttribute {string} gmf-objectediting-process Determines the
  *     behavior to adopt when sketch features are added.
- * @htmlAttribute {gmf.ObjectEditingQuery.QueryableLayerInfo} gmf-objectediting-queryablelayerinfo
+ * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objectediting-queryablelayerinfo
  *     Queryable layer information.
  * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
  *     if the currently active tool requires a queryable layer or not.
@@ -65,7 +81,7 @@ gmf.module.value('gmfObjectEditingToolsOptions', {});
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
  */
-gmf.objecteditingtoolsDirective = function() {
+gmf.objectediting.toolsComponent.directive_ = function() {
   return {
     controller: 'GmfObjecteditingtoolsController as oetCtrl',
     scope: {
@@ -81,11 +97,12 @@ gmf.objecteditingtoolsDirective = function() {
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/objecteditingtools.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/objectediting/toolsComponent.html`
   };
 };
 
-gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
+gmf.objectediting.toolsComponent.directive('gmfObjecteditingtools',
+  gmf.objectediting.toolsComponent.directive_);
 
 
 /**
@@ -99,7 +116,7 @@ gmf.module.directive('gmfObjecteditingtools', gmf.objecteditingtoolsDirective);
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateMgr) {
+gmf.objectediting.toolsComponent.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -140,7 +157,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateM
   this.map;
 
   /**
-   * @type {gmf.ObjectEditingQuery.QueryableLayerInfo}
+   * @type {gmfx.ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.queryableLayerInfo;
@@ -199,7 +216,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateM
   this.drawActive = false;
 
   this.registerTool_('drawActive',
-    gmf.ObjecteditingtoolsController.ProcessType.ADD);
+    gmf.objectediting.toolsComponent.ProcessType.ADD);
 
   /**
    * @type {boolean}
@@ -208,7 +225,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateM
   this.eraseActive = false;
 
   this.registerTool_('eraseActive',
-    gmf.ObjecteditingtoolsController.ProcessType.DELETE);
+    gmf.objectediting.toolsComponent.ProcessType.DELETE);
 
   /**
    * @type {boolean}
@@ -233,13 +250,13 @@ gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateM
     oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive',
-    gmf.ObjecteditingtoolsController.ProcessType.ADD);
+    gmf.objectediting.toolsComponent.ProcessType.ADD);
 
   this.registerTool_('copyFromActive',
-    gmf.ObjecteditingtoolsController.ProcessType.ADD, true);
+    gmf.objectediting.toolsComponent.ProcessType.ADD, true);
 
   this.registerTool_('deleteFromActive',
-    gmf.ObjecteditingtoolsController.ProcessType.DELETE, true);
+    gmf.objectediting.toolsComponent.ProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
@@ -264,7 +281,7 @@ gmf.ObjecteditingtoolsController = function($injector, $scope, ngeoToolActivateM
  *     layer or not. Defaults to `false`.
  * @private
  */
-gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
+gmf.objectediting.toolsComponent.Controller_.prototype.registerTool_ = function(
   toolActiveName, process, opt_requiresLayer
 ) {
 
@@ -275,7 +292,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  const group = `${gmf.ObjecteditingtoolsController.NAMESPACE_}-${ol.getUid(this)}`;
+  const group = `${gmf.objectediting.toolsComponent.Controller_.NAMESPACE_}-${ol.getUid(this)}`;
   const toolActivate = new ngeo.misc.ToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 
@@ -292,7 +309,7 @@ gmf.ObjecteditingtoolsController.prototype.registerTool_ = function(
  * @param {boolean|undefined} newVal New value.
  * @private
  */
-gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
+gmf.objectediting.toolsComponent.Controller_.prototype.handleToolActiveChange_ = function(
   process, requiresLayer, newVal
 ) {
 
@@ -321,24 +338,24 @@ gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
 /**
  * @private
  */
-gmf.ObjecteditingtoolsController.prototype.handleDestroy_ = function() {};
+gmf.objectediting.toolsComponent.Controller_.prototype.handleDestroy_ = function() {};
 
 
-gmf.module.controller(
-  'GmfObjecteditingtoolsController', gmf.ObjecteditingtoolsController);
+gmf.objectediting.toolsComponent.controller('GmfObjecteditingtoolsController',
+  gmf.objectediting.toolsComponent.Controller_);
 
 
 /**
  * @const
  * @private
  */
-gmf.ObjecteditingtoolsController.NAMESPACE_ = 'oet';
+gmf.objectediting.toolsComponent.Controller_.NAMESPACE_ = 'oet';
 
 
 /**
  * @enum {string}
  */
-gmf.ObjecteditingtoolsController.ProcessType = {
+gmf.objectediting.toolsComponent.ProcessType = {
   ADD: 'add',
   DELETE: 'delete'
 };
