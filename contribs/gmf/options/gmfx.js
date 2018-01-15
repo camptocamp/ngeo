@@ -52,7 +52,8 @@ gmfx.ComparisonFilter.prototype.value;
  *    geolocationZoom: (number|undefined),
  *    mapViewConfig: (olx.ViewOptions|undefined),
  *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
- *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined)
+ *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined),
+ *    mapPixelRatio: (number|undefined)
  * }}
  */
 gmfx.Config;
