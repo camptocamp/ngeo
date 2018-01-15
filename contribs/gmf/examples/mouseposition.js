@@ -1,5 +1,8 @@
 goog.provide('gmfapp.mouseposition');
 
+// webpack: import './mouseposition.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.module');
 /** @suppress {extraRequire} */
@@ -13,17 +16,20 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.mouseposition.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.module.name,
 ]);
+
+gmfapp.mouseposition.constant('defaultTheme', 'Demo');
+gmfapp.mouseposition.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+gmfapp.mouseposition.MainController = function() {
 
   const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 
@@ -49,7 +55,7 @@ gmfapp.MainController = function() {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  his.map = new ol.Map({
     layers: [
       new ol.layer.Tile({
         source: new ol.source.OSM()
@@ -62,4 +68,4 @@ gmfapp.MainController = function() {
   });
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.mouseposition.module.controller('MainController', gmfapp.mouseposition.MainController);

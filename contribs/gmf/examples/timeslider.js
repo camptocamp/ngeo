@@ -1,16 +1,20 @@
 goog.provide('gmfapp.timeslider');
 
-/** @suppress {extraRequire} */
+// webpack: import './timeslider.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 goog.require('gmf.layertree.timeSliderComponent');
 goog.require('ngeo.misc.WMSTime');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.timeslider.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.layertree.timeSliderComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
+
+gmfapp.timeslider.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -19,7 +23,7 @@ gmfapp.module = angular.module('gmfapp', [
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
-gmfapp.MainController = function($scope, ngeoWMSTime) {
+gmfapp.timeslider.MainController = function($scope, ngeoWMSTime) {
 
   /**
    * @type {ngeo.misc.WMSTime}
@@ -82,4 +86,4 @@ gmfapp.MainController = function($scope, ngeoWMSTime) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.timeslider.module.controller('MainController', gmfapp.timeslider.MainController);

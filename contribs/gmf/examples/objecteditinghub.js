@@ -1,6 +1,9 @@
 goog.provide('gmfapp.objecteditinghub');
 
+// webpack: import './objecteditinghub.css';
+// webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
+goog.require('gmf');
 goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.objectediting.Manager');
 goog.require('gmf.theme.Themes');
@@ -8,7 +11,7 @@ goog.require('ol.format.WFS');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.objecteditinghub.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.editing.XSDAttributes.module.name,
   gmf.objectediting.Manager.module.name,
@@ -16,12 +19,15 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.objecteditinghub.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value('gmfLayersUrl',
+gmfapp.objecteditinghub.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+
+gmfapp.objecteditinghub.constant('defaultTheme', 'Demo');
+gmfapp.objecteditinghub.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -33,7 +39,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
+gmfapp.objecteditinghub.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.$http}
@@ -234,7 +240,7 @@ gmfapp.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes)
 /**
  * @export
  */
-gmfapp.MainController.prototype.runEditor = function() {
+gmfapp.objecteditinghub.MainController.prototype.runEditor = function() {
 
   const geomType = this.selectedGeomType;
   const feature = this.selectedFeature;
@@ -250,7 +256,7 @@ gmfapp.MainController.prototype.runEditor = function() {
   params[gmf.objectediting.Manager.Param.THEME] = this.themeName;
   params[gmf.objectediting.Manager.Param.PROPERTY] = property;
 
-  const url = gmfapp.MainController.appendParams(this.selectedUrl['url'], params);
+  const url = gmfapp.objecteditinghub.MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);
 };
 
@@ -258,7 +264,7 @@ gmfapp.MainController.prototype.runEditor = function() {
 /**
  * @export
  */
-gmfapp.MainController.prototype.runViewerDev = function() {
+gmfapp.objecteditinghub.MainController.prototype.runViewerDev = function() {
   this.runViewer_(this.viewerUrlDev_);
 };
 
@@ -266,7 +272,7 @@ gmfapp.MainController.prototype.runViewerDev = function() {
 /**
  * @export
  */
-gmfapp.MainController.prototype.runViewerHosted = function() {
+gmfapp.objecteditinghub.MainController.prototype.runViewerHosted = function() {
   this.runViewer_(this.viewerUrlHosted_);
 };
 
@@ -275,7 +281,7 @@ gmfapp.MainController.prototype.runViewerHosted = function() {
  * @param {string} baseUrl Base url of the viewer.
  * @private
  */
-gmfapp.MainController.prototype.runViewer_ = function(baseUrl) {
+gmfapp.objecteditinghub.MainController.prototype.runViewer_ = function(baseUrl) {
 
   const node = this.selectedGmfLayerNode;
   const nodeId = node.id;
@@ -295,7 +301,7 @@ gmfapp.MainController.prototype.runViewer_ = function(baseUrl) {
   params['wfs_layer'] = nodeName;
   params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
-  const url = gmfapp.MainController.appendParams(baseUrl, params);
+  const url = gmfapp.objecteditinghub.MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
@@ -305,7 +311,7 @@ gmfapp.MainController.prototype.runViewer_ = function(baseUrl) {
  * @return {angular.$q.Promise} The promise attached to the deferred object.
  * @private
  */
-gmfapp.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
+gmfapp.objecteditinghub.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
   this.getFeaturesDeferred_ = this.q_.defer();
 
@@ -325,11 +331,11 @@ gmfapp.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
+gmfapp.objecteditinghub.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
   const id = gmfLayerNode.id;
 
-  const url = gmfapp.MainController.appendParams(
+  const url = gmfapp.objecteditinghub.MainController.appendParams(
     this.gmfServer_.urlWfs,
     {
       'SERVICE': 'WFS',
@@ -351,7 +357,7 @@ gmfapp.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
+gmfapp.objecteditinghub.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
   const features = /** @type Array.<ol.Feature> */ (
     this.getFeaturesFromCache_(gmfLayerNode));
   this.features = features;
@@ -364,7 +370,7 @@ gmfapp.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
  * @return {?Array.<ol.Feature>} List of features
  * @private
  */
-gmfapp.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
+gmfapp.objecteditinghub.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
   const id = gmfLayerNode.id;
   const features = this.featuresCache_[id] || null;
   return features;
@@ -376,7 +382,7 @@ gmfapp.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
  * @return {angular.$q.Promise} The promise attached to the deferred object.
  * @private
  */
-gmfapp.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
+gmfapp.objecteditinghub.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
   this.getGeometryTypeDeferred_ = this.q_.defer();
 
@@ -396,7 +402,7 @@ gmfapp.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.MainController.prototype.issueGetAttributesRequest_ = function(
+gmfapp.objecteditinghub.MainController.prototype.issueGetAttributesRequest_ = function(
   gmfLayerNode
 ) {
 
@@ -418,7 +424,7 @@ gmfapp.MainController.prototype.issueGetAttributesRequest_ = function(
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
+gmfapp.objecteditinghub.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
   const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
   this.selectedGeomType = geomType;
 };
@@ -429,7 +435,7 @@ gmfapp.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) 
  * @return {string|undefined} The type of geometry.
  * @private
  */
-gmfapp.MainController.prototype.getGeometryTypeFromCache_ = function(
+gmfapp.objecteditinghub.MainController.prototype.getGeometryTypeFromCache_ = function(
   gmfLayerNode
 ) {
   const id = gmfLayerNode.id;
@@ -446,7 +452,7 @@ gmfapp.MainController.prototype.getGeometryTypeFromCache_ = function(
  *     and the values are arbitrary types or arrays.
  * @return {string} The new URI.
  */
-gmfapp.MainController.appendParams = function(uri, params) {
+gmfapp.objecteditinghub.MainController.appendParams = function(uri, params) {
   const keyParams = [];
   // Skip any null or undefined parameter values
   Object.keys(params).forEach((k) => {
@@ -463,4 +469,4 @@ gmfapp.MainController.appendParams = function(uri, params) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.objecteditinghub.module.controller('MainController', gmfapp.objecteditinghub.MainController);

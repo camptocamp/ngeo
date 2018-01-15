@@ -1,6 +1,8 @@
 goog.provide('gmfapp.backgroundlayerselector');
 
-/** @suppress {extraRequire} */
+// webpack: import './backgroundlayerselector.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 goog.require('gmf.backgroundlayerselector.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -12,17 +14,19 @@ goog.require('ol.View');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.backgroundlayerselector.module = angular.module('gmfapp', [
   gmf.backgroundlayerselector.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
 ]);
 
 
-gmfapp.module.value(
+gmfapp.backgroundlayerselector.module.value(
   'gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
+
+gmfapp.backgroundlayerselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -30,7 +34,7 @@ gmfapp.module.value(
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes) {
+gmfapp.backgroundlayerselector.MainController = function(gmfThemes) {
 
   gmfThemes.loadThemes();
 
@@ -56,4 +60,4 @@ gmfapp.MainController = function(gmfThemes) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.backgroundlayerselector.module.controller('MainController', gmfapp.backgroundlayerselector.MainController);

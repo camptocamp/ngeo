@@ -1,5 +1,8 @@
 goog.provide('gmfapp.simple');
 
+// webpack: import './simple.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('ol.Map');
@@ -9,17 +12,20 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.simple.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.component.name,
 ]);
+
+gmfapp.simple.constant('defaultTheme', 'Demo');
+gmfapp.simple.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+gmfapp.simple.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -39,4 +45,4 @@ gmfapp.MainController = function() {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.simple.module.controller('MainController', gmfapp.simple.MainController);

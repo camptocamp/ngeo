@@ -1,18 +1,23 @@
 goog.provide('gmfapp.themeselector');
 
+// webpack: import './themeselector.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.TreeManager');
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.themeselector.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.theme.module.name,
 ]);
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.themeselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+
+gmfapp.themeselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -22,7 +27,7 @@ gmfapp.module.value('gmfTreeUrl',
  * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
-gmfapp.MainController = function($http, gmfThemes, gmfThemeManager) {
+gmfapp.themeselector.MainController = function($http, gmfThemes, gmfThemeManager) {
 
   /**
    * @param {gmfThemes.GmfTheme} theme Theme.
@@ -43,4 +48,4 @@ gmfapp.MainController = function($http, gmfThemes, gmfThemeManager) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.themeselector.module.controller('MainController', gmfapp.themeselector.MainController);

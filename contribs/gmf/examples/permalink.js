@@ -1,5 +1,8 @@
 goog.provide('gmfapp.permalink');
 
+// webpack: import './permalink.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
@@ -14,13 +17,16 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.permalink.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.component.name,
 ]);
 
+gmfapp.permalink.constant('defaultTheme', 'Demo');
+gmfapp.permalink.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
-gmfapp.module.value('gmfPermalinkOptions',
+
+gmfapp.permalink.module.value('gmfPermalinkOptions',
   /** @type {gmfx.PermalinkOptions} */ ({
     crosshairStyle: new ol.style.Style({
       image: new ol.style.RegularShape({
@@ -40,7 +46,7 @@ gmfapp.module.value('gmfPermalinkOptions',
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+gmfapp.permalink.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -60,4 +66,4 @@ gmfapp.MainController = function() {
   });
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.permalink.module.controller('MainController', gmfapp.permalink.MainController);

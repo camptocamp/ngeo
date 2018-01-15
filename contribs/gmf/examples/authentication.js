@@ -1,26 +1,31 @@
 goog.provide('gmfapp.authentication');
 
 
+// webpack: import './authentication.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 goog.require('gmf.authentication.module');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.authentication.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name
 ]);
 
 
-gmfapp.module.value(
+gmfapp.authentication.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+
+gmfapp.authentication.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {};
+gmfapp.authentication.MainController = function() {};
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.authentication.module.controller('MainController', gmfapp.authentication.MainController);

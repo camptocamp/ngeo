@@ -1,0 +1,12 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+ul {
+  width: 50%;
+}
+li {
+  list-style: none;
+}
+.tooltip {
+  min-width: 6.5rem;
+}

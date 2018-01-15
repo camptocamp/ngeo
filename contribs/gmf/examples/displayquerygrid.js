@@ -1,7 +1,12 @@
 goog.provide('gmfapp.displayquerygrid');
 
+// webpack: import './displayquerygrid.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 goog.require('gmf.datasource.Manager');
+goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
+goog.require('gmf.displayquerygridComponent');
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -10,7 +15,6 @@ goog.require('gmf.query.gridComponent');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.grid.module');
 goog.require('ngeo.map.module');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -29,7 +33,7 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.displayquerygrid.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
@@ -42,16 +46,19 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.constant('ngeoQueryOptions', {
+gmfapp.displayquerygrid.module.constant('ngeoQueryOptions', {
   'limit': 20,
   'queryCountFirst': true
 });
 
 
-gmfapp.module.constant(
+gmfapp.displayquerygrid.module.constant(
   'gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
+
+gmfapp.displayquerygrid.constant('defaultTheme', 'Demo');
+gmfapp.displayquerygrid.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -60,13 +67,13 @@ gmfapp.module.constant(
  *
  * @type {!angular.Component}
  */
-gmfapp.queryresultComponent = {
+gmfapp.displayquerygrid.queryresultComponent = {
   controller: 'gmfappQueryresultController',
   controllerAs: 'qrCtrl',
   templateUrl: 'partials/queryresult.html'
 };
 
-gmfapp.module.component('gmfappQueryresult', gmfapp.queryresultComponent);
+gmfapp.displayquerygrid.module.component('gmfappQueryresult', gmfapp.displayquerygrid.queryresultComponent);
 
 
 /**
@@ -75,7 +82,7 @@ gmfapp.module.component('gmfappQueryresult', gmfapp.queryresultComponent);
  * @constructor
  * @ngInject
  */
-gmfapp.QueryresultController = function(ngeoQueryResult) {
+gmfapp.displayquerygrid.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -86,7 +93,7 @@ gmfapp.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultController);
+gmfapp.displayquerygrid.module.controller('gmfappQueryresultController', gmfapp.displayquerygrid.QueryresultController);
 
 
 /**
@@ -98,7 +105,7 @@ gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultContro
  *   overlay manager service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
+gmfapp.displayquerygrid.MainController = function(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
@@ -176,4 +183,4 @@ gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.displayquerygrid.module.controller('MainController', gmfapp.displayquerygrid.MainController);

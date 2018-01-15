@@ -1,5 +1,8 @@
 goog.provide('gmfapp.search');
 
+// webpack: import './search.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.search.module');
@@ -19,7 +22,7 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.search.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.map.component.name,
   gmf.search.module.name,
@@ -27,15 +30,18 @@ gmfapp.module = angular.module('gmfapp', [
   ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
-
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.search.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
-gmfapp.module.value('fulltextsearchUrl',
+gmfapp.search.module.value('fulltextsearchUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
 
-gmfapp.module.value('gmfLayersUrl',
+gmfapp.search.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+
+gmfapp.search.constant('defaultTheme', 'Demo');
+gmfapp.search.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+
 
 /**
  * @param {gmf.theme.Themes} gmfThemes Themes service.
@@ -44,7 +50,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
+gmfapp.search.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   gmfThemes.loadThemes();
 
@@ -128,4 +134,4 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
   };
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.search.module.controller('MainController', gmfapp.search.MainController);

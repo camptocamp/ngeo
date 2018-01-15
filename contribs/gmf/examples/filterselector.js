@@ -2,14 +2,15 @@
 
 goog.provide('gmfapp.filterselector');
 
+// webpack: import './filterselector.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');
 /** @suppress {extraRequire} */
+goog.require('gmf.datasource.DataSourcesManager');
 goog.require('gmf.filters.module');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
@@ -31,7 +32,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.filterselector.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
   gmf.datasource.Manager.module.name,
@@ -44,24 +45,27 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.filterselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value(
+gmfapp.filterselector.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.filterselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value('gmfLayersUrl',
+gmfapp.filterselector.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
+gmfapp.filterselector.constant('defaultTheme', 'Filters');
+gmfapp.filterselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
-gmfapp.MainController = class {
+
+gmfapp.filterselector.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -174,4 +178,4 @@ gmfapp.MainController = class {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.filterselector.module.controller('MainController', gmfapp.filterselector.MainController);

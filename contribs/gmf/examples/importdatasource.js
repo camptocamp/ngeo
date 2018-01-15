@@ -2,11 +2,14 @@
 
 goog.provide('gmfapp.importdatasource');
 
+// webpack: import './importdatasource.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');
 /** @suppress {extraRequire} */
+goog.require('gmf.datasource.DataSourcesManager');
 goog.require('gmf.import.importdatasourceComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
@@ -15,7 +18,6 @@ goog.require('gmf.theme.Themes');
 goog.require('ngeo.datasource.DataSources');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -26,7 +28,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.importdatasource.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.datasource.Manager.module.name,
   gmf.import.importdatasourceComponent.name,
@@ -39,17 +41,17 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.importdatasource.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.importdatasource.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value('gmfLayersUrl',
+gmfapp.importdatasource.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.module.value('gmfExternalOGCServers', [{
+gmfapp.importdatasource.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'https://wms.geo.admin.ch/?lang=fr'
@@ -63,8 +65,11 @@ gmfapp.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
+gmfapp.importdatasource.constant('defaultTheme', 'Filters');
+gmfapp.importdatasource.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
-gmfapp.MainController = class {
+
+gmfapp.importdatasource.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -142,4 +147,4 @@ gmfapp.MainController = class {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.importdatasource.module.controller('MainController', gmfapp.importdatasource.MainController);

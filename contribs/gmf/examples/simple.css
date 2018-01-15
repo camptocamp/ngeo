@@ -1,0 +1,7 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
