@@ -732,20 +732,30 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
   const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
   if (this.color) {
     const color = ol.color.asArray(this.color);
+
+    const strokeColor = color.slice();
+    // 100% opacity for the stroke color
+    strokeColor[3] = 1;
+
+    const fillColor = color.slice();
+    // 50% opacity for the fill color
+    fillColor[3] = 0.5;
+
     const strokeStyle = style.getStroke();
     if (strokeStyle) {
-      // 100% opacity for the stroke color
-      const strokeColor = color.slice();
-      strokeColor[3] = 1;
       strokeStyle.setColor(strokeColor);
-
-      const fillStyle = style.getFill();
-      if (fillStyle) {
-        // 50% opacity for the fill color
-        const fillColor = color.slice();
-        fillColor[3] = 0.5;
-        fillStyle.setColor(fillColor);
-      }
+    }
+    const fillStyle = style.getFill();
+    if (fillStyle) {
+      fillStyle.setColor(fillColor);
+    }
+    const image = style.getImage();
+    if (image) {
+      style.setImage(new ol.style.Circle({
+        fill: new ol.style.Fill({color: fillColor}),
+        radius: 5,
+        stroke: new ol.style.Stroke({color: strokeColor})
+      }));
     }
   }
   return style;
