@@ -285,6 +285,7 @@ gmf.Authentication.prototype.resetUser_ = function() {
   }
   this.dispatchEvent(new gmf.AuthenticationEvent(
     gmf.AuthenticationEventType.LOGOUT, this.user_));
+  this.load_();
 };
 
 
