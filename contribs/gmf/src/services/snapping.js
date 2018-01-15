@@ -5,7 +5,6 @@ goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 goog.require('gmf.LayertreeController');
 goog.require('ol.Collection');
-goog.require('ol.ViewProperty');
 goog.require('ol.format.WFS');
 goog.require('ol.interaction.Snap');
 
@@ -183,23 +182,7 @@ gmf.Snapping.prototype.setMap = function(map) {
       )
     );
 
-    const view = map.getView();
-    keys.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.CENTER),
-        this.handleMapViewChange_,
-        this
-      )
-    );
-    keys.push(
-      ol.events.listen(
-        view,
-        ol.Object.getChangeEventType(ol.ViewProperty.RESOLUTION),
-        this.handleMapViewChange_,
-        this
-      )
-    );
+    keys.push(ol.events.listen(map, 'moveend', this.handleMapMoveEnd_, this));
   }
 };
 
@@ -537,7 +520,7 @@ gmf.Snapping.prototype.loadItemFeatures_ = function(item) {
  * delay. Cancel any currently delayed call, if required.
  * @private
  */
-gmf.Snapping.prototype.handleMapViewChange_ = function() {
+gmf.Snapping.prototype.handleMapMoveEnd_ = function() {
   if (this.mapViewChangePromise_) {
     this.timeout_.cancel(this.mapViewChangePromise_);
   }
