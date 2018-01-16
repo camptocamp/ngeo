@@ -128,12 +128,11 @@ gmf.ThemeManager.prototype.isLoading = function() {
 
 /**
  * @param {string} name The new theme name.
- * @param {boolean=} opt_stealth Don't emit an event is true
- * @export
+ * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
  */
-gmf.ThemeManager.prototype.setThemeName = function(name, opt_stealth) {
+gmf.ThemeManager.prototype.setThemeName = function(name, opt_silent) {
   this.themeName_ = name;
-  if (!opt_stealth) {
+  if (!opt_silent) {
     this.$rootScope_.$emit(gmf.ThemeManagerEventType.THEME_NAME_SET, name);
   }
 };

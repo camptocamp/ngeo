@@ -151,9 +151,6 @@ gmf.AbstractController = function(config, $scope, $injector) {
     this.gmfThemeManager.setThemeName('', true);
     if (evt.type !== gmf.AuthenticationEventType.READY) {
       this.updateCurrentTheme_(previousThemeName);
-    } else {
-      // initialize default background layer
-      this.setDefaultBackground_(null, true);
     }
     // Reload themes when login status changes.
     this.gmfThemes_.loadThemes(roleId);
@@ -416,7 +413,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
   $scope.$root.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
-        this.setDefaultBackground_(theme, false);
+        this.setDefaultBackground_(theme);
       }
     });
   });
@@ -590,31 +587,31 @@ gmf.AbstractController.prototype.initLanguage = function() {
 
 /**
  * @param {gmfThemes.GmfTheme} theme Theme.
- * @param {boolean} use_permalink Get background from the permalink.
  * @private
  */
-gmf.AbstractController.prototype.setDefaultBackground_ = function(theme, use_permalink) {
+gmf.AbstractController.prototype.setDefaultBackground_ = function(theme) {
   this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
     let layer;
 
-    if (use_permalink) {
-      // get the background from the permalink
-      layer = this.permalink_.getBackgroundLayer(layers);
-    }
+    // get the background from the permalink
+    layer = this.permalink_.getBackgroundLayer(layers);
+
     if (!layer) {
       // get the background from the user settings
       layer = gmf.AbstractController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
-      if (!layer && theme) {
-        // get the background from the theme
-        layer = gmf.AbstractController.getLayerByLabels(layers, theme.functionalities.default_basemap);
-      }
-      if (!layer) {
-        // fallback to the layers list, use the second one because the first is the blank layer.
-        layer = layers[1];
-      }
     }
-    goog.asserts.assert(layer);
 
+    if (!layer) {
+      // get the background from the theme
+      layer = gmf.AbstractController.getLayerByLabels(layers, theme.functionalities.default_basemap);
+    }
+
+    if (!layer) {
+      // fallback to the layers list, use the second one because the first is the blank layer.
+      layer = layers[1];
+    }
+
+    goog.asserts.assert(layer);
     this.backgroundLayerMgr_.set(this.map, layer);
   });
 };
