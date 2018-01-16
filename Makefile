@@ -962,7 +962,7 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	node buildtools/extract-messages $(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES) > $@
 
 .build/python-venv/bin/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
-	.build/python-venv/bin/pip install `grep ^transifex-client== $< --colour=never`
+	.build/python-venv/bin/pip install `grep ^transifex-client== $< --colour=never | sed 's/\#.*//g'`
 	touch $@
 
 .PHONY: transifex-get
