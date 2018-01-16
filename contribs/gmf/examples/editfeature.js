@@ -3,9 +3,9 @@ goog.provide('gmfapp.editfeature');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.authentication.module');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
 goog.require('gmf.editing.EditFeature');
+/** @suppress {extraRequire} */
+goog.require('gmf.map.component');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -21,7 +21,8 @@ goog.require('ol.source.ImageWMS');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
-  gmf.editing.EditFeature.module.name
+  gmf.editing.EditFeature.module.name,
+  gmf.map.component.name,
 ]);
 
 

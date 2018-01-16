@@ -3,6 +3,8 @@ goog.provide('gmfapp.mobilemeasure');
 goog.require('gmf');
 goog.require('gmf.Permalink');
 /** @suppress {extraRequire} */
+goog.require('gmf.map.component');
+/** @suppress {extraRequire} */
 goog.require('gmf.mobile.measure.lengthComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobile.measure.pointComponent');
@@ -10,8 +12,6 @@ goog.require('gmf.mobile.measure.pointComponent');
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -22,9 +22,10 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
-  ngeo.misc.btnComponent.name,
+  gmf.map.component.name,
   gmf.mobile.measure.lengthComponent.name,
   gmf.mobile.measure.pointComponent.name,
+  ngeo.misc.btnComponent.name,
 ]);
 
 

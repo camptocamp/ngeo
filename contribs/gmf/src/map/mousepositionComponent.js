@@ -1,9 +1,22 @@
-goog.provide('gmf.mousepositionComponent');
+goog.provide('gmf.map.mousepositionComponent');
 
 goog.require('gmf');
+goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.control.MousePosition');
+goog.require('ol.proj');
+
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.map.mousepositionComponent = angular.module('gmfMapMouseposition', [
+  ngeo.module.name,
+]);
+
+gmf.module.requires.push(gmf.map.mousepositionComponent.name);
+
 
 /**
  * Provide a component to display the mouse position coordinates depending
@@ -23,16 +36,17 @@ goog.require('ol.control.MousePosition');
  * @ngdoc component
  * @ngname gmfMouseposition
  */
-gmf.mousepositionComponent = {
+gmf.map.mousepositionComponent.component_ = {
   controller: 'gmfMousepositionController as ctrl',
   bindings: {
     'map': '<gmfMousepositionMap',
     'projections': '<gmfMousepositionProjections'
   },
-  templateUrl: () => `${gmf.baseTemplateUrl}/mouseposition.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/map/mousepositionComponent.html`
 };
 
-gmf.module.component('gmfMouseposition', gmf.mousepositionComponent);
+gmf.map.mousepositionComponent.component('gmfMouseposition',
+  gmf.map.mousepositionComponent.component_);
 
 
 /**
@@ -46,7 +60,7 @@ gmf.module.component('gmfMouseposition', gmf.mousepositionComponent);
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-gmf.MousepositionController = function($element, $filter, $scope, gettextCatalog) {
+gmf,map.MousepositionComponent.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   /**
    * @type {!ol.Map}
    * @export
@@ -94,7 +108,7 @@ gmf.MousepositionController = function($element, $filter, $scope, gettextCatalog
 /**
  * Initialise the controller.
  */
-gmf.MousepositionController.prototype.$onInit = function() {
+gmf.map.mousepositionComponent.Controller_.prototype.$onInit = function() {
   // function that apply the filter.
   const formatFn = function(coordinates) {
     const filterAndArgs = this.projection.filter.split(':');
@@ -130,10 +144,10 @@ gmf.MousepositionController.prototype.$onInit = function() {
  * @param {gmfx.MousePositionProjection} projection The new projection to use.
  * @export
  */
-gmf.MousepositionController.prototype.setProjection = function(projection) {
+gmf.map.mousepositionComponent.Controller_.prototype.setProjection = function(projection) {
   this.control.setProjection(ol.proj.get(projection.code));
   this.projection = projection;
 };
 
-gmf.module.controller('gmfMousepositionController',
-  gmf.MousepositionController);
+gmf.map.mousepositionComponent.controller('gmfMousepositionController',
+  gmf.map.mousepositionComponent.Controller_);

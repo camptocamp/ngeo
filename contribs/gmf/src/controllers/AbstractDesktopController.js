@@ -15,7 +15,7 @@ goog.require('gmf.editing.editFeatureSelectorComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.filters.filterselectorComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.mousepositionComponent');
+goog.require('gmf.map.mousepositionComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.print.component');
 /** @suppress {extraRequire} */

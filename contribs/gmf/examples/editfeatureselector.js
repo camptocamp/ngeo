@@ -9,7 +9,7 @@ goog.require('gmf.editing.editFeatureSelectorComponent');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
@@ -32,6 +32,7 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.editing.editFeatureSelectorComponent.name,
   gmf.layertree.component.name,
   gmf.layertree.TreeManager.module.name,
+  gmf.map.component.name,
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);

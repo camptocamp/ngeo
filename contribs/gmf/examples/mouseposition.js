@@ -1,9 +1,7 @@
 goog.provide('gmfapp.mouseposition');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mousepositionComponent');
+goog.require('gmf.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
@@ -15,7 +13,10 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.map.module.name,
+]);
 
 
 /**

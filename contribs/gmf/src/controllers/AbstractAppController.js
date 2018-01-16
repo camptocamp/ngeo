@@ -14,7 +14,7 @@ goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.Manager');
 /** @suppress {extraRequire} */

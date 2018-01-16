@@ -1,7 +1,7 @@
 goog.provide('gmfapp.permalink');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -14,7 +14,10 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.map.component.name,
+]);
 
 
 gmfapp.module.value('gmfPermalinkOptions',

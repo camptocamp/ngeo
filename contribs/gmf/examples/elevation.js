@@ -1,9 +1,9 @@
 goog.provide('gmfapp.elevation');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.raster.module');
+goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.raster.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -15,6 +15,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.map.component.name,
   gmf.raster.module.name,
 ]);
 

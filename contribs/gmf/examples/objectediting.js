@@ -5,7 +5,7 @@ goog.require('gmf');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.objectediting.component');
 goog.require('gmf.objectediting.Manager');
@@ -27,6 +27,7 @@ goog.require('ol.source.Vector');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.layertree.component.name,
+  gmf.map.component.name,
   gmf.objectediting.component.name,
   gmf.objectediting.Manager.module.name,
   gmf.theme.Themes.module.name,
