@@ -1,25 +1,33 @@
-goog.provide('gmf.displayquerywindowComponent');
+goog.provide('gmf.query.windowComponent');
 
 goog.require('gmf');
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
-goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.FeatureHelper');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.swipe');
+/** @suppress {extraRequire} - required for `ngeoQueryResult` */
+goog.require('ngeo.query.MapQuerent');
 goog.require('ol.Collection');
+goog.require('ol.obj');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-// In the future module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlayMgr.module.name
-// - ngeo.misc.FeatureHelper.module.name
-// - ngeo.misc.swipe.name
+/**
+ * @type {!angular.Module}
+ */
+gmf.query.windowComponent = angular.module('gmfQueryWindowComponent', [
+  ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.swipe.name,
+  ngeo.query.MapQuerent.module.name,
+]);
+
+gmf.module.requires.push(gmf.query.windowComponent.name);
 
 
-ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
+gmf.query.windowComponent.value('gmfDisplayquerywindowTemplateUrl',
   /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
@@ -28,7 +36,7 @@ ngeo.module.value('gmfDisplayquerywindowTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/displayquerywindow.html`;
+      `${gmf.baseModuleTemplateUrl}/query/windowComponent.html`;
   });
 
 
@@ -75,7 +83,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  * @ngdoc component
  * @ngname gmfDisplayquerywindow
  */
-gmf.displayquerywindowComponent = {
+gmf.query.windowComponent.component_ = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
     'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
@@ -89,7 +97,7 @@ gmf.displayquerywindowComponent = {
 };
 
 
-gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
+gmf.query.windowComponent.component('gmfDisplayquerywindow', gmf.query.windowComponent.component_);
 
 
 /**
@@ -105,7 +113,7 @@ gmf.module.component('gmfDisplayquerywindow', gmf.displayquerywindowComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, ngeoMapQuerent,
+gmf.query.windowComponent.Controller_ = function($element, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr) {
 
   /**
@@ -245,7 +253,7 @@ gmf.DisplayquerywindowController = function($element, $scope, ngeoQueryResult, n
 /**
  * Initialise the controller.
  */
-gmf.DisplayquerywindowController.prototype.$onInit = function() {
+gmf.query.windowComponent.Controller_.prototype.$onInit = function() {
   this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
   this.collapsed = this['defaultCollapsedFn'] ?
@@ -301,7 +309,7 @@ gmf.DisplayquerywindowController.prototype.$onInit = function() {
  * highlight the first feature.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.show = function() {
+gmf.query.windowComponent.Controller_.prototype.show = function() {
   this.clear();
   this.updateFeatures_();
 };
@@ -310,7 +318,7 @@ gmf.DisplayquerywindowController.prototype.show = function() {
 /**
  * @private
  */
-gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
+gmf.query.windowComponent.Controller_.prototype.updateFeatures_ = function() {
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
     this.collectFeatures_();
@@ -327,7 +335,7 @@ gmf.DisplayquerywindowController.prototype.updateFeatures_ = function() {
  * @return {boolean} True if result has changed. False else.
  * @private
  */
-gmf.DisplayquerywindowController.prototype.setCurrentResult_ = function(
+gmf.query.windowComponent.Controller_.prototype.setCurrentResult_ = function(
   position, setHighlight) {
   let hasChanged = false;
   if (position !== this.currentResult) {
@@ -364,7 +372,7 @@ gmf.DisplayquerywindowController.prototype.setCurrentResult_ = function(
  * the map.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.previous = function() {
+gmf.query.windowComponent.Controller_.prototype.previous = function() {
   let position = this.currentResult - 1;
   if (position < 0) {
     position = this.getResultLength() - 1;
@@ -381,7 +389,7 @@ gmf.DisplayquerywindowController.prototype.previous = function() {
  * the map.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.next = function() {
+gmf.query.windowComponent.Controller_.prototype.next = function() {
   let position = this.currentResult + 1;
   const positionMax = this.getResultLength() - 1;
   if (position > positionMax) {
@@ -399,7 +407,7 @@ gmf.DisplayquerywindowController.prototype.next = function() {
  * @param {ngeox.QueryResult} queryResult ngeo query result.
  * @private
  */
-gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryResult) {
+gmf.query.windowComponent.Controller_.prototype.updateQueryResult_ = function(queryResult) {
   this.ngeoQueryResult.total = 0;
   this.ngeoQueryResult.sources.length = 0;
   for (let i = 0; i < queryResult.sources.length; i++) {
@@ -419,7 +427,7 @@ gmf.DisplayquerywindowController.prototype.updateQueryResult_ = function(queryRe
  * @return {number} Total number of features.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.getResultLength = function() {
+gmf.query.windowComponent.Controller_.prototype.getResultLength = function() {
   if (this.selectedSource === null) {
     return this.ngeoQueryResult.total;
   } else {
@@ -432,7 +440,7 @@ gmf.DisplayquerywindowController.prototype.getResultLength = function() {
  * @return {boolean} If the first result is active.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.isFirst = function() {
+gmf.query.windowComponent.Controller_.prototype.isFirst = function() {
   return this.currentResult == 0;
 };
 
@@ -441,7 +449,7 @@ gmf.DisplayquerywindowController.prototype.isFirst = function() {
  * @return {boolean} If the last result is active.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.isLast = function() {
+gmf.query.windowComponent.Controller_.prototype.isLast = function() {
   return this.currentResult == this.getResultLength() - 1;
 };
 
@@ -452,7 +460,7 @@ gmf.DisplayquerywindowController.prototype.isLast = function() {
  * @return {Object?} Filtered properties of the current feature or null.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.getFeatureValues = function() {
+gmf.query.windowComponent.Controller_.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
@@ -469,7 +477,7 @@ gmf.DisplayquerywindowController.prototype.getFeatureValues = function() {
  * or the previous result.
  * @private
  */
-gmf.DisplayquerywindowController.prototype.animate_ = function(isNext) {
+gmf.query.windowComponent.Controller_.prototype.animate_ = function(isNext) {
   this.isNext = isNext;
   this.animate++;
 };
@@ -479,7 +487,7 @@ gmf.DisplayquerywindowController.prototype.animate_ = function(isNext) {
  * Collect all features in the queryResult object.
  * @private
  */
-gmf.DisplayquerywindowController.prototype.collectFeatures_ = function() {
+gmf.query.windowComponent.Controller_.prototype.collectFeatures_ = function() {
   const sources = this.ngeoQueryResult.sources;
   this.features_.clear();
   for (let i = 0; i < sources.length; i++) {
@@ -502,7 +510,7 @@ gmf.DisplayquerywindowController.prototype.collectFeatures_ = function() {
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */
-gmf.DisplayquerywindowController.prototype.highlightCurrentFeature_ =
+gmf.query.windowComponent.Controller_.prototype.highlightCurrentFeature_ =
 function(opt_lastFeature) {
   this.highlightFeatures_.clear();
   this.features_.remove(this.feature);
@@ -518,7 +526,7 @@ function(opt_lastFeature) {
  * from the map.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.close = function() {
+gmf.query.windowComponent.Controller_.prototype.close = function() {
   this.open = false;
   this.clear();
   this.ngeoMapQuerent_.clear();
@@ -530,7 +538,7 @@ gmf.DisplayquerywindowController.prototype.close = function() {
  * from the map.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.clear = function() {
+gmf.query.windowComponent.Controller_.prototype.clear = function() {
   this.feature = null;
   this.source = null;
   this.currentResult = -1;
@@ -544,7 +552,7 @@ gmf.DisplayquerywindowController.prototype.clear = function() {
  * @param {ngeox.QueryResultSource} source The source to select.
  * @export
  */
-gmf.DisplayquerywindowController.prototype.setSelectedSource = function(source) {
+gmf.query.windowComponent.Controller_.prototype.setSelectedSource = function(source) {
   if (source !== null && source.features.length <= 0) {
     // sources with no results can not be selected
     return;
@@ -555,4 +563,5 @@ gmf.DisplayquerywindowController.prototype.setSelectedSource = function(source) 
 };
 
 
-gmf.module.controller('GmfDisplayquerywindowController', gmf.DisplayquerywindowController);
+gmf.query.windowComponent.controller('GmfDisplayquerywindowController',
+  gmf.query.windowComponent.Controller_);

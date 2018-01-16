@@ -1,28 +1,41 @@
-goog.provide('gmf.displayquerygridComponent');
+goog.provide('gmf.query.gridComponent');
 
 goog.require('gmf');
+/** @suppress {extraRequire} */
+goog.require('ngeo.download.Csv');
+/** @suppress {extraRequire} */
+goog.require('ngeo.download.service');
+/** @suppress {extraRequire} */
+goog.require('ngeo.grid.component');
+goog.require('ngeo.grid.Config');
+goog.require('ngeo.map.FeatureOverlayMgr');
 /** @suppress {extraRequire} - required for `ngeoQueryResult` */
 goog.require('ngeo.query.MapQuerent');
 goog.require('ol.Collection');
+goog.require('ol.extent');
+goog.require('ol.Map');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.download.module');
-/** @suppress {extraRequire} */
-goog.require('ngeo.grid.module');
-goog.require('ngeo.map.FeatureOverlayMgr');
+
+/**
+ * @type {!angular.Module}
+ */
+gmf.query.gridComponent = angular.module('gmfQueryGridComponent', [
+  ngeo.download.Csv.module.name,
+  ngeo.download.service.name,
+  ngeo.grid.component.name,
+  ngeo.grid.Config.module.name,
+  ngeo.map.FeatureOverlayMgr.module.name,
+  ngeo.query.MapQuerent.module.name,
+]);
+
+gmf.module.requires.push(gmf.query.gridComponent.name);
 
 
-// In the future module declaration, don't forget to require:
-// - ngeo.download.module.name
-// - ngeo.grid.module.name
-// - ngeo.map.FeatureOverlayMgr.module.name
-
-
-ngeo.module.value('gmfDisplayquerygridTemplateUrl',
+gmf.query.gridComponent.value('gmfDisplayquerygridTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.Attributes} $attrs Attributes.
@@ -31,7 +44,7 @@ ngeo.module.value('gmfDisplayquerygridTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/displayquerygrid.html`;
+      `${gmf.baseModuleTemplateUrl}/query/gridComponent.html`;
   }
 );
 
@@ -87,7 +100,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  * @ngdoc component
  * @ngname gmfDisplayquerygrid
  */
-gmf.displayquerygridComponent = {
+gmf.query.gridComponent.component_ = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
@@ -103,7 +116,7 @@ gmf.displayquerygridComponent = {
 };
 
 
-gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
+gmf.query.gridComponent.component('gmfDisplayquerygrid', gmf.query.gridComponent.component_);
 
 
 /**
@@ -124,7 +137,7 @@ gmf.module.component('gmfDisplayquerygrid', gmf.displayquerygridComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
+gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
@@ -287,7 +300,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
 /**
  * Init the controller
  */
-gmf.DisplayquerygridController.prototype.$onInit = function() {
+gmf.query.gridComponent.Controller_.prototype.$onInit = function() {
   this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ? this['removeEmptyColumnsFn']() === true : false;
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
   this.mergeTabs_ = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
@@ -331,7 +344,7 @@ gmf.DisplayquerygridController.prototype.$onInit = function() {
  * @export
  * @return {Array.<gmfx.GridSource>} Grid sources.
  */
-gmf.DisplayquerygridController.prototype.getGridSources = function() {
+gmf.query.gridComponent.Controller_.prototype.getGridSources = function() {
   return this.loadedGridSources.map(sourceLabel => this.gridSources[sourceLabel]);
 };
 
@@ -339,7 +352,7 @@ gmf.DisplayquerygridController.prototype.getGridSources = function() {
 /**
  * @private
  */
-gmf.DisplayquerygridController.prototype.updateData_ = function() {
+gmf.query.gridComponent.Controller_.prototype.updateData_ = function() {
   // close if there are no results
   if (this.ngeoQueryResult.total === 0 && !this.hasOneWithTooManyResults_()) {
     const oldActive = this.active;
@@ -394,7 +407,7 @@ gmf.DisplayquerygridController.prototype.updateData_ = function() {
  * @private
  * @return {boolean} If one of the source has too many results.
  */
-gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() {
+gmf.query.gridComponent.Controller_.prototype.hasOneWithTooManyResults_ = function() {
   return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
 };
 
@@ -405,7 +418,7 @@ gmf.DisplayquerygridController.prototype.hasOneWithTooManyResults_ = function() 
  * @param {gmfx.GridSource} gridSource Grid source.
  * @return {boolean} Is selected?
  */
-gmf.DisplayquerygridController.prototype.isSelected = function(gridSource) {
+gmf.query.gridComponent.Controller_.prototype.isSelected = function(gridSource) {
   return this.selectedTab === gridSource.source.label;
 };
 
@@ -416,7 +429,7 @@ gmf.DisplayquerygridController.prototype.isSelected = function(gridSource) {
  * @return {Array.<ngeox.QueryResultSource>} The merged sources.
  * @private
  */
-gmf.DisplayquerygridController.prototype.getMergedSources_ = function(sources) {
+gmf.query.gridComponent.Controller_.prototype.getMergedSources_ = function(sources) {
   const allSources = [];
   /** @type {Object.<string, ngeox.QueryResultSource>} */
   const mergedSources = {};
@@ -449,7 +462,7 @@ gmf.DisplayquerygridController.prototype.getMergedSources_ = function(sources) {
  *    not be merged.
  * @private
  */
-gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mergedSources) {
+gmf.query.gridComponent.Controller_.prototype.getMergedSource_ = function(source, mergedSources) {
   let mergeSourceId = null;
 
   for (const currentMergeSourceId in this.mergeTabs_) {
@@ -511,7 +524,7 @@ gmf.DisplayquerygridController.prototype.getMergedSource_ = function(source, mer
  * @param {ngeox.QueryResultSource} source Result source.
  * @private
  */
-gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
+gmf.query.gridComponent.Controller_.prototype.collectData_ = function(source) {
   const features = source.features;
   const allProperties = [];
   const featureGeometriesNames = [];
@@ -547,7 +560,7 @@ gmf.DisplayquerygridController.prototype.collectData_ = function(source) {
  * @param {Array.<string>} featureGeometriesNames Geometry names.
  * @private
  */
-gmf.DisplayquerygridController.prototype.cleanProperties_ = function(
+gmf.query.gridComponent.Controller_.prototype.cleanProperties_ = function(
   allProperties, featureGeometriesNames) {
   allProperties.forEach((properties) => {
     featureGeometriesNames.forEach((featureGeometryName) => {
@@ -568,7 +581,7 @@ gmf.DisplayquerygridController.prototype.cleanProperties_ = function(
  * @param {Array.<Object>} allProperties A row.
  * @private
  */
-gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
+gmf.query.gridComponent.Controller_.prototype.removeEmptyColumnsFn_ = function(
   allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
   const keysToKeep = [];
@@ -604,7 +617,7 @@ gmf.DisplayquerygridController.prototype.removeEmptyColumnsFn_ = function(
  * @return {boolean} Returns true if a grid was created.
  * @private
  */
-gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
+gmf.query.gridComponent.Controller_.prototype.makeGrid_ = function(data, source) {
   const sourceLabel = `${source.label}`;
   let gridConfig = null;
   if (data !== null) {
@@ -629,7 +642,7 @@ gmf.DisplayquerygridController.prototype.makeGrid_ = function(data, source) {
  * @return {?ngeo.grid.Config} Grid config.
  * @private
  */
-gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
+gmf.query.gridComponent.Controller_.prototype.getGridConfiguration_ = function(
   data) {
   goog.asserts.assert(data.length > 0);
   const clone = {};
@@ -659,7 +672,7 @@ gmf.DisplayquerygridController.prototype.getGridConfiguration_ = function(
  * from the map.
  * @export
  */
-gmf.DisplayquerygridController.prototype.clear = function() {
+gmf.query.gridComponent.Controller_.prototype.clear = function() {
   this.active = false;
   this.pending = false;
   this.gridSources = {};
@@ -681,7 +694,7 @@ gmf.DisplayquerygridController.prototype.clear = function() {
  * @param {gmfx.GridSource} gridSource Grid source.
  * @export
  */
-gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
+gmf.query.gridComponent.Controller_.prototype.selectTab = function(gridSource) {
   const source = gridSource.source;
   this.selectedTab = source.label;
 
@@ -709,7 +722,7 @@ gmf.DisplayquerygridController.prototype.selectTab = function(gridSource) {
  * @private
  * @param {string|number} sourceLabel Id of the source that should be refreshed.
  */
-gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceLabel) {
+gmf.query.gridComponent.Controller_.prototype.reflowGrid_ = function(sourceLabel) {
   // this is a "work-around" to make sure that the grid is rendered correctly.
   // when a pane is activated by setting `this.selectedTab`, the class `active`
   // is not yet set on the pane. that's why the class is set manually, and
@@ -727,7 +740,7 @@ gmf.DisplayquerygridController.prototype.reflowGrid_ = function(sourceLabel) {
  * Called when the row selection has changed.
  * @private
  */
-gmf.DisplayquerygridController.prototype.onSelectionChanged_ = function() {
+gmf.query.gridComponent.Controller_.prototype.onSelectionChanged_ = function() {
   if (this.selectedTab === null) {
     return;
   }
@@ -741,7 +754,7 @@ gmf.DisplayquerygridController.prototype.onSelectionChanged_ = function() {
  * @param {gmfx.GridSource} gridSource Grid source
  * @private
  */
-gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) {
+gmf.query.gridComponent.Controller_.prototype.updateFeatures_ = function(gridSource) {
   this.features_.clear();
   this.highlightFeatures_.clear();
 
@@ -769,7 +782,7 @@ gmf.DisplayquerygridController.prototype.updateFeatures_ = function(gridSource) 
  * @export
  * @return {gmfx.GridSource|null} Grid source.
  */
-gmf.DisplayquerygridController.prototype.getActiveGridSource = function() {
+gmf.query.gridComponent.Controller_.prototype.getActiveGridSource = function() {
   if (this.selectedTab === null) {
     return null;
   } else {
@@ -783,7 +796,7 @@ gmf.DisplayquerygridController.prototype.getActiveGridSource = function() {
  * @export
  * @return {boolean} Is one selected?
  */
-gmf.DisplayquerygridController.prototype.isOneSelected = function() {
+gmf.query.gridComponent.Controller_.prototype.isOneSelected = function() {
   const source = this.getActiveGridSource();
   if (source === null || source.configuration === null) {
     return false;
@@ -798,7 +811,7 @@ gmf.DisplayquerygridController.prototype.isOneSelected = function() {
  * @export
  * @return {number} The number of selected rows.
  */
-gmf.DisplayquerygridController.prototype.getSelectedRowCount = function() {
+gmf.query.gridComponent.Controller_.prototype.getSelectedRowCount = function() {
   const source = this.getActiveGridSource();
   if (source === null || source.configuration === null) {
     return 0;
@@ -812,7 +825,7 @@ gmf.DisplayquerygridController.prototype.getSelectedRowCount = function() {
  * Select all rows of the currently active grid.
  * @export
  */
-gmf.DisplayquerygridController.prototype.selectAll = function() {
+gmf.query.gridComponent.Controller_.prototype.selectAll = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.selectAll();
@@ -824,7 +837,7 @@ gmf.DisplayquerygridController.prototype.selectAll = function() {
  * Unselect all rows of the currently active grid.
  * @export
  */
-gmf.DisplayquerygridController.prototype.unselectAll = function() {
+gmf.query.gridComponent.Controller_.prototype.unselectAll = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.unselectAll();
@@ -836,7 +849,7 @@ gmf.DisplayquerygridController.prototype.unselectAll = function() {
  * Invert the selection of the currently active grid.
  * @export
  */
-gmf.DisplayquerygridController.prototype.invertSelection = function() {
+gmf.query.gridComponent.Controller_.prototype.invertSelection = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.invertSelection();
@@ -848,7 +861,7 @@ gmf.DisplayquerygridController.prototype.invertSelection = function() {
  * Zoom to the selected features.
  * @export
  */
-gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
+gmf.query.gridComponent.Controller_.prototype.zoomToSelection = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const extent = ol.extent.createEmpty();
@@ -867,7 +880,7 @@ gmf.DisplayquerygridController.prototype.zoomToSelection = function() {
  * Start a CSV download for the selected features.
  * @export
  */
-gmf.DisplayquerygridController.prototype.downloadCsv = function() {
+gmf.query.gridComponent.Controller_.prototype.downloadCsv = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const columnDefs = source.configuration.columnDefs;
@@ -880,5 +893,5 @@ gmf.DisplayquerygridController.prototype.downloadCsv = function() {
 };
 
 
-gmf.module.controller('GmfDisplayquerygridController',
-  gmf.DisplayquerygridController);
+gmf.query.gridComponent.controller('GmfDisplayquerygridController',
+  gmf.query.gridComponent.Controller_);

@@ -3,7 +3,7 @@ goog.provide('gmfapp.wfspermalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowComponent');
+goog.require('gmf.query.windowComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -17,7 +17,10 @@ goog.require('ol.style.Circle');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+gmfapp.module = angular.module('gmfapp', [
+  gmf.module.name,
+  gmf.query.windowComponent.name,
+]);
 
 
 gmfapp.module.value('ngeoWfsPermalinkOptions',
@@ -58,7 +61,7 @@ gmfapp.MainController = function() {
   const stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the displayquerywindow directive
+   * FeatureStyle used by the gmf.query.windowComponent
    * @type {ol.style.Style}
    * @export
    */

@@ -3,7 +3,7 @@ goog.provide('gmf.AbstractMobileController');
 goog.require('gmf');
 goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowComponent');
+goog.require('gmf.query.windowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobile.measure.lengthComponent');
 /** @suppress {extraRequire} */

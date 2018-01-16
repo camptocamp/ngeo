@@ -7,7 +7,7 @@ goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdata.component');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridComponent');
+goog.require('gmf.query.gridComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawing.drawFeatureComponent');
 /** @suppress {extraRequire} */
