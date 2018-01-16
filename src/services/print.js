@@ -223,7 +223,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   // (1.) We loop on every layers and if one of them doesn't use native angle,
   // this set the global value to use for the print (default is true)
   layers.forEach((layer) => {
-    if (layer.getProperties()['printNativeAngle'] === false) {
+    if (layer.get('printNativeAngle') === false) {
       this.printNativeAngle_ = false;
     }
   });
