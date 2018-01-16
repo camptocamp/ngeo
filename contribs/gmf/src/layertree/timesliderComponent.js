@@ -45,7 +45,7 @@ gmf.layertree.timeSliderComponent.directive_ = function($timeout, $filter) {
     bindToController: true,
     controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
-    templateUrl: `${gmf.baseTemplateUrl}/timeslider.html`,
+    templateUrl: `${gmf.baseModuleTemplateUrl}/layertree/timesliderComponent.html`,
     link: /** @type {!angular.LinkingFunctions} */ ({
       pre: function preLink(scope, element, attrs, ctrl) {
         ctrl.init();
