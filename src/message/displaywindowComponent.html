@@ -1,10 +1,10 @@
 <div
-  class="gmf-displayquerywindow"
+  class="ngeo-displaywindow"
   ng-show="$ctrl.open"
   ng-style="$ctrl.style"
 >
 
-  <div class="gmf-displayquerywindow-container">
+  <div class="container">
 
     <button
       type="button"
@@ -12,19 +12,19 @@
       ng-click="$ctrl.close()">
     </button>
 
-    <div class="gmf-displayquerywindow-animation-container">
-      <div class="gmf-displayquerywindow-slide-animation ">
+    <div class="animation-container">
+      <div class="slide-animation ">
         <div
-          class="gmf-displayquerywindow-header"
+          class="header"
           ng-if="$ctrl.title !== null">
-          <p class="gmf-displayquerywindow-title">{{ $ctrl.title }}</p>
+          <p class="title">{{ $ctrl.title }}</p>
         </div>
         <div
-          class="gmf-displayquerywindow-details"
+          class="details"
           ng-if="$ctrl.content !== null"
           ng-bind-html="$ctrl.content"></div>
         <div
-          class="gmf-displayquerywindow-details"
+          class="details"
           ng-if="$ctrl.url !== null">
           <iframe
             frameborder="0"

@@ -1,6 +1,6 @@
 <div
   class="gmf-displayquerywindow"
-  ng-class="{'gmf-displayquerywindow-desktop': ctrl.desktop, 'gmf-displayquerywindow-mobile': !ctrl.desktop}"
+  ng-class="{'desktop': ctrl.desktop, 'mobile': !ctrl.desktop}"
   ng-show="ctrl.open"
   ngeo-swipe-up="ctrl.collapsed = false"
   ngeo-swipe-down="ctrl.collapsed = true"
@@ -10,14 +10,14 @@
   ng-swipe-right="ctrl.previous()">
 
   <button
-    class="gmf-displayquerywindow-collapse-button"
+    class="collapse-button"
     type="button"
     ng-show="::!ctrl.desktop"
     ng-click="ctrl.collapsed = !ctrl.collapsed"
-    ng-class="[ctrl.collapsed ? 'gmf-displayquerywindow-collapse-button-up' : 'gmf-displayquerywindow-collapse-button-down']">
+    ng-class="[ctrl.collapsed ? 'collapse-button-up' : 'collapse-button-down']">
   </button>
 
-  <div class="gmf-displayquerywindow-container">
+  <div class="container">
 
     <button
       type="button"
@@ -26,33 +26,33 @@
     </button>
 
     <div
-      class="gmf-displayquerywindow-animation-container"
-      ng-class="[ctrl.collapsed ? '' : 'gmf-displayquerywindow-animation-container-detailed', ctrl.isNext ? 'gmf-displayquerywindow-next' : 'gmf-displayquerywindow-previous']">
+      class="animation-container"
+      ng-class="[ctrl.collapsed ? '' : 'animation-container-detailed', ctrl.isNext ? 'next' : 'previous']">
 
       <div
         ng-animate-swap="ctrl.animate"
-        class="gmf-displayquerywindow-slide-animation gmf-animatable">
+        class="slide-animation gmf-animatable">
 
-        <div class="gmf-displayquerywindow-header">
+        <div class="header">
           <p
-            class="gmf-displayquerywindow-title"
+            class="title"
             >{{ctrl.source.label | translate}}</p>
           <p
-            class="gmf-displayquerywindow-subtitle"
+            class="subtitle"
             >{{ctrl.getFeatureValues()[ctrl.source.identifierAttributeField]}}</p>
         </div>
 
-        <div class="gmf-displayquerywindow-details">
+        <div class="details">
           <table>
             <tr
               ng-repeat="(key, value) in ctrl.getFeatureValues()"
               ng-if="value !== undefined">
               <td
-                class="gmf-displayquerywindow-details-key"
+                class="details-key"
                 ng-bind-html="key | translate | ngeoTrustHtml"
                 ></td>
               <td
-                class="gmf-displayquerywindow-details-value"
+                class="details-value"
                 ng-bind-html="value | ngeoTrustHtml"
                 ></td>
             </tr>
@@ -61,12 +61,12 @@
       </div>
     </div>
 
-    <div class="gmf-displayquerywindow-navigate">
+    <div class="navigate">
 
-      <div class="gmf-displayquerywindow-placeholder">
+      <div class="placeholder">
         <button
           type="button"
-          class="gmf-displayquerywindow-previous btn"
+          class="previous btn"
           ng-disabled="ctrl.isFirst()"
           ng-show="ctrl.getResultLength() > 1"
           ng-click="ctrl.previous()">
@@ -74,7 +74,7 @@
         </button>
       </div>
 
-      <div class="gmf-displayquerywindow-results">
+      <div class="results">
         <span ng-show="::!ctrl.desktop">{{'Result' | translate}}</span>
         <span>{{ctrl.currentResult + 1}}</span>
         <span>/</span>
@@ -130,10 +130,10 @@
         </div>
       </div>
 
-      <div class="gmf-displayquerywindow-placeholder">
+      <div class="placeholder">
         <button
           type="button"
-          class="gmf-displayquerywindow-next btn"
+          class="next btn"
           ng-disabled="ctrl.isLast()"
           ng-show="ctrl.getResultLength() > 1"
           ng-click="ctrl.next()">

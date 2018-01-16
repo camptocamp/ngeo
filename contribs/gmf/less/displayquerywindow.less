@@ -4,7 +4,7 @@
 @displayquerywindow-detailed-header-height: 5rem;
 @displayquerywindow-detailed-details-line-height: 2rem;
 @displayquerywindow-detailed-details-height: 8 * @displayquerywindow-detailed-details-line-height;
-.gmf-displayquerywindow {
+.gmf-displayquerywindow, .ngeo-displaywindow {
   width: @displayquerywindow-tablet-width;
   max-width: @displayquerywindow-tablet-width;
   margin-left: -@displayquerywindow-tablet-width / 2;
@@ -14,7 +14,7 @@
   max-height: 10 * @map-tools-size;
   position: fixed;
   z-index: @above-menus-index;
-  .gmf-displayquerywindow-collapse-button {
+  .collapse-button {
     background-color: @nav-bg;
     border: solid 1px @border-color;
     border-bottom-width: 0;
@@ -23,26 +23,27 @@
     height: @map-tools-size;
     width: @map-tools-size + @map-tools-size * 2/3;
   }
-  .gmf-displayquerywindow-collapse-button-up::after {
+  .collapse-button-up::after {
     content: @fa-var-chevron-up;
   }
-  .gmf-displayquerywindow-collapse-button-down::after {
+  .collapse-button-down::after {
     content: @fa-var-chevron-down;
   }
-  .gmf-displayquerywindow-container {
+  .container {
     background-color: @nav-bg;
     border: solid 1px @border-color;
     height: 24rem;
     position: relative;
+    width: 100%;
   }
-  .gmf-displayquerywindow-animation-container {
+  .animation-container {
     position: relative;
     overflow: hidden;
     // height with 2em: 1em per text (title, subtitle)
     height: calc(4 * @app-margin + @half-app-margin ~"+ 2em");
     margin: 0;
     transition: 0.3s ease-in all;
-    .gmf-displayquerywindow-slide-animation {
+    .slide-animation {
       display: flex;
       flex-direction: column;
       height: 100%;
@@ -60,14 +61,14 @@
       }
     }
   }
-  .gmf-displayquerywindow-animation-container-detailed {
+  .animation-container-detailed {
     height: ~"calc(100% - 3rem)";
-    .gmf-displayquerywindow-details {
+    .details {
       display: block;
     }
   }
-  .gmf-displayquerywindow-next {
-    .gmf-displayquerywindow-slide-animation {
+  .next {
+    .slide-animation {
       &.ng-enter,
       &.ng-enter-prepare {
         left: 100%;
@@ -80,8 +81,8 @@
       }
     }
   }
-  .gmf-displayquerywindow-previous {
-    .gmf-displayquerywindow-slide-animation {
+  .previous {
+    .slide-animation {
       &.ng-enter,
       &.ng-enter-prepare {
         left: -100%;
@@ -94,53 +95,52 @@
       }
     }
   }
-  .gmf-displayquerywindow-title {
+  .title {
     font-weight: bold;
   }
-  .gmf-displayquerywindow-details {
+  .details {
     display: none;
     flex: 1;
     line-height: @displayquerywindow-detailed-details-line-height;
     overflow-x: hidden;
     overflow-y: auto;
-    .gmf-displayquerywindow-details-key {
+    .details-key {
       padding-right: @app-margin;
     }
 
     /** word wrapping */
-    .gmf-displayquerywindow-details-key, .gmf-displayquerywindow-details-value {
+    .details-key, .details-value {
       white-space: normal;
     }
 
-    .gmf-displayquerywindow-slide-animation.ng-enter-active .gmf-displayquerywindow-details .gmf-displayquerywindow-details-value {
+    .slide-animation.ng-enter-active .details .details-value {
       white-space: nowrap;
     }
   }
-  .gmf-displayquerywindow-navigate {
+  .navigate {
     border-top: solid 1px @border-color;
     height: @map-tools-size;
     display: flex;
     justify-content: space-between;
     position: absolute;
     bottom: 0;
-    width: 100%;
-    .gmf-displayquerywindow-placeholder {
+    .placeholder {
       // these elements are necessary when only the middle element (results)
       // is shown to center it in the middle (with 'justify-content')
       height: 100%;
     }
-    .gmf-displayquerywindow-results {
+    .results {
       line-height: 0.9 * @map-tools-size;
       .dropup {
         display: inline;
       }
     }
-    .gmf-displayquerywindow-previous {
+    .previous {
       &::before {
         content: @fa-var-chevron-left;
       }
     }
-    .gmf-displayquerywindow-next {
+    .next {
       &::after {
         content: @fa-var-chevron-right;
       }
@@ -179,14 +179,14 @@
   }
 }
 
-.gmf-displayquerywindow-mobile {
+.gmf-displayquerywindow.mobile {
   button.close {
     font-size: 21px;
   }
 }
 
 @media (max-width: @screen-sm-min) {
-  .gmf-displayquerywindow-mobile {
+  .gmf-displayquerywindow.mobile {
     width: 100%;
     max-width: 100%;
     margin-left: -50%;
@@ -194,12 +194,12 @@
     left: 50%;
     bottom: 0;
     /** prevent glitch for swipe animation **/
-    .gmf-displayquerywindow-details table {
-      .gmf-displayquerywindow-details-key {
+    .details table {
+      .details-key {
         min-width: calc(~"30vw -" 2 * @app-margin);
         max-width: calc(~"30vw -" 2 * @app-margin);
       }
-      .gmf-displayquerywindow-details-value {
+      .details-value {
         min-width: calc(~"70vw -" 2 * @app-margin);
         max-width: calc(~"70vw -" 2 * @app-margin);
       }
@@ -209,8 +209,8 @@
 
 @media (orientation:landscape) {
   /* mobile landscape orientation */
-  .gmf-displayquerywindow-mobile {
-    .gmf-displayquerywindow-animation-container-detailed {
+  .gmf-displayquerywindow.mobile {
+    .animation-container-detailed {
       height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3);
     }
   }

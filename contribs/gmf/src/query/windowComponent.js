@@ -291,11 +291,11 @@ gmf.query.windowComponent.Controller_.prototype.$onInit = function() {
   this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
 
   if (this.desktop) {
-    this.element_.find('.gmf-displayquerywindow-container').draggable({
+    this.element_.find('.gmf-displayquerywindow .container').draggable({
       'cancel': 'input,textarea,button,select,option,tr',
       'containment': this.draggableContainment
     });
-    this.element_.find('.gmf-displayquerywindow-container').resizable({
+    this.element_.find('.gmf-displayquerywindow .container').resizable({
       'minHeight': 240,
       'minWidth': 240
     });
