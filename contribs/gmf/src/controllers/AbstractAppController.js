@@ -10,7 +10,7 @@ goog.require('gmf.displaywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.disclaimer.component');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowComponent');
+goog.require('gmf.query.windowComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
@@ -237,7 +237,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   const queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the displayquerywindow directive
+   * FeatureStyle used by the gmf.query.windowComponent
    * @type {ol.style.Style}
    * @export
    */

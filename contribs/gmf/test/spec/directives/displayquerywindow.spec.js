@@ -1,8 +1,8 @@
-goog.require('gmf.displayquerywindowComponent');
+goog.require('gmf.query.windowComponent');
 goog.require('ol.style.Style');
 goog.require('ol.Feature');
 
-describe('gmf.displayquerywindowComponent', () => {
+describe('gmf.query.windowComponent', () => {
 
   let displayQueriesController;
   let ngeoQueryResult;

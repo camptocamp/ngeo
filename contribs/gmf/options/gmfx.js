@@ -95,7 +95,7 @@ gmfx.GridSource.prototype.source;
 
 
 /**
- * Configuration option for {@link gmf.displayquerygridComponent} to merge
+ * Configuration option for {@link gmf.query.gridComponent} to merge
  * grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources

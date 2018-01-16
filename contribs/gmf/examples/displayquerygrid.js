@@ -2,11 +2,11 @@ goog.provide('gmfapp.displayquerygrid');
 
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.query.gridComponent');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.grid.module');
 goog.require('ngeo.map.module');
@@ -32,6 +32,7 @@ goog.require('ol.style.Style');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.layertree.component.name,
+  gmf.query.gridComponent.name,
   gmf.theme.Themes.module.name,
   ngeo.grid.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me

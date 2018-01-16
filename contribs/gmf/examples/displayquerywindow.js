@@ -2,11 +2,11 @@ goog.provide('gmfapp.displayquerywindow');
 
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.displayquerywindowComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.mapDirective');
+/** @suppress {extraRequire} */
+goog.require('gmf.query.windowComponent');
 goog.require('gmf.theme.Themes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -32,6 +32,7 @@ goog.require('ngeo.map.module');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.layertree.component.name,
+  gmf.query.windowComponent.name,
   gmf.theme.Themes.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeo.misc.btnComponent.name,
@@ -102,7 +103,7 @@ gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
   const stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
 
   /**
-   * FeatureStyle used by the displayquerywindow directive
+   * FeatureStyle used by the gmf.query.windowComponent
    * @type {ol.style.Style}
    * @export
    */
