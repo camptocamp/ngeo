@@ -6,8 +6,6 @@ goog.require('gmf.backgroundlayerselector.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.DataSourcesManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.displaywindowComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.disclaimer.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.query.windowComponent');
@@ -29,6 +27,8 @@ goog.require('ngeo.filters');
 goog.require('ngeo.query.MapQuerent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.message.displaywindowComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.FeatureHelper');
 /** @suppress {extraRequire} */

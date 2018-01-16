@@ -1,15 +1,21 @@
-goog.provide('gmf.displaywindowComponent');
+goog.provide('ngeo.message.displaywindowComponent');
 
-goog.require('gmf');
+goog.require('ngeo');
 
+/**
+ * @type {!angular.Module}
+ */
+ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowComponent', []);
+
+ngeo.module.requires.push(ngeo.message.displaywindowComponent.name);
 
 /**
  * @private
  */
-gmf.DisplaywindowController = class {
+ngeo.message.displaywindowComponent.Controller_ = class {
 
   /**
-   * The `gmf-displaywindow` component is an alternative to the `ngeo.message.Popup`.
+   * The `ngeo-displaywindow` component is an alternative to the `ngeo.message.Popup`.
    * What they have in common:
    *
    * - support title
@@ -22,8 +28,6 @@ gmf.DisplaywindowController = class {
    *
    * - it supports being dragged
    * - it supports being resized
-   * - its UI looks exactly like the `gmf-displayquerywindow`. It evens
-   *   borrows some CSS class names and its HTML structure.
    *
    * @param {!jQuery} $element Element.
    * @param {!angular.$sce} $sce Angular sce service.
@@ -31,7 +35,7 @@ gmf.DisplaywindowController = class {
    * @struct
    * @ngInject
    * @ngdoc controller
-   * @ngname GmfDisplaywindowController
+   * @ngname ngeoDisplaywindowComponentController
    */
   constructor($element, $sce) {
 
@@ -142,14 +146,14 @@ gmf.DisplaywindowController = class {
 
     // Draggable
     if (this.draggable) {
-      this.element_.find('.gmf-displayquerywindow-container').draggable({
+      this.element_.find('.ngeo-displaywindow-container').draggable({
         'containment': this.draggableContainment
       });
     }
 
     // Resizable
     if (this.resizable) {
-      this.element_.find('.gmf-displayquerywindow-container').resizable({
+      this.element_.find('.ngeo-displaywindow-container').resizable({
         'minHeight': 240,
         'minWidth': 240
       });
@@ -200,7 +204,7 @@ gmf.DisplaywindowController = class {
 };
 
 
-gmf.module.component('gmfDisplaywindow', {
+ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<',
     'content': '=',
@@ -214,6 +218,6 @@ gmf.module.component('gmfDisplaywindow', {
     'url': '=',
     'width': '='
   },
-  controller: gmf.DisplaywindowController,
-  templateUrl: () => `${gmf.baseTemplateUrl}/displaywindow.html`
+  controller: ngeo.message.displaywindowComponent.Controller_,
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/message/displaywindowComponent.html`
 });
