@@ -56,9 +56,9 @@ ngeo.WMSTime.prototype.formatTimeValue = function(time, resolution, opt_useISOFo
   // Localized format.
   if (!opt_useISOFormat) {
     const gettextCatalog = this.gettextCatalog_;
-    yearResolution = gettextCatalog.getString('yy');
-    monthResolution = gettextCatalog.getString('M/yy');
-    dayResolution = gettextCatalog.getString('M/d/yy');
+    yearResolution = gettextCatalog.getString('yyyy');
+    monthResolution = gettextCatalog.getString('M/yyyy');
+    dayResolution = gettextCatalog.getString('M/d/yyyy');
   }
 
   switch (resolution) {
