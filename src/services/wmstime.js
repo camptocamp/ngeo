@@ -9,13 +9,14 @@ goog.require('goog.asserts');
  * ngeo - WMS time service
  * @extends {ngeo.Time}
  * @param {angular.$filter} $filter angular filter service.
+ * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @struct
  * @ngInject
  * @ngdoc service
  * @ngname ngeoWMSTime
  */
-ngeo.WMSTime  = function($filter) {
+ngeo.WMSTime  = function($filter, gettextCatalog) {
 
   /**
    * @private
@@ -23,31 +24,50 @@ ngeo.WMSTime  = function($filter) {
    */
   this.$filter_ = $filter;
 
+  /**
+   * @type {!angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
+
   ngeo.Time.call(this);
 };
 ol.inherits(ngeo.WMSTime, ngeo.Time);
 
 
 /**
- * ngeoWMSTime.prototype.formatWMSTimeValue_ - Format time regarding a
- * resolution
- *
+ * Format time regarding a resolution
  * @param  {number} time (in ms format) timestamp to format
- * @param  {ngeox.TimePropertyResolutionEnum} resolution resolution to use
+ * @param  {(ngeox.TimePropertyResolutionEnum|undefined)} resolution resolution to use
+ * @param  {boolean=} opt_useISOFormat True to a ISO-8601 date string that can be used
+ *     as a WMS-T Parameter. Otherwise, use a localized date format.
  * @param  {boolean=} opt_toUTC to get the UTC date
- * @return {string} ISO-8601 date string regarding the resolution
- * @private
+ * @return {string} Date string regarding the resolution.
  */
-ngeo.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUTC) {
+ngeo.WMSTime.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
   const date = new Date(time);
   const utc = opt_toUTC ? 'UTC' : undefined;
+
+  // ISO-8601 format to use date as a WMS-T Parameter.
+  let yearResolution = 'yyyy';
+  let monthResolution = 'yyyy-MM';
+  let dayResolution = 'yyyy-MM-dd';
+
+  // Localized format.
+  if (!opt_useISOFormat) {
+    const gettextCatalog = this.gettextCatalog_;
+    yearResolution = gettextCatalog.getString('yy');
+    monthResolution = gettextCatalog.getString('M/yy');
+    dayResolution = gettextCatalog.getString('M/d/yy');
+  }
+
   switch (resolution) {
     case 'year':
-      return this.$filter_('date')(date, 'yyyy', utc);
+      return this.$filter_('date')(date, yearResolution, utc);
     case 'month':
-      return this.$filter_('date')(date, 'yyyy-MM', utc);
+      return this.$filter_('date')(date, monthResolution, utc);
     case 'day':
-      return this.$filter_('date')(date, 'yyyy-MM-dd', utc);
+      return this.$filter_('date')(date, dayResolution, utc);
     default:
       //case "second":
       return date.toISOString().replace(/\.\d{3}/, '');
@@ -56,9 +76,7 @@ ngeo.WMSTime.prototype.formatWMSTimeValue_ = function(time, resolution, opt_toUT
 
 
 /**
- * ngeoWMSTime.prototype.formatWMSTimeParam - Format time to be used as a
- * WMS Time query parameter
- *
+ * Format time to be used as a WMS Time query parameter
  * @param  {ngeox.TimeProperty} wmsTimeProperty a wmstime property from a node
  * @param  {{start : number, end : (number|undefined)}} times start & end time selected (in ms format)
  * @param  {boolean=} opt_toUTC to get the UTC date
@@ -71,11 +89,11 @@ ngeo.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt
   if (wmsTimeProperty.mode === 'range') {
     goog.asserts.assert(times.end !== undefined);
     return (
-      `${this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC)}/${
-        this.formatWMSTimeValue_(times.end, wmsTimeProperty.resolution, opt_toUTC)}`
+      `${this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC)}/${
+        this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`
     );
   } else {
-    return this.formatWMSTimeValue_(times.start, wmsTimeProperty.resolution, opt_toUTC);
+    return this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC);
   }
 };
 
