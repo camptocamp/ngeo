@@ -217,7 +217,7 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
 
   const mapLayerGroup = map.getLayerGroup();
   goog.asserts.assert(mapLayerGroup);
-  this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') !== false);
+  this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
