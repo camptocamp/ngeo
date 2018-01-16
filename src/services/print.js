@@ -216,19 +216,11 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
-  goog.asserts.assert(mapLayerGroup !== null);
+  goog.asserts.assert(mapLayerGroup);
+  this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') !== false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
-  // (1.) We loop on every layers and if one of them doesn't use native angle,
-  // this set the global value to use for the print (default is true)
-  layers.forEach((layer) => {
-    if (layer.get('printNativeAngle') === false) {
-      this.printNativeAngle_ = false;
-    }
-  });
-
-  // (2.) We encode the layers
   layers.forEach((layer) => {
     if (layer.getVisible()) {
       goog.asserts.assert(viewResolution !== undefined);
