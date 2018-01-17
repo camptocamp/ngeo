@@ -390,14 +390,21 @@ ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {
   const event = new ngeo.CustomEvent('measureend', {feature: this.sketchFeature});
   this.dispatchEvent(event);
   this.sketchFeature = null;
-  goog.asserts.assert(this.changeEventKey_ !== null);
-  goog.asserts.assert(this.postcomposeEventKey_ !== null);
-  ol.events.unlistenByKey(this.changeEventKey_);
-  ol.events.unlistenByKey(this.postcomposeEventKey_);
-  this.changeEventKey_ = null;
-  this.postcomposeEventKey_ = null;
+  this.unlistenerEvent_();
 };
 
+/**
+ * Handle unlistener events for 'end of drawing' interaction
+ * @private
+ */
+ngeo.interaction.Measure.prototype.unlistenerEvent_ = function() {
+  if (this.changeEventKey_ !== null && this.postcomposeEventKey_ !== null) {
+    ol.events.unlistenByKey(this.changeEventKey_);
+    ol.events.unlistenByKey(this.postcomposeEventKey_);
+    this.changeEventKey_ = null;
+    this.postcomposeEventKey_ = null;
+  }
+};
 
 /**
  * Creates a new help tooltip
@@ -488,6 +495,7 @@ ngeo.interaction.Measure.prototype.updateState_ = function() {
     this.getMap().removeOverlay(this.measureTooltipOverlay_);
     this.removeMeasureTooltip_();
     this.removeHelpTooltip_();
+    this.unlistenerEvent_();
   }
 };
 

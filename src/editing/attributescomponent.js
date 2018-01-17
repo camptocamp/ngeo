@@ -4,6 +4,8 @@ goog.require('ol');
 goog.require('ol.events');
 goog.require('ngeo');
 goog.require('ngeo.misc.EventHelper');
+/** @suppress {extraRequire} */
+goog.require('ngeo.datetimepickerDirective');
 
 
 ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
@@ -11,6 +13,7 @@ ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
 ]);
 
 ngeo.module.requires.push(ngeo.editing.attributesComponent.name);
+
 
 /**
  * Component used to render the attributes of a feature into a form.
@@ -50,7 +53,6 @@ ngeo.editing.attributesComponent.component('ngeoAttributes', ngeo.editing.attrib
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
  * @struct
@@ -58,7 +60,7 @@ ngeo.editing.attributesComponent.component('ngeoAttributes', ngeo.editing.attrib
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */
-ngeo.editing.attributesComponent.Controller_ = function($scope, ngeoEventHelper, gettextCatalog) {
+ngeo.editing.attributesComponent.Controller_ = function($scope, ngeoEventHelper) {
 
   /**
    * The list of attributes to create the form with.
@@ -102,23 +104,6 @@ ngeo.editing.attributesComponent.Controller_ = function($scope, ngeoEventHelper,
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * The gettext catalog
-   * @type {!angularGettext.Catalog}
-   * @private
-   */
-  this.gettextCatalog_ = gettextCatalog;
-
-  /**
-   * Datepicker options
-   * @type {Object}
-   * @export
-   */
-  this.dateOptions = {
-    'changeMonth': true,
-    'changeYear': true
-  };
-
-  /**
    * While changes happen from the form (from the template), they are applied
    * to the feature inner properties. The 'propertychange' event registered
    * above does the opposite, i.e. it listens to the feature inner properties
@@ -144,9 +129,6 @@ ngeo.editing.attributesComponent.Controller_.prototype.$onInit = function() {
     uid,
     ol.events.listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
   );
-
-  const lang = this.gettextCatalog_.getCurrentLanguage();
-  $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 };
 
 

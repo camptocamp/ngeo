@@ -160,7 +160,7 @@ gmf.query.windowComponent.Controller_ = function($element, $scope, ngeoQueryResu
   };
 
   /**
-   * @type {ngeo.query.MapQuerent}
+   * @type {!ngeo.query.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
@@ -172,7 +172,7 @@ gmf.query.windowComponent.Controller_ = function($element, $scope, ngeoQueryResu
   this.selectedSource = null;
 
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.features_ = new ol.Collection();
@@ -184,26 +184,19 @@ gmf.query.windowComponent.Controller_ = function($element, $scope, ngeoQueryResu
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
-   * @private
-   */
-  this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
-
-  /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.highlightFeatures_ = new ol.Collection();
-  this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
   /**
-   * @type {ngeox.QueryResultSource?}
+   * @type {?ngeox.QueryResultSource}
    * @export
    */
   this.source = null;
 
   /**
-   * @type {ol.Feature}
+   * @type {?ol.Feature}
    * @export
    */
   this.feature = null;
@@ -265,13 +258,15 @@ gmf.query.windowComponent.Controller_.prototype.$onInit = function() {
   this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
     featuresOverlay.setStyle(featuresStyle);
   }
-  featuresOverlay.setFeatures(this.features_);
 
+  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
     goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
@@ -288,7 +283,7 @@ gmf.query.windowComponent.Controller_.prototype.$onInit = function() {
       stroke: stroke
     });
   }
-  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+  highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
 
   if (this.desktop) {
     this.element_.find('.gmf-displayquerywindow .container').draggable({

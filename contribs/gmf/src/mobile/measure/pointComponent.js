@@ -57,7 +57,7 @@ gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
  *
  * @htmlAttribute {boolean} gmf-mobile-measurepoint-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurepoint-Coordinatedecimals number
+ * @htmlAttribute {number=} gmf-mobile-measurepoint-coordinatedecimals number
  *     of decimal to display for the coordinate.
  * @htmlAttribute {Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
@@ -81,7 +81,8 @@ gmf.mobile.measure.pointComponent.component_ =
           'getCoordinateDecimalsFn': '&?gmfMobileMeasurepointCoordinatedecimals',
           'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
           'map': '=gmfMobileMeasurepointMap',
-          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle'
+          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle',
+          'format': '<gmfMobileMeasurepointFormat'
         },
         controller: 'GmfMobileMeasurePointController as ctrl',
         bindToController: true,
@@ -203,26 +204,21 @@ gmf.mobile.measure.pointComponent.Controller_ = function(gettextCatalog, $scope,
   }
 
   /**
+   * @type {string}
+   */
+  this.format;
+
+  /**
    * @type {ngeo.interaction.MeasurePointMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasurePointMobile(
-    /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')), {
-      decimals: this.coordinateDecimals,
-      sketchStyle: this.sketchStyle
-    });
-
-  this.measure.setActive(this.active);
-  ngeo.misc.decorate.interaction(this.measure);
+  this.measure;
 
   /**
    * @type {ngeo.interaction.MobileDraw}
    * @export
    */
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
-    this.measure.getDrawInteraction());
-
-  ngeo.misc.decorate.interaction(this.drawInteraction);
+  this.drawInteraction;
 
   /**
    * The key for map view 'propertychange' event.
@@ -237,6 +233,19 @@ gmf.mobile.measure.pointComponent.Controller_ = function(gettextCatalog, $scope,
  * Initialise the controller.
  */
 gmf.mobile.measure.pointComponent.Controller_.prototype.init = function() {
+  this.measure = new ngeo.interaction.MeasurePointMobile(
+    /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
+    this.format || '{x}, {y}',
+    {
+      decimals: this.coordinateDecimals,
+      sketchStyle: this.sketchStyle
+    }
+  );
+  this.measure.setActive(this.active);
+  ngeo.misc.decorate.interaction(this.measure);
+  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (this.measure.getDrawInteraction());
+  ngeo.misc.decorate.interaction(this.drawInteraction);
+
   const layersConfig = this['getLayersConfigFn']();
   goog.asserts.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;

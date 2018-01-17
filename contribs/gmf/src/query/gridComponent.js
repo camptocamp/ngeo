@@ -105,7 +105,7 @@ gmf.query.gridComponent.component_ = {
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
     'featuresStyleFn': '&gmfDisplayquerygridFeaturesstyle',
-    'selectedFeatureStyleFn': '&gmfDisplayquerygridSourceselectedfeaturestyle',
+    'selectedFeatureStyleFn': '&gmfDisplayquerygridSelectedfeaturestyle',
     'getMapFn': '&gmfDisplayquerygridMap',
     'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
     'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
@@ -122,15 +122,15 @@ gmf.query.gridComponent.component('gmfDisplayquerygrid', gmf.query.gridComponent
 /**
  * Controller for the query grid.
  *
- * @param {angular.$injector} $injector Main injector.
+ * @param {!angular.$injector} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
- * @param {ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.download.Csv} ngeoCsvDownload CSV download service.
- * @param {angular.JQLite} $element Element.
+ * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
+ * @param {!angular.JQLite} $element Element.
  * @constructor
  * @private
  * @ngInject
@@ -151,31 +151,31 @@ gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResul
   this.$scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {!angular.$timeout}
    * @private
    */
   this.$timeout_ = $timeout;
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {!ngeox.QueryResult}
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {ngeo.query.MapQuerent}
+   * @type {!ngeo.query.MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {ngeo.download.Csv}
+   * @type {!ngeo.download.Csv}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {angular.JQLite}
+   * @type {!angular.JQLite}
    * @private
    */
   this.$element_ = $element;
@@ -206,7 +206,7 @@ gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResul
 
   /**
    * IDs of the grid sources in the order they were loaded.
-   * @type {Array.<string>}
+   * @type {!Array.<string>}
    * @export
    */
   this.loadedGridSources = [];
@@ -247,23 +247,22 @@ gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResul
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.features_ = new ol.Collection();
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {!ngeo.map.FeatureOverlayMgr}
    * @private
    */
-  this.highlightFeatureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {ol.Collection}
+   * @type {!ol.Collection}
    * @private
    */
   this.highlightFeatures_ = new ol.Collection();
-  this.highlightFeatureOverlay_.setFeatures(this.highlightFeatures_);
 
   /**
    * Filename
@@ -305,13 +304,16 @@ gmf.query.gridComponent.Controller_.prototype.$onInit = function() {
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
   this.mergeTabs_ = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
 
+  const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
     goog.asserts.assertInstanceof(featuresStyle, ol.style.Style);
-    this.highlightFeatureOverlay_.setStyle(featuresStyle);
+    featuresOverlay.setStyle(featuresStyle);
   }
-  this.highlightFeatureOverlay_.setFeatures(this.features_);
 
+  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
     goog.asserts.assertInstanceof(highlightFeatureStyle, ol.style.Style);
@@ -329,7 +331,7 @@ gmf.query.gridComponent.Controller_.prototype.$onInit = function() {
       zIndex: 10
     });
   }
-  this.highlightFeatureOverlay_.setStyle(highlightFeatureStyle);
+  highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
 
   const mapFn = this['getMapFn'];
   if (mapFn) {
@@ -378,6 +380,7 @@ gmf.query.gridComponent.Controller_.prototype.updateData_ = function() {
     if (source.tooManyResults) {
       this.makeGrid_(null, source);
     } else {
+      source.id = this.escapeValue_(source.id);
       const features = source.features;
       if (features.length > 0) {
         this.collectData_(source);
@@ -385,7 +388,7 @@ gmf.query.gridComponent.Controller_.prototype.updateData_ = function() {
     }
   });
 
-  if (this.loadedGridSources.length == 0) {
+  if (this.loadedGridSources.length === 0) {
     // if no grids were created, do not show
     this.active = false;
     return;
@@ -409,6 +412,26 @@ gmf.query.gridComponent.Controller_.prototype.updateData_ = function() {
  */
 gmf.query.gridComponent.Controller_.prototype.hasOneWithTooManyResults_ = function() {
   return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
+};
+
+/**
+ * Returns an escaped value.
+ * @param {string|number} value A value to escape.
+ * @returns {string|number} value An escaped value.
+ * @private
+ */
+gmf.query.gridComponent.Controller_.prototype.escapeValue_ = function(value) {
+  // Work-around for Number.isInteger() when not always getting a number ...
+  if (Number.isInteger(/** @type {number} */ (value))) {
+    return value;
+  } else {
+    const toEscape = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\ |]/g;
+    if (value.match(toEscape) !== null) {
+      return value.replace(toEscape, '_');
+    } else {
+      return value;
+    }
+  }
 };
 
 
@@ -714,21 +737,21 @@ gmf.query.gridComponent.Controller_.prototype.selectTab = function(gridSource) {
   }
   this.updateFeatures_(gridSource);
 
-  this.reflowGrid_(this.selectedTab);
+  this.reflowGrid_(source.id);
 };
 
 
 /**
  * @private
- * @param {string|number} sourceLabel Id of the source that should be refreshed.
+ * @param {string|number} sourceId Id of the source that should be refreshed.
  */
-gmf.query.gridComponent.Controller_.prototype.reflowGrid_ = function(sourceLabel) {
-  // this is a "work-around" to make sure that the grid is rendered correctly.
-  // when a pane is activated by setting `this.selectedTab`, the class `active`
-  // is not yet set on the pane. that's why the class is set manually, and
+gmf.query.gridComponent.Controller_.prototype.reflowGrid_ = function(sourceId) {
+  // This is a "work-around" to make sure that the grid is rendered correctly.
+  // When a pane is activated by setting `this.selectedTab`, the class `active`
+  // is not yet set on the pane. That's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
-  const activePane = this.$element_.find(`div.tab-pane#${sourceLabel}`);
+  const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
   activePane.removeClass('active').addClass('active');
   this.$timeout_(() => {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');

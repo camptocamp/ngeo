@@ -7,6 +7,7 @@ goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
+goog.require('ol.events');
 
 
 /**
@@ -61,20 +62,23 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * Example:
  *
  *      <gmf-authentication
- *        gmf-authentication-allow-password-reset="true"
- *        gmf-authentication-allow-password-change="true">
+ *        gmf-authentication-allow-password-change="::true">
  *      </gmf-authentication>
  *
- * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true.
  * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
  *     show the password forgotten link. Default to true.
+ * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
+ *     show the change password button. Default to true.
+ * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
+ *     user to change its password. Default to false. If you set it to true, you
+ *     should also allow the user to change its password.
  * @ngdoc component
  * @ngname gmfAuthentication
  */
 gmf.authentication.component.component_ = {
   bindings: {
-    'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange'
+    'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
+    'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange'
   },
   controller: 'GmfAuthenticationController',
   templateUrl: gmfAuthenticationTemplateUrl
@@ -149,6 +153,12 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @type {boolean}
      * @export
      */
+    this.forcePasswordChange;
+
+    /**
+     * @type {boolean}
+     * @export
+     */
     this.changingPassword = false;
 
     /**
@@ -202,18 +212,17 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @export
      */
     this.newPwdConfVal = '';
+
+    ol.events.listen(gmfAuthenticationService, 'ready', this.onLoginReady_.bind(this));
   }
 
   /**
    * Initialise the controller.
    */
   $onInit() {
-    if (this.allowPasswordReset === undefined) {
-      this.allowPasswordReset = true;
-    }
-    if (this.allowPasswordChange === undefined) {
-      this.allowPasswordChange = true;
-    }
+    this.allowPasswordReset = this.allowPasswordReset !== false;
+    this.allowPasswordChange = this.allowPasswordChange !== false;
+    this.forcePasswordChange = this.forcePasswordChange === true;
   }
 
 
@@ -347,6 +356,23 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.newPwdVal = '';
     this.newPwdConfVal = '';
   }
+
+
+  /**
+   * @param {gmfx.AuthenticationEvent} e GMF Authentication event.
+   * @private
+   */
+  onLoginReady_(e) {
+    if (e.detail.user.is_password_changed === false && this.forcePasswordChange) {
+      const gettextCatalog = this.gettextCatalog;
+      const msg = gettextCatalog.getString('You must change your password.');
+      this.notification_.notify({
+        msg: msg,
+        type: ngeo.message.Message.Type.WARNING
+      });
+    }
+  }
+
 
   /**
    * @param {string|Array.<string>} errors Errors.

@@ -25,12 +25,16 @@
     <main>
       <div class="gmf-app-data-panel">
         <div class="gmf-app-header">
-          <div class="dropdown">
-            <a href class="btn btn-default btn-block btn-primary"
-              data-toggle="dropdown">
-              <span class="fa fa-grid"></span>
-              <span translate>Themes</span>
-              <span class="caret"></span>
+          <div class="dropdown" ng-cloak>
+            <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+              <span ng-if="mainCtrl.gmfThemeManager.isLoading()">
+                <span translate>Loading...</span>
+              </span>
+              <span ng-if="!mainCtrl.gmfThemeManager.isLoading()">
+                <span class="fa fa-grid"></span>
+                <span translate>Themes</span>
+                <span class="caret"></span>
+              </span>
             </a>
             <gmf-themeselector class="dropdown-menu"
               gmf-themeselector-currenttheme="mainCtrl.theme"
@@ -100,7 +104,10 @@
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
-              <gmf-authentication gmf-authentication-allow-password-reset="false" gmf-authentication-allow-password-change="false"></gmf-authentication>
+              <gmf-authentication
+                  gmf-authentication-allow-password-reset="::false"
+                  gmf-authentication-allow-password-change="::false">
+              </gmf-authentication>
             </div>
           </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">
@@ -229,6 +236,7 @@
           gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
           gmf-search-colorchooser="::true"
           gmf-search-placeholder="{{'Search…'|translate}}"
+          gmf-search-delay="mainCtrl.searchDelay"
           gmf-search-clearbutton="::true">
         </gmf-search>
         <ngeo-displaywindow
@@ -337,6 +345,7 @@
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../third-party/jquery-ui/jquery-ui.js"></script>
     <script src="../../../../node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+    <script src="../../../../node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"></script>
     <script src="../../../../node_modules/angular/angular.js"></script>
     <script src="../../../../node_modules/angular-animate/angular-animate.js"></script>
     <script src="../../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
@@ -408,6 +417,9 @@
               defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
               defaultFeaturePrefix: 'feature'
             }));
+        module.constant('ngeoQueryOptions', {
+          limit: 50
+        })
       })();
     </script>
   </body>

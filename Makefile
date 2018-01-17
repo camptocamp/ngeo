@@ -7,6 +7,7 @@ NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
+CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("@camptocamp/closure-util").getLibraryPath())' 2> /dev/null)
 
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
@@ -48,7 +49,9 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/url-polyfill/url-polyfill.js \
 	third-party/jquery-ui/jquery-ui.js \
 	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
+	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js \
 	node_modules/google-closure-library/closure/goog/transpile.js \
+	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js \
 	utils/ios-overlap-fix.js
 else
 GMF_APPS_LIBS_JS_FILES += \
@@ -74,6 +77,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/url-polyfill/url-polyfill.min.js \
 	third-party/jquery-ui/jquery-ui.min.js \
 	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
+	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js \
 	utils/ios-overlap-fix.js
 endif
 
@@ -979,9 +983,7 @@ transifex-send: .build/python-venv/bin/tx \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
 	.build/python-venv/bin/tx push --source
-	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx push --source
-	cd -
+	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --source
 
 .PHONY: transifex-init
 transifex-init: .build/python-venv/bin/tx \
@@ -993,10 +995,8 @@ transifex-init: .build/python-venv/bin/tx \
 	.build/python-venv/bin/tx push --source --force --no-interactive
 	.build/python-venv/bin/tx push --translations --force --no-interactive
 
-	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx push --source --force --no-interactive
-	.build/python-venv/bin/tx push --translations --force --no-interactive
-	cd -
+	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --source --force --no-interactive
+	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --translations --force --no-interactive
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
 	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed

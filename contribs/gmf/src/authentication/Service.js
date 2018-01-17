@@ -191,6 +191,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
     /** @type {gmfx.AuthenticationEvent} */
     const event = new ngeo.CustomEvent('logout', {user: this.user_});
     this.dispatchEvent(event);
+    this.load_();
   }
 };
 
