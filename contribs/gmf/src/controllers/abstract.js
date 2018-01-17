@@ -412,9 +412,7 @@ gmf.AbstractController = function(config, $scope, $injector) {
 
   $scope.$root.$on(gmf.ThemeManagerEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
-      if (theme) {
-        this.setDefaultBackground_(theme);
-      }
+      this.setDefaultBackground_(theme);
     });
   });
 
@@ -601,7 +599,7 @@ gmf.AbstractController.prototype.setDefaultBackground_ = function(theme) {
       layer = gmf.AbstractController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }
 
-    if (!layer) {
+    if (!layer && theme) {
       // get the background from the theme
       layer = gmf.AbstractController.getLayerByLabels(layers, theme.functionalities.default_basemap);
     }

@@ -922,8 +922,8 @@ gmf.Permalink.prototype.initLayers_ = function() {
     const themeName = this.defaultThemeName();
     goog.asserts.assert(themeName !== null);
 
-    if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
-      this.gmfThemeManager_.setThemeName(themeName);
+    if (this.gmfThemeManager_) {
+      this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
     }
 
     /**
