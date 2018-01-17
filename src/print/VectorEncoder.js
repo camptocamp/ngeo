@@ -171,20 +171,20 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyle = function(object, geometry
   const textStyle = style.getText();
   if (styleType === ngeo.print.VectorEncoder.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
-      this.encodeVectorStylePolygon_(
+      this.encodeVectorStylePolygon(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
   } else if (styleType === ngeo.print.VectorEncoder.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
-      this.encodeVectorStyleLine_(styleObject.symbolizers, strokeStyle);
+      this.encodeVectorStyleLine(styleObject.symbolizers, strokeStyle);
     }
   } else if (styleType === ngeo.print.VectorEncoder.PrintStyleType.POINT) {
     if (imageStyle !== null) {
-      this.encodeVectorStylePoint_(styleObject.symbolizers, imageStyle);
+      this.encodeVectorStylePoint(styleObject.symbolizers, imageStyle);
     }
   }
   if (textStyle !== null) {
-    this.encodeTextStyle_(styleObject.symbolizers, textStyle);
+    this.encodeTextStyle(styleObject.symbolizers, textStyle);
   }
 };
 
@@ -192,9 +192,9 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyle = function(object, geometry
 /**
  * @param {MapFishPrintSymbolizerPoint|MapFishPrintSymbolizerPolygon} symbolizer MapFish Print symbolizer.
  * @param {!ol.style.Fill} fillStyle Fill style.
- * @private
+ * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyleFill_ = function(symbolizer, fillStyle) {
+ngeo.print.VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
     goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
@@ -210,13 +210,13 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleFill_ = function(symbolizer,
  * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
  *     symbolizers.
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
- * @private
+ * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyleLine_ = function(symbolizers, strokeStyle) {
+ngeo.print.VectorEncoder.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
-  this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
+  this.encodeVectorStyleStroke(symbolizer, strokeStyle);
   symbolizers.push(symbolizer);
 };
 
@@ -225,9 +225,9 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleLine_ = function(symbolizers
  * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
  *     symbolizers.
  * @param {!ol.style.Image} imageStyle Image style.
- * @private
+ * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint_ = function(symbolizers, imageStyle) {
+ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
   let symbolizer;
   if (imageStyle instanceof ol.style.Circle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -236,11 +236,11 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint_ = function(symbolizer
     symbolizer.pointRadius = imageStyle.getRadius();
     const fillStyle = imageStyle.getFill();
     if (fillStyle !== null) {
-      this.encodeVectorStyleFill_(symbolizer, fillStyle);
+      this.encodeVectorStyleFill(symbolizer, fillStyle);
     }
     const strokeStyle = imageStyle.getStroke();
     if (strokeStyle !== null) {
-      this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
+      this.encodeVectorStyleStroke(symbolizer, strokeStyle);
     }
   } else if (imageStyle instanceof ol.style.Icon) {
     const src = imageStyle.getSrc();
@@ -302,11 +302,11 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint_ = function(symbolizer
       }
       const strokeShape = imageStyle.getStroke();
       if (strokeShape !== null) {
-        this.encodeVectorStyleStroke_(symbolizer, strokeShape);
+        this.encodeVectorStyleStroke(symbolizer, strokeShape);
       }
       const fillShape = imageStyle.getFill();
       if (fillShape !== null) {
-        this.encodeVectorStyleFill_(symbolizer, fillShape);
+        this.encodeVectorStyleFill(symbolizer, fillShape);
       }
     }
   }
@@ -321,15 +321,15 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint_ = function(symbolizer
  *     symbolizers.
  * @param {!ol.style.Fill} fillStyle Fill style.
  * @param {ol.style.Stroke} strokeStyle Stroke style.
- * @private
+ * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStylePolygon_ = function(symbolizers, fillStyle, strokeStyle) {
+ngeo.print.VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
-  this.encodeVectorStyleFill_(symbolizer, fillStyle);
+  this.encodeVectorStyleFill(symbolizer, fillStyle);
   if (strokeStyle !== null) {
-    this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
+    this.encodeVectorStyleStroke(symbolizer, strokeStyle);
   }
   symbolizers.push(symbolizer);
 };
@@ -339,9 +339,9 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePolygon_ = function(symboliz
  * @param {MapFishPrintSymbolizerPoint|MapFishPrintSymbolizerLine|MapFishPrintSymbolizerPolygon}
  *      symbolizer MapFish Print symbolizer.
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
- * @private
+ * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyleStroke_ = function(symbolizer, strokeStyle) {
+ngeo.print.VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
@@ -369,9 +369,9 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleStroke_ = function(symbolize
  * @param {Array.<MapFishPrintSymbolizerText>} symbolizers Array of MapFish Print
  *     symbolizers.
  * @param {!ol.style.Text} textStyle Text style.
- * @private
+ * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeTextStyle_ = function(symbolizers, textStyle) {
+ngeo.print.VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
