@@ -72,8 +72,7 @@ app.mapquery.module.controller('AppQueryresultController', app.mapquery.Queryres
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
- *     data sources objects.
+ * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
@@ -93,16 +92,6 @@ app.mapquery.MainController = function($scope, ngeoDataSources, ngeoToolActivate
    */
   this.queryActive = true;
 
-  ngeoDataSources.push(new ngeo.datasource.OGC({
-    id: 1,
-    name: 'bus_stop',
-    visible: true,
-    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-    ogcLayers: [{
-      name: 'bus_stop',
-      queryable: true
-    }]
-  }));
   const busStopLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
@@ -110,16 +99,6 @@ app.mapquery.MainController = function($scope, ngeoDataSources, ngeoToolActivate
     })
   });
 
-  ngeoDataSources.push(new ngeo.datasource.OGC({
-    id: 2,
-    name: 'information',
-    visible: true,
-    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-    ogcLayers: [{
-      name: 'information',
-      queryable: true
-    }]
-  }));
   const informationLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
@@ -146,6 +125,30 @@ app.mapquery.MainController = function($scope, ngeoDataSources, ngeoToolActivate
       zoom: 0
     })
   });
+
+  ngeoDataSources.map = this.map;
+
+  ngeoDataSources.collection.push(new ngeo.datasource.OGC({
+    id: 1,
+    name: 'bus_stop',
+    visible: true,
+    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'bus_stop',
+      queryable: true
+    }]
+  }));
+
+  ngeoDataSources.collection.push(new ngeo.datasource.OGC({
+    id: 2,
+    name: 'information',
+    visible: true,
+    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'information',
+      queryable: true
+    }]
+  }));
 
   const queryToolActivate = new ngeo.misc.ToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);

@@ -30,8 +30,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @param {!angular.$injector} $injector Main injector.
    * @param {!angular.$q} $q The Angular $q service.
    * @param {!angular.Scope} $rootScope The rootScope provider.
-   * @param {!ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
-   *     data sources objects.
+   * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {!ngeo.utils.File} ngeoFile Ngeo file.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
    * @struct
@@ -68,7 +67,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
      * @type {!ngeox.datasource.DataSources}
      * @private
      */
-    this.ngeoDataSources_ = ngeoDataSources;
+    this.dataSources_ = ngeoDataSources.collection;
 
     /**
      * @type {!ngeo.utils.File}
@@ -144,7 +143,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
      */
     this.wmtsCache_ = {};
 
-    ol.events.listen(this.ngeoDataSources_, 'remove', this.handleDataSourcesRemove_, this);
+    ol.events.listen(this.dataSources_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
 
@@ -373,7 +372,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     if (wmsGroup) {
       if (!wmsGroup.dataSources.includes(dataSource)) {
         wmsGroup.addDataSource(dataSource);
-        this.ngeoDataSources_.push(dataSource);
+        this.dataSources_.push(dataSource);
       }
     } else {
       wmsGroup = new ngeo.datasource.WMSGroup({
@@ -384,7 +383,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
       });
       this.addLayer_(wmsGroup.layer);
       this.addWMSGroup_(wmsGroup);
-      this.ngeoDataSources_.push(dataSource);
+      this.dataSources_.push(dataSource);
     }
   }
 
@@ -448,7 +447,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     this.addLayer_(layerObj);
 
     // (5) Add data source to ngeo collection
-    this.ngeoDataSources_.push(dataSource);
+    this.dataSources_.push(dataSource);
 
     // (6) Create and set WMTS cache item
     this.wmtsCache_[id] = {
@@ -487,7 +486,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         this.map_.getView().fit(dataSource.extent);
 
         // (5) Finally, add it to the ngeo collection
-        this.ngeoDataSources_.push(dataSource);
+        this.dataSources_.push(dataSource);
       },
       (rejections) => {
         goog.asserts.fail(`Failed to load file: ${file.name}`);

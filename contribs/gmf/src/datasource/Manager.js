@@ -29,7 +29,8 @@ gmf.datasource.Manager = class {
    * The GeoMapFish DataSources Manager is responsible of listenening to the
    * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
    * objects with the layer definitions found and push them in the
-   * `ngeox.datasource.DataSources` collection.
+   * `ngeox.datasource.DataSources` collection. The Manager must be initialized
+   * with the app's map using the setDatasourcseMap() method.
    *
    * When changing theme, these data sources are cleared then re-created.
    *
@@ -41,8 +42,8 @@ gmf.datasource.Manager = class {
    * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
-   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
-   *     data sources objects.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
+   *     data sources service.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
@@ -95,13 +96,19 @@ gmf.datasource.Manager = class {
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
     /**
+     * @type {ngeo.datasource.DataSources}
+     * @private
+     */
+    this.ngeoDataSources_ = ngeoDataSources;
+
+    /**
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
      * @type {ngeox.datasource.DataSources}
      * @private
      */
-    this.ngeoDataSources_ = ngeoDataSources;
+    this.dataSources_ = ngeoDataSources.collection;
 
     /**
      * @type {!ngeo.map.LayerHelper}
@@ -171,6 +178,16 @@ gmf.datasource.Manager = class {
       this
     );
     ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
+  }
+
+
+  /**
+   * Set the map to use with your datasources.
+   * @param {!ol.Map} map The map to use.
+   * @export
+   */
+  setDatasourceMap(map) {
+    this.ngeoDataSources_.map = map;
   }
 
   /**
@@ -297,13 +314,13 @@ gmf.datasource.Manager = class {
   clearDataSources_() {
 
     // (1) Remove data sources from ngeo collection
-    const ngeoDataSources = this.ngeoDataSources_.getArray();
-    for (let i = ngeoDataSources.length - 1, ii = 0; i >= ii; i--) {
-      if (this.dataSourcesCache_[ngeoDataSources[i].id]) {
+    const dataSources = this.dataSources_.getArray();
+    for (let i = dataSources.length - 1, ii = 0; i >= ii; i--) {
+      if (this.dataSourcesCache_[dataSources[i].id]) {
         // Use the `remove` method of the `ol.Collection` object for it
         // to update its length accordingly and trigger the REMOVE event as
         // well.
-        this.ngeoDataSources_.remove(ngeoDataSources[i]);
+        this.dataSources_.remove(dataSources[i]);
       }
     }
 
@@ -564,7 +581,7 @@ gmf.datasource.Manager = class {
       wmsLayer
     };
 
-    this.ngeoDataSources_.push(dataSource);
+    this.dataSources_.push(dataSource);
 
     this.gmfWFSAliases_.describe(dataSource);
   }
@@ -582,7 +599,7 @@ gmf.datasource.Manager = class {
     // (1) Remove data source
     const dataSource = item.treeCtrl.getDataSource();
     goog.asserts.assert(dataSource, 'DataSource should be set');
-    this.ngeoDataSources_.remove(dataSource);
+    this.dataSources_.remove(dataSource);
 
     // (2) Remove item and clear event listeners
     item.treeCtrl.setDataSource(null);
@@ -623,10 +640,10 @@ gmf.datasource.Manager = class {
    * @private
    */
   handleTreeCtrlStateChange_(treeCtrl, newVal) {
-    const dataSource = treeCtrl.getDataSource();
-    goog.asserts.assert(dataSource, 'DataSource should be set');
+    const treeDataSource = treeCtrl.getDataSource();
+    goog.asserts.assert(treeDataSource, 'DataSource should be set');
     const visible = newVal === 'on';
-    dataSource.visible = visible;
+    treeDataSource.visible = visible;
 
     // In GMF, multiple data sources can be combined into one ol.layer.Layer
     // object. When changing the state of a data source, we need to make
@@ -637,15 +654,15 @@ gmf.datasource.Manager = class {
     const siblingDataSourceIds = gmf.layertree.SyncLayertreeMap.getLayer(
       treeCtrl).get('querySourceIds');
     if (Array.isArray(siblingDataSourceIds)) {
-      const ngeoDataSources = this.ngeoDataSources_.getArray();
-      for (const ngeoDataSource of ngeoDataSources) {
-        if (ngeoDataSource instanceof gmf.datasource.OGC &&
-            ngeoDataSource.filterRules !== null &&
-            ngeoDataSource.id !== dataSource.id &&
-            siblingDataSourceIds.includes(ngeoDataSource.id) &&
-            ngeoDataSource.visible
+      const dataSources = this.dataSources_.getArray();
+      for (const dataSource of dataSources) {
+        if (dataSource instanceof gmf.datasource.OGC &&
+            dataSource.filterRules !== null &&
+            dataSource.id !== treeDataSource.id &&
+            siblingDataSourceIds.includes(dataSource.id) &&
+            dataSource.visible
         ) {
-          this.handleDataSourceFilterRulesChange_(ngeoDataSource, true);
+          this.handleDataSourceFilterRulesChange_(dataSource, true);
           break;
         }
       }
@@ -815,7 +832,7 @@ gmf.datasource.Manager = class {
           const dataSource = cache[id];
           if (dataSource) {
             dataSource.visible = false;
-            this.ngeoDataSources_.remove(dataSource);
+            this.dataSources_.remove(dataSource);
           }
         }
       }
@@ -829,7 +846,7 @@ gmf.datasource.Manager = class {
           const dataSource = cache[id];
           if (dataSource) {
             dataSource.visible = true;
-            this.ngeoDataSources_.push(dataSource);
+            this.dataSources_.push(dataSource);
           }
         }
       }

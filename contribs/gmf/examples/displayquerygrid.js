@@ -139,6 +139,9 @@ gmfapp.MainController = function(gmfThemes, gmfDataSourcesManager,
     })
   });
 
+  // Init the datasources with our map.
+  gmfDataSourcesManager.setDatasourceMap(this.map);
+
   /**
    * @type {Array.<Object>|undefined}
    * export
