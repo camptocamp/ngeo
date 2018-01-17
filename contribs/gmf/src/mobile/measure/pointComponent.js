@@ -7,6 +7,7 @@ goog.require('ngeo.interaction.MobileDraw');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
+/** @suppress {extraRequire} */
 goog.require('ngeo.misc.decorate');
 goog.require('ol.events');
 goog.require('ol.style.Fill');
