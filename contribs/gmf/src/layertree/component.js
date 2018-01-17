@@ -32,6 +32,8 @@ goog.require('ol.source.WMTS');
  * @type {!angular.Module}
  */
 gmf.layertree.component = angular.module('gmfLayertreeComponent', [
+  gmf.datasource.DataSourceBeingFiltered.module.name,
+  gmf.datasource.ExternalDataSourcesManager.module.name,
   gmf.layertree.datasourceGroupTreeComponent.name,
   gmf.layertree.SyncLayertreeMap.module.name,
   gmf.layertree.TreeManager.module.name,
@@ -145,7 +147,7 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+ * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
  * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -205,7 +207,7 @@ gmf.layertree.component.Controller_ = function($element, $http, $sce, $scope,
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmf.datasource.DataSourceBeingFiltered}
+   * @type {gmfx.datasource.DataSourceBeingFiltered}
    * @export
    */
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -456,7 +458,7 @@ gmf.layertree.component.Controller_.prototype.getNodeState = function(treeCtrl) 
  * data sources.
  *
  * The setting of the TIME parameter on the layer occurs in the
- * `gmf.datasource.DataSourcesManager` service
+ * `gmf.datasource.Manager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
  * @param {ngeo.layertree.Controller} layertreeCtrl ngeo layertree controller

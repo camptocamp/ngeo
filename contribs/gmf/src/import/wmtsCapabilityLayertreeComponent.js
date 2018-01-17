@@ -8,11 +8,10 @@ goog.require('ngeo.message.Popup');
 goog.require('ol');
 
 
-gmf.import.wmtsCapabilityLayertreeComponent =
-  angular.module('gmfWmtscapabilitylayertree', [
-    // todo: add gmf.datasource.ExternalDataSourcesManager
-    ngeo.message.Popup.module.name,
-  ]);
+gmf.import.wmtsCapabilityLayertreeComponent = angular.module('gmfWmtscapabilitylayertree', [
+  gmf.datasource.ExternalDataSourcesManager.module.name,
+  ngeo.message.Popup.module.name,
+]);
 
 gmf.module.requires.push(gmf.import.wmtsCapabilityLayertreeComponent.name);
 

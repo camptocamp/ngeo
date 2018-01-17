@@ -3,21 +3,12 @@ goog.provide('gmf.datasource.DataSourceBeingFiltered');
 goog.require('gmf');
 
 
-gmf.module.value('gmfDataSourceBeingFiltered', {
+/**
+ * @type {!angular.Module}
+ */
+gmf.datasource.DataSourceBeingFiltered.module = angular.module('gmfDataSourceBeingFiltered', []);
+// type gmfx.datasource.DataSourceBeingFiltered
+gmf.datasource.DataSourceBeingFiltered.module.value('gmfDataSourceBeingFiltered', {
   dataSource: null
 });
-
-
-/**
- * @record
- * @struct
- * @export
- */
-gmf.datasource.DataSourceBeingFiltered = function() {};
-
-
-/**
- * @type {?gmf.datasource.OGC}
- * @export
- */
-gmf.datasource.DataSourceBeingFiltered.prototype.dataSource;
+gmf.module.requires.push(gmf.datasource.DataSourceBeingFiltered.module.name);

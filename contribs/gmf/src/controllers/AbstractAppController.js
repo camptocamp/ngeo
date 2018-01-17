@@ -4,7 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselector.component');
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.DataSourcesManager');
+goog.require('gmf.datasource.Manager');
 /** @suppress {extraRequire} */
 goog.require('gmf.disclaimer.component');
 /** @suppress {extraRequire} */

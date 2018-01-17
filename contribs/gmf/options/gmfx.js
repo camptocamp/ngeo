@@ -664,6 +664,20 @@ gmfx.datasource;
 
 
 /**
+ * @typedef {ol.Collection.<gmf.datasource.OGC>}
+ */
+gmfx.datasource.DataSources;
+
+
+/**
+ * @typedef {{
+ *  dataSource : (gmf.datasource.OGC|null)
+ * }}
+ */
+gmfx.datasource.DataSourceBeingFiltered;
+
+
+/**
  * The options required to create a `gmf.datasource.OGC`.
  * @record
  * @struct
@@ -697,6 +711,34 @@ gmfx.datasource.DataSourceTableObject;
  * }}
  */
 gmfx.datasource.DataSourcePrintReportObject;
+
+
+/**
+ * @typedef {{
+ *     layerObj: (!ol.layer.Tile),
+ *     unregister: Function
+ * }}
+ */
+gmfx.datasource.ExternalDataSourcesManagerWMTSCacheItem;
+
+
+/**
+ * @typedef {Object<(number|string), gmfx.datasource.ManagerTreeCtrlCacheItem>}
+ */
+gmfx.datasource.ManagerTreeCtrlCache;
+
+
+/**
+ * @typedef {{
+ *     filterRulesWatcherUnregister: (Function),
+ *     stateWatcherUnregister: (Function),
+ *     timeLowerValueWatcherUnregister: (Function|undefined),
+ *     timeUpperValueWatcherUnregister: (Function|undefined),
+ *     treeCtrl: (ngeo.layertree.Controller),
+ *     wmsLayer: (ol.layer.Image|undefined)
+ * }}
+ */
+gmfx.datasource.ManagerTreeCtrlCacheItem;
 
 
 /**

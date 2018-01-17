@@ -3,7 +3,7 @@
 goog.provide('gmfapp.importdatasource');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.DataSourcesManager');
+goog.require('gmf.datasource.Manager');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.importdatasourceComponent');
 /** @suppress {extraRequire} */
@@ -27,6 +27,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.datasource.Manager.module.name,
   gmf.import.importdatasourceComponent.name,
   gmf.layertree.component.name,
   gmf.theme.Themes.module.name,
@@ -64,7 +65,7 @@ gmfapp.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
+   * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
    *     data sources manager service.
    * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
