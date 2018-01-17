@@ -20,7 +20,13 @@
           with open(filename, 'rb') as f:
               content = f.read().decode('utf-8')
               content = re.sub(r"'", "\\'", content)
-              content = htmlmin.minify(content, remove_comments=True)
+              content = htmlmin.minify(
+                  content,
+                  remove_comments=True,
+                  remove_empty_space=True,
+                  remove_all_empty_space=True,
+                  remove_optional_attribute_quotes=False,
+              )
               name = os.path.join(dest_folder, filename[len(source_folder) + 1:])
               _partials[name.replace("\\", "/")] = content
 %>\
