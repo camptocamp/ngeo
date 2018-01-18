@@ -172,29 +172,6 @@ ngeo.FeatureProperties = {
  * @enum {string}
  * @export
  */
-ngeo.FilterCondition = {
-  /**
-   * @type {string}
-   * @export
-   */
-  AND: '&&',
-  /**
-   * @type {string}
-   * @export
-   */
-  NOT: '!',
-  /**
-   * @type {string}
-   * @export
-   */
-  OR: '||'
-};
-
-
-/**
- * @enum {string}
- * @export
- */
 ngeo.GeometryType = {
   /**
    * @type {string}

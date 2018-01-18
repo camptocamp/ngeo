@@ -1,6 +1,7 @@
 goog.provide('ngeo.filter.RuleHelper');
 
 goog.require('ngeo');
+goog.require('ngeo.filter.Condition');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ngeo.rule.Date');
@@ -405,15 +406,15 @@ ngeo.filter.RuleHelper = class {
       if (conditions.length === 1) {
         mainFilter = conditions[0];
       } else if (conditions.length >= 2) {
-        if (condition === ngeo.FilterCondition.AND) {
+        if (condition === ngeo.filter.Condition.AND) {
           mainFilter = ol.format.filter.and.apply(null, conditions);
-        } else if (condition === ngeo.FilterCondition.OR ||
-                   condition === ngeo.FilterCondition.NOT
+        } else if (condition === ngeo.filter.Condition.OR ||
+                   condition === ngeo.filter.Condition.NOT
         ) {
           mainFilter = ol.format.filter.or.apply(null, conditions);
         }
       }
-      if (mainFilter && condition === ngeo.FilterCondition.NOT) {
+      if (mainFilter && condition === ngeo.filter.Condition.NOT) {
         mainFilter = ol.format.filter.not(mainFilter);
       }
     }

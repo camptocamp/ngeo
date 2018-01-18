@@ -3,6 +3,7 @@ goog.provide('ngeo.datasource.OGC');
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
+goog.require('ngeo.filter.Condition');
 goog.require('ol.format.GML2');
 goog.require('ol.format.GML3');
 goog.require('ol.format.WFS');
@@ -47,7 +48,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
      * @type {string}
      * @private
      */
-    this.filterCondition_ = options.filterCondition || ngeo.FilterCondition.AND;
+    this.filterCondition_ = options.filterCondition || ngeo.filter.Condition.AND;
 
     /**
      * A list of filter rules to apply to this data source using the filter

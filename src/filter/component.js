@@ -2,6 +2,7 @@ goog.provide('ngeo.filter.component');
 
 goog.require('ngeo');
 goog.require('ngeo.query.MapQuerent');
+goog.require('ngeo.filter.Condition');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.ruleComponent');
 /** @suppress {extraRequire} */
@@ -149,15 +150,15 @@ ngeo.filter.component.FilterController_ = class {
     this.conditions = [
       {
         text: gettextCatalog.getString('All'),
-        value: ngeo.FilterCondition.AND
+        value: ngeo.filter.Condition.AND
       },
       {
         text: gettextCatalog.getString('At least one'),
-        value: ngeo.FilterCondition.OR
+        value: ngeo.filter.Condition.OR
       },
       {
         text: gettextCatalog.getString('None'),
-        value: ngeo.FilterCondition.NOT
+        value: ngeo.filter.Condition.NOT
       }
     ];
 
