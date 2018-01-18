@@ -113,7 +113,8 @@ describe('ngeo.CreatePrint', () => {
                 type: 'wms',
                 opacity: 1,
                 serverType: undefined,
-                version: undefined
+                version: undefined,
+                useNativeAngle: true
               }]
             },
             foo: 'fooval',
@@ -170,7 +171,8 @@ describe('ngeo.CreatePrint', () => {
                 type: 'wms',
                 opacity: 1,
                 serverType: undefined,
-                version: undefined
+                version: undefined,
+                useNativeAngle: true
               }]
             },
             foo: 'fooval',
