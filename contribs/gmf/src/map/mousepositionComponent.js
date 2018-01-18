@@ -60,7 +60,7 @@ gmf.map.mousepositionComponent.component('gmfMouseposition',
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-gmf,map.MousepositionComponent.Controller_ = function($element, $filter, $scope, gettextCatalog) {
+gmf.map.mousepositionComponent.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   /**
    * @type {!ol.Map}
    * @export
@@ -102,6 +102,12 @@ gmf,map.MousepositionComponent.Controller_ = function($element, $filter, $scope,
    * @private
    */
   this.$filter_ = $filter;
+
+  /**
+   * @type  {?ol.control.MousePosition}
+   * @private
+   */
+  this.control_ = null;
 };
 
 
@@ -109,6 +115,24 @@ gmf,map.MousepositionComponent.Controller_ = function($element, $filter, $scope,
  * Initialise the controller.
  */
 gmf.map.mousepositionComponent.Controller_.prototype.$onInit = function() {
+  this.$scope_.$on('gettextLanguageChanged', () => {
+    this.initOlControl_();
+  });
+
+  // Init control once, in case of applications that never set the language.
+  this.initOlControl_();
+};
+
+
+/**
+ * Init the ol.control.MousePosition
+ * @private
+ */
+gmf.map.mousepositionComponent.Controller_.prototype.initOlControl_ = function() {
+  if (this.control_ !== null) {
+    this.map.removeControl(this.control_);
+  }
+
   // function that apply the filter.
   const formatFn = function(coordinates) {
     const filterAndArgs = this.projection.filter.split(':');
@@ -119,24 +143,17 @@ gmf.map.mousepositionComponent.Controller_.prototype.$onInit = function() {
     return filter.apply(this, args);
   };
 
-  this.control = null;
-  this.$scope_.$on('gettextLanguageChanged', () => {
-    if (this.control !== null) {
-      this.map.removeControl(this.control);
-    }
-
-    const gettextCatalog = this.gettextCatalog_;
-    this.control = new ol.control.MousePosition({
-      className: 'gmf-mouseposition-control',
-      coordinateFormat: formatFn.bind(this),
-      target: angular.element('.gmf-mouseposition-control-target', this.$element_)[0],
-      undefinedHTML: gettextCatalog.getString('Coordinates')
-    });
-
-    this.setProjection(this.projections[0]);
-
-    this.map.addControl(this.control);
+  const gettextCatalog = this.gettextCatalog_;
+  this.control_ = new ol.control.MousePosition({
+    className: 'gmf-mouseposition-control',
+    coordinateFormat: formatFn.bind(this),
+    target: angular.element('.gmf-mouseposition-control-target', this.$element_)[0],
+    undefinedHTML: gettextCatalog.getString('Coordinates')
   });
+
+  this.setProjection(this.projections[0]);
+
+  this.map.addControl(this.control_);
 };
 
 
@@ -145,7 +162,7 @@ gmf.map.mousepositionComponent.Controller_.prototype.$onInit = function() {
  * @export
  */
 gmf.map.mousepositionComponent.Controller_.prototype.setProjection = function(projection) {
-  this.control.setProjection(ol.proj.get(projection.code));
+  this.control_.setProjection(ol.proj.get(projection.code));
   this.projection = projection;
 };
 
