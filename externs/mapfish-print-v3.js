@@ -514,6 +514,28 @@ MapFishPrintSymbolizerPoint.prototype.strokeWidth;
 MapFishPrintSymbolizerPoint.prototype.graphicName;
 
 
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.labelAnchorPointX;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.labelAnchorPointY;
+
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicXOffset;
+
+/**
+ * @type {number}
+ */
+MapFishPrintSymbolizerPoint.prototype.graphicYOffset;
+
+
 
 /**
  * @constructor
