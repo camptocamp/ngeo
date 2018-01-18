@@ -798,7 +798,7 @@ gmf.EditfeatureController.prototype.handleFeatureAdd_ = function(evt) {
             } else if (attribute.type === 'time') {
               jsonFormat = 'H:i:s';
             }
-            const name = this.feature.get(attribute.name);
+            const name = feature.get(attribute.name);
             goog.asserts.assertString(name);
             value = dateFormatter.parseDate(name, jsonFormat);
           }
