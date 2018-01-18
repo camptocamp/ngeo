@@ -1,6 +1,7 @@
 goog.provide('ngeo.draw.rectangle');
 
 goog.require('ngeo');
+goog.require('ngeo.GeometryType');
 goog.require('ol.events');
 goog.require('ol.interaction.Draw');
 goog.require('ol.geom.Polygon');

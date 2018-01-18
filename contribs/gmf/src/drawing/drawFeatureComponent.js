@@ -4,6 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawing.featureStyleComponent');
 goog.require('ngeo');
+goog.require('ngeo.GeometryType');
 goog.require('ngeo.Menu');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.exportfeaturesComponent');

@@ -4,6 +4,7 @@ goog.provide('app.createfeature');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
+goog.require('ngeo.GeometryType');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.ToolActivate');

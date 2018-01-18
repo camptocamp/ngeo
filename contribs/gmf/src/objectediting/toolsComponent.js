@@ -7,6 +7,7 @@ goog.require('gmf.objectediting.getWMSFeatureComponent');
 goog.require('ngeo.editing.createfeatureComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createregularpolygonfromclickComponent');
+goog.require('ngeo.GeometryType');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */

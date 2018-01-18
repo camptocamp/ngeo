@@ -4,6 +4,7 @@ goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 goog.require('ngeo.format.FeatureProperties');
+goog.require('ngeo.GeometryType');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');

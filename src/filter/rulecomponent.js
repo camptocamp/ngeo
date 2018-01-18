@@ -6,6 +6,7 @@ goog.require('ngeo.draw.component');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.format.AttributeType');
+goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');

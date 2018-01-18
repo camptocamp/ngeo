@@ -6,6 +6,7 @@ goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.service');
 goog.require('ngeo.format.FeatureProperties');
+goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.array');
