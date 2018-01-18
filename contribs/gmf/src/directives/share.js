@@ -120,7 +120,7 @@ gmf.ShareController = function($scope, ngeoLocation, gmfShareService, $q, $attrs
    * @type {boolean}
    * @export
    */
-  this.errorOnGetShortUrl;
+  this.errorOnGetShortUrl = false;
 
   this.getShortUrl();
 
@@ -145,6 +145,7 @@ gmf.ShareController.prototype.getShortUrl = function() {
    */
   function onSuccess_(resp) {
     this.shortLink = resp.data.short_url;
+    this.errorOnGetShortUrl = false;
   }
 
   /**
