@@ -5,7 +5,7 @@ goog.require('gmf.disclaimer.module');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 goog.require('gmf.theme.Manager');
 goog.require('gmf.theme.Themes');
 /** @suppress {extraRequire} */
@@ -23,6 +23,7 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change when other dependencies are in a module
   gmf.layertree.component.name,
   gmf.layertree.TreeManager.module.name,
+  gmf.map.component.name,
   gmf.theme.Manager.module.name,
   gmf.theme.Themes.module.name,
   ngeo.statemanager.Location.module.name,

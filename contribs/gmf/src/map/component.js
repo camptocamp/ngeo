@@ -1,23 +1,23 @@
-goog.provide('gmf.mapDirective');
+goog.provide('gmf.map.component');
 
 goog.require('gmf');
 goog.require('gmf.Permalink');
 goog.require('gmf.editing.Snapping');
-
+goog.require('ngeo.map.directive');
 goog.require('ngeo.map.FeatureOverlayMgr');
-
-
-// In the future module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlayMgr.module.name
+goog.require('ol.Map');
 
 
 /**
- * This goog.require is needed because it provides 'ngeo-map' used in
- * the template.
- * @suppress {extraRequire}
+ * @type {!angular.Module}
  */
-goog.require('ngeo.map.module');
-goog.require('ol.Map');
+gmf.map.component = angular.module('gmfMapComponent', [
+  gmf.editing.Snapping.module.name,
+  ngeo.map.directive.name,
+  ngeo.map.FeatureOverlayMgr.module.name,
+]);
+
+gmf.module.requires.push(gmf.map.component.name);
 
 
 /**
@@ -39,7 +39,7 @@ goog.require('ol.Map');
  * @ngdoc directive
  * @ngname gmfMap
  */
-gmf.mapDirective = function() {
+gmf.map.component.directive_ = function() {
   return {
     scope: {
       'map': '<gmfMapMap',
@@ -48,11 +48,11 @@ gmf.mapDirective = function() {
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
-    templateUrl: `${gmf.baseTemplateUrl}/map.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/map/component.html`
   };
 };
 
-gmf.module.directive('gmfMap', gmf.mapDirective);
+gmf.map.component.directive('gmfMap', gmf.map.component.directive_);
 
 
 /**
@@ -65,7 +65,7 @@ gmf.module.directive('gmfMap', gmf.mapDirective);
  * @ngdoc controller
  * @ngname GmfMapController
  */
-gmf.MapController = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
+gmf.map.component.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
 
   // Scope properties
 
@@ -109,14 +109,15 @@ gmf.MapController = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   this.gmfSnapping_ = gmfSnapping;
 };
 
-gmf.module.controller('GmfMapController', gmf.MapController);
-
 
 /**
  * Called on initialization of the controller.
  */
-gmf.MapController.prototype.$onInit = function() {
+gmf.map.component.Controller_.prototype.$onInit = function() {
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
 };
+
+
+gmf.map.component.controller('GmfMapController', gmf.map.component.Controller_);

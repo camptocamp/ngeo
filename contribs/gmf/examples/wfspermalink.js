@@ -1,7 +1,7 @@
 goog.provide('gmfapp.wfspermalink');
 
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.query.windowComponent');
 /** @suppress {extraRequire} */
@@ -19,6 +19,7 @@ goog.require('ol.style.Circle');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
+  gmf.map.component.name,
   gmf.query.windowComponent.name,
 ]);
 

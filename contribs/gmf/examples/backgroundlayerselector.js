@@ -3,7 +3,7 @@ goog.provide('gmfapp.backgroundlayerselector');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselector.module');
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
+goog.require('gmf.map.component');
 goog.require('gmf.theme.Themes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -14,6 +14,7 @@ goog.require('ol.View');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.backgroundlayerselector.module.name,
+  gmf.map.component.name,
   gmf.theme.Themes.module.name,
 ]);
 
