@@ -27,7 +27,7 @@ goog.require('gmf.raster.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.timeSliderComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.shareComponent');
+goog.require('gmf.permalink.shareComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */

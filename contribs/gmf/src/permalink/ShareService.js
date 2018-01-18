@@ -1,4 +1,4 @@
-goog.provide('gmf.ShareService');
+goog.provide('gmf.permalink.ShareService');
 
 goog.require('gmf');
 
@@ -13,7 +13,7 @@ goog.require('gmf');
  * @export
  * @ngname gmfShareService
  */
-gmf.ShareService = function($http, gmfShortenerCreateUrl) {
+gmf.permalink.ShareService = function($http, gmfShortenerCreateUrl) {
 
   /**
    * @type {angular.$http}
@@ -38,7 +38,7 @@ gmf.ShareService = function($http, gmfShortenerCreateUrl) {
  * @return {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} an object containing the permalink not shortened or
  * the promise attached to the shortener API request
  */
-gmf.ShareService.prototype.getShortUrl = function(url) {
+gmf.permalink.ShareService.prototype.getShortUrl = function(url) {
   const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
     url
   });
@@ -64,7 +64,7 @@ gmf.ShareService.prototype.getShortUrl = function(url) {
  * @param  {string=} opt_message message for the email
  * @return {angular.$http.HttpPromise} the promise attached to the shortener API request
  */
-gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
+gmf.permalink.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
     url: shortUrl,
     email: email
@@ -83,7 +83,7 @@ gmf.ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message)
  * @return {angular.$http.HttpPromise} the promise attached to the shortener API request
  * @private
  */
-gmf.ShareService.prototype.postShortUrl_ = function(params) {
+gmf.permalink.ShareService.prototype.postShortUrl_ = function(params) {
   // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -97,7 +97,7 @@ gmf.ShareService.prototype.postShortUrl_ = function(params) {
  * @constant
  * @type {number}
  */
-gmf.ShareService.URL_MAX_LEN = 2083;
+gmf.permalink.ShareService.URL_MAX_LEN = 2083;
 
 /**
  * Max length defined for the url parth section.
@@ -105,7 +105,10 @@ gmf.ShareService.URL_MAX_LEN = 2083;
  * @constant
  * @type {number}
  */
-gmf.ShareService.URL_PATH_MAX_LEN = 2048;
+gmf.permalink.ShareService.URL_PATH_MAX_LEN = 2048;
 
+gmf.permalink.ShareService.module = angular.module('gmfShareService', []);
 
-gmf.module.service('gmfShareService', gmf.ShareService);
+gmf.module.requires.push(gmf.permalink.ShareService.module.name);
+
+gmf.permalink.ShareService.module.service('gmfShareService', gmf.permalink.ShareService);

@@ -1,7 +1,7 @@
 goog.provide('gmfapp.mobilemeasure');
 
 goog.require('gmf');
-goog.require('gmf.Permalink');
+goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
@@ -23,6 +23,7 @@ goog.require('ol.source.OSM');
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.component.name,
+  gmf.permalink.Permalink.module.name,
   gmf.mobile.measure.lengthComponent.name,
   gmf.mobile.measure.pointComponent.name,
   ngeo.misc.btnComponent.name,
@@ -35,7 +36,7 @@ gmfapp.module.value(
 
 
 /**
- * @param {gmf.Permalink} gmfPermalink The gmf permalink service.
+ * @param {gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
  * @constructor
  * @ngInject
  */

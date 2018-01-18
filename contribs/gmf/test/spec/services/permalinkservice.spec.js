@@ -1,6 +1,6 @@
 /* global themes */
 goog.require('gmf.test.data.themes');
-goog.require('gmf.Permalink');
+goog.require('gmf.permalink.Permalink');
 goog.require('gmf');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.statemanager.Service');
