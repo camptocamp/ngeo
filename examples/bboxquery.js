@@ -69,7 +69,7 @@ app.bboxquery.module.controller('AppQueryresultController', app.bboxquery.Queryr
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
+ * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @constructor
  * @ngInject

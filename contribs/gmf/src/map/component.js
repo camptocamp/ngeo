@@ -3,7 +3,7 @@ goog.provide('gmf.map.component');
 goog.require('gmf');
 goog.require('gmf.permalink.Permalink');
 goog.require('gmf.editing.Snapping');
-goog.require('ngeo.map.directive');
+goog.require('ngeo.map.component');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ol.Map');
 
@@ -14,7 +14,7 @@ goog.require('ol.Map');
 gmf.map.component = angular.module('gmfMapComponent', [
   gmf.permalink.Permalink.module.name,
   gmf.editing.Snapping.module.name,
-  ngeo.map.directive.name,
+  ngeo.map.component.name,
   ngeo.map.FeatureOverlayMgr.module.name,
 ]);
 

@@ -1,4 +1,4 @@
-goog.provide('ngeo.map.directive');
+goog.provide('ngeo.map.component');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
@@ -9,9 +9,9 @@ goog.require('ol.Map');
 /**
  * @type {!angular.Module}
  */
-ngeo.map.directive = angular.module('ngeoMap', []);
+ngeo.map.component = angular.module('ngeoMap', []);
 
-ngeo.module.requires.push(ngeo.map.directive.name);
+ngeo.module.requires.push(ngeo.map.component.name);
 
 
 /**
@@ -43,7 +43,7 @@ ngeo.module.requires.push(ngeo.map.directive.name);
  * @ngname ngeoMap
  * @ngInject
  */
-ngeo.map.directive.directive_ = function($window) {
+ngeo.map.component.directive_ = function($window) {
   return {
     restrict: 'A',
     /**
@@ -108,4 +108,4 @@ ngeo.map.directive.directive_ = function($window) {
 };
 
 // Register the directive in the module
-ngeo.map.directive.directive('ngeoMap', ngeo.map.directive.directive_);
+ngeo.map.component.directive('ngeoMap', ngeo.map.component.directive_);
