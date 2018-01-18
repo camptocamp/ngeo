@@ -449,7 +449,7 @@ gmf.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
 
   if (this.gmfThemeManager_) {
     this.rootScope_.$on(gmf.theme.Manager.EventType.THEME_NAME_SET, (event, name) => {
-      this.setThemeInUrl_();
+      this.setThemeInUrl_(name);
     });
   }
 
@@ -865,10 +865,10 @@ gmf.Permalink.prototype.themeInUrl_ = function(pathElements) {
 
 
 /**
+ * @param {string} themeName Theme name.
  * @private
  */
-gmf.Permalink.prototype.setThemeInUrl_ = function() {
-  const themeName = this.gmfThemeManager_ ? this.gmfThemeManager_.getThemeName() : null;
+gmf.Permalink.prototype.setThemeInUrl_ = function(themeName) {
   if (themeName) {
     const pathElements = this.ngeoLocation_.getPath().split('/');
     goog.asserts.assert(pathElements.length > 1);
@@ -950,10 +950,10 @@ gmf.Permalink.prototype.initLayers_ = function() {
   }
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.defaultThemeName();
+    goog.asserts.assert(themeName !== null);
 
     if (this.gmfThemeManager_ && this.gmfThemeManager_.modeFlush) {
-      // Set theme in stealth mode, we just want to set the theme name, not more.
-      this.gmfThemeManager_.setThemeName(`${themeName}`, true);
+      this.gmfThemeManager_.setThemeName(themeName);
     }
 
     /**
@@ -963,7 +963,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
     let theme;
     // Check if we have the groups in the permalink
     const groupsNames = this.ngeoLocation_.getParam(gmf.PermalinkParam.TREE_GROUPS);
-    if (!groupsNames) {
+    if (groupsNames === undefined) {
       goog.asserts.assertString(themeName);
       theme = gmf.theme.Themes.findThemeByName(themes, themeName);
       if (theme) {
@@ -1014,7 +1014,7 @@ gmf.Permalink.prototype.initLayers_ = function() {
           const groupLayers = this.ngeoStateManager_.getInitialStringValue(
             gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           );
-          if (groupLayers) {
+          if (groupLayers !== undefined) {
             const groupLayersArray = groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
@@ -1376,6 +1376,27 @@ gmf.Permalink.prototype.registerExternalDSGroup_ = function(group) {
 
 
 /**
+ * Contains the layer name
+ * @param {!ol.layer.Base} layer The layer to inspect
+ * @param {string} name The layer name to find
+ * @return {boolean} The containing status
+ */
+gmf.Permalink.prototype.containsLayerName = function(layer, name) {
+  if (layer instanceof ol.layer.Group) {
+    for (const l of layer.getLayers().getArray()) {
+      goog.asserts.assert(l);
+      if (this.containsLayerName(l, name)) {
+        return true;
+      }
+    }
+    return false;
+  } else {
+    return layer.get('layerNodeName') == name;
+  }
+};
+
+
+/**
  * @param {!ol.Collection.Event} evt Collection event.
  * @private
  */
@@ -1468,6 +1489,56 @@ gmf.Permalink.prototype.setExternalDataSourcesState_ = function() {
 
     // (4) Reset promise
     this.setExternalDataSourcesStatePromise_ = null;
+  });
+};
+
+
+/**
+ * Clean the permalink parameters
+ * @param {!Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
+ */
+gmf.Permalink.prototype.cleanParams = function(groups) {
+  const keys = goog.asserts.assert(this.ngeoLocation_.getParamKeys());
+  for (const key of keys) {
+    if (key.startsWith(gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS)) {
+      const value = key.substring(gmf.PermalinkParamPrefix.TREE_GROUP_LAYERS.length);
+      for (const group of groups) {
+        if (group.name == value) {
+          this.ngeoStateManager_.deleteParam(key);
+          break;
+        }
+      }
+    }
+    if (key.startsWith(gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY)) {
+      const value = key.substring(gmf.PermalinkParamPrefix.TREE_GROUP_OPACITY.length);
+      for (const group of groups) {
+        if (group.name == value) {
+          this.ngeoStateManager_.deleteParam(key);
+          break;
+        }
+      }
+    }
+  }
+  this.$timeout_(() => {
+    if (!this.map_) {
+      return;
+    }
+    const layer = this.map_.getLayerGroup();
+    goog.asserts.assert(layer);
+    for (const key of keys) {
+      if (key.startsWith(gmf.PermalinkParamPrefix.TREE_ENABLE)) {
+        const value = key.substring(gmf.PermalinkParamPrefix.TREE_ENABLE.length);
+        if (!this.containsLayerName(layer, value)) {
+          this.ngeoStateManager_.deleteParam(key);
+        }
+      }
+      if (key.startsWith(gmf.PermalinkParamPrefix.TREE_OPACITY)) {
+        const value = key.substring(gmf.PermalinkParamPrefix.TREE_OPACITY.length);
+        if (!this.containsLayerName(layer, value)) {
+          this.ngeoStateManager_.deleteParam(key);
+        }
+      }
+    }
   });
 };
 

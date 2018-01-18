@@ -101,13 +101,20 @@ gmf.theme.Manager.prototype.getThemeName = function() {
 
 
 /**
- * @param {string} name The new theme name.
- * @param {boolean=} opt_stealth Don't emit an event is true
+ * @return {boolean} true if the theme is loading.
  * @export
  */
-gmf.theme.Manager.prototype.setThemeName = function(name, opt_stealth) {
+gmf.theme.Manager.prototype.isLoading = function() {
+  return !this.gmfThemes_.loaded;
+};
+
+/**
+ * @param {string} name The new theme name.
+ * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
+ */
+gmf.theme.Manager.prototype.setThemeName = function(name, opt_silent) {
   this.themeName_ = name;
-  if (!opt_stealth) {
+  if (!opt_silent) {
     this.$rootScope_.$emit(gmf.theme.Manager.EventType.THEME_NAME_SET, name);
   }
 };

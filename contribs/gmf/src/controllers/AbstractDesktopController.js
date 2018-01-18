@@ -93,6 +93,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    * @export
    */
   this.map = new ol.Map({
+    pixelRatio: config.mapPixelRatio,
     layers: [],
     view: new ol.View(viewConfig),
     controls: config.mapControls || [

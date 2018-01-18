@@ -44,6 +44,12 @@ app.mobile.Controller = function($scope, $injector) {
   ];
 
   /**
+   * @type {number}
+   * @export
+   */
+  this.searchDelay = 50;
+
+  /**
    * @type {Array.<string>}
    * @export
    */

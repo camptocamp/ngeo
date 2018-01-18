@@ -175,12 +175,9 @@ gmf.editing.Snapping.prototype.setMap = function(map) {
       }, 0);
     });
 
-    const view = map.getView();
-
     keys.push(
       ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
-      ol.events.listen(view, 'change:center', this.handleMapViewChange_, this),
-      ol.events.listen(view, 'change:resolution', this.handleMapViewChange_, this)
+      ol.events.listen(map, 'moveend', this.handleMapMoveEnd_, this)
     );
   }
 };
@@ -520,7 +517,7 @@ gmf.editing.Snapping.prototype.loadItemFeatures_ = function(item) {
  * delay. Cancel any currently delayed call, if required.
  * @private
  */
-gmf.editing.Snapping.prototype.handleMapViewChange_ = function() {
+gmf.editing.Snapping.prototype.handleMapMoveEnd_ = function() {
   if (this.mapViewChangePromise_) {
     this.timeout_.cancel(this.mapViewChangePromise_);
   }

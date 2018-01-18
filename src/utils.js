@@ -99,11 +99,7 @@ ngeo.utils.encodeQueryString = function(queryData) {
   const queryItem = [];
   for (const key in queryData) {
     const value = queryData[key];
-    if (value) {
-      queryItem.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-    } else {
-      queryItem.push(encodeURIComponent(key));
-    }
+    queryItem.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
   }
   return queryItem.join('&');
 };

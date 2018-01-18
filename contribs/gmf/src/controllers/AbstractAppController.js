@@ -156,9 +156,6 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
     this.gmfThemeManager.setThemeName('', true);
     if (evt.type !== 'ready') {
       this.updateCurrentTheme_(previousThemeName);
-    } else {
-      // initialize default background layer
-      this.setDefaultBackground_(null, true);
     }
     // Reload themes when login status changes.
     this.gmfThemes_.loadThemes(roleId);
@@ -427,7 +424,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
   $scope.$root.$on(gmf.theme.Manager.EventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       if (theme) {
-        this.setDefaultBackground_(theme, false);
+        this.setDefaultBackground_(theme);
       }
     });
   });
@@ -610,6 +607,19 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
 
 /**
+ * @param {Array.<ol.layer.Base>} layers Layers list.
+ * @param {Array.<string>} labels default_basemap list.
+ * @return {ol.layer.Base} layer or null
+ */
+gmf.AbstractAppController.getLayerByLabels = function(layers, labels) {
+  if (labels && labels.length > 0) {
+    return ol.array.find(layers, layer => layer.get('label') === labels[0]);
+  }
+  return null;
+};
+
+
+/**
  * @param {string} lang Language code.
  * @export
  */
@@ -654,34 +664,31 @@ gmf.AbstractAppController.prototype.initLanguage = function() {
 
 /**
  * @param {gmfThemes.GmfTheme} theme Theme.
- * @param {boolean} use_permalink Get background from the permalink.
  * @private
  */
-gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme, use_permalink) {
+gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
   this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
-    let default_basemap;
     let layer;
 
-    if (use_permalink) {
-      // get the background from the permalink
-      layer = this.permalink_.getBackgroundLayer(layers);
-    }
-    if (!layer) {
-      if (this.gmfUser.functionalities) {
-        // get the background from the user settings
-        default_basemap = this.gmfUser.functionalities.default_basemap;
-      } else if (theme) {
-        // get the background from the theme
-        default_basemap = theme.functionalities.default_basemap;
-      }
-      if (default_basemap && default_basemap.length > 0) {
-        layer = ol.array.find(layers, layer => layer.get('label') === default_basemap[0]);
-      }
-    }
-    // fallback to the layers list, use the second one because the first is the blank layer.
-    layer = layer || layers[1];
-    goog.asserts.assert(layer);
+    // get the background from the permalink
+    layer = this.permalink_.getBackgroundLayer(layers);
 
+    if (!layer) {
+      // get the background from the user settings
+      layer = gmf.AbstractAppController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
+    }
+
+    if (!layer) {
+      // get the background from the theme
+      layer = gmf.AbstractAppController.getLayerByLabels(layers, theme.functionalities.default_basemap);
+    }
+
+    if (!layer) {
+      // fallback to the layers list, use the second one because the first is the blank layer.
+      layer = layers[1];
+    }
+
+    goog.asserts.assert(layer);
     this.backgroundLayerMgr_.set(this.map, layer);
   });
 };

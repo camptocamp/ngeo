@@ -37,17 +37,17 @@
     class="btn btn-sm btn-default gmf-objectediting-btn-save"
     ng-click="form.$valid && oeCtrl.save()"
     ng-disabled="!oeCtrl.dirty || oeCtrl.pending || !oeCtrl.featureHasGeom"
-    title="{{'Save modifications | translate'}}"></input>
+    title="{{'Save modifications' | translate}}"></input>
   <a
     class="btn btn-sm btn-link gmf-objectediting-btn-undo"
     ng-click="oeCtrl.undo()"
     ng-disabled="!oeCtrl.dirty || oeCtrl.pending"
-    title="{{'Undo latest modifications | translate'}}"
+    title="{{'Undo latest modifications' | translate}}"
     href>{{'Undo' | translate}}</a>
   <a
     class="btn btn-sm btn-link gmf-objectediting-btn-delete"
     ng-click="oeCtrl.delete()"
     ng-disabled="oeCtrl.isStateInsert() || oeCtrl.pending"
-    title="{{'Delete the feature | translate'}}"
+    title="{{'Delete the feature' | translate}}"
     href>{{'Delete' | translate}}</a>
 </form>

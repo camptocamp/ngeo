@@ -87,7 +87,7 @@ ngeo.query.mapQueryComponent.directive_ = function(ngeoMapQuerent, $injector) {
        * Listen to the map events.
        */
       const activate_ = function() {
-        clickEventKey_ = ol.events.listen(map, 'click', handleMapClick_);
+        clickEventKey_ = ol.events.listen(map, 'singleclick', handleMapClick_);
         const queryOptions = /** @type {ngeox.QueryOptions} */ (
           $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
         );

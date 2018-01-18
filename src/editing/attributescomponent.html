@@ -15,7 +15,6 @@
           <label>
             <input
                 name="{{::attribute.name}}"
-                ng-required="attribute.required"
                 ng-model="attrCtrl.properties[attribute.name]"
                 ng-change="attrCtrl.handleInputChange(attribute.name);"
                 type="checkbox">
@@ -43,9 +42,23 @@
             name="{{::attribute.name}}"
             ng-required="attribute.required"
             ng-switch-when="date"
-            ui-date="attrCtrl.dateOptions"
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
+            ngeo-datetimepicker
+            ngeo-datetimepicker-options="'{&quot;timepicker&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;allowBlank&quot;: true, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;}'"
+            class="form-control"
+            type="text">
+        </input>
+
+        <input
+            name="{{::attribute.name}}"
+            id="time"
+            ng-required="attribute.required"
+            ng-switch-when="time"
+            ng-model="attrCtrl.properties[attribute.name]"
+            ng-change="attrCtrl.handleInputChange(attribute.name);"
+            ngeo-datetimepicker
+            ngeo-datetimepicker-options="'{&quot;datepicker&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;, &quot;defaultTime&quot;: &quot;00:00&quot;}'"
             class="form-control"
             type="text">
         </input>
@@ -54,9 +67,10 @@
             name="{{::attribute.name}}"
             ng-required="attribute.required"
             ng-switch-when="datetime"
-            ui-date="attrCtrl.dateOptions"
             ng-model="attrCtrl.properties[attribute.name]"
             ng-change="attrCtrl.handleInputChange(attribute.name);"
+            ngeo-datetimepicker
+            ngeo-datetimepicker-options="'{&quot;scrollTime&quot;: false, &quot;format&quot;: &quot;' + attribute.format + '&quot;, &quot;allowBlank&quot;: true, &quot;todayButton&quot;: false, &quot;mask&quot;: &quot;' + attribute.mask + '&quot;, &quot;defaultTime&quot;: &quot;00:00&quot;}'"
             class="form-control"
             type="text">
         </input>

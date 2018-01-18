@@ -26,6 +26,7 @@ goog.require('ol');
 app.mobile_alt.Controller = function($scope, $injector) {
   gmf.AbstractMobileController.call(this, {
     autorotate: true,
+    mapPixelRatio: 1,
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -42,6 +43,12 @@ app.mobile_alt.Controller = function($scope, $injector) {
     {name: 'aster', unit: 'm'},
     {name: 'srtm', unit: 'm'}
   ];
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.searchDelay = 50;
 
   /**
    * @type {Array.<string>}

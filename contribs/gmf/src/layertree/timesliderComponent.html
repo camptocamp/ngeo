@@ -15,19 +15,19 @@
     <div
       class="gmf-time-slider-start-date"
       ng-if="::sliderCtrl.time.mode === 'range'">
-      <span>{{sliderCtrl.dates[0] | date : 'shortDate'}}</span>
+      <span>{{sliderCtrl.getLocalizedDate(sliderCtrl.dates[0])}}</span>
     </div>
 
     <div
       class="gmf-time-slider-start-date"
       ng-if="::sliderCtrl.time.mode === 'value'">
-      <span>{{sliderCtrl.dates | date : 'shortDate'}}</span>
+      <span>{{sliderCtrl.getLocalizedDate(sliderCtrl.dates)}}</span>
     </div>
 
     <div
       class="gmf-time-slider-end-date"
       ng-if="::sliderCtrl.time.mode === 'range'">
-      <span>{{sliderCtrl.dates[1] | date : 'shortDate'}}</span>
+      <span>{{sliderCtrl.getLocalizedDate(sliderCtrl.dates[1])}}</span>
     </div>
   </div>
 

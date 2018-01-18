@@ -306,5 +306,17 @@ gmf.layertree.timeSliderComponent.Controller_.prototype.getClosestValue_ = funct
   }
 };
 
+
+/**
+ * Format and localize time regarding a resolution.
+ * @param {number} time (in ms format) timestamp to format and localize.
+ * @return {string} Localized date string regarding the resolution.
+ * @export
+ */
+gmf.layertree.timeSliderComponent.Controller_.prototype.getLocalizedDate = function(time) {
+  return this.ngeoWMSTime_.formatTimeValue(time, this.time.resolution);
+};
+
+
 gmf.layertree.timeSliderComponent.controller('gmfTimeSliderController',
   gmf.layertree.timeSliderComponent.Controller_);
