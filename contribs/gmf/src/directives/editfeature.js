@@ -17,6 +17,7 @@ goog.require('ngeo.DecorateInteraction');
 goog.require('ngeo.EventHelper');
 goog.require('ngeo.FeatureHelper');
 goog.require('ngeo.LayerHelper');
+goog.require('ngeo.utils');
 goog.require('ngeo.Menu');
 goog.require('ngeo.ToolActivate');
 goog.require('ngeo.ToolActivateMgr');
@@ -449,6 +450,7 @@ gmf.EditfeatureController.prototype.$onInit = function() {
 
   // (1.2) Create, set and initialize interactions
   this.modify_ = new ol.interaction.Modify({
+    deleteCondition: ngeo.utils.deleteCondition,
     features: this.features,
     style: this.ngeoFeatureHelper_.getVertexStyle(false)
   });
