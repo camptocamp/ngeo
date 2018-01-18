@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.Modify');
 
+goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ngeo.interaction.ModifyRectangle');
 goog.require('ol.events');
@@ -218,8 +219,8 @@ ngeo.interaction.Modify.prototype.removeFeature_ = function(feature) {
  */
 ngeo.interaction.Modify.prototype.getFeatureCollection_ = function(feature) {
   let features;
-  const isCircle = feature.get(ngeo.FeatureProperties.IS_CIRCLE);
-  const isRectangle = feature.get(ngeo.FeatureProperties.IS_RECTANGLE);
+  const isCircle = feature.get(ngeo.format.FeatureProperties.IS_CIRCLE);
+  const isRectangle = feature.get(ngeo.format.FeatureProperties.IS_RECTANGLE);
   if (isCircle === true || isCircle === 'true') {
     features = this.circleFeatures_;
   } else if (isRectangle === true || isRectangle === 'true') {

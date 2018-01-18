@@ -4,6 +4,7 @@ goog.require('gmf');
 goog.require('ol.events');
 goog.require('ol.Object');
 goog.require('ngeo');
+goog.require('ngeo.format.FeatureProperties');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.colorpickerComponent');
 goog.require('ngeo.misc.FeatureHelper');
@@ -144,14 +145,14 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.handleFeatureSet_ = func
 
   if (newFeature) {
     [
-      ngeo.FeatureProperties.ANGLE,
-      ngeo.FeatureProperties.COLOR,
-      ngeo.FeatureProperties.NAME,
-      ngeo.FeatureProperties.SHOW_LABEL,
-      ngeo.FeatureProperties.OPACITY,
-      ngeo.FeatureProperties.SHOW_MEASURE,
-      ngeo.FeatureProperties.SIZE,
-      ngeo.FeatureProperties.STROKE
+      ngeo.format.FeatureProperties.ANGLE,
+      ngeo.format.FeatureProperties.COLOR,
+      ngeo.format.FeatureProperties.NAME,
+      ngeo.format.FeatureProperties.SHOW_LABEL,
+      ngeo.format.FeatureProperties.OPACITY,
+      ngeo.format.FeatureProperties.SHOW_MEASURE,
+      ngeo.format.FeatureProperties.SIZE,
+      ngeo.format.FeatureProperties.STROKE
     ].forEach(function(propName) {
       keys.push(
         ol.events.listen(
@@ -189,9 +190,9 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.handleFeatureSet_ = func
 gmf.drawing.featureStyleComponent.Controller_.prototype.handleColorSet_ = function(
   newColor) {
   if (this.feature && newColor) {
-    const currentColor = this.feature.get(ngeo.FeatureProperties.COLOR);
+    const currentColor = this.feature.get(ngeo.format.FeatureProperties.COLOR);
     if (currentColor !== newColor) {
-      this.feature.set(ngeo.FeatureProperties.COLOR, newColor);
+      this.feature.set(ngeo.format.FeatureProperties.COLOR, newColor);
     }
   }
 };
@@ -203,7 +204,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.handleColorSet_ = functi
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetAngle = function(value) {
-  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.ANGLE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.format.FeatureProperties.ANGLE, value));
 };
 
 
@@ -213,7 +214,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.getSetAngle = function(v
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetName = function(value) {
-  return goog.asserts.assertString(this.getSetProperty_(ngeo.FeatureProperties.NAME, value));
+  return goog.asserts.assertString(this.getSetProperty_(ngeo.format.FeatureProperties.NAME, value));
 };
 
 /**
@@ -223,7 +224,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.getSetName = function(va
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetShowLabel = function(value) {
-  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.FeatureProperties.SHOW_LABEL, value));
+  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.format.FeatureProperties.SHOW_LABEL, value));
 };
 
 /**
@@ -232,7 +233,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.getSetShowLabel = functi
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetOpacity = function(value) {
-  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.OPACITY, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.format.FeatureProperties.OPACITY, value));
 };
 
 
@@ -243,7 +244,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.getSetOpacity = function
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetShowMeasure = function(value) {
-  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.FeatureProperties.SHOW_MEASURE, value));
+  return goog.asserts.assertBoolean(this.getSetProperty_(ngeo.format.FeatureProperties.SHOW_MEASURE, value));
 };
 
 
@@ -253,7 +254,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.getSetShowMeasure = func
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetSize = function(value) {
-  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.SIZE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.format.FeatureProperties.SIZE, value));
 };
 
 
@@ -263,7 +264,7 @@ gmf.drawing.featureStyleComponent.Controller_.prototype.getSetSize = function(va
  * @export
  */
 gmf.drawing.featureStyleComponent.Controller_.prototype.getSetStroke = function(value) {
-  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.FeatureProperties.STROKE, value));
+  return goog.asserts.assertNumber(this.getSetProperty_(ngeo.format.FeatureProperties.STROKE, value));
 };
 
 

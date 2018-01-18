@@ -5,6 +5,7 @@ goog.require('ngeo');
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.service');
+goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.array');
@@ -330,7 +331,7 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   const fillColor = color.slice();
   fillColor[3] = opacity;
 
-  const azimut = this.optNumber(feature, ngeo.FeatureProperties.AZIMUT);
+  const azimut = this.optNumber(feature, ngeo.format.FeatureProperties.AZIMUT);
 
   const styles = [new ol.style.Style({
     fill: new ol.style.Fill({
@@ -655,7 +656,7 @@ ngeo.misc.FeatureHelper.getFilteredFeatureValues = function(feature) {
  */
 ngeo.misc.FeatureHelper.prototype.getAngleProperty = function(feature) {
   const angle = +(/** @type {string} */ (
-    feature.get(ngeo.FeatureProperties.ANGLE)));
+    feature.get(ngeo.format.FeatureProperties.ANGLE)));
   goog.asserts.assertNumber(angle);
   return angle;
 };
@@ -668,7 +669,7 @@ ngeo.misc.FeatureHelper.prototype.getAngleProperty = function(feature) {
  */
 ngeo.misc.FeatureHelper.prototype.getColorProperty = function(feature) {
 
-  const color = goog.asserts.assertString(feature.get(ngeo.FeatureProperties.COLOR));
+  const color = goog.asserts.assertString(feature.get(ngeo.format.FeatureProperties.COLOR));
 
   goog.asserts.assertString(color);
 
@@ -692,7 +693,7 @@ ngeo.misc.FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
  * @export
  */
 ngeo.misc.FeatureHelper.prototype.getNameProperty = function(feature) {
-  const name = goog.asserts.assertString(feature.get(ngeo.FeatureProperties.NAME));
+  const name = goog.asserts.assertString(feature.get(ngeo.format.FeatureProperties.NAME));
   goog.asserts.assertString(name);
   return name;
 };
@@ -704,7 +705,7 @@ ngeo.misc.FeatureHelper.prototype.getNameProperty = function(feature) {
  * @export
  */
 ngeo.misc.FeatureHelper.prototype.getOpacityProperty = function(feature) {
-  return this.getNumber(feature, ngeo.FeatureProperties.OPACITY);
+  return this.getNumber(feature, ngeo.format.FeatureProperties.OPACITY);
 };
 
 
@@ -714,7 +715,7 @@ ngeo.misc.FeatureHelper.prototype.getOpacityProperty = function(feature) {
  * @export
  */
 ngeo.misc.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
-  let showMeasure = feature.get(ngeo.FeatureProperties.SHOW_MEASURE);
+  let showMeasure = feature.get(ngeo.format.FeatureProperties.SHOW_MEASURE);
   if (showMeasure === undefined) {
     showMeasure = false;
   } else if (typeof showMeasure === 'string') {
@@ -729,7 +730,7 @@ ngeo.misc.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
  * @export
  */
 ngeo.misc.FeatureHelper.prototype.getShowLabelProperty = function(feature) {
-  let showLabel = feature.get(ngeo.FeatureProperties.SHOW_LABEL);
+  let showLabel = feature.get(ngeo.format.FeatureProperties.SHOW_LABEL);
   if (showLabel === undefined) {
     showLabel = false;
   } else if (typeof showLabel === 'string') {
@@ -744,7 +745,7 @@ ngeo.misc.FeatureHelper.prototype.getShowLabelProperty = function(feature) {
  * @export
  */
 ngeo.misc.FeatureHelper.prototype.getSizeProperty = function(feature) {
-  return this.getNumber(feature, ngeo.FeatureProperties.SIZE);
+  return this.getNumber(feature, ngeo.format.FeatureProperties.SIZE);
 };
 
 
@@ -754,7 +755,7 @@ ngeo.misc.FeatureHelper.prototype.getSizeProperty = function(feature) {
  * @export
  */
 ngeo.misc.FeatureHelper.prototype.getStrokeProperty = function(feature) {
-  return this.getNumber(feature, ngeo.FeatureProperties.STROKE);
+  return this.getNumber(feature, ngeo.format.FeatureProperties.STROKE);
 };
 
 
@@ -894,7 +895,7 @@ ngeo.misc.FeatureHelper.prototype.getMeasure = function(feature) {
 
   if (geometry instanceof ol.geom.Polygon) {
     if (this.getType(feature) === ngeo.GeometryType.CIRCLE) {
-      const azimut = this.optNumber(feature, ngeo.FeatureProperties.AZIMUT);
+      const azimut = this.optNumber(feature, ngeo.format.FeatureProperties.AZIMUT);
       goog.asserts.assertNumber(azimut);
       const line = this.getRadiusLine(feature, azimut);
 
@@ -937,7 +938,7 @@ ngeo.misc.FeatureHelper.prototype.getType = function(feature) {
   let type;
 
   if (geometry instanceof ol.geom.Point) {
-    if (feature.get(ngeo.FeatureProperties.IS_TEXT)) {
+    if (feature.get(ngeo.format.FeatureProperties.IS_TEXT)) {
       type = ngeo.GeometryType.TEXT;
     } else {
       type = ngeo.GeometryType.POINT;
@@ -945,9 +946,9 @@ ngeo.misc.FeatureHelper.prototype.getType = function(feature) {
   } else if (geometry instanceof ol.geom.MultiPoint) {
     type = ngeo.GeometryType.MULTI_POINT;
   } else if (geometry instanceof ol.geom.Polygon) {
-    if (feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
+    if (feature.get(ngeo.format.FeatureProperties.IS_CIRCLE)) {
       type = ngeo.GeometryType.CIRCLE;
-    } else if (feature.get(ngeo.FeatureProperties.IS_RECTANGLE)) {
+    } else if (feature.get(ngeo.format.FeatureProperties.IS_RECTANGLE)) {
       type = ngeo.GeometryType.RECTANGLE;
     } else {
       type = ngeo.GeometryType.POLYGON;
