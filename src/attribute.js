@@ -1,5 +1,7 @@
 goog.provide('ngeo.Attribute');
 
+goog.require('ngeo.format.AttributeType');
+
 
 /**
  * Set the `type` and `geomType` properties of an attribute if the given
@@ -13,7 +15,7 @@ ngeo.Attribute.setGeometryType = function(attribute, type) {
   const geomRegex =
     /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
   if (geomRegex.exec(type)) {
-    attribute.type = ngeo.AttributeType.GEOMETRY;
+    attribute.type = ngeo.format.AttributeType.GEOMETRY;
     if (/^gml:Point/.exec(type)) {
       attribute.geomType = 'Point';
     } else if (/^gml:LineString|^gml:Curve/.exec(type)) {

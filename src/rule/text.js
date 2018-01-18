@@ -1,5 +1,6 @@
 goog.provide('ngeo.rule.Text');
 
+goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Rule');
 
 
@@ -15,7 +16,7 @@ ngeo.rule.Text = class extends ngeo.rule.Rule {
   constructor(options) {
 
     options.operator = options.operator || ngeo.rule.Rule.OperatorType.LIKE;
-    options.type = ngeo.AttributeType.TEXT;
+    options.type = ngeo.format.AttributeType.TEXT;
 
     super(options);
 

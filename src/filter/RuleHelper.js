@@ -2,6 +2,7 @@ goog.provide('ngeo.filter.RuleHelper');
 
 goog.require('ngeo');
 goog.require('ngeo.filter.Condition');
+goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ngeo.rule.Date');
@@ -84,8 +85,8 @@ ngeo.filter.RuleHelper = class {
     // Todo: support geometry
 
     switch (attribute.type) {
-      case ngeo.AttributeType.DATE:
-      case ngeo.AttributeType.DATETIME:
+      case ngeo.format.AttributeType.DATE:
+      case ngeo.format.AttributeType.DATETIME:
         if (isCustom) {
           rule = new ngeo.rule.Date({
             name: name,
@@ -107,7 +108,7 @@ ngeo.filter.RuleHelper = class {
           });
         }
         break;
-      case ngeo.AttributeType.GEOMETRY:
+      case ngeo.format.AttributeType.GEOMETRY:
         rule = new ngeo.rule.Geometry({
           name: name,
           operator: ngeo.rule.Rule.SpatialOperatorType.WITHIN,
@@ -120,7 +121,7 @@ ngeo.filter.RuleHelper = class {
           type: attribute.type
         });
         break;
-      case ngeo.AttributeType.NUMBER:
+      case ngeo.format.AttributeType.NUMBER:
         if (isCustom) {
           rule = new ngeo.rule.Rule({
             name: name,
@@ -134,18 +135,18 @@ ngeo.filter.RuleHelper = class {
               ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
             ],
             propertyName: attribute.name,
-            type: ngeo.AttributeType.NUMBER
+            type: ngeo.format.AttributeType.NUMBER
           });
         } else {
           rule = new ngeo.rule.Rule({
             name: name,
             operator: ngeo.rule.Rule.OperatorType.BETWEEN,
             propertyName: attribute.name,
-            type: ngeo.AttributeType.NUMBER
+            type: ngeo.format.AttributeType.NUMBER
           });
         }
         break;
-      case ngeo.AttributeType.SELECT:
+      case ngeo.format.AttributeType.SELECT:
         rule = new ngeo.rule.Select({
           choices: goog.asserts.assert(attribute.choices),
           name: name,
@@ -198,14 +199,14 @@ ngeo.filter.RuleHelper = class {
   createRule(options) {
     let rule;
     switch (options.type) {
-      case ngeo.AttributeType.DATE:
-      case ngeo.AttributeType.DATETIME:
+      case ngeo.format.AttributeType.DATE:
+      case ngeo.format.AttributeType.DATETIME:
         rule = new ngeo.rule.Date(options);
         break;
-      case ngeo.AttributeType.GEOMETRY:
+      case ngeo.format.AttributeType.GEOMETRY:
         rule = new ngeo.rule.Geometry(options);
         break;
-      case ngeo.AttributeType.SELECT:
+      case ngeo.format.AttributeType.SELECT:
         const selectOptions = /** @type {!ngeox.rule.SelectOptions} */ (
           options);
         goog.asserts.assert(selectOptions.choices);

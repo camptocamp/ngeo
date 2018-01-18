@@ -5,6 +5,7 @@ goog.require('ngeo.Menu');
 goog.require('ngeo.draw.component');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
+goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
@@ -368,8 +369,8 @@ ngeo.filter.ruleComponent.RuleController_ = class {
     //
     // This chunk of code ensures that the rule properties are synchronized
     // with the TimeProperty objects required to build the datepickers.
-    if (this.clone.type === ngeo.AttributeType.DATE ||
-        this.clone.type === ngeo.AttributeType.DATETIME
+    if (this.clone.type === ngeo.format.AttributeType.DATE ||
+        this.clone.type === ngeo.format.AttributeType.DATETIME
     ) {
       // Watch 'expression'
       this.unlisteners_.push(this.scope_.$watch(
@@ -395,7 +396,7 @@ ngeo.filter.ruleComponent.RuleController_ = class {
           this.timeRangeMode.maxValue = value;
         }
       ));
-    } else if (this.clone.type === ngeo.AttributeType.GEOMETRY) {
+    } else if (this.clone.type === ngeo.format.AttributeType.GEOMETRY) {
 
       // Watch 'operator' of clone. Make sure any existing geometry is
       // supported by the newly selected operator. If it doesn't, reset

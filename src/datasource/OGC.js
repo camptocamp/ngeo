@@ -4,6 +4,7 @@ goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ngeo.filter.Condition');
+goog.require('ngeo.format.AttributeType');
 goog.require('ol.format.GML2');
 goog.require('ol.format.GML3');
 goog.require('ol.format.WFS');
@@ -894,7 +895,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
     if (this.attributes) {
       for (const attribute of this.attributes) {
-        if (attribute.type === ngeo.AttributeType.GEOMETRY) {
+        if (attribute.type === ngeo.format.AttributeType.GEOMETRY) {
           geometryName = attribute.name;
           break;
         }

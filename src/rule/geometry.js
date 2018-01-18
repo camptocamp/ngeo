@@ -1,5 +1,6 @@
 goog.provide('ngeo.rule.Geometry');
 
+goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Rule');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -17,7 +18,7 @@ ngeo.rule.Geometry = class extends ngeo.rule.Rule {
    */
   constructor(options) {
 
-    options.type = ngeo.AttributeType.GEOMETRY;
+    options.type = ngeo.format.AttributeType.GEOMETRY;
 
     super(options);
 
