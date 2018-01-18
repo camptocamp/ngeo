@@ -385,7 +385,8 @@ ngeo.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         styles.push(new ol.style.Style({
           text: this.createTextStyle_({
             text: textLabelValue,
-            offsetY: -(8 / 2 + 4)
+            offsetY: -(8 / 2 + 4),
+            exceedLength: true
           })
         }));
       }
