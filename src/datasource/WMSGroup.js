@@ -4,6 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.OGC');
+goog.require('ol.array');
 
 
 ngeo.datasource.WMSGroup = class extends ngeo.datasource.OGCGroup {

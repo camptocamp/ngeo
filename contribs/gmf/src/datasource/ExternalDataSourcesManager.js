@@ -30,7 +30,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @param {!angular.$injector} $injector Main injector.
    * @param {!angular.$q} $q The Angular $q service.
    * @param {!angular.Scope} $rootScope The rootScope provider.
-   * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   * @param {!ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    * @param {!ngeo.utils.File} ngeoFile Ngeo file.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
@@ -65,7 +65,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     /**
      * The collection of DataSources from ngeo. When this service creates
      * a data source, its gets added to that collection.
-     * @type {!ngeo.datasource.DataSources}
+     * @type {!ngeox.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -668,6 +668,7 @@ gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
 
 gmf.datasource.ExternalDataSourcesManager.module = angular.module('gmfExternalDataSourcesManager', [
   ngeo.utils.File.module.name,
+  ngeo.datasource.DataSources.module.name,
 ]);
 gmf.datasource.ExternalDataSourcesManager.module.service('gmfExternalDataSourcesManager',
   gmf.datasource.ExternalDataSourcesManager);

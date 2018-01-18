@@ -11,7 +11,9 @@ goog.require('ol.Map');
 /**
  * @type {!angular.Module}
  */
-ngeo.map.directive = angular.module('ngeoMap', []);
+ngeo.map.directive = angular.module('ngeoMap', [
+  ngeo.datasource.SyncDataSourcesMap.module.name
+]);
 
 ngeo.module.requires.push(ngeo.map.directive.name);
 

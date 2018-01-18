@@ -22,6 +22,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 app.module = angular.module('app', [
   ngeo.module.name,
+  ngeo.datasource.DataSources.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,
@@ -68,7 +69,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+ * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.

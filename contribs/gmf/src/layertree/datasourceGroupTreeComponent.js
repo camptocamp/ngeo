@@ -9,7 +9,9 @@ goog.require('ol');
  * @type {!angular.Module}
  */
 gmf.layertree.datasourceGroupTreeComponent = angular.module(
-  'gmfLayertreeDatasourceGroupTreeComponent', []);
+  'gmfLayertreeDatasourceGroupTreeComponent', [
+    ngeo.datasource.DataSources.module.name,
+  ]);
 
 gmf.module.requires.push(gmf.layertree.datasourceGroupTreeComponent.name);
 
@@ -21,7 +23,7 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   * @param {!ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    * @private
    * @struct
@@ -49,7 +51,7 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
     this.scope_ = $scope;
 
     /**
-     * @type {!ngeo.datasource.DataSources}
+     * @type {!ngeox.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
