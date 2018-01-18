@@ -606,7 +606,7 @@ gmf.AbstractController.prototype.setDefaultBackground_ = function(theme) {
 
     if (!layer) {
       // fallback to the layers list, use the second one because the first is the blank layer.
-      layer = layers[1];
+      layer = layers[layers.length > 1 ? 1 : 0];
     }
 
     goog.asserts.assert(layer);
