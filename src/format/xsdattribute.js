@@ -1,7 +1,7 @@
 goog.provide('ngeo.format.XSDAttribute');
 
 goog.require('ngeo');
-goog.require('ngeo.Attribute');
+goog.require('ngeo.format.Attribute');
 goog.require('ngeo.format.AttributeType');
 goog.require('ol.format.XML');
 goog.require('goog.asserts');
@@ -101,7 +101,7 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const type = node.getAttribute('type');
   if (type) {
-    if (!ngeo.Attribute.setGeometryType(attribute, type)) {
+    if (!ngeo.format.Attribute.setGeometryType(attribute, type)) {
       this.setAttributeByXsdType_(attribute, type);
     }
   } else {

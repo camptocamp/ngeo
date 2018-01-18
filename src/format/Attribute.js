@@ -1,4 +1,4 @@
-goog.provide('ngeo.Attribute');
+goog.provide('ngeo.format.Attribute');
 
 goog.require('ngeo.format.AttributeType');
 
@@ -11,7 +11,7 @@ goog.require('ngeo.format.AttributeType');
  * @param {string} type Type.
  * @return {boolean} Whether both attribute type and geomType were set.
  */
-ngeo.Attribute.setGeometryType = function(attribute, type) {
+ngeo.format.Attribute.setGeometryType = function(attribute, type) {
   const geomRegex =
     /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
   if (geomRegex.exec(type)) {
