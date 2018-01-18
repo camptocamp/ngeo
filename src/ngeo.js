@@ -242,21 +242,3 @@ ngeo.GeometryType = {
    */
   TEXT: 'Text'
 };
-
-
-/**
- * @enum {string}
- * @export
- */
-ngeo.NumberType = {
-  /**
-   * @type {string}
-   * @export
-   */
-  FLOAT: 'float',
-  /**
-   * @type {string}
-   * @export
-   */
-  INTEGER: 'integer'
-};

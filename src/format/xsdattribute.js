@@ -174,10 +174,10 @@ ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
     attribute.type = ngeo.AttributeType.TIME;
   } else if (type === 'xsd:decimal') {
     attribute.type = ngeo.AttributeType.NUMBER;
-    attribute.numType = ngeo.NumberType.FLOAT;
+    attribute.numType = ngeo.format.XSDAttribute.NumberType.FLOAT;
   } else if (type === 'xsd:integer') {
     attribute.type = ngeo.AttributeType.NUMBER;
-    attribute.numType = ngeo.NumberType.INTEGER;
+    attribute.numType = ngeo.format.XSDAttribute.NumberType.INTEGER;
   } else if (type === 'xsd:string') {
     attribute.type = ngeo.AttributeType.TEXT;
   }
@@ -198,4 +198,22 @@ ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
     }
   }
   return geomAttribute;
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.format.XSDAttribute.NumberType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  FLOAT: 'float',
+  /**
+   * @type {string}
+   * @export
+   */
+  INTEGER: 'integer'
 };
