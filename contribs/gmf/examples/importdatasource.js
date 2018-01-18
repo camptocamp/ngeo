@@ -12,6 +12,7 @@ goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.theme.Themes');
+goog.require('ngeo.datasource.DataSources');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
@@ -32,6 +33,7 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.layertree.component.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
+  ngeo.datasource.DataSources.module.name,
   ngeo.query.bboxQueryComponent.name,
   ngeo.query.mapQueryComponent.name,
 ]);
@@ -70,7 +72,7 @@ gmfapp.MainController = class {
    *     data sources manager service.
    * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    * @ngInject
    */

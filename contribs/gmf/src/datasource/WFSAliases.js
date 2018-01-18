@@ -1,17 +1,17 @@
-goog.provide('gmf.WFSAliases');
+goog.provide('gmf.datasource.WFSAliases');
 
 goog.require('gmf');
-goog.require('ngeo.datasource.DataSourcesHelper');
+goog.require('ngeo.datasource.Helper');
 
 
-gmf.WFSAliases = class {
+gmf.datasource.WFSAliases = class {
 
   /**
    * Service that provides methods to get additional information and actions
    * when perfoming WFS requests.
    *
    * @struct
-   * @param {ngeo.datasource.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
@@ -22,7 +22,7 @@ gmf.WFSAliases = class {
     // === Injected properties ===
 
     /**
-     * @type {ngeo.datasource.DataSourcesHelper}
+     * @type {ngeo.datasource.Helper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -44,4 +44,6 @@ gmf.WFSAliases = class {
 };
 
 
-gmf.module.service('gmfWFSAliases', gmf.WFSAliases);
+gmf.datasource.WFSAliases.module = angular.module('gmfDatasourceWFSAliases', []);
+gmf.datasource.WFSAliases.module.service('gmfWFSAliases', gmf.datasource.WFSAliases);
+gmf.module.requires.push(gmf.datasource.WFSAliases.module.name);

@@ -23,7 +23,7 @@ ngeo.datasource.SyncDataSourcesMap = class {
    * - inRange: The map view 'change:resolution' event is listened and the
    *   property is updated depending on the current resolution.
    *
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    *
    * @struct
@@ -34,7 +34,7 @@ ngeo.datasource.SyncDataSourcesMap = class {
   constructor(ngeoDataSources) {
 
     /**
-     * @type {ngeo.datasource.DataSources}
+     * @type {ngeox.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -170,5 +170,11 @@ ngeo.datasource.SyncDataSourcesMap = class {
 };
 
 
-ngeo.module.service(
-  'ngeoSyncDataSourcesMap', ngeo.datasource.SyncDataSourcesMap);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.datasource.SyncDataSourcesMap.module = angular.module('ngeoSyncDataSourcesMap', [
+  ngeo.datasource.DataSources.module.name,
+]);
+ngeo.datasource.SyncDataSourcesMap.module.service('ngeoSyncDataSourcesMap', ngeo.datasource.SyncDataSourcesMap);
+ngeo.module.requires.push(ngeo.datasource.SyncDataSourcesMap.module.name);

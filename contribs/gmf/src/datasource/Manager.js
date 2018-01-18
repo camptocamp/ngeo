@@ -1,8 +1,8 @@
 goog.provide('gmf.datasource.Manager');
 
 goog.require('gmf');
-goog.require('gmf.WFSAliases');
 goog.require('gmf.datasource.OGC');
+goog.require('gmf.datasource.WFSAliases');
 goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
@@ -29,7 +29,7 @@ gmf.datasource.Manager = class {
    * The GeoMapFish DataSources Manager is responsible of listenening to the
    * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
    * objects with the layer definitions found and push them in the
-   * `ngeo.datasource.DataSources` collection.
+   * `ngeox.datasource.DataSources` collection.
    *
    * When changing theme, these data sources are cleared then re-created.
    *
@@ -41,12 +41,12 @@ gmf.datasource.Manager = class {
    * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
    *     data sources objects.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
-   * @param {!gmf.WFSAliases} gmfWFSAliases Gmf WFS aliases service.
+   * @param {!gmf.datasource.WFSAliases} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
@@ -98,7 +98,7 @@ gmf.datasource.Manager = class {
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
-     * @type {ngeo.datasource.DataSources}
+     * @type {ngeox.datasource.DataSources}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -122,7 +122,7 @@ gmf.datasource.Manager = class {
     this.ngeoWMSTime_ = ngeoWMSTime;
 
     /**
-     * @type {!gmf.WFSAliases}
+     * @type {!gmf.datasource.WFSAliases}
      * @private
      */
     this.gmfWFSAliases_ = gmfWFSAliases;
@@ -842,10 +842,12 @@ gmf.datasource.Manager = class {
  * @type {!angular.Module}
  */
 gmf.datasource.Manager.module = angular.module('gmfDataSourcesManager', [
+  gmf.datasource.WFSAliases.module.name,
   gmf.layertree.SyncLayertreeMap.module.name,
   gmf.layertree.TreeManager.module.name,
   gmf.theme.Themes.module.name,
   ngeo.filter.RuleHelper.module.name,
+  ngeo.datasource.DataSources.module.name,
   ngeo.map.BackgroundLayerMgr.module.name,
   ngeo.map.LayerHelper.module.name,
   ngeo.misc.WMSTime.module.name,

@@ -1,6 +1,7 @@
 goog.provide('ngeo.datasource.File');
 
 goog.require('ngeo.datasource.DataSource');
+goog.require('ol.Collection');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 

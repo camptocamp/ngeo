@@ -4,6 +4,7 @@ goog.require('gmf.datasource.DataSourceBeingFiltered');
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.datasource.Helper');
 goog.require('gmf.datasource.Manager');
+goog.require('gmf.datasource.WFSAliases');
 
 
 /**
@@ -14,4 +15,5 @@ gmf.datasource.module = angular.module('gmfDatasourceModule', [
   gmf.datasource.ExternalDataSourcesManager.module.name,
   gmf.datasource.Helper.module.name,
   gmf.datasource.Manager.module.name,
+  gmf.datasource.WFSAliases.module.name,
 ]);

@@ -1035,6 +1035,12 @@ ngeox.datasource;
 
 
 /**
+ * @typedef {!ol.Collection.<!ngeo.datasource.DataSource>}
+ */
+ngeox.datasource.DataSources;
+
+
+/**
  * The options required to create a `ngeox.datasource.DataSource`.
  * @record
  * @struct

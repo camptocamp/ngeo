@@ -1,21 +1,21 @@
-goog.provide('ngeo.datasource.DataSourcesHelper');
+goog.provide('ngeo.datasource.Helper');
 
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.query.Querent');
 goog.require('ngeo.format.WFSAttribute');
+goog.require('ngeo.query.Querent');
 goog.require('ol.events');
 
 
-ngeo.datasource.DataSourcesHelper = class {
+ngeo.datasource.Helper = class {
 
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @struct
    * @param {angular.$q} $q The Angular $q service.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
+   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo data source
    *     collection.
    * @param {ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
@@ -33,7 +33,7 @@ ngeo.datasource.DataSourcesHelper = class {
     this.q_ = $q;
 
     /**
-     * @type {ngeo.datasource.DataSources}
+     * @type {ngeox.datasource.DataSources}
      * @private
      */
     this.collection_ = ngeoDataSources;
@@ -60,7 +60,7 @@ ngeo.datasource.DataSourcesHelper = class {
   }
 
   /**
-   * @return {ngeo.datasource.DataSources} Data sources collection.
+   * @return {ngeox.datasource.DataSources} Data sources collection.
    * @export
    */
   get collection() {
@@ -149,4 +149,12 @@ ngeo.datasource.DataSourcesHelper = class {
 };
 
 
-ngeo.module.service('ngeoDataSourcesHelper', ngeo.datasource.DataSourcesHelper);
+/**
+ * @type {!angular.Module}
+ */
+ngeo.datasource.Helper.module = angular.module('ngeoDataSourcesHelper', [
+  ngeo.datasource.DataSources.module.name,
+  ngeo.query.Querent.module.name,
+]);
+ngeo.datasource.Helper.module.service('ngeoDataSourcesHelper', ngeo.datasource.Helper);
+ngeo.module.requires.push(ngeo.datasource.Helper.module.name);

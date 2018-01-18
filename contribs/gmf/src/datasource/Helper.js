@@ -3,7 +3,7 @@ goog.provide('gmf.datasource.Helper');
 goog.require('gmf');
 goog.require('gmf.editing.EnumerateAttribute');
 goog.require('ngeo');
-goog.require('ngeo.datasource.DataSourcesHelper');
+goog.require('ngeo.datasource.Helper');
 goog.require('ol.array');
 
 
@@ -17,7 +17,7 @@ gmf.datasource.Helper = class {
    * @param {angular.$q} $q The Angular $q service.
    * @param {gmf.editing.EnumerateAttribute} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
-   * @param {ngeo.datasource.DataSourcesHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfDataSourcesHelper
@@ -40,7 +40,7 @@ gmf.datasource.Helper = class {
     this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     /**
-     * @type {ngeo.datasource.DataSourcesHelper}
+     * @type {ngeo.datasource.Helper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;

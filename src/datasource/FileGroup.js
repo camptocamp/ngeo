@@ -1,6 +1,7 @@
 goog.provide('ngeo.datasource.FileGroup');
 
 goog.require('ngeo');
+goog.require('ngeo.datasource.File');
 goog.require('ngeo.datasource.Group');
 
 
