@@ -1,6 +1,6 @@
 goog.provide('gmfapp.displayquerygrid');
 
-goog.require('gmf.datasource.DataSourcesManager');
+goog.require('gmf.datasource.Manager');
 /** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
@@ -31,6 +31,7 @@ goog.require('ol.style.Style');
 /** @type {!angular.Module} **/
 gmfapp.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
+  gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
   gmf.query.gridComponent.name,
   gmf.theme.Themes.module.name,
@@ -90,7 +91,7 @@ gmfapp.module.controller('gmfappQueryresultController', gmfapp.QueryresultContro
 /**
  * @constructor
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.datasource.DataSourcesManager} gmfDataSourcesManager The gmf
+ * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
  *     data sources manager service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.

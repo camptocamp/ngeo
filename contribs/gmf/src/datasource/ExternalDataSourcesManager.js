@@ -3,7 +3,6 @@
 
 goog.provide('gmf.datasource.ExternalDataSourcesManager');
 
-goog.require('ol.events');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('ngeo.utils.File');
@@ -13,6 +12,8 @@ goog.require('ngeo.datasource.FileGroup');
 goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.WMSGroup');
+goog.require('ol');
+goog.require('ol.events');
 goog.require('ol.Collection');
 goog.require('ol.format.GPX');
 goog.require('ol.format.KML');
@@ -138,7 +139,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     /**
      * Cache that stores the information of a WMTS data source. The key is the
      * data source id.
-     * @type {!Object.<number, gmf.datasource.ExternalDataSourcesManager.WMTSCacheItem>}
+     * @type {!Object.<number, gmfx.datasource.ExternalDataSourcesManagerWMTSCacheItem>}
      * @private
      */
     this.wmtsCache_ = {};
@@ -665,14 +666,9 @@ gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
 };
 
 
-gmf.module.service(
-  'gmfExternalDataSourcesManager', gmf.datasource.ExternalDataSourcesManager);
-
-
-/**
- * @typedef {{
- *     layerObj: (!ol.layer.Tile),
- *     unregister: Function
- * }}
- */
-gmf.datasource.ExternalDataSourcesManager.WMTSCacheItem;
+gmf.datasource.ExternalDataSourcesManager.module = angular.module('gmfExternalDataSourcesManager', [
+  ngeo.utils.File.module.name,
+]);
+gmf.datasource.ExternalDataSourcesManager.module.service('gmfExternalDataSourcesManager',
+  gmf.datasource.ExternalDataSourcesManager);
+gmf.module.requires.push(gmf.datasource.ExternalDataSourcesManager.module.name);

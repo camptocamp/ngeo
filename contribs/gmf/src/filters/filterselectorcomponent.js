@@ -5,7 +5,7 @@ goog.require('gmf');
 goog.require('gmf.authentication.Service');
 goog.require('gmf.datasource.DataSourceBeingFiltered');
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.DataSourcesHelper');
+goog.require('gmf.datasource.Helper');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.filters.SavedFilters');
 /** @suppress {extraRequire} */
@@ -24,6 +24,8 @@ goog.require('ngeo.map.FeatureOverlayMgr');
 
 gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
   gmf.authentication.Service.module.name,
+  gmf.datasource.DataSourceBeingFiltered.module.name,
+  gmf.datasource.Helper.module.name,
   ngeo.map.FeatureOverlayMgr.module.name,
   ngeo.message.Notification.module.name,
   ngeo.message.modalComponent.name,
@@ -44,10 +46,10 @@ gmf.filters.filterselectorComponent.Controller_ = class {
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.$timeout} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {gmf.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+   * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
-   * @param {gmf.datasource.DataSourcesHelper} gmfDataSourcesHelper Gmf data
+   * @param {gmf.datasource.Helper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {gmf.filters.SavedFilters} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
@@ -110,7 +112,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
-     * @type {gmf.datasource.DataSourceBeingFiltered}
+     * @type {gmfx.datasource.DataSourceBeingFiltered}
      * @export
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -121,7 +123,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
     );
 
     /**
-     * @type {gmf.datasource.DataSourcesHelper}
+     * @type {gmf.datasource.Helper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
@@ -208,7 +210,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {gmf.datasource.DataSources}
+     * @type {gmfx.datasource.DataSources}
      * @private
      */
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;

@@ -1,11 +1,13 @@
-goog.provide('gmf.datasource.DataSourcesHelper');
+goog.provide('gmf.datasource.Helper');
 
 goog.require('gmf');
 goog.require('gmf.editing.EnumerateAttribute');
+goog.require('ngeo');
 goog.require('ngeo.datasource.DataSourcesHelper');
+goog.require('ol.array');
 
 
-gmf.datasource.DataSourcesHelper = class {
+gmf.datasource.Helper = class {
 
   /**
    * A service that provides utility methods to manipulate or get GMF data
@@ -47,7 +49,7 @@ gmf.datasource.DataSourcesHelper = class {
     // === Other properties ===
 
     /**
-     * @type {gmf.datasource.DataSources}
+     * @type {gmfx.datasource.DataSources}
      * @protected
      */
     this.collection_;
@@ -60,11 +62,11 @@ gmf.datasource.DataSourcesHelper = class {
   }
 
   /**
-   * @return {gmf.datasource.DataSources} Data sources collection.
+   * @return {gmfx.datasource.DataSources} Data sources collection.
    * @export
    */
   get collection() {
-    return /** @type {gmf.datasource.DataSources} */ (
+    return /** @type {gmfx.datasource.DataSources} */ (
       this.ngeoDataSourcesHelper_.collection
     );
   }
@@ -131,10 +133,11 @@ gmf.datasource.DataSourcesHelper = class {
 };
 
 
-gmf.module.service('gmfDataSourcesHelper', gmf.datasource.DataSourcesHelper);
-
-
 /**
- * @typedef {ol.Collection.<gmf.datasource.OGC>}
+ * @type {!angular.Module}
  */
-gmf.datasource.DataSources;
+gmf.datasource.Helper.module = angular.module('gmfDataSourcesHelper', [
+  gmf.editing.EnumerateAttribute.module.name,
+]);
+gmf.datasource.Helper.module.service('gmfDataSourcesHelper', gmf.datasource.Helper);
+gmf.module.requires.push(gmf.datasource.Helper.module.name);

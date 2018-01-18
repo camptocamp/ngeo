@@ -11,10 +11,10 @@ goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.OGC');
 
 gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
-  // todo: add gmf.datasource.ExternalDataSourcesManager
-  ngeo.query.Querent.module.name,
+  gmf.datasource.ExternalDataSourcesManager.module.name,
   gmf.import.wmsCapabilityLayertreeComponent.name,
   gmf.import.wmtsCapabilityLayertreeComponent.name,
+  ngeo.query.Querent.module.name,
 ]);
 
 gmf.module.requires.push(gmf.import.importdatasourceComponent.name);

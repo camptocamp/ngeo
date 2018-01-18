@@ -1,25 +1,29 @@
-goog.provide('gmf.datasource.DataSourcesManager');
+goog.provide('gmf.datasource.Manager');
 
 goog.require('gmf');
+goog.require('gmf.WFSAliases');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
-goog.require('gmf.WFSAliases');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
+goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.map.BackgroundLayerMgr');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.WMSTime');
+goog.require('ol');
 goog.require('ol.events');
+goog.require('ol.layer.Tile');
 goog.require('ol.obj');
 goog.require('ol.layer.Image');
 goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
 
 
-gmf.datasource.DataSourcesManager = class {
+gmf.datasource.Manager = class {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
@@ -145,7 +149,7 @@ gmf.datasource.DataSourcesManager = class {
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
-     * @type {gmf.datasource.DataSourcesManager.TreeCtrlCache}
+     * @type {gmfx.datasource.ManagerTreeCtrlCache}
      * @private
      */
     this.treeCtrlCache_ = {};
@@ -569,7 +573,7 @@ gmf.datasource.DataSourcesManager = class {
    * Remove a treeCtrl cache item. Unregister event listeners and remove the
    * data source from the ngeo collection.
    *
-   * @param {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} item Layertree
+   * @param {gmfx.datasource.ManagerTreeCtrlCacheItem} item Layertree
    *     controller cache item
    * @private
    */
@@ -652,7 +656,7 @@ gmf.datasource.DataSourcesManager = class {
    * Returns a layertree controller cache item, if it exists.
    *
    * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
-   * @return {gmf.datasource.DataSourcesManager.TreeCtrlCacheItem} Cache item
+   * @return {gmfx.datasource.ManagerTreeCtrlCacheItem} Cache item
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
@@ -835,22 +839,16 @@ gmf.datasource.DataSourcesManager = class {
 
 
 /**
- * @typedef {Object<(number|string), gmf.datasource.DataSourcesManager.TreeCtrlCacheItem>}
+ * @type {!angular.Module}
  */
-gmf.datasource.DataSourcesManager.TreeCtrlCache;
-
-
-/**
- * @typedef {{
- *     filterRulesWatcherUnregister: (Function),
- *     stateWatcherUnregister: (Function),
- *     timeLowerValueWatcherUnregister: (Function|undefined),
- *     timeUpperValueWatcherUnregister: (Function|undefined),
- *     treeCtrl: (ngeo.layertree.Controller),
- *     wmsLayer: (ol.layer.Image|undefined)
- * }}
- */
-gmf.datasource.DataSourcesManager.TreeCtrlCacheItem;
-
-
-gmf.module.service('gmfDataSourcesManager', gmf.datasource.DataSourcesManager);
+gmf.datasource.Manager.module = angular.module('gmfDataSourcesManager', [
+  gmf.layertree.SyncLayertreeMap.module.name,
+  gmf.layertree.TreeManager.module.name,
+  gmf.theme.Themes.module.name,
+  ngeo.filter.RuleHelper.module.name,
+  ngeo.map.BackgroundLayerMgr.module.name,
+  ngeo.map.LayerHelper.module.name,
+  ngeo.misc.WMSTime.module.name,
+]);
+gmf.datasource.Manager.module.service('gmfDataSourcesManager', gmf.datasource.Manager);
+gmf.module.requires.push(gmf.datasource.Manager.module.name);
