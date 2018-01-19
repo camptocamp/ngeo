@@ -19,10 +19,11 @@ app.module = angular.module('app', [
 /**
  * @param {angular.$http} $http Angular http service.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.Scope} $scope Scope.
  * @ngInject
  * @constructor
  */
-app.MainController = function($http, $timeout) {
+app.MainController = function($http, $timeout, $scope) {
 
   /**
    * @type {angular.$timeout}
@@ -53,6 +54,33 @@ app.MainController = function($http, $timeout) {
 
   $http.get('data/xsdattributes.xml').then(
     this.handleXSDAttributeGet_.bind(this));
+
+  //
+  // Visual feedback for changes applied to feature:
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.log = '';
+
+  $scope.$watch(
+    () => this.feature.get('name'),
+    (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        this.appendLog(`name changed from '${oldValue}' to '${newValue}'`);
+      }
+    }
+  );
+
+  $scope.$watch(
+    () => this.feature.get('kind'),
+    (newValue, oldValue) => {
+      if (newValue !== oldValue) {
+        this.appendLog(`kind changed from '${oldValue}' to '${newValue}'`);
+      }
+    }
+  );
 };
 
 
@@ -76,6 +104,13 @@ app.MainController.prototype.updateName = function() {
   this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
   }, 0);
+};
+
+/**
+ * @param {string} newMessage New message to add to log.
+ */
+app.MainController.prototype.appendLog = function(newMessage) {
+  this.log = `${newMessage}\n${this.log}`;
 };
 
 
