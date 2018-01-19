@@ -62,7 +62,7 @@ gmf.mobile.measure.lengthComponent.component_ =
           'active': '=gmfMobileMeasurelengthActive',
           'precision': '<?gmfMobileMeasurelengthPrecision',
           'map': '=gmfMobileMeasurelengthMap',
-          'sketchStyle': '=?gmfMobileMeasureLengthSketchstyle'
+          'sketchStyle': '=?gmfMobileMeasurelengthSketchstyle'
         },
         controller: 'GmfMobileMeasureLengthController as ctrl',
         bindToController: true,
