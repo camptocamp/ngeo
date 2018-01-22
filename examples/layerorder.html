@@ -6,43 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css">
-    <style>
-        #map {
-          width: 800px;
-          height: 400px;
-        }
-
-        ul {
-          padding: 0;
-        }
-        li {
-          list-style: none;
-          margin: 5px;
-          background-color: white;
-          border: 1px solid;
-          padding: 5px;
-          width: 250px;
-        }
-        li:hover .sortable-handle {
-          opacity: 1;
-        }
-        .sortable-handle {
-          opacity: 0.3;
-          margin-right: 10px;
-          cursor: -moz-grab;
-          cursor: -webkit-grab;
-          cursor: grab;
-        }
-        .sortable-dragger {
-          -webkit-box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.5);
-          box-shadow: 0px 2px 6px -1px rgba(0, 0, 0, 0.5);
-        }
-        .placeholder {
-          border: 1px dashed black;
-        }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
@@ -63,17 +26,5 @@
       <input type="checkbox" ng-model="ctrl.toggleRoadsLayer" ng-model-options="{getterSetter: true}"/>
     <label>
       <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.misc.sortableComponent.html" title="Read our documentation">ngeo-sortable</a></code> directive and the <code><a href="../apidoc/ngeo.misc.syncArrays.html" title="Read our documentation">ngeo.misc.syncArrays</a></code> function to create a list of layers where the order of layers can be changed using drag-and-drop.</p>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=layerorder.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

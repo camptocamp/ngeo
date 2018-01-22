@@ -1,7 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const webpackMerge = require('webpack-merge');
-const commons = require('./webpack.commons.js');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 
@@ -44,7 +42,7 @@ const examplesRule = {
   use: babelUse,
 }
 
-module.exports = webpackMerge(commons.config, {
+module.exports = {
   output: {
     filename: '[name].[chunkhash:20].js'
   },
@@ -68,4 +66,4 @@ module.exports = webpackMerge(commons.config, {
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.prod.js'),
     }
   },
-});
+};

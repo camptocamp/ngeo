@@ -1,5 +1,7 @@
 goog.provide('app.backgroundlayerdropdown');
 
+// webpack: import './backgroundlayerdropdown.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -9,11 +11,12 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.backgroundlayerdropdown.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name
 ]);
@@ -27,7 +30,7 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.backgroundlayerComponent = {
+app.backgroundlayerdropdown.backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
@@ -37,7 +40,7 @@ app.backgroundlayerComponent = {
 };
 
 
-app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
+app.backgroundlayerdropdown.module.component('appBackgroundlayer', app.backgroundlayerdropdown.backgroundlayerComponent);
 
 
 /**
@@ -48,7 +51,7 @@ app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
  * @export
  * @ngInject
  */
-app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+app.backgroundlayerdropdown.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
     (resp) => {
       const bgLayers = resp.data;
@@ -70,7 +73,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * @param {Object} layerSpec Layer specification object.
  * @export
  */
-app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
+app.backgroundlayerdropdown.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;
   const layer = this.createLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this['map'], layer);
@@ -82,7 +85,7 @@ app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
  * @return {ol.layer.Tile} The layer.
  * @private
  */
-app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
+app.backgroundlayerdropdown.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
   if (layerName === 'blank') {
     return new ol.layer.Tile();
   }
@@ -94,8 +97,8 @@ app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
 };
 
 
-app.module.controller('AppBackgroundlayerController',
-  app.BackgroundlayerController);
+app.backgroundlayerdropdown.module.controller('AppBackgroundlayerController',
+  app.backgroundlayerdropdown.BackgroundlayerController);
 
 
 /**
@@ -103,7 +106,7 @@ app.module.controller('AppBackgroundlayerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+app.backgroundlayerdropdown.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
@@ -135,4 +138,4 @@ app.MainController = function($scope) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.backgroundlayerdropdown.module.controller('MainController', app.backgroundlayerdropdown.MainController);

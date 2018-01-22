@@ -1,0 +1,9 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+#map {
+  height: 400px;
+}
+.dropdown button {
+  min-width: 100px;
+}

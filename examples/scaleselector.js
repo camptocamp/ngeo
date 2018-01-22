@@ -1,5 +1,7 @@
 goog.provide('app.scaleselector');
 
+// webpack: import './scaleselector.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ol.Map');
@@ -7,11 +9,12 @@ goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.scaleselector.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name
 ]);
@@ -22,7 +25,7 @@ app.module = angular.module('app', [
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+app.scaleselector.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
@@ -61,4 +64,4 @@ app.MainController = function($scope) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.scaleselector.module.controller('MainController', app.scaleselector.MainController);

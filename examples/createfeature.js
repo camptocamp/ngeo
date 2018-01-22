@@ -1,5 +1,7 @@
 goog.provide('app.createfeature');
 
+// webpack: import './createfeature.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
 /** @suppress {extraRequire} */
@@ -14,11 +16,12 @@ goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.createfeature.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
@@ -33,7 +36,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoToolActivateMgr) {
+app.createfeature.MainController = function(ngeoToolActivateMgr) {
 
   /**
    * @type {ol.Collection}
@@ -149,4 +152,4 @@ app.MainController = function(ngeoToolActivateMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.createfeature.module.controller('MainController', app.createfeature.MainController);

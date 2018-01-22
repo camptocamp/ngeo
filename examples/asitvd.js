@@ -1,15 +1,18 @@
 goog.provide('app.asitvd');
 
+// webpack: import './asitvd.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.source.AsitVD');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', [
+app.asitvd.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name
 ]);
@@ -19,7 +22,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.asitvd.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -40,4 +43,4 @@ app.MainController = function() {
   });
 };
 
-app.module.controller('MainController', app.MainController);
+app.asitvd.module.controller('MainController', app.asitvd.MainController);

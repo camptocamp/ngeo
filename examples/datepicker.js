@@ -1,12 +1,15 @@
 goog.provide('app.datepicker');
 
+// webpack: import './datepicker.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.datepickerComponent');
+goog.require('ngeo');
 goog.require('ngeo.misc.Time');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.datepicker.module = angular.module('app', [
   ngeo.module.name,
   ngeo.misc.datepickerComponent.name,
   ngeo.misc.Time.module.name,
@@ -18,7 +21,7 @@ app.module = angular.module('app', [
  * @param {!ngeo.misc.Time} ngeoTime time service.
  * @ngInject
  */
-app.MainController = function(ngeoTime) {
+app.datepicker.MainController = function(ngeoTime) {
 
   /**
    * @type {ngeo.misc.Time}
@@ -77,4 +80,4 @@ app.MainController = function(ngeoTime) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.datepicker.module.controller('MainController', app.datepicker.MainController);

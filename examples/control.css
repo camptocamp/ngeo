@@ -1,0 +1,9 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+#map {
+  width: 600px;
+  height: 400px;
+}
+#mouse-position {
+}

@@ -1,5 +1,8 @@
 goog.provide('app.toolActivate');
 
+// webpack: import './toolActivate.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -20,7 +23,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.toolActivate.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
@@ -35,7 +38,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+app.toolActivate.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {ol.Map}
@@ -151,4 +154,4 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.toolActivate.module.controller('MainController', app.toolActivate.MainController);

@@ -4,6 +4,7 @@ goog.require('ngeo');
 goog.require('ngeo.print.VectorEncoder');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ol');
+goog.require('ol.obj');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');

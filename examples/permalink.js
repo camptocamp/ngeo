@@ -1,5 +1,8 @@
 goog.provide('app.permalink');
 
+// webpack: import './permalink.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.debounce');
@@ -17,7 +20,7 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.permalink.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.debounce.name,
@@ -34,7 +37,7 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.mapComponent = {
+app.permalink.mapComponent = {
   controller: 'AppMapController as ctrl',
   bindings: {
     'map': '=appMap'
@@ -43,7 +46,7 @@ app.mapComponent = {
 };
 
 
-app.module.component('appMap', app.mapComponent);
+app.permalink.module.component('appMap', app.permalink.mapComponent);
 
 
 /**
@@ -52,7 +55,7 @@ app.module.component('appMap', app.mapComponent);
  * @constructor
  * @ngInject
  */
-app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
+app.permalink.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   /**
    * @type {ol.Map}
    * @export
@@ -72,9 +75,9 @@ app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.ngeoDebounce_ = ngeoDebounce;
 };
 
-app.module.controller('AppMapController', app.MapComponentController);
+app.permalink.module.controller('AppMapController', app.permalink.MapComponentController);
 
-app.MapComponentController.prototype.$onInit = function() {
+app.permalink.MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
 
   let zoom = this.ngeoLocation_.getParam('z');
@@ -115,7 +118,7 @@ app.MapComponentController.prototype.$onInit = function() {
  *
  * @type {!angular.Component}
  */
-app.drawComponent = {
+app.permalink.drawComponent = {
   controller: 'AppDrawController as ctrl',
   bindings: {
     'map': '=appDrawMap',
@@ -129,7 +132,7 @@ app.drawComponent = {
 };
 
 
-app.module.component('appDraw', app.drawComponent);
+app.permalink.module.component('appDraw', app.permalink.drawComponent);
 
 
 /**
@@ -139,7 +142,7 @@ app.module.component('appDraw', app.drawComponent);
  * @export
  * @ngInject
  */
-app.DrawComponentController = function($scope, ngeoLocation) {
+app.permalink.DrawComponentController = function($scope, ngeoLocation) {
 
   /**
    * @type {ol.Map}
@@ -177,7 +180,7 @@ app.DrawComponentController = function($scope, ngeoLocation) {
   this.interaction;
 };
 
-app.DrawComponentController.prototype.$onInit = function() {
+app.permalink.DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
   this.interaction = new ol.interaction.Draw({
@@ -225,19 +228,19 @@ app.DrawComponentController.prototype.$onInit = function() {
  * Clear the vector layer.
  * @export
  */
-app.DrawComponentController.prototype.clearLayer = function() {
+app.permalink.DrawComponentController.prototype.clearLayer = function() {
   this.layer.getSource().clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };
 
-app.module.controller('AppDrawController', app.DrawComponentController);
+app.permalink.module.controller('AppDrawController', app.permalink.DrawComponentController);
 
 
 /**
  * @constructor
  */
-app.MainController = function() {
+app.permalink.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -269,4 +272,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.permalink.module.controller('MainController', app.permalink.MainController);

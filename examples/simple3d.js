@@ -1,5 +1,7 @@
 goog.provide('app.simple3d');
 
+// webpack: import './simple3d.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -14,7 +16,7 @@ goog.require('ngeo.olcs.Manager');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.simple3d.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.olcs.olcsModule.name
@@ -27,7 +29,7 @@ app.module = angular.module('app', [
  * @param {angular.Scope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
  */
-app.MainController = function($rootScope, ngeoOlcsService) {
+app.simple3d.MainController = function($rootScope, ngeoOlcsService) {
 
   /**
    * @type {ol.Map}
@@ -60,4 +62,4 @@ app.MainController = function($rootScope, ngeoOlcsService) {
   ngeoOlcsService.initialize(this.ol3dm);
 };
 
-app.module.controller('MainController', app.MainController);
+app.simple3d.module.controller('MainController', app.simple3d.MainController);

@@ -1,5 +1,7 @@
 goog.provide('app.backgroundlayer');
 
+// webpack: import './backgroundlayer.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.source.AsitVD');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -9,11 +11,12 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.backgroundlayer.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name
 ]);
@@ -32,7 +35,7 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.backgroundlayerComponent = {
+app.backgroundlayer.backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
@@ -42,7 +45,7 @@ app.backgroundlayerComponent = {
 };
 
 
-app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
+app.backgroundlayer.module.component('appBackgroundlayer', app.backgroundlayer.backgroundlayerComponent);
 
 
 /**
@@ -53,7 +56,7 @@ app.module.component('appBackgroundlayer', app.backgroundlayerComponent);
  * @export
  * @ngInject
  */
-app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+app.backgroundlayer.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
 
   /**
    * @type {ol.Map}
@@ -94,7 +97,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * it.
  * @export
  */
-app.BackgroundlayerController.prototype.change = function() {
+app.backgroundlayer.BackgroundlayerController.prototype.change = function() {
   const layerSpec = this.bgLayer;
   const layer = this.getLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this.map, layer);
@@ -106,7 +109,7 @@ app.BackgroundlayerController.prototype.change = function() {
  * @return {ol.layer.Tile} The layer.
  * @private
  */
-app.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
+app.backgroundlayer.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
   if (layerName === 'blank') {
     return new ol.layer.Tile();
   }
@@ -118,8 +121,8 @@ app.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
 };
 
 
-app.module.controller('AppBackgroundlayerController',
-  app.BackgroundlayerController);
+app.backgroundlayer.module.controller('AppBackgroundlayerController',
+  app.backgroundlayer.BackgroundlayerController);
 
 
 /**
@@ -127,7 +130,7 @@ app.module.controller('AppBackgroundlayerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+app.backgroundlayer.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
@@ -159,4 +162,4 @@ app.MainController = function($scope) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.backgroundlayer.module.controller('MainController', app.backgroundlayer.MainController);

@@ -1,10 +1,13 @@
 goog.provide('app.colorpicker');
 
+// webpack: import './colorpicker.css';
+// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.colorpickerComponent');
+goog.require('ngeo');
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.colorpicker.module = angular.module('app', [
   ngeo.module.name,
   ngeo.misc.colorpickerComponent.name,
 ]);
@@ -16,21 +19,21 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.colorpickerComponent = {
+app.colorpicker.colorpickerComponent = {
   template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
   controller: 'AppColorpickerController',
   controllerAs: 'ctrl'
 };
 
 
-app.module.component('appColorpicker', app.colorpickerComponent);
+app.colorpicker.module.component('appColorpicker', app.colorpicker.colorpickerComponent);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.ColorPickerController = function() {
+app.colorpicker.ColorPickerController = function() {
 
 
   /**
@@ -45,8 +48,8 @@ app.ColorPickerController = function() {
 
 };
 
-app.module.controller('AppColorpickerController',
-  app.ColorPickerController);
+app.colorpicker.module.controller('AppColorpickerController',
+  app.colorpicker.ColorPickerController);
 
 
 /**
@@ -54,7 +57,7 @@ app.module.controller('AppColorpickerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+app.colorpicker.MainController = function($scope) {
 
   /**
    * Active color.
@@ -66,4 +69,4 @@ app.MainController = function($scope) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.colorpicker.module.controller('MainController', app.colorpicker.MainController);

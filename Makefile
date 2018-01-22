@@ -81,9 +81,11 @@ GMF_APPS_LIBS_JS_FILES += \
 	utils/ios-overlap-fix.js
 endif
 
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
+CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES)) \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES))
 EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/angular.min.js \
 	.build/examples-hosted/lib/angular-animate.min.js \
@@ -210,7 +212,7 @@ apidoc: .build/apidoc
 dist: dist/ngeo.js dist/gmf.js
 
 .PHONY: check
-check: lint check-googs check-examples test dist build-gmf-apps
+check: lint check-googs check-examples-checker check-examples test dist build-gmf-apps
 
 .PHONY: check-googs
 check-googs:
@@ -225,8 +227,14 @@ build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),
 	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES))) \
 	$(ANGULAR_LOCALES_FILES)
 
+.PHONY: check-examples-checker
+check-example-checker: $(CHECK_EXAMPLE_CHECKER)
+
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
+
+.PHONY: check-examples-webpack
+check-examples-webpack: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK)
 
 .PHONY: lint
 lint: .build/eslint.timestamp git-attributes eof-newline check-ngeox
@@ -551,42 +559,38 @@ dist/gmf.js.map: dist/gmf.js
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
-.PRECIOUS: .build/examples-hosted/%.html
-.build/examples-hosted/%.html: examples/%.html \
-		.build/examples-hosted/%.js \
-		$(NGEO_EXAMPLES_HOSTED_REQUIREMENTS)
-	mkdir -p $(dir $@)
-	sed -e 's|\.\./node_modules/openlayers/css/ol.css|lib/ngeo.css|' \
-		-e 's|\.\./node_modules/bootstrap/dist/css/bootstrap.css|lib/bootstrap.min.css|' \
-		-e 's|\.\./node_modules/font-awesome/css/font-awesome.css|lib/font-awesome.min.css|' \
-		-e 's|\.\./node_modules/jquery/dist/jquery.js|lib/jquery.min.js|' \
-		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.js|lib/jquery-ui.min.js|' \
-		-e 's|\.\./node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js|lib/jquery.ui.touch-punch.min.js|' \
-		-e 's|\.\./third-party/jquery-ui/jquery-ui.min\.css|lib/jquery-ui.min.css|' \
-		-e 's|\.\./node_modules/bootstrap/dist/js/bootstrap.js|lib/bootstrap.min.js|' \
-		-e 's|\.\./node_modules/angular/angular.js|lib/angular.min.js|' \
-		-e 's|\.\./node_modules/angular-animate/angular-animate.js|lib/angular-animate.min.js|' \
-		-e 's|\.\./node_modules/angular-float-thead/angular-floatThead.js|lib/angular-floatThead.js|' \
-		-e 's|\.\./node_modules/floatthead/dist/jquery.floatThead.min.js|lib/jquery.floatThead.min.js|' \
-		-e 's|\.\./node_modules/angular-gettext/dist/angular-gettext.js|lib/angular-gettext.min.js|' \
-		-e 's|\.\./node_modules/angular-touch/angular-touch.js|lib/angular-touch.min.js|' \
-		-e 's|\.\./node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js|lib/tmhDynamicLocale.min.js|' \
-		-e 's|\.\./node_modules/angular-ui-date/dist/date.js|lib/date.min.js|' \
-		-e 's|\.\./node_modules/d3/build/d3.js|lib/d3.min.js|' \
-		-e 's|\.\./node_modules/file-saver/FileSaver.min.js|lib/FileSaver.min.js|' \
-		-e 's|\.\./node_modules/corejs-typeahead/dist/typeahead.bundle.js|lib/typeahead.bundle.min.js|' \
-		-e 's|\.\./node_modules/proj4/dist/proj4\.js|lib/proj4.js|' \
-		-e 's|\.\./node_modules/jsts/dist/jsts\.min\.js|lib/jsts.min.js|' \
-		-e 's|\.\./node_modules/moment/min/moment\.min\.js|lib/moment.min.js|' \
-		-e 's|\.\./node_modules/url-polyfill/url-polyfill.js|lib/url-polyfill/url-polyfill.min.js|' \
-		-e 's|/@?main=$*.js|lib/transpile.js|' \
-		-e 's|default\.js|$*.js|' \
-		-e 's|\.\./utils/watchwatchers.js|lib/watchwatchers.js|' \
-		-e '/<head>/a\$(SED_NEW_LINE)    <script src="https.js"></script>$(SED_NEW_LINE)' $< > $@
-
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: contribs/gmf/examples/%.html \
 		.build/examples-hosted/contribs/gmf/%.js \
+		.build/examples-hosted/https.js \
+		.build/examples-hosted/lib/ngeo.css \
+		.build/examples-hosted/lib/bootstrap.min.css \
+		.build/examples-hosted/lib/jquery-ui.min.css \
+		.build/examples-hosted/lib/font-awesome.min.css \
+		.build/examples-hosted/lib/jquery.min.js \
+		.build/examples-hosted/lib/jquery-ui.min.js \
+		.build/examples-hosted/lib/angular.min.js \
+		.build/examples-hosted/lib/angular-animate.min.js \
+		.build/examples-hosted/lib/angular-sanitize.min.js \
+		.build/examples-hosted/lib/angular-touch.min.js \
+		.build/examples-hosted/lib/angular-gettext.min.js \
+		.build/examples-hosted/lib/date.min.js \
+		.build/examples-hosted/lib/angular-floatThead.js \
+		.build/examples-hosted/lib/jquery.floatThead.min.js \
+		.build/examples-hosted/lib/slider.min.js \
+		.build/examples-hosted/lib/tmhDynamicLocale.min.js \
+		.build/examples-hosted/lib/transpile.js \
+		.build/examples-hosted/lib/watchwatchers.js \
+		.build/examples-hosted/lib/bootstrap.min.js \
+		.build/examples-hosted/lib/proj4.js \
+		.build/examples-hosted/lib/moment.min.js \
+		.build/examples-hosted/lib/FileSaver.min.js \
+		.build/examples-hosted/lib/typeahead.bundle.min.js \
+		.build/examples-hosted/lib/jsts.min.js \
+		.build/examples-hosted/lib/d3.min.js \
+		.build/examples-hosted/fonts/fontawesome-webfont.woff \
+		.build/examples-hosted/fonts/fontawesome-webfont.ttf \
+		.build/examples-hosted/fonts/fontawesome-webfont.svg \
 		$(GMF_EXAMPLES_HOSTED_REQUIREMENTS)
 	mkdir -p $(dir $@)
 	sed -e 's|\.\./node_modules/openlayers/css/ol\.css|lib/ngeo.css|' \
@@ -695,11 +699,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/contribs/gmf/apps/mobile/image/background-layer-button.png:
 	# no background layer button for the mobile
 
-.PRECIOUS: .build/examples-hosted/%.js
-.build/examples-hosted/%.js: .build/examples/%.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .PRECIOUS: .build/examples-hosted/contribs/gmf/%.js
 .build/examples-hosted/contribs/gmf/%.js: .build/contribs/gmf/examples/%.js
 	mkdir -p $(dir $@)
@@ -730,16 +729,25 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
+.build/test-check-example/%.check.timestamp: test/check-example/%.html \
+		.build/node_modules.timestamp \
+		buildtools/check-example.js
+	mkdir -p $(dir $@)
+	if ./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $< ; then false; fi
+	touch $@
+
 .build/%.check.timestamp: .build/examples-hosted/%.html \
-		.build/examples-hosted/%.js \
-		.build/node_modules.timestamp
+		.build/node_modules.timestamp \
+		buildtools/check-example.js
 	mkdir -p $(dir $@)
 	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	#[ `compare -metric RMSE $<.png example/$*-ref.png /$<-diff.png 2>&1 | sed 's/^.*(\(.*\))/\1/g'` \< 0.05 ]
 	touch $@
 
 .build/contribs/gmf/%.check.timestamp: .build/examples-hosted/contribs/gmf/%.html \
 		.build/examples-hosted/contribs/gmf/%.js \
-		.build/node_modules.timestamp
+		.build/node_modules.timestamp \
+		buildtools/check-example.js
 	mkdir -p $(dir $@)
 	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
@@ -752,7 +760,9 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/node_modules.timestamp: package.json
 	@# re-installing the node packages, while 'make serve' is still running
 	@# might freeze the system. ask for confirmation in that case.
-	@if ps -a | grep node; then \
+	@if ps a | grep -v grep | grep 'node buildtools/serve.js'; then \
+		echo "Affected process:"; \
+		ps a | grep -v grep | grep 'node buildtools/serve.js'; \
 		read -r -p "'make serve' might be running, which may cause problems. Abort? [Yn]" ABORT; \
 		if [ "$$ABORT" != "n" ]; then \
 			exit 1; \

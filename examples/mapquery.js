@@ -1,5 +1,8 @@
 goog.provide('app.mapquery');
 
+// webpack: import './mapquery.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
@@ -20,7 +23,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.mapquery.module = angular.module('app', [
   ngeo.module.name,
   ngeo.datasource.DataSources.module.name,
   ngeo.map.module.name,
@@ -29,7 +32,7 @@ app.module = angular.module('app', [
 ]);
 
 
-app.module.value('ngeoQueryOptions', {
+app.mapquery.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -39,13 +42,13 @@ app.module.value('ngeoQueryOptions', {
  *
  * @type {!angular.Component}
  */
-app.queryresultComponent = {
+app.mapquery.queryresultComponent = {
   controller: 'AppQueryresultController',
   controllerAs: 'qrCtrl',
   templateUrl: 'partials/queryresult.html'
 };
 
-app.module.component('appQueryresult', app.queryresultComponent);
+app.mapquery.module.component('appQueryresult', app.mapquery.queryresultComponent);
 
 
 /**
@@ -53,7 +56,7 @@ app.module.component('appQueryresult', app.queryresultComponent);
  * @constructor
  * @ngInject
  */
-app.QueryresultController = function(ngeoQueryResult) {
+app.mapquery.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -64,7 +67,7 @@ app.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-app.module.controller('AppQueryresultController', app.QueryresultController);
+app.mapquery.module.controller('AppQueryresultController', app.mapquery.QueryresultController);
 
 
 /**
@@ -76,7 +79,7 @@ app.module.controller('AppQueryresultController', app.QueryresultController);
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
+app.mapquery.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
@@ -158,7 +161,7 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
  * @return {boolean|undefined} Value.
  * @export
  */
-app.MainController.prototype.getSetDummyActive = function(val) {
+app.mapquery.MainController.prototype.getSetDummyActive = function(val) {
   if (val !== undefined) {
     this.dummyActive = val;
   } else {
@@ -167,4 +170,4 @@ app.MainController.prototype.getSetDummyActive = function(val) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.mapquery.module.controller('MainController', app.mapquery.MainController);

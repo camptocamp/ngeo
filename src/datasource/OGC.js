@@ -3,7 +3,6 @@ goog.provide('ngeo.datasource.OGC');
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
-goog.require('ngeo.datasource.OGC');
 goog.require('ol.format.GML2');
 goog.require('ol.format.GML3');
 goog.require('ol.format.WFS');

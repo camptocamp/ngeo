@@ -1,5 +1,7 @@
 goog.provide('app.rotate');
 
+// webpack: import './rotate.css';
+// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.Rotate');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
@@ -16,11 +18,12 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Circle');
 goog.require('ol.geom.Polygon');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.rotate.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name
 ]);
@@ -34,7 +37,7 @@ const module = angular.module('app', ['ngeo']);
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.rotate.MainController = function() {
 
   /**
    * @type {ol.Map}
@@ -144,4 +147,4 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+module.controller('MainController', app.rotate.MainController);

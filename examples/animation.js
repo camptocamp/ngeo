@@ -1,15 +1,18 @@
 goog.provide('app.animation');
 
+// webpack: import './animation.css';
+// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', [
+app.animation.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name
 ]);
@@ -22,7 +25,7 @@ app.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.mapComponent = {
+app.animation.mapComponent = {
   bindings: {
     'map': '=appMap',
     'class': '=appMapClass'
@@ -31,7 +34,7 @@ app.mapComponent = {
 };
 
 
-app.module.component('appMap', app.mapComponent);
+app.animation.module.component('appMap', app.animation.mapComponent);
 
 
 /**
@@ -41,7 +44,7 @@ app.module.component('appMap', app.mapComponent);
  * @constructor
  * @ngInject
  */
-app.MainController = function($timeout) {
+app.animation.MainController = function($timeout) {
   /**
    * @type {ol.Map}
    * @export
@@ -76,4 +79,4 @@ app.MainController = function($timeout) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.animation.module.controller('MainController', app.animation.MainController);

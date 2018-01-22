@@ -47,6 +47,7 @@ install:
 
 - if [ ${IS_HOME} = TRUE ]; then openssl aes-256-cbc -K $encrypted_66d875d20fac_key -iv $encrypted_66d875d20fac_iv -in secrets.tar.enc -out secrets.tar -d; fi
 - if [ ${IS_HOME} = TRUE ]; then tar xvf secrets.tar; fi
+- if [ ${IS_HOME} = TRUE ]; then rm secrets.tar; fi
 - if [ ${IS_HOME} = TRUE ]; then cp .transifexrc $HOME/.transifexrc; fi
 - if [ ${IS_HOME} = TRUE ]; then cp ngeo_deploy_key $HOME/.ssh/id_rsa; fi
 - if [ ${IS_HOME} = TRUE ]; then chmod 600 $HOME/.ssh/id_rsa; fi
@@ -68,6 +69,7 @@ jobs:
     - make lint
     - make check-ngeox
     - make git-attributes
+    - make check-examples-checker
     - if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
     - if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 
@@ -83,14 +85,14 @@ jobs:
   - stage: Tests
     env:
     - JOB=webpack
-    install:
+    - TARGET=ngeo-examples
+    script:
     - npm install
+    - npm install github:openlayers/openlayers#2ee34b825c4b5d6edd3569e10b3f63510754e012
     - buildtools/webpack-migration
     - git add -A  # for git-attributes
-    script:
-    - NODE_ENV=dev node_modules/.bin/webpack
-    - rm -rf dist/*
-    - NODE_ENV=prod node_modules/.bin/webpack
+    - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
+    - travis_wait node_modules/.bin/webpack
     - export CHROME_BIN=/opt/google/chrome/chrome
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
@@ -109,6 +111,8 @@ jobs:
     - node_modules/.bin/eslint contribs/gmf/examples || true
     - node_modules/.bin/eslint contribs/gmf/test
     - node_modules/.bin/eslint contribs/gmf/apps
+    - make check-examples-webpack
+    - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples-ngeo buildtools/deploy.sh; fi
 
   - stage: Build
     env:
@@ -123,13 +127,6 @@ jobs:
     - DEVELOPMENT=TRUE
     script:
     - buildtools/test_examples.py 2/2
-    if: type = pull_request
-  - stage: Build
-    env:
-    - JOB=build-examples-ngeo
-    - DEVELOPMENT=TRUE
-    script:
-    - make examples-hosted-ngeo
     if: type = pull_request
   - stage: Build
     env:
@@ -173,12 +170,6 @@ jobs:
     after_success:
     - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
     if: tag IS present AND repo = camptocamp/ngeo
-  - stage: Build and publish
-    env:
-    - JOB=publish-examples-ngeo
-    script:
-    - buildtools/deploy.sh
-    if: type = push AND repo = camptocamp/ngeo AND branch IS present
   - stage: Build and publish
     env:
     - JOB=publish-examples-gmf

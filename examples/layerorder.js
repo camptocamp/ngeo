@@ -1,5 +1,8 @@
 goog.provide('app.layerorder');
 
+// webpack: import './layerorder.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.sortableComponent');
@@ -14,7 +17,7 @@ goog.require('ol.source.TileWMS');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.layerorder.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.sortableComponent.name,
@@ -27,7 +30,7 @@ app.module = angular.module('app', [
  * @export
  * @ngInject
  */
-app.MainController = function($scope) {
+app.layerorder.MainController = function($scope) {
 
   /** @type {ol.layer.Tile} */
   const asitvd = new ol.layer.Tile({
@@ -139,7 +142,7 @@ app.MainController = function($scope) {
  *     function is used as setter.
  * @export
  */
-app.MainController.prototype.toggleRoadsLayer = function(val) {
+app.layerorder.MainController.prototype.toggleRoadsLayer = function(val) {
   if (val === undefined) {
     return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {
@@ -152,4 +155,4 @@ app.MainController.prototype.toggleRoadsLayer = function(val) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.layerorder.module.controller('MainController', app.layerorder.MainController);

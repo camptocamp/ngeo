@@ -1,0 +1,12 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+#map {
+  width: 800px;
+  height: 400px;
+}
+
+[ngeo-btn] {
+    width: 100px;
+    margin: 5px;
+}

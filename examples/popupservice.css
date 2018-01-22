@@ -1,0 +1,9 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+.buttons .btn {
+  margin: 0 0 5px 0;
+}
+.popup-with-iframe .popover-content {
+  height: calc(100% - 40px);
+}

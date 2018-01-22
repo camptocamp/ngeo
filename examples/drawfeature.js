@@ -1,5 +1,8 @@
 goog.provide('app.drawfeature');
 
+// webpack: import './drawfeature.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.draw.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.ToolActivate');
@@ -13,7 +16,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.drawfeature.module = angular.module('app', [
   ngeo.module.name,
   ngeo.draw.module.name,
   ngeo.map.module.name,
@@ -29,7 +32,7 @@ app.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
+app.drawfeature.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -81,4 +84,4 @@ app.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.drawfeature.module.controller('MainController', app.drawfeature.MainController);

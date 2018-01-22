@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoprefix = require('less-plugin-autoprefix');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 // Make sure that Angular finds jQuery and does not fall back to jqLite
@@ -79,9 +78,6 @@ const iconRule = {
 const config = {
   context: path.resolve(__dirname, '../'),
   devtool: 'source-map',
-  entry: {
-    app: './examples/search.js',
-  },
   output: {
     path: path.resolve(__dirname, '../dist/')
   },
@@ -99,13 +95,7 @@ const config = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     provideJQueryPlugin,
     new ExtractTextPlugin('[name].css'),
-    new ExtractTextPlugin('[name].less'),
-    new HtmlWebpackPlugin({
-      template: 'examples/search.html',
-      chunksSortMode: 'manual',
-      filename: 'search.html',
-      chunks: ['app'],
-    }),
+    new ExtractTextPlugin('[name].less')
   ],
   resolve: {
     modules: [
@@ -115,6 +105,9 @@ const config = {
       'ngeo': path.resolve(__dirname, '../src'),
       'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
+      'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
+      'ol/ol.css': 'openlayers/css/ol.css',
+      'ol': 'openlayers/src/ol',
       'jquery-ui/datepicker' : 'jquery-ui/ui/widgets/datepicker',
       'proj4': 'proj4/lib',
     }

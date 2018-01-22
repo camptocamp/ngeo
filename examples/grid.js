@@ -1,10 +1,13 @@
 goog.provide('app.grid');
 
+// webpack: import './grid.css';
+// webpack: import './common_dependencies.js';
+goog.require('ngeo');
 goog.require('ngeo.grid.module');
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
+app.grid.module = angular.module('app', [
   ngeo.module.name,
   ngeo.grid.module.name
 ]);
@@ -14,7 +17,7 @@ app.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+app.grid.MainController = function() {
 
   const data = [
     {
@@ -71,4 +74,4 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+app.grid.module.controller('MainController', app.grid.MainController);
