@@ -20,6 +20,7 @@
   "devDependencies": {
     "@camptocamp/cesium": "1.40.0",
     "@camptocamp/closure-util": "1.27.0",
+    "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "angular": "1.6.8",
     "angular-animate": "1.6.8",
     "angular-dynamic-locale": "0.1.32",
@@ -35,7 +36,6 @@
     "async": "2.6.0",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
-    "babel-plugin-angularjs-annotate": "0.8.2",
     "babel-preset-env": "1.6.1",
     "bootstrap": "3.3.7",
     "clean-css-cli": "4.1.10",
