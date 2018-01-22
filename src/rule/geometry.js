@@ -6,6 +6,9 @@ goog.require('ol.Object');
 goog.require('ol.events');
 goog.require('ol.Observable');
 goog.require('ol.Feature');
+goog.require('ol.geom.Geometry');
+goog.require('ol.Object');
+goog.require('ol.Observable');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.Geometry');
 

@@ -13,6 +13,7 @@ goog.require('ol.Sphere');
 goog.require('ol.events');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
+goog.require('ol.proj');
 goog.require('ol.proj.EPSG4326');
 goog.require('ol.source.Vector');
 goog.require('ol.style.Fill');
