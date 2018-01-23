@@ -26,7 +26,7 @@ gmfapp.backgroundlayerselector.module.value(
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
-gmfapp.backgroundlayerselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.backgroundlayerselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

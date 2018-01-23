@@ -8,8 +8,6 @@ goog.require('gmf');
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');
-/** @suppress {extraRequire} */
-goog.require('gmf.datasource.DataSourcesManager');
 goog.require('gmf.filters.module');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');

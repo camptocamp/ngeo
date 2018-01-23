@@ -7,8 +7,6 @@ goog.provide('gmfapp.importdatasource');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');
-/** @suppress {extraRequire} */
-goog.require('gmf.datasource.DataSourcesManager');
 goog.require('gmf.import.importdatasourceComponent');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');

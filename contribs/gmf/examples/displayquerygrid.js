@@ -4,9 +4,6 @@ goog.provide('gmfapp.displayquerygrid');
 // webpack: import './common_dependencies.js';
 goog.require('gmf');
 goog.require('gmf.datasource.Manager');
-goog.require('gmf.datasource.DataSourcesManager');
-/** @suppress {extraRequire} */
-goog.require('gmf.displayquerygridComponent');
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');

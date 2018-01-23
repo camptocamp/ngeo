@@ -1,4 +1,4 @@
 import 'jquery';
 import 'angular';
 import 'angular-gettext';
-import '../utils/watchwatchers.js';
+import '../../../utils/watchwatchers.js';
