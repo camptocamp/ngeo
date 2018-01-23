@@ -37,8 +37,18 @@ const ngeoRule = {
   use: babelUse,
 }
 
-const examplesRule = {
+const ngeoExamplesRule = {
   test: /ngeo\/examples\/.*\.js$/,
+  use: babelUse,
+}
+
+const gmfRule = {
+  test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
+  use: babelUse,
+}
+
+const gmfExamplesRule = {
+  test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
   use: babelUse,
 }
 
@@ -51,7 +61,9 @@ module.exports = {
       resourcesRule,
       fontRule,
       ngeoRule,
-      examplesRule,
+      ngeoExamplesRule,
+      gmfRule,
+      gmfExamplesRule,
     ]
   },
   plugins: [

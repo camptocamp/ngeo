@@ -19,6 +19,9 @@ switch (process.env.TARGET) {
   case 'ngeo-examples':
     config = webpackMerge(config, require('./buildtools/webpack.ngeoexamples'));
     break;
+  case 'gmf-examples':
+    config = webpackMerge(config, require('./buildtools/webpack.gmfexamples'));
+    break;
   default:
     console.log(`The 'TARGET' environement variable is set to an invalide value: ${process.env.TARGET}.` )
     process.exit(2);
