@@ -93,6 +93,24 @@ gmf.module.directive('gmfMobileMeasurelength',
 gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $filter) {
 
   /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
+   * @type {ngeo.DecorateInteraction}
+   * @private
+   */
+  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
+
+  /**
+   * @type {angular.$filter}
+   * @private
+   */
+  this.filter_ = $filter;
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -104,7 +122,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    */
   this.active;
 
-  $scope.$watch(() => this.active, (newVal) => {
+  this.scope_.$watch(() => this.active, (newVal) => {
     this.measure.setActive(newVal);
   });
 
@@ -118,64 +136,84 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
    * @export
    */
-  this.sketchStyle;
-
-  if (this.sketchStyle === undefined) {
-    this.sketchStyle = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: 'rgba(255, 255, 255, 0.2)'
-      }),
+  this.sketchStyle = new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: 'rgba(0, 0, 0, 0.5)',
+      lineDash: [10, 10],
+      width: 2
+    }),
+    image: new ol.style.RegularShape({
       stroke: new ol.style.Stroke({
-        color: 'rgba(0, 0, 0, 0.5)',
-        lineDash: [10, 10],
+        color: 'rgba(0, 0, 0, 0.7)',
         width: 2
       }),
-      image: new ol.style.RegularShape({
-        stroke: new ol.style.Stroke({
-          color: 'rgba(0, 0, 0, 0.7)',
-          width: 2
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0
-      })
-    });
-  }
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
 
   /**
    * @type {ngeo.interaction.MeasureLengthMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasureLengthMobile($filter('ngeoUnitPrefix'), {
-    precision: this.precision,
-    sketchStyle: this.sketchStyle
-  });
+  this.measure;
 
-  this.measure.setActive(this.active);
-  ngeoDecorateInteraction(this.measure);
 
   /**
    * @type {ngeo.interaction.MobileDraw}
    * @export
    */
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
-    this.measure.getDrawInteraction());
-
-  const drawInteraction = this.drawInteraction;
-  ngeoDecorateInteraction(drawInteraction);
-
-  Object.defineProperty(this, 'hasPoints', {
-    get() {
-      return this.drawInteraction.getFeature() !== null;
-    }
-  });
+  this.drawInteraction;
 
   /**
    * @type {boolean}
    * @export
    */
   this.dirty = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.drawing = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.valid = false;
+};
+
+/**
+ * Initialise the controller.
+ */
+gmf.MobileMeasureLengthController.prototype.init = function() {
+
+  this.measure = new ngeo.interaction.MeasureLengthMobile(this.filter_('ngeoUnitPrefix'), {
+    precision: this.precision,
+    sketchStyle: this.sketchStyle
+  });
+
+  this.measure.setActive(this.active);
+  this.ngeoDecorateInteraction_(this.measure);
+
+
+  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
+    this.measure.getDrawInteraction());
+
+  const drawInteraction = this.drawInteraction;
+  this.ngeoDecorateInteraction_(drawInteraction);
+
+  Object.defineProperty(this, 'hasPoints', {
+    get() {
+      return this.drawInteraction.getFeature() !== null;
+    }
+  });
 
   ol.events.listen(
     drawInteraction,
@@ -188,17 +226,11 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
       // only need to do this when dirty, as going to "no being dirty"
       // is made by a click on a button where Angular is within scope
       if (this.dirty) {
-        $scope.$apply();
+        this.scope_.$apply();
       }
     },
     this
   );
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.drawing = false;
 
   ol.events.listen(
     drawInteraction,
@@ -210,12 +242,6 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
     this
   );
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.valid = false;
-
   ol.events.listen(
     drawInteraction,
     ol.Object.getChangeEventType(
@@ -225,12 +251,7 @@ gmf.MobileMeasureLengthController = function($scope, ngeoDecorateInteraction, $f
     },
     this
   );
-};
 
-/**
- * Initialise the controller.
- */
-gmf.MobileMeasureLengthController.prototype.init = function() {
   this.map.addInteraction(this.measure);
 };
 
