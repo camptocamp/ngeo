@@ -189,7 +189,8 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   // Injecting the gmfDataSourcesManager service creates the data sources
   const gmfDataSourcesManager = $injector.get('gmfDataSourcesManager');
-
+  // Init the datasources with our map.
+  gmfDataSourcesManager.setDatasourceMap(this.map);
   // Give the dimensions to the gmfDataSourcesManager
   gmfDataSourcesManager.setDimensions(this.dimensions);
 

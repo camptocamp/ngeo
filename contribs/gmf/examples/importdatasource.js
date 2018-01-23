@@ -72,8 +72,7 @@ gmfapp.MainController = class {
    *     data sources manager service.
    * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
-   *     data sources objects.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,
@@ -111,6 +110,9 @@ gmfapp.MainController = class {
         zoom: 2
       })
     });
+
+    // Init the datasources with our map.
+    gmfDataSourcesManager.setDatasourceMap(this.map);
 
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {

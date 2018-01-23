@@ -29,8 +29,7 @@ ngeo.query.MapQuerent = class {
    *
    * @struct
    * @param {angular.$injector} $injector Main injector.
-   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
-   *     data source objects.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
    * @param {ngeo.query.Querent} ngeoQuerent The ngeo querent service.
@@ -50,7 +49,7 @@ ngeo.query.MapQuerent = class {
      * @type {ngeox.datasource.DataSources}
      * @private
      */
-    this.ngeoDataSources_ = ngeoDataSources;
+    this.dataSources_ = ngeoDataSources.collection;
 
     /**
      * @type {ngeo.datasource.Helper}
@@ -117,7 +116,7 @@ ngeo.query.MapQuerent = class {
         options.queryableDataSources === undefined
     ) {
       queryableDataSources = this.ngeoQuerent_.getQueryableDataSources(
-        this.ngeoDataSources_.getArray(),
+        this.dataSources_.getArray(),
         options.map
       );
     }

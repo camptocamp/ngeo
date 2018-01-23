@@ -23,8 +23,8 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {!ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
-   *     data sources objects.
+   * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources
+   *     service.
    * @private
    * @struct
    * @ngInject
@@ -54,7 +54,7 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
      * @type {!ngeox.datasource.DataSources}
      * @private
      */
-    this.ngeoDataSources_ = ngeoDataSources;
+    this.dataSources_ = ngeoDataSources.collection;
   }
 
   /**
@@ -84,14 +84,14 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
   }
 
   /**
-   * Remove all data sources from the `ngeo.DataSources` collection, which
+   * Remove all data sources from the `ngeo.datasource.DataSources` collection, which
    * will automatically remove them from the Group. The group itself
    * is going to be removed as well, destroying this component in the process.
    * @export
    */
   remove() {
     for (let i = this.group.dataSources.length - 1, ii = 0; i >= ii; i--) {
-      this.ngeoDataSources_.remove(this.group.dataSources[i]);
+      this.dataSources_.remove(this.group.dataSources[i]);
     }
   }
 
@@ -101,7 +101,7 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
    * @export
    */
   removeDataSource(dataSource) {
-    this.ngeoDataSources_.remove(dataSource);
+    this.dataSources_.remove(dataSource);
   }
 };
 

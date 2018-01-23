@@ -69,7 +69,7 @@ app.bboxquery.module.controller('AppQueryresultController', app.bboxquery.Queryr
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo collection of
+ * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @constructor
  * @ngInject
@@ -82,37 +82,17 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
    */
   this.queryActive = true;
 
-  ngeoDataSources.push(new ngeo.datasource.OGC({
-    id: 1,
-    name: 'bus_stop',
-    visible: true,
-    wfsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-    ogcLayers: [{
-      name: 'bus_stop',
-      queryable: true
-    }]
-  }));
-  const busStopLayer = new ol.layer.Image({
-    'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-      params: {'LAYERS': 'bus_stop'}
-    })
-  });
-
-  ngeoDataSources.push(new ngeo.datasource.OGC({
-    id: 2,
-    name: 'information',
-    visible: true,
-    wfsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-    ogcLayers: [{
-      name: 'information',
-      queryable: true
-    }]
-  }));
   const informationLayer = new ol.layer.Image({
     'source': new ol.source.ImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
+    })
+  });
+
+  const busStopLayer = new ol.layer.Image({
+    'source': new ol.source.ImageWMS({
+      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+      params: {'LAYERS': 'bus_stop'}
     })
   });
 
@@ -136,6 +116,29 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
     })
   });
 
+  ngeoDataSources.map = this.map;
+
+  ngeoDataSources.collection.push(new ngeo.datasource.OGC({
+    id: 1,
+    name: 'bus_stop',
+    visible: true,
+    wfsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'bus_stop',
+      queryable: true
+    }]
+  }));
+
+  ngeoDataSources.collection.push(new ngeo.datasource.OGC({
+    id: 2,
+    name: 'information',
+    visible: true,
+    wfsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'information',
+      queryable: true
+    }]
+  }));
 };
 
 app.bboxquery.module.controller('MainController', app.bboxquery.MainController);

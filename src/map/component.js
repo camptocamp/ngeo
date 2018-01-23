@@ -1,9 +1,7 @@
-goog.provide('ngeo.map.directive');
+goog.provide('ngeo.map.component');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-// TODO Remove me, there should not be a dependency on datasources from the map.
-goog.require('ngeo.datasource.SyncDataSourcesMap');
 goog.require('ol.events');
 goog.require('ol.Map');
 
@@ -11,11 +9,9 @@ goog.require('ol.Map');
 /**
  * @type {!angular.Module}
  */
-ngeo.map.directive = angular.module('ngeoMap', [
-  ngeo.datasource.SyncDataSourcesMap.module.name
-]);
+ngeo.map.component = angular.module('ngeoMap', []);
 
-ngeo.module.requires.push(ngeo.map.directive.name);
+ngeo.module.requires.push(ngeo.map.component.name);
 
 
 /**
@@ -42,14 +38,12 @@ ngeo.module.requires.push(ngeo.map.directive.name);
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
  * @param {angular.$window} $window The Angular $window service.
- * @param {ngeo.datasource.SyncDataSourcesMap} ngeoSyncDataSourcesMap Ngeo sync
- *     data sources map service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoMap
  * @ngInject
  */
-ngeo.map.directive.directive_ = function($window, ngeoSyncDataSourcesMap) {
+ngeo.map.component.directive_ = function($window) {
   return {
     restrict: 'A',
     /**
@@ -66,9 +60,6 @@ ngeo.map.directive.directive_ = function($window, ngeoSyncDataSourcesMap) {
       goog.asserts.assertInstanceof(map, ol.Map);
 
       map.setTarget(element[0]);
-
-      ngeoSyncDataSourcesMap.map = map;
-
 
       // Get the 'window resize' attributes, which are optionnal. If defined,
       // the browser window 'resize' event is listened to update the size of
@@ -117,4 +108,4 @@ ngeo.map.directive.directive_ = function($window, ngeoSyncDataSourcesMap) {
 };
 
 // Register the directive in the module
-ngeo.map.directive.directive('ngeoMap', ngeo.map.directive.directive_);
+ngeo.map.component.directive('ngeoMap', ngeo.map.component.directive_);

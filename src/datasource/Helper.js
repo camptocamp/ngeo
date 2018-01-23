@@ -9,14 +9,13 @@ goog.require('ol.events');
 
 
 ngeo.datasource.Helper = class {
-
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @struct
    * @param {angular.$q} $q The Angular $q service.
-   * @param {ngeox.datasource.DataSources} ngeoDataSources Ngeo data source
-   *     collection.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
+   *     service.
    * @param {ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
@@ -36,7 +35,7 @@ ngeo.datasource.Helper = class {
      * @type {ngeox.datasource.DataSources}
      * @private
      */
-    this.collection_ = ngeoDataSources;
+    this.collection_ = ngeoDataSources.collection;
 
     /**
      * @type {ngeo.query.Querent}
@@ -55,8 +54,8 @@ ngeo.datasource.Helper = class {
 
     // Events
 
-    ol.events.listen(ngeoDataSources, 'add', this.handleDataSourcesAdd_, this);
-    ol.events.listen(ngeoDataSources, 'remove', this.handleDataSourcesRemove_, this);
+    ol.events.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
+    ol.events.listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
   /**

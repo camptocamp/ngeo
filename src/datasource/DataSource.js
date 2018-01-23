@@ -35,7 +35,7 @@ ngeo.datasource.DataSource = class {
      * required for the `inRange` property to be dynamic, otherwise its
      * value is always `true` by default.
      *
-     * The synchronization is made in the `ngeo.datasource.SyncDataSourcesMap`
+     * The synchronization is made in the `ngeo.datasource.DataSources`
      * service.
      *
      * @type {boolean}
