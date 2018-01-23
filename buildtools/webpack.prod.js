@@ -64,6 +64,7 @@ module.exports = {
   resolve: {
     alias: {
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.prod.js'),
+      'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.prod.js'),
     }
   },
 };
