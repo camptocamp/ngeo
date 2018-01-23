@@ -28,7 +28,7 @@ const babelUse = {
   loader: 'babel-loader',
   options: {
     presets: ['es2015'],
-    plugins: ['angularjs-annotate'],
+    plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
   }
 }
 

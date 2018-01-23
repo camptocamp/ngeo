@@ -18,7 +18,6 @@ sed -i '/^  ol/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
 sed -i '/^}$/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
 git add -A  # To be removed when we use the new OpenLayers version
 buildtools/git-grep-sed 'Sphere' 's|ol/Sphere|ol/sphere|g'
-buildtools/git-grep-sed 'ngInject' 's|\* @ngInject|*//* @ngInject|g'
 find -name node_modules -prune -or -name '*.js' -print | xargs sed -i 's|^// webpack: ||g'
 node_modules/.bin/eslint --fix src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps || true
 mv karma-conf{-webpack,}.js
