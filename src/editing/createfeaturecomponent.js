@@ -3,6 +3,7 @@ goog.provide('ngeo.editing.createfeatureComponent');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
+goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.misc.EventHelper');

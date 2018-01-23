@@ -13,6 +13,7 @@ goog.require('ngeo.editing.attributesComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
 goog.require('ngeo.format.XSDAttribute');
+goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
 goog.require('ngeo.map.LayerHelper');

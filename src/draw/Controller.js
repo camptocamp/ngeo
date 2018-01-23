@@ -3,6 +3,8 @@ goog.provide('ngeo.draw.Controller');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
+goog.require('ngeo.format.FeatureProperties');
+goog.require('ngeo.GeometryType');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
@@ -190,7 +192,7 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
 
   const feature = new ol.Feature(sketch.getGeometry());
 
-  const prop = ngeo.FeatureProperties;
+  const prop = ngeo.format.FeatureProperties;
 
   switch (type) {
     case ngeo.GeometryType.CIRCLE:

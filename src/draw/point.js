@@ -1,6 +1,7 @@
 goog.provide('ngeo.draw.point');
 
 goog.require('ngeo');
+goog.require('ngeo.GeometryType');
 goog.require('ol.events');
 goog.require('ol.interaction.Draw');
 

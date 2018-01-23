@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.ModifyCircle');
 
 goog.require('goog.asserts');
+goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol');
 goog.require('ol.Collection');
@@ -132,7 +133,7 @@ ol.inherits(ngeo.interaction.ModifyCircle, ol.interaction.Pointer);
  */
 ngeo.interaction.ModifyCircle.prototype.addFeature_ = function(feature) {
   if (feature.getGeometry().getType() === 'Polygon' &&
-      !!feature.get(ngeo.FeatureProperties.IS_CIRCLE)) {
+      !!feature.get(ngeo.format.FeatureProperties.IS_CIRCLE)) {
     const geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
     this.writeCircleGeometry_(feature, geometry);
 
@@ -348,7 +349,7 @@ ngeo.interaction.ModifyCircle.handleDragEvent_ = function(evt) {
 
 
   const azimut = ngeo.interaction.MeasureAzimut.getAzimut(line);
-  this.features_.getArray()[0].set(ngeo.FeatureProperties.AZIMUT, azimut);
+  this.features_.getArray()[0].set(ngeo.format.FeatureProperties.AZIMUT, azimut);
 
   this.createOrUpdateVertexFeature_(vertex);
 };

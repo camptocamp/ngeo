@@ -1173,7 +1173,7 @@ ngeox.datasource.OGCOptions.prototype.dimensionsConfig;
 
 /**
  * The filter condition to apply to the filter rules (if any). Defaults to
- * `ngeo.FilterCondition.AND`.
+ * `ngeo.filter.Condition.AND`.
  * @type {string|undefined}
  */
 ngeox.datasource.OGCOptions.prototype.filterCondition;

@@ -1,5 +1,6 @@
 goog.provide('ngeo.rule.Select');
 
+goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Rule');
 
 
@@ -18,7 +19,7 @@ ngeo.rule.Select = class extends ngeo.rule.Rule {
   constructor(options) {
 
     options.operator = ngeo.rule.Rule.OperatorType.EQUAL_TO;
-    options.type = ngeo.AttributeType.SELECT;
+    options.type = ngeo.format.AttributeType.SELECT;
 
     super(options);
 

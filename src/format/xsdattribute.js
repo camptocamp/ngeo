@@ -1,7 +1,8 @@
 goog.provide('ngeo.format.XSDAttribute');
 
 goog.require('ngeo');
-goog.require('ngeo.Attribute');
+goog.require('ngeo.format.Attribute');
+goog.require('ngeo.format.AttributeType');
 goog.require('ol.format.XML');
 goog.require('goog.asserts');
 
@@ -100,7 +101,7 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const type = node.getAttribute('type');
   if (type) {
-    if (!ngeo.Attribute.setGeometryType(attribute, type)) {
+    if (!ngeo.format.Attribute.setGeometryType(attribute, type)) {
       this.setAttributeByXsdType_(attribute, type);
     }
   } else {
@@ -113,7 +114,7 @@ ngeo.format.XSDAttribute.prototype.readFromElementNode_ = function(node) {
       enumerations = node.getElementsByTagName('xsd:enumeration');
     }
     if (enumerations.length) {
-      attribute.type = ngeo.AttributeType.SELECT;
+      attribute.type = ngeo.format.AttributeType.SELECT;
       const choices = [];
       for (let i = 0, ii = enumerations.length; i < ii; i++) {
         choices.push(enumerations[i].getAttribute('value'));
@@ -165,21 +166,21 @@ ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
   attribute, type
 ) {
   if (type === 'xsd:boolean') {
-    attribute.type = ngeo.AttributeType.BOOLEAN;
+    attribute.type = ngeo.format.AttributeType.BOOLEAN;
   } else if (type === 'xsd:date') {
-    attribute.type = ngeo.AttributeType.DATE;
+    attribute.type = ngeo.format.AttributeType.DATE;
   } else if (type === 'xsd:dateTime') {
-    attribute.type = ngeo.AttributeType.DATETIME;
+    attribute.type = ngeo.format.AttributeType.DATETIME;
   } else if (type === 'xsd:time') {
-    attribute.type = ngeo.AttributeType.TIME;
+    attribute.type = ngeo.format.AttributeType.TIME;
   } else if (type === 'xsd:decimal') {
-    attribute.type = ngeo.AttributeType.NUMBER;
-    attribute.numType = ngeo.NumberType.FLOAT;
+    attribute.type = ngeo.format.AttributeType.NUMBER;
+    attribute.numType = ngeo.format.XSDAttribute.NumberType.FLOAT;
   } else if (type === 'xsd:integer') {
-    attribute.type = ngeo.AttributeType.NUMBER;
-    attribute.numType = ngeo.NumberType.INTEGER;
+    attribute.type = ngeo.format.AttributeType.NUMBER;
+    attribute.numType = ngeo.format.XSDAttribute.NumberType.INTEGER;
   } else if (type === 'xsd:string') {
-    attribute.type = ngeo.AttributeType.TEXT;
+    attribute.type = ngeo.format.AttributeType.TEXT;
   }
 };
 
@@ -192,10 +193,28 @@ ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
 ngeo.format.XSDAttribute.getGeometryAttribute = function(attributes) {
   let geomAttribute = null;
   for (let i = 0, ii = attributes.length; i < ii; i++) {
-    if (attributes[i].type === ngeo.AttributeType.GEOMETRY) {
+    if (attributes[i].type === ngeo.format.AttributeType.GEOMETRY) {
       geomAttribute = attributes[i];
       break;
     }
   }
   return geomAttribute;
+};
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+ngeo.format.XSDAttribute.NumberType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  FLOAT: 'float',
+  /**
+   * @type {string}
+   * @export
+   */
+  INTEGER: 'integer'
 };

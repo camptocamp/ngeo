@@ -6,6 +6,7 @@ goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('ngeo');
+goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Feature');
 goog.require('ol.Map');
@@ -59,20 +60,20 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
   const pointProperties = {
     geometry: new ol.geom.Point([-8458215, 6672646])
   };
-  pointProperties[ngeo.FeatureProperties.COLOR] = '#009D57';
-  pointProperties[ngeo.FeatureProperties.NAME] = 'Point1';
-  pointProperties[ngeo.FeatureProperties.SIZE] = '6';
+  pointProperties[ngeo.format.FeatureProperties.COLOR] = '#009D57';
+  pointProperties[ngeo.format.FeatureProperties.NAME] = 'Point1';
+  pointProperties[ngeo.format.FeatureProperties.SIZE] = '6';
   features.push(new ol.Feature(pointProperties));
 
   const textProperties = {
     geometry: new ol.geom.Point([-8007848, 6209744])
   };
-  textProperties[ngeo.FeatureProperties.ANGLE] = '0';
-  textProperties[ngeo.FeatureProperties.COLOR] = '#000000';
-  textProperties[ngeo.FeatureProperties.IS_TEXT] = true;
-  textProperties[ngeo.FeatureProperties.NAME] = 'Text 1';
-  textProperties[ngeo.FeatureProperties.SIZE] = '16';
-  textProperties[ngeo.FeatureProperties.STROKE] = '2';
+  textProperties[ngeo.format.FeatureProperties.ANGLE] = '0';
+  textProperties[ngeo.format.FeatureProperties.COLOR] = '#000000';
+  textProperties[ngeo.format.FeatureProperties.IS_TEXT] = true;
+  textProperties[ngeo.format.FeatureProperties.NAME] = 'Text 1';
+  textProperties[ngeo.format.FeatureProperties.SIZE] = '16';
+  textProperties[ngeo.format.FeatureProperties.STROKE] = '2';
   features.push(new ol.Feature(textProperties));
 
   const lineProperties = {
@@ -83,9 +84,9 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
       [-7973910, 6631065]
     ])
   };
-  lineProperties[ngeo.FeatureProperties.COLOR] = '#0BA9CC';
-  lineProperties[ngeo.FeatureProperties.NAME] = 'LineString 1';
-  lineProperties[ngeo.FeatureProperties.STROKE] = '4';
+  lineProperties[ngeo.format.FeatureProperties.COLOR] = '#0BA9CC';
+  lineProperties[ngeo.format.FeatureProperties.NAME] = 'LineString 1';
+  lineProperties[ngeo.format.FeatureProperties.STROKE] = '4';
   features.push(new ol.Feature(lineProperties));
 
   const poly1Properties = {
@@ -99,11 +100,11 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
       ]
     ])
   };
-  poly1Properties[ngeo.FeatureProperties.COLOR] = '#4186F0';
-  poly1Properties[ngeo.FeatureProperties.NAME] = 'Polygon 1';
-  poly1Properties[ngeo.FeatureProperties.OPACITY] = '0.5';
-  poly1Properties[ngeo.FeatureProperties.SHOW_MEASURE] = true;
-  poly1Properties[ngeo.FeatureProperties.STROKE] = '1';
+  poly1Properties[ngeo.format.FeatureProperties.COLOR] = '#4186F0';
+  poly1Properties[ngeo.format.FeatureProperties.NAME] = 'Polygon 1';
+  poly1Properties[ngeo.format.FeatureProperties.OPACITY] = '0.5';
+  poly1Properties[ngeo.format.FeatureProperties.SHOW_MEASURE] = true;
+  poly1Properties[ngeo.format.FeatureProperties.STROKE] = '1';
   features.push(new ol.Feature(poly1Properties));
 
   const poly2Properties = {
@@ -117,31 +118,31 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
       ]
     ])
   };
-  poly2Properties[ngeo.FeatureProperties.COLOR] = '#CCCCCC';
-  poly2Properties[ngeo.FeatureProperties.NAME] = 'Polygon 2';
-  poly2Properties[ngeo.FeatureProperties.OPACITY] = '1';
-  poly2Properties[ngeo.FeatureProperties.STROKE] = '3';
+  poly2Properties[ngeo.format.FeatureProperties.COLOR] = '#CCCCCC';
+  poly2Properties[ngeo.format.FeatureProperties.NAME] = 'Polygon 2';
+  poly2Properties[ngeo.format.FeatureProperties.OPACITY] = '1';
+  poly2Properties[ngeo.format.FeatureProperties.STROKE] = '3';
   features.push(new ol.Feature(poly2Properties));
 
   const rectProperties = {
     geometry: ol.geom.Polygon.fromExtent([-7874848, 6496535, -7730535, 6384020])
   };
-  rectProperties[ngeo.FeatureProperties.COLOR] = '#000000';
-  rectProperties[ngeo.FeatureProperties.IS_RECTANGLE] = true;
-  rectProperties[ngeo.FeatureProperties.NAME] = 'Rectangle 1';
-  rectProperties[ngeo.FeatureProperties.OPACITY] = '0.5';
-  rectProperties[ngeo.FeatureProperties.STROKE] = '2';
+  rectProperties[ngeo.format.FeatureProperties.COLOR] = '#000000';
+  rectProperties[ngeo.format.FeatureProperties.IS_RECTANGLE] = true;
+  rectProperties[ngeo.format.FeatureProperties.NAME] = 'Rectangle 1';
+  rectProperties[ngeo.format.FeatureProperties.OPACITY] = '0.5';
+  rectProperties[ngeo.format.FeatureProperties.STROKE] = '2';
   features.push(new ol.Feature(rectProperties));
 
   const circleProperties = {
     geometry: ol.geom.Polygon.fromCircle(
       new ol.geom.Circle([-7691093, 6166327], 35000), 64)
   };
-  circleProperties[ngeo.FeatureProperties.COLOR] = '#000000';
-  circleProperties[ngeo.FeatureProperties.IS_CIRCLE] = true;
-  circleProperties[ngeo.FeatureProperties.NAME] = 'Circle 1';
-  circleProperties[ngeo.FeatureProperties.OPACITY] = '0.5';
-  circleProperties[ngeo.FeatureProperties.STROKE] = '2';
+  circleProperties[ngeo.format.FeatureProperties.COLOR] = '#000000';
+  circleProperties[ngeo.format.FeatureProperties.IS_CIRCLE] = true;
+  circleProperties[ngeo.format.FeatureProperties.NAME] = 'Circle 1';
+  circleProperties[ngeo.format.FeatureProperties.OPACITY] = '0.5';
+  circleProperties[ngeo.format.FeatureProperties.STROKE] = '2';
   features.push(new ol.Feature(circleProperties));
 
   const view = new ol.View({

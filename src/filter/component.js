@@ -2,10 +2,12 @@ goog.provide('ngeo.filter.component');
 
 goog.require('ngeo');
 goog.require('ngeo.query.MapQuerent');
+goog.require('ngeo.filter.Condition');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.ruleComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filter.RuleHelper');
+goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.map.FeatureOverlay');
 goog.require('ol');
@@ -149,15 +151,15 @@ ngeo.filter.component.FilterController_ = class {
     this.conditions = [
       {
         text: gettextCatalog.getString('All'),
-        value: ngeo.FilterCondition.AND
+        value: ngeo.filter.Condition.AND
       },
       {
         text: gettextCatalog.getString('At least one'),
-        value: ngeo.FilterCondition.OR
+        value: ngeo.filter.Condition.OR
       },
       {
         text: gettextCatalog.getString('None'),
-        value: ngeo.FilterCondition.NOT
+        value: ngeo.filter.Condition.NOT
       }
     ];
 
@@ -199,7 +201,7 @@ ngeo.filter.component.FilterController_ = class {
     // (1) Separate the attributes in 2: geometry and the others.
     const attributes = goog.asserts.assert(this.datasource.attributes);
     for (const attribute of attributes) {
-      if (attribute.type === ngeo.AttributeType.GEOMETRY) {
+      if (attribute.type === ngeo.format.AttributeType.GEOMETRY) {
         this.geometryAttributes.push(attribute);
       } else {
         this.otherAttributes.push(attribute);

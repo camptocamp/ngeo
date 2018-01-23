@@ -4,6 +4,7 @@ goog.require('gmf');
 goog.require('gmf.editing.EnumerateAttribute');
 goog.require('ngeo');
 goog.require('ngeo.datasource.Helper');
+goog.require('ngeo.format.AttributeType');
 goog.require('ol.array');
 
 
@@ -106,14 +107,14 @@ gmf.datasource.Helper = class {
         const promises = [];
         for (const attribute of attributes) {
           if (ol.array.includes(enumAttributes, attribute.name) &&
-             attribute.type !== ngeo.AttributeType.SELECT &&
+             attribute.type !== ngeo.format.AttributeType.SELECT &&
              (!attribute.choices || !attribute.choices.length)) {
             promises.push(
               this.gmfEnumerateAttribute_.getAttributeValues(
                 dataSource, attribute.name
               ).then((values) => {
                 const choices = values.map(choice => choice.value);
-                attribute.type = ngeo.AttributeType.SELECT;
+                attribute.type = ngeo.format.AttributeType.SELECT;
                 attribute.choices = choices;
               })
             );

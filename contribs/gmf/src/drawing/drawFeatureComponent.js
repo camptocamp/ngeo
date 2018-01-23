@@ -4,6 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.drawing.featureStyleComponent');
 goog.require('ngeo');
+goog.require('ngeo.GeometryType');
 goog.require('ngeo.Menu');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.exportfeaturesComponent');
@@ -11,6 +12,7 @@ goog.require('ngeo.editing.exportfeaturesComponent');
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.component');
+goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.Modify');
 goog.require('ngeo.interaction.Rotate');
 goog.require('ngeo.interaction.Translate');
@@ -322,7 +324,7 @@ gmf.drawing.drawFeatureComponent.Controller_ = function($scope, $timeout, gettex
    * @type {string}
    * @export
    */
-  this.nameProperty = ngeo.FeatureProperties.NAME;
+  this.nameProperty = ngeo.format.FeatureProperties.NAME;
 
   /**
    * @private

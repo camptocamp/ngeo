@@ -1,11 +1,11 @@
 goog.provide('ngeo.measure.area');
 
 goog.require('ngeo');
+goog.require('ngeo.draw.Controller');
+goog.require('ngeo.GeometryType');
+goog.require('ngeo.interaction.MeasureArea');
 goog.require('ol.events');
 goog.require('ol.style.Style');
-goog.require('ngeo.interaction.MeasureArea');
-
-goog.require('ngeo.draw.Controller');
 
 
 /**

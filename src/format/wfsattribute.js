@@ -1,6 +1,7 @@
 goog.provide('ngeo.format.WFSAttribute');
 
-goog.require('ngeo.Attribute');
+goog.require('ngeo.format.Attribute');
+goog.require('ngeo.format.AttributeType');
 
 
 ngeo.format.WFSAttribute = class {
@@ -42,13 +43,13 @@ ngeo.format.WFSAttribute = class {
 
     const type = goog.asserts.assertString(object['type']);
 
-    if (!ngeo.Attribute.setGeometryType(attribute, type)) {
+    if (!ngeo.format.Attribute.setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType') {
-        attribute.type = ngeo.AttributeType.DATETIME;
+        attribute.type = ngeo.format.AttributeType.DATETIME;
       } else if (type === 'double') {
-        attribute.type = ngeo.AttributeType.NUMBER;
+        attribute.type = ngeo.format.AttributeType.NUMBER;
       } else {
-        attribute.type = ngeo.AttributeType.TEXT;
+        attribute.type = ngeo.format.AttributeType.TEXT;
       }
     }
 

@@ -1,15 +1,15 @@
 goog.provide('ngeo.measure.azimut');
 
 goog.require('ngeo');
+goog.require('ngeo.draw.Controller');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
+goog.require('ngeo.GeometryType');
+goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
 goog.require('ol.style.Style');
-goog.require('ngeo.interaction.MeasureAzimut');
-
-goog.require('ngeo.draw.Controller');
 
 
 /**

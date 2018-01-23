@@ -14,6 +14,7 @@ goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.datasource.WMSGroup');
 /** @suppress {extraRequire} */
 goog.require('ngeo.format.FeatureHash');
+goog.require('ngeo.format.FeatureProperties');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.EventHelper');
@@ -313,19 +314,19 @@ gmf.permalink.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebo
     setStyle: false,
     encodeStyles: false,
     propertiesType: {
-      'fillColor': ngeo.FeatureProperties.COLOR,
-      'fillOpacity': ngeo.FeatureProperties.OPACITY,
-      'fontColor': ngeo.FeatureProperties.COLOR,
-      'fontSize': ngeo.FeatureProperties.SIZE,
-      'isBox': ngeo.FeatureProperties.IS_RECTANGLE,
-      'isCircle': ngeo.FeatureProperties.IS_CIRCLE,
-      'isLabel': ngeo.FeatureProperties.IS_TEXT,
-      'name': ngeo.FeatureProperties.NAME,
-      'pointRadius': ngeo.FeatureProperties.SIZE,
-      'showLabel': ngeo.FeatureProperties.SHOW_LABEL,
-      'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
-      'strokeColor': ngeo.FeatureProperties.COLOR,
-      'strokeWidth': ngeo.FeatureProperties.STROKE
+      'fillColor': ngeo.format.FeatureProperties.COLOR,
+      'fillOpacity': ngeo.format.FeatureProperties.OPACITY,
+      'fontColor': ngeo.format.FeatureProperties.COLOR,
+      'fontSize': ngeo.format.FeatureProperties.SIZE,
+      'isBox': ngeo.format.FeatureProperties.IS_RECTANGLE,
+      'isCircle': ngeo.format.FeatureProperties.IS_CIRCLE,
+      'isLabel': ngeo.format.FeatureProperties.IS_TEXT,
+      'name': ngeo.format.FeatureProperties.NAME,
+      'pointRadius': ngeo.format.FeatureProperties.SIZE,
+      'showLabel': ngeo.format.FeatureProperties.SHOW_LABEL,
+      'showMeasure': ngeo.format.FeatureProperties.SHOW_MEASURE,
+      'strokeColor': ngeo.format.FeatureProperties.COLOR,
+      'strokeWidth': ngeo.format.FeatureProperties.STROKE
     }
   });
 

@@ -4,6 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.drawing.module');
+goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
@@ -126,7 +127,7 @@ gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
 
   $('#pointermove-feature').html(
-    (feature) ? feature.get(ngeo.FeatureProperties.NAME) : 'None'
+    (feature) ? feature.get(ngeo.format.FeatureProperties.NAME) : 'None'
   );
 
   this.scope_.$apply();
