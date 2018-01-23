@@ -4,13 +4,11 @@ goog.provide('app.datepicker');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.datepickerComponent');
-goog.require('ngeo');
 goog.require('ngeo.misc.Time');
 
 
 /** @type {!angular.Module} **/
 app.datepicker.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.misc.datepickerComponent.name,
   ngeo.misc.Time.module.name,
 ]);

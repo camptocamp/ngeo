@@ -1,6 +1,5 @@
 goog.provide('app.attributes');
 
-// webpack: import './attributes.css';
 // webpack: import './common_dependencies.js';
 goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */

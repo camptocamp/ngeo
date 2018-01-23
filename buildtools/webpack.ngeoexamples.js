@@ -8,7 +8,7 @@ const entry = {};
 
 for (const filename of ls('examples/*.html')) {
   const name = filename.name;
-  entry[name] = `./examples/${name}.js`;
+  entry[name] = ['ngeo/mainmodule.js', `./examples/${name}.js`];
   plugins.push(
     new HtmlWebpackPlugin({
       template: `examples/${name}.html`,
