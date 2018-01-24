@@ -424,9 +424,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
 
   $scope.$root.$on(gmf.theme.Manager.EventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
-      if (theme) {
-        this.setDefaultBackground_(theme);
-      }
+      this.setDefaultBackground_(theme);
     });
   });
 
@@ -679,14 +677,14 @@ gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
       layer = gmf.AbstractAppController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }
 
-    if (!layer) {
+    if (!layer && theme) {
       // get the background from the theme
       layer = gmf.AbstractAppController.getLayerByLabels(layers, theme.functionalities.default_basemap);
     }
 
     if (!layer) {
       // fallback to the layers list, use the second one because the first is the blank layer.
-      layer = layers[1];
+      layer = layers[layers.length > 1 ? 1 : 0];
     }
 
     goog.asserts.assert(layer);

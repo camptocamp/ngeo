@@ -150,6 +150,7 @@ gmf.permalink.shareComponent.Controller_.prototype.getShortUrl = function() {
    */
   function onSuccess_(resp) {
     this.shortLink = resp.data.short_url;
+    this.errorOnGetShortUrl = false;
   }
 
   /**

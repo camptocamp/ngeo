@@ -83,6 +83,12 @@ ngeo.print.Service = function(url, $http, ngeoLayerHelper) {
    * @private
    */
   this.vectorEncoder_ = new ngeo.print.VectorEncoder();
+
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.printNativeAngle_ = true;
 };
 
 
@@ -161,7 +167,8 @@ ngeo.print.Service.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
-  goog.asserts.assert(mapLayerGroup !== null);
+  goog.asserts.assert(mapLayerGroup);
+  this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
   layers = layers.slice().reverse();
 
@@ -261,7 +268,8 @@ ngeo.print.Service.prototype.encodeWmsLayer_ = function(arr, opacity, url, param
     serverType: params['SERVERTYPE'],
     type: 'wms',
     opacity: opacity,
-    version: params['VERSION']
+    version: params['VERSION'],
+    useNativeAngle: this.printNativeAngle_,
   });
   arr.push(object);
 };
