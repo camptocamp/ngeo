@@ -18,7 +18,7 @@
     "ngeo-build": "buildtools/build.js"
   },
   "devDependencies": {
-    "@camptocamp/cesium": "1.40.0",
+    "@camptocamp/cesium": "1.41.0",
     "@camptocamp/closure-util": "1.27.0",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "angular": "1.6.8",
