@@ -1,6 +1,3 @@
-/**
- * @module ngeo olcs constants
- */
 goog.module('ngeo.olcs.constants');
 goog.module.declareLegacyNamespace();
 
