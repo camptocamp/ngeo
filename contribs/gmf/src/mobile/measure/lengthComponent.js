@@ -97,6 +97,18 @@ gmf.mobile.measure.lengthComponent.directive('gmfMobileMeasurelength',
 gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
 
   /**
+   * @type {angular.Scope}
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
+   * @type {angular.$filter}
+   * @private
+   */
+  this.filter_ = $filter;
+
+  /**
    * @type {ol.Map}
    * @export
    */
@@ -108,7 +120,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
    */
   this.active;
 
-  $scope.$watch(() => this.active, (newVal) => {
+  this.scope_.$watch(() => this.active, (newVal) => {
     this.measure.setActive(newVal);
   });
 
@@ -122,36 +134,64 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
    * @export
    */
-  this.sketchStyle;
-
-  if (this.sketchStyle === undefined) {
-    this.sketchStyle = new ol.style.Style({
-      fill: new ol.style.Fill({
-        color: 'rgba(255, 255, 255, 0.2)'
-      }),
+  this.sketchStyle = new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: 'rgba(0, 0, 0, 0.5)',
+      lineDash: [10, 10],
+      width: 2
+    }),
+    image: new ol.style.RegularShape({
       stroke: new ol.style.Stroke({
-        color: 'rgba(0, 0, 0, 0.5)',
-        lineDash: [10, 10],
+        color: 'rgba(0, 0, 0, 0.7)',
         width: 2
       }),
-      image: new ol.style.RegularShape({
-        stroke: new ol.style.Stroke({
-          color: 'rgba(0, 0, 0, 0.7)',
-          width: 2
-        }),
-        points: 4,
-        radius: 8,
-        radius2: 0,
-        angle: 0
-      })
-    });
-  }
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
 
   /**
    * @type {ngeo.interaction.MeasureLengthMobile}
    * @export
    */
-  this.measure = new ngeo.interaction.MeasureLengthMobile($filter('ngeoUnitPrefix'), {
+  this.measure;
+
+  /**
+   * @type {ngeo.interaction.MobileDraw}
+   * @export
+   */
+  this.drawInteraction;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.dirty = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.drawing = false;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.valid = false;
+};
+
+/**
+ * Initialise the controller.
+ */
+gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
+
+  this.measure = new ngeo.interaction.MeasureLengthMobile(this.filter_('ngeoUnitPrefix'), {
     precision: this.precision,
     sketchStyle: this.sketchStyle
   });
@@ -159,10 +199,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
   this.measure.setActive(this.active);
   ngeo.misc.decorate.interaction(this.measure);
 
-  /**
-   * @type {ngeo.interaction.MobileDraw}
-   * @export
-   */
+
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
     this.measure.getDrawInteraction());
 
@@ -175,12 +212,6 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
     }
   });
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.dirty = false;
-
   ol.events.listen(
     drawInteraction,
     ol.Object.getChangeEventType('dirty'),
@@ -191,17 +222,11 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
       // only need to do this when dirty, as going to "no being dirty"
       // is made by a click on a button where Angular is within scope
       if (this.dirty) {
-        $scope.$apply();
+        this.scope_.$apply();
       }
     },
     this
   );
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.drawing = false;
 
   ol.events.listen(
     drawInteraction,
@@ -212,12 +237,6 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
     this
   );
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.valid = false;
-
   ol.events.listen(
     drawInteraction,
     ol.Object.getChangeEventType('valid'),
@@ -226,12 +245,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
     },
     this
   );
-};
 
-/**
- * Initialise the controller.
- */
-gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
   this.map.addInteraction(this.measure);
 };
 

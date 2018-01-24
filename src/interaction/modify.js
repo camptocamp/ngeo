@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.Modify');
 
+goog.require('ngeo.utils');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ngeo.interaction.ModifyRectangle');
@@ -60,6 +61,7 @@ ngeo.interaction.Modify = function(options) {
   this.otherFeatures_ = new ol.Collection();
 
   this.interactions_.push(new ol.interaction.Modify({
+    deleteCondition: ngeo.utils.deleteCondition,
     features: this.otherFeatures_,
     pixelTolerance: options.pixelTolerance,
     style: options.style,

@@ -375,6 +375,7 @@ gmf.objectediting.component.Controller = function($scope, $timeout, gettextCatal
    * @private
    */
   this.modify_ = new ol.interaction.Modify({
+    deleteCondition: ngeo.utils.deleteCondition,
     features: this.features_,
     style: ngeoFeatureHelper.getVertexStyle(false)
   });

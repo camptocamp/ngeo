@@ -13,6 +13,7 @@ goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
+goog.require('ol.style.Style');
 
 
 /**
@@ -55,6 +56,32 @@ app.mobile_alt.Controller = function($scope, $injector) {
    * @export
    */
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
+
+
+  /**
+   * @type {ol.style.Style}
+   * @export
+   */
+  this.customMeasureStyle = new ol.style.Style({
+    fill: new ol.style.Fill({
+      color: 'rgba(255, 128, 128, 0.2)'
+    }),
+    stroke: new ol.style.Stroke({
+      color: 'rgba(255, 0, 0, 0.5)',
+      lineDash: [10, 10],
+      width: 2
+    }),
+    image: new ol.style.RegularShape({
+      stroke: new ol.style.Stroke({
+        color: 'rgba(255, 0, 0, 0.7)',
+        width: 2
+      }),
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
 
 };
 ol.inherits(app.mobile_alt.Controller, gmf.AbstractMobileController);

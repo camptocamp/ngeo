@@ -256,7 +256,7 @@ ngeo.misc.FeatureHelper.prototype.getPointStyle_ = function(feature) {
       })
     })
   })];
-  //Label Style
+  // Label Style
   const textLabelValues = [];
   if (showMeasure) {
     textLabelValues.push(this.getMeasure(feature));
@@ -267,10 +267,14 @@ ngeo.misc.FeatureHelper.prototype.getPointStyle_ = function(feature) {
   if (showLabel ||  showMeasure) {
     // display both label using  \n
     const textLabelValue = textLabelValues.join('\n');
+    const font_size = 10;
+    // https://reeddesign.co.uk/test/points-pixels.html
+    const point_to_px = 1.3;
     styles.push(new ol.style.Style({
       text: this.createTextStyle_({
         text: textLabelValue,
-        offsetY: -(size + 10 / 2 + 4)
+        size: font_size,
+        offsetY: -(size + (font_size / 2) * textLabelValues.length * point_to_px + 4)
       })
     }));
   }
@@ -390,7 +394,8 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         styles.push(new ol.style.Style({
           text: this.createTextStyle_({
             text: textLabelValue,
-            offsetY: -(8 / 2 + 4)
+            offsetY: -(8 / 2 + 4),
+            exceedLength: true
           })
         }));
       }

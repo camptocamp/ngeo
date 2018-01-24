@@ -12,6 +12,7 @@ goog.require('ngeo');
 goog.require('ngeo.editing.attributesComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
+goog.require('ngeo.utils');
 goog.require('ngeo.format.XSDAttribute');
 goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.Rotate');
@@ -475,6 +476,7 @@ gmf.editing.editFeatureComponent.Controller_.prototype.$onInit = function() {
 
   // (1.2) Create, set and initialize interactions
   this.modify_ = new ol.interaction.Modify({
+    deleteCondition: ngeo.utils.deleteCondition,
     features: this.features,
     style: this.ngeoFeatureHelper_.getVertexStyle(false)
   });
@@ -828,7 +830,7 @@ gmf.editing.editFeatureComponent.Controller_.prototype.handleFeatureAdd_ = funct
             } else if (attribute.type === 'time') {
               jsonFormat = 'H:i:s';
             }
-            const name = this.feature.get(attribute.name);
+            const name = feature.get(attribute.name);
             goog.asserts.assertString(name);
             value = dateFormatter.parseDate(name, jsonFormat);
           }

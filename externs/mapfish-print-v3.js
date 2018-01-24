@@ -197,6 +197,11 @@ MapFishPrintWmsLayer.prototype.styles;
 MapFishPrintWmsLayer.prototype.version;
 
 
+/**
+ * @type {boolean}
+ */
+MapFishPrintWmsLayer.prototype.useNativeAngle;
+
 
 /**
  * @constructor
