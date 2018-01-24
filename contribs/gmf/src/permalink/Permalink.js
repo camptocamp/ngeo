@@ -13,6 +13,7 @@ goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
 /** @suppress {extraRequire} */
+goog.require('ngeo.olcs.constants');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.format.FeatureProperties');
 /** @suppress {extraRequire} */
@@ -678,13 +679,16 @@ gmf.permalink.Permalink.prototype.registerMap_ = function(map, oeFeature) {
     goog.asserts.assert(size);
     view.fit(oeFeature.getGeometry().getExtent(), size);
   } else {
-    center = this.getMapCenter();
-    if (center) {
-      view.setCenter(center);
-    }
-    const zoom = this.getMapZoom();
-    if (zoom !== undefined) {
-      view.setZoom(zoom);
+    const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(ngeo.olcs.constants.Permalink3dParam.ENABLED);
+    if (!enabled3d) {
+      center = this.getMapCenter();
+      if (center) {
+        view.setCenter(center);
+      }
+      const zoom = this.getMapZoom();
+      if (zoom !== undefined) {
+        view.setZoom(zoom);
+      }
     }
   }
 
@@ -1501,7 +1505,6 @@ gmf.permalink.Permalink.module = angular.module('gmfPermalink', [
   gmf.theme.Manager.module.name,
   ngeo.draw.features.name,
   ngeo.misc.EventHelper.module.name,
-  ngeo.statemanager.module.name,
   ngeo.layertree.Controller.module.name,
 ]);
 
