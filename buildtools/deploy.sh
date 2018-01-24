@@ -2,13 +2,10 @@
 
 make .build/node_modules.timestamp
 
-if [ "${JOB}" == publish-examples-ngeo ]
+if [ "${JOB}" == publish-examples ]
 then
-    make examples-hosted-ngeo .build/examples-hosted/index.html
-fi
-if [ "${JOB}" == publish-examples-gmf ]
-then
-    make examples-hosted-gmf .build/examples-hosted/contribs/gmf/index.html
+    make examples-hosted-ngeo .build/examples-hosted/index.html \
+        examples-hosted-gmf .build/examples-hosted/contribs/gmf/index.html
 fi
 if [ "${JOB}" == publish-apps-gmf ]
 then
@@ -44,16 +41,13 @@ cd -
 
 mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}
 cd .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}
-if [ "${JOB}" == publish-examples-ngeo ]
+if [ "${JOB}" == publish-examples ]
 then
     git rm --ignore-unmatch --quiet --force examples/*.js examples/*.html || true
     git rm --ignore-unmatch -r --quiet --force examples/data || true
     git rm --ignore-unmatch -r --quiet --force examples/fonts || true
     git rm --ignore-unmatch -r --quiet --force examples/lib || true
     git rm --ignore-unmatch -r --quiet --force examples/partials || true
-fi
-if [ "${JOB}" == publish-examples-gmf ]
-then
     git rm --ignore-unmatch --quiet --force examples/contribs/gmf/*.js examples/contribs/gmf/*.html || true
 fi
 if [ "${JOB}" == publish-apps-gmf ]
@@ -69,14 +63,10 @@ then
 fi
 cd -
 
-if [ "${JOB}" == publish-examples-ngeo ]
-then
-    mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/
-    cp -r .build/examples-hosted/* .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/
-fi
-if [ "${JOB}" == publish-examples-gmf ]
+if [ "${JOB}" == publish-examples ]
 then
     mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
+    cp -r .build/examples-hosted/* .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/
     cp -r .build/examples-hosted/contribs/gmf/* .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
 fi
 if [ "${JOB}" == publish-apps-gmf ]
