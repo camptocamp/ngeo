@@ -634,7 +634,7 @@ Those generated files are attached to the build of `ngeo` and `gmf` distribs.
 
 For this to work in any case (examples, applications, built or not), just refer
 the `templateUrl` as a relative path to the directive. The definition of the
-variable `ngeo.baseModuleTemplateUrl` and `gmf.baseTemplateUrl` will resolve,
+variable `ngeo.baseModuleTemplateUrl` and `gmf.baseModuleTemplateUrl` will resolve,
 depending on the case, the correct paths.
 
 ## Directive scoping

@@ -31,16 +31,10 @@ gmf.module.config(['$animateProvider',
 ]);
 
 /**
- * The default template based URL, used as it by the template cache.
- * @type {string}
- */
-gmf.baseTemplateUrl = 'gmf';
-
-/**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
-gmf.baseModuleTemplateUrl = 'gmfmodule';
+gmf.baseModuleTemplateUrl = 'gmf';
 
 /**
  * @const
