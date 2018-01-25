@@ -1,8 +1,11 @@
 goog.provide('gmfapp.elevation');
 
+
+// webpack: import './elevation.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
-/** @suppress {extraRequire} */
 goog.require('gmf.raster.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -13,23 +16,26 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.elevation.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.component.name,
   gmf.raster.module.name,
 ]);
 
 
-gmfapp.module.value(
+gmfapp.elevation.module.value(
   'gmfRasterUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+
+gmfapp.elevation.constant('defaultTheme', 'Demo');
+gmfapp.elevation.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+gmfapp.elevation.MainController = function() {
   /**
    * @type {Array.<string>}
    * @export
@@ -61,4 +67,4 @@ gmfapp.MainController = function() {
   });
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.elevation.module.controller('MainController', gmfapp.elevation.MainController);

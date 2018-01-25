@@ -9,7 +9,7 @@ function jscodeshift {
 node node_modules/googshift/filename-case-from-module.js src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
-JSCS_ARGS="--non-default-import=ol,ol/proj,ol/proj/proj4,ol/dom,ol/array,ol/math,ol/extent,ol/easing,ol/color,ol/obj,ol/uri,ol/functions,ol/Sphere --package=ngeo,ol"
+JSCS_ARGS="--non-default-import=ol,ol/proj,ol/proj/proj4,ol/dom,ol/array,ol/math,ol/extent,ol/easing,ol/color,ol/obj,ol/uri,ol/functions,ol/Sphere --package=ngeo,ol,gmf"
 jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js $JSCS_ARGS src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
 jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
 jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS contribs/gmf/apps

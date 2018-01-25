@@ -1,6 +1,8 @@
 goog.provide('gmfapp.print');
 
-/** @suppress {extraRequire} */
+// webpack: import './print.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -17,7 +19,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.print.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.layertree.component.name,
   gmf.map.component.name,
@@ -27,24 +29,27 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value(
+gmfapp.print.module.value(
   'gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
 
-gmfapp.module.value('gmfPrintUrl',
+gmfapp.print.module.value('gmfPrintUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
 
 
-gmfapp.module.value(
+gmfapp.print.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
 );
 
 
-gmfapp.module.value('gmfLayersUrl',
+gmfapp.print.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+
+gmfapp.print.constant('defaultTheme', 'Demo');
+gmfapp.print.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -54,7 +59,7 @@ gmfapp.module.value('gmfLayersUrl',
  *   overlay manager service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
+gmfapp.print.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
@@ -107,4 +112,4 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.print.module.controller('MainController', gmfapp.print.MainController);

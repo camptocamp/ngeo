@@ -1,7 +1,8 @@
 goog.provide('gmfapp.featurestyle');
 
+// webpack: import './featurestyle.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -22,7 +23,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.featurestyle.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.drawing.featureStyleComponent.name,
   gmf.map.component.name,
@@ -31,7 +32,10 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('ngeoMeasureDecimals', 2);
+gmfapp.featurestyle.module.value('ngeoMeasureDecimals', 2);
+
+gmfapp.featurestyle.constant('defaultTheme', 'Demo');
+gmfapp.featurestyle.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -40,7 +44,7 @@ gmfapp.module.value('ngeoMeasureDecimals', 2);
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
-gmfapp.MainController = function($scope, ngeoFeatureHelper) {
+gmfapp.featurestyle.MainController = function($scope, ngeoFeatureHelper) {
 
   /**
    * @type {!angular.Scope}
@@ -190,7 +194,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper) {
  * @param {ol.MapBrowserEvent} evt MapBrowser event
  * @private
  */
-gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
+gmfapp.featurestyle.MainController.prototype.handleMapSingleClick_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
@@ -213,4 +217,4 @@ gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.featurestyle.module.controller('MainController', gmfapp.featurestyle.MainController);

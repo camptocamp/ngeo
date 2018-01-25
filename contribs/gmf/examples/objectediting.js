@@ -1,7 +1,8 @@
 goog.provide('gmfapp.objectediting');
 
+// webpack: import './objectediting.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
@@ -24,7 +25,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.objectediting.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.layertree.component.name,
   gmf.map.component.name,
@@ -33,6 +34,14 @@ gmfapp.module = angular.module('gmfapp', [
   gmf.theme.Themes.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
+
+gmfapp.objectediting.constant('defaultTheme', 'ObjectEditing');
+gmfapp.objectediting.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+gmfapp.objectediting.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+gmfapp.objectediting.constant('gmfObjectEditingToolsOptions', {
+  regularPolygonRadius: 150
+});
+gmfapp.objectediting.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -45,7 +54,7 @@ gmfapp.module = angular.module('gmfapp', [
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
+gmfapp.objectediting.MainController = function(gmfObjectEditingManager, gmfThemes,
   gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
@@ -167,4 +176,4 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
 
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.objectediting.module.controller('MainController', gmfapp.objectediting.MainController);

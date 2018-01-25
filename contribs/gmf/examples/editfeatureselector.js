@@ -1,11 +1,11 @@
 goog.provide('gmfapp.editfeatureselector');
 
+// webpack: import './editfeatureselector.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.editFeatureSelectorComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
@@ -26,7 +26,7 @@ goog.require('ol.source.Vector');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.editfeatureselector.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.authentication.module.name,
   gmf.editing.editFeatureSelectorComponent.name,
@@ -38,21 +38,24 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.editfeatureselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value(
+gmfapp.editfeatureselector.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.editfeatureselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value('gmfLayersUrl',
+gmfapp.editfeatureselector.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+
+gmfapp.editfeatureselector.constant('defaultTheme', 'Edit');
+gmfapp.editfeatureselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -66,7 +69,7 @@ gmfapp.module.value('gmfLayersUrl',
  * @ngInject
  * @constructor
  */
-gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
+gmfapp.editfeatureselector.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
@@ -172,4 +175,4 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.editfeatureselector.module.controller('MainController', gmfapp.editfeatureselector.MainController);

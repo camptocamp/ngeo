@@ -1,5 +1,7 @@
 goog.provide('gmfapp.drawfeature');
 
+// webpack: import './drawfeature.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -16,7 +18,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.drawfeature.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.drawing.module.name,
   gmf.map.component.name,
@@ -26,10 +28,13 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('ngeoExportFeatureFormats', [
+gmfapp.drawfeature.module.value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.KML,
   ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
+
+gmfapp.drawfeature.constant('defaultTheme', 'Demo');
+gmfapp.drawfeature.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -43,7 +48,7 @@ gmfapp.module.value('ngeoExportFeatureFormats', [
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
+gmfapp.drawfeature.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
@@ -121,7 +126,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
  * @param {ol.MapBrowserEvent} evt MapBrowser event
  * @private
  */
-gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
+gmfapp.drawfeature.MainController.prototype.handleMapPointerMove_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
@@ -134,4 +139,4 @@ gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.drawfeature.module.controller('MainController', gmfapp.drawfeature.MainController);

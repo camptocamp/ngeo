@@ -1,0 +1,6 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+.layers-list {
+  max-width: 100%;
+}

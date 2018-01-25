@@ -1,17 +1,20 @@
 goog.provide('gmfapp.datepicker');
 
+// webpack: import './datepicker.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.WMSTime');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.datepicker.module = angular.module('gmfapp', [
   gmf.module.name,
   ngeo.misc.datepickerComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
+
+gmfapp.datepicker.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -20,7 +23,7 @@ gmfapp.module = angular.module('gmfapp', [
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
-gmfapp.MainController = function($scope, ngeoWMSTime) {
+gmfapp.datepicker.MainController = function($scope, ngeoWMSTime) {
 
   /**
    * @type {ngeo.misc.WMSTime}
@@ -81,4 +84,4 @@ gmfapp.MainController = function($scope, ngeoWMSTime) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.datepicker.module.controller('MainController', gmfapp.datepicker.MainController);

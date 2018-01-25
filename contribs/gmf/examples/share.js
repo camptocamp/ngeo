@@ -1,5 +1,8 @@
 goog.provide('gmfapp.share');
 
+// webpack: import './share.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.permalink.shareComponent');
 /** @suppress {extraRequire} */
@@ -7,18 +10,21 @@ goog.require('ngeo.message.modalComponent');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.share.module = angular.module('gmfapp', [
   gmf.module.name,
   ngeo.message.modalComponent.name,
   gmf.permalink.shareComponent.name,
 ]);
+
+gmfapp.share.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.share.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+gmfapp.share.MainController = function() {
 
   /**
    * Model attached to the modal to toggle it
@@ -37,4 +43,4 @@ gmfapp.MainController = function() {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.share.module.controller('MainController', gmfapp.share.MainController);

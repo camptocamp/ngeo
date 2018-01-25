@@ -1,5 +1,8 @@
 goog.provide('gmfapp.wfspermalink');
 
+// webpack: import './wfspermalink.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
@@ -17,14 +20,13 @@ goog.require('ol.style.Circle');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.wfspermalink.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.component.name,
   gmf.query.windowComponent.name,
 ]);
 
-
-gmfapp.module.value('ngeoWfsPermalinkOptions',
+gmfapp.wfspermalink.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
     url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
     wfsTypes: [
@@ -35,11 +37,15 @@ gmfapp.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
+gmfapp.wfspermalink.constant('defaultTheme', 'Demo');
+gmfapp.wfspermalink.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+
+
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+gmfapp.wfspermalink.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
@@ -77,4 +83,4 @@ gmfapp.MainController = function() {
   });
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.wfspermalink.module.controller('MainController', gmfapp.wfspermalink.MainController);

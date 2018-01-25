@@ -85,14 +85,14 @@ jobs:
   - stage: Tests
     env:
     - JOB=webpack
-    - TARGET=ngeo-examples
     script:
     - npm install
     - npm install github:openlayers/openlayers#2ee34b825c4b5d6edd3569e10b3f63510754e012
     - buildtools/webpack-migration
     - git add -A  # for git-attributes
     - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
-    - travis_wait node_modules/.bin/webpack
+    - TARGET=ngeo-examples travis_wait node_modules/.bin/webpack
+    - TARGET=gmf-examples travis_wait node_modules/.bin/webpack
     - export CHROME_BIN=/opt/google/chrome/chrome
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
@@ -112,28 +112,16 @@ jobs:
     - node_modules/.bin/eslint contribs/gmf/test
     - node_modules/.bin/eslint contribs/gmf/apps
     - make check-examples-webpack
-    - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples-ngeo buildtools/deploy.sh; fi
+    - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples buildtools/deploy.sh; fi
 
   - stage: Build
     env:
-    - JOB=test-examples-1
+    - JOB=test-examples
     - DEVELOPMENT=TRUE
     script:
-    - buildtools/test_examples.py 1/2
-    if: type = pull_request
-  - stage: Build
-    env:
-    - JOB=test-examples-2
-    - DEVELOPMENT=TRUE
-    script:
-    - buildtools/test_examples.py 2/2
-    if: type = pull_request
-  - stage: Build
-    env:
-    - JOB=build-examples-gmf
-    - DEVELOPMENT=TRUE
-    script:
-    - make examples-hosted-gmf
+    # Workaround to be able to build the apps
+    - make .build/node_modules.timestamp
+    - buildtools/test_examples.py 1/1
     if: type = pull_request
   - stage: Build
     env:
@@ -170,12 +158,6 @@ jobs:
     after_success:
     - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
     if: tag IS present AND repo = camptocamp/ngeo
-  - stage: Build and publish
-    env:
-    - JOB=publish-examples-gmf
-    script:
-    - buildtools/deploy.sh
-    if: type = push AND repo = camptocamp/ngeo AND branch IS present
   - stage: Build and publish
     env:
     - JOB=publish-apps-gmf

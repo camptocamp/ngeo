@@ -1,5 +1,8 @@
 goog.provide('gmfapp.profile');
 
+// webpack: import './profile.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
@@ -19,7 +22,7 @@ goog.require('ol.style.Style');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.profile.module = angular.module('gmfapp', [
   gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.permalink.Permalink.module.name,
   gmf.map.component.name,
@@ -28,9 +31,13 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value(
+gmfapp.profile.module.value(
   'gmfProfileJsonUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+
+gmfapp.profile.constant('defaultTheme', 'Demo');
+gmfapp.profile.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+
 
 /**
  * @param {angular.Scope} $scope Angular scope.
@@ -39,7 +46,7 @@ gmfapp.module.value(
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
+gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {ol.geom.LineString}
    * @export
@@ -144,4 +151,4 @@ gmfapp.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.profile.module.controller('MainController', gmfapp.profile.MainController);

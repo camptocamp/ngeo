@@ -1,0 +1,15 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
+
+.gmf-contextualdata {
+  font-size: 0.8em;
+  width: 300px;
+}
+.gmf-contextualdata table {
+  width: 100%;
+}

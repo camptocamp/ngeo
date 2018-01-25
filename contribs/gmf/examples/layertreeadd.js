@@ -1,7 +1,9 @@
 goog.provide('gmfapp.layertreeadd');
 
+// webpack: import './layertreeadd.css';
+// webpack: import './common_dependencies.js';
+goog.require('gmf');
 goog.require('gmf.disclaimer.module');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
@@ -18,7 +20,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.layertreeadd.module = angular.module('gmfapp', [
   gmf.module.name, // Change me other dependencies are in a module
   gmf.layertree.component.name,
   gmf.map.component.name,
@@ -29,8 +31,12 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value('gmfTreeUrl',
+gmfapp.layertreeadd.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+
+gmfapp.layertreeadd.constant('defaultTheme', 'Demo');
+gmfapp.layertreeadd.constant('gmfTreeManagerModeFlush', false);
+gmfapp.layertreeadd.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -41,7 +47,7 @@ gmfapp.module.value('gmfTreeUrl',
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
+gmfapp.layertreeadd.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -198,4 +204,4 @@ gmfapp.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, nge
   };
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.layertreeadd.module.controller('MainController', gmfapp.layertreeadd.MainController);

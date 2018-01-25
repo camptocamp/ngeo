@@ -1,14 +1,14 @@
 goog.provide('gmfapp.mobilemeasure');
 
+// webpack: import './mobilemeasure.css';
+// webpack: import './common_dependencies.js';
 goog.require('gmf');
-goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
+goog.require('gmf.permalink.Permalink');
 goog.require('gmf.mobile.measure.lengthComponent');
-/** @suppress {extraRequire} */
 goog.require('gmf.mobile.measure.pointComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
@@ -20,7 +20,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', [
+gmfapp.mobilemeasure.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.map.component.name,
   gmf.permalink.Permalink.module.name,
@@ -30,9 +30,12 @@ gmfapp.module = angular.module('gmfapp', [
 ]);
 
 
-gmfapp.module.value(
+gmfapp.mobilemeasure.module.value(
   'gmfRasterUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+
+gmfapp.mobilemeasure.constant('defaultTheme', 'Demo');
+gmfapp.mobilemeasure.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -40,7 +43,7 @@ gmfapp.module.value(
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function(gmfPermalink) {
+gmfapp.mobilemeasure.MainController = function(gmfPermalink) {
 
   const center = gmfPermalink.getMapCenter() || [537635, 152640];
   const zoom = gmfPermalink.getMapZoom() || 3;
@@ -89,4 +92,4 @@ gmfapp.MainController = function(gmfPermalink) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+gmfapp.mobilemeasure.module.controller('MainController', gmfapp.mobilemeasure.MainController);

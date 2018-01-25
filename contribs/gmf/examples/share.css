@@ -1,0 +1,10 @@
+@import "~ol/ol.css"
+@import "~bootstrap/dist/css/bootstrap.css"
+
+.share {
+  margin: 3rem 0;
+  width: 20vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
