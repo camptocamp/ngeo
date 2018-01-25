@@ -119,6 +119,8 @@ jobs:
     - JOB=test-examples
     - DEVELOPMENT=TRUE
     script:
+    # Workaround to be able to build the apps
+    - make .build/node_modules.timestamp
     - buildtools/test_examples.py 1/1
     if: type = pull_request
   - stage: Build
