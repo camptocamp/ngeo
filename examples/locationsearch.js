@@ -2,6 +2,8 @@ goog.provide('app.locationsearch');
 
 // webpack: import './locationsearch.css';
 // webpack: import './common_dependencies.js';
+goog.require('ol');
+goog.require('ol.proj');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');

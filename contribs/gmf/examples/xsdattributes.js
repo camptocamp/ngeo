@@ -4,6 +4,7 @@ goog.require('gmf.theme.Themes');
 goog.require('gmf.editing.XSDAttributes');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
+goog.require('ngeo.format.XSDAttribute');
 goog.require('ol.Feature');
 
 

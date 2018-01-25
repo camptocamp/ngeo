@@ -6,8 +6,6 @@ goog.provide('ngeo.misc.swipe');
  */
 ngeo.misc.swipe = angular.module('ngeoMiscSwipe', []);
 
-ngeo.module.requires.push(ngeo.misc.swipe.name);
-
 
 /**
  * ===========================================

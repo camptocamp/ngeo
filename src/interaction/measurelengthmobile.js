@@ -2,6 +2,7 @@ goog.provide('ngeo.interaction.MeasureLengthMobile');
 
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ngeo.interaction.MobileDraw');
+goog.require('ol');
 
 
 /**

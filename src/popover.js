@@ -1,5 +1,6 @@
 goog.provide('ngeo.Popover');
 
+goog.require('ol');
 goog.require('ol.Overlay');
 
 

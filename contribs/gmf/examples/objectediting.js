@@ -14,6 +14,7 @@ goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ol.proj');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');

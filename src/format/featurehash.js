@@ -2,9 +2,13 @@ goog.provide('ngeo.format.FeatureHash');
 
 goog.require('goog.asserts');
 goog.require('ngeo.format.FeatureProperties');
+goog.require('ngeo.format.FeatureHashStyleType');
 goog.require('ngeo.utils');
+goog.require('ol');
 goog.require('ol.Feature');
 goog.require('ol.color');
+goog.require('ol.array');
+goog.require('ol.format.Feature');
 goog.require('ol.format.TextFeature');
 goog.require('ol.geom.GeometryLayout');
 goog.require('ol.geom.GeometryType');
@@ -19,36 +23,6 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-
-
-/**
- * @enum {string}
- */
-ngeo.format.FeatureHashStyleType = {
-  LINE_STRING: 'LineString',
-  POINT: 'Point',
-  POLYGON: 'Polygon'
-};
-
-
-/**
- * @type {Object.<ol.geom.GeometryType, ngeo.format.FeatureHashStyleType>}
- * @private
- */
-ngeo.format.FeatureHashStyleTypes_ = {
-  'LineString': ngeo.format.FeatureHashStyleType.LINE_STRING,
-  'Point': ngeo.format.FeatureHashStyleType.POINT,
-  'Polygon': ngeo.format.FeatureHashStyleType.POLYGON,
-  'MultiLineString': ngeo.format.FeatureHashStyleType.LINE_STRING,
-  'MultiPoint': ngeo.format.FeatureHashStyleType.POINT,
-  'MultiPolygon': ngeo.format.FeatureHashStyleType.POLYGON
-};
-
-/**
- * @type {Object.<string, string>}
- * @private
- */
-ngeo.format.FeatureHashLegacyProperties_ = {};
 
 
 /**
@@ -124,10 +98,30 @@ ngeo.format.FeatureHash = function(opt_options) {
    * @type {Object.<string, string>}
    * @private
    */
-  ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
+  ngeo.format.FeatureHash.LegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
 
 };
 ol.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
+
+
+/**
+ * @type {Object.<ol.geom.GeometryType, ngeo.format.FeatureHashStyleType>}
+ * @private
+ */
+ngeo.format.FeatureHash.StyleTypes_ = {
+  'LineString': ngeo.format.FeatureHashStyleType.LINE_STRING,
+  'Point': ngeo.format.FeatureHashStyleType.POINT,
+  'Polygon': ngeo.format.FeatureHashStyleType.POLYGON,
+  'MultiLineString': ngeo.format.FeatureHashStyleType.LINE_STRING,
+  'MultiPoint': ngeo.format.FeatureHashStyleType.POINT,
+  'MultiPolygon': ngeo.format.FeatureHashStyleType.POLYGON
+};
+
+/**
+ * @type {Object.<string, string>}
+ * @private
+ */
+ngeo.format.FeatureHash.LegacyProperties_ = {};
 
 
 /**
@@ -239,7 +233,7 @@ ngeo.format.FeatureHash.encodeNumber_ = function(num) {
  * @private
  */
 ngeo.format.FeatureHash.encodeStyles_ = function(styles, geometryType, encodedStyles) {
-  const styleType = ngeo.format.FeatureHashStyleTypes_[geometryType];
+  const styleType = ngeo.format.FeatureHash.StyleTypes_[geometryType];
   goog.asserts.assert(styleType !== undefined);
   for (let i = 0; i < styles.length; ++i) {
     const style = styles[i];
@@ -668,8 +662,8 @@ ngeo.format.FeatureHash.setStyleProperties_ = function(text, feature) {
   const clone = {};
   for (const key in properties) {
     const value = properties[key];
-    if (ngeo.format.FeatureHashLegacyProperties_[key]) {
-      clone[ngeo.format.FeatureHashLegacyProperties_[key]] = value;
+    if (ngeo.format.FeatureHash.LegacyProperties_[key]) {
+      clone[ngeo.format.FeatureHash.LegacyProperties_[key]] = value;
     } else {
       clone[key] = value;
     }
@@ -1038,8 +1032,8 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
         goog.asserts.assert(keyVal.length === 2);
         let key = keyVal[0];
         const value = keyVal[1];
-        if (!this.setStyle_ && ngeo.format.FeatureHashLegacyProperties_[key]) {
-          key = ngeo.format.FeatureHashLegacyProperties_[key];
+        if (!this.setStyle_ && ngeo.format.FeatureHash.LegacyProperties_[key]) {
+          key = ngeo.format.FeatureHash.LegacyProperties_[key];
         }
         feature.set(key, ngeo.format.FeatureHash.castValue_(key, value));
       }

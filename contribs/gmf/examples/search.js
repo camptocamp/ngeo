@@ -5,6 +5,7 @@ goog.require('gmf.map.component');
 goog.require('gmf.search.module');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.message.Notification');
+goog.require('ngeo.message.Message');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.map.module');

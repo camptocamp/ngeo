@@ -4,11 +4,13 @@ goog.require('ngeo.utils');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ngeo.interaction.ModifyRectangle');
+goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.Collection');
 goog.require('ol.interaction.Modify');
+goog.require('ol.Feature');
 
 
 /**

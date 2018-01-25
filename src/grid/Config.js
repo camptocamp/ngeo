@@ -134,4 +134,3 @@ ngeo.grid.Config.prototype.invertSelection = function() {
  * @type {!angular.Module}
  */
 ngeo.grid.Config.module = angular.module('ngeoGridConfig', []);
-ngeo.module.requires.push(ngeo.grid.Config.module.name);

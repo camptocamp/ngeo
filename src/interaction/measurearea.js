@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.MeasureArea');
 
 goog.require('ngeo.interaction.Measure');
+goog.require('ol');
 goog.require('ol.geom.Polygon');
 goog.require('ol.interaction.Draw');
 
