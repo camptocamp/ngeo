@@ -218,8 +218,6 @@ gmf.filters.SavedFilters = class {
 
 gmf.filters.SavedFilters.module = angular.module('gmfSavedFilters', []);
 
-gmf.module.requires.push(gmf.filters.SavedFilters.module.name);
-
 gmf.filters.SavedFilters.module.service('gmfSavedFilters', gmf.filters.SavedFilters);
 
 

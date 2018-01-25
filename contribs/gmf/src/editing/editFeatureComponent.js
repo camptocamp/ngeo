@@ -62,11 +62,6 @@ gmf.editing.editFeatureComponent = angular.module('GmfEditingFeatureComponent', 
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.editing.editFeatureComponent.name);
-
-
-// FIXME add dependencies to the future module
-// - ngeo.message.modalComponent.name
 
 /**
  * Directive used to insert, modify and delete features from a single layer.

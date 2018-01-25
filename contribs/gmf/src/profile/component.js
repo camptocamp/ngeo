@@ -28,8 +28,6 @@ gmf.profile.component = angular.module('gmfProfile', [
   ngeo.profile.elevationComponent.name,
 ]);
 
-gmf.module.requires.push(gmf.profile.component.name);
-
 
 gmf.profile.component.value('gmfProfileTemplateUrl',
   /**

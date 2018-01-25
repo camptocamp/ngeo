@@ -109,6 +109,4 @@ gmf.permalink.ShareService.URL_PATH_MAX_LEN = 2048;
 
 gmf.permalink.ShareService.module = angular.module('gmfShareService', []);
 
-gmf.module.requires.push(gmf.permalink.ShareService.module.name);
-
 gmf.permalink.ShareService.module.service('gmfShareService', gmf.permalink.ShareService);

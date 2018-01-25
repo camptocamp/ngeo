@@ -154,4 +154,3 @@ gmf.theme.Manager.module = angular.module('gmfThemeManager', [
 gmf.theme.Manager.module.value('gmfTreeManagerModeFlush', true);
 
 gmf.theme.Manager.module.service('gmfThemeManager', gmf.theme.Manager);
-gmf.module.requires.push(gmf.theme.Manager.module.name);

@@ -571,4 +571,3 @@ gmf.editing.Snapping.module = angular.module('gmfSnapping', [
   ngeo.layertree.Controller.module.name,
 ]);
 gmf.editing.Snapping.module.service('gmfSnapping', gmf.editing.Snapping);
-gmf.module.requires.push(gmf.editing.Snapping.module.name);

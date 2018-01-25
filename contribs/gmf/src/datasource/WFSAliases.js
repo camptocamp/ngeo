@@ -46,4 +46,3 @@ gmf.datasource.WFSAliases = class {
 
 gmf.datasource.WFSAliases.module = angular.module('gmfDatasourceWFSAliases', []);
 gmf.datasource.WFSAliases.module.service('gmfWFSAliases', gmf.datasource.WFSAliases);
-gmf.module.requires.push(gmf.datasource.WFSAliases.module.name);

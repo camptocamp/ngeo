@@ -53,8 +53,6 @@ gmf.objectediting.component = angular.module('gmfObjectEditingComponent', [
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.objectediting.component.name);
-
 
 gmf.objectediting.component.value('gmfObjecteditingTemplateUrl',
   /**

@@ -28,8 +28,6 @@ gmf.objectediting.toolsComponent = angular.module('gmfObjecteditingToolsComponen
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.objectediting.toolsComponent.name);
-
 
 /**
  * A list of additional options for this directive that are not defined as

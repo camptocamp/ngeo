@@ -671,4 +671,3 @@ gmf.datasource.ExternalDataSourcesManager.module = angular.module('gmfExternalDa
 ]);
 gmf.datasource.ExternalDataSourcesManager.module.service('gmfExternalDataSourcesManager',
   gmf.datasource.ExternalDataSourcesManager);
-gmf.module.requires.push(gmf.datasource.ExternalDataSourcesManager.module.name);

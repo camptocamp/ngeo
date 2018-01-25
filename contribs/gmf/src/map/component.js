@@ -18,8 +18,6 @@ gmf.map.component = angular.module('gmfMapComponent', [
   ngeo.map.FeatureOverlayMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.map.component.name);
-
 
 /**
  * A "map" directive for a GeoMapFish application.

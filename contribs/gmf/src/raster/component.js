@@ -16,8 +16,6 @@ gmf.raster.component = angular.module('gmfRasterComponent', [
   ngeo.misc.debounce.name,
 ]);
 
-gmf.module.requires.push(gmf.raster.component.name);
-
 
 /**
  * Provide a directive that set a value each 500ms with the elevation under the

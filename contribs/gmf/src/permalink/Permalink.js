@@ -1507,8 +1507,6 @@ gmf.permalink.Permalink.module = angular.module('gmfPermalink', [
   ngeo.layertree.Controller.module.name,
 ]);
 
-gmf.module.requires.push(gmf.permalink.Permalink.module.name);
-
 gmf.permalink.Permalink.module.service('gmfPermalink', gmf.permalink.Permalink);
 
 

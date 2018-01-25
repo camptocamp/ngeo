@@ -11,4 +11,3 @@ gmf.datasource.DataSourceBeingFiltered.module = angular.module('gmfDataSourceBei
 gmf.datasource.DataSourceBeingFiltered.module.value('gmfDataSourceBeingFiltered', {
   dataSource: null
 });
-gmf.module.requires.push(gmf.datasource.DataSourceBeingFiltered.module.name);

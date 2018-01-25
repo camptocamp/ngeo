@@ -12,8 +12,6 @@ gmf.objectediting.getWMSFeatureComponent = angular.module('gmfObjecteditingGetWM
   gmf.objectediting.Query.module.name,
 ]);
 
-gmf.module.requires.push(gmf.objectediting.getWMSFeatureComponent.name);
-
 
 /**
  * When activated, this directive registers clicks on an OL3 map and use the

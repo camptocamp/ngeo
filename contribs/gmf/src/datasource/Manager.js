@@ -871,4 +871,3 @@ gmf.datasource.Manager.module = angular.module('gmfDataSourcesManager', [
   ngeo.misc.WMSTime.module.name,
 ]);
 gmf.datasource.Manager.module.service('gmfDataSourcesManager', gmf.datasource.Manager);
-gmf.module.requires.push(gmf.datasource.Manager.module.name);

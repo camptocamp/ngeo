@@ -204,4 +204,3 @@ gmf.objectediting.Query.module = angular.module('gmfObjectEditingQuery', [
   gmf.theme.Themes.module.name,
 ]);
 gmf.objectediting.Query.module.service('gmfObjectEditingQuery', gmf.objectediting.Query);
-gmf.module.requires.push(gmf.objectediting.Query.module.name);

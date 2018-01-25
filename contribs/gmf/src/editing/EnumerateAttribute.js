@@ -75,4 +75,3 @@ gmf.editing.EnumerateAttribute = class {
  */
 gmf.editing.EnumerateAttribute.module = angular.module('gmfEnumerateAttribute', []);
 gmf.editing.EnumerateAttribute.module.service('gmfEnumerateAttribute', gmf.editing.EnumerateAttribute);
-gmf.module.requires.push(gmf.editing.EnumerateAttribute.module.name);

@@ -12,8 +12,6 @@ gmf.import.wmsCapabilityLayertreeComponent = angular.module('gmfWmscapabilitylay
   ngeo.message.Popup.module.name,
 ]);
 
-gmf.module.requires.push(gmf.import.wmsCapabilityLayertreeComponent.name);
-
 
 /**
  * @private

@@ -40,8 +40,6 @@ gmf.search.component = angular.module('gmfSearch', [
   ngeo.message.popoverComponent.name,
 ]);
 
-gmf.module.requires.push(gmf.search.component.name);
-
 
 /**
  * @param {angular.JQLite} element Element.

@@ -16,8 +16,6 @@ gmf.map.mousepositionComponent = angular.module('gmfMapMouseposition', [
   ngeo.misc.filters.name,
 ]);
 
-gmf.module.requires.push(gmf.map.mousepositionComponent.name);
-
 
 /**
  * Provide a component to display the mouse position coordinates depending

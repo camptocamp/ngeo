@@ -19,8 +19,6 @@ gmf.disclaimer.component = angular.module('gmfDisclaimer', [
   'ngSanitize'
 ]);
 
-gmf.module.requires.push(gmf.disclaimer.component.name);
-
 
 /**
  * @constructor

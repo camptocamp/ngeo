@@ -33,8 +33,6 @@ gmf.query.gridComponent = angular.module('gmfQueryGridComponent', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
-gmf.module.requires.push(gmf.query.gridComponent.name);
-
 
 gmf.query.gridComponent.value('gmfDisplayquerygridTemplateUrl',
   /**

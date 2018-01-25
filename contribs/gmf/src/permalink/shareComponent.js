@@ -8,8 +8,6 @@ gmf.permalink.shareComponent = angular.module('', [
   gmf.permalink.ShareService.module.name,
 ]);
 
-gmf.module.requires.push(gmf.permalink.shareComponent.name);
-
 
 /**
  * Component to display a shortened permalink and share it by email

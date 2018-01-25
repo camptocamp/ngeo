@@ -33,8 +33,6 @@ gmf.print.component = angular.module('gmfPrintComponent', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
-gmf.module.requires.push(gmf.print.component.name);
-
 
 /**
  * @enum {string}

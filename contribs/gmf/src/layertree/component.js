@@ -48,8 +48,6 @@ gmf.layertree.component = angular.module('gmfLayertreeComponent', [
   ngeo.misc.WMSTime.module.name,
 ]);
 
-gmf.module.requires.push(gmf.layertree.component.name);
-
 
 gmf.layertree.component.value('gmfLayertreeTemplate',
   /**

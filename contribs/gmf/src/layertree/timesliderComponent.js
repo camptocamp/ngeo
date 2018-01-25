@@ -12,8 +12,6 @@ gmf.layertree.timeSliderComponent = angular.module('gmfLayertreeTimeSliderCompon
   'ui.slider',
 ]);
 
-gmf.module.requires.push(gmf.layertree.timeSliderComponent.name);
-
 
 /**
  * Provide a directive to select a single date or a range of dates with a slider

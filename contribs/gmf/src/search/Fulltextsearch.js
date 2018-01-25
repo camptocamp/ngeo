@@ -68,4 +68,3 @@ gmf.search.FulltextSearch.prototype.search = function(query, params) {
  */
 gmf.search.FulltextSearch.module = angular.module('gmfSearchFulltextSearch', []);
 gmf.search.FulltextSearch.module.service('gmfSearchFulltextSearch', gmf.search.FulltextSearch);
-gmf.module.requires.push(gmf.search.FulltextSearch.module.name);

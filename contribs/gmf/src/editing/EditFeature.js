@@ -151,4 +151,3 @@ gmf.editing.EditFeature.prototype.deleteFeature = function(layerId, feature) {
  */
 gmf.editing.EditFeature.module = angular.module('gmfEditFeature', []);
 gmf.editing.EditFeature.module.service('gmfEditFeature', gmf.editing.EditFeature);
-gmf.module.requires.push(gmf.editing.EditFeature.module.name);

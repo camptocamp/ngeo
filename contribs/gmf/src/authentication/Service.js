@@ -211,7 +211,6 @@ gmf.authentication.Service.RouteSuffix = {
  */
 gmf.authentication.Service.module = angular.module('gmfAuthenticationService', []);
 gmf.authentication.Service.module.service('gmfAuthenticationService', gmf.authentication.Service);
-gmf.module.requires.push(gmf.authentication.Service.module.name);
 
 gmf.authentication.Service.module.value('gmfUser', {
   'functionalities': null,
