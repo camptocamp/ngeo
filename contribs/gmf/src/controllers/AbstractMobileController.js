@@ -14,10 +14,14 @@ goog.require('gmf.mobileNavDirective');
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
+goog.require('ol');
+goog.require('ol.obj');
+goog.require('ol.proj');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
+goog.require('ol.control.Rotate');
 goog.require('ol.interaction');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');

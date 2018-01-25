@@ -27,7 +27,6 @@ ngeo.draw.component = angular.module('ngeoDrawfeature', [
   ngeo.measure.length.name,
 ]);
 
-ngeo.module.requires.push(ngeo.draw.component.name);
 
 /**
  * Directive used to draw vector features on a map.

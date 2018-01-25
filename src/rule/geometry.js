@@ -2,9 +2,12 @@ goog.provide('ngeo.rule.Geometry');
 
 goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Rule');
+goog.require('ol.Object');
 goog.require('ol.events');
+goog.require('ol.Observable');
 goog.require('ol.Feature');
 goog.require('ol.format.GeoJSON');
+goog.require('ol.geom.Geometry');
 
 
 ngeo.rule.Geometry = class extends ngeo.rule.Rule {

@@ -179,4 +179,3 @@ gmf.objectediting.Manager.module = angular.module('gmfObjectEditingManager', [
   ngeo.statemanager.Location.module.name,
 ]);
 gmf.objectediting.Manager.module.service('gmfObjectEditingManager', gmf.objectediting.Manager);
-gmf.module.requires.push(gmf.objectediting.Manager.module.name);

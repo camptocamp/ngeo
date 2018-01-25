@@ -40,11 +40,15 @@ goog.require('ngeo.misc.sortableComponent');
 goog.require('ngeo.misc.ToolActivate');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivateMgr');
+goog.require('ol');
+goog.require('ol.proj');
+goog.require('ol.obj');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
+goog.require('ol.control.Rotate');
 goog.require('ol.interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');

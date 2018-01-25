@@ -8,6 +8,7 @@ goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.objectediting.Manager');
 goog.require('gmf.theme.Themes');
 goog.require('ol.format.WFS');
+goog.require('ngeo.format.XSDAttribute');
 
 
 /** @type {!angular.Module} **/

@@ -38,7 +38,9 @@ goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.statemanager.module');
+goog.require('ol.array');
 goog.require('ol.events');
+goog.require('ol.Map');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');

@@ -1,6 +1,7 @@
 goog.provide('ngeo.rule.Rule');
 
 goog.require('ngeo');
+goog.require('ol.Observable');
 
 
 /**

@@ -3,9 +3,10 @@ goog.provide('ngeo.interaction.MeasureAzimut');
 goog.require('goog.asserts');
 goog.require('ngeo.interaction.DrawAzimut');
 goog.require('ngeo.interaction.Measure');
+goog.require('ol');
 goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
-
+goog.require('ol.proj.Projection');
 
 /**
  * @classdesc

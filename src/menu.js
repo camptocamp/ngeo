@@ -1,6 +1,7 @@
 goog.provide('ngeo.Menu');
 
 goog.require('ngeo.CustomEvent');
+goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Overlay');
 goog.require('ol.OverlayPositioning');

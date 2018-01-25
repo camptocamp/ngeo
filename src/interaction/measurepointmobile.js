@@ -2,6 +2,8 @@ goog.provide('ngeo.interaction.MeasurePointMobile');
 
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MobileDraw');
+goog.require('ol');
+goog.require('ol.obj');
 goog.require('ol.geom.Point');
 
 
