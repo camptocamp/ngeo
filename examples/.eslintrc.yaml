@@ -6,8 +6,7 @@
     'googshift/no-duplicate-requires': 'error',
 
     'googshift/no-missing-requires': ['off', {
-      prefixes: ['ngeo', 'ol'],
-      exceptions: ['ngeo.module.requires.push']
+      prefixes: ['ngeo', 'ol']
     }],
 
     'googshift/no-unused-requires': 'off',

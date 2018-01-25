@@ -7,7 +7,6 @@ rules:
   googshift/no-missing-requires:
     - error
     - prefixes: [ngeo, ol]
-      exceptions: ['ngeo.module.requires.push']
 
   googshift/no-unused-requires: warn
 
