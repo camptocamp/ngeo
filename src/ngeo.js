@@ -45,14 +45,6 @@ goog.require('ol.style.AtlasManager');
 // webpack: import 'angular-float-thead';
 
 
-/** @type {!angular.Module} */
-ngeo.module = angular.module('ngeo', [
-  'gettext', 'ui.date', 'floatThead'
-  // src/modules/* were added for producing the dist/ngeo.js file, which is badly broken.
-  // removing them as they conflict with the "virtual" angular module root "vocation" of this file.
-]);
-
-
 /**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
