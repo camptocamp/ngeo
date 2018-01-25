@@ -35,12 +35,12 @@ buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStopWfs
 buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputInformationHitsWfs\>/gmlResponseInformationHitsWfs/g'
 buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataWmtsCapabilities\>/wmtsCapabilities/g'
 buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataGeoAdminLocationSearch\>/geoAdminLocationSearch/g'
-#sed '/ngeo:/d' -i .eslintrc.yaml
-#sed '/gmf:/d' -i .eslintrc.yaml
-#sed '/ol:/d' -i .eslintrc.yaml
+sed '/ngeo:/d' -i .eslintrc.yaml
+sed '/gmf:/d' -i .eslintrc.yaml
+sed '/ol:/d' -i .eslintrc.yaml
 sed '/olcs:/d' -i .eslintrc.yaml
-#sed '/app:/d' -i .eslintrc.yaml
-#sed '/gmfapp:/d' -i .eslintrc.yaml
+sed '/app:/d' -i .eslintrc.yaml
+sed '/gmfapp:/d' -i .eslintrc.yaml
 sed '/proj4:/d' -i .eslintrc.yaml
 git reset --mixed
 set +x
