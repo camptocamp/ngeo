@@ -767,6 +767,7 @@ gmf.PrintController.prototype.print = function(format) {
   map.setView(this.map.getView());
   const ol_layers = this.ngeoLayerHelper_.getFlatLayers(this.map.getLayerGroup());
   const new_ol_layers = [];
+  let print_native_angle = true;
   for (let i = 0, ii = ol_layers.length; i < ii; i++) {
     let layer = ol_layers[i];
     const metadata = layer.get('metadata');
@@ -787,10 +788,17 @@ gmf.PrintController.prototype.print = function(format) {
         }
       }
     }
+
+    // Get the print native angle parameter for WMS layers
+    if (layer instanceof ol.layer.Image) {
+      print_native_angle = layer.get('printNativeAngle');
+    }
+
     new_ol_layers.push(layer);
   }
   map.setLayerGroup(new ol.layer.Group({
-    layers: new_ol_layers
+    layers: new_ol_layers,
+    'printNativeAngle': print_native_angle
   }));
 
   const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,

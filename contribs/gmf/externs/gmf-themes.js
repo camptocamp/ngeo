@@ -487,6 +487,14 @@ gmfThemes.GmfMetaData.prototype.isChecked;
  */
 gmfThemes.GmfMetaData.prototype.isExpanded;
 
+/**
+ * Whether the print should rotate the symbols.
+ * Default to true.
+ * For layer groups (only).
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.printNativeAngle;
+
 
 /**
  * Whether the legend is expanded by default.

@@ -163,6 +163,11 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   let layer = null;
   const isFirstLevelGroup = treeCtrl.parent.isRoot;
 
+  let printNativeAngle = true;
+  if (groupNode.metadata.printNativeAngle !== undefined) {
+    printNativeAngle = groupNode.metadata.printNativeAngle;
+  }
+
   if (isFirstLevelGroup) { // First level group
     layer = this.createLayerFromGroup_(treeCtrl, !!groupNode.mixed);
     // Insert the layer at the right place
@@ -178,6 +183,8 @@ gmf.SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
+
+  layer.set('printNativeAngle', printNativeAngle);
   return layer;
 };
 
