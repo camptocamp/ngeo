@@ -11,8 +11,6 @@ goog.require('ol.geom.Polygon');
  */
 ngeo.draw.rectangle = angular.module('ngeoDrawrectangle', []);
 
-ngeo.module.requires.push(ngeo.draw.rectangle.name);
-
 
 /**
  * @return {angular.Directive} The directive specs.

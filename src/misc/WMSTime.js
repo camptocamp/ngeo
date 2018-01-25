@@ -106,4 +106,3 @@ ngeo.misc.WMSTime.module = angular.module('ngeoWMSTime', [
   ngeo.misc.Time.module.name,
 ]);
 ngeo.misc.WMSTime.module.service('ngeoWMSTime', ngeo.misc.WMSTime);
-ngeo.module.requires.push(ngeo.misc.WMSTime.module.name);

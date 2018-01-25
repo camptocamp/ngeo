@@ -483,4 +483,3 @@ ngeo.statemanager.Location.MockProvider = function($locationProvider) {
  */
 ngeo.statemanager.Location.module = angular.module('ngeoLocation', []);
 ngeo.statemanager.Location.module.factory('ngeoLocation', ngeo.statemanager.Location.LocationFactory);
-ngeo.module.requires.push(ngeo.statemanager.Location.module.name);

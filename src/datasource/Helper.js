@@ -157,4 +157,3 @@ ngeo.datasource.Helper.module = angular.module('ngeoDataSourcesHelper', [
   ngeo.query.Querent.module.name,
 ]);
 ngeo.datasource.Helper.module.service('ngeoDataSourcesHelper', ngeo.datasource.Helper);
-ngeo.module.requires.push(ngeo.datasource.Helper.module.name);

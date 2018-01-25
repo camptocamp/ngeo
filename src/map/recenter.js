@@ -7,8 +7,6 @@ goog.require('ngeo');
  */
 ngeo.map.recenter = angular.module('ngeoRecenter', []);
 
-ngeo.module.requires.push(ngeo.map.recenter.name);
-
 /**
  * Provides the "ngeoRecenter" directive, a widget for recentering a map
  * to a specific extent (by using `ngeo-extent`) or a specific zoom level

@@ -7,7 +7,6 @@ goog.require('ngeo');
  * @type {angular.Module}
  */
 ngeo.message.modalComponent = angular.module('ngeoModal', []);
-ngeo.module.requires.push(ngeo.message.modalComponent.name);
 
 /**
  * Provides the "ngeoModal" component.

@@ -121,4 +121,3 @@ ngeo.map.FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
  * @type {!angular.Module}
  */
 ngeo.map.FeatureOverlay.module = angular.module('ngeoFeatureOverlay', []);
-ngeo.module.requires.push(ngeo.map.FeatureOverlay.module.name);

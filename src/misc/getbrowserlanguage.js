@@ -8,8 +8,6 @@ goog.require('ngeo');
  */
 ngeo.misc.getBrowserLanguage = angular.module('ngeoGetBrowserLanguage', []);
 
-ngeo.module.requires.push(ngeo.misc.getBrowserLanguage.name);
-
 
 /**
  * Provides a function that returns the most appropriate 2-letter

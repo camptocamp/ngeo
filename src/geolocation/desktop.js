@@ -19,8 +19,6 @@ ngeo.geolocation.desktop = angular.module('ngeoDesktopGeolocation', [
   ngeo.message.Notification.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.geolocation.desktop.name);
-
 
 /**
  * @enum {string}

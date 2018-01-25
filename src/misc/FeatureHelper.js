@@ -1104,4 +1104,3 @@ ngeo.misc.FeatureHelper.module = angular.module('ngeoFeatureHelper', [
   ngeo.misc.filters.name,
 ]);
 ngeo.misc.FeatureHelper.module.service('ngeoFeatureHelper', ngeo.misc.FeatureHelper);
-ngeo.module.requires.push(ngeo.misc.FeatureHelper.module.name);

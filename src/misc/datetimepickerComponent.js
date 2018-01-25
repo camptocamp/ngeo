@@ -6,7 +6,10 @@ goog.provide('ngeo.misc.datetimepickerComponent');
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.datetimepickerComponent = angular.module('ngeoDateTimePicker', ['gettext']);
+ngeo.misc.datetimepickerComponent = angular.module('ngeoDateTimePicker', [
+  'gettext',
+  ngeo.misc.Time.module.name,
+]);
 
 /**
  * A directive used to display a date or time picker

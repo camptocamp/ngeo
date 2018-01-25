@@ -232,4 +232,3 @@ ngeo.query.MapQuerent.module = angular.module('ngeoMapQuerent', [
   ngeo.query.Querent.module.name,
 ]);
 ngeo.query.MapQuerent.module.service('ngeoMapQuerent', ngeo.query.MapQuerent);
-ngeo.module.requires.push(ngeo.query.MapQuerent.module.name);

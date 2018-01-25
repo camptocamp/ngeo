@@ -959,4 +959,3 @@ ngeo.query.Querent.module = angular.module('ngeoQuerent', [
   ngeo.misc.WMSTime.module.name,
 ]);
 ngeo.query.Querent.module.service('ngeoQuerent', ngeo.query.Querent);
-ngeo.module.requires.push(ngeo.query.Querent.module.name);

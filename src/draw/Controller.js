@@ -247,4 +247,3 @@ ngeo.draw.Controller.module = angular.module('ngeoDrawfeatureController', [
   ngeo.misc.FeatureHelper.module.name,
 ]);
 ngeo.draw.Controller.module.controller('ngeoDrawfeatureController', ngeo.draw.Controller);
-ngeo.module.requires.push(ngeo.draw.Controller.module.name);

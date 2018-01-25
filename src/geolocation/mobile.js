@@ -19,9 +19,6 @@ ngeo.geolocation.mobile = angular.module('ngeoMobileGeolocation', [
   ngeo.message.Notification.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.geolocation.mobile.name);
-
-
 /**
  * @enum {string}
  */

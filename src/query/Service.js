@@ -849,4 +849,3 @@ ngeo.query.Service.QueryableSources;
  */
 ngeo.query.Service.module = angular.module('ngeoQuery', []);
 ngeo.query.Service.module.service('ngeoQuery', ngeo.query.Service);
-ngeo.module.requires.push(ngeo.query.Service.module.name);

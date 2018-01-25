@@ -15,8 +15,6 @@ ngeo.measure.area = angular.module('ngeoMeasurearea', [
   ngeo.draw.Controller.module.name
 ]);
 
-ngeo.module.requires.push(ngeo.measure.area.name);
-
 
 /**
  * @param {!angular.$compile} $compile Angular compile service.

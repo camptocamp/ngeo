@@ -391,4 +391,3 @@ ngeo.layertree.Controller.prototype.traverseDepthFirst = function(visitor) {
  */
 ngeo.layertree.Controller.module = angular.module('ngeoLayertreeController', []);
 ngeo.layertree.Controller.module.controller('ngeoLayertreeController', ngeo.layertree.Controller);
-ngeo.module.requires.push(ngeo.layertree.Controller.module.name);

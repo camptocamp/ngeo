@@ -9,8 +9,6 @@ goog.require('ngeo.utils');
  */
 ngeo.download.service = angular.module('ngeoDownload', []);
 
-ngeo.module.requires.push(ngeo.download.service.name);
-
 /**
  * A service to start a download for a file.
  *

@@ -11,8 +11,6 @@ ngeo.query.bboxQueryComponent = angular.module('ngeoBboxQuery', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.query.bboxQueryComponent.name);
-
 
 /**
  * Provides a "bbox query" directive.

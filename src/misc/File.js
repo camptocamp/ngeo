@@ -95,5 +95,3 @@ ngeo.misc.File = function($q, $http, gettext) {
 ngeo.misc.File.module = angular.module('ngeoFile', []);
 
 ngeo.misc.File.module.service('ngeoFile', ngeo.misc.File);
-
-ngeo.module.requires.push(ngeo.misc.File.module.name);

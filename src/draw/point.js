@@ -10,8 +10,6 @@ goog.require('ol.interaction.Draw');
  */
 ngeo.draw.point = angular.module('ngeoDrawpoint', []);
 
-ngeo.module.requires.push(ngeo.draw.point.name);
-
 
 /**
  * @return {angular.Directive} The directive specs.

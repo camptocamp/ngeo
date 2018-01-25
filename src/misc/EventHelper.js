@@ -75,4 +75,3 @@ ngeo.misc.EventHelper.prototype.initListenerKey_ = function(uid) {
  */
 ngeo.misc.EventHelper.module = angular.module('ngeoEventHelper', []);
 ngeo.misc.EventHelper.module.service('ngeoEventHelper', ngeo.misc.EventHelper);
-ngeo.module.requires.push(ngeo.misc.EventHelper.module.name);

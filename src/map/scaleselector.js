@@ -12,8 +12,6 @@ goog.require('ol.events');
  */
 ngeo.map.scaleselector = angular.module('ngeoScaleselector', []);
 
-ngeo.module.requires.push(ngeo.map.scaleselector.name);
-
 
 ngeo.map.scaleselector.value('ngeoScaleselectorTemplateUrl',
   /**
