@@ -12,7 +12,6 @@ goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.WMSGroup');
-/** @suppress {extraRequire} */
 goog.require('ngeo.olcs.constants');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.format.FeatureProperties');
