@@ -5,10 +5,12 @@ const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoprefix = require('less-plugin-autoprefix');
 
 
-// Make sure that Angular finds jQuery and does not fall back to jqLite
-// See https://github.com/webpack/webpack/issues/582
-const provideJQueryPlugin = new webpack.ProvidePlugin({
-  'window.jQuery': 'jquery'
+const providePlugin = new webpack.ProvidePlugin({
+  // Make sure that Angular finds jQuery and does not fall back to jqLite
+  // See https://github.com/webpack/webpack/issues/582
+  'window.jQuery': 'jquery',
+  // For own scripts
+  $: 'jquery',
 });
 
 const angularRule = {
@@ -25,6 +27,14 @@ const typeaheadRule = {
   use: {
     loader: 'expose-loader',
     options: 'Bloodhound'
+  }
+};
+
+const dateFormatterRule = {
+  test: require.resolve('jquery-datetimepicker'),
+  use: {
+    loader: 'expose-loader',
+    options: 'DateFormatter'
   }
 };
 
@@ -85,6 +95,7 @@ const config = {
     rules: [
       angularRule,
       typeaheadRule,
+      dateFormatterRule,
       cssRule,
       lessRule,
       htmlRule,
@@ -93,7 +104,7 @@ const config = {
   },
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
-    provideJQueryPlugin,
+    providePlugin,
     new ExtractTextPlugin('[name].css'),
     new ExtractTextPlugin('[name].less')
   ],

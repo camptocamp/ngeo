@@ -1,17 +1,12 @@
 goog.provide('ngeo.misc.datetimepickerComponent');
 
-goog.require('ngeo');
-goog.require('ngeo.misc.Time');
+// webpack: import 'jquery-datetimepicker';
 
 
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.datetimepickerComponent = angular.module('ngeoDateTimePicker', [
-  ngeo.misc.Time.module.name,
-]);
-
-ngeo.module.requires.push(ngeo.misc.datetimepickerComponent.name);
+ngeo.misc.datetimepickerComponent = angular.module('ngeoDateTimePicker', ['gettext']);
 
 /**
  * A directive used to display a date or time picker
@@ -30,7 +25,7 @@ ngeo.module.requires.push(ngeo.misc.datetimepickerComponent.name);
 ngeo.misc.datetimepickerComponent.component_ = function() {
   return {
     restrict: 'A',
-    controller: ngeo.misc.datetimepickerComponent.component_,
+    controller: ngeo.misc.datetimepickerComponent.Controller_,
     bindToController: true,
     scope: {
       'options': '<ngeoDatetimepickerOptions'
@@ -38,7 +33,7 @@ ngeo.misc.datetimepickerComponent.component_ = function() {
   };
 };
 
-ngeo.misc.datetimepickerComponent.directive('ngeoDateTimePicker', ngeo.misc.datetimepickerComponent.component_);
+ngeo.misc.datetimepickerComponent.directive('ngeoDatetimepicker', ngeo.misc.datetimepickerComponent.component_);
 
 
 /**

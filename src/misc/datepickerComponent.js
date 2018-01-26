@@ -12,8 +12,6 @@ ngeo.misc.datepickerComponent = angular.module('ngeoDatePicker', [
   ngeo.misc.Time.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.misc.datepickerComponent.name);
-
 
 ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
   /**
