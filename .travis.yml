@@ -26,8 +26,6 @@ addons:
 cache:
   apt: true
   pip: true
-  directories:
-  - node_modules
 
 env:
   global:
@@ -37,7 +35,6 @@ env:
 before_install:
 - python3 --version
 - /opt/google/chrome/chrome --version
-- npm prune
 - git config --global user.name "Travis"
 - git config --global user.email "travis@travis-ci.org"
 
