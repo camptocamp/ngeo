@@ -4,7 +4,7 @@ describe('ngeo.Filters', () => {
 
   let $filter;
 
-  beforeEach(inject((_$filter_) => {
+  beforeEach(angular.mock.inject((_$filter_) => {
     $filter = _$filter_;
   }));
 

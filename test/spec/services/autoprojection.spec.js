@@ -6,8 +6,8 @@ describe('ngeo.misc.AutoProjection', () => {
   let ngeoAutoProjection;
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoAutoProjection = $injector.get('ngeoAutoProjection');
+    angular.mock.inject((_ngeoAutoProjection_) => {
+      ngeoAutoProjection = _ngeoAutoProjection_;
     });
   });
 

@@ -13,8 +13,8 @@ describe('ngeo.statemanager.Location', () => {
     module(($provide) => {
       $provide.value('$window', win);
     });
-    inject(($injector) => {
-      ngeoLocation = $injector.get('ngeoLocation');
+    angular.mock.inject((_ngeoLocation_) => {
+      ngeoLocation = _ngeoLocation_;
     });
   });
 

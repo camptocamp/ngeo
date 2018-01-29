@@ -22,7 +22,6 @@ globals:
     gmf: false
     app: false
     gmfapp: false
-    inject: false
     jsts: false
     moment: false
     DateFormatter: false

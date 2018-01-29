@@ -1,4 +1,3 @@
-/* global themes */
 goog.require('gmf.test.data.themes');
 goog.require('gmf.permalink.Permalink');
 goog.require('gmf');
@@ -19,20 +18,20 @@ describe('Permalink service', () => {
   let StateManagerService;
   let ngeoLocation;
 
-  beforeEach(inject(($injector) => {
-    StateManagerService = $injector.get('ngeoStateManager');
-    PermalinkService = $injector.get('gmfPermalink');
-    ngeoLocation = $injector.get('ngeoLocation');
+  beforeEach(angular.mock.inject((_ngeoStateManager_, _gmfPermalink_, _ngeoLocation_, _ngeoLayerHelper_) => {
+    StateManagerService = _ngeoStateManager_;
+    PermalinkService = _gmfPermalink_;
+    ngeoLocation = _ngeoLocation_;
     const map = new ol.Map({layers: [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    const themesClone = ol.obj.assign({}, themes);
+    const themesClone = ol.obj.assign({}, gmf.test.data.themes);
     PermalinkService.themes_ = themesClone['themes'];
 
 
     //create fake layerTree
-    const LayerHelper = $injector.get('ngeoLayerHelper');
+    const LayerHelper = _ngeoLayerHelper_;
 
     const dataGroup = LayerHelper.getGroupFromMap(map, gmf.DATALAYERGROUP_NAME);
     const firstLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([

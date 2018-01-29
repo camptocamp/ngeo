@@ -20,7 +20,7 @@ describe('ngeo.misc.filereaderComponent', () => {
       $provide.value('$window', {FileReader: FileReader, angular: window.angular});
     });
 
-    inject(($rootScope, $compile) => {
+    angular.mock.inject(($rootScope, $compile) => {
       $compile(element)($rootScope);
       rootScope = $rootScope;
     });

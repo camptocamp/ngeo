@@ -7,8 +7,8 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
   let map;
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoBackgroundLayerMgr = $injector.get('ngeoBackgroundLayerMgr');
+    angular.mock.inject((_ngeoBackgroundLayerMgr_) => {
+      ngeoBackgroundLayerMgr = _ngeoBackgroundLayerMgr_;
     });
 
     map = new ol.Map({});

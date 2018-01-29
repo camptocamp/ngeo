@@ -13,28 +13,16 @@ JSCS_ARGS="--non-default-import=ol,ol/proj,ol/proj/proj4,ol/dom,ol/array,ol/math
 jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js $JSCS_ARGS src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps
 jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS --absolute-module=true src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test
 jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS contribs/gmf/apps
-sed -i '/^if/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
-sed -i '/^  ol/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
-sed -i '/^}$/d' src/proj/somerc.js src/proj/lcc.js src/proj/utm.js
 git add -A  # To be removed when we use the new OpenLayers version
 buildtools/git-grep-sed 'Sphere' 's|ol/Sphere|ol/sphere|g'
-find -name node_modules -prune -or -name '*.js' -print | xargs sed -i 's|^// webpack: ||g'
+find -name node_modules -prune -or -name '*.js' -print | xargs sed -i 's|// webpack: ||g'
+find -name node_modules -prune -or -name '*.js' -print | xargs sed -i '/nowebpack$/d'
 node_modules/.bin/eslint --fix src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps || true
 mv karma-conf{-webpack,}.js
 mv src/{ngeo,index}.js
 mv contribs/gmf/src/{gmf,index}.js
 mv src/goog.asserts.js{_,}
 mv src/goog.asserts.prod.js{_,}
-buildtools/git-grep-sed 'gmf/test/data/' 's/\<gmfTestDataThemes\>/themes/g'
-buildtools/git-grep-sed 'gmf/test/data/' 's/\<gmfTestDataPrintcapabilities\>/printCapabilities/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputFuel\>/msGMLOutputFuel/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStop\>/gmlResponseBusStop/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStopAndInformation\>/gmlResponseBusStopAndInformation/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputInformationWfs\>/gmlResponseInformationWfs/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputBusStopWfs\>/gmlResponseBusStopWfs/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataMsGMLOutputInformationHitsWfs\>/gmlResponseInformationHitsWfs/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataWmtsCapabilities\>/wmtsCapabilities/g'
-buildtools/git-grep-sed 'ngeo/test/data/' 's/\<ngeoTestDataGeoAdminLocationSearch\>/geoAdminLocationSearch/g'
 sed '/ngeo:/d' -i .eslintrc.yaml
 sed '/gmf:/d' -i .eslintrc.yaml
 sed '/ol:/d' -i .eslintrc.yaml

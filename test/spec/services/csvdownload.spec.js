@@ -4,7 +4,7 @@ describe('ngeo.download.Csv', () => {
 
   let ngeoCsvDownload;
 
-  beforeEach(inject((_ngeoCsvDownload_) => {
+  beforeEach(angular.mock.inject((_ngeoCsvDownload_) => {
     ngeoCsvDownload = _ngeoCsvDownload_;
   }));
 

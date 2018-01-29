@@ -43,7 +43,7 @@ describe('ngeo.layertree.component', () => {
       return new ol.layer.Image();
     };
 
-    inject(($rootScope, $compile, $sce) => {
+    angular.mock.inject(($rootScope, $compile, $sce) => {
       $rootScope.tree = tree;
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;

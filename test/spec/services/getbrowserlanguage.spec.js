@@ -9,8 +9,8 @@ describe('ngeo.misc.getBrowserLanguage', () => {
     module(($provide) => {
       $provide.value('$window', win);
     });
-    inject(($injector) => {
-      ngeoGetBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
+    angular.mock.inject((_ngeoGetBrowserLanguage_) => {
+      ngeoGetBrowserLanguage = _ngeoGetBrowserLanguage_;
     });
   });
 

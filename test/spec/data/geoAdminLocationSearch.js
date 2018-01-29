@@ -1,7 +1,6 @@
-/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "geoAdminLocationSearch" }] */
 goog.provide('ngeo.test.data.geoAdminLocationSearch');
 
-const geoAdminLocationSearch = {
+ngeo.test.data.geoAdminLocationSearch = {
   'results': [{
     'id': 1883,
     'weight': 9,

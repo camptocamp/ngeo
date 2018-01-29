@@ -1,5 +1,6 @@
 goog.provide('ngeo.WFSDescribeFeatureType');
 
+goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.format.XML');
 goog.require('ol.xml');

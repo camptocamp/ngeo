@@ -13,7 +13,7 @@ describe('gmf.contextualdata.component', () => {
   let $httpBackend;
   let callbackSpy;
 
-  beforeEach(inject(($injector, _$httpBackend_, _$rootScope_, _$compile_, _$document_) => {
+  beforeEach(angular.mock.inject((_$httpBackend_, _$rootScope_, _$compile_, _$document_) => {
     const $rootScope = _$rootScope_;
     $compile = _$compile_;
     $document = _$document_;

@@ -1,5 +1,3 @@
-/*eslint valid-jsdoc: 0 */
-
 goog.require('gmf.theme.module');
 
 beforeEach(() => {
@@ -7,7 +5,7 @@ beforeEach(() => {
   gmfModule.constant('angularLocaleScript', 'http://fake');
   gmfModule.constant('gmfLayersUrl', 'https://fake');
 
-  module('gmf', ($provide) => {
+  angular.mock.module('gmf', ($provide) => {
     $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
     $provide.value('gmfShortenerCreateUrl', 'http://fake/gmf/short/create');
     $provide.value('authenticationBaseUrl', 'https://fake/gmf/authentication');

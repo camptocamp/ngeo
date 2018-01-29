@@ -1,6 +1,3 @@
-/*global describe beforeEach inject expect it */
-/*eslint no-undef: "error"*/
-
 goog.require('ngeo.misc.decorate');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Group');
@@ -11,7 +8,7 @@ goog.require('ol.Collection');
 describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   let scope;
 
-  beforeEach(inject(($rootScope) => {
+  beforeEach(angular.mock.inject(($rootScope) => {
     scope = $rootScope.$new();
   }));
 
@@ -43,6 +40,5 @@ describe('ngeo.misc.DecorateLayerLoading test suite', () => {
     expect(layer.get('load_count')).toBe(0);
     expect(lg_1.get('load_count')).toBe(0);
     expect(lg_2.get('load_count')).toBe(0);
-
   });
 });
