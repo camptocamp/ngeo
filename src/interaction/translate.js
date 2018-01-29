@@ -3,6 +3,7 @@ goog.provide('ngeo.interaction.Translate');
 goog.require('ol');
 goog.require('ol.Feature');
 goog.require('ol.events');
+goog.require('ol.extent');
 goog.require('ol.geom.Geometry');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
