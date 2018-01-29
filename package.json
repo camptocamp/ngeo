@@ -43,7 +43,7 @@
     "corejs-typeahead": "1.2.1",
     "coveralls": "3.0.0",
     "css-loader": "0.28.9",
-    "d3": "4.12.1",
+    "d3": "4.13.0",
     "eslint": "4.16.0",
     "eslint-config-openlayers": "9.0.0",
     "eslint-plugin-googshift": "0.9.3",
