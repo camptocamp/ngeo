@@ -3,6 +3,7 @@ goog.provide('ngeo.misc.datepickerComponent');
 goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.misc.Time');
+// webpack: import 'angular-ui-date';
 
 
 /**
@@ -10,6 +11,7 @@ goog.require('ngeo.misc.Time');
  */
 ngeo.misc.datepickerComponent = angular.module('ngeoDatePicker', [
   ngeo.misc.Time.module.name,
+  'ui.date',
 ]);
 
 
