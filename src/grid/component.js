@@ -5,15 +5,16 @@ goog.require('ol.has');
 goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
-
 goog.require('ngeo.grid.Config');
+// webpack: import 'floatthead';
 
 
 /**
  * @type {!angular.Module}
  */
 ngeo.grid.component = angular.module('ngeoGrid', [
-  ngeo.grid.Config.module.name
+  ngeo.grid.Config.module.name,
+  'floatThead',
 ]);
 
 ngeo.module.requires.push(ngeo.grid.component.name);
