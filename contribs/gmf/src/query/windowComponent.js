@@ -13,6 +13,9 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+// webpack: import 'angular-animate';
+// webpack: import 'angular-touch';
+
 
 /**
  * @type {!angular.Module}
@@ -22,9 +25,23 @@ gmf.query.windowComponent = angular.module('gmfQueryWindowComponent', [
   ngeo.misc.FeatureHelper.module.name,
   ngeo.misc.swipe.name,
   ngeo.query.MapQuerent.module.name,
+  'ngAnimate',
+  'ngTouch',
 ]);
 
 gmf.module.requires.push(gmf.query.windowComponent.name);
+
+
+gmf.query.windowComponent.config(['$animateProvider',
+  /**
+   * For performance reason, only perform animation on elements that have the
+   * `gmf-animatable` css class.
+   * @param {angular.$animateProvider} $animateProvider animate provider.
+   */
+  function($animateProvider) {
+    $animateProvider.classNameFilter(/gmf-animatable/);
+  }
+]);
 
 
 gmf.query.windowComponent.value('gmfDisplayquerywindowTemplateUrl',
