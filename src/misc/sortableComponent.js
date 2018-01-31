@@ -1,5 +1,6 @@
 goog.provide('ngeo.misc.sortableComponent');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 
 

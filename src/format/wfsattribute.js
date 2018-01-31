@@ -1,5 +1,6 @@
 goog.provide('ngeo.format.WFSAttribute');
 
+goog.require('goog.asserts');
 goog.require('ngeo.format.Attribute');
 goog.require('ngeo.format.AttributeType');
 

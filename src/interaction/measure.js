@@ -1,8 +1,8 @@
 goog.provide('ngeo.interaction.Measure');
 
+goog.require('goog.asserts');
 goog.require('ngeo.CustomEvent');
 goog.require('ngeo.interaction.MeasureBaseOptions');
-goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.dom');
 goog.require('ol.proj');

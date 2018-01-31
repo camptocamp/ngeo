@@ -1,6 +1,7 @@
 goog.provide('gmf.profile.drawLineComponent');
 
 goog.require('gmf');
+goog.require('goog.asserts');
 goog.require('ol.Collection');
 goog.require('ol.interaction.Draw');
 goog.require('ol.Map');

@@ -1,5 +1,6 @@
 goog.provide('ngeo.Menu');
 
+goog.require('goog.asserts');
 goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.events');

@@ -1,5 +1,6 @@
 goog.provide('ngeo.datasource.Group');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ol.Collection');
 

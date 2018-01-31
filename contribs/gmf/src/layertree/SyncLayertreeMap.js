@@ -2,6 +2,7 @@ goog.provide('gmf.layertree.SyncLayertreeMap');
 
 goog.require('gmf');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ol');

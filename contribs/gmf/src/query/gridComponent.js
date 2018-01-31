@@ -1,6 +1,7 @@
 goog.provide('gmf.query.gridComponent');
 
 goog.require('gmf');
+goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.Csv');
 /** @suppress {extraRequire} */

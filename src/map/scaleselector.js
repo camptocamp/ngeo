@@ -1,5 +1,6 @@
 goog.provide('ngeo.map.scaleselector');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ol.array');
 goog.require('ol.Map');

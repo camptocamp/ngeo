@@ -1,5 +1,6 @@
 goog.provide('ngeo.query.Querent');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.filter.RuleHelper');

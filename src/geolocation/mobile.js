@@ -1,6 +1,8 @@
 goog.provide('ngeo.geolocation.mobile');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.message.Notification');
 goog.require('ol.easing');
 goog.require('ol.events');
@@ -8,9 +10,6 @@ goog.require('ol.Feature');
 goog.require('ol.Geolocation');
 goog.require('ol.Map');
 goog.require('ol.geom.Point');
-
-goog.require('ngeo.map.FeatureOverlayMgr');
-
 
 /**
  * @type {!angular.Module}

@@ -2,6 +2,7 @@
 
 goog.provide('ngeo.query.Service');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ol.format.WFS');

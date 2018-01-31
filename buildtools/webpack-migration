@@ -6,6 +6,7 @@ function jscodeshift {
     rm /tmp/jscodeshift.log
 }
 
+rm -f src/jstsexports.js
 node node_modules/googshift/filename-case-from-module.js src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
@@ -31,6 +32,7 @@ sed '/app:/d' -i .eslintrc.yaml
 sed '/gmfapp:/d' -i .eslintrc.yaml
 sed '/proj4:/d' -i .eslintrc.yaml
 sed '/d3:/d' -i .eslintrc.yaml
+sed '/goog:/d' -i .eslintrc.yaml
 sed '/jsts:/d' -i .eslintrc.yaml
 sed '/moment:/d' -i .eslintrc.yaml
 sed '/saveAs:/d' -i .eslintrc.yaml

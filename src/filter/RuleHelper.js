@@ -1,5 +1,6 @@
 goog.provide('ngeo.filter.RuleHelper');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.filter.Condition');
 goog.require('ngeo.format.AttributeType');

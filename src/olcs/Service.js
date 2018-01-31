@@ -1,5 +1,6 @@
 goog.module('ngeo.olcs.Service');
 
+goog.require('goog.asserts');
 goog.require('ngeo.misc.debounce');
 goog.require('ngeo.statemanager.Location');
 goog.require('ngeo.olcs.constants');

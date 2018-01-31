@@ -5,6 +5,7 @@ goog.require('ol.events');
 goog.require('ol.layer.Base');
 goog.require('ol.layer.Group');
 goog.require('gmf');
+goog.require('goog.asserts');
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.misc.EventHelper');

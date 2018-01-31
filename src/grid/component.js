@@ -1,11 +1,11 @@
 goog.provide('ngeo.grid.component');
 
-goog.require('ngeo');
-goog.require('ol.has');
 goog.require('goog.asserts');
+goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 goog.require('ngeo.grid.Config');
+goog.require('ol.has');
 // webpack: import 'floatthead';
 
 

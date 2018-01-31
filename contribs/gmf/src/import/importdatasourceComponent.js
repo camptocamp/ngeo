@@ -7,6 +7,7 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf.import.wmsCapabilityLayertreeComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.wmtsCapabilityLayertreeComponent');
+goog.require('goog.asserts');
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.OGC');
 

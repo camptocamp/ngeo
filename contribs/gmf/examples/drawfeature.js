@@ -6,6 +6,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.drawing.module');
+goog.require('goog.asserts');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.FeatureHelper');

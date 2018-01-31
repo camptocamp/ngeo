@@ -1,5 +1,6 @@
 goog.provide('ngeo.editing.createfeatureComponent');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');

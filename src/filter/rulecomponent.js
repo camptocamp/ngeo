@@ -1,5 +1,6 @@
 goog.provide('ngeo.filter.ruleComponent');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.Menu');
 goog.require('ngeo.draw.component');

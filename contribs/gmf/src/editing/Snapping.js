@@ -3,6 +3,7 @@ goog.provide('gmf.editing.Snapping');
 goog.require('gmf');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 goog.require('ngeo.layertree.Controller');
 goog.require('ol');
 goog.require('ol.events');

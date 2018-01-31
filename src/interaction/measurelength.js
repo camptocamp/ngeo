@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.MeasureLength');
 
+goog.require('goog.asserts');
 goog.require('ngeo.interaction.Measure');
 goog.require('ol');
 goog.require('ol.geom.LineString');

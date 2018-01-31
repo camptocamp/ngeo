@@ -1,6 +1,7 @@
 goog.provide('gmf.query.windowComponent');
 
 goog.require('gmf');
+goog.require('goog.asserts');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.FeatureHelper');
 /** @suppress {extraRequire} */

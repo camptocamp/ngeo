@@ -1,12 +1,12 @@
 goog.provide('ngeo.datasource.DataSources');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ol.Collection');
 goog.require('ol.events');
 goog.require('ol.Observable');
 goog.require('ol.View');
-goog.require('goog.asserts');
 
 
 ngeo.datasource.DataSources = class {

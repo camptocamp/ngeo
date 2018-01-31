@@ -4,6 +4,7 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.FeatureHelper');

@@ -8,6 +8,7 @@ goog.require('gmf.datasource.DataSourceBeingFiltered');
 goog.require('gmf.datasource.Helper');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.filters.SavedFilters');
+goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
 goog.require('ngeo.message.Notification');

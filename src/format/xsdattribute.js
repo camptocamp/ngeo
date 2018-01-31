@@ -1,11 +1,11 @@
 goog.provide('ngeo.format.XSDAttribute');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.format.Attribute');
 goog.require('ngeo.format.AttributeType');
 goog.require('ol');
 goog.require('ol.format.XML');
-goog.require('goog.asserts');
 
 
 /**

@@ -1,5 +1,7 @@
 goog.provide('ngeo.print.VectorEncoder');
 
+goog.require('goog.asserts');
+goog.require('ngeo.utils');
 goog.require('ol');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.source.Vector');
@@ -8,8 +10,6 @@ goog.require('ol.math');
 goog.require('ol.style.Icon');
 goog.require('ol.style.Circle');
 goog.require('ol.color');
-goog.require('goog.asserts');
-goog.require('ngeo.utils');
 
 
 /**

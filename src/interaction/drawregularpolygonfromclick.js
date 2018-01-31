@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.DrawRegularPolygonFromClick');
 
+goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Feature');

@@ -1,14 +1,14 @@
 goog.provide('ngeo.googlestreetview.component');
 
+goog.require('goog.asserts');
+goog.require('ngeo');
+goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ol.array');
 goog.require('ol.events');
 goog.require('ol.proj');
 goog.require('ol.Feature');
 goog.require('ol.Observable');
 goog.require('ol.geom.Point');
-goog.require('ngeo');
-
-goog.require('ngeo.map.FeatureOverlayMgr');
 
 
 /**

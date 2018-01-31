@@ -1,6 +1,7 @@
 goog.provide('gmf.profile.component');
 
 goog.require('gmf');
+goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.Observable');
