@@ -30,6 +30,12 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+// webpack: import {OL3Parser} from 'jsts/io';
+// webpack: const jsts = {
+// webpack:   io: {
+// webpack:     OL3Parser,
+// webpack:   },
+// webpack: };
 
 
 /**

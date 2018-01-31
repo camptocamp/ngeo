@@ -21,12 +21,15 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Circle');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Fill');
+// webpack: import 'angular-sanitize';
+
 
 /** @type {!angular.Module} **/
 app.measure.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
+  'ngSanitize',
 ]);
 
 

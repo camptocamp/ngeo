@@ -1,13 +1,18 @@
 goog.provide('ngeo.message.displaywindowComponent');
 
 goog.require('ngeo');
+// webpack: import 'angular-sanitize';
+
 
 /**
  * @type {!angular.Module}
  */
-ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowComponent', []);
+ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowComponent', [
+  'ngSanitize',
+]);
 
 ngeo.module.requires.push(ngeo.message.displaywindowComponent.name);
+
 
 /**
  * @private

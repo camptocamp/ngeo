@@ -2,13 +2,14 @@ goog.provide('gmf.layertree.timeSliderComponent');
 
 goog.require('gmf');
 goog.require('ngeo.misc.WMSTime');
-
+// webpack: import 'angular-ui-slider';
 
 /**
  * @type {!angular.Module}
  */
 gmf.layertree.timeSliderComponent = angular.module('gmfLayertreeTimeSliderComponent', [
   ngeo.misc.WMSTime.module.name,
+  'ui.slider',
 ]);
 
 gmf.module.requires.push(gmf.layertree.timeSliderComponent.name);

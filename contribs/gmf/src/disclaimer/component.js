@@ -9,11 +9,13 @@ goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.map.LayerHelper');
+// webpack: import 'angular-sanitize';
 
 /**
  * @type {angular.Module}
  */
 gmf.disclaimer.component = angular.module('gmfDisclaimer', [
+  'ngSanitize'
 ]);
 
 gmf.module.requires.push(gmf.disclaimer.component.name);

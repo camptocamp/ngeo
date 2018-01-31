@@ -119,6 +119,8 @@ const config = {
       'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
       'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
+      'jsts': 'jsts/org/locationtech/jts',
+      'moment': 'moment/src/moment.js',
       'ol/ol.css': 'openlayers/css/ol.css',
       'ol': 'openlayers/src/ol',
       'jquery-ui/datepicker' : 'jquery-ui/ui/widgets/datepicker',

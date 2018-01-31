@@ -302,6 +302,7 @@ ngeo.module.filter('ngeoDMSCoordinates', ngeo.DMSCoordinates);
  *
  *    <p ng-bind-html="ctrl.someValue | ngeoTrustHtml"></p>
  *
+ * If you use it, you don't require the "ngSanitize".
  * @return {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter

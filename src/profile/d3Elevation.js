@@ -3,6 +3,23 @@ goog.provide('ngeo.profile.d3Elevation');
 goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.obj');
+// webpack: import {bisector, extent} from 'd3-array';
+// webpack: import {axisBottom, axisLeft} from 'd3-axis';
+// webpack: import {scaleLinear} from 'd3-scale';
+// webpack: import {mouse, select, selectAll} from 'd3-selection';
+// webpack: import {area, line} from 'd3-shape';
+// webpack: const d3 = {
+// webpack:    bisector,
+// webpack:    extent,
+// webpack:    axisBottom,
+// webpack:    axisLeft,
+// webpack:    scaleLinear,
+// webpack:    mouse,
+// webpack:    select,
+// webpack:    selectAll,
+// webpack:    area,
+// webpack:    line,
+// webpack: };
 
 
 /**

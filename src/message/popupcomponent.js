@@ -1,9 +1,14 @@
 goog.provide('ngeo.message.popupComponent');
 
 goog.require('ngeo');
+// webpack: import 'angular-sanitize';
 
-ngeo.message.popupComponent = angular.module('ngeoPopup', []);
+
+ngeo.message.popupComponent = angular.module('ngeoPopup', [
+  'ngSanitize',
+]);
 ngeo.module.requires.push(ngeo.message.popupComponent.name);
+
 
 ngeo.message.popupComponent.value('ngeoPopupTemplateUrl',
   /**
