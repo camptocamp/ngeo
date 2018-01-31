@@ -136,9 +136,9 @@ exports.fail = function(opt_message, var_args) {
  * @throws {goog.asserts.AssertionError} When the value is not a number.
  */
 exports.assertNumber = function(value, opt_message, var_args) {
-  if (exports.ENABLE_ASSERTS && !goog.isNumber(value)) {
+  if (exports.ENABLE_ASSERTS && typeof value != 'number') {
     exports.doAssertFailure_(
-      'Expected number but got %s: %s.', [goog.typeOf(value), value],
+      'Expected number but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {number} */ (value);
@@ -154,9 +154,9 @@ exports.assertNumber = function(value, opt_message, var_args) {
  * @throws {goog.asserts.AssertionError} When the value is not a string.
  */
 exports.assertString = function(value, opt_message, var_args) {
-  if (exports.ENABLE_ASSERTS && !goog.isString(value)) {
+  if (exports.ENABLE_ASSERTS && typeof value != 'string') {
     exports.doAssertFailure_(
-      'Expected string but got %s: %s.', [goog.typeOf(value), value],
+      'Expected string but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {string} */ (value);
@@ -173,9 +173,9 @@ exports.assertString = function(value, opt_message, var_args) {
  * @throws {goog.asserts.AssertionError} When the value is not a function.
  */
 exports.assertFunction = function(value, opt_message, var_args) {
-  if (exports.ENABLE_ASSERTS && !goog.isFunction(value)) {
+  if (exports.ENABLE_ASSERTS && typeof value != 'function') {
     exports.doAssertFailure_(
-      'Expected function but got %s: %s.', [goog.typeOf(value), value],
+      'Expected function but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {!Function} */ (value);
@@ -191,9 +191,11 @@ exports.assertFunction = function(value, opt_message, var_args) {
  * @throws {goog.asserts.AssertionError} When the value is not an object.
  */
 exports.assertObject = function(value, opt_message, var_args) {
-  if (exports.ENABLE_ASSERTS && !goog.isObject(value)) {
+  if (exports.ENABLE_ASSERTS &&
+      (value === null || typeof value != 'object' ||
+      Array.isArray(value) || typeof value == 'function')) {
     exports.doAssertFailure_(
-      'Expected object but got %s: %s.', [goog.typeOf(value), value],
+      'Expected object but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {!Object} */ (value);
@@ -209,9 +211,9 @@ exports.assertObject = function(value, opt_message, var_args) {
  * @throws {goog.asserts.AssertionError} When the value is not an array.
  */
 exports.assertArray = function(value, opt_message, var_args) {
-  if (exports.ENABLE_ASSERTS && !goog.isArray(value)) {
+  if (exports.ENABLE_ASSERTS && !Array.isArray(value)) {
     exports.doAssertFailure_(
-      'Expected array but got %s: %s.', [goog.typeOf(value), value],
+      'Expected array but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {!Array<?>} */ (value);
@@ -228,9 +230,9 @@ exports.assertArray = function(value, opt_message, var_args) {
  * @throws {goog.asserts.AssertionError} When the value is not a boolean.
  */
 exports.assertBoolean = function(value, opt_message, var_args) {
-  if (exports.ENABLE_ASSERTS && !goog.isBoolean(value)) {
+  if (exports.ENABLE_ASSERTS && typeof value != 'boolean') {
     exports.doAssertFailure_(
-      'Expected boolean but got %s: %s.', [goog.typeOf(value), value],
+      'Expected boolean but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {boolean} */ (value);
@@ -248,9 +250,11 @@ exports.assertBoolean = function(value, opt_message, var_args) {
  */
 exports.assertElement = function(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS &&
-      (!goog.isObject(value) || value.nodeType != goog.dom.NodeType.ELEMENT)) {
+      (value === null || typeof value != 'object' ||
+      Array.isArray(value) || typeof value == 'function' ||
+      value.nodeType == undefined)) {
     exports.doAssertFailure_(
-      'Expected Element but got %s: %s.', [goog.typeOf(value), value],
+      'Expected Element but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return /** @type {!Element} */ (value);
