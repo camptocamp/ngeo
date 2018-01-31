@@ -14,9 +14,9 @@ describe('ngeo.misc.ToolActivateMgr', () => {
     interaction3 = {active: false};
     tool3 = new ngeo.misc.ToolActivate(interaction3, 'active');
 
-    inject(($injector) => {
-      ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-      $rootScope = $injector.get('$rootScope');
+    angular.mock.inject((_ngeoToolActivateMgr_, _$rootScope_) => {
+      ngeoToolActivateMgr = _ngeoToolActivateMgr_;
+      $rootScope = _$rootScope_;
     });
   });
 

@@ -32,7 +32,7 @@ describe('gmf.query.gridComponent', () => {
       $provide.value('ngeoQueryOptions', {});
     });
 
-    inject(($injector, _$controller_, _$rootScope_) => {
+    angular.mock.inject(($injector, _$controller_, _$rootScope_) => {
       ngeoQueryResult = $injector.get('ngeoQueryResult');
       $timeout = $injector.get('$timeout');
       const $controller = _$controller_;

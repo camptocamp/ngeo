@@ -1,4 +1,3 @@
-/* global msGMLOutputFuel */
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.proj');
@@ -22,9 +21,9 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       });
     });
 
-    inject(($injector) => {
-      ngeoWfsPermalink = $injector.get('ngeoWfsPermalink');
-      ngeoQueryResult = $injector.get('ngeoQueryResult');
+    angular.mock.inject((_ngeoWfsPermalink_, _ngeoQueryResult_) => {
+      ngeoWfsPermalink = _ngeoWfsPermalink_;
+      ngeoQueryResult = _ngeoQueryResult_;
     });
   });
 
@@ -39,10 +38,9 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
     beforeEach(() => {
       const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy';
-      inject(($injector) => {
-        $httpBackend = $injector.get('$httpBackend');
-        $httpBackend.when('POST', url).respond(msGMLOutputFuel);
-        $httpBackend = $injector.get('$httpBackend');
+      angular.mock.inject((_$httpBackend_) => {
+        $httpBackend = _$httpBackend_;
+        $httpBackend.when('POST', url).respond(ngeo.test.data.msGMLOutputFuel);
       });
 
       const projection = ol.proj.get('EPSG:21781');

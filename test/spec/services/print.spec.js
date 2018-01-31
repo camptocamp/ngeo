@@ -27,8 +27,8 @@ describe('ngeo.print.Service', () => {
   let ngeoCreatePrint;
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoCreatePrint = $injector.get('ngeoCreatePrint');
+    angular.mock.inject((_ngeoCreatePrint_) => {
+      ngeoCreatePrint = _ngeoCreatePrint_;
     });
 
   });
@@ -635,7 +635,7 @@ describe('ngeo.print.Service', () => {
         layout: 'foo layout'
       };
 
-      inject(($injector) => {
+      angular.mock.inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('POST', 'http://example.com/print/report.pdf')
           .respond({
@@ -669,7 +669,7 @@ describe('ngeo.print.Service', () => {
     });
 
     /*    describe('cancel report request', () => {
-      it('cancels the request', inject(($q) => {
+      it('cancels the request', angular.mock.inject(($q) => {
         $httpBackend.expectPOST('http://example.com/print/report.pdf');
 
         const canceler = $q.defer();
@@ -693,7 +693,7 @@ describe('ngeo.print.Service', () => {
     beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
 
-      inject(($injector) => {
+      angular.mock.inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
         $httpBackend.when('GET',
           'http://example.com/print/status/deadbeef.json').respond({
@@ -745,7 +745,7 @@ describe('ngeo.print.Service', () => {
     // Only used to test that getCapabilities fetch the json from the proper url
     let capabilities;
 
-    beforeEach(inject((_$httpBackend_) => {
+    beforeEach(angular.mock.inject((_$httpBackend_) => {
 
       $httpBackend = _$httpBackend_;
 
@@ -775,7 +775,7 @@ describe('ngeo.print.Service', () => {
     let print;
     let $httpBackend;
 
-    beforeEach(inject((_$httpBackend_) => {
+    beforeEach(angular.mock.inject((_$httpBackend_) => {
       print = ngeoCreatePrint('http://example.com/print');
       $httpBackend = _$httpBackend_;
       $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef')

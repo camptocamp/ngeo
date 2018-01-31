@@ -10,8 +10,8 @@ describe('gmf.query.windowComponent', () => {
   let $scope;
   let $rootScope;
 
-  beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
-    ngeoQueryResult = $injector.get('ngeoQueryResult');
+  beforeEach(angular.mock.inject((_$controller_, _$rootScope_, _ngeoQueryResult_) => {
+    ngeoQueryResult = _ngeoQueryResult_;
     const $controller = _$controller_;
     $element = angular.element('<div></div>');
     $rootScope = _$rootScope_;

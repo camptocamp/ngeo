@@ -1,4 +1,3 @@
-/* global printCapabilities */
 goog.require('gmf.print.component');
 goog.require('gmf.test.data.printcapabilities');
 goog.require('ol.Map');
@@ -9,7 +8,7 @@ describe('GmfPrintController', () => {
   let $controller, $rootScope, $scope;
   let gmfPrintCtrl;
 
-  beforeEach(inject((_$controller_, _$rootScope_) => {
+  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
@@ -24,7 +23,7 @@ describe('GmfPrintController', () => {
       })
     });
     gmfPrintCtrl.map.setSize([100, 100]);
-    gmfPrintCtrl.parseCapabilities_({data: printCapabilities});
+    gmfPrintCtrl.parseCapabilities_({data: gmf.test.data.printcapabilities});
   }));
 
   it('Get Set rotation', () => {

@@ -5,8 +5,8 @@ describe('ngeo.print.Utils', () => {
   let ngeoPrintUtils;
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoPrintUtils = $injector.get('ngeoPrintUtils');
+    angular.mock.inject((_ngeoPrintUtils_) => {
+      ngeoPrintUtils = _ngeoPrintUtils_;
     });
   });
 

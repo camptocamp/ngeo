@@ -1,6 +1,15 @@
+const path = require('path');
 
 var isDebug = process.argv.some(function(argument) {
     return argument === '--debug';
+});
+
+const webpackMerge = require('webpack-merge');
+const commons = require('./buildtools/webpack.commons');
+let webpackConfig = commons.config;
+webpackConfig = webpackMerge(webpackConfig, require('./buildtools/webpack.dev'));
+webpackConfig = webpackMerge(webpackConfig, {
+  devtool: 'inline-source-map',
 });
 
 module.exports = function(config) {
@@ -15,22 +24,18 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/jquery/dist/jquery.js',
-      'node_modules/angular/angular.js',
-      'node_modules/bootstrap/dist/js/bootstrap.js',
-      'test/spec/beforeeach.js',
-      'test/spec/**/*.spec.js',
-      'contribs/gmf/test/spec/**/*.spec.js',
+      'test/spec/all.js',
+      'contribs/gmf/test/spec/all.js',
     ],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/spec/**/*.js': ['webpack'],
-      'contribs/gmf/test/spec/**/*.js': ['webpack'],
+      'test/spec/all.js': ['webpack', 'sourcemap'],
+      'contribs/gmf/test/spec/all.js': ['webpack', 'sourcemap'],
     },
 
-    webpack: Object.assign({}, require('./buildtools/webpack.dev')),
+    webpack: webpackConfig,
 
     // test results reporter to use
     // possible values: 'dots', 'progress'

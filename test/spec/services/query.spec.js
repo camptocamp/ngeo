@@ -1,11 +1,3 @@
-/* global gmlResponseBusStop,
-          gmlResponseBusStopAndInformation,
-          gmlResponseInformationWfs,
-          gmlResponseBusStopWfs,
-          gmlResponseInformationWfs,
-          gmlResponseInformationHitsWfs,
-          gmlResponseInformationWfs,
-          gmlResponseInformationHitsWfs */
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.OSM');
 goog.require('ol.format.WMSGetFeatureInfo');
@@ -15,7 +7,6 @@ goog.require('ol.proj');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ngeo.query.Service');
-//goog.require('ngeo.QueryInfoFormatType');
 goog.require('ngeo.test.data.msGMLOutputBusStop');
 goog.require('ngeo.test.data.msGMLOutputBusStopAndInformation');
 goog.require('ngeo.test.data.msGMLOutputBusStopWfs');
@@ -38,9 +29,9 @@ describe('ngeo.query.Service', () => {
       });
     });
 
-    inject(($injector) => {
-      ngeoQuery = $injector.get('ngeoQuery');
-      ngeoQueryResult = $injector.get('ngeoQueryResult');
+    angular.mock.inject((_ngeoQuery_, _ngeoQueryResult_) => {
+      ngeoQuery = _ngeoQuery_;
+      ngeoQueryResult = _ngeoQueryResult_;
     });
   });
 
@@ -140,11 +131,11 @@ describe('ngeo.query.Service', () => {
 
     beforeEach(() => {
 
-      inject(($injector) => {
+      angular.mock.inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
-        $httpBackend.when('GET', requestUrlBusStop).respond(gmlResponseBusStop);
+        $httpBackend.when('GET', requestUrlBusStop).respond(ngeo.test.data.msGMLOutputBusStop);
         $httpBackend.when('GET', requestUrlBusStopAndInformation).respond(
-          gmlResponseBusStopAndInformation);
+          ngeo.test.data.msGMLOutputBusStopAndInformation);
       });
 
       busStopLayer = new ol.layer.Image({
@@ -250,7 +241,7 @@ describe('ngeo.query.Service', () => {
     });
 
     it('Issues WFS request for one source', () => {
-      $httpBackend.when('POST', url).respond(gmlResponseInformationWfs);
+      $httpBackend.when('POST', url).respond(ngeo.test.data.msGMLOutputInformationWfs);
 
       const coordinate = [499200, 130000];
       // make a GetFeatureInfo request for this source
@@ -274,8 +265,8 @@ describe('ngeo.query.Service', () => {
     });
 
     it('Issues WFS request for two sources', () => {
-      $httpBackend.when('POST', url).respond(gmlResponseBusStopWfs);
-      $httpBackend.when('POST', `${url}?information`).respond(gmlResponseInformationWfs);
+      $httpBackend.when('POST', url).respond(ngeo.test.data.msGMLOutputBusStopWfs);
+      $httpBackend.when('POST', `${url}?information`).respond(ngeo.test.data.msGMLOutputInformationWfs);
 
       const coordinate = [499200, 130000];
       ngeoQuery.addSource({
@@ -303,9 +294,9 @@ describe('ngeo.query.Service', () => {
       ngeoQuery.queryCountFirst_ = true;
 
       // request to get feature count
-      $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(gmlResponseInformationHitsWfs);
+      $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(ngeo.test.data.msGMLOutputInformationHitsWfs);
       // request to get features
-      $httpBackend.when('POST', url, body => body.indexOf('hits') == -1).respond(gmlResponseInformationWfs);
+      $httpBackend.when('POST', url, body => body.indexOf('hits') == -1).respond(ngeo.test.data.msGMLOutputInformationWfs);
 
       const coordinate = [499200, 130000];
       // make a WFS GetFeature request for this source
@@ -330,7 +321,7 @@ describe('ngeo.query.Service', () => {
       ngeoQuery.limit_ = 2;
 
       // request to get feature count
-      $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(gmlResponseInformationHitsWfs);
+      $httpBackend.when('POST', url, body => body.indexOf('hits') != -1).respond(ngeo.test.data.msGMLOutputInformationHitsWfs);
 
       const coordinate = [499200, 130000];
       // make a WFS GetFeature request for this source

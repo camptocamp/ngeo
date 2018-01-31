@@ -12,8 +12,8 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
   beforeEach(() => {
     map = new ol.Map({});
 
-    inject(($injector) => {
-      ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
+    angular.mock.inject((_ngeoFeatureOverlayMgr_) => {
+      ngeoFeatureOverlayMgr = _ngeoFeatureOverlayMgr_;
       ngeoFeatureOverlayMgr.init(map);
       layer = ngeoFeatureOverlayMgr.getLayer();
     });

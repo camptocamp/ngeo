@@ -1,4 +1,3 @@
-/* global wmtsCapabilities */
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
 goog.require('ol.source.ImageWMS');
@@ -14,10 +13,10 @@ describe('ngeo.map.LayerHelper', () => {
   let $httpBackend;
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoLayerHelper = $injector.get('ngeoLayerHelper');
-      $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', wmtsSrc).respond(wmtsCapabilities);
+    angular.mock.inject((_ngeoLayerHelper_, _$httpBackend_) => {
+      ngeoLayerHelper = _ngeoLayerHelper_;
+      $httpBackend = _$httpBackend_;
+      $httpBackend.when('GET', wmtsSrc).respond(ngeo.test.data.wmtsCapabilities);
     });
   });
 
@@ -40,8 +39,7 @@ describe('ngeo.map.LayerHelper', () => {
   it('Create a WMTS layer from capabilitites', () => {
     $httpBackend.expectGET(wmtsSrc);
     const spy = jasmine.createSpy();
-    const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
-      wmtsName);
+    const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc, wmtsName);
     promise.then(spy);
     $httpBackend.flush();
 
@@ -72,9 +70,8 @@ describe('ngeo.map.LayerHelper', () => {
     const layerName = 'wmsLayer';
     const scale = 0;
     const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
-    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=` +
-      `WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=${layerName
-      }&SCALE=${scale}`;
+    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
+      `REQUEST=GetLegendGraphic&LAYER=${layerName}&SCALE=${scale}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
@@ -82,19 +79,16 @@ describe('ngeo.map.LayerHelper', () => {
     const url = 'http://test';
     const layerName = 'wmsLayer';
     const legendRule = 'legendRule';
-    const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined,
-      legendRule);
-    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=` +
-      `WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=${layerName
-      }&RULE=${legendRule}`;
+    const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined, legendRule);
+    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
+      `REQUEST=GetLegendGraphic&LAYER=${layerName}&RULE=${legendRule}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
 
   it('Get WMTS legend url', () => {
     $httpBackend.expectGET(wmtsSrc);
     const spy = jasmine.createSpy();
-    const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc,
-      wmtsName);
+    const promise = ngeoLayerHelper.createWMTSLayerFromCapabilitites(wmtsSrc, wmtsName);
     promise.then(spy);
     $httpBackend.flush();
 

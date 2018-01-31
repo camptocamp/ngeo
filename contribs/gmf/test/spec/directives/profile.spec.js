@@ -16,7 +16,7 @@ describe('gmf.GmfProfileController', () => {
       };
     });
 
-    inject(($injector, _$controller_, _$rootScope_) => {
+    angular.mock.inject((_$controller_, _$rootScope_) => {
       const $controller = _$controller_;
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();

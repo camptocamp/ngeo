@@ -113,6 +113,8 @@ const config = {
       '../node_modules'
     ],
     alias: {
+      'ngeo/test': path.resolve(__dirname, '../test/spec'),
+      'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
       'ngeo': path.resolve(__dirname, '../src'),
       'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),

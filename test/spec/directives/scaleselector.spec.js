@@ -22,7 +22,7 @@ describe('ngeo.map.scaleselector', () => {
             'ngeo-scaleselector-map="map">' +
         '</div>');
 
-    inject(($rootScope, $compile, $sce) => {
+    angular.mock.inject(($rootScope, $compile, $sce) => {
       scales = {
         '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
         '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),

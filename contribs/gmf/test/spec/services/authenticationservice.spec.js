@@ -10,15 +10,15 @@ describe('gmf.authentication.Service', () => {
   let $httpBackend;
 
   beforeEach(() => {
-    inject(($injector) => {
-      gmfAuthentication = $injector.get('gmfAuthenticationService');
-      authenticationBaseUrl = $injector.get('authenticationBaseUrl');
+    angular.mock.inject((_$httpBackend_, _gmfAuthenticationService_, _authenticationBaseUrl_) => {
+      gmfAuthentication = _gmfAuthenticationService_;
+      authenticationBaseUrl = _authenticationBaseUrl_;
 
       isLoggedInUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.IS_LOGGED_IN}`;
       loginUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.LOGIN}`;
       logoutUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.LOGOUT}`;
 
-      $httpBackend = $injector.get('$httpBackend');
+      $httpBackend = _$httpBackend_;
       $httpBackend.when('GET', isLoggedInUrl).respond({});
 
       // need to flush after the initialization to process the request which

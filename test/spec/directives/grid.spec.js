@@ -7,7 +7,7 @@ describe('ngeo.grid.component', () => {
   let $scope;
   let $rootScope;
 
-  beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
+  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
     const $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();

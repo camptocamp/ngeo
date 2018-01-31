@@ -111,8 +111,7 @@ ngeo.interaction.Measure = function(opt_options) {
    * @type {boolean}
    * @private
    */
-  this.displayHelpTooltip_ = options.displayHelpTooltip !== undefined ?
-    options.displayHelpTooltip : true;
+  this.displayHelpTooltip_ = options.displayHelpTooltip !== undefined ? options.displayHelpTooltip : true;
 
   /**
    * The message to show when user is about to start drawing.
@@ -197,7 +196,7 @@ ol.inherits(ngeo.interaction.Measure, ol.interaction.Interaction);
  * @const
  * @type {ol.Sphere}
  */
-ngeo.interaction.Measure.SPHERE_WGS84 = new ol.Sphere(ol.proj.EPSG4326.RADIUS);
+ngeo.interaction.Measure.SPHERE_WGS84 = new ol.Sphere(ol.proj.EPSG4326.RADIUS);  // nowebpack
 
 
 /**
@@ -210,12 +209,11 @@ ngeo.interaction.Measure.SPHERE_WGS84 = new ol.Sphere(ol.proj.EPSG4326.RADIUS);
  * @return {string} Formatted string of the area.
  * @this {ngeo.interaction.Measure}
  */
-ngeo.interaction.Measure.getFormattedArea = function(
-  polygon, projection, precision, format) {
-  const geom = /** @type {ol.geom.Polygon} */ (
-    polygon.clone().transform(projection, 'EPSG:4326'));
-  const coordinates = geom.getLinearRing(0).getCoordinates();
-  const area = Math.abs(ngeo.interaction.Measure.SPHERE_WGS84.geodesicArea(coordinates));
+ngeo.interaction.Measure.getFormattedArea = function(polygon, projection, precision, format) {
+  const geom = /** @type {ol.geom.Polygon} */ (polygon.clone().transform(projection, 'EPSG:4326'));
+  const coordinates = geom.getLinearRing(0).getCoordinates();  // nowebpack
+  const area = Math.abs(ngeo.interaction.Measure.SPHERE_WGS84.geodesicArea(coordinates));  // nowebpack
+  // webpack: const area = Math.abs(olSphere.getArea(geom));
   return format(area, 'm²', 'square', precision);
 };
 
@@ -228,8 +226,7 @@ ngeo.interaction.Measure.getFormattedArea = function(
  * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  */
-ngeo.interaction.Measure.getFormattedCircleArea = function(
-  circle, precision, format) {
+ngeo.interaction.Measure.getFormattedCircleArea = function(circle, precision, format) {
   const area = Math.PI * Math.pow(circle.getRadius(), 2);
   return format(area, 'm²', 'square', precision);
 };
@@ -244,14 +241,14 @@ ngeo.interaction.Measure.getFormattedCircleArea = function(
  * @param {!ngeox.unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  */
-ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
-  precision, format) {
+ngeo.interaction.Measure.getFormattedLength = function(lineString, projection, precision, format) {
   let length = 0;
   const coordinates = lineString.getCoordinates();
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
     const c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
     const c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
-    length += ngeo.interaction.Measure.SPHERE_WGS84.haversineDistance(c1, c2);
+    length += ngeo.interaction.Measure.SPHERE_WGS84.haversineDistance(c1, c2);  // nowebpack
+    // webpack: length += olSphere.getDistance(c1, c2);  // nowebpack
   }
   return format(length, 'm', 'unit', precision);
 };
@@ -265,8 +262,7 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection,
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */
-ngeo.interaction.Measure.getFormattedPoint = function(
-  point, decimals, format, opt_template) {
+ngeo.interaction.Measure.getFormattedPoint = function(point, decimals, format, opt_template) {
   return format(point.getCoordinates(), decimals, opt_template);
 };
 

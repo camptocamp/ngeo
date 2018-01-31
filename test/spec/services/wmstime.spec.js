@@ -1,5 +1,3 @@
-/*global describe beforeEach inject expect it*/
-
 goog.require('ngeo.misc.WMSTime');
 
 describe('ngeo.misc.WMSTime service', () => {
@@ -17,8 +15,8 @@ describe('ngeo.misc.WMSTime service', () => {
   };
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoWMSTime = $injector.get('ngeoWMSTime');
+    angular.mock.inject((_ngeoWMSTime_) => {
+      ngeoWMSTime = _ngeoWMSTime_;
     });
   });
 
