@@ -45,6 +45,7 @@ sed '/proj4:/d' -i .eslintrc.yaml
 sed '/d3:/d' -i .eslintrc.yaml
 sed '/jsts:/d' -i .eslintrc.yaml
 sed '/moment:/d' -i .eslintrc.yaml
+sed '/saveAs:/d' -i .eslintrc.yaml
 git reset --mixed
 set +x
 
