@@ -23,7 +23,7 @@ goog.require('gmf.theme.Themes');
 goog.require('gmf.theme.selectorComponent');
 goog.require('goog.asserts');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.MapQuerent');
 /** @suppress {extraRequire} */

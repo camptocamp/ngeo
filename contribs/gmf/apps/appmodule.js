@@ -8,7 +8,7 @@ goog.provide('app');
 goog.require('gmf');
 
 goog.require('ngeo.utils');
-goog.require('ngeo.utils.module');
+goog.require('ngeo.misc.extraModule');
 goog.require('gmf.layertree.module');
 goog.require('gmf.search.module');
 goog.require('gmf.authentication.module');
@@ -18,7 +18,7 @@ goog.require('gmf.authentication.module');
  * @type {!angular.Module}
  */
 app.module = angular.module('app', [
-  ngeo.utils.module.module.name,
+  ngeo.misc.extraModule.name,
   gmf.layertree.module.name,
   gmf.search.module.name,
   gmf.authentication.module.name,

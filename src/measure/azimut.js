@@ -2,8 +2,7 @@ goog.provide('ngeo.measure.azimut');
 
 goog.require('ngeo');
 goog.require('ngeo.draw.Controller');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol.events');
@@ -16,7 +15,8 @@ goog.require('ol.style.Style');
  * @type {!angular.Module}
  */
 ngeo.measure.azimut = angular.module('ngeoMeasureazimut', [
-  ngeo.draw.Controller.module.name
+  ngeo.draw.Controller.module.name,
+  ngeo.misc.filters.name,
 ]);
 
 ngeo.module.requires.push(ngeo.measure.azimut.name);

@@ -2,8 +2,7 @@ goog.provide('ngeo.measure.length');
 
 goog.require('ngeo');
 goog.require('ngeo.draw.Controller');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.MeasureLength');
 goog.require('ol.events');
@@ -13,7 +12,8 @@ goog.require('ol.style.Style');
  * @type {!angular.Module}
  */
 ngeo.measure.length = angular.module('ngeoMeasurelength', [
-  ngeo.draw.Controller.module.name
+  ngeo.draw.Controller.module.name,
+  ngeo.misc.filters.name,
 ]);
 
 ngeo.module.requires.push(ngeo.measure.length.name);

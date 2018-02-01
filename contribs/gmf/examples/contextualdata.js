@@ -5,10 +5,8 @@ goog.provide('gmfapp.contextualdata');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdata.module');
-/** @suppress {extraRequire} */
 goog.require('gmf.map.component');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -22,6 +20,7 @@ gmfapp.contextualdata.module = angular.module('gmfapp', [
   gmf.module.name,
   gmf.contextualdata.module.name,
   gmf.map.component.name,
+  ngeo.misc.filters.name,
 ]);
 
 

@@ -8,7 +8,9 @@ goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.misc.FeatureHelper');
+goog.require('ngeo.misc.File');
 goog.require('ngeo.misc.filereaderComponent');
+goog.require('ngeo.misc.filters');
 goog.require('ngeo.misc.getBrowserLanguage');
 goog.require('ngeo.misc.sortableComponent');
 goog.require('ngeo.misc.Time');
@@ -26,7 +28,9 @@ ngeo.misc.extraModule = angular.module('ngeoMiscExtraModule', [
   ngeo.misc.debounce.name,
   ngeo.misc.EventHelper.module.name,
   ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.File.module.name,
   ngeo.misc.filereaderComponent.name,
+  ngeo.misc.filters.name,
   ngeo.misc.getBrowserLanguage.name,
   ngeo.misc.sortableComponent.name,
   ngeo.misc.Time.module.name,

@@ -3,8 +3,7 @@ goog.provide('gmf.map.mousepositionComponent');
 goog.require('gmf');
 goog.require('goog.asserts');
 goog.require('ngeo');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 goog.require('ol.control.MousePosition');
 goog.require('ol.proj');
 
@@ -14,6 +13,7 @@ goog.require('ol.proj');
  */
 gmf.map.mousepositionComponent = angular.module('gmfMapMouseposition', [
   ngeo.module.name,
+  ngeo.misc.filters.name,
 ]);
 
 gmf.module.requires.push(gmf.map.mousepositionComponent.name);

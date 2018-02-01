@@ -1,6 +1,6 @@
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 
-describe('ngeo.Filters', () => {
+describe('ngeo.misc.filters', () => {
 
   let $filter;
 
