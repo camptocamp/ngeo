@@ -10,7 +10,6 @@ goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.filters');
 goog.require('ol.Map');
 goog.require('ol.View');

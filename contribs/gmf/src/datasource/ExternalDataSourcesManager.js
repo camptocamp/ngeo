@@ -4,7 +4,6 @@
 goog.provide('gmf.datasource.ExternalDataSourcesManager');
 
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('goog.asserts');
 goog.require('ngeo.misc.File');
 goog.require('ngeo.datasource.DataSources');

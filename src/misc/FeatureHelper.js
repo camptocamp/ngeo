@@ -2,7 +2,6 @@ goog.provide('ngeo.misc.FeatureHelper');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.service');

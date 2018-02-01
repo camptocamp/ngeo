@@ -2,7 +2,6 @@ goog.provide('app.scaleselector');
 
 // webpack: import './scaleselector.css';
 // webpack: import './common_dependencies.js';
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.filters');
 goog.require('ol.Map');
 goog.require('ol.View');

@@ -5,9 +5,7 @@ goog.provide('gmfapp.contextualdata');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdata.module');
-/** @suppress {extraRequire} */
 goog.require('gmf.map.component');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');

@@ -2,7 +2,6 @@ goog.provide('ngeo.grid.component');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.grid.Config');
 goog.require('ol.has');
