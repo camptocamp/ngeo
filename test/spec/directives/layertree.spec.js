@@ -7,7 +7,6 @@ goog.require('ngeo');
 describe('ngeo.layertree.component', () => {
 
   let roottreeCtrl;
-  ngeo.module.requires.push(ngeo.layertree.module.name);
 
   beforeEach(() => {
 
