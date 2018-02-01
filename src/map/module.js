@@ -15,7 +15,6 @@ goog.require('ngeo.map.scaleselector');
  * @type {!angular.Module}
  */
 ngeo.map.module = angular.module('ngeoMapModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.map.BackgroundLayerMgr.module.name,
   ngeo.map.component.name,
   ngeo.map.FeatureOverlayMgr.module.name,

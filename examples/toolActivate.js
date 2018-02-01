@@ -24,7 +24,6 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 app.toolActivate.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,

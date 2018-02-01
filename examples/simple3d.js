@@ -17,7 +17,6 @@ goog.require('ngeo.olcs.Manager');
 
 /** @type {!angular.Module} **/
 app.simple3d.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.olcs.olcsModule.name
 ]);

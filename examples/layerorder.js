@@ -18,7 +18,6 @@ goog.require('ol.source.TileWMS');
 
 /** @type {!angular.Module} **/
 app.layerorder.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.sortableComponent.name,
 ]);

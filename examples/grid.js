@@ -8,7 +8,6 @@ goog.require('ngeo.grid.module');
 
 /** @type {!angular.Module} **/
 app.grid.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.grid.module.name
 ]);
 

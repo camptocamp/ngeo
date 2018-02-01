@@ -23,7 +23,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.createfeature.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,

@@ -18,7 +18,6 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 app.importfeatures.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.filereaderComponent.name,
 ]);

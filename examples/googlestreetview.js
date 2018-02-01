@@ -20,7 +20,6 @@ goog.require('ngeo.misc.ToolActivateMgr');
 
 /** @type {!angular.Module} **/
 app.googlestreetview.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.googlestreetview.module.name,
   ngeo.misc.ToolActivateMgr.module.name

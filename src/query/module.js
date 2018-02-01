@@ -11,7 +11,6 @@ goog.require('ngeo.query.bboxQueryComponent');
  * @type {angular.Module}
  */
 ngeo.query.module = angular.module('ngeoQueryModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.query.Service.module.name,
   ngeo.query.Querent.module.name,
   ngeo.query.MapQuerent.module.name,
