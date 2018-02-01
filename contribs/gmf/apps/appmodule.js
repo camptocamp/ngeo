@@ -7,6 +7,7 @@ goog.provide('app');
 
 goog.require('gmf');
 
+goog.require('ngeo.utils');
 goog.require('ngeo.misc.extraModule');
 goog.require('gmf.layertree.module');
 goog.require('gmf.search.module');
