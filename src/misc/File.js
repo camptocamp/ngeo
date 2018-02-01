@@ -1,5 +1,4 @@
-goog.module('ngeo.misc.File');
-goog.module.declareLegacyNamespace();
+goog.provide('ngeo.misc.File');
 
 goog.require('ngeo');
 
@@ -11,7 +10,7 @@ goog.require('ngeo');
  * @param {gettext} gettext .
  * @ngInject
  */
-const NgeoFile = function($q, $http, gettext) {
+ngeo.misc.File = function($q, $http, gettext) {
   let fileReader, canceler;
 
   // Test the validity of the file size
@@ -93,8 +92,8 @@ const NgeoFile = function($q, $http, gettext) {
   };
 };
 
-const name = 'ngeoFile';
-NgeoFile.module = angular.module(name, []).service(name, NgeoFile);
-ngeo.module.requires.push(name);
+ngeo.misc.File.module = angular.module('ngeoFile', []);
 
-exports = NgeoFile;
+ngeo.misc.File.module.service('ngeoFile', ngeo.misc.File);
+
+ngeo.module.requires.push(ngeo.misc.File.module.name);
