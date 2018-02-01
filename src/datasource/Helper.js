@@ -1,5 +1,6 @@
 goog.provide('ngeo.datasource.Helper');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ngeo.datasource.DataSources');

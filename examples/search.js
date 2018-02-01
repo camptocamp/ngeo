@@ -2,8 +2,12 @@ goog.provide('app.search');
 
 // webpack: import './search.css';
 // webpack: import './common_dependencies.js';
+goog.require('goog.asserts');
+goog.require('ngeo');
+goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.search.module');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -11,11 +15,6 @@ goog.require('ol.layer.Vector');
 goog.require('ol.proj');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
-goog.require('goog.asserts');
-
-goog.require('ngeo');
-goog.require('ngeo.map.module');
-goog.require('ngeo.search.module');
 
 
 /** @type {!angular.Module} **/

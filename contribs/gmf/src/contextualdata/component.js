@@ -2,6 +2,7 @@ goog.provide('gmf.contextualdata.component');
 
 goog.require('gmf');
 goog.require('gmf.raster.RasterService');
+goog.require('goog.asserts');
 goog.require('ol.Overlay');
 goog.require('ol.proj');
 goog.require('ol.events');

@@ -6,6 +6,7 @@ goog.require('gmf.datasource.WFSAliases');
 goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');

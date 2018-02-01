@@ -21,6 +21,7 @@ goog.require('gmf.theme.Manager');
 goog.require('gmf.theme.Themes');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.selectorComponent');
+goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');
 /** @suppress {extraRequire} */

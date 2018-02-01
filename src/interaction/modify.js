@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.Modify');
 
+goog.require('goog.asserts');
 goog.require('ngeo.utils');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.ModifyCircle');

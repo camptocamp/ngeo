@@ -1,5 +1,6 @@
 goog.provide('ngeo.filter.component');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.filter.Condition');

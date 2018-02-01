@@ -1,7 +1,7 @@
 goog.provide('ngeo.interaction.Rotate');
 
-goog.require('ngeo.CustomEvent');
 goog.require('goog.asserts');
+goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.extent');
 goog.require('ol.Collection');

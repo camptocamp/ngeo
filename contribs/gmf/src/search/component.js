@@ -4,6 +4,7 @@ goog.require('gmf');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.search.FulltextSearch');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.misc.AutoProjection');
 /** @suppress {extraRequire} */

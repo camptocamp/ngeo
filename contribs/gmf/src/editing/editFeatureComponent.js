@@ -7,6 +7,7 @@ goog.require('gmf.editing.EditFeature');
 goog.require('gmf.editing.Snapping');
 goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.layertree.SyncLayertreeMap');
+goog.require('goog.asserts');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');

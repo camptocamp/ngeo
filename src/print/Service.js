@@ -1,5 +1,6 @@
 goog.provide('ngeo.print.Service');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
 goog.require('ngeo.print.VectorEncoder');
 goog.require('ngeo.map.LayerHelper');

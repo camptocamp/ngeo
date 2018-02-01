@@ -9,6 +9,7 @@ goog.require('gmf.layertree.datasourceGroupTreeComponent');
 goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 goog.require('ngeo.datasource.OGC');
 /** @suppress {extraRequire} */
 goog.require('ngeo.layertree.component');

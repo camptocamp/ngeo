@@ -1,5 +1,6 @@
 goog.provide('ngeo.rule.Geometry');
 
+goog.require('goog.asserts');
 goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Rule');
 goog.require('ol.Object');

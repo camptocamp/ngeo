@@ -1,7 +1,7 @@
 goog.provide('ngeo.message.Popup');
 
-goog.require('ngeo');
 goog.require('goog.asserts');
+goog.require('ngeo');
 
 /**
  * This goog.require is needed because of 'ngeo-popup' used in

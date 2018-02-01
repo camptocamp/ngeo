@@ -2,6 +2,7 @@ goog.provide('gmf.raster.component');
 
 goog.require('gmf');
 goog.require('gmf.raster.RasterService');
+goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
 goog.require('ol.events');

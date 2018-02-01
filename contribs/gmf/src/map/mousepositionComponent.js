@@ -1,6 +1,7 @@
 goog.provide('gmf.map.mousepositionComponent');
 
 goog.require('gmf');
+goog.require('goog.asserts');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.filters');

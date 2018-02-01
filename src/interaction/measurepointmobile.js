@@ -1,5 +1,6 @@
 goog.provide('ngeo.interaction.MeasurePointMobile');
 
+goog.require('goog.asserts');
 goog.require('ngeo.interaction.Measure');
 goog.require('ngeo.interaction.MobileDraw');
 goog.require('ol');

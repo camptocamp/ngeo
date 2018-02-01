@@ -2,17 +2,16 @@ goog.provide('app.locationsearch');
 
 // webpack: import './locationsearch.css';
 // webpack: import './common_dependencies.js';
+goog.require('goog.asserts');
+goog.require('ngeo');
+goog.require('ngeo.map.module');
+goog.require('ngeo.search.module');
 goog.require('ol');
 goog.require('ol.proj');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
-goog.require('goog.asserts');
-
-goog.require('ngeo');
-goog.require('ngeo.map.module');
-goog.require('ngeo.search.module');
 
 
 /** @type {!angular.Module} **/

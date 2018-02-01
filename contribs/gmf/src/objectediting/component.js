@@ -9,7 +9,8 @@ goog.require('gmf.objectediting.Query');
 /** @suppress {extraRequire} */
 goog.require('gmf.objectediting.toolsComponent');
 /** @suppress {extraRequire} */
-goog.require('ngeo.jstsExports');
+goog.require('goog.asserts');
+goog.require('ngeo.jstsExports'); // nowebpack
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');

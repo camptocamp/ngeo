@@ -2,6 +2,7 @@ goog.provide('gmf.layertree.TreeManager');
 
 goog.require('gmf');
 goog.require('gmf.theme.Themes');
+goog.require('goog.asserts');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');

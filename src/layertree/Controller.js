@@ -1,11 +1,12 @@
 goog.provide('ngeo.layertree.Controller');
 
+goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ngeo.misc.decorate');
 goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Layer');
-goog.require('ngeo.misc.decorate');
 
 
 /**

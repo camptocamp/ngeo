@@ -1,6 +1,7 @@
 goog.module('ngeo.olcs.controls3d');
 goog.module.declareLegacyNamespace();
 
+goog.require('goog.asserts');
 goog.require('ol.easing');
 goog.require('olcs.core');
 goog.require('ngeo');
