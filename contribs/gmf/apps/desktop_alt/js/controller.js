@@ -21,13 +21,13 @@ goog.require('ngeo.googlestreetview.component');
 goog.require('ol');
 
 
-gmf.module.value('ngeoQueryOptions', {
+app.module.value('ngeoQueryOptions', {
   'limit': 20,
   'queryCountFirst': true,
   'cursorHover': true
 });
 
-gmf.module.value('gmfExternalOGCServers', [{
+app.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'https://wms.geo.admin.ch/?lang=fr'
@@ -41,12 +41,12 @@ gmf.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-gmf.module.value('gmfPrintOptions', {
+app.module.value('gmfPrintOptions', {
   'scaleInput': true
 });
 
-gmf.module.value('ngeoMeasurePrecision', 6);
-gmf.module.value('ngeoMeasureDecimals', 2);
+app.module.value('ngeoMeasurePrecision', 6);
+app.module.value('ngeoMeasureDecimals', 2);
 
 
 /**

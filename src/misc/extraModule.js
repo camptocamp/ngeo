@@ -20,7 +20,6 @@ goog.require('ngeo.misc.WMSTime');
  * @type {!angular.Module}
  */
 ngeo.misc.extraModule = angular.module('ngeoMiscExtraModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.misc.AutoProjection.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.controlComponent.name,

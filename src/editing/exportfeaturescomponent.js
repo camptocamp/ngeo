@@ -45,7 +45,7 @@ ngeo.editing.exportfeaturesComponent.directive_ = function() {
 };
 
 
-ngeo.module.directive('ngeoExportfeatures', ngeo.editing.exportfeaturesComponent.directive_);
+ngeo.editing.exportfeaturesComponent.directive('ngeoExportfeatures', ngeo.editing.exportfeaturesComponent.directive_);
 
 
 /**
