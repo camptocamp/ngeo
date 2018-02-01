@@ -9,7 +9,7 @@ goog.require('gmf.mobile.measure.lengthComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.mobile.measure.pointComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.mobileNavDirective');
+goog.require('gmf.mobile.navigation.component');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
