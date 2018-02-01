@@ -1,7 +1,6 @@
 goog.provide('gmf.mobile.measure.lengthComponent');
 
 goog.require('gmf');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.interaction.MeasureLengthMobile');
 goog.require('ngeo.interaction.MobileDraw');
@@ -13,7 +12,7 @@ goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
-gmf.mobile.measure.lengthComponent = angular.module('', [
+gmf.mobile.measure.lengthComponent = angular.module('gmfMobileMeasureLength', [
   ngeo.misc.filters.name,
 ]);
 

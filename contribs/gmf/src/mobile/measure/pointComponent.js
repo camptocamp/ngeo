@@ -17,7 +17,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-gmf.mobile.measure.pointComponent = angular.module('', [
+gmf.mobile.measure.pointComponent = angular.module('gmfMobileMeasurePoint', [
   gmf.raster.RasterService.module.name,
 ]);
 
