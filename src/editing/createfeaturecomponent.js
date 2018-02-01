@@ -3,7 +3,7 @@ goog.provide('ngeo.editing.createfeatureComponent');
 goog.require('goog.asserts');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureLength');
@@ -18,7 +18,8 @@ goog.require('ol.style.Style');
 
 
 ngeo.editing.createfeatureComponent = angular.module('ngeoCreatefeature', [
-  ngeo.misc.EventHelper.module.name
+  ngeo.misc.EventHelper.module.name,
+  ngeo.misc.filters.name,
 ]);
 
 ngeo.module.requires.push(ngeo.editing.createfeatureComponent.name);

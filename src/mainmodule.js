@@ -15,7 +15,7 @@ goog.require('ngeo.profile.module');
 goog.require('ngeo.query.module');
 goog.require('ngeo.search.module');
 goog.require('ngeo.statemanager.module');
-goog.require('ngeo.utils.module');
+goog.require('ngeo.misc.extraModule');
 
 
 ngeo.mainmodule = angular.module('ngeo', [
@@ -33,5 +33,5 @@ ngeo.mainmodule = angular.module('ngeo', [
   ngeo.query.module.name,
   ngeo.search.module.name,
   ngeo.statemanager.module.name,
-  ngeo.utils.module.name,
+  ngeo.misc.extraModule.name,
 ]);

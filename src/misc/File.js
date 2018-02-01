@@ -1,4 +1,4 @@
-goog.module('ngeo.utils.File');
+goog.module('ngeo.misc.File');
 goog.module.declareLegacyNamespace();
 
 goog.require('ngeo');

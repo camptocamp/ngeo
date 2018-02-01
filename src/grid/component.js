@@ -3,7 +3,7 @@ goog.provide('ngeo.grid.component');
 goog.require('goog.asserts');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 goog.require('ngeo.grid.Config');
 goog.require('ol.has');
 // webpack: import 'floatthead';
@@ -14,6 +14,7 @@ goog.require('ol.has');
  */
 ngeo.grid.component = angular.module('ngeoGrid', [
   ngeo.grid.Config.module.name,
+  ngeo.misc.filters.name,
   'floatThead',
 ]);
 

@@ -11,7 +11,7 @@ goog.require('ngeo.map.module');
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -29,6 +29,7 @@ app.measure.module = angular.module('app', [
   ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
+  ngeo.misc.filters.name,
   'ngSanitize',
 ]);
 

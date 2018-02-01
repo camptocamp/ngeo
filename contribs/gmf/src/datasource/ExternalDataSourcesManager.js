@@ -6,7 +6,7 @@ goog.provide('gmf.datasource.ExternalDataSourcesManager');
 goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('goog.asserts');
-goog.require('ngeo.utils.File');
+goog.require('ngeo.misc.File');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.File');
 goog.require('ngeo.datasource.FileGroup');
@@ -32,7 +32,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @param {!angular.$q} $q The Angular $q service.
    * @param {!angular.Scope} $rootScope The rootScope provider.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
-   * @param {!ngeo.utils.File} ngeoFile Ngeo file.
+   * @param {!ngeo.misc.File} ngeoFile Ngeo file.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
    * @struct
    * @ngInject
@@ -71,7 +71,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {!ngeo.utils.File}
+     * @type {!ngeo.misc.File}
      * @private
      */
     this.ngeoFile_ = ngeoFile;
@@ -667,7 +667,7 @@ gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
 
 
 gmf.datasource.ExternalDataSourcesManager.module = angular.module('gmfExternalDataSourcesManager', [
-  ngeo.utils.File.module.name,
+  ngeo.misc.File.module.name,
   ngeo.datasource.DataSources.module.name,
 ]);
 gmf.datasource.ExternalDataSourcesManager.module.service('gmfExternalDataSourcesManager',

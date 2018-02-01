@@ -3,7 +3,7 @@ goog.provide('ngeo.misc.FeatureHelper');
 goog.require('goog.asserts');
 goog.require('ngeo');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filters');
+goog.require('ngeo.misc.filters');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.service');
 goog.require('ngeo.format.FeatureProperties');
@@ -1101,7 +1101,8 @@ ngeo.misc.FeatureHelper.FormatType = {
  * @type {!angular.Module}
  */
 ngeo.misc.FeatureHelper.module = angular.module('ngeoFeatureHelper', [
-  ngeo.download.service.name
+  ngeo.download.service.name,
+  ngeo.misc.filters.name,
 ]);
 ngeo.misc.FeatureHelper.module.service('ngeoFeatureHelper', ngeo.misc.FeatureHelper);
 ngeo.module.requires.push(ngeo.misc.FeatureHelper.module.name);
