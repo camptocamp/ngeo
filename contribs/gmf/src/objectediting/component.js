@@ -8,8 +8,8 @@ goog.require('gmf.objectediting.geom');
 goog.require('gmf.objectediting.Query');
 /** @suppress {extraRequire} */
 goog.require('gmf.objectediting.toolsComponent');
-/** @suppress {extraRequire} */
 goog.require('goog.asserts');
+/** @suppress {extraRequire} */ // nowebpack
 goog.require('ngeo.jstsExports'); // nowebpack
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.decorate');
