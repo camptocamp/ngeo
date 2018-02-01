@@ -1,6 +1,7 @@
 goog.provide('gmf.AbstractDesktopController');
 
 goog.require('gmf');
+goog.require('gmf.defaultConfig');
 goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
@@ -58,14 +59,14 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
 
-gmf.module.value('isDesktop', true);
+gmf.defaultConfig.value('isDesktop', true);
 
-gmf.module.value('ngeoQueryOptions', {
+gmf.defaultConfig.value('ngeoQueryOptions', {
   'limit': 20
 });
 
-gmf.module.value('ngeoMeasurePrecision', 3);
-gmf.module.value('ngeoMeasureDecimals', 0);
+gmf.defaultConfig.value('ngeoMeasurePrecision', 3);
+gmf.defaultConfig.value('ngeoMeasureDecimals', 0);
 
 
 /**
@@ -258,6 +259,6 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
 ol.inherits(gmf.AbstractDesktopController, gmf.AbstractAppController);
 
 
-gmf.module.controller(
+gmf.defaultConfig.controller(
   'AbstractDesktopController',
   gmf.AbstractDesktopController);

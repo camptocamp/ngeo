@@ -1,6 +1,7 @@
 goog.provide('gmf.AbstractAppController');
 
 goog.require('gmf');
+goog.require('gmf.defaultConfig');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselector.component');
 /** @suppress {extraRequire} */
@@ -48,7 +49,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-gmf.module.value('ngeoExportFeatureFormats', [
+gmf.defaultConfig.value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.KML,
   ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
@@ -726,4 +727,4 @@ gmf.AbstractAppController.prototype.getLocationIcon = function() {
   return arrowWrapper;
 };
 
-gmf.module.controller('AbstractController', gmf.AbstractAppController);
+gmf.defaultConfig.controller('AbstractController', gmf.AbstractAppController);

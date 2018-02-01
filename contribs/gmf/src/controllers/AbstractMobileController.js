@@ -1,6 +1,7 @@
 goog.provide('gmf.AbstractMobileController');
 
 goog.require('gmf');
+goog.require('gmf.defaultConfig');
 goog.require('gmf.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('gmf.query.windowComponent');
@@ -31,9 +32,9 @@ goog.require('ol.style.Style');
 /** @suppress {extraRequire} */
 goog.require('ngeo.geolocation.mobile');
 
-gmf.module.value('isMobile', true);
+gmf.defaultConfig.value('isMobile', true);
 
-gmf.module.value('ngeoQueryOptions', {
+gmf.defaultConfig.value('ngeoQueryOptions', {
   'tolerance': 10
 });
 
@@ -212,4 +213,4 @@ gmf.AbstractMobileController.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
 };
 
-gmf.module.controller('AbstractMobileController', gmf.AbstractMobileController);
+gmf.defaultConfig.controller('AbstractMobileController', gmf.AbstractMobileController);
