@@ -1,6 +1,13 @@
 goog.provide('gmf.defaultConfig');
 
 gmf.defaultConfig = angular.module('gmfDefaultConfig', [
+  'gettext',
+  'ngAnimate',
+  'ngTouch',
+  'ngSanitize',
+  'tmh.dynamicLocale',
+  'ui.date',
+  'ui.slider',
 ]);
 
 gmf.defaultConfig.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
