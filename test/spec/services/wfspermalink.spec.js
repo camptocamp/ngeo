@@ -12,7 +12,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   let ngeoQueryResult;
 
   beforeEach(() => {
-    module('ngeo', ($provide) => {
+    angular.mock.module('ngeo', ($provide) => {
       $provide.value('ngeoWfsPermalinkOptions', {
         url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],

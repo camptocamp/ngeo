@@ -8,11 +8,6 @@ goog.require('ol.proj');
 describe('ngeo.search.createLocationSearchBloodhound', () => {
 
   let ngeoCreateLocationSearchBloodhound;
-  angular.module('myTest', [
-    ngeo.search.module.name,
-  ]);
-
-  beforeEach(angular.mock.module(ngeo.search.module.name));
 
   beforeEach(() => {
     angular.mock.inject((_ngeoCreateLocationSearchBloodhound_) => {

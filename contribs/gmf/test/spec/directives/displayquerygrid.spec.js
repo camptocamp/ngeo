@@ -28,7 +28,7 @@ describe('gmf.query.gridComponent', () => {
   let $timeout;
 
   beforeEach(() => {
-    module('ngeo', ($provide) => {
+    angular.mock.module('ngeo', ($provide) => {
       $provide.value('ngeoQueryOptions', {});
     });
 

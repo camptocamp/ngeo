@@ -4,9 +4,11 @@ describe('ngeo.download.Csv', () => {
 
   let ngeoCsvDownload;
 
-  beforeEach(angular.mock.inject((_ngeoCsvDownload_) => {
-    ngeoCsvDownload = _ngeoCsvDownload_;
-  }));
+  beforeEach(() => {
+    angular.mock.inject((_ngeoCsvDownload_) => {
+      ngeoCsvDownload = _ngeoCsvDownload_;
+    });
+  });
 
   describe('#generateCsv', () => {
     it('deals with no data', () => {

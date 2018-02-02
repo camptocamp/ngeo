@@ -14,6 +14,7 @@ goog.require('ngeo.misc.filters');
 goog.require('ngeo.misc.getBrowserLanguage');
 goog.require('ngeo.misc.sortableComponent');
 goog.require('ngeo.misc.Time');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.misc.WMSTime');
 
 /**
@@ -33,5 +34,6 @@ ngeo.misc.extraModule = angular.module('ngeoMiscExtraModule', [
   ngeo.misc.getBrowserLanguage.name,
   ngeo.misc.sortableComponent.name,
   ngeo.misc.Time.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
   ngeo.misc.WMSTime.module.name,
 ]);

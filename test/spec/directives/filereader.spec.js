@@ -7,7 +7,7 @@ describe('ngeo.misc.filereaderComponent', () => {
     element = angular.element(
       '<input type="file" ngeo-filereader="fileContent" />');
 
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       const FileReader = function() {};
       FileReader.prototype.readAsText = function(file) {
         const progressEvent = {

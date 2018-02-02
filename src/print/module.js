@@ -7,7 +7,7 @@ goog.require('ngeo.print.Utils');
 /**
  * @type {angular.Module}
  */
-ngeo.print.module = angular.module('ngeoPrint', [
+ngeo.print.module = angular.module('ngeoPrintModule', [
   ngeo.print.Service.module.name,
   ngeo.print.Utils.module.name
 ]);

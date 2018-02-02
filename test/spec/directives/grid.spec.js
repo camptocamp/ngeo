@@ -7,62 +7,64 @@ describe('ngeo.grid.component', () => {
   let $scope;
   let $rootScope;
 
-  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
-    const $controller = _$controller_;
-    $rootScope = _$rootScope_;
-    $scope = $rootScope.$new();
+  beforeEach(() => {
+    angular.mock.inject((_$controller_, _$rootScope_) => {
+      const $controller = _$controller_;
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
 
-    const gridConfigData = [
-      {
-        'name': 'row_1',
-        'display_name': 'Row 1',
-        'type': 12,
-        'timestamp': '2010-11-09T22:56:26Z'
-      },
-      {
-        'name': 'row_2',
-        'display_name': 'Row 2',
-        'type': 121,
-        'timestamp': '2010-11-07T22:56:26Z'
-      },
-      {
-        'name': 'row_3',
-        'display_name': 'Row 3',
-        'type': 7,
-        'timestamp': '2010-11-03T22:56:26Z'
-      },
-      {
-        'name': 'row_4',
-        'display_name': 'Row 3',
-        'type': 7,
-        'timestamp': '2010-11-03T22:56:26Z'
-      },
-      {
-        'name': 'row_4',
-        'display_name': 'Row 4',
-        'type': 5,
-        'timestamp': '2010-11-19T22:56:26Z'
-      },
-      {
-        'name': 'row_5',
-        'display_name': 'Row 5',
-        'type': 23,
-        'timestamp': '2010-11-23T22:56:26Z'
-      }
-    ];
-    const columnDefs = [
-      {name: 'name'},
-      {name: 'display_name'},
-      {name: 'timestamp'},
-      {name: 'type'}
-    ];
+      const gridConfigData = [
+        {
+          'name': 'row_1',
+          'display_name': 'Row 1',
+          'type': 12,
+          'timestamp': '2010-11-09T22:56:26Z'
+        },
+        {
+          'name': 'row_2',
+          'display_name': 'Row 2',
+          'type': 121,
+          'timestamp': '2010-11-07T22:56:26Z'
+        },
+        {
+          'name': 'row_3',
+          'display_name': 'Row 3',
+          'type': 7,
+          'timestamp': '2010-11-03T22:56:26Z'
+        },
+        {
+          'name': 'row_4',
+          'display_name': 'Row 3',
+          'type': 7,
+          'timestamp': '2010-11-03T22:56:26Z'
+        },
+        {
+          'name': 'row_4',
+          'display_name': 'Row 4',
+          'type': 5,
+          'timestamp': '2010-11-19T22:56:26Z'
+        },
+        {
+          'name': 'row_5',
+          'display_name': 'Row 5',
+          'type': 23,
+          'timestamp': '2010-11-23T22:56:26Z'
+        }
+      ];
+      const columnDefs = [
+        {name: 'name'},
+        {name: 'display_name'},
+        {name: 'timestamp'},
+        {name: 'type'}
+      ];
 
-    const data = {
-      configuration: new ngeo.grid.Config(gridConfigData, columnDefs)
-    };
-    gridController = $controller(
-      'ngeoGridController', {$scope}, data);
-  }));
+      const data = {
+        configuration: new ngeo.grid.Config(gridConfigData, columnDefs)
+      };
+      gridController = $controller(
+        'ngeoGridController', {$scope}, data);
+    });
+  });
 
   describe('#sort', () => {
 

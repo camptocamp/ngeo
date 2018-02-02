@@ -6,7 +6,7 @@ describe('ngeo.misc.getBrowserLanguage', () => {
 
   beforeEach(() => {
     win = {navigator: {}};
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       $provide.value('$window', win);
     });
     angular.mock.inject((_ngeoGetBrowserLanguage_) => {

@@ -10,7 +10,7 @@ describe('ngeo.statemanager.Location', () => {
       'history': {'replaceState': function() {}}
     };
     spyOn(win.history, 'replaceState');
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       $provide.value('$window', win);
     });
     angular.mock.inject((_ngeoLocation_) => {
