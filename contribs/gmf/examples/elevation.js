@@ -17,7 +17,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.elevation.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.map.component.name,
   gmf.raster.module.name,
 ]);

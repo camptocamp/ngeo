@@ -1,16 +1,11 @@
-goog.provide('gmf.defaultConfig');
+goog.provide('gmf.controllers.defaultConfig');
 
-gmf.defaultConfig = angular.module('gmfDefaultConfig', [
+gmf.controllers.defaultConfig = angular.module('gmfDefaultConfig', [
   'gettext',
-  'ngAnimate',
-  'ngTouch',
-  'ngSanitize',
   'tmh.dynamicLocale',
-  'ui.date',
-  'ui.slider',
 ]);
 
-gmf.defaultConfig.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+gmf.controllers.defaultConfig.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
    * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.

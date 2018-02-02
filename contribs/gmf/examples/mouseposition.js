@@ -17,7 +17,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.mouseposition.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.map.module.name,
 ]);
 

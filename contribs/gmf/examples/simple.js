@@ -13,7 +13,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.simple.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.map.component.name,
 ]);
 

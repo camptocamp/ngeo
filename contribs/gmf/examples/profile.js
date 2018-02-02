@@ -23,7 +23,6 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.profile.module = angular.module('gmfapp', [
-  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.permalink.Permalink.module.name,
   gmf.map.component.name,
   gmf.profile.module.name,

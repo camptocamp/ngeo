@@ -11,7 +11,6 @@ goog.require('ngeo.message.modalComponent');
 
 /** @type {!angular.Module} **/
 gmfapp.share.module = angular.module('gmfapp', [
-  gmf.module.name,
   ngeo.message.modalComponent.name,
   gmf.permalink.shareComponent.name,
 ]);

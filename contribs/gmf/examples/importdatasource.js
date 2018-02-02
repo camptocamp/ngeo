@@ -27,7 +27,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.importdatasource.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.datasource.Manager.module.name,
   gmf.import.importdatasourceComponent.name,
   gmf.layertree.component.name,

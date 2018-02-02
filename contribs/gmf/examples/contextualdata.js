@@ -17,7 +17,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.contextualdata.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.contextualdata.module.name,
   gmf.map.component.name,
   ngeo.misc.filters.name,

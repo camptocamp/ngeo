@@ -1,8 +1,8 @@
-goog.provide('gmf.AbstractMobileController');
+goog.provide('gmf.controllers.AbstractMobileController');
 
 goog.require('gmf');
-goog.require('gmf.defaultConfig');
-goog.require('gmf.AbstractAppController');
+goog.require('gmf.controllers.defaultConfig');
+goog.require('gmf.controllers.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('gmf.query.windowComponent');
 /** @suppress {extraRequire} */
@@ -32,9 +32,9 @@ goog.require('ol.style.Style');
 /** @suppress {extraRequire} */
 goog.require('ngeo.geolocation.mobile');
 
-gmf.defaultConfig.value('isMobile', true);
+gmf.controllers.defaultConfig.value('isMobile', true);
 
-gmf.defaultConfig.value('ngeoQueryOptions', {
+gmf.controllers.defaultConfig.value('ngeoQueryOptions', {
   'tolerance': 10
 });
 
@@ -49,12 +49,12 @@ gmf.defaultConfig.value('ngeoQueryOptions', {
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractAppController}
+ * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller
  * @ngInject
  * @export
  */
-gmf.AbstractMobileController = function(config, $scope, $injector) {
+gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
 
   /**
    * @type {boolean}
@@ -116,7 +116,7 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractAppController.prototype.getLocationIcon();
+  const arrow = gmf.controllers.AbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
@@ -142,18 +142,18 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
         ol.interaction.defaults({pinchRotate: true})
   });
 
-  gmf.AbstractAppController.call(this, config, $scope, $injector);
+  gmf.controllers.AbstractAppController.call(this, config, $scope, $injector);
 
   this.manageResize = true;
   this.resizeTransition = 500;
 };
-ol.inherits(gmf.AbstractMobileController, gmf.AbstractAppController);
+ol.inherits(gmf.controllers.AbstractMobileController, gmf.controllers.AbstractAppController);
 
 
 /**
  * @export
  */
-gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
+gmf.controllers.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
   this.leftNavVisible = !this.leftNavVisible;
 };
 
@@ -161,7 +161,7 @@ gmf.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
 /**
  * @export
  */
-gmf.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
+gmf.controllers.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
   this.rightNavVisible = !this.rightNavVisible;
 };
 
@@ -170,7 +170,7 @@ gmf.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
  * Hide both navigation menus.
  * @export
  */
-gmf.AbstractMobileController.prototype.hideNav = function() {
+gmf.controllers.AbstractMobileController.prototype.hideNav = function() {
   this.leftNavVisible = this.rightNavVisible = false;
 };
 
@@ -180,7 +180,7 @@ gmf.AbstractMobileController.prototype.hideNav = function() {
  * otherwise false.
  * @export
  */
-gmf.AbstractMobileController.prototype.navIsVisible = function() {
+gmf.controllers.AbstractMobileController.prototype.navIsVisible = function() {
   return this.leftNavVisible || this.rightNavVisible;
 };
 
@@ -189,7 +189,7 @@ gmf.AbstractMobileController.prototype.navIsVisible = function() {
  * Hide search overlay.
  * @export
  */
-gmf.AbstractMobileController.prototype.hideSearchOverlay = function() {
+gmf.controllers.AbstractMobileController.prototype.hideSearchOverlay = function() {
   this.searchOverlayVisible = false;
 };
 
@@ -199,7 +199,7 @@ gmf.AbstractMobileController.prototype.hideSearchOverlay = function() {
  * otherwise false.
  * @export
  */
-gmf.AbstractMobileController.prototype.leftNavIsVisible = function() {
+gmf.controllers.AbstractMobileController.prototype.leftNavIsVisible = function() {
   return this.leftNavVisible;
 };
 
@@ -209,8 +209,8 @@ gmf.AbstractMobileController.prototype.leftNavIsVisible = function() {
  * otherwise false.
  * @export
  */
-gmf.AbstractMobileController.prototype.rightNavIsVisible = function() {
+gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
 };
 
-gmf.defaultConfig.controller('AbstractMobileController', gmf.AbstractMobileController);
+gmf.controllers.defaultConfig.controller('AbstractMobileController', gmf.controllers.AbstractMobileController);

@@ -1,7 +1,7 @@
-goog.provide('gmf.AbstractAppController');
+goog.provide('gmf.controllers.AbstractAppController');
 
 goog.require('gmf');
-goog.require('gmf.defaultConfig');
+goog.require('gmf.controllers.defaultConfig');
 /** @suppress {extraRequire} */
 goog.require('gmf.backgroundlayerselector.component');
 /** @suppress {extraRequire} */
@@ -49,7 +49,7 @@ goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 
-gmf.defaultConfig.value('ngeoExportFeatureFormats', [
+gmf.controllers.defaultConfig.value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.KML,
   ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
@@ -69,7 +69,7 @@ gmf.defaultConfig.value('ngeoExportFeatureFormats', [
  * @ngInject
  * @export
  */
-gmf.AbstractAppController = function(config, $scope, $injector) {
+gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
 
   /**
    * Location service
@@ -614,7 +614,7 @@ gmf.AbstractAppController = function(config, $scope, $injector) {
  * @param {Array.<string>} labels default_basemap list.
  * @return {ol.layer.Base} layer or null
  */
-gmf.AbstractAppController.getLayerByLabels = function(layers, labels) {
+gmf.controllers.AbstractAppController.getLayerByLabels = function(layers, labels) {
   if (labels && labels.length > 0) {
     return ol.array.find(layers, layer => layer.get('label') === labels[0]);
   }
@@ -626,7 +626,7 @@ gmf.AbstractAppController.getLayerByLabels = function(layers, labels) {
  * @param {string} lang Language code.
  * @export
  */
-gmf.AbstractAppController.prototype.switchLanguage = function(lang) {
+gmf.controllers.AbstractAppController.prototype.switchLanguage = function(lang) {
   goog.asserts.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
@@ -637,7 +637,7 @@ gmf.AbstractAppController.prototype.switchLanguage = function(lang) {
 
 /**
  */
-gmf.AbstractAppController.prototype.initLanguage = function() {
+gmf.controllers.AbstractAppController.prototype.initLanguage = function() {
   this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
@@ -669,7 +669,7 @@ gmf.AbstractAppController.prototype.initLanguage = function() {
  * @param {gmfThemes.GmfTheme} theme Theme.
  * @private
  */
-gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
+gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
   this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
     let layer;
 
@@ -678,12 +678,12 @@ gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
 
     if (!layer) {
       // get the background from the user settings
-      layer = gmf.AbstractAppController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
+      layer = gmf.controllers.AbstractAppController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }
 
     if (!layer && theme) {
       // get the background from the theme
-      layer = gmf.AbstractAppController.getLayerByLabels(layers, theme.functionalities.default_basemap);
+      layer = gmf.controllers.AbstractAppController.getLayerByLabels(layers, theme.functionalities.default_basemap);
     }
 
     if (!layer) {
@@ -700,7 +700,7 @@ gmf.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
  * @param {string} fallbackThemeName fallback theme name.
  * @private
  */
-gmf.AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
+gmf.controllers.AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
@@ -718,7 +718,7 @@ gmf.AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackTheme
  * @protected
  * @return {Element} Span element with font-awesome inside of it
  */
-gmf.AbstractAppController.prototype.getLocationIcon = function() {
+gmf.controllers.AbstractAppController.prototype.getLocationIcon = function() {
   const arrow = document.createElement('span');
   arrow.className = 'fa fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
@@ -727,4 +727,4 @@ gmf.AbstractAppController.prototype.getLocationIcon = function() {
   return arrowWrapper;
 };
 
-gmf.defaultConfig.controller('AbstractController', gmf.AbstractAppController);
+gmf.controllers.defaultConfig.controller('AbstractController', gmf.controllers.AbstractAppController);

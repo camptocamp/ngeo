@@ -18,7 +18,6 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.permalink.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.map.component.name,
 ]);
 

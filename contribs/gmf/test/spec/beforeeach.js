@@ -1,11 +1,11 @@
-goog.require('gmf.theme.module');
+goog.require('gmf.controllers.defaultConfig');
 
 beforeEach(() => {
-  const gmfModule = angular.module('gmf');
+  const gmfModule = angular.module('gmfDefaultConfig');
   gmfModule.constant('angularLocaleScript', 'http://fake');
   gmfModule.constant('gmfLayersUrl', 'https://fake');
 
-  angular.mock.module('gmf', ($provide) => {
+  angular.mock.module('gmfDefaultConfig', ($provide) => {
     $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
     $provide.value('gmfShortenerCreateUrl', 'http://fake/gmf/short/create');
     $provide.value('authenticationBaseUrl', 'https://fake/gmf/authentication');

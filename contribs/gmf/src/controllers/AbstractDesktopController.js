@@ -1,8 +1,8 @@
-goog.provide('gmf.AbstractDesktopController');
+goog.provide('gmf.controllers.AbstractDesktopController');
 
 goog.require('gmf');
-goog.require('gmf.defaultConfig');
-goog.require('gmf.AbstractAppController');
+goog.require('gmf.controllers.defaultConfig');
+goog.require('gmf.controllers.AbstractAppController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 /** @suppress {extraRequire} */
@@ -59,14 +59,14 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
 
-gmf.defaultConfig.value('isDesktop', true);
+gmf.controllers.defaultConfig.value('isDesktop', true);
 
-gmf.defaultConfig.value('ngeoQueryOptions', {
+gmf.controllers.defaultConfig.value('ngeoQueryOptions', {
   'limit': 20
 });
 
-gmf.defaultConfig.value('ngeoMeasurePrecision', 3);
-gmf.defaultConfig.value('ngeoMeasureDecimals', 0);
+gmf.controllers.defaultConfig.value('ngeoMeasurePrecision', 3);
+gmf.controllers.defaultConfig.value('ngeoMeasureDecimals', 0);
 
 
 /**
@@ -79,19 +79,19 @@ gmf.defaultConfig.value('ngeoMeasureDecimals', 0);
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractAppController}
+ * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller
  * @ngInject
  * @export
  */
-gmf.AbstractDesktopController = function(config, $scope, $injector) {
+gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) {
 
   const viewConfig = {
     projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractAppController.prototype.getLocationIcon();
+  const arrow = gmf.controllers.AbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
@@ -246,7 +246,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.profileLine = null;
 
-  gmf.AbstractAppController.call(this, config, $scope, $injector);
+  gmf.controllers.AbstractAppController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
@@ -256,9 +256,9 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
 
 };
-ol.inherits(gmf.AbstractDesktopController, gmf.AbstractAppController);
+ol.inherits(gmf.controllers.AbstractDesktopController, gmf.controllers.AbstractAppController);
 
 
-gmf.defaultConfig.controller(
+gmf.controllers.defaultConfig.controller(
   'AbstractDesktopController',
-  gmf.AbstractDesktopController);
+  gmf.controllers.AbstractDesktopController);
