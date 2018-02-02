@@ -16,18 +16,6 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 
 
-// Moved to mapquerent.js
-/**
- * The `ngeoQueryResult` is the value service where the features of the query
- * result are added.
- */
-//ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
-//  sources: [],
-//  total: 0,
-//  pending: false
-//}));
-
-
 /**
  * The Query service provides a way to send WMS GetFeatureInfo and WFS GetFeature
  * requests from visible layer objects within a map. Those do not necessarily need to have
