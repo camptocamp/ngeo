@@ -789,9 +789,10 @@ gmf.PrintController.prototype.print = function(format) {
       }
     }
 
-    // Get the print native angle parameter for WMS layers
-    if (layer instanceof ol.layer.Image) {
-      print_native_angle = layer.get('printNativeAngle');
+    // Get the print native angle parameter for WMS layers when set to not use default value
+    // Is applied only once when the value is overridden with a metadata from administration
+    if (layer instanceof ol.layer.Image && layer.get('printNativeAngle') === false) {
+      print_native_angle = false;
     }
 
     new_ol_layers.push(layer);
