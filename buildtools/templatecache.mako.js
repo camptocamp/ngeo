@@ -36,7 +36,7 @@
  * GENERATED FILE. DO NOT EDIT.
  */
 
-goog.require('${app}');
+//goog.require('${app}');
 
 (function() {
   /**
@@ -49,5 +49,5 @@ goog.require('${app}');
   %endfor
   };
 
-  ${app}.module.run(runner);
+  angular.module('${app}').run(runner);
 })();
