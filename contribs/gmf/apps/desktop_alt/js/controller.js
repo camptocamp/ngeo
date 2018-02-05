@@ -8,7 +8,7 @@ goog.provide('app.desktop_alt.Controller');
 
 goog.require('app');
 goog.require('gmf');
-goog.require('gmf.AbstractDesktopController');
+goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.importdatasourceComponent');
 /** @suppress {extraRequire} */
@@ -56,12 +56,12 @@ app.module.value('ngeoMeasureDecimals', 2);
  * @param {gettext} gettext The gettext service
  * @param {angular.$q} $q Angular $q.
  * @constructor
- * @extends {gmf.AbstractDesktopController}
+ * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
 app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) {
-  gmf.AbstractDesktopController.call(this, {
+  gmf.controllers.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -146,7 +146,7 @@ app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) 
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
 };
-ol.inherits(app.desktop_alt.Controller, gmf.AbstractDesktopController);
+ol.inherits(app.desktop_alt.Controller, gmf.controllers.AbstractDesktopController);
 
 
 /**

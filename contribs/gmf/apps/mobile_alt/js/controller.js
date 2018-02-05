@@ -7,7 +7,7 @@
 goog.provide('app.mobile_alt.Controller');
 
 goog.require('app');
-goog.require('gmf.AbstractMobileController');
+goog.require('gmf.controllers.AbstractMobileController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
@@ -20,12 +20,12 @@ goog.require('ol.style.Style');
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractMobileController}
+ * @extends {gmf.controllers.AbstractMobileController}
  * @ngInject
  * @export
  */
 app.mobile_alt.Controller = function($scope, $injector) {
-  gmf.AbstractMobileController.call(this, {
+  gmf.controllers.AbstractMobileController.call(this, {
     autorotate: true,
     mapPixelRatio: 1,
     srid: 21781,
@@ -84,7 +84,7 @@ app.mobile_alt.Controller = function($scope, $injector) {
   });
 
 };
-ol.inherits(app.mobile_alt.Controller, gmf.AbstractMobileController);
+ol.inherits(app.mobile_alt.Controller, gmf.controllers.AbstractMobileController);
 
 
 app.module.controller('AlternativeMobileController', app.mobile_alt.Controller);

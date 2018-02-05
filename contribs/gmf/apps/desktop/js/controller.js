@@ -7,7 +7,7 @@
 goog.provide('app.desktop.Controller');
 
 goog.require('app');
-goog.require('gmf.AbstractDesktopController');
+goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
@@ -22,12 +22,12 @@ goog.require('ol');
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractDesktopController}
+ * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
 app.desktop.Controller = function($scope, $injector) {
-  gmf.AbstractDesktopController.call(this, {
+  gmf.controllers.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -100,7 +100,7 @@ app.desktop.Controller = function($scope, $injector) {
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
 };
-ol.inherits(app.desktop.Controller, gmf.AbstractDesktopController);
+ol.inherits(app.desktop.Controller, gmf.controllers.AbstractDesktopController);
 
 
 app.module.controller('DesktopController', app.desktop.Controller);

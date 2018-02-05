@@ -7,7 +7,7 @@
 goog.provide('app.mobile.Controller');
 
 goog.require('app');
-goog.require('gmf.AbstractMobileController');
+goog.require('gmf.controllers.AbstractMobileController');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
 /** @suppress {extraRequire} */
@@ -19,12 +19,12 @@ goog.require('ol');
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractMobileController}
+ * @extends {gmf.controllers.AbstractMobileController}
  * @ngInject
  * @export
  */
 app.mobile.Controller = function($scope, $injector) {
-  gmf.AbstractMobileController.call(this, {
+  gmf.controllers.AbstractMobileController.call(this, {
     autorotate: false,
     srid: 21781,
     mapViewConfig: {
@@ -56,7 +56,7 @@ app.mobile.Controller = function($scope, $injector) {
   this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
 };
-ol.inherits(app.mobile.Controller, gmf.AbstractMobileController);
+ol.inherits(app.mobile.Controller, gmf.controllers.AbstractMobileController);
 
 
 app.module.controller('MobileController', app.mobile.Controller);
