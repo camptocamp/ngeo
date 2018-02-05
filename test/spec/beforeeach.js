@@ -4,7 +4,7 @@ goog.provide('app');
 
 goog.require('ngeo.mainmodule');
 
-const module = angular.module('app', []);
+const module = app.module = angular.module('app', []);
 
 beforeEach(() =>  {
   module.requires.push(ngeo.mainmodule.name);
