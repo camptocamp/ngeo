@@ -251,7 +251,7 @@ eof-newline:
 	buildtools/test-eof-newline
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/tests-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
+test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@cat .build/coverage/coverage.txt
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
@@ -815,12 +815,6 @@ $(EXTERNS_JQUERY): github_versions
 		$(GMF_SRC_JS_FILES)
 	.build/python-venv/bin/python buildtools/closure/depswriter.py \
 		--root_with_prefix="contribs/gmf/src ../../../../contribs/gmf/src" --output_file=$@
-
-.build/tests-deps.js: .build/python-venv \
-		.build/node_modules.timestamp \
-		test/spec/beforeeach.js
-	.build/python-venv/bin/python buildtools/closure/depswriter.py \
-		--root_with_prefix="test ../../../../test" --output_file=$@
 
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
