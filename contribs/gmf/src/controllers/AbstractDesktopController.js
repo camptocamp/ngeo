@@ -3,44 +3,7 @@ goog.provide('gmf.controllers.AbstractDesktopController');
 goog.require('gmf');
 goog.require('gmf.controllers.defaultConfig');
 goog.require('gmf.controllers.AbstractAppController');
-/** @suppress {extraRequire} */
-goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.contextualdata.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.query.gridComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.drawing.drawFeatureComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.editing.editFeatureSelectorComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.filters.filterselectorComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.map.mousepositionComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.print.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.profile.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.profile.drawLineComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.raster.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertree.timeSliderComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.permalink.shareComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.draw.features');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.datepickerComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.sortableComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol');
 goog.require('ol.proj');
 goog.require('ol.obj');

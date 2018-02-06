@@ -44,5 +44,7 @@ gmf.datasource.WFSAliases = class {
 };
 
 
-gmf.datasource.WFSAliases.module = angular.module('gmfDatasourceWFSAliases', []);
+gmf.datasource.WFSAliases.module = angular.module('gmfDatasourceWFSAliases', [
+  ngeo.datasource.Helper.module.name,
+]);
 gmf.datasource.WFSAliases.module.service('gmfWFSAliases', gmf.datasource.WFSAliases);
