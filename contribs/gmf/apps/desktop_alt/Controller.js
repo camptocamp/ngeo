@@ -39,9 +39,9 @@ if (!window.requestAnimationFrame) {
  */
 const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   gmfControllersAbstractDesktopController.call(this, {
-    srid: 21781,
+    srid: 2056,
     mapViewConfig: {
-      center: [632464, 185457],
+      center: [2551894, 1202362],
       zoom: 3,
       resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
     }

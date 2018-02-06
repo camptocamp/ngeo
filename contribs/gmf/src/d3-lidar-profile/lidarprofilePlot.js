@@ -1,357 +1,392 @@
-goog.provide('gmf.lidarProfile.plot');
+goog.provide('gmf.lidarProfile.Plot');
 
-/**
-* @constructor
-* @param {Object} options to be defined in gmfx
-* @param {gmf.lidarProfile} parent instance
-*/
-gmf.lidarProfile.plot = function(options, parent) {
+goog.require('ol.Feature');
+goog.require('ol.geom.Point');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Style');
 
-/**
- * @type {Object}
- * @export
- */
-  this.options = options;
+
+gmf.lidarProfile.Plot = class {
 
   /**
-  * @type {gmf.lidarProfile}
-  * @private
-  */
-  this.parent_ = parent;
+   * FIXME missing description
+   * @struct
+   * @param {gmf.lidarProfile.Manager} gmfLidarProfileManagerInstance gmf lidar profile manager instance
+   */
+  constructor(gmfLidarProfileManagerInstance) {
+
+    /**
+     * @type {gmf.lidarProfile.Manager}
+     * @private
+     */
+    this.manager_ = gmfLidarProfileManagerInstance;
+
+    /**
+     * d3.scaleLinear X scale.
+     * @type {Function}
+     */
+    this.scaleX;
+
+    /**
+     * d3.scaleLinear Y scale.
+     * @type {Function}
+     */
+    this.scaleY;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.width_;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.height_;
+
+    /**
+     * @type {Array.<number>}
+     */
+    this.previousDomainX = [];
+
+    /**
+     * @type {Array.<number>}
+     */
+    this.previousDomainY = [];
+  }
+
 
   /**
-  * @type {gmf.lidarProfile.utils}
-  * @private
-  */
-  this.utils_ = new gmf.lidarProfile.utils(options, null);
-
-  /**
-   * @type {Object}
+   * Draw the points to the canvas element
+   * @param {gmfx.LidarProfilePoints} points of the profile
+   * @param {string} material used to determine point color
    * @export
    */
-  this.scaleX;
+  drawPoints(points, material) {
+    let i = -1;
+    const nPoints = points.distance.length;
+    let cx, cy;
+    const ctx = d3.select('#gmf-lidar-profile-container .lidar-canvas').node().getContext('2d');
+    const profileServerConfig = this.manager_.config.serverConfig;
 
-  /**
-   * @type {Object}
-   * @export
-   */
-  this.scaleY;
+    while (++i < nPoints) {
 
-  /**
-   * @type {number}
-   * @export
-   */
-  this.width;
+      const distance = points.distance[i];
+      const altitude = points.altitude[i];
+      const rgb = points.color_packed[i];
+      const intensity = points.intensity[i];
+      const classification = points.classification[i];
+      if (profileServerConfig.classification_colors[classification] &&
+            profileServerConfig.classification_colors[classification].visible) {
 
-  /**
-   * @type {number}
-   * @export
-   */
-  this.height;
-  /**
-   * @type {Array.<number>}
-   * @export
-   */
-  this.previousDomainX = [];
-  /**
-   * @type {Array.<number>}
-   * @export
-   */
-  this.previousDomainY = [];
+        cx = this.scaleX(distance);
+        cy = this.scaleY(altitude);
 
-};
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
 
-/**
- * Draw the points to the canvas element
- * @param {gmfx.LidarProfilePoints} points of the profile
- * @param {string} material used to determine point color
- * @export
-*/
-gmf.lidarProfile.plot.prototype.drawPoints = function(points, material) {
-  let i = -1;
-  const nPoints = points.distance.length;
-  let cx, cy;
-  const ctx = d3.select('#profileCanvas').node().getContext('2d');
-  const profileConfig = this.options.profileConfig;
-
-  while (++i < nPoints) {
-
-    const distance = points.distance[i];
-    const altitude = points.altitude[i];
-    const rgb = points.color_packed[i];
-    const intensity = points.intensity[i];
-    const classification = points.classification[i];
-    if (profileConfig.classification[classification] && profileConfig.classification[classification].visible) {
-
-      cx = this.scaleX(distance);
-      cy = this.scaleY(altitude);
-
-      ctx.beginPath();
-      ctx.moveTo(cx, cy);
-
-      if (material == 'COLOR_PACKED') {
-        ctx.fillStyle = `RGB(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-      } else if (material == 'INTENSITY') {
-        ctx.fillStyle = `RGB(${intensity}, ${intensity}, ${intensity})`;
-      } else if (material == 'CLASSIFICATION') {
-        ctx.fillStyle = `RGB(${profileConfig.classification[classification].color})`;
-      } else {
-        ctx.fillStyle = profileConfig.defaultColor;
+        if (material == 'COLOR_PACKED') {
+          ctx.fillStyle = `RGB(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+        } else if (material == 'INTENSITY') {
+          ctx.fillStyle = `RGB(${intensity}, ${intensity}, ${intensity})`;
+        } else if (material == 'CLASSIFICATION') {
+          ctx.fillStyle = `RGB(${profileServerConfig.classification_colors[classification].color})`;
+        } else {
+          ctx.fillStyle = profileServerConfig.default_color;
+        }
+        ctx.arc(cx, cy, profileServerConfig.point_size, 0, 2 * Math.PI, false);
+        ctx.fill();
       }
-      ctx.arc(cx, cy, profileConfig.pointSize, 0, 2 * Math.PI, false);
-      ctx.fill();
-
     }
   }
-};
 
-/**
- * Setup the SVG components of the d3 chart
- * @param {Array.<number>} rangeX range of the x scale
- * @param {Array.<number>} rangeY range of the y scale
- * @export
-*/
-gmf.lidarProfile.plot.prototype.setupPlot = function(rangeX, rangeY) {
 
-  const canvasEl = d3.select('#profileCanvas').node();
-  const ctx = d3.select('#profileCanvas')
-    .node().getContext('2d');
-  ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
+  /**
+   * Setup the SVG components of the d3 chart
+   * @param {Array.<number>} rangeX range of the x scale
+   * @param {Array.<number>} rangeY range of the y scale
+   * @export
+   */
+  setupPlot(rangeX, rangeY) {
+    const canvas = d3.select('#gmf-lidar-profile-container .lidar-canvas');
+    const canvasEl = canvas.node();
+    const ctx = canvasEl.getContext('2d');
+    ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
-  const margin = this.options.profileConfig.margin;
-  const containerWidth = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().width;
-  const containerHeight = d3.select('.gmf-lidar-profile-container').node().getBoundingClientRect().height;
-  this.width = containerWidth - (margin.left + margin.right);
-  this.height = containerHeight - (margin.top + margin.bottom);
+    const margin = this.manager_.config.clientConfig.margin;
+    const containerEl = d3.select('#gmf-lidar-profile-container').node();
+    const containerWidth = containerEl.getBoundingClientRect().width;
+    const containerHeight = containerEl.getBoundingClientRect().height;
+    this.width_ = containerWidth - (margin.left + margin.right);
+    this.height_ = containerHeight - (margin.top + margin.bottom);
 
-  d3.select('#profileCanvas')
-    .attr('height', this.height)
-    .attr('width', this.width)
-    .style('background-color', 'black')
-    .style('z-index', 0)
-    .style('position', 'absolute')
-    .style('margin-left', `${margin.left.toString()}px`)
-    .style('margin-top', `${margin.top.toString()}px`);
+    canvas.attr('height', this.height_)
+      .attr('width', this.width_)
+      .style('background-color', 'black')
+      .style('z-index', 0)
+      .style('position', 'absolute')
+      .style('margin-left', `${margin.left.toString()}px`)
+      .style('margin-top', `${margin.top.toString()}px`);
 
-  const domainProfileWidth = rangeX[1] - rangeX[0];
-  const domainProfileHeight = rangeY[1] - rangeY[0];
-  const domainRatio = domainProfileWidth / domainProfileHeight;
-  const rangeProfileWidth = this.width;
-  const rangeProfileHeight = this.height;
-  const rangeRatio = rangeProfileWidth / rangeProfileHeight;
+    const domainProfileWidth = rangeX[1] - rangeX[0];
+    const domainProfileHeight = rangeY[1] - rangeY[0];
+    const domainRatio = domainProfileWidth / domainProfileHeight;
+    const rangeProfileWidth = this.width_;
+    const rangeProfileHeight = this.height_;
+    const rangeRatio = rangeProfileWidth / rangeProfileHeight;
 
-  let domainScale;
-  if (domainRatio < rangeRatio) {
-    const domainScale = rangeRatio / domainRatio;
-    const domainScaledWidth = domainProfileWidth * domainScale;
-    this.scaleX = d3.scaleLinear()
-      .domain([0, domainScaledWidth])
-      .range([0, this.width]);
-    this.scaleY = d3.scaleLinear()
-      .domain(rangeY)
-      .range([this.height, 0]);
-  } else {
-    domainScale =  domainRatio / rangeRatio;
-    const domainScaledHeight = domainProfileHeight * domainScale;
-    const domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
-    this.scaleX = d3.scaleLinear()
-      .domain(rangeX)
-      .range([0, this.width]);
-    this.scaleY = d3.scaleLinear()
-      .domain([
+    let domainScale;
+    if (domainRatio < rangeRatio) {
+      const domainScale = rangeRatio / domainRatio;
+      const domainScaledWidth = domainProfileWidth * domainScale;
+      this.scaleX = d3.scaleLinear();
+      this.scaleX['domain']([0, domainScaledWidth]);
+      this.scaleX['range']([0, this.width_]);
+      this.scaleY = d3.scaleLinear();
+      this.scaleY['domain'](rangeY);
+      this.scaleY['range']([this.height_, 0]);
+    } else {
+      domainScale =  domainRatio / rangeRatio;
+      const domainScaledHeight = domainProfileHeight * domainScale;
+      const domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
+      this.scaleX = d3.scaleLinear();
+      this.scaleX['domain'](rangeX);
+      this.scaleX['range']([0, this.width_]);
+      this.scaleY = d3.scaleLinear();
+      this.scaleY['domain']([
         domainHeightCentroid - domainScaledHeight / 2,
-        domainHeightCentroid + domainScaledHeight / 2])
-      .range([this.height, 0]);
-  }
+        domainHeightCentroid + domainScaledHeight / 2]);
+      this.scaleY['range']([this.height_, 0]);
+    }
 
-  const zoom = d3.zoom()
-    .scaleExtent([1, 100])
-    .translateExtent([[0, 0], [this.width, this.height]])
-    .extent([[0, 0], [this.width, this.height]])
-    .on('zoom', this.zoomed.bind(this));
+    const zoom = d3.zoom()
+      .scaleExtent([1, 100])
+      .translateExtent([[0, 0], [this.width_, this.height_]])
+      .extent([[0, 0], [this.width_, this.height_]])
+      .on('zoom', this.zoomed.bind(this));
 
-  zoom.on('end', this.zoomEnd.bind(this));
+    zoom.on('end', this.zoomEnd.bind(this));
 
-  this.previousDomainX = this.scaleX.domain();
-  this.previousDomainY = this.scaleY.domain();
+    this.previousDomainX = this.scaleX['domain']();
+    this.previousDomainY = this.scaleY['domain']();
 
-  d3.select('svg#profileSVG')
-    .call(zoom)
-    .on('dblclick.zoom', null);
+    const svg = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
 
-  d3.select('svg#profileSVG').selectAll('*').remove();
+    svg.call(zoom).on('dblclick.zoom', null);
+    svg.selectAll('*').remove();
 
-  const svg = d3.select('svg#profileSVG')
-    .attr('width', this.width + margin.left)
-    .attr('height', this.height + margin.top + margin.bottom);
+    svg.attr('width', this.width_ + margin.left)
+      .attr('height', this.height_ + margin.top + margin.bottom);
 
-  d3.select('svg#profileSVG')
-    .on('mousemove', () => {
-      this.pointHighlight.bind(this);
+    svg.on('mousemove', () => {
+      this.pointHighlight.bind(this)();
     });
 
 
-  const xAxis = d3.axisBottom(this.scaleX);
-  const yAxis = d3.axisLeft(this.scaleY)
-    .tickSize(-this.width);  this.previousDomainX = this.scaleX.domain();
-  this.previousDomainY = this.scaleY.domain();
+    const xAxis = d3.axisBottom(this.scaleX);
+    const yAxis = d3.axisLeft(this.scaleY)
+      .tickSize(-this.width_);  this.previousDomainX = this.scaleX['domain']();
+    this.previousDomainY = this.scaleY['domain']();
 
-  svg.select('.y.axis').selectAll('g.tick line').style('stroke', '#b7cff7');
+    svg.select('.y.axis').selectAll('g.tick line').style('stroke', '#b7cff7');
 
-  svg.append('g')
-    .attr('class', 'y axis')
-    .call(yAxis);
+    svg.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis);
 
-  svg.append('g')
-    .attr('class', 'x axis')
-    .call(xAxis);
+    svg.append('g')
+      .attr('class', 'x axis')
+      .call(xAxis);
 
-  svg.select('.y.axis').attr('transform', `translate(${margin.left}, ${margin.top})`);
-  svg.select('.x.axis').attr('transform', `translate(${margin.left}, ${this.height + margin.top})`);
+    svg.select('.y.axis').attr('transform', `translate(${margin.left}, ${margin.top})`);
+    svg.select('.x.axis').attr('transform', `translate(${margin.left}, ${this.height_ + margin.top})`);
 
-  svg.select('.y.axis').selectAll('g.tick line')
-    .style('opacity', '0.5')
-    .style('stroke', '#b7cff7');
+    svg.select('.y.axis').selectAll('g.tick line')
+      .style('opacity', '0.5')
+      .style('stroke', '#b7cff7');
 
-  this.previousDomainX = this.scaleX.domain();
-  this.previousDomainY = this.scaleY.domain();
+    this.previousDomainX = this.scaleX['domain']();
+    this.previousDomainY = this.scaleY['domain']();
+  }
 
-};
 
-gmf.lidarProfile.plot.prototype.zoomEnd = function() {
-  const ctx = d3.select('#profileCanvas')
-    .node().getContext('2d');
-  ctx.clearRect(0, 0, this.width, this.height);
-  this.parent_.loader.updateData();
-};
+  /**
+   * FIXME missing description
+   */
+  zoomEnd() {
+    const ctx = d3.select('#gmf-lidar-profile-container .lidar-canvas')
+      .node().getContext('2d');
+    ctx.clearRect(0, 0, this.width_, this.height_);
+    this.manager_.updateData();
+  }
 
-gmf.lidarProfile.plot.prototype.zoomed = function() {
 
-  if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'mousemove') {
-    if (d3.event.sourceEvent.movementX == 0 && d3.event.sourceEvent.movementY == 0) {
-      return;
+  /**
+   * FIXME missing description
+   */
+  zoomed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'mousemove') {
+      if (d3.event.sourceEvent.movementX == 0 && d3.event.sourceEvent.movementY == 0) {
+        return;
+      }
+    }
+
+    this.manager_.measure.clearMeasure();
+
+    const tr = d3.event.transform;
+    const svg = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
+    const xAxis = d3.axisBottom(this.scaleX);
+    const yAxis = d3.axisLeft(this.scaleY)
+      .tickSize(-this.width_);
+
+    svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(this.scaleX)));
+    svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(this.scaleY)));
+    const ctx = d3.select('#gmf-lidar-profile-container .lidar-canvas')
+      .node().getContext('2d');
+    ctx.clearRect(0, 0, this.width_, this.height_);
+
+    svg.select('.y.axis').selectAll('g.tick line')
+      .style('opacity', '0.5')
+      .style('stroke', '#b7cff7');
+
+    this.scaleX = tr.rescaleX(this.scaleX);
+    this.scaleY = tr.rescaleY(this.scaleY);
+  }
+
+
+  /**
+   * Update the Openlayers overlay that displays point position and attributes values
+   * @export
+   */
+  pointHighlight() {
+    const svg = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
+    const lidarInfo = d3.select('#gmf-lidar-profile-container .lidar-info');
+    const pointSize = this.manager_.config.serverConfig.point_size;
+    const margin = this.manager_.config.clientConfig.margin;
+    const tolerance = this.manager_.config.clientConfig.tolerance || 0;
+
+    const canvasCoordinates = d3.mouse(d3.select('#gmf-lidar-profile-container .lidar-canvas').node());
+    const classification_colors = this.manager_.config.serverConfig.classification_colors;
+
+    let cx, cy;
+    const p = this.manager_.utils.getClosestPoint(this.manager_.profilePoints,
+      canvasCoordinates[0], canvasCoordinates[1], tolerance, this.scaleX, this.scaleY, classification_colors);
+
+    if (p != undefined) {
+
+      cx = this.scaleX(p.distance) + margin.left;
+      cy = this.scaleY(p.altitude) + margin.top;
+
+      svg.selectAll('#highlightCircle').remove();
+
+      svg.append('circle')
+        .attr('id', 'highlightCircle')
+        .attr('cx', cx)
+        .attr('cy', cy)
+        .attr('r', pointSize + 1)
+        .style('fill', 'orange');
+
+      const pClassification = p.classification || -1;
+      const pointClassification = classification_colors[pClassification] || {};
+
+      const html = this.getInfoHTML(p, pointClassification, 1);
+
+      lidarInfo.html(html);
+      this.manager_.cartoHighlight.setElement(null);
+      const el = document.createElement('div');
+      el.className += 'tooltip gmf-tooltip-measure';
+      el.innerHTML = html;
+
+      this.manager_.cartoHighlight.setElement(el);
+      this.manager_.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
+      this.manager_.lidarPointHighlight.getSource().clear();
+      const lidarPointGeom = new ol.geom.Point([p.coords[0], p.coords[1]]);
+      const lidarPointFeature = new ol.Feature(lidarPointGeom);
+      if (typeof (pointClassification.color) !== undefined) {
+
+        lidarPointFeature.setStyle(new ol.style.Style({
+          image: new ol.style.Circle({
+            fill: new ol.style.Fill({
+              color: `rgba(${pointClassification.color}, 1)`
+            }),
+            radius: 3
+          })
+        }));
+      }
+
+      this.manager_.lidarPointHighlight.getSource().addFeature(lidarPointFeature);
+    } else {
+      this.manager_.lidarPointHighlight.getSource().clear();
+      svg.select('#highlightCircle').remove();
+      lidarInfo.html('');
+      this.manager_.cartoHighlight.setPosition(undefined);
     }
   }
 
-  this.parent_.measure.clearMeasure();
 
-  const tr = d3.event.transform;
-  const svg = d3.select('svg#profileSVG');
-  const xAxis = d3.axisBottom(this.scaleX);
-  const yAxis = d3.axisLeft(this.scaleY)
-    .tickSize(-this.width);
+  /**
+   * @param {gmfx.LidarPoint} point the concerned point.
+   * @param {lidarProfileServer.ConfigClassification} classification_color the classification
+   *     object concerning this point.
+   * @param {number} distDecimal the number of decimal to keep.
+   * @return {string} the text for the html info.
+   * @export
+   */
+  getInfoHTML(point, classification_color, distDecimal) {
+    const gettextCatalog = this.manager_.gettextCatalog;
+    const html = [];
+    const number = this.manager_.$filter('number');
 
-  svg.select('.x.axis').call(xAxis.scale(tr.rescaleX(this.scaleX)));
-  svg.select('.y.axis').call(yAxis.scale(tr.rescaleY(this.scaleY)));
-  const ctx = d3.select('#profileCanvas')
-    .node().getContext('2d');
-  ctx.clearRect(0, 0, this.width, this.height);
+    const distance = point.distance;
+    const altitude = point.altitude;
+    const classification = gettextCatalog.getString(classification_color.name);
+    const intensity = point.intensity;
 
-  svg.select('.y.axis').selectAll('g.tick line')
-    .style('opacity', '0.5')
-    .style('stroke', '#b7cff7');
-
-  this.scaleX = tr.rescaleX(this.scaleX);
-  this.scaleY = tr.rescaleY(this.scaleY);
-  console.log(this);
-};
-
-/**
- * Update the Openlayers overlay that displays point position and attributes values
- * @export
-*/
-gmf.lidarProfile.plot.prototype.pointHighlight = function() {
-
-  const svg = d3.select('svg#profileSVG');
-  const pointSize = this.options.profileConfig.pointSize;
-  const margin = this.options.profileConfig.margin;
-  const tolerance = this.options.profileConfig.tolerance;
-
-  const canvasCoordinates = d3.mouse(d3.select('#profileCanvas').node());
-
-  let cx, cy;
-  const p = this.utils_.getClosestPoint(this.parent_.loader.profilePoints,
-    canvasCoordinates[0], canvasCoordinates[1], tolerance, this.scaleX, this.scaleY);
-
-  if (p != undefined) {
-
-    cx = this.scaleX(p.distance) + margin.left;
-    cy = this.scaleY(p.altitude) + margin.top;
-
-    svg.selectAll('#highlightCircle').remove();
-
-    d3.select('svg#profileSVG').append('circle')
-      .attr('id', 'highlightCircle')
-      .attr('cx', cx)
-      .attr('cy', cy)
-      .attr('r', pointSize + 1)
-      .style('fill', 'orange');
-
-    const html = `Distance: ${Math.round(10 * p.distance) / 10}<br>
-    Altitude: ${Math.round(10 * p.altitude) / 10}<br>
-    Classification: ${this.options.profileConfig.classification[p.classification].name}<br>
-    Intensity: ${p.intensity}<br>`;
-
-    d3.select('#profileInfo')
-      .html(html);
-    this.parent_.loader.cartoHighlight.setElement(null);
-    const el = document.createElement('div');
-    el.className += 'tooltip gmf-tooltip-measure';
-    el.innerHTML = html;
-
-    this.parent_.loader.cartoHighlight.setElement(el);
-    this.parent_.loader.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
-    const classifColor = this.options.profileConfig.classification[p.classification].color;
-    this.parent_.loader.lidarPointHighlight.getSource().clear();
-    const lidarPointGeom = new ol.geom.Point([p.coords[0], p.coords[1]]);
-    const lidarPointFeature = new ol.Feature(lidarPointGeom);
-    if (typeof (classifColor) !== undefined) {
-
-      lidarPointFeature.setStyle(new ol.style.Style({
-        image: new ol.style.Circle({
-          fill: new ol.style.Fill({
-            color: `rgba(${classifColor}, 1)`
-          }),
-          radius: 3
-        })
-      }));
+    if (distance !== undefined) {
+      const distanceTxt = gettextCatalog.getString('Distance: ');
+      html.push(`${distanceTxt + number(distance, distDecimal)}`);
+    }
+    if (altitude !== undefined) {
+      const altitudeTxt = gettextCatalog.getString('Altitude: ');
+      html.push(`${altitudeTxt + number(altitude, distDecimal)}`);
+    }
+    if (classification.length > 0) {
+      const classificationTxt = gettextCatalog.getString('Classification: ');
+      html.push(`${classificationTxt + classification}`);
+    }
+    if (intensity !== undefined) {
+      const intensityTxt = gettextCatalog.getString('Intensity: ');
+      html.push(`${intensityTxt + number(intensity, 0)}`);
     }
 
-    this.parent_.loader.lidarPointHighlight.getSource().addFeature(lidarPointFeature);
-  } else {
-    this.parent_.loader.lidarPointHighlight.getSource().clear();
-    svg.select('#highlightCircle').remove();
-    d3.select('#profileInfo').html('');
-    this.parent_.loader.cartoHighlight.setPosition(undefined);
+    return html.join('</br>');
   }
-};
 
-/**
-* Change the profile style according to the material color
-* @param {string} material value as defined in Pytree attribute configuration
-* @export
-*/
-gmf.lidarProfile.plot.prototype.changeStyle = function(material) {
 
-  const ctx = d3.select('#profileCanvas')
-    .node().getContext('2d');
-  ctx.clearRect(0, 0, d3.select('#profileCanvas').node().width, d3.select('#profileCanvas').node().height);
-  this.drawPoints(this.parent_.loader.profilePoints, material);
+  /**
+  * Change the profile style according to the material color
+  * @param {string} material value as defined in Pytree attribute configuration
+  * @export
+  */
+  changeStyle(material) {
+    const canvasEl = d3.select('#gmf-lidar-profile-container .lidar-canvas').node();
+    const ctx = canvasEl.getContext('2d');
+    ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+    this.drawPoints(this.manager_.profilePoints, material);
+  }
 
-};
 
-/**
-* Show/Hide classes in the profile
-* @param {gmfx.lidarPointAttribute} classification value as defined in the Pytree classification_colors configuration
-* @param {string} material  value as defined in Pytree attribute configuration
-* @export
-*/
-gmf.lidarProfile.plot.prototype.setClassActive = function(classification, material) {
-
-  this.options.profileConfig.classification = classification;
-  const ctx = d3.select('#profileCanvas')
-    .node().getContext('2d');
-  ctx.clearRect(0, 0, d3.select('#profileCanvas').node().width, d3.select('#profileCanvas').node().height);
-  this.drawPoints(this.parent_.loader.profilePoints, material);
-
+  /**
+  * Show/Hide classes in the profile
+  * @param {lidarProfileServer.ConfigClassifications} classification value as defined in the Pytree classification_colors
+  *     configuration
+  * @param {string} material  value as defined in Pytree attribute configuration
+  * @export
+  */
+  setClassActive(classification, material) {
+    this.manager_.config.serverConfig.classification_colors = classification;
+    this.changeStyle(material);
+  }
 };
