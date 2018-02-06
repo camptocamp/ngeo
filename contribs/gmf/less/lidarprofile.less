@@ -1,6 +1,6 @@
 @lidar-profile-height: 35rem;
 @profile-legend-width: 15rem;
-.gmf-lidar-profile-container {
+#gmf-lidar-profile-container {
   position: relative;
   overflow: hidden;
   padding: @app-margin;
@@ -9,12 +9,12 @@
   height: @lidar-profile-height;
   display: flex;
 
-  .gmf-lidar-profile {
+  .lidar-profile {
     width: ~"calc(100% - @{profile-legend-width})";
     background-color: #f5f5f5;
   }
 
-  .gmf-lidar-profile-legend {
+  .lidar-legend {
     list-style-type: none;
     width: @profile-legend-width;
     padding: @app-margin;
@@ -24,7 +24,7 @@
     height: 1rem;
   }
 
-  #lidarError {
+  .lidar-error {
     visibility: hidden;
     position: absolute;
     color: #4b717f;
@@ -38,14 +38,13 @@
     height: 100%;
   }
 
+  .lod-info {
+    max-height: 90px;
+    overflow-y: auto;
+  }
 }
 
-#lodInfo {
-  max-height: 90px;
-  overflow-y: auto;
-}
-
-.gmf_lidar_profile_automatic_width {
+.gmf-lidar-profile-automatic-width {
   color: gray;
 }
 

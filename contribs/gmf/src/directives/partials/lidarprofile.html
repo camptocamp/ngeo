@@ -1,18 +1,13 @@
-<div
-  class="gmf-lidar-profile-container panel"
-  ng-show="$ctrl.active">
-  <div class="gmf-lidar-profile"
-      gmf-lidar-profile="::ctrl.profileData"
-       gmf-lidar-profile-options="::ctrl.profileOptions"
-       gmf-lidar-profile-highlight="ctrl.profileHighlight">
-    <div id="lidarError"></div>
-    <canvas id="profileCanvas"></canvas>
-    <svg id="profileSVG" style="fill: #ffff00;position:absolute;z-index:1;"></svg>
+<div id="gmf-lidar-profile-container" class="panel" ng-show="$ctrl.active">
+  <div class="lidar-profile">
+    <div class="lidar-error"></div>
+    <canvas class="lidar-canvas"></canvas>
+    <svg class="lidar-svg" style="fill: #ffff00;position:absolute;z-index:1;"></svg>
   </div>
-  <div class="gmf-lidar-profile-legend">
-  <div id="widthInfo"></div>
-  <div id="lodInfo"></div>
-  <div id="profileInfo"></div>
+  <div class="lidar-legend">
+    <div class="width-info"></div>
+    <div class="lod-info"></div>
+    <div class="lidar-info"></div>
   </div>
   <div
     class="close"

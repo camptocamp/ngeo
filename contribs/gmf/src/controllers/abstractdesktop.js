@@ -29,8 +29,6 @@ goog.require('gmf.lidarProfileComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.lidarPanelComponent');
 /** @suppress {extraRequire} */
-goog.require('gmf.LidarProfileConfig');
-/** @suppress {extraRequire} */
 goog.require('gmf.drawprofilelineDirective');
 /** @suppress {extraRequire} */
 goog.require('ngeo.DatePickerDirective');
