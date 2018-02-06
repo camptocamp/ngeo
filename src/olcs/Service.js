@@ -11,7 +11,7 @@ const Service = class {
   /**
    * @ngInject
    * @param {!ngeox.miscDebounce} ngeoDebounce ngeo debounce service.
-   * @param {!ngeox.Location} ngeoLocation ngeo location service.
+   * @param {!ngeo.statemanager.Location} ngeoLocation ngeo location service.
    * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo StateManager service.
    */
   constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
@@ -29,7 +29,7 @@ const Service = class {
 
     /**
      * @private
-     * @type {!ngeox.Location}
+     * @type {!ngeo.statemanager.Location}
      */
     this.ngeoLocation_ = ngeoLocation;
 
@@ -124,8 +124,8 @@ const Service = class {
 
 const name = 'ngeoOlcsService';
 Service.module = angular.module(name, [
-  ngeo.misc.debounce.module.name,
-  ngeo.statemanager.Location.name,
+  ngeo.misc.debounce.name,
+  ngeo.statemanager.Location.module.name,
   ngeo.statemanager.Service.module.name,
 ]).service(name, Service);
 
