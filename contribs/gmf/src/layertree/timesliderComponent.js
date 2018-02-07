@@ -2,6 +2,7 @@ goog.provide('gmf.layertree.timeSliderComponent');
 
 goog.require('gmf');
 goog.require('ngeo.misc.WMSTime');
+// webpack: import 'jquery-ui/widgets/slider.js';
 // webpack: import 'angular-ui-slider';
 
 /**

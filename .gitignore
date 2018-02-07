@@ -19,3 +19,5 @@
 /contribs/gmf/fonts/fontawesome*
 /contribs/gmf/cursors/*.cur
 /contribs/gmf/examples/https.js
+/test/spec/templatecache.js
+/test/spec/gmftemplatecache.js

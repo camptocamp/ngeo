@@ -1,5 +1,6 @@
 goog.provide('gmf.controllers.AbstractAppController');
 
+// webpack: import 'angular-dynamic-locale';
 goog.require('gmf');
 goog.require('gmf.authentication.module');
 goog.require('gmf.backgroundlayerselector.component');

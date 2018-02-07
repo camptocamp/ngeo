@@ -6,6 +6,7 @@ goog.require('ngeo.misc.filters');
 goog.require('ngeo.grid.Config');
 goog.require('ol.has');
 // webpack: import 'floatthead';
+// webpack: import 'angular-float-thead';
 
 
 /**

@@ -291,9 +291,9 @@ ngeo.map.LayerHelper.prototype.getFlatLayers = function(layer) {
 ngeo.map.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
   if (layer instanceof ol.layer.Group) {
     const sublayers = layer.getLayers();
-    sublayers.forEach(function(l) {
+    sublayers.forEach((l) => {
       this.getFlatLayers_(l, array);
-    }, this);
+    });
   } else {
     if (array.indexOf(layer) < 0) {
       array.push(layer);
@@ -314,7 +314,7 @@ ngeo.map.LayerHelper.prototype.getFlatLayers_ = function(layer, array) {
  */
 ngeo.map.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
   let found = null;
-  layers.some(function(layer) {
+  layers.some((layer) => {
     if (layer instanceof ol.layer.Group) {
       const sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
@@ -322,7 +322,7 @@ ngeo.map.LayerHelper.prototype.getLayerByName = function(layerName, layers) {
       found = layer;
     }
     return !!found;
-  }, this);
+  });
 
   return found;
 };

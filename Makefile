@@ -835,6 +835,25 @@ $(EXTERNS_JQUERY): github_versions
 		--var "partials=ngeo:src gmf:contribs/gmf/src" \
 		--var "app=app" $< > $@
 
+.PRECIOUS: test/spec/templatecache.js
+test/spec/templatecache.js: buildtools/templatecache-webpack.mako.js \
+		.build/glob2.timestamp \
+		.build/python-venv/bin/mako-render \
+		$(NGEO_PARTIALS_FILES)
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "partials=ngeo:src" \
+		--var "app=./beforeeach.js" $< > $@
+
+.PRECIOUS: test/spec/gmftemplatecache.js
+test/spec/gmftemplatecache.js: buildtools/templatecache-webpack.mako.js \
+		.build/glob2.timestamp \
+		.build/python-venv/bin/mako-render \
+		$(NGEO_PARTIALS_FILES) \
+		$(GMF_PARTIALS_FILES)
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "partials=ngeo:src gmf:contribs/gmf/src" \
+		--var "app=./beforeeach.js" $< > $@
+
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
 
