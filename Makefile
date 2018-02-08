@@ -2,7 +2,7 @@ SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
-GMF_DIRECTIVES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/src/directives/partials/*.html)
+GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
@@ -830,7 +830,7 @@ $(EXTERNS_JQUERY): github_versions
 		.build/glob2.timestamp \
 		.build/python-venv/bin/mako-render \
 		$(NGEO_PARTIALS_FILES) \
-		$(GMF_DIRECTIVES_PARTIALS_FILES)
+		$(GMF_PARTIALS_FILES)
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "partials=ngeo:src gmf:contribs/gmf/src" \
 		--var "app=gmf" $< > $@
@@ -902,9 +902,9 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	node buildtools/extract-messages $(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
-		$(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES)
+		$(GMF_PARTIALS_FILES) $(GMF_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(GMF_DIRECTIVES_PARTIALS_FILES) $(GMF_JS_FILES) > $@
+	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_JS_FILES) > $@
 
 .build/locale/apps.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES)
