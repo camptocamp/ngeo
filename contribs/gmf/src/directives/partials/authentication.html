@@ -78,7 +78,9 @@
     </div>
   </form>
 
-  <ngeo-modal ng-model="authCtrl.changePasswordModalShown">
+  <ngeo-modal
+      ngeo-modal-destroy-content-on-hide="true"
+      ng-model="authCtrl.changePasswordModalShown">
     <div class="modal-header">
       <button type="button"
               class="close"
@@ -140,7 +142,9 @@
     </div>
   </form>
 
-  <ngeo-modal ng-model="authCtrl.resetPasswordModalShown">
+  <ngeo-modal
+      ngeo-modal-destroy-content-on-hide="true"
+      ng-model="authCtrl.resetPasswordModalShown">
     <div class="modal-header">
       <button type="button"
               class="close"

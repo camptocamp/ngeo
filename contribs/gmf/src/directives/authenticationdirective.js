@@ -193,7 +193,7 @@ gmf.AuthenticationController = function(gettextCatalog, $scope,
   this.newPwdConfVal = '';
 
   ol.events.listen(gmfAuthentication, gmf.AuthenticationEventType.READY,
-    this.onLoginReady_.bind(this));
+    this.onUserChange_.bind(this));
 };
 
 
@@ -280,7 +280,10 @@ gmf.AuthenticationController.prototype.login = function() {
   } else {
     const error = gettextCatalog.getString('Incorrect username or password.');
     this.gmfAuthentication_.login(this.loginVal, this.pwdVal).then(
-      this.resetError_.bind(this),
+      () => {
+        this.resetError_();
+        this.onUserChange_();
+      },
       this.setError_.bind(this, error));
   }
 };
@@ -345,11 +348,10 @@ gmf.AuthenticationController.prototype.changePasswordReset = function() {
 
 
 /**
- * @param {gmf.AuthenticationEvent} e GMF Authentification event.
  * @private
  */
-gmf.AuthenticationController.prototype.onLoginReady_ = function(e) {
-  if (e.user.is_password_changed === false && this.forcePasswordChange) {
+gmf.AuthenticationController.prototype.onUserChange_ = function() {
+  if (this.gmfUser.is_password_changed === false && this.forcePasswordChange) {
     const gettextCatalog = this.gettextCatalog;
     const msg = gettextCatalog.getString('You must change your password.');
     this.notification_.notify({
