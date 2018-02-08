@@ -2,44 +2,23 @@ goog.provide('gmf.controllers.AbstractAppController');
 
 goog.require('gmf');
 goog.require('gmf.controllers.defaultConfig');
-/** @suppress {extraRequire} */
+goog.require('gmf.authentication.module');
 goog.require('gmf.backgroundlayerselector.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.datasource.Manager');
-/** @suppress {extraRequire} */
+goog.require('gmf.datasource.module');
 goog.require('gmf.disclaimer.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.query.windowComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertree.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertree.TreeManager');
-/** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.theme.Manager');
-/** @suppress {extraRequire} */
-goog.require('gmf.theme.Themes');
-/** @suppress {extraRequire} */
-goog.require('gmf.theme.selectorComponent');
-goog.require('goog.asserts');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.filters');
-/** @suppress {extraRequire} */
-goog.require('ngeo.query.MapQuerent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryComponent');
-/** @suppress {extraRequire} */
+goog.require('gmf.filters.module');
+goog.require('gmf.layertree.module');
+goog.require('gmf.map.module');
+goog.require('gmf.query.extraModule');
+goog.require('gmf.search.module');
+goog.require('gmf.theme.module');
 goog.require('ngeo.message.displaywindowComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.FeatureHelper');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.getBrowserLanguage');
+goog.require('ngeo.misc.extraModule');
 goog.require('ngeo.misc.ToolActivate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.ToolActivateMgr');
-/** @suppress {extraRequire} */
+goog.require('ngeo.query.MapQuerent');
+goog.require('ngeo.query.mapQueryComponent');
 goog.require('ngeo.statemanager.module');
+goog.require('goog.asserts');
 goog.require('ol.array');
 goog.require('ol.events');
 goog.require('ol.Map');
@@ -47,12 +26,6 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-
-gmf.controllers.defaultConfig.value('ngeoExportFeatureFormats', [
-  ngeo.misc.FeatureHelper.FormatType.KML,
-  ngeo.misc.FeatureHelper.FormatType.GPX
-]);
 
 
 /**
@@ -727,4 +700,31 @@ gmf.controllers.AbstractAppController.prototype.getLocationIcon = function() {
   return arrowWrapper;
 };
 
-gmf.controllers.defaultConfig.controller('AbstractController', gmf.controllers.AbstractAppController);
+
+gmf.controllers.AbstractAppController.module = angular.module('GmfAbstractAppControllerModule', [
+  gmf.controllers.defaultConfig.name,
+  gmf.authentication.module.name,
+  gmf.backgroundlayerselector.component.name,
+  gmf.datasource.module.name,
+  gmf.disclaimer.component.name,
+  gmf.filters.module.name,
+  gmf.layertree.module.name,
+  gmf.map.module.name,
+  gmf.query.extraModule.name,
+  gmf.search.module.name,
+  gmf.theme.module.name,
+  ngeo.message.displaywindowComponent.name,
+  ngeo.misc.extraModule.name,
+  ngeo.query.MapQuerent.module.name,
+  ngeo.query.mapQueryComponent.name,
+  ngeo.statemanager.module.name,
+]);
+
+
+gmf.controllers.AbstractAppController.module.controller('AbstractController', gmf.controllers.AbstractAppController);
+
+
+gmf.controllers.AbstractAppController.module.value('ngeoExportFeatureFormats', [
+  ngeo.misc.FeatureHelper.FormatType.KML,
+  ngeo.misc.FeatureHelper.FormatType.GPX
+]);

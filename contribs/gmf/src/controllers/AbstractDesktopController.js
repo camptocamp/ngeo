@@ -1,9 +1,18 @@
 goog.provide('gmf.controllers.AbstractDesktopController');
 
 goog.require('gmf');
-goog.require('gmf.controllers.defaultConfig');
 goog.require('gmf.controllers.AbstractAppController');
+
+goog.require('gmf.contextualdata.module');
+goog.require('gmf.drawing.module');
+goog.require('gmf.editing.module');
+goog.require('gmf.permalink.shareComponent');
+goog.require('gmf.print.component');
+goog.require('gmf.profile.module');
+goog.require('gmf.raster.component');
+goog.require('ngeo.draw.features');
 goog.require('ngeo.misc.ToolActivate');
+goog.require('ngeo.query.bboxQueryComponent');
 goog.require('ol');
 goog.require('ol.proj');
 goog.require('ol.obj');
@@ -20,16 +29,6 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-
-
-gmf.controllers.defaultConfig.value('isDesktop', true);
-
-gmf.controllers.defaultConfig.value('ngeoQueryOptions', {
-  'limit': 20
-});
-
-gmf.controllers.defaultConfig.value('ngeoMeasurePrecision', 3);
-gmf.controllers.defaultConfig.value('ngeoMeasureDecimals', 0);
 
 
 /**
@@ -221,7 +220,28 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
 };
 ol.inherits(gmf.controllers.AbstractDesktopController, gmf.controllers.AbstractAppController);
 
+gmf.controllers.AbstractDesktopController.module = angular.module('GmfAbstractDesktopControllerModule', [
+  gmf.controllers.AbstractAppController.module.name,
+  gmf.contextualdata.module.name,
+  gmf.drawing.module.name,
+  gmf.editing.module.name,
+  gmf.permalink.shareComponent.name,
+  gmf.print.component.name,
+  gmf.profile.module.name,
+  gmf.raster.component.name,
+  ngeo.draw.features.name,
+  ngeo.query.bboxQueryComponent,
+]);
 
-gmf.controllers.defaultConfig.controller(
+gmf.controllers.AbstractDesktopController.module.controller(
   'AbstractDesktopController',
   gmf.controllers.AbstractDesktopController);
+
+gmf.controllers.AbstractDesktopController.module.value('isDesktop', true);
+
+gmf.controllers.AbstractDesktopController.module.value('ngeoQueryOptions', {
+  'limit': 20
+});
+
+gmf.controllers.AbstractDesktopController.module.value('ngeoMeasurePrecision', 3);
+gmf.controllers.AbstractDesktopController.module.value('ngeoMeasureDecimals', 0);

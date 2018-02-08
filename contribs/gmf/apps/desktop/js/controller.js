@@ -17,6 +17,11 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.googlestreetview.component');
 goog.require('ol');
 
+app.desktop.module = angular.module('AppDesktop', [
+  app.module.name,
+  gmf.controllers.AbstractDesktopController.module.name,
+]);
+
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -103,4 +108,4 @@ app.desktop.Controller = function($scope, $injector) {
 ol.inherits(app.desktop.Controller, gmf.controllers.AbstractDesktopController);
 
 
-app.module.controller('DesktopController', app.desktop.Controller);
+app.desktop.module.controller('DesktopController', app.desktop.Controller);

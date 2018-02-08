@@ -1,20 +1,11 @@
 goog.provide('gmf.controllers.AbstractMobileController');
 
 goog.require('gmf');
-goog.require('gmf.controllers.defaultConfig');
 goog.require('gmf.controllers.AbstractAppController');
-/** @suppress {extraRequire} */
+goog.require('gmf.mobile.measure.module');
+goog.require('gmf.mobile.navigation.module');
 goog.require('gmf.query.windowComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.mobile.measure.lengthComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.mobile.measure.pointComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.mobile.navigation.component');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.query.mapQueryComponent');
+goog.require('ngeo.geolocation.mobile');
 goog.require('ol');
 goog.require('ol.obj');
 goog.require('ol.proj');
@@ -28,15 +19,6 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.geolocation.mobile');
-
-gmf.controllers.defaultConfig.value('isMobile', true);
-
-gmf.controllers.defaultConfig.value('ngeoQueryOptions', {
-  'tolerance': 10
-});
 
 
 /**
@@ -213,4 +195,19 @@ gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function(
   return this.rightNavVisible;
 };
 
-gmf.controllers.defaultConfig.controller('AbstractMobileController', gmf.controllers.AbstractMobileController);
+
+gmf.controllers.AbstractMobileController.module = angular.module('GmfAbstractMobileControllerModule', [
+  gmf.controllers.AbstractMobileController.module.name,
+  gmf.mobile.measure.module.name,
+  gmf.mobile.navigation.module.name,
+  gmf.query.windowComponent.name,
+  ngeo.geolocation.mobile.name,
+]);
+
+gmf.controllers.AbstractMobileController.module.controller('AbstractMobileController', gmf.controllers.AbstractMobileController);
+
+gmf.controllers.AbstractMobileController.module.value('isMobile', true);
+
+gmf.controllers.AbstractMobileController.module.value('ngeoQueryOptions', {
+  'tolerance': 10
+});
