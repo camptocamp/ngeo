@@ -1,7 +1,6 @@
 goog.provide('gmf.controllers.AbstractAppController');
 
 goog.require('gmf');
-goog.require('gmf.controllers.defaultConfig');
 goog.require('gmf.authentication.module');
 goog.require('gmf.backgroundlayerselector.component');
 goog.require('gmf.datasource.module');
@@ -702,7 +701,8 @@ gmf.controllers.AbstractAppController.prototype.getLocationIcon = function() {
 
 
 gmf.controllers.AbstractAppController.module = angular.module('GmfAbstractAppControllerModule', [
-  gmf.controllers.defaultConfig.name,
+  'gettext',
+  'tmh.dynamicLocale',
   gmf.authentication.module.name,
   gmf.backgroundlayerselector.component.name,
   gmf.datasource.module.name,
@@ -727,4 +727,15 @@ gmf.controllers.AbstractAppController.module.controller('AbstractController', gm
 gmf.controllers.AbstractAppController.module.value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.KML,
   ngeo.misc.FeatureHelper.FormatType.GPX
+]);
+
+gmf.controllers.AbstractAppController.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+  /**
+   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
+   * @param {string} angularLocaleScript the script.
+   */
+  function(tmhDynamicLocaleProvider, angularLocaleScript) {
+    // configure the script URL
+    tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
+  }
 ]);

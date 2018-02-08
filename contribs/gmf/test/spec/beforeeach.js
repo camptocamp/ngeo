@@ -1,5 +1,3 @@
-goog.require('gmf.controllers.defaultConfig');
-
 goog.require('gmf.contextualdata.component');
 goog.require('gmf.layertree.module');
 goog.require('gmf.map.component');
@@ -11,7 +9,8 @@ goog.require('gmf.query.extraModule');
 const appModule = angular.module('gmfapp', []);
 
 beforeEach(() =>  {
-  appModule.requires.push(gmf.controllers.defaultConfig.name);
+  appModule.requires.push('gettext');
+  appModule.requires.push('tmh.dynamicLocale');
   appModule.requires.push(gmf.contextualdata.component.name);
   appModule.requires.push(gmf.map.component.name);
   appModule.requires.push(gmf.layertree.module.name);
@@ -24,8 +23,8 @@ beforeEach(() =>  {
 beforeEach(angular.mock.module('gmfapp'));
 
 beforeEach(() => {
-  gmf.controllers.defaultConfig.constant('angularLocaleScript', 'http://fake');
-  gmf.controllers.defaultConfig.constant('gmfLayersUrl', 'https://fake');
+  appModule.constant('angularLocaleScript', 'http://fake');
+  appModule.constant('gmfLayersUrl', 'https://fake');
 
   angular.mock.module('gmfapp', ($provide) => {
     $provide.value('gmfTreeUrl', 'http://fake/gmf/themes');
