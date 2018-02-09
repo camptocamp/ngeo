@@ -13,6 +13,7 @@ goog.require('gmf.search.module');
 goog.require('gmf.theme.module');
 goog.require('ngeo.message.displaywindowComponent');
 goog.require('ngeo.misc.extraModule');
+goog.require('ngeo.misc.FeatureHelper');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.query.mapQueryComponent');
@@ -715,6 +716,7 @@ gmf.controllers.AbstractAppController.module = angular.module('GmfAbstractAppCon
   gmf.theme.module.name,
   ngeo.message.displaywindowComponent.name,
   ngeo.misc.extraModule.name,
+  ngeo.misc.FeatureHelper.module.name,
   ngeo.query.MapQuerent.module.name,
   ngeo.query.mapQueryComponent.name,
   ngeo.statemanager.module.name,
