@@ -7,6 +7,7 @@ function jscodeshift {
 }
 
 rm -f src/jstsexports.js
+rm -rf third-party/
 node node_modules/googshift/filename-case-from-module.js src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
