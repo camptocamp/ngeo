@@ -109,18 +109,6 @@ $ make gh-pages GITHUB_USERNAME=<your_github_username>
 
 URL will then be `http://<your_github_username>.github.io/ngeo/<branchname>/apidoc`
 
-## Developing on Windows
-
-If using Windows, then please use the Windows Makefile `Makefile_windows`.
-
-Typically, to run the example, one would use the following command:
-
-```shell
-$ make -f Makefile_windows serve
-```
-
-Please be sure to fulfill also the requirements listed on top of the Windows Makefile
-
 ## Developer Guide
 
 This section includes information for developers and users of ngeo.
