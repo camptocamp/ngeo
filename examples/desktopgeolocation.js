@@ -18,7 +18,6 @@ goog.require('ngeo.geolocation.desktop');
 
 /** @type {!angular.Module} **/
 app.desktopgeolocation.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.geolocation.desktop.name,
   ngeo.map.module.name
 ]);

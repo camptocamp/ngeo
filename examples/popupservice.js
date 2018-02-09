@@ -8,7 +8,6 @@ goog.require('ngeo.message.Popup');
 
 /** @type {!angular.Module} **/
 app.popupservice.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.message.Popup.module.name,
 ]);
 

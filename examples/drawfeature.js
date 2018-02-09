@@ -17,7 +17,6 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 app.drawfeature.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.draw.module.name,
   ngeo.map.module.name,
   ngeo.misc.ToolActivateMgr.module.name,

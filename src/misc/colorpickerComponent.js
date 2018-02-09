@@ -8,8 +8,6 @@ goog.require('ngeo');
  */
 ngeo.misc.colorpickerComponent = angular.module('ngeoColorpicker', []);
 
-ngeo.module.requires.push(ngeo.misc.colorpickerComponent.name);
-
 
 ngeo.misc.colorpickerComponent.value('ngeoColorpickerTemplateUrl',
   /**

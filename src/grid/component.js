@@ -17,8 +17,6 @@ ngeo.grid.component = angular.module('ngeoGrid', [
   'floatThead',
 ]);
 
-ngeo.module.requires.push(ngeo.grid.component.name);
-
 
 ngeo.grid.component.value('ngeoGridTemplateUrl',
   /**

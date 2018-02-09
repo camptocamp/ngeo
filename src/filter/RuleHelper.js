@@ -724,4 +724,3 @@ ngeo.filter.RuleHelper.module = angular.module('ngeoRuleHelper', [
   ngeo.misc.WMSTime.module.name,
 ]);
 ngeo.filter.RuleHelper.module.service('ngeoRuleHelper', ngeo.filter.RuleHelper);
-ngeo.module.requires.push(ngeo.filter.RuleHelper.module.name);

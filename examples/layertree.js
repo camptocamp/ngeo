@@ -21,7 +21,6 @@ goog.require('ngeo.message.Popup');
 
 /** @type {!angular.Module} **/
 app.layertree.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.layertree.module.name,
   ngeo.map.module.name,
   ngeo.message.Popup.module.name,

@@ -12,7 +12,6 @@ goog.require('ngeo.draw.text');
  * @type {!angular.Module}
  */
 ngeo.draw.module = angular.module('ngeoDrawModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.draw.Controller.module.name,
   ngeo.draw.component.name,
   ngeo.draw.features.name,

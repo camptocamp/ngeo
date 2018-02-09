@@ -30,8 +30,6 @@ gmf.query.windowComponent = angular.module('gmfQueryWindowComponent', [
   'ngTouch',
 ]);
 
-gmf.module.requires.push(gmf.query.windowComponent.name);
-
 
 gmf.query.windowComponent.config(['$animateProvider',
   /**

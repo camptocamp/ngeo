@@ -198,4 +198,3 @@ ngeo.misc.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
 
 ngeo.misc.ToolActivateMgr.module = angular.module('ngeoToolActivateMgr', []);
 ngeo.misc.ToolActivateMgr.module.service('ngeoToolActivateMgr', ngeo.misc.ToolActivateMgr);
-ngeo.module.requires.push(ngeo.misc.ToolActivateMgr.module.name);

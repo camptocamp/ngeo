@@ -195,4 +195,3 @@ ngeo.statemanager.Service.module = angular.module('ngeoStateManager', [
 ]);
 ngeo.statemanager.Service.module.service('ngeoStateManager', ngeo.statemanager.Service);
 ngeo.statemanager.Service.module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
-ngeo.module.requires.push(ngeo.statemanager.Service.module.name);

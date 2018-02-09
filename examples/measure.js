@@ -25,7 +25,6 @@ goog.require('ol.style.Fill');
 
 /** @type {!angular.Module} **/
 app.measure.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.filters.name,

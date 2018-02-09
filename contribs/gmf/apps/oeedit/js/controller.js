@@ -7,7 +7,7 @@
 goog.provide('app.oeedit.Controller');
 
 goog.require('app');
-goog.require('gmf.AbstractDesktopController');
+goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.objectediting.component');
 goog.require('gmf.objectediting.Manager');
@@ -30,7 +30,7 @@ goog.require('ol.source.Vector');
  * @param {angular.$injector} $injector Main injector.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @constructor
- * @extends {gmf.AbstractDesktopController}
+ * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
@@ -42,7 +42,7 @@ app.oeedit.Controller = function($scope, $injector, $timeout) {
    */
   this.oeEditActive = false;
 
-  gmf.AbstractDesktopController.call(this, {
+  gmf.controllers.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -205,7 +205,7 @@ app.oeedit.Controller = function($scope, $injector, $timeout) {
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
 };
-ol.inherits(app.oeedit.Controller, gmf.AbstractDesktopController);
+ol.inherits(app.oeedit.Controller, gmf.controllers.AbstractDesktopController);
 
 
 app.module.controller('OEEditController', app.oeedit.Controller);

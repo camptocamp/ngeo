@@ -16,8 +16,6 @@ gmf.mobile.measure.lengthComponent = angular.module('gmfMobileMeasureLength', [
   ngeo.misc.filters.name,
 ]);
 
-gmf.module.requires.push(gmf.mobile.measure.lengthComponent.name);
-
 
 gmf.mobile.measure.lengthComponent.value('gmfMobileMeasureLengthTemplateUrl',
   /**

@@ -9,7 +9,6 @@ goog.require('ngeo.measure.length');
  * @type {!angular.Module}
  */
 ngeo.measure.module = angular.module('ngeoMeasureModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.measure.area.name,
   ngeo.measure.azimut.name,
   ngeo.measure.length.name

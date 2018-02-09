@@ -1,45 +1,18 @@
-goog.provide('gmf.AbstractDesktopController');
+goog.provide('gmf.controllers.AbstractDesktopController');
 
 goog.require('gmf');
-goog.require('gmf.AbstractAppController');
-/** @suppress {extraRequire} */
-goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.contextualdata.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.query.gridComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.drawing.drawFeatureComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.editing.editFeatureSelectorComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.filters.filterselectorComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.map.mousepositionComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.print.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.profile.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.profile.drawLineComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.raster.component');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertree.timeSliderComponent');
-/** @suppress {extraRequire} */
+goog.require('gmf.controllers.AbstractAppController');
+
+goog.require('gmf.contextualdata.module');
+goog.require('gmf.drawing.module');
+goog.require('gmf.editing.module');
 goog.require('gmf.permalink.shareComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
+goog.require('gmf.print.component');
+goog.require('gmf.profile.module');
+goog.require('gmf.raster.component');
 goog.require('ngeo.draw.features');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.datepickerComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.sortableComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.ToolActivate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.ToolActivateMgr');
+goog.require('ngeo.query.bboxQueryComponent');
 goog.require('ol');
 goog.require('ol.proj');
 goog.require('ol.obj');
@@ -58,16 +31,6 @@ goog.require('ol.style.Style');
 goog.require('ol.style.Text');
 
 
-gmf.module.value('isDesktop', true);
-
-gmf.module.value('ngeoQueryOptions', {
-  'limit': 20
-});
-
-gmf.module.value('ngeoMeasurePrecision', 3);
-gmf.module.value('ngeoMeasureDecimals', 0);
-
-
 /**
  * Desktop application abstract controller.
  *
@@ -78,19 +41,19 @@ gmf.module.value('ngeoMeasureDecimals', 0);
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.AbstractAppController}
+ * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller
  * @ngInject
  * @export
  */
-gmf.AbstractDesktopController = function(config, $scope, $injector) {
+gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) {
 
   const viewConfig = {
     projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
   };
   ol.obj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.AbstractAppController.prototype.getLocationIcon();
+  const arrow = gmf.controllers.AbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
@@ -245,7 +208,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
    */
   this.profileLine = null;
 
-  gmf.AbstractAppController.call(this, config, $scope, $injector);
+  gmf.controllers.AbstractAppController.call(this, config, $scope, $injector);
 
   // close the login panel on successful login
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
@@ -255,9 +218,30 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
   });
 
 };
-ol.inherits(gmf.AbstractDesktopController, gmf.AbstractAppController);
+ol.inherits(gmf.controllers.AbstractDesktopController, gmf.controllers.AbstractAppController);
 
+gmf.controllers.AbstractDesktopController.module = angular.module('GmfAbstractDesktopControllerModule', [
+  gmf.controllers.AbstractAppController.module.name,
+  gmf.contextualdata.module.name,
+  gmf.drawing.module.name,
+  gmf.editing.module.name,
+  gmf.permalink.shareComponent.name,
+  gmf.print.component.name,
+  gmf.profile.module.name,
+  gmf.raster.component.name,
+  ngeo.draw.features.name,
+  ngeo.query.bboxQueryComponent,
+]);
 
-gmf.module.controller(
+gmf.controllers.AbstractDesktopController.module.controller(
   'AbstractDesktopController',
-  gmf.AbstractDesktopController);
+  gmf.controllers.AbstractDesktopController);
+
+gmf.controllers.AbstractDesktopController.module.value('isDesktop', true);
+
+gmf.controllers.AbstractDesktopController.module.value('ngeoQueryOptions', {
+  'limit': 20
+});
+
+gmf.controllers.AbstractDesktopController.module.value('ngeoMeasurePrecision', 3);
+gmf.controllers.AbstractDesktopController.module.value('ngeoMeasureDecimals', 0);

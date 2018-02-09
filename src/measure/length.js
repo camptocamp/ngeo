@@ -16,8 +16,6 @@ ngeo.measure.length = angular.module('ngeoMeasurelength', [
   ngeo.misc.filters.name,
 ]);
 
-ngeo.module.requires.push(ngeo.measure.length.name);
-
 
 /**
  * @param {!angular.$compile} $compile Angular compile service.

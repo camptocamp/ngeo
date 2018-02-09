@@ -18,8 +18,6 @@ gmf.profile.drawLineComponent = angular.module('gmfDrawProfileLine', [
   ngeo.map.FeatureOverlayMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.profile.drawLineComponent.name);
-
 
 /**
  * Simple directive that can be put on any element. The directive listen on

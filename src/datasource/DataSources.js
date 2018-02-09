@@ -180,4 +180,3 @@ ngeo.datasource.DataSources = class {
 ngeo.datasource.DataSources.module = angular.module('ngeoDataSources', []);
 // DataSources with the ngeox.datasource.DataSources type.
 ngeo.datasource.DataSources.module.service('ngeoDataSources', ngeo.datasource.DataSources);
-ngeo.module.requires.push(ngeo.datasource.DataSources.module.name);

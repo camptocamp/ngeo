@@ -9,6 +9,5 @@ goog.require('ngeo.layertree.component');
  * @type {!angular.Module}
  */
 ngeo.layertree.module = angular.module('ngeoLayertreeModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.layertree.component.name
 ]);

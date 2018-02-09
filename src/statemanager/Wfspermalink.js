@@ -317,4 +317,3 @@ ngeo.statemanager.WfsPermalink.module.value('ngeoWfsPermalinkOptions',
 
 
 ngeo.statemanager.WfsPermalink.module.service('ngeoWfsPermalink', ngeo.statemanager.WfsPermalink);
-ngeo.module.requires.push(ngeo.statemanager.WfsPermalink.module.name);

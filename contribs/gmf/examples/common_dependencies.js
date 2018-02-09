@@ -1,4 +1,4 @@
-import 'jquery';
-import 'angular';
-import 'angular-gettext';
-import '../../../utils/watchwatchers.js';
+// webpack: import 'jquery';
+// webpack: import 'angular';
+// webpack: import 'angular-gettext';
+// webpack: import '../../../utils/watchwatchers.js';

@@ -19,7 +19,6 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 app.search.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.search.module.name
 ]);

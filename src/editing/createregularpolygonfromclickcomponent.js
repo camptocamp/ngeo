@@ -9,8 +9,6 @@ goog.require('ol.Feature');
 ngeo.editing.createregularpolygonfromclickComponent = angular.module('ngeoCreateregularpolygonfromclick', [
 ]);
 
-ngeo.module.requires.push(ngeo.editing.createregularpolygonfromclickComponent.name);
-
 
 /**
  * A directive used to draw vector features of a single geometry type using

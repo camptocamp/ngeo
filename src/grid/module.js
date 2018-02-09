@@ -10,6 +10,5 @@ goog.require('ngeo.grid.component');
  * @type {!angular.Module}
  */
 ngeo.grid.module = angular.module('ngeoGridModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.grid.component.name
 ]);

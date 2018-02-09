@@ -22,7 +22,6 @@ goog.require('ngeo.profile.elevationComponent');
 
 /** @type {!angular.Module} **/
 app.elevationProfile.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.profile.elevationComponent.name,
 ]);

@@ -10,8 +10,6 @@ ngeo.query.mapQueryComponent = angular.module('ngeoMapQuery', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.query.mapQueryComponent.name);
-
 
 /**
  * Provides a "map query" directive.

@@ -24,7 +24,6 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.search.module = angular.module('gmfapp', [
-  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.map.component.name,
   gmf.search.module.name,
   gmf.theme.Themes.module.name,

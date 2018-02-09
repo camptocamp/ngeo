@@ -35,8 +35,6 @@ gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
   gmf.filters.SavedFilters.module.name,
 ]);
 
-gmf.module.requires.push(gmf.filters.filterselectorComponent.name);
-
 
 /**
  * @private

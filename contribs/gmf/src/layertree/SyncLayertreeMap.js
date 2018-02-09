@@ -441,4 +441,3 @@ gmf.layertree.SyncLayertreeMap.module = angular.module('gmfSyncLayertreeMap', [
   ngeo.misc.WMSTime.module.name,
 ]);
 gmf.layertree.SyncLayertreeMap.module.service('gmfSyncLayertreeMap', gmf.layertree.SyncLayertreeMap);
-gmf.module.requires.push(gmf.layertree.SyncLayertreeMap.module.name);

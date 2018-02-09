@@ -14,7 +14,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.scaleselector.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.filters.name,
 ]);

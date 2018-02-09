@@ -14,13 +14,13 @@ goog.require('ngeo.misc.filters');
 goog.require('ngeo.misc.getBrowserLanguage');
 goog.require('ngeo.misc.sortableComponent');
 goog.require('ngeo.misc.Time');
+goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.misc.WMSTime');
 
 /**
  * @type {!angular.Module}
  */
 ngeo.misc.extraModule = angular.module('ngeoMiscExtraModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.misc.AutoProjection.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.controlComponent.name,
@@ -34,5 +34,6 @@ ngeo.misc.extraModule = angular.module('ngeoMiscExtraModule', [
   ngeo.misc.getBrowserLanguage.name,
   ngeo.misc.sortableComponent.name,
   ngeo.misc.Time.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
   ngeo.misc.WMSTime.module.name,
 ]);

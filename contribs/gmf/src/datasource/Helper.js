@@ -141,4 +141,3 @@ gmf.datasource.Helper.module = angular.module('gmfDataSourcesHelper', [
   gmf.editing.EnumerateAttribute.module.name,
 ]);
 gmf.datasource.Helper.module.service('gmfDataSourcesHelper', gmf.datasource.Helper);
-gmf.module.requires.push(gmf.datasource.Helper.module.name);

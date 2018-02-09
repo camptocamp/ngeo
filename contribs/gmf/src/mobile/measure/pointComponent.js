@@ -21,8 +21,6 @@ gmf.mobile.measure.pointComponent = angular.module('gmfMobileMeasurePoint', [
   gmf.raster.RasterService.module.name,
 ]);
 
-gmf.module.requires.push(gmf.mobile.measure.pointComponent.name);
-
 
 gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
   /**

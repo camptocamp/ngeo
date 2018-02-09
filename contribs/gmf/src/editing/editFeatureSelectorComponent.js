@@ -17,8 +17,6 @@ gmf.editing.editFeatureSelectorComponent = angular.module('GmfEditingFeatureSele
   gmf.theme.Themes.module.name,
 ]);
 
-gmf.module.requires.push(gmf.editing.editFeatureSelectorComponent.name);
-
 
 /**
  * Directive that uses the GMF Theme service to collect the editable layers

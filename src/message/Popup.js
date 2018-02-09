@@ -269,4 +269,3 @@ ngeo.message.Popup.module = angular.module('ngeoCreatePopup', [
   ngeo.message.popupComponent.name,
 ]);
 ngeo.message.Popup.module.factory('ngeoCreatePopup', ngeo.message.Popup.Factory);
-ngeo.module.requires.push(ngeo.message.Popup.module.name);

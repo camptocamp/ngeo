@@ -44,8 +44,6 @@ ngeo.filter.ruleComponent = angular.module('ngeoRule', [
   ngeo.misc.FeatureHelper.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.filter.ruleComponent.name);
-
 
 /**
  * @private

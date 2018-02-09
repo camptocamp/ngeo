@@ -11,9 +11,6 @@ ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowCo
   'ngSanitize',
 ]);
 
-ngeo.module.requires.push(ngeo.message.displaywindowComponent.name);
-
-
 /**
  * @private
  */

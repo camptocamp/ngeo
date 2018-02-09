@@ -12,7 +12,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} */
 app.attributes.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.editing.attributesComponent.name,
 ]);

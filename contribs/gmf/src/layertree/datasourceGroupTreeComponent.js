@@ -13,8 +13,6 @@ gmf.layertree.datasourceGroupTreeComponent = angular.module(
     ngeo.datasource.DataSources.module.name,
   ]);
 
-gmf.module.requires.push(gmf.layertree.datasourceGroupTreeComponent.name);
-
 
 /**
  * @private

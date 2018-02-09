@@ -8,9 +8,6 @@ goog.require('ngeo');
  */
 ngeo.misc.filereaderComponent = angular.module('ngeoFilereader', []);
 
-ngeo.module.requires.push(ngeo.misc.filereaderComponent.name);
-
-
 /**
  * This directive is to used on an input file element. When a file is selected
  * the directive uses the browser `FileReader` API to read the file. The file

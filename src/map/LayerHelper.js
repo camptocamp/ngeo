@@ -458,4 +458,3 @@ ngeo.map.LayerHelper.prototype.getQuerySourceIds = function(layer) {
  */
 ngeo.map.LayerHelper.module = angular.module('ngeoLayerHelper', []);
 ngeo.map.LayerHelper.module.service('ngeoLayerHelper', ngeo.map.LayerHelper);
-ngeo.module.requires.push(ngeo.map.LayerHelper.module.name);

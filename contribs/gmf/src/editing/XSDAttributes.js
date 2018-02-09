@@ -66,4 +66,3 @@ gmf.editing.XSDAttributes.prototype.handleGetAttributes_ = function(resp) {
  */
 gmf.editing.XSDAttributes.module = angular.module('gmfXSDAttributes', []);
 gmf.editing.XSDAttributes.module.service('gmfXSDAttributes', gmf.editing.XSDAttributes);
-gmf.module.requires.push(gmf.editing.XSDAttributes.module.name);

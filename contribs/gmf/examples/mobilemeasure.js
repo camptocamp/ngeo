@@ -21,7 +21,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.mobilemeasure.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.map.component.name,
   gmf.permalink.Permalink.module.name,
   gmf.mobile.measure.lengthComponent.name,

@@ -13,7 +13,6 @@ goog.require('ngeo.message.modalComponent');
  * @type {angular.Module}
  */
 ngeo.message.extraModule = angular.module('ngeoMessageExtraModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
   ngeo.message.Notification.module.name,
   ngeo.message.displaywindowComponent.name,
   ngeo.message.Disclaimer.module.name,

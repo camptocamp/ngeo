@@ -125,4 +125,3 @@ ngeo.misc.AutoProjection.prototype.tryProjectionsWithInversion = function(
  */
 ngeo.misc.AutoProjection.module = angular.module('ngeoAutoProjection', []);
 ngeo.misc.AutoProjection.module.service('ngeoAutoProjection', ngeo.misc.AutoProjection);
-ngeo.module.requires.push(ngeo.misc.AutoProjection.module.name);

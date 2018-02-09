@@ -19,8 +19,6 @@ gmf.drawing.featureStyleComponent = angular.module('gmfDrawingFeatureStyle', [
   ngeo.misc.FeatureHelper.module.name,
 ]);
 
-gmf.module.requires.push(gmf.drawing.featureStyleComponent.name);
-
 
 /**
  * Directive used to set the style of a vector feature. The options depend

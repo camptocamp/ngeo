@@ -228,5 +228,3 @@ ngeo.message.Disclaimer.module = angular.module('ngeoDisclaimer', [
 ]);
 
 ngeo.message.Disclaimer.module.service('ngeoDisclaimer', ngeo.message.Disclaimer);
-
-ngeo.module.requires.push(ngeo.message.Disclaimer.module.name);

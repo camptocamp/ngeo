@@ -10,7 +10,6 @@ goog.require('gmf.layertree.TreeManager');
 
 /** @type {!angular.Module} **/
 gmfapp.themeselector.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.theme.module.name,
 ]);
 

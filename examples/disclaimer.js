@@ -15,7 +15,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.disclaimer.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.message.Disclaimer.module.name,
 ]);

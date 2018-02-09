@@ -261,5 +261,3 @@ const name = 'ngeoOlcsControls3d';
 exports = angular.module(name, [])
   .component(name, component)
   .value('ngeoOlcsControls3dTemplateUrl', '');
-
-ngeo.module.requires.push(name);

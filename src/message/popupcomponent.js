@@ -7,7 +7,6 @@ goog.require('ngeo');
 ngeo.message.popupComponent = angular.module('ngeoPopup', [
   'ngSanitize',
 ]);
-ngeo.module.requires.push(ngeo.message.popupComponent.name);
 
 
 ngeo.message.popupComponent.value('ngeoPopupTemplateUrl',

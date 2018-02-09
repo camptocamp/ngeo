@@ -11,8 +11,6 @@ goog.require('ol.Map');
  */
 ngeo.map.component = angular.module('ngeoMap', []);
 
-ngeo.module.requires.push(ngeo.map.component.name);
-
 
 /**
  * Provides a directive used to insert a user-defined OpenLayers

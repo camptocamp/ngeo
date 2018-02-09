@@ -17,7 +17,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.backgroundlayerdropdown.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name
 ]);
 

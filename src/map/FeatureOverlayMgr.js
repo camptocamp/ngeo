@@ -182,4 +182,3 @@ ngeo.map.FeatureOverlayMgr.module = angular.module('ngeoFeatureOverlayMgr', [
   ngeo.map.FeatureOverlay.module.name
 ]);
 ngeo.map.FeatureOverlayMgr.module.service('ngeoFeatureOverlayMgr', ngeo.map.FeatureOverlayMgr);
-ngeo.module.requires.push(ngeo.map.FeatureOverlayMgr.module.name);

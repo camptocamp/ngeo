@@ -6,8 +6,6 @@ goog.require('ol.string');
 
 ngeo.misc.filters = angular.module('ngeoAngularFilters', []);
 
-ngeo.module.requires.push(ngeo.misc.filters.name);
-
 /**
  * Format a number as a localized scale.
  * For instance:
@@ -238,7 +236,7 @@ ngeo.misc.filters.NumberCoordinates = function($filter) {
   return filterFn;
 };
 
-ngeo.module.filter('ngeoNumberCoordinates', ngeo.misc.filters.NumberCoordinates);
+ngeo.misc.filters.filter('ngeoNumberCoordinates', ngeo.misc.filters.NumberCoordinates);
 
 
 /**

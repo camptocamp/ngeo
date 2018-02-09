@@ -21,7 +21,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name
 ]);
 

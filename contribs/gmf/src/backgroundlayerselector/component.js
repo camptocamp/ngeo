@@ -15,8 +15,6 @@ gmf.backgroundlayerselector.component = angular.module('gmfBackgroundlayerselect
   ngeo.map.BackgroundLayerMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.backgroundlayerselector.component.name);
-
 
 gmf.backgroundlayerselector.component.value('gmfBackgroundlayerselectorTemplateUrl',
   /**

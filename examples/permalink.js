@@ -21,7 +21,6 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 app.permalink.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.debounce.name,
   ngeo.statemanager.module.name,

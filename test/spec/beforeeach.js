@@ -1,7 +1,16 @@
 /*eslint valid-jsdoc: 0 */
 
-goog.require('ngeo.layertree.module');
-goog.require('ngeo.search.module');
+goog.provide('app');
+
+goog.require('ngeo.mainmodule');
+
+const module = app.module = angular.module('app', []);
+
+beforeEach(() =>  {
+  module.requires.push(ngeo.mainmodule.name);
+});
+
+beforeEach(angular.mock.module('app'));
 
 beforeEach(() => {
   jasmine.addMatchers({

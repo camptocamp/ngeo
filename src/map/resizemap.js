@@ -9,8 +9,6 @@ goog.require('ol.Map');
  */
 ngeo.map.resizemap = angular.module('ngeoResizemap', []);
 
-ngeo.module.requires.push(ngeo.map.resizemap.name);
-
 /**
  * Provides a directive that resizes the map in an animation loop
  * during 1 second when the value of "state" changes. This is especially useful

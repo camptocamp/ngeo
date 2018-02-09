@@ -8,8 +8,6 @@ goog.require('ngeo');
  */
 ngeo.misc.debounce = angular.module('ngeoDebounce', []);
 
-ngeo.module.requires.push(ngeo.misc.debounce.name);
-
 
 /**
  * Provides a debounce service. That service is a function

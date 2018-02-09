@@ -19,6 +19,7 @@ goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.statemanager.module');
+goog.require('ngeo.statemanager.Service');
 goog.require('ngeo.layertree.Controller');
 goog.require('goog.asserts');
 goog.require('ol');
@@ -1507,8 +1508,6 @@ gmf.permalink.Permalink.module = angular.module('gmfPermalink', [
   ngeo.layertree.Controller.module.name,
 ]);
 
-gmf.module.requires.push(gmf.permalink.Permalink.module.name);
-
 gmf.permalink.Permalink.module.service('gmfPermalink', gmf.permalink.Permalink);
 
 
@@ -1555,5 +1554,5 @@ gmf.permalink.Permalink.module.value('gmfPermalinkOptions',
   for (const key2 in gmf.PermalinkParam) {
     regexp.push(new RegExp(gmf.permalink.Permalink.ParamPrefix[key2]));
   }
-  ngeo.module.value('ngeoUsedKeyRegexp', regexp);
+  ngeo.statemanager.Service.module.value('ngeoUsedKeyRegexp', regexp);
 })();

@@ -73,4 +73,3 @@ gmf.raster.RasterService.Param = {
  */
 gmf.raster.RasterService.module = angular.module('gmfRaster', []);
 gmf.raster.RasterService.module.service('gmfRaster', gmf.raster.RasterService);
-gmf.module.requires.push(gmf.raster.RasterService.module.name);

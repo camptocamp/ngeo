@@ -20,7 +20,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.print.module = angular.module('gmfapp', [
-  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.layertree.component.name,
   gmf.map.component.name,
   gmf.print.component.name,

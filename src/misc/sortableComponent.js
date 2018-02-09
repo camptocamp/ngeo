@@ -9,8 +9,6 @@ goog.require('ngeo');
  */
 ngeo.misc.sortableComponent = angular.module('ngeoSortable', []);
 
-ngeo.module.requires.push(ngeo.misc.sortableComponent.name);
-
 
 /**
  * Provides a directive that allows drag-and-dropping DOM items between them.

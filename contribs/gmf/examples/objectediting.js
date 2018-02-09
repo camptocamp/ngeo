@@ -27,7 +27,6 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 gmfapp.objectediting.module = angular.module('gmfapp', [
-  gmf.module.name,
   gmf.layertree.component.name,
   gmf.map.component.name,
   gmf.objectediting.component.name,

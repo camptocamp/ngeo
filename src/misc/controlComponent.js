@@ -11,8 +11,6 @@ goog.require('ol.control.Control');
  */
 ngeo.misc.controlComponent = angular.module('ngeoControl', []);
 
-ngeo.module.requires.push(ngeo.misc.controlComponent.name);
-
 
 /**
  * Provides a directive that can be used to add a control to the map

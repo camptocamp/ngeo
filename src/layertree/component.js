@@ -11,8 +11,6 @@ ngeo.layertree.component = angular.module('ngeoLayertree', [
   ngeo.layertree.Controller.module.name
 ]);
 
-ngeo.module.requires.push(ngeo.layertree.component.name);
-
 
 ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
   /**

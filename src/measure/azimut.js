@@ -19,8 +19,6 @@ ngeo.measure.azimut = angular.module('ngeoMeasureazimut', [
   ngeo.misc.filters.name,
 ]);
 
-ngeo.module.requires.push(ngeo.measure.azimut.name);
-
 
 /**
  * @param {!angular.$compile} $compile Angular compile service.

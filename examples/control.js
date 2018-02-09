@@ -15,7 +15,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 app.control.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.misc.controlComponent.name,
 ]);

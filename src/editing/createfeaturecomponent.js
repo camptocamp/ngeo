@@ -21,8 +21,6 @@ ngeo.editing.createfeatureComponent = angular.module('ngeoCreatefeature', [
   ngeo.misc.filters.name,
 ]);
 
-ngeo.module.requires.push(ngeo.editing.createfeatureComponent.name);
-
 
 /**
  * A directive used to draw vector features of a single geometry type using

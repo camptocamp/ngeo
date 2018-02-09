@@ -290,4 +290,3 @@ ngeo.print.Utils.prototype.getUpRightCorner = function(mapCenter) {
  */
 ngeo.print.Utils.module = angular.module('ngeoPrintUtils', []);
 ngeo.print.Utils.module.service('ngeoPrintUtils', ngeo.print.Utils);
-ngeo.module.requires.push(ngeo.print.Utils.module.name);

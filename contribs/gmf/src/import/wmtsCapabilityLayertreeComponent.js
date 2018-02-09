@@ -13,8 +13,6 @@ gmf.import.wmtsCapabilityLayertreeComponent = angular.module('gmfWmtscapabilityl
   ngeo.message.Popup.module.name,
 ]);
 
-gmf.module.requires.push(gmf.import.wmtsCapabilityLayertreeComponent.name);
-
 
 /**
  * @private

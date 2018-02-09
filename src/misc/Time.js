@@ -66,4 +66,3 @@ ngeo.misc.Time.prototype.getUTCDate = function(localDate) {
  */
 ngeo.misc.Time.module = angular.module('ngeoTime', []);
 ngeo.misc.Time.module.service('ngeoTime', ngeo.misc.Time);
-ngeo.module.requires.push(ngeo.misc.Time.module.name);

@@ -1,24 +1,5 @@
 goog.provide('gmf');
 
-goog.require('ngeo');
-
-/** @type {!angular.Module} */
-gmf.module = angular.module('gmf', [
-  ngeo.module.name, 'gettext', 'ngAnimate', 'ngTouch', 'ngSanitize',
-  'tmh.dynamicLocale', 'ui.date', 'ui.slider'
-]);
-
-gmf.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
-  /**
-   * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
-   * @param {string} angularLocaleScript the script.
-   */
-  function(tmhDynamicLocaleProvider, angularLocaleScript) {
-    // configure the script URL
-    tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
-  }
-]);
-
 /**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}

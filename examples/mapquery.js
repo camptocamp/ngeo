@@ -24,7 +24,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 app.mapquery.module = angular.module('app', [
-  ngeo.module.name,
   ngeo.datasource.DataSources.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,

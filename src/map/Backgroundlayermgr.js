@@ -162,4 +162,3 @@ ngeo.map.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimension
  */
 ngeo.map.BackgroundLayerMgr.module = angular.module('ngeoBackgroundLayerMgr', []);
 ngeo.map.BackgroundLayerMgr.module.service('ngeoBackgroundLayerMgr', ngeo.map.BackgroundLayerMgr);
-ngeo.module.requires.push(ngeo.map.BackgroundLayerMgr.module.name);

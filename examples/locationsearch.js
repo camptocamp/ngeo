@@ -16,7 +16,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
-  ngeo.module.name,
   ngeo.map.module.name,
   ngeo.search.module.name
 ]);

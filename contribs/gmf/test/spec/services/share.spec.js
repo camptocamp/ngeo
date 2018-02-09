@@ -42,7 +42,7 @@ describe('gmf.permalink.ShareService', () => {
     let shortenerUrl;
     let gmfShareService;
 
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       $provide.value('gmfShortenerCreateUrl', '');
     });
 

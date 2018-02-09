@@ -49,5 +49,5 @@ goog.require('${app}');
   %endfor
   };
 
-  ${app}.module.run(runner);
+  angular.module(${app}.module.name).run(runner);
 })();

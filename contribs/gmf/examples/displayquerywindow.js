@@ -31,7 +31,6 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 gmfapp.displayquerywindow.module = angular.module('gmfapp', [
-  gmf.module.name, // Change me when gmf.Theme and other dependencies are in a module
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
   gmf.map.component.name,

@@ -19,8 +19,6 @@ gmf.authentication.component = angular.module('gmfAuthentication', [
   ngeo.message.modalComponent.name,
 ]);
 
-gmf.module.requires.push(gmf.authentication.component.name);
-
 /**
  * @param {angular.JQLite} element Element.
  * @param {angular.Attributes} attrs Attributes.

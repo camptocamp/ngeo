@@ -19,7 +19,7 @@ describe('ngeo.query.Service', () => {
   let ngeoQueryResult;
 
   beforeEach(() => {
-    module('ngeo', ($provide) => {
+    angular.mock.module('ngeo', ($provide) => {
       // reset services and values
       $provide.value('ngeoQueryOptions', {});
       $provide.service('ngeoQuery', ngeo.query.Service);

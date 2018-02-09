@@ -142,4 +142,3 @@ ngeo.download.Csv.module = angular.module('ngeoCsvDownload', [
   ngeo.download.service.name
 ]);
 ngeo.download.Csv.module.service('ngeoCsvDownload', ngeo.download.Csv);
-ngeo.module.requires.push(ngeo.download.Csv.module.name);

@@ -12,8 +12,6 @@ ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
   ngeo.misc.EventHelper.module.name,
 ]);
 
-ngeo.module.requires.push(ngeo.editing.attributesComponent.name);
-
 
 /**
  * Component used to render the attributes of a feature into a form.

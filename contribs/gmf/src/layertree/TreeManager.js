@@ -596,4 +596,3 @@ gmf.layertree.TreeManager.module = angular.module('gmfTreeManager', [
   ngeo.statemanager.Service.module.name,
 ]);
 gmf.layertree.TreeManager.module.service('gmfTreeManager', gmf.layertree.TreeManager);
-gmf.module.requires.push(gmf.layertree.TreeManager.module.name);

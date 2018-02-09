@@ -14,8 +14,6 @@ gmf.theme.selectorComponent = angular.module('gmfThemeSelectorComponent', [
   gmf.theme.Themes.module.name,
 ]);
 
-gmf.module.requires.push(gmf.theme.selectorComponent.name);
-
 
 /**
  * Note that this component works with the {@link gmf.layertree.TreeManager}.

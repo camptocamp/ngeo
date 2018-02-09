@@ -10,8 +10,6 @@ goog.require('ol.interaction.Draw');
  */
 ngeo.draw.text = angular.module('ngeoDrawtext', []);
 
-ngeo.module.requires.push(ngeo.draw.text.name);
-
 
 /**
  * @return {angular.Directive} The directive specs.

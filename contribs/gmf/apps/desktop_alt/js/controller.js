@@ -8,7 +8,7 @@ goog.provide('app.desktop_alt.Controller');
 
 goog.require('app');
 goog.require('gmf');
-goog.require('gmf.AbstractDesktopController');
+goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.importdatasourceComponent');
 /** @suppress {extraRequire} */
@@ -21,13 +21,13 @@ goog.require('ngeo.googlestreetview.component');
 goog.require('ol');
 
 
-gmf.module.value('ngeoQueryOptions', {
+app.module.value('ngeoQueryOptions', {
   'limit': 20,
   'queryCountFirst': true,
   'cursorHover': true
 });
 
-gmf.module.value('gmfExternalOGCServers', [{
+app.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'https://wms.geo.admin.ch/?lang=fr'
@@ -41,12 +41,12 @@ gmf.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-gmf.module.value('gmfPrintOptions', {
+app.module.value('gmfPrintOptions', {
   'scaleInput': true
 });
 
-gmf.module.value('ngeoMeasurePrecision', 6);
-gmf.module.value('ngeoMeasureDecimals', 2);
+app.module.value('ngeoMeasurePrecision', 6);
+app.module.value('ngeoMeasureDecimals', 2);
 
 
 /**
@@ -56,12 +56,12 @@ gmf.module.value('ngeoMeasureDecimals', 2);
  * @param {gettext} gettext The gettext service
  * @param {angular.$q} $q Angular $q.
  * @constructor
- * @extends {gmf.AbstractDesktopController}
+ * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
 app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) {
-  gmf.AbstractDesktopController.call(this, {
+  gmf.controllers.AbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -146,7 +146,7 @@ app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) 
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
 };
-ol.inherits(app.desktop_alt.Controller, gmf.AbstractDesktopController);
+ol.inherits(app.desktop_alt.Controller, gmf.controllers.AbstractDesktopController);
 
 
 /**

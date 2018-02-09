@@ -18,8 +18,6 @@ gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
   ngeo.query.Querent.module.name,
 ]);
 
-gmf.module.requires.push(gmf.import.importdatasourceComponent.name);
-
 /**
  * @private
  */

@@ -27,8 +27,6 @@ ngeo.filter.component = angular.module('ngeoFilter', [
   ngeo.filter.ruleComponent.name,
 ]);
 
-ngeo.module.requires.push(ngeo.filter.component.name);
-
 ngeo.filter.component.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',

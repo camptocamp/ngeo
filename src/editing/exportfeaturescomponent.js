@@ -10,8 +10,6 @@ ngeo.editing.exportfeaturesComponent = angular.module('ngeoExportfeatures', [
   ngeo.misc.FeatureHelper.module.name
 ]);
 
-ngeo.module.requires.push(ngeo.editing.exportfeaturesComponent.name);
-
 /**
  * Directive used to export vector features in different types of format.
  * To configure which formats to use, define the `ngeoExportFeatureFormats`
@@ -47,7 +45,7 @@ ngeo.editing.exportfeaturesComponent.directive_ = function() {
 };
 
 
-ngeo.module.directive('ngeoExportfeatures', ngeo.editing.exportfeaturesComponent.directive_);
+ngeo.editing.exportfeaturesComponent.directive('ngeoExportfeatures', ngeo.editing.exportfeaturesComponent.directive_);
 
 
 /**

@@ -18,8 +18,6 @@ ngeo.profile.elevationComponent = angular.module('ngeoProfile', [
   ngeo.misc.debounce.name
 ]);
 
-ngeo.module.requires.push(ngeo.profile.elevationComponent.name);
-
 
 /**
  * Provides a directive used to insert an elevation profile chart

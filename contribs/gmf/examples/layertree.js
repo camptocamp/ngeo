@@ -22,7 +22,6 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.layertree.module = angular.module('gmfapp', [
-  gmf.module.name, // Change when other dependencies are in a module
   gmf.layertree.component.name,
   gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,

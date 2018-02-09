@@ -18,8 +18,6 @@ ngeo.googlestreetview.component = angular.module('ngeoGooglestreetview', [
   ngeo.map.FeatureOverlayMgr.module.name
 ]);
 
-ngeo.module.requires.push(ngeo.googlestreetview.component.name);
-
 /**
  * @private
  */

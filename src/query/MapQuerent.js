@@ -8,17 +8,6 @@ goog.require('ngeo.datasource.Helper');
 goog.require('ol.obj');
 
 
-/**
- * The `ngeoQueryResult` is the value service where the features of the query
- * result are added.
- */
-ngeo.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
-  sources: [],
-  total: 0,
-  pending: false
-}));
-
-
 ngeo.query.MapQuerent = class {
 
   /**
@@ -232,4 +221,14 @@ ngeo.query.MapQuerent.module = angular.module('ngeoMapQuerent', [
   ngeo.query.Querent.module.name,
 ]);
 ngeo.query.MapQuerent.module.service('ngeoMapQuerent', ngeo.query.MapQuerent);
-ngeo.module.requires.push(ngeo.query.MapQuerent.module.name);
+
+
+/**
+ * The `ngeoQueryResult` is the value service where the features of the query
+ * result are added.
+ */
+ngeo.query.MapQuerent.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
+  sources: [],
+  total: 0,
+  pending: false
+}));

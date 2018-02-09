@@ -16,8 +16,6 @@ gmf.contextualdata.component = angular.module('gmfContextualdata', [
   gmf.raster.RasterService.module.name,
 ]);
 
-gmf.module.requires.push(gmf.contextualdata.component.name);
-
 
 /**
  * Provide a directive responsible of displaying contextual data after a right

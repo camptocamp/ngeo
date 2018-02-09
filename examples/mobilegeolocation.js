@@ -18,7 +18,6 @@ goog.require('ngeo.geolocation.mobile');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
-  ngeo.module.name,
   ngeo.geolocation.mobile.name,
   ngeo.map.module.name
 ]);

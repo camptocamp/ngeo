@@ -8,8 +8,6 @@ goog.require('ngeo');
  */
 ngeo.misc.btnComponent = angular.module('ngeoBtnComponent', []);
 
-ngeo.module.requires.push(ngeo.misc.btnComponent.name);
-
 
 /**
  * Provides two directives: ngeo-btn-group and ngeo-btn.

@@ -42,8 +42,6 @@ gmf.drawing.drawFeatureComponent = angular.module('GmfDrawFeatureComponent', [
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
-gmf.module.requires.push(gmf.drawing.drawFeatureComponent.name);
-
 
 /**
  * Directive used to create, modify and delete vector features on a map with

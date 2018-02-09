@@ -586,4 +586,3 @@ gmf.theme.Themes.module = angular.module('gmfThemes', [
 ]);
 gmf.theme.Themes.module.value('gmfThemesOptions', {});
 gmf.theme.Themes.module.service('gmfThemes', gmf.theme.Themes);
-gmf.theme.Themes.module.requires.push(gmf.theme.Themes.module.name);
