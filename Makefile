@@ -649,7 +649,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/index.html: \
 		buildtools/examples-index.mako.html \
 		$(EXAMPLES_HTML_FILES) \
-		$(PY_VENV_BIN)/bin/mako-render \
+		$(PY_VENV_BIN)/mako-render \
 		.build/beautifulsoup4.timestamp \
 		.build/examples-hosted/bootstrap.min.css
 	mkdir -p $(dir $@)
