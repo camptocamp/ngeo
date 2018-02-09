@@ -19,8 +19,8 @@ rules:
 
   googshift/valid-provide-and-module:
     - warn
-    - entryPoints: [ngeo]
-      root: src/module
-      replace: ../../contribs/gmf/src|gmf
+    - entryPoints: [gmfapp, ngeo]
+      root: fakeroot
+      replace: ../contribs/gmf/examples|gmfapp
 
   googshift/valid-requires: error

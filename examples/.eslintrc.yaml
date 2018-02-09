@@ -20,7 +20,7 @@ rules:
   googshift/valid-provide-and-module:
     - warn
     - entryPoints: [ngeo]
-      root: src/module
-      replace: ..|ngeo
+      root: src
+      replace: ../examples|app
 
   googshift/valid-requires: error

@@ -21,6 +21,6 @@ rules:
     - warn
     - entryPoints: [ngeo]
       root: spec
-      replace: ..|ngeo.test
+      replace: ../test/spec|ngeo/test
 
   googshift/valid-requires: error
