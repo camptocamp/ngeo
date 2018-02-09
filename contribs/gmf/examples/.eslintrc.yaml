@@ -1,29 +1,26 @@
-{
-  plugins: [
-    'googshift',
-  ],
-  rules: {
-    'googshift/no-duplicate-requires': 'error',
+plugins:
+  - googshift
 
-    'googshift/no-missing-requires': ['off', {
-      prefixes: ['gmf', 'ngeo', 'ol']
-    }],
+rules:
+  googshift/no-duplicate-requires: error
 
-    'googshift/no-unused-requires': 'off',
+  googshift/no-missing-requires:
+    - warn
+    - prefixes: [gmf, ngeo, ol]
 
-    'googshift/one-provide-or-module': ['error', {
-      entryPoints: ['gmf'],
-      root: 'src'
-    }],
+  googshift/no-unused-requires: warn
 
-    'googshift/requires-first': 'error',
+  googshift/one-provide-or-module:
+    - warn
+    - entryPoints: [gmf]
+      root: src
 
-    'googshift/valid-provide-and-module': ['off', {
-      entryPoints: ['ngeo'],
-      root: 'src/module',
-      replace: '../../contribs/gmf/src|gmf'
-    }],
+  googshift/requires-first: error
 
-    'googshift/valid-requires': 'error',
-  }
-}
+  googshift/valid-provide-and-module:
+    - warn
+    - entryPoints: [ngeo]
+      root: src/module
+      replace: ../../contribs/gmf/src|gmf
+
+  googshift/valid-requires: error

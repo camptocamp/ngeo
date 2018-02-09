@@ -18,9 +18,9 @@ rules:
   googshift/requires-first: error
 
   googshift/valid-provide-and-module:
-    - error
+    - warn
     - entryPoints: [ngeo]
-      root: src/module
-      replace: ..|ngeo
+      root: spec
+      replace: ..|ngeo.test
 
   googshift/valid-requires: error
