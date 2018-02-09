@@ -2,6 +2,7 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.proj');
 goog.require('ol.format.filter');
+goog.require('ol.format.filter.EqualTo');
 goog.require('ol.format.filter.LogicalNary');
 goog.require('ngeo.statemanager.WfsPermalink');
 goog.require('ngeo.test.data.msGMLOutputFuel');

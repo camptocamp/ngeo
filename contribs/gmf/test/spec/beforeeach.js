@@ -1,3 +1,4 @@
+// webpack: import 'angular-dynamic-locale';
 goog.require('gmf.contextualdata.component');
 goog.require('gmf.layertree.module');
 goog.require('gmf.map.component');

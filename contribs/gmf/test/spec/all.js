@@ -1,6 +1,3 @@
-// webpack: import 'jquery';
-// webpack: import 'angular';
-// webpack: import 'angular-mocks';
 import './beforeeach.js';
 import './controllers/gmfprintcontroller.spec.js';
 import './services/share.spec.js';

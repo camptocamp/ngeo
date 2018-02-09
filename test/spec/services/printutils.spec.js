@@ -2,11 +2,11 @@ goog.require('ngeo.print.Utils');
 
 describe('ngeo.print.Utils', () => {
 
-  let ngeoPrintUtils;
+  let ngeoPrintUtilsService;
 
   beforeEach(() => {
-    angular.mock.inject((_ngeoPrintUtils_) => {
-      ngeoPrintUtils = _ngeoPrintUtils_;
+    angular.mock.inject((ngeoPrintUtils) => {
+      ngeoPrintUtilsService = ngeoPrintUtils;
     });
   });
 
@@ -32,7 +32,7 @@ describe('ngeo.print.Utils', () => {
       const mapSize = [2, 1];  // px
       const printMapSize = [640, 320];  // dots
       const printScale = 10;  // scale denominator
-      const optimalResolution = ngeoPrintUtils.getOptimalResolution(
+      const optimalResolution = ngeoPrintUtilsService.getOptimalResolution(
         mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);
     });

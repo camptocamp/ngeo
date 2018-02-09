@@ -2,6 +2,7 @@ goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Image');
 goog.require('ngeo.layertree.module');
+goog.require('ngeo.layertree.Controller');
 goog.require('ngeo');
 
 describe('ngeo.layertree.component', () => {
