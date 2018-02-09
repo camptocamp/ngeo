@@ -175,10 +175,12 @@ else
 	SED_NEW_LINE = ''
 endif
 
-ifeq ($(OS),Windows_NT)
+ifneq (,$(findstring CYGWIN,$(OS)))
 	PY_VENV_BIN = .build/python-venv/Scripts
+	PY_VERSION =
 else
 	PY_VENV_BIN = .build/python-venv/bin
+	PY_VERSION = --python python3
 endif
 
 # Disabling Make built-in rules to speed up execution time
@@ -793,7 +795,7 @@ $(EXTERNS_JQUERY): github_versions
 
 .build/python-venv:
 	mkdir -p $(dir $@)
-	virtualenv --python python3 --no-site-packages $@
+	virtualenv $(PY_VERSION) --no-site-packages $@
 	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
