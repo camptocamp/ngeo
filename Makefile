@@ -175,6 +175,12 @@ else
 	SED_NEW_LINE = ''
 endif
 
+ifeq ($(OS),Windows_NT)
+	PY_VENV_BIN = .build/python-venv/Scripts
+else
+	PY_VENV_BIN = .build/python-venv/bin
+endif
+
 # Disabling Make built-in rules to speed up execution time
 .SUFFIXES:
 
@@ -288,15 +294,15 @@ examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
 .build/glob2.timestamp: requirements.txt .build/python-venv
-	.build/python-venv/bin/pip install `grep ^glob2== $< --colour=never`
+	$(PY_VENV_BIN)/pip install `grep ^glob2== $< --colour=never`
 	touch $@
 
 .build/requests.timestamp: requirements.txt .build/python-venv
-	.build/python-venv/bin/pip install `grep ^requests== $< --colour=never`
+	$(PY_VENV_BIN)/pip install `grep ^requests== $< --colour=never`
 	touch $@
 
 .build/urllib3.timestamp: requirements.txt .build/python-venv
-	.build/python-venv/bin/pip install `grep ^urllib3== $< --colour=never`
+	$(PY_VENV_BIN)/pip install `grep ^urllib3== $< --colour=never`
 	touch $@
 
 .PHONY: gh-pages
@@ -643,20 +649,20 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 .build/examples-hosted/index.html: \
 		buildtools/examples-index.mako.html \
 		$(EXAMPLES_HTML_FILES) \
-		.build/python-venv/bin/mako-render \
+		$(PY_VENV_BIN)/bin/mako-render \
 		.build/beautifulsoup4.timestamp \
 		.build/examples-hosted/bootstrap.min.css
 	mkdir -p $(dir $@)
-	.build/python-venv/bin/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
+	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
 .build/examples-hosted/contribs/gmf/index.html: \
 		buildtools/examples-index.mako.html \
 		$(GMF_EXAMPLES_HTML_FILES) \
-		.build/python-venv/bin/mako-render \
+		$(PY_VENV_BIN)/mako-render \
 		.build/beautifulsoup4.timestamp \
 		.build/examples-hosted/contribs/gmf/bootstrap.min.css
 	mkdir -p $(dir $@)
-	.build/python-venv/bin/python buildtools/generate-examples-index.py \
+	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
 		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
 		--app 'Alternate mobile application' apps/mobile_alt/index.html 'An alternate mobile example application for GeoMapFish.' \
@@ -717,9 +723,9 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	cp $< $@
 
 .PRECIOUS: .build/examples/%.json
-.build/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+.build/examples/%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
 	mkdir -p $(dir $@)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var entry_point=app.$* \
 		--var src=examples/$*.js \
@@ -728,9 +734,9 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var source_map=.build/examples/$*.js.map $< > $@
 
 .PRECIOUS: .build/contribs/gmf/examples/%.json
-.build/contribs/gmf/examples/%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
+.build/contribs/gmf/examples/%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
 	mkdir -p $(dir $@)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var entry_point=gmfapp.$* \
 		--var src=contribs/gmf/examples/$*.js \
@@ -738,23 +744,23 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 		--var examples=true \
 		--var source_map=.build/examples/$*.js.map $< > $@
 
-.build/ngeo.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+.build/ngeo.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var lib=true \
 		--var src_set=ngeo \
 		--var source_map=dist/ngeo.js.map $< > $@
 
-.build/gmf.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+.build/gmf.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var lib=true \
 		--var src_set=contribs_gmf \
 		--var source_map=dist/gmf.js.map $< > $@
 
 .PRECIOUS: .build/app-%.json
-.build/app-%.json: buildtools/mako_build.json .build/python-venv/bin/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+.build/app-%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var 'src=contribs/gmf/apps/**/js/*.js,contribs/gmf/apps/appmodule.js' \
 		--var src_set=contribs_gmf \
@@ -788,50 +794,50 @@ $(EXTERNS_JQUERY): github_versions
 .build/python-venv:
 	mkdir -p $(dir $@)
 	virtualenv --python python3 --no-site-packages $@
-	.build/python-venv/bin/pip install `grep ^pip== requirements.txt --colour=never`
-	.build/python-venv/bin/pip install `grep ^setuptoolss== requirements.txt --colour=never`
+	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
+	$(PY_VENV_BIN)/pip install `grep ^setuptoolss== requirements.txt --colour=never`
 
-.build/python-venv/bin/mako-render: requirements.txt .build/python-venv
-	.build/python-venv/bin/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
+$(PY_VENV_BIN)/mako-render: requirements.txt .build/python-venv
+	$(PY_VENV_BIN)/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
 	touch $@
 
 .build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
-	.build/python-venv/bin/pip install `grep ^beautifulsoup4== $< --colour=never`
+	$(PY_VENV_BIN)/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
 .build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
-	.build/python-venv/bin/python buildtools/closure/depswriter.py \
+	$(PY_VENV_BIN)/python buildtools/closure/depswriter.py \
 		--root_with_prefix="node_modules/openlayers/src ../../../openlayers/src" \
 		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../openlayers/build/ol.ext" \
 		--output_file=$@
 
 .build/ngeo-deps.js: .build/python-venv .build/node_modules.timestamp
-	.build/python-venv/bin/python buildtools/closure/depswriter.py \
+	$(PY_VENV_BIN)/python buildtools/closure/depswriter.py \
 		--root_with_prefix="src ../../../../src" --output_file=$@
 
 .build/gmf-deps.js: .build/python-venv \
 		.build/node_modules.timestamp \
 		$(SRC_JS_FILES) \
 		$(GMF_SRC_JS_FILES)
-	.build/python-venv/bin/python buildtools/closure/depswriter.py \
+	$(PY_VENV_BIN)/python buildtools/closure/depswriter.py \
 		--root_with_prefix="contribs/gmf/src ../../../../contribs/gmf/src" --output_file=$@
 
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \
 		.build/glob2.timestamp \
-		.build/python-venv/bin/mako-render \
+		$(PY_VENV_BIN)/mako-render \
 		$(NGEO_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		--var "partials=ngeo:src" \
 		--var "app=app" $< > $@
 
 .PRECIOUS: .build/gmftemplatecache.js
 .build/gmftemplatecache.js: buildtools/templatecache.mako.js \
 		.build/glob2.timestamp \
-		.build/python-venv/bin/mako-render \
+		$(PY_VENV_BIN)/mako-render \
 		$(NGEO_PARTIALS_FILES) \
 		$(GMF_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		--var "partials=ngeo:src gmf:contribs/gmf/src" \
 		--var "app=app" $< > $@
 
@@ -888,12 +894,12 @@ $(HOME)/.transifexrc:
 	echo "password = c2cc2c" >> $@
 	echo "token =" >> $@
 
-.tx/config: .tx/config.mako .build/python-venv/bin/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+.tx/config: .tx/config.mako $(PY_VENV_BIN)/mako-render
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
-contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-venv/bin/mako-render
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako $(PY_VENV_BIN)/mako-render
+	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
@@ -911,8 +917,8 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES) > $@
 
-.build/python-venv/bin/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
-	.build/python-venv/bin/pip install `grep ^transifex-client== $< --colour=never | sed 's/\#.*//g'`
+$(PY_VENV_BIN)/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
+	$(PY_VENV_BIN)/pip install `grep ^transifex-client== $< --colour=never | sed 's/\#.*//g'`
 	touch $@
 
 .PHONY: transifex-get
@@ -922,39 +928,39 @@ transifex-get: $(L10N_PO_FILES) \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
 
 .PHONY: transifex-send
-transifex-send: .build/python-venv/bin/tx \
+transifex-send: $(PY_VENV_BIN)/tx \
 		.tx/config \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
-	.build/python-venv/bin/tx push --source
-	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --source
+	$(PY_VENV_BIN)/tx push --source
+	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --source
 
 .PHONY: transifex-init
-transifex-init: .build/python-venv/bin/tx \
+transifex-init: $(PY_VENV_BIN)/tx \
 		.tx/config \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
 		.build/locale/apps.pot
-	.build/python-venv/bin/tx push --source --force --no-interactive
-	.build/python-venv/bin/tx push --translations --force --no-interactive
+	$(PY_VENV_BIN)/tx push --source --force --no-interactive
+	$(PY_VENV_BIN)/tx push --translations --force --no-interactive
 
-	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --source --force --no-interactive
-	cd contribs/gmf/apps/; ../../../.build/python-venv/bin/tx push --translations --force --no-interactive
+	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --source --force --no-interactive
+	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --translations --force --no-interactive
 
-.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv/bin/tx
-	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(PY_VENV_BIN)/tx
+	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
-.build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv/bin/tx
-	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+.build/locale/%/LC_MESSAGES/gmf.po: .tx/config $(PY_VENV_BIN)/tx
+	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
-.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config .build/python-venv/bin/tx
+.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(PY_VENV_BIN)/tx
 	cd contribs/gmf/apps/
-	.build/python-venv/bin/tx pull -l $* --force --mode=reviewed
+	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	cd .
 	$(TOUCHBACK_TXRC)
 
