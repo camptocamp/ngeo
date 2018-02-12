@@ -90,7 +90,7 @@ gmf.displayquerygridComponent = {
     'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
     'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
     'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
-    'mergeTabsFn': '&?gmfDisplayquerygridMergetabs'
+    'mergeTabs': '=?gmfDisplayquerygridMergetabs'
   },
   templateUrl: gmfDisplayquerygridTemplateUrl
 };
@@ -274,7 +274,7 @@ gmf.DisplayquerygridController = function($injector, $scope, ngeoQueryResult, ng
 gmf.DisplayquerygridController.prototype.$onInit = function() {
   this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ? this['removeEmptyColumnsFn']() === true : false;
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
-  this.mergeTabs_ = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
+  this.mergeTabs_ = this['mergeTabs'] ? this['mergeTabs'] : {};
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
