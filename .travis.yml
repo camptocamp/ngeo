@@ -99,8 +99,15 @@ jobs:
     - make lint
     - make check-examples-webpack
     - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples buildtools/deploy.sh; fi
+    - gem install jgrep
+    - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
+    - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
+    - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+    - |
+      sed -i 's/"name": "ngeo",/"name": "ngeo-es6",/g' package.json
     after_success:
     - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
+    - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
 
   - stage: Build
     env:
@@ -139,8 +146,8 @@ jobs:
     script:
     - make dist/ngeo.js
     - make dist/gmf.js
-    - .build/python-venv/bin/pip install jsongrep
-    - export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`
+    - gem install jgrep
+    - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
     - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
     after_success:
