@@ -3,7 +3,11 @@ goog.provide('gmf.lidarPanelComponent');
 goog.require('gmf');
 goog.require('gmf.lidarProfile.Config');
 goog.require('gmf.lidarProfile.Manager');
+/** @suppress {extraRequire} */
+goog.require('ngeo.btngroupDirective');
 goog.require('ngeo.CsvDownload');
+goog.require('ngeo.ToolActivateMgr');
+goog.require('ngeo.ToolActivate');
 goog.require('ol.geom.LineString');
 
 
@@ -73,12 +77,13 @@ gmf.LidarPanelController_ = class {
 
     /**
      * @type {boolean}
+     * @export
      */
     this.ready = false;
 
     /**
      * @type {gmf.lidarProfile.Config}
-     * @private_
+     * @private
      */
     this.profileConfig_ = gmfLidarProfileConfig;
 
@@ -200,16 +205,15 @@ gmf.LidarPanelController_ = class {
   }
 
   /**
-   * FIXME
    * Clear the LIDAR profile tool.
    * @export
    */
   clearAll() {
     this.line = null;
     this.profile.setLine(null);
+    this.profile.cartoHighlight.setPosition(undefined);
     this.clearMeasure();
     this.resetPlot();
-    this.profile.cartoHighlight.setPosition(undefined);
   }
 
 
@@ -240,7 +244,9 @@ gmf.LidarPanelController_ = class {
    */
   resetPlot() {
     this.profile.clearBuffer();
-    this.profile.getProfileByLOD(0, true, 0);
+    if (this.line) {
+      this.profile.getProfileByLOD(0, true, 0);
+    }
   }
 
 

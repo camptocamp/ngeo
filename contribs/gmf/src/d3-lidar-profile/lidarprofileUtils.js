@@ -1,5 +1,13 @@
 goog.provide('gmf.lidarProfile.Utils');
 
+goog.require('ol.Feature');
+goog.require('ol.geom.LineString');
+goog.require('ol.geom.Point');
+goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
+goog.require('ol.style.Style');
+
 
 gmf.lidarProfile.Utils = class {
 

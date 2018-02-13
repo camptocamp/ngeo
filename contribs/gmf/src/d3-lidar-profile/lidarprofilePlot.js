@@ -1,5 +1,11 @@
 goog.provide('gmf.lidarProfile.Plot');
 
+goog.require('ol.Feature');
+goog.require('ol.geom.Point');
+goog.require('ol.style.Circle');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Style');
+
 
 gmf.lidarProfile.Plot = class {
 

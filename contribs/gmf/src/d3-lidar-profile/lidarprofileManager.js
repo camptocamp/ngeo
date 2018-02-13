@@ -4,6 +4,11 @@ goog.require('gmf.lidarProfile.Measure');
 goog.require('gmf.lidarProfile.Plot');
 goog.require('gmf.lidarProfile.Utils');
 goog.require('ngeo.Debounce');
+goog.require('ol.layer.Vector');
+goog.require('ol.Overlay');
+goog.require('ol.source.Vector');
+goog.require('ol.style.Fill');
+goog.require('ol.style.Style');
 
 
 gmf.lidarProfile.Manager = class {

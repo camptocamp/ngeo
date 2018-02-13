@@ -14,6 +14,12 @@ goog.provide('app_desktop_alt');
 goog.require('app');
 goog.require('gmf.AbstractDesktopController');
 /** @suppress {extraRequire} */
+goog.require('gmf.lidarProfileComponent');
+/** @suppress {extraRequire} */
+goog.require('gmf.lidarPanelComponent');
+/** @suppress {extraRequire} */
+goog.require('ngeo.googlestreetviewComponent');
+/** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetviewComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG2056');
