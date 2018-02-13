@@ -398,7 +398,7 @@ describe('gmf.displayquerygridComponent', () => {
         queried: true
       }];
 
-      queryGridController.mergeTabs_ = {
+      queryGridController.mergeTabs = {
         'merged_source': ['Test 1', 'Test 2']
       };
 
@@ -491,7 +491,7 @@ describe('gmf.displayquerygridComponent', () => {
         queried: true
       }];
 
-      queryGridController.mergeTabs_ = {
+      queryGridController.mergeTabs = {
         'merged_source': ['Test 1', 'Test 2']
       };
 
