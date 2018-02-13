@@ -12,6 +12,8 @@ env:
   global:
   - CXX=g++-4.8
   - secure: "l/McmiK4djffT04/+5MxW9sy4yO80Rf6vq+nZb5P647A6pXpPLdoRLGo50CtYRiKnFLiChHk2QxUOspeKuIKE+UQAm9dGmyMgfYkj/jwxIBd0YQqavaGzoWo5U1ZSGKeVd3kJlIaUJyLlnKbBOmFCY00c4JLveAagsV53lbephY="
+  - GIT_REMOTE_NAME=origin
+  - GITHUB_USERNAME=camptocamp
 
 addons:
   apt:
@@ -26,11 +28,6 @@ addons:
 cache:
   apt: true
   pip: true
-
-env:
-  global:
-  - GIT_REMOTE_NAME=origin
-  - GITHUB_USERNAME=camptocamp
 
 before_install:
 - python3 --version
@@ -99,8 +96,15 @@ jobs:
     - make lint
     - make check-examples-webpack
     - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples buildtools/deploy.sh; fi
+    - gem install jgrep
+    - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
+    - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
+    - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
+    - |
+      sed -i 's/"name": "ngeo",/"name": "ngeo-es6",/g' package.json
     after_success:
     - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
+    - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
 
   - stage: Build
     env:
@@ -137,10 +141,11 @@ jobs:
     env:
     - JOB=publish-npm
     script:
-    - make dist/ngeo.js
-    - make dist/gmf.js
-    - .build/python-venv/bin/pip install jsongrep
-    - export PACKAGE_VERSION=`.build/python-venv/bin/jsongrep -e version package.json`
+#    - make dist/ngeo.js
+#    - make dist/gmf.js
+    - make .build/node_modules.timestamp
+    - gem install jgrep
+    - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
     - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
     after_success:
