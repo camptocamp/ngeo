@@ -141,8 +141,9 @@ jobs:
     env:
     - JOB=publish-npm
     script:
-    - make dist/ngeo.js
-    - make dist/gmf.js
+#    - make dist/ngeo.js
+#    - make dist/gmf.js
+    - make .build/node_modules.timestamp
     - gem install jgrep
     - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
