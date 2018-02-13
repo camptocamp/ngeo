@@ -1,0 +1,43 @@
+goog.provide('gmf.mainmodule');
+
+goog.require('gmf.authentication.module');
+goog.require('gmf.backgroundlayerselector.module');
+goog.require('gmf.contextualdata.module');
+goog.require('gmf.datasource.module');
+goog.require('gmf.disclaimer.module');
+goog.require('gmf.drawing.module');
+goog.require('gmf.editing.module');
+goog.require('gmf.filters.module');
+goog.require('gmf.import.module');
+goog.require('gmf.layertree.module');
+goog.require('gmf.map.module');
+goog.require('gmf.objectediting.module');
+goog.require('gmf.permalink.module');
+goog.require('gmf.print.module');
+goog.require('gmf.profile.module');
+goog.require('gmf.raster.module');
+goog.require('gmf.search.module');
+goog.require('gmf.theme.module');
+goog.require('ngeo.mainmodule');
+
+gmf.mainmodule = angular.module('gmf', [
+  gmf.authentication.module.name,
+  gmf.backgroundlayerselector.module.name,
+  gmf.contextualdata.module.name,
+  gmf.datasource.module.name,
+  gmf.disclaimer.module.name,
+  gmf.drawing.module.name,
+  gmf.editing.module.name,
+  gmf.filters.module.name,
+  gmf.import.module.name,
+  gmf.layertree.module.name,
+  gmf.map.module.name,
+  gmf.objectediting.module.name,
+  gmf.permalink.module.name,
+  gmf.print.module.name,
+  gmf.profile.module.name,
+  gmf.raster.module.name,
+  gmf.search.module.name,
+  gmf.theme.module.name,
+  ngeo.mainmodule.name,
+]);

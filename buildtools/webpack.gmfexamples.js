@@ -8,7 +8,7 @@ const entry = {};
 
 for (const filename of ls('contribs/gmf/examples/*.html')) {
   const name = filename.name;
-  entry[name] = `./contribs/gmf/examples/${name}.js`;
+  entry[name] = ['./contribs/gmf/src/mainmodule.js', `./contribs/gmf/examples/${name}.js`];
   plugins.push(
     new HtmlWebpackPlugin({
       template: `contribs/gmf/examples/${name}.html`,
