@@ -386,7 +386,6 @@ gmf.lidarProfile.Manager = class {
           const alti = ualti * scale;
           points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
           this.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
-          points.altitude.push(Math.round(100 * alti) / 100);
           this.profilePoints.altitude.push(Math.round(100 * alti) / 100);
 
         } else if (attributes[k]['value']  == 'CLASSIFICATION') {
@@ -409,7 +408,9 @@ gmf.lidarProfile.Manager = class {
         } else if (attributes[k]['value']  == 'POSITION_CARTESIAN') {
           const x = view.getInt32(aoffset, true) * scale + jHeader['boundingBox']['lx'];
           const y = view.getInt32(aoffset + 4, true) * scale + jHeader['boundingBox']['ly'];
+          const z = view.getInt32(aoffset + 8, true) * scale + jHeader['boundingBox']['lz'];
           points.coords.push([x, y]);
+          points.altitude.push(z);
           this.profilePoints.coords.push([x, y]);
         }
         aoffset = aoffset + attributes[k]['bytes'];
@@ -417,8 +418,6 @@ gmf.lidarProfile.Manager = class {
     }
 
     const rangeX = [0, this.line_.getLength()];
-
-    // TODO fix z offset issue in Pytree!
 
     const rangeY = [this.utils.arrayMin(points.altitude), this.utils.arrayMax(points.altitude)];
 
