@@ -230,7 +230,7 @@ gmf.controllers.AbstractDesktopController.module = angular.module('GmfAbstractDe
   gmf.profile.module.name,
   gmf.raster.component.name,
   ngeo.draw.features.name,
-  ngeo.query.bboxQueryComponent,
+  ngeo.query.bboxQueryComponent.name,
 ]);
 
 gmf.controllers.AbstractDesktopController.module.controller(

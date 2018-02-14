@@ -4,7 +4,7 @@ goog.require('gmf');
 goog.require('gmf.permalink.ShareService');
 
 
-gmf.permalink.shareComponent = angular.module('', [
+gmf.permalink.shareComponent = angular.module('gmfPermalinkShareComponent', [
   gmf.permalink.ShareService.module.name,
 ]);
 

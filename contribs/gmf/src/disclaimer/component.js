@@ -16,7 +16,8 @@ goog.require('ngeo.map.LayerHelper');
  * @type {angular.Module}
  */
 gmf.disclaimer.component = angular.module('gmfDisclaimer', [
-  'ngSanitize'
+  'ngSanitize',
+  ngeo.message.Disclaimer.module.name
 ]);
 
 
