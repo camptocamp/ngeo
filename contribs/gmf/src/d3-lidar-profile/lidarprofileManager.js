@@ -196,12 +196,14 @@ gmf.lidarProfile.Manager = class {
 
   /**
    * Load profile data (lidar points) by succesive Levels Of Details using asynchronous requests
+   * @param {Array} clippedLine an array of the clipped line coordinates
    * @param {number} distanceOffset the left side of d3 profile domain at current zoom and pan configuration
    * @param {boolean} resetPlot wether to reset d3 plot or not
    * @param {number} minLOD minimum level of detail
    * @export
    */
-  getProfileByLOD(distanceOffset, resetPlot, minLOD) {
+  getProfileByLOD(clippedLine, distanceOffset,resetPlot, minLOD) {
+
     const gettextCatalog = this.gettextCatalog;
     this.profilePoints = this.getEmptyProfilePoints_();
 
@@ -217,14 +219,11 @@ gmf.lidarProfile.Manager = class {
     if (distanceOffset == 0) {
       maxLODWith = this.utils.getNiceLOD(this.line_.getLength(), max_levels);
     } else {
-      const domain = this.plot.scaleX['domain']();
-      let map_resolution = this.map_ ? this.map_.getView().getResolution() : 0;
-      map_resolution = map_resolution || 0;
-      const clip = this.utils.clipLineByMeasure(this.config, map_resolution,
-        this.line_, domain[0], domain[1]);
+      const domain = this.plot.updateScaleX['domain']();
       pytreeLinestring = '';
-      for (let i = 0; i < clip.clippedLine.length; i++) {
-        pytreeLinestring += `{${clip.clippedLine[i][0]},${clip.clippedLine[i][1]}},`;
+
+      for (let i = 0; i < clippedLine.length; i++) {
+        pytreeLinestring += `{${clippedLine[i][0]},${clippedLine[i][1]}},`;
       }
       pytreeLinestring = pytreeLinestring.substr(0, pytreeLinestring.length - 1);
       maxLODWith = this.utils.getNiceLOD(domain[1] - domain[0], max_levels);
@@ -281,8 +280,8 @@ gmf.lidarProfile.Manager = class {
     }
 
     const pointCloudName = this.config.serverConfig.default_point_cloud;
-    const hurl = `${this.config.pytreeLidarProfileJsonUrl}/get_profile?minLOD=${minLOD}
-      &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes='`;
+    const hurl = `${this.config.pytreeLidarProfileJsonUrl}profile/get?minLOD=${minLOD}
+      &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes=`;
 
     this.$http.get(hurl, {
       headers: {
@@ -364,7 +363,6 @@ gmf.lidarProfile.Manager = class {
     const scale = jHeader['scale'];
 
     if (jHeader['points'] < 3) {
-      this.isPlotSetup_ = false;
       return;
     }
 
@@ -379,15 +377,10 @@ gmf.lidarProfile.Manager = class {
       for (let k = 0; k < attributes.length; k++) {
 
         if (attributes[k]['value'] == 'POSITION_PROJECTED_PROFILE') {
-
           const udist = view.getUint32(aoffset, true);
-          const ualti = view.getUint32(aoffset + 4, true);
           const dist = udist * scale;
-          const alti = ualti * scale;
           points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
           this.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
-          points.altitude.push(Math.round(100 * alti) / 100);
-          this.profilePoints.altitude.push(Math.round(100 * alti) / 100);
 
         } else if (attributes[k]['value']  == 'CLASSIFICATION') {
           const classif = view.getUint8(aoffset);
@@ -409,7 +402,10 @@ gmf.lidarProfile.Manager = class {
         } else if (attributes[k]['value']  == 'POSITION_CARTESIAN') {
           const x = view.getInt32(aoffset, true) * scale + jHeader['boundingBox']['lx'];
           const y = view.getInt32(aoffset + 4, true) * scale + jHeader['boundingBox']['ly'];
+          const z = view.getInt32(aoffset + 8, true) * scale + jHeader['boundingBox']['lz'];
           points.coords.push([x, y]);
+          points.altitude.push(z);
+          this.profilePoints.altitude.push(z);
           this.profilePoints.coords.push([x, y]);
         }
         aoffset = aoffset + attributes[k]['bytes'];
@@ -418,15 +414,13 @@ gmf.lidarProfile.Manager = class {
 
     const rangeX = [0, this.line_.getLength()];
 
-    // TODO fix z offset issue in Pytree!
-
     const rangeY = [this.utils.arrayMin(points.altitude), this.utils.arrayMax(points.altitude)];
 
     if (iter == 0 && resetPlot || !this.isPlotSetup_) {
       this.plot.setupPlot(rangeX, rangeY);
       this.isPlotSetup_ = true;
     }
-    this.plot.drawPoints(points, this.config.serverConfig.default_attribute);
+    this.plot.drawPoints(points);
   }
 
   /**
@@ -437,7 +431,6 @@ gmf.lidarProfile.Manager = class {
     const gettextCatalog = this.gettextCatalog;
     const errorInfoTxt = gettextCatalog.getString('Lidar profile service error');
     const errorOfflineTxt = gettextCatalog.getString('It might be offline');
-    // TODO: check extent consistency earlier
     const errorOutsideTxt = gettextCatalog.getString('Or did you attempt to draw a profile outside data extent ?');
     const errorNoPointError = gettextCatalog.getString('Or did you attempt to draw such a small profile that no point was returned ?');
     return `
@@ -462,8 +455,7 @@ gmf.lidarProfile.Manager = class {
    * @private
    */
   updateData_() {
-    const domainX = this.plot.scaleX['domain']();
-    const domainY = this.plot.scaleY['domain']();
+    const domainX = this.plot.updateScaleX['domain']();
     let map_resolution = this.map_ ? this.map_.getView().getResolution() : 0;
     map_resolution = map_resolution || 0;
     const clip = this.utils.clipLineByMeasure(this.config, map_resolution,
@@ -480,21 +472,18 @@ gmf.lidarProfile.Manager = class {
     if (Math.abs(domainX[0] - this.plot.previousDomainX[0]) < xTolerance &&
         Math.abs(domainX[1] - this.plot.previousDomainX[1]) < xTolerance) {
 
-      this.plot.drawPoints(this.profilePoints,
-        this.config.serverConfig.default_attribute);
+      this.plot.drawPoints(this.profilePoints);
 
     } else {
       if (maxLODWidth.maxLOD <= this.config.serverConfig.initialLOD) {
-        this.plot.drawPoints(this.profilePoints,
-          this.config.serverConfig.default_attribute);
+        this.plot.drawPoints(this.profilePoints);
       } else {
-        this.getProfileByLOD(clip.distanceOffset, false, 0);
+        this.getProfileByLOD(clip.clippedLine, clip.distanceOffset, false, 0);
 
       }
     }
 
     this.plot.previousDomainX = domainX;
-    this.plot.previousDomainY = domainY;
   }
 
 };

@@ -30,8 +30,11 @@ gmf.lidarProfile.Utils = class {
     const fractionStart = dLeft / totalLength;
     const fractionEnd = dRight / totalLength;
 
-    linestring.forEachSegment((segStart, segEnd) => {
+    let segNumber = linestring.getCoordinates().length - 1;
+    let counter = 0;
 
+    linestring.forEachSegment((segStart, segEnd) => {
+      counter += 1;
       const segLine = new ol.geom.LineString([segStart, segEnd]);
       mileage_end += segLine.getLength();
 
@@ -49,6 +52,8 @@ gmf.lidarProfile.Utils = class {
         clippedLine.appendCoordinate(segEnd);
       } else if (dRight > mileage_start && dRight < mileage_end) {
         clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
+      } else if  (dRight > mileage_start && dRight > mileage_end && counter === segNumber) {
+         clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
       }
 
       mileage_start += segLine.getLength();
@@ -77,7 +82,8 @@ gmf.lidarProfile.Utils = class {
 
     let firstSegmentAngle = 0;
     let lastSegementAngle = 0;
-    const segNumber = clippedLine.getCoordinates().length - 1;
+
+    segNumber = clippedLine.getCoordinates().length - 1;
     let segCounter = 1;
 
     clippedLine.forEachSegment((start, end) => {
@@ -330,8 +336,8 @@ gmf.lidarProfile.Utils = class {
     const hP = [];
 
     for (let i = 0; i < d.distance.length; i++) {
-      if (sx(d.distance[i]) < xs + tol && sx(d.distance[i]) > xs - tol && sy(d.altitude[i]) < ys + tol && sy(d.altitude[i]) > ys - tol) {
 
+      if (sx(d.distance[i]) < xs + tol && sx(d.distance[i]) > xs - tol && sy(d.altitude[i]) < ys + tol && sy(d.altitude[i]) > ys - tol) {
         const pDistance =  Math.sqrt(Math.pow((sx(d.distance[i]) - xs), 2) + Math.pow((sy(d.altitude[i]) - ys), 2));
         const cClassif = classification_colors[d.classification[i]];
         if (cClassif && cClassif.visible == 1) {

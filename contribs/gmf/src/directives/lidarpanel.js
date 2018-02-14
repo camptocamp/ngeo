@@ -198,7 +198,7 @@ gmf.LidarPanelController_ = class {
     this.profile.clearBuffer();
     if (this.line) {
       this.profile.setLine(this.line);
-      this.profile.getProfileByLOD(0, true, this.profileConfig_.serverConfig.minLOD);
+      this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
     } else {
       this.clearAll();
     }
@@ -245,7 +245,7 @@ gmf.LidarPanelController_ = class {
   resetPlot() {
     this.profile.clearBuffer();
     if (this.line) {
-      this.profile.getProfileByLOD(0, true, 0);
+      this.profile.getProfileByLOD([], 0, true, 0);
     }
   }
 
@@ -311,7 +311,7 @@ gmf.LidarPanelController_ = class {
       this.profileConfig_.serverConfig.width = opt_profileWidth;
       if (this.line) {
         this.profile.clearBuffer();
-        this.profile.getProfileByLOD(0, true, this.profileConfig_.serverConfig.minLOD);
+        this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
       }
     }
     return this.profileConfig_.serverConfig.width;
@@ -329,7 +329,7 @@ gmf.LidarPanelController_ = class {
       this.profileConfig_.clientConfig.autoWidth = opt_autoWidth;
       if (this.line) {
         this.profile.clearBuffer();
-        this.profile.getProfileByLOD(0, true, this.profileConfig_.serverConfig.minLOD);
+        this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
       }
     }
     return !!this.profileConfig_.clientConfig.autoWidth;
