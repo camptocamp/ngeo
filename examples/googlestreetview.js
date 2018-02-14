@@ -10,8 +10,6 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
-
-goog.require('ngeo');
 goog.require('ngeo.googlestreetview.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.ToolActivate');

@@ -1,7 +1,6 @@
 goog.provide('ngeo.map.FeatureOverlayMgr');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.map.FeatureOverlay');
 goog.require('ol');
 goog.require('ol.layer.Vector');

@@ -1,6 +1,5 @@
 goog.provide('ngeo.misc.Time');
 
-goog.require('ngeo');
 
 /**
  * ngeo - Time service

@@ -2,7 +2,6 @@ goog.provide('app.mapquery');
 
 // webpack: import './mapquery.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');

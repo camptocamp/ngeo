@@ -1,7 +1,6 @@
 goog.provide('ngeo.query.MapQuerent');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.Helper');

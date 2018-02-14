@@ -1,7 +1,6 @@
 goog.provide('ngeo.datasource.WMSGroup');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.OGC');

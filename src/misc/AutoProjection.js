@@ -1,6 +1,5 @@
 goog.provide('ngeo.misc.AutoProjection');
 
-goog.require('ngeo');
 goog.require('ol.proj');
 goog.require('ol.extent');
 

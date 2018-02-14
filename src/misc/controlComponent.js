@@ -1,7 +1,6 @@
 goog.provide('ngeo.misc.controlComponent');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ol.Map');
 goog.require('ol.control.Control');
 

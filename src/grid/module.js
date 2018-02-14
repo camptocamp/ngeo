@@ -1,6 +1,5 @@
 goog.provide('ngeo.grid.module');
 
-goog.require('ngeo');
 goog.require('ngeo.grid.component');
 
 /**

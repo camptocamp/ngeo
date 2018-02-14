@@ -1,7 +1,6 @@
 goog.provide('ngeo.draw.Controller');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');
 goog.require('ngeo.format.FeatureProperties');

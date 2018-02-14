@@ -14,8 +14,6 @@ goog.require('ol.geom.Circle');
 goog.require('ol.geom.Polygon');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
-
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 

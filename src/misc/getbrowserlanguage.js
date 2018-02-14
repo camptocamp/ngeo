@@ -1,7 +1,5 @@
 goog.provide('ngeo.misc.getBrowserLanguage');
 
-goog.require('ngeo');
-
 
 /**
  * @type {!angular.Module}

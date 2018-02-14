@@ -1,6 +1,5 @@
 goog.provide('ngeo.googlestreetview.module');
 
-goog.require('ngeo');
 goog.require('ngeo.googlestreetview.component');
 
 /**

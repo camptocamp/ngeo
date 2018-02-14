@@ -1,6 +1,5 @@
 goog.provide('ngeo.download.service');
 
-goog.require('ngeo');
 goog.require('ngeo.utils');
 // webpack: import {saveAs} from 'file-saver';
 

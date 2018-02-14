@@ -1,6 +1,5 @@
 goog.provide('ngeo.editing.createregularpolygonfromclickComponent');
 
-goog.require('ngeo');
 goog.require('ngeo.interaction.DrawRegularPolygonFromClick');
 goog.require('ol.events');
 goog.require('ol.Feature');

@@ -1,6 +1,5 @@
 goog.provide('ngeo.statemanager.extraModule');
 
-goog.require('ngeo');
 goog.require('ngeo.statemanager.WfsPermalink');
 
 /**

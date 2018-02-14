@@ -14,8 +14,6 @@ goog.require('ol.layer.Image');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.Vector');
-
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.profile.elevationComponent');
 

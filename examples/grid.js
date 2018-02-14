@@ -2,8 +2,8 @@ goog.provide('app.grid');
 
 // webpack: import './grid.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.grid.module');
+goog.require('ngeo.grid.Config');
 
 
 /** @type {!angular.Module} **/

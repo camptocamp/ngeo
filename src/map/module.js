@@ -1,6 +1,5 @@
 goog.provide('ngeo.map.module');
 
-goog.require('ngeo');
 goog.require('ngeo.map.BackgroundLayerMgr');
 goog.require('ngeo.map.component');
 goog.require('ngeo.map.FeatureOverlayMgr');

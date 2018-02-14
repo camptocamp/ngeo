@@ -1,6 +1,5 @@
 goog.provide('ngeo.map.extraModule');
 
-goog.require('ngeo');
 goog.require('ngeo.map.LayerHelper');
 
 /**

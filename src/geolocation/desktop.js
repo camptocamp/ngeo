@@ -1,7 +1,6 @@
 goog.provide('ngeo.geolocation.desktop');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.message.Notification');
 goog.require('ol.events');

@@ -1,7 +1,6 @@
 goog.require('ngeo.search.createLocationSearchBloodhound');
 goog.require('ngeo.test.data.geoAdminLocationSearch');
 goog.require('ngeo.search.module');
-goog.require('ngeo');
 goog.require('ol.proj');
 
 

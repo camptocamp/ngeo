@@ -1,7 +1,5 @@
 goog.provide('ngeo.misc.debounce');
 
-goog.require('ngeo');
-
 
 /**
  * @type {!angular.Module}

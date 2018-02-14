@@ -2,7 +2,6 @@ goog.provide('app.permalink');
 
 // webpack: import './permalink.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.debounce');

@@ -10,8 +10,6 @@ goog.require('ol.View');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.ImageWMS');
-
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 

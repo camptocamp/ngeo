@@ -1,7 +1,6 @@
 goog.provide('ngeo.misc.WMSTime');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.misc.Time');
 goog.require('ol');
 

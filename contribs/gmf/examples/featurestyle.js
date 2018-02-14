@@ -7,7 +7,6 @@ goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Feature');

@@ -1,6 +1,5 @@
 goog.provide('ngeo.datasource.OGCGroup');
 
-goog.require('ngeo');
 goog.require('ngeo.datasource.Group');
 
 

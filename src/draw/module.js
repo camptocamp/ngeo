@@ -1,6 +1,5 @@
 goog.provide('ngeo.draw.module');
 
-goog.require('ngeo');
 goog.require('ngeo.draw.component');
 goog.require('ngeo.draw.Controller');
 goog.require('ngeo.draw.features');

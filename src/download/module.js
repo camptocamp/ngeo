@@ -1,6 +1,5 @@
 goog.provide('ngeo.download.module');
 
-goog.require('ngeo');
 goog.require('ngeo.download.Csv');
 goog.require('ngeo.download.service');
 

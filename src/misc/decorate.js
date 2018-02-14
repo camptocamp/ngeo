@@ -1,7 +1,6 @@
 goog.provide('ngeo.misc.decorate');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Base');
 goog.require('ol.layer.Group');

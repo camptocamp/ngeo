@@ -1,6 +1,5 @@
 goog.provide('ngeo.editing.module');
 
-goog.require('ngeo');
 goog.require('ngeo.editing.attributesComponent');
 goog.require('ngeo.editing.createfeatureComponent');
 goog.require('ngeo.editing.createregularpolygonfromclickComponent');

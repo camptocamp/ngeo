@@ -1,7 +1,5 @@
 goog.provide('ngeo.misc.ToolActivate');
 
-goog.require('ngeo');
-
 
 /**
  * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.

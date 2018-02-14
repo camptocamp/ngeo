@@ -1,6 +1,5 @@
 goog.provide('ngeo.geolocation.extraModule');
 
-goog.require('ngeo');
 goog.require('ngeo.geolocation.desktop');
 goog.require('ngeo.geolocation.mobile');
 

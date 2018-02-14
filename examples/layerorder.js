@@ -2,7 +2,6 @@ goog.provide('app.layerorder');
 
 // webpack: import './layerorder.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.sortableComponent');

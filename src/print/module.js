@@ -1,6 +1,5 @@
 goog.provide('ngeo.print.module');
 
-goog.require('ngeo');
 goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
 

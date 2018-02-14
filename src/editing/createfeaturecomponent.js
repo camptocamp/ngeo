@@ -1,7 +1,6 @@
 goog.provide('ngeo.editing.createfeatureComponent');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.MeasureArea');

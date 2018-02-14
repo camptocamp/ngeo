@@ -1,7 +1,6 @@
 goog.provide('ngeo.datasource.DataSources');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ol.Collection');
 goog.require('ol.events');

@@ -1,6 +1,5 @@
 goog.provide('ngeo.editing.exportfeaturesComponent');
 
-goog.require('ngeo');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol');
 goog.require('ol.geom.Point');

@@ -1,6 +1,5 @@
 goog.provide('ngeo.map.recenter');
 
-goog.require('ngeo');
 
 /**
  * @type {!angular.Module}
