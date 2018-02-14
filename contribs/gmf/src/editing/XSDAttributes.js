@@ -1,6 +1,5 @@
 goog.provide('gmf.editing.XSDAttributes');
 
-goog.require('gmf');
 goog.require('ngeo.format.XSDAttribute');
 
 

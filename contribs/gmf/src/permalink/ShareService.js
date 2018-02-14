@@ -1,7 +1,5 @@
 goog.provide('gmf.permalink.ShareService');
 
-goog.require('gmf');
-
 
 /**
  * Service to handle the sharing of the permalink.

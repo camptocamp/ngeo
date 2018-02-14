@@ -1,6 +1,5 @@
 goog.provide('gmf.objectediting.Query');
 
-goog.require('gmf');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.format.WMSGetFeatureInfo');

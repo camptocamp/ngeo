@@ -2,7 +2,6 @@ goog.provide('gmfapp.xsdattributes');
 
 // webpack: import './xsdattributes.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.theme.Themes');
 goog.require('gmf.editing.XSDAttributes');
 goog.require('ngeo.editing.attributesComponent');

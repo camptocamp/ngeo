@@ -4,7 +4,6 @@ goog.provide('gmfapp.importdatasource');
 
 // webpack: import './importdatasource.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');
 goog.require('gmf.import.importdatasourceComponent');

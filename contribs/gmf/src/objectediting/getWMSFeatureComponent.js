@@ -1,6 +1,5 @@
 goog.provide('gmf.objectediting.getWMSFeatureComponent');
 
-goog.require('gmf');
 goog.require('gmf.objectediting.Query');
 goog.require('ol.events');
 

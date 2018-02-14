@@ -2,7 +2,6 @@ goog.provide('gmfapp.simple');
 
 // webpack: import './simple.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('ol.Map');

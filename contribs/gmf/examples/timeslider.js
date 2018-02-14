@@ -2,7 +2,6 @@ goog.provide('gmfapp.timeslider');
 
 // webpack: import './timeslider.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.layertree.timeSliderComponent');
 goog.require('ngeo.misc.WMSTime');
 

@@ -2,7 +2,6 @@ goog.provide('gmfapp.displayquerywindow');
 
 // webpack: import './displayquerywindow.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.datasource.Manager');
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */

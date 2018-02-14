@@ -1,6 +1,5 @@
 goog.provide('gmf.datasource.Helper');
 
-goog.require('gmf');
 goog.require('gmf.editing.EnumerateAttribute');
 goog.require('ngeo.datasource.Helper');
 goog.require('ngeo.format.AttributeType');

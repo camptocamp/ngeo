@@ -1,6 +1,5 @@
 goog.provide('gmf.editing.Snapping');
 
-goog.require('gmf');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
 goog.require('goog.asserts');

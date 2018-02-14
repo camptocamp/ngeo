@@ -2,7 +2,6 @@ goog.provide('gmfapp.drawfeature');
 
 // webpack: import './drawfeature.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.drawing.module');

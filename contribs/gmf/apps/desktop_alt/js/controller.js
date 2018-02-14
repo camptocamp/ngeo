@@ -7,7 +7,6 @@
 goog.provide('app.desktop_alt.Controller');
 
 goog.require('app');
-goog.require('gmf');
 goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.importdatasourceComponent');

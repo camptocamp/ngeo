@@ -1,7 +1,5 @@
 goog.provide('gmf.editing.EnumerateAttribute');
 
-goog.require('gmf');
-
 
 gmf.editing.EnumerateAttribute = class {
 

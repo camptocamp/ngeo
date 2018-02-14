@@ -2,7 +2,6 @@ goog.provide('gmfapp.themeselector');
 
 // webpack: import './themeselector.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.module');
 /** @suppress {extraRequire} */

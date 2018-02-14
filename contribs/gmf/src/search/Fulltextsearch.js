@@ -1,6 +1,5 @@
 goog.provide('gmf.search.FulltextSearch');
 
-goog.require('gmf');
 goog.require('ngeo.utils');
 
 
