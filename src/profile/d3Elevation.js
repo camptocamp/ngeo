@@ -3,6 +3,7 @@ goog.provide('ngeo.profile.d3Elevation');
 goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.obj');
+// webpack: import 'd3-transition';
 // webpack: import {bisector, extent} from 'd3-array';
 // webpack: import {axisBottom, axisLeft} from 'd3-axis';
 // webpack: import {scaleLinear} from 'd3-scale';

@@ -14,6 +14,7 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
+// webpack: import 'jquery-ui/ui/widgets/resizable.js';
 // webpack: import 'angular-animate';
 // webpack: import 'angular-touch';
 
