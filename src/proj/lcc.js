@@ -1,8 +1,8 @@
 goog.module('ngeo.proj.lcc');
 goog.module.declareLegacyNamespace();
 
-goog.require('ol.proj');
-goog.require('ol.proj.proj4');
+goog.require('ol.proj'); // nowebpack
+goog.require('ol.proj.proj4'); // nowebpack
 // webpack: import proj4 from 'proj4/lib/core.js';
 // webpack: import lcc from 'proj4/lib/projections/lcc.js';
 

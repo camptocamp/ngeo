@@ -21,6 +21,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.layertreeadd.module = angular.module('gmfapp', [
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
   gmf.theme.Manager.module.name,
   gmf.theme.Themes.module.name,

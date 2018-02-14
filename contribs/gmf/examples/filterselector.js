@@ -14,9 +14,7 @@ goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.map.component');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.datasource.DataSources');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
@@ -33,11 +31,14 @@ gmfapp.filterselector.module = angular.module('gmfapp', [
   gmf.authentication.module.name,
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.filters.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
   ngeo.datasource.DataSources.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
+  ngeo.query.bboxQueryComponent.name,
+  ngeo.query.mapQueryComponent.name,
 ]);
 
 

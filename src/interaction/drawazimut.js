@@ -3,7 +3,6 @@ goog.provide('ngeo.interaction.DrawAzimut');
 goog.require('goog.asserts');
 goog.require('ol');
 goog.require('ol.Feature');
-goog.require('ol.MapBrowserEvent');
 goog.require('ol.events');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');

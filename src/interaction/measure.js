@@ -2,18 +2,15 @@ goog.provide('ngeo.interaction.Measure');
 
 goog.require('goog.asserts');
 goog.require('ngeo.CustomEvent');
-goog.require('ngeo.interaction.MeasureBaseOptions');
 goog.require('ol');
 goog.require('ol.dom');
 goog.require('ol.proj');
-goog.require('ol.Feature');
-goog.require('ol.MapBrowserEvent');
 goog.require('ol.Overlay');
 goog.require('ol.Sphere');
 goog.require('ol.events');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
-goog.require('ol.proj.EPSG4326');
+goog.require('ol.proj.EPSG4326'); //nowebpack
 goog.require('ol.source.Vector');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
@@ -248,7 +245,7 @@ ngeo.interaction.Measure.getFormattedLength = function(lineString, projection, p
     const c1 = ol.proj.transform(coordinates[i], projection, 'EPSG:4326');
     const c2 = ol.proj.transform(coordinates[i + 1], projection, 'EPSG:4326');
     length += ngeo.interaction.Measure.SPHERE_WGS84.haversineDistance(c1, c2);  // nowebpack
-    // webpack: length += olSphere.getDistance(c1, c2);  // nowebpack
+    // webpack: length += olSphere.getDistance(c1, c2);
   }
   return format(length, 'm', 'unit', precision);
 };

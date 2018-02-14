@@ -436,6 +436,7 @@ gmf.layertree.SyncLayertreeMap.getLayer = function(treeCtrl) {
  * @type {!angular.Module}
  */
 gmf.layertree.SyncLayertreeMap.module = angular.module('gmfSyncLayertreeMap', [
+  gmf.theme.Themes.module.name,
   ngeo.layertree.Controller.module.name,
   ngeo.misc.WMSTime.module.name,
 ]);

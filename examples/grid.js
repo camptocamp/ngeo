@@ -2,6 +2,7 @@ goog.provide('app.grid');
 
 // webpack: import './grid.css';
 // webpack: import './common_dependencies.js';
+goog.require('ngeo.grid.Config') 
 goog.require('ngeo.grid.module');
 goog.require('ngeo.grid.Config');
 

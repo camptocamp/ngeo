@@ -217,6 +217,7 @@ ngeo.query.MapQuerent = class {
  */
 ngeo.query.MapQuerent.module = angular.module('ngeoMapQuerent', [
   ngeo.datasource.DataSources.module.name,
+  ngeo.datasource.Helper.module.name,
   ngeo.query.Querent.module.name,
 ]);
 ngeo.query.MapQuerent.module.service('ngeoMapQuerent', ngeo.query.MapQuerent);

@@ -3,7 +3,6 @@ goog.provide('ngeo.print.Service');
 goog.require('goog.asserts');
 goog.require('ngeo.print.VectorEncoder');
 goog.require('ngeo.map.LayerHelper');
-goog.require('ol');
 goog.require('ol.obj');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');

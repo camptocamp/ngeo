@@ -144,6 +144,7 @@ gmf.theme.Manager.EventType = {
  */
 gmf.theme.Manager.module = angular.module('gmfThemeManager', [
   gmf.layertree.TreeManager.module.name,
+  gmf.theme.Themes.module.name,
   ngeo.statemanager.Service.module.name,
 ]);
 

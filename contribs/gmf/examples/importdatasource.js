@@ -29,6 +29,7 @@ gmfapp.importdatasource.module = angular.module('gmfapp', [
   gmf.datasource.Manager.module.name,
   gmf.import.importdatasourceComponent.name,
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
   ngeo.datasource.DataSources.module.name,

@@ -5,7 +5,6 @@ goog.require('gmf.permalink.Permalink');
 goog.require('gmf.editing.Snapping');
 goog.require('ngeo.map.component');
 goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ol.Map');
 
 
 /**

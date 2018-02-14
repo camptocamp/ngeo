@@ -7,7 +7,6 @@ goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ol.geom.GeometryLayout');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.layer.Image');

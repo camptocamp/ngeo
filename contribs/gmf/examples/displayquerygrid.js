@@ -14,9 +14,7 @@ goog.require('ngeo.map.module');
 goog.require('ngeo.misc.btnComponent');
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -38,6 +36,8 @@ gmfapp.displayquerygrid.module = angular.module('gmfapp', [
   ngeo.grid.module.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeo.misc.btnComponent.name,
+  ngeo.query.bboxQueryComponent.name,
+  ngeo.query.mapQueryComponent.name,
 ]);
 
 

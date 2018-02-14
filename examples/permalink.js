@@ -8,7 +8,6 @@ goog.require('ngeo.misc.debounce');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.statemanager.module');
 goog.require('ol.Map');
-goog.require('ol.geom.GeometryType');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');

@@ -6,10 +6,10 @@ goog.require('ol.layer.Base');
 goog.require('ol.layer.Group');
 goog.require('gmf');
 goog.require('goog.asserts');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.misc.EventHelper');
-goog.require('ngeo.map.LayerHelper');
 // webpack: import 'angular-sanitize';
 
 /**
@@ -17,7 +17,9 @@ goog.require('ngeo.map.LayerHelper');
  */
 gmf.disclaimer.component = angular.module('gmfDisclaimer', [
   'ngSanitize',
-  ngeo.message.Disclaimer.module.name
+  ngeo.map.LayerHelper.module.name,
+  ngeo.message.Disclaimer.module.name,
+  ngeo.misc.EventHelper.module.name,
 ]);
 
 

@@ -26,7 +26,8 @@ gmfapp.search.module = angular.module('gmfapp', [
   gmf.map.component.name,
   gmf.search.module.name,
   gmf.theme.Themes.module.name,
-  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.message.Notification.module.name,
 ]);
 
 gmfapp.search.module.value('gmfTreeUrl',

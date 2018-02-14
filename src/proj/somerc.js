@@ -1,8 +1,8 @@
 goog.module('ngeo.proj.somerc');
 goog.module.declareLegacyNamespace();
 
-goog.require('ol.proj');
-goog.require('ol.proj.proj4');
+goog.require('ol.proj'); // nowebpack
+goog.require('ol.proj.proj4'); // nowebpack
 // webpack: import proj4 from 'proj4';
 // webpack: import somerc from 'proj4/projections/somerc.js';
 

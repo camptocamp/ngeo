@@ -11,7 +11,6 @@ goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
-goog.require('ol');
 goog.require('ol.coordinate');
 goog.require('ol.interaction.Draw');
 goog.require('ol.layer.Tile');

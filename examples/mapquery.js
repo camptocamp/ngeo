@@ -11,7 +11,6 @@ goog.require('ngeo.map.module');
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -27,6 +26,7 @@ app.mapquery.module = angular.module('app', [
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,
+  ngeo.query.mapQueryComponent.name,
 ]);
 
 

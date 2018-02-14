@@ -566,6 +566,7 @@ gmf.editing.Snapping.WFSConfig;
  * @type {!angular.Module}
  */
 gmf.editing.Snapping.module = angular.module('gmfSnapping', [
+  gmf.layertree.TreeManager.module.name,
   gmf.theme.Themes.module.name,
   ngeo.layertree.Controller.module.name,
 ]);

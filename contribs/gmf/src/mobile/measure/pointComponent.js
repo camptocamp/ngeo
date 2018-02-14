@@ -5,8 +5,6 @@ goog.require('gmf.raster.RasterService');
 goog.require('goog.asserts');
 goog.require('ngeo.interaction.MeasurePointMobile');
 goog.require('ngeo.interaction.MobileDraw');
-
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.decorate');
@@ -19,6 +17,7 @@ goog.require('ol.style.Style');
 
 gmf.mobile.measure.pointComponent = angular.module('gmfMobileMeasurePoint', [
   gmf.raster.RasterService.module.name,
+  ngeo.misc.debounce.name,
 ]);
 
 

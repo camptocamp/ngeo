@@ -4,11 +4,11 @@ goog.provide('gmfapp.themeselector');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.module');
-/** @suppress {extraRequire} */
 goog.require('gmf.layertree.TreeManager');
 
 /** @type {!angular.Module} **/
 gmfapp.themeselector.module = angular.module('gmfapp', [
+  gmf.layertree.TreeManager.module.name,
   gmf.theme.module.name,
 ]);
 

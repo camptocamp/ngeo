@@ -26,7 +26,6 @@ goog.require('ol.array');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
-goog.require('ol.proj');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
 goog.require('ol.style.Style');
@@ -1499,12 +1498,13 @@ gmf.permalink.Permalink.prototype.cleanParams = function(groups) {
 
 
 gmf.permalink.Permalink.module = angular.module('gmfPermalink', [
-  ngeo.statemanager.module.name,
-  gmf.theme.Themes.module.name,
   gmf.theme.Manager.module.name,
+  gmf.theme.Themes.module.name,
   ngeo.draw.features.name,
-  ngeo.misc.EventHelper.module.name,
   ngeo.layertree.Controller.module.name,
+  ngeo.misc.debounce.name,
+  ngeo.misc.EventHelper.module.name,
+  ngeo.statemanager.module.name,
 ]);
 
 gmf.permalink.Permalink.module.service('gmfPermalink', gmf.permalink.Permalink);

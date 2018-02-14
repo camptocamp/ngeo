@@ -136,6 +136,7 @@ gmf.datasource.Helper = class {
  * @type {!angular.Module}
  */
 gmf.datasource.Helper.module = angular.module('gmfDataSourcesHelper', [
+  ngeo.datasource.Helper.module.name,
   gmf.editing.EnumerateAttribute.module.name,
 ]);
 gmf.datasource.Helper.module.service('gmfDataSourcesHelper', gmf.datasource.Helper);

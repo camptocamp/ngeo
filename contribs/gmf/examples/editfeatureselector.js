@@ -32,6 +32,7 @@ gmfapp.editfeatureselector.module = angular.module('gmfapp', [
   gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
+  ngeo.misc.FeatureHelper.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
