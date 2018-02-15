@@ -4,8 +4,7 @@ goog.provide('app.search');
 // webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
 goog.require('ngeo.map.module');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.search.module');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -161,8 +160,7 @@ app.search.SearchController.prototype.createVectorLayer_ = function() {
  */
 app.search.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
   const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?query=%QUERY';
-  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(
-    url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
+  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, ol.proj.get('EPSG:3857'), EPSG21781);
   bloodhound.initialize();
   return bloodhound;
 };

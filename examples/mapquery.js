@@ -2,8 +2,7 @@ goog.provide('app.mapquery');
 
 // webpack: import './mapquery.css';
 // webpack: import './common_dependencies.js';
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.map.module');
@@ -117,7 +116,7 @@ app.mapquery.MainController = function($scope, ngeoDataSources, ngeoToolActivate
       busStopLayer
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 0

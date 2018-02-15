@@ -2,8 +2,7 @@ goog.provide('app.mapfishprint');
 
 // webpack: import './mapfishprint.css';
 // webpack: import './common_dependencies.js';
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
 goog.require('ol.Map');
@@ -104,13 +103,13 @@ app.mapfishprint.MainController = function($timeout, ngeoCreatePrint, ngeoPrintU
         source: new ol.source.Vector({
           url: 'data/polygon-swizerland.json',
           format: new ol.format.GeoJSON({
-            defaultDataProjection: 'EPSG:21781'
+            defaultDataProjection: EPSG21781
           })
         })
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
       center: [537635, 152640],
       zoom: 3

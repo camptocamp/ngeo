@@ -10,8 +10,7 @@ goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.Themes');
 goog.require('gmf.theme.Manager');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.statemanager.Location');
 goog.require('ol.Map');
 goog.require('ol.View');

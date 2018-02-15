@@ -4,10 +4,8 @@ goog.provide('gmfapp.mouseposition');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.module');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG2056');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -36,11 +34,11 @@ gmfapp.mouseposition.MainController = function() {
    * @export
    */
   this.projections = [{
-    code: 'EPSG:2056',
+    code: EPSG2056,
     label: 'CH1903+ / LV95',
     filter: `ngeoNumberCoordinates:0:${epsg2056template}`
   }, {
-    code: 'EPSG:21781',
+    code: EPSG21781,
     label: 'CH1903 / LV03',
     filter: 'ngeoNumberCoordinates:2:[{x} E; {y} N]'
   }, {

@@ -2,8 +2,7 @@ goog.provide('app.elevationProfile');
 
 // webpack: import './elevationProfile.css';
 // webpack: import './common_dependencies.js';
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Feature');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -65,7 +64,7 @@ app.elevationProfile.MainController = function($http, $scope) {
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       extent: [420000, 30000, 900000, 350000],
       zoom: 0,
       center: [0, 0]

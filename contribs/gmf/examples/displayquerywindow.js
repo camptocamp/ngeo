@@ -10,8 +10,7 @@ goog.require('gmf.map.component');
 goog.require('gmf.query.windowComponent');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.query.bboxQueryComponent');
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ol.Map');
@@ -132,7 +131,7 @@ gmfapp.displayquerywindow.MainController = function(gmfThemes, gmfDataSourcesMan
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3

@@ -6,8 +6,7 @@ goog.provide('gmfapp.contextualdata');
 goog.require('gmf.contextualdata.module');
 goog.require('gmf.map.component');
 goog.require('ngeo.misc.filters');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -50,7 +49,7 @@ gmfapp.contextualdata.MainController = function() {
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 3
