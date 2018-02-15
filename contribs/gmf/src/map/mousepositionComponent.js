@@ -1,6 +1,6 @@
 goog.provide('gmf.map.mousepositionComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
 goog.require('ngeo.misc.filters');
 goog.require('ol.control.MousePosition');

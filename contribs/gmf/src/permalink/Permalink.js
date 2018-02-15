@@ -9,8 +9,6 @@ goog.require('ngeo.Popover');
 goog.require('ngeo.draw.features');
 goog.require('ngeo.datasource.Group');
 goog.require('ngeo.datasource.OGC');
-/** @suppress {extraRequire} */
-goog.require('ngeo.datasource.WMSGroup');
 goog.require('ngeo.olcs.constants');
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.format.FeatureProperties');

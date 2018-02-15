@@ -1,6 +1,6 @@
 goog.provide('gmf.profile.component');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');

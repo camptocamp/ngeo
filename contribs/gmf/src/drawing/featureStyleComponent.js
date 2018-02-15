@@ -1,6 +1,6 @@
 goog.provide('gmf.drawing.featureStyleComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Object');

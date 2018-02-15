@@ -2,7 +2,6 @@ goog.require('ngeo.misc.decorate');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Group');
 goog.require('ol.source.Image');
-goog.require('ol.Collection');
 
 
 describe('ngeo.misc.DecorateLayerLoading test suite', () => {

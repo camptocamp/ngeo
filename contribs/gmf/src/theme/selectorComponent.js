@@ -1,6 +1,6 @@
 goog.provide('gmf.theme.selectorComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.theme.Manager');
 goog.require('gmf.theme.Themes');
 goog.require('ol.events');

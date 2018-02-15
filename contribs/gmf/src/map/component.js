@@ -1,6 +1,6 @@
 goog.provide('gmf.map.component');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.permalink.Permalink');
 goog.require('gmf.editing.Snapping');
 goog.require('ngeo.map.component');

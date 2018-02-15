@@ -5,6 +5,7 @@ goog.provide('gmf.datasource.ExternalDataSourcesManager');
 
 goog.require('gmf');
 goog.require('goog.asserts');
+goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.misc.File');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.File');
@@ -380,7 +381,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         injector: this.injector_,
         title: service['Title'],
         url: url
-      });
+      }, this.ngeoLayerHelper_);
       this.addLayer_(wmsGroup.layer);
       this.addWMSGroup_(wmsGroup);
       this.dataSources_.push(dataSource);
@@ -666,6 +667,7 @@ gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
 
 
 gmf.datasource.ExternalDataSourcesManager.module = angular.module('gmfExternalDataSourcesManager', [
+  ngeo.map.LayerHelper.module.name,
   ngeo.misc.File.module.name,
   ngeo.datasource.DataSources.module.name,
 ]);

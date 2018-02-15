@@ -10,9 +10,6 @@ goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.googlestreetview.component');
 goog.require('ol');
 
 app.desktop.module = angular.module('AppDesktop', [

@@ -11,6 +11,9 @@ goog.require('gmf.controllers.AbstractMobileController');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
+goog.require('ol.style.Fill');
+goog.require('ol.style.RegularShape');
+goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
 

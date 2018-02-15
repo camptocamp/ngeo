@@ -1,7 +1,7 @@
 goog.provide('gmf.editing.editFeatureSelectorComponent');
 
+goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.editFeatureComponent');
 goog.require('gmf.layertree.TreeManager');

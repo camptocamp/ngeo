@@ -1,6 +1,6 @@
 goog.provide('gmf.mobile.measure.pointComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.raster.RasterService');
 goog.require('goog.asserts');
 goog.require('ngeo.interaction.MeasurePointMobile');

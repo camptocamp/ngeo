@@ -1,6 +1,6 @@
 goog.provide('gmf.query.gridComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.download.Csv');

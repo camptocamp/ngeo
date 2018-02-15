@@ -1,6 +1,6 @@
 goog.provide('gmf.objectediting.component');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.editing.EditFeature');
 goog.require('gmf.layertree.SyncLayertreeMap');
 goog.require('gmf.layertree.TreeManager');
