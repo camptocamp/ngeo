@@ -14,7 +14,6 @@ import './services/wfspermalink.spec.js';
 import './services/featureoverlay.spec.js';
 import './services/decoratelayerloading.spec.js';
 import './services/filters.spec.js';
-import './services/query.spec.js';
 import './services/print.spec.js';
 import './services/csvdownload.spec.js';
 import './services/toolActivateMgr.spec.js';
