@@ -1,8 +1,6 @@
 goog.provide('gmf.controllers.AbstractDesktopController');
 
-goog.require('gmf');
 goog.require('gmf.controllers.AbstractAppController');
-
 goog.require('gmf.contextualdata.module');
 goog.require('gmf.drawing.module');
 goog.require('gmf.editing.module');

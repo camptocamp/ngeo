@@ -6,7 +6,6 @@ goog.provide('app.bboxquery');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');

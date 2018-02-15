@@ -1,7 +1,6 @@
 goog.provide('ngeo.misc.syncArrays');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 
 
 /**

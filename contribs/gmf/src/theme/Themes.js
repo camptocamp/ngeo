@@ -1,7 +1,6 @@
 goog.provide('gmf.theme.Themes');
 
 goog.require('goog.asserts');
-goog.require('gmf');
 goog.require('ngeo.map.LayerHelper');
 goog.require('ol');
 goog.require('ol.array');

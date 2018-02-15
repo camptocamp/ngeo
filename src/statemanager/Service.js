@@ -1,7 +1,6 @@
 goog.provide('ngeo.statemanager.Service');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 
 goog.require('ngeo.statemanager.Location');
 

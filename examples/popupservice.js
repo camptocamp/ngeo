@@ -2,7 +2,6 @@ goog.provide('app.popupservice');
 
 // webpack: import './popupservice.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.message.Popup');
 
 

@@ -2,7 +2,6 @@ goog.provide('gmfapp.datepicker');
 
 // webpack: import './datepicker.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.WMSTime');
 

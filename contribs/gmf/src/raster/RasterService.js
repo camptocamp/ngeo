@@ -1,7 +1,5 @@
 goog.provide('gmf.raster.RasterService');
 
-goog.require('gmf');
-
 
 /**
  * The Raster service.

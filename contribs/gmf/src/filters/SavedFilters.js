@@ -1,6 +1,5 @@
 goog.provide('gmf.filters.SavedFilters');
 
-goog.require('gmf');
 goog.require('goog.asserts');
 goog.require('ol.array');
 

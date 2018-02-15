@@ -1,6 +1,5 @@
 goog.provide('ngeo.draw.features');
 
-goog.require('ngeo');
 goog.require('ol.Collection');
 
 

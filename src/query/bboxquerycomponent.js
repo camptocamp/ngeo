@@ -1,6 +1,5 @@
 goog.provide('ngeo.query.bboxQueryComponent');
 
-goog.require('ngeo');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.MapQuerent');
 goog.require('ol.interaction.DragBox');

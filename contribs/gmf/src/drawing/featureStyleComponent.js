@@ -4,7 +4,6 @@ goog.require('gmf');
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Object');
-goog.require('ngeo');
 goog.require('ngeo.format.FeatureProperties');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.colorpickerComponent');

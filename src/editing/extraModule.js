@@ -1,6 +1,5 @@
 goog.provide('ngeo.editing.extraModule');
 
-goog.require('ngeo');
 goog.require('ngeo.editing.exportfeaturesComponent');
 
 /**

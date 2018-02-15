@@ -4,7 +4,6 @@ goog.provide('gmfapp.filterselector');
 
 // webpack: import './filterselector.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');

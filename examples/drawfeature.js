@@ -2,7 +2,6 @@ goog.provide('app.drawfeature');
 
 // webpack: import './drawfeature.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.draw.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.ToolActivate');

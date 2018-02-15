@@ -4,7 +4,6 @@ goog.provide('gmfapp.editfeature');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.proj.EPSG21781');
-goog.require('gmf');
 goog.require('gmf.authentication.module');
 goog.require('gmf.editing.EditFeature');
 /** @suppress {extraRequire} */

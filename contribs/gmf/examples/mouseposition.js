@@ -2,7 +2,6 @@ goog.provide('gmfapp.mouseposition');
 
 // webpack: import './mouseposition.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.module');
 /** @suppress {extraRequire} */

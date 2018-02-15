@@ -1,7 +1,6 @@
 goog.provide('ngeo.message.Disclaimer');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.message.Popup');
 goog.require('ngeo.message.Message');
 goog.require('ol');

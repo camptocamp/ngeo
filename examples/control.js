@@ -2,7 +2,6 @@ goog.provide('app.control');
 
 // webpack: import './control.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.controlComponent');

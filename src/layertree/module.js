@@ -1,6 +1,5 @@
 goog.provide('ngeo.layertree.module');
 
-goog.require('ngeo');
 goog.require('ngeo.layertree.component');
 
 /**

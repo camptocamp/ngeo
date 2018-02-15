@@ -1,6 +1,5 @@
 goog.provide('gmf.datasource.Manager');
 
-goog.require('gmf');
 goog.require('gmf.datasource.OGC');
 goog.require('gmf.datasource.WFSAliases');
 goog.require('gmf.layertree.SyncLayertreeMap');

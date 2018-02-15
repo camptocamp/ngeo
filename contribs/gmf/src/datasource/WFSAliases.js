@@ -1,6 +1,5 @@
 goog.provide('gmf.datasource.WFSAliases');
 
-goog.require('gmf');
 goog.require('ngeo.datasource.Helper');
 
 

@@ -1,7 +1,6 @@
 goog.provide('gmf.mobile.navigation.component');
 
 goog.require('goog.asserts');
-goog.require('gmf');
 
 
 gmf.mobile.navigation.component = angular.module('gmfMobileNav', []);

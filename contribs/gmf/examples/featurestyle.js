@@ -2,12 +2,10 @@ goog.provide('gmfapp.featurestyle');
 
 // webpack: import './featurestyle.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.misc.FeatureHelper');
 goog.require('ol.Feature');

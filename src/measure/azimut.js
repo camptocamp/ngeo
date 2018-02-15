@@ -1,6 +1,5 @@
 goog.provide('ngeo.measure.azimut');
 
-goog.require('ngeo');
 goog.require('ngeo.draw.Controller');
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.GeometryType');

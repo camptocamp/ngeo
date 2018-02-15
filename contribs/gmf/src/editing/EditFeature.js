@@ -1,6 +1,5 @@
 goog.provide('gmf.editing.EditFeature');
 
-goog.require('gmf');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.uri');
 

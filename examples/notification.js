@@ -2,7 +2,6 @@ goog.provide('app.notification');
 
 // webpack: import './notification.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 

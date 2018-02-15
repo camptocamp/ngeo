@@ -1,6 +1,5 @@
 goog.provide('ngeo.misc.extraModule');
 
-goog.require('ngeo');
 goog.require('ngeo.misc.AutoProjection');
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.controlComponent');

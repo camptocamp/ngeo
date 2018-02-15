@@ -1,8 +1,8 @@
 goog.provide('ngeo.map.resizemap');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ol.Map');
+
 
 /**
  * @type {!angular.Module}

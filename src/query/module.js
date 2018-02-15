@@ -1,6 +1,5 @@
 goog.provide('ngeo.query.module');
 
-goog.require('ngeo');
 goog.require('ngeo.query.Service');
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.query.MapQuerent');

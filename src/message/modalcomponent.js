@@ -1,7 +1,6 @@
 goog.provide('ngeo.message.modalComponent');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 
 /**
  * @type {angular.Module}

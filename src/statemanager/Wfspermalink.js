@@ -1,7 +1,6 @@
 goog.provide('ngeo.statemanager.WfsPermalink');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ol.extent');
 goog.require('ol.format.filter');
 goog.require('ol.format.WFS');

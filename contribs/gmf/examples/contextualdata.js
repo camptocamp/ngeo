@@ -2,7 +2,6 @@ goog.provide('gmfapp.contextualdata');
 
 // webpack: import './contextualdata.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdata.module');
 goog.require('gmf.map.component');

@@ -1,7 +1,6 @@
 goog.provide('ngeo.map.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.Observable');

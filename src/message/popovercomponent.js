@@ -1,6 +1,5 @@
 goog.provide('ngeo.message.popoverComponent');
 
-goog.require('ngeo');
 
 /**
  * @type {angular.Module}

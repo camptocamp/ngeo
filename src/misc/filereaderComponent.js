@@ -1,7 +1,5 @@
 goog.provide('ngeo.misc.filereaderComponent');
 
-goog.require('ngeo');
-
 
 /**
  * @type {!angular.Module}

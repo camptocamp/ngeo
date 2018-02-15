@@ -2,7 +2,6 @@ goog.provide('gmf.authentication.component');
 
 goog.require('gmf');
 goog.require('gmf.authentication.Service');
-goog.require('ngeo');
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */

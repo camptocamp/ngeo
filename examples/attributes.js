@@ -5,8 +5,6 @@ goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
 goog.require('ol.Feature');
-
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 

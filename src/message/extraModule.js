@@ -1,6 +1,5 @@
 goog.provide('ngeo.message.extraModule');
 
-goog.require('ngeo');
 goog.require('ngeo.message.Notification');
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.message.displaywindowComponent');

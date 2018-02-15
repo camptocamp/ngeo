@@ -1,7 +1,5 @@
 goog.provide('ngeo.datasource.DataSource');
 
-goog.require('ngeo');
-
 
 /**
  * @implements {ngeox.datasource.DataSource}

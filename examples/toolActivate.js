@@ -2,7 +2,6 @@ goog.provide('app.toolActivate');
 
 // webpack: import './toolActivate.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');

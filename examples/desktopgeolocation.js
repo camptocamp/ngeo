@@ -10,8 +10,6 @@ goog.require('ol.style.Circle');
 goog.require('ol.style.Style');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
-
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.geolocation.desktop');
 

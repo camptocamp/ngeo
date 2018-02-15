@@ -1,6 +1,5 @@
 goog.provide('ngeo.measure.area');
 
-goog.require('ngeo');
 goog.require('ngeo.draw.Controller');
 goog.require('ngeo.GeometryType');
 goog.require('ngeo.interaction.MeasureArea');

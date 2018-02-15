@@ -1,6 +1,5 @@
 goog.provide('ngeo.profile.module');
 
-goog.require('ngeo');
 goog.require('ngeo.profile.elevationComponent');
 
 /**

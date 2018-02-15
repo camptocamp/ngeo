@@ -1,7 +1,6 @@
 goog.provide('ngeo.layertree.Controller');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.misc.decorate');
 goog.require('ol');
 goog.require('ol.events');

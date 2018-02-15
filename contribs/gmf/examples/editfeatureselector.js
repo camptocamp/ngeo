@@ -2,7 +2,6 @@ goog.provide('gmfapp.editfeatureselector');
 
 // webpack: import './editfeatureselector.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.editFeatureSelectorComponent');

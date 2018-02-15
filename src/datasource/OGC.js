@@ -1,7 +1,6 @@
 goog.provide('ngeo.datasource.OGC');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ngeo.filter.Condition');
 goog.require('ngeo.format.AttributeType');

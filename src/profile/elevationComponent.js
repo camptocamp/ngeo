@@ -3,7 +3,6 @@ goog.provide('ngeo.profile.elevationComponent');
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.obj');
-goog.require('ngeo');
 goog.require('ngeo.misc.debounce');
 goog.require('ngeo.profile.d3Elevation');
 // webpack: import {select} from 'd3-selection';

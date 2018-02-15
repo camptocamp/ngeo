@@ -1,6 +1,5 @@
 goog.provide('gmf.controllers.AbstractMobileController');
 
-goog.require('gmf');
 goog.require('gmf.controllers.AbstractAppController');
 goog.require('gmf.mobile.measure.module');
 goog.require('gmf.mobile.navigation.module');

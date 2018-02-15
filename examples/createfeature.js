@@ -16,8 +16,6 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.OSM');
 goog.require('ol.source.Vector');
-
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 
 

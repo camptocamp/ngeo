@@ -1,7 +1,5 @@
 goog.provide('ngeo.misc.btnComponent');
 
-goog.require('ngeo');
-
 
 /**
  * @type {!angular.Module}

@@ -1,7 +1,6 @@
 goog.provide('ngeo.map.component');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ol.events');
 goog.require('ol.Map');
 

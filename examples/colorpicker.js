@@ -4,7 +4,6 @@ goog.provide('app.colorpicker');
 // webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.colorpickerComponent');
-goog.require('ngeo');
 
 /** @type {!angular.Module} **/
 app.colorpicker.module = angular.module('app', [

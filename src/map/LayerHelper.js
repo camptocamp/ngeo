@@ -1,7 +1,6 @@
 goog.provide('ngeo.map.LayerHelper');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ol.array');
 goog.require('ol.format.WMTSCapabilities');
 goog.require('ol.layer.Group');

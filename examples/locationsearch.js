@@ -3,7 +3,6 @@ goog.provide('app.locationsearch');
 // webpack: import './locationsearch.css';
 // webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 goog.require('ngeo.search.module');
 goog.require('ol');

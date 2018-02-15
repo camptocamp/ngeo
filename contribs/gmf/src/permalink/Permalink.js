@@ -4,7 +4,6 @@ goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.Manager');
 goog.require('gmf.theme.Themes');
-goog.require('ngeo');
 goog.require('ngeo.Popover');
 /** @suppress {extraRequire} */
 goog.require('ngeo.draw.features');

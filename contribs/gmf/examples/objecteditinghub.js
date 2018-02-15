@@ -3,7 +3,6 @@ goog.provide('gmfapp.objecteditinghub');
 // webpack: import './objecteditinghub.css';
 // webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
-goog.require('gmf');
 goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.objectediting.Manager');
 goog.require('gmf.theme.Themes');

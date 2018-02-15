@@ -1,6 +1,5 @@
 goog.provide('gmf.theme.Manager');
 
-goog.require('gmf');
 goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.statemanager.Service');

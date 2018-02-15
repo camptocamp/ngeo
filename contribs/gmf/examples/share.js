@@ -2,7 +2,6 @@ goog.provide('gmfapp.share');
 
 // webpack: import './share.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 /** @suppress {extraRequire} */
 goog.require('gmf.permalink.shareComponent');
 /** @suppress {extraRequire} */

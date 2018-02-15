@@ -1,7 +1,5 @@
 goog.provide('ngeo.misc.File');
 
-goog.require('ngeo');
-
 
 /**
  * @constructor

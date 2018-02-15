@@ -1,7 +1,5 @@
 goog.provide('gmf.datasource.DataSourceBeingFiltered');
 
-goog.require('gmf');
-
 
 /**
  * @type {!angular.Module}

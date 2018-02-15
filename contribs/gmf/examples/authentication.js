@@ -3,7 +3,6 @@ goog.provide('gmfapp.authentication');
 
 // webpack: import './authentication.css';
 // webpack: import './common_dependencies.js';
-goog.require('gmf');
 goog.require('gmf.authentication.module');
 
 

@@ -2,7 +2,6 @@ goog.provide('app.importfeatures');
 
 // webpack: import './importfeatures.css';
 // webpack: import './common_dependencies.js';
-goog.require('ngeo');
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.filereaderComponent');

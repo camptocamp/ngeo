@@ -1,6 +1,5 @@
 goog.provide('ngeo.misc.filters');
 
-goog.require('ngeo');
 goog.require('ol.math');
 goog.require('ol.string');
 
