@@ -10,36 +10,34 @@
 
 goog.provide('ngeo');
 
-
-// Required by olx
-/** @suppress {extraRequire} */
-goog.require('ol.format.IGC');
-/** @suppress {extraRequire} */
-goog.require('ol.source.Raster');
-/** @suppress {extraRequire} */
-goog.require('ol.VectorTile');
-/** @suppress {extraRequire} */
-goog.require('ol.Overlay');
-/** @suppress {extraRequire} */
-goog.require('ol.control.ScaleLine');
-/** @suppress {extraRequire} */
-goog.require('ol.source.WMTS');
-/** @suppress {extraRequire} */
-goog.require('ol.style.Icon');
-/** @suppress {extraRequire} */
-goog.require('ol.layer.VectorTile');
-// Required by ol3
-/** @suppress {extraRequire} */
-goog.require('ol.Map');
-/** @suppress {extraRequire} */
-goog.require('ol.source.Vector');
-/** @suppress {extraRequire} */
-goog.require('ol.render.Feature');
-/** @suppress {extraRequire} */
-goog.require('ol.source.VectorTile');
-/** @suppress {extraRequire} */
-goog.require('ol.style.AtlasManager');
-
+// Required by olx // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.format.IGC'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.source.Raster'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.VectorTile'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.Overlay'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.control.ScaleLine'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.source.WMTS'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.style.Icon'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.layer.VectorTile'); // nowebpack
+// Required by ol3 // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.Map'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.source.Vector'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.render.Feature'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.source.VectorTile'); // nowebpack
+/** @suppress {extraRequire} */ // nowebpack
+goog.require('ol.style.AtlasManager'); // nowebpack
 
 /**
  * The default template base URL for modules, used as-is by the template cache.
