@@ -10,8 +10,6 @@ goog.require('ngeo.editing.createregularpolygonfromclickComponent');
 goog.require('ngeo.GeometryType');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ol');

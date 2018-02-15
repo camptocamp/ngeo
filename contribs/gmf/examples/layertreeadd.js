@@ -61,7 +61,7 @@ gmfapp.layertreeadd.MainController = function(gmfTreeManager, gmfThemes, gmfThem
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3

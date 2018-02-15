@@ -4,11 +4,11 @@ goog.require('ol');
 goog.require('ol.events');
 goog.require('ngeo');
 goog.require('ngeo.misc.EventHelper');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.datetimepickerComponent');
 
 
 ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
+  ngeo.misc.datetimepickerComponent.name,
   ngeo.misc.EventHelper.module.name,
 ]);
 
