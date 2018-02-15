@@ -559,6 +559,16 @@ dist/gmf.js.map: dist/gmf.js
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
+.PRECIOUS: contribs/gmf/apps-webpack/desktop/js/templatecache.js
+contribs/gmf/apps-webpack/desktop/js/templatecache.js: buildtools/templatecache-webpack.mako.js \
+		.build/glob2.timestamp \
+		.build/python-venv/bin/mako-render \
+		$(NGEO_PARTIALS_FILES) \
+		$(GMF_PARTIALS_FILES)
+	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
+		--var "partials=ngeo:src gmf:contribs/gmf/src" \
+		--var "app=./Controller.js" $< > $@
+
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html \

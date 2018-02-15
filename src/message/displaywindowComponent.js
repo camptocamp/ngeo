@@ -1,6 +1,7 @@
 goog.provide('ngeo.message.displaywindowComponent');
 
 goog.require('ngeo');
+// webpack: import 'jquery-ui/ui/widgets/resizable.js';
 // webpack: import 'angular-sanitize';
 
 

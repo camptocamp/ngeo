@@ -1,5 +1,7 @@
 goog.provide('ngeo.message.modalComponent');
 
+// webpack: import 'jquery-ui/ui/widgets/draggable.js';
+// webpack: import 'bootstrap/js/modal.js';
 goog.require('goog.asserts');
 
 /**

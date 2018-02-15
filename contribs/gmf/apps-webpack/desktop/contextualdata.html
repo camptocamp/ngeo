@@ -1,0 +1,43 @@
+<table>
+  <tr>
+    <td translate>
+      Swiss grid (LV03)
+    </td>
+    <td>
+      {{coord_21781|ngeoNumberCoordinates}}
+    </td>
+  </tr>
+  <tr>
+    <td translate>
+      Wgs Coord.
+    </td>
+    <td>
+      {{coord_4326|ngeoNumberCoordinates:2:'{y} {x}'}}
+    </td>
+  </tr>
+  <tr>
+    <td translate>
+      Wgs Coord. DMS
+    </td>
+    <td>
+      {{coord_4326|ngeoDMSCoordinates:0:'{y} {x}'}}
+    </td>
+  </tr>
+  <tr>
+    <td translate>
+      Elevation (SRTM)
+    </td>
+    <td>
+      {{srtm}} [m]
+    </td>
+  </tr>
+  <tr>
+    <td translate>
+      Elevation (Aster)
+    </td>
+    <td>
+      {{aster}} [m]
+    </td>
+  </tr>
+</table>
+<a ng-href="https://maps.google.ch/?ie=UTF8&ll={{coord_4326_northern}},{{coord_4326_eastern}}&layer=c&cbll={{coord_4326_northern}},{{coord_4326_eastern}}&cbp=12,57.78,,0,8.1" target="_blank">Google StreetView</a>

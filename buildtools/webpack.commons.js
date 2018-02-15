@@ -9,6 +9,8 @@ const providePlugin = new webpack.ProvidePlugin({
   // Make sure that Angular finds jQuery and does not fall back to jqLite
   // See https://github.com/webpack/webpack/issues/582
   'window.jQuery': 'jquery',
+  // For Bootstrap
+  'jQuery': 'jquery',
   // For own scripts
   $: 'jquery',
 });
@@ -85,6 +87,13 @@ const iconRule = {
   }
 };
 
+const cursorRule = {
+  test: /\.cur$/,
+  use: {
+    loader: 'url-loader'
+  }
+};
+
 const config = {
   context: path.resolve(__dirname, '../'),
   devtool: 'source-map',
@@ -99,7 +108,8 @@ const config = {
       cssRule,
       lessRule,
       htmlRule,
-      iconRule
+      iconRule,
+      cursorRule,
     ]
   },
   plugins: [

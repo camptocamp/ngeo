@@ -22,6 +22,9 @@ switch (process.env.TARGET) {
   case 'gmf-examples':
     config = webpackMerge(config, require('./buildtools/webpack.gmfexamples'));
     break;
+  case 'gmf-apps':
+    config = webpackMerge(config, require('./buildtools/webpack.gmfapps'));
+    break;
   default:
     console.log(`The 'TARGET' environement variable is set to an invalide value: ${process.env.TARGET}.` )
     process.exit(2);
