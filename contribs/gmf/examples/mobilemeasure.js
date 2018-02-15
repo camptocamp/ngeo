@@ -9,8 +9,7 @@ goog.require('gmf.permalink.Permalink');
 goog.require('gmf.mobile.measure.lengthComponent');
 goog.require('gmf.mobile.measure.pointComponent');
 goog.require('ngeo.misc.btnComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.control.ScaleLine');
@@ -57,7 +56,7 @@ gmfapp.mobilemeasure.MainController = function(gmfPermalink) {
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: center,
       zoom: zoom

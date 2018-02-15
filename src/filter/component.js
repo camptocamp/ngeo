@@ -15,16 +15,14 @@ goog.require('ol');
 goog.require('ol.array');
 
 
-// In futur module declaration, don't forget to require:
-// - ngeo.map.FeatureOverlay.module.name
-
-
 /**
  * @type {!angular.Module}
  */
 ngeo.filter.component = angular.module('ngeoFilter', [
   ngeo.filter.RuleHelper.module.name,
   ngeo.filter.ruleComponent.name,
+  ngeo.map.FeatureOverlay.module.name,
+  ngeo.query.MapQuerent.module.name,
 ]);
 
 ngeo.filter.component.component('ngeoFilter', {

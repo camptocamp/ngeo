@@ -2,8 +2,7 @@ goog.provide('gmfapp.editfeature');
 
 // webpack: import './editfeature.css';
 // webpack: import './common_dependencies.js';
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.authentication.module');
 goog.require('gmf.editing.EditFeature');
 /** @suppress {extraRequire} */
@@ -119,7 +118,7 @@ gmfapp.editfeature.MainController = function($scope, gmfEditFeature, gmfUser) {
       this.wmsLayer_
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2

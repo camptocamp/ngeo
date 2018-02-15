@@ -4,12 +4,11 @@ goog.module.declareLegacyNamespace();
 goog.require('ol.proj');
 /** @suppress {extraRequire} */
 goog.require('ol.proj.proj4');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.lcc');
+const lcc = goog.require('ngeo.proj.lcc');
 // webpack: import proj4 from 'proj4';
 
 const epsg3947def = [
-  '+proj=lcc',
+  `+proj=${lcc}`,
   '+lat_1=46.25',
   '+lon_0=3',
   '+lat_0=47',

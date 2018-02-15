@@ -12,8 +12,7 @@ goog.require('gmf.objectediting.Manager');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.proj');
 goog.require('ol.Collection');
 goog.require('ol.Map');
@@ -27,6 +26,7 @@ goog.require('ol.source.Vector');
 /** @type {!angular.Module} **/
 gmfapp.objectediting.module = angular.module('gmfapp', [
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
   gmf.objectediting.component.name,
   gmf.objectediting.Manager.module.name,
@@ -64,7 +64,7 @@ gmfapp.objectediting.MainController = function(gmfObjectEditingManager, gmfTheme
 
   gmfThemes.loadThemes();
 
-  const projection = ol.proj.get('EPSG:21781');
+  const projection = ol.proj.get(EPSG21781);
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
@@ -111,7 +111,7 @@ gmfapp.objectediting.MainController = function(gmfObjectEditingManager, gmfTheme
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2

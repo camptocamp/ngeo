@@ -2,9 +2,7 @@ goog.provide('ngeo.interaction.ModifyRectangle');
 
 goog.require('goog.asserts');
 goog.require('ol');
-goog.require('ol.Collection');
 goog.require('ol.Feature');
-goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.events');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');

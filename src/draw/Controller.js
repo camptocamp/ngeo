@@ -5,7 +5,6 @@ goog.require('goog.asserts');
 goog.require('ngeo.draw.features');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.GeometryType');
-/** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
 goog.require('ngeo.misc.decorate');
 goog.require('ngeo.misc.FeatureHelper');
@@ -243,6 +242,7 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
  */
 ngeo.draw.Controller.module = angular.module('ngeoDrawfeatureController', [
   ngeo.draw.features.name,
+  ngeo.misc.btnComponent.name,
   ngeo.misc.FeatureHelper.module.name,
 ]);
 ngeo.draw.Controller.module.controller('ngeoDrawfeatureController', ngeo.draw.Controller);

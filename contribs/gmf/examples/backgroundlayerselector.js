@@ -6,8 +6,7 @@ goog.require('gmf.backgroundlayerselector.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.theme.Themes');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 
@@ -51,7 +50,7 @@ gmfapp.backgroundlayerselector.MainController = function(gmfThemes) {
     layers: [],
     view: new ol.View({
       center: [632464, 185457],
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       minZoom: 3,
       zoom: 3
     })

@@ -9,8 +9,7 @@ goog.require('gmf.map.component');
 goog.require('gmf.print.component');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.map.module');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -72,7 +71,7 @@ gmfapp.print.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3

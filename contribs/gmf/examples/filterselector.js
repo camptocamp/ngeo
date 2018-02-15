@@ -14,14 +14,11 @@ goog.require('gmf.layertree.TreeManager');
 goog.require('gmf.map.component');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.datasource.DataSources');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
-/** @suppress {extraRequire} */
 goog.require('ngeo.query.mapQueryComponent');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.misc.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -33,11 +30,14 @@ gmfapp.filterselector.module = angular.module('gmfapp', [
   gmf.authentication.module.name,
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.filters.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
   ngeo.datasource.DataSources.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
+  ngeo.query.bboxQueryComponent.name,
+  ngeo.query.mapQueryComponent.name,
 ]);
 
 
@@ -103,7 +103,7 @@ gmfapp.filterselector.MainController = class {
         })
       ],
       view: new ol.View({
-        projection: 'EPSG:21781',
+        projection: EPSG21781,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [537635, 152640],
         zoom: 2

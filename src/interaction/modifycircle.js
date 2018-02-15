@@ -4,7 +4,6 @@ goog.require('goog.asserts');
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol');
-goog.require('ol.Collection');
 goog.require('ol.Feature');
 goog.require('ol.MapBrowserPointerEvent');
 goog.require('ol.coordinate');

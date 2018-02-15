@@ -8,8 +8,7 @@ goog.require('gmf.search.module');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.message.Notification');
 goog.require('ngeo.message.Message');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.map.module');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -26,7 +25,8 @@ gmfapp.search.module = angular.module('gmfapp', [
   gmf.map.component.name,
   gmf.search.module.name,
   gmf.theme.Themes.module.name,
-  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeo.message.Notification.module.name,
 ]);
 
 gmfapp.search.module.value('gmfTreeUrl',
@@ -63,7 +63,7 @@ gmfapp.search.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNo
     groupValues: ['osm', 'district'],
     groupActions: [],
     labelKey: 'label',
-    projection: 'EPSG:21781',
+    projection: EPSG21781,
     bloodhoundOptions: {
       remote: {
         rateLimitWait: 250

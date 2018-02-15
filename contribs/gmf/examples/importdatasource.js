@@ -16,8 +16,7 @@ goog.require('ngeo.datasource.DataSources');
 /** @suppress {extraRequire} */
 goog.require('ngeo.query.bboxQueryComponent');
 goog.require('ngeo.query.mapQueryComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -29,6 +28,7 @@ gmfapp.importdatasource.module = angular.module('gmfapp', [
   gmf.datasource.Manager.module.name,
   gmf.import.importdatasourceComponent.name,
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,
   ngeo.datasource.DataSources.module.name,
@@ -105,7 +105,7 @@ gmfapp.importdatasource.MainController = class {
         })
       ],
       view: new ol.View({
-        projection: 'EPSG:21781',
+        projection: EPSG21781,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [537635, 152640],
         zoom: 2

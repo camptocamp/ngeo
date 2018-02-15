@@ -8,8 +8,7 @@ goog.require('gmf.permalink.Permalink');
 goog.require('gmf.map.component');
 goog.require('gmf.profile.module');
 goog.require('ngeo.map.module');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -79,7 +78,7 @@ gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 3

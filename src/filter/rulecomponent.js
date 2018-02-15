@@ -42,6 +42,7 @@ ngeo.filter.ruleComponent = angular.module('ngeoRule', [
   ngeo.map.FeatureOverlay.module.name,
   ngeo.misc.datepickerComponent.name,
   ngeo.misc.FeatureHelper.module.name,
+  ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
 

@@ -4,12 +4,11 @@ goog.module.declareLegacyNamespace();
 goog.require('ol.proj');
 /** @suppress {extraRequire} */
 goog.require('ol.proj.proj4');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.somerc');
+const somerc = goog.require('ngeo.proj.somerc');
 // webpack: import proj4 from 'proj4';
 
 const epsg2056def = [
-  '+proj=somerc',
+  `+proj=${somerc}`,
   '+lat_0=46.95240555555556',
   '+lon_0=7.439583333333333',
   '+k_0=1',

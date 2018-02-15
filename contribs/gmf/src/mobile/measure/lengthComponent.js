@@ -3,7 +3,6 @@ goog.provide('gmf.mobile.measure.lengthComponent');
 goog.require('gmf');
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.interaction.MeasureLengthMobile');
-goog.require('ngeo.interaction.MobileDraw');
 goog.require('ngeo.misc.decorate');
 goog.require('ol.events');
 goog.require('ol.Object');

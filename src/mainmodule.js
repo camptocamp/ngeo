@@ -31,6 +31,7 @@ ngeo.mainmodule = angular.module('ngeo', [
   ngeo.layertree.module.name,
   ngeo.map.module.name,
   ngeo.map.LayerHelper.module.name,
+  ngeo.measure.module.name,
   ngeo.print.module.name,
   ngeo.profile.module.name,
   ngeo.query.module.name,

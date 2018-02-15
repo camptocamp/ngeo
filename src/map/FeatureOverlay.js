@@ -1,6 +1,5 @@
 goog.provide('ngeo.map.FeatureOverlay');
 
-goog.require('ol');
 goog.require('ol.events');
 
 

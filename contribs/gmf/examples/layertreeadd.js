@@ -10,8 +10,7 @@ goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.Themes');
 goog.require('gmf.theme.Manager');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.statemanager.Location');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -21,6 +20,7 @@ goog.require('ol.source.OSM');
 /** @type {!angular.Module} **/
 gmfapp.layertreeadd.module = angular.module('gmfapp', [
   gmf.layertree.component.name,
+  gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
   gmf.theme.Manager.module.name,
   gmf.theme.Themes.module.name,
@@ -60,7 +60,7 @@ gmfapp.layertreeadd.MainController = function(gmfTreeManager, gmfThemes, gmfThem
       })
     ],
     view: new ol.View({
-      projection: 'EPSG:21781',
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3

@@ -8,10 +8,8 @@ goog.provide('app.oeview.Controller');
 
 goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG2056');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
+const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
+const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 
 
@@ -37,7 +35,7 @@ app.oeview.Controller = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
+  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
   /**
    * @type {!Array.<number>}
@@ -71,11 +69,11 @@ app.oeview.Controller = function($scope, $injector) {
    * @export
    */
   this.mousePositionProjections = [{
-    code: 'EPSG:2056',
+    code: EPSG2056,
     label: 'CH1903+ / LV95',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
-    code: 'EPSG:21781',
+    code: EPSG21781,
     label: 'CH1903 / LV03',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {

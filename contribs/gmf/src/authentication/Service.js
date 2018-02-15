@@ -1,7 +1,6 @@
 goog.provide('gmf.authentication.Service');
 
 goog.require('ngeo.CustomEvent');
-goog.require('ol');
 goog.require('ol.events.EventTarget');
 
 /**
