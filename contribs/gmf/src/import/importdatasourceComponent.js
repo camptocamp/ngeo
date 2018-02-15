@@ -18,6 +18,12 @@ gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
   ngeo.query.Querent.module.name,
 ]);
 
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
+// webpack: });
+
+
 /**
  * @private
  */
@@ -374,5 +380,6 @@ gmf.import.importdatasourceComponent.component('gmfImportdatasource', {
     'map': '<'
   },
   controller: gmf.import.importdatasourceComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/importdatasourceComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/importdatasourceComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/import/importdatasourceComponent'
 });

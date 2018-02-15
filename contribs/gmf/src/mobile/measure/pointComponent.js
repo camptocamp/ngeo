@@ -21,15 +21,20 @@ gmf.mobile.measure.pointComponent = angular.module('gmfMobileMeasurePoint', [
 
 gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} The template url.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} The template url.
+   */
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/mobile/measure/pointComponent.html`;
+      `${gmf.baseModuleTemplateUrl}/mobile/measure/pointComponent.html`; // nowebpack
+    // webpack: 'gmf/measure/pointComponent';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
+// webpack: });
 
 
 /**

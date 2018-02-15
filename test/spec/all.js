@@ -1,9 +1,8 @@
-// webpack: import 'jquery';
-// webpack: import 'angular';
-// webpack: import 'angular-mocks';
-// webpack: import 'angular-gettext';
-import './templatecache.js';
-import './gmftemplatecache.js';
+import 'jquery';
+import 'angular';
+import 'angular-mocks';
+import 'angular-gettext';
+import './beforeeach.js';
 import './search/createlocationsearchbloodhound.spec.js';
 import './services/wmstime.spec.js';
 import './services/layerHelper.spec.js';

@@ -1,6 +1,6 @@
 goog.provide('ngeo.message.displaywindowComponent');
 
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 // webpack: import 'jquery-ui/ui/widgets/resizable.js';
 // webpack: import 'angular-sanitize';
 
@@ -11,6 +11,12 @@ goog.require('ngeo');
 ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowComponent', [
   'ngSanitize',
 ]);
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
+// webpack: });
+
 
 /**
  * @private
@@ -222,5 +228,6 @@ ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
     'width': '='
   },
   controller: ngeo.message.displaywindowComponent.Controller_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/message/displaywindowComponent.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/message/displaywindowComponent.html` // nowebpack
+  // webpack: templateUrl: 'ngeo/message/displaywindowComponent'
 });

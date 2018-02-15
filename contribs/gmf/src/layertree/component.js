@@ -49,19 +49,36 @@ gmf.layertree.component = angular.module('gmfLayertreeComponent', [
 ]);
 
 
+// Overrides the path to the layertree template (used by each node, except
+// the root node that path is defined by the gmfLayertreeTemplate value.
+ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
+  /**
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template URL.
+   */
+  (element, attrs) => `${gmf.baseModuleTemplateUrl}/layertree/component.html`); // nowebpack
+// webpack: (element, attrs) => 'gmf/layertree');
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/layertree', require('./component.html'));
+// webpack: });
+
+
 gmf.layertree.component.value('gmfLayertreeTemplate',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template.
+   */
   ($element, $attrs) => {
-    const subTemplateUrl = `${gmf.baseModuleTemplateUrl}/layertree/component.html`;
-    return `${'<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
+    const subTemplateUrl = `${gmf.baseModuleTemplateUrl}/layertree/component.html`; // nowebpack
+    // webpack: const subTemplateUrl = 'gmf/layertree';
+    return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
           'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
-          'ngeo-layertree-templateurl="'}${subTemplateUrl}">` +
+          `ngeo-layertree-templateurl="${subTemplateUrl}">` +
           '</div>';
   }
 );
@@ -77,17 +94,6 @@ gmf.layertree.component.value('gmfLayertreeTemplate',
 function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
   return gmfLayertreeTemplate($element, $attrs);
 }
-
-
-// Overrides the path to the layertree template (used by each node, except
-// the root node that path is defined by the gmfLayertreeTemplate value.
-ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
-  /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
-  (element, attrs) => `${gmf.baseModuleTemplateUrl}/layertree/component.html`);
 
 
 /**

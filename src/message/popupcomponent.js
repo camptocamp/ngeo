@@ -1,6 +1,6 @@
 goog.provide('ngeo.message.popupComponent');
 
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 // webpack: import 'angular-sanitize';
 
 
@@ -11,15 +11,20 @@ ngeo.message.popupComponent = angular.module('ngeoPopup', [
 
 ngeo.message.popupComponent.value('ngeoPopupTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template URL.
+   */
   (element, attrs) => {
     const templateUrl = attrs['ngeoPopupTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/message/popupcomponent.html`;
+      `${ngeo.baseModuleTemplateUrl}/message/popupcomponent.html`; // nowebpack
+    // webpack: 'ngeo/message/popupcomponent';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
+// webpack: });
 
 
 /**

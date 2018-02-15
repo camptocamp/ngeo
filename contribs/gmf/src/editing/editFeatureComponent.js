@@ -62,6 +62,11 @@ gmf.editing.editFeatureComponent = angular.module('GmfEditingFeatureComponent', 
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
+// webpack: })
+
+
 /**
  * Directive used to insert, modify and delete features from a single layer.
  * It allows you to modify the geometry of the feature in addition to its
@@ -114,9 +119,11 @@ gmf.editing.editFeatureComponent.component_ = function() {
       'vectorLayer': '<gmfEditfeatureVector'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureComponent.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureComponent.html` // nowebpack
+    // webpack: templateUrl: 'gmf/editing/editFeatureComponent'
   };
 };
+
 
 gmf.editing.editFeatureComponent.directive('gmfEditfeature',
   gmf.editing.editFeatureComponent.component_);

@@ -18,15 +18,20 @@ gmf.mobile.measure.lengthComponent = angular.module('gmfMobileMeasureLength', [
 
 gmf.mobile.measure.lengthComponent.value('gmfMobileMeasureLengthTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} The template url.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} The template url.
+   */
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/mobile/measure/lengthComponent.html`;
+      `${gmf.baseModuleTemplateUrl}/mobile/measure/lengthComponent.html`; // nowebpack
+    // webpack: 'gmf/measure/lengthComponent';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/measure/lengthComponent', require('./lengthComponent.html'));
+// webpack: });
 
 
 /**

@@ -1,6 +1,6 @@
 goog.provide('ngeo.misc.colorpickerComponent');
 
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 
 
 /**
@@ -11,15 +11,21 @@ ngeo.misc.colorpickerComponent = angular.module('ngeoColorpicker', []);
 
 ngeo.misc.colorpickerComponent.value('ngeoColorpickerTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template URL.
+   */
   (element, attrs) => {
     const templateUrl = attrs['ngeoColorpickerTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/misc/colorpickerComponent.html`;
+      `${ngeo.baseModuleTemplateUrl}/misc/colorpickerComponent.html`; // nowebpack
+    // webpack: 'ngeo/misc/colorpickerComponent';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
+// webpack: });
+
 
 /**
  * Provides the "ngeoColorpicker" directive, a widget for

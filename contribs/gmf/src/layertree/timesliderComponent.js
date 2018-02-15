@@ -14,6 +14,11 @@ gmf.layertree.timeSliderComponent = angular.module('gmfLayertreeTimeSliderCompon
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
+// webpack: });
+
+
 /**
  * Provide a directive to select a single date or a range of dates with a slider
  * Example:
@@ -45,7 +50,8 @@ gmf.layertree.timeSliderComponent.directive_ = function($timeout, $filter) {
     bindToController: true,
     controller: 'gmfTimeSliderController as sliderCtrl',
     restrict: 'AE',
-    templateUrl: `${gmf.baseModuleTemplateUrl}/layertree/timesliderComponent.html`,
+    templateUrl: `${gmf.baseModuleTemplateUrl}/layertree/timesliderComponent.html`, // nowebpack
+    // webpack: templateUrl: 'gmf/layertree/timesliderComponent',
     link: /** @type {!angular.LinkingFunctions} */ ({
       pre: function preLink(scope, element, attrs, ctrl) {
         ctrl.init();

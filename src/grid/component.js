@@ -1,7 +1,7 @@
 goog.provide('ngeo.grid.component');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.grid.Config');
 goog.require('ol.has');
@@ -19,6 +19,11 @@ ngeo.grid.component = angular.module('ngeoGrid', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/grid', require('./component.html'));
+// webpack: });
+
+
 ngeo.grid.component.value('ngeoGridTemplateUrl',
   /**
      * @param {!angular.JQLite} $element Element.
@@ -28,7 +33,8 @@ ngeo.grid.component.value('ngeoGridTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['ngeoGridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/grid/component.html`;
+      `${ngeo.baseModuleTemplateUrl}/grid/component.html`; // nowebpack
+    // webpack: 'ngeo/grid';
   }
 );
 

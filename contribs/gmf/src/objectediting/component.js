@@ -54,6 +54,11 @@ gmf.objectediting.component = angular.module('gmfObjectEditingComponent', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/objectediting', require('./component.html'));
+// webpack: });
+
+
 gmf.objectediting.component.value('gmfObjecteditingTemplateUrl',
   /**
      * @param {!angular.JQLite} $element Element.
@@ -63,7 +68,8 @@ gmf.objectediting.component.value('gmfObjecteditingTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfObjecteditingTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/objectediting/component.html`;
+      `${gmf.baseModuleTemplateUrl}/objectediting/component.html`; // nowebpack
+    // webpack: 'gmf/objectediting';
   }
 );
 

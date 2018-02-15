@@ -1,7 +1,7 @@
 goog.provide('ngeo.misc.datepickerComponent');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.misc.Time');
 // webpack: import 'angular-ui-date';
 
@@ -17,15 +17,20 @@ ngeo.misc.datepickerComponent = angular.module('ngeoDatePicker', [
 
 ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template URL.
+   */
   (element, attrs) => {
     const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/misc/datepickerComponent.html`;
+      `${ngeo.baseModuleTemplateUrl}/misc/datepickerComponent.html`; // nowebpack
+    // webpack: 'ngeo/misc/datepickerComponent';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
+// webpack: });
 
 
 /**

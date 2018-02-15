@@ -18,6 +18,7 @@ gmf.authentication.component = angular.module('gmfAuthentication', [
   ngeo.message.modalComponent.name,
 ]);
 
+
 /**
  * @param {angular.JQLite} element Element.
  * @param {angular.Attributes} attrs Attributes.
@@ -26,8 +27,14 @@ gmf.authentication.component = angular.module('gmfAuthentication', [
 gmf.authentication.component.gmfAuthenticationTemplateUrl_ = (element, attrs) => {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
-    `${gmf.baseModuleTemplateUrl}/authentication/component.html`;
+    `${gmf.baseModuleTemplateUrl}/authentication/component.html`; // nowebpack
+  // webpack: 'gmf/authentication';
 };
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/authentication', require('./component.html'));
+// webpack: })
 
 
 /**

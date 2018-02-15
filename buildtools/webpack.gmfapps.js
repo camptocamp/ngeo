@@ -8,7 +8,7 @@ const entry = {};
 
 for (const filename of ls('contribs/gmf/apps-webpack/*/index.html')) {
   const name = path.basename(filename.path);
-  entry[name] = `./${filename.path}/js/templatecache.js`;
+  entry[name] = `./${filename.path}/js/Controller.js`;
   plugins.push(
     new HtmlWebpackPlugin({
       template: filename.full,

@@ -15,6 +15,11 @@ gmf.map.mousepositionComponent = angular.module('gmfMapMouseposition', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
+// webpack: });
+
+
 /**
  * Provide a component to display the mouse position coordinates depending
  * on the chosen projection. The component also provides a projection picker
@@ -39,7 +44,8 @@ gmf.map.mousepositionComponent.component_ = {
     'map': '<gmfMousepositionMap',
     'projections': '<gmfMousepositionProjections'
   },
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/map/mousepositionComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/map/mousepositionComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/map/mousepositionComponent'
 };
 
 gmf.map.mousepositionComponent.component('gmfMouseposition',

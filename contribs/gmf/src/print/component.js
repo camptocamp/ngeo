@@ -34,6 +34,24 @@ gmf.print.component = angular.module('gmfPrintComponent', [
 ]);
 
 
+gmf.print.component.value('gmfPrintTemplateUrl',
+  /**
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template.
+   */
+  (element, attrs) => {
+    const templateUrl = attrs['gmfPrintTemplateurl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/print/component.html`; // nowebpack
+    // webpack: 'gmf/print';
+  });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/print', require('./component.html'));
+// webpack: });
+
+
 /**
  * @enum {string}
  * @export
@@ -75,19 +93,6 @@ gmf.print.component.PrintStateEnum = {
 gmf.print.component.value('gmfPrintState', {
   'state': gmf.print.component.PrintStateEnum.CAPABILITIES_NOT_LOADED
 });
-
-
-gmf.print.component.value('gmfPrintTemplateUrl',
-  /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template.
-     */
-  (element, attrs) => {
-    const templateUrl = attrs['gmfPrintTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/print/component.html`;
-  });
 
 
 /**

@@ -53,8 +53,13 @@ gmf.query.windowComponent.value('gmfDisplayquerywindowTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/query/windowComponent.html`;
+      `${gmf.baseModuleTemplateUrl}/query/windowComponent.html`; // nowebpack
+    // webpack: 'gmf/query/windowComponent';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
+// webpack: });
 
 
 /**

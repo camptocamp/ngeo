@@ -36,6 +36,11 @@ gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
+// webpack: });
+
+
 /**
  * @private
  */
@@ -715,5 +720,6 @@ gmf.filters.filterselectorComponent.component('gmfFilterselector', {
     toolGroup: '<'
   },
   controller: gmf.filters.filterselectorComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/filters/filterselectorcomponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/filters/filterselectorcomponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/filters/filterselectorcomponent'
 });

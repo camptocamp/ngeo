@@ -1,6 +1,6 @@
 goog.provide('ngeo.query.module');
 
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.query.Querent');
 goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.query.mapQueryComponent');

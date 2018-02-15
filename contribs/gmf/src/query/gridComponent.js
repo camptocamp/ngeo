@@ -43,9 +43,14 @@ gmf.query.gridComponent.value('gmfDisplayquerygridTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/query/gridComponent.html`;
+      `${gmf.baseModuleTemplateUrl}/query/gridComponent.html`; // nowebpack
+    // webpack: 'gmf/query/gridComponent';
   }
 );
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
+// webpack: });
 
 
 /**

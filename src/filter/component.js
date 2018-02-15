@@ -1,7 +1,7 @@
 goog.provide('ngeo.filter.component');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.query.MapQuerent');
 goog.require('ngeo.filter.Condition');
 /** @suppress {extraRequire} */
@@ -25,6 +25,12 @@ ngeo.filter.component = angular.module('ngeoFilter', [
   ngeo.query.MapQuerent.module.name,
 ]);
 
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/filter', require('./component.html'));
+// webpack: });
+
+
 ngeo.filter.component.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
@@ -38,7 +44,8 @@ ngeo.filter.component.component('ngeoFilter', {
     'toolGroup': '<'
   },
   controller: 'ngeoFilterController',
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/component.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/component.html` // nowebpack
+  // webpack: templateUrl: 'ngeo/filter'
 });
 
 /**
