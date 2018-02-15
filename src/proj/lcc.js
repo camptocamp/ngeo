@@ -10,3 +10,4 @@ if (typeof ol.proj.proj4.get() !== 'function' && typeof proj4 === 'function') { 
   ol.proj.setProj4(proj4);  // nowebpack
 }  // nowebpack
 // webpack: proj4.Proj.projections.add(lcc);
+exports = 'lcc';

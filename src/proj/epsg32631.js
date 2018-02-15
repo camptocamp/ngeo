@@ -4,12 +4,11 @@ goog.module.declareLegacyNamespace();
 goog.require('ol.proj');
 /** @suppress {extraRequire} */
 goog.require('ol.proj.proj4');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.utm');
+const utm = goog.require('ngeo.proj.utm');
 // webpack: import proj4 from 'proj4';
 
 const epsg32631def = [
-  '+proj=utm',
+  `+proj=${utm}`,
   '+zone=31',
   '+ellps=WGS84',
   '+datum=WGS84',
