@@ -79,7 +79,7 @@
     "karma-jasmine": "1.1.1",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "2.0.13",
-    "less": "2.7.2",
+    "less": "3.0.1",
     "less-loader": "4.0.6",
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
