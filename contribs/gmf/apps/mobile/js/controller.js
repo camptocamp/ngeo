@@ -8,8 +8,10 @@ goog.provide('app.mobile.Controller');
 
 goog.require('app');
 goog.require('gmf.controllers.AbstractMobileController');
-const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG2056');
+/** @suppress {extraRequire} */
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 
 
@@ -51,7 +53,7 @@ app.mobile.Controller = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+  this.searchCoordinatesProjections = ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'];
 
 };
 ol.inherits(app.mobile.Controller, gmf.controllers.AbstractMobileController);
