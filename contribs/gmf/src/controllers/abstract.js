@@ -588,7 +588,7 @@ gmf.AbstractController.prototype.initLanguage = function() {
  * @private
  */
 gmf.AbstractController.prototype.setDefaultBackground_ = function(theme) {
-  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+  this.gmfThemes_.getBgLayers().then((layers) => {
     let layer;
 
     // get the background from the permalink
