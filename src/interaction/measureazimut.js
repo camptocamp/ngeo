@@ -20,13 +20,11 @@ goog.require('ol.proj.Projection');
  * @extends {ngeo.interaction.Measure}
  * @param {!ngeox.unitPrefix} unitPrefixFormat The format function
  * @param {!ngeox.number} numberFormat The format function
- * @param {!ngeox.interaction.MeasureOptions=} opt_options Options
+ * @param {!ngeox.interaction.MeasureOptions=} options Options
  */
-ngeo.interaction.MeasureAzimut = function(unitPrefixFormat, numberFormat, opt_options) {
+ngeo.interaction.MeasureAzimut = function(unitPrefixFormat, numberFormat, options = /** @type {ngeox.interaction.MeasureOptions} */({})) {
 
-  const options = opt_options || {};
-
-  ngeo.interaction.Measure.call(this, options);
+  ngeo.interaction.Measure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
 
   /**
