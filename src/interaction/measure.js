@@ -24,11 +24,9 @@ goog.require('ol.style.Style');
  * @struct
  * @abstract
  * @extends {ol.interaction.Interaction}
- * @param {ngeo.interaction.MeasureBaseOptions=} opt_options Options
+ * @param {ngeo.interaction.MeasureBaseOptions=} options Options
  */
-ngeo.interaction.Measure = function(opt_options) {
-
-  const options = opt_options !== undefined ? opt_options : {};
+ngeo.interaction.Measure = function(options = /** @type {ngeo.interaction.MeasureBaseOptions} */ ({})) {
 
   ol.interaction.Interaction.call(this, {
     handleEvent: ngeo.interaction.Measure.handleEvent_

@@ -17,15 +17,13 @@ goog.require('ol.geom.Point');
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.numberCoordinates} format the number formatter
  * @param {string} coordFormat the coordinates formatter
- * @param {ngeox.interaction.MeasureOptions=} opt_options Options
+ * @param {ngeox.interaction.MeasureOptions=} options Options
  */
-ngeo.interaction.MeasurePointMobile = function(format, coordFormat, opt_options) {
-
-  const options = opt_options !== undefined ? opt_options : {};
+ngeo.interaction.MeasurePointMobile = function(format, coordFormat, options = /** @type {ngeox.interaction.MeasureOptions} */ ({})) {
 
   ol.obj.assign(options, {displayHelpTooltip: false});
 
-  ngeo.interaction.Measure.call(this, options);
+  ngeo.interaction.Measure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */(options));
 
   /**
    * @type {ngeox.numberCoordinates}

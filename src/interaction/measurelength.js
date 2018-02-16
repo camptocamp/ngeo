@@ -17,13 +17,11 @@ goog.require('ol.interaction.Draw');
  * @struct
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.unitPrefix} format The format function
- * @param {ngeox.interaction.MeasureOptions=} opt_options Options
+ * @param {ngeox.interaction.MeasureOptions=} options Options
  */
-ngeo.interaction.MeasureLength = function(format, opt_options) {
+ngeo.interaction.MeasureLength = function(format, options = /** @type {ngeox.interaction.MeasureOptions} */({})) {
 
-  const options = opt_options !== undefined ? opt_options : {};
-
-  ngeo.interaction.Measure.call(this, options);
+  ngeo.interaction.Measure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
 
   /**

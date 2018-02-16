@@ -10,8 +10,8 @@ goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
 goog.require('gmf.import.importdatasourceComponent');
-const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.proj.EPSG2056');
+goog.require('ngeo.proj.EPSG21781');
 
 /** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetview.component');
@@ -71,7 +71,7 @@ app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) 
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+  this.searchCoordinatesProjections = [ngeo.proj.EPSG21781, ngeo.proj.EPSG2056, 'EPSG:4326'];
 
   /**
    * @type {number}
@@ -110,11 +110,11 @@ app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) 
    * @export
    */
   this.mousePositionProjections = [{
-    code: EPSG2056,
+    code: 'EPSG:2056',
     label: 'CH1903+ / LV95',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
-    code: EPSG21781,
+    code: 'EPSG:21781',
     label: 'CH1903 / LV03',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {

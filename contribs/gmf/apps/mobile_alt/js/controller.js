@@ -8,8 +8,8 @@ goog.provide('app.mobile_alt.Controller');
 
 goog.require('app');
 goog.require('gmf.controllers.AbstractMobileController');
-const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
+goog.require('ngeo.proj.EPSG2056');
+goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 goog.require('ol.style.Style');
 
@@ -53,7 +53,7 @@ app.mobile_alt.Controller = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+  this.searchCoordinatesProjections = [ngeo.proj.EPSG21781, ngeo.proj.EPSG2056, 'EPSG:4326'];
 
 
   /**
