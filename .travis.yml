@@ -81,7 +81,7 @@ jobs:
     - JOB=webpack
     script:
     - npm install
-    - npm install github:openlayers/openlayers#2ee34b825c4b5d6edd3569e10b3f63510754e012
+    - npm install github:openlayers/openlayers#master
     - buildtools/webpack-migration
     - git add -A  # for git-attributes
     - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
