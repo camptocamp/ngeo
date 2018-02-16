@@ -85,6 +85,9 @@ goog.require('ol.Feature');
  *     collection in which to push the drawn features. If none is provided,
  *     then the `ngeoFeatures` collection is used.
  * @htmlAttribute {ol.Map} ngeo-drawfeature-map The map.
+ * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
+ *      checkbox in order to display the feature measurements as a label.
+ *      Default to false.
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -97,7 +100,8 @@ ngeo.drawfeatureDirective = function() {
     bindToController: {
       'active': '=ngeoDrawfeatureActive',
       'features': '=?ngeoDrawfeatureFeatures',
-      'map': '=ngeoDrawfeatureMap'
+      'map': '=ngeoDrawfeatureMap',
+      'showMeasure': '=?ngeoDrawfeatureShowmeasure'
     }
   };
 };
@@ -147,6 +151,12 @@ ngeo.DrawfeatureController = function($scope, $compile, $sce,
    * @export
    */
   this.map;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.showMeasure;
 
   /**
    * @type {angularGettext.Catalog}
@@ -311,7 +321,7 @@ ngeo.DrawfeatureController.prototype.handleDrawEnd = function(type, event) {
 
   feature.set(prop.ANGLE, 0);
   feature.set(prop.OPACITY, 0.2);
-  feature.set(prop.SHOW_MEASURE, false);
+  feature.set(prop.SHOW_MEASURE, this.showMeasure ? true : false);
   feature.set(prop.SHOW_LABEL, false);
   feature.set(prop.SIZE, 10);
   feature.set(prop.STROKE, 2);

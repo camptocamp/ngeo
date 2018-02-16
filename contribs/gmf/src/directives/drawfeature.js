@@ -45,7 +45,8 @@ gmf.drawfeatureDirective = function() {
     controller: 'GmfDrawfeatureController as efCtrl',
     scope: {
       'active': '=gmfDrawfeatureActive',
-      'map': '<gmfDrawfeatureMap'
+      'map': '<gmfDrawfeatureMap',
+      'showMeasure': '=?gmfDrawfeatureShowmeasure'
     },
     bindToController: true,
     templateUrl: `${gmf.baseTemplateUrl}/drawfeature.html`
