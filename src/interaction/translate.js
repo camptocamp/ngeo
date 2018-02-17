@@ -2,6 +2,7 @@ goog.provide('ngeo.interaction.Translate');
 
 goog.require('goog.asserts');
 goog.require('ol');
+goog.require('ol.extent');
 goog.require('ol.Feature');
 goog.require('ol.events');
 goog.require('ol.geom.Geometry');
