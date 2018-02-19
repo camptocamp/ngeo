@@ -7,10 +7,16 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('ngeo.message.Popup');
 goog.require('ol');
 
+
 gmf.import.wmsCapabilityLayertreeComponent = angular.module('gmfWmscapabilitylayertreenode', [
   gmf.datasource.ExternalDataSourcesManager.module.name,
   ngeo.message.Popup.module.name,
 ]);
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html'));
+// webpack: });
 
 
 /**
@@ -94,5 +100,6 @@ gmf.import.wmsCapabilityLayertreeComponent.component('gmfWmscapabilitylayertreen
     'url': '<'
   },
   controller: gmf.import.wmsCapabilityLayertreeComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmsCapabilityLayertreeComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmsCapabilityLayertreeComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/import/wmsCapabilityLayertreeComponent'
 });

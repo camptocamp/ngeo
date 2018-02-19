@@ -1,7 +1,7 @@
 goog.provide('ngeo.filter.ruleComponent');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.Menu');
 goog.require('ngeo.draw.component');
 /** @suppress {extraRequire} */
@@ -44,6 +44,11 @@ ngeo.filter.ruleComponent = angular.module('ngeoRule', [
   ngeo.misc.FeatureHelper.module.name,
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
+// webpack: });
 
 
 /**
@@ -936,5 +941,6 @@ ngeo.filter.ruleComponent.component('ngeoRule', {
     'toolGroup': '<'
   },
   controller: ngeo.filter.ruleComponent.RuleController_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rulecomponent.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rulecomponent.html` // nowebpack
+  // webpack: templateUrl: 'ngeo/filter/rulecomponent'
 });

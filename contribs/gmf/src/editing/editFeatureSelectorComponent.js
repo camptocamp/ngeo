@@ -18,6 +18,11 @@ gmf.editing.editFeatureSelectorComponent = angular.module('GmfEditingFeatureSele
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html'));
+// webpack: });
+
+
 /**
  * Directive that uses the GMF Theme service to collect the editable layers
  * and create a drop-down list out of them. When the user selects one of the
@@ -54,9 +59,11 @@ gmf.editing.editFeatureSelectorComponent.component_ = function() {
       'vectorLayer': '<gmfEditfeatureselectorVector'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureSelectorComponent.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureSelectorComponent.html` // nowebpack
+    // webpack: templateUrl: 'gmf/editing/editFeatureSelectorComponent'
   };
 };
+
 
 gmf.editing.editFeatureSelectorComponent.directive('gmfEditfeatureselector',
   gmf.editing.editFeatureSelectorComponent.component_);

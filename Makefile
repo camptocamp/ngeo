@@ -559,16 +559,6 @@ dist/gmf.js.map: dist/gmf.js
 
 node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
-.PRECIOUS: contribs/gmf/apps-webpack/desktop/js/templatecache.js
-contribs/gmf/apps-webpack/desktop/js/templatecache.js: buildtools/templatecache-webpack.mako.js \
-		.build/glob2.timestamp \
-		.build/python-venv/bin/mako-render \
-		$(NGEO_PARTIALS_FILES) \
-		$(GMF_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src gmf:contribs/gmf/src" \
-		--var "app=./Controller.js" $< > $@
-
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html \
@@ -844,25 +834,6 @@ $(EXTERNS_JQUERY): github_versions
 	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
 		--var "partials=ngeo:src gmf:contribs/gmf/src" \
 		--var "app=app" $< > $@
-
-.PRECIOUS: test/spec/templatecache.js
-test/spec/templatecache.js: buildtools/templatecache-webpack.mako.js \
-		.build/glob2.timestamp \
-		.build/python-venv/bin/mako-render \
-		$(NGEO_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src" \
-		--var "app=./beforeeach.js" $< > $@
-
-.PRECIOUS: test/spec/gmftemplatecache.js
-test/spec/gmftemplatecache.js: buildtools/templatecache-webpack.mako.js \
-		.build/glob2.timestamp \
-		.build/python-venv/bin/mako-render \
-		$(NGEO_PARTIALS_FILES) \
-		$(GMF_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 .build/python-venv/bin/mako-render \
-		--var "partials=ngeo:src gmf:contribs/gmf/src" \
-		--var "app=./beforeeach.js" $< > $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
 	node $< > $@

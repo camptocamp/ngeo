@@ -38,8 +38,13 @@ gmf.profile.component.value('gmfProfileTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfProfileTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/profile/component.html`;
+      `${gmf.baseModuleTemplateUrl}/profile/component.html`; // nowebpack
+    // webpack: 'gmf/profile';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/profile', require('./component.html'));
+// webpack: });
 
 
 /**

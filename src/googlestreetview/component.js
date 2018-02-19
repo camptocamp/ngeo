@@ -1,7 +1,7 @@
 goog.provide('ngeo.googlestreetview.component');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ol.array');
 goog.require('ol.events');
@@ -17,6 +17,12 @@ goog.require('ol.geom.Point');
 ngeo.googlestreetview.component = angular.module('ngeoGooglestreetview', [
   ngeo.map.FeatureOverlayMgr.module.name
 ]);
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
+// webpack: });
+
 
 /**
  * @private
@@ -373,5 +379,6 @@ ngeo.googlestreetview.component.component('ngeoGooglestreetview', {
     'radius': '<?'
   },
   controller: ngeo.googlestreetview.component.Controller_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html` // nowebpack
+  // webpack: templateUrl: 'ngeo/googlestreetview'
 });

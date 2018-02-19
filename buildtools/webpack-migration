@@ -8,6 +8,11 @@ function jscodeshift {
 
 rm -f src/jstsexports.js
 rm -rf third-party/
+rm -f examples/default.js
+rm -f contribs/gmf/apps/default.js
+rm -f contribs/gmf/examples/default.js
+rm -f buildtools/templatecache.mako.js
+rm -f src/ngeo.js
 node node_modules/googshift/filename-case-from-module.js src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/src '*.js'
 node node_modules/googshift/filename-case-from-module.js contribs/gmf/apps '*.js'
@@ -17,11 +22,10 @@ jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_mod
 jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js $JSCS_ARGS contribs/gmf/apps
 git add -A  # To be removed when we use the new OpenLayers version
 buildtools/git-grep-sed 'Sphere' 's|ol/Sphere|ol/sphere|g'
-find -name node_modules -prune -or \( -name '*.js' -or -name '*.css' -or -name '*.less' \) -print | xargs sed -i 's|// webpack: ||g'
-find -name node_modules -prune -or \( -name '*.js' -or -name '*.css' -or -name '*.less' \) -print | xargs sed -i '/nowebpack$/d'
+buildtools/git-grep-sed webpack 's|// webpack: ||g'
+buildtools/git-grep-sed webpack '/nowebpack$/d'
 node_modules/.bin/eslint --fix src contribs/gmf/src examples contribs/gmf/examples test contribs/gmf/test contribs/gmf/apps || true
 mv karma-conf{-webpack,}.js
-mv src/{ngeo,index}.js
 mv contribs/gmf/src/{gmf,index}.js
 mv src/goog.asserts.js{_,}
 mv src/goog.asserts.prod.js{_,}
@@ -43,6 +47,8 @@ set +x
 echo ------------------------
 echo Clean used scripts with:
 echo '  git rm buildtools/git-grep-sed buildtools/webpack-migration contribs/gmf/apps-webpack'
+echo
+echo Fix alone comment in contribs/gmf/src/gmf.js
 echo
 echo 'If your repository was completely clean (git clean --force -d) you can do the commit with:'
 echo '  git add -A'

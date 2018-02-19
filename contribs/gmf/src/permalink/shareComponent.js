@@ -9,6 +9,11 @@ gmf.permalink.shareComponent = angular.module('gmfPermalinkShareComponent', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
+// webpack: });
+
+
 /**
  * Component to display a shortened permalink and share it by email
  * Example:
@@ -25,7 +30,8 @@ gmf.permalink.shareComponent.component_ = {
     'enableEmail': '<gmfShareEmail'
   },
   controller: 'GmfShareController',
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/permalink/shareComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/permalink/shareComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/permalink/shareComponent'
 };
 gmf.permalink.shareComponent.component('gmfShare', gmf.permalink.shareComponent.component_);
 

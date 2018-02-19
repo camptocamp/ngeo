@@ -18,6 +18,11 @@ gmf.map.component = angular.module('gmfMapComponent', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/map', require('./component.html'));
+// webpack: });
+
+
 /**
  * A "map" directive for a GeoMapFish application.
  *
@@ -46,7 +51,8 @@ gmf.map.component.directive_ = function() {
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/map/component.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/map/component.html` // nowebpack
+    // webpack: templateUrl: 'gmf/map'
   };
 };
 

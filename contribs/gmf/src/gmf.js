@@ -4,7 +4,7 @@ goog.provide('gmf');
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
-gmf.baseModuleTemplateUrl = 'gmf';
+gmf.baseModuleTemplateUrl = 'gmf'; // nowebpack
 
 /**
  * @const

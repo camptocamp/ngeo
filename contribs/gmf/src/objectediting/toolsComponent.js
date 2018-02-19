@@ -27,6 +27,11 @@ gmf.objectediting.toolsComponent = angular.module('gmfObjecteditingToolsComponen
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
+// webpack: });
+
+
 /**
  * A list of additional options for this directive that are not defined as
  * html attributes. All keys of this hash are optional. For the complete list
@@ -94,7 +99,8 @@ gmf.objectediting.toolsComponent.directive_ = function() {
       'sketchFeatures': '<gmfObjecteditingtoolsSketchfeatures'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/objectediting/toolsComponent.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/objectediting/toolsComponent.html` // nowebpack
+    // webpack: templateUrl: 'gmf/objectediting/toolsComponent'
   };
 };
 

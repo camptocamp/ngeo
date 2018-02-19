@@ -25,9 +25,15 @@ gmf.backgroundlayerselector.component.value('gmfBackgroundlayerselectorTemplateU
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/backgroundlayerselector/component.html`;
+      `${gmf.baseModuleTemplateUrl}/backgroundlayerselector/component.html`; // nowebpack
+    // webpack: 'gmf/backgroundlayerselector';
   }
 );
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
+// webpack: })
 
 
 /**

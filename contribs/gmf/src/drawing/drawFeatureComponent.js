@@ -42,6 +42,11 @@ gmf.drawing.drawFeatureComponent = angular.module('GmfDrawFeatureComponent', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
+// webpack: })
+
+
 /**
  * Directive used to create, modify and delete vector features on a map with
  * the addition of changing their style.
@@ -69,9 +74,11 @@ gmf.drawing.drawFeatureComponent.component_ = function() {
       'showMeasure': '=?gmfDrawfeatureShowmeasure'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/drawing/drawFeatureComponent.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/drawing/drawFeatureComponent.html` // nowebpack
+    // webpack: templateUrl: 'gmf/drawing/drawFeatureComponent'
   };
 };
+
 
 gmf.drawing.drawFeatureComponent.directive('gmfDrawfeature',
   gmf.drawing.drawFeatureComponent.component_);

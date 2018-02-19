@@ -49,8 +49,13 @@ gmf.search.component = angular.module('gmfSearch', [
 gmf.search.component.gmfSearchTemplateUrl_ = (element, attrs) => {
   const templateUrl = attrs['gmfSearchTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
-    `${gmf.baseModuleTemplateUrl}/search/component.html`;
+    `${gmf.baseModuleTemplateUrl}/search/component.html`; // nowebpack
+  // webpack: 'gmf/search';
 };
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/search', require('./component.html'));
+// webpack: });
 
 
 /**

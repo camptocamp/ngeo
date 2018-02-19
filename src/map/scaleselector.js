@@ -1,7 +1,7 @@
 goog.provide('ngeo.map.scaleselector');
 
 goog.require('goog.asserts');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ol.array');
 goog.require('ol.Map');
 goog.require('ol.events');
@@ -15,15 +15,20 @@ ngeo.map.scaleselector = angular.module('ngeoScaleselector', []);
 
 ngeo.map.scaleselector.value('ngeoScaleselectorTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template URL.
+   */
   (element, attrs) => {
     const templateUrl = attrs['ngeoScaleselectorTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/map/scaleselector.html`;
+      `${ngeo.baseModuleTemplateUrl}/map/scaleselector.html`; // nowebpack
+    // webpack: 'ngeo/map/scaleselector';
   });
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
+// webpack: });
 
 
 /**

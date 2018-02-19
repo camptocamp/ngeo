@@ -45,7 +45,7 @@ app.measure.measuretoolsComponent = {
   },
   controller: 'AppMeasuretoolsController',
   controllerAs: 'ctrl',
-  templateUrl: 'partials/measuretools.html'
+  template: require('./partials/measuretools.html')
 };
 
 app.measure.module.component('appMeasuretools', app.measure.measuretoolsComponent);

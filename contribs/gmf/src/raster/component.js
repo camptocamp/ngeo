@@ -17,6 +17,11 @@ gmf.raster.component = angular.module('gmfRasterComponent', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
+// webpack: });
+
+
 /**
  * Provide a directive that set a value each 500ms with the elevation under the
  * mouse cursor position on the map. The value must come from the elevation
@@ -258,7 +263,8 @@ gmf.raster.component.widgetComponent_ = {
     'layers': '<gmfElevationwidgetLayers',
     'active': '<gmfElevationwidgetActive'
   },
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/raster/widgetComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/raster/widgetComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/raster/widgetComponent'
 };
 gmf.raster.component.component('gmfElevationwidget', gmf.raster.component.widgetComponent_);
 

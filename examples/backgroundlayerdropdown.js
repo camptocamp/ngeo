@@ -30,7 +30,7 @@ app.backgroundlayerdropdown.backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
-  templateUrl: 'partials/backgroundlayerdropdown.html',
+  template: require('./partials/backgroundlayerdropdown.html'),
   controller: 'AppBackgroundlayerController',
   controllerAs: 'ctrl'
 };

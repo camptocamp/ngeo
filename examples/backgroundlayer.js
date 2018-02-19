@@ -35,7 +35,7 @@ app.backgroundlayer.backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
-  templateUrl: 'partials/backgroundlayer.html',
+  template: require('./partials/backgroundlayer.html'),
   controller: 'AppBackgroundlayerController',
   controllerAs: 'ctrl'
 };

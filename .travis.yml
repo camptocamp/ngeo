@@ -87,9 +87,7 @@ jobs:
     - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
     - TARGET=ngeo-examples travis_wait node_modules/.bin/webpack --profile
     - TARGET=gmf-examples travis_wait node_modules/.bin/webpack --profile
-    - make contribs/gmf/apps-webpack/desktop/js/templatecache.js
     - TARGET=gmf-apps travis_wait node_modules/.bin/webpack --profile
-    - make test/spec/templatecache.js test/spec/gmftemplatecache.js
     - export CHROME_BIN=/opt/google/chrome/chrome
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start

@@ -62,7 +62,7 @@ gmfapp.displayquerywindow.constant('angularLocaleScript', '../build/angular-loca
 gmfapp.displayquerywindow.queryresultComponent = {
   controller: 'AppQueryresultController',
   controllerAs: 'qrCtrl',
-  templateUrl: 'partials/queryresult.html'
+  template: require('./partials/queryresult.html')
 };
 
 gmfapp.displayquerywindow.module.component('appQueryresult', gmfapp.displayquerywindow.queryresultComponent);

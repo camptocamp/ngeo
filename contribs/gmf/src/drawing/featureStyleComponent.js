@@ -19,6 +19,11 @@ gmf.drawing.featureStyleComponent = angular.module('gmfDrawingFeatureStyle', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
+// webpack: })
+
+
 /**
  * Directive used to set the style of a vector feature. The options depend
  * on the type of geometry.
@@ -41,9 +46,11 @@ gmf.drawing.featureStyleComponent.directive_ = function() {
       'feature': '=gmfFeaturestyleFeature'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/drawing/featureStyleComponent.html`
+    templateUrl: `${gmf.baseModuleTemplateUrl}/drawing/featureStyleComponent.html` // nowebpack
+    // webpack: templateUrl: 'gmf/drawing/featureStyleComponent'
   };
 };
+
 
 gmf.drawing.featureStyleComponent.directive('gmfFeaturestyle',
   gmf.drawing.featureStyleComponent.directive_);

@@ -14,6 +14,11 @@ gmf.import.wmtsCapabilityLayertreeComponent = angular.module('gmfWmtscapabilityl
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html'));
+// webpack: });
+
+
 /**
  * @private
  */
@@ -96,5 +101,6 @@ gmf.import.wmtsCapabilityLayertreeComponent.component('gmfWmtscapabilitylayertre
     'url': '<'
   },
   controller: gmf.import.wmtsCapabilityLayertreeComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmtsCapabilityLayertreeComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmtsCapabilityLayertreeComponent.html` // nowebpack
+  // webpack: templateUrl: 'ngeo/import/wmtsCapabilityLayertreeComponent'
 });

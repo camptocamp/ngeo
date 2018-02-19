@@ -4,7 +4,10 @@ goog.module.declareLegacyNamespace();
 goog.require('goog.asserts');
 goog.require('ol.easing');
 goog.require('olcs.core');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
+
+
+exports = angular.module('ngeoOlcsControls3d', []);
 
 
 function shouldUpdate(older, newer) {
@@ -225,8 +228,15 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
     return ngeoOlcsControls3dTemplateUrl;
   }
   const templateUrl = $attrs['ngeoOlcsControls3dTemplateUrl'];
-  return templateUrl ? templateUrl : `${ngeo.baseModuleTemplateUrl}/olcs/controls3d.html`;
+  return templateUrl ? templateUrl :
+    `${ngeo.baseModuleTemplateUrl}/olcs/controls3d.html`; // nowebpack
+  // webpack: 'ngeo/olsc/controls3d';
 }
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
+// webpack: });
+
 
 /**
  * Provides the "ngeoOlcsControls3d" component, a widget for
@@ -247,7 +257,7 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */
-const component = {
+exports.component({
   bindings: {
     'minTilt': '<?',
     'maxTilt': '<?',
@@ -255,9 +265,7 @@ const component = {
   },
   controller: Controller,
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
-};
+});
 
-const name = 'ngeoOlcsControls3d';
-exports = angular.module(name, [])
-  .component(name, component)
-  .value('ngeoOlcsControls3dTemplateUrl', '');
+
+exports.value('ngeoOlcsControls3dTemplateUrl', '');

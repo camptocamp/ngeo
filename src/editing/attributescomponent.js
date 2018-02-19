@@ -2,7 +2,7 @@ goog.provide('ngeo.editing.attributesComponent');
 
 goog.require('ol');
 goog.require('ol.events');
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('ngeo.misc.EventHelper');
 goog.require('ngeo.misc.datetimepickerComponent');
 
@@ -11,6 +11,11 @@ ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
   ngeo.misc.datetimepickerComponent.name,
   ngeo.misc.EventHelper.module.name,
 ]);
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
+// webpack: });
 
 
 /**
@@ -42,7 +47,8 @@ ngeo.editing.attributesComponent.component_ = {
   require: {
     'form': '^'
   },
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/editing/attributescomponent.html`
+  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/editing/attributescomponent.html` // nowebpack
+  // webpack: templateUrl: 'ngeo/editing/attributescomponent'
 };
 
 ngeo.editing.attributesComponent.component('ngeoAttributes', ngeo.editing.attributesComponent.component_);

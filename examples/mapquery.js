@@ -42,7 +42,7 @@ app.mapquery.module.value('ngeoQueryOptions', {
 app.mapquery.queryresultComponent = {
   controller: 'AppQueryresultController',
   controllerAs: 'qrCtrl',
-  templateUrl: 'partials/queryresult.html'
+  template: require('./partials/queryresult.html')
 };
 
 app.mapquery.module.component('appQueryresult', app.mapquery.queryresultComponent);

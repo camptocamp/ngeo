@@ -1,4 +1,4 @@
-goog.require('ngeo');
+goog.require('ngeo'); // nowebpack
 goog.require('gmf');
 
 const urlElements = window.location.pathname.split('/');

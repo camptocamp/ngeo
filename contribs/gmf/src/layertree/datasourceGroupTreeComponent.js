@@ -8,10 +8,14 @@ goog.require('ol');
 /**
  * @type {!angular.Module}
  */
-gmf.layertree.datasourceGroupTreeComponent = angular.module(
-  'gmfLayertreeDatasourceGroupTreeComponent', [
-    ngeo.datasource.DataSources.module.name,
-  ]);
+gmf.layertree.datasourceGroupTreeComponent = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
+  ngeo.datasource.DataSources.module.name,
+]);
+
+
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
+// webpack: });
 
 
 /**
@@ -109,5 +113,6 @@ gmf.layertree.datasourceGroupTreeComponent.component('gmfDatasourcegrouptree', {
     'group': '<'
   },
   controller: gmf.layertree.datasourceGroupTreeComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/layertree/datasourceGroupTreeComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/layertree/datasourceGroupTreeComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/layertree/datasourceGroupTreeComponent'
 });

@@ -39,7 +39,7 @@ app.bboxquery.module.value('ngeoQueryOptions', {
 app.bboxquery.queryresultComponent = {
   controller: 'AppQueryresultController',
   controllerAs: 'qrCtrl',
-  templateUrl: 'partials/queryresult.html'
+  template: require('./partials/queryresult.html')
 };
 
 app.bboxquery.module.component('appQueryresult', app.bboxquery.queryresultComponent);

@@ -15,6 +15,11 @@ gmf.theme.selectorComponent = angular.module('gmfThemeSelectorComponent', [
 ]);
 
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
+// webpack: });
+
+
 /**
  * Note that this component works with the {@link gmf.layertree.TreeManager}.
  * Setting the theme will update the "tree" object of
@@ -71,7 +76,8 @@ gmf.theme.selectorComponent.component_ = {
     'filter': '<gmfThemeselectorFilter'
   },
   controller: 'gmfThemeselectorController',
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/theme/selectorComponent.html`
+  templateUrl: () => `${gmf.baseModuleTemplateUrl}/theme/selectorComponent.html` // nowebpack
+  // webpack: templateUrl: 'gmf/theme/selectorComponent'
 };
 
 gmf.theme.selectorComponent.component('gmfThemeselector', gmf.theme.selectorComponent.component_);
