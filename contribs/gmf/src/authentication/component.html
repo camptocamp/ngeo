@@ -80,7 +80,7 @@
 
   <ngeo-modal
       ngeo-modal-destroy-content-on-hide="true"
-      ng-model="authCtrl.changePasswordModalShown">
+      ng-model="$ctrl.changePasswordModalShown">
     <div class="modal-header">
       <button type="button"
               class="close"
@@ -136,7 +136,7 @@
     <span
         ng-show="$ctrl.error"
         class="gmf-authentication-error help-block"></span>
-    <div ng-show="authCtrl.allowPasswordReset" class="form-group">
+    <div ng-show="$ctrl.allowPasswordReset" class="form-group">
       <a ng-click="$ctrl.resetPassword()"
          href="">{{'Password forgotten?' | translate}}</a>
     </div>
@@ -144,7 +144,7 @@
 
   <ngeo-modal
       ngeo-modal-destroy-content-on-hide="true"
-      ng-model="authCtrl.resetPasswordModalShown">
+      ng-model="$ctrl.resetPasswordModalShown">
     <div class="modal-header">
       <button type="button"
               class="close"

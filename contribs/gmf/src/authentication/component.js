@@ -74,6 +74,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  */
 gmf.authentication.component.component_ = {
   bindings: {
+    'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
     'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange'
   },
