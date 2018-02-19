@@ -12,6 +12,7 @@ goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
 goog.require('ngeo.query.MapQuerent');
 goog.require('ol.array');
+goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
 goog.require('ol.Observable');
@@ -833,6 +834,7 @@ gmf.print.component.Controller_ = class {
     map.setView(this.map.getView());
     const ol_layers = this.ngeoLayerHelper_.getFlatLayers(this.map.getLayerGroup());
     const new_ol_layers = [];
+    let print_native_angle = true;
     for (let i = 0, ii = ol_layers.length; i < ii; i++) {
       let layer = ol_layers[i];
       const metadata = layer.get('metadata');
@@ -853,10 +855,18 @@ gmf.print.component.Controller_ = class {
           }
         }
       }
+
+      // Get the print native angle parameter for WMS layers when set to not use default value
+      // Is applied only once when the value is overridden with a metadata from administration
+      if (layer instanceof ol.layer.Image && layer.get('printNativeAngle') === false) {
+        print_native_angle = false;
+      }
+
       new_ol_layers.push(layer);
     }
     map.setLayerGroup(new ol.layer.Group({
-      layers: new_ol_layers
+      layers: new_ol_layers,
+      'printNativeAngle': print_native_angle
     }));
 
     const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,

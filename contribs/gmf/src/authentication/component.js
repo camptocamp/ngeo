@@ -210,7 +210,7 @@ gmf.authentication.component.AuthenticationController_ = class {
      */
     this.newPwdConfVal = '';
 
-    ol.events.listen(gmfAuthenticationService, 'ready', this.onLoginReady_.bind(this));
+    ol.events.listen(gmfAuthenticationService, 'ready', this.onUserChange_.bind(this));
   }
 
   /**
@@ -294,7 +294,10 @@ gmf.authentication.component.AuthenticationController_ = class {
     } else {
       const error = gettextCatalog.getString('Incorrect username or password.');
       this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal).then(
-        this.resetError_.bind(this),
+        () => {
+          this.resetError_();
+          this.onUserChange_();
+        },
         this.setError_.bind(this, error));
     }
   }
@@ -356,11 +359,10 @@ gmf.authentication.component.AuthenticationController_ = class {
 
 
   /**
-   * @param {gmfx.AuthenticationEvent} e GMF Authentication event.
    * @private
    */
-  onLoginReady_(e) {
-    if (e.detail.user.is_password_changed === false && this.forcePasswordChange) {
+  onUserChange_() {
+    if (this.gmfUser.is_password_changed === false && this.forcePasswordChange) {
       const gettextCatalog = this.gettextCatalog;
       const msg = gettextCatalog.getString('You must change your password.');
       this.notification_.notify({
