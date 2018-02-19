@@ -309,12 +309,11 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    */
   this.gmfUser = $injector.get('gmfUser');
 
-  // close right nave on successful login
-  $scope.$watch(() => this.gmfUser.username, (newVal) => {
-    if (newVal !== null && this.navIsVisible) {
-      this.rightNavVisible = false;
-    }
-  });
+  /**
+   * @type {gmfx.User}
+   * @export
+   */
+  this.forcePasswordChange = true;
 
   /**
    * @type {ngeox.miscGetBrowserLanguage}

@@ -103,8 +103,10 @@
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
+              <!-- Use forcePasswordChange (instand directly a boolean) because this value is bound with
+                   a function that opens the login panel (require to display the change password modal) -->
               <gmf-authentication
-                  gmf-authentication-force-password-change="::true">
+                  gmf-authentication-force-password-change="::mainCtrl.forcePasswordChange">
               </gmf-authentication>
             </div>
           </div>

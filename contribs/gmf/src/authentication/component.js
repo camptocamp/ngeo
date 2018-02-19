@@ -75,7 +75,9 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *     show the change password button. Default to true.
  * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
  *     user to change its password. Default to false. If you set it to true, you
- *     should also allow the user to change its password.
+ *     should also allow the user to change its password and you must ensure that the modal can be
+ *     displayed (if your login panel is hidden, display it).
+ *
  * @ngdoc component
  * @ngname gmfAuthentication
  */
@@ -102,7 +104,6 @@ gmf.authentication.component.AuthenticationController_ = class {
   /**
    * @private
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {angular.Scope} $scope The directive's scope.
    * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -110,19 +111,13 @@ gmf.authentication.component.AuthenticationController_ = class {
    * @ngdoc controller
    * @ngname GmfAuthenticationController
    */
-  constructor(gettextCatalog, $scope, gmfAuthenticationService, gmfUser, ngeoNotification) {
+  constructor(gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
 
     /**
      * @type {gmfx.User}
      * @export
      */
     this.gmfUser = gmfUser;
-
-    /**
-     * @type {angular.Scope}
-     * @private
-     */
-    this.$scope_ = $scope;
 
     /**
      * @type {angularGettext.Catalog}
@@ -217,8 +212,6 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @export
      */
     this.newPwdConfVal = '';
-
-    ol.events.listen(gmfAuthenticationService, 'ready', this.onUserChange_.bind(this));
   }
 
   /**
@@ -302,10 +295,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     } else {
       const error = gettextCatalog.getString('Incorrect username or password.');
       this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal).then(
-        () => {
-          this.resetError_();
-          this.onUserChange_();
-        },
+        this.resetError_.bind(this),
         this.setError_.bind(this, error));
     }
   }
@@ -367,19 +357,13 @@ gmf.authentication.component.AuthenticationController_ = class {
 
 
   /**
-   * @private
+   * @return {boolean} True if the modal must be shown to force the user to change its
+   *     password. False Otherwise.
+   * @export
    */
-  onUserChange_() {
-    if (this.gmfUser.is_password_changed === false && this.forcePasswordChange) {
-      const gettextCatalog = this.gettextCatalog;
-      const msg = gettextCatalog.getString('You must change your password.');
-      this.notification_.notify({
-        msg: msg,
-        type: ngeo.message.Message.Type.WARNING
-      });
-    }
+  userMustChangeItsPassword() {
+    return (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
   }
-
 
   /**
    * @param {string|Array.<string>} errors Errors.

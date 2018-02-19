@@ -17,9 +17,6 @@
           class="form-control btn btn-primary"
           value="{{'Logout' | translate}}" />
     </div>
-    <span
-        ng-show="$ctrl.error"
-        class="gmf-authentication-error help-block"></span>
     <div class="form-group">
     <input
         ng-show="$ctrl.allowPasswordChange"
@@ -68,15 +65,15 @@
           value="{{'Change password' | translate}}" />
     </div>
     <div class="form-group">
-      <span ng-show="$ctrl.error"
-            class="gmf-authentication-error help-block"></span>
-    <input
-        type="button"
-        class="form-control btn btn-default"
-        value="{{'Cancel' | translate}}"
-        ng-click="$ctrl.changePasswordReset()" />
+      <input
+          type="button"
+          class="form-control btn btn-default"
+          value="{{'Cancel' | translate}}"
+          ng-click="$ctrl.changePasswordReset()" />
     </div>
   </form>
+
+  <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
 
   <ngeo-modal
       ngeo-modal-destroy-content-on-hide="true"
@@ -99,6 +96,63 @@
       <button type="button"
               class="btn btn-default"
               data-dismiss="modal">{{'OK' | translate}}</button>
+    </div>
+  </ngeo-modal>
+
+  <ngeo-modal
+      ngeo-modal-destroy-content-on-hide="true"
+      ng-model="$ctrl.userMustChangeItsPassword()"
+      ng-model-options="{getterSetter: true}">
+    <div class="modal-header">
+      <h4 class="modal-title">
+        {{'You must change your password.' | translate}}
+      </h4>
+    </div>
+    <div class="modal-body">
+      <form
+          name="changePasswordForm"
+          role="form"
+          ng-submit="$ctrl.changePassword()"
+          ng-controller="GmfAuthenticationController"
+          ng-class="{'has-error': $ctrl.error}">
+        <div class="form-group">
+          <input
+              type="password"
+              class="form-control"
+              name="oldpassword"
+              ng-model="$ctrl.oldPwdVal"
+              ng-attr-placeholder="{{'Old password' | translate}}"/>
+        </div>
+        <div class="form-group">
+          <input
+              type="password"
+              class="form-control"
+              name="newpassword"
+              ng-model="$ctrl.newPwdVal"
+              ng-attr-placeholder="{{'New password' | translate}}"/>
+        </div>
+        <div class="form-group">
+          <input
+              type="password"
+              class="form-control"
+              name="newpasswordconfirm"
+              ng-model="$ctrl.newPwdConfVal"
+              ng-attr-placeholder="{{'Confirm new password' | translate}}"/>
+        </div>
+        <div class="form-group">
+          <input
+              type="submit"
+              class="form-control btn btn-primary"
+              value="{{'Change password' | translate}}" />
+        </div>
+        <input
+            type="button"
+            class="form-control btn btn-default"
+            value="{{'Logout' | translate}}"
+            ng-click="$ctrl.logout()" />
+        </div>
+      </form>
+      <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
     </div>
   </ngeo-modal>
 
@@ -133,14 +187,13 @@
         class="form-control btn btn-primary"
         value="{{'Connect' | translate}}" />
     </div>
-    <span
-        ng-show="$ctrl.error"
-        class="gmf-authentication-error help-block"></span>
     <div ng-show="$ctrl.allowPasswordReset" class="form-group">
       <a ng-click="$ctrl.resetPassword()"
          href="">{{'Password forgotten?' | translate}}</a>
     </div>
   </form>
+
+  <div ng-show="$ctrl.error" class="gmf-authentication-error help-block"></div>
 
   <ngeo-modal
       ngeo-modal-destroy-content-on-hide="true"

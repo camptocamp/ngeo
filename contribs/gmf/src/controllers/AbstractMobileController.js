@@ -127,6 +127,23 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
 
   this.manageResize = true;
   this.resizeTransition = 500;
+
+  // Close right nave on successful login.
+  $scope.$watch(() => this.gmfUser.username, (newVal) => {
+    if (newVal !== null && this.navIsVisible()) {
+      this.rightNavVisible = false;
+    }
+  });
+
+  // Open login panel if user must change it's password.
+  if (this.forcePasswordChange) {
+    $scope.$watch(() => this.gmfUser.is_password_changed, (newVal) => {
+      if (newVal === false && !this.rightNavVisible) {
+        this.rightNavVisible = true;
+      }
+    });
+  }
+
 };
 ol.inherits(gmf.controllers.AbstractMobileController, gmf.controllers.AbstractAppController);
 
