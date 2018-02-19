@@ -24,7 +24,7 @@ describe('gmf.theme.Themes', () => {
 
   it('Get background layers', () => {
     const spy = jasmine.createSpy();
-    gmfThemes.getBgLayers({}).then(spy);
+    gmfThemes.getBgLayers().then(spy);
     const urls = [];
 
     $httpBackend.expectGET(treeUrl);

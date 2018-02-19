@@ -109,7 +109,7 @@ gmf.query.gridComponent.component_ = {
     'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
     'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
     'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
-    'mergeTabsFn': '&?gmfDisplayquerygridMergetabs'
+    'mergeTabs': '<?gmfDisplayquerygridMergetabs'
   },
   templateUrl: gmfDisplayquerygridTemplateUrl
 };
@@ -231,9 +231,8 @@ gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResul
 
   /**
    * @type {!gmfx.GridMergeTabs}
-   * @private
    */
-  this.mergeTabs_ = {};
+  this.mergeTabs = {};
 
   /**
    * A mapping between row uid and the corresponding feature for each
@@ -301,7 +300,6 @@ gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResul
 gmf.query.gridComponent.Controller_.prototype.$onInit = function() {
   this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ? this['removeEmptyColumnsFn']() === true : false;
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
-  this.mergeTabs_ = this['mergeTabsFn'] ? this['mergeTabsFn']() : {};
 
   const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
@@ -370,7 +368,7 @@ gmf.query.gridComponent.Controller_.prototype.updateData_ = function() {
   this.pending = false;
   let sources = this.ngeoQueryResult.sources;
   // merge sources if requested
-  if (Object.keys(this.mergeTabs_).length > 0) {
+  if (Object.keys(this.mergeTabs).length > 0) {
     sources = this.getMergedSources_(sources);
   }
 
@@ -487,8 +485,8 @@ gmf.query.gridComponent.Controller_.prototype.getMergedSources_ = function(sourc
 gmf.query.gridComponent.Controller_.prototype.getMergedSource_ = function(source, mergedSources) {
   let mergeSourceId = null;
 
-  for (const currentMergeSourceId in this.mergeTabs_) {
-    const sourceLabels = this.mergeTabs_[currentMergeSourceId];
+  for (const currentMergeSourceId in this.mergeTabs) {
+    const sourceLabels = this.mergeTabs[currentMergeSourceId];
     const containsSource = sourceLabels.some(sourceLabel => sourceLabel == source.label);
     if (containsSource) {
       mergeSourceId = currentMergeSourceId;

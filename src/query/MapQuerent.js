@@ -14,8 +14,6 @@ ngeo.query.MapQuerent = class {
    * queries using the Querent service. The result is stored inside this
    * service.
    *
-   * NOTE: This will replace the ngeo.Query service.
-   *
    * @struct
    * @param {angular.$injector} $injector Main injector.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.

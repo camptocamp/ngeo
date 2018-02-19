@@ -171,7 +171,7 @@ gmf.backgroundlayerselector.component.Controller_.prototype.$onInit = function()
  * @private
  */
 gmf.backgroundlayerselector.component.Controller_.prototype.handleThemesChange_ = function() {
-  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+  this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
   });
 };
