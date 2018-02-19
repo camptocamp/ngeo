@@ -413,7 +413,7 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    * @private
    */
   this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
-    this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+    this.gmfThemes_.getBgLayers().then((layers) => {
       let background;
       if (!skipPermalink) {
         // get the background from the permalink
@@ -645,7 +645,7 @@ gmf.controllers.AbstractAppController.prototype.initLanguage = function() {
  * @private
  */
 gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
-  this.gmfThemes_.getBgLayers(this.dimensions).then((layers) => {
+  this.gmfThemes_.getBgLayers().then((layers) => {
     let layer;
 
     // get the background from the permalink

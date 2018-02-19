@@ -361,7 +361,7 @@ gmf.authentication.component.AuthenticationController_ = class {
   /**
    * @private
    */
-  onUserChange() {
+  onUserChange_() {
     if (this.gmfUser.is_password_changed === false && this.forcePasswordChange) {
       const gettextCatalog = this.gettextCatalog;
       const msg = gettextCatalog.getString('You must change your password.');

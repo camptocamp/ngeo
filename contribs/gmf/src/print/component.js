@@ -12,6 +12,7 @@ goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
 goog.require('ngeo.query.MapQuerent');
 goog.require('ol.array');
+goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
 goog.require('ol.Observable');
