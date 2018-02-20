@@ -39,7 +39,6 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * Example:
  *
  *      <gmf-backgroundlayerselector
- *        gmf-backgroundlayerselector-dimensions="::ctrl.dimensions"
  *        gmf-backgroundlayerselector-map="::ctrl.map"
  *        gmf-backgroundlayerselector-select="onBackgroundSelected()">
  *      </gmf-backgroundlayerselector>
@@ -48,8 +47,6 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *  * thumbnail: The URL used for the icon.
  *
- * @htmlAttribute {Object.<string, string>} gmf-backgroundlayerselector-dimensions
- *     The dimensions.
  * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
@@ -60,7 +57,6 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
 gmf.backgroundlayerselectorComponent = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
-    'dimensions': '=gmfBackgroundlayerselectorDimensions',
     'map': '=gmfBackgroundlayerselectorMap',
     'select': '&?gmfBackgroundlayerselectorSelect'
   },
@@ -83,12 +79,6 @@ gmf.module.component('gmfBackgroundlayerselector', gmf.backgroundlayerselectorCo
  * @ngname GmfBackgroundlayerselectorController
  */
 gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
-
-  /**
-   * @type {!Object.<string, string>}
-   * @export
-   */
-  this.dimensions;
 
   /**
    * @type {?ol.Map}
@@ -154,7 +144,6 @@ gmf.module.controller('GmfBackgroundlayerselectorController',
  * Initialise the controller.
  */
 gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
-  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
   this.handleThemesChange_();
 };
 
