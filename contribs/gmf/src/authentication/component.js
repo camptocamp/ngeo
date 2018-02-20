@@ -71,8 +71,12 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *
  * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
  *     show the password forgotten link. Default to true.
- * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true.
+ * @htmlAttribute {boolean|function} gmf-authentication-allow-password-change Whether to
+ *     show the change password button. Default to true. You can also specify a gmfx.passwordValidator Object
+ *     to add constraint on user's new password.
+ * @htmlAttribute {gmfx.PasswordValidator} gmf-authentication-password-validator A gmfx.passwordValidator
+ *     Object to add constraint on user's new password. The gmf-authentication-allow-password-change. To use
+ *     it you must also allow the user to change its password.
  * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
  *     user to change its password. Default to false. If you set it to true, you
  *     should also allow the user to change its password and you must ensure that the modal can be
@@ -85,6 +89,7 @@ gmf.authentication.component.component_ = {
   bindings: {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
+    'passwordValidator': '<?gmfAuthenticationPasswordValidator',
     'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange'
   },
   controller: 'GmfAuthenticationController',
@@ -148,6 +153,12 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @export
      */
     this.allowPasswordChange;
+
+    /**
+     * @type {gmfx.passwordValidator?}
+     * @export
+     */
+    this.passwordValidator = null;
 
     /**
      * @type {boolean}
@@ -238,7 +249,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     const confPwd = this.newPwdConfVal;
 
     const errors = [];
-    // (1) validation - passwords are required
+    // Validation - Passwords are required.
     if (oldPwd === '') {
       errors.push(gettextCatalog.getString('The old password is required.'));
     }
@@ -252,19 +263,24 @@ gmf.authentication.component.AuthenticationController_ = class {
     if (errors.length) {
       this.setError_(errors);
     } else {
-      // (2) validation - passwords must be new and must also match
+      // Default validation - Passwords must be new and must also match.
       if (oldPwd === newPwd) {
         errors.push(gettextCatalog.getString('The old and new passwords are the same.'));
       }
       if (newPwd !== confPwd) {
         errors.push(gettextCatalog.getString('The passwords don\'t match.'));
       }
+      // Custom validation - If a passwordValidator is set, use it to validate the new password.
+      if (this.passwordValidator) {
+        if (!this.passwordValidator.isPasswordValid(oldPwd)) {
+          errors.push(gettextCatalog.getString(this.passwordValidator.notValidMessage));
+        }
+      }
 
       if (errors.length) {
         this.setError_(errors);
       } else {
-        // (3) send request with current credentials, which may fail if
-        //     the old password given is incorrect.
+        // Send request with current credentials, which may fail if the old password given is incorrect.
         const error = gettextCatalog.getString('Incorrect old password.');
         this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd).then(
           () => {

@@ -180,6 +180,17 @@ gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
 
 
 /**
+ * Password validator function with an error message.
+ * Configuration options for the permalink service.
+ * @typedef {{
+ *     isPasswordValid: function(string): string,
+ *     notValidMessage: string
+ * }}
+ */
+gmfx.PasswordValidator;
+
+
+/**
  * Configuration options for the permalink service.
  * @typedef {{
  *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined),
