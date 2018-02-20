@@ -40,6 +40,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *      <gmf-backgroundlayerselector
  *        gmf-backgroundlayerselector-map="::ctrl.map"
+ *        gmf-backgroundlayer-opacity-options="::ctrl.bgOpacityOptions"
  *        gmf-backgroundlayerselector-select="onBackgroundSelected()">
  *      </gmf-backgroundlayerselector>
  *
@@ -48,6 +49,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *  * thumbnail: The URL used for the icon.
  *
  * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
+ * @htmlAttribute {string} gmf-backgroundlayer-opacity-options The opacity slider options.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
  *
@@ -58,6 +60,7 @@ gmf.backgroundlayerselectorComponent = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
     'map': '=gmfBackgroundlayerselectorMap',
+    'opacityOptions': '=gmfBackgroundlayerOpacityOptions',
     'select': '&?gmfBackgroundlayerselectorSelect'
   },
   templateUrl: gmfBackgroundlayerselectorTemplateUrl
@@ -85,6 +88,12 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    * @export
    */
   this.map;
+
+  /**
+   * @type {?string}
+   * @export
+   */
+  this.opacityOptions;
 
   /**
    * Function called when a layer was selected by the user.
@@ -155,6 +164,20 @@ gmf.BackgroundlayerselectorController.prototype.$onInit = function() {
 gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
+
+    if (this.opacityOptions !== undefined) {
+      const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
+      if (opacityLayer !== undefined) {
+        // Set the opacity layer and default opacity
+        this.opacityLayer = opacityLayer;
+        this.opacityLayer.opacity = 0;
+
+        // Reorder the bgArray with the opacity layer at the end
+        const indexOpa = this.bgLayers.findIndex(layer => layer === this.opacityLayer);
+        this.bgLayers.splice(indexOpa, 1);
+        this.bgLayers.push(opacityLayer);
+      }
+    }
   });
 };
 
