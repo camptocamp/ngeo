@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="DesktopController as mainCtrl">
+<html lang="{{mainCtrl.lang}}" ng-app="AppOEView" ng-controller="DesktopController as mainCtrl">
   <head>
     <title ng-bind-template="{{'ObjectEditing - Viewer Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
@@ -168,7 +168,7 @@
           langUrls[lang] = langUrlElements.join('/')
         });
 
-        var module = angular.module('app');
+        var module = angular.module('AppOEView');
         module.constant('defaultTheme', 'ObjectEditing');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);
@@ -203,4 +203,4 @@
       })();
     </script>
   </body>
-</html>
+/html>

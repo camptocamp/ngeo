@@ -12,6 +12,11 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 
+app.oeview.module = angular.module('AppOEView', [
+  app.module.name,
+  gmf.controllers.AbstractDesktopController.module.name,
+]);
+
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -92,4 +97,4 @@ app.oeview.Controller = function($scope, $injector) {
 ol.inherits(app.oeview.Controller, gmf.controllers.AbstractDesktopController);
 
 
-app.module.controller('DesktopController', app.oeview.Controller);
+app.oeview.module.controller('DesktopController', app.oeview.Controller);
