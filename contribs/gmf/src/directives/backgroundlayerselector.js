@@ -1,6 +1,5 @@
 goog.provide('gmf.backgroundlayerselectorComponent');
 
-goog.require('goog.asserts');
 goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
@@ -117,6 +116,12 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.bgLayers;
 
   /**
+   * @type {ol.layer.Base}
+   * @export
+   */
+  this.opacityLayer;
+
+  /**
    * @type {ngeo.DecorateLayer}
    * @private
    */
@@ -181,7 +186,7 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
 
         // Set the opacity layer and default opacity
         this.opacityLayer = opacityLayer;
-        this.opacityLayer.opacity = opacityLayer.getOpacity();
+        /** @type{number} */ (this.opacityLayer.opacity) = opacityLayer.getOpacity();
 
         // Reorder the bgArray with the opacity layer at the end
         const indexOpa = this.bgLayers.findIndex(layer => layer === this.opacityLayer);
