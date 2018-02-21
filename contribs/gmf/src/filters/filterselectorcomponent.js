@@ -1,6 +1,6 @@
 goog.provide('gmf.filters.filterselectorComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 /** @suppress {extraRequire} */
 goog.require('gmf.authentication.Service');
 goog.require('gmf.datasource.DataSourceBeingFiltered');

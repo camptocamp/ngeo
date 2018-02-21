@@ -1,6 +1,6 @@
 goog.provide('gmf.raster.component');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.raster.RasterService');
 goog.require('goog.asserts');
 /** @suppress {extraRequire} */

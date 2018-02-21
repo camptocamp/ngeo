@@ -1,7 +1,6 @@
 goog.provide('ngeo.datasource.WMSGroup');
 
 goog.require('goog.asserts');
-goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.datasource.OGCGroup');
 goog.require('ngeo.datasource.OGC');
 goog.require('ol.array');
@@ -19,8 +18,9 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.OGCGroup {
    *
    * @struct
    * @param {ngeox.datasource.WMSGroupOptions} options Options.
+   * @param {!ngeo.map.LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
-  constructor(options) {
+  constructor(options, ngeoLayerHelper) {
 
     super(options);
 
@@ -39,7 +39,7 @@ ngeo.datasource.WMSGroup = class extends ngeo.datasource.OGCGroup {
      * @type {!ngeo.map.LayerHelper}
      * @private
      */
-    this.ngeoLayerHelper_ = injector.get('ngeoLayerHelper');
+    this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
      * @type {!angular.Scope}

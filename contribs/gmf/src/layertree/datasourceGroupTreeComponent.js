@@ -1,6 +1,6 @@
 goog.provide('gmf.layertree.datasourceGroupTreeComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('ngeo.datasource.DataSources');
 goog.require('ol');
 

@@ -1,6 +1,6 @@
 goog.provide('gmf.mobile.measure.lengthComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('ngeo.misc.filters');
 goog.require('ngeo.interaction.MeasureLengthMobile');
 goog.require('ngeo.misc.decorate');

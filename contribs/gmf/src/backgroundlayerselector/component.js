@@ -1,7 +1,7 @@
 goog.provide('gmf.backgroundlayerselector.component');
 
+goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
-goog.require('gmf');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.map.BackgroundLayerMgr');
 goog.require('ol.events');

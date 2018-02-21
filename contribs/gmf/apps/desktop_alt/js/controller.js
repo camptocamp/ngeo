@@ -9,13 +9,16 @@ goog.provide('app.desktop_alt.Controller');
 goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
 /** @suppress {extraRequire} */
-goog.require('gmf.import.importdatasourceComponent');
+goog.require('gmf.import.module');
+/** @suppress {extraRequire} */
+goog.require('ngeo.googlestreetview.module');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
-
-/** @suppress {extraRequire} */
-goog.require('ngeo.googlestreetview.component');
 goog.require('ol');
+
+// Add me in module dependencies:
+// gmf.import.module.name,
+// ngeo.googlestreetview.module.name
 
 
 app.module.value('ngeoQueryOptions', {

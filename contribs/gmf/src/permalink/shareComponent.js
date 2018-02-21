@@ -1,6 +1,6 @@
 goog.provide('gmf.permalink.shareComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.permalink.ShareService');
 
 

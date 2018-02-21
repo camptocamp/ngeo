@@ -1,7 +1,6 @@
 goog.provide('gmf.editing.editFeatureComponent');
 
-
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 goog.require('gmf.editing.EditFeature');
 /** @suppress {extraRequire} */
 goog.require('gmf.editing.Snapping');

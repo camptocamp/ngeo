@@ -1,6 +1,6 @@
 goog.provide('gmf.import.wmtsCapabilityLayertreeComponent');
 
-goog.require('gmf');
+goog.require('gmf'); // nowebpack
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.ExternalDataSourcesManager');
 /** @suppress {extraRequire} */
