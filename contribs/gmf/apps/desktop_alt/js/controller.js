@@ -139,7 +139,7 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
    * @type {string}
    * @export
    */
-  this.bgOpacityOptions = 'OSM map WMS';
+  this.bgOpacityOptions = 'Test aus Olten';
 
   /**
    * @export

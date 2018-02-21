@@ -104,6 +104,13 @@ ngeo.BackgroundLayerMgr = function() {
    * @private
    */
   this.mapUids_ = {};
+
+  /**
+   * A status for the opacity layer group 'set' operation
+   * @type {boolean}
+   * @private
+   */
+  this.switchStatus_ = false;
 };
 ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
 
@@ -148,6 +155,25 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
     layer, previous));
   return previous;
+};
+
+/**
+ * Set a background layer used by the opacity slider.
+ * @param {ol.Map} map The map.
+ * @param {ol.layer.Base} layer The opacity background layer.
+ */
+ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
+  layer.setOpacity(0);
+  layer.setVisible(true);
+
+  // Switch order to make the opacity layer first
+  const data = map.getLayers().getArray()[0];
+  if (map.getLayers().getArray().length > 0 && !this.switchStatus_) {
+    map.getLayers().removeAt(0);
+    map.getLayers().setAt(0, layer);
+    map.getLayers().setAt(1, data);
+    this.switchStatus_ = true;
+  }
 };
 
 /**

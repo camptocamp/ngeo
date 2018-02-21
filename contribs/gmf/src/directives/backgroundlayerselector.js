@@ -5,6 +5,7 @@ goog.require('gmf');
 goog.require('gmf.Themes');
 goog.require('ngeo.BackgroundEventType');
 goog.require('ngeo.BackgroundLayerMgr');
+goog.require('ngeo.DecorateLayer');
 
 
 gmf.module.value('gmfBackgroundlayerselectorTemplateUrl',
@@ -77,11 +78,12 @@ gmf.module.component('gmfBackgroundlayerselector', gmf.backgroundlayerselectorCo
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!gmf.Themes} gmfThemes Themes service.
+ * @param {ngeo.DecorateLayer} ngeoDecorateLayer layer decorator service.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
+gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr, gmfThemes, ngeoDecorateLayer) {
 
   /**
    * @type {?ol.Map}
@@ -113,6 +115,12 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    * @export
    */
   this.bgLayers;
+
+  /**
+   * @type {ngeo.DecorateLayer}
+   * @private
+   */
+  this.ngeoDecorateLayer_ = ngeoDecorateLayer;
 
   /**
    * @type {!gmf.Themes}
@@ -168,9 +176,12 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
     if (this.opacityOptions !== undefined) {
       const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
       if (opacityLayer !== undefined) {
+        this.setOpacityBgLayer(opacityLayer);
+        this.ngeoDecorateLayer_(opacityLayer);
+
         // Set the opacity layer and default opacity
         this.opacityLayer = opacityLayer;
-        this.opacityLayer.opacity = 0;
+        this.opacityLayer.opacity = opacityLayer.getOpacity();
 
         // Reorder the bgArray with the opacity layer at the end
         const indexOpa = this.bgLayers.findIndex(layer => layer === this.opacityLayer);
@@ -195,6 +206,13 @@ gmf.BackgroundlayerselectorController.prototype.setLayer = function(layer, opt_s
   }
 };
 
+/**
+ * Set a background layer used by the opacity slider.
+ * @param {ol.layer.Base} layer The opacity background layer.
+ */
+gmf.BackgroundlayerselectorController.prototype.setOpacityBgLayer = function(layer) {
+  this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
+};
 
 /**
  * @private
