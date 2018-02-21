@@ -16,6 +16,11 @@ goog.require('ol.style.RegularShape');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+app.mobile_alt.module = angular.module('AppMobileAlt', [
+  app.module.name,
+  gmf.controllers.AbstractMobileController.module.name,
+]);
+
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -88,4 +93,4 @@ app.mobile_alt.Controller = function($scope, $injector) {
 ol.inherits(app.mobile_alt.Controller, gmf.controllers.AbstractMobileController);
 
 
-app.module.controller('AlternativeMobileController', app.mobile_alt.Controller);
+app.mobile_alt.module.controller('AlternativeMobileController', app.mobile_alt.Controller);
