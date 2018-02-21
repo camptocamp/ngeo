@@ -8,26 +8,28 @@ goog.provide('app.desktop_alt.Controller');
 
 goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
-/** @suppress {extraRequire} */
 goog.require('gmf.import.module');
-/** @suppress {extraRequire} */
 goog.require('ngeo.googlestreetview.module');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 
-// Add me in module dependencies:
-// gmf.import.module.name,
-// ngeo.googlestreetview.module.name
+
+app.desktop_alt.module = angular.module('AppDesktopAlt', [
+  app.module.name,
+  gmf.controllers.AbstractDesktopController.module.name,
+  gmf.import.module.name,
+  ngeo.googlestreetview.module.name,
+]);
 
 
-app.module.value('ngeoQueryOptions', {
+app.desktop_alt.module.value('ngeoQueryOptions', {
   'limit': 20,
   'queryCountFirst': true,
   'cursorHover': true
 });
 
-app.module.value('gmfExternalOGCServers', [{
+app.desktop_alt.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'https://wms.geo.admin.ch/?lang=fr'
@@ -41,12 +43,12 @@ app.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-app.module.value('gmfPrintOptions', {
+app.desktop_alt.module.value('gmfPrintOptions', {
   'scaleInput': true
 });
 
-app.module.value('ngeoMeasurePrecision', 6);
-app.module.value('ngeoMeasureDecimals', 2);
+app.desktop_alt.module.value('ngeoMeasurePrecision', 6);
+app.desktop_alt.module.value('ngeoMeasureDecimals', 2);
 
 
 /**
@@ -160,4 +162,4 @@ app.desktop_alt.Controller.prototype.onKeydown = function(event) {
   }
 };
 
-app.module.controller('AlternativeDesktopController', app.desktop_alt.Controller);
+app.desktop_alt.module.controller('AlternativeDesktopController', app.desktop_alt.Controller);
