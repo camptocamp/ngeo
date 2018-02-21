@@ -12,6 +12,11 @@ goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 
+app.mobile.module = angular.module('AppMobile', [
+  app.module.name,
+  gmf.controllers.AbstractMobileController.module.name,
+]);
+
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -57,4 +62,4 @@ app.mobile.Controller = function($scope, $injector) {
 ol.inherits(app.mobile.Controller, gmf.controllers.AbstractMobileController);
 
 
-app.module.controller('MobileController', app.mobile.Controller);
+app.mobile.module.controller('MobileController', app.mobile.Controller);
