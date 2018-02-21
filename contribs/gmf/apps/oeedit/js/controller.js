@@ -8,19 +8,20 @@ goog.provide('app.oeedit.Controller');
 
 goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
-/** @suppress {extraRequire} */
-goog.require('gmf.objectediting.component');
-goog.require('gmf.objectediting.Manager');
-goog.require('gmf.theme.Themes');
+goog.require('gmf.objectediting.module');
 goog.require('ngeo.misc.ToolActivate');
-/** @suppress {extraRequire} */
-goog.require('ngeo.misc.ToolActivateMgr');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
 goog.require('ol.Collection');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
+
+app.oeedit.module = angular.module('AppOEEdit', [
+  app.module.name,
+  gmf.controllers.AbstractDesktopController.module.name,
+  gmf.objectediting.module.name,
+]);
 
 
 /**
@@ -206,4 +207,4 @@ app.oeedit.Controller = function($scope, $injector, $timeout) {
 ol.inherits(app.oeedit.Controller, gmf.controllers.AbstractDesktopController);
 
 
-app.module.controller('OEEditController', app.oeedit.Controller);
+app.oeedit.module.controller('OEEditController', app.oeedit.Controller);

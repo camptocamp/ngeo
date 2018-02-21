@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="AlternativeMobileController as mainCtrl">
+<html lang="{{mainCtrl.lang}}" ng-app="AppMobileAlt" ng-controller="AlternativeMobileController as mainCtrl">
   <head>
     <title ng-bind-template="{{'Alternative Mobile Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
@@ -215,7 +215,7 @@
           langUrls[lang] = langUrlElements.join('/')
         });
 
-        var module = angular.module('app');
+        var module = angular.module('AppMobileAlt');
         module.constant('defaultTheme', 'Demo');
         module.constant('defaultLang', 'en');
         module.constant('langUrls', langUrls);

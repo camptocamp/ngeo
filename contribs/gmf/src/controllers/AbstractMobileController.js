@@ -196,7 +196,7 @@ gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function(
 
 
 gmf.controllers.AbstractMobileController.module = angular.module('GmfAbstractMobileControllerModule', [
-  gmf.controllers.AbstractMobileController.module.name,
+  gmf.controllers.AbstractAppController.module.name,
   gmf.mobile.measure.module.name,
   gmf.mobile.navigation.module.name,
   gmf.query.windowComponent.name,
