@@ -11,7 +11,7 @@ let path = require('path');
 let async = require('async');
 let closure = require('@camptocamp/closure-util');
 let fs = require('fs-extra');
-let nomnom = require('nomnom');
+let options = require('commander');
 let temp = require('temp').track();
 
 let generateExports = require('./generate-exports');
@@ -216,25 +216,15 @@ function main(config, callback) {
  * function.
  */
 if (require.main === module) {
-  let options = nomnom.options({
-    config: {
-      position: 0,
-      required: true,
-      help: 'Path to JSON config file'
-    },
-    output: {
-      position: 1,
-      required: true,
-      help: 'Output file path'
-    },
-    loglevel: {
-      abbr: 'l',
-      choices: ['silly', 'verbose', 'info', 'warn', 'error'],
-      default: 'info',
-      help: 'Log level',
-      metavar: 'LEVEL'
-    }
-  }).parse();
+  options.option('-l, --loglevel [level]', 'Log level',  /^(silly|verbose|info|warn|error)$/i, 'info');
+  options.option('-c, --config <file>', 'Path to JSON config file');
+  options.option('-o, --output <file>', 'Output file path');
+  options.parse(process.argv);
+
+  if (!options.config || !options.output) {
+    options.outputHelp();
+    process.exit(1);
+  }
 
   /**
    * Set the log level.

@@ -4,7 +4,7 @@ let path = require('path');
 
 let async = require('async');
 let fse = require('fs-extra');
-let nomnom = require('nomnom');
+let options = require('commander');
 
 let generateInfo = require('./generate-info');
 
@@ -28,7 +28,7 @@ function getConfig(configPath, callback) {
       try {
         obj = JSON.parse(String(data));
       } catch (err) {
-        callback(new Error('Trouble parsing file as JSON: ' + options.config));
+        callback(new Error('Trouble parsing file as JSON: ' + configPath));
         return;
       }
       let patterns = obj.exports;
@@ -38,8 +38,7 @@ function getConfig(configPath, callback) {
       }
       let namespace = obj.namespace;
       if (namespace && typeof namespace !== 'string') {
-        callback(new Error('Expected an namespace string, got: ' +
-            namespace));
+        callback(new Error('Expected an namespace string, got: ' + namespace));
         return;
       }
       callback(null, obj);
@@ -216,23 +215,13 @@ function main(config, callback) {
  * function, and write the output file.
  */
 if (require.main === module) {
-  let options = nomnom.options({
-    output: {
-      position: 0,
-      required: true,
-      help: 'Output file path'
-    },
-    config: {
-      abbr: 'c',
-      help: 'Path to JSON config file',
-      metavar: 'CONFIG'
-    }
-  }).parse();
+  options.option('-c, --config [file]', 'Path to JSON config file');
+  options.parse(process.argv);
 
   async.waterfall([
     getConfig.bind(null, options.config),
     main,
-    fse.outputFile.bind(fse, options.output)
+    fse.outputFile.bind(fse, options.args)
   ], function(err) {
     if (err) {
       console.error(err.message);
