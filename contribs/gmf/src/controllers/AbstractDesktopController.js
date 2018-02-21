@@ -10,6 +10,7 @@ goog.require('gmf.print.component');
 goog.require('gmf.profile.module');
 goog.require('gmf.raster.component');
 goog.require('ngeo.draw.features');
+goog.require('ngeo.map.resizemap');
 goog.require('ngeo.misc.ToolActivate');
 goog.require('ngeo.query.bboxQueryComponent');
 goog.require('ol');
@@ -229,6 +230,7 @@ gmf.controllers.AbstractDesktopController.module = angular.module('GmfAbstractDe
   gmf.profile.module.name,
   gmf.raster.component.name,
   ngeo.draw.features.name,
+  ngeo.map.resizemap.name,
   ngeo.query.bboxQueryComponent.name,
 ]);
 
