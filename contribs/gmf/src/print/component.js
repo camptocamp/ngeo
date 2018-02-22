@@ -12,10 +12,10 @@ goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
 goog.require('ngeo.query.MapQuerent');
 goog.require('ol.array');
+goog.require('ol.events');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
-goog.require('ol.Observable');
 goog.require('ol.Map');
 goog.require('ol.math');
 
@@ -360,13 +360,13 @@ gmf.print.component.Controller_ = class {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {ol.EventsKey|Array.<ol.EventsKey>}
+     * @type {ol.EventsKey}
      * @private
      */
     this.postComposeListenerKey_;
 
     /**
-     * @type {ol.EventsKey|Array.<ol.EventsKey>}
+     * @type {ol.EventsKey}
      * @private
      */
     this.pointerDragListenerKey_;
@@ -535,10 +535,8 @@ gmf.print.component.Controller_ = class {
         this.gmfPrintState_.state = gmf.print.component.PrintStateEnum.NOT_IN_USE;
         // Get capabilities - On success
         this.parseCapabilities_(resp);
-        this.postComposeListenerKey_ = this.map.on('postcompose',
-          this.postcomposeListener_);
-        this.pointerDragListenerKey_ = this.map.on('pointerdrag',
-          this.onPointerDrag_.bind(this));
+        this.postComposeListenerKey_ = ol.events.listen(this.map, 'postcompose', this.postcomposeListener_);
+        this.pointerDragListenerKey_ = ol.events.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
         this.map.render();
       }, (resp) => {
         // Get capabilities - On error
@@ -546,8 +544,8 @@ gmf.print.component.Controller_ = class {
         this.capabilities_ = null;
       });
     } else {
-      ol.Observable.unByKey(this.postComposeListenerKey_);
-      ol.Observable.unByKey(this.pointerDragListenerKey_);
+      ol.events.unlistenByKey(this.postComposeListenerKey_);
+      ol.events.unlistenByKey(this.pointerDragListenerKey_);
       this.getSetRotation(0);
       this.map.render(); // Redraw (remove) post compose mask;
     }

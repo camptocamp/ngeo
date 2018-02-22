@@ -1,7 +1,7 @@
 goog.provide('ngeo.rule.Rule');
 
 goog.require('goog.asserts');
-goog.require('ol.Observable');
+goog.require('ol.events');
 
 
 /**
@@ -327,7 +327,7 @@ ngeo.rule.Rule = class {
    * @export
    */
   destroy() {
-    ol.Observable.unByKey(this.listenerKeys);
+    this.listenerKeys.forEach(ol.events.unlistenByKey);
     this.listenerKeys.length = 0;
   }
 

@@ -17,7 +17,6 @@ goog.require('ngeo.message.Message');
 goog.require('ngeo.filter.RuleHelper');
 goog.require('ngeo.filter.component');
 goog.require('ol.events');
-goog.require('ol.Observable');
 goog.require('ol.array');
 
 goog.require('ngeo.map.FeatureOverlayMgr');
@@ -356,7 +355,7 @@ gmf.filters.filterselectorComponent.Controller_ = class {
       this.gmfDataSources_.forEach(this.registerDataSource_, this);
 
     } else {
-      ol.Observable.unByKey(keys);
+      keys.forEach(ol.events.unlistenByKey);
       keys.length = 0;
 
       // Remove data sources that are in the collection

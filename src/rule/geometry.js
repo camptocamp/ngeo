@@ -5,7 +5,6 @@ goog.require('ngeo.format.AttributeType');
 goog.require('ngeo.rule.Rule');
 goog.require('ol.Object');
 goog.require('ol.events');
-goog.require('ol.Observable');
 goog.require('ol.Feature');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.Geometry');
@@ -181,7 +180,7 @@ ngeo.rule.Geometry = class extends ngeo.rule.Rule {
 
     // (1) Unlisten
     if (this.geometryChangeListenerKey_ !== null) {
-      ol.Observable.unByKey(this.geometryChangeListenerKey_);
+      ol.events.unlistenByKey(this.geometryChangeListenerKey_);
       this.geometryChangeListenerKey_ = null;
     }
 

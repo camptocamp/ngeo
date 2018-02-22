@@ -22,7 +22,6 @@ goog.require('ngeo.rule.Rule');
 goog.require('ngeo.rule.Geometry');
 goog.require('ngeo.rule.Select');
 goog.require('ol');
-goog.require('ol.Observable');
 goog.require('ol.Feature');
 goog.require('ol.Collection');
 goog.require('ol.events');
@@ -686,8 +685,8 @@ ngeo.filter.ruleComponent.RuleController_ = class {
 
     } else {
       cloneFeature.setStyle(null);
-
-      ol.Observable.unByKey(keys);
+      keys.forEach(ol.events.unlistenByKey);
+      keys.length = 0;
 
       this.drawActive = false;
 

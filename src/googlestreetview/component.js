@@ -7,7 +7,6 @@ goog.require('ol.array');
 goog.require('ol.events');
 goog.require('ol.proj');
 goog.require('ol.Feature');
-goog.require('ol.Observable');
 goog.require('ol.geom.Point');
 
 
@@ -237,7 +236,7 @@ ngeo.googlestreetview.component.Controller_ = class {
         ol.events.listen(this.map, 'click', this.handleMapClick_, this)
       );
     } else {
-      ol.Observable.unByKey(keys);
+      keys.forEach(ol.events.unlistenByKey);
       keys.length = 0;
     }
   }
