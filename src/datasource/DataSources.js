@@ -4,7 +4,6 @@ goog.require('goog.asserts');
 goog.require('ngeo.datasource.DataSource');
 goog.require('ol.Collection');
 goog.require('ol.events');
-goog.require('ol.Observable');
 goog.require('ol.View');
 
 
@@ -98,7 +97,7 @@ ngeo.datasource.DataSources = class {
    * @private
    */
   unbindMap_(map) {
-    ol.Observable.unByKey(this.listenerKeys_);
+    this.listenerKeys_.forEach(ol.events.unlistenByKey);
     this.listenerKeys_ = [];
   }
 

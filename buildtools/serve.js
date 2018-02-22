@@ -4,28 +4,15 @@ let path = require('path');
 let url = require('url');
 
 let closure = require('@camptocamp/closure-util');
-let nomnom = require('nomnom');
+let options = require('commander');
 let gaze = require('gaze');
 let exec = require('child_process').exec;
 
 let log = closure.log;
 
-let options = nomnom.options({
-  port: {
-    abbr: 'p',
-    'default': 3000,
-    help: 'Port for incoming connections',
-    metavar: 'PORT'
-  },
-  loglevel: {
-    abbr: 'l',
-    choices: ['silly', 'verbose', 'info', 'warn', 'error'],
-    'default': 'info',
-    help: 'Log level',
-    metavar: 'LEVEL'
-  }
-}).parse();
-
+options.option('-p, --port [number]', 'Port for incoming connections', parseInt, 3000);
+options.option('-l, --loglevel [level]', 'Log level',  /^(silly|verbose|info|warn|error)$/i, 'info');
+options.parse(process.argv);
 
 /** @type {string} */
 log.level = options.loglevel;

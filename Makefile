@@ -324,7 +324,7 @@ dist/ngeo.js: .build/ngeo.json \
 		.build/templatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
+	node buildtools/build.js --config $< --output $@
 	echo '//# sourceMappingURL=ngeo.js.map' >> $@
 	@$(STAT_UNCOMPRESSED) $@
 	@cp $@ /tmp/
@@ -347,7 +347,7 @@ dist/gmf.js: .build/gmf.json \
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
+	node buildtools/build.js --config $< --output $@
 	echo '//# sourceMappingURL=gmf.js.map' >> $@
 	@$(STAT_UNCOMPRESSED) $@
 	@cp $@ /tmp/
@@ -365,7 +365,7 @@ dist/gmf.js.map: dist/gmf.js
 		.build/templatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
+	node buildtools/build.js --config $< --output $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 .PRECIOUS: .build/contribs/gmf/examples/%.js
@@ -377,7 +377,7 @@ dist/gmf.js.map: dist/gmf.js
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
+	node buildtools/build.js --config $< --output $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 .PRECIOUS: .build/examples-hosted/lib/%.css
@@ -859,7 +859,7 @@ contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
 		.build/gmftemplatecache.js \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
-	node buildtools/build.js $< $@
+	node buildtools/build.js --config $< --output $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
 
 .PRECIOUS: contribs/gmf/build/%.js

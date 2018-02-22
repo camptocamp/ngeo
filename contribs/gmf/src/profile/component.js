@@ -4,7 +4,6 @@ goog.require('gmf'); // nowebpack
 goog.require('goog.asserts');
 goog.require('ol.events');
 goog.require('ol.Feature');
-goog.require('ol.Observable');
 goog.require('ol.Overlay');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
@@ -392,7 +391,7 @@ gmf.profile.component.Controller_.prototype.updateEventsListening_ = function() 
     this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
       this.onPointerMove_.bind(this));
   } else {
-    ol.Observable.unByKey(this.pointerMoveKey_);
+    ol.events.unlistenByKey(this.pointerMoveKey_);
   }
 };
 

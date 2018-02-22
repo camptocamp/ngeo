@@ -1,6 +1,6 @@
 "use strict";
 let fs = require('fs');
-let nomnom = require('nomnom');
+let options = require('commander');
 let Compiler = require('angular-gettext-tools').Compiler;
 
 function main(inputs) {
@@ -31,9 +31,8 @@ function main(inputs) {
 
 // If running this module directly then call the main function.
 if (require.main === module) {
-  let options = nomnom.parse();
-  let inputs = options._;
-  main(inputs);
+  options.parse(process.argv);
+  main(options.args);
 }
 
 module.exports = main;
