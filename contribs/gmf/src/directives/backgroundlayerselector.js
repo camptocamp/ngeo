@@ -140,6 +140,12 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
+  /**
+   * @type {boolean}
+   * @private
+   */
+  this.isThemeLoadedOnce_ = false;
+
   this.listenerKeys_.push(ol.events.listen(
     this.backgroundLayerMgr_,
     ngeo.BackgroundEventType.CHANGE,
@@ -170,7 +176,11 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
 
-    if (this.opacityOptions !== undefined) {
+    if (this.opacityOptions !== undefined && !this.isThemeLoadedOnce_) {
+      // Angular initialize twice the component, this limit to set
+      // only once the background layer used by opacity slider
+      this.isThemeLoadedOnce_ = true;
+
       const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
       if (opacityLayer !== undefined) {
         this.setOpacityBgLayer(opacityLayer);
@@ -190,7 +200,7 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
  * @param {?number} val The opacity.
  * @returns {number} The background layer opacity.
  */
-gmf.BackgroundlayerselectorController.prototype.getSetOpacityBgLayer = function(val) {
+gmf.BackgroundlayerselectorController.prototype.getSetBgLayerOpacity = function(val) {
   if (val) {
     this.opacityLayer.setOpacity(val);
   }
