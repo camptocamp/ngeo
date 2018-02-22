@@ -46,10 +46,10 @@ gmf.query.windowComponent.config(['$animateProvider',
 
 gmf.query.windowComponent.value('gmfDisplayquerywindowTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
