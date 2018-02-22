@@ -44,7 +44,6 @@ app.measure.measuretoolsComponent = {
     'lang': '=appMeasuretoolsLang'
   },
   controller: 'AppMeasuretoolsController',
-  controllerAs: 'ctrl',
   template: require('./partials/measuretools.html')
 };
 

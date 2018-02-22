@@ -1,8 +1,8 @@
-<h3>Total: {{ qrCtrl.result.total }}</h3>
+<h3>Total: {{ $ctrl.result.total }}</h3>
 
 <ul class="nav nav-tabs"
     role="tablist">
-  <li ng-repeat="source in qrCtrl.result.sources"
+  <li ng-repeat="source in $ctrl.result.sources"
       role="presentation"
       ng-class="::{active: $index == 0}">
     <a href="#{{ ::source.label }}"
@@ -19,7 +19,7 @@
 </ul>
 
 <div class="tab-content">
-  <div ng-repeat="source in qrCtrl.result.sources"
+  <div ng-repeat="source in $ctrl.result.sources"
        role="tabpanel"
        class="tab-pane"
        ng-class="::{active: $index == 0}"

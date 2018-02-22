@@ -30,12 +30,11 @@ app.search.searchComponent = {
     'map': '=appSearchMap'
   },
   controller: 'AppSearchController',
-  controllerAs: 'ctrl',
   template:
       '<input type="text" placeholder="search…" ' +
-      'ngeo-search="ctrl.options" ' +
-      'ngeo-search-datasets="ctrl.datasets" ' +
-      'ngeo-search-listeners="ctrl.listeners">'
+      'ngeo-search="$ctrl.options" ' +
+      'ngeo-search-datasets="$ctrl.datasets" ' +
+      'ngeo-search-listeners="$ctrl.listeners">'
 };
 
 

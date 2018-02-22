@@ -36,14 +36,13 @@ app.layertree.layertreeComponent = {
     'map': '=appLayertreeMap'
   },
   controller: 'AppLayertreeController',
-  controllerAs: 'ctrl',
-  // use "::ctrl.tree" for the "tree" expression as we know the
+  // use "::$ctrl.tree" for the "tree" expression as we know the
   // layer tree won't change
   template:
-      '<div ngeo-layertree="::ctrl.tree" ' +
+      '<div ngeo-layertree="::$ctrl.tree" ' +
       'ngeo-layertree-templateurl="partials/layertree.html" ' +
-      'ngeo-layertree-map="ctrl.map" ' +
-      'ngeo-layertree-nodelayer="ctrl.getLayer(node)">' +
+      'ngeo-layertree-map="$ctrl.map" ' +
+      'ngeo-layertree-nodelayer="$ctrl.getLayer(node)">' +
       '</div>'
 };
 
