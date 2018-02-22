@@ -61,10 +61,10 @@ gmf.objectediting.component = angular.module('gmfObjectEditingComponent', [
 
 gmf.objectediting.component.value('gmfObjecteditingTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template URL.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfObjecteditingTemplateurl'];
     return templateUrl !== undefined ? templateUrl :

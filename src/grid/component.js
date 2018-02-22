@@ -26,10 +26,10 @@ ngeo.grid.component = angular.module('ngeoGrid', [
 
 ngeo.grid.component.value('ngeoGridTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template URL.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['ngeoGridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :

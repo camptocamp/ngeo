@@ -18,9 +18,8 @@ app.colorpicker.module = angular.module('app', [
  * @type {!angular.Component}
  */
 app.colorpicker.colorpickerComponent = {
-  template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
-  controller: 'AppColorpickerController',
-  controllerAs: 'ctrl'
+  template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
+  controller: 'AppColorpickerController'
 };
 
 

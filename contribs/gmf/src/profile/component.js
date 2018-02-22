@@ -30,10 +30,10 @@ gmf.profile.component = angular.module('gmfProfile', [
 
 gmf.profile.component.value('gmfProfileTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
-     * @return {string} Template.
-     */
+   * @param {!angular.JQLite} $element Element.
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} Template.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfProfileTemplateurl'];
     return templateUrl !== undefined ? templateUrl :

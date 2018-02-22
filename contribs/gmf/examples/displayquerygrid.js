@@ -63,7 +63,6 @@ gmfapp.displayquerygrid.constant('angularLocaleScript', '../build/angular-locale
  */
 gmfapp.displayquerygrid.queryresultComponent = {
   controller: 'gmfappQueryresultController',
-  controllerAs: 'qrCtrl',
   template: require('./partials/queryresult.html')
 };
 
