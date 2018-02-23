@@ -325,7 +325,7 @@ gmf.layertree.SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMT
   goog.asserts.assert(gmfLayerWMTS.url);
   goog.asserts.assert(gmfLayerWMTS.layer);
   this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
-    gmfLayerWMTS.layer, gmfLayerWMTS.dimensions).then((layer) => {
+    gmfLayerWMTS.layer, gmfLayerWMTS.matrixSet, gmfLayerWMTS.dimensions).then((layer) => {
     newLayer.setSource(layer.getSource());
     newLayer.set('capabilitiesStyles', layer.get('capabilitiesStyles'));
   });
