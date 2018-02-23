@@ -110,7 +110,6 @@ ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.
- * @param {angular.$compile} $compile Angular compile service.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
@@ -118,7 +117,7 @@ ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-ngeo.layertree.component.directive_ = function($compile, ngeoLayertreeTemplateUrl) {
+ngeo.layertree.component.directive_ = function(ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
