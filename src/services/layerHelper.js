@@ -106,12 +106,13 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  * as key 'capabilitiesStyles' as param of the new layer.
  * @param {string} capabilitiesURL The getCapabilities url.
  * @param {string} layerName The name of the layer.
+ * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
  * @return {angular.$q.Promise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
  *     no layer else.
  * @export
  */
-ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_dimensions) {
+ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions) {
   const parser = new ol.format.WMTSCapabilities();
   const layer = new ol.layer.Tile({
     preload: Infinity
@@ -125,6 +126,7 @@ ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilit
     }
     if (result) {
       const options = ol.source.WMTS.optionsFromCapabilities(result, {
+        matrixSet: opt_matrixSet,
         crossOrigin: 'anonymous',
         layer: layerName
       });
