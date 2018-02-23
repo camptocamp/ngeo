@@ -278,6 +278,7 @@ gmf.Themes.prototype.getBgLayers = function() {
       return layerHelper.createWMTSLayerFromCapabilitites(
         gmfLayerWMTS.url,
         gmfLayerWMTS.layer || '',
+        gmfLayerWMTS.matrixSet,
         gmfLayer.dimensions
       ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
         let message = `Unable to build layer "${gmfLayerWMTS.layer}" from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
