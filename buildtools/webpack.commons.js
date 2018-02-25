@@ -116,7 +116,8 @@ const config = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     providePlugin,
     new ExtractTextPlugin('[name].css'),
-    new ExtractTextPlugin('[name].less')
+    new ExtractTextPlugin('[name].less'),
+    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
   ],
   resolve: {
     modules: [

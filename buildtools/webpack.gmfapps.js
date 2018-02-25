@@ -18,15 +18,17 @@ for (const filename of ls('contribs/gmf/apps-webpack/*/index.html')) {
     }),
   );
 }
-plugins.push(new webpack.optimize.CommonsChunkPlugin({
-  name: 'common',
-  chunks: Object.keys(entry),
-}));
 
 module.exports = {
   output: {
     path: path.resolve(__dirname, '../.build/contribs-gmf-apps'),
   },
   entry: entry,
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      name: 'commons',
+    }
+  },
   plugins: plugins,
 };
