@@ -216,16 +216,6 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
       this.loginActive = false;
     }
   });
-
-  // Open login panel if user must change it's password.
-  if (this.forcePasswordChange) {
-    $scope.$watch(() => this.gmfUser.is_password_changed, (newVal) => {
-      if (newVal === false && !this.loginActive) {
-        this.loginActive = true;
-      }
-    });
-  }
-
 };
 ol.inherits(gmf.controllers.AbstractDesktopController, gmf.controllers.AbstractAppController);
 

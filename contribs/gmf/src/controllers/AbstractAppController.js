@@ -310,12 +310,6 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
   this.gmfUser = $injector.get('gmfUser');
 
   /**
-   * @type {gmfx.User}
-   * @export
-   */
-  this.forcePasswordChange = true;
-
-  /**
    * @type {ngeox.miscGetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
@@ -580,6 +574,16 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    * @export
    */
   this.displaywindowWidth = null;
+};
+
+
+/**
+ * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitely set
+ *     to false.
+ * @export
+ */
+gmf.controllers.AbstractAppController.prototype.userMustChangeItsPassword = function() {
+  return this.gmfUser.is_password_changed === false;
 };
 
 

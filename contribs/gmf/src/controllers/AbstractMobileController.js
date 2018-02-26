@@ -134,17 +134,6 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
       this.rightNavVisible = false;
     }
   });
-
-  // Open login panel if user must change it's password.
-  if (this.forcePasswordChange) {
-    $scope.$watch(() => this.gmfUser.is_password_changed, (newVal) => {
-      if (newVal === false && !this.rightNavVisible) {
-        this.rightNavVisible = true;
-        this.openNavMenu('#login');
-      }
-    });
-  }
-
 };
 ol.inherits(gmf.controllers.AbstractMobileController, gmf.controllers.AbstractAppController);
 

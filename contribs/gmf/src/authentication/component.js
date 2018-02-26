@@ -79,8 +79,27 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *     it you must also allow the user to change its password.
  * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
  *     user to change its password. Default to false. If you set it to true, you
- *     should also allow the user to change its password and you must ensure that the modal can be
- *     displayed (if your login panel is hidden, display it).
+ *     should also allow the user to change its password. Don't add this option alone, use
+ *     it in a dedicated authentication component, in a ngeo-modal, directly in
+ *     your index.html (see example 2.)
+ *
+ * Example 2:
+ *
+ *     <ngeo-modal
+ *         ngeo-modal-closable="false"
+ *         ng-model="mainCtrl.userMustChangeItsPassword()"
+ *         ng-model-options="{getterSetter: true}">
+ *       <div class="modal-header">
+ *         <h4 class="modal-title">
+ *           {{'You must change your password' | translate}}
+ *         </h4>
+ *       </div>
+ *       <div class="modal-body" translate>
+ *         <gmf-authentication
+ *           gmf-authentication-force-password-change="::true">
+ *         </gmf-authentication>
+ *       </div>
+ *     </ngeo-modal>
  *
  * @ngdoc component
  * @ngname gmfAuthentication
@@ -108,6 +127,7 @@ gmf.authentication.component.component('gmfAuthentication', gmf.authentication.c
 gmf.authentication.component.AuthenticationController_ = class {
   /**
    * @private
+   * @param {!angular.JQLite} $element Element.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
@@ -116,7 +136,13 @@ gmf.authentication.component.AuthenticationController_ = class {
    * @ngdoc controller
    * @ngname GmfAuthenticationController
    */
-  constructor(gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
+  constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
+
+    /**
+     * @type {!angular.JQLite}
+     * @private
+     */
+    this.$element_ = $element;
 
     /**
      * @type {gmfx.User}
@@ -232,6 +258,9 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.allowPasswordReset = this.allowPasswordReset !== false;
     this.allowPasswordChange = this.allowPasswordChange !== false;
     this.forcePasswordChange = this.forcePasswordChange === true;
+    if (this.forcePasswordChange) {
+      this.changingPassword = true;
+    }
   }
 
 
@@ -371,10 +400,9 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.newPwdConfVal = '';
   }
 
-
   /**
-   * @return {boolean} True if the modal must be shown to force the user to change its
-   *     password. False Otherwise.
+   * @return {boolean} True if the user must change is password and if the "forcePasswordChange" option of
+   *    this component is set to true.
    * @export
    */
   userMustChangeItsPassword() {
@@ -392,7 +420,7 @@ gmf.authentication.component.AuthenticationController_ = class {
 
     this.error = true;
 
-    const container = angular.element('.gmf-authentication-error');
+    const container = this.$element_.find('.gmf-authentication-error');
 
     if (!Array.isArray(errors)) {
       errors = [errors];
