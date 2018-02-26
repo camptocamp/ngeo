@@ -172,6 +172,12 @@ ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
   layer.setVisible(true);
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
   bgGroup.getLayers().insertAt(1, layer);
+
+  // To make sure the group are correctly sorted,
+  // We remove the background group at index 1 and
+  // add it back at index 0 (then index 1 is data group)
+  map.getLayers().pop();
+  map.getLayers().insertAt(0, bgGroup);
 };
 
 /**
