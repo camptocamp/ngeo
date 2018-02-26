@@ -97,7 +97,7 @@
     "ttf2eot": "2.0.0",
     "ttf2woff": "2.0.1",
     "uglify-js": "3.3.12",
-    "uglifyjs-webpack-plugin": "1.2.0",
+    "uglifyjs-webpack-plugin": "1.2.1",
     "url-loader": "0.6.2",
     "url-polyfill": "1.0.11",
     "walk": "2.3.9",
