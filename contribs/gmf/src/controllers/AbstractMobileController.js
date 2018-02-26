@@ -140,6 +140,7 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
     $scope.$watch(() => this.gmfUser.is_password_changed, (newVal) => {
       if (newVal === false && !this.rightNavVisible) {
         this.rightNavVisible = true;
+        this.openNavMenu('#login');
       }
     });
   }
@@ -209,6 +210,22 @@ gmf.controllers.AbstractMobileController.prototype.leftNavIsVisible = function()
  */
 gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
+};
+
+
+/**
+ * Open the menu with corresponding to the data-target attribute value.
+ * @param {string} target the data-target value.
+ * @export
+ */
+gmf.controllers.AbstractMobileController.prototype.openNavMenu = function(target) {
+  const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
+  for (const key in navElements) {
+    const element = navElements[key];
+    if (element.dataset && element.dataset.target === target) {
+      element.click();
+    }
+  }
 };
 
 
