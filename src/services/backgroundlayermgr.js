@@ -163,6 +163,18 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
 };
 
 /**
+ * Return the current opacity background layer of a given map. `null` is returned if
+ * the map does not have an opacity background layer.
+ * @param {ol.Map} map Map.
+ * @return {ol.layer.Base} layer The opacity background layer.
+ * @export
+ */
+ngeo.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
+  const mapUid = ol.getUid(map).toString();
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+};
+
+/**
  * Set a background layer used by the opacity slider.
  * @param {ol.Map} map The map.
  * @param {ol.layer.Base} layer The opacity background layer.

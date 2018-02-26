@@ -78,6 +78,20 @@ describe('ngeo.BackgroundLayerMgr', () => {
       const layer = ngeoBackgroundLayerMgr.get(map);
       expect(layer).toBe(expectedLayer);
     });
+
+    it('returns `null` if no opacity background layer', () => {
+      const layer = ngeoBackgroundLayerMgr.getOpacityBgLayer(map);
+      expect(layer).toBe(null);
+    });
+
+    it('returns the current opacity background layer', () => {
+      const activeBgLayer = new ol.layer.Tile();
+      ngeoBackgroundLayerMgr.set(map, activeBgLayer);
+      const opacityBgLayer = new ol.layer.Tile();
+      ngeoBackgroundLayerMgr.setOpacityBgLayer(map, opacityBgLayer);
+      const layer = ngeoBackgroundLayerMgr.getOpacityBgLayer(map);
+      expect(layer).toBe(opacityBgLayer);
+    });
   });
 
 });
