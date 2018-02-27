@@ -18,9 +18,32 @@ ngeo.googlestreetview.component = angular.module('ngeoGooglestreetview', [
 ]);
 
 
+ngeo.googlestreetview.component.value('ngeoGooglestreetviewTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['ngeoGooglestreetviewTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html`; // nowebpack
+    // webpack: 'ngeo/googlestreetview';
+  });
+
 // webpack: exports.run(/* @ngInject */ ($templateCache) => {
 // webpack:   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
 // webpack: });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} ngeoGooglestreetviewTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl) {
+  return ngeoGooglestreetviewTemplateUrl($attrs);
+}
 
 
 /**
@@ -378,6 +401,5 @@ ngeo.googlestreetview.component.component('ngeoGooglestreetview', {
     'radius': '<?'
   },
   controller: ngeo.googlestreetview.component.Controller_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html` // nowebpack
-  // webpack: templateUrl: 'ngeo/googlestreetview'
+  templateUrl: ngeoGooglestreetviewTemplateUrl
 });

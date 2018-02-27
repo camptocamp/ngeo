@@ -31,6 +31,29 @@ ngeo.filter.component = angular.module('ngeoFilter', [
 // webpack: });
 
 
+ngeo.filter.component.value('ngeoFilterTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['ngeoFilterTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/filter/component.html`; // nowebpack
+    // webpack: 'ngeo/filter';
+  });
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} ngeoFilterTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
+  return ngeoFilterTemplateUrl($attrs);
+}
+
+
 ngeo.filter.component.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
@@ -44,8 +67,7 @@ ngeo.filter.component.component('ngeoFilter', {
     'toolGroup': '<'
   },
   controller: 'ngeoFilterController',
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/component.html` // nowebpack
-  // webpack: templateUrl: 'ngeo/filter'
+  templateUrl: ngeoFilterTemplateUrl
 });
 
 /**

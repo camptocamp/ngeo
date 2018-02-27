@@ -18,6 +18,29 @@ ngeo.editing.attributesComponent = angular.module('ngeoAttributes', [
 // webpack: });
 
 
+ngeo.editing.attributesComponent.value('ngeoAttributesTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['ngeoAttributesTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/editing/attributescomponent.html`; // nowebpack
+    // webpack: 'ngeo/editing/attributescomponent';
+  });
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} ngeoAttributesTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
+  return ngeoAttributesTemplateUrl($attrs);
+}
+
+
 /**
  * Component used to render the attributes of a feature into a form.
  * Example:
@@ -47,8 +70,7 @@ ngeo.editing.attributesComponent.component_ = {
   require: {
     'form': '^'
   },
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/editing/attributescomponent.html` // nowebpack
-  // webpack: templateUrl: 'ngeo/editing/attributescomponent'
+  templateUrl: ngeoAttributesTemplateUrl
 };
 
 ngeo.editing.attributesComponent.component('ngeoAttributes', ngeo.editing.attributesComponent.component_);

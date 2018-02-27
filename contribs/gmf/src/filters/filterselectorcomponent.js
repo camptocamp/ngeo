@@ -39,6 +39,29 @@ gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [
 // webpack:   $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
 // webpack: });
 
+gmf.filters.filterselectorComponent.value('gmfFilterselectorTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['gmfFilterselectorTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/filters/filterselectorcomponent.html`; // nowebpack
+    // webpack: 'gmf/filters/filterselectorcomponent';
+  });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} gmfFilterselectorTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
+  return gmfFilterselectorTemplateUrl($attrs);
+}
+
 
 /**
  * @private
@@ -719,6 +742,5 @@ gmf.filters.filterselectorComponent.component('gmfFilterselector', {
     toolGroup: '<'
   },
   controller: gmf.filters.filterselectorComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/filters/filterselectorcomponent.html` // nowebpack
-  // webpack: templateUrl: 'gmf/filters/filterselectorcomponent'
+  templateUrl: gmfFilterselectorTemplateUrl
 });
