@@ -2,6 +2,7 @@ goog.provide('app.notification');
 
 // webpack: import './notification.css';
 // webpack: import './common_dependencies.js';
+// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 

@@ -2,6 +2,7 @@ goog.provide('app.popupservice');
 
 // webpack: import './popupservice.css';
 // webpack: import './common_dependencies.js';
+// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('ngeo.message.Popup');
 
 

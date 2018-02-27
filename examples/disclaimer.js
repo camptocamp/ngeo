@@ -2,6 +2,7 @@ goog.provide('app.disclaimer');
 
 // webpack: import './disclaimer.css';
 // webpack: import './common_dependencies.js';
+// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.message.Message');
 goog.require('ol.Map');
