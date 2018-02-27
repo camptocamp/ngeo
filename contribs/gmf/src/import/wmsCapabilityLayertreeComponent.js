@@ -19,6 +19,30 @@ gmf.import.wmsCapabilityLayertreeComponent = angular.module('gmfWmscapabilitylay
 // webpack: });
 
 
+gmf.import.wmsCapabilityLayertreeComponent.value('gmfWmscapabilitylayertreenodeTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['gmfWmscapabilitylayertreenodeTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/import/wmsCapabilityLayertreeComponent.html`; // nowebpack
+    // webpack: 'gmf/import/wmsCapabilityLayertreeComponent';
+  });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayertreenodeTemplateUrl) {
+  return gmfWmscapabilitylayertreenodeTemplateUrl($attrs);
+}
+
+
 /**
  * @private
  */
@@ -100,6 +124,5 @@ gmf.import.wmsCapabilityLayertreeComponent.component('gmfWmscapabilitylayertreen
     'url': '<'
   },
   controller: gmf.import.wmsCapabilityLayertreeComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/wmsCapabilityLayertreeComponent.html` // nowebpack
-  // webpack: templateUrl: 'gmf/import/wmsCapabilityLayertreeComponent'
+  templateUrl: gmfWmscapabilitylayertreenodeTemplateUrl
 });

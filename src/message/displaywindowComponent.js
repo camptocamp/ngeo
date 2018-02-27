@@ -18,6 +18,29 @@ ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowCo
 // webpack: });
 
 
+ngeo.message.displaywindowComponent.value('ngeoMessageDisplaywindowTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['ngeoMessageDisplaywindowTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/message/displaywindowComponent.html`; // nowebpack
+    // webpack: 'ngeo/message/displaywindowComponent';
+  });
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} ngeoMessageDisplaywindowTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTemplateUrl) {
+  return ngeoMessageDisplaywindowTemplateUrl($attrs);
+}
+
+
 /**
  * @private
  */
@@ -228,6 +251,5 @@ ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
     'width': '='
   },
   controller: ngeo.message.displaywindowComponent.Controller_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/message/displaywindowComponent.html` // nowebpack
-  // webpack: templateUrl: 'ngeo/message/displaywindowComponent'
+  templateUrl: ngeoMessageDisplaywindowTemplateUrl
 });

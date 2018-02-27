@@ -24,6 +24,30 @@ gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
 // webpack: });
 
 
+gmf.import.importdatasourceComponent.value('gmfImportdatasourceTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['gmfImportdatasourceTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/import/importdatasourceComponent.html`; // nowebpack
+    // webpack: 'gmf/import/importdatasourceComponent';
+  });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} gmfImportdatasourceTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) {
+  return gmfImportdatasourceTemplateUrl($attrs);
+}
+
+
 /**
  * @private
  */
@@ -380,6 +404,5 @@ gmf.import.importdatasourceComponent.component('gmfImportdatasource', {
     'map': '<'
   },
   controller: gmf.import.importdatasourceComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/import/importdatasourceComponent.html` // nowebpack
-  // webpack: templateUrl: 'gmf/import/importdatasourceComponent'
+  templateUrl: gmfImportdatasourceTemplateUrl
 });

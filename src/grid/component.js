@@ -26,11 +26,10 @@ ngeo.grid.component = angular.module('ngeoGrid', [
 
 ngeo.grid.component.value('ngeoGridTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} Template URL.
    */
-  ($element, $attrs) => {
+  ($attrs) => {
     const templateUrl = $attrs['ngeoGridTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
       `${ngeo.baseModuleTemplateUrl}/grid/component.html`; // nowebpack
@@ -38,16 +37,14 @@ ngeo.grid.component.value('ngeoGridTemplateUrl',
   }
 );
 
-
 /**
- * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} ngeoGridTemplateUrl Template function.
+ * @param {!function(!angular.Attributes): string} ngeoGridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
-function ngeoGridTemplateUrl($element, $attrs, ngeoGridTemplateUrl) {
-  return ngeoGridTemplateUrl($element, $attrs);
+function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
+  return ngeoGridTemplateUrl($attrs);
 }
 
 

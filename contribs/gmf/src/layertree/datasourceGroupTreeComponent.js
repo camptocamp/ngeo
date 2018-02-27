@@ -18,6 +18,29 @@ gmf.layertree.datasourceGroupTreeComponent = angular.module('gmfLayertreeDatasou
 // webpack: });
 
 
+gmf.layertree.datasourceGroupTreeComponent.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['gmfLayertreeDatasourceGroupTreeTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/layertree/datasourceGroupTreeComponent.html`; // nowebpack
+    // webpack: 'gmf/layertree/datasourceGroupTreeComponent';
+  });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasourceGroupTreeTemplateUrl) {
+  return gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs);
+}
+
 /**
  * @private
  */
@@ -113,6 +136,5 @@ gmf.layertree.datasourceGroupTreeComponent.component('gmfDatasourcegrouptree', {
     'group': '<'
   },
   controller: gmf.layertree.datasourceGroupTreeComponent.Controller_,
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/layertree/datasourceGroupTreeComponent.html` // nowebpack
-  // webpack: templateUrl: 'gmf/layertree/datasourceGroupTreeComponent'
+  templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl
 });

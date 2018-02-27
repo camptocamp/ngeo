@@ -50,6 +50,29 @@ ngeo.filter.ruleComponent = angular.module('ngeoRule', [
 // webpack: });
 
 
+ngeo.filter.ruleComponent.value('ngeoRuleTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['ngeoRuleTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${ngeo.baseModuleTemplateUrl}/filter/rulecomponent.html`; // nowebpack
+    // webpack: 'ngeo/filter/rulecomponent';
+  });
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} ngeoRuleTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
+  return ngeoRuleTemplateUrl($attrs);
+}
+
+
 /**
  * @private
  */
@@ -940,6 +963,5 @@ ngeo.filter.ruleComponent.component('ngeoRule', {
     'toolGroup': '<'
   },
   controller: ngeo.filter.ruleComponent.RuleController_,
-  templateUrl: () => `${ngeo.baseModuleTemplateUrl}/filter/rulecomponent.html` // nowebpack
-  // webpack: templateUrl: 'ngeo/filter/rulecomponent'
+  templateUrl: ngeoRuleTemplateUrl
 });

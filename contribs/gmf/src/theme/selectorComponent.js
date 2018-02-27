@@ -20,6 +20,30 @@ gmf.theme.selectorComponent = angular.module('gmfThemeSelectorComponent', [
 // webpack: });
 
 
+gmf.theme.selectorComponent.value('gmfThemeSelectorTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['gmfThemeSelectorTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/theme/selectorComponent.html`; // nowebpack
+    // webpack: 'gmf/theme/selectorComponent';
+  });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} gmfThemeSelectorTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
+  return gmfThemeSelectorTemplateUrl($attrs);
+}
+
+
 /**
  * Note that this component works with the {@link gmf.layertree.TreeManager}.
  * Setting the theme will update the "tree" object of
@@ -76,8 +100,7 @@ gmf.theme.selectorComponent.component_ = {
     'filter': '<gmfThemeselectorFilter'
   },
   controller: 'gmfThemeselectorController',
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/theme/selectorComponent.html` // nowebpack
-  // webpack: templateUrl: 'gmf/theme/selectorComponent'
+  templateUrl: gmfThemeSelectorTemplateUrl
 };
 
 gmf.theme.selectorComponent.component('gmfThemeselector', gmf.theme.selectorComponent.component_);

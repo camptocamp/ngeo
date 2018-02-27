@@ -22,6 +22,30 @@ gmf.raster.component = angular.module('gmfRasterComponent', [
 // webpack: });
 
 
+gmf.raster.component.value('gmfElevationwidgetTemplateUrl',
+  /**
+   * @param {!angular.Attributes} $attrs Attributes.
+   * @return {string} The template url.
+   */
+  ($attrs) => {
+    const templateUrl = $attrs['gmfElevationwidgetTemplateUrl'];
+    return templateUrl !== undefined ? templateUrl :
+      `${gmf.baseModuleTemplateUrl}/raster/widgetComponent.html`; // nowebpack
+    // webpack: 'gmf/raster/widgetComponent';
+  });
+
+
+/**
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.Attributes): string} gmfElevationwidgetTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
+  return gmfElevationwidgetTemplateUrl($attrs);
+}
+
+
 /**
  * Provide a directive that set a value each 500ms with the elevation under the
  * mouse cursor position on the map. The value must come from the elevation
@@ -263,8 +287,7 @@ gmf.raster.component.widgetComponent_ = {
     'layers': '<gmfElevationwidgetLayers',
     'active': '<gmfElevationwidgetActive'
   },
-  templateUrl: () => `${gmf.baseModuleTemplateUrl}/raster/widgetComponent.html` // nowebpack
-  // webpack: templateUrl: 'gmf/raster/widgetComponent'
+  templateUrl: gmfElevationwidgetTemplateUrl
 };
 gmf.raster.component.component('gmfElevationwidget', gmf.raster.component.widgetComponent_);
 
