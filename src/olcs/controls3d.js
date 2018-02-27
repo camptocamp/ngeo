@@ -257,7 +257,7 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */
-exports.component({
+const component = {
   bindings: {
     'minTilt': '<?',
     'maxTilt': '<?',
@@ -265,7 +265,8 @@ exports.component({
   },
   controller: Controller,
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
-});
+};
 
+exports.component('ngeoOlcsControls3d', component);
 
 exports.value('ngeoOlcsControls3dTemplateUrl', '');
