@@ -114,9 +114,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  */
 ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions) {
   const parser = new ol.format.WMTSCapabilities();
-  const layer = new ol.layer.Tile({
-    preload: Infinity
-  });
+  const layer = new ol.layer.Tile();
   const $q = this.$q_;
 
   return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
