@@ -64,7 +64,7 @@
     "html-loader": "0.5.5",
     "html-webpack-plugin": "3.0.4",
     "istanbul-instrumenter-loader": "3.0.0",
-    "jasmine-core": "2.99.0",
+    "jasmine-core": "3.1.0",
     "jquery": "3.3.1",
     "jquery-datetimepicker": "2.5.18",
     "jquery-ui": "1.12.1",
