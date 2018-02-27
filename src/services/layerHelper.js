@@ -53,14 +53,6 @@ ngeo.LayerHelper.REFRESH_PARAM = 'random';
 
 
 /**
- * Load tiles up to preload levels. By default preload is 0, which means only load visible level.
- * See preload value in documentation for ol.Layer.Tile.
- * @const
- */
-ngeo.LayerHelper.TILE_PRELOAD = 0;
-
-
-/**
  * Create and return a basic WMS layer with only a source URL and a comma
  * separated layers names (see {@link ol.source.ImageWMS}).
  *
@@ -122,9 +114,7 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  */
 ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions) {
   const parser = new ol.format.WMTSCapabilities();
-  const layer = new ol.layer.Tile({
-    preload: ngeo.LayerHelper.TILE_PRELOAD
-  });
+  const layer = new ol.layer.Tile();
   const $q = this.$q_;
 
   return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
