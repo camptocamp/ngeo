@@ -89,7 +89,7 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
   this.map;
 
   /**
-   * @type {?string}
+   * @type {!string|undefined}
    * @export
    */
   this.opacityOptions;
@@ -140,12 +140,6 @@ gmf.BackgroundlayerselectorController = function($scope, ngeoBackgroundLayerMgr,
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
-  /**
-   * @type {boolean}
-   * @private
-   */
-  this.isThemeLoadedOnce_ = false;
-
   this.listenerKeys_.push(ol.events.listen(
     this.backgroundLayerMgr_,
     ngeo.BackgroundEventType.CHANGE,
@@ -176,17 +170,14 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
 
-    if (this.opacityOptions !== undefined && !this.isThemeLoadedOnce_) {
-      // Angular initialize twice the component, this limit to set
-      // only once the background layer used by opacity slider
-      this.isThemeLoadedOnce_ = true;
-
+    if (this.opacityOptions !== undefined) {
       const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
       if (opacityLayer !== undefined) {
         this.setOpacityBgLayer(opacityLayer);
         this.opacityLayer = opacityLayer;
 
-        // Reorder the bgArray with the opacity layer at the end
+        // Reorder for the UI the bgArray copy with the opacity layer at the end
+        this.bgLayers = this.bgLayers.slice();
         const indexOpa = this.bgLayers.findIndex(layer => layer === this.opacityLayer);
         this.bgLayers.splice(indexOpa, 1);
         this.bgLayers.push(opacityLayer);
@@ -196,7 +187,7 @@ gmf.BackgroundlayerselectorController.prototype.handleThemesChange_ = function()
 };
 
 /**
- * Getter/setter for background layer opacity.
+ * Getter/setter for background layer overlay, used by opacity slider.
  * @param {?number} val The opacity.
  * @returns {number} The background layer opacity.
  */
@@ -221,7 +212,7 @@ gmf.BackgroundlayerselectorController.prototype.setLayer = function(layer, opt_s
 };
 
 /**
- * Set a background layer used by the opacity slider.
+ * Set a background layer overlay, used by the opacity slider.
  * @param {ol.layer.Base} layer The opacity background layer.
  */
 gmf.BackgroundlayerselectorController.prototype.setOpacityBgLayer = function(layer) {

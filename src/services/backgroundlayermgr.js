@@ -141,6 +141,7 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   const mapUid = ol.getUid(map).toString();
   const previous = this.get(map);
+  layer.setZIndex(-200);
 
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
 
@@ -163,8 +164,8 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
 };
 
 /**
- * Return the current opacity background layer of a given map. `null` is returned if
- * the map does not have an opacity background layer.
+ * Return the current background layer overlay of a given map, used by the opacity slider.
+ * `null` is returned if the map does not have an opacity background layer.
  * @param {ol.Map} map Map.
  * @return {ol.layer.Base} layer The opacity background layer.
  * @export
@@ -175,21 +176,20 @@ ngeo.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
 };
 
 /**
- * Set a background layer used by the opacity slider.
+ * Set an background layer overlay, used by the opacity slider.
  * @param {ol.Map} map The map.
  * @param {ol.layer.Base} layer The opacity background layer.
  */
 ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
   layer.setOpacity(0);
+  layer.setZIndex(-100);
   layer.setVisible(true);
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
-  bgGroup.getLayers().insertAt(1, layer);
 
-  // To make sure the group are correctly sorted,
-  // We remove the background group at index 1 and
-  // add it back at index 0 (then index 1 is data group)
-  map.getLayers().pop();
-  map.getLayers().insertAt(0, bgGroup);
+  const index = bgGroup.getLayers().getArray().indexOf(layer);
+  if (index === -1) {
+    bgGroup.getLayers().push(layer);
+  }
 };
 
 /**
