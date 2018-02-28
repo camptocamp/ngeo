@@ -1,5 +1,3 @@
-goog.require('gmf.permalink.ShareService');
-
 describe('gmf.permalink.ShareService', () => {
   let $httpBackend;
   const successResponse = {

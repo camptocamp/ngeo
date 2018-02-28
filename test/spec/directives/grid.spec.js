@@ -1,5 +1,4 @@
 goog.require('ngeo.grid.Config');
-goog.require('ngeo.grid.component');
 
 describe('ngeo.grid.component', () => {
 

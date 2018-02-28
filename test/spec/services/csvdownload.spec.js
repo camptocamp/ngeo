@@ -1,5 +1,3 @@
-goog.require('ngeo.download.Csv');
-
 describe('ngeo.download.Csv', () => {
 
   let ngeoCsvDownload;

@@ -1,4 +1,3 @@
-goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ol.Map');
 goog.require('ol.Collection');
 goog.require('ol.Feature');

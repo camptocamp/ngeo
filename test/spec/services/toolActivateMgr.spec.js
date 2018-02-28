@@ -1,5 +1,4 @@
 goog.require('ngeo.misc.ToolActivate');
-goog.require('ngeo.misc.ToolActivateMgr');
 
 describe('ngeo.misc.ToolActivateMgr', () => {
   let interaction1, interaction2, interaction3, tool1, tool2, tool3;

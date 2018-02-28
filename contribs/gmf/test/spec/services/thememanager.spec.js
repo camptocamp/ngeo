@@ -1,4 +1,3 @@
-goog.require('gmf.theme.Manager');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.theme.Manager', () => {

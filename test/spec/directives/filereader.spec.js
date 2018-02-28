@@ -1,5 +1,3 @@
-goog.require('ngeo.misc.filereaderComponent');
-
 describe('ngeo.misc.filereaderComponent', () => {
   let element, rootScope;
 

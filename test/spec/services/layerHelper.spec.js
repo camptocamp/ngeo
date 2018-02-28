@@ -2,7 +2,6 @@ goog.require('ol.layer.Group');
 goog.require('ol.layer.Image');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.Collection');
-goog.require('ngeo.map.LayerHelper');
 goog.require('ngeo.test.data.wmtsCapabilities');
 
 describe('ngeo.map.LayerHelper', () => {

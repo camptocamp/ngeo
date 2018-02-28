@@ -1,6 +1,3 @@
-goog.require('gmf.layertree.TreeManager');
-goog.require('gmf.theme.Manager');
-goog.require('gmf.theme.Themes');
 goog.require('gmf.test.data.themes');
 
 describe('gmf.layertree.TreeManager', () => {

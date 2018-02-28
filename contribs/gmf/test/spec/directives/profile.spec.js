@@ -1,6 +1,3 @@
-goog.require('gmf.profile.component');
-
-
 describe('gmf.GmfProfileController', () => {
 
   let profileController;

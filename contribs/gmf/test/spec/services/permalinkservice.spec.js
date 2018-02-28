@@ -1,14 +1,9 @@
 goog.require('gmf.test.data.themes');
-goog.require('gmf.permalink.Permalink');
 goog.require('gmf');
-goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.statemanager.Service');
-goog.require('ngeo.statemanager.Location');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.Collection');
-goog.require('ol.layer.Group');
 goog.require('ol.proj');
 goog.require('ol.obj');
 
