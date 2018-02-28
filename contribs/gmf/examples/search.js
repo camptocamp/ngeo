@@ -21,6 +21,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.search.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
   gmf.search.module.name,
   gmf.theme.Themes.module.name,

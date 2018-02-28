@@ -18,6 +18,7 @@ goog.require('ol.style.Circle');
 
 /** @type {!angular.Module} **/
 gmfapp.wfspermalink.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
   gmf.query.windowComponent.name,
 ]);

@@ -12,6 +12,7 @@ goog.require('ol.View');
 
 /** @type {!angular.Module} **/
 gmfapp.backgroundlayerselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.backgroundlayerselector.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,

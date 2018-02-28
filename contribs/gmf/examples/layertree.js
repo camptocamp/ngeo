@@ -19,6 +19,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.layertree.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.component.name,
   gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,

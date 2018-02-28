@@ -7,6 +7,7 @@ goog.require('gmf.authentication.module');
 
 /** @type {!angular.Module} **/
 gmfapp.authentication.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name
 ]);
 

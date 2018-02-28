@@ -10,6 +10,7 @@ goog.require('ol.Feature');
 
 /** @type {!angular.Module} **/
 gmfapp.xsdattributes.module = angular.module('gmfapp', [
+  'gettext',
   gmf.editing.XSDAttributes.module.name,
   gmf.theme.Themes.module.name,
   ngeo.editing.attributesComponent.name,

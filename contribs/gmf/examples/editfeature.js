@@ -20,6 +20,7 @@ goog.require('ol.source.ImageWMS');
 
 /** @type {!angular.Module} **/
 gmfapp.editfeature.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name,
   gmf.editing.EditFeature.module.name,
   gmf.map.component.name,

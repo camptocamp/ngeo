@@ -26,6 +26,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 gmfapp.displayquerywindow.module = angular.module('gmfapp', [
+  'gettext',
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
   gmf.map.component.name,

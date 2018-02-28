@@ -19,6 +19,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.drawfeature.module = angular.module('gmfapp', [
+  'gettext',
   gmf.drawing.module.name,
   gmf.map.component.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me

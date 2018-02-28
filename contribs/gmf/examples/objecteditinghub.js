@@ -11,6 +11,7 @@ goog.require('ngeo.format.XSDAttribute');
 
 /** @type {!angular.Module} **/
 gmfapp.objecteditinghub.module = angular.module('gmfapp', [
+  'gettext',
   gmf.editing.XSDAttributes.module.name,
   gmf.objectediting.Manager.module.name,
   gmf.theme.Themes.module.name,

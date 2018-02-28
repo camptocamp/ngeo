@@ -11,6 +11,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.simple.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
 ]);
 

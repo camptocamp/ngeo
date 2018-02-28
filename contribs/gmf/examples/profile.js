@@ -20,6 +20,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.profile.module = angular.module('gmfapp', [
+  'gettext',
   gmf.permalink.Permalink.module.name,
   gmf.map.component.name,
   gmf.profile.module.name,

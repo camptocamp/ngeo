@@ -7,6 +7,7 @@ goog.require('ngeo.misc.WMSTime');
 
 /** @type {!angular.Module} **/
 gmfapp.datepicker.module = angular.module('gmfapp', [
+  'gettext',
   ngeo.misc.datepickerComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);

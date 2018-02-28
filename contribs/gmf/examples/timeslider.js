@@ -7,6 +7,7 @@ goog.require('ngeo.misc.WMSTime');
 
 /** @type {!angular.Module} **/
 gmfapp.timeslider.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.timeSliderComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);

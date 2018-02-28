@@ -25,6 +25,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 gmfapp.editfeatureselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name,
   gmf.editing.editFeatureSelectorComponent.name,
   gmf.layertree.component.name,

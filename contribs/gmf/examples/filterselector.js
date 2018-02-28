@@ -27,6 +27,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.filterselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name,
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
