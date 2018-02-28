@@ -106,11 +106,12 @@ ol.inherits(gmf.AuthenticationEvent, ol.events.Event);
  * @struct
  * @extends {ol.events.EventTarget}
  * @param {angular.$http} $http Angular http service.
+ * @param {angular.$injector} $injector Main injector.
  * @param {string} authenticationBaseUrl URL to "authentication" web service.
  * @param {gmfx.User} gmfUser User.
  * @ngInject
  */
-gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
+gmf.Authentication = function($http, $injector, authenticationBaseUrl, gmfUser) {
 
   ol.events.EventTarget.call(this);
 
@@ -132,6 +133,16 @@ gmf.Authentication = function($http, authenticationBaseUrl, gmfUser) {
    * @private
    */
   this.user_ = gmfUser;
+
+  /**
+   * Don't request a new user object from the back-end after
+   * logging out if the logged-in user's role has this role.
+   * @type {?string}
+   * @private
+   */
+  this.noReloadRole_ =  $injector.has('gmfAuthenticationNoReloadRole')
+    ? $injector.get('gmfAuthenticationNoReloadRole')
+    : null;
 
   this.load_();
 };
@@ -197,9 +208,11 @@ gmf.Authentication.prototype.login = function(login, pwd) {
  * @export
  */
 gmf.Authentication.prototype.logout = function() {
+  const noReload = this.user_['role_name'] === this.noReloadRole_;
   const url = `${this.baseUrl_}/${gmf.AuthenticationRouteSuffix.LOGOUT}`;
-  return this.$http_.get(url, {withCredentials: true}).then(
-    this.resetUser_.bind(this));
+  return this.$http_.get(url, {withCredentials: true}).then(() => {
+    this.resetUser_(noReload);
+  });
 };
 
 
@@ -278,14 +291,20 @@ gmf.Authentication.prototype.setUser_ = function(respData, emitEvent) {
 
 /**
  * @private
+ * @param {boolean} noReload Don't request a new user object from
+ *  the back-end after logging out, defaults to false.
  */
-gmf.Authentication.prototype.resetUser_ = function() {
+gmf.Authentication.prototype.resetUser_ = function(noReload) {
+  noReload = noReload || false;
   for (const key in this.user_) {
     this.user_[key] = null;
   }
   this.dispatchEvent(new gmf.AuthenticationEvent(
     gmf.AuthenticationEventType.LOGOUT, this.user_));
-  this.load_();
+
+  if (!noReload) {
+    this.load_();
+  }
 };
 
 
