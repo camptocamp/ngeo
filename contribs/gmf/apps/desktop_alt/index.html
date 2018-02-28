@@ -412,9 +412,10 @@
               defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
               defaultFeaturePrefix: 'feature'
             }));
+        module.constant('ngeoTilesPreloadingLimit', 0);
         module.constant('ngeoQueryOptions', {
           limit: 50
-        })
+        });
       })();
     </script>
   </body>
