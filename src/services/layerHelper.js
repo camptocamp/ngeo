@@ -18,13 +18,16 @@ goog.require('ol.uri');
  * Provides help functions that helps you to create and manage layers.
  * @param {angular.$q} $q Angular promises/deferred service.
  * @param {angular.$http} $http Angular http service.
+ * @param {number} ngeoTilesPreloadingLimit Load tiles up to preload levels. By default preload is Infinity,
+ *     which means load all tiles on the top of the visible level. See also preload value
+ *     in documentation for ol.Layer.Tile.
  * @constructor
  * @struct
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject
  */
-ngeo.LayerHelper = function($q, $http) {
+ngeo.LayerHelper = function($q, $http, ngeoTilesPreloadingLimit) {
 
   /**
    * @type {angular.$q}
@@ -37,6 +40,13 @@ ngeo.LayerHelper = function($q, $http) {
    * @private
    */
   this.$http_ = $http;
+
+  /**
+   * The Tiles Preloading Limit value
+   * @type {number}
+   * @private
+   */
+  this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit;
 };
 
 
@@ -114,7 +124,9 @@ ngeo.LayerHelper.prototype.createBasicWMSLayer = function(sourceURL,
  */
 ngeo.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions) {
   const parser = new ol.format.WMTSCapabilities();
-  const layer = new ol.layer.Tile();
+  const layer = new ol.layer.Tile({
+    preload: this.tilesPreloadingLimit_
+  });
   const $q = this.$q_;
 
   return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
@@ -367,4 +379,5 @@ ngeo.LayerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time
 };
 
 
+ngeo.module.value('ngeoTilesPreloadingLimit', Infinity);
 ngeo.module.service('ngeoLayerHelper', ngeo.LayerHelper);
