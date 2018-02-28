@@ -1,5 +1,7 @@
 goog.provide('ngeo.message.popoverComponent');
 
+// webpack: import 'bootstrap/js/tooltip.js';
+// webpack: import 'bootstrap/js/popover.js';
 
 /**
  * @type {angular.Module}

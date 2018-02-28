@@ -1,5 +1,6 @@
 goog.provide('ngeo.message.Notification');
 
+// webpack: import 'bootstrap/js/alert.js';
 goog.require('goog.asserts');
 goog.require('ngeo.message.Message');
 goog.require('ol');
