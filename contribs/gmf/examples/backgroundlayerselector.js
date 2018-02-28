@@ -1,7 +1,6 @@
 goog.provide('gmfapp.backgroundlayerselector');
 
 // webpack: import './backgroundlayerselector.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.backgroundlayerselector.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -13,6 +12,7 @@ goog.require('ol.View');
 
 /** @type {!angular.Module} **/
 gmfapp.backgroundlayerselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.backgroundlayerselector.module.name,
   gmf.map.component.name,
   gmf.theme.Themes.module.name,

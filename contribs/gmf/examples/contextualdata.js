@@ -1,7 +1,6 @@
 goog.provide('gmfapp.contextualdata');
 
 // webpack: import './contextualdata.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.contextualdata.module');
 goog.require('gmf.map.component');
@@ -15,6 +14,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.contextualdata.module = angular.module('gmfapp', [
+  'gettext',
   gmf.contextualdata.module.name,
   gmf.map.component.name,
   ngeo.misc.filters.name,
@@ -29,8 +29,8 @@ gmfapp.contextualdata.module.value(
   'gmfContextualdatacontentTemplateUrl',
   'partials/contextualdata.html');
 
-gmfapp.contextualdata.constant('defaultTheme', 'Demo');
-gmfapp.contextualdata.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.contextualdata.module.constant('defaultTheme', 'Demo');
+gmfapp.contextualdata.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

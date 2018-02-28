@@ -1,7 +1,6 @@
 goog.provide('gmfapp.mouseposition');
 
 // webpack: import './mouseposition.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.module');
 const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
@@ -14,11 +13,12 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.mouseposition.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.module.name,
 ]);
 
-gmfapp.mouseposition.constant('defaultTheme', 'Demo');
-gmfapp.mouseposition.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.mouseposition.module.constant('defaultTheme', 'Demo');
+gmfapp.mouseposition.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

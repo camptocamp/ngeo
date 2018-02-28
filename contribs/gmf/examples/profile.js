@@ -1,7 +1,6 @@
 goog.provide('gmfapp.profile');
 
 // webpack: import './profile.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
@@ -21,6 +20,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.profile.module = angular.module('gmfapp', [
+  'gettext',
   gmf.permalink.Permalink.module.name,
   gmf.map.component.name,
   gmf.profile.module.name,
@@ -32,8 +32,8 @@ gmfapp.profile.module.value(
   'gmfProfileJsonUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
 
-gmfapp.profile.constant('defaultTheme', 'Demo');
-gmfapp.profile.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.profile.module.constant('defaultTheme', 'Demo');
+gmfapp.profile.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

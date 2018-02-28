@@ -1,7 +1,6 @@
 goog.provide('gmfapp.print');
 
 // webpack: import './print.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -18,6 +17,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.print.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.component.name,
   gmf.map.component.name,
   gmf.print.component.name,
@@ -45,8 +45,8 @@ gmfapp.print.module.value(
 gmfapp.print.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.print.constant('defaultTheme', 'Demo');
-gmfapp.print.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.print.module.constant('defaultTheme', 'Demo');
+gmfapp.print.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

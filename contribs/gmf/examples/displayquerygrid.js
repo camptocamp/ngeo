@@ -1,7 +1,6 @@
 goog.provide('gmfapp.displayquerygrid');
 
 // webpack: import './displayquerygrid.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.datasource.Manager');
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
@@ -27,6 +26,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.displayquerygrid.module = angular.module('gmfapp', [
+  'gettext',
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
   gmf.map.component.name,
@@ -51,8 +51,8 @@ gmfapp.displayquerygrid.module.constant(
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
-gmfapp.displayquerygrid.constant('defaultTheme', 'Demo');
-gmfapp.displayquerygrid.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.displayquerygrid.module.constant('defaultTheme', 'Demo');
+gmfapp.displayquerygrid.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

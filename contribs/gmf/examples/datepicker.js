@@ -1,18 +1,18 @@
 goog.provide('gmfapp.datepicker');
 
 // webpack: import './datepicker.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.misc.datepickerComponent');
 goog.require('ngeo.misc.WMSTime');
 
 
 /** @type {!angular.Module} **/
 gmfapp.datepicker.module = angular.module('gmfapp', [
+  'gettext',
   ngeo.misc.datepickerComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
 
-gmfapp.datepicker.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.datepicker.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

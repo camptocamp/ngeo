@@ -1,7 +1,6 @@
 goog.provide('gmfapp.xsdattributes');
 
 // webpack: import './xsdattributes.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.theme.Themes');
 goog.require('gmf.editing.XSDAttributes');
 goog.require('ngeo.editing.attributesComponent');
@@ -11,6 +10,7 @@ goog.require('ol.Feature');
 
 /** @type {!angular.Module} **/
 gmfapp.xsdattributes.module = angular.module('gmfapp', [
+  'gettext',
   gmf.editing.XSDAttributes.module.name,
   gmf.theme.Themes.module.name,
   ngeo.editing.attributesComponent.name,
@@ -23,7 +23,7 @@ gmfapp.xsdattributes.module.value('gmfTreeUrl',
 gmfapp.xsdattributes.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.xsdattributes.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.xsdattributes.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

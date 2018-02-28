@@ -1,7 +1,6 @@
 goog.provide('gmfapp.objecteditinghub');
 
 // webpack: import './objecteditinghub.css';
-// webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
 goog.require('gmf.editing.XSDAttributes');
 goog.require('gmf.objectediting.Manager');
@@ -12,6 +11,7 @@ goog.require('ngeo.format.XSDAttribute');
 
 /** @type {!angular.Module} **/
 gmfapp.objecteditinghub.module = angular.module('gmfapp', [
+  'gettext',
   gmf.editing.XSDAttributes.module.name,
   gmf.objectediting.Manager.module.name,
   gmf.theme.Themes.module.name,
@@ -25,8 +25,8 @@ gmfapp.objecteditinghub.module.value('gmfTreeUrl',
 gmfapp.objecteditinghub.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.objecteditinghub.constant('defaultTheme', 'Demo');
-gmfapp.objecteditinghub.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.objecteditinghub.module.constant('defaultTheme', 'Demo');
+gmfapp.objecteditinghub.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

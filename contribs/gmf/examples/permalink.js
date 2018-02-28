@@ -1,7 +1,6 @@
 goog.provide('gmfapp.permalink');
 
 // webpack: import './permalink.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
@@ -16,11 +15,12 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.permalink.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
 ]);
 
-gmfapp.permalink.constant('defaultTheme', 'Demo');
-gmfapp.permalink.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.permalink.module.constant('defaultTheme', 'Demo');
+gmfapp.permalink.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 gmfapp.permalink.module.value('gmfPermalinkOptions',

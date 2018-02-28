@@ -1,7 +1,6 @@
 goog.provide('gmfapp.layertree');
 
 // webpack: import './layertree.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.disclaimer.module');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
@@ -20,6 +19,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.layertree.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.component.name,
   gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
@@ -34,8 +34,8 @@ gmfapp.layertree.module = angular.module('gmfapp', [
 gmfapp.layertree.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
 
-gmfapp.layertree.constant('defaultTheme', 'Demo');
-gmfapp.layertree.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.layertree.module.constant('defaultTheme', 'Demo');
+gmfapp.layertree.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

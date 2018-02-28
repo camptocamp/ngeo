@@ -3,7 +3,6 @@
 goog.provide('gmfapp.importdatasource');
 
 // webpack: import './importdatasource.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');
@@ -26,6 +25,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.importdatasource.module = angular.module('gmfapp', [
+  'gettext',
   gmf.datasource.Manager.module.name,
   gmf.import.importdatasourceComponent.name,
   gmf.layertree.component.name,
@@ -62,8 +62,8 @@ gmfapp.importdatasource.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-gmfapp.importdatasource.constant('defaultTheme', 'Filters');
-gmfapp.importdatasource.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.importdatasource.module.constant('defaultTheme', 'Filters');
+gmfapp.importdatasource.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 gmfapp.importdatasource.MainController = class {

@@ -1,7 +1,6 @@
 goog.provide('gmfapp.featurestyle');
 
 // webpack: import './featurestyle.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -23,6 +22,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 gmfapp.featurestyle.module = angular.module('gmfapp', [
+  'gettext',
   gmf.drawing.featureStyleComponent.name,
   gmf.map.component.name,
   ngeo.misc.FeatureHelper.module.name,
@@ -31,8 +31,8 @@ gmfapp.featurestyle.module = angular.module('gmfapp', [
 
 gmfapp.featurestyle.module.value('ngeoMeasureDecimals', 2);
 
-gmfapp.featurestyle.constant('defaultTheme', 'Demo');
-gmfapp.featurestyle.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.featurestyle.module.constant('defaultTheme', 'Demo');
+gmfapp.featurestyle.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

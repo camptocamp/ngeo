@@ -1,7 +1,6 @@
 goog.provide('gmfapp.objectediting');
 
 // webpack: import './objectediting.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */
@@ -25,6 +24,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 gmfapp.objectediting.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.component.name,
   gmf.layertree.TreeManager.module.name,
   gmf.map.component.name,
@@ -34,13 +34,13 @@ gmfapp.objectediting.module = angular.module('gmfapp', [
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
-gmfapp.objectediting.constant('defaultTheme', 'ObjectEditing');
-gmfapp.objectediting.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
-gmfapp.objectediting.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
-gmfapp.objectediting.constant('gmfObjectEditingToolsOptions', {
+gmfapp.objectediting.module.constant('defaultTheme', 'ObjectEditing');
+gmfapp.objectediting.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+gmfapp.objectediting.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+gmfapp.objectediting.module.constant('gmfObjectEditingToolsOptions', {
   regularPolygonRadius: 150
 });
-gmfapp.objectediting.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.objectediting.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

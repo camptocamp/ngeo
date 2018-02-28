@@ -3,7 +3,6 @@
 goog.provide('gmfapp.filterselector');
 
 // webpack: import './filterselector.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
@@ -28,6 +27,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.filterselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name,
   gmf.datasource.Manager.module.name,
   gmf.layertree.component.name,
@@ -58,8 +58,8 @@ gmfapp.filterselector.module.value('gmfTreeUrl',
 gmfapp.filterselector.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.filterselector.constant('defaultTheme', 'Filters');
-gmfapp.filterselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.filterselector.module.constant('defaultTheme', 'Filters');
+gmfapp.filterselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 gmfapp.filterselector.MainController = class {

@@ -1,7 +1,6 @@
 goog.provide('gmfapp.drawfeature');
 
 // webpack: import './drawfeature.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
@@ -20,6 +19,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.drawfeature.module = angular.module('gmfapp', [
+  'gettext',
   gmf.drawing.module.name,
   gmf.map.component.name,
   ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
@@ -33,8 +33,8 @@ gmfapp.drawfeature.module.value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
 
-gmfapp.drawfeature.constant('defaultTheme', 'Demo');
-gmfapp.drawfeature.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.drawfeature.module.constant('defaultTheme', 'Demo');
+gmfapp.drawfeature.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

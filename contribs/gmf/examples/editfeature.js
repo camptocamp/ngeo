@@ -1,7 +1,6 @@
 goog.provide('gmfapp.editfeature');
 
 // webpack: import './editfeature.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.authentication.module');
@@ -21,6 +20,7 @@ goog.require('ol.source.ImageWMS');
 
 /** @type {!angular.Module} **/
 gmfapp.editfeature.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name,
   gmf.editing.EditFeature.module.name,
   gmf.map.component.name,
@@ -35,8 +35,8 @@ gmfapp.editfeature.module.value(
 gmfapp.editfeature.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.editfeature.constant('defaultTheme', 'Demo');
-gmfapp.editfeature.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.editfeature.module.constant('defaultTheme', 'Demo');
+gmfapp.editfeature.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

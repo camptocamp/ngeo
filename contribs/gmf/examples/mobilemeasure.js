@@ -1,7 +1,6 @@
 goog.provide('gmfapp.mobilemeasure');
 
 // webpack: import './mobilemeasure.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
@@ -19,6 +18,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 gmfapp.mobilemeasure.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
   gmf.permalink.Permalink.module.name,
   gmf.mobile.measure.lengthComponent.name,
@@ -31,8 +31,8 @@ gmfapp.mobilemeasure.module.value(
   'gmfRasterUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
 
-gmfapp.mobilemeasure.constant('defaultTheme', 'Demo');
-gmfapp.mobilemeasure.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.mobilemeasure.module.constant('defaultTheme', 'Demo');
+gmfapp.mobilemeasure.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

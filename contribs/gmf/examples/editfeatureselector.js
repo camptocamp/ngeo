@@ -1,7 +1,6 @@
 goog.provide('gmfapp.editfeatureselector');
 
 // webpack: import './editfeatureselector.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
@@ -26,6 +25,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 gmfapp.editfeatureselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.authentication.module.name,
   gmf.editing.editFeatureSelectorComponent.name,
   gmf.layertree.component.name,
@@ -53,8 +53,8 @@ gmfapp.editfeatureselector.module.value('gmfTreeUrl',
 gmfapp.editfeatureselector.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.editfeatureselector.constant('defaultTheme', 'Edit');
-gmfapp.editfeatureselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.editfeatureselector.module.constant('defaultTheme', 'Edit');
+gmfapp.editfeatureselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

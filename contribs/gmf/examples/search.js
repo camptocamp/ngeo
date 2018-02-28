@@ -1,7 +1,6 @@
 goog.provide('gmfapp.search');
 
 // webpack: import './search.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.search.module');
@@ -22,6 +21,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 gmfapp.search.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
   gmf.search.module.name,
   gmf.theme.Themes.module.name,
@@ -38,8 +38,8 @@ gmfapp.search.module.value('fulltextsearchUrl',
 gmfapp.search.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.search.constant('defaultTheme', 'Demo');
-gmfapp.search.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.search.module.constant('defaultTheme', 'Demo');
+gmfapp.search.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

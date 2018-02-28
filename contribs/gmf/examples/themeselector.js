@@ -1,13 +1,13 @@
 goog.provide('gmfapp.themeselector');
 
 // webpack: import './themeselector.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.module');
 goog.require('gmf.layertree.TreeManager');
 
 /** @type {!angular.Module} **/
 gmfapp.themeselector.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.TreeManager.module.name,
   gmf.theme.module.name,
 ]);
@@ -15,7 +15,7 @@ gmfapp.themeselector.module = angular.module('gmfapp', [
 gmfapp.themeselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
-gmfapp.themeselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.themeselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

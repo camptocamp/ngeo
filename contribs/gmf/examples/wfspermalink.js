@@ -1,7 +1,6 @@
 goog.provide('gmfapp.wfspermalink');
 
 // webpack: import './wfspermalink.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */
@@ -19,6 +18,7 @@ goog.require('ol.style.Circle');
 
 /** @type {!angular.Module} **/
 gmfapp.wfspermalink.module = angular.module('gmfapp', [
+  'gettext',
   gmf.map.component.name,
   gmf.query.windowComponent.name,
 ]);
@@ -34,8 +34,8 @@ gmfapp.wfspermalink.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
-gmfapp.wfspermalink.constant('defaultTheme', 'Demo');
-gmfapp.wfspermalink.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.wfspermalink.module.constant('defaultTheme', 'Demo');
+gmfapp.wfspermalink.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

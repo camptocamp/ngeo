@@ -1,18 +1,18 @@
 goog.provide('gmfapp.timeslider');
 
 // webpack: import './timeslider.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.layertree.timeSliderComponent');
 goog.require('ngeo.misc.WMSTime');
 
 
 /** @type {!angular.Module} **/
 gmfapp.timeslider.module = angular.module('gmfapp', [
+  'gettext',
   gmf.layertree.timeSliderComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
 
-gmfapp.timeslider.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.timeslider.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
