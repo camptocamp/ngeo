@@ -3,7 +3,6 @@
 goog.provide('gmfapp.importdatasource');
 
 // webpack: import './importdatasource.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.datasource.Manager');

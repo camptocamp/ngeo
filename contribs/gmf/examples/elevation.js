@@ -2,7 +2,6 @@ goog.provide('gmfapp.elevation');
 
 
 // webpack: import './elevation.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 goog.require('gmf.raster.module');

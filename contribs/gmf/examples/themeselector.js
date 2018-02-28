@@ -1,7 +1,6 @@
 goog.provide('gmfapp.themeselector');
 
 // webpack: import './themeselector.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.theme.module');
 goog.require('gmf.layertree.TreeManager');

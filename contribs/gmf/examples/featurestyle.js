@@ -1,7 +1,6 @@
 goog.provide('gmfapp.featurestyle');
 
 // webpack: import './featurestyle.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.drawing.featureStyleComponent');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');

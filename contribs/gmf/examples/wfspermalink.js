@@ -1,7 +1,6 @@
 goog.provide('gmfapp.wfspermalink');
 
 // webpack: import './wfspermalink.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 /** @suppress {extraRequire} */

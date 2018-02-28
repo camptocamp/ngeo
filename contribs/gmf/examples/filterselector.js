@@ -3,7 +3,6 @@
 goog.provide('gmfapp.filterselector');
 
 // webpack: import './filterselector.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */

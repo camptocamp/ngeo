@@ -1,7 +1,6 @@
 goog.provide('gmfapp.editfeature');
 
 // webpack: import './editfeature.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('gmf.authentication.module');

@@ -1,7 +1,6 @@
 goog.provide('gmfapp.layertreeadd');
 
 // webpack: import './layertreeadd.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.disclaimer.module');
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');

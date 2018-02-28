@@ -1,7 +1,6 @@
 goog.provide('gmfapp.drawfeature');
 
 // webpack: import './drawfeature.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');

@@ -1,7 +1,6 @@
 goog.provide('gmfapp.print');
 
 // webpack: import './print.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.layertree.component');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');

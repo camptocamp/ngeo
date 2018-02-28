@@ -1,7 +1,6 @@
 goog.provide('gmfapp.objectediting');
 
 // webpack: import './objectediting.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.layertree.component');
 goog.require('gmf.layertree.TreeManager');
 /** @suppress {extraRequire} */

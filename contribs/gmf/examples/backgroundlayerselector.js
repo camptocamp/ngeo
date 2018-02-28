@@ -1,7 +1,6 @@
 goog.provide('gmfapp.backgroundlayerselector');
 
 // webpack: import './backgroundlayerselector.css';
-// webpack: import './common_dependencies.js';
 goog.require('gmf.backgroundlayerselector.module');
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');

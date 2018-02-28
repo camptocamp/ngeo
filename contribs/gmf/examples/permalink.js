@@ -1,7 +1,6 @@
 goog.provide('gmfapp.permalink');
 
 // webpack: import './permalink.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.component');
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');

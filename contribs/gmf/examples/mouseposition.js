@@ -1,7 +1,6 @@
 goog.provide('gmfapp.mouseposition');
 
 // webpack: import './mouseposition.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('gmf.map.module');
 const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
