@@ -24,8 +24,8 @@ gmfapp.objecteditinghub.module.value('gmfTreeUrl',
 gmfapp.objecteditinghub.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.objecteditinghub.constant('defaultTheme', 'Demo');
-gmfapp.objecteditinghub.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.objecteditinghub.module.constant('defaultTheme', 'Demo');
+gmfapp.objecteditinghub.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

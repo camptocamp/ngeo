@@ -23,8 +23,8 @@ gmfapp.elevation.module.value(
   'gmfRasterUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
 
-gmfapp.elevation.constant('defaultTheme', 'Demo');
-gmfapp.elevation.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.elevation.module.constant('defaultTheme', 'Demo');
+gmfapp.elevation.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

@@ -33,13 +33,13 @@ gmfapp.objectediting.module = angular.module('gmfapp', [
   ngeo.misc.ToolActivateMgr.module.name,
 ]);
 
-gmfapp.objectediting.constant('defaultTheme', 'ObjectEditing');
-gmfapp.objectediting.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
-gmfapp.objectediting.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
-gmfapp.objectediting.constant('gmfObjectEditingToolsOptions', {
+gmfapp.objectediting.module.constant('defaultTheme', 'ObjectEditing');
+gmfapp.objectediting.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+gmfapp.objectediting.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+gmfapp.objectediting.module.constant('gmfObjectEditingToolsOptions', {
   regularPolygonRadius: 150
 });
-gmfapp.objectediting.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.objectediting.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

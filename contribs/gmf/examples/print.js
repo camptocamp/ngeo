@@ -44,8 +44,8 @@ gmfapp.print.module.value(
 gmfapp.print.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.print.constant('defaultTheme', 'Demo');
-gmfapp.print.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.print.module.constant('defaultTheme', 'Demo');
+gmfapp.print.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

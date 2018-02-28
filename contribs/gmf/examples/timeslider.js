@@ -11,7 +11,7 @@ gmfapp.timeslider.module = angular.module('gmfapp', [
   ngeo.misc.WMSTime.module.name,
 ]);
 
-gmfapp.timeslider.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.timeslider.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

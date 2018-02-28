@@ -22,7 +22,7 @@ gmfapp.xsdattributes.module.value('gmfTreeUrl',
 gmfapp.xsdattributes.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.xsdattributes.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.xsdattributes.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

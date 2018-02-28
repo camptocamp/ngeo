@@ -16,8 +16,8 @@ gmfapp.mouseposition.module = angular.module('gmfapp', [
   gmf.map.module.name,
 ]);
 
-gmfapp.mouseposition.constant('defaultTheme', 'Demo');
-gmfapp.mouseposition.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.mouseposition.module.constant('defaultTheme', 'Demo');
+gmfapp.mouseposition.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

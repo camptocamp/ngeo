@@ -18,8 +18,8 @@ gmfapp.permalink.module = angular.module('gmfapp', [
   gmf.map.component.name,
 ]);
 
-gmfapp.permalink.constant('defaultTheme', 'Demo');
-gmfapp.permalink.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.permalink.module.constant('defaultTheme', 'Demo');
+gmfapp.permalink.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 gmfapp.permalink.module.value('gmfPermalinkOptions',

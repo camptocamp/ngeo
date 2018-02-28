@@ -50,8 +50,8 @@ gmfapp.displayquerygrid.module.constant(
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
         'version=2&background=background');
 
-gmfapp.displayquerygrid.constant('defaultTheme', 'Demo');
-gmfapp.displayquerygrid.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.displayquerygrid.module.constant('defaultTheme', 'Demo');
+gmfapp.displayquerygrid.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

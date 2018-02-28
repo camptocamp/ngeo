@@ -30,8 +30,8 @@ gmfapp.featurestyle.module = angular.module('gmfapp', [
 
 gmfapp.featurestyle.module.value('ngeoMeasureDecimals', 2);
 
-gmfapp.featurestyle.constant('defaultTheme', 'Demo');
-gmfapp.featurestyle.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.featurestyle.module.constant('defaultTheme', 'Demo');
+gmfapp.featurestyle.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

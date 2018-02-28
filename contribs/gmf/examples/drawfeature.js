@@ -32,8 +32,8 @@ gmfapp.drawfeature.module.value('ngeoExportFeatureFormats', [
   ngeo.misc.FeatureHelper.FormatType.GPX
 ]);
 
-gmfapp.drawfeature.constant('defaultTheme', 'Demo');
-gmfapp.drawfeature.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.drawfeature.module.constant('defaultTheme', 'Demo');
+gmfapp.drawfeature.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

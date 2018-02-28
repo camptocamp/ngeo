@@ -52,8 +52,8 @@ gmfapp.editfeatureselector.module.value('gmfTreeUrl',
 gmfapp.editfeatureselector.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.editfeatureselector.constant('defaultTheme', 'Edit');
-gmfapp.editfeatureselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.editfeatureselector.module.constant('defaultTheme', 'Edit');
+gmfapp.editfeatureselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

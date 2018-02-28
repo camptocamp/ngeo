@@ -11,7 +11,7 @@ gmfapp.datepicker.module = angular.module('gmfapp', [
   ngeo.misc.WMSTime.module.name,
 ]);
 
-gmfapp.datepicker.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.datepicker.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

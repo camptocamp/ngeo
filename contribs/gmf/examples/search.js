@@ -37,8 +37,8 @@ gmfapp.search.module.value('fulltextsearchUrl',
 gmfapp.search.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.search.constant('defaultTheme', 'Demo');
-gmfapp.search.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.search.module.constant('defaultTheme', 'Demo');
+gmfapp.search.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

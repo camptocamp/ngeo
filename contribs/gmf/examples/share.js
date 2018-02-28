@@ -13,8 +13,8 @@ gmfapp.share.module = angular.module('gmfapp', [
   gmf.permalink.shareComponent.name,
 ]);
 
-gmfapp.share.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-gmfapp.share.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
+gmfapp.share.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.share.module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
 
 
 /**

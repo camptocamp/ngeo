@@ -30,8 +30,8 @@ gmfapp.mobilemeasure.module.value(
   'gmfRasterUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
 
-gmfapp.mobilemeasure.constant('defaultTheme', 'Demo');
-gmfapp.mobilemeasure.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.mobilemeasure.module.constant('defaultTheme', 'Demo');
+gmfapp.mobilemeasure.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

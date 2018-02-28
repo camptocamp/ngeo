@@ -14,7 +14,7 @@ gmfapp.themeselector.module = angular.module('gmfapp', [
 gmfapp.themeselector.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
 
-gmfapp.themeselector.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.themeselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

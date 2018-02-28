@@ -61,8 +61,8 @@ gmfapp.importdatasource.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-gmfapp.importdatasource.constant('defaultTheme', 'Filters');
-gmfapp.importdatasource.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.importdatasource.module.constant('defaultTheme', 'Filters');
+gmfapp.importdatasource.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 gmfapp.importdatasource.MainController = class {

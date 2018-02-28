@@ -33,8 +33,8 @@ gmfapp.wfspermalink.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
-gmfapp.wfspermalink.constant('defaultTheme', 'Demo');
-gmfapp.wfspermalink.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.wfspermalink.module.constant('defaultTheme', 'Demo');
+gmfapp.wfspermalink.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

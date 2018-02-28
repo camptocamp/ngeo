@@ -14,8 +14,8 @@ gmfapp.simple.module = angular.module('gmfapp', [
   gmf.map.component.name,
 ]);
 
-gmfapp.simple.constant('defaultTheme', 'Demo');
-gmfapp.simple.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.simple.module.constant('defaultTheme', 'Demo');
+gmfapp.simple.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

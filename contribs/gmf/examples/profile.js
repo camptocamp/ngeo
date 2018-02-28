@@ -31,8 +31,8 @@ gmfapp.profile.module.value(
   'gmfProfileJsonUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
 
-gmfapp.profile.constant('defaultTheme', 'Demo');
-gmfapp.profile.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.profile.module.constant('defaultTheme', 'Demo');
+gmfapp.profile.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**

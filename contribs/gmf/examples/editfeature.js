@@ -34,8 +34,8 @@ gmfapp.editfeature.module.value(
 gmfapp.editfeature.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
 
-gmfapp.editfeature.constant('defaultTheme', 'Demo');
-gmfapp.editfeature.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+gmfapp.editfeature.module.constant('defaultTheme', 'Demo');
+gmfapp.editfeature.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
