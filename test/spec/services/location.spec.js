@@ -1,5 +1,3 @@
-goog.require('ngeo.statemanager.Location');
-
 describe('ngeo.statemanager.Location', () => {
   let win;
   let ngeoLocation;

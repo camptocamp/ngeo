@@ -1,4 +1,3 @@
-goog.require('gmf.query.windowComponent');
 goog.require('ol.style.Style');
 goog.require('ol.Feature');
 

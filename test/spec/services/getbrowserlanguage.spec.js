@@ -1,5 +1,3 @@
-goog.require('ngeo.misc.getBrowserLanguage');
-
 describe('ngeo.misc.getBrowserLanguage', () => {
   let win;
   let ngeoGetBrowserLanguage;

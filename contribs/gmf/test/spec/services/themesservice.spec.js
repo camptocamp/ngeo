@@ -1,4 +1,3 @@
-goog.require('gmf.theme.Themes');
 goog.require('gmf.test.data.themes');
 goog.require('gmf.test.data.themescapabilities');
 goog.require('ol.events');

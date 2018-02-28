@@ -1,5 +1,3 @@
-goog.require('ngeo.misc.WMSTime');
-
 describe('ngeo.misc.WMSTime service', () => {
   let ngeoWMSTime;
 

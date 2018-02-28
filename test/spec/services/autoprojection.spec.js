@@ -1,4 +1,3 @@
-goog.require('ngeo.misc.AutoProjection');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.proj');
 

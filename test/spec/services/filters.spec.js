@@ -1,5 +1,3 @@
-goog.require('ngeo.misc.filters');
-
 describe('ngeo.misc.filters', () => {
 
   let $filter;
