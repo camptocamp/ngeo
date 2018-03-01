@@ -2,6 +2,7 @@ const path = require('path');
 const ls = require('ls');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const plugins = [];
 const entry = {};
@@ -19,9 +20,18 @@ for (const filename of ls('examples/*.html')) {
       chunksSortMode: 'manual',
       filename: name + '.html',
       chunks: ['commons', name],
-    }),
+    })
   );
 }
+
+// move data folder
+plugins.push(new CopyWebpackPlugin(
+  [{
+    from: 'examples/data/*',
+    to: 'data',
+    flatten: true
+  }]
+));
 
 module.exports = {
   output: {
