@@ -1,7 +1,6 @@
 goog.provide('app.permalink');
 
 // webpack: import './permalink.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.format.FeatureHash');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.debounce');
@@ -19,6 +18,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 app.permalink.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.debounce.name,
   ngeo.statemanager.module.name,

@@ -1,7 +1,6 @@
 goog.provide('app.importfeatures');
 
 // webpack: import './importfeatures.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.filereaderComponent');
@@ -17,6 +16,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 app.importfeatures.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.filereaderComponent.name,
 ]);

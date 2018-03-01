@@ -1,7 +1,6 @@
 goog.provide('app.modifycircle');
 
 // webpack: import './modifycircle.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.format.FeatureProperties');
 goog.require('ngeo.interaction.ModifyCircle');
 goog.require('ol.Map');
@@ -19,6 +18,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 

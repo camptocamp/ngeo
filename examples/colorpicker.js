@@ -1,12 +1,12 @@
 goog.provide('app.colorpicker');
 
 // webpack: import './colorpicker.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.colorpickerComponent');
 
 /** @type {!angular.Module} **/
 app.colorpicker.module = angular.module('app', [
+  'gettext',
   ngeo.misc.colorpickerComponent.name,
 ]);
 

@@ -1,7 +1,6 @@
 goog.provide('app.bboxquery');
 
 // webpack: import './bboxquery.css';
-// webpack: import './common_dependencies.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
@@ -19,6 +18,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} */
 app.bboxquery.module = angular.module('app', [
+  'gettext',
   ngeo.datasource.DataSources.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,

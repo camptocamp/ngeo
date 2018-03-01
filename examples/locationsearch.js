@@ -1,7 +1,6 @@
 goog.provide('app.locationsearch');
 
 // webpack: import './locationsearch.css';
-// webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
 goog.require('ngeo.map.module');
 goog.require('ngeo.search.module');
@@ -14,6 +13,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.search.module.name
 ]);

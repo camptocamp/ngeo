@@ -1,7 +1,6 @@
 goog.provide('app.interactionbtngroup');
 
 // webpack: import './interactionbtngroup.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -20,6 +19,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 app.interactionbtngroup.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
 ]);

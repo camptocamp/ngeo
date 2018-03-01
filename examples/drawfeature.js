@@ -1,7 +1,6 @@
 goog.provide('app.drawfeature');
 
 // webpack: import './drawfeature.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.draw.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.misc.ToolActivate');
@@ -16,6 +15,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 app.drawfeature.module = angular.module('app', [
+  'gettext',
   ngeo.draw.module.name,
   ngeo.map.module.name,
   ngeo.misc.ToolActivateMgr.module.name,

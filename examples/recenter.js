@@ -1,7 +1,6 @@
 goog.provide('app.recenter');
 
 // webpack: import './recenter.css';
-// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -11,6 +10,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 

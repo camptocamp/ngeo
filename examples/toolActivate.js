@@ -1,7 +1,6 @@
 goog.provide('app.toolActivate');
 
 // webpack: import './toolActivate.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.btnComponent');
@@ -22,6 +21,7 @@ goog.require('ol.style.Style');
 
 /** @type {!angular.Module} **/
 app.toolActivate.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,

@@ -1,7 +1,6 @@
 goog.provide('app.scaleselector');
 
 // webpack: import './scaleselector.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.misc.filters');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -12,6 +11,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.scaleselector.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.filters.name,
 ]);

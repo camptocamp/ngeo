@@ -1,7 +1,6 @@
 goog.provide('app.simple');
 
 // webpack: import './simple.css';
-// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -11,6 +10,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.simple.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 

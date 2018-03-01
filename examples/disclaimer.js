@@ -1,7 +1,6 @@
 goog.provide('app.disclaimer');
 
 // webpack: import './disclaimer.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('ngeo.message.Disclaimer');
 goog.require('ngeo.message.Message');
@@ -14,6 +13,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.disclaimer.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.message.Disclaimer.module.name,
 ]);

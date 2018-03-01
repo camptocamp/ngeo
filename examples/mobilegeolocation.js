@@ -1,7 +1,6 @@
 goog.provide('app.mobilegeolocation');
 
 // webpack: import './mobilegeolocation.css';
-// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -16,6 +15,7 @@ goog.require('ngeo.geolocation.mobile');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
+  'gettext',
   ngeo.geolocation.mobile.name,
   ngeo.map.module.name
 ]);

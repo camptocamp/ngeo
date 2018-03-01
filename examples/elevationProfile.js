@@ -1,7 +1,6 @@
 goog.provide('app.elevationProfile');
 
 // webpack: import './elevationProfile.css';
-// webpack: import './common_dependencies.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Feature');
 goog.require('ol.Map');
@@ -18,6 +17,7 @@ goog.require('ngeo.profile.elevationComponent');
 
 /** @type {!angular.Module} **/
 app.elevationProfile.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.profile.elevationComponent.name,
 ]);

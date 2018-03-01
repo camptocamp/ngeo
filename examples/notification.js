@@ -1,7 +1,6 @@
 goog.provide('app.notification');
 
 // webpack: import './notification.css';
-// webpack: import './common_dependencies.js';
 // webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
@@ -9,6 +8,7 @@ goog.require('ngeo.message.Notification');
 
 /** @type {!angular.Module} **/
 app.notification.module = angular.module('app', [
+  'gettext',
   ngeo.message.Notification.module.name,
 ]);
 

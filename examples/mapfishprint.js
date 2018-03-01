@@ -1,7 +1,6 @@
 goog.provide('app.mapfishprint');
 
 // webpack: import './mapfishprint.css';
-// webpack: import './common_dependencies.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
@@ -17,6 +16,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.print.Service.module.name,
   ngeo.print.Utils.modle.name,

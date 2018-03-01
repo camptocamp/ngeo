@@ -1,7 +1,6 @@
 goog.provide('app.animation');
 
 // webpack: import './animation.css';
-// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -11,6 +10,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} */
 app.animation.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 

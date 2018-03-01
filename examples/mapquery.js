@@ -1,7 +1,6 @@
 goog.provide('app.mapquery');
 
 // webpack: import './mapquery.css';
-// webpack: import './common_dependencies.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.datasource.DataSources');
 goog.require('ngeo.datasource.OGC');
@@ -21,6 +20,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 app.mapquery.module = angular.module('app', [
+  'gettext',
   ngeo.datasource.DataSources.module.name,
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,

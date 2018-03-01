@@ -1,7 +1,6 @@
 goog.provide('app.control');
 
 // webpack: import './control.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.map.module');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.controlComponent');
@@ -14,6 +13,7 @@ goog.require('ol.source.OSM');
 
 /** @type {!angular.Module} **/
 app.control.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.controlComponent.name,
 ]);

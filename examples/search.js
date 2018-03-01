@@ -1,7 +1,6 @@
 goog.provide('app.search');
 
 // webpack: import './search.css';
-// webpack: import './common_dependencies.js';
 goog.require('goog.asserts');
 goog.require('ngeo.map.module');
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
@@ -17,6 +16,7 @@ goog.require('ol.source.Vector');
 
 /** @type {!angular.Module} **/
 app.search.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.search.module.name
 ]);

@@ -1,7 +1,6 @@
 goog.provide('app.createfeature');
 
 // webpack: import './createfeature.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.createfeatureComponent');
 goog.require('ngeo.GeometryType');
@@ -21,6 +20,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.createfeature.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.ToolActivateMgr.module.name,

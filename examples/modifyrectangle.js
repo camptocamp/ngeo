@@ -1,7 +1,6 @@
 goog.provide('app.modifyrectangle');
 
 // webpack: import './modifyrectangle.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.ModifyRectangle');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -21,6 +20,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 const module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 
