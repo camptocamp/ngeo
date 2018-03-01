@@ -40,6 +40,11 @@ gmf.module.config(['$animateProvider',
  */
 gmf.baseTemplateUrl = 'gmf';
 
+/**
+ * @const
+ * @export
+ */
+gmf.BACKGROUNDLAYERGROUP_NAME = 'background';
 
 /**
  * @const

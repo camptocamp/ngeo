@@ -136,6 +136,12 @@ app.AlternativeDesktopController = function($scope, $injector, ngeoFile, gettext
   gettextCatalog.getString('Add a layer');
 
   /**
+   * @type {string}
+   * @export
+   */
+  this.bgOpacityOptions = 'Test aus Olten';
+
+  /**
    * @export
    */
   this.importOptions = new app.GmfImportHelper(this.map, $scope, gettext, ngeoFile, $q).createOptions();

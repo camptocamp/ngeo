@@ -4,6 +4,7 @@ goog.provide('ngeo.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
 goog.require('ngeo');
+goog.require('ngeo.LayerHelper');
 goog.require('ol.Observable');
 goog.require('ol.events');
 goog.require('ol.source.ImageWMS');
@@ -91,10 +92,12 @@ ol.inherits(ngeo.BackgroundEvent, ol.events.Event);
  * @extends {ol.Observable}
  * @constructor
  * @struct
+ * @param {ngeo.LayerHelper} ngeoLayerHelper Themes service.
+ * @ngInject
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
  */
-ngeo.BackgroundLayerMgr = function() {
+ngeo.BackgroundLayerMgr = function(ngeoLayerHelper) {
 
   ol.Observable.call(this);
 
@@ -104,6 +107,12 @@ ngeo.BackgroundLayerMgr = function() {
    * @private
    */
   this.mapUids_ = {};
+
+  /**
+   * @type {ngeo.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
 };
 ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
 
@@ -117,7 +126,7 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
   const mapUid = ol.getUid(map).toString();
-  return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
 };
 
 
@@ -132,22 +141,57 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   const mapUid = ol.getUid(map).toString();
   const previous = this.get(map);
+  if (layer !== null) {
+    layer.setZIndex(-200);
+  }
+
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
+
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
     if (layer !== null) {
-      map.getLayers().setAt(0, layer);
+      bgGroup.getLayers().setAt(0, layer);
     } else {
-      map.getLayers().removeAt(0);
+      bgGroup.getLayers().removeAt(0);
       delete this.mapUids_[mapUid];
     }
   } else if (layer !== null) {
-    map.getLayers().insertAt(0, layer);
+    bgGroup.getLayers().insertAt(0, layer);
     this.mapUids_[mapUid] = true;
   }
 
   this.dispatchEvent(new ngeo.BackgroundEvent(ngeo.BackgroundEventType.CHANGE,
     layer, previous));
   return previous;
+};
+
+/**
+ * Return the current background layer overlay of a given map, used by the opacity slider.
+ * `null` is returned if the map does not have an opacity background layer.
+ * @param {ol.Map} map Map.
+ * @return {ol.layer.Base} layer The opacity background layer.
+ * @export
+ */
+ngeo.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
+  const mapUid = ol.getUid(map).toString();
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+};
+
+/**
+ * Set an background layer overlay, used by the opacity slider.
+ * @param {ol.Map} map The map.
+ * @param {ol.layer.Base} layer The opacity background layer.
+ */
+ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
+  layer.setOpacity(0);
+  layer.setZIndex(-100);
+  layer.setVisible(true);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
+
+  const index = bgGroup.getLayers().getArray().indexOf(layer);
+  if (index === -1) {
+    bgGroup.getLayers().push(layer);
+  }
 };
 
 /**
