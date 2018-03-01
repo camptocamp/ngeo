@@ -10,7 +10,7 @@
     role="tablist">
 
     <li
-      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id"
+      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.label"
       role="presentation"
       ng-class="{'active' : ctrl.isSelected(gridSource)}"
       ng-click="ctrl.selectTab(gridSource)">
@@ -34,7 +34,7 @@
 
   <div class="tab-content">
     <div
-      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.id"
+      ng-repeat="gridSource in ctrl.getGridSources() track by gridSource.source.label"
       role="tabpanel"
       class="tab-pane"
       ng-class="{'active' : ctrl.isSelected(gridSource)}"
