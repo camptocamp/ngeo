@@ -141,7 +141,9 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
   const mapUid = ol.getUid(map).toString();
   const previous = this.get(map);
-  layer.setZIndex(-200);
+  if (layer !== null) {
+    layer.setZIndex(-200);
+  }
 
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
 
