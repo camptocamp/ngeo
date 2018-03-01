@@ -37,9 +37,11 @@ page.onAlert = function(msg) {
 };
 page.onResourceError = function(resourceError) {
   if (resourceError.url.includes('tile.openstreetmap.org')) {
-    console.warn('Ignoring ressource error from openstreetmap');
+    console.warn('Ignoring ressource error from OpenStreetMap');
   } else if (resourceError.url.includes('https://maps.googleapis.com/maps/api/js')) {
-    console.warn('Ignoring ressource error from google');
+    console.warn('Ignoring ressource error from Google');
+  } else if (resourceError.url.includes('https://csi.gstatic.com/')) {
+    console.warn('Ignoring ressource error from Google static');
   } else {
     console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
     exitCode = 2;
