@@ -1,5 +1,6 @@
 goog.provide('ngeo.message.Disclaimer');
 
+// webpack: import 'bootstrap/js/alert.js';
 goog.require('goog.asserts');
 goog.require('ngeo.message.Popup');
 goog.require('ngeo.message.Message');
