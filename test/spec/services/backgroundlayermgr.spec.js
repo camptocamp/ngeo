@@ -55,6 +55,52 @@ describe('ngeo.BackgroundLayerMgr', () => {
       expect(bgGroup.getLayers().item(1)).toBe(layer2);
     });
 
+    it('sets the ZINdex on active background layergroup', () => {
+      const layer1 = new ol.layer.Tile();
+      const layer2 = new ol.layer.Tile();
+      const group = new ol.layer.Group();
+      const collection = new ol.Collection();
+
+      collection.push(layer1);
+      collection.push(layer2);
+      group.setLayers(collection);
+
+      ngeoBackgroundLayerMgr.set(map, group);
+      const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
+      const bgGroupLayers = bgGroup.getLayers().item(0).getLayers();
+
+      // We don't set ZIndex on the group, as OL is
+      // just ordering it without regard it is group or layer
+      expect(bgGroup.getZIndex()).toBe(0);
+
+      // As we just set the layers ZIndex, this is where it is expected
+      expect(bgGroupLayers.item(0).getZIndex()).toBe(-200);
+      expect(bgGroupLayers.item(1).getZIndex()).toBe(-200);
+    });
+
+    it('sets the ZINdex on overlay background layergroup', () => {
+      const layer1 = new ol.layer.Tile();
+      const layer2 = new ol.layer.Tile();
+      const group = new ol.layer.Group();
+      const collection = new ol.Collection();
+
+      collection.push(layer1);
+      collection.push(layer2);
+      group.setLayers(collection);
+
+      ngeoBackgroundLayerMgr.setOpacityBgLayer(map, group);
+      const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
+      const bgGroupLayers = bgGroup.getLayers().item(0).getLayers();
+
+      // We don't set ZIndex on the group, as OL is
+      // just ordering it without regard it is group or layer
+      expect(bgGroup.getZIndex()).toBe(0);
+
+      // As we just set the layers ZIndex, this is where it is expected
+      expect(bgGroupLayers.item(0).getZIndex()).toBe(-100);
+      expect(bgGroupLayers.item(1).getZIndex()).toBe(-100);
+    });
+
     it('unsets the background layer', () => {
       const layer = new ol.layer.Tile();
       ngeoBackgroundLayerMgr.set(map, layer);
