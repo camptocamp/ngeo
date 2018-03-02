@@ -17,6 +17,7 @@ const loaderOptionsPlugin = new webpack.LoaderOptionsPlugin({
 
 
 module.exports = {
+  mode: 'development',
   output: {
     filename: '[name].js'
   },

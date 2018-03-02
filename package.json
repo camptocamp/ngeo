@@ -52,7 +52,7 @@
     "eslint-config-openlayers": "9.0.0",
     "eslint-plugin-googshift": "0.9.3",
     "expose-loader": "0.7.4",
-    "extract-text-webpack-plugin": "3.0.2",
+    "extract-text-webpack-plugin": "4.0.0-alpha.0",
     "file-loader": "1.1.10",
     "file-saver": "1.3.3",
     "floatthead": "2.1.1",
@@ -101,7 +101,8 @@
     "url-loader": "0.6.2",
     "url-polyfill": "1.0.11",
     "walk": "2.3.9",
-    "webpack": "3.11.0",
+    "webpack": "4.0.1",
+    "webpack-cli": "2.0.8",
     "webpack-merge": "4.1.2"
   },
   "dependencies": {}
