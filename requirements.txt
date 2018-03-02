@@ -5,5 +5,5 @@ Mako==1.0.7
 pip==9.0.1
 requests==2.18.4
 setuptools==38.5.1
-transifex-client==0.12.5  # rq.filter: !=0.13.0
+transifex-client==0.13.1  # rq.filter: !=0.13.0
 urllib3==1.22
