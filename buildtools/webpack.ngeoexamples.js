@@ -26,11 +26,18 @@ for (const filename of ls('examples/*.html')) {
 
 // move data folder
 plugins.push(new CopyWebpackPlugin(
-  [{
-    from: 'examples/data/*',
-    to: 'data',
-    flatten: true
-  }]
+  [
+    {
+      from: 'examples/data/*',
+      to: 'data',
+      flatten: true
+    },
+    {
+      from: 'examples/partials/*',
+      to: 'partials',
+      flatten: true
+    }
+  ]
 ));
 
 module.exports = {
