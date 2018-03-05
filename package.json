@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
-    "@camptocamp/cesium": "1.41.0",
+    "@camptocamp/cesium": "1.43.0",
     "@camptocamp/closure-util": "1.27.0",
     "angular": "1.6.9",
     "angular-animate": "1.6.9",
