@@ -91,6 +91,7 @@
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",
     "proj4": "2.4.4",
+    "rollup-plugin-commonjs": "8.2.6",
     "serve": "6.5.1",
     "svg2ttf": "4.1.0",
     "temp": "0.8.3",
