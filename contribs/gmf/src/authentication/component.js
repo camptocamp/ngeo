@@ -6,7 +6,6 @@ goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
-goog.require('ol.events');
 
 
 /**
@@ -72,9 +71,9 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
  *     show the password forgotten link. Default to true.
  * @htmlAttribute {boolean|function} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true. You can also specify a gmfx.passwordValidator Object
+ *     show the change password button. Default to true. You can also specify a gmfx.PasswordValidator Object
  *     to add constraint on user's new password.
- * @htmlAttribute {gmfx.PasswordValidator} gmf-authentication-password-validator A gmfx.passwordValidator
+ * @htmlAttribute {gmfx.PasswordValidator} gmf-authentication-password-validator A gmfx.PasswordValidator
  *     Object to add constraint on user's new password. The gmf-authentication-allow-password-change. To use
  *     it you must also allow the user to change its password.
  * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
@@ -181,7 +180,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.allowPasswordChange;
 
     /**
-     * @type {gmfx.passwordValidator?}
+     * @type {gmfx.PasswordValidator?}
      * @export
      */
     this.passwordValidator = null;
