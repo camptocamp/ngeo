@@ -210,13 +210,12 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
 
   gmf.controllers.AbstractAppController.call(this, config, $scope, $injector);
 
-  // close the login panel on successful login
+  // Close the login panel on successful login.
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
     if (newVal !== null && this.loginActive) {
       this.loginActive = false;
     }
   });
-
 };
 ol.inherits(gmf.controllers.AbstractDesktopController, gmf.controllers.AbstractAppController);
 

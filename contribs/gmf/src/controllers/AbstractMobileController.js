@@ -127,6 +127,13 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
 
   this.manageResize = true;
   this.resizeTransition = 500;
+
+  // Close right nave on successful login.
+  $scope.$watch(() => this.gmfUser.username, (newVal) => {
+    if (newVal !== null && this.navIsVisible()) {
+      this.rightNavVisible = false;
+    }
+  });
 };
 ol.inherits(gmf.controllers.AbstractMobileController, gmf.controllers.AbstractAppController);
 
@@ -192,6 +199,22 @@ gmf.controllers.AbstractMobileController.prototype.leftNavIsVisible = function()
  */
 gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
+};
+
+
+/**
+ * Open the menu with corresponding to the data-target attribute value.
+ * @param {string} target the data-target value.
+ * @export
+ */
+gmf.controllers.AbstractMobileController.prototype.openNavMenu = function(target) {
+  const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
+  for (const key in navElements) {
+    const element = navElements[key];
+    if (element.dataset && element.dataset.target === target) {
+      element.click();
+    }
+  }
 };
 
 

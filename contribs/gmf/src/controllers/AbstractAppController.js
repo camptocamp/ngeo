@@ -309,13 +309,6 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    */
   this.gmfUser = $injector.get('gmfUser');
 
-  // close right nave on successful login
-  $scope.$watch(() => this.gmfUser.username, (newVal) => {
-    if (newVal !== null && this.navIsVisible) {
-      this.rightNavVisible = false;
-    }
-  });
-
   /**
    * @type {ngeox.miscGetBrowserLanguage}
    */
@@ -581,6 +574,16 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    * @export
    */
   this.displaywindowWidth = null;
+};
+
+
+/**
+ * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitely set
+ *     to false.
+ * @export
+ */
+gmf.controllers.AbstractAppController.prototype.userMustChangeItsPassword = function() {
+  return this.gmfUser.is_password_changed === false;
 };
 
 

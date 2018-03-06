@@ -38,6 +38,8 @@ ngeo.message.modalComponent = angular.module('ngeoModal', []);
  *
  * @htmlAttribute {boolean} ngeo-modal-resizable Whether the modal can be
  *     resized or not. Defaults to `false`.
+ * @htmlAttribute {boolean} ngeo-modal-closable Whether the modal can be
+ *     closed by clicking outside it or by hiting the `escape` keyboard key. Defaults to `true`.
  * @ngdoc component
  * @ngname ngeoModal
  * @type {!angular.Component}
@@ -56,7 +58,8 @@ ngeo.message.modalComponent.component_ = {
   transclude: true,
   controller: 'ngeoModalController',
   bindings: {
-    'resizable': '<ngeoModalResizable'
+    'resizable': '<ngeoModalResizable',
+    'closable': '<ngeoModalClosable'
   }
 };
 
@@ -91,6 +94,12 @@ ngeo.message.modalComponent.Controller_ = class {
      * @export
      * @type {boolean}
      */
+    this.closable = true;
+
+    /**
+     * @export
+     * @type {boolean}
+     */
     this.resizable;
 
     /**
@@ -101,7 +110,13 @@ ngeo.message.modalComponent.Controller_ = class {
   }
 
   $onInit() {
+
     this.modal_ = this.$element_.children();
+
+    if (this.closable === false) {
+      this.modal_.attr('data-keyboard', false);
+      this.modal_.attr('data-backdrop', 'static');
+    }
 
     this.resizable = !!this.resizable;
 
@@ -118,9 +133,7 @@ ngeo.message.modalComponent.Controller_ = class {
     this.modal_.on('shown.bs.modal hidden.bs.modal', (e) => {
       const type = e.type;
       goog.asserts.assert(type == 'shown' || type == 'hidden');
-      this.$scope_.$apply(() => {
-        this.ngModel.$setViewValue(type == 'shown');
-      });
+      this.ngModel.$setViewValue(type == 'shown');
     });
   }
 

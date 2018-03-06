@@ -21,11 +21,12 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
 
   /**
    * @param {angular.$http} $http Angular http service.
+   * @param {angular.Scope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {gmfx.User} gmfUser User.
    * @ngInject
    */
-  constructor($http, authenticationBaseUrl, gmfUser) {
+  constructor($http, $rootScope, authenticationBaseUrl, gmfUser) {
 
     super();
 
@@ -34,6 +35,12 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
      * @private
      */
     this.$http_ = $http;
+
+    /**
+     * @type {angular.Scope}
+     * @private
+     */
+    this.$rootScope_ = $rootScope;
 
     /**
      * The authentication url without trailing slash
@@ -80,7 +87,10 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
     }), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       withCredentials: true
-    });
+    }).then(((response) => {
+      this.user_.is_password_changed = true;
+      this.$rootScope_.$digest();
+    }).bind(this));
   }
 
   /**

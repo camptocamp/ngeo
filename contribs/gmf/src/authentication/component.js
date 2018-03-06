@@ -71,11 +71,36 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *
  * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
  *     show the password forgotten link. Default to true.
- * @htmlAttribute {boolean} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true.
+ * @htmlAttribute {boolean|function} gmf-authentication-allow-password-change Whether to
+ *     show the change password button. Default to true. You can also specify a gmfx.passwordValidator Object
+ *     to add constraint on user's new password.
+ * @htmlAttribute {gmfx.PasswordValidator} gmf-authentication-password-validator A gmfx.passwordValidator
+ *     Object to add constraint on user's new password. The gmf-authentication-allow-password-change. To use
+ *     it you must also allow the user to change its password.
  * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
  *     user to change its password. Default to false. If you set it to true, you
- *     should also allow the user to change its password.
+ *     should also allow the user to change its password. Don't add this option alone, use
+ *     it in a dedicated authentication component, in a ngeo-modal, directly in
+ *     your index.html (see example 2.)
+ *
+ * Example 2:
+ *
+ *     <ngeo-modal
+ *         ngeo-modal-closable="false"
+ *         ng-model="mainCtrl.userMustChangeItsPassword()"
+ *         ng-model-options="{getterSetter: true}">
+ *       <div class="modal-header">
+ *         <h4 class="modal-title">
+ *           {{'You must change your password' | translate}}
+ *         </h4>
+ *       </div>
+ *       <div class="modal-body" translate>
+ *         <gmf-authentication
+ *           gmf-authentication-force-password-change="::true">
+ *         </gmf-authentication>
+ *       </div>
+ *     </ngeo-modal>
+ *
  * @ngdoc component
  * @ngname gmfAuthentication
  */
@@ -83,6 +108,7 @@ gmf.authentication.component.component_ = {
   bindings: {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
+    'passwordValidator': '<?gmfAuthenticationPasswordValidator',
     'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange'
   },
   controller: 'GmfAuthenticationController',
@@ -101,8 +127,8 @@ gmf.authentication.component.component('gmfAuthentication', gmf.authentication.c
 gmf.authentication.component.AuthenticationController_ = class {
   /**
    * @private
+   * @param {!angular.JQLite} $element Element.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
-   * @param {angular.Scope} $scope The directive's scope.
    * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -110,19 +136,19 @@ gmf.authentication.component.AuthenticationController_ = class {
    * @ngdoc controller
    * @ngname GmfAuthenticationController
    */
-  constructor(gettextCatalog, $scope, gmfAuthenticationService, gmfUser, ngeoNotification) {
+  constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
+
+    /**
+     * @type {!angular.JQLite}
+     * @private
+     */
+    this.$element_ = $element;
 
     /**
      * @type {gmfx.User}
      * @export
      */
     this.gmfUser = gmfUser;
-
-    /**
-     * @type {angular.Scope}
-     * @private
-     */
-    this.$scope_ = $scope;
 
     /**
      * @type {angularGettext.Catalog}
@@ -153,6 +179,12 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @export
      */
     this.allowPasswordChange;
+
+    /**
+     * @type {gmfx.passwordValidator?}
+     * @export
+     */
+    this.passwordValidator = null;
 
     /**
      * @type {boolean}
@@ -217,8 +249,6 @@ gmf.authentication.component.AuthenticationController_ = class {
      * @export
      */
     this.newPwdConfVal = '';
-
-    ol.events.listen(gmfAuthenticationService, 'ready', this.onUserChange_.bind(this));
   }
 
   /**
@@ -228,6 +258,9 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.allowPasswordReset = this.allowPasswordReset !== false;
     this.allowPasswordChange = this.allowPasswordChange !== false;
     this.forcePasswordChange = this.forcePasswordChange === true;
+    if (this.forcePasswordChange) {
+      this.changingPassword = true;
+    }
   }
 
 
@@ -245,7 +278,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     const confPwd = this.newPwdConfVal;
 
     const errors = [];
-    // (1) validation - passwords are required
+    // Validation - Passwords are required.
     if (oldPwd === '') {
       errors.push(gettextCatalog.getString('The old password is required.'));
     }
@@ -259,19 +292,24 @@ gmf.authentication.component.AuthenticationController_ = class {
     if (errors.length) {
       this.setError_(errors);
     } else {
-      // (2) validation - passwords must be new and must also match
+      // Default validation - Passwords must be new and must also match.
       if (oldPwd === newPwd) {
         errors.push(gettextCatalog.getString('The old and new passwords are the same.'));
       }
       if (newPwd !== confPwd) {
         errors.push(gettextCatalog.getString('The passwords don\'t match.'));
       }
+      // Custom validation - If a passwordValidator is set, use it to validate the new password.
+      if (this.passwordValidator) {
+        if (!this.passwordValidator.isPasswordValid(oldPwd)) {
+          errors.push(gettextCatalog.getString(this.passwordValidator.notValidMessage));
+        }
+      }
 
       if (errors.length) {
         this.setError_(errors);
       } else {
-        // (3) send request with current credentials, which may fail if
-        //     the old password given is incorrect.
+        // Send request with current credentials, which may fail if the old password given is incorrect.
         const error = gettextCatalog.getString('Incorrect old password.');
         this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd).then(
           () => {
@@ -302,10 +340,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     } else {
       const error = gettextCatalog.getString('Incorrect username or password.');
       this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal).then(
-        () => {
-          this.resetError_();
-          this.onUserChange_();
-        },
+        this.resetError_.bind(this),
         this.setError_.bind(this, error));
     }
   }
@@ -365,21 +400,14 @@ gmf.authentication.component.AuthenticationController_ = class {
     this.newPwdConfVal = '';
   }
 
-
   /**
-   * @private
+   * @return {boolean} True if the user must change is password and if the "forcePasswordChange" option of
+   *    this component is set to true.
+   * @export
    */
-  onUserChange_() {
-    if (this.gmfUser.is_password_changed === false && this.forcePasswordChange) {
-      const gettextCatalog = this.gettextCatalog;
-      const msg = gettextCatalog.getString('You must change your password.');
-      this.notification_.notify({
-        msg: msg,
-        type: ngeo.message.Message.Type.WARNING
-      });
-    }
+  userMustChangeItsPassword() {
+    return (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
   }
-
 
   /**
    * @param {string|Array.<string>} errors Errors.
@@ -392,7 +420,7 @@ gmf.authentication.component.AuthenticationController_ = class {
 
     this.error = true;
 
-    const container = angular.element('.gmf-authentication-error');
+    const container = this.$element_.find('.gmf-authentication-error');
 
     if (!Array.isArray(errors)) {
       errors = [errors];
