@@ -6,7 +6,6 @@ goog.require('ngeo.message.Message');
 goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
-goog.require('ol.events');
 
 
 /**
