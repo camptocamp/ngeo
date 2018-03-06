@@ -209,8 +209,8 @@ gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function(
  */
 gmf.controllers.AbstractMobileController.prototype.openNavMenu = function(target) {
   const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
-  for (const key in navElements) {
-    const element = navElements[key];
+  for (let i = 0; i < navElements.length; i++) {
+    const element = navElements[i];
     if (element.dataset && element.dataset.target === target) {
       element.click();
     }
