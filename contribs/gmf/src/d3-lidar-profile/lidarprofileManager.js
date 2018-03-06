@@ -281,7 +281,7 @@ gmf.lidarProfile.Manager = class {
     }
 
     const pointCloudName = this.config.serverConfig.default_point_cloud;
-    const hurl = `${this.config.pytreeLidarProfileJsonUrl}/get_profile?minLOD=${minLOD}
+    const hurl = `${this.config.pytreeLidarProfileJsonUrl}profile/get?minLOD=${minLOD}
       &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes='`;
 
     this.$http.get(hurl, {

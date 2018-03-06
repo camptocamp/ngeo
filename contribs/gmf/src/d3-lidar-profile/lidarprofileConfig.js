@@ -65,7 +65,7 @@ gmf.lidarProfile.Config = class {
    * @export
    */
   initProfileConfig() {
-    return this.$http_.get(`${this.pytreeLidarProfileJsonUrl}/profile_config_gmf2`).then((resp) => {
+    return this.$http_.get(`${this.pytreeLidarProfileJsonUrl}/profile/config`).then((resp) => {
 
       this.serverConfig = /** @type {lidarProfileServer.Config} */ ({
         classification_colors: resp.data['classification_colors'] || null,
