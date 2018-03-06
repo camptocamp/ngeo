@@ -1,5 +1,6 @@
 goog.provide('ngeo.misc.sortableComponent');
 
+// webpack: import 'jquery-ui/ui/widgets/sortable.js';
 goog.require('goog.asserts');
 
 

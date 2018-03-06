@@ -17,7 +17,7 @@ goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', [
+const appmodule = angular.module('app', [
   'gettext',
   ngeo.map.module.name
 ]);
@@ -93,4 +93,4 @@ app.modifycircle.MainController = function() {
 };
 
 
-module.controller('MainController', app.modifycircle.MainController);
+appmodule.controller('MainController', app.modifycircle.MainController);

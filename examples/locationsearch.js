@@ -12,7 +12,7 @@ goog.require('ol.source.OSM');
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', [
+const appmodule = angular.module('app', [
   'gettext',
   ngeo.map.module.name,
   ngeo.search.module.name
@@ -35,7 +35,7 @@ app.locationsearch.locationSearchComponent = {
 };
 
 
-module.component('appLocationSearch', app.locationsearch.locationSearchComponent);
+appmodule.component('appLocationSearch', app.locationsearch.locationSearchComponent);
 
 
 /**
@@ -140,7 +140,7 @@ app.locationsearch.SearchController.select_ = function(event, suggestion, datase
 };
 
 
-module.controller('AppSearchController', app.locationsearch.SearchController);
+appmodule.controller('AppSearchController', app.locationsearch.SearchController);
 
 
 /**
@@ -167,4 +167,4 @@ app.locationsearch.MainController = function() {
 };
 
 
-module.controller('MainController', app.locationsearch.MainController);
+appmodule.controller('MainController', app.locationsearch.MainController);

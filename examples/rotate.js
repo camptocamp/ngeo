@@ -27,7 +27,7 @@ app.rotate.module = angular.module('app', [
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', ['ngeo']);
+const appmodule = angular.module('app', ['ngeo']);
 
 
 /**
@@ -144,4 +144,4 @@ app.rotate.MainController = function() {
 };
 
 
-module.controller('MainController', app.rotate.MainController);
+appmodule.controller('MainController', app.rotate.MainController);

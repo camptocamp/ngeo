@@ -19,7 +19,7 @@ goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', [
+const appmodule = angular.module('app', [
   'gettext',
   ngeo.map.module.name
 ]);
@@ -136,4 +136,4 @@ app.modifyrectangle.MainController = function() {
 };
 
 
-module.controller('MainController', app.modifyrectangle.MainController);
+appmodule.controller('MainController', app.modifyrectangle.MainController);

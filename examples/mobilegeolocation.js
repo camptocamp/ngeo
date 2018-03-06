@@ -14,7 +14,7 @@ goog.require('ngeo.geolocation.mobile');
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', [
+const appmodule = angular.module('app', [
   'gettext',
   ngeo.geolocation.mobile.name,
   ngeo.map.module.name
@@ -74,4 +74,4 @@ app.mobilegeolocation.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-module.controller('MainController', app.mobilegeolocation.MainController);
+appmodule.controller('MainController', app.mobilegeolocation.MainController);

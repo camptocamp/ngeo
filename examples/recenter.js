@@ -9,7 +9,7 @@ goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', [
+const appmodule = angular.module('app', [
   'gettext',
   ngeo.map.module.name
 ]);
@@ -39,4 +39,4 @@ app.recenter.MainController = function() {
 };
 
 
-module.controller('MainController', app.recenter.MainController);
+appmodule.controller('MainController', app.recenter.MainController);
