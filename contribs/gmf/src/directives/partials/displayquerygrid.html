@@ -16,9 +16,9 @@
       ng-click="ctrl.selectTab(gridSource)">
 
       <a
-        href="#{{gridSource.source.id}}"
-        data-target="#{{gridSource.source.id}}"
-        aria-controls="{{gridSource.source.id}}"
+        href="#{{ctrl.escapeValue(gridSource.source.label)}}"
+        data-target="#{{ctrl.escapeValue(gridSource.source.label)}}"
+        aria-controls="{{ctrl.escapeValue(gridSource.source.label)}}"
         role="tab"
         data-toggle="tab">
 
@@ -38,7 +38,7 @@
       role="tabpanel"
       class="tab-pane"
       ng-class="{'active' : ctrl.isSelected(gridSource)}"
-      id="{{gridSource.source.id}}">
+      id="{{ctrl.escapeValue(gridSource.source.label)}}">
 
       <ngeo-grid
         ngeo-grid-configuration="gridSource.configuration"
