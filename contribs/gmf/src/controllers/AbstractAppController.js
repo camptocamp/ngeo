@@ -452,13 +452,14 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {number=} opt_width CSS width.
    * @param {number=} opt_height CSS height.
+   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    * @export
    */
   gmfx.openIframePopup = (
-    url, title, opt_width, opt_height
+    url, title, opt_width, opt_height, opt_apply
   ) => {
     this.displaywindowUrl = url;
-    gmfx.openPopup_(title, opt_width, opt_height);
+    gmfx.openPopup_(title, opt_width, opt_height, opt_apply);
   };
 
   /**
@@ -467,21 +468,23 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {number=} opt_width CSS width in pixel.
    * @param {number=} opt_height CSS height in pixel.
+   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    * @export
    */
   gmfx.openTextPopup = (
-    content, title, opt_width, opt_height
+    content, title, opt_width, opt_height, opt_apply
   ) => {
     this.displaywindowContent = content;
-    gmfx.openPopup_(title, opt_width, opt_height);
+    gmfx.openPopup_(title, opt_width, opt_height, opt_apply);
   };
 
   /**
    * @param {string} title (text).
    * @param {number=} opt_width CSS width in pixel.
    * @param {number=} opt_height CSS height in pixel.
+   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
-  gmfx.openPopup_ = (title, opt_width, opt_height) => {
+  gmfx.openPopup_ = (title, opt_width, opt_height, opt_apply) => {
 
     this.displaywindowTitle = title;
     this.displaywindowOpen = true;
@@ -492,8 +495,9 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
     if (opt_height) {
       this.displaywindowHeight = `${opt_height}px`;
     }
-
-    this.$scope.$apply();
+    if (opt_apply !== false) {
+      this.$scope.$apply();
+    }
   };
 
   /**
@@ -527,10 +531,11 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    * @param {string} title (text).
    * @param {number=} opt_width CSS width in pixel.
    * @param {number=} opt_height CSS height in pixel.
+   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    * @export
    */
-  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height) {
-    gmfx.openIframePopup(url, title, opt_width, opt_height);
+  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height, opt_apply) {
+    gmfx.openIframePopup(url, title, opt_width, opt_height, opt_apply);
   };
 
   /**

@@ -178,14 +178,14 @@ ngeo.message.displaywindowComponent.Controller_ = class {
 
     // Draggable
     if (this.draggable) {
-      this.element_.find('.ngeo-displaywindow-container').draggable({
+      this.element_.find('.ngeo-displaywindow .container').draggable({
         'containment': this.draggableContainment
       });
     }
 
     // Resizable
     if (this.resizable) {
-      this.element_.find('.ngeo-displaywindow-container').resizable({
+      this.element_.find('.ngeo-displaywindow .container').resizable({
         'minHeight': 240,
         'minWidth': 240
       });

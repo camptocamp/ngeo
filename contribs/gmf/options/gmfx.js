@@ -654,6 +654,7 @@ gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 gmfx.openIframePopup;
 
@@ -664,6 +665,7 @@ gmfx.openIframePopup;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 gmfx.openTextPopup;
 
@@ -771,6 +773,7 @@ cgxp.tools;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 cgxp.tools.openInfoWindow;
 
@@ -780,6 +783,7 @@ cgxp.tools.openInfoWindow;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 gmfx.openPopup_
 

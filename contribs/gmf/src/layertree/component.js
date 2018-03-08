@@ -15,10 +15,6 @@ goog.require('ngeo.datasource.OGC');
 goog.require('ngeo.layertree.component');
 goog.require('ngeo.layertree.Controller');
 goog.require('ngeo.map.LayerHelper');
-/** @suppress {extraRequire} */
-goog.require('ngeo.message.Popup');
-/** @suppress {extraRequire} */
-goog.require('ngeo.message.popupComponent');
 goog.require('ngeo.misc.syncArrays');
 goog.require('ngeo.misc.WMSTime');
 goog.require('ol.layer.Tile');
@@ -43,8 +39,6 @@ gmf.layertree.component = angular.module('gmfLayertreeComponent', [
   ngeo.layertree.component.name,
   ngeo.layertree.Controller.module.name,
   ngeo.map.LayerHelper.module.name,
-  ngeo.message.Popup.module.name,
-  ngeo.message.popupComponent.name,
   ngeo.misc.WMSTime.module.name,
 ]);
 
@@ -114,7 +108,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *
  * You can add an attribute 'gmf-layertree-openlinksinnewwindow="::true"' to open
  * metadata URLs in a new window. By default, and in the default template,
- * links will be opened in a popup.
+ * links will be opened in a popup (The window.gmfx.openIframePopup function must be available !)
  *
  * Used UI metadata:
  *
@@ -138,7 +132,7 @@ gmf.layertree.component.component_ = {
   bindings: {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
-    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow'
+    'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
   },
   template: gmfLayertreeTemplate
 };
@@ -149,7 +143,6 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
 /**
  * @param {angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
@@ -169,10 +162,8 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.layertree.component.Controller_ = function($element, $scope,
-  ngeoCreatePopup, ngeoLayerHelper, gmfDataSourceBeingFiltered,
-  gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager,
-  gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
+gmf.layertree.component.Controller_ = function($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltered,
+  gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
 
   /**
    * @type {?ol.Map}
@@ -242,12 +233,6 @@ gmf.layertree.component.Controller_ = function($element, $scope,
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
-
-  /**
-   * @private
-   * @type {!ngeo.message.Popup}
-   */
-  this.infoPopup_ = ngeoCreatePopup();
 
   /**
    * @type {!Object.<number, !Array.<string>>}
@@ -586,7 +571,7 @@ gmf.layertree.component.Controller_.prototype.getScale_ = function() {
 
 
 /**
- * Display a ngeo.infoPopup with the content of the metadata url of a node.
+ * Opens a gmfx.openIframePopup with the content of the metadata url of a node.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
@@ -595,9 +580,11 @@ gmf.layertree.component.Controller_.prototype.displayMetadata = function(treeCtr
   const node = treeCtrl.node;
   const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
-    this.infoPopup_.setTitle(node.name);
-    this.infoPopup_.setUrl(metadataURL);
-    this.infoPopup_.setOpen(true);
+    // FIXME layertree should not rely on a window function.
+    const gmfx = window.gmfx;
+    if (gmfx.openIframePopup) {
+      gmfx.openIframePopup(metadataURL, node.name, undefined, undefined, false);
+    }
   }
 };
 
