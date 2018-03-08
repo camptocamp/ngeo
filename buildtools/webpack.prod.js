@@ -57,6 +57,9 @@ module.exports = {
   output: {
     filename: '[name].[chunkhash:20].js'
   },
+  plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
+  ],
   module: {
     rules: [
       resourcesRule,
