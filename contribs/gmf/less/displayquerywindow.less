@@ -4,13 +4,31 @@
 @displayquerywindow-detailed-header-height: 5rem;
 @displayquerywindow-detailed-details-line-height: 2rem;
 @displayquerywindow-detailed-details-height: 8 * @displayquerywindow-detailed-details-line-height;
+
+.gmf-displayquerywindow {
+  .details {
+    display: none;
+  }
+  .animation-container {
+    // height with 2em: 1em per text (title, subtitle)
+    height: calc(4 * @app-margin + @half-app-margin + @map-tools-size ~"+ 2em");
+  }
+}
+
+.ngeo-displaywindow {
+  .animation-container {
+    height: 100%;
+    width: 100%;
+  }
+}
+
 .gmf-displayquerywindow, .ngeo-displaywindow {
-  width: @displayquerywindow-tablet-width;
-  max-width: @displayquerywindow-tablet-width;
-  margin-left: -@displayquerywindow-tablet-width / 2;
   right: @app-margin + @map-tools-size + @app-margin;
   left: initial;
   bottom: @app-margin;
+  width: @displayquerywindow-tablet-width;
+  max-width: @displayquerywindow-tablet-width;
+  margin-left: -@displayquerywindow-tablet-width / 2;
   max-height: 10 * @map-tools-size;
   position: fixed;
   z-index: @above-menus-index;
@@ -29,17 +47,16 @@
   .collapse-button-down::after {
     content: @fa-var-chevron-down;
   }
-  .gmf-displayquerywindow-container {
+  .windowcontainer {
     background-color: @nav-bg;
     border: solid 1px @border-color;
     position: relative;
+    height: 100%;
     width: 100%;
   }
   .animation-container {
     position: relative;
     overflow: hidden;
-    // height with 2em: 1em per text (title, subtitle)
-    height: calc(4 * @app-margin + @half-app-margin + @map-tools-size ~"+ 2em");
     margin: 0;
     transition: 0.3s ease-in all;
     .slide-animation {
@@ -98,7 +115,6 @@
     font-weight: bold;
   }
   .details {
-    display: none;
     flex: 1;
     line-height: @displayquerywindow-detailed-details-line-height;
     overflow-x: hidden;
@@ -178,8 +194,8 @@
     }
   }
   &.desktop {
-    .gmf-displayquerywindow-container {
-      height: 24rem
+    .windowcontainer {
+      height: 24rem;
     }
   }
 }

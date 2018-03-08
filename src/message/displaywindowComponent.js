@@ -178,14 +178,14 @@ ngeo.message.displaywindowComponent.Controller_ = class {
 
     // Draggable
     if (this.draggable) {
-      this.element_.find('.ngeo-displaywindow .container').draggable({
+      this.element_.find('.ngeo-displaywindow .windowcontainer').draggable({
         'containment': this.draggableContainment
       });
     }
 
     // Resizable
     if (this.resizable) {
-      this.element_.find('.ngeo-displaywindow .container').resizable({
+      this.element_.find('.ngeo-displaywindow .windowcontainer').resizable({
         'minHeight': 240,
         'minWidth': 240
       });
@@ -208,8 +208,8 @@ ngeo.message.displaywindowComponent.Controller_ = class {
    */
   get style() {
     return {
-      'height': this.height || undefined,
-      'width': this.height || undefined
+      'height': this.height || '240px',
+      'width': this.height || '240px'
     };
   }
 
