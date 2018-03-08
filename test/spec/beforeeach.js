@@ -4,10 +4,10 @@ goog.provide('app');
 
 goog.require('ngeo.mainmodule');
 
-const module = app.module = angular.module('app', []);
+app.module = angular.module('app', []);
 
 beforeEach(() =>  {
-  module.requires.push(ngeo.mainmodule.name);
+  app.module.requires.push(ngeo.mainmodule.name);
 });
 
 beforeEach(angular.mock.module('app'));

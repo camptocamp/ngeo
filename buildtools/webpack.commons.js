@@ -113,16 +113,16 @@ const config = {
     ]
   },
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
     providePlugin,
     new ExtractTextPlugin('[name].css'),
     new ExtractTextPlugin('[name].less'),
-    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/(en)$/)
+    new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
   resolve: {
     modules: [
       '../node_modules'
     ],
+    mainFields: ['jsnext:main', 'main'],
     alias: {
       'ngeo/test': path.resolve(__dirname, '../test/spec'),
       'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
@@ -131,7 +131,6 @@ const config = {
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
       'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
       'jsts': 'jsts/org/locationtech/jts',
-      'moment': 'moment/src/moment.js',
       'ol/ol.css': 'openlayers/css/ol.css',
       'ol': 'openlayers/src/ol',
       // For angular-ui-date
