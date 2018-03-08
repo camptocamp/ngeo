@@ -148,8 +148,6 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
 
 /**
  * @param {angular.JQLite} $element Element.
- * @param {!angular.$http} $http Angular http service.
- * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -171,7 +169,7 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.layertree.component.Controller_ = function($element, $http, $sce, $scope,
+gmf.layertree.component.Controller_ = function($element, $scope,
   ngeoCreatePopup, ngeoLayerHelper, gmfDataSourceBeingFiltered,
   gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager,
   gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
@@ -193,18 +191,6 @@ gmf.layertree.component.Controller_ = function($element, $http, $sce, $scope,
    * @private
    */
   this.scope_ = $scope;
-
-  /**
-   * @private
-   * @type {!angular.$http}
-   */
-  this.$http_ = $http;
-
-  /**
-   * @private
-   * @type {!angular.$sce}
-   */
-  this.$sce_ = $sce;
 
   /**
    * @type {!ngeo.map.LayerHelper}
@@ -262,12 +248,6 @@ gmf.layertree.component.Controller_ = function($element, $http, $sce, $scope,
    * @type {!ngeo.message.Popup}
    */
   this.infoPopup_ = ngeoCreatePopup();
-
-  /**
-   * @type {!Object.<string, !angular.$q.Promise>}
-   * @private
-   */
-  this.promises_ = {};
 
   /**
    * @type {!Object.<number, !Array.<string>>}
@@ -612,23 +592,12 @@ gmf.layertree.component.Controller_.prototype.getScale_ = function() {
  * @export
  */
 gmf.layertree.component.Controller_.prototype.displayMetadata = function(treeCtrl) {
-  const treeUid = treeCtrl.uid.toString();
   const node = treeCtrl.node;
   const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
-    if (!(treeUid in this.promises_)) {
-      this.promises_[treeUid] = this.$http_.get(metadataURL).then(
-        (resp) => {
-          const html = this.$sce_.trustAsHtml(resp.data);
-          return html;
-        });
-    }
-    const infoPopup = this.infoPopup_;
-    this.promises_[treeUid].then((html) => {
-      infoPopup.setTitle(node.name);
-      infoPopup.setContent(html);
-      infoPopup.setOpen(true);
-    });
+    this.infoPopup_.setTitle(node.name);
+    this.infoPopup_.setUrl(metadataURL);
+    this.infoPopup_.setOpen(true);
   }
 };
 
