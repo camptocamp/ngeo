@@ -29,10 +29,9 @@
   .collapse-button-down::after {
     content: @fa-var-chevron-down;
   }
-  .container {
+  .gmf-displayquerywindow-container {
     background-color: @nav-bg;
     border: solid 1px @border-color;
-    height: 24rem;
     position: relative;
     width: 100%;
   }
@@ -40,7 +39,7 @@
     position: relative;
     overflow: hidden;
     // height with 2em: 1em per text (title, subtitle)
-    height: calc(4 * @app-margin + @half-app-margin ~"+ 2em");
+    height: calc(4 * @app-margin + @half-app-margin + @map-tools-size ~"+ 2em");
     margin: 0;
     transition: 0.3s ease-in all;
     .slide-animation {
@@ -123,6 +122,7 @@
     display: flex;
     justify-content: space-between;
     position: absolute;
+    width: 100%;
     bottom: 0;
     .placeholder {
       // these elements are necessary when only the middle element (results)
@@ -172,9 +172,14 @@
       font-family: FontAwesome;
     }
   }
-  &.ui-draggable {
+  .ui-draggable {
     tr {
       cursor: text;
+    }
+  }
+  &.desktop {
+    .gmf-displayquerywindow-container {
+      height: 24rem
     }
   }
 }
@@ -211,7 +216,7 @@
   /* mobile landscape orientation */
   .gmf-displayquerywindow.mobile {
     .animation-container-detailed {
-      height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3);
+      height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3) + @map-tools-size;
     }
   }
 }
