@@ -8,13 +8,17 @@ const entry = {};
 
 for (const filename of ls('examples/*.html')) {
   const name = filename.name;
-  entry[name] = ['ngeo/mainmodule.js', `./examples/${name}.js`];
+  entry[name] = [
+    './examples/common_dependencies.js', // Should be first
+    'ngeo/mainmodule.js', // To have a big commons part
+    `./examples/${name}.js`
+  ];
   plugins.push(
     new HtmlWebpackPlugin({
       template: `examples/${name}.html`,
       chunksSortMode: 'manual',
       filename: name + '.html',
-      chunks: ['common', name],
+      chunks: ['commons', name],
     }),
   );
 }

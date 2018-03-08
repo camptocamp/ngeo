@@ -9,8 +9,8 @@ const entry = {};
 for (const filename of ls('contribs/gmf/examples/*.html')) {
   const name = filename.name;
   entry[name] = [
-    './contribs/gmf/examples/common_dependencies.js',
-    './contribs/gmf/src/mainmodule.js',
+    './contribs/gmf/examples/common_dependencies.js', // Should be first
+    'gmf/mainmodule.js', // To have a big commons part
     `./contribs/gmf/examples/${name}.js`
   ];
   plugins.push(
@@ -18,7 +18,7 @@ for (const filename of ls('contribs/gmf/examples/*.html')) {
       template: `contribs/gmf/examples/${name}.html`,
       chunksSortMode: 'manual',
       filename: name + '.html',
-      chunks: ['common', name],
+      chunks: ['commons', name],
     }),
   );
 }

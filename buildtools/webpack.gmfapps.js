@@ -14,7 +14,7 @@ for (const filename of ls('contribs/gmf/apps-webpack/*/index.html')) {
       template: filename.full,
       chunksSortMode: 'manual',
       filename: name + '.html',
-      chunks: ['common', name],
+      chunks: ['commons', name],
     }),
   );
 }
