@@ -14,3 +14,10 @@
 }
 
 @theme-selector-columns: 3;
+
+div .ngeo-displaywindow {
+  @displaywindow-min-height: 24rem;
+  left: @app-margin + @left-panel-width + @displaywindow-min-height / 2;
+  right: initial;
+  top: @topbar-height + @app-margin + 3 * @map-tools-size;
+}
