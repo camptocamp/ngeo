@@ -23,8 +23,6 @@
               content = htmlmin.minify(
                   content,
                   remove_comments=True,
-                  remove_empty_space=True,
-                  remove_all_empty_space=True,
                   remove_optional_attribute_quotes=False,
               )
               name = os.path.join(dest_folder, filename[len(source_folder) + 1:])
