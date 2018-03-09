@@ -1,13 +1,13 @@
 goog.provide('app.modal');
 
 // webpack: import './modal.css';
-// webpack: import './common_dependencies.js';
 /** @suppress {extraRequire} */
 goog.require('ngeo.message.modalComponent');
 
 
 /** @type {!angular.Module} **/
 app.modal.module = angular.module('app', [
+  'gettext',
   ngeo.message.modalComponent.name,
 ]);
 

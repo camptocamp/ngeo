@@ -1,7 +1,6 @@
 goog.provide('app.measure');
 
 // webpack: import './measure.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.MeasureArea');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ngeo.interaction.MeasureLength');
@@ -24,6 +23,7 @@ goog.require('ol.style.Fill');
 
 /** @type {!angular.Module} **/
 app.measure.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.misc.btnComponent.name,
   ngeo.misc.filters.name,

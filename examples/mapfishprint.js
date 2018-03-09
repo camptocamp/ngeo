@@ -1,7 +1,6 @@
 goog.provide('app.mapfishprint');
 
 // webpack: import './mapfishprint.css';
-// webpack: import './common_dependencies.js';
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ngeo.print.Service');
 goog.require('ngeo.print.Utils');
@@ -16,10 +15,11 @@ goog.require('ngeo.map.module');
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', [
+const appmodule = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.print.Service.module.name,
-  ngeo.print.Utils.modle.name,
+  ngeo.print.Utils.module.name,
 ]);
 
 
@@ -267,4 +267,4 @@ app.mapfishprint.MainController.prototype.handleGetStatusError_ = function(resp)
 };
 
 
-module.controller('MainController', app.mapfishprint.MainController);
+appmodule.controller('MainController', app.mapfishprint.MainController);

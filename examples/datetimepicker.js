@@ -1,12 +1,12 @@
 goog.provide('app.datetimepicker');
 
 // webpack: import './datetimepicker.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.misc.datetimepickerComponent');
 
 
 /** @type {!angular.Module} **/
 app.datetimepicker.module = angular.module('app', [
+  'gettext',
   ngeo.misc.datetimepickerComponent.name,
 ]);
 

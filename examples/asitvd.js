@@ -1,7 +1,6 @@
 goog.provide('app.asitvd');
 
 // webpack: import './asitvd.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.source.AsitVD');
 goog.require('ol.Map');
 goog.require('ol.View');
@@ -11,6 +10,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} */
 app.asitvd.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 

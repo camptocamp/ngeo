@@ -6,7 +6,6 @@
 goog.provide('app.layertree');
 
 // webpack: import './layertree.css';
-// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -19,6 +18,7 @@ goog.require('ngeo.message.Popup');
 
 /** @type {!angular.Module} **/
 app.layertree.module = angular.module('app', [
+  'gettext',
   ngeo.layertree.module.name,
   ngeo.map.module.name,
   ngeo.message.Popup.module.name,

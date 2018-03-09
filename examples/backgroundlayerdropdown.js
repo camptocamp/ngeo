@@ -1,7 +1,6 @@
 goog.provide('app.backgroundlayerdropdown');
 
 // webpack: import './backgroundlayerdropdown.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.source.AsitVD');
 const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
 goog.require('ol.Map');
@@ -14,6 +13,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.backgroundlayerdropdown.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 

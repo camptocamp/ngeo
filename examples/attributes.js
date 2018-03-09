@@ -1,6 +1,5 @@
 goog.provide('app.attributes');
 
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
 goog.require('ngeo.editing.attributesComponent');
@@ -10,6 +9,7 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} */
 app.attributes.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.editing.attributesComponent.name,
 ]);

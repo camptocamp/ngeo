@@ -1,7 +1,6 @@
 goog.provide('app.rotate');
 
 // webpack: import './rotate.css';
-// webpack: import './common_dependencies.js';
 goog.require('ngeo.interaction.Rotate');
 goog.require('ol.Collection');
 goog.require('ol.Feature');
@@ -22,12 +21,13 @@ goog.require('ngeo.map.module');
 
 /** @type {!angular.Module} **/
 app.rotate.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name
 ]);
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', ['ngeo']);
+const appmodule = angular.module('app', ['ngeo']);
 
 
 /**
@@ -144,4 +144,4 @@ app.rotate.MainController = function() {
 };
 
 
-module.controller('MainController', app.rotate.MainController);
+appmodule.controller('MainController', app.rotate.MainController);

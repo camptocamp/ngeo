@@ -1,7 +1,6 @@
 goog.provide('app.googlestreetview');
 
 // webpack: import './googlestreetview.css';
-// webpack: import './common_dependencies.js';
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
@@ -18,6 +17,7 @@ goog.require('ngeo.misc.ToolActivateMgr');
 
 /** @type {!angular.Module} **/
 app.googlestreetview.module = angular.module('app', [
+  'gettext',
   ngeo.map.module.name,
   ngeo.googlestreetview.module.name,
   ngeo.misc.ToolActivateMgr.module.name
