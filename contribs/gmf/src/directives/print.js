@@ -313,6 +313,12 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.pointerDragListenerKey_;
 
   /**
+   * @type {ol.EventsKey}
+   * @private
+   */
+  this.mapViewResolutionChangeKey_;
+
+  /**
    * Current report reference id.
    * @type {string}
    * @private
@@ -365,6 +371,12 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
   this.hiddenAttributeNames;
 
   /**
+   * @type {boolean}
+   * @private
+   */
+  this.scaleManuallySelected_ = false;
+
+  /**
    * @return {ol.Size} Size in dots of the map to print.
    */
   const getSizeFn = () => this.paperSize_;
@@ -378,8 +390,8 @@ gmf.PrintController = function($rootScope, $scope, $timeout, $q, $injector,
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
     goog.asserts.assert(this.layoutInfo.scales);
     goog.asserts.assert(this.layoutInfo.scale !== undefined);
-    if (this.layoutInfo.scale === -1 ||
-        ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
+    if (!this.scaleManuallySelected_ &&
+        (this.layoutInfo.scale === -1 || ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale))) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
       this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
@@ -468,6 +480,9 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
         this.postcomposeListener_);
       this.pointerDragListenerKey_ = this.map.on('pointerdrag',
         this.onPointerDrag_.bind(this));
+      this.mapViewResolutionChangeKey_ = this.map.getView().on('change:resolution', () => {
+        this.scaleManuallySelected_ = false;
+      });
       this.map.render();
     }, (resp) => {
       // Get capabilities - On error
@@ -477,6 +492,7 @@ gmf.PrintController.prototype.togglePrintPanel_ = function(active) {
   } else {
     ol.Observable.unByKey(this.postComposeListenerKey_);
     ol.Observable.unByKey(this.pointerDragListenerKey_);
+    ol.Observable.unByKey(this.mapViewResolutionChangeKey_);
     this.getSetRotation(0);
     this.map.render(); // Redraw (remove) post compose mask;
   }
@@ -735,7 +751,7 @@ gmf.PrintController.prototype.print = function(format) {
 
   const mapSize = this.map.getSize();
   const viewResolution = this.map.getView().getResolution();
-  const scale = this.getOptimalScale_(mapSize, viewResolution);
+  const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
   const rotation = this.rotateMask_ ? -this.rotation : this.rotation;
   const datasource = this.getDataSource_();
 
@@ -743,7 +759,7 @@ gmf.PrintController.prototype.print = function(format) {
     'datasource': datasource,
     'lang': this.gettextCatalog_.currentLanguage,
     'rotation': rotation,
-    'scale': this.layoutInfo.scale
+    'scale': scale
   };
 
   if (this.layoutInfo.simpleAttributes) {
@@ -1099,6 +1115,7 @@ gmf.PrintController.prototype.getSetScale = function(opt_scale) {
     const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
     const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
     this.map.getView().setResolution(contrainRes);
+    this.scaleManuallySelected_ = true;
   }
   return this.layoutInfo.scale;
 };
