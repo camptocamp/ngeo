@@ -477,6 +477,9 @@ gmf.SearchController.prototype.$onInit = function() {
       if (this.ngeoLocation_.getParam('search-select-index')) {
         resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
       }
+      if (this.ngeoLocation_.getParam('search-maxzoom')) {
+        this.maxZoom = parseInt(this.ngeoLocation_.getParam('search-maxzoom'), 10) || 16;
+      }
       this.fulltextsearch_(searchQuery, resultIndex);
     }
   }
@@ -899,8 +902,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     }
   }
 
-  const size = this.map_.getSize();
-  if (featureGeometry && size) {
+  if (featureGeometry && this.map_.getSize()) {
     const view = this.map_.getView();
     this.featureOverlay_.clear();
     this.featureOverlay_.addFeature(feature);
@@ -908,7 +910,7 @@ gmf.SearchController.prototype.selectFromGMF_ = function(event, feature, dataset
     const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
       featureGeometry.getExtent() : featureGeometry;
     view.fit(fitArray, {
-      size,
+      size: this.map_.getSize(),
       maxZoom: this.maxZoom});
   }
   this.leaveSearch_();
@@ -982,7 +984,10 @@ gmf.SearchController.prototype.fulltextsearch_ = function(query, resultIndex) {
         const format = new ol.format.GeoJSON();
         const feature = format.readFeature(data.features[resultIndex - 1]);
         this.featureOverlay_.addFeature(feature);
-        this.map_.getView().fit(feature.getGeometry().getExtent());
+        this.map_.getView().fit(feature.getGeometry().getExtent(), {
+          size: this.map_.getSize(),
+          maxZoom: this.maxZoom
+        });
         this.inputValue = /** @type {string} */ (feature.get('label'));
       }
     });
