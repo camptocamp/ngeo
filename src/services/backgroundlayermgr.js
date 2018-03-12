@@ -139,10 +139,12 @@ ngeo.BackgroundLayerMgr.prototype.get = function(map) {
  * @export
  */
 ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
+  const ZIndex = -200;
   const mapUid = ol.getUid(map).toString();
   const previous = this.get(map);
   if (layer !== null) {
-    layer.setZIndex(-200);
+    layer.setZIndex(ZIndex);
+    this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
   }
 
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
@@ -183,9 +185,11 @@ ngeo.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
  * @param {ol.layer.Base} layer The opacity background layer.
  */
 ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
+  const ZIndex = -100;
   layer.setOpacity(0);
-  layer.setZIndex(-100);
   layer.setVisible(true);
+  layer.setZIndex(ZIndex);
+  this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
 
   const index = bgGroup.getLayers().getArray().indexOf(layer);

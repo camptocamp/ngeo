@@ -354,6 +354,20 @@ ngeo.LayerHelper.prototype.refreshWMSLayer = function(layer) {
 
 
 /**
+ * Set ZIndex property to first level children elements
+ * @param {ol.layer.Group|ol.layer.Base} element The group of layer with first level children layers.
+ * @param {number} ZIndex The ZIndex for children element.
+ */
+ngeo.LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
+  if (!(element instanceof ol.layer.Group)) {
+    return;
+  }
+  const innerGroupLayers = element.getLayers();
+  innerGroupLayers.forEach(innerLayer => innerLayer.setZIndex(ZIndex));
+};
+
+
+/**
  * Update the LAYERS parameter of the source of the given WMS layer.
  * @param {ol.layer.Image} layer The WMS layer.
  * @param {string} names The names that will be used to set
