@@ -236,6 +236,7 @@ gmf.query.gridComponent.Controller_ = function($injector, $scope, ngeoQueryResul
 
   /**
    * @type {!gmfx.GridMergeTabs}
+   * @export
    */
   this.mergeTabs = {};
 
@@ -382,7 +383,7 @@ gmf.query.gridComponent.Controller_.prototype.updateData_ = function() {
     if (source.tooManyResults) {
       this.makeGrid_(null, source);
     } else {
-      source.id = this.escapeValue_(source.id);
+      source.id = this.escapeValue(source.id);
       const features = source.features;
       if (features.length > 0) {
         this.collectData_(source);
@@ -417,12 +418,12 @@ gmf.query.gridComponent.Controller_.prototype.hasOneWithTooManyResults_ = functi
 };
 
 /**
- * Returns an escaped value.
+ * Returns the value with all symbols and spaces replaced by an underscore.
  * @param {string|number} value A value to escape.
  * @returns {string|number} value An escaped value.
- * @private
+ * @export
  */
-gmf.query.gridComponent.Controller_.prototype.escapeValue_ = function(value) {
+gmf.query.gridComponent.Controller_.prototype.escapeValue = function(value) {
   // Work-around for Number.isInteger() when not always getting a number ...
   if (Number.isInteger(/** @type {number} */ (value))) {
     return value;
@@ -739,21 +740,21 @@ gmf.query.gridComponent.Controller_.prototype.selectTab = function(gridSource) {
   }
   this.updateFeatures_(gridSource);
 
-  this.reflowGrid_(source.id);
+  this.reflowGrid_();
 };
 
 
 /**
  * @private
- * @param {string|number} sourceId Id of the source that should be refreshed.
  */
-gmf.query.gridComponent.Controller_.prototype.reflowGrid_ = function(sourceId) {
+gmf.query.gridComponent.Controller_.prototype.reflowGrid_ = function() {
   // This is a "work-around" to make sure that the grid is rendered correctly.
   // When a pane is activated by setting `this.selectedTab`, the class `active`
   // is not yet set on the pane. That's why the class is set manually, and
   // after the pane is shown (in the next digest loop), the grid table can
   // be refreshed.
-  const activePane = this.$element_.find(`div.tab-pane#${sourceId}`);
+  const id = this.escapeValue(this.selectedTab || '');
+  const activePane = this.$element_.find(`div.tab-pane#${id}`);
   activePane.removeClass('active').addClass('active');
   this.$timeout_(() => {
     activePane.find('div.ngeo-grid-table-container table')['trigger']('reflow');

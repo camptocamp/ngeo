@@ -119,7 +119,6 @@
         id="background"
         class="gmf-mobile-nav-slide"
         data-header-title="{{'Background' | translate}}"
-        gmf-backgroundlayerselector-dimensions="::mainCtrl.dimensions"
         gmf-backgroundlayerselector-map="::mainCtrl.map"
         gmf-backgroundlayerselector-select="mainCtrl.hideNav()">
       </gmf-backgroundlayerselector>
@@ -240,6 +239,7 @@
               defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
               defaultFeaturePrefix: 'feature'
             }));
+        module.constant('ngeoTilesPreloadingLimit', 0);
        })();
     </script>
   </body>

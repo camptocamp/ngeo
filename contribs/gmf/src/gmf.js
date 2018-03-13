@@ -10,6 +10,12 @@ gmf.baseModuleTemplateUrl = 'gmf'; // nowebpack
  * @const
  * @export
  */
+gmf.BACKGROUNDLAYERGROUP_NAME = 'background';
+
+/**
+ * @const
+ * @export
+ */
 gmf.DATALAYERGROUP_NAME = 'data';
 
 /**

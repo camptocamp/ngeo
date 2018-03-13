@@ -95,6 +95,20 @@ button[ngeo-mobile-geolocation] {
         content: @fa-var-check;
       }
     }
+
+    &.gmf-backgroundlayerselector-disabled{
+      border-top-color: @map-tools-color;
+      pointer-events: none;
+    }
+
+    span.gmf-backgroundlayerselector-opacity-check {
+      &::after {
+        width: (18em / 14);
+        font-family: FontAwesome;
+        content: @fa-var-check;
+        text-align: center;
+      }
+    }
   }
 
   .gmf-text {
@@ -107,6 +121,12 @@ button[ngeo-mobile-geolocation] {
   .gmf-thumb {
     height: @map-tools-size;
     margin: 0 @half-app-margin;
+  }
+
+  input.gmf-backgroundlayerselector-opacity-slider {
+    margin: 1rem 0 2rem 0;
+    padding-left: @half-app-margin !important;
+    padding-right: @half-app-margin !important;
   }
 }
 

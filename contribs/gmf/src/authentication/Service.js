@@ -21,12 +21,13 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
 
   /**
    * @param {angular.$http} $http Angular http service.
+   * @param {angular.$injector} $injector Main injector.
    * @param {angular.Scope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {gmfx.User} gmfUser User.
    * @ngInject
    */
-  constructor($http, $rootScope, authenticationBaseUrl, gmfUser) {
+  constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser) {
 
     super();
 
@@ -54,6 +55,16 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
      * @private
      */
     this.user_ = gmfUser;
+
+    /**
+      * Don't request a new user object from the back-end after
+      * logging out if the logged-in user's role has this role.
+      * @type {?string}
+      * @private
+      */
+    this.noReloadRole_ =  $injector.has('gmfAuthenticationNoReloadRole')
+      ? $injector.get('gmfAuthenticationNoReloadRole')
+      : null;
 
     this.load_();
   }
@@ -114,9 +125,11 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
    * @export
    */
   logout() {
+    const noReload = this.user_['role_name'] === this.noReloadRole_;
     const url = `${this.baseUrl_}/${gmf.authentication.Service.RouteSuffix.LOGOUT}`;
-    return this.$http_.get(url, {withCredentials: true}).then(
-      this.resetUser_.bind(this));
+    return this.$http_.get(url, {withCredentials: true}).then(() => {
+      this.resetUser_(noReload);
+    });
   }
 
   /**
@@ -191,15 +204,20 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
 
   /**
    * @private
+   * @param {boolean} noReload Don't request a new user object from
+   * the back-end after logging out, defaults to false.
    */
-  resetUser_() {
+  resetUser_(noReload) {
+    noReload = noReload || false;
     for (const key in this.user_) {
       this.user_[key] = null;
     }
     /** @type {gmfx.AuthenticationEvent} */
     const event = new ngeo.CustomEvent('logout', {user: this.user_});
     this.dispatchEvent(event);
-    this.load_();
+    if (!noReload) {
+      this.load_();
+    }
   }
 };
 

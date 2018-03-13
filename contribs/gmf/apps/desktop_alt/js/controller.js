@@ -147,6 +147,12 @@ app.desktop_alt.Controller = function($scope, $injector, ngeoFile, gettext, $q) 
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.bgOpacityOptions = 'Test aus Olten';
 };
 ol.inherits(app.desktop_alt.Controller, gmf.controllers.AbstractDesktopController);
 

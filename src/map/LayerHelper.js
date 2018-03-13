@@ -17,13 +17,16 @@ goog.require('ol.uri');
  * Provides help functions that helps you to create and manage layers.
  * @param {angular.$q} $q Angular promises/deferred service.
  * @param {angular.$http} $http Angular http service.
+ * @param {number} ngeoTilesPreloadingLimit Load tiles up to preload levels. By default preload is Infinity,
+ *     which means load all tiles on the top of the visible level. See also preload value
+ *     in documentation for ol.Layer.Tile.
  * @constructor
  * @struct
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject
  */
-ngeo.map.LayerHelper = function($q, $http) {
+ngeo.map.LayerHelper  = function($q, $http, ngeoTilesPreloadingLimit) {
 
   /**
    * @type {angular.$q}
@@ -36,6 +39,13 @@ ngeo.map.LayerHelper = function($q, $http) {
    * @private
    */
   this.$http_ = $http;
+
+  /**
+   * The Tiles Preloading Limit value
+   * @type {number}
+   * @private
+   */
+  this.tilesPreloadingLimit_ = ngeoTilesPreloadingLimit;
 };
 
 
@@ -153,7 +163,7 @@ ngeo.map.LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
 ngeo.map.LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions) {
   const parser = new ol.format.WMTSCapabilities();
   const layer = new ol.layer.Tile({
-    preload: Infinity
+    preload: this.tilesPreloadingLimit_
   });
   const $q = this.$q_;
 
@@ -417,6 +427,20 @@ ngeo.map.LayerHelper.prototype.refreshWMSLayer = function(layer) {
 
 
 /**
+ * Set ZIndex property to first level children elements
+ * @param {ol.layer.Group|ol.layer.Base} element The group of layer with first level children layers.
+ * @param {number} ZIndex The ZIndex for children element.
+ */
+ngeo.map.LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
+  if (!(element instanceof ol.layer.Group)) {
+    return;
+  }
+  const innerGroupLayers = element.getLayers();
+  innerGroupLayers.forEach(innerLayer => innerLayer.setZIndex(ZIndex));
+};
+
+
+/**
  * Update the LAYERS parameter of the source of the given WMS layer.
  * @param {ol.layer.Image} layer The WMS layer.
  * @param {string} names The names that will be used to set
@@ -457,5 +481,6 @@ ngeo.map.LayerHelper.prototype.getQuerySourceIds = function(layer) {
 /**
  * @type {!angular.Module}
  */
-ngeo.map.LayerHelper.module = angular.module('ngeoLayerHelper', []);
-ngeo.map.LayerHelper.module.service('ngeoLayerHelper', ngeo.map.LayerHelper);
+ngeo.map.LayerHelper.module = angular.module('ngeoLayerHelper', [])
+  .service('ngeoLayerHelper', ngeo.map.LayerHelper)
+  .value('ngeoTilesPreloadingLimit', Infinity);
