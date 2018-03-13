@@ -41,10 +41,20 @@ ngeo.format.WFSAttribute = class {
     const type = goog.asserts.assertString(object['type']);
 
     if (!ngeo.Attribute.setGeometryType(attribute, type)) {
-      if (type === 'gml:TimeInstantType') {
+      if (type === 'gml:TimeInstantType' || type === 'dateTime') {
         attribute.type = ngeo.AttributeType.DATETIME;
-      } else if (type === 'double') {
+      } else if (type === 'date') {
+        attribute.type = ngeo.AttributeType.DATE;
+      } else if (type === 'time') {
+        attribute.type = ngeo.AttributeType.TIME;
+      } else if (type === 'decimal' || type === 'double') {
         attribute.type = ngeo.AttributeType.NUMBER;
+        attribute.numType = ngeo.NumberType.FLOAT;
+      } else if (type === 'integer' || type === 'long') {
+        attribute.type = ngeo.AttributeType.NUMBER;
+        attribute.numType = ngeo.NumberType.INTEGER;
+      } else if (type === 'boolean') {
+        attribute.type = ngeo.AttributeType.BOOLEAN;
       } else {
         attribute.type = ngeo.AttributeType.TEXT;
       }
