@@ -2,7 +2,6 @@ goog.provide('ngeo.map.BackgroundLayerMgr');
 
 goog.require('goog.asserts');
 goog.require('ngeo.CustomEvent');
-goog.require('ngeo.map.LayerHelper');
 goog.require('ol');
 goog.require('ol.Observable');
 goog.require('ol.layer.Group');
@@ -74,6 +73,11 @@ ngeo.map.BackgroundLayerMgr = function(ngeoLayerHelper) {
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {string}
+   */
+  this.BACKGROUNDLAYERGROUP_NAME = 'background';
 };
 ol.inherits(ngeo.map.BackgroundLayerMgr, ol.Observable);
 
@@ -87,7 +91,7 @@ ol.inherits(ngeo.map.BackgroundLayerMgr, ol.Observable);
  */
 ngeo.map.BackgroundLayerMgr.prototype.get = function(map) {
   const mapUid = ol.getUid(map).toString();
-  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
 };
 
 
@@ -108,7 +112,7 @@ ngeo.map.BackgroundLayerMgr.prototype.set = function(map, layer) {
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
   }
 
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME);
 
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
@@ -141,7 +145,7 @@ ngeo.map.BackgroundLayerMgr.prototype.set = function(map, layer) {
  */
 ngeo.map.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
   const mapUid = ol.getUid(map).toString();
-  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
 };
 
 /**
@@ -155,7 +159,7 @@ ngeo.map.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
   layer.setVisible(true);
   layer.setZIndex(ZIndex);
   this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME);
 
   const index = bgGroup.getLayers().getArray().indexOf(layer);
   if (index === -1) {

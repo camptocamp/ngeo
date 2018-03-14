@@ -2,8 +2,6 @@ goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.layer.Group');
 goog.require('ol.layer.Tile');
-goog.require('ngeo.map.BackgroundLayerMgr');
-goog.require('ngeo.map.LayerHelper');
 
 describe('ngeo.map.BackgroundLayerMgr', () => {
   let ngeoBackgroundLayerMgr;
