@@ -257,8 +257,8 @@
               <img src="image/background-layer-button.png" alt="" />
             </button>
             <gmf-backgroundlayerselector
-              gmf-backgroundlayerselector-dimensions="::mainCtrl.dimensions"
               gmf-backgroundlayerselector-map="::mainCtrl.map"
+              gmf-backgroundlayer-opacity-options="::mainCtrl.bgOpacityOptions"
               class="dropdown-menu">
             </gmf-backgroundlayerselector>
           </div>
@@ -417,9 +417,10 @@
               defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
               defaultFeaturePrefix: 'feature'
             }));
+        module.constant('ngeoTilesPreloadingLimit', 0);
         module.constant('ngeoQueryOptions', {
           limit: 50
-        })
+        });
       })();
     </script>
   </body>

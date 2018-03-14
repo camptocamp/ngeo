@@ -659,7 +659,7 @@ gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function
     // get the background from the permalink
     layer = this.permalink_.getBackgroundLayer(layers);
 
-    if (!layer) {
+    if (!layer && this.gmfUser.functionalities) {
       // get the background from the user settings
       layer = gmf.controllers.AbstractAppController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }

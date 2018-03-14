@@ -477,7 +477,9 @@ gmf.search.component.SearchController_ = class {
           resultIndex = parseInt(this.ngeoLocation_.getParam('search-select-index'), 10);
         }
         let mapZoom;
-        if (this.ngeoLocation_.getParam('map_zoom')) {
+        if (this.ngeoLocation_.getParam('search-maxzoom')) {
+          mapZoom = parseInt(this.ngeoLocation_.getParam('search-maxzoom'), 10);
+        } else if (this.ngeoLocation_.getParam('map_zoom')) {
           mapZoom = parseInt(this.ngeoLocation_.getParam('map_zoom'), 10);
         }
         this.fulltextsearch_(searchQuery, resultIndex, mapZoom);
@@ -1056,6 +1058,7 @@ gmf.search.component.SearchController_ = class {
           const fitOptions = /** @type {olx.view.FitOptions} */ ({});
           if (opt_zoom !== undefined) {
             fitOptions.maxZoom = opt_zoom;
+            fitOptions.size = this.map.getSize();
           }
           this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
           this.inputValue = /** @type {string} */ (feature.get('label'));

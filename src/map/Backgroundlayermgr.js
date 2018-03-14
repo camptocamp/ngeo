@@ -52,10 +52,12 @@ goog.require('ol.source.WMTS');
  * @extends {ol.Observable}
  * @constructor
  * @struct
+ * @param {ngeo.map.LayerHelper} ngeoLayerHelper Themes service.
+ * @ngInject
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
  */
-ngeo.map.BackgroundLayerMgr = function() {
+ngeo.map.BackgroundLayerMgr = function(ngeoLayerHelper) {
 
   ol.Observable.call(this);
 
@@ -65,6 +67,17 @@ ngeo.map.BackgroundLayerMgr = function() {
    * @private
    */
   this.mapUids_ = {};
+
+  /**
+   * @type {ngeo.map.LayerHelper}
+   * @private
+   */
+  this.ngeoLayerHelper_ = ngeoLayerHelper;
+
+  /**
+   * @type {string}
+   */
+  this.BACKGROUNDLAYERGROUP_NAME = 'background';
 };
 ol.inherits(ngeo.map.BackgroundLayerMgr, ol.Observable);
 
@@ -78,7 +91,7 @@ ol.inherits(ngeo.map.BackgroundLayerMgr, ol.Observable);
  */
 ngeo.map.BackgroundLayerMgr.prototype.get = function(map) {
   const mapUid = ol.getUid(map).toString();
-  return mapUid in this.mapUids_ ? map.getLayers().item(0) : null;
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
 };
 
 
@@ -91,18 +104,26 @@ ngeo.map.BackgroundLayerMgr.prototype.get = function(map) {
  * @export
  */
 ngeo.map.BackgroundLayerMgr.prototype.set = function(map, layer) {
+  const ZIndex = -200;
   const mapUid = ol.getUid(map).toString();
   const previous = this.get(map);
+  if (layer !== null) {
+    layer.setZIndex(ZIndex);
+    this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
+  }
+
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME);
+
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
     if (layer !== null) {
-      map.getLayers().setAt(0, layer);
+      bgGroup.getLayers().setAt(0, layer);
     } else {
-      map.getLayers().removeAt(0);
+      bgGroup.getLayers().removeAt(0);
       delete this.mapUids_[mapUid];
     }
   } else if (layer !== null) {
-    map.getLayers().insertAt(0, layer);
+    bgGroup.getLayers().insertAt(0, layer);
     this.mapUids_[mapUid] = true;
   }
   /** @type {ngeox.BackgroundEvent} */
@@ -113,6 +134,37 @@ ngeo.map.BackgroundLayerMgr.prototype.set = function(map, layer) {
   this.dispatchEvent(event);
 
   return previous;
+};
+
+/**
+ * Return the current background layer overlay of a given map, used by the opacity slider.
+ * `null` is returned if the map does not have an opacity background layer.
+ * @param {ol.Map} map Map.
+ * @return {ol.layer.Base} layer The opacity background layer.
+ * @export
+ */
+ngeo.map.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
+  const mapUid = ol.getUid(map).toString();
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+};
+
+/**
+ * Set an background layer overlay, used by the opacity slider.
+ * @param {ol.Map} map The map.
+ * @param {ol.layer.Base} layer The opacity background layer.
+ */
+ngeo.map.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
+  const ZIndex = -100;
+  layer.setOpacity(0);
+  layer.setVisible(true);
+  layer.setZIndex(ZIndex);
+  this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, this.BACKGROUNDLAYERGROUP_NAME);
+
+  const index = bgGroup.getLayers().getArray().indexOf(layer);
+  if (index === -1) {
+    bgGroup.getLayers().push(layer);
+  }
 };
 
 /**

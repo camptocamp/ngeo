@@ -1,7 +1,6 @@
 goog.provide('gmf.backgroundlayerselector.component');
 
 goog.require('gmf'); // nowebpack
-goog.require('goog.asserts');
 goog.require('gmf.theme.Themes');
 goog.require('ngeo.map.BackgroundLayerMgr');
 goog.require('ol.events');
@@ -54,8 +53,8 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * Example:
  *
  *      <gmf-backgroundlayerselector
- *        gmf-backgroundlayerselector-dimensions="::ctrl.dimensions"
  *        gmf-backgroundlayerselector-map="::ctrl.map"
+ *        gmf-backgroundlayer-opacity-options="::ctrl.bgOpacityOptions"
  *        gmf-backgroundlayerselector-select="onBackgroundSelected()">
  *      </gmf-backgroundlayerselector>
  *
@@ -63,9 +62,8 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *  * thumbnail: The URL used for the icon.
  *
- * @htmlAttribute {Object.<string, string>} gmf-backgroundlayerselector-dimensions
- *     The dimensions.
  * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
+ * @htmlAttribute {string} gmf-backgroundlayer-opacity-options The opacity slider options.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
  *
@@ -75,8 +73,8 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
 gmf.backgroundlayerselector.component.component_ = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
-    'dimensions': '=gmfBackgroundlayerselectorDimensions',
     'map': '=gmfBackgroundlayerselectorMap',
+    'opacityOptions': '=gmfBackgroundlayerOpacityOptions',
     'select': '&?gmfBackgroundlayerselectorSelect'
   },
   templateUrl: gmfBackgroundlayerselectorTemplateUrl
@@ -101,16 +99,16 @@ gmf.backgroundlayerselector.component.component('gmfBackgroundlayerselector',
 gmf.backgroundlayerselector.component.Controller_ = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
-   * @type {!Object.<string, string>}
-   * @export
-   */
-  this.dimensions;
-
-  /**
    * @type {?ol.Map}
    * @export
    */
   this.map;
+
+  /**
+   * @type {!string|undefined}
+   * @export
+   */
+  this.opacityOptions;
 
   /**
    * Function called when a layer was selected by the user.
@@ -130,6 +128,12 @@ gmf.backgroundlayerselector.component.Controller_ = function($scope, ngeoBackgro
    * @export
    */
   this.bgLayers;
+
+  /**
+   * @type {ol.layer.Base}
+   * @export
+   */
+  this.opacityLayer;
 
   /**
    * @type {!gmf.theme.Themes}
@@ -167,7 +171,6 @@ gmf.backgroundlayerselector.component.Controller_ = function($scope, ngeoBackgro
  * Initialise the controller.
  */
 gmf.backgroundlayerselector.component.Controller_.prototype.$onInit = function() {
-  goog.asserts.assert(this.dimensions, 'The dimensions object is required');
   this.handleThemesChange_();
 };
 
@@ -179,9 +182,34 @@ gmf.backgroundlayerselector.component.Controller_.prototype.$onInit = function()
 gmf.backgroundlayerselector.component.Controller_.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
+
+    if (this.opacityOptions !== undefined) {
+      const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
+      if (opacityLayer !== undefined) {
+        this.setOpacityBgLayer(opacityLayer);
+        this.opacityLayer = opacityLayer;
+
+        // Reorder for the UI the bgArray copy with the opacity layer at the end
+        this.bgLayers = this.bgLayers.slice();
+        const indexOpa = this.bgLayers.findIndex(layer => layer === this.opacityLayer);
+        this.bgLayers.splice(indexOpa, 1);
+        this.bgLayers.push(opacityLayer);
+      }
+    }
   });
 };
 
+/**
+ * Getter/setter for background layer overlay, used by opacity slider.
+ * @param {?number} val The opacity.
+ * @returns {number} The background layer opacity.
+ */
+gmf.backgroundlayerselector.component.Controller_.prototype.getSetBgLayerOpacity = function(val) {
+  if (val) {
+    this.opacityLayer.setOpacity(val);
+  }
+  return this.opacityLayer.getOpacity();
+};
 
 /**
  * @param {ol.layer.Base} layer Layer.
@@ -196,6 +224,13 @@ gmf.backgroundlayerselector.component.Controller_.prototype.setLayer = function(
   }
 };
 
+/**
+ * Set a background layer overlay, used by the opacity slider.
+ * @param {ol.layer.Base} layer The opacity background layer.
+ */
+gmf.backgroundlayerselector.component.Controller_.prototype.setOpacityBgLayer = function(layer) {
+  this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
+};
 
 /**
  * @private
