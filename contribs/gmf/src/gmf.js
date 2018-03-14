@@ -44,12 +44,6 @@ gmf.baseTemplateUrl = 'gmf';
  * @const
  * @export
  */
-gmf.BACKGROUNDLAYERGROUP_NAME = 'background';
-
-/**
- * @const
- * @export
- */
 gmf.DATALAYERGROUP_NAME = 'data';
 
 /**
