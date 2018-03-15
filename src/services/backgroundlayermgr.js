@@ -185,6 +185,7 @@ ngeo.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
  * Set an background layer overlay, used by the opacity slider.
  * @param {ol.Map} map The map.
  * @param {ol.layer.Base} layer The opacity background layer.
+ * @export
  */
 ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
   const ZIndex = -100;
