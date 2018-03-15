@@ -7,6 +7,7 @@ goog.require('ngeo');
 goog.require('ngeo.LayerHelper');
 goog.require('ngeo.utils');
 goog.require('ol.color');
+goog.require('ol.array');
 goog.require('ol.format.GeoJSON');
 goog.require('ol.geom.GeometryType');
 goog.require('ol.layer.Image');
@@ -225,6 +226,9 @@ ngeo.Print.prototype.encodeMap_ = function(map, scale, object) {
   goog.asserts.assert(mapLayerGroup);
   this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
+
+  // Sort the layer by ZIndex
+  ol.array.stableSort(layers, (layer_a, layer_b) => layer_a.getZIndex() - layer_b.getZIndex());
   layers = layers.slice().reverse();
 
   layers.forEach((layer) => {
