@@ -126,7 +126,8 @@ ol.inherits(ngeo.BackgroundLayerMgr, ol.Observable);
  */
 ngeo.BackgroundLayerMgr.prototype.get = function(map) {
   const mapUid = ol.getUid(map).toString();
-  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
+    ngeo.BackgroundLayerMgr.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
 };
 
 
@@ -147,7 +148,7 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
   }
 
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, ngeo.BackgroundLayerMgr.BACKGROUNDLAYERGROUP_NAME);
 
   if (previous !== null) {
     goog.asserts.assert(mapUid in this.mapUids_);
@@ -176,7 +177,8 @@ ngeo.BackgroundLayerMgr.prototype.set = function(map, layer) {
  */
 ngeo.BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
   const mapUid = ol.getUid(map).toString();
-  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
+    ngeo.BackgroundLayerMgr.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
 };
 
 /**
@@ -190,7 +192,7 @@ ngeo.BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
   layer.setVisible(true);
   layer.setZIndex(ZIndex);
   this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, gmf.BACKGROUNDLAYERGROUP_NAME);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, ngeo.BackgroundLayerMgr.BACKGROUNDLAYERGROUP_NAME);
 
   const index = bgGroup.getLayers().getArray().indexOf(layer);
   if (index === -1) {
@@ -241,3 +243,8 @@ ngeo.BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
 
 
 ngeo.module.service('ngeoBackgroundLayerMgr', ngeo.BackgroundLayerMgr);
+
+/**
+ * @const
+ */
+ngeo.BackgroundLayerMgr.BACKGROUNDLAYERGROUP_NAME = 'background';
