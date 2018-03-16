@@ -2605,3 +2605,55 @@ ngeox.CreatePrint;
  * }}
  */
 ngeox.FilterCondition;
+
+
+/**
+ * Format a duration in seconds to a more readable form.
+ * Arguments:
+ * - duration The duration in seconds.
+ * @typedef {function(number): string}
+ */
+ngeox.duration;
+
+
+
+/**
+ * @typedef {{
+ *     name: (string),
+ *     coordinate: (ol.Coordinate)
+ * }}
+ */
+ngeox.NominatimSearchResult;
+
+/**
+ * @typedef {{
+ *     display_name: (string),
+ *     lon: (number),
+ *     lat: (number)
+ * }}
+ */
+ngeox.NominatimSearchResponseResult;
+
+/**
+ * @typedef {{
+ *     feature: (?ol.Feature),
+ *     onSelect: (function(ngeox.NominatimSearchResult))
+ * }}
+ */
+ngeox.RoutingVia;
+
+/**
+ * @typedef {{
+ *     label: (string),
+ *     profile: (string)
+ * }}
+ */
+ngeox.RoutingProfile;
+
+/**
+ * @typedef {{
+ *     backendUrl: (string|undefined),
+ *     profiles: (Array.<ngeox.RoutingProfile>|undefined)
+ * }}
+ */
+ngeox.RoutingOptions;
