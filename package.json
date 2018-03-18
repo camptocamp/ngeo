@@ -88,7 +88,7 @@
     "moment": "2.21.0",
     "ol-cesium": "1.35.0",
     "olcs": "0.0.10",
-    "openlayers": "4.6.4",
+    "openlayers": "4.6.5",
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",
     "proj4": "2.4.4",
