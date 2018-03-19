@@ -1,8 +1,8 @@
 # Migration from ngeo 2.2 to ngeo 2.3
 
-The version 2.3 of ngeo was adapted to prepare your aplication to to use [webpack](https://webpack.js.org/).
-That force us to redesign our manner to organize the code. The following "how to" will help you to
-understand what we have changed, why and will help you to report these changes in your project. This will
+The version 2.3 of ngeo was adapted to prepare your application to to use [webpack](https://webpack.js.org/).
+That forced us to redesign our manner to organize the code. The following "how to" will help you to
+understand what we have changed, why, and will help you report these changes in your project. This will
 be explained in two sections:
 
  - [One before the switch to ngeo 2.3](#prepare-your-code-for-ngeo-23)
@@ -10,44 +10,44 @@ be explained in two sections:
 
 Note:
 You must know that now in ngeo, the code is organized in modules. There is no more `directive` or `service`
-folder. Instead we have a folder for each module. A module is a part of the application. For instance, the
-`authentication` folder will contains the component, the partial and the service related to
-the authentication. The folder will also contains a `module.js` file that can be include in your
-application to load directly all what is require for this module to work.
+folders. Instead we have a folder for each module. A module is a part of the application. For instance, the
+`authentication` folder contains the component, the partial and the service related to
+authentication. The folder also contains a `module.js` file that can be included in your
+application to load directly all what is required for this module to work.
 
 
 ## Prepare your code for ngeo 2.3
 
-There is some steps to complete before to try to use ngeo 2.3. We encourage you to build and test
-your application after each step. You should see any difference on the use of your application.
+Here are the steps to complete before switching to use ngeo 2.3. We encourage you to build and test
+your application after each step. You should not see any difference when using your application.
 
- 1. [Remove dependencies to the goog library](#remove-dependencies-to-the-goog-library)
+ 1. [Remove dependencies on the goog library](#remove-dependencies-to-the-goog-library)
  1. [Use only one goog.provide per file](#one-googprovide-per-file)
  1. [Integrate eslint googshift and activate check](#integrate-eslint-googshift-and-activate-check)
- 1. [Transformation of the code via googshift](#transformation-of-the-code-via-googshift)
+ 1. [Transforma the code to ES6 modules via googshift](#transformation-of-the-code-via-googshift)
 
 If you have **no custom elements** in you application you may **start directly with the third point**.
 
 ### Remove dependencies to the goog library
 
-If in one of your .js file you refer to a `goog`function. You should replace it because we don't
-use anymore this library (we will stop to use google closure to build our code). Excepted for the following
-function: `goog.asserts`, `goog.require` and `goog.provide` (and `goog.module` but you should not have any
-one in your code for now). We can ignors theme because we will manage them within a script, later.
+If in one of your .js file you refer to a `goog` function. You should replace it because we don't
+use anymore this library (and we will alse stop using google closure to build our code). Excepted for the following
+functions: `goog.asserts`, `goog.require` and `goog.provide` (and `goog.module` but you should not have any
+in your code for now). We can ignore them because we will provide them with a script, later.
 
-To search occurences of `goog` function (without above exceptions) you can use this command (unix):
+To search occurences of `goog` functions (without above exceptions) you can use this command (unix):
 
 ```
 git grep goog <path_to_apps_folder> | grep -v 'require' | grep -v 'provide' | grep -v 'asserts' | grep -v 'google'
 ```
 
-In a GeoMapFish project, `path_to_apps_folder` will be the path to your `static-ngeo` folder.
+In a GeoMapFish project, `path_to_apps_folder` is be the path to your `static-ngeo` folder.
 
-To know how to replace a goog function, you can help you by searching the same function in ngeo
-2.1 and by comparing the line with the same line in ngeo 2.2 or upper. Examples:
+To know how to replace a `goog` function, it can help to search the same function in `ngeo`
+2.1 and compare the line with the same line in ngeo 2.2 or upper. Examples:
 
- - `goog.getUid` become `ol.getUi`.
- - `goog.object.extend` become `ol.obj.assign`.
+ - `goog.getUid` becomes `ol.getUi`.
+ - `goog.object.extend` becomes `ol.obj.assign`.
  - ...
 
 Test, then commit your changes.
