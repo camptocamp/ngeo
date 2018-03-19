@@ -332,8 +332,7 @@ ngeo.interaction.ModifyCircle.handleDownEvent_ = function(evt) {
 ngeo.interaction.ModifyCircle.handleDragEvent_ = function(evt) {
   this.willModifyFeatures_(evt);
   const vertex = evt.coordinate;
-  const geometry =
-      /** @type {ol.geom.Polygon}*/ (this.dragSegments_[0][0].geometry);
+  const geometry = /** @type {ol.geom.Polygon}*/ (this.dragSegments_[0][0].geometry);
   const center = ol.extent.getCenter(geometry.getExtent());
 
   const line = new ol.geom.LineString([center, vertex]);
