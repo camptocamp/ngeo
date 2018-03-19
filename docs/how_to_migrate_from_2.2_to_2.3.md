@@ -54,7 +54,7 @@ Test, then commit your changes.
 
 ### Use only one goog.provide per file
 
-Webpack expect only one export per file. If a file contains more than one `goog.provide`, simply remove one.
+Webpack expects only one export per file. If a file contains more than one `goog.provide`, simply remove one.
 Ensure that the removed value is not required (by a `goog.require`) in another file. If you find
 one, replace the required value by the one still provided.
 
@@ -64,26 +64,26 @@ have an `an_app_name.module.component` in your file. (you can have an entity ass
 component, like `app.module.component.myObjec`, but not a new entity, like `app.module.Service`.)
 We will see later what `an_app_name` means, we encourage you to simply name it `app`.
 
-Also the path and the name of the file must match with what you provide. On the example above, it will
-be expected that the path to your file is `<a_folder>/module/component.js`. (We will configure
+Also the path and the name of the file must match what you provide. In the example above, it is
+expected that the path to your file is `<a_folder>/module/component.js`. (We will configure
 the `<a_folder>` value later.)
 
-If you have multiple differents entities in one file you can:
+If you have multiple different entities in one file you can:
 
  - Split your file to have one class (and provide) per file.
  - Or if you don't use this entity out of the file, assign this entity to a variable inside the
-   file (typically for a controllers of a component).
+   file (typically for a component controller).
 
-To help you, you can see how `component`, `service`, `factory`, etc. are made in ngeo 2.3.
+It can help to see how `component`, `service`, `factory`, etc. are made in ngeo 2.3.
 
 Note for GeoMapFish:
 Your application main controllers (files in static-ngeo/js/<application>.js). Are also concerned.
-But as the build expect to find the inteface name in the 'goog.provide', you must potentialy rename
-your file like the interface.
+But as the build expects to find the inteface name in the 'goog.provide', you must potentialy rename
+your file to match the interface name.
 Example: you have a `ngeodesktop` interface, that means that your file must be named `ngeodesktop.js` and the
 file must provide `<an_app_name>_ngeodesktop`. You may have to exceptionnaly adapt this line in your
 CONST_Makefile: https://github.com/camptocamp/c2cgeoportal/blob/97eb3dcb4d6dda719cba69d7d62ecb7ebbbc72bd/c2cgeoportal/scaffolds/update/CONST_Makefile_tmpl#L911
-Where `$(PACKAGE)` is `<an_app_name>` and `$*` is one of your interface (like `ngeodesktop`).
+Where `$(PACKAGE)` is `<an_app_name>` and `$*` is one of your interfaces (like `ngeodesktop`).
 
 Test, then commit your changes.
 
@@ -124,16 +124,16 @@ rules:
   no-unused-vars: warn
 ```
 
-Where `an_app_name` match with what you choose in the previous step for the same value.
+Where `an_app_name` matches what you chose in the previous step for the same value.
 and for the path on the line `replace`:
 
   - `../../` is because the script will be read from `node_modules/eslint-plugin-googshift`.
   - `<path_to_this_folder/>` for the path to the top folder of this file.
   - `a_folder` is the top folder of this file.
-  - `|<an_app_name>` to refers this path at this name. This final value will be used as base name for what
+  - `|<an_app_name>` to refer this path at this name. This final value will be used as base name for what
     you provide in your .js files (the `<an_app_name>` part in `<an_app_name>.module.component`).
 
-Then run the linter, and fix the errors (and warnings when it's possible). The mains errors will be missing
+Then run the linter, and fix the errors (and warnings when it's possible). The main errors will be missing
 or unused `goog-provide` values.
 
 To run the linter in GeoMapFish, run `rm -f .build/eslint.timestamp && make -f <instance>.mk lint-ngeo`.
@@ -151,9 +151,9 @@ To achieve this preparation phase, run this script:
 In Geompafish, the `<path_to_your_js_folder>` will be `<package>/static-ngeo/apps/ <package>/static-ngeo/components/`.
 
 The script will make your js files ready for webpack. You will see that now, what you provide is named
-`exports` in each file. Also the requirements are used as constant.
+`exports` in each file. Also the requirements are used through constants.
 
-If the previous steps was well done, your application should work. Otherwise you can adapt your code now or
+If the previous steps were well done, your application should work. Otherwise you can adapt your code now or
 revert the changes, correct your files and run the script again.
 
 Test, then commit your changes.
@@ -166,7 +166,7 @@ the changes can't be easily tested before the end of the transformation.
 
 ### Summary
 
-If you have no custom AngularJS elements in your code, you may start directly with the second points.
+If you have no custom AngularJS element in your code, you may start directly with the second points.
 
  1. [Transform your components to modules](#transform-your-components-to-modules)
  1. [Transform your applications to modules](#transform-your-applications-to-modules)
@@ -174,9 +174,9 @@ If you have no custom AngularJS elements in your code, you may start directly wi
 
 ### Transform your components to modules
 
-In ngeo 2.3 we no more rely to a global module 'ngeo', or 'gmf'. Now we want to be able to require only
+In ngeo 2.3 we no more rely on the global modules 'ngeo', or 'gmf'. Now we want to be able to require only
 the modules we need in our application. That's why each file provides its own AngularJs module, and each
-file require only what it needs to work.
+file requires only what it needs to work.
 
 In each of your file declaring an AngularJS entity (like `service`, `factory`, `component`, `directive`,
 `value`, etc) you must create an AngularJS module. You also must require all modules that your module
@@ -198,14 +198,14 @@ exports = angular.module('ngeoGrid', [
 ]);
 ```
 
-At this module is attached an AngularJS component and a value, like this:
+On this module is attached an AngularJS component and a value, like this:
 
 ```
 exports.value('ngeoGridTemplateUrl', a_function);
 exports.component('ngeoGrid', the_grid_component);
 ```
 
-For AngularJS `service`, that's the same concept, but instead to provide the module, we prefer to provide
+For AngularJS `service`, that's the same concept, but instead of providing the module, we prefer to provide
 the class and to attach the module to this class. Example with the file that provides the
 `ngeo.print.Service` module, with one dependency and named `ngeoPrint`. It also provides a `factory`:
 
@@ -224,22 +224,22 @@ exports.module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
 ```
 
 You can see that to require a module inside another module, we add the name of the module into the array of
-dependencies of the module. In the two lasts examples, that are the `ngeoGridConfig.module.name`,
+dependencies of the module. In the last two examples, that are the `ngeoGridConfig.module.name`,
 `ngeoMiscFilters.name` and `ngeoMapLayerHelper.module.name`. In the case of the component
-`ngeoMiscFilters.name`, the module is assign to the `ngeoMiscFilters` component, that's why we can use its
+`ngeoMiscFilters.name`, the module is assigned to the `ngeoMiscFilters` component, that's why we can use its
 name directly.
-`floatThead` is an external dependencies that is not using webpack. So we provide directly the name because
+`floatThead` is an external dependency that is not using webpack. So we provide directly the name because
 we can't `goog.require` the module.
 
-You can see how it's done in ngeo 2.3 to help you to transforms your own AngularJS entities into modules.
+You can see how it's done in ngeo 2.3 to help you transform your own AngularJS entities into modules.
 
 ### Transform your applications to modules
 
 This part is described for GeoMapFish applicaions only.
 
-#### In each your application controller (`<package/static-ngeo/apps/<interface>/Controller.js`)
+#### In each of your application controller (`<package/static-ngeo/apps/<interface>/Controller.js`)
 
-First add the requirement of the abstract controller your application rely on (here an example for the
+First add the requirement of the abstract controller your application rely on (here is an example for the
 desktop).
 
 ```
@@ -264,7 +264,7 @@ Finally, export your module with an unique controller name (here it's `AppMainCo
 exports.module.controller('AppMainController', exports);
 ```
 
-#### In each your application controller (`<package>/templates/<interface>.html`)
+#### In each of your application controller (`<package>/templates/<interface>.html`)
 
 Adapt your first html line to use your module (here `AppMain`) and its controller (here `AppMainController`).
 
