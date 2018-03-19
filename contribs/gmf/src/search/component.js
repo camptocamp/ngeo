@@ -87,9 +87,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *        gmf-search-options="::ctrl.searchOptions"
  *        gmf-search-styles="::ctrl.searchStyles"
  *        gmf-search-datasources="::ctrl.searchDatasources"
- *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections"
- *        gmf-search-delay="mainCtrl.searchDelay"
- *        gmf-search-clearbutton="::true">
+ *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -110,10 +108,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *        gmf-search-options="::ctrl.searchOptions"
  *        gmf-search-styles="::ctrl.searchStyles"
  *        gmf-search-datasources="::ctrl.searchDatasources"
- *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections"
- *        gmf-search-clearbutton="::true"
- *        gmf-search-delay="mainCtrl.searchDelay"
- *        gmf-search-colorchooser="::true">
+ *        gmf-search-coordinatesprojections="::ctrl.searchCoordinatesProjections">
  *      </gmf-search>
  *      <script>
  *        (function() {
@@ -304,17 +299,17 @@ gmf.search.component.SearchController_ = class {
 
     /**
      * Whether or not to show a button to clear the search text.
-     * Default to false.
+     * Default to true.
      * @type {boolean}
      * @export
      */
-    this.clearButton = false;
+    this.clearButton;
 
     /**
      * @type {boolean}
      * @export
      */
-    this.colorChooser = false;
+    this.colorChooser;
 
     /**
      * @type {string}
@@ -422,6 +417,11 @@ gmf.search.component.SearchController_ = class {
    * Called on initialization of the controller.
    */
   $onInit() {
+    const gettextCatalog = this.gettextCatalog_;
+    this.clearButton = this.clearButton !== false;
+    this.colorChooser = this.colorChooser === true;
+    this.placeholder = this.placeholder !== undefined ? this.placeholder :
+      gettextCatalog.getString('Search…');
 
     // Init coordinates projections
     let coordProj = this.coordinatesProjections;
