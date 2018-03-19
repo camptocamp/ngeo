@@ -21,17 +21,17 @@ application to load directly all what is required for this module to work.
 Here are the steps to complete before switching to use ngeo 2.3. We encourage you to build and test
 your application after each step. You should not see any difference when using your application.
 
- 1. [Remove dependencies on the goog library](#remove-dependencies-to-the-goog-library)
+ 1. [Remove dependencies on the goog library](#remove-dependencies-on-the-goog-library)
  1. [Use only one goog.provide per file](#one-googprovide-per-file)
  1. [Integrate eslint googshift and activate check](#integrate-eslint-googshift-and-activate-check)
- 1. [Transforma the code to ES6 modules via googshift](#transformation-of-the-code-via-googshift)
+ 1. [Transform the code to ES6 modules via googshift](#transform-the-code-via-googshift)
 
 If you have **no custom elements** in you application you may **start directly with the third point**.
 
-### Remove dependencies to the goog library
+### Remove dependencies on the goog library
 
 If in one of your .js file you refer to a `goog` function. You should replace it because we don't
-use anymore this library (and we will alse stop using google closure to build our code). Excepted for the following
+use anymore this library (and we will also stop using google closure to build our code). Excepted for the following
 functions: `goog.asserts`, `goog.require` and `goog.provide` (and `goog.module` but you should not have any
 in your code for now). We can ignore them because we will provide them with a script, later.
 
@@ -41,7 +41,7 @@ To search occurences of `goog` functions (without above exceptions) you can use 
 git grep goog <path_to_apps_folder> | grep -v 'require' | grep -v 'provide' | grep -v 'asserts' | grep -v 'google'
 ```
 
-In a GeoMapFish project, `path_to_apps_folder` is be the path to your `static-ngeo` folder.
+In a GeoMapFish project, `path_to_apps_folder` is the path to your `static-ngeo` folder.
 
 To know how to replace a `goog` function, it can help to search the same function in `ngeo`
 2.1 and compare the line with the same line in ngeo 2.2 or upper. Examples:
@@ -140,7 +140,7 @@ To run the linter in GeoMapFish, run `rm -f .build/eslint.timestamp && make -f <
 
 Test, then commit your changes.
 
-### Transformation of the code via googshift
+### Transform the code via googshift
 
 To achieve this preparation phase, run this script:
 
