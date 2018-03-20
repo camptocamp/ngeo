@@ -7,6 +7,8 @@ goog.require('gmf.datasource.ExternalDataSourcesManager');
 goog.require('ngeo.message.Popup');
 goog.require('ol');
 
+// webpack: import 'bootstrap/js/collapse.js';
+
 
 gmf.import.wmsCapabilityLayertreeComponent = angular.module('gmfWmscapabilitylayertreenode', [
   gmf.datasource.ExternalDataSourcesManager.module.name,

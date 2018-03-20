@@ -17,6 +17,7 @@ goog.require('ol.style.Style');
 // webpack: import 'jquery-ui/ui/widgets/resizable.js';
 // webpack: import 'angular-animate';
 // webpack: import 'angular-touch';
+// webpack: import 'bootstrap/js/collapse.js';
 
 
 /**

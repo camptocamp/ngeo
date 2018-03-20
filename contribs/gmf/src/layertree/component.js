@@ -24,6 +24,7 @@ goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
 
+// webpack: import 'bootstrap/js/collapse.js';
 
 /**
  * @type {!angular.Module}
@@ -45,7 +46,7 @@ gmf.layertree.component = angular.module('gmfLayertreeComponent', [
 
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-ngeo.layertree.component.value('ngeoLayertreeTemplateUrl',
+gmf.layertree.component.value('ngeoLayertreeTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
    * @param {angular.Attributes} attrs Attributes.

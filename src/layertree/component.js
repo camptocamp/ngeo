@@ -2,6 +2,7 @@ goog.provide('ngeo.layertree.component');
 
 goog.require('ngeo'); // nowebpack
 goog.require('ngeo.layertree.Controller');
+// webpack: import 'bootstrap/js/collapse.js'; // needed to collapse a layertree
 
 
 /**
