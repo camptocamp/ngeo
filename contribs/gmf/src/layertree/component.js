@@ -24,6 +24,7 @@ goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
 
+// webpack: import 'bootstrap/js/collapse.js';
 
 /**
  * @type {!angular.Module}
