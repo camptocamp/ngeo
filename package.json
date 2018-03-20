@@ -79,7 +79,7 @@
     "karma-coverage-istanbul-reporter": "1.4.2",
     "karma-jasmine": "1.1.1",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "2.0.13",
+    "karma-webpack": "3.0.0",
     "less": "2.7.2",
     "less-loader": "4.1.0",
     "less-plugin-autoprefix": "1.5.1",
