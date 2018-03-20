@@ -94,7 +94,7 @@ ngeo.message.modalComponent.Controller_ = class {
      * @export
      * @type {boolean}
      */
-    this.closable = true;
+    this.closable;
 
     /**
      * @export
@@ -110,10 +110,11 @@ ngeo.message.modalComponent.Controller_ = class {
   }
 
   $onInit() {
+    this.closable = this.closable === true;
 
     this.modal_ = this.$element_.children();
 
-    if (this.closable === false) {
+    if (!this.closable) {
       this.modal_.attr('data-keyboard', false);
       this.modal_.attr('data-backdrop', 'static');
     }

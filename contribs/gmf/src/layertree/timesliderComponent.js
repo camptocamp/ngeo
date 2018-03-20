@@ -92,8 +92,7 @@ gmf.layertree.timeSliderComponent.directive_ = function($timeout, $filter) {
 };
 
 
-gmf.layertree.timeSliderComponent.directive('gmfTimeSlider',
-  gmf.layertree.timeSliderComponent.directive_);
+gmf.layertree.timeSliderComponent.directive('gmfTimeSlider', gmf.layertree.timeSliderComponent.directive_);
 
 
 /**

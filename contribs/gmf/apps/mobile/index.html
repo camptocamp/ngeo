@@ -36,14 +36,12 @@
         class="gmf-mobile-measure"
         gmf-mobile-measurelength
         gmf-mobile-measurelength-active="mainCtrl.measureLengthActive"
-        gmf-mobile-measurelength-precision="2"
         gmf-mobile-measurelength-map="::mainCtrl.map">
       </div>
       <div
         class="gmf-mobile-measure"
         gmf-mobile-measurepoint
         gmf-mobile-measurepoint-active="mainCtrl.measurePointActive"
-        gmf-mobile-measurepoint-coordinateDecimals="2"
         gmf-mobile-measurepoint-layersconfig="::mainCtrl.elevationLayersConfig"
         gmf-mobile-measurepoint-map="::mainCtrl.map">
       </div>
@@ -53,11 +51,8 @@
       </button>
       <gmf-search gmf-search-map="::mainCtrl.map"
         gmf-search-datasources="::mainCtrl.searchDatasources"
-        gmf-search-clearbutton="::true"
-        gmf-search-placeholder="{{'Search…'|translate}}"
         gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
-        gmf-search-listeners="::mainCtrl.searchListeners"
-        gmf-search-delay="mainCtrl.searchDelay">
+        gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
         ng-click="mainCtrl.toggleRightNavVisibility()">
@@ -108,8 +103,7 @@
         </ul>
         <gmf-layertree
           gmf-layertree-dimensions="mainCtrl.dimensions"
-          gmf-layertree-map="::mainCtrl.map"
-          gmf-layertree-openlinksinnewwindow="::true">
+          gmf-layertree-map="::mainCtrl.map">
         </gmf-layertree>
       </div>
       <gmf-backgroundlayerselector
@@ -168,7 +162,6 @@
       </gmf-authentication>
     </nav>
     <ngeo-modal
-        ngeo-modal-closable="false"
         ng-model="mainCtrl.userMustChangeItsPassword()"
         ng-model-options="{getterSetter: true}">
       <div class="modal-header">
