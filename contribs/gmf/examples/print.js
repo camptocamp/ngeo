@@ -28,22 +28,22 @@ gmfapp.print.module = angular.module('gmfapp', [
 
 gmfapp.print.module.value(
   'gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?' +
         'version=2&background=background');
 
 
 gmfapp.print.module.value('gmfPrintUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/printproxy');
 
 
 gmfapp.print.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi'
 );
 
 
 gmfapp.print.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
 gmfapp.print.module.constant('defaultTheme', 'Demo');
 gmfapp.print.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

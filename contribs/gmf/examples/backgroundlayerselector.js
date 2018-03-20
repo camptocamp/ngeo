@@ -21,7 +21,7 @@ gmfapp.backgroundlayerselector.module = angular.module('gmfapp', [
 
 gmfapp.backgroundlayerselector.module.value(
   'gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?' +
         'version=2&background=background');
 
 gmfapp.backgroundlayerselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

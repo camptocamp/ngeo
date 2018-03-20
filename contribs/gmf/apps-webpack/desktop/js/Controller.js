@@ -138,14 +138,14 @@ exports.module = angular.module('AppDesktop', [
   exports.module.constant('defaultLang', 'en');
   exports.module.constant('langUrls', langUrls);
   exports.module.constant('cacheVersion', cacheVersion);
-  exports.module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
-  exports.module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
-  exports.module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
-  exports.module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
-  exports.module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
-  exports.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
-  exports.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
-  exports.module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
+  exports.module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
+  exports.module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+  exports.module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
+  exports.module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
+  exports.module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/printproxy');
+  exports.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
+  exports.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+  exports.module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/short/create');
   exports.module.constant('gmfSearchGroups', ['osm','district']);
   // Requires that the gmfSearchGroups is specified
   exports.module.constant('gmfSearchActions', [
@@ -156,7 +156,7 @@ exports.module = angular.module('AppDesktop', [
   exports.module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
   exports.module.value('ngeoWfsPermalinkOptions',
       /** @type {ngeox.WfsPermalinkOptions} */ ({
-        url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+        url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
         wfsTypes: [
           {featureType: 'fuel', label: 'display_name'},
           {featureType: 'osm_scale', label: 'display_name'}

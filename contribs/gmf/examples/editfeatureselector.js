@@ -38,20 +38,20 @@ gmfapp.editfeatureselector.module = angular.module('gmfapp', [
 
 
 gmfapp.editfeatureselector.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
 gmfapp.editfeatureselector.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 
 gmfapp.editfeatureselector.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
 gmfapp.editfeatureselector.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
 gmfapp.editfeatureselector.module.constant('defaultTheme', 'Edit');
 gmfapp.editfeatureselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

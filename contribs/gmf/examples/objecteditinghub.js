@@ -19,11 +19,11 @@ gmfapp.objecteditinghub.module = angular.module('gmfapp', [
 
 
 gmfapp.objecteditinghub.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
 gmfapp.objecteditinghub.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
 gmfapp.objecteditinghub.module.constant('defaultTheme', 'Demo');
 gmfapp.objecteditinghub.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
