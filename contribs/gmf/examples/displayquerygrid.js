@@ -48,7 +48,7 @@ gmfapp.displayquerygrid.module.constant('ngeoQueryOptions', {
 
 gmfapp.displayquerygrid.module.constant(
   'gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?' +
         'version=2&background=background');
 
 gmfapp.displayquerygrid.module.constant('defaultTheme', 'Demo');

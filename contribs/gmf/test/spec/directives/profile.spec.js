@@ -7,7 +7,7 @@ describe('gmf.GmfProfileController', () => {
 
   beforeEach(() => {
     angular.mock.module('ngeo', ($provide) => {
-      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
       csvDownloadServiceMock = {
         startDownload(data, columnDefs, fileName) {}
       };

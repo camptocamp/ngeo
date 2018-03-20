@@ -23,7 +23,7 @@ gmfapp.contextualdata.module = angular.module('gmfapp', [
 
 gmfapp.contextualdata.module.value(
   'gmfRasterUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
 
 gmfapp.contextualdata.module.value(
   'gmfContextualdatacontentTemplateUrl',

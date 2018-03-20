@@ -25,7 +25,7 @@ gmfapp.wfspermalink.module = angular.module('gmfapp', [
 
 gmfapp.wfspermalink.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
-    url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}

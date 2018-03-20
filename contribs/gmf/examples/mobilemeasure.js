@@ -29,7 +29,7 @@ gmfapp.mobilemeasure.module = angular.module('gmfapp', [
 
 gmfapp.mobilemeasure.module.value(
   'gmfRasterUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
 
 gmfapp.mobilemeasure.module.constant('defaultTheme', 'Demo');
 gmfapp.mobilemeasure.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

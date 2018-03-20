@@ -27,7 +27,7 @@ const appmodule = angular.module('app', [
  * @const
  * @private
  */
-app.mapfishprint.WMS_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
+app.mapfishprint.WMS_URL_ = 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/' +
     'mapserv_proxy';
 
 
@@ -35,7 +35,7 @@ app.mapfishprint.WMS_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
  * @const
  * @private
  */
-app.mapfishprint.PRINT_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
+app.mapfishprint.PRINT_URL_ = 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/' +
     'printproxy';
 
 

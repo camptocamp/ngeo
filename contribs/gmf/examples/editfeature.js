@@ -29,11 +29,11 @@ gmfapp.editfeature.module = angular.module('gmfapp', [
 
 gmfapp.editfeature.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 
 gmfapp.editfeature.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
 gmfapp.editfeature.module.constant('defaultTheme', 'Demo');
 gmfapp.editfeature.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -71,7 +71,7 @@ gmfapp.editfeature.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @private
    */
   this.wmsSource_ = new ol.source.ImageWMS({
-    url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+    url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
     params: {'LAYERS': 'point'}
   });
 

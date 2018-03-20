@@ -30,13 +30,13 @@ gmfapp.search.module = angular.module('gmfapp', [
 ]);
 
 gmfapp.search.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 gmfapp.search.module.value('fulltextsearchUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
 
 gmfapp.search.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
 gmfapp.search.module.constant('defaultTheme', 'Demo');
 gmfapp.search.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -69,7 +69,7 @@ gmfapp.search.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNo
         rateLimitWait: 250
       }
     },
-    url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch'
+    url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch'
   }];
 
   const fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});

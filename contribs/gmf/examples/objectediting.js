@@ -35,8 +35,8 @@ gmfapp.objectediting.module = angular.module('gmfapp', [
 ]);
 
 gmfapp.objectediting.module.constant('defaultTheme', 'ObjectEditing');
-gmfapp.objectediting.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
-gmfapp.objectediting.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+gmfapp.objectediting.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+gmfapp.objectediting.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 gmfapp.objectediting.module.constant('gmfObjectEditingToolsOptions', {
   regularPolygonRadius: 150
 });

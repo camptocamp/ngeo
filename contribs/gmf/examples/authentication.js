@@ -14,7 +14,7 @@ gmfapp.authentication.module = angular.module('gmfapp', [
 
 gmfapp.authentication.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 gmfapp.authentication.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 

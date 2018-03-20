@@ -30,7 +30,7 @@ gmfapp.layertreeadd.module = angular.module('gmfapp', [
 
 
 gmfapp.layertreeadd.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
 
 gmfapp.layertreeadd.module.constant('defaultTheme', 'Demo');
 gmfapp.layertreeadd.module.constant('gmfTreeManagerModeFlush', false);

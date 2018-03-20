@@ -32,7 +32,7 @@ gmfapp.layertree.module = angular.module('gmfapp', [
 
 
 gmfapp.layertree.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
 
 gmfapp.layertree.module.constant('defaultTheme', 'Demo');
 gmfapp.layertree.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

@@ -30,7 +30,7 @@ gmfapp.profile.module = angular.module('gmfapp', [
 
 gmfapp.profile.module.value(
   'gmfProfileJsonUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
 
 gmfapp.profile.module.constant('defaultTheme', 'Demo');
 gmfapp.profile.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
