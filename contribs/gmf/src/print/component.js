@@ -373,7 +373,7 @@ gmf.print.component.Controller_ = class {
     this.pointerDragListenerKey_;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {?ol.EventsKey|Array.<ol.EventsKey>}
      * @private
      */
     this.mapViewResolutionChangeKey_;
