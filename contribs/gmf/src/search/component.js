@@ -113,11 +113,20 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      <script>
  *        (function() {
  *          let module = angular.module('app');
- *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5}) | n}');
+ *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 30, "partitionlimit": 5, "ranksystem": "ts_rank_cd"}) | n}');
  *          module.value('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
  *          module.value('gmfSearchActions', []);
  *        })();
  *      </script>
+ *
+ * The 'fulltextsearchUrl' value in the examples above set three "_query" parameters: "limit",
+ * "partitionlimit" and "ranksystem". For this last one "ts_rank_cd" is the only effective value. It's used to
+ * order your search results with the "ts_rank_cd" ranking system from PostgreSQL module pg_trgm. Without
+ * this value, the PostgreSQL function "similarity" (module pg_trgm) is used for the ranking. Read the
+ * full-text search c2cgeoportal documentation to know more.
+ * You can also add these parameters to the "url" variable of one (or more) of the
+ * gmfx.SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
+ * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {ol.Map} gmf-search-map The map.
@@ -980,9 +989,10 @@ gmf.search.component.SearchController_ = class {
       this.displayColorPicker = true;
       const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
+      const maxZoom = this.maxZoom;
       view.fit(fitArray, {
-        size: size,
-        maxZoom: this.maxZoom
+        size,
+        maxZoom
       });
     }
     this.leaveSearch_();
@@ -1056,10 +1066,11 @@ gmf.search.component.SearchController_ = class {
           const feature = format.readFeature(data.features[resultIndex - 1]);
           this.featureOverlay_.addFeature(feature);
           const fitOptions = /** @type {olx.view.FitOptions} */ ({});
-          if (opt_zoom !== undefined) {
-            fitOptions.maxZoom = opt_zoom;
-            fitOptions.size = this.map.getSize();
+          if (opt_zoom === undefined) {
+            opt_zoome = this.maxZoom;
           }
+          fitOptions.maxZoom = opt_zoom;
+          fitOptions.size = this.map.getSize();
           this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
           this.inputValue = /** @type {string} */ (feature.get('label'));
         }

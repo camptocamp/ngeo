@@ -44,11 +44,21 @@ ngeo.format.WFSAttribute = class {
 
     const type = goog.asserts.assertString(object['type']);
 
-    if (!ngeo.format.Attribute.setGeometryType(attribute, type)) {
-      if (type === 'gml:TimeInstantType') {
+    if (!ngeo.format.AttributeType.setGeometryType(attribute, type)) {
+      if (type === 'gml:TimeInstantType' || type === 'dateTime') {
         attribute.type = ngeo.format.AttributeType.DATETIME;
-      } else if (type === 'double') {
+      } else if (type === 'date') {
+        attribute.type = ngeo.format.AttributeType.DATE;
+      } else if (type === 'time') {
+        attribute.type = ngeo.format.AttributeType.TIME;
+      } else if (type === 'decimal' || type === 'double') {
         attribute.type = ngeo.format.AttributeType.NUMBER;
+        attribute.numType = ngeo.format.AttributeType.FLOAT;
+      } else if (type === 'integer' || type === 'long') {
+        attribute.type = ngeo.format.AttributeType.NUMBER;
+        attribute.numType = ngeo.format.AttributeType.INTEGER;
+      } else if (type === 'boolean') {
+        attribute.type = ngeo.format.AttributeType.BOOLEAN;
       } else {
         attribute.type = ngeo.format.AttributeType.TEXT;
       }
@@ -56,5 +66,4 @@ ngeo.format.WFSAttribute = class {
 
     return attribute;
   }
-
 };

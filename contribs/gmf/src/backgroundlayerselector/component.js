@@ -203,6 +203,7 @@ gmf.backgroundlayerselector.component.Controller_.prototype.handleThemesChange_ 
  * Getter/setter for background layer overlay, used by opacity slider.
  * @param {?number} val The opacity.
  * @returns {number} The background layer opacity.
+ * @export
  */
 gmf.backgroundlayerselector.component.Controller_.prototype.getSetBgLayerOpacity = function(val) {
   if (val) {
@@ -227,6 +228,7 @@ gmf.backgroundlayerselector.component.Controller_.prototype.setLayer = function(
 /**
  * Set a background layer overlay, used by the opacity slider.
  * @param {ol.layer.Base} layer The opacity background layer.
+ * @export
  */
 gmf.backgroundlayerselector.component.Controller_.prototype.setOpacityBgLayer = function(layer) {
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
