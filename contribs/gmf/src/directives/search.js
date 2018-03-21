@@ -65,7 +65,7 @@ gmf.module.value('gmfSearchTemplateUrl',
  *      <script>
  *        (function() {
  *          let module = angular.module('app');
- *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20}) | n}');
+ *          module.value('fulltextsearchUrl', '${request.route_url('fulltextsearch', _query={"limit": 20, "ranksystem": "similarity"}) | n}');
  *          module.value('gmfSearchGroups', []);
  *          module.constant('gmfSearchActions', [
  *                {action: 'add_theme', title: 'Add a theme'},
@@ -94,6 +94,15 @@ gmf.module.value('gmfSearchTemplateUrl',
  *          module.value('gmfSearchActions', []);
  *        })();
  *      </script>
+ *
+ * The 'fulltextsearchUrl' value in the examples above set three "_query" parameters: "limit",
+ * "partitionlimit" and "ranksystem". For this last one "similarity" is the only effective value. It's used to
+ * order your search results with the "similarity" ranking system from PostgreSQL module pg_trgm. Without this value,
+ * the PostgreSQL function "ts_rank_cd" is used for the ranking. Read the full-text search c2cgeoportal documentation
+ * to know more.
+ * You can also add these parameters to the "url" variable of one (or more) of the
+ * gmfx.SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
+ * allows you to have multiples configurations on one search component.
  *
  * @param {string} gmfSearchTemplateUrl URL to template.
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
