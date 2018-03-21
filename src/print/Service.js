@@ -3,6 +3,7 @@ goog.provide('ngeo.print.Service');
 goog.require('goog.asserts');
 goog.require('ngeo.print.VectorEncoder');
 goog.require('ngeo.map.LayerHelper');
+goog.require('ol.array');
 goog.require('ol.obj');
 goog.require('ol.layer.Image');
 goog.require('ol.layer.Tile');
@@ -169,6 +170,9 @@ ngeo.print.Service.prototype.encodeMap_ = function(map, scale, object) {
   goog.asserts.assert(mapLayerGroup);
   this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
+
+  // Sort the layer by ZIndex
+  ol.array.stableSort(layers, (layer_a, layer_b) => layer_a.getZIndex() - layer_b.getZIndex());
   layers = layers.slice().reverse();
 
   layers.forEach((layer) => {
