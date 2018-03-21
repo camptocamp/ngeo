@@ -16,12 +16,6 @@ gmf.DATALAYERGROUP_NAME = 'data';
  * @const
  * @export
  */
-gmf.EXTERNALLAYERGROUP_NAME = 'external';
-
-/**
- * @const
- * @export
- */
 gmf.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
 
 

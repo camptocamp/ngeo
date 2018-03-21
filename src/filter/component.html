@@ -88,8 +88,8 @@
 <a
     class="btn btn-link"
     type="button"
-    ng-click="!$ctrl.aRuleIsActive && $ctrl.apply()"
-    ng-disabled="$ctrl.aRuleIsActive">
+    ng-click="$ctrl.apply()"
+    ng-disabled="$ctrl.hasARule() === false || $ctrltrl.datasource.visible === false">
   <span class="fa fa-check"></span>
   <span translate>Apply filter</span>
 </a>
@@ -97,8 +97,8 @@
 <a
     class="btn btn-link"
     type="button"
-    ng-click="!$ctrl.aRuleIsActive && $ctrl.getData()"
-    ng-disabled="$ctrl.aRuleIsActive">
+    ng-click="$ctrl.getData()"
+    ng-disabled="$ctrl.hasARule() === false || $ctrl.datasource.visible === false">
   <span class="fa fa-chevron-right"></span>
   <span translate>Get data</span>
 </a>

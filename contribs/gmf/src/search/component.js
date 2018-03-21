@@ -980,9 +980,10 @@ gmf.search.component.SearchController_ = class {
       this.displayColorPicker = true;
       const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
         featureGeometry.getExtent() : featureGeometry;
+      const maxZoom = this.maxZoom;
       view.fit(fitArray, {
-        size: size,
-        maxZoom: this.maxZoom
+        size,
+        maxZoom
       });
     }
     this.leaveSearch_();
@@ -1056,10 +1057,11 @@ gmf.search.component.SearchController_ = class {
           const feature = format.readFeature(data.features[resultIndex - 1]);
           this.featureOverlay_.addFeature(feature);
           const fitOptions = /** @type {olx.view.FitOptions} */ ({});
-          if (opt_zoom !== undefined) {
-            fitOptions.maxZoom = opt_zoom;
-            fitOptions.size = this.map.getSize();
+          if (opt_zoom === undefined) {
+            opt_zoome = this.maxZoom;
           }
+          fitOptions.maxZoom = opt_zoom;
+          fitOptions.size = this.map.getSize();
           this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
           this.inputValue = /** @type {string} */ (feature.get('label'));
         }

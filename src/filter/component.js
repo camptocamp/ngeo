@@ -260,6 +260,15 @@ ngeo.filter.component.FilterController_ = class {
 
 
   /**
+   * @return {boolean} True if at least one rule is currently defined.
+   * @export
+   */
+  hasARule() {
+    return [].concat(this.customRules, this.directedRules).length > 0;
+  }
+
+
+  /**
    * Loop in all directed and custom rules. Apply the rules that have a proper
    * value inside the data source, in the `filterRules` property.
    * @export

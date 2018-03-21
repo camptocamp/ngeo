@@ -168,7 +168,10 @@ ngeo.statemanager.WfsPermalink.prototype.issueRequest_ = function(wfsType, filte
   });
 
   const featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
-  this.$http_.post(this.url_, featureRequest).then((response) => {
+  const config = {
+    headers: {'Content-Type': 'text/xml; charset=UTF-8'}
+  };
+  this.$http_.post(this.url_, featureRequest, config).then((response) => {
     const features = wfsFormat.readFeatures(response.data);
     if (features.length == 0) {
       return;
