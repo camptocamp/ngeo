@@ -3,6 +3,7 @@ goog.provide('ngeo.format.WFSAttribute');
 goog.require('goog.asserts');
 goog.require('ngeo.format.Attribute');
 goog.require('ngeo.format.AttributeType');
+goog.require('ngeo.format.XSDAttribute');
 
 
 ngeo.format.WFSAttribute = class {
@@ -45,10 +46,20 @@ ngeo.format.WFSAttribute = class {
     const type = goog.asserts.assertString(object['type']);
 
     if (!ngeo.format.Attribute.setGeometryType(attribute, type)) {
-      if (type === 'gml:TimeInstantType') {
+      if (type === 'gml:TimeInstantType' || type === 'dateTime') {
         attribute.type = ngeo.format.AttributeType.DATETIME;
-      } else if (type === 'double') {
+      } else if (type === 'date') {
+        attribute.type = ngeo.format.AttributeType.DATE;
+      } else if (type === 'time') {
+        attribute.type = ngeo.format.AttributeType.TIME;
+      } else if (type === 'decimal' || type === 'double') {
         attribute.type = ngeo.format.AttributeType.NUMBER;
+        attribute.numType = ngeo.format.XSDAttribute.NumberType.FLOAT;
+      } else if (type === 'integer' || type === 'long') {
+        attribute.type = ngeo.format.AttributeType.NUMBER;
+        attribute.numType = ngeo.format.XSDAttribute.NumberType.INTEGER;
+      } else if (type === 'boolean') {
+        attribute.type = ngeo.format.AttributeType.BOOLEAN;
       } else {
         attribute.type = ngeo.format.AttributeType.TEXT;
       }

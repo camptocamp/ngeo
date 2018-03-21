@@ -117,7 +117,16 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *          module.value('gmfSearchGroups', ${dumps(fulltextsearch_groups) | n});
  *          module.value('gmfSearchActions', []);
  *        })();
- *      </script>
+ *     </scriptrchUrl' value in the examples above set three "_query" parameters: "limit",
+ *
+ * The 'fulltextsearchUrl' value in the examples above set three "_query" parameters: "limit",
+ * "partitionlimit" and "ranksystem". For this last one "ts_rank_cd" is the only effective value. It's used to
+ * order your search results with the "ts_rank_cd" ranking system from PostgreSQL module pg_trgm. Without
+ * this value, the PostgreSQL function "similarity" (module pg_trgm) is used for the ranking. Read the
+ * full-text search c2cgeoportal documentation to know more.
+ * You can also add these parameters to the "url" variable of one (or more) of the
+ * gmfx.SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
+ * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {ol.Map} gmf-search-map The map.

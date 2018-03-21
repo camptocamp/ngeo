@@ -18,6 +18,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
 goog.require('ol.Map');
 goog.require('ol.math');
+goog.require('ol.Observable');
 
 
 /**
@@ -372,6 +373,12 @@ gmf.print.component.Controller_ = class {
     this.pointerDragListenerKey_;
 
     /**
+     * @type {?ol.EventsKey|Array.<ol.EventsKey>}
+     * @private
+     */
+    this.mapViewResolutionChangeKey_;
+
+    /**
      * Current report reference id.
      * @type {string}
      * @private
@@ -422,6 +429,12 @@ gmf.print.component.Controller_ = class {
      * @export
      */
     this.hiddenAttributeNames;
+
+    /**
+     * @type {boolean}
+     * @private
+     */
+    this.scaleManuallySelected_ = false;
 
     /**
      * @type {function(ol.render.Event)}
@@ -507,8 +520,8 @@ gmf.print.component.Controller_ = class {
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
     goog.asserts.assert(this.layoutInfo.scales);
     goog.asserts.assert(this.layoutInfo.scale !== undefined);
-    if (this.layoutInfo.scale === -1 ||
-        ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale)) {
+    if (!this.scaleManuallySelected_ &&
+        (this.layoutInfo.scale === -1 || ol.array.includes(this.layoutInfo.scales, this.layoutInfo.scale))) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
       this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
@@ -537,6 +550,9 @@ gmf.print.component.Controller_ = class {
         this.parseCapabilities_(resp);
         this.postComposeListenerKey_ = ol.events.listen(this.map, 'postcompose', this.postcomposeListener_);
         this.pointerDragListenerKey_ = ol.events.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
+        this.mapViewResolutionChangeKey_ = this.map.getView().on('change:resolution', () => {
+          this.scaleManuallySelected_ = false;
+        });
         this.map.render();
       }, (resp) => {
         // Get capabilities - On error
@@ -546,6 +562,7 @@ gmf.print.component.Controller_ = class {
     } else {
       ol.events.unlistenByKey(this.postComposeListenerKey_);
       ol.events.unlistenByKey(this.pointerDragListenerKey_);
+      ol.Observable.unByKey(this.mapViewResolutionChangeKey_);
       this.getSetRotation(0);
       this.map.render(); // Redraw (remove) post compose mask;
     }
@@ -805,7 +822,7 @@ gmf.print.component.Controller_ = class {
 
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution() || 0;
-    const scale = this.getOptimalScale_(mapSize, viewResolution);
+    const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
     const rotation = this.rotateMask ? -this.rotation : this.rotation;
     const datasource = this.getDataSource_();
 
@@ -813,7 +830,7 @@ gmf.print.component.Controller_ = class {
       'datasource': datasource,
       'lang': this.gettextCatalog_.currentLanguage,
       'rotation': rotation,
-      'scale': this.layoutInfo.scale
+      'scale': scale
     };
 
     if (this.layoutInfo.simpleAttributes) {
@@ -1169,6 +1186,9 @@ gmf.print.component.Controller_ = class {
       const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
       const contrainRes = this.map.getView().constrainResolution(res, 0, 1);
       this.map.getView().setResolution(contrainRes);
+      // Render the map to update the postcompose mask manually
+      this.map.render();
+      this.scaleManuallySelected_ = true;
     }
     return this.layoutInfo.scale;
   }
