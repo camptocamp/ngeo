@@ -97,7 +97,8 @@ gmf.module.value('gmfSearchTemplateUrl',
  *
  * The 'fulltextsearchUrl' value in the examples above set three "_query" parameters: "limit",
  * "partitionlimit" and "ranksystem". For this last one "similarity" is the only effective value. It's used to
- * order your search results with another rank system. Read the full-text search c2cgeoportal documentation
+ * order your search results with the "similarity" ranking system from PostgreSQL module pg_trgm. Without this value,
+ * the PostgreSQL function "ts_rank_cd" is used for the ranking. Read the full-text search c2cgeoportal documentation
  * to know more.
  * You can also add these parameters to the "url" variable of one (or more) of the
  * gmfx.SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
