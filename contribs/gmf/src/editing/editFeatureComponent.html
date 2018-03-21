@@ -41,46 +41,6 @@
       </span>
     </a>
     <div ng-switch-default>
-      <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown">
-        <div class="modal-header">
-          <button
-              type="button"
-              class="close"
-              data-dismiss="modal"
-              aria-label="{{'Close' | translate}}">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title">
-            {{'Unsaved modifications!' | translate}}
-          </h4>
-        </div>
-        <div class="modal-body">
-          {{'There are unsaved changes.' | translate}}
-        </div>
-        <div class="modal-footer">
-          <button
-              type="button"
-              class="btn btn-default"
-              data-dismiss="modal"
-              ng-click="efCtrl.continueWithoutSaving()">
-            {{'Continue without saving' | translate}}
-          </button>
-          <button
-              type="button"
-              class="btn btn-primary"
-              data-dismiss="modal">
-            {{'Cancel' | translate}}
-          </button>
-          <button
-              type="button"
-              class="btn btn-default"
-              data-dismiss="modal"
-              ng-click="efCtrl.submit()">
-            {{'Save' | translate}}
-          </button>
-        </div>
-      </ngeo-modal>
-
       <form
         novalidate
         name="form"
@@ -126,6 +86,45 @@
       </form>
     </div>
   </div>
+  <ngeo-modal ng-model="efCtrl.unsavedModificationsModalShown">
+    <div class="modal-header">
+      <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="{{'Close' | translate}}">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title">
+        {{'Unsaved modifications!' | translate}}
+      </h4>
+    </div>
+    <div class="modal-body">
+      {{'There are unsaved changes.' | translate}}
+    </div>
+    <div class="modal-footer">
+      <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+          ng-click="efCtrl.continueWithoutSaving()">
+        {{'Continue without saving' | translate}}
+      </button>
+      <button
+          type="button"
+          class="btn btn-primary"
+          data-dismiss="modal">
+        {{'Cancel' | translate}}
+      </button>
+      <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+          ng-click="efCtrl.submit()">
+        {{'Save' | translate}}
+      </button>
+    </div>
+  </ngeo-modal>
   <ngeo-modal ng-model="efCtrl.showServerError">
     <div class="modal-header">{{'Server error.' | translate}}</div>
     <div class="modal-body">{{$parent.efCtrl.serverErrorType}}<br>
