@@ -143,14 +143,14 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      of supported projections for coordinates search (projections must be
  *      defined in ol3). If not provided, only the map's view projection
  *      format will be supported.
- * @htmlAttribute {boolean} gmf-search-clearbutton The clear button.
- * @htmlAttribute {boolean} gmf-search-delay The bloodhound request delay.
- * @htmlAttribute {boolean} gmf-search-colorchooser Whether to let the user
- *      change the style of the feature on the map. Default is false.
  * @htmlAttribute {ngeox.SearchComponentListeners} gmf-search-listeners
  *      The listeners.
- * @htmlAttribute {number} gmf-search-maxzoom The maximum zoom we will zoom on result, default is 16.
- * @htmlAttribute {function} gmf-search-on-init Optional function called when the component is initialized.
+ * @htmlAttribute {boolean=} gmf-search-clearbutton Optional clear button in the input search. Default to true.
+ * @htmlAttribute {number=} gmf-search-delay Optional bloodhound request delay in ms. Default to 50 ms.
+ * @htmlAttribute {boolean=} gmf-search-colorchooser Optional. Whether to let the user
+ *      change the style of the feature on the map. Default is false.
+ * @htmlAttribute {number=} gmf-search-maxzoom Optional maximum zoom we will zoom on result, default is 16.
+ * @htmlAttribute {function=} gmf-search-on-init Optional function called when the component is initialized.
  * @ngdoc component
  * @ngname gmfSearch
  */
@@ -162,12 +162,12 @@ gmf.search.component.component_ = {
     'datasources': '<gmfSearchDatasources',
     'typeaheadOptions': '<?gmfSearchOptions',
     'featuresStyles': '<?gmfSearchStyles',
-    'clearButton': '=gmfSearchClearbutton',
-    'colorChooser': '<gmfSearchColorchooser',
+    'clearButton': '=?gmfSearchClearbutton',
+    'colorChooser': '<?gmfSearchColorchooser',
     'coordinatesProjections': '<?gmfSearchCoordinatesprojections',
     'additionalListeners': '<gmfSearchListeners',
-    'maxZoom': '<gmfSearchMaxzoom',
-    'delay': '<gmfSearchDelay',
+    'maxZoom': '<?gmfSearchMaxzoom',
+    'delay': '<?gmfSearchDelay',
     'onInitCallback': '<?gmfSearchOnInit'
   },
   controller: 'gmfSearchController',
@@ -330,7 +330,7 @@ gmf.search.component.SearchController_ = class {
      * @type {number}
      * @export
      */
-    this.delay = parseInt(this.scope_['delay'], 10) || 50;
+    this.delay;
 
     /**
      * The maximum zoom we will zoom on result.
@@ -429,6 +429,9 @@ gmf.search.component.SearchController_ = class {
     const gettextCatalog = this.gettextCatalog_;
     this.clearButton = this.clearButton !== false;
     this.colorChooser = this.colorChooser === true;
+    if (this.delay === undefined) {
+      this.delay = 50;
+    }
     this.placeholder = this.placeholder !== undefined ? this.placeholder :
       gettextCatalog.getString('Search…');
 
