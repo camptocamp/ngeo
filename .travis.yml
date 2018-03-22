@@ -100,7 +100,7 @@ jobs:
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
     - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
     - |
-      sed -i 's/"name": "ngeo",/"name": "ngeo-es6",/g' package.json
+      buildtools/create-es6-package
     after_success:
     - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
     - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
