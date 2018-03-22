@@ -18,7 +18,6 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
 goog.require('ol.Map');
 goog.require('ol.math');
-goog.require('ol.Observable');
 
 
 /**
@@ -373,7 +372,7 @@ gmf.print.component.Controller_ = class {
     this.pointerDragListenerKey_;
 
     /**
-     * @type {?ol.EventsKey|Array.<ol.EventsKey>}
+     * @type {ol.EventsKey}
      * @private
      */
     this.mapViewResolutionChangeKey_;
@@ -550,7 +549,7 @@ gmf.print.component.Controller_ = class {
         this.parseCapabilities_(resp);
         this.postComposeListenerKey_ = ol.events.listen(this.map, 'postcompose', this.postcomposeListener_);
         this.pointerDragListenerKey_ = ol.events.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
-        this.mapViewResolutionChangeKey_ = this.map.getView().on('change:resolution', () => {
+        this.mapViewResolutionChangeKey_ = ol.events.listen(this.map.getView(), 'change:resolution', () => {
           this.scaleManuallySelected_ = false;
         });
         this.map.render();
@@ -562,7 +561,7 @@ gmf.print.component.Controller_ = class {
     } else {
       ol.events.unlistenByKey(this.postComposeListenerKey_);
       ol.events.unlistenByKey(this.pointerDragListenerKey_);
-      ol.Observable.unByKey(this.mapViewResolutionChangeKey_);
+      ol.events.unlistenByKey(this.mapViewResolutionChangeKey_);
       this.getSetRotation(0);
       this.map.render(); // Redraw (remove) post compose mask;
     }
