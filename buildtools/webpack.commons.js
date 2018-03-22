@@ -15,6 +15,45 @@ const providePlugin = new webpack.ProvidePlugin({
   $: 'jquery',
 });
 
+const babelAnnotateUse = {
+  loader: 'babel-loader',
+  options: {
+    presets: ['es2015'],
+    plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
+  }
+}
+
+const ngeoRule = {
+  test: /ngeo\/src\/.*\.js$/,
+  use: babelAnnotateUse,
+}
+
+const ngeoExamplesRule = {
+  test: /ngeo\/examples\/.*\.js$/,
+  use: babelAnnotateUse,
+}
+
+const gmfRule = {
+  test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
+  use: babelAnnotateUse,
+}
+
+const gmfExamplesRule = {
+  test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
+  use: babelAnnotateUse,
+}
+
+const olRule = {
+  test: /openlayers\/src\/.*\.js$/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: ['es2015'],
+    }
+  }
+};
+
+
 const angularRule = {
   test: require.resolve('angular'),
   use: {
@@ -102,6 +141,7 @@ const config = {
   },
   module: {
     rules: [
+      olRule,
       angularRule,
       typeaheadRule,
       dateFormatterRule,
@@ -110,6 +150,10 @@ const config = {
       htmlRule,
       iconRule,
       cursorRule,
+      ngeoRule,
+      ngeoExamplesRule,
+      gmfRule,
+      gmfExamplesRule,
     ]
   },
   plugins: [

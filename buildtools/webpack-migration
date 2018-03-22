@@ -46,7 +46,7 @@ set +x
 
 echo ------------------------
 echo Clean used scripts with:
-echo '  git rm buildtools/git-grep-sed buildtools/webpack-migration contribs/gmf/apps-webpack'
+echo '  git rm buildtools/git-grep-sed buildtools/webpack-migration contribs/gmf/apps-webpack buildtools/create-es6-package'
 echo
 echo Fix alone comment in contribs/gmf/src/gmf.js
 echo

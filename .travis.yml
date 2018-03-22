@@ -82,6 +82,7 @@ jobs:
     script:
     - npm install
     - npm install https://api.github.com/repos/openlayers/openlayers/tarball/bfae19c7e138533ad0c1a071d8886d55aac9bd35
+    - rm -f node_modules/openlayers/.babelrc # this babelrc is internal to OpenLayers (jsdoc)
     - buildtools/webpack-migration
     - git add -A  # for git-attributes
     - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
@@ -100,7 +101,7 @@ jobs:
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
     - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
     - |
-      sed -i 's/"name": "ngeo",/"name": "ngeo-es6",/g' package.json
+      buildtools/create-es6-package
     after_success:
     - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
     - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi

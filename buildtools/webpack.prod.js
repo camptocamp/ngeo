@@ -24,34 +24,6 @@ const fontRule = {
   }
 };
 
-const babelUse = {
-  loader: 'babel-loader',
-  options: {
-    presets: ['es2015'],
-    plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
-  }
-}
-
-const ngeoRule = {
-  test: /ngeo\/src\/.*\.js$/,
-  use: babelUse,
-}
-
-const ngeoExamplesRule = {
-  test: /ngeo\/examples\/.*\.js$/,
-  use: babelUse,
-}
-
-const gmfRule = {
-  test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
-  use: babelUse,
-}
-
-const gmfExamplesRule = {
-  test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
-  use: babelUse,
-}
-
 module.exports = {
   mode: 'production',
   output: {
@@ -64,10 +36,6 @@ module.exports = {
     rules: [
       resourcesRule,
       fontRule,
-      ngeoRule,
-      ngeoExamplesRule,
-      gmfRule,
-      gmfExamplesRule,
     ]
   },
   optimization: {

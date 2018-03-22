@@ -1,0 +1,5 @@
+#!/bin/bash
+sed -i 's/"name": "ngeo",/"name": "ngeo-es6",/g' package.json
+sed -i 'sY/ngeo\\/Y/ngeo-es6\\/Yg' buildtools/webpack.*.js
+sed -i 'sY~openlayersY../../../node_modules/openlayersYg' contribs/gmf/less/base.less
+sed -i 'sY~bootstrapY../../../node_modules/bootstrapYg' contribs/gmf/less/base.less
