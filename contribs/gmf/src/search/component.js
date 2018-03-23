@@ -162,7 +162,7 @@ gmf.search.component.component_ = {
     'datasources': '<gmfSearchDatasources',
     'typeaheadOptions': '<?gmfSearchOptions',
     'featuresStyles': '<?gmfSearchStyles',
-    'clearButton': '=gmfSearchClearbutton',
+    'clearButton': '=?gmfSearchClearbutton',
     'colorChooser': '<gmfSearchColorchooser',
     'coordinatesProjections': '<?gmfSearchCoordinatesprojections',
     'additionalListeners': '<gmfSearchListeners',
