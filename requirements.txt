@@ -2,7 +2,7 @@ beautifulsoup4==4.6.0
 glob2==0.6
 htmlmin==0.1.12
 Mako==1.0.7
-pip==9.0.2
+pip==9.0.3
 requests==2.18.4
 setuptools==39.0.1
 transifex-client==0.12.5  # rq.filter: !=0.13.0, !=0.13.1
