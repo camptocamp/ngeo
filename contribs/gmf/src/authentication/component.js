@@ -93,7 +93,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *           {{'You must change your password' | translate}}
  *         </h4>
  *       </div>
- *       <div class="modal-body" translate>
+ *       <div class="modal-body">
  *         <gmf-authentication
  *           gmf-authentication-force-password-change="::true">
  *         </gmf-authentication>
