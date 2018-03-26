@@ -48,6 +48,7 @@ const olRule = {
   use: {
     loader: 'babel-loader',
     options: {
+      babelrc: false,
       presets: ['es2015'],
     }
   }
