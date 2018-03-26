@@ -42,7 +42,7 @@ page.onResourceError = function(resourceError) {
     console.warn('Ignoring ressource error from Google');
   } else if (resourceError.url.includes('https://csi.gstatic.com/')) {
     console.warn('Ignoring ressource error from Google static');
-  } else {
+  } else if (resourceError.errorCode >= 300) {
     console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
     exitCode = 2;
   }
