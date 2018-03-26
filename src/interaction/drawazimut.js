@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.DrawAzimut');
 
 goog.require('goog.asserts');
+goog.require('ngeo.interaction.common');
 goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.Feature');
@@ -10,7 +11,6 @@ goog.require('ol.geom.Circle');
 goog.require('ol.geom.GeometryCollection');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
-goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -88,8 +88,7 @@ ngeo.interaction.DrawAzimut = function(options) {
       useSpatialIndex: false,
       wrapX: false
     }),
-    style: options.style !== undefined ?
-      options.style : ol.interaction.Draw.getDefaultStyleFunction()
+    style: options.style || ngeo.interaction.common.getDefaultDrawStyleFunction()
   });
 
   ol.events.listen(this, 'change:active', this.updateState_, this);

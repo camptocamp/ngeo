@@ -1,12 +1,12 @@
 goog.provide('ngeo.interaction.Rotate');
 
 goog.require('goog.asserts');
+goog.require('ngeo.interaction.common');
 goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.extent');
 goog.require('ol.Feature');
 goog.require('ol.events');
-goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.geom.Geometry');
 goog.require('ol.geom.Point');
@@ -89,8 +89,6 @@ ngeo.interaction.Rotate = function(options) {
    */
   this.centerCoordinate_ = null;
 
-  const style = options.style ? options.style : ol.interaction.Modify.getDefaultStyleFunction();
-
   /**
    * Draw overlay where sketch features are drawn.
    * @type {ol.layer.Vector}
@@ -101,7 +99,7 @@ ngeo.interaction.Rotate = function(options) {
       useSpatialIndex: false,
       wrapX: !!options.wrapX
     }),
-    style: style,
+    style: options.style || ngeo.interaction.common.getDefaultModifyStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });

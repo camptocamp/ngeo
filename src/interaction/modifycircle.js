@@ -3,6 +3,7 @@ goog.provide('ngeo.interaction.ModifyCircle');
 goog.require('goog.asserts');
 goog.require('ngeo.CustomEvent');
 goog.require('ngeo.format.FeatureProperties');
+goog.require('ngeo.interaction.common');
 goog.require('ngeo.interaction.MeasureAzimut');
 goog.require('ol');
 goog.require('ol.Feature');
@@ -18,7 +19,6 @@ goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
 goog.require('ol.structs.RBush');
-goog.require('ol.style.Style');
 
 
 /**
@@ -106,8 +106,7 @@ ngeo.interaction.ModifyCircle = function(options) {
       useSpatialIndex: false,
       wrapX: !!options.wrapX
     }),
-    style: options.style ? options.style :
-      ngeo.interaction.ModifyCircle.getDefaultStyleFunction(),
+    style: options.style || ngeo.interaction.common.getDefaultModifyStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -482,15 +481,4 @@ ngeo.interaction.ModifyCircle.prototype.setGeometryCoordinates_ = function(geome
   this.changingFeature_ = true;
   geometry.setCoordinates(coordinates);
   this.changingFeature_ = false;
-};
-
-
-/**
- * @return {ol.StyleFunction} Styles.
- */
-ngeo.interaction.ModifyCircle.getDefaultStyleFunction = function() {
-  const style = ol.style.Style.createDefaultEditing();
-  return function(feature, resolution) {
-    return style[/**@type {ol.geom.GeometryType} */ ('Point')];
-  };
 };
