@@ -72,7 +72,7 @@ ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $in
           const circle = /** @type {ol.geom.Circle} */ (
             geometry.getGeometries()[1]);
           const polygon = ol.geom.Polygon.fromCircle(circle, 64);
-          event.feature = new ol.Feature(polygon);
+          event.detail.feature = new ol.Feature(polygon);
           const azimut = ngeo.interaction.MeasureAzimut.getAzimut(
             /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
           );
