@@ -8,6 +8,7 @@ goog.provide('app.desktop.Controller');
 
 goog.require('app');
 goog.require('gmf.controllers.AbstractDesktopController');
+goog.require('gmf.import.module');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
@@ -15,8 +16,22 @@ goog.require('ol');
 app.desktop.module = angular.module('AppDesktop', [
   app.module.name,
   gmf.controllers.AbstractDesktopController.module.name,
+  gmf.import.module.name,
 ]);
 
+app.desktop.module.value('gmfExternalOGCServers', [{
+  'name': 'Swiss Topo WMS',
+  'type': 'WMS',
+  'url': 'https://wms.geo.admin.ch/?lang=fr'
+}, {
+  'name': 'ASIT VD',
+  'type': 'WMTS',
+  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
+}, {
+  'name': 'Swiss Topo WMTS',
+  'type': 'WMTS',
+  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
+}]);
 
 /**
  * @param {angular.Scope} $scope Scope.
