@@ -332,11 +332,11 @@ ngeo.interaction.Measure.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.Draw.Event} evt Event.
+ * @param {ol.interaction.Draw.Event|ngeox.DrawEvent} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
-  this.sketchFeature = evt.feature;
+  this.sketchFeature = evt.feature || evt.detail.feature;
   this.vectorLayer_.getSource().clear(true);
   this.createMeasureTooltip_();
 
@@ -360,7 +360,7 @@ ngeo.interaction.Measure.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.Draw.Event} evt Event.
+ * @param {ol.interaction.Draw.Event|ngeox.DrawEvent} evt Event.
  * @private
  */
 ngeo.interaction.Measure.prototype.onDrawEnd_ = function(evt) {

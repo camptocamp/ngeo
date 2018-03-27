@@ -2545,6 +2545,20 @@ ngeox.BackgroundEvent;
  *   feature: ol.Feature
  * }>}
  */
+ngeox.DrawEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   features: ol.Feature
+ * }>}
+ */
+ngeox.ModifyEvent;
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>}
+ */
 ngeox.MeasureEvent;
 
 /**

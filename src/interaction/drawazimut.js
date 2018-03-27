@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.DrawAzimut');
 
 goog.require('goog.asserts');
+goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.Feature');
 goog.require('ol.events');
@@ -217,8 +218,9 @@ ngeo.interaction.DrawAzimut.prototype.startDrawing_ = function(event) {
   this.sketchFeature_ = new ol.Feature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
-  this.dispatchEvent(new ol.interaction.Draw.Event(
-    /** @type {ol.interaction.DrawEventType} */ ('drawstart'), this.sketchFeature_));
+  /** @type {ngeox.DrawEvent} */
+  const evt = new ngeo.CustomEvent('drawstart', {feature: this.sketchFeature_});
+  this.dispatchEvent(evt);
 };
 
 
@@ -297,8 +299,9 @@ ngeo.interaction.DrawAzimut.prototype.finishDrawing_ = function() {
     this.source_.addFeature(sketchFeature);
   }
 
-  this.dispatchEvent(new ol.interaction.Draw.Event(
-    /** @type {ol.interaction.DrawEventType} */ ('drawend'), sketchFeature));
+  /** @type {ngeox.DrawEvent} */
+  const event = new ngeo.CustomEvent('drawend', {feature: this.sketchFeature_});
+  this.dispatchEvent(event);
 };
 
 

@@ -16,7 +16,7 @@ goog.require('ol.proj.Projection');
  *
  * @constructor
  * @struct
- * @fires ol.interaction.Draw.Event
+ * @fires ngeox.MeasureEvent
  * @extends {ngeo.interaction.Measure}
  * @param {!ngeox.unitPrefix} unitPrefixFormat The format function
  * @param {!ngeox.number} numberFormat The format function

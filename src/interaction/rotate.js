@@ -184,8 +184,9 @@ ngeo.interaction.Rotate.prototype.addFeature_ = function(feature) {
 ngeo.interaction.Rotate.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
-    this.dispatchEvent(new ol.interaction.Modify.Event(
-      /** @type {ol.interaction.ModifyEventType} */ ('modifystart'), this.features_, evt));
+    /** @type {ngeox.ModifyEvent} */
+    const event = new ngeo.CustomEvent('modifystart', {features: this.features_});
+    this.dispatchEvent(event);
   }
 };
 

@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.MobileDraw');
 
 goog.require('goog.asserts');
+goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Feature');
@@ -25,7 +26,7 @@ goog.require('ol.source.Vector');
  *
  * @constructor
  * @struct
- * @fires ol.interaction.Draw.Event
+ * @fires ngeox.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.MobileDrawOptions} options Options
  */
@@ -206,8 +207,9 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
   if (this.type_ === 'Point') {
     if (!this.sketchFeature_) {
       this.sketchFeature_ = new ol.Feature(new ol.geom.Point(coordinate));
-      this.dispatchEvent(new ol.interaction.Draw.Event(
-        /** @type {ol.interaction.DrawEventType} */ ('drawstart'), this.sketchFeature_));
+      /** @type {ngeox.DrawEvent} */
+      const event = new ngeo.CustomEvent('drawstart', {feature: this.sketchFeature_});
+      this.dispatchEvent(event);
     }
     sketchFeatureGeom = this.sketchFeature_.getGeometry();
     goog.asserts.assertInstanceof(sketchFeatureGeom, ol.geom.SimpleGeometry);
@@ -221,8 +223,9 @@ ngeo.interaction.MobileDraw.prototype.addToDrawing = function() {
     if (!this.sketchFeature_) {
       coordinates = [coordinate.slice(), coordinate.slice()];
       this.sketchFeature_ = new ol.Feature(new ol.geom.LineString(coordinates));
-      this.dispatchEvent(new ol.interaction.Draw.Event(
-        /** @type {ol.interaction.DrawEventType} */ ('drawstart'), this.sketchFeature_));
+      /** @type {ngeox.DrawEvent} */
+      const event = new ngeo.CustomEvent('drawstart', {feature: this.sketchFeature_});
+      this.dispatchEvent(event);
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
       goog.asserts.assertInstanceof(sketchFeatureGeom, ol.geom.SimpleGeometry);
@@ -287,8 +290,9 @@ ngeo.interaction.MobileDraw.prototype.finishDrawing = function() {
 
   this.set('drawing', false);
 
-  this.dispatchEvent(new ol.interaction.Draw.Event(
-    /** @type {ol.interaction.DrawEventType} */ ('drawend'), this.sketchFeature_));
+  /** @type {ngeox.DrawEvent} */
+  const event = new ngeo.CustomEvent('drawend', {feature: this.sketchFeature_});
+  this.dispatchEvent(event);
 };
 
 
