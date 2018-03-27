@@ -80,7 +80,7 @@ You can see in the `travis.yaml` file how it's done (JOB=webpack).
 Also, if you use the non-webpack version again, you must reinstall the version of openlayers described in your
 `package.json`.
 
-Then, to run you application, use `npm run serve-ngeo-examples`, `npm run serve-gmf-examples`, or `npm run serve-gmf-apps` (as defined
+Then, to run your application, use `npm run serve-ngeo-examples`, `npm run serve-gmf-examples`, or `npm run serve-gmf-apps` (as defined
 in the `script` block of your `package.json`).
 
 To know more, see the [webpack documentation](https://webpack.js.org) and our configuaration in the
