@@ -83,7 +83,7 @@ Also, if you use the non-webpack version again, you must reinstall the version o
 Then, to run your application, use `npm run serve-ngeo-examples`, `npm run serve-gmf-examples`, or `npm run serve-gmf-apps` (as defined
 in the `script` block of your `package.json`).
 
-To know more, see the [webpack documentation](https://webpack.js.org) and our configuaration in the
+To know more, see the [webpack documentation](https://webpack.js.org) and our configuration in the
 `webpack.config.js` file.
 
 ### Main changes in our manner to code
