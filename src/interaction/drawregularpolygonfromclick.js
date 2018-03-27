@@ -1,13 +1,13 @@
 goog.provide('ngeo.interaction.DrawRegularPolygonFromClick');
 
 goog.require('goog.asserts');
+goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.events');
 goog.require('ol.Feature');
 goog.require('ol.functions');
 goog.require('ol.geom.Circle');
 goog.require('ol.geom.Polygon');
-goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.Interaction');
 
 
@@ -18,7 +18,7 @@ goog.require('ol.interaction.Interaction');
  *
  * @constructor
  * @struct
- * @fires ol.interaction.Draw.Event
+ * @fires ngeox.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.DrawRegularPolygonFromClickOptions} options Options
  */
@@ -135,6 +135,7 @@ ngeo.interaction.DrawRegularPolygonFromClick.prototype.handleMapClick_ = functio
 
   ol.geom.Polygon.makeRegular(geometry, center, this.radius_, this.angle_);
 
-  this.dispatchEvent(new ol.interaction.Draw.Event(
-    /** @type {ol.interaction.DrawEventType} */ ('drawend'), new ol.Feature(geometry)));
+  /** @type {ngeox.DrawEvent} */
+  const event = new ngeo.CustomEvent('drawend', {feature: new ol.Feature(geometry)});
+  this.dispatchEvent(event);
 };

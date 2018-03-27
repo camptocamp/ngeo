@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.ModifyRectangle');
 
 goog.require('goog.asserts');
+goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.Feature');
 goog.require('ol.events');
@@ -185,8 +186,9 @@ ngeo.interaction.ModifyRectangle.prototype.addFeature_ = function(feature) {
 ngeo.interaction.ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
-    this.dispatchEvent(new ol.interaction.Modify.Event(
-      /** @type {ol.interaction.ModifyEventType} */ ('modifystart'), this.features_, evt));
+    /** @type {ngeox.ModifyEvent} */
+    const event = new ngeo.CustomEvent('modifystart', {features: this.features_});
+    this.dispatchEvent(event);
     this.params_ = this.initializeParams_();
   }
 };
@@ -410,8 +412,9 @@ ngeo.interaction.ModifyRectangle.prototype.calculateNewPixel_ = function(
  */
 ngeo.interaction.ModifyRectangle.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
-    this.dispatchEvent(new ol.interaction.Modify.Event(
-      /** @type {ol.interaction.ModifyEventType} */ ('modifyend'), this.features_, evt));
+    /** @type {ngeox.ModifyEvent} */
+    const event = new ngeo.CustomEvent('modifyend', {features: this.features_});
+    this.dispatchEvent(event);
     this.params_ = null;
     this.modified_ = false;
   }
