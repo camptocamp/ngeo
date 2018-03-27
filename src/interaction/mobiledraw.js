@@ -1,6 +1,7 @@
 goog.provide('ngeo.interaction.MobileDraw');
 
 goog.require('goog.asserts');
+goog.require('ngeo.interaction.common');
 goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.events');
@@ -9,7 +10,6 @@ goog.require('ol.functions');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.SimpleGeometry');
-goog.require('ol.interaction.Draw');
 goog.require('ol.interaction.Interaction');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -92,8 +92,7 @@ ngeo.interaction.MobileDraw = function(options) {
       useSpatialIndex: false,
       wrapX: options.wrapX ? options.wrapX : false
     }),
-    style: options.style ? options.style :
-      ol.interaction.Draw.getDefaultStyleFunction(),
+    style: options.style || ngeo.interaction.common.getDefaultDrawStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });

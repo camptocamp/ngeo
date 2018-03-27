@@ -1,13 +1,13 @@
 goog.provide('ngeo.interaction.ModifyRectangle');
 
 goog.require('goog.asserts');
+goog.require('ngeo.interaction.common');
 goog.require('ngeo.CustomEvent');
 goog.require('ol');
 goog.require('ol.Feature');
 goog.require('ol.events');
 goog.require('ol.geom.Point');
 goog.require('ol.geom.Polygon');
-goog.require('ol.interaction.Modify');
 goog.require('ol.interaction.Pointer');
 goog.require('ol.layer.Vector');
 goog.require('ol.source.Vector');
@@ -40,9 +40,6 @@ ngeo.interaction.ModifyRectangle = function(options) {
    */
   this.modified_ = false;
 
-  // Get the style for the box and the points
-  const style = options.style ? options.style : ol.interaction.Modify.getDefaultStyleFunction();
-
   /**
    * @type {ol.layer.Vector}
    * @private
@@ -52,7 +49,7 @@ ngeo.interaction.ModifyRectangle = function(options) {
       wrapX: !!options.wrapX
     }),
     visible: this.getActive(),
-    style: style,
+    style: options.style || ngeo.interaction.common.getDefaultModifyStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
