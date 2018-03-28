@@ -170,6 +170,7 @@ If you have no custom AngularJS element in your code, you may start directly wit
 
  1. [Transform your components to modules](#transform-your-components-to-modules)
  1. [Transform your applications to modules](#transform-your-applications-to-modules)
+ 1. [Adapt paths for 'less'](#Adapt-paths-for-less)
  1. [Test your application](#test-your-application)
 
 ### Transform your components to modules
@@ -291,6 +292,16 @@ these values to the module of your controller like this:
   ...
 </script>
 ```
+
+### Adapt paths for 'less'
+
+You must import your `<interface.less>` in each application controller you have by something
+like: `import '../../less/<interface>.less'`.
+
+With Webpack (`less-loader`), to reference a file by it's relative URL, the beginning of the path must be the
+current file. That means that, if in a file `a/b/c/d.js` you want to import the `.less` file  located
+in `a/x/y/z.less`, the import must be written like this: `import '../../x/y/z.less'`. Paths must also be
+adapted for url in each `.less` file (for instance, for a `background-image: url("../../images/office.svg");`
 
 ### Test your application
 
