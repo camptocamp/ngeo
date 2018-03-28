@@ -20,7 +20,7 @@ ngeo.rule.Rule = class {
    * - and an expression, for example 'Chicoutimi'.
    *
    * A rule is useful to hold those properties and change them on the fly.
-   * For example, chaning an operator from 'is equal to' to 'like'.
+   * For example, changing an operator from 'is equal to' to 'like'.
    *
    * Also, a rule is especially useful for its `value` getter, which returns
    * the combination of properties described above or `null` if there are some

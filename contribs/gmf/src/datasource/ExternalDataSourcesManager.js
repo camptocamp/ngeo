@@ -654,7 +654,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
  *
  * Please, note that this is used to generate a unique id for the created
  * external data sources and since a WMS/WMTS Capability Layer objects don't
- * natively contains an id by themselves, then it is programatically generated
+ * natively contains an id by themselves, then it is programmatically generated
  * using the `ol.getUid` method, plus a million.
  *
  * @param {!Object} layer WMS/WMTS Capability Layer object.

@@ -112,7 +112,7 @@ gmf.objectediting.Manager.prototype.getLayerNodeId = function() {
 
 
 /**
- * Called after getting features with comparison filters. Resolve the defered
+ * Called after getting features with comparison filters. Resolve the deferred
  * promise with the first returned feature (if any), otherwise resolve it
  * with a feature created with an empty geometry and the property key + value
  * that was used in the attempt to fetch it.

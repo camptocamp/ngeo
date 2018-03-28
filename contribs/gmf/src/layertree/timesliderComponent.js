@@ -32,7 +32,7 @@ gmf.layertree.timeSliderComponent = angular.module('gmfLayertreeTimeSliderCompon
  *      </gmf-time-slider>
  *
  * @htmlAttribute {ngeox.TimeProperty} gmf-time-slider-time parameter for initialization.
- * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expresion evaluated after
+ * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
  * @param {angular.$timeout} $timeout angular timeout service
  * @param {angular.$filter} $filter angular filter service

@@ -58,7 +58,7 @@ ngeo.misc.sortableComponent.component_ = function($timeout) {
     /**
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
+     * @param {angular.Attributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
 

@@ -34,7 +34,7 @@ ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
 
 
 /**
- * Provide a directive to select a signle date or a range of dates. Requires
+ * Provide a directive to select a single date or a range of dates. Requires
  * jQuery UI for the 'datepicker' widget.
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}

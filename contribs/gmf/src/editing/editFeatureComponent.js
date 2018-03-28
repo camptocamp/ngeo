@@ -74,7 +74,7 @@ gmf.editing.editFeatureComponent = angular.module('GmfEditingFeatureComponent', 
  * In order to modify or delete a feature, you must click on the map at the
  * location of the feature to select it first.
  *
- * In order to create a new feature, you use the "Draw" button and digitalize
+ * In order to create a new feature, you use the "Draw" button and digitize
  * the feature on the map.
  *
  * Example:

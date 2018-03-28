@@ -253,9 +253,9 @@ ngeo.print.Utils.prototype.getBottomLeftCorner = function(mapCenter) {
 
 
 /**
- * Get the coordinates of the bottom rigth corner of the printed map.
+ * Get the coordinates of the bottom right corner of the printed map.
  * @param {ol.Coordinate} mapCenter Center of the map to print.ç
- * @return {ol.Coordinate} The coordinates of the bottom rigth corner.
+ * @return {ol.Coordinate} The coordinates of the bottom right corner.
  */
 ngeo.print.Utils.prototype.getBottomRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
