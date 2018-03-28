@@ -46,7 +46,7 @@ ngeo.map.component.directive_ = function($window) {
     /**
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
+     * @param {angular.Attributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       // Get the 'ol.Map' object from attributes and manage it accordingly
@@ -58,7 +58,7 @@ ngeo.map.component.directive_ = function($window) {
 
       map.setTarget(element[0]);
 
-      // Get the 'window resize' attributes, which are optionnal. If defined,
+      // Get the 'window resize' attributes, which are optional. If defined,
       // the browser window 'resize' event is listened to update the size of
       // the map when fired. A transition option is also available to let any
       // animation that may occur on the div of the map to smootly resize the

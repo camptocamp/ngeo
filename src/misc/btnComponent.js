@@ -47,7 +47,7 @@ ngeo.misc.btnComponent.btnGroupComponent_ = function($parse) {
     /**
      * @param {!angular.Scope} scope Scope.
      * @param {!angular.JQLite=} element Element.
-     * @param {!angular.Attributes=} attrs Atttributes.
+     * @param {!angular.Attributes=} attrs Attributes.
      * @param {!ngeo.misc.btnComponent.BtnGroupController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
@@ -144,7 +144,7 @@ ngeo.misc.btnComponent.btnComponent_ = function($parse) {
     /**
      * @param {!angular.Scope} scope Scope.
      * @param {!angular.JQLite=} element Element.
-     * @param {!angular.Attributes=} attrs Atttributes.
+     * @param {!angular.Attributes=} attrs Attributes.
      * @param {!Array.<!Object>=} ctrls Controller.
      */
     link: (scope, element, attrs, ctrls) => {

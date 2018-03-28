@@ -35,7 +35,7 @@ use anymore this library (and we will also stop using google closure to build ou
 functions: `goog.asserts`, `goog.require` and `goog.provide` (and `goog.module` but you should not have any
 in your code for now). We can ignore them because we will provide them with a script, later.
 
-To search occurences of `goog` functions (without above exceptions) you can use this command (unix):
+To search occurrences of `goog` functions (without above exceptions) you can use this command (unix):
 
 ```
 git grep goog <path_to_apps_folder> | grep -v 'require' | grep -v 'provide' | grep -v 'asserts' | grep -v 'google'
@@ -78,7 +78,7 @@ It can help to see how `component`, `service`, `factory`, etc. are made in ngeo 
 
 Note for GeoMapFish:
 Your application main controllers (files in static-ngeo/js/<application>.js). Are also concerned.
-But as the build expects to find the inteface name in the 'goog.provide', you must potentialy rename
+But as the build expects to find the interface name in the 'goog.provide', you must potentialy rename
 your file to match the interface name.
 Example: you have a `ngeodesktop` interface, that means that your file must be named `ngeodesktop.js` and the
 file must provide `<an_app_name>_ngeodesktop`. You may have to exceptionnaly adapt this line in your
@@ -161,7 +161,7 @@ Test, then commit your changes.
 
 ## Use ngeo 2.3
 
-At this point you can update your application to use ngeo 2.3. It's recommanded to work on a branch, because
+At this point you can update your application to use ngeo 2.3. It's recommended to work on a branch, because
 the changes can't be easily tested before the end of the transformation.
 
 ### Summary

@@ -135,7 +135,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      The datasources.
  * @htmlAttribute {Object.<string, ol.style.Style>}
  *      gmf-search-styles A map of styles to apply on searched features. Keys
- *      must be the 'layer_name' propertie of features except for coordinates
+ *      must be the 'layer_name' property of features except for coordinates
  *      where the key ifor its style is the value of the constant
  *      'gmf.COORDINATES_LAYER_NAME'. The 'default' key is used to apply the
  *      default style.

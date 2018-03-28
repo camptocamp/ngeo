@@ -438,7 +438,7 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
   this.updateCurrentBackgroundLayer_(false);
 
   // Static "not used" functions should be in the window because otherwise
-  // closure remove them. "export" tag doens't work on static function below,
+  // closure remove them. "export" tag doesn't work on static function below,
   // we "export" them as externs in the gmfx options file.
   const gmfx = window.gmfx || {};
   /**
@@ -583,7 +583,7 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
 
 
 /**
- * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitely set
+ * @return {boolean} Return true if a user exists and its 'is_password_changed' value is explicitly set
  *     to false.
  * @export
  */

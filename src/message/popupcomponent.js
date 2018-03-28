@@ -56,7 +56,7 @@ ngeo.message.popupComponent.directive_ = function(ngeoPopupTemplateUrl) {
     /**
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
+     * @param {angular.Attributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       element.addClass('popover');

@@ -38,7 +38,7 @@ ngeo.misc.filereaderComponent.component_ = function($window) {
     /**
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
+     * @param {angular.Attributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       const supported = 'FileReader' in $window;

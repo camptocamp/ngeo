@@ -368,7 +368,7 @@ gmf.authentication.component.AuthenticationController_ = class {
       return;
     }
 
-    const error = gettextCatalog.getString('An error occured while reseting the password.');
+    const error = gettextCatalog.getString('An error occurred while resetting the password.');
 
     /**
      * @param {gmfx.AuthenticationDefaultResponse} respData Response.

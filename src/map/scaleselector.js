@@ -74,7 +74,7 @@ ngeo.map.scaleselector.value('ngeoScaleselectorTemplateUrl',
  * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
  * @htmlAttribute {ngeox.ScaleselectorOptions} ngeo-scaleselector-options
- *     Optionnal. The configuration options.
+ *     Optional. The configuration options.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.Directive} Directive Definition Object.

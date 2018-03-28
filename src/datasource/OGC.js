@@ -17,7 +17,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
   /**
    * A data source contains information of a single source of data that can
-   * show or fetch the data using an OGC server. Serveral OGC service types are
+   * show or fetch the data using an OGC server. Several OGC service types are
    * supported by this data source: WMS, WMTS and even WFS.
    *
    * You can use the information stored within an OGC data source to do all
@@ -809,7 +809,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
   /**
    * Check if there's at least one OGC layer in range of a given resolution.
    * @param {number} res Resolution.
-   * @param {boolean} queryableOnly Whether to additionnally check if the
+   * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
    * @return {boolean} At least one OGC layer is in range.
    * @export
@@ -822,7 +822,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
    * Returns a list of OGC layer names that are in range of a given resolution.
    * If there's no OGC layers defined, an empty array is returned.
    * @param {number} res Resolution.
-   * @param {boolean} queryableOnly Whether to additionnally check if the
+   * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
    * @return {Array.<string>} The OGC layer names that are in range.
    * @export
@@ -850,7 +850,7 @@ ngeo.datasource.OGC = class extends ngeo.datasource.DataSource {
 
   /**
    * Returns the list of OGC layer names.
-   * @param {boolean} queryableOnly Whether to additionnally check if the
+   * @param {boolean} queryableOnly Whether to additionally check if the
    *     OGC layer is queryable as well or not. Defaults to `false`.
    * @return {Array.<string>} The OGC layer names.
    * @export
