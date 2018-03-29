@@ -335,8 +335,7 @@ ngeo.misc.filters.filter('ngeoTrustHtml', ngeo.misc.filters.trustHtmlFilter);
  *        -> Note: the remaining 10 seconds will be dropped
  *
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @return {ngeox.duration} Function used to format a time duration
- *  in seconds into a string.
+ * @return {ngeox.duration} Function used to format a time duration in seconds into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDuration
@@ -359,16 +358,16 @@ ngeo.misc.filters.Duration = function(gettextCatalog) {
     let formattedUnit = '';
     switch (unit) {
       case TimeUnits.SECONDS:
-        formattedUnit = amount !== 1 ? gettextCatalog.getString('seconds') : gettextCatalog.getString('second');
+        formattedUnit = gettextCatalog.getPlural(amount, 'second', 'seconds');
         break;
       case TimeUnits.MINUTES:
-        formattedUnit = amount !== 1 ? gettextCatalog.getString('minutes') : gettextCatalog.getString('minute');
+        formattedUnit = gettextCatalog.getPlural(amount, 'minute', 'minutes');
         break;
       case TimeUnits.HOURS:
-        formattedUnit = amount !== 1 ? gettextCatalog.getString('hours') : gettextCatalog.getString('hour');
+        formattedUnit = gettextCatalog.getPlural(amount, 'hour', 'hours');
         break;
       case TimeUnits.DAYS:
-        formattedUnit = amount !== 1 ? gettextCatalog.getString('days') : gettextCatalog.getString('day');
+        formattedUnit = gettextCatalog.getPlural(amount, 'day', 'days');
         break;
       default:
         break;
