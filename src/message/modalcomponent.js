@@ -110,7 +110,7 @@ ngeo.message.modalComponent.Controller_ = class {
   }
 
   $onInit() {
-    this.closable = this.closable === true;
+    this.closable = this.closable !== false;
 
     this.modal_ = this.$element_.children();
 
