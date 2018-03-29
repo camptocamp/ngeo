@@ -4,13 +4,18 @@
 
 goog.provide('app.routing');
 
+goog.require('ngeo.routing.module');
 goog.require('ol.Map');
 goog.require('ol.View');
 goog.require('ol.layer.Tile');
 goog.require('ol.source.OSM');
 
-/** @type {!angular.Module} */
-app.module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} **/
+const appmodule = angular.module('app', [
+  'gettext',
+  ngeo.map.module.name,
+  ngeo.routing.module.name
+]);
 
 
 /**
@@ -43,4 +48,4 @@ app.MainController = function() {
   this.routingfeatureActive = true;
 };
 
-app.module.controller('MainController', app.MainController);
+appmodule.controller('MainController', app.MainController);
