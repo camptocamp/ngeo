@@ -90,6 +90,12 @@ ngeo.misc.sortableComponent.component_ = function($timeout) {
 
         const sortableElement = $(element);
 
+        // the element is already sortable; reset it.
+        if (sortableElement.data('ui-sortable')) {
+          sortableElement.off('sortupdate');
+          sortableElement.sortable('destroy');
+        }
+
         const sortableOptions = {
           'axis': 'y',
           'classes': {
