@@ -15,10 +15,18 @@ const providePlugin = new webpack.ProvidePlugin({
   $: 'jquery',
 });
 
+babelPresets = [['env', {
+  "targets": {
+    "browsers": ["last 2 versions", "Firefox ESR", "ie 11"],
+  },
+  "modules": false,
+  "loose": true,
+}]];
+
 const babelAnnotateUse = {
   loader: 'babel-loader',
   options: {
-    presets: ['es2015'],
+    presets: babelPresets,
     plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
   }
 }
@@ -49,7 +57,7 @@ const olRule = {
     loader: 'babel-loader',
     options: {
       babelrc: false,
-      presets: ['es2015'],
+      presets: babelPresets,
     }
   }
 };
