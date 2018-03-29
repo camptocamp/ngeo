@@ -54,7 +54,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
  */
-ngeo.NgeoNominatimInputController = function($element, $injector, $scope, ngeoNominatimService) {
+ngeo.routing.NominatimInputComponent.Controller = function($element, $injector, $scope, ngeoNominatimService) {
 
   /**
    * @type {!angular.JQLite}
@@ -123,10 +123,10 @@ ngeo.NgeoNominatimInputController = function($element, $injector, $scope, ngeoNo
  * @param {jQuery.Event} event Event.
  * @param {ngeox.NominatimSearchResult} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
- * @this {ngeo.NgeoNominatimInputController}
+ * @this {ngeo.routing.NominatimInputComponent.Controller}
  * @private
  */
-ngeo.NgeoNominatimInputController.prototype.select_ = function(event, suggestion, dataset) {
+ngeo.routing.NominatimInputComponent.Controller.prototype.select_ = function(event, suggestion, dataset) {
   if (this.onSelect) {
     this.onSelect(suggestion);
   }
@@ -156,7 +156,7 @@ ngeo.NgeoNominatimInputController.prototype.select_ = function(event, suggestion
  * @ngname ngeoNominatimInput
  */
 ngeo.routing.NominatimInputComponent.component_ = {
-  controller: ngeo.NgeoNominatimInputController,
+  controller: ngeo.routing.NominatimInputComponent.Controller,
   bindings: {
     'onSelect': '=?ngeoNominatimInputOnSelect',
     'inputValue': '=?ngeoNominatimInputValue',
