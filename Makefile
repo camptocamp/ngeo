@@ -42,7 +42,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/floatthead/dist/jquery.floatThead.js \
 	node_modules/proj4/dist/proj4-src.js \
 	node_modules/d3/build/d3.js \
-	node_modules/file-saver/dist/FileSaver.js \
+	node_modules/file-saver/FileSaver.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
 	node_modules/jsts/dist/jsts.js \
 	node_modules/moment/moment.js \
@@ -69,7 +69,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/bootstrap/dist/js/bootstrap.min.js \
 	node_modules/floatthead/dist/jquery.floatThead.min.js \
 	node_modules/proj4/dist/proj4.js \
-	node_modules/file-saver/dist/FileSaver.min.js \
+	node_modules/file-saver/FileSaver.min.js \
 	node_modules/d3/build/d3.min.js \
 	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
 	node_modules/jsts/dist/jsts.min.js \
@@ -477,7 +477,7 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/FileSaver.min.js: node_modules/file-saver/dist/FileSaver.min.js
+.build/examples-hosted/lib/FileSaver.min.js: node_modules/file-saver/FileSaver.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
