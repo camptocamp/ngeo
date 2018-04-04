@@ -394,12 +394,6 @@ gmf.search.component.SearchController_ = class {
      * @type {string}
      * @export
      */
-    this.placeholder = '';
-
-    /**
-     * @type {string}
-     * @export
-     */
     this.color;
 
     /**
