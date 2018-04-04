@@ -321,3 +321,107 @@ ngeo.misc.filters.trustHtmlFilter = function($sce) {
 };
 
 ngeo.misc.filters.filter('ngeoTrustHtml', ngeo.misc.filters.trustHtmlFilter);
+
+
+/**
+ * A filter used to format a time duration in seconds into a more
+ * readable form.
+ * Only the two largest units will be shown.
+ *
+ * Examples:
+ *      {{42 | ngeoDuration}} => 42 seconds
+ *      {{132 | ngeoDuration}} => 2 minutes 12 seconds
+ *      {{3910 | ngeoDuration}} => 1 hour 5 minutes
+ *        -> Note: the remaining 10 seconds will be dropped
+ *
+ * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @return {ngeox.duration} Function used to format a time duration in seconds into a string.
+ * @ngInject
+ * @ngdoc filter
+ * @ngname ngeoDuration
+ */
+ngeo.misc.filters.Duration = function(gettextCatalog) {
+  // time unit enum
+  const TimeUnits = Object.freeze({
+    SECONDS: Symbol('seconds'),
+    MINUTES: Symbol('minutes'),
+    HOURS: Symbol('hours'),
+    DAYS: Symbol('days')
+  });
+
+  /**
+   * @param {number} amount Amount of time.
+   * @param {symbol} unit Unit of time.
+   * @return {string} formatted and translated string
+   */
+  const pluralize = function(amount, unit) {
+    let formattedUnit = '';
+    switch (unit) {
+      case TimeUnits.SECONDS:
+        formattedUnit = gettextCatalog.getPlural(amount, 'second', 'seconds');
+        break;
+      case TimeUnits.MINUTES:
+        formattedUnit = gettextCatalog.getPlural(amount, 'minute', 'minutes');
+        break;
+      case TimeUnits.HOURS:
+        formattedUnit = gettextCatalog.getPlural(amount, 'hour', 'hours');
+        break;
+      case TimeUnits.DAYS:
+        formattedUnit = gettextCatalog.getPlural(amount, 'day', 'days');
+        break;
+      default:
+        break;
+    }
+    return `${amount} ${formattedUnit}`;
+  };
+
+  /**
+   * @param {number} duration The duration in seconds.
+   * @return {string} The formatted string.
+   */
+  const result = function(duration) {
+    // round to next integer
+    duration = Math.round(duration);
+
+    // just seconds
+    let output;
+    if (duration < 60) {
+      return pluralize(duration, TimeUnits.SECONDS);
+    }
+
+    // minutes (+ seconds)
+    let remainder = duration % 60; // seconds
+    duration = Math.floor(duration / 60); // minutes
+    if (duration < 60) { // less than an hour
+      output = pluralize(duration, TimeUnits.MINUTES);
+      if (remainder > 0) {
+        output += ` ${pluralize(remainder, TimeUnits.SECONDS)}`;
+      }
+      return output;
+    }
+
+    // hours (+ minutes)
+    remainder = duration % 60; // minutes
+    duration = Math.floor(duration / 60); // hours
+    if (duration < 24) { // less than a day
+      output = pluralize(duration, TimeUnits.HOURS);
+      if (remainder > 0) {
+        output += ` ${pluralize(remainder, TimeUnits.MINUTES)}`;
+      }
+      return output;
+    }
+
+    // days (+ hours)
+    remainder = duration % 24; // hours
+    duration = Math.floor(duration / 24); // days
+    output = pluralize(duration, TimeUnits.DAYS);
+    if (remainder > 0) {
+      output += ` ${pluralize(remainder, TimeUnits.HOURS)}`;
+    }
+    return output;
+  };
+
+  return result;
+};
+
+ngeo.misc.filters.filter('ngeoDuration', ngeo.misc.filters.Duration);

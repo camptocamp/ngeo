@@ -11,6 +11,7 @@ goog.require('gmf.controllers.AbstractDesktopController');
 goog.require('gmf.import.module');
 goog.require('ngeo.googlestreetview.module');
 goog.require('ngeo.statemanager.WfsPermalink');
+goog.require('ngeo.routing.module');
 goog.require('ngeo.proj.EPSG2056');
 goog.require('ngeo.proj.EPSG21781');
 goog.require('ol');
@@ -20,6 +21,7 @@ app.desktop_alt.module = angular.module('AppDesktopAlt', [
   app.module.name,
   gmf.controllers.AbstractDesktopController.module.name,
   gmf.import.module.name,
+  ngeo.routing.module.name,
   ngeo.googlestreetview.module.name,
   ngeo.statemanager.WfsPermalink.module.name,
 ]);
