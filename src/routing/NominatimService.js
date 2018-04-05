@@ -37,7 +37,7 @@ ngeo.routing.NominatimService = function($http, $injector, ngeoDebounce) {
    * @type {string}
    * @private
    */
-  this.nominatimUrl_ = 'http://nominatim.openstreetmap.org/';
+  this.nominatimUrl_ = 'https://nominatim.openstreetmap.org/';
 
   if ($injector.has('ngeoNominatimUrl')) {
     this.nominatimUrl_ = $injector.get('ngeoNominatimUrl');
