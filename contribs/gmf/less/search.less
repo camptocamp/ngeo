@@ -65,26 +65,28 @@ gmf-search {
     z-index: @search-index;
   }
 
-  .tt-menu {
-    max-height: @search-results-max-height;
-    .gmf-search-no-results {
-      padding: @app-margin;
-      cursor: default;
-    }
-    border-top: none;
-    .gmf-search-header {
-      display: none;
-    }
-    .gmf-search-datum {
-      p {
-        margin: 0;
+  .twitter-typeahead {
+    .tt-menu {
+      max-height: @search-results-max-height;
+      .gmf-search-no-results {
+        padding: @app-margin;
+        cursor: default;
       }
-      .gmf-search-label {
-        color: @color;
+      border-top: none;
+      .gmf-search-header {
+        display: none;
       }
-      .gmf-search-group {
-        color: @color-light;
-        font-size: 80%;
+      .gmf-search-datum {
+        p {
+          margin: 0;
+        }
+        .gmf-search-label {
+          color: @color;
+        }
+        .gmf-search-group {
+          color: @color-light;
+          font-size: 80%;
+        }
       }
     }
   }
