@@ -40,12 +40,15 @@ app.layertree.layertreeComponent = {
   // layer tree won't change
   template:
       '<div ngeo-layertree="::$ctrl.tree" ' +
-      'ngeo-layertree-templateurl="partials/layertree.html" ' +
+      'ngeo-layertree-templateurl="examples/layertree" ' +
       'ngeo-layertree-map="$ctrl.map" ' +
       'ngeo-layertree-nodelayer="$ctrl.getLayer(node)">' +
       '</div>'
 };
 
+// webpack: exports.run(/* @ngInject */ ($templateCache) => {
+// webpack:   $templateCache.put('examples/layertree', require('./partials/layertree.html'));
+// webpack: });
 
 app.layertree.module.component('appLayertree', app.layertree.layertreeComponent);
 
