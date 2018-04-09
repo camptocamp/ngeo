@@ -337,7 +337,7 @@ gmf.authentication.component.AuthenticationController_ = class {
     if (errors.length) {
       this.setError_(errors);
     } else {
-      const error = gettextCatalog.getString('Incorrect username or password.');
+      const error = gettextCatalog.getString('Incorrect credentials or disabled account.');
       this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal).then(
         this.resetError_.bind(this),
         this.setError_.bind(this, error));
