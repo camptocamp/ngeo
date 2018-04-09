@@ -32,11 +32,6 @@ plugins.push(new CopyWebpackPlugin(
       to: 'data',
       flatten: true
     },
-    {
-      from: 'examples/partials/*',
-      to: 'partials',
-      flatten: true
-    }
   ]
 ));
 
