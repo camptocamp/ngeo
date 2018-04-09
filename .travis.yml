@@ -148,7 +148,8 @@ jobs:
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
     - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
     after_success:
-    - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
+    - if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+$ ]]; then export TAG="--tag `echo $TRAVIS_TAG|awk -F[.-] '{print $4}'`"; fi
+    - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish $TAG; fi
     if: tag IS present AND repo = camptocamp/ngeo
   - stage: Build and publish
     env:
