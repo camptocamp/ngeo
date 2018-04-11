@@ -575,6 +575,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
 		.build/examples-hosted/contribs/gmf/build/%.js \
 		.build/examples-hosted/contribs/gmf/build/%.css \
+		.build/examples-hosted/contribs/gmf/build/images \
 		.build/examples-hosted/lib/watchwatchers.js \
 		.build/examples-hosted/lib/ios-overlap-fix.js \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \

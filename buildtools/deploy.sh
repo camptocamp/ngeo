@@ -52,6 +52,7 @@ then
 fi
 if [ "${JOB}" == publish-apps-gmf ]
 then
+    git rm --ignore-unmatch -r --quiet --force lib || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/apps || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/build || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/fonts || true
@@ -72,6 +73,7 @@ fi
 if [ "${JOB}" == publish-apps-gmf ]
 then
     mkdir -p .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
+    cp -r .build/examples-hosted/lib .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/
     cp -r .build/examples-hosted/contribs/gmf/apps .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
     cp -r .build/examples-hosted/contribs/gmf/build .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
     cp -r .build/examples-hosted/contribs/gmf/fonts .build/ngeo-${GITHUB_USERNAME}-gh-pages/${GIT_BRANCH}/examples/contribs/gmf/
