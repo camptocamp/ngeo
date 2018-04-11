@@ -48,7 +48,7 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/moment/moment.js \
 	node_modules/url-polyfill/url-polyfill.js \
 	third-party/jquery-ui/jquery-ui.js \
-	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
+	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js \
 	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js \
 	node_modules/google-closure-library/closure/goog/transpile.js \
 	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js \
