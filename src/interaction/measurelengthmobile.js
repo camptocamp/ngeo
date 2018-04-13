@@ -13,16 +13,17 @@ goog.require('ol.obj');
  * @constructor
  * @struct
  * @extends {ngeo.interaction.MeasureLength}
- * @param {ngeox.unitPrefix} format The format function
+ * @param {!ngeox.unitPrefix} format The format function
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  */
-ngeo.interaction.MeasureLengthMobile = function(format, opt_options) {
+ngeo.interaction.MeasureLengthMobile = function(format, gettextCatalog, opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
   ol.obj.assign(options, {displayHelpTooltip: false});
 
-  ngeo.interaction.MeasureLength.call(this, format, options);
+  ngeo.interaction.MeasureLength.call(this, format, gettextCatalog, options);
 
 };
 ol.inherits(

@@ -41,7 +41,7 @@ ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $inje
       const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
           'Double-click or click starting point to finish');
 
-      const measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
+      const measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
         style: new ol.style.Style(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],

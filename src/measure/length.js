@@ -42,7 +42,7 @@ ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $in
       const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
           'Double-click or click last point to finish');
 
-      const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
+      const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
         style: new ol.style.Style(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
