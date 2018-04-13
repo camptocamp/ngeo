@@ -165,7 +165,7 @@ jobs:
     if: type = push AND repo = camptocamp/ngeo AND branch IS present
 
   - stage: Publish on transifex
-    install: []
+    script: []
     if: type = push AND branch = master AND repo = camptocamp/ngeo
     after_success:
     - make transifex-send
