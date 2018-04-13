@@ -46,7 +46,7 @@ In a GeoMapFish project, `path_to_apps_folder` is the path to your `static-ngeo`
 To know how to replace a `goog` function, it can help to search the same function in `ngeo`
 2.1 and compare the line with the same line in ngeo 2.2 or upper. Examples:
 
- - `goog.getUid` becomes `ol.getUi`.
+ - `goog.getUid` becomes `ol.getUid`.
  - `goog.object.extend` becomes `ol.obj.assign`.
  - ...
 
@@ -77,7 +77,7 @@ If you have multiple different entities in one file you can:
 It can help to see how `component`, `service`, `factory`, etc. are made in ngeo 2.3.
 
 Note for GeoMapFish:
-Your application main controllers (files in static-ngeo/js/<application>.js). Are also concerned.
+Your application main controllers (files in `static-ngeo/js/<application>.js`). Are also concerned.
 But as the build expects to find the interface name in the 'goog.provide', you must potentialy rename
 your file to match the interface name.
 Example: you have a `ngeodesktop` interface, that means that your file must be named `ngeodesktop.js` and the
