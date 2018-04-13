@@ -197,6 +197,7 @@ ngeo.editing.createfeatureComponent.Controller_.prototype.$onInit = function() {
 
     interaction = new ngeo.interaction.MeasureLength(
       this.filter_('ngeoUnitPrefix'),
+      gettextCatalog,
       {
         style: new ol.style.Style(),
         startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
@@ -214,6 +215,7 @@ ngeo.editing.createfeatureComponent.Controller_.prototype.$onInit = function() {
 
     interaction = new ngeo.interaction.MeasureArea(
       this.filter_('ngeoUnitPrefix'),
+      gettextCatalog,
       {
         style: new ol.style.Style(),
         startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],

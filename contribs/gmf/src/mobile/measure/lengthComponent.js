@@ -89,7 +89,8 @@ gmf.mobile.measure.lengthComponent.directive('gmfMobileMeasurelength',
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$filter} $filter Angular filter
+ * @param {!angular.$filter} $filter Angular filter
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @struct
@@ -97,7 +98,7 @@ gmf.mobile.measure.lengthComponent.directive('gmfMobileMeasurelength',
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
  */
-gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
+gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter, gettextCatalog) {
 
   /**
    * @type {angular.Scope}
@@ -110,6 +111,12 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
    * @private
    */
   this.filter_ = $filter;
+
+  /**
+   * @type {!angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {ol.Map}
@@ -194,7 +201,7 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter) {
  */
 gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
 
-  this.measure = new ngeo.interaction.MeasureLengthMobile(this.filter_('ngeoUnitPrefix'), {
+  this.measure = new ngeo.interaction.MeasureLengthMobile(this.filter_('ngeoUnitPrefix'), this.gettextCatalog_, {
     precision: this.precision,
     sketchStyle: this.sketchStyle
   });

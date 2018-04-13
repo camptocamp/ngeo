@@ -55,11 +55,12 @@ app.measure.module.component('appMeasuretools', app.measure.measuretoolsComponen
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angular.$filter} $filter Angular filter service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  */
 app.measure.MeasuretoolsController = function($scope, $compile, $sce,
-  $filter) {
+  $filter, gettextCatalog) {
 
   /**
    * @type {ol.Map}
@@ -167,7 +168,7 @@ app.measure.MeasuretoolsController = function($scope, $compile, $sce,
    * @type {ngeo.interaction.MeasureLength}
    * @export
    */
-  this.measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
+  this.measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureLengthContinueMsg[0]
@@ -180,7 +181,7 @@ app.measure.MeasuretoolsController = function($scope, $compile, $sce,
    * @type {ngeo.interaction.MeasureArea}
    * @export
    */
-  this.measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
+  this.measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureAreaContinueMsg[0]

@@ -16,10 +16,11 @@ goog.require('ol.interaction.Draw');
  * @constructor
  * @struct
  * @extends {ngeo.interaction.Measure}
- * @param {ngeox.unitPrefix} format The format function
+ * @param {!ngeox.unitPrefix} format The format function
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeox.interaction.MeasureOptions=} options Options
  */
-ngeo.interaction.MeasureArea = function(format, options = {}) {
+ngeo.interaction.MeasureArea = function(format, gettextCatalog, options = {}) {
 
   ngeo.interaction.Measure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
@@ -33,9 +34,9 @@ ngeo.interaction.MeasureArea = function(format, options = {}) {
     this.continueMsg = options.continueMsg;
   } else {
     this.continueMsg = document.createElement('span');
-    this.continueMsg.textContent = 'Click to continue drawing the polygon.';
+    this.continueMsg.textContent = gettextCatalog.getString('Click to continue drawing the polygon.');
     const br = document.createElement('br');
-    br.textContent = 'Double-click or click starting point to finish.';
+    br.textContent = gettextCatalog.getString('Double-click or click starting point to finish.');
     this.continueMsg.appendChild(br);
   }
 

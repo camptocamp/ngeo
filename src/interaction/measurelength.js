@@ -16,10 +16,11 @@ goog.require('ol.interaction.Draw');
  * @constructor
  * @struct
  * @extends {ngeo.interaction.Measure}
- * @param {ngeox.unitPrefix} format The format function
+ * @param {!ngeox.unitPrefix} format The format function
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeox.interaction.MeasureOptions=} options Options
  */
-ngeo.interaction.MeasureLength = function(format, options = /** @type {ngeox.interaction.MeasureOptions} */({})) {
+ngeo.interaction.MeasureLength = function(format, gettextCatalog, options = /** @type {ngeox.interaction.MeasureOptions} */({})) {
 
   ngeo.interaction.Measure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
@@ -33,9 +34,9 @@ ngeo.interaction.MeasureLength = function(format, options = /** @type {ngeox.int
     this.continueMsg = options.continueMsg;
   } else {
     this.continueMsg = document.createElement('span');
-    this.continueMsg.textContent = 'Click to continue drawing the line.';
+    this.continueMsg.textContent = gettextCatalog.getString('Click to continue drawing the line.');
     const br = document.createElement('br');
-    br.textContent = 'Double-click or click last point to finish.';
+    br.textContent = gettextCatalog.getString('Double-click or click last point to finish.');
     this.continueMsg.appendChild(br);
   }
 
