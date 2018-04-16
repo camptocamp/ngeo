@@ -50,7 +50,7 @@
     "css-loader": "0.28.11",
     "d3": "4.13.0",
     "eslint": "4.19.1",
-    "eslint-config-openlayers": "9.0.0",
+    "eslint-config-openlayers": "9.1.0",
     "eslint-plugin-googshift": "0.9.3",
     "expose-loader": "0.7.5",
     "extract-text-webpack-plugin": "4.0.0-alpha.0",
