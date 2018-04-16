@@ -71,7 +71,7 @@
     "jquery-ui": "1.12.1",
     "jquery-ui-touch-punch": "0.2.3",
     "jsdoc": "3.5.5",
-    "jsdom": "11.7.0",
+    "jsdom": "11.8.0",
     "jsts": "1.6.0",
     "karma": "2.0.0",
     "karma-chrome-launcher": "2.2.0",
