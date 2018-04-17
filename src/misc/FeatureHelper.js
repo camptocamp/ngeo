@@ -347,7 +347,7 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
     })
   })];
   if (showMeasure || showLabel) {
-    if (azimut !== undefined) {
+    if (showMeasure && azimut !== undefined) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
       const length = ngeo.interaction.Measure.getFormattedLength(
@@ -378,6 +378,17 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
           offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 20
         })
       }));
+
+      //Label Style
+      if (showLabel) {
+        styles.push(new ol.style.Style({
+          text: this.createTextStyle_({
+            text: this.getNameProperty(feature),
+            offsetY: -8,
+            exceedLength: true
+          })
+        }));
+      }
     } else {
       //Label Style
       const textLabelValues = [];
@@ -393,7 +404,6 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         styles.push(new ol.style.Style({
           text: this.createTextStyle_({
             text: textLabelValue,
-            offsetY: -(8 / 2 + 4),
             exceedLength: true
           })
         }));
