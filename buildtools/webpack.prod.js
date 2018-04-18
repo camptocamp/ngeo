@@ -17,7 +17,7 @@ const resourcesRule = {
 const fontRule = {
   test: /\.(eot|ttf|woff|woff2)$/,
   use: {
-    loader: 'url-loader',
+    loader: 'file-loader',
     options: {
       name: 'build/[name].[hash:20].[ext]'
     }
