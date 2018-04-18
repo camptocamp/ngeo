@@ -6,6 +6,7 @@ goog.require('goog.asserts');
 /** @suppress {extraRequire} */
 goog.require('ngeo.misc.debounce');
 goog.require('ol.events');
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 /**

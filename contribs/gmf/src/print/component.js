@@ -18,6 +18,7 @@ goog.require('ol.layer.Tile');
 goog.require('ol.layer.Group');
 goog.require('ol.Map');
 goog.require('ol.math');
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 /**

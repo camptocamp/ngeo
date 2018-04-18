@@ -18,6 +18,7 @@ goog.require('ol.style.Style');
 // webpack: import 'angular-animate';
 // webpack: import 'angular-touch';
 // webpack: import 'bootstrap/js/collapse.js';
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 /**
