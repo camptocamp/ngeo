@@ -105,6 +105,7 @@ ngeox.Attribute.prototype.mask;
  *
  * @typedef {{
  *     dataSource: (ngeox.DataSource),
+ *     incDimensions: (boolean|undefined),
  *     incTime: (boolean|undefined),
  *     filter: (ol.format.filter.Filter|undefined),
  *     filterRules: (!Array.<ngeox.rule.Rule>|undefined),
@@ -120,6 +121,13 @@ ngeox.CreateFilterOptions;
  * @type {ngeox.DataSource}
  */
 ngeox.CreateFilterOptions.prototype.dataSource;
+
+
+/**
+ * Whether to include the dimensions related filters. Default to `true`.
+ * @type {boolean|undefined}
+ */
+ngeox.CreateFilterOptions.prototype.incDimensions;
 
 
 /**
@@ -237,6 +245,16 @@ ngeox.DataSourceOptions.prototype.dimensions;
  * @type {ngeox.Dimensions|undefined}
  */
 ngeox.DataSourceOptions.prototype.dimensionsConfig;
+
+
+/**
+ * The dimensions filters configuration, which determines dimensions supported
+ * by this data source using filters and give the corresponding field and
+ * whether they should use a static value or the one defined in the
+ * dimensions.
+ * @type {ngeox.DimensionsFiltersConfig|undefined}
+ */
+ngeox.DataSourceOptions.prototype.dimensionsFiltersConfig;
 
 
 /**
@@ -573,6 +591,22 @@ ngeox.DataSource.prototype.haveTheSameActiveDimensions = function(dataSource) {}
  * @typedef {Object.<string, ?string>}
  */
 ngeox.Dimensions;
+
+
+/**
+ * @typedef {{
+ *     field: (string),
+ *     value: (string|undefined)
+ * }}
+ */
+ngeox.DimensionFilterConfig;
+
+
+/**
+* Dimensions applied by filters configuration.
+* @typedef {Object.<string, ngeox.DimensionFilterConfig>}
+*/
+ngeox.DimensionsFiltersConfig;
 
 
 /**

@@ -434,6 +434,23 @@ ngeo.RuleHelper = class {
       }
     }
 
+    if (options.incDimensions) {
+      const dimensionsFilter = this.createDimensionsFilterFromDataSource_(dataSource);
+      if (dimensionsFilter) {
+        if (mainFilter) {
+          mainFilter = ol.format.filter.and.apply(
+            null,
+            [
+              mainFilter,
+              dimensionsFilter
+            ]
+          );
+        } else {
+          mainFilter = dimensionsFilter;
+        }
+      }
+    }
+
     return mainFilter;
   }
 
@@ -638,6 +655,39 @@ ngeo.RuleHelper = class {
     }
 
     return filter;
+  }
+
+  /**
+   * Create and return an OpenLayers filter object using the available
+   * dimensions filters configuration within the data source.
+   * @param {ngeo.DataSource} dataSource Data source from which to create the
+   *     filter.
+   * @return {?ol.format.filter.Filter} Filter
+   * @private
+   */
+  createDimensionsFilterFromDataSource_(dataSource) {
+    const config = dataSource.dimensionsFiltersConfig;
+    const dimensions = dataSource.dimensions;
+
+    const conditions = [];
+    for (const key in config) {
+      let value = config[key].value;
+      if (value === null) {
+        if (dimensions[key] !== undefined && dimensions[key] !== null) {
+          value = dimensions[key];
+        }
+      }
+      if (value != null) {
+        conditions.push(ol.format.filter.equalTo(config[key].field, value, true));
+      }
+    }
+    if (conditions.length === 1) {
+      return conditions[0];
+    }
+    else if (conditions.length >= 2) {
+      return ol.format.filter.and.apply(null, conditions);
+    }
+    return null;
   }
 
   /**

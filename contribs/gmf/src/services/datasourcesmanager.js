@@ -132,6 +132,14 @@ gmf.DataSourcesManager = class {
     this.dimensions_;
 
     /**
+     * The function to call to unregister the `watch` event on the dimensions
+     * object properties.
+     * @type {?Function}
+     * @private
+     */
+    this.dimensionsWatcherUnregister = null;
+
+    /**
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
@@ -165,7 +173,43 @@ gmf.DataSourcesManager = class {
    *     object to keep a reference of in this service.
    */
   setDimensions(dimensions) {
+    if (this.dimensionsWatcherUnregister) {
+      this.dimensionsWatcherUnregister();
+    }
+
     this.dimensions_ = dimensions;
+
+    this.dimensionsWatcherUnregister = this.rootScope_.$watch(
+        () => this.dimensions_,
+        this.handleDimensionsChange_.bind(this),
+        true
+    );
+    this.handleDimensionsChange_();
+  }
+
+  handleDimensionsChange_() {
+
+    // Create a layer list to update each one only once
+    const layers = [];
+    const layerIds = [];
+
+    this.ngeoDataSources_.forEach(function(ds) {
+      if (ds.dimensionsFiltersConfig) {
+        for (const key in ds.dimensionsFiltersConfig) {
+          if (ds.dimensionsFiltersConfig[key].value === null) {
+            const layer = this.getDataSourceLayer_(ds);
+            if (layer == undefined) { return; }
+            const id = ol.getUid(layer);
+            if (layerIds.indexOf(id) == -1) {
+              layers.push(layer);
+              layerIds.push(id);
+            }
+          }
+        }
+      }
+    }.bind(this));
+
+    layers.forEach(this.updateLayerFilter_.bind(this));
   }
 
   /**
@@ -400,6 +444,7 @@ gmf.DataSourcesManager = class {
     // (7) Dimensions
     const dimensions = this.dimensions_;
     const dimensionsConfig = node.dimensions || firstLevelGroup.dimensions;
+    const dimensionsFiltersConfig = node.dimensions_filters;
 
     // (8) Time values (lower or lower/upper)
     let timeLowerValue;
@@ -426,6 +471,7 @@ gmf.DataSourcesManager = class {
       copyable,
       dimensions,
       dimensionsConfig,
+      dimensionsFiltersConfig,
       gmfLayer,
       id,
       identifierAttribute,
@@ -585,22 +631,9 @@ gmf.DataSourcesManager = class {
     //
     // Note: we only need to do this ONCE, as there can be only one
     // data source being filtered at a time
-    const siblingDataSourceIds = gmf.SyncLayertreeMap.getLayer(
-      treeCtrl).get('querySourceIds');
-    if (Array.isArray(siblingDataSourceIds)) {
-      const ngeoDataSources = this.ngeoDataSources_.getArray();
-      for (const ngeoDataSource of ngeoDataSources) {
-        if (ngeoDataSource.filterRules !== null &&
-            ngeoDataSource.id !== dataSource.id &&
-            siblingDataSourceIds.includes(ngeoDataSource.id) &&
-            ngeoDataSource.visible
-        ) {
-          goog.asserts.assertInstanceof(ngeoDataSource, gmf.DataSource);
-          this.handleDataSourceFilterRulesChange_(ngeoDataSource, true);
-          break;
-        }
-      }
-    }
+    const layer = this.getDataSourceLayer_(dataSource);
+    if (layer == undefined) { return; }
+    this.updateLayerFilter_(layer);
   }
 
   /**
@@ -612,6 +645,85 @@ gmf.DataSourcesManager = class {
    */
   getTreeCtrlCacheItem_(treeCtrl) {
     return this.treeCtrlCache_[ol.getUid(treeCtrl.node)] || null;
+  }
+
+  /**
+   * Return the layer corresponding to the data source.
+   * @param {!ngeo.DataSource} dataSource The data source.
+   * @return {ol.layer.Base|undefined} The layer.
+   * @private
+   */
+  getDataSourceLayer_(dataSource) {
+    dataSource = /** @type {!gmf.DataSource} */ (dataSource);
+    const id = ol.getUid(dataSource.gmfLayer);
+    const item = this.treeCtrlCache_[id];
+    if (item == undefined) { return; }
+    const treeCtrl = item.treeCtrl;
+    return gmf.SyncLayertreeMap.getLayer(treeCtrl);
+  }
+
+  /**
+   * Update layer filter parameter according to data sources filter rules
+   * and dimensions filters.
+   * @param {ol.layer.Base} layer The layer to update.
+   * @private
+   */
+  updateLayerFilter_(layer) {
+    goog.asserts.assert(
+      layer instanceof ol.layer.Image ||
+      layer instanceof ol.layer.Tile
+    );
+
+    const source = layer.getSource();
+    if (!(
+        source instanceof ol.source.ImageWMS ||
+        source instanceof ol.source.TileWMS)) {
+      return;
+    }
+
+    const params = source.getParams();
+    const layersParam = params['LAYERS'];
+    const layersList = layersParam.split(',');
+    goog.asserts.assert(layersList.length >= 1);
+
+    const filterParam = 'FILTER';
+    const filterParamValues = [];
+    let hasFilter = false;
+    for (let i = 0, ii = layersList.length; i < ii; i++) {
+      let filterParamValue = '()';
+
+      this.ngeoDataSources_.forEach(function(dataSource) {
+        const dsLayer = this.getDataSourceLayer_(dataSource);
+        if (dsLayer == undefined) { return; }
+        if (ol.getUid(dsLayer) == ol.getUid(layer) &&
+            layersList[i] === dataSource.name)  {
+
+          const id = ol.getUid(dataSource.gmfLayer);
+          const item = this.treeCtrlCache_[id];
+          goog.asserts.assert(item);
+          const treeCtrl = item.treeCtrl;
+          const projCode = treeCtrl.map.getView().getProjection().getCode();
+
+          const filterString = dataSource.visible ?
+              this.ngeoRuleHelper_.createFilterString({
+                dataSource,
+                projCode,
+                incDimensions: true
+              }) :
+              null;
+          if (filterString) {
+            filterParamValue = `(${filterString})`;
+            hasFilter = true;
+          }
+        }
+      }.bind(this));
+
+      filterParamValues.push(filterParamValue);
+    }
+
+    source.updateParams({
+      [filterParam]: hasFilter ? filterParamValues.join('') : null
+    });
   }
 
   /**
@@ -637,64 +749,9 @@ gmf.DataSourcesManager = class {
       return;
     }
 
-    const id = ol.getUid(dataSource.gmfLayer);
-    const item = this.treeCtrlCache_[id];
-    goog.asserts.assert(item);
-    const treeCtrl = item.treeCtrl;
-
-    const layer = gmf.SyncLayertreeMap.getLayer(treeCtrl);
-    goog.asserts.assert(
-      layer instanceof ol.layer.Image ||
-      layer instanceof ol.layer.Tile
-    );
-
-    const source = layer.getSource();
-    goog.asserts.assert(
-      source instanceof ol.source.ImageWMS ||
-      source instanceof ol.source.TileWMS
-    );
-
-    const filtrableLayerName = dataSource.getFiltrableOGCLayerName();
-    const projCode = treeCtrl.map.getView().getProjection().getCode();
-    const filterString = dataSource.visible ?
-      this.ngeoRuleHelper_.createFilterString({
-        dataSource,
-        projCode
-      }) :
-      null;
-
-    const filterParam = 'FILTER';
-    let filterParamValue = null;
-
-    if (filterString) {
-      const params = source.getParams();
-      const layersParam = params['LAYERS'];
-      const layersList = layersParam.split(',');
-      goog.asserts.assert(layersList.length >= 1);
-
-      if (layersList.length === 1) {
-        // When there's only one layer in the `LAYERS` parameters, then
-        // the filter string is given as-is.
-        filterParamValue = filterString;
-      } else {
-        // When there's more then one layer, then each filter must be wrapped
-        // between parenthesis and the order must also match the `LAYERS`
-        // parameter as well.
-        const filterParamValues = [];
-        for (let i = 0, ii = layersList.length; i < ii; i++) {
-          if (layersList[i] === filtrableLayerName) {
-            filterParamValues.push(`(${filterString})`);
-          } else {
-            filterParamValues.push('()');
-          }
-        }
-        filterParamValue = filterParamValues.join('');
-      }
-    }
-
-    source.updateParams({
-      [filterParam]: filterParamValue
-    });
+    const layer = this.getDataSourceLayer_(dataSource);
+    if (layer == undefined) { return; }
+    this.updateLayerFilter_(layer);
   }
 
   /**

@@ -34,11 +34,18 @@ ngeo.DataSource = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * The dimenions configuration for the data source.
+     * The dimensions configuration for the data source.
      * @type {?ngeox.Dimensions}
      * @private
      */
     this.dimensionsConfig_ = options.dimensionsConfig || null;
+
+    /**
+     * The dimensions applied by filters configuration for the data source.
+     * @type {?ngeox.DimensionsFiltersConfig}
+     * @private
+     */
+    this.dimensionsFiltersConfig_ = options.dimensionsFiltersConfig || null;
 
     /**
      * The filter condition to apply to the filter rules (if any).
@@ -371,6 +378,13 @@ ngeo.DataSource = class {
   // ========================================
   // === Dynamic property getters/setters ===
   // ========================================
+  /**
+   * @return {?ngeox.Dimensions} Current dimensions to use for this data source
+   * @export
+   */
+  get dimensions() {
+    return this.dimensions_;
+  }
 
   /**
    * @return {?ngeox.Dimensions} Dimensions configuration for this data source
@@ -386,6 +400,24 @@ ngeo.DataSource = class {
    */
   set dimensionsConfig(dimensionsConfig) {
     this.dimensionsConfig_ = dimensionsConfig;
+  }
+
+  /**
+  * @return {?ngeox.DimensionsFiltersConfig} dimensionsFiltersConfig Dimensions
+  * filters configuration for this data source
+  * @export
+  */
+  get dimensionsFiltersConfig() {
+    return this.dimensionsFiltersConfig_;
+  }
+
+  /**
+   * @param {?ngeox.DimensionsFiltersConfig}dimensionsFiltersConfig Dimensions
+  * filters configuration for this data source
+   * @export
+   */
+  set dimensionsFiltersConfig(dimensionsFiltersConfig) {
+    this.dimensionsFiltersConfig_ = dimensionsFiltersConfig;
   }
 
   /**

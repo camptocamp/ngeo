@@ -173,6 +173,14 @@ gmfThemes.GmfLayer.prototype.dimensions;
 
 
 /**
+ * The dimensions applied by filters on the layer configuration, if the value
+ * is null we will take the dimension from the application.
+ * @type {!ngeox.DimensionsFiltersConfig}
+ */
+gmfThemes.GmfLayer.prototype.dimensions_filters;
+
+
+/**
  * @type {boolean|undefined}
  */
 gmfThemes.GmfLayer.prototype.editable;
