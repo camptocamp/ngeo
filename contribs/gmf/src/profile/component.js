@@ -16,6 +16,7 @@ goog.require('ngeo.download.Csv');
 goog.require('ngeo.map.FeatureOverlayMgr');
 /** @suppress {extraRequire} */
 goog.require('ngeo.profile.elevationComponent');
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 /**

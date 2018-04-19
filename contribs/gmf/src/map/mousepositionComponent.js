@@ -5,6 +5,7 @@ goog.require('goog.asserts');
 goog.require('ngeo.misc.filters');
 goog.require('ol.control.MousePosition');
 goog.require('ol.proj');
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 /**

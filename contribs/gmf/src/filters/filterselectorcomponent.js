@@ -20,6 +20,7 @@ goog.require('ol.events');
 goog.require('ol.array');
 
 goog.require('ngeo.map.FeatureOverlayMgr');
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 gmf.filters.filterselectorComponent = angular.module('gmfFilterselector', [

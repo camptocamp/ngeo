@@ -27,6 +27,7 @@ goog.require('ol.Collection');
 goog.require('ol.style.Fill');
 goog.require('ol.style.Style');
 goog.require('ol.style.Text');
+// webpack: import 'bootstrap/js/dropdown.js';
 
 
 /**
