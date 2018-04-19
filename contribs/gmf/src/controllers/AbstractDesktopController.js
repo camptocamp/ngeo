@@ -1,6 +1,5 @@
 goog.provide('gmf.controllers.AbstractDesktopController');
 
-// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
 goog.require('gmf.controllers.AbstractAppController');
 goog.require('gmf.contextualdata.module');
 goog.require('gmf.drawing.module');
