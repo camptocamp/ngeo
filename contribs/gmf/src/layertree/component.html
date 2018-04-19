@@ -50,6 +50,8 @@
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     class="gmf-layertree-name"
+    data-toggle="tooltip"
+    data-placement="top"
     title="{{layertreeCtrl.node.name | translate}}">
 
     {{layertreeCtrl.node.name | translate}}
@@ -57,6 +59,7 @@
     <i
       class="gmf-icon gmf-icon-search-go gmf-layertree-zoom"
       data-toggle="tooltip"
+      data-placement="bottom"
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
       ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'">
@@ -90,6 +93,8 @@
 
     <span
       class="fa fa-pencil"
+      data-toggle="tooltip"
+      data-placement="right"
       title="{{'Currently editing this layer'|translate}}"
       ng-if="layertreeCtrl.properties.editing">
     </span>
@@ -137,7 +142,6 @@
           <li ng-if="::gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend">
             <i class="fa fa-th-list fa-fw"></i>
             <a
-              title="{{'Show/hide legend'|translate}}"
               ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend'); popoverCtrl.dismissPopover()"
               data-toggle="collapse"
               href="">
@@ -147,7 +151,6 @@
           <li ng-if="layertreeCtrl.getDataSource() && layertreeCtrl.getDataSource().filtrable">
             <i class="fa fa-filter fa-fw"></i>
             <a
-              title="{{'Filter'|translate}}"
               ng-click="gmfLayertreeCtrl.toggleFiltrableDataSource(layertreeCtrl.getDataSource())"
               href="">
               {{'Filter'|translate}}
@@ -176,15 +179,6 @@
         </a>
       </span>
     </span>
-
-    <a
-      class="fa fa-align-left gmf-layertree-legend-button"
-      ng-if="::gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
-      title="{{'Show/hide legend'|translate}}"
-      data-toggle="collapse"
-      ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
-      href>
-    </a>
   </span>
 </div>
 
@@ -210,7 +204,6 @@
   <a
     class="gmf-layertree-node-menu-togglelegend"
     ng-if="::gmfLayertreeCtrl.supportsLegend(layertreeCtrl)"
-    title="{{'Hide legend'|translate}}"
     data-toggle="collapse"
     ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
     href="">
