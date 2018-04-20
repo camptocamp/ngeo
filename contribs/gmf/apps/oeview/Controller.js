@@ -14,6 +14,8 @@ import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
+import Raven from 'raven-js/src/raven.js';
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -97,6 +99,12 @@ const exports = function($scope, $injector) {
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
+
+  if ($injector.has('sentryUrl')) {
+    Raven.config($injector.get('sentryUrl'))
+      .addPlugin(RavenPluginsAngular)
+      .install();
+  }
 };
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
@@ -104,6 +112,7 @@ olBase.inherits(exports, gmfControllersAbstractDesktopController);
 exports.module = angular.module('Appoeview', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
+  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');

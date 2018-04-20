@@ -19,6 +19,8 @@ import * as olBase from 'ol/index.js';
 import olCollection from 'ol/Collection.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
+import Raven from 'raven-js/src/raven.js';
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -206,6 +208,12 @@ const exports = function($scope, $injector, $timeout) {
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
+
+  if ($injector.has('sentryUrl')) {
+    Raven.config($injector.get('sentryUrl'))
+      .addPlugin(RavenPluginsAngular)
+      .install();
+  }
 };
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
@@ -214,6 +222,7 @@ exports.module = angular.module('Appoeedit', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
   gmfObjecteditingModule.name,
+  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
