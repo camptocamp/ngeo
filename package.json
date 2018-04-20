@@ -73,7 +73,7 @@
     "jsdoc": "3.5.5",
     "jsdom": "11.8.0",
     "jsts": "1.6.0",
-    "karma": "2.0.0",
+    "karma": "2.0.2",
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.1.1",
     "karma-coverage-istanbul-reporter": "1.4.2",
