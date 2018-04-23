@@ -189,7 +189,7 @@ help:
 	@echo "Main targets:"
 	@echo
 	@echo "- help                    Display this help message"
-	@echo "- serve                   Run a development web server for running the examples"
+	@echo "- serve                   Run a development web server for running the ngeo examples"
 	@echo "- check                   Perform a number of checks on the code"
 	@echo "- test                    Run the test suite"
 	@echo "- test-debug              Run the test suite in the browser"
@@ -268,7 +268,7 @@ test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/temp
 
 .PHONY: serve
 serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	node buildtools/serve.js
+	TARGET=ngeo-examples NODE_ENV=dev node_modules/.bin/webpack-dev-server --progress --watch --bail -d
 
 .PHONY: examples-hosted
 examples-hosted: \
