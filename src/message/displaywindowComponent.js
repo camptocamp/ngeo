@@ -83,7 +83,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @type {?string}
      * @export
      */
-    this.content;
+    this.content = null;
 
     /**
      * @type {boolean}
@@ -107,7 +107,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @type {?string}
      * @export
      */
-    this.height;
+    this.height = null;
 
     /**
      * @type {boolean}
@@ -125,19 +125,19 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @type {?string}
      * @export
      */
-    this.title;
+    this.title = null;
 
     /**
      * @type {?string}
      * @export
      */
-    this.url;
+    this.url = null;
 
     /**
      * @type {?string}
      * @export
      */
-    this.width;
+    this.width = null;
 
 
     // === Injected Properties ===
@@ -165,11 +165,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     this.content = this.content || null;
     this.desktop = this.desktop !== false;
     this.draggableContainment = this.draggableContainment || 'document';
-    this.height = this.height || null;
     this.open = this.open === true;
-    this.title = this.title || null;
-    this.url = this.url || null;
-    this.width = this.width || null;
 
     this.draggable = this.draggable !== undefined ?
       this.draggable : this.desktop;
@@ -209,7 +205,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
   get style() {
     return {
       'height': this.height || '240px',
-      'width': this.height || '240px'
+      'width': this.width || '240px'
     };
   }
 
@@ -218,7 +214,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
    * @export
    */
   get urlTrusted() {
-    if (this.url !== null) {
+    if (this.url) {
       return /** @type {string} */ (this.sce_.trustAsResourceUrl(this.url));
     }
   }
@@ -238,17 +234,17 @@ ngeo.message.displaywindowComponent.Controller_ = class {
 
 ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
   bindings: {
-    'clearOnClose': '<',
-    'content': '=',
-    'desktop': '<',
-    'draggable': '<',
-    'draggableContainment': '<',
-    'height': '=',
-    'open': '=',
-    'resizable': '<',
-    'title': '=',
-    'url': '=',
-    'width': '='
+    'clearOnClose': '<?',
+    'content': '=?',
+    'desktop': '<?',
+    'draggable': '<?',
+    'draggableContainment': '<?',
+    'height': '=?',
+    'open': '=?',
+    'resizable': '<?',
+    'title': '=?',
+    'url': '=?',
+    'width': '=?'
   },
   controller: ngeo.message.displaywindowComponent.Controller_,
   templateUrl: ngeoMessageDisplaywindowTemplateUrl
