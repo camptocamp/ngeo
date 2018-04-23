@@ -93,7 +93,7 @@
     "phantomjs-prebuilt": "2.1.16",
     "proj4": "2.4.4",
     "rollup-plugin-commonjs": "9.1.0",
-    "serve": "6.5.5",
+    "serve": "6.5.6",
     "svg2ttf": "4.1.0",
     "temp": "0.8.3",
     "ttf2eot": "2.0.0",
