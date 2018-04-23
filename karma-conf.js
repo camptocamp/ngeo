@@ -7,7 +7,6 @@ var isDebug = process.argv.some(function(argument) {
 });
 
 module.exports = function(config) {
-  var closureLibPath = 'node_modules/google-closure-library/';
   var olSrcPath = 'node_modules/openlayers/src/';
   var olExtPath = 'node_modules/openlayers/build/ol.ext/';
 
@@ -24,8 +23,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      closureLibPath + 'closure/goog/base.js',
-      closureLibPath + 'closure/goog/deps.js',
       '.build/ol-deps.js',
       '.build/ngeo-deps.js',
       '.build/gmf-deps.js',
@@ -53,10 +50,6 @@ module.exports = function(config) {
       'contribs/gmf/test/spec/beforeeach.js',
       'contribs/gmf/test/spec/data/*.js',
       'contribs/gmf/test/spec/**/*.spec.js',
-      {
-        pattern: closureLibPath + 'closure/**/*.js',
-        included: false
-      },
       {
         pattern: olSrcPath + '**/*.js',
         included: false

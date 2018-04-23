@@ -7,11 +7,9 @@ NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
 GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
-CLOSURE_LIBRARY_PATH = $(shell node -e 'process.stdout.write(require("@camptocamp/closure-util").getLibraryPath())' 2> /dev/null)
 
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
-
 
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
 JQUERY_UI = contribs/gmf/build/images/
@@ -25,7 +23,6 @@ GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 DEVELOPMENT ?= FALSE
 ifeq ($(DEVELOPMENT), TRUE)
-CLOSURE_VARS += --var development=true
 GMF_APPS_LIBS_JS_FILES += \
 	examples/https.js \
 	node_modules/jquery/dist/jquery.js \
@@ -50,8 +47,6 @@ GMF_APPS_LIBS_JS_FILES += \
 	third-party/jquery-ui/jquery-ui.js \
 	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js \
 	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js \
-	node_modules/google-closure-library/closure/goog/transpile.js \
-	$(CLOSURE_LIBRARY_PATH)/closure/goog/transpile.js \
 	utils/ios-overlap-fix.js
 else
 GMF_APPS_LIBS_JS_FILES += \
@@ -513,10 +508,6 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/transpile.js: node_modules/google-closure-library/closure/goog/transpile.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .PRECIOUS: .build/examples-hosted/fonts/%
 .build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
 	mkdir -p $(dir $@)
@@ -725,74 +716,9 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.PRECIOUS: .build/examples/%.json
-.build/examples/%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
-	mkdir -p $(dir $@)
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		$(CLOSURE_VARS) \
-		--var entry_point=app.$* \
-		--var src=examples/$*.js \
-		--var src_set=ngeo \
-		--var examples=true \
-		--var source_map=.build/examples/$*.js.map $< > $@
-
-.PRECIOUS: .build/contribs/gmf/examples/%.json
-.build/contribs/gmf/examples/%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
-	mkdir -p $(dir $@)
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		$(CLOSURE_VARS) \
-		--var entry_point=gmfapp.$* \
-		--var src=contribs/gmf/examples/$*.js \
-		--var src_set=contribs_gmf \
-		--var examples=true \
-		--var source_map=.build/examples/$*.js.map $< > $@
-
-.build/ngeo.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		$(CLOSURE_VARS) \
-		--var lib=true \
-		--var src_set=ngeo \
-		--var source_map=dist/ngeo.js.map $< > $@
-
-.build/gmf.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		$(CLOSURE_VARS) \
-		--var lib=true \
-		--var src_set=contribs_gmf \
-		--var source_map=dist/gmf.js.map $< > $@
-
-.PRECIOUS: .build/app-%.json
-.build/app-%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		$(CLOSURE_VARS) \
-		--var 'src=contribs/gmf/apps/**/js/*.js,contribs/gmf/apps/appmodule.js' \
-		--var src_set=contribs_gmf \
-		--var entry_point=app.$*.Controller \
-		--var source_map=contribs/gmf/build/$*.js.map $< > $@
-
 contribs/gmf/build/angular-locale_%.js: github_versions
 	mkdir -p $(dir $@)
 	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut -d = -f 2`/src/ngLocale/angular-locale_$*.js
-
-$(EXTERNS_ANGULAR): github_versions
-	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6.js
-	touch $@
-
-$(EXTERNS_ANGULAR_Q): github_versions
-	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6-q_templated.js
-	touch $@
-
-$(EXTERNS_ANGULAR_HTTP_PROMISE): github_versions
-	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/angular-1.6-http-promise_templated.js
-	touch $@
-
-$(EXTERNS_JQUERY): github_versions
-	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/google/closure-compiler/`grep ^closure-compiler= $< | cut -d = -f 2`/contrib/externs/jquery-1.9.js
-	touch $@
 
 .build/python-venv:
 	mkdir -p $(dir $@)
@@ -807,23 +733,6 @@ $(PY_VENV_BIN)/mako-render: requirements.txt .build/python-venv
 .build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
-
-.build/ol-deps.js: .build/python-venv .build/node_modules.timestamp
-	$(PY_VENV_BIN)/python buildtools/closure/depswriter.py \
-		--root_with_prefix="node_modules/openlayers/src ../../../openlayers/src" \
-		--root_with_prefix="node_modules/openlayers/build/ol.ext ../../../openlayers/build/ol.ext" \
-		--output_file=$@
-
-.build/ngeo-deps.js: .build/python-venv .build/node_modules.timestamp
-	$(PY_VENV_BIN)/python buildtools/closure/depswriter.py \
-		--root_with_prefix="src ../../../../src" --output_file=$@
-
-.build/gmf-deps.js: .build/python-venv \
-		.build/node_modules.timestamp \
-		$(SRC_JS_FILES) \
-		$(GMF_SRC_JS_FILES)
-	$(PY_VENV_BIN)/python buildtools/closure/depswriter.py \
-		--root_with_prefix="contribs/gmf/src ../../../../contribs/gmf/src" --output_file=$@
 
 .PRECIOUS: .build/templatecache.js
 .build/templatecache.js: buildtools/templatecache.mako.js \

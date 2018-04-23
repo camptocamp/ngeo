@@ -99,8 +99,6 @@ jobs:
     - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
     - echo "_auth = ${NPM_AUTH}" > ~/.npmrc
     - echo "email = stephane.brunner@camptocamp.com" >> ~/.npmrc
-    - |
-      buildtools/create-es6-package
     after_success:
     - cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
     - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish; fi
