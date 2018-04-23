@@ -1081,9 +1081,9 @@ gmf.editing.editFeatureComponent.Controller_.prototype.initializeInteractions_ =
  * @private
  */
 gmf.editing.editFeatureComponent.Controller_.prototype.registerInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
-  }, this);
+  });
 };
 
 
@@ -1092,9 +1092,9 @@ gmf.editing.editFeatureComponent.Controller_.prototype.registerInteractions_ = f
  * @private
  */
 gmf.editing.editFeatureComponent.Controller_.prototype.unregisterInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
-  }, this);
+  });
 };
 
 

@@ -132,7 +132,7 @@ ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
       if (newVal === false) {
         this.interactions_.forEach((interaction) => {
           interaction.setActive(false);
-        }, this);
+        });
       }
     }
   );

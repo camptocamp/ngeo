@@ -211,7 +211,7 @@ ngeo.editing.exportfeaturesComponent.Controller_.prototype.handleDestroy_ = func
     this.menu_.remove();
     this.items_.forEach(($item) => {
       $item.off(['click', id].join('.'));
-    }, this);
+    });
     this.items_.length = 0;
     this.menu_ = null;
   }

@@ -292,7 +292,7 @@ ngeo.statemanager.WfsPermalink.prototype.clearResult_ = function() {
   this.result_.total = 0;
   this.result_.sources.forEach((source) => {
     source.features.length = 0;
-  }, this);
+  });
 };
 
 
