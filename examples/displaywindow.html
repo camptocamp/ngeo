@@ -16,6 +16,11 @@
         type="button"
         class="btn btn-default">Open / close window 2.</button>
 
+    <button ng-click="ctrl.window3IsOpen = !ctrl.window3IsOpen;"
+            title="Open window 3."
+            type="button"
+            class="btn btn-default">Open / close window 3.</button>
+
     <ngeo-displaywindow
       class="window1"
       url="::ctrl.window1Content"
@@ -34,6 +39,19 @@
       height="::150"
       open="ctrl.window2IsOpen"
       title="'Window 2 - A powerful window'">
+    </ngeo-displaywindow>
+
+    <ngeo-displaywindow
+            class="window3"
+            clear-on-close="::false"
+            content-template="::ctrl.window3Template"
+            content-scope="::ctrl.window3Scope"
+            draggable="::true"
+            resize="::true"
+            width="::400"
+            height="::350"
+            open="ctrl.window3IsOpen"
+            title="'Window 3 - Using AngularJS template with bindings'">
     </ngeo-displaywindow>
 
   </body>
