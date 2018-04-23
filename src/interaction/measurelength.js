@@ -25,11 +25,6 @@ ngeo.interaction.MeasureLength = function(format, gettextCatalog, options = /** 
   ngeo.interaction.Measure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
 
-  /**
-   * Message to show after the first point is clicked.
-   * @type {Element}
-   */
-  this.continueMsg;
   if (options.continueMsg !== undefined) {
     this.continueMsg = options.continueMsg;
   } else {

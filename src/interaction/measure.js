@@ -274,10 +274,7 @@ ngeo.interaction.Measure.handleEvent_ = function(evt) {
     return true;
   }
 
-  let helpMsg = this.startMsg;
-  if (this.sketchFeature !== null) {
-    helpMsg = this.continueMsg;
-  }
+  const helpMsg = this.sketchFeature === null ? this.startMsg : this.continueMsg;
 
   if (this.displayHelpTooltip_) {
     ol.dom.removeChildren(this.helpTooltipElement_);

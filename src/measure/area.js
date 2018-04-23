@@ -38,7 +38,7 @@ ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $inje
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
-      const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
+      const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click starting point to finish');
 
       const measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
