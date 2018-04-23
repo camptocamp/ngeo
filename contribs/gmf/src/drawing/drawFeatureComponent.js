@@ -356,9 +356,9 @@ gmf.drawing.drawFeatureComponent.Controller_.prototype.initializeInteractions_ =
  * @private
  */
 gmf.drawing.drawFeatureComponent.Controller_.prototype.registerInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
-  }, this);
+  });
 };
 
 
@@ -367,9 +367,9 @@ gmf.drawing.drawFeatureComponent.Controller_.prototype.registerInteractions_ = f
  * @private
  */
 gmf.drawing.drawFeatureComponent.Controller_.prototype.unregisterInteractions_ = function() {
-  this.interactions_.forEach(function(interaction) {
+  this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
-  }, this);
+  });
 };
 
 

@@ -232,9 +232,9 @@ ngeo.layertree.Controller.prototype.setStateInternal_ = function(state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
   // Asks to each child to set its state;
-  this.children.forEach(function(child) {
+  this.children.forEach((child) => {
     child.setStateInternal_(this.state_);
-  }, this);
+  });
 };
 
 

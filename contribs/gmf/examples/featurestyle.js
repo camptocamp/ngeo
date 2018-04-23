@@ -156,7 +156,7 @@ gmfapp.featurestyle.MainController = function($scope, ngeoFeatureHelper) {
   // set style
   features.forEach((feature) => {
     ngeoFeatureHelper.setStyle(feature);
-  }, this);
+  });
 
   /**
    * @type {ol.Map}

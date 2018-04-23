@@ -376,12 +376,12 @@ gmf.permalink.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebo
   //   (2) listen for further features added/removed
   const features = this.getFeatures();
   if (this.ngeoFeatures_) {
-    features.forEach(function(feature) {
+    features.forEach((feature) => {
       if (this.featureHelper_) {
         this.featureHelper_.setStyle(feature);
       }
       this.addNgeoFeature_(feature);
-    }, this);
+    });
 
     this.ngeoFeatures_.extend(features);
     ol.events.listen(this.ngeoFeatures_, 'add', this.handleNgeoFeaturesAdd_, this);
@@ -390,9 +390,9 @@ gmf.permalink.Permalink = function($q, $timeout, $rootScope, $injector, ngeoDebo
 
   if (this.featureHelper_) {
     this.rootScope_.$on('$localeChangeSuccess', () => {
-      features.forEach(function(feature) {
+      features.forEach((feature) => {
         this.featureHelper_.setStyle(feature);
-      }, this);
+      });
     });
   }
 

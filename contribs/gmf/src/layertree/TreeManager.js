@@ -248,9 +248,9 @@ gmf.layertree.TreeManager.prototype.addFirstLevelGroup_ = function(group) {
     // Set the number of group to add.
     this.numberOfGroupsToAddInThisDigestLoop = this.groupsToAddInThisDigestLoop_.length;
     // Add each first-level-groups.
-    this.groupsToAddInThisDigestLoop_.forEach(function(grp) {
+    this.groupsToAddInThisDigestLoop_.forEach((grp) => {
       this.root.children.unshift(grp);
-    }, this);
+    });
     //Update the permalink
     this.updateTreeGroupsState_(this.root.children);
     // Reset the groups and the promise state. Don't reset the
@@ -386,13 +386,13 @@ gmf.layertree.TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
   if (!node.children) {
     return;
   }
-  node.children.forEach(function(childNode) {
+  node.children.forEach((childNode) => {
     if (childNode.children) {
       this.toggleNodeCheck_(childNode, names);
     } else if (childNode.metadata) {
       childNode.metadata.isChecked = ol.array.includes(names, childNode.name);
     }
-  }, this);
+  });
 };
 
 

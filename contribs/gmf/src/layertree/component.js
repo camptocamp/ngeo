@@ -608,16 +608,16 @@ gmf.layertree.component.Controller_.prototype.afterReorder = function() {
         return;
       }
     });
-  }, this);
+  });
 
   // Update gmfTreeManager rootctrl children order
   this.gmfTreeManager_.rootCtrl.children = treeCtrls;
 
   // Update map 'data' groupe layers order
   this.layers.length = 0;
-  this.gmfTreeManager_.rootCtrl.children.forEach(function(child) {
+  this.gmfTreeManager_.rootCtrl.children.forEach((child) => {
     this.layers.push(child.layer);
-  }, this);
+  });
 
   // Update the permalink order
   this.gmfPermalink_.refreshFirstLevelGroups();

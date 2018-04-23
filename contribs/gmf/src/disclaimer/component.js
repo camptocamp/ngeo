@@ -194,18 +194,18 @@ gmf.disclaimer.component.Controller_.prototype.registerLayer_ = function(layer) 
     );
 
     // (2) Register existing layers in the group
-    layer.getLayers().forEach(function(layer) {
+    layer.getLayers().forEach((layer) => {
       this.registerLayer_(layer);
-    }, this);
+    });
 
   } else {
 
     // Show disclaimer messages for this layer
     const disclaimers = layer.get('disclaimers');
     if (disclaimers && Array.isArray(disclaimers)) {
-      disclaimers.forEach(function(disclaimer) {
+      disclaimers.forEach((disclaimer) => {
         this.showDisclaimerMessage_(disclaimer);
-      }, this);
+      });
     }
   }
 };
@@ -232,9 +232,9 @@ gmf.disclaimer.component.Controller_.prototype.unregisterLayer_ = function(layer
     // Close disclaimer messages for this layer
     const disclaimers = layer.get('disclaimers');
     if (disclaimers && Array.isArray(disclaimers)) {
-      disclaimers.forEach(function(disclaimer) {
+      disclaimers.forEach((disclaimer) => {
         this.closeDisclaimerMessage_(disclaimer);
-      }, this);
+      });
     }
   }
 

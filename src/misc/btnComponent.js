@@ -97,11 +97,11 @@ ngeo.misc.btnComponent.BtnGroupController = function($scope) {
  * @param {number} index Index of the button in buttons array.
  */
 ngeo.misc.btnComponent.BtnGroupController.prototype.activate = function(index) {
-  this.buttons_.forEach(function(expressionFn, i) {
+  this.buttons_.forEach((expressionFn, i) => {
     if (i != index) {
       expressionFn.assign(this.scope_, false);
     }
-  }, this);
+  });
 };
 
 
