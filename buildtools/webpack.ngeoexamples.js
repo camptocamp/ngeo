@@ -18,7 +18,7 @@ for (const filename of ls('examples/*.html')) {
     new HtmlWebpackPlugin({
       template: `examples/${name}.html`,
       chunksSortMode: 'manual',
-      filename: name + '.html',
+      filename: 'examples/' + name + '.html',
       chunks: ['commons', name],
     })
   );
@@ -36,9 +36,6 @@ plugins.push(new CopyWebpackPlugin(
 ));
 
 module.exports = {
-  output: {
-    path: path.resolve(__dirname, '../.build/examples-hosted/'),
-  },
   entry: entry,
   optimization: {
     splitChunks: {
@@ -48,3 +45,11 @@ module.exports = {
   },
   plugins: plugins,
 };
+
+if (!process.env.DEV_SERVER) {
+  Object.assign(module.exports, {
+    output: {
+      path: path.resolve(__dirname, '../.build/examples-hosted/'),
+    },
+  });
+}
