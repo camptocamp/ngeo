@@ -78,6 +78,7 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$sce} $sce Angular sce service.
  * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.CreatePopup} ngeoCreatePopup Popup service.
  * @param {!ngeo.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.EventHelper} ngeoEventHelper Ngeo Event Helper.
@@ -88,7 +89,7 @@ gmf.module.component('gmfDisclaimer', gmf.disclaimerComponent);
  * @ngname GmfDisclaimerController
  */
 gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
-  ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+  gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
    * @type {?ol.Map}
@@ -139,6 +140,12 @@ gmf.DisclaimerController = function($element, $scope, $sce, $timeout,
    * @private
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @type {!angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {!angular.JQLite}
@@ -299,6 +306,7 @@ gmf.DisclaimerController.prototype.$onDestroy = function() {
  * @private
  */
 gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
+  msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (this.msgs_.indexOf(msg) < 0) {
       this.msgs_.push(msg);
@@ -321,6 +329,7 @@ gmf.DisclaimerController.prototype.showDisclaimerMessage_ = function(msg) {
  * @private
  */
 gmf.DisclaimerController.prototype.closeDisclaimerMessage_ = function(msg) {
+  msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
     this.msgs_.length = 0;
