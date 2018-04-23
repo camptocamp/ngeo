@@ -46,6 +46,8 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
+        'minDate': ctrl.initialMinDate,
+        'maxDate': ctrl.initialMaxDate,
         'onClose': function(selectedDate) {
           if (selectedDate) {
             $(element[0]).find('input[name="edate"]').datepicker('option', 'minDate', selectedDate);
@@ -54,6 +56,8 @@ ngeo.DatePicker = function(ngeoDatePickerTemplateUrl,  $timeout) {
       });
 
       ctrl.edateOptions = angular.extend({}, ctrl.edateOptions, {
+        'minDate': ctrl.initialMinDate,
+        'maxDate': ctrl.initialMaxDate,
         'onClose': function(selectedDate) {
           if (selectedDate) {
             $(element[0]).find('input[name="sdate"]').datepicker('option', 'maxDate', selectedDate);
@@ -149,8 +153,6 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime, gettextCatalog
    * @export
    */
   this.edateOptions = {
-    'minDate': this.initialMinDate,
-    'maxDate': this.initialMaxDate,
     'changeMonth': true,
     'changeYear': true
   };
@@ -161,8 +163,6 @@ ngeo.DatePickerController = function($scope, $injector, ngeoTime, gettextCatalog
    * @export
    */
   this.sdateOptions = {
-    'minDate': this.initialMinDate,
-    'maxDate': this.initialMaxDate,
     'changeMonth': true,
     'changeYear': true
   };
