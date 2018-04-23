@@ -155,6 +155,23 @@ ngeo.RuleController = class {
     };
 
     /**
+     * @type {Object.<string, string>}
+     * @export
+     */
+    this.operatorsShortFormat = {
+      [ot.EQUAL_TO]: '=',
+      [ot.GREATER_THAN]: '>',
+      [ot.GREATER_THAN_OR_EQUAL_TO]: '>=',
+      [ot.LESSER_THAN]: '<',
+      [ot.LESSER_THAN_OR_EQUAL_TO]: '<=',
+      [ot.NOT_EQUAL_TO]: '!=',
+      [ot.LIKE]: '~',
+      [tot.BEGINS]: '>=',
+      [tot.ENDS]: '<=',
+      [tot.EQUALS]: '='
+    };
+
+    /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a range of date.
      * @type {!ngeox.TimeProperty}

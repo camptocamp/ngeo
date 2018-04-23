@@ -362,8 +362,8 @@ ngeo.rule.Rule.SpatialOperatorType = {
  * @enum {string}
  */
 ngeo.rule.Rule.TemporalOperatorType = {
-  BEGINS: '>=',
-  DURING: '..',
-  ENDS: '<=',
-  EQUALS: '='
+  BEGINS: 'time_start',
+  DURING: 'time_during',
+  ENDS: 'time_end',
+  EQUALS: 'time_equal'
 };
