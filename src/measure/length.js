@@ -39,7 +39,7 @@ ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $in
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const helpMsg = gettextCatalog.getString('Click to start drawing line');
-      const contMsg = gettextCatalog.getString('Click to continue drawing<br/>' +
+      const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click last point to finish');
 
       const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
