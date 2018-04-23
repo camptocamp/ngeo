@@ -21,8 +21,9 @@
         </div>
         <div
           class="details"
-          ng-if="$ctrl.content !== null"
-          ng-bind-html="$ctrl.content"></div>
+          ng-if="$ctrl.content"
+          ng-bind-html="$ctrl.content">
+        </div>
         <div
           class="details"
           ng-if="$ctrl.url !== null">

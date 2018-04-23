@@ -47,24 +47,9 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 ngeo.message.displaywindowComponent.Controller_ = class {
 
   /**
-   * The `ngeo-displaywindow` component is an alternative to the `ngeo.message.Popup`.
-   * What they have in common:
-   *
-   * - support title
-   * - support url to be shown in an iframe
-   * - support plain HTML content
-   * - support sizing, i.e. height and width.
-   * - support being opened/closed
-   *
-   * The differences with the `ngeo.message.Popup` are:
-   *
-   * - it supports being dragged
-   * - it supports being resized
-   *
    * @param {!jQuery} $element Element.
    * @param {!angular.$sce} $sce Angular sce service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoDisplaywindowComponentController
@@ -83,7 +68,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @type {?string}
      * @export
      */
-    this.content;
+    this.content = null;
 
     /**
      * @type {boolean}
@@ -107,7 +92,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @type {?string}
      * @export
      */
-    this.height;
+    this.height = null;
 
     /**
      * @type {boolean}
@@ -125,19 +110,19 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @type {?string}
      * @export
      */
-    this.title;
+    this.title = null;
 
     /**
      * @type {?string}
      * @export
      */
-    this.url;
+    this.url = null;
 
     /**
      * @type {?string}
      * @export
      */
-    this.width;
+    this.width = null;
 
 
     // === Injected Properties ===
@@ -165,11 +150,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     this.content = this.content || null;
     this.desktop = this.desktop !== false;
     this.draggableContainment = this.draggableContainment || 'document';
-    this.height = this.height || null;
     this.open = this.open === true;
-    this.title = this.title || null;
-    this.url = this.url || null;
-    this.width = this.width || null;
 
     this.draggable = this.draggable !== undefined ?
       this.draggable : this.desktop;
@@ -209,7 +190,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
   get style() {
     return {
       'height': this.height || '240px',
-      'width': this.height || '240px'
+      'width': this.width || '240px'
     };
   }
 
@@ -218,7 +199,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
    * @export
    */
   get urlTrusted() {
-    if (this.url !== null) {
+    if (this.url) {
       return /** @type {string} */ (this.sce_.trustAsResourceUrl(this.url));
     }
   }
@@ -236,19 +217,60 @@ ngeo.message.displaywindowComponent.Controller_ = class {
 };
 
 
+/**
+ * The `ngeo-displaywindow` component is an alternative to the `ngeo.message.Popup`.
+ * What they have in common:
+ *
+ * - support title
+ * - support url to be shown in an iframe
+ * - support plain HTML content
+ * - support sizing, i.e. height and width.
+ * - support being opened/closed
+ *
+ * The differences with the `ngeo.message.Popup` are:
+ *
+ * - it supports being dragged
+ * - it supports being resized
+ *
+ * Example:
+ *      <ngeo-displaywindow
+ *        class="window1"
+ *        url="::ctrl.window1Content"
+ *        desktop="::false"
+ *        open="::true"
+ *        title="'Window 1 - The simplest window (close kills it)'">
+ *      </ngeo-displaywindow>
+ *
+ * @htmlAttribute {boolean=} ngeo-displaywindow-clear-on-close Whether to clear the content on close or not.
+ * @htmlAttribute {string=} ngeo-displaywindow-content The html content. If not provided, you must provide
+ *     an url.
+ * @htmlAttribute {boolean=} ngeo-displaywindow-desktop If true, the window is draggable and resizable. If
+ *     not set, you must set manually both parameter.
+ * @htmlAttribute {boolean=} ngeo-displaywindow-draggable Wheter the window is draggable or not.
+ * @htmlAttribute {string=} ngeo-displaywindow-draggable-containment The zone (css selector) where the window
+ *     is authorized to be dragged.
+ * @htmlAttribute {string=} ngeo-displaywindow-height The default height of the window.
+ * @htmlAttribute {boolean=} ngeo-displaywindow-open Wheter the window is open or not.
+ * @htmlAttribute {string=} ngeo-displaywindow-title The html title of the window.
+ * @htmlAttribute {string=} ngeo-displaywindow-url The url to open in an iframe, in the window. The content
+ *     attribute must not be provided.
+ * @htmlAttribute {string=} ngeo-displaywindow-width The default width of the window.
+ * @ngdoc component
+ * @ngname ngeoDisplaywindow
+ */
 ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
   bindings: {
-    'clearOnClose': '<',
-    'content': '=',
-    'desktop': '<',
-    'draggable': '<',
-    'draggableContainment': '<',
-    'height': '=',
-    'open': '=',
-    'resizable': '<',
-    'title': '=',
-    'url': '=',
-    'width': '='
+    'clearOnClose': '<?',
+    'content': '=?',
+    'desktop': '<?',
+    'draggable': '<?',
+    'draggableContainment': '<?',
+    'height': '=?',
+    'open': '=?',
+    'resizable': '<?',
+    'title': '=?',
+    'url': '=?',
+    'width': '=?'
   },
   controller: ngeo.message.displaywindowComponent.Controller_,
   templateUrl: ngeoMessageDisplaywindowTemplateUrl
