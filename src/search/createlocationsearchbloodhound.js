@@ -25,7 +25,7 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
    * @param {string} bbox Bbox string.
    * @return {?ol.Extent} Parsed extent.
    */
-  const parseBbox = function(bbox) {
+  const parseBbox = (bbox) => {
     const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
     const match = regex.exec(bbox);
     if (match !== null) {
@@ -40,11 +40,9 @@ ngeo.search.createLocationSearchBloodhound = function(opt_options) {
     }
   };
 
-  const removeHtmlTags = function(label) {
-    return label.replace(/<\/?[ib]>/g, '');
-  };
+  const removeHtmlTags = label => label.replace(/<\/?[ib]>/g, '');
 
-  const extractName = function(label) {
+  const extractName = (label) => {
     const regex = /<b>(.*?)<\/b>/g;
     const match = regex.exec(label);
     if (match !== null) {
