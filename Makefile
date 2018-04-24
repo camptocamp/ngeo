@@ -251,13 +251,12 @@ eof-newline:
 	buildtools/test-eof-newline
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
+test: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
-	@cat .build/coverage/coverage.txt
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
-test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
+test-debug: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
@@ -888,9 +887,6 @@ clean:
 	rm -f .build/*.check.timestamp
 	rm -f .build/examples/*.js
 	rm -f .build/eslint.timestamp
-	rm -f .build/ol-deps.js
-	rm -f .build/ngeo-deps.js
-	rm -f .build/gmf-deps.js
 	rm -f .build/info.json
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
