@@ -52,9 +52,9 @@ ngeo.search.searchDirective = function() {
               /** @type {ngeox.SearchDirectiveListeners} */
               (scope.$eval(typeaheadListenersExpr));
 
-          /**
-           * @type {ngeox.SearchDirectiveListeners}
-           */
+      /**
+       * @type {ngeox.SearchDirectiveListeners}
+       */
       const typeaheadListeners = ngeo.search.searchDirective.adaptListeners_(
         typeaheadListeners_);
 
@@ -72,10 +72,10 @@ ngeo.search.searchDirective = function() {
 
       element.on('typeahead:cursorchange',
         /**
-               * @param {jQuery.Event} event Event.
-               * @param {Object} suggestion Suggestion.
-               * @param {TypeaheadDataset} dataset Dataset.
-               */
+         * @param {jQuery.Event} event Event.
+         * @param {Object} suggestion Suggestion.
+         * @param {TypeaheadDataset} dataset Dataset.
+         */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
             typeaheadListeners.cursorchange(event, suggestion, dataset);
@@ -84,10 +84,10 @@ ngeo.search.searchDirective = function() {
 
       element.on('typeahead:select',
         /**
-               * @param {jQuery.Event} event Event.
-               * @param {Object} suggestion Suggestion.
-               * @param {TypeaheadDataset} dataset Dataset.
-               */
+         * @param {jQuery.Event} event Event.
+         * @param {Object} suggestion Suggestion.
+         * @param {TypeaheadDataset} dataset Dataset.
+         */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
             typeaheadListeners.select(event, suggestion, dataset);
@@ -96,10 +96,10 @@ ngeo.search.searchDirective = function() {
 
       element.on('typeahead:autocomplete',
         /**
-               * @param {jQuery.Event} event Event.
-               * @param {Object} suggestion Suggestion.
-               * @param {TypeaheadDataset} dataset Dataset.
-               */
+         * @param {jQuery.Event} event Event.
+         * @param {Object} suggestion Suggestion.
+         * @param {TypeaheadDataset} dataset Dataset.
+         */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
             typeaheadListeners.autocomplete(event, suggestion, dataset);
@@ -108,10 +108,10 @@ ngeo.search.searchDirective = function() {
 
       element.on('typeahead:asyncreceive',
         /**
-               * @param {jQuery.Event} event Event.
-               * @param {TypeaheadDataset} dataset Dataset.
-               * @param {string} query Query.
-               */
+         * @param {jQuery.Event} event Event.
+         * @param {TypeaheadDataset} dataset Dataset.
+         * @param {string} query Query.
+         */
         (event, dataset, query) => {
           scope.$apply(() => {
             const empty = element.data('tt-typeahead')['menu']['_allDatasetsEmpty']();
