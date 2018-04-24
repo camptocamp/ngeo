@@ -170,7 +170,7 @@ ngeo.format.XSDAttribute.prototype.setAttributeByXsdType_ = function(
     attribute.type = ngeo.AttributeType.DATETIME;
   } else if (type === 'xsd:time') {
     attribute.type = ngeo.AttributeType.TIME;
-  } else if (type === 'xsd:decimal') {
+  } else if (type === 'xsd:decimal' || type === 'xsd:double') {
     attribute.type = ngeo.AttributeType.NUMBER;
     attribute.numType = ngeo.NumberType.FLOAT;
   } else if (type === 'xsd:integer') {
