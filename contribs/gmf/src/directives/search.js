@@ -970,8 +970,9 @@ gmf.SearchController.datasetsempty_ = function(event, query, empty) {
   }
   if (empty) {
     message.show();
-    menu.show();
+    menu.addClass('gmf-search-no-results');
   } else {
+    menu.removeClass('gmf-search-no-results');
     message.hide();
   }
 
