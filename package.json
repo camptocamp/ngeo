@@ -4,9 +4,9 @@
   "description": "AngularJS OpenLayers Library",
   "scripts": {
     "prepublish": "make -f npm.mk install",
-    "serve-ngeo-examples": "NODE_ENV=dev TARGET=ngeo-examples webpack --watch & serve .build/examples-hosted/",
-    "serve-gmf-examples": "NODE_ENV=dev TARGET=gmf-examples webpack --watch & serve .build/examples-hosted/contribs/gmf/",
-    "serve-gmf-apps": "NODE_ENV=dev TARGET=gmf-apps webpack --watch & serve .build/contribs-gmf-apps/"
+    "serve-ngeo-examples": "DEV_SERVER=1 TARGET=ngeo-examples NODE_ENV=dev node_modules/.bin/webpack-dev-server --progress --watch --bail -d",
+    "serve-gmf-examples": "DEV_SERVER=1 TARGET=gmf-examples NODE_ENV=dev node_modules/.bin/webpack-dev-server --progress --watch --bail -d",
+    "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps NODE_ENV=dev node_modules/.bin/webpack-dev-server --progress --watch --bail -d"
   },
   "repository": {
     "type": "git",
