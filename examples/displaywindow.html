@@ -21,6 +21,11 @@
             type="button"
             class="btn btn-default">Open / close window 3.</button>
 
+    <button ng-click="ctrl.window4IsOpen = !ctrl.window4IsOpen;"
+            title="Open window 4."
+            type="button"
+            class="btn btn-default">Open / close window 4.</button>
+
     <ngeo-displaywindow
       class="window1"
       url="::ctrl.window1Content"
@@ -45,14 +50,41 @@
             class="window3"
             clear-on-close="::false"
             content-template="::ctrl.window3Template"
-            content-scope="::ctrl.window3Scope"
+            content-scope="::ctrl.windowScope"
             draggable="::true"
             resize="::true"
             width="::400"
-            height="::350"
+            height="::150"
             open="ctrl.window3IsOpen"
-            title="'Window 3 - Using AngularJS template with bindings'">
+            title="'Window 3 - Using angular-directives'">
     </ngeo-displaywindow>
 
+    <ngeo-displaywindow
+            class="window4"
+            clear-on-close="::false"
+            content-template="::ctrl.window4Template"
+            content-scope="::ctrl.windowScope"
+            draggable="::true"
+            resize="::true"
+            width="::400"
+            height="::250"
+            open="ctrl.window4IsOpen"
+            title="'Window 4 - Using AngularJS template with bindings'">
+    </ngeo-displaywindow>
+
+    <script type="text/ng-template"
+            id="window4Template">
+      <div class="details">
+        <h3>Using angular-bindings:</h3>
+        <p>
+          <label for="textBinding">Data: </label>
+          <input type="text" id="textBinding" size="35" ng-model="ctrl.window4TextBinding" />
+        </p>
+        <p>
+          Output:
+        <p id="textBindingOutput">{{ctrl.window4TextBinding}}</p>
+        </p>
+      </div>
+    </script>
   </body>
 </html>

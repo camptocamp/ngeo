@@ -54,14 +54,6 @@ app.displaywindow.MainController = function($scope) {
   this.window3Template = `
     <div class="details">
       <p>
-          <h3>Using angular-bindings:</h3>
-          <label for="textBinding">Data: </label>
-          <input type="text" id="textBinding" size="35" ng-model="ctrl.window3TextBinding" />
-          <p>Output:
-            <p id="textBindingOutput">{{ctrl.window3TextBinding}}</p>
-          </p>
-      </p>
-      <p>
           <h3>Using angular-directives:</h3>
           <span ng-if="!ctrl.window3FalseValue">This should appear</span>
           <span ng-show="ctrl.window3FalseValue">This should not be visible</span>
@@ -75,17 +67,30 @@ app.displaywindow.MainController = function($scope) {
    */
   this.window3FalseValue = false;
 
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.window4IsOpen = false;
+
   /**
    * @type {string}
    * @export
    */
-  this.window3TextBinding = 'This is an angular binding.';
+  this.window4Template = angular.element(document.getElementById('window4Template')).html();
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.window4TextBinding = 'This is an angular binding.';
 
   /**
    * @type {angular.Scope}
    * @export
    */
-  this.window3Scope = $scope;
+  this.windowScope = $scope;
 };
 
 
