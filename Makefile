@@ -76,8 +76,10 @@ endif
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := \
+	$(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
+
 EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/angular.min.js \
 	.build/examples-hosted/lib/angular-animate.min.js \
@@ -273,6 +275,15 @@ examples-hosted: \
 		examples-hosted-ngeo \
 		examples-hosted-gmf \
 		examples-hosted-apps
+
+.build/examples-hosted/%: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	NODE_ENV=dev TARGET=ngeo-examples node_modules/.bin/webpack --progress
+
+.build/examples-hosted/contribs/gmf/%: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	NODE_ENV=dev TARGET=gmf-examples node_modules/.bin/webpack --progress
+
+.build/examples-hosted/contribs-gmf-apps/%: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	NODE_ENV=dev TARGET=gmf-apps node_modules/.bin/webpack --progress
 
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: \

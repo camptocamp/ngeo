@@ -81,13 +81,8 @@ jobs:
     - JOB=webpack
     script:
     - npm install
-    - npm install https://api.github.com/repos/openlayers/openlayers/tarball/bfae19c7e138533ad0c1a071d8886d55aac9bd35
-    - buildtools/webpack-migration
     - git add -A  # for git-attributes
     - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
-    - TARGET=ngeo-examples node_modules/.bin/webpack --profile
-    - TARGET=gmf-examples node_modules/.bin/webpack --profile
-    - TARGET=gmf-apps node_modules/.bin/webpack --profile
     - export CHROME_BIN=/opt/google/chrome/chrome
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
