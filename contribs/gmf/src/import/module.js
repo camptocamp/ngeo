@@ -5,6 +5,8 @@ import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceCompo
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
 
+import './import.less';
+
 /**
  * @type {!angular.Module}
  */

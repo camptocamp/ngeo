@@ -3,6 +3,8 @@
  */
 import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';
 
+import './routing.less';
+
 /**
  * @type {angular.Module}
  */
