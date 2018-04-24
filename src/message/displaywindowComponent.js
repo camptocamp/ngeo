@@ -299,8 +299,8 @@ ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',
-    'contentTemplate': '<',
-    'contentScope': '<',
+    'contentTemplate': '<?',
+    'contentScope': '<?',
     'desktop': '<?',
     'draggable': '<?',
     'draggableContainment': '<?',

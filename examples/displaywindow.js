@@ -54,7 +54,7 @@ app.displaywindow.MainController = function($scope) {
   this.window3Template = `
     <div class="details">
       <p>
-          <h3>Using angular-directives:</h3>
+          <h3>Using AngularJS directives:</h3>
           <span ng-if="!ctrl.window3FalseValue">This should appear</span>
           <span ng-show="ctrl.window3FalseValue">This should not be visible</span>
       </p>
@@ -84,7 +84,7 @@ app.displaywindow.MainController = function($scope) {
    * @type {string}
    * @export
    */
-  this.window4TextBinding = 'This is an angular binding.';
+  this.window4TextBinding = 'This is an AngularJS binding.';
 
   /**
    * @type {angular.Scope}
