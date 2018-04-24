@@ -24,7 +24,7 @@
   font-weight: bold;
 }
 
-.ui-draggable {
+.ui-draggable .ui-draggable-handle {
   cursor: pointer;
 }
 
