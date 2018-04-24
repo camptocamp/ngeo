@@ -2,6 +2,7 @@ goog.provide('ngeo.message.displaywindowComponent');
 
 goog.require('ngeo'); // nowebpack
 // webpack: import 'jquery-ui/ui/widgets/resizable.js';
+// webpack: import 'jquery-ui/ui/widgets/draggable.js';
 // webpack: import 'angular-sanitize';
 
 
