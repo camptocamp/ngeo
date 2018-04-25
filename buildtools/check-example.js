@@ -9,14 +9,7 @@ var args = require('system').args;
 if (args.length != 2) {
   phantom.exit(1);
 }
-
 var examplePath = args[1];
-var env = require('system').env;
-if ('TRAVIS' in env && examplePath === '.build/examples-hosted/contribs/gmf/authentication.html') {
-  console.log('Skipping', examplePath, 'as it fails mysteriously on travis');
-  phantom.exit(0);
-}
-
 var page = require('webpage').create();
 var exitCode = 0;
 page.onError = function(msg, trace) {
