@@ -148,7 +148,7 @@ jobs:
     env:
     - JOB=publish-apps-gmf
     script:
-    - buildtools/deploy.sh
+    - echo 'disabled' # buildtools/deploy.sh
     if: type = push AND repo = camptocamp/ngeo AND branch IS present
   - stage: Build and publish
     env:
