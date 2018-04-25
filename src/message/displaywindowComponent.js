@@ -2,6 +2,7 @@ goog.provide('ngeo.message.displaywindowComponent');
 
 goog.require('ngeo'); // nowebpack
 // webpack: import 'jquery-ui/ui/widgets/resizable.js';
+// webpack: import 'jquery-ui/ui/widgets/draggable.js';
 // webpack: import 'angular-sanitize';
 
 
@@ -186,7 +187,8 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     // Draggable
     if (this.draggable) {
       this.element_.find('.ngeo-displaywindow .windowcontainer').draggable({
-        'containment': this.draggableContainment
+        'containment': this.draggableContainment,
+        'handle': 'div.header'
       });
     }
 
