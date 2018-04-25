@@ -11,8 +11,10 @@ describe('GmfPrintController', () => {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    const $element = angular.element('<div></div>');
     gmfPrintCtrl = $controller('GmfPrintController',
       {
+        $element,
         $scope,
         gmfPrintUrl: ''
       }
@@ -27,11 +29,14 @@ describe('GmfPrintController', () => {
     gmfPrintCtrl.parseCapabilities_({data: printCapabilities});
   }));
 
-  it('Get Set rotation', () => {
+  it('Set rotation', () => {
     expect(gmfPrintCtrl.rotation).toBe(0);
-    gmfPrintCtrl.getSetRotation(25);
-    expect(gmfPrintCtrl.rotation).toBe(gmfPrintCtrl.getSetRotation());
+    gmfPrintCtrl.setRotation(25);
     expect(gmfPrintCtrl.rotation).toBe(25);
+    gmfPrintCtrl.setRotation(190);
+    expect(gmfPrintCtrl.rotation).toBe(180);
+    gmfPrintCtrl.setRotation(-1000);
+    expect(gmfPrintCtrl.rotation).toBe(-180);
   });
 
   it('Set layout and test depending layout informations changes', () => {

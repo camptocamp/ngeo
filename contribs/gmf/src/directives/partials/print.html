@@ -156,10 +156,9 @@
 
         <div class="col-md-5">
           <input
-            class="form-control"
+            class="form-control gmf-print-rotation-input"
             type="range"
-            ng-model="ctrl.getSetRotation"
-            ng-model-options="{getterSetter: true}"
+            value="0"
             min="-180"
             max="180"
             data-toggle="tooltip"
@@ -168,10 +167,11 @@
 
         <div class="col-md-4">
           <input
-            class="form-control"
+            class="form-control gmf-print-rotation-input"
             type="number"
-            ng-model="ctrl.getSetRotation"
-            ng-model-options="{getterSetter: true}">
+            min="-180"
+            max="180"
+            value="0">
         </div>
       </div>
 
