@@ -291,6 +291,7 @@ examples-hosted: \
 
 .PHONY: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: .build/examples-webpack.timestamp
+	@#necessary comment
 
 .build/examples-webpack.timestamp: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES) $(EXAMPLES_FILES)
 	NODE_ENV=dev TARGET=ngeo-examples node_modules/.bin/webpack --progress
@@ -298,6 +299,7 @@ examples-hosted: \
 
 .PHONY: .build/examples-hosted/contribs/gmf/%.html
 .build/examples-hosted/contribs/gmf/%.html: .build/examples-contribs-gmf-webpack.timestamp
+	@#necessary comment
 
 .build/examples-contribs-gmf-webpack.timestamp: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES) $(GMF_EXAMPLES_FILES) contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
 	NODE_ENV=dev TARGET=gmf-examples node_modules/.bin/webpack --progress
@@ -305,6 +307,7 @@ examples-hosted: \
 
 .PHONY: .build/examples-hosted/contribs-gmf-apps/%.html
 .build/examples-hosted/contribs-gmf-apps/%.html: .build/examples-contribs-gmf-apps-webpack.timestamp
+	@#necessary comment
 
 .build/.examples.hosted.contribs.gmf.apps.webpack.timestamp: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES) $(GMF_APPS_FILES) contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
 	NODE_ENV=dev TARGET=gmf-apps node_modules/.bin/webpack --progress
