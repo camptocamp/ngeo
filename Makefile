@@ -691,7 +691,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/node_modules.timestamp \
 		buildtools/check-example.js
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs --ignore-ssl-errors=yes --local-to-remote-url-access=true buildtools/check-example.js $<
 	#[ `compare -metric RMSE $<.png example/$*-ref.png /$<-diff.png 2>&1 | sed 's/^.*(\(.*\))/\1/g'` \< 0.05 ]
 	touch $@
 
@@ -700,12 +700,12 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		.build/node_modules.timestamp \
 		buildtools/check-example.js
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs --ignore-ssl-errors=yes --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
 
 .build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%/index.html
 	mkdir -p $(dir $@)
-	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
+	./node_modules/.bin/phantomjs --ignore-ssl-errors=yes --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
 
 .build/node_modules.timestamp: package.json
