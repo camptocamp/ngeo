@@ -180,6 +180,7 @@ gmf.print.component.component('gmfPrint', gmf.print.component.component_);
 gmf.print.component.Controller_ = class {
 
   /**
+   * @param {angular.JQLite} $element Element.
    * @param {angular.Scope} $rootScope Angular root scope.
    * @param {angular.Scope} $scope Angular scope.
    * @param {angular.$timeout} $timeout Angular timeout service.
@@ -202,7 +203,7 @@ gmf.print.component.Controller_ = class {
    * @ngdoc controller
    * @ngname GmfPrintController
    */
-  constructor($rootScope, $scope, $timeout, $q, $injector,
+  constructor($element, $rootScope, $scope, $timeout, $q, $injector,
     gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
     ngeoCreatePrint, gmfPrintUrl, gmfAuthenticationService, ngeoQueryResult,
     $filter, gmfPrintState, gmfThemes) {
@@ -437,6 +438,19 @@ gmf.print.component.Controller_ = class {
     this.scaleManuallySelected_ = false;
 
     /**
+     * @type {angular.JQLite}
+     * @export
+     */
+    this.rotationInput_ = $element.find('.gmf-print-rotation-input');
+
+    this.rotationInput_.on('input', (event) => {
+      const rotation = $(event.target).val();
+      if (rotation !== '') {
+        this.setRotation(/** @type {number} */ (rotation));
+      }
+    });
+
+    /**
      * @type {function(ol.render.Event)}
      */
     this.postcomposeListener_;
@@ -563,7 +577,7 @@ gmf.print.component.Controller_ = class {
       ol.events.unlistenByKey(this.postComposeListenerKey_);
       ol.events.unlistenByKey(this.pointerDragListenerKey_);
       ol.events.unlistenByKey(this.mapViewResolutionChangeKey_);
-      this.getSetRotation(0);
+      this.setRotation(0);
       this.map.render(); // Redraw (remove) post compose mask;
     }
   }
@@ -731,32 +745,22 @@ gmf.print.component.Controller_ = class {
 
 
   /**
-   * Getter setter to update or get the current rotation value. Param and result
-   *     are in degree. Updating the rotation will redraw the mask or rorate the
-   *     map (depending on the configuration);
-   * @param {number=} opt_rotation The optional new rotation value.
-   * @return {number} The new value of rotation;
-   * @export
+   * Set the current rotation value.
+   * Updating the rotation will redraw the mask or rotate the map (depending on the configuration).
+   * @param {number} rotation The optional new rotation value in degrees.
    */
-  getSetRotation(opt_rotation) {
-    if (opt_rotation !== undefined) {
-      let rotation = parseInt(opt_rotation, 10);
-      if (rotation > 180) {
-        rotation = -180;
-      } else if (rotation < -180) {
-        rotation = 180;
-      }
-      this.rotation = rotation;
+  setRotation(rotation) {
+    this.rotation = ol.math.clamp(rotation, -180, 180);
 
-      // Render the map to update the postcompose mask or rotate the map.
-      if (this.rotateMask) {
-        this.map.render();
-      } else {
-        this.map.getView().setRotation(ol.math.toRadians(this.rotation));
-      }
+    // sync all the inputs
+    this.rotationInput_.val(this.rotation.toString());
 
+    // Render the map to update the postcompose mask or rotate the map.
+    if (this.rotateMask_) {
+      this.map.render();
+    } else {
+      this.map.getView().setRotation(ol.math.toRadians(this.rotation));
     }
-    return this.rotation;
   }
 
 
@@ -793,7 +797,7 @@ gmf.print.component.Controller_ = class {
         const increment = Math.round(ol.math.toDegrees(angle) * boost);
 
         // Set rotation then update the view.
-        this.getSetRotation(this.rotation + increment);
+        this.setRotation(this.rotation + increment);
         this.$scope_.$digest();
       }
       // Prepare the removal of this session of drags events
