@@ -1037,8 +1037,9 @@ gmf.search.component.SearchController_ = class {
     }
     if (empty) {
       message.show();
-      menu.show();
+      menu.addClass('gmf-search-no-results');
     } else {
+      menu.removeClass('gmf-search-no-results');
       message.hide();
     }
   }

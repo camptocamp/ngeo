@@ -244,7 +244,7 @@
           <span>{{ $ctrl.timeToDate($ctrl.rule.upperBoundary) }}</span>
         </div>
         <div ng-switch-default>
-          <span>{{ $ctrl.rule.operator }}</span>
+          <span>{{ $ctrl.operatorsShortFormat[$ctrl.rule.operator] }}</span>
           <span>{{ $ctrl.timeToDate($ctrl.rule.getExpression()) }}</span>
         </div>
       </div>
@@ -291,7 +291,7 @@
           <span>{{ $ctrl.rule.upperBoundary }}</span>
         </div>
         <div ng-switch-default>
-          <span>{{ $ctrl.rule.operator }}</span>
+          <span>{{ $ctrl.operatorsShortFormat[$ctrl.rule.operator] }}</span>
           <span>{{ $ctrl.rule.getExpression() }}</span>
         </div>
       </div>
