@@ -8,6 +8,7 @@ GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.ht
 
 OS := $(shell uname)
 
+EXAMPLES_FILES := $(shell find examples -maxdepth 1 -type f)
 EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
 
@@ -15,9 +16,11 @@ FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot t
 
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
+GMF_EXAMPLES_FILES := $(shell find contribs/gmf/examples -type f)
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
+GMF_APPS_FILES := $(shell find contribs/gmf/apps/ -type f)
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 DEVELOPMENT ?= FALSE
@@ -286,14 +289,26 @@ examples-hosted: \
 		examples-hosted-gmf \
 		examples-hosted-apps
 
-.build/examples-hosted/%: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+.PHONY: .build/examples-hosted/%.html
+.build/examples-hosted/%.html: .build/examples-webpack.timestamp
+
+.build/examples-webpack.timestamp: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES) $(EXAMPLES_FILES)
 	NODE_ENV=dev TARGET=ngeo-examples node_modules/.bin/webpack --progress
+	touch $@
 
-.build/examples-hosted/contribs/gmf/%: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+.PHONY: .build/examples-hosted/contribs/gmf/%.html
+.build/examples-hosted/contribs/gmf/%.html: .build/examples-contribs-gmf-webpack.timestamp
+
+.build/examples-contribs-gmf-webpack.timestamp: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES) $(GMF_EXAMPLES_FILES) contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
 	NODE_ENV=dev TARGET=gmf-examples node_modules/.bin/webpack --progress
+	touch $@
 
-.build/examples-hosted/contribs-gmf-apps/%: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+.PHONY: .build/examples-hosted/contribs-gmf-apps/%.html
+.build/examples-hosted/contribs-gmf-apps/%.html: .build/examples-contribs-gmf-apps-webpack.timestamp
+
+.build/.examples.hosted.contribs.gmf.apps.webpack.timestamp: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES) $(GMF_APPS_FILES) contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
 	NODE_ENV=dev TARGET=gmf-apps node_modules/.bin/webpack --progress
+	touch $@
 
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: \
