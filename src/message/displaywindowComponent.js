@@ -49,12 +49,14 @@ ngeo.message.displaywindowComponent.Controller_ = class {
   /**
    * @param {!jQuery} $element Element.
    * @param {!angular.$sce} $sce Angular sce service.
+   * @param {!angular.Scope} $scope Scope.
+   * @param {angular.$compile} $compile The compile provider.
    * @private
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoDisplaywindowComponentController
    */
-  constructor($element, $sce) {
+  constructor($element, $sce, $scope, $compile) {
 
     // === Binding Properties ===
 
@@ -69,6 +71,16 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @export
      */
     this.content = null;
+
+    /**
+     * @type {?string}
+     */
+    this.contentTemplate = null;
+
+    /**
+     * @type {?angular.Scope}
+     */
+    this.contentScope = null;
 
     /**
      * @type {boolean}
@@ -138,6 +150,18 @@ ngeo.message.displaywindowComponent.Controller_ = class {
      * @private
      */
     this.sce_ = $sce;
+
+    /**
+     * @type {angular.Scope}
+     * @private
+     */
+    this.scope_ = $scope;
+
+    /**
+     * @type {angular.$compile}
+     * @private
+     */
+    this.compile_ = $compile;
   }
 
   /**
@@ -148,6 +172,8 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     // Initialize binding properties
     this.clearOnClose = this.clearOnClose !== false;
     this.content = this.content || null;
+    this.contentTemplate = this.contentTemplate || null;
+    this.contentScope = this.contentScope || null;
     this.desktop = this.desktop !== false;
     this.draggableContainment = this.draggableContainment || 'document';
     this.open = this.open === true;
@@ -170,6 +196,13 @@ ngeo.message.displaywindowComponent.Controller_ = class {
         'minHeight': 240,
         'minWidth': 240
       });
+    }
+
+    if (this.contentTemplate) {
+      const scope = this.contentScope || this.scope_;
+      const compiled = this.compile_(this.contentTemplate)(scope);
+      const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container');
+      displayWindow.append(compiled);
     }
   }
 
@@ -231,6 +264,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
  *
  * - it supports being dragged
  * - it supports being resized
+ * - support angularjs template content
  *
  * Example:
  *      <ngeo-displaywindow
@@ -244,6 +278,9 @@ ngeo.message.displaywindowComponent.Controller_ = class {
  * @htmlAttribute {boolean=} ngeo-displaywindow-clear-on-close Whether to clear the content on close or not.
  * @htmlAttribute {string=} ngeo-displaywindow-content The html content. If not provided, you must provide
  *     an url.
+ * @htmlAttribute {string=} ngeo-displaywindow-content-template AngularJS template. It gets compiled during runtime
+ * with the supplied scope (ngeo-displaywindow-content-scope).
+ * @htmlAttribute {angular.Scope=} ngeo-displaywindow-content-scope Scope used for ngeo-displaywindow-content-template.
  * @htmlAttribute {boolean=} ngeo-displaywindow-desktop If true, the window is draggable and resizable. If
  *     not set, you must set manually both parameter.
  * @htmlAttribute {boolean=} ngeo-displaywindow-draggable Wheter the window is draggable or not.
@@ -262,6 +299,8 @@ ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',
+    'contentTemplate': '<?',
+    'contentScope': '<?',
     'desktop': '<?',
     'draggable': '<?',
     'draggableContainment': '<?',

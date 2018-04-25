@@ -54,3 +54,15 @@
   font-family: FontAwesome;
   content: "\f0c9";
 }
+
+#textBindingOutput {
+  border: 1px dotted #0e0e0e;
+  padding: 10px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  width: 50px;
+  float: left;
+}

@@ -12,10 +12,11 @@ app.displaywindow.module = angular.module('app', [
 
 
 /**
+ * @param {angular.Scope} $scope Scope.
  * @ngInject
  * @constructor
  */
-app.displaywindow.MainController = function() {
+app.displaywindow.MainController = function($scope) {
 
   /**
    * @type {string}
@@ -40,6 +41,56 @@ app.displaywindow.MainController = function() {
    */
   this.window2IsOpen = false;
 
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.window3IsOpen = false;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.window3Template = `
+    <div class="details">
+      <p>
+          <h3>Using AngularJS directives:</h3>
+          <span ng-if="!ctrl.window3FalseValue">This should appear</span>
+          <span ng-show="ctrl.window3FalseValue">This should not be visible</span>
+      </p>
+    </div>
+  `;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.window3FalseValue = false;
+
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.window4IsOpen = false;
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.window4Template = angular.element(document.getElementById('window4Template')).html();
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.window4TextBinding = 'This is an AngularJS binding.';
+
+  /**
+   * @type {angular.Scope}
+   * @export
+   */
+  this.windowScope = $scope;
 };
 
 
