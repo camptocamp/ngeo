@@ -289,6 +289,9 @@ examples-hosted: \
 		examples-hosted-gmf \
 		examples-hosted-apps
 
+.PHONY: example-hosted-webpack
+example-hosted-webpack: .build/examples-webpack.timestamp .build/examples-contribs-gmf-webpack.timestamp
+
 .PHONY: .build/examples-hosted/%.html
 .build/examples-hosted/%.html: .build/examples-webpack.timestamp
 	@#necessary comment

@@ -87,8 +87,8 @@ jobs:
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
     - ./node_modules/karma/bin/karma start karma-conf.js --single-run
+    - make example-hosted-webpack
     - make lint
-    - make check-examples-webpack
     - if [ ${IS_HOME} = TRUE ]; then JOB=publish-examples buildtools/deploy.sh; fi
     - gem install jgrep
     - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
