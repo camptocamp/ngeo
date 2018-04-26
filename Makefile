@@ -45,7 +45,6 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/jsts/dist/jsts.js \
 	node_modules/moment/moment.js \
 	node_modules/url-polyfill/url-polyfill.js \
-	third-party/jquery-ui/jquery-ui.js \
 	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js \
 	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js \
 	utils/ios-overlap-fix.js
@@ -71,7 +70,6 @@ GMF_APPS_LIBS_JS_FILES += \
 	node_modules/jsts/dist/jsts.min.js \
 	node_modules/moment/min/moment.min.js \
 	node_modules/url-polyfill/url-polyfill.min.js \
-	third-party/jquery-ui/jquery-ui.min.js \
 	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
 	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js \
 	utils/ios-overlap-fix.js
@@ -194,7 +192,6 @@ help:
 	@echo "Main targets:"
 	@echo
 	@echo "- help                    Display this help message"
-	@echo "- serve                   Run a development web server for running the examples"
 	@echo "- check                   Perform a number of checks on the code"
 	@echo "- test                    Run the test suite"
 	@echo "- test-debug              Run the test suite in the browser"
@@ -266,9 +263,6 @@ test-debug: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .b
 	mkdir -p $(dir $@)
 	touch $@
 
-.PHONY: serve
-serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	node buildtools/serve.js
 
 .PHONY: examples-hosted
 examples-hosted: \
@@ -402,25 +396,9 @@ gh-pages:
 	mkdir -p $(dir $@)
 	cp $< $@
 
-.build/examples-hosted/lib/jquery-ui.min.js: third-party/jquery-ui/jquery-ui.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
 .build/examples-hosted/lib/jquery.ui.touch-punch.min.js: node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
-
-.build/examples-hosted/lib/jquery-ui.min.css: third-party/jquery-ui/jquery-ui.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/contribs/gmf/build/images/: third-party/jquery-ui/images/
-	mkdir -p $@
-	cp -r $</* $@
-
-.build/examples-hosted/lib/images/: third-party/jquery-ui/images/
-	mkdir -p $@
-	cp -r $</* $@
 
 .build/examples-hosted/lib/d3.min.js: node_modules/d3/build/d3.min.js
 	mkdir -p $(dir $@)
@@ -531,7 +509,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	mkdir -p $(dir $@)
 	sed -e '/stylesheet\/less" href="..\/..\//d' \
 		-e '/\/node_modules\//d' \
-		-e '/\/third-party\//d' \
 		-e '/default\.js/d' \
 		-e '/utils\/ios-overlap-fix\.js/d' \
 		-e "s/var cacheVersion = '0';/var cacheVersion = '`git rev-parse HEAD`';/g" \
@@ -854,10 +831,6 @@ contribs/gmf/fonts/gmf-icons.eot: contribs/gmf/fonts/gmf-icons.ttf .build/node_m
 
 contribs/gmf/fonts/gmf-icons.woff: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
 	node_modules/ttf2woff/ttf2woff.js $< $@
-
-contribs/gmf/build/images/: third-party/jquery-ui/images
-	mkdir -p $@
-	cp $</*.png $@
 
 # clean
 
