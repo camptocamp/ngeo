@@ -1,43 +1,46 @@
-goog.provide('gmf.search.component');
+/**
+ * @module gmf.search.component
+ */
+import gmfBase from 'gmf/index.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import googAsserts from 'goog/asserts.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 
-goog.require('gmf');
-goog.require('gmf.layertree.TreeManager');
-goog.require('gmf.search.FulltextSearch');
-goog.require('gmf.theme.Themes');
-goog.require('goog.asserts');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.misc.AutoProjection');
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.colorpickerComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.message.popoverComponent');
-goog.require('ngeo.search.module');
-goog.require('ol.Feature');
-goog.require('ol.color');
-goog.require('ol.geom.Point');
-goog.require('ol.obj');
-goog.require('ol.format.GeoJSON');
-goog.require('ol.proj');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.RegularShape');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.uri');
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
+/** @suppress {extraRequire} */
+import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
+
+import ngeoSearchModule from 'ngeo/search/module.js';
+import olFeature from 'ol/Feature.js';
+import * as olColor from 'ol/color.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import * as olObj from 'ol/obj.js';
+import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import * as olProj from 'ol/proj.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import * as olUri from 'ol/uri.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.search.component = angular.module('gmfSearch', [
-  gmf.layertree.TreeManager.module.name,
-  gmf.search.FulltextSearch.module.name,
-  gmf.theme.Themes.module.name,
-  ngeo.misc.AutoProjection.module.name,
-  ngeo.misc.colorpickerComponent.name,
-  ngeo.search.module.name,
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.message.popoverComponent.name,
+const exports = angular.module('gmfSearch', [
+  gmfLayertreeTreeManager.module.name,
+  gmfSearchFulltextSearch.module.name,
+  gmfThemeThemes.module.name,
+  ngeoMiscAutoProjection.module.name,
+  ngeoMiscColorpickerComponent.name,
+  ngeoSearchModule.name,
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMessagePopoverComponent.name,
 ]);
 
 
@@ -46,16 +49,15 @@ gmf.search.component = angular.module('gmfSearch', [
  * @param {angular.Attributes} attrs Attributes.
  * @return {string} Template URL.
  */
-gmf.search.component.gmfSearchTemplateUrl_ = (element, attrs) => {
+exports.gmfSearchTemplateUrl_ = (element, attrs) => {
   const templateUrl = attrs['gmfSearchTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
-    `${gmf.baseModuleTemplateUrl}/search/component.html`; // nowebpack
-  // webpack: 'gmf/search';
+    'gmf/search';
 };
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/search', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/search', require('./component.html'));
+});
 
 
 /**
@@ -154,7 +156,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @ngdoc component
  * @ngname gmfSearch
  */
-gmf.search.component.component_ = {
+exports.component_ = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
     'placeholder': '@?gmfSearchPlaceholder',
@@ -175,17 +177,17 @@ gmf.search.component.component_ = {
 };
 
 
-gmf.search.component.value('gmfSearchTemplateUrl', gmf.search.component.gmfSearchTemplateUrl_);
+exports.value('gmfSearchTemplateUrl', exports.gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module
-gmf.search.component.component('gmfSearch', gmf.search.component.component_);
+exports.component('gmfSearch', exports.component_);
 
 
 /**
  * @private
  */
-gmf.search.component.SearchController_ = class {
+exports.SearchController_ = class {
 
   /**
    * @private
@@ -456,7 +458,7 @@ gmf.search.component.SearchController_ = class {
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
     if (this.typeaheadOptions) {
-      ol.obj.assign(this.options, this.typeaheadOptions);
+      olObj.assign(this.options, this.typeaheadOptions);
     }
 
     this.initDatasets_();
@@ -641,7 +643,7 @@ gmf.search.component.SearchController_ = class {
       })
     });
     if (config.typeaheadDatasetOptions) {
-      ol.obj.assign(typeaheadDataset, config.typeaheadDatasetOptions);
+      olObj.assign(typeaheadDataset, config.typeaheadDatasetOptions);
     }
     return typeaheadDataset;
   }
@@ -712,7 +714,7 @@ gmf.search.component.SearchController_ = class {
     const mapProjectionCode = this.map.getView().getProjection().getCode();
     const remoteOptions = this.getBloodhoudRemoteOptions_();
     const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
-      ol.proj.get(mapProjectionCode), ol.proj.get(config.projection),
+      olProj.get(mapProjectionCode), olProj.get(config.projection),
       config.bloodhoundOptions, remoteOptions);
     bloodhound.initialize();
     return bloodhound;
@@ -734,7 +736,7 @@ gmf.search.component.SearchController_ = class {
         settings.xhrFields = {
           withCredentials: true
         };
-        settings.url = ol.uri.appendParams(url, {
+        settings.url = olUri.appendParams(url, {
           'query': query,
           'lang': lang,
           'interface': interfaceName
@@ -782,25 +784,25 @@ gmf.search.component.SearchController_ = class {
    * @private
    */
   initStyles_() {
-    this.styles_[gmf.COORDINATES_LAYER_NAME] = new ol.style.Style({
-      image: new ol.style.RegularShape({
-        stroke: new ol.style.Stroke({color: [0, 0, 0, 0.7], width: 2}),
+    this.styles_[gmfBase.COORDINATES_LAYER_NAME] = new olStyleStyle({
+      image: new olStyleRegularShape({
+        stroke: new olStyleStroke({color: [0, 0, 0, 0.7], width: 2}),
         points: 4,
         radius: 8,
         radius2: 0,
         angle: 0
       })
     });
-    const fill = new ol.style.Fill({
+    const fill = new olStyleFill({
       color: [65, 134, 240, 0.5]
     });
-    const stroke = new ol.style.Stroke({
+    const stroke = new olStyleStroke({
       color: [65, 134, 240, 1],
       width: 2
     });
-    this.styles_['default'] = new ol.style.Style({
+    this.styles_['default'] = new olStyleStyle({
       fill: fill,
-      image: new ol.style.Circle({
+      image: new olStyleCircle({
         fill: fill,
         radius: 5,
         stroke: stroke
@@ -808,7 +810,7 @@ gmf.search.component.SearchController_ = class {
       stroke: stroke
     });
     const customStyles = this.featuresStyles || {};
-    ol.obj.assign(this.styles_, customStyles);
+    olObj.assign(this.styles_, customStyles);
   }
 
   /**
@@ -819,10 +821,10 @@ gmf.search.component.SearchController_ = class {
    * @private
    */
   getSearchStyle_(feature, resolution) {
-    goog.asserts.assert(feature);
+    googAsserts.assert(feature);
     const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
     if (this.color) {
-      const color = ol.color.asArray(this.color);
+      const color = olColor.asArray(this.color);
 
       const strokeColor = color.slice();
       // 100% opacity for the stroke color
@@ -842,10 +844,10 @@ gmf.search.component.SearchController_ = class {
       }
       const image = style.getImage();
       if (image) {
-        style.setImage(new ol.style.Circle({
-          fill: new ol.style.Fill({color: fillColor}),
+        style.setImage(new olStyleCircle({
+          fill: new olStyleFill({color: fillColor}),
           radius: 5,
-          stroke: new ol.style.Stroke({color: strokeColor})
+          stroke: new olStyleStroke({color: strokeColor})
         }));
       }
     }
@@ -921,17 +923,17 @@ gmf.search.component.SearchController_ = class {
    */
   select_(event, suggestion, dataset) {
     if (suggestion['tt_source'] === 'coordinates') {
-      const geom = new ol.geom.Point(suggestion['position']);
+      const geom = new olGeomPoint(suggestion['position']);
 
       this.featureOverlay_.clear();
-      this.featureOverlay_.addFeature(new ol.Feature({
+      this.featureOverlay_.addFeature(new olFeature({
         geometry: geom,
-        'layer_name': gmf.COORDINATES_LAYER_NAME
+        'layer_name': gmfBase.COORDINATES_LAYER_NAME
       }));
       this.map.getView().setCenter(suggestion['position']);
       this.leaveSearch_();
     } else {
-      goog.asserts.assertInstanceof(suggestion, ol.Feature);
+      googAsserts.assertInstanceof(suggestion, olFeature);
       this.selectFromGMF_(event, suggestion, dataset);
     }
   }
@@ -954,7 +956,7 @@ gmf.search.component.SearchController_ = class {
         const actionData = action['data'];
         if (actionName == 'add_theme') {
           this.gmfThemes_.getThemesObject().then((themes) => {
-            const theme = gmf.theme.Themes.findThemeByName(themes, actionData);
+            const theme = gmfThemeThemes.findThemeByName(themes, actionData);
             if (theme) {
               this.gmfTreeManager_.addFirstLevelGroups(theme.children);
             }
@@ -1059,7 +1061,7 @@ gmf.search.component.SearchController_ = class {
     this.fullTextSearch_.search(query, {'limit': resultIndex})
       .then((data) => {
         if (data && data.features[resultIndex - 1]) {
-          const format = new ol.format.GeoJSON();
+          const format = new olFormatGeoJSON();
           const feature = format.readFeature(data.features[resultIndex - 1]);
           this.featureOverlay_.addFeature(feature);
           const fitOptions = /** @type {olx.view.FitOptions} */ ({});
@@ -1076,4 +1078,7 @@ gmf.search.component.SearchController_ = class {
 
 
 // Register the controller in the module
-gmf.search.component.controller('gmfSearchController', gmf.search.component.SearchController_);
+exports.controller('gmfSearchController', exports.SearchController_);
+
+
+export default exports;

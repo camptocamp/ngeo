@@ -1,11 +1,14 @@
-goog.provide('gmf.disclaimer.module');
-
-goog.require('gmf.disclaimer.component');
-
+/**
+ * @module gmf.disclaimer.module
+ */
+import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.disclaimer.module = angular.module('gmfDisclaimerModule', [
-  gmf.disclaimer.component.name,
+const exports = angular.module('gmfDisclaimerModule', [
+  gmfDisclaimerComponent.name,
 ]);
+
+
+export default exports;

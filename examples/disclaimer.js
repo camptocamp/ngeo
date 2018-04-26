@@ -1,21 +1,25 @@
-goog.provide('app.disclaimer');
+/**
+ * @module app.disclaimer
+ */
+const exports = {};
 
-// webpack: import './disclaimer.css';
-// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
-goog.require('ngeo.message.Disclaimer');
-goog.require('ngeo.message.Message');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ngeo.map.module');
+import './disclaimer.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
+
+import ngeoMessageMessage from 'ngeo/message/Message.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.disclaimer.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.message.Disclaimer.module.name,
+  ngeoMapModule.name,
+  ngeoMessageDisclaimer.module.name,
 ]);
 
 
@@ -24,7 +28,7 @@ app.disclaimer.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.disclaimer.MainController = function(ngeoDisclaimer) {
+exports.MainController = function(ngeoDisclaimer) {
 
   /**
    * @type {ngeo.message.Disclaimer}
@@ -36,13 +40,13 @@ app.disclaimer.MainController = function(ngeoDisclaimer) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -93,7 +97,7 @@ app.disclaimer.MainController = function(ngeoDisclaimer) {
 /**
  * @export
  */
-app.disclaimer.MainController.prototype.success = function() {
+exports.MainController.prototype.success = function() {
   this.disclaimer.success(this.successMsg_);
 };
 
@@ -101,7 +105,7 @@ app.disclaimer.MainController.prototype.success = function() {
 /**
  * @export
  */
-app.disclaimer.MainController.prototype.info = function() {
+exports.MainController.prototype.info = function() {
   this.disclaimer.info(this.infoMsg_);
 };
 
@@ -109,7 +113,7 @@ app.disclaimer.MainController.prototype.info = function() {
 /**
  * @export
  */
-app.disclaimer.MainController.prototype.warn = function() {
+exports.MainController.prototype.warn = function() {
   this.disclaimer.warn(this.warningMsg_);
 };
 
@@ -117,7 +121,7 @@ app.disclaimer.MainController.prototype.warn = function() {
 /**
  * @export
  */
-app.disclaimer.MainController.prototype.error = function() {
+exports.MainController.prototype.error = function() {
   this.disclaimer.error(this.errorMsg_);
 };
 
@@ -127,12 +131,12 @@ app.disclaimer.MainController.prototype.error = function() {
  * this case, it's shown in the map.
  * @export
  */
-app.disclaimer.MainController.prototype.inMap = function() {
+exports.MainController.prototype.inMap = function() {
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.alert({
       msg: message,
       target: angular.element('#disclaimers-in-map'),
-      type: ngeo.message.Message.Type.WARNING
+      type: ngeoMessageMessage.Type.WARNING
     });
   }, this);
 };
@@ -143,36 +147,39 @@ app.disclaimer.MainController.prototype.inMap = function() {
  * instead of clicking on the close button.
  * @export
  */
-app.disclaimer.MainController.prototype.closeAll = function() {
+exports.MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.successMsg_,
-    type: ngeo.message.Message.Type.SUCCESS
+    type: ngeoMessageMessage.Type.SUCCESS
   });
 
   this.disclaimer.close({
     msg: this.infoMsg_,
-    type: ngeo.message.Message.Type.INFORMATION
+    type: ngeoMessageMessage.Type.INFORMATION
   });
 
   this.disclaimer.close({
     msg: this.warningMsg_,
-    type: ngeo.message.Message.Type.WARNING
+    type: ngeoMessageMessage.Type.WARNING
   });
 
   this.disclaimer.close({
     msg: this.errorMsg_,
-    type: ngeo.message.Message.Type.ERROR
+    type: ngeoMessageMessage.Type.ERROR
   });
 
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.close({
       msg: message,
-      type: ngeo.message.Message.Type.WARNING
+      type: ngeoMessageMessage.Type.WARNING
     });
   }, this);
 
 };
 
 
-app.disclaimer.module.controller('MainController', app.disclaimer.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

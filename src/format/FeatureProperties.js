@@ -1,10 +1,11 @@
-goog.provide('ngeo.format.FeatureProperties');
-
+/**
+ * @module ngeo.format.FeatureProperties
+ */
 /**
  * @enum {string}
  * @export
  */
-ngeo.format.FeatureProperties = {
+const exports = {
   /**
    * @type {string}
    * @export
@@ -66,3 +67,6 @@ ngeo.format.FeatureProperties = {
    */
   STROKE: 'k'
 };
+
+
+export default exports;

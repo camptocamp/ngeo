@@ -1,27 +1,30 @@
-goog.provide('gmf.import.wmsCapabilityLayertreeComponent');
+/**
+ * @module gmf.import.wmsCapabilityLayertreeComponent
+ */
 
-goog.require('gmf'); // nowebpack
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.ExternalDataSourcesManager');
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.message.Popup');
-goog.require('ol');
+import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
-// webpack: import 'bootstrap/js/collapse.js';
+import * as olBase from 'ol/index.js';
+
+import 'bootstrap/js/collapse.js';
 
 
-gmf.import.wmsCapabilityLayertreeComponent = angular.module('gmfWmscapabilitylayertreenode', [
-  gmf.datasource.ExternalDataSourcesManager.module.name,
-  ngeo.message.Popup.module.name,
+const exports = angular.module('gmfWmscapabilitylayertreenode', [
+  gmfDatasourceExternalDataSourcesManager.module.name,
+  ngeoMessagePopup.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html'));
+});
 
 
-gmf.import.wmsCapabilityLayertreeComponent.value('gmfWmscapabilitylayertreenodeTemplateUrl',
+exports.value('gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -29,8 +32,7 @@ gmf.import.wmsCapabilityLayertreeComponent.value('gmfWmscapabilitylayertreenodeT
   ($attrs) => {
     const templateUrl = $attrs['gmfWmscapabilitylayertreenodeTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/import/wmsCapabilityLayertreeComponent.html`; // nowebpack
-    // webpack: 'gmf/import/wmsCapabilityLayertreeComponent';
+      'gmf/import/wmsCapabilityLayertreeComponent';
   });
 
 
@@ -48,7 +50,7 @@ function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayert
 /**
  * @private
  */
-gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -114,17 +116,20 @@ gmf.import.wmsCapabilityLayertreeComponent.Controller_ = class {
    * @export
    */
   getUid(layer) {
-    return ol.getUid(layer);
+    return olBase.getUid(layer);
   }
 };
 
 
-gmf.import.wmsCapabilityLayertreeComponent.component('gmfWmscapabilitylayertreenode', {
+exports.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
     'layer': '<',
     'url': '<'
   },
-  controller: gmf.import.wmsCapabilityLayertreeComponent.Controller_,
+  controller: exports.Controller_,
   templateUrl: gmfWmscapabilitylayertreenodeTemplateUrl
 });
+
+
+export default exports;

@@ -1,68 +1,74 @@
+/**
+ * @module gmfapp.filterselector
+ */
+const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
-goog.provide('gmfapp.filterselector');
+import './filterselector.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
-// webpack: import './filterselector.css';
-// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
-goog.require('gmf.authentication.module');
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.Manager');
-goog.require('gmf.filters.module');
-goog.require('gmf.layertree.component');
-goog.require('gmf.layertree.TreeManager');
+import gmfDatasourceManager from 'gmf/datasource/Manager.js';
+
+import gmfFiltersModule from 'gmf/filters/module.js';
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-goog.require('gmf.theme.Themes');
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.query.bboxQueryComponent');
-goog.require('ngeo.query.mapQueryComponent');
-goog.require('ngeo.misc.ToolActivate');
-goog.require('ngeo.misc.ToolActivateMgr');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.filterselector.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.authentication.module.name,
-  gmf.datasource.Manager.module.name,
-  gmf.layertree.component.name,
-  gmf.layertree.TreeManager.module.name,
-  gmf.filters.module.name,
-  gmf.map.component.name,
-  gmf.theme.Themes.module.name,
-  ngeo.datasource.DataSources.module.name,
-  ngeo.misc.ToolActivateMgr.module.name,
-  ngeo.query.bboxQueryComponent.name,
-  ngeo.query.mapQueryComponent.name,
+  gmfAuthenticationModule.name,
+  gmfDatasourceManager.module.name,
+  gmfLayertreeComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfFiltersModule.name,
+  gmfMapComponent.name,
+  gmfThemeThemes.module.name,
+  ngeoDatasourceDataSources.module.name,
+  ngeoMiscToolActivateMgr.module.name,
+  ngeoQueryBboxQueryComponent.name,
+  ngeoQueryMapQueryComponent.name,
 ]);
 
 
-gmfapp.filterselector.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.filterselector.module.value(
+exports.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 
-gmfapp.filterselector.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.filterselector.module.value('gmfLayersUrl',
+exports.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
-gmfapp.filterselector.module.constant('defaultTheme', 'Filters');
-gmfapp.filterselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Filters');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-gmfapp.filterselector.MainController = class {
+exports.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -97,13 +103,13 @@ gmfapp.filterselector.MainController = class {
      * @type {ol.Map}
      * @export
      */
-    this.map = new ol.Map({
+    this.map = new olMap({
       layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
+        new olLayerTile({
+          source: new olSourceOSM()
         })
       ],
-      view: new ol.View({
+      view: new olView({
         projection: EPSG21781,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [537635, 152640],
@@ -138,7 +144,7 @@ gmfapp.filterselector.MainController = class {
      */
     this.filterSelectorActive = true;
 
-    const filterSelectorToolActivate = new ngeo.misc.ToolActivate(
+    const filterSelectorToolActivate = new ngeoMiscToolActivate(
       this, 'filterSelectorActive');
     ngeoToolActivateMgr.registerTool(
       'dummyTools', filterSelectorToolActivate, true);
@@ -149,7 +155,7 @@ gmfapp.filterselector.MainController = class {
      */
     this.dummyActive = false;
 
-    const dummyToolActivate = new ngeo.misc.ToolActivate(
+    const dummyToolActivate = new ngeoMiscToolActivate(
       this, 'dummyActive');
     ngeoToolActivateMgr.registerTool(
       'dummyTools', dummyToolActivate, false);
@@ -160,7 +166,7 @@ gmfapp.filterselector.MainController = class {
      */
     this.queryActive = true;
 
-    const queryToolActivate = new ngeo.misc.ToolActivate(
+    const queryToolActivate = new ngeoMiscToolActivate(
       this, 'queryActive');
     ngeoToolActivateMgr.registerTool(
       this.toolGroup, queryToolActivate, true);
@@ -175,4 +181,7 @@ gmfapp.filterselector.MainController = class {
 };
 
 
-gmfapp.filterselector.module.controller('MainController', gmfapp.filterselector.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,21 +1,24 @@
 /**
+ * @module app.routing
+ */
+const exports = {};
+
+/**
  * This example shows the ngeo routing directive.
  */
 
-goog.provide('app.routing');
-
-goog.require('ngeo.map.module');
-goog.require('ngeo.routing.module');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoRoutingModule from 'ngeo/routing/module.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 /** @type {!angular.Module} **/
-app.routing.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.routing.module.name
+  ngeoMapModule.name,
+  ngeoRoutingModule.name
 ]);
 
 
@@ -24,19 +27,19 @@ app.routing.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.routing.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [931010.1535989442, 5961705.842297254],
       zoom: 9
     })
@@ -49,4 +52,7 @@ app.routing.MainController = function() {
   this.routingfeatureActive = true;
 };
 
-app.routing.module.controller('MainController', app.routing.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

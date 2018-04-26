@@ -1,34 +1,35 @@
-goog.provide('gmf.controllers.AbstractAppController');
+/**
+ * @module gmf.controllers.AbstractAppController
+ */
+import 'angular-dynamic-locale';
+import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
-// webpack: import 'angular-dynamic-locale';
-goog.require('gmf.authentication.module');
-goog.require('gmf.backgroundlayerselector.component');
-goog.require('gmf.datasource.module');
-goog.require('gmf.disclaimer.component');
-goog.require('gmf.filters.module');
-goog.require('gmf.layertree.module');
-goog.require('gmf.map.module');
-goog.require('gmf.query.extraModule');
-goog.require('gmf.search.module');
-goog.require('gmf.theme.module');
-goog.require('ngeo.message.displaywindowComponent');
-goog.require('ngeo.misc.extraModule');
-goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.misc.ToolActivate');
-goog.require('ngeo.query.MapQuerent');
-goog.require('ngeo.query.mapQueryComponent');
-goog.require('ngeo.statemanager.module');
-goog.require('goog.asserts');
-goog.require('ol.array');
-goog.require('ol.events');
-goog.require('ol.Map');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('gmf.theme.Manager');
-goog.require('gmf.theme.Themes');
-
+import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
+import gmfDatasourceModule from 'gmf/datasource/module.js';
+import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
+import gmfFiltersModule from 'gmf/filters/module.js';
+import gmfLayertreeModule from 'gmf/layertree/module.js';
+import gmfMapModule from 'gmf/map/module.js';
+import gmfQueryExtraModule from 'gmf/query/extraModule.js';
+import gmfSearchModule from 'gmf/search/module.js';
+import gmfThemeModule from 'gmf/theme/module.js';
+import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
+import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
+import googAsserts from 'goog/asserts.js';
+import * as olArray from 'ol/array.js';
+import * as olEvents from 'ol/events.js';
+import olMap from 'ol/Map.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import gmfThemeManager from 'gmf/theme/Manager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 /**
  * Application abstract controller.
@@ -44,7 +45,7 @@ goog.require('gmf.theme.Themes');
  * @ngInject
  * @export
  */
-gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
+const exports = function(config, $scope, $injector) {
 
   /**
    * Location service
@@ -56,14 +57,14 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
     window.injector = $injector;
   }
 
-  goog.asserts.assertInstanceof(this.map, ol.Map);
+  googAsserts.assertInstanceof(this.map, olMap);
 
   /**
    * Ngeo FeatureHelper service
    * @type {ngeo.misc.FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(goog.asserts.assert(this.map.getView().getProjection()));
+  ngeoFeatureHelper.setProjection(googAsserts.assert(this.map.getView().getProjection()));
 
   /**
    * @type {gmf.theme.Manager}
@@ -141,9 +142,9 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
     this.updateHasEditableLayers_();
   };
 
-  ol.events.listen(gmfAuthentication, 'ready', userChange);
-  ol.events.listen(gmfAuthentication, 'login', userChange);
-  ol.events.listen(gmfAuthentication, 'logout', userChange);
+  olEvents.listen(gmfAuthentication, 'ready', userChange);
+  olEvents.listen(gmfAuthentication, 'login', userChange);
+  olEvents.listen(gmfAuthentication, 'logout', userChange);
 
   /**
    * @type {Array.<gmfx.SearchComponentDatasource>}
@@ -210,17 +211,17 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    */
   this.rightNavVisible = false;
 
-  const queryFill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  const queryStroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  const queryFill = new olStyleFill({color: [255, 170, 0, 0.6]});
+  const queryStroke = new olStyleStroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the gmf.query.windowComponent
    * @type {ol.style.Style}
    * @export
    */
-  this.queryFeatureStyle = new ol.style.Style({
+  this.queryFeatureStyle = new olStyleStyle({
     fill: queryFill,
-    image: new ol.style.Circle({
+    image: new olStyleCircle({
       fill: queryFill,
       radius: 5,
       stroke: queryStroke
@@ -376,25 +377,25 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  const queryToolActivate = new ngeo.misc.ToolActivate(this, 'queryActive');
+  const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
 
-  const measurePointActivate = new ngeo.misc.ToolActivate(this, 'measurePointActive');
+  const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
 
-  const measureLengthActivate = new ngeo.misc.ToolActivate(this, 'measureLengthActive');
+  const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
   ngeoToolActivateMgr.registerTool(mapTools, measureLengthActivate, false);
 
-  const drawFeatureActivate = new ngeo.misc.ToolActivate(this, 'drawFeatureActive');
+  const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawFeatureActivate, false);
 
-  const drawProfilePanelActivate = new ngeo.misc.ToolActivate(this, 'drawProfilePanelActive');
+  const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, drawProfilePanelActivate, false);
 
-  const printPanelActivate = new ngeo.misc.ToolActivate(this, 'printPanelActive');
+  const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
-  $scope.$root.$on(gmf.theme.Manager.EventType.THEME_NAME_SET, (event, name) => {
+  $scope.$root.$on(gmfThemeManager.EventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       this.setDefaultBackground_(theme);
     });
@@ -419,7 +420,7 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
           const defaultBasemapArray = functionalities.default_basemap;
           if (defaultBasemapArray.length > 0) {
             const defaultBasemapLabel = defaultBasemapArray[0];
-            background = ol.array.find(layers, layer => layer.get('label') === defaultBasemapLabel);
+            background = olArray.find(layers, layer => layer.get('label') === defaultBasemapLabel);
           }
         }
       }
@@ -587,7 +588,7 @@ gmf.controllers.AbstractAppController = function(config, $scope, $injector) {
  *     to false.
  * @export
  */
-gmf.controllers.AbstractAppController.prototype.userMustChangeItsPassword = function() {
+exports.prototype.userMustChangeItsPassword = function() {
   return this.gmfUser.is_password_changed === false;
 };
 
@@ -597,9 +598,9 @@ gmf.controllers.AbstractAppController.prototype.userMustChangeItsPassword = func
  * @param {Array.<string>} labels default_basemap list.
  * @return {ol.layer.Base} layer or null
  */
-gmf.controllers.AbstractAppController.getLayerByLabels = function(layers, labels) {
+exports.getLayerByLabels = function(layers, labels) {
   if (labels && labels.length > 0) {
-    return ol.array.find(layers, layer => layer.get('label') === labels[0]);
+    return olArray.find(layers, layer => layer.get('label') === labels[0]);
   }
   return null;
 };
@@ -609,8 +610,8 @@ gmf.controllers.AbstractAppController.getLayerByLabels = function(layers, labels
  * @param {string} lang Language code.
  * @export
  */
-gmf.controllers.AbstractAppController.prototype.switchLanguage = function(lang) {
-  goog.asserts.assert(lang in this.langUrls);
+exports.prototype.switchLanguage = function(lang) {
+  googAsserts.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
@@ -620,7 +621,7 @@ gmf.controllers.AbstractAppController.prototype.switchLanguage = function(lang) 
 
 /**
  */
-gmf.controllers.AbstractAppController.prototype.initLanguage = function() {
+exports.prototype.initLanguage = function() {
   this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
@@ -652,7 +653,7 @@ gmf.controllers.AbstractAppController.prototype.initLanguage = function() {
  * @param {gmfThemes.GmfTheme} theme Theme.
  * @private
  */
-gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
+exports.prototype.setDefaultBackground_ = function(theme) {
   this.gmfThemes_.getBgLayers().then((layers) => {
     let layer;
 
@@ -661,12 +662,12 @@ gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function
 
     if (!layer && this.gmfUser.functionalities) {
       // get the background from the user settings
-      layer = gmf.controllers.AbstractAppController.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
+      layer = exports.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }
 
     if (!layer && theme) {
       // get the background from the theme
-      layer = gmf.controllers.AbstractAppController.getLayerByLabels(layers, theme.functionalities.default_basemap);
+      layer = exports.getLayerByLabels(layers, theme.functionalities.default_basemap);
     }
 
     if (!layer) {
@@ -674,7 +675,7 @@ gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function
       layer = layers[layers.length > 1 ? 1 : 0];
     }
 
-    goog.asserts.assert(layer);
+    googAsserts.assert(layer);
     this.backgroundLayerMgr_.set(this.map, layer);
   });
 };
@@ -683,11 +684,11 @@ gmf.controllers.AbstractAppController.prototype.setDefaultBackground_ = function
  * @param {string} fallbackThemeName fallback theme name.
  * @private
  */
-gmf.controllers.AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
+exports.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
-      const theme = gmf.theme.Themes.findThemeByName(themes, /** @type {string} */ (themeName));
+      const theme = gmfThemeThemes.findThemeByName(themes, /** @type {string} */ (themeName));
       if (theme) {
         this.gmfThemeManager.addTheme(theme, true);
       }
@@ -701,7 +702,7 @@ gmf.controllers.AbstractAppController.prototype.updateCurrentTheme_ = function(f
  * @protected
  * @return {Element} Span element with font-awesome inside of it
  */
-gmf.controllers.AbstractAppController.prototype.getLocationIcon = function() {
+exports.prototype.getLocationIcon = function() {
   const arrow = document.createElement('span');
   arrow.className = 'fa fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
@@ -711,37 +712,37 @@ gmf.controllers.AbstractAppController.prototype.getLocationIcon = function() {
 };
 
 
-gmf.controllers.AbstractAppController.module = angular.module('GmfAbstractAppControllerModule', [
+exports.module = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
-  gmf.authentication.module.name,
-  gmf.backgroundlayerselector.component.name,
-  gmf.datasource.module.name,
-  gmf.disclaimer.component.name,
-  gmf.filters.module.name,
-  gmf.layertree.module.name,
-  gmf.map.module.name,
-  gmf.query.extraModule.name,
-  gmf.search.module.name,
-  gmf.theme.module.name,
-  ngeo.message.displaywindowComponent.name,
-  ngeo.misc.extraModule.name,
-  ngeo.misc.FeatureHelper.module.name,
-  ngeo.query.MapQuerent.module.name,
-  ngeo.query.mapQueryComponent.name,
-  ngeo.statemanager.module.name,
+  gmfAuthenticationModule.name,
+  gmfBackgroundlayerselectorComponent.name,
+  gmfDatasourceModule.name,
+  gmfDisclaimerComponent.name,
+  gmfFiltersModule.name,
+  gmfLayertreeModule.name,
+  gmfMapModule.name,
+  gmfQueryExtraModule.name,
+  gmfSearchModule.name,
+  gmfThemeModule.name,
+  ngeoMessageDisplaywindowComponent.name,
+  ngeoMiscExtraModule.name,
+  ngeoMiscFeatureHelper.module.name,
+  ngeoQueryMapQuerent.module.name,
+  ngeoQueryMapQueryComponent.name,
+  ngeoStatemanagerModule.name,
 ]);
 
 
-gmf.controllers.AbstractAppController.module.controller('AbstractController', gmf.controllers.AbstractAppController);
+exports.module.controller('AbstractController', exports);
 
 
-gmf.controllers.AbstractAppController.module.value('ngeoExportFeatureFormats', [
-  ngeo.misc.FeatureHelper.FormatType.KML,
-  ngeo.misc.FeatureHelper.FormatType.GPX
+exports.module.value('ngeoExportFeatureFormats', [
+  ngeoMiscFeatureHelper.FormatType.KML,
+  ngeoMiscFeatureHelper.FormatType.GPX
 ]);
 
-gmf.controllers.AbstractAppController.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+exports.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
    * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.
@@ -751,3 +752,6 @@ gmf.controllers.AbstractAppController.module.config(['tmhDynamicLocaleProvider',
     tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
   }
 ]);
+
+
+export default exports;

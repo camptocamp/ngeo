@@ -1,7 +1,7 @@
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.layer.Group');
-goog.require('ol.layer.Tile');
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olLayerGroup from 'ol/layer/Group.js';
+import olLayerTile from 'ol/layer/Tile.js';
 
 describe('ngeo.map.BackgroundLayerMgr', () => {
   let ngeoBackgroundLayerMgr;
@@ -15,31 +15,31 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
       ngeoLayerHelper = _ngeoLayerHelper_;
     });
 
-    map = new ol.Map({});
+    map = new olMap({});
   });
 
   describe('#set', () => {
 
     it('sets the background layer #1', () => {
-      const layer = new ol.layer.Tile();
+      const layer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
       expect(bgGroup.getLayers().item(0)).toBe(layer);
     });
 
     it('sets the background layer #2', () => {
-      const layer = new ol.layer.Tile();
+      const layer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
-      bgGroup.getLayers().setAt(1, new ol.layer.Tile());
+      bgGroup.getLayers().setAt(1, new olLayerTile());
       expect(bgGroup.getLayers().getLength()).toBe(2);
       expect(bgGroup.getLayers().item(0)).toBe(layer);
     });
 
     it('sets the background layer #3', () => {
-      const layer1 = new ol.layer.Tile();
+      const layer1 = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer1);
-      const layer2 = new ol.layer.Tile();
+      const layer2 = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer2);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
       expect(bgGroup.getLayers().getLength()).toBe(1);
@@ -47,9 +47,9 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     });
 
     it('sets the opacity background layer', () => {
-      const layer1 = new ol.layer.Tile();
+      const layer1 = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer1);
-      const layer2 = new ol.layer.Tile();
+      const layer2 = new olLayerTile();
       ngeoBackgroundLayerMgr.setOpacityBgLayer(map, layer2);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
       expect(bgGroup.getLayers().getLength()).toBe(2);
@@ -58,10 +58,10 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     });
 
     it('sets the ZINdex on active background layergroup', () => {
-      const layer1 = new ol.layer.Tile();
-      const layer2 = new ol.layer.Tile();
-      const group = new ol.layer.Group();
-      const collection = new ol.Collection();
+      const layer1 = new olLayerTile();
+      const layer2 = new olLayerTile();
+      const group = new olLayerGroup();
+      const collection = new olCollection();
 
       collection.push(layer1);
       collection.push(layer2);
@@ -81,10 +81,10 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     });
 
     it('sets the ZINdex on overlay background layergroup', () => {
-      const layer1 = new ol.layer.Tile();
-      const layer2 = new ol.layer.Tile();
-      const group = new ol.layer.Group();
-      const collection = new ol.Collection();
+      const layer1 = new olLayerTile();
+      const layer2 = new olLayerTile();
+      const group = new olLayerGroup();
+      const collection = new olCollection();
 
       collection.push(layer1);
       collection.push(layer2);
@@ -104,7 +104,7 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     });
 
     it('unsets the background layer', () => {
-      const layer = new ol.layer.Tile();
+      const layer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer);
       ngeoBackgroundLayerMgr.set(map, null);
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
@@ -121,7 +121,7 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     });
 
     it('returns the current background layer', () => {
-      const expectedLayer = new ol.layer.Tile();
+      const expectedLayer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, expectedLayer);
       const layer = ngeoBackgroundLayerMgr.get(map);
       expect(layer).toBe(expectedLayer);
@@ -133,9 +133,9 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
     });
 
     it('returns the current opacity background layer', () => {
-      const activeBgLayer = new ol.layer.Tile();
+      const activeBgLayer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, activeBgLayer);
-      const opacityBgLayer = new ol.layer.Tile();
+      const opacityBgLayer = new olLayerTile();
       ngeoBackgroundLayerMgr.setOpacityBgLayer(map, opacityBgLayer);
       const layer = ngeoBackgroundLayerMgr.getOpacityBgLayer(map);
       expect(layer).toBe(opacityBgLayer);

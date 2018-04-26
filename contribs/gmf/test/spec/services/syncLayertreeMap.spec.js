@@ -1,10 +1,10 @@
-goog.require('gmf.layertree.SyncLayertreeMap');
-goog.require('gmf.test.data.themes');
-goog.require('gmf.test.data.themescapabilities');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Group');
-goog.require('ol.layer.Image');
+import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import gmfTestDataThemes from 'gmf/test/data/themes.js';
+import gmfTestDataThemescapabilities from 'gmf/test/data/themescapabilities.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerGroup from 'ol/layer/Group.js';
+import olLayerImage from 'ol/layer/Image.js';
 
 
 describe('gmf.layertree.SyncLayertreeMap', () => {
@@ -15,14 +15,14 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   let getLayer;
 
   beforeEach(() => {
-    map = new ol.Map({
-      view: new ol.View({
+    map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 0
       })
     });
 
-    const group = new ol.layer.Group();
+    const group = new olLayerGroup();
     map.getLayers().push(group);
 
     element = angular.element(
@@ -38,8 +38,8 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
 
       const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
       // Prepare request simulation
-      $httpBackend.when('GET', reGmfTreeUrl).respond(gmf.test.data.themes);
-      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(gmf.test.data.themescapabilities.swisstopo);
+      $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
+      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr').respond(gmfTestDataThemescapabilities.swisstopo);
 
       // Prepare themes
       $httpBackend.expectGET(reGmfTreeUrl);
@@ -59,7 +59,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Get layer', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[3]; // Theme 'OSM'
+      $rootScope.tree = gmfTestDataThemes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);
@@ -69,10 +69,10 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const treeLayer = treeGroup.children[0]; // Leaf 'cinema'
-    const layer = gmf.layertree.SyncLayertreeMap.getLayer(treeLayer);
+    const layer = gmfLayertreeSyncLayertreeMap.getLayer(treeLayer);
 
     expect(treeLayer.layer).toBe(null);
-    expect(layer.constructor).toBe(ol.layer.Image);
+    expect(layer.constructor).toBe(olLayerImage);
   });
 
   // ================== Create ================
@@ -80,7 +80,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Create WMS Layer in mixed group', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[3]; // Theme 'OSM'
+      $rootScope.tree = gmfTestDataThemes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);
@@ -98,7 +98,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Create WMS Layer in a not mixed group', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[3]; // Theme 'OSM'
+      $rootScope.tree = gmfTestDataThemes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);
@@ -117,7 +117,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Create WMTS Layer (in a mixed group)', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[2]; // Theme 'Cadastre'
+      $rootScope.tree = gmfTestDataThemes.themes[2]; // Theme 'Cadastre'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);
@@ -138,7 +138,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Sync WMS Layer in mixed group', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[3]; // Theme 'OSM'
+      $rootScope.tree = gmfTestDataThemes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);
@@ -163,7 +163,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Sync WMS Layer in a not mixed group', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[3]; // Theme 'OSM'
+      $rootScope.tree = gmfTestDataThemes.themes[3]; // Theme 'OSM'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);
@@ -194,7 +194,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
   it('Sync WMTS Layer (in a mixed group)', () => {
     angular.mock.inject(($rootScope, $compile) => {
       // Init, compile layertree
-      $rootScope.tree = gmf.test.data.themes.themes[2]; // Theme 'Cadastre'
+      $rootScope.tree = gmfTestDataThemes.themes[2]; // Theme 'Cadastre'
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
       $compile(element)($rootScope);

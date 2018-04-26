@@ -1,28 +1,32 @@
-goog.provide('app.rotate');
+/**
+ * @module app.rotate
+ */
+const exports = {};
 
-// webpack: import './rotate.css';
-goog.require('ngeo.interaction.Rotate');
-goog.require('ol.Collection');
-goog.require('ol.Feature');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
-goog.require('ol.style.Text');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Circle');
-goog.require('ol.geom.Polygon');
-goog.require('ngeo.map.module');
+import './rotate.css';
+import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
+
+import olCollection from 'ol/Collection.js';
+import olFeature from 'ol/Feature.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olStyleText from 'ol/style/Text.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.rotate.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name
+  ngeoMapModule.name
 ]);
 
 
@@ -34,19 +38,19 @@ const appmodule = angular.module('app', ['ngeo']);
  * @constructor
  * @ngInject
  */
-app.rotate.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-10997148, 4569099],
       zoom: 4
     })
@@ -54,7 +58,7 @@ app.rotate.MainController = function() {
 
   const map = this.map;
 
-  const polygon = new ol.geom.Polygon([[
+  const polygon = new olGeomPolygon([[
     [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
   ]]);
 
@@ -62,16 +66,16 @@ app.rotate.MainController = function() {
    * @type {ol.Collection.<ol.Feature>}
    * @export
    */
-  this.features = new ol.Collection();
+  this.features = new olCollection();
 
-  this.features.push(new ol.Feature({
+  this.features.push(new olFeature({
     geometry: polygon
   }));
 
-  const vectorSource = new ol.source.Vector({
+  const vectorSource = new olSourceVector({
     features: this.features
   });
-  const vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new olLayerVector({
     source: vectorSource
   });
 
@@ -83,30 +87,30 @@ app.rotate.MainController = function() {
   const style = (function() {
     const styles = {};
     styles['Polygon'] = [
-      new ol.style.Style({
-        fill: new ol.style.Fill({
+      new olStyleStyle({
+        fill: new olStyleFill({
           color: [255, 255, 255, 0.5]
         })
       }),
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
+      new olStyleStyle({
+        stroke: new olStyleStroke({
           color: [255, 255, 255, 1],
           width: 5
         })
       }),
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
+      new olStyleStyle({
+        stroke: new olStyleStroke({
           color: [0, 153, 255, 1],
           width: 3
         })
       })
     ];
-    styles['Point'] = new ol.style.Style({
-      image: new ol.style.Circle(),
-      text: new ol.style.Text({
+    styles['Point'] = new olStyleStyle({
+      image: new olStyleCircle(),
+      text: new olStyleText({
         text: '\uf01e',
         font: 'normal 18px FontAwesome',
-        fill: new ol.style.Fill({
+        fill: new olStyleFill({
           color: '#ffffff'
         })
       })
@@ -123,7 +127,7 @@ app.rotate.MainController = function() {
    * @type {ngeo.interaction.Rotate}
    * @export
    */
-  this.interaction = new ngeo.interaction.Rotate(
+  this.interaction = new ngeoInteractionRotate(
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features,
       layers: [vectorLayer],
@@ -144,4 +148,7 @@ app.rotate.MainController = function() {
 };
 
 
-appmodule.controller('MainController', app.rotate.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

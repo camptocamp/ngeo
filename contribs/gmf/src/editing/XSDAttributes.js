@@ -1,7 +1,7 @@
-goog.provide('gmf.editing.XSDAttributes');
-
-goog.require('ngeo.format.XSDAttribute');
-
+/**
+ * @module gmf.editing.XSDAttributes
+ */
+import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 /**
  * An service used to fetch the XSD attribute definition of layers using their
@@ -13,7 +13,7 @@ goog.require('ngeo.format.XSDAttribute');
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-gmf.editing.XSDAttributes = function($http, gmfLayersUrl) {
+const exports = function($http, gmfLayersUrl) {
 
   /**
    * @type {angular.$http}
@@ -41,7 +41,7 @@ gmf.editing.XSDAttributes = function($http, gmfLayersUrl) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.editing.XSDAttributes.prototype.getAttributes = function(id) {
+exports.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
     const url = `${this.baseUrl_}/${id}/md.xsd`;
     this.promises_[id] = this.http_.get(url).then(
@@ -55,13 +55,16 @@ gmf.editing.XSDAttributes.prototype.getAttributes = function(id) {
  * @return {Array.<ngeox.Attribute>} List of attributes.
  * @export
  */
-gmf.editing.XSDAttributes.prototype.handleGetAttributes_ = function(resp) {
-  return new ngeo.format.XSDAttribute().read(resp.data);
+exports.prototype.handleGetAttributes_ = function(resp) {
+  return new ngeoFormatXSDAttribute().read(resp.data);
 };
 
 
 /**
  * @type {!angular.Module}
  */
-gmf.editing.XSDAttributes.module = angular.module('gmfXSDAttributes', []);
-gmf.editing.XSDAttributes.module.service('gmfXSDAttributes', gmf.editing.XSDAttributes);
+exports.module = angular.module('gmfXSDAttributes', []);
+exports.module.service('gmfXSDAttributes', exports);
+
+
+export default exports;

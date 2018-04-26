@@ -1,5 +1,7 @@
-goog.module('ngeo.olcs.constants');
-goog.module.declareLegacyNamespace();
+/**
+ * @module ngeo.olcs.constants
+ */
+const exports = {};
 
 /**
  * @enum {string}
@@ -42,3 +44,6 @@ exports.Permalink3dParam = {
    */
   PREFIX: '3d_'
 };
+
+
+export default exports;

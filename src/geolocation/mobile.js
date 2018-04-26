@@ -1,27 +1,28 @@
-goog.provide('ngeo.geolocation.mobile');
-
-goog.require('goog.asserts');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.message.Notification');
-goog.require('ol.easing');
-goog.require('ol.events');
-goog.require('ol.Feature');
-goog.require('ol.Geolocation');
-goog.require('ol.Map');
-goog.require('ol.geom.Point');
+/**
+ * @module ngeo.geolocation.mobile
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoMessageNotification from 'ngeo/message/Notification.js';
+import * as olEasing from 'ol/easing.js';
+import * as olEvents from 'ol/events.js';
+import olFeature from 'ol/Feature.js';
+import olGeolocation from 'ol/Geolocation.js';
+import olMap from 'ol/Map.js';
+import olGeomPoint from 'ol/geom/Point.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.geolocation.mobile = angular.module('ngeoMobileGeolocation', [
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.message.Notification.module.name,
+const exports = angular.module('ngeoMobileGeolocation', [
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMessageNotification.module.name,
 ]);
 
 /**
  * @enum {string}
  */
-ngeo.geolocation.mobile.GeolocationEventType = {
+exports.GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
@@ -47,7 +48,7 @@ ngeo.geolocation.mobile.GeolocationEventType = {
  * @ngdoc directive
  * @ngname ngeoMobileGeolocation
  */
-ngeo.geolocation.mobile.directive_ = function() {
+exports.directive_ = function() {
   return {
     restrict: 'A',
     scope: {
@@ -59,7 +60,7 @@ ngeo.geolocation.mobile.directive_ = function() {
 };
 
 
-ngeo.geolocation.mobile.directive('ngeoMobileGeolocation', ngeo.geolocation.mobile.directive_);
+exports.directive('ngeoMobileGeolocation', exports.directive_);
 
 
 /**
@@ -76,13 +77,13 @@ ngeo.geolocation.mobile.directive('ngeoMobileGeolocation', ngeo.geolocation.mobi
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController
  */
-ngeo.geolocation.mobile.Controller_ = function($scope, $element,
+exports.Controller_ = function($scope, $element,
   gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
   const map = $scope['getMobileMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
+  googAsserts.assertInstanceof(map, olMap);
 
   /**
    * @type {!angular.Scope}
@@ -97,7 +98,7 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
   this.map_ = map;
 
   const options = $scope['getMobileGeolocationOptionsFn']() || {};
-  goog.asserts.assertObject(options);
+  googAsserts.assertObject(options);
 
   /**
    * @type {ngeo.message.Notification}
@@ -115,7 +116,7 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
    * @type {ol.Geolocation}
    * @private
    */
-  this.geolocation_ = new ol.Geolocation({
+  this.geolocation_ = new olGeolocation({
     projection: map.getView().getProjection(),
     trackingOptions: /** @type {GeolocationPositionOptions} */ ({
       enableHighAccuracy: true
@@ -145,14 +146,14 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
         break;
     }
     this.notification_.error(msg);
-    $scope.$emit(ngeo.geolocation.mobile.GeolocationEventType.ERROR, error);
+    $scope.$emit(exports.GeolocationEventType.ERROR, error);
   }, this);
 
   /**
    * @type {ol.Feature}
    * @private
    */
-  this.positionFeature_ = new ol.Feature();
+  this.positionFeature_ = new olFeature();
 
   if (options.positionFeatureStyle) {
     this.positionFeature_.setStyle(options.positionFeatureStyle);
@@ -162,7 +163,7 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
    * @type {ol.Feature}
    * @private
    */
-  this.accuracyFeature_ = new ol.Feature();
+  this.accuracyFeature_ = new olFeature();
 
   if (options.accuracyFeatureStyle) {
     this.accuracyFeature_.setStyle(options.accuracyFeatureStyle);
@@ -189,20 +190,20 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
    */
   this.viewChangedByMe_ = false;
 
-  ol.events.listen(this.geolocation_, 'change:accuracyGeometry', () => {
+  olEvents.listen(this.geolocation_, 'change:accuracyGeometry', () => {
     this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
     this.setPosition_();
   });
 
-  ol.events.listen(this.geolocation_, 'change:position', () => {
+  olEvents.listen(this.geolocation_, 'change:position', () => {
     this.setPosition_();
   });
 
   const view = map.getView();
 
-  ol.events.listen(view, 'change:center', this.handleViewChange_, this);
+  olEvents.listen(view, 'change:center', this.handleViewChange_, this);
 
-  ol.events.listen(view, 'change:resolution', this.handleViewChange_, this);
+  olEvents.listen(view, 'change:resolution', this.handleViewChange_, this);
 
 };
 
@@ -210,7 +211,7 @@ ngeo.geolocation.mobile.Controller_ = function($scope, $element,
 /**
  * @export
  */
-ngeo.geolocation.mobile.Controller_.prototype.toggleTracking = function() {
+exports.Controller_.prototype.toggleTracking = function() {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
     const currentPosition = this.geolocation_.getPosition();
@@ -218,10 +219,10 @@ ngeo.geolocation.mobile.Controller_.prototype.toggleTracking = function() {
     // doesn't return an error
     if (currentPosition === undefined) {
       this.untrack_();
-      this.$scope_.$emit(ngeo.geolocation.mobile.GeolocationEventType.ERROR, null);
+      this.$scope_.$emit(exports.GeolocationEventType.ERROR, null);
       return;
     }
-    goog.asserts.assert(currentPosition !== undefined);
+    googAsserts.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
     const center = this.map_.getView().getCenter();
     const diff = Math.abs(currentPosition[0] - center[0]) + Math.abs(currentPosition[1] - center[1]);
@@ -240,7 +241,7 @@ ngeo.geolocation.mobile.Controller_.prototype.toggleTracking = function() {
 /**
  * @private
  */
-ngeo.geolocation.mobile.Controller_.prototype.track_ = function() {
+exports.Controller_.prototype.track_ = function() {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.follow_ = true;
@@ -251,7 +252,7 @@ ngeo.geolocation.mobile.Controller_.prototype.track_ = function() {
 /**
  * @private
  */
-ngeo.geolocation.mobile.Controller_.prototype.untrack_ = function() {
+exports.Controller_.prototype.untrack_ = function() {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
@@ -262,9 +263,9 @@ ngeo.geolocation.mobile.Controller_.prototype.untrack_ = function() {
 /**
  * @private
  */
-ngeo.geolocation.mobile.Controller_.prototype.setPosition_ = function() {
+exports.Controller_.prototype.setPosition_ = function() {
   const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-  const point = new ol.geom.Point(position);
+  const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
   const accuracy = this.accuracyFeature_.getGeometry();
@@ -287,7 +288,7 @@ ngeo.geolocation.mobile.Controller_.prototype.setPosition_ = function() {
  * @param {ol.Object.Event} event Event.
  * @private
  */
-ngeo.geolocation.mobile.Controller_.prototype.handleViewChange_ = function(event) {
+exports.Controller_.prototype.handleViewChange_ = function(event) {
   if (this.follow_ && !this.viewChangedByMe_) {
     this.follow_ = false;
   }
@@ -295,7 +296,7 @@ ngeo.geolocation.mobile.Controller_.prototype.handleViewChange_ = function(event
 
 
 // Orientation control events
-ngeo.geolocation.mobile.Controller_.prototype.autorotateListener = function() {
+exports.Controller_.prototype.autorotateListener = function() {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
     window.addEventListener('deviceorientationabsolute', (evt) => {
@@ -321,19 +322,22 @@ ngeo.geolocation.mobile.Controller_.prototype.autorotateListener = function() {
  * @return {number} .
  * @private
  */
-ngeo.geolocation.mobile.Controller_.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
+exports.Controller_.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
     currentAlpha = eventAlpha;
     const radAlpha = currentAlpha * Math.PI / 180;
     this.map_.getView().animate({
       rotation: radAlpha,
       duration: 350,
-      easing: ol.easing.linear
+      easing: olEasing.linear
     });
   }
   return currentAlpha;
 };
 
 
-ngeo.geolocation.mobile.controller('ngeoGeolocationMobileController',
-  ngeo.geolocation.mobile.Controller_);
+exports.controller('ngeoGeolocationMobileController',
+  exports.Controller_);
+
+
+export default exports;

@@ -1,14 +1,18 @@
-goog.provide('app.grid');
+/**
+ * @module app.grid
+ */
+const exports = {};
 
-// webpack: import './grid.css';
-goog.require('ngeo.grid.Config');
-goog.require('ngeo.grid.module');
+import './grid.css';
+import ngeoGridConfig from 'ngeo/grid/Config.js';
+
+import ngeoGridModule from 'ngeo/grid/module.js';
 
 
 /** @type {!angular.Module} **/
-app.grid.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.grid.module.name
+  ngeoGridModule.name
 ]);
 
 
@@ -16,7 +20,7 @@ app.grid.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.grid.MainController = function() {
+exports.MainController = function() {
 
   const data = [
     {
@@ -68,9 +72,12 @@ app.grid.MainController = function() {
    * @type {ngeo.grid.Config}
    * @export
    */
-  this.gridConfig = new ngeo.grid.Config(data, columnDefs);
+  this.gridConfig = new ngeoGridConfig(data, columnDefs);
 
 };
 
 
-app.grid.module.controller('MainController', app.grid.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

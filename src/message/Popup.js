@@ -1,13 +1,14 @@
-goog.provide('ngeo.message.Popup');
+/**
+ * @module ngeo.message.Popup
+ */
+import googAsserts from 'goog/asserts.js';
 
-goog.require('goog.asserts');
 /**
  * This goog.require is needed because of 'ngeo-popup' used in
  * the template.
  * @suppress {extraRequire}
  */
-goog.require('ngeo.message.popupComponent');
-
+import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 
 /**
  * Provides a factory to create a popup in the page.
@@ -29,7 +30,7 @@ goog.require('ngeo.message.popupComponent');
  * @ngdoc service
  * @ngname ngeoCreatePopup
  */
-ngeo.message.Popup = function($compile, $rootScope, $sce, $timeout) {
+const exports = function($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The scope the compiled element is link to.
@@ -87,7 +88,7 @@ ngeo.message.Popup = function($compile, $rootScope, $sce, $timeout) {
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
  * @export
  */
-ngeo.message.Popup.prototype.getOpen = function() {
+exports.prototype.getOpen = function() {
   return this.scope['open'];
 };
 
@@ -97,7 +98,7 @@ ngeo.message.Popup.prototype.getOpen = function() {
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  * @export
  */
-ngeo.message.Popup.prototype.setOpen = function(open) {
+exports.prototype.setOpen = function(open) {
   this.scope['open'] = open;
 };
 
@@ -106,7 +107,7 @@ ngeo.message.Popup.prototype.setOpen = function(open) {
  * Destroy the popup.
  * @export
  */
-ngeo.message.Popup.prototype.destroy = function() {
+exports.prototype.destroy = function() {
   this.scope.$destroy();
   this.element_.remove();
 };
@@ -117,7 +118,7 @@ ngeo.message.Popup.prototype.destroy = function() {
  * @param {string} title The title.
  * @export
  */
-ngeo.message.Popup.prototype.setTitle = function(title) {
+exports.prototype.setTitle = function(title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
   this.scope['title'] = trustedTitle;
 };
@@ -132,7 +133,7 @@ ngeo.message.Popup.prototype.setTitle = function(title) {
  *     Default is false.
  * @export
  */
-ngeo.message.Popup.prototype.setContent = function(content, opt_trusted) {
+exports.prototype.setContent = function(content, opt_trusted) {
   this.scope['content'] = opt_trusted ? this.sce_.trustAsHtml(/** @type {string} */ (content)) : content;
 };
 
@@ -142,7 +143,7 @@ ngeo.message.Popup.prototype.setContent = function(content, opt_trusted) {
  * @param {string} url The url of the page.
  * @export
  */
-ngeo.message.Popup.prototype.setUrl = function(url) {
+exports.prototype.setUrl = function(url) {
   const content = this.sce_.trustAsHtml(
     `<iframe src="${url}" width="100%" height="100%"></iframe>`
   );
@@ -155,7 +156,7 @@ ngeo.message.Popup.prototype.setUrl = function(url) {
  * @param {string} width Width the popup should have.
  * @export
  */
-ngeo.message.Popup.prototype.setWidth = function(width) {
+exports.prototype.setWidth = function(width) {
   this.element_.width(width);
 };
 
@@ -165,7 +166,7 @@ ngeo.message.Popup.prototype.setWidth = function(width) {
  * @param {string} height Height the popup should have.
  * @export
  */
-ngeo.message.Popup.prototype.setHeight = function(height) {
+exports.prototype.setHeight = function(height) {
   this.element_.height(height);
 };
 
@@ -176,7 +177,7 @@ ngeo.message.Popup.prototype.setHeight = function(height) {
  * @param {string} height Height the popup should have.
  * @export
  */
-ngeo.message.Popup.prototype.setSize = function(width, height) {
+exports.prototype.setSize = function(width, height) {
   this.setWidth(width);
   this.setHeight(height);
 };
@@ -188,7 +189,7 @@ ngeo.message.Popup.prototype.setSize = function(width, height) {
  *     being closed or not.
  * @export
  */
-ngeo.message.Popup.prototype.setAutoDestroy = function(autoDestroy) {
+exports.prototype.setAutoDestroy = function(autoDestroy) {
   this.autoDestroy_ = autoDestroy;
 };
 
@@ -198,7 +199,7 @@ ngeo.message.Popup.prototype.setAutoDestroy = function(autoDestroy) {
  * @param {string} cls Class name to add to the popup element.
  * @export
  */
-ngeo.message.Popup.prototype.addClass = function(cls) {
+exports.prototype.addClass = function(cls) {
   this.element_.addClass(cls);
 };
 
@@ -208,14 +209,14 @@ ngeo.message.Popup.prototype.addClass = function(cls) {
  * @param {ngeox.PopupOptions} options Options.
  * @export
  */
-ngeo.message.Popup.prototype.open = function(options) {
+exports.prototype.open = function(options) {
 
   if (options.url) {
     this.setUrl(options.url);
   } else if (options.content) {
     this.setContent(options.content);
   } else {
-    goog.asserts.fail('ngeo.message.Popup options requirest "url" or "content".');
+    googAsserts.fail('ngeo.message.Popup options requirest "url" or "content".');
   }
 
   if (options.autoDestroy !== undefined) {
@@ -250,20 +251,24 @@ ngeo.message.Popup.prototype.open = function(options) {
  * @return {ngeox.PopupFactory} The function to create a popup.
  * @ngInject
  */
-ngeo.message.Popup.Factory = function($compile, $rootScope, $sce, $timeout) {
+exports.Factory = function($compile, $rootScope, $sce, $timeout) {
   return (
     /**
      * @return {!ngeo.message.Popup} The popup instance.
      */
     function() {
-      return new ngeo.message.Popup($compile, $rootScope, $sce, $timeout);
-    });
+      return new exports($compile, $rootScope, $sce, $timeout);
+    }
+  );
 };
 
 /**
  * @type {angular.Module}
  */
-ngeo.message.Popup.module = angular.module('ngeoCreatePopup', [
-  ngeo.message.popupComponent.name,
+exports.module = angular.module('ngeoCreatePopup', [
+  ngeoMessagePopupComponent.name,
 ]);
-ngeo.message.Popup.module.factory('ngeoCreatePopup', ngeo.message.Popup.Factory);
+exports.module.factory('ngeoCreatePopup', exports.Factory);
+
+
+export default exports;

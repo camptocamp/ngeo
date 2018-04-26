@@ -1,34 +1,34 @@
-goog.provide('gmf.controllers.AbstractDesktopController');
-
-goog.require('gmf.controllers.AbstractAppController');
-goog.require('gmf.contextualdata.module');
-goog.require('gmf.drawing.module');
-goog.require('gmf.editing.module');
-goog.require('gmf.permalink.shareComponent');
-goog.require('gmf.print.component');
-goog.require('gmf.profile.module');
-goog.require('gmf.raster.component');
-goog.require('ngeo.draw.features');
-goog.require('ngeo.map.resizemap');
-goog.require('ngeo.misc.ToolActivate');
-goog.require('ngeo.query.bboxQueryComponent');
-goog.require('ol');
-goog.require('ol.proj');
-goog.require('ol.obj');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.control.ScaleLine');
-goog.require('ol.control.Zoom');
-goog.require('ol.control.Rotate');
-goog.require('ol.interaction');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.Vector');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
-
+/**
+ * @module gmf.controllers.AbstractDesktopController
+ */
+import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
+import gmfContextualdataModule from 'gmf/contextualdata/module.js';
+import gmfDrawingModule from 'gmf/drawing/module.js';
+import gmfEditingModule from 'gmf/editing/module.js';
+import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
+import gmfPrintComponent from 'gmf/print/component.js';
+import gmfProfileModule from 'gmf/profile/module.js';
+import gmfRasterComponent from 'gmf/raster/component.js';
+import ngeoDrawFeatures from 'ngeo/draw/features.js';
+import ngeoMapResizemap from 'ngeo/map/resizemap.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+import * as olBase from 'ol/index.js';
+import * as olProj from 'ol/proj.js';
+import * as olObj from 'ol/obj.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olControlScaleLine from 'ol/control/ScaleLine.js';
+import olControlZoom from 'ol/control/Zoom.js';
+import olControlRotate from 'ol/control/Rotate.js';
+import * as olInteraction from 'ol/interaction.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleText from 'ol/style/Text.js';
 
 /**
  * Desktop application abstract controller.
@@ -45,37 +45,37 @@ goog.require('ol.style.Text');
  * @ngInject
  * @export
  */
-gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) {
+const exports = function(config, $scope, $injector) {
 
   const viewConfig = {
-    projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
+    projection: olProj.get(`EPSG:${config.srid || 21781}`)
   };
-  ol.obj.assign(viewConfig, config.mapViewConfig || {});
+  olObj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.controllers.AbstractAppController.prototype.getLocationIcon();
+  const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     pixelRatio: config.mapPixelRatio,
     layers: [],
-    view: new ol.View(viewConfig),
+    view: new olView(viewConfig),
     controls: config.mapControls || [
-      new ol.control.ScaleLine({
+      new olControlScaleLine({
         target: document.getElementById('scaleline')
       }),
-      new ol.control.Zoom({
+      new olControlZoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
       }),
-      new ol.control.Rotate({
+      new olControlRotate({
         label: arrow,
         tipLabel: ''
       })
     ],
-    interactions: config.mapInteractions || ol.interaction.defaults({
+    interactions: config.mapInteractions || olInteraction.defaults({
       pinchRotate: true,
       altShiftDragRotate: true
     }),
@@ -123,12 +123,12 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
    * @type {!ol.style.Style}
    * @export
    */
-  this.googleStreetViewStyle = new ol.style.Style({
-    text: new ol.style.Text({
-      fill: new ol.style.Fill({color: '#279B61'}),
+  this.googleStreetViewStyle = new olStyleStyle({
+    text: new olStyleText({
+      fill: new olStyleFill({color: '#279B61'}),
       font: 'normal 30px FontAwesome',
       offsetY: -15,
-      stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+      stroke: new olStyleStroke({color: '#ffffff', width: 3}),
       text: '\uf041'
     })
   });
@@ -174,10 +174,10 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
    * @type {ol.layer.Vector}
    * @export
    */
-  this.editFeatureVectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({
+  this.editFeatureVectorLayer = new olLayerVector({
+    source: new olSourceVector({
       wrapX: false,
-      features: new ol.Collection()
+      features: new olCollection()
     }),
     style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
     // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
@@ -190,10 +190,10 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  const editFeatureActivate = new ngeo.misc.ToolActivate(this, 'editFeatureActive');
+  const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
-  const googleStreetViewActivate = new ngeo.misc.ToolActivate(
+  const googleStreetViewActivate = new ngeoMiscToolActivate(
     this,
     'googleStreetViewActive'
   );
@@ -213,7 +213,7 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
    */
   this.profileLine = null;
 
-  gmf.controllers.AbstractAppController.call(this, config, $scope, $injector);
+  gmfControllersAbstractAppController.call(this, config, $scope, $injector);
 
   // Close the login panel on successful login.
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
@@ -222,31 +222,35 @@ gmf.controllers.AbstractDesktopController = function(config, $scope, $injector) 
     }
   });
 };
-ol.inherits(gmf.controllers.AbstractDesktopController, gmf.controllers.AbstractAppController);
 
-gmf.controllers.AbstractDesktopController.module = angular.module('GmfAbstractDesktopControllerModule', [
-  gmf.controllers.AbstractAppController.module.name,
-  gmf.contextualdata.module.name,
-  gmf.drawing.module.name,
-  gmf.editing.module.name,
-  gmf.permalink.shareComponent.name,
-  gmf.print.component.name,
-  gmf.profile.module.name,
-  gmf.raster.component.name,
-  ngeo.draw.features.name,
-  ngeo.map.resizemap.name,
-  ngeo.query.bboxQueryComponent.name,
+olBase.inherits(exports, gmfControllersAbstractAppController);
+
+exports.module = angular.module('GmfAbstractDesktopControllerModule', [
+  gmfControllersAbstractAppController.module.name,
+  gmfContextualdataModule.name,
+  gmfDrawingModule.name,
+  gmfEditingModule.name,
+  gmfPermalinkShareComponent.name,
+  gmfPrintComponent.name,
+  gmfProfileModule.name,
+  gmfRasterComponent.name,
+  ngeoDrawFeatures.name,
+  ngeoMapResizemap.name,
+  ngeoQueryBboxQueryComponent.name,
 ]);
 
-gmf.controllers.AbstractDesktopController.module.controller(
+exports.module.controller(
   'AbstractDesktopController',
-  gmf.controllers.AbstractDesktopController);
+  exports);
 
-gmf.controllers.AbstractDesktopController.module.value('isDesktop', true);
+exports.module.value('isDesktop', true);
 
-gmf.controllers.AbstractDesktopController.module.value('ngeoQueryOptions', {
+exports.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
-gmf.controllers.AbstractDesktopController.module.value('ngeoMeasurePrecision', 3);
-gmf.controllers.AbstractDesktopController.module.value('ngeoMeasureDecimals', 0);
+exports.module.value('ngeoMeasurePrecision', 3);
+exports.module.value('ngeoMeasureDecimals', 0);
+
+
+export default exports;

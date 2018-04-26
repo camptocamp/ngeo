@@ -1,13 +1,15 @@
-goog.provide('ngeo.interaction.common');
-
-goog.require('ol.style.Style');
+/**
+ * @module ngeo.interaction.common
+ */
+const exports = {};
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /**
  * @return {ol.StyleFunction} Styles.
  */
-ngeo.interaction.common.getDefaultDrawStyleFunction = function() {
-  const style = ol.style.Style.createDefaultEditing();
+exports.getDefaultDrawStyleFunction = function() {
+  const style = olStyleStyle.createDefaultEditing();
   return function(feature, resolution) {
     return style[feature.getGeometry().getType()];
   };
@@ -17,9 +19,12 @@ ngeo.interaction.common.getDefaultDrawStyleFunction = function() {
 /**
  * @return {ol.StyleFunction} Styles.
  */
-ngeo.interaction.common.getDefaultModifyStyleFunction = function() {
-  const style = ol.style.Style.createDefaultEditing();
+exports.getDefaultModifyStyleFunction = function() {
+  const style = olStyleStyle.createDefaultEditing();
   return function(feature, resolution) {
     return style[/**@type {ol.geom.GeometryType} */ ('Point')];
   };
 };
+
+
+export default exports;

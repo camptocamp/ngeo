@@ -1,38 +1,42 @@
-goog.provide('ngeo.misc.extraModule');
-
-goog.require('ngeo.misc.AutoProjection');
-goog.require('ngeo.misc.btnComponent');
-goog.require('ngeo.misc.controlComponent');
-goog.require('ngeo.misc.datepickerComponent');
-goog.require('ngeo.misc.debounce');
-goog.require('ngeo.misc.EventHelper');
-goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.misc.File');
-goog.require('ngeo.misc.filereaderComponent');
-goog.require('ngeo.misc.filters');
-goog.require('ngeo.misc.getBrowserLanguage');
-goog.require('ngeo.misc.sortableComponent');
-goog.require('ngeo.misc.Time');
-goog.require('ngeo.misc.ToolActivateMgr');
-goog.require('ngeo.misc.WMSTime');
+/**
+ * @module ngeo.misc.extraModule
+ */
+import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';
+import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFile from 'ngeo/misc/File.js';
+import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import ngeoMiscGetBrowserLanguage from 'ngeo/misc/getBrowserLanguage.js';
+import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
+import ngeoMiscTime from 'ngeo/misc/Time.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.extraModule = angular.module('ngeoMiscExtraModule', [
-  ngeo.misc.AutoProjection.module.name,
-  ngeo.misc.btnComponent.name,
-  ngeo.misc.controlComponent.name,
-  ngeo.misc.datepickerComponent.name,
-  ngeo.misc.debounce.name,
-  ngeo.misc.EventHelper.module.name,
-  ngeo.misc.FeatureHelper.module.name,
-  ngeo.misc.File.module.name,
-  ngeo.misc.filereaderComponent.name,
-  ngeo.misc.filters.name,
-  ngeo.misc.getBrowserLanguage.name,
-  ngeo.misc.sortableComponent.name,
-  ngeo.misc.Time.module.name,
-  ngeo.misc.ToolActivateMgr.module.name,
-  ngeo.misc.WMSTime.module.name,
+const exports = angular.module('ngeoMiscExtraModule', [
+  ngeoMiscAutoProjection.module.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscControlComponent.name,
+  ngeoMiscDatepickerComponent.name,
+  ngeoMiscDebounce.name,
+  ngeoMiscEventHelper.module.name,
+  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscFile.module.name,
+  ngeoMiscFilereaderComponent.name,
+  ngeoMiscFilters.name,
+  ngeoMiscGetBrowserLanguage.name,
+  ngeoMiscSortableComponent.name,
+  ngeoMiscTime.module.name,
+  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscWMSTime.module.name,
 ]);
+
+
+export default exports;

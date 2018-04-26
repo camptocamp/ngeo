@@ -1,6 +1,6 @@
-goog.provide('ngeo.misc.Time');
-
-
+/**
+ * @module ngeo.misc.Time
+ */
 /**
  * ngeo - Time service
  * @constructor
@@ -9,7 +9,7 @@ goog.provide('ngeo.misc.Time');
  * @ngdoc service
  * @ngname ngeoTime
  */
-ngeo.misc.Time  = function() {};
+const exports = function() {};
 
 
 /**
@@ -23,7 +23,7 @@ ngeo.misc.Time  = function() {};
  * }} - Configuration for the UI components
  * @export
  */
-ngeo.misc.Time.prototype.getOptions = function(time) {
+exports.prototype.getOptions = function(time) {
 
   const minDate = new Date(time.minValue);
   const maxDate = new Date(time.maxValue);
@@ -52,7 +52,7 @@ ngeo.misc.Time.prototype.getOptions = function(time) {
  * @return {Object} UTC date
  * @export
  */
-ngeo.misc.Time.prototype.getUTCDate = function(localDate) {
+exports.prototype.getUTCDate = function(localDate) {
   return new Date(
     localDate.getUTCFullYear(),
     localDate.getUTCMonth(),
@@ -63,5 +63,8 @@ ngeo.misc.Time.prototype.getUTCDate = function(localDate) {
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.Time.module = angular.module('ngeoTime', []);
-ngeo.misc.Time.module.service('ngeoTime', ngeo.misc.Time);
+exports.module = angular.module('ngeoTime', []);
+exports.module.service('ngeoTime', exports);
+
+
+export default exports;

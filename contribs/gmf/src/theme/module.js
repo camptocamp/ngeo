@@ -1,15 +1,18 @@
-goog.provide('gmf.theme.module');
-
-goog.require('gmf.theme.Manager');
-goog.require('gmf.theme.selectorComponent');
-goog.require('gmf.theme.Themes');
-
+/**
+ * @module gmf.theme.module
+ */
+import gmfThemeManager from 'gmf/theme/Manager.js';
+import gmfThemeSelectorComponent from 'gmf/theme/selectorComponent.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.theme.module = angular.module('gmfThemeModule', [
-  gmf.theme.selectorComponent.name,
-  gmf.theme.Manager.module.name,
-  gmf.theme.Themes.module.name,
+const exports = angular.module('gmfThemeModule', [
+  gmfThemeSelectorComponent.name,
+  gmfThemeManager.module.name,
+  gmfThemeThemes.module.name,
 ]);
+
+
+export default exports;

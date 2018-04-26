@@ -1,58 +1,65 @@
-goog.provide('gmfapp.displayquerygrid');
+/**
+ * @module gmfapp.displayquerygrid
+ */
+const exports = {};
 
-// webpack: import './displayquerygrid.css';
-goog.require('gmf.datasource.Manager');
-goog.require('gmf.layertree.component');
+import './displayquerygrid.css';
+import gmfDatasourceManager from 'gmf/datasource/Manager.js';
+
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
+import gmfMapComponent from 'gmf/map/component.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.query.gridComponent');
-goog.require('gmf.theme.Themes');
-goog.require('ngeo.grid.module');
-goog.require('ngeo.map.module');
-goog.require('ngeo.misc.btnComponent');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.query.bboxQueryComponent');
-goog.require('ngeo.query.mapQueryComponent');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import gmfQueryGridComponent from 'gmf/query/gridComponent.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoGridModule from 'ngeo/grid/module.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.displayquerygrid.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.datasource.Manager.module.name,
-  gmf.layertree.component.name,
-  gmf.map.component.name,
-  gmf.query.gridComponent.name,
-  gmf.theme.Themes.module.name,
-  ngeo.grid.module.name,
-  ngeo.map.module.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeo.misc.btnComponent.name,
-  ngeo.query.bboxQueryComponent.name,
-  ngeo.query.mapQueryComponent.name,
+  gmfDatasourceManager.module.name,
+  gmfLayertreeComponent.name,
+  gmfMapComponent.name,
+  gmfQueryGridComponent.name,
+  gmfThemeThemes.module.name,
+  ngeoGridModule.name,
+  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMiscBtnComponent.name,
+  ngeoQueryBboxQueryComponent.name,
+  ngeoQueryMapQueryComponent.name,
 ]);
 
 
-gmfapp.displayquerygrid.module.constant('ngeoQueryOptions', {
+exports.module.constant('ngeoQueryOptions', {
   'limit': 20,
   'queryCountFirst': true
 });
 
 
-gmfapp.displayquerygrid.module.constant(
+exports.module.constant(
   'gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?' +
         'version=2&background=background');
 
-gmfapp.displayquerygrid.module.constant('defaultTheme', 'Demo');
-gmfapp.displayquerygrid.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -61,12 +68,12 @@ gmfapp.displayquerygrid.module.constant('angularLocaleScript', '../build/angular
  *
  * @type {!angular.Component}
  */
-gmfapp.displayquerygrid.queryresultComponent = {
+exports.queryresultComponent = {
   controller: 'gmfappQueryresultController',
   template: require('./partials/queryresult.html')
 };
 
-gmfapp.displayquerygrid.module.component('gmfappQueryresult', gmfapp.displayquerygrid.queryresultComponent);
+exports.module.component('gmfappQueryresult', exports.queryresultComponent);
 
 
 /**
@@ -75,7 +82,7 @@ gmfapp.displayquerygrid.module.component('gmfappQueryresult', gmfapp.displayquer
  * @constructor
  * @ngInject
  */
-gmfapp.displayquerygrid.QueryresultController = function(ngeoQueryResult) {
+exports.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -86,7 +93,7 @@ gmfapp.displayquerygrid.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-gmfapp.displayquerygrid.module.controller('gmfappQueryresultController', gmfapp.displayquerygrid.QueryresultController);
+exports.module.controller('gmfappQueryresultController', exports.QueryresultController);
 
 
 /**
@@ -98,22 +105,22 @@ gmfapp.displayquerygrid.module.controller('gmfappQueryresultController', gmfapp.
  *   overlay manager service.
  * @ngInject
  */
-gmfapp.displayquerygrid.MainController = function(gmfThemes, gmfDataSourcesManager,
+exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
-  const fill = new ol.style.Fill({color: [255, 170, 0, 0.6]});
-  const stroke = new ol.style.Stroke({color: [255, 170, 0, 1], width: 2});
+  const fill = new olStyleFill({color: [255, 170, 0, 0.6]});
+  const stroke = new olStyleStroke({color: [255, 170, 0, 1], width: 2});
 
   /**
    * FeatureStyle used by the displayquerygrid directive
    * @type {ol.style.Style}
    * @export
    */
-  this.featureStyle = new ol.style.Style({
+  this.featureStyle = new olStyleStyle({
     fill: fill,
-    image: new ol.style.Circle({
+    image: new olStyleCircle({
       fill: fill,
       radius: 5,
       stroke: stroke
@@ -125,13 +132,13 @@ gmfapp.displayquerygrid.MainController = function(gmfThemes, gmfDataSourcesManag
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
@@ -176,4 +183,7 @@ gmfapp.displayquerygrid.MainController = function(gmfThemes, gmfDataSourcesManag
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-gmfapp.displayquerygrid.module.controller('MainController', gmfapp.displayquerygrid.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,5 +1,5 @@
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.proj');
+import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
+import * as olProj from 'ol/proj.js';
 
 describe('ngeo.misc.AutoProjection', () => {
   let ngeoAutoProjection;
@@ -29,17 +29,17 @@ describe('ngeo.misc.AutoProjection', () => {
     spyOn(console, 'error');
     const projections = ngeoAutoProjection.getProjectionList(codes);
     expect(console.error).toHaveBeenCalled();
-    expect(projections[0]).toBe(ol.proj.get('EPSG:4326'));
-    expect(projections[1]).toBe(ol.proj.get('EPSG:3857'));
+    expect(projections[0]).toBe(olProj.get('EPSG:4326'));
+    expect(projections[1]).toBe(olProj.get('EPSG:3857'));
     expect(projections.length).toBe(2);
   });
 
   it('Try projections', () => {
     const coordinatesA = [600000, 200000];
     const coordinatesB = [8, 47];
-    const viewProjection = ol.proj.get('EPSG:21781');
+    const viewProjection = olProj.get('EPSG:21781');
     const extent = viewProjection.getExtent();
-    const projections = [ol.proj.get('EPSG:21781'), ol.proj.get('EPSG:4326')];
+    const projections = [olProj.get('EPSG:21781'), olProj.get('EPSG:4326')];
 
     let point = ngeoAutoProjection.tryProjections(coordinatesA, extent,
       viewProjection);
@@ -49,8 +49,8 @@ describe('ngeo.misc.AutoProjection', () => {
       viewProjection);
     expect(point).toBeNull();
 
-    const coordinatesBTransformed = ol.proj.transform(coordinatesB,
-      ol.proj.get('EPSG:4326'), viewProjection);
+    const coordinatesBTransformed = olProj.transform(coordinatesB,
+      olProj.get('EPSG:4326'), viewProjection);
     point = ngeoAutoProjection.tryProjections(coordinatesB, extent,
       viewProjection, projections);
     expect(point).toEqual(coordinatesBTransformed);
@@ -58,10 +58,10 @@ describe('ngeo.misc.AutoProjection', () => {
 
   it('Try projections with inversion', () => {
     const coordinates = [47, 8];
-    const viewProjection = ol.proj.get('EPSG:21781');
+    const viewProjection = olProj.get('EPSG:21781');
     const extent = viewProjection.getExtent();
-    const projections = [ol.proj.get('EPSG:4326')];
-    const coordinatesTransformed = ol.proj.transform(coordinates.reverse(),
+    const projections = [olProj.get('EPSG:4326')];
+    const coordinatesTransformed = olProj.transform(coordinates.reverse(),
       projections[0], viewProjection);
 
     const point = ngeoAutoProjection.tryProjectionsWithInversion(coordinates,

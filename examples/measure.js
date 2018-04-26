@@ -1,32 +1,38 @@
-goog.provide('app.measure');
+/**
+ * @module app.measure
+ */
+const exports = {};
 
-// webpack: import './measure.css';
-goog.require('ngeo.interaction.MeasureArea');
-goog.require('ngeo.interaction.MeasureAzimut');
-goog.require('ngeo.interaction.MeasureLength');
-goog.require('ngeo.map.module');
+import './measure.css';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
+
+import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
-goog.require('ngeo.misc.decorate');
-goog.require('ngeo.misc.filters');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.control.ScaleLine');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Style');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Fill');
-// webpack: import 'angular-sanitize';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olControlScaleLine from 'ol/control/ScaleLine.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleFill from 'ol/style/Fill.js';
+import 'angular-sanitize';
 
 
 /** @type {!angular.Module} **/
-app.measure.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.misc.btnComponent.name,
-  ngeo.misc.filters.name,
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscFilters.name,
   'ngSanitize',
 ]);
 
@@ -38,7 +44,7 @@ app.measure.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.measure.measuretoolsComponent = {
+exports.measuretoolsComponent = {
   bindings: {
     'map': '=appMeasuretoolsMap',
     'lang': '=appMeasuretoolsLang'
@@ -47,7 +53,7 @@ app.measure.measuretoolsComponent = {
   template: require('./partials/measuretools.html')
 };
 
-app.measure.module.component('appMeasuretools', app.measure.measuretoolsComponent);
+exports.module.component('appMeasuretools', exports.measuretoolsComponent);
 
 
 /**
@@ -59,7 +65,7 @@ app.measure.module.component('appMeasuretools', app.measure.measuretoolsComponen
  * @constructor
  * @ngInject
  */
-app.measure.MeasuretoolsController = function($scope, $compile, $sce,
+exports.MeasuretoolsController = function($scope, $compile, $sce,
   $filter, gettextCatalog) {
 
   /**
@@ -144,21 +150,21 @@ app.measure.MeasuretoolsController = function($scope, $compile, $sce,
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
   });
 
-  const style = new ol.style.Style({
-    fill: new ol.style.Fill({
+  const style = new olStyleStyle({
+    fill: new olStyleFill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
-    stroke: new ol.style.Stroke({
+    stroke: new olStyleStroke({
       color: 'rgba(0, 0, 0, 0.5)',
       lineDash: [10, 10],
       width: 2
     }),
-    image: new ol.style.Circle({
+    image: new olStyleCircle({
       radius: 5,
-      stroke: new ol.style.Stroke({
+      stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.7)'
       }),
-      fill: new ol.style.Fill({
+      fill: new olStyleFill({
         color: 'rgba(255, 255, 255, 0.2)'
       })
     })
@@ -168,33 +174,33 @@ app.measure.MeasuretoolsController = function($scope, $compile, $sce,
    * @type {ngeo.interaction.MeasureLength}
    * @export
    */
-  this.measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
+  this.measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureLengthContinueMsg[0]
   });
 
   this.measureLength.setActive(false);
-  ngeo.misc.decorate.interaction(this.measureLength);
+  ngeoMiscDecorate.interaction(this.measureLength);
 
   /**
    * @type {ngeo.interaction.MeasureArea}
    * @export
    */
-  this.measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
+  this.measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureAreaContinueMsg[0]
   });
 
   this.measureArea.setActive(false);
-  ngeo.misc.decorate.interaction(this.measureArea);
+  ngeoMiscDecorate.interaction(this.measureArea);
 
   /**
    * @type {ngeo.interaction.MeasureAzimut}
    * @export
    */
-  this.measureAzimut = new ngeo.interaction.MeasureAzimut(
+  this.measureAzimut = new ngeoInteractionMeasureAzimut(
     $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
       sketchStyle: style,
       startMsg: measureStartMsg[0],
@@ -202,7 +208,7 @@ app.measure.MeasuretoolsController = function($scope, $compile, $sce,
     });
 
   this.measureAzimut.setActive(false);
-  ngeo.misc.decorate.interaction(this.measureAzimut);
+  ngeoMiscDecorate.interaction(this.measureAzimut);
 
 
   // the following code shows how one can add additional information to the
@@ -214,9 +220,9 @@ app.measure.MeasuretoolsController = function($scope, $compile, $sce,
   });
 };
 
-app.measure.module.controller('AppMeasuretoolsController', app.measure.MeasuretoolsController);
+exports.module.controller('AppMeasuretoolsController', exports.MeasuretoolsController);
 
-app.measure.MeasuretoolsController.prototype.$onInit = function() {
+exports.MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);
@@ -226,7 +232,7 @@ app.measure.MeasuretoolsController.prototype.$onInit = function() {
  * @constructor
  * @ngInject
  */
-app.measure.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {string}
@@ -238,20 +244,23 @@ app.measure.MainController = function() {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [692114.718759744, 5743119.914347709],
       zoom: 15
     })
   });
 
-  this.map.addControl(new ol.control.ScaleLine());
+  this.map.addControl(new olControlScaleLine());
 };
 
 
-app.measure.module.controller('MainController', app.measure.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

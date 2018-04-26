@@ -1,12 +1,16 @@
-goog.provide('ngeo.print.module');
-
-goog.require('ngeo.print.Service');
-goog.require('ngeo.print.Utils');
+/**
+ * @module ngeo.print.module
+ */
+import ngeoPrintService from 'ngeo/print/Service.js';
+import ngeoPrintUtils from 'ngeo/print/Utils.js';
 
 /**
  * @type {angular.Module}
  */
-ngeo.print.module = angular.module('ngeoPrintModule', [
-  ngeo.print.Service.module.name,
-  ngeo.print.Utils.module.name
+const exports = angular.module('ngeoPrintModule', [
+  ngeoPrintService.module.name,
+  ngeoPrintUtils.module.name
 ]);
+
+
+export default exports;

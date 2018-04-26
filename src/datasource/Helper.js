@@ -1,14 +1,14 @@
-goog.provide('ngeo.datasource.Helper');
+/**
+ * @module ngeo.datasource.Helper
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
+import ngeoQueryQuerent from 'ngeo/query/Querent.js';
+import * as olEvents from 'ol/events.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.datasource.DataSource');
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.format.WFSAttribute');
-goog.require('ngeo.query.Querent');
-goog.require('ol.events');
-
-
-ngeo.datasource.Helper = class {
+const exports = class {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
@@ -54,8 +54,8 @@ ngeo.datasource.Helper = class {
 
     // Events
 
-    ol.events.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
-    ol.events.listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
+    olEvents.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
+    olEvents.listen(this.collection_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
   /**
@@ -101,15 +101,15 @@ ngeo.datasource.Helper = class {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getOGCLayerNames()[0];
-        goog.asserts.assertString(
+        googAsserts.assertString(
           ogcLayerName, 'The data source should have only one ogcLayer.');
         const element = featureType.element[0];
-        goog.asserts.assert(element.name === ogcLayerName);
-        goog.asserts.assert(
+        googAsserts.assert(element.name === ogcLayerName);
+        googAsserts.assert(
           featureType.complexType[0].name === element.type);
 
         const complexContent = featureType['complexType'][0]['complexContent'];
-        const attributes = new ngeo.format.WFSAttribute().read(complexContent);
+        const attributes = new ngeoFormatWFSAttribute().read(complexContent);
 
         // Set the attributes in the data source
         dataSource.setAttributes(attributes);
@@ -128,8 +128,8 @@ ngeo.datasource.Helper = class {
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = goog.asserts.assertInstanceof(
-      evt.element, ngeo.datasource.DataSource);
+    const dataSource = googAsserts.assertInstanceof(
+      evt.element, ngeoDatasourceDataSource);
     this.cache_[dataSource.id] = dataSource;
   }
 
@@ -140,8 +140,8 @@ ngeo.datasource.Helper = class {
    * @private
    */
   handleDataSourcesRemove_(evt) {
-    const dataSource = goog.asserts.assertInstanceof(
-      evt.element, ngeo.datasource.DataSource);
+    const dataSource = googAsserts.assertInstanceof(
+      evt.element, ngeoDatasourceDataSource);
     delete this.cache_[dataSource.id];
   }
 
@@ -151,8 +151,11 @@ ngeo.datasource.Helper = class {
 /**
  * @type {!angular.Module}
  */
-ngeo.datasource.Helper.module = angular.module('ngeoDataSourcesHelper', [
-  ngeo.datasource.DataSources.module.name,
-  ngeo.query.Querent.module.name,
+exports.module = angular.module('ngeoDataSourcesHelper', [
+  ngeoDatasourceDataSources.module.name,
+  ngeoQueryQuerent.module.name,
 ]);
-ngeo.datasource.Helper.module.service('ngeoDataSourcesHelper', ngeo.datasource.Helper);
+exports.module.service('ngeoDataSourcesHelper', exports);
+
+
+export default exports;

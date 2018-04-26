@@ -1,15 +1,18 @@
-goog.provide('ngeo.search.module');
-
-goog.require('ngeo.search.searchDirective');
-goog.require('ngeo.search.createGeoJSONBloodhound');
-goog.require('ngeo.search.createLocationSearchBloodhound');
-
+/**
+ * @module ngeo.search.module
+ */
+import ngeoSearchSearchDirective from 'ngeo/search/searchDirective.js';
+import ngeoSearchCreateGeoJSONBloodhound from 'ngeo/search/createGeoJSONBloodhound.js';
+import ngeoSearchCreateLocationSearchBloodhound from 'ngeo/search/createLocationSearchBloodhound.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.search.module = angular.module('ngeoSearchModule', [
-  ngeo.search.searchDirective.module.name,
-  ngeo.search.createGeoJSONBloodhound.module.name,
-  ngeo.search.createLocationSearchBloodhound.module.name
+const exports = angular.module('ngeoSearchModule', [
+  ngeoSearchSearchDirective.module.name,
+  ngeoSearchCreateGeoJSONBloodhound.module.name,
+  ngeoSearchCreateLocationSearchBloodhound.module.name
 ]);
+
+
+export default exports;

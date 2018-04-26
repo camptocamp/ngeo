@@ -1,13 +1,16 @@
-goog.provide('gmf.mobile.measure.module');
-
-goog.require('gmf.mobile.measure.lengthComponent');
-goog.require('gmf.mobile.measure.pointComponent');
-
+/**
+ * @module gmf.mobile.measure.module
+ */
+import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
+import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.mobile.measure.module = angular.module('gmfMobileMeasureModule', [
-  gmf.mobile.measure.lengthComponent.name,
-  gmf.mobile.measure.pointComponent.name,
+const exports = angular.module('gmfMobileMeasureModule', [
+  gmfMobileMeasureLengthComponent.name,
+  gmfMobileMeasurePointComponent.name,
 ]);
+
+
+export default exports;

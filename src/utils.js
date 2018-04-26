@@ -1,12 +1,14 @@
-goog.provide('ngeo.utils');
-
-goog.require('ol.events.condition');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.MultiPoint');
-goog.require('ol.geom.MultiLineString');
-goog.require('ol.geom.MultiPolygon');
-goog.require('ol.geom.Point');
-goog.require('ol.geom.Polygon');
+/**
+ * @module ngeo.utils
+ */
+const exports = {};
+import * as olEventsCondition from 'ol/events/condition.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
+import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
 
 
 /**
@@ -15,16 +17,16 @@ goog.require('ol.geom.Polygon');
  * @param {ol.geom.Geometry} geometry A geometry
  * @return {ol.geom.Geometry} A multi geometry
  */
-ngeo.utils.toMulti = function(geometry) {
+exports.toMulti = function(geometry) {
   let multiGeom;
-  if (geometry instanceof ol.geom.Point) {
-    multiGeom = new ol.geom.MultiPoint([]);
+  if (geometry instanceof olGeomPoint) {
+    multiGeom = new olGeomMultiPoint([]);
     multiGeom.appendPoint(geometry);
-  } else if (geometry instanceof ol.geom.LineString) {
-    multiGeom = new ol.geom.MultiLineString([]);
+  } else if (geometry instanceof olGeomLineString) {
+    multiGeom = new olGeomMultiLineString([]);
     multiGeom.appendLineString(geometry);
-  } else if (geometry instanceof ol.geom.Polygon) {
-    multiGeom = new ol.geom.MultiPolygon([]);
+  } else if (geometry instanceof olGeomPolygon) {
+    multiGeom = new olGeomMultiPolygon([]);
     multiGeom.appendPolygon(geometry);
   } else {
     multiGeom = geometry;
@@ -36,7 +38,7 @@ ngeo.utils.toMulti = function(geometry) {
  * Checks if on Safari.
  * @return {boolean} True if on Safari.
  */
-ngeo.utils.isSafari = function() {
+exports.isSafari = function() {
   return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 };
 
@@ -46,7 +48,7 @@ ngeo.utils.isSafari = function() {
  * @return {string} hex value prepended with zero if it was single digit,
  *     otherwise the same value that was passed in.
  */
-ngeo.utils.colorZeroPadding = function(hex) {
+exports.colorZeroPadding = function(hex) {
   return hex.length == 1 ? `0${hex}` : hex;
 };
 
@@ -55,16 +57,16 @@ ngeo.utils.colorZeroPadding = function(hex) {
  * @param {!Array.<number>} rgb rgb representation of the color.
  * @return {string} hex representation of the color.
  */
-ngeo.utils.rgbArrayToHex = function(rgb) {
+exports.rgbArrayToHex = function(rgb) {
   const r = rgb[0];
   const g = rgb[1];
   const b = rgb[2];
   if (r != (r & 255) || g != (g & 255) || b != (b & 255)) {
     throw Error(`"(${r},${g},${b})" is not a valid RGB color`);
   }
-  const hexR = ngeo.utils.colorZeroPadding(r.toString(16));
-  const hexG = ngeo.utils.colorZeroPadding(g.toString(16));
-  const hexB = ngeo.utils.colorZeroPadding(b.toString(16));
+  const hexR = exports.colorZeroPadding(r.toString(16));
+  const hexG = exports.colorZeroPadding(g.toString(16));
+  const hexB = exports.colorZeroPadding(b.toString(16));
   return `#${hexR}${hexG}${hexB}`;
 };
 
@@ -73,7 +75,7 @@ ngeo.utils.rgbArrayToHex = function(rgb) {
  * @param {string|undefined} queryString The queryString.
  * @return {!Object.<string, string>} The result.
  */
-ngeo.utils.decodeQueryString = function(queryString) {
+exports.decodeQueryString = function(queryString) {
   const queryData = {};
   if (queryString) {
     const pairs = queryString.substring(1).split('&');
@@ -96,7 +98,7 @@ ngeo.utils.decodeQueryString = function(queryString) {
  * @param {!Object.<string, string>} queryData The queryData,
  * @return {string} The result.
  */
-ngeo.utils.encodeQueryString = function(queryData) {
+exports.encodeQueryString = function(queryData) {
   const queryItem = [];
   for (const key in queryData) {
     const value = queryData[key];
@@ -111,6 +113,9 @@ ngeo.utils.encodeQueryString = function(queryData) {
  * @param {ol.MapBrowserEvent} event Browser event.
  * @return {boolean} The result.
  */
-ngeo.utils.deleteCondition = function(event) {
-  return ol.events.condition.noModifierKeys(event) && ol.events.condition.singleClick(event);
+exports.deleteCondition = function(event) {
+  return olEventsCondition.noModifierKeys(event) && olEventsCondition.singleClick(event);
 };
+
+
+export default exports;

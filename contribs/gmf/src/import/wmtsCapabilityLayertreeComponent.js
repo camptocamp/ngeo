@@ -1,25 +1,27 @@
-goog.provide('gmf.import.wmtsCapabilityLayertreeComponent');
+/**
+ * @module gmf.import.wmtsCapabilityLayertreeComponent
+ */
 
-goog.require('gmf'); // nowebpack
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.ExternalDataSourcesManager');
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.message.Popup');
-goog.require('ol');
+import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
+import * as olBase from 'ol/index.js';
 
-gmf.import.wmtsCapabilityLayertreeComponent = angular.module('gmfWmtscapabilitylayertree', [
-  gmf.datasource.ExternalDataSourcesManager.module.name,
-  ngeo.message.Popup.module.name,
+const exports = angular.module('gmfWmtscapabilitylayertree', [
+  gmfDatasourceExternalDataSourcesManager.module.name,
+  ngeoMessagePopup.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html'));
+});
 
 
-gmf.import.wmtsCapabilityLayertreeComponent.value('gmfWmtscapabilitylayertreTemplateUrl',
+exports.value('gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -27,8 +29,7 @@ gmf.import.wmtsCapabilityLayertreeComponent.value('gmfWmtscapabilitylayertreTemp
   ($attrs) => {
     const templateUrl = $attrs['gmfWmtscapabilitylayertreTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/import/wmtsCapabilityLayertreeComponent.html`; // nowebpack
-    // webpack: 'ngeo/import/wmtsCapabilityLayertreeComponent';
+      'ngeo/import/wmtsCapabilityLayertreeComponent';
   });
 
 
@@ -46,7 +47,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 /**
  * @private
  */
-gmf.import.wmtsCapabilityLayertreeComponent.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -113,17 +114,20 @@ gmf.import.wmtsCapabilityLayertreeComponent.Controller_ = class {
    * @export
    */
   getUid(layer) {
-    return ol.getUid(layer);
+    return olBase.getUid(layer);
   }
 };
 
 
-gmf.import.wmtsCapabilityLayertreeComponent.component('gmfWmtscapabilitylayertree', {
+exports.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
     'layers': '<',
     'url': '<'
   },
-  controller: gmf.import.wmtsCapabilityLayertreeComponent.Controller_,
+  controller: exports.Controller_,
   templateUrl: gmfWmtscapabilitylayertreTemplateUrl
 });
+
+
+export default exports;

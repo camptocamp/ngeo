@@ -1,12 +1,16 @@
-goog.provide('ngeo.layertree.module');
-
-goog.require('ngeo.layertree.component');
+/**
+ * @module ngeo.layertree.module
+ */
+import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
 /**
  * Also related to the map but not included in the module:
  *  - ngeo.layertree.Controller (already required by ngeo.layertree.component)
  * @type {!angular.Module}
  */
-ngeo.layertree.module = angular.module('ngeoLayertreeModule', [
-  ngeo.layertree.component.name
+const exports = angular.module('ngeoLayertreeModule', [
+  ngeoLayertreeComponent.name
 ]);
+
+
+export default exports;

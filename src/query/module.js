@@ -1,17 +1,20 @@
-goog.provide('ngeo.query.module');
-
-goog.require('ngeo'); // nowebpack
-goog.require('ngeo.query.Querent');
-goog.require('ngeo.query.MapQuerent');
-goog.require('ngeo.query.mapQueryComponent');
-goog.require('ngeo.query.bboxQueryComponent');
+/**
+ * @module ngeo.query.module
+ */
+import ngeoQueryQuerent from 'ngeo/query/Querent.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 
 /**
  * @type {angular.Module}
  */
-ngeo.query.module = angular.module('ngeoQueryModule', [
-  ngeo.query.Querent.module.name,
-  ngeo.query.MapQuerent.module.name,
-  ngeo.query.mapQueryComponent.name,
-  ngeo.query.bboxQueryComponent.name,
+const exports = angular.module('ngeoQueryModule', [
+  ngeoQueryQuerent.module.name,
+  ngeoQueryMapQuerent.module.name,
+  ngeoQueryMapQueryComponent.name,
+  ngeoQueryBboxQueryComponent.name,
 ]);
+
+
+export default exports;

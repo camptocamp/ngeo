@@ -1,9 +1,9 @@
-goog.provide('gmf.datasource.OGC');
+/**
+ * @module gmf.datasource.OGC
+ */
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-goog.require('ngeo.datasource.OGC');
-
-
-gmf.datasource.OGC = class extends ngeo.datasource.OGC {
+const exports = class extends ngeoDatasourceOGC {
 
   /**
    * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
@@ -37,3 +37,6 @@ gmf.datasource.OGC = class extends ngeo.datasource.OGC {
   }
 
 };
+
+
+export default exports;

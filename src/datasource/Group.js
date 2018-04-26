@@ -1,10 +1,10 @@
-goog.provide('ngeo.datasource.Group');
+/**
+ * @module ngeo.datasource.Group
+ */
+import googAsserts from 'goog/asserts.js';
+import olCollection from 'ol/Collection.js';
 
-goog.require('goog.asserts');
-goog.require('ol.Collection');
-
-
-ngeo.datasource.Group = class {
+const exports = class {
 
   /**
    * A Group data source combines multiple `ngeo.datasource.DataSource` objects.
@@ -23,7 +23,7 @@ ngeo.datasource.Group = class {
      * @type {!ol.Collection.<!ngeo.datasource.DataSource>}
      * @protected
      */
-    this.dataSourcesCollection_ = new ol.Collection(options.dataSources);
+    this.dataSourcesCollection_ = new olCollection(options.dataSources);
 
 
     // === STATIC properties (i.e. that never change) ===
@@ -94,15 +94,15 @@ ngeo.datasource.Group = class {
       } else {
         const otherState = this.getDataSourceState(dataSource);
         if (otherState !== state) {
-          state = ngeo.datasource.Group.VisibilityState.INDETERMINATE;
+          state = exports.VisibilityState.INDETERMINATE;
         }
       }
-      if (state === ngeo.datasource.Group.VisibilityState.INDETERMINATE) {
+      if (state === exports.VisibilityState.INDETERMINATE) {
         break;
       }
     }
 
-    goog.asserts.assertString(state);
+    googAsserts.assertString(state);
 
     return state;
   }
@@ -119,8 +119,8 @@ ngeo.datasource.Group = class {
    */
   getDataSourceState(dataSource) {
     return dataSource.visible ?
-      ngeo.datasource.Group.VisibilityState.ON :
-      ngeo.datasource.Group.VisibilityState.OFF;
+      exports.VisibilityState.ON :
+      exports.VisibilityState.OFF;
   }
 
   /**
@@ -151,7 +151,7 @@ ngeo.datasource.Group = class {
    */
   toggleVisibilityState() {
     const visibleToSet =
-        this.visibilityState !== ngeo.datasource.Group.VisibilityState.ON;
+        this.visibilityState !== exports.VisibilityState.ON;
     for (const dataSource of this.dataSources) {
       if (dataSource.visible !== visibleToSet) {
         dataSource.visible = visibleToSet;
@@ -164,8 +164,11 @@ ngeo.datasource.Group = class {
 /**
  * @enum {string}
  */
-ngeo.datasource.Group.VisibilityState = {
+exports.VisibilityState = {
   INDETERMINATE: 'indeterminate',
   OFF: 'off',
   ON: 'on'
 };
+
+
+export default exports;

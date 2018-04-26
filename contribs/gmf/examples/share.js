@@ -1,28 +1,32 @@
-goog.provide('gmfapp.share');
+/**
+ * @module gmfapp.share
+ */
+const exports = {};
 
-// webpack: import './share.css';
+import './share.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.permalink.shareComponent');
+import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.message.modalComponent');
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.share.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  ngeo.message.modalComponent.name,
-  gmf.permalink.shareComponent.name,
+  ngeoMessageModalComponent.name,
+  gmfPermalinkShareComponent.name,
 ]);
 
-gmfapp.share.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-gmfapp.share.module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/short/create');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/short/create');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.share.MainController = function() {
+exports.MainController = function() {
 
   /**
    * Model attached to the modal to toggle it
@@ -41,4 +45,7 @@ gmfapp.share.MainController = function() {
 };
 
 
-gmfapp.share.module.controller('MainController', gmfapp.share.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

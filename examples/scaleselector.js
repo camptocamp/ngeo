@@ -1,19 +1,23 @@
-goog.provide('app.scaleselector');
+/**
+ * @module app.scaleselector
+ */
+const exports = {};
 
-// webpack: import './scaleselector.css';
-goog.require('ngeo.misc.filters');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ngeo.map.module');
+import './scaleselector.css';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.scaleselector.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.misc.filters.name,
+  ngeoMapModule.name,
+  ngeoMiscFilters.name,
 ]);
 
 
@@ -22,19 +26,19 @@ app.scaleselector.module = angular.module('app', [
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.scaleselector.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-10635142.37, 4813698.29],
       zoom: 1,
       maxZoom: 4
@@ -61,4 +65,7 @@ app.scaleselector.MainController = function($scope) {
 };
 
 
-app.scaleselector.module.controller('MainController', app.scaleselector.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

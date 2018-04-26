@@ -1,26 +1,28 @@
-goog.provide('ngeo.profile.d3Elevation');
+/**
+ * @module ngeo.profile.d3Elevation
+ */
+import googAsserts from 'goog/asserts.js';
+import * as olBase from 'ol/index.js';
+import * as olObj from 'ol/obj.js';
 
-goog.require('goog.asserts');
-goog.require('ol');
-goog.require('ol.obj');
-// webpack: import 'd3-transition';
-// webpack: import {bisector, extent} from 'd3-array';
-// webpack: import {axisBottom, axisLeft} from 'd3-axis';
-// webpack: import {scaleLinear} from 'd3-scale';
-// webpack: import {mouse, select, selectAll} from 'd3-selection';
-// webpack: import {area, line} from 'd3-shape';
-// webpack: const d3 = {
-// webpack:    bisector,
-// webpack:    extent,
-// webpack:    axisBottom,
-// webpack:    axisLeft,
-// webpack:    scaleLinear,
-// webpack:    mouse,
-// webpack:    select,
-// webpack:    selectAll,
-// webpack:    area,
-// webpack:    line,
-// webpack: };
+import 'd3-transition';
+import {bisector, extent} from 'd3-array';
+import {axisBottom, axisLeft} from 'd3-axis';
+import {scaleLinear} from 'd3-scale';
+import {mouse, select, selectAll} from 'd3-selection';
+import {area, line} from 'd3-shape';
+const d3 = {
+  bisector,
+  extent,
+  axisBottom,
+  axisLeft,
+  scaleLinear,
+  mouse,
+  select,
+  selectAll,
+  area,
+  line,
+};
 
 
 /**
@@ -75,7 +77,7 @@ goog.require('ol.obj');
  * @param {ngeox.profile.ProfileOptions} options Profile options.
  * @export
  */
-ngeo.profile.d3Elevation = function(options) {
+const exports = function(options) {
   /**
    * Whether the simplified profile should be shown.
    * @type {boolean}
@@ -94,14 +96,14 @@ ngeo.profile.d3Elevation = function(options) {
    * @type {function(Object, number, string, Object.<string, number>, string)}
    */
   const hoverCallback = options.hoverCallback !== undefined ?
-    options.hoverCallback : ol.nullFunction;
+    options.hoverCallback : olBase.nullFunction;
 
   /**
    * Out callback function.
    * @type {function()}
    */
   const outCallback = options.outCallback !== undefined ?
-    options.outCallback : ol.nullFunction;
+    options.outCallback : olBase.nullFunction;
 
   /**
    * Distance data extractor used to get the dist values.
@@ -193,7 +195,7 @@ ngeo.profile.d3Elevation = function(options) {
   };
 
   if (options.formatter !== undefined) {
-    ol.obj.assign(formatter, options.formatter);
+    olObj.assign(formatter, options.formatter);
   }
 
   /**
@@ -561,7 +563,7 @@ ngeo.profile.d3Elevation = function(options) {
 
   profile.showPois = function(pois) {
     pois = pois !== undefined ? pois : [];
-    goog.asserts.assert(pois.length === 0 || poiExtractor !== undefined);
+    googAsserts.assert(pois.length === 0 || poiExtractor !== undefined);
 
     const pe = poiExtractor;
     const g = svg.select('g');
@@ -635,3 +637,6 @@ ngeo.profile.d3Elevation = function(options) {
 
   return profile;
 };
+
+
+export default exports;

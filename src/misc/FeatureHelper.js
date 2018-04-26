@@ -1,31 +1,34 @@
-goog.provide('ngeo.misc.FeatureHelper');
+/**
+ * @module ngeo.misc.FeatureHelper
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.misc.filters');
 /** @suppress {extraRequire} */
-goog.require('ngeo.download.service');
-goog.require('ngeo.format.FeatureProperties');
-goog.require('ngeo.GeometryType');
-goog.require('ngeo.interaction.Measure');
-goog.require('ngeo.interaction.MeasureAzimut');
-goog.require('ol.array');
-goog.require('ol.color');
-goog.require('ol.extent');
-goog.require('ol.Feature');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.MultiLineString');
-goog.require('ol.geom.MultiPoint');
-goog.require('ol.geom.Point');
-goog.require('ol.geom.Polygon');
-goog.require('ol.geom.MultiPolygon');
-goog.require('ol.format.GPX');
-goog.require('ol.format.KML');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.RegularShape');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
+import ngeoDownloadService from 'ngeo/download/service.js';
+
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
+import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import * as olArray from 'ol/array.js';
+import * as olColor from 'ol/color.js';
+import * as olExtent from 'ol/extent.js';
+import olFeature from 'ol/Feature.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
+import olFormatGPX from 'ol/format/GPX.js';
+import olFormatKML from 'ol/format/KML.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleText from 'ol/style/Text.js';
 
 /**
  * Provides methods for features, such as:
@@ -41,7 +44,7 @@ goog.require('ol.style.Text');
  * @ngname ngeoFeatureHelper
  * @ngInject
  */
-ngeo.misc.FeatureHelper = function($injector, $filter) {
+const exports = function($injector, $filter) {
 
   /**
    * @type {!angular.$filter}
@@ -101,7 +104,7 @@ ngeo.misc.FeatureHelper = function($injector, $filter) {
     const filterElements = $injector.get('ngeoPointfilter').split(':');
     const filterName = filterElements.shift();
     const filter = this.$filter_(filterName);
-    goog.asserts.assertFunction(filter);
+    googAsserts.assertFunction(filter);
     this.pointFilterFn_ = filter;
     this.pointFilterArgs_ = filterElements;
   } else {
@@ -128,7 +131,7 @@ ngeo.misc.FeatureHelper = function($injector, $filter) {
  * @param {!ol.proj.Projection} projection Projection.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.setProjection = function(projection) {
+exports.prototype.setProjection = function(projection) {
   this.projection_ = projection;
 };
 
@@ -144,7 +147,7 @@ ngeo.misc.FeatureHelper.prototype.setProjection = function(projection) {
  *     selected, which includes additional vertex and halo styles.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
+exports.prototype.setStyle = function(feature, opt_select) {
   const styles = this.getStyle(feature);
   if (opt_select) {
     if (this.supportsVertex_(feature)) {
@@ -163,30 +166,30 @@ ngeo.misc.FeatureHelper.prototype.setStyle = function(feature, opt_select) {
  * @return {!Array.<!ol.style.Style>} The style object.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getStyle = function(feature) {
+exports.prototype.getStyle = function(feature) {
   const type = this.getType(feature);
   let style;
 
   switch (type) {
-    case ngeo.GeometryType.LINE_STRING:
+    case ngeoGeometryType.LINE_STRING:
       style = this.getLineStringStyle_(feature);
       break;
-    case ngeo.GeometryType.POINT:
+    case ngeoGeometryType.POINT:
       style = this.getPointStyle_(feature);
       break;
-    case ngeo.GeometryType.CIRCLE:
-    case ngeo.GeometryType.POLYGON:
-    case ngeo.GeometryType.RECTANGLE:
+    case ngeoGeometryType.CIRCLE:
+    case ngeoGeometryType.POLYGON:
+    case ngeoGeometryType.RECTANGLE:
       style = this.getPolygonStyle_(feature);
       break;
-    case ngeo.GeometryType.TEXT:
+    case ngeoGeometryType.TEXT:
       style = this.getTextStyle_(feature);
       break;
     default:
       break;
   }
 
-  goog.asserts.assert(style, 'Style should be thruthy');
+  googAsserts.assert(style, 'Style should be thruthy');
 
   let styles;
   if (style.constructor === Array) {
@@ -204,14 +207,14 @@ ngeo.misc.FeatureHelper.prototype.getStyle = function(feature) {
  * @return {!Array.<!ol.style.Style>} Style.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
+exports.prototype.getLineStringStyle_ = function(feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
   const color = this.getRGBAColorProperty(feature);
 
-  const styles = [new ol.style.Style({
-    stroke: new ol.style.Stroke({
+  const styles = [new olStyleStyle({
+    stroke: new olStyleStroke({
       color: color,
       width: strokeWidth
     })
@@ -227,7 +230,7 @@ ngeo.misc.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
   if (showLabel ||  showMeasure) {
     // display both label using  \n
     const textLabelValue = textLabelValues.join('\n');
-    styles.push(new ol.style.Style({
+    styles.push(new olStyleStyle({
       text: this.createTextStyle_({
         text: textLabelValue
       })
@@ -242,15 +245,15 @@ ngeo.misc.FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
  * @return {!Array.<!ol.style.Style>} Style.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.getPointStyle_ = function(feature) {
+exports.prototype.getPointStyle_ = function(feature) {
   const size = this.getSizeProperty(feature);
   const color = this.getRGBAColorProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
-  const styles = [new ol.style.Style({
-    image: new ol.style.Circle({
+  const styles = [new olStyleStyle({
+    image: new olStyleCircle({
       radius: size,
-      fill: new ol.style.Fill({
+      fill: new olStyleFill({
         color: color
       })
     })
@@ -269,7 +272,7 @@ ngeo.misc.FeatureHelper.prototype.getPointStyle_ = function(feature) {
     const font_size = 10;
     // https://reeddesign.co.uk/test/points-pixels.html
     const point_to_px = 1.3;
-    styles.push(new ol.style.Style({
+    styles.push(new olStyleStyle({
       text: this.createTextStyle_({
         text: textLabelValue,
         size: font_size,
@@ -288,13 +291,13 @@ ngeo.misc.FeatureHelper.prototype.getPointStyle_ = function(feature) {
  * @param {string} attrib The attribute name.
  * @return {number|undefined}, The attribute value
  */
-ngeo.misc.FeatureHelper.prototype.optNumber = function(feature, attrib) {
+exports.prototype.optNumber = function(feature, attrib) {
   const value = feature.get(attrib);
   if (value !== undefined) {
     if (typeof value == 'string') {
       return +value;
     } else {
-      return goog.asserts.assertNumber(value);
+      return googAsserts.assertNumber(value);
     }
   } else {
     return undefined;
@@ -309,12 +312,12 @@ ngeo.misc.FeatureHelper.prototype.optNumber = function(feature, attrib) {
  * @param {string} attrib The attribute name.
  * @return {number}, The attribute value
  */
-ngeo.misc.FeatureHelper.prototype.getNumber = function(feature, attrib) {
+exports.prototype.getNumber = function(feature, attrib) {
   const value = feature.get(attrib);
   if (typeof value == 'string') {
     return +value;
   } else {
-    return goog.asserts.assertNumber(value);
+    return googAsserts.assertNumber(value);
   }
 };
 
@@ -324,7 +327,7 @@ ngeo.misc.FeatureHelper.prototype.getNumber = function(feature, attrib) {
  * @return {!Array.<!ol.style.Style>} Style.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
+exports.prototype.getPolygonStyle_ = function(feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const opacity = this.getOpacityProperty(feature);
   const color = this.getRGBAColorProperty(feature);
@@ -335,13 +338,13 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   const fillColor = color.slice();
   fillColor[3] = opacity;
 
-  const azimut = this.optNumber(feature, ngeo.format.FeatureProperties.AZIMUT);
+  const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
 
-  const styles = [new ol.style.Style({
-    fill: new ol.style.Fill({
+  const styles = [new olStyleStyle({
+    fill: new olStyleFill({
       color: fillColor
     }),
-    stroke: new ol.style.Stroke({
+    stroke: new olStyleStroke({
       color: color,
       width: strokeWidth
     })
@@ -350,15 +353,15 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
     if (showMeasure && azimut !== undefined) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
-      const length = ngeo.interaction.Measure.getFormattedLength(
+      const length = ngeoInteractionMeasure.getFormattedLength(
         line, this.projection_, this.precision_, this.unitPrefixFormat_);
 
-      styles.push(new ol.style.Style({
+      styles.push(new olStyleStyle({
         geometry: line,
-        fill: new ol.style.Fill({
+        fill: new olStyleFill({
           color: fillColor
         }),
-        stroke: new ol.style.Stroke({
+        stroke: new olStyleStroke({
           color: color,
           width: strokeWidth
         }),
@@ -369,8 +372,8 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       }));
 
       // Azimut style
-      styles.push(new ol.style.Style({
-        geometry: new ol.geom.Point(line.getLastCoordinate()),
+      styles.push(new olStyleStyle({
+        geometry: new olGeomPoint(line.getLastCoordinate()),
         text: this.createTextStyle_({
           text: `${this.numberFormat_(azimut, this.decimals_)}°`,
           size: 10,
@@ -381,7 +384,7 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
 
       //Label Style
       if (showLabel) {
-        styles.push(new ol.style.Style({
+        styles.push(new olStyleStyle({
           text: this.createTextStyle_({
             text: this.getNameProperty(feature),
             offsetY: -8,
@@ -401,7 +404,7 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       if (showLabel ||  showMeasure) {
         // display both label using  \n
         const textLabelValue = textLabelValues.join('\n');
-        styles.push(new ol.style.Style({
+        styles.push(new olStyleStyle({
           text: this.createTextStyle_({
             text: textLabelValue,
             exceedLength: true
@@ -419,9 +422,9 @@ ngeo.misc.FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
  * @return {!ol.style.Style} Style.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.getTextStyle_ = function(feature) {
+exports.prototype.getTextStyle_ = function(feature) {
 
-  return new ol.style.Style({
+  return new olStyleStyle({
     text: this.createTextStyle_({
       text: this.getNameProperty(feature),
       size: this.getSizeProperty(feature),
@@ -438,7 +441,7 @@ ngeo.misc.FeatureHelper.prototype.getTextStyle_ = function(feature) {
  * @return {!Array.<!ol.style.Style>} List of style.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.createEditingStyles = function(feature) {
+exports.prototype.createEditingStyles = function(feature) {
   // (1) Style definition depends on geometry type
   const white = [255, 255, 255, 1];
   const blue = [0, 153, 255, 1];
@@ -451,13 +454,13 @@ ngeo.misc.FeatureHelper.prototype.createEditingStyles = function(feature) {
 
   if (type === 'Point') {
     styles.push(
-      new ol.style.Style({
-        image: new ol.style.Circle({
+      new olStyleStyle({
+        image: new olStyleCircle({
           radius: width * 2,
-          fill: new ol.style.Fill({
+          fill: new olStyleFill({
             color: blue
           }),
-          stroke: new ol.style.Stroke({
+          stroke: new olStyleStroke({
             color: white,
             width: width / 2
           })
@@ -468,16 +471,16 @@ ngeo.misc.FeatureHelper.prototype.createEditingStyles = function(feature) {
   } else {
     if (type === 'LineString') {
       styles.push(
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
+        new olStyleStyle({
+          stroke: new olStyleStroke({
             color: white,
             width: width + 2
           })
         })
       );
       styles.push(
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
+        new olStyleStyle({
+          stroke: new olStyleStroke({
             color: blue,
             width: width
           })
@@ -485,12 +488,12 @@ ngeo.misc.FeatureHelper.prototype.createEditingStyles = function(feature) {
       );
     } else {
       styles.push(
-        new ol.style.Style({
-          stroke: new ol.style.Stroke({
+        new olStyleStyle({
+          stroke: new olStyleStroke({
             color: blue,
             width: width / 2
           }),
-          fill: new ol.style.Fill({
+          fill: new olStyleFill({
             color: [255, 255, 255, 0.5]
           })
         })
@@ -516,18 +519,18 @@ ngeo.misc.FeatureHelper.prototype.createEditingStyles = function(feature) {
  * @return {!ol.style.Style} Style.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
+exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
   const incGeomFunc = opt_incGeomFunc !== undefined ? opt_incGeomFunc : true;
 
   const options = {
-    image: new ol.style.RegularShape({
+    image: new olStyleRegularShape({
       radius: 6,
       points: 4,
       angle: Math.PI / 4,
-      fill: new ol.style.Fill({
+      fill: new olStyleFill({
         color: [255, 255, 255, 0.5]
       }),
-      stroke: new ol.style.Stroke({
+      stroke: new olStyleStroke({
         color: [0, 0, 0, 1]
       })
     })
@@ -545,13 +548,13 @@ ngeo.misc.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       let multiCoordinates = [];
       let coordinates = [];
       let i, ii;
-      if (geom instanceof ol.geom.LineString) {
+      if (geom instanceof olGeomLineString) {
         coordinates = geom.getCoordinates();
-      } else if (geom instanceof ol.geom.MultiLineString) {
+      } else if (geom instanceof olGeomMultiLineString) {
         multiCoordinates = geom.getCoordinates();
-      } else if (geom instanceof ol.geom.Polygon) {
+      } else if (geom instanceof olGeomPolygon) {
         coordinates = geom.getCoordinates()[0];
-      } else if (geom instanceof ol.geom.MultiPolygon) {
+      } else if (geom instanceof olGeomMultiPolygon) {
         innerMultiCoordinates = geom.getCoordinates();
       }
 
@@ -565,14 +568,14 @@ ngeo.misc.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       }
 
       if (coordinates.length) {
-        return new ol.geom.MultiPoint(coordinates);
+        return new olGeomMultiPoint(coordinates);
       } else {
         return geom;
       }
     };
   }
 
-  return new ol.style.Style(options);
+  return new olStyleStyle(options);
 };
 
 
@@ -581,14 +584,14 @@ ngeo.misc.FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
  * @return {boolean} Whether the feature supports vertex or not.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.supportsVertex_ = function(feature) {
+exports.prototype.supportsVertex_ = function(feature) {
   const supported = [
-    ngeo.GeometryType.LINE_STRING,
-    ngeo.GeometryType.POLYGON,
-    ngeo.GeometryType.RECTANGLE
+    ngeoGeometryType.LINE_STRING,
+    ngeoGeometryType.POLYGON,
+    ngeoGeometryType.RECTANGLE
   ];
   const type = this.getType(feature);
-  return ol.array.includes(supported, type);
+  return olArray.includes(supported, type);
 };
 
 
@@ -597,37 +600,37 @@ ngeo.misc.FeatureHelper.prototype.supportsVertex_ = function(feature) {
  * @return {!ol.style.Style} Style.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
+exports.prototype.getHaloStyle_ = function(feature) {
   const type = this.getType(feature);
   let style;
   const haloSize = 3;
 
   switch (type) {
-    case ngeo.GeometryType.POINT:
+    case ngeoGeometryType.POINT:
       const size = this.getSizeProperty(feature);
-      style = new ol.style.Style({
-        image: new ol.style.Circle({
+      style = new olStyleStyle({
+        image: new olStyleCircle({
           radius: size + haloSize,
-          fill: new ol.style.Fill({
+          fill: new olStyleFill({
             color: [255, 255, 255, 1]
           })
         })
       });
       break;
-    case ngeo.GeometryType.LINE_STRING:
-    case ngeo.GeometryType.CIRCLE:
-    case ngeo.GeometryType.POLYGON:
-    case ngeo.GeometryType.RECTANGLE:
+    case ngeoGeometryType.LINE_STRING:
+    case ngeoGeometryType.CIRCLE:
+    case ngeoGeometryType.POLYGON:
+    case ngeoGeometryType.RECTANGLE:
       const strokeWidth = this.getStrokeProperty(feature);
-      style = new ol.style.Style({
-        stroke: new ol.style.Stroke({
+      style = new olStyleStyle({
+        stroke: new olStyleStroke({
           color: [255, 255, 255, 1],
           width: strokeWidth + haloSize * 2
         })
       });
       break;
-    case ngeo.GeometryType.TEXT:
-      style = new ol.style.Style({
+    case ngeoGeometryType.TEXT:
+      style = new olStyleStyle({
         text: this.createTextStyle_({
           text: this.getNameProperty(feature),
           size: this.getSizeProperty(feature),
@@ -640,7 +643,7 @@ ngeo.misc.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       break;
   }
 
-  goog.asserts.assert(style, 'Style should be thruthy');
+  googAsserts.assert(style, 'Style should be thruthy');
 
   return style;
 };
@@ -656,7 +659,7 @@ ngeo.misc.FeatureHelper.prototype.getHaloStyle_ = function(feature) {
  * @return {!Object.<string, *>} Filtered properties of the current feature.
  * @export
  */
-ngeo.misc.FeatureHelper.getFilteredFeatureValues = function(feature) {
+exports.getFilteredFeatureValues = function(feature) {
   const properties = feature.getProperties();
   delete properties['boundedBy'];
   delete properties[feature.getGeometryName()];
@@ -669,10 +672,10 @@ ngeo.misc.FeatureHelper.getFilteredFeatureValues = function(feature) {
  * @return {number} Angle.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getAngleProperty = function(feature) {
+exports.prototype.getAngleProperty = function(feature) {
   const angle = +(/** @type {string} */ (
-    feature.get(ngeo.format.FeatureProperties.ANGLE)));
-  goog.asserts.assertNumber(angle);
+    feature.get(ngeoFormatFeatureProperties.ANGLE)));
+  googAsserts.assertNumber(angle);
   return angle;
 };
 
@@ -682,11 +685,11 @@ ngeo.misc.FeatureHelper.prototype.getAngleProperty = function(feature) {
  * @return {string} Color.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getColorProperty = function(feature) {
+exports.prototype.getColorProperty = function(feature) {
 
-  const color = goog.asserts.assertString(feature.get(ngeo.format.FeatureProperties.COLOR));
+  const color = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.COLOR));
 
-  goog.asserts.assertString(color);
+  googAsserts.assertString(color);
 
   return color;
 };
@@ -697,8 +700,8 @@ ngeo.misc.FeatureHelper.prototype.getColorProperty = function(feature) {
  * @return {ol.Color} Color.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
-  return ol.color.fromString(this.getColorProperty(feature));
+exports.prototype.getRGBAColorProperty = function(feature) {
+  return olColor.fromString(this.getColorProperty(feature));
 };
 
 
@@ -707,9 +710,9 @@ ngeo.misc.FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
  * @return {string} Name.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getNameProperty = function(feature) {
-  const name = goog.asserts.assertString(feature.get(ngeo.format.FeatureProperties.NAME));
-  goog.asserts.assertString(name);
+exports.prototype.getNameProperty = function(feature) {
+  const name = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.NAME));
+  googAsserts.assertString(name);
   return name;
 };
 
@@ -719,8 +722,8 @@ ngeo.misc.FeatureHelper.prototype.getNameProperty = function(feature) {
  * @return {number} Opacity.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getOpacityProperty = function(feature) {
-  return this.getNumber(feature, ngeo.format.FeatureProperties.OPACITY);
+exports.prototype.getOpacityProperty = function(feature) {
+  return this.getNumber(feature, ngeoFormatFeatureProperties.OPACITY);
 };
 
 
@@ -729,14 +732,14 @@ ngeo.misc.FeatureHelper.prototype.getOpacityProperty = function(feature) {
  * @return {boolean} Show measure.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
-  let showMeasure = feature.get(ngeo.format.FeatureProperties.SHOW_MEASURE);
+exports.prototype.getShowMeasureProperty = function(feature) {
+  let showMeasure = feature.get(ngeoFormatFeatureProperties.SHOW_MEASURE);
   if (showMeasure === undefined) {
     showMeasure = false;
   } else if (typeof showMeasure === 'string') {
     showMeasure = (showMeasure === 'true') ? true : false;
   }
-  return goog.asserts.assertBoolean(showMeasure);
+  return googAsserts.assertBoolean(showMeasure);
 };
 
 /**
@@ -744,14 +747,14 @@ ngeo.misc.FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
  * @return {boolean} Show feature label.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getShowLabelProperty = function(feature) {
-  let showLabel = feature.get(ngeo.format.FeatureProperties.SHOW_LABEL);
+exports.prototype.getShowLabelProperty = function(feature) {
+  let showLabel = feature.get(ngeoFormatFeatureProperties.SHOW_LABEL);
   if (showLabel === undefined) {
     showLabel = false;
   } else if (typeof showLabel === 'string') {
     showLabel = (showLabel === 'true') ? true : false;
   }
-  return goog.asserts.assertBoolean(showLabel);
+  return googAsserts.assertBoolean(showLabel);
 };
 
 /**
@@ -759,8 +762,8 @@ ngeo.misc.FeatureHelper.prototype.getShowLabelProperty = function(feature) {
  * @return {number} Size.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getSizeProperty = function(feature) {
-  return this.getNumber(feature, ngeo.format.FeatureProperties.SIZE);
+exports.prototype.getSizeProperty = function(feature) {
+  return this.getNumber(feature, ngeoFormatFeatureProperties.SIZE);
 };
 
 
@@ -769,8 +772,8 @@ ngeo.misc.FeatureHelper.prototype.getSizeProperty = function(feature) {
  * @return {number} Stroke.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getStrokeProperty = function(feature) {
-  return this.getNumber(feature, ngeo.format.FeatureProperties.STROKE);
+exports.prototype.getStrokeProperty = function(feature) {
+  return this.getNumber(feature, ngeoFormatFeatureProperties.STROKE);
 };
 
 
@@ -784,12 +787,12 @@ ngeo.misc.FeatureHelper.prototype.getStrokeProperty = function(feature) {
  * @param {string} formatType Format type to export the features.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.export = function(features, formatType) {
+exports.prototype.export = function(features, formatType) {
   switch (formatType) {
-    case ngeo.misc.FeatureHelper.FormatType.GPX:
+    case exports.FormatType.GPX:
       this.exportGPX(features);
       break;
-    case ngeo.misc.FeatureHelper.FormatType.KML:
+    case exports.FormatType.KML:
       this.exportKML(features);
       break;
     default:
@@ -804,8 +807,8 @@ ngeo.misc.FeatureHelper.prototype.export = function(features, formatType) {
  * @param {!Array.<!ol.Feature>} features Array of vector features.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.exportGPX = function(features) {
-  const format = new ol.format.GPX();
+exports.prototype.exportGPX = function(features) {
+  const format = new olFormatGPX();
   const mimeType = 'application/gpx+xml';
   const fileName = 'export.gpx';
   this.export_(features, format, fileName, mimeType);
@@ -818,8 +821,8 @@ ngeo.misc.FeatureHelper.prototype.exportGPX = function(features) {
  * @param {!Array.<!ol.Feature>} features Array of vector features.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.exportKML = function(features) {
-  const format = new ol.format.KML();
+exports.prototype.exportKML = function(features) {
+  const format = new olFormatKML();
   const mimeType = 'application/vnd.google-earth.kml+xml';
   const fileName = 'export.kml';
   this.export_(features, format, fileName, mimeType);
@@ -836,7 +839,7 @@ ngeo.misc.FeatureHelper.prototype.exportKML = function(features) {
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeType) {
+exports.prototype.export_ = function(features, format, fileName, opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
 
   // clone the features to apply the original style to the clone
@@ -844,7 +847,7 @@ ngeo.misc.FeatureHelper.prototype.export_ = function(features, format, fileName,
   const clones = [];
   let clone;
   features.forEach((feature) => {
-    clone = new ol.Feature(feature.getProperties());
+    clone = new olFeature(feature.getProperties());
     this.setStyle(clone, false);
     clones.push(clone);
   });
@@ -868,7 +871,7 @@ ngeo.misc.FeatureHelper.prototype.export_ = function(features, format, fileName,
  * @return {!ol.style.Text} Style.
  * @private
  */
-ngeo.misc.FeatureHelper.prototype.createTextStyle_ = function(options) {
+exports.prototype.createTextStyle_ = function(options) {
   if (options.angle) {
     const angle = options.angle !== undefined ? options.angle : 0;
     const rotation = angle * Math.PI / 180;
@@ -879,17 +882,17 @@ ngeo.misc.FeatureHelper.prototype.createTextStyle_ = function(options) {
   options.font = ['normal', `${options.size || 10}pt`, 'Arial'].join(' ');
 
   if (options.color) {
-    options.fill = new ol.style.Fill({color: options.color || [0, 0, 0, 1]});
+    options.fill = new olStyleFill({color: options.color || [0, 0, 0, 1]});
     delete options.color;
   }
 
-  options.stroke = new ol.style.Stroke({
+  options.stroke = new olStyleStroke({
     color: [255, 255, 255, 1],
     width: options.width || 3
   });
   delete options.width;
 
-  return new ol.style.Text(options);
+  return new olStyleText(options);
 };
 
 
@@ -901,31 +904,31 @@ ngeo.misc.FeatureHelper.prototype.createTextStyle_ = function(options) {
  * @return {string} Measure.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getMeasure = function(feature) {
+exports.prototype.getMeasure = function(feature) {
 
   const geometry = feature.getGeometry();
-  goog.asserts.assert(geometry, 'Geometry should be truthy');
+  googAsserts.assert(geometry, 'Geometry should be truthy');
 
   let measure = '';
 
-  if (geometry instanceof ol.geom.Polygon) {
-    if (this.getType(feature) === ngeo.GeometryType.CIRCLE) {
-      const azimut = this.optNumber(feature, ngeo.format.FeatureProperties.AZIMUT);
-      goog.asserts.assertNumber(azimut);
+  if (geometry instanceof olGeomPolygon) {
+    if (this.getType(feature) === ngeoGeometryType.CIRCLE) {
+      const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
+      googAsserts.assertNumber(azimut);
       const line = this.getRadiusLine(feature, azimut);
 
-      measure = ngeo.interaction.MeasureAzimut.getFormattedAzimutRadius(
+      measure = ngeoInteractionMeasureAzimut.getFormattedAzimutRadius(
         line, this.projection_, this.decimals_, this.precision_, this.unitPrefixFormat_, this.numberFormat_);
     } else {
-      measure = ngeo.interaction.Measure.getFormattedArea(
+      measure = ngeoInteractionMeasure.getFormattedArea(
         geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
     }
-  } else if (geometry instanceof ol.geom.LineString) {
-    measure = ngeo.interaction.Measure.getFormattedLength(
+  } else if (geometry instanceof olGeomLineString) {
+    measure = ngeoInteractionMeasure.getFormattedLength(
       geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
-  } else if (geometry instanceof ol.geom.Point) {
+  } else if (geometry instanceof olGeomPoint) {
     if (this.pointFilterFn_ === null) {
-      measure = ngeo.interaction.Measure.getFormattedPoint(
+      measure = ngeoInteractionMeasure.getFormattedPoint(
         geometry, this.decimals_, this.ngeoNumberCoordinates_);
     } else {
       const coordinates = geometry.getCoordinates();
@@ -946,37 +949,37 @@ ngeo.misc.FeatureHelper.prototype.getMeasure = function(feature) {
  * @return {string} The type of geometry.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getType = function(feature) {
+exports.prototype.getType = function(feature) {
   const geometry = feature.getGeometry();
-  goog.asserts.assert(geometry, 'Geometry should be thruthy');
+  googAsserts.assert(geometry, 'Geometry should be thruthy');
 
   let type;
 
-  if (geometry instanceof ol.geom.Point) {
-    if (feature.get(ngeo.format.FeatureProperties.IS_TEXT)) {
-      type = ngeo.GeometryType.TEXT;
+  if (geometry instanceof olGeomPoint) {
+    if (feature.get(ngeoFormatFeatureProperties.IS_TEXT)) {
+      type = ngeoGeometryType.TEXT;
     } else {
-      type = ngeo.GeometryType.POINT;
+      type = ngeoGeometryType.POINT;
     }
-  } else if (geometry instanceof ol.geom.MultiPoint) {
-    type = ngeo.GeometryType.MULTI_POINT;
-  } else if (geometry instanceof ol.geom.Polygon) {
-    if (feature.get(ngeo.format.FeatureProperties.IS_CIRCLE)) {
-      type = ngeo.GeometryType.CIRCLE;
-    } else if (feature.get(ngeo.format.FeatureProperties.IS_RECTANGLE)) {
-      type = ngeo.GeometryType.RECTANGLE;
+  } else if (geometry instanceof olGeomMultiPoint) {
+    type = ngeoGeometryType.MULTI_POINT;
+  } else if (geometry instanceof olGeomPolygon) {
+    if (feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)) {
+      type = ngeoGeometryType.CIRCLE;
+    } else if (feature.get(ngeoFormatFeatureProperties.IS_RECTANGLE)) {
+      type = ngeoGeometryType.RECTANGLE;
     } else {
-      type = ngeo.GeometryType.POLYGON;
+      type = ngeoGeometryType.POLYGON;
     }
-  } else if (geometry instanceof ol.geom.MultiPolygon) {
-    type = ngeo.GeometryType.MULTI_POLYGON;
-  } else if (geometry instanceof ol.geom.LineString) {
-    type = ngeo.GeometryType.LINE_STRING;
-  } else if (geometry instanceof ol.geom.MultiLineString) {
-    type = ngeo.GeometryType.MULTI_LINE_STRING;
+  } else if (geometry instanceof olGeomMultiPolygon) {
+    type = ngeoGeometryType.MULTI_POLYGON;
+  } else if (geometry instanceof olGeomLineString) {
+    type = ngeoGeometryType.LINE_STRING;
+  } else if (geometry instanceof olGeomMultiLineString) {
+    type = ngeoGeometryType.MULTI_LINE_STRING;
   }
 
-  goog.asserts.assert(type, 'Type should be thruthy');
+  googAsserts.assert(type, 'Type should be thruthy');
 
   return type;
 };
@@ -991,29 +994,29 @@ ngeo.misc.FeatureHelper.prototype.getType = function(feature) {
  * @param {number=} opt_panDuration Pan animation duration. Defaults to `250`.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.panMapToFeature = function(feature, map,
+exports.prototype.panMapToFeature = function(feature, map,
   opt_panDuration) {
 
   const panDuration = opt_panDuration !== undefined ? opt_panDuration : 250;
   const size = map.getSize();
-  goog.asserts.assertArray(size);
+  googAsserts.assertArray(size);
   const view = map.getView();
   const extent = view.calculateExtent(size);
   const geometry = feature.getGeometry();
 
   if (!geometry.intersectsExtent(extent)) {
     const mapCenter = view.getCenter();
-    goog.asserts.assertArray(mapCenter);
+    googAsserts.assertArray(mapCenter);
 
     let featureCenter;
-    if (geometry instanceof ol.geom.LineString) {
+    if (geometry instanceof olGeomLineString) {
       featureCenter = geometry.getCoordinateAt(0.5);
-    } else if (geometry instanceof ol.geom.Polygon) {
+    } else if (geometry instanceof olGeomPolygon) {
       featureCenter = geometry.getInteriorPoint().getCoordinates();
-    } else if (geometry instanceof ol.geom.Point) {
+    } else if (geometry instanceof olGeomPoint) {
       featureCenter = geometry.getCoordinates();
     } else {
-      featureCenter = ol.extent.getCenter(geometry.getExtent());
+      featureCenter = olExtent.getCenter(geometry.getExtent());
     }
 
     view.animate({
@@ -1034,18 +1037,18 @@ ngeo.misc.FeatureHelper.prototype.panMapToFeature = function(feature, map,
  * @param {number} azimut Azimut in degrees.
  * @return {!ol.geom.LineString} The line geometry.
  */
-ngeo.misc.FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
+exports.prototype.getRadiusLine = function(feature, azimut) {
   const geometry = feature.getGeometry();
   // Determine the radius for the circle
   const extent = geometry.getExtent();
   const radius = (extent[3] - extent[1]) / 2;
 
-  const center = ol.extent.getCenter(geometry.getExtent());
+  const center = olExtent.getCenter(geometry.getExtent());
 
   const x = Math.cos((azimut - 90) * Math.PI / 180) * radius;
   const y = -Math.sin((azimut - 90) * Math.PI / 180) * radius;
   const endPoint = [x + center[0], y + center[1]];
-  return new ol.geom.LineString([center, endPoint]);
+  return new olGeomLineString([center, endPoint]);
 };
 
 
@@ -1055,7 +1058,7 @@ ngeo.misc.FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
  * @return {!Object.<string, *>} Object.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
+exports.prototype.getNonSpatialProperties = function(feature) {
   const geometryName = feature.getGeometryName();
   const nonSpatialProperties = {};
   const properties = feature.getProperties();
@@ -1073,7 +1076,7 @@ ngeo.misc.FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
  * @param {!ol.Feature} feature Feature.
  * @export
  */
-ngeo.misc.FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {
+exports.prototype.clearNonSpatialProperties = function(feature) {
   const geometryName = feature.getGeometryName();
   const properties = feature.getProperties();
   for (const key in properties) {
@@ -1091,7 +1094,7 @@ ngeo.misc.FeatureHelper.prototype.clearNonSpatialProperties = function(feature) 
  * @enum {string}
  * @export
  */
-ngeo.misc.FeatureHelper.FormatType = {
+exports.FormatType = {
   /**
    * @type {string}
    * @export
@@ -1108,8 +1111,11 @@ ngeo.misc.FeatureHelper.FormatType = {
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.FeatureHelper.module = angular.module('ngeoFeatureHelper', [
-  ngeo.download.service.name,
-  ngeo.misc.filters.name,
+exports.module = angular.module('ngeoFeatureHelper', [
+  ngeoDownloadService.name,
+  ngeoMiscFilters.name,
 ]);
-ngeo.misc.FeatureHelper.module.service('ngeoFeatureHelper', ngeo.misc.FeatureHelper);
+exports.module.service('ngeoFeatureHelper', exports);
+
+
+export default exports;

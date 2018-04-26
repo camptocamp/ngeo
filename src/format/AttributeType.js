@@ -1,10 +1,11 @@
-goog.provide('ngeo.format.AttributeType');
-
+/**
+ * @module ngeo.format.AttributeType
+ */
 /**
  * @enum {string}
  * @export
  */
-ngeo.format.AttributeType = {
+const exports = {
   /**
    * @type {string}
    */
@@ -38,3 +39,6 @@ ngeo.format.AttributeType = {
    */
   TEXT: 'text'
 };
+
+
+export default exports;

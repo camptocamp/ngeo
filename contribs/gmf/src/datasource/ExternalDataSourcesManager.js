@@ -1,26 +1,26 @@
+/**
+ * @module gmf.datasource.ExternalDataSourcesManager
+ */
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator
 
-goog.provide('gmf.datasource.ExternalDataSourcesManager');
+import gmfBase from 'gmf/index.js';
+import googAsserts from 'goog/asserts.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoMiscFile from 'ngeo/misc/File.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoDatasourceFile from 'ngeo/datasource/File.js';
+import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
+import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
+import * as olBase from 'ol/index.js';
+import * as olEvents from 'ol/events.js';
+import olCollection from 'ol/Collection.js';
+import olFormatGPX from 'ol/format/GPX.js';
+import olFormatKML from 'ol/format/KML.js';
 
-goog.require('gmf');
-goog.require('goog.asserts');
-goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.misc.File');
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.datasource.File');
-goog.require('ngeo.datasource.FileGroup');
-goog.require('ngeo.datasource.OGC');
-goog.require('ngeo.datasource.OGCGroup');
-goog.require('ngeo.datasource.WMSGroup');
-goog.require('ol');
-goog.require('ol.events');
-goog.require('ol.Collection');
-goog.require('ol.format.GPX');
-goog.require('ol.format.KML');
-
-
-gmf.datasource.ExternalDataSourcesManager = class {
+const exports = class {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
@@ -116,7 +116,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
      * @type {!ngeo.datasource.FileGroup}
      * @private
      */
-    this.fileGroup_ = new ngeo.datasource.FileGroup({
+    this.fileGroup_ = new ngeoDatasourceFileGroup({
       dataSources: [],
       injector: this.injector_,
       title: gettextCatalog.getString('Local files')
@@ -127,14 +127,14 @@ gmf.datasource.ExternalDataSourcesManager = class {
      * @type {!ol.Collection.<!ngeo.datasource.WMSGroup>}
      * @private
      */
-    this.wmsGroupsCollection_ = new ol.Collection();
+    this.wmsGroupsCollection_ = new olCollection();
 
     /**
      * Collection of groups for WMTS data sources.
      * @type {!ol.Collection.<!ngeo.datasource.OGCGroup>}
      * @private
      */
-    this.wmtsGroupsCollection_ = new ol.Collection();
+    this.wmtsGroupsCollection_ = new olCollection();
 
     /**
      * Cache that stores the information of a WMTS data source. The key is the
@@ -144,7 +144,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
      */
     this.wmtsCache_ = {};
 
-    ol.events.listen(this.dataSources_, 'remove', this.handleDataSourcesRemove_, this);
+    olEvents.listen(this.dataSources_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
 
@@ -280,10 +280,10 @@ gmf.datasource.ExternalDataSourcesManager = class {
    */
   get layerGroup() {
     const map = this.map_;
-    goog.asserts.assert(map);
+    googAsserts.assert(map);
     return this.ngeoLayerHelper_.getGroupFromMap(
       map,
-      gmf.EXTERNALLAYERGROUP_NAME
+      gmfBase.EXTERNALLAYERGROUP_NAME
     );
   }
 
@@ -318,7 +318,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
-    const id = gmf.datasource.ExternalDataSourcesManager.getId(layer);
+    const id = exports.getId(layer);
     const service = capabilities['Service'];
 
     let dataSource;
@@ -338,8 +338,8 @@ gmf.datasource.ExternalDataSourcesManager = class {
       // wmsInfoFormat
       const infoFormats = req['GetFeatureInfo']['Format'];
       const wmsInfoFormat = infoFormats.includes(
-        ngeo.datasource.OGC.WMSInfoFormat.GML
-      ) ? ngeo.datasource.OGC.WMSInfoFormat.GML : undefined;
+        ngeoDatasourceOGC.WMSInfoFormat.GML
+      ) ? ngeoDatasourceOGC.WMSInfoFormat.GML : undefined;
 
       // queryable
       const queryable = layer['queryable'] === true &&
@@ -347,7 +347,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
-      dataSource = new ngeo.datasource.OGC({
+      dataSource = new ngeoDatasourceOGC({
         id: id,
         name: layer['Title'],
         ogcImageType: ogcImageType,
@@ -355,7 +355,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
           name: layer['Name'],
           queryable: queryable
         }],
-        ogcType: ngeo.datasource.OGC.Type.WMS,
+        ogcType: ngeoDatasourceOGC.Type.WMS,
         visible: true,
         wmsInfoFormat: wmsInfoFormat,
         wmsUrl: url
@@ -376,7 +376,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         this.dataSources_.push(dataSource);
       }
     } else {
-      wmsGroup = new ngeo.datasource.WMSGroup({
+      wmsGroup = new ngeoDatasourceWMSGroup({
         dataSources: [dataSource],
         injector: this.injector_,
         title: service['Title'],
@@ -395,7 +395,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @export
    */
   createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
-    const id = gmf.datasource.ExternalDataSourcesManager.getId(layer);
+    const id = exports.getId(layer);
 
     // (1) No need to do anything if there's already a WMTS data source (and its
     // layer in the map)
@@ -410,15 +410,15 @@ gmf.datasource.ExternalDataSourcesManager = class {
       dataSource = this.extDataSources_[id];
     } else {
 
-      const name = goog.asserts.assertString(layer['Title']);
-      const wmtsLayer = goog.asserts.assertString(layer['Identifier']);
+      const name = googAsserts.assertString(layer['Title']);
+      const wmtsLayer = googAsserts.assertString(layer['Identifier']);
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
-      dataSource = new ngeo.datasource.OGC({
+      dataSource = new ngeoDatasourceOGC({
         id: id,
         name: name,
-        ogcType: ngeo.datasource.OGC.Type.WMTS,
+        ogcType: ngeoDatasourceOGC.Type.WMTS,
         visible: true,
         wmtsLayer: wmtsLayer,
         wmtsUrl: wmtsUrl
@@ -431,7 +431,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
     // (3) Get/Create group, then add data source to group
     let wmtsGroup = this.getWMTSGroup(wmtsUrl);
     if (!wmtsGroup) {
-      wmtsGroup = new ngeo.datasource.OGCGroup({
+      wmtsGroup = new ngeoDatasourceOGCGroup({
         dataSources: [],
         title: capabilities['ServiceIdentification']['Title'],
         url: wmtsUrl
@@ -490,7 +490,7 @@ gmf.datasource.ExternalDataSourcesManager = class {
         this.dataSources_.push(dataSource);
       },
       (rejections) => {
-        goog.asserts.fail(`Failed to load file: ${file.name}`);
+        googAsserts.fail(`Failed to load file: ${file.name}`);
       }
     );
   }
@@ -516,16 +516,16 @@ gmf.datasource.ExternalDataSourcesManager = class {
         };
 
         if (ngeoFile.isKml(content)) {
-          features = new ol.format.KML().readFeatures(content, readOptions);
+          features = new olFormatKML().readFeatures(content, readOptions);
         } else if (ngeoFile.isGpx(content)) {
-          features = new ol.format.GPX().readFeatures(content, readOptions);
+          features = new olFormatGPX().readFeatures(content, readOptions);
         }
 
         if (features) {
-          const id = gmf.datasource.ExternalDataSourcesManager.getId(file);
+          const id = exports.getId(file);
 
-          const dataSource = new ngeo.datasource.File({
-            features: new ol.Collection(features),
+          const dataSource = new ngeoDatasourceFile({
+            features: new olCollection(features),
             id: id,
             name: file.name,
             visible: true
@@ -567,9 +567,9 @@ gmf.datasource.ExternalDataSourcesManager = class {
   handleDataSourcesRemove_(evt) {
     const dataSource = evt.element;
     if (this.extDataSources_[dataSource.id] === dataSource) {
-      if (dataSource instanceof ngeo.datasource.File) {
+      if (dataSource instanceof ngeoDatasourceFile) {
         this.removeFileDataSource_(dataSource);
-      } else if (dataSource instanceof ngeo.datasource.OGC) {
+      } else if (dataSource instanceof ngeoDatasourceOGC) {
         this.removeOGCDataSource_(dataSource);
       }
     }
@@ -601,10 +601,10 @@ gmf.datasource.ExternalDataSourcesManager = class {
    * @private
    */
   removeOGCDataSource_(dataSource) {
-    if (dataSource.ogcType === ngeo.datasource.OGC.Type.WMS) {
+    if (dataSource.ogcType === ngeoDatasourceOGC.Type.WMS) {
       // WMS data source
       const url = dataSource.wmsUrl;
-      goog.asserts.assert(url);
+      googAsserts.assert(url);
 
       const wmsGroup = this.getWMSGroup(url);
       if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
@@ -619,10 +619,10 @@ gmf.datasource.ExternalDataSourcesManager = class {
           this.removeWMSGroup_(wmsGroup);
         }
       }
-    } else if (dataSource.ogcType === ngeo.datasource.OGC.Type.WMTS) {
+    } else if (dataSource.ogcType === ngeoDatasourceOGC.Type.WMTS) {
       // WMTS data source
       const url = dataSource.wmtsUrl;
-      goog.asserts.assert(url);
+      googAsserts.assert(url);
 
       const wmtsGroup = this.getWMTSGroup(url);
       if (wmtsGroup && wmtsGroup.dataSources.includes(dataSource)) {
@@ -661,15 +661,18 @@ gmf.datasource.ExternalDataSourcesManager = class {
  * @return {number} Data source id.
  * @export
  */
-gmf.datasource.ExternalDataSourcesManager.getId = function(layer) {
-  return ol.getUid(layer) + 1000000;
+exports.getId = function(layer) {
+  return olBase.getUid(layer) + 1000000;
 };
 
 
-gmf.datasource.ExternalDataSourcesManager.module = angular.module('gmfExternalDataSourcesManager', [
-  ngeo.map.LayerHelper.module.name,
-  ngeo.misc.File.module.name,
-  ngeo.datasource.DataSources.module.name,
+exports.module = angular.module('gmfExternalDataSourcesManager', [
+  ngeoMapLayerHelper.module.name,
+  ngeoMiscFile.module.name,
+  ngeoDatasourceDataSources.module.name,
 ]);
-gmf.datasource.ExternalDataSourcesManager.module.service('gmfExternalDataSourcesManager',
-  gmf.datasource.ExternalDataSourcesManager);
+exports.module.service('gmfExternalDataSourcesManager',
+  exports);
+
+
+export default exports;

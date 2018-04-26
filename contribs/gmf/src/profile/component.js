@@ -1,35 +1,39 @@
-goog.provide('gmf.profile.component');
+/**
+ * @module gmf.profile.component
+ */
+import googAsserts from 'goog/asserts.js';
+import * as olEvents from 'ol/events.js';
+import olFeature from 'ol/Feature.js';
+import olOverlay from 'ol/Overlay.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import * as olObj from 'ol/obj.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStyle from 'ol/style/Style.js';
 
-goog.require('gmf'); // nowebpack
-goog.require('goog.asserts');
-goog.require('ol.events');
-goog.require('ol.Feature');
-goog.require('ol.Overlay');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.Point');
-goog.require('ol.obj');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Style');
 /** @suppress {extraRequire} */
-goog.require('ngeo.download.Csv');
-goog.require('ngeo.map.FeatureOverlayMgr');
+import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.profile.elevationComponent');
-// webpack: import 'bootstrap/js/dropdown.js';
+import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
+
+import 'bootstrap/js/dropdown.js';
 
 
 /**
  * @type {!angular.Module}
  */
-gmf.profile.component = angular.module('gmfProfile', [
-  ngeo.download.Csv.module.name,
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.profile.elevationComponent.name,
+const exports = angular.module('gmfProfile', [
+  ngeoDownloadCsv.module.name,
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoProfileElevationComponent.name,
 ]);
 
 
-gmf.profile.component.value('gmfProfileTemplateUrl',
+exports.value('gmfProfileTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.Attributes} $attrs Attributes.
@@ -38,13 +42,12 @@ gmf.profile.component.value('gmfProfileTemplateUrl',
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfProfileTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/profile/component.html`; // nowebpack
-    // webpack: 'gmf/profile';
+      'gmf/profile';
   });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/profile', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/profile', require('./component.html'));
+});
 
 
 /**
@@ -98,7 +101,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @ngdoc component
  * @ngname gmfProfile
  */
-gmf.profile.component.component_ = {
+exports.component_ = {
   controller: 'GmfProfileController as ctrl',
   bindings: {
     'active': '=gmfProfileActive',
@@ -112,7 +115,7 @@ gmf.profile.component.component_ = {
   templateUrl: gmfProfileTemplateUrl
 };
 
-gmf.profile.component.component('gmfProfile', gmf.profile.component.component_);
+exports.component('gmfProfile', exports.component_);
 
 
 /**
@@ -131,7 +134,7 @@ gmf.profile.component.component('gmfProfile', gmf.profile.component.component_);
  * @ngdoc controller
  * @ngname GmfProfileController
  */
-gmf.profile.component.Controller_ = function($scope, $http, $element, $filter,
+exports.Controller_ = function($scope, $http, $element, $filter,
   gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
   ngeoCsvDownload) {
 
@@ -256,7 +259,7 @@ gmf.profile.component.Controller_ = function($scope, $http, $element, $filter,
    * @type {ol.Feature}
    * @private
    */
-  this.snappedPoint_ = new ol.Feature();
+  this.snappedPoint_ = new olFeature();
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
@@ -319,7 +322,7 @@ gmf.profile.component.Controller_ = function($scope, $http, $element, $filter,
 /**
  * Init the controller
  */
-gmf.profile.component.Controller_.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   this.map_ = this['getMapFn'] ? this['getMapFn']() : null;
   this.nbPoints_ = this['getNbPointsFn'] ? this['getNbPointsFn']() : 100;
 
@@ -327,11 +330,11 @@ gmf.profile.component.Controller_.prototype.$onInit = function() {
   const hoverPointStyleFn = this['getHoverPointStyleFn'];
   if (hoverPointStyleFn) {
     hoverPointStyle = hoverPointStyleFn();
-    goog.asserts.assertInstanceof(hoverPointStyle, ol.style.Style);
+    googAsserts.assertInstanceof(hoverPointStyle, olStyleStyle);
   } else {
-    hoverPointStyle = new ol.style.Style({
-      image: new ol.style.Circle({
-        fill: new ol.style.Fill({color: '#ffffff'}),
+    hoverPointStyle = new olStyleStyle({
+      image: new olStyleCircle({
+        fill: new olStyleFill({color: '#ffffff'}),
         radius: 3
       })
     });
@@ -339,7 +342,7 @@ gmf.profile.component.Controller_.prototype.$onInit = function() {
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   const linesConfiguration = this['getLinesConfigurationFn']();
-  goog.asserts.assertInstanceof(linesConfiguration, Object);
+  googAsserts.assertInstanceof(linesConfiguration, Object);
 
   this.linesConfiguration_ = linesConfiguration;
 
@@ -364,8 +367,8 @@ gmf.profile.component.Controller_.prototype.$onInit = function() {
   const optionsFn = this['getOptionsFn'];
   if (optionsFn) {
     const options = optionsFn();
-    goog.asserts.assertObject(options);
-    ol.obj.assign(this.profileOptions, options);
+    googAsserts.assertObject(options);
+    olObj.assign(this.profileOptions, options);
   }
 };
 
@@ -373,7 +376,7 @@ gmf.profile.component.Controller_.prototype.$onInit = function() {
 /**
  * @private
  */
-gmf.profile.component.Controller_.prototype.update_ = function() {
+exports.Controller_.prototype.update_ = function() {
   this.isErrored = false;
   if (this.line) {
     this.getJsonProfile_();
@@ -387,12 +390,12 @@ gmf.profile.component.Controller_.prototype.update_ = function() {
 /**
  * @private
  */
-gmf.profile.component.Controller_.prototype.updateEventsListening_ = function() {
+exports.Controller_.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
-    this.pointerMoveKey_ = ol.events.listen(this.map_, 'pointermove',
+    this.pointerMoveKey_ = olEvents.listen(this.map_, 'pointermove',
       this.onPointerMove_.bind(this));
   } else {
-    ol.events.unlistenByKey(this.pointerMoveKey_);
+    olEvents.unlistenByKey(this.pointerMoveKey_);
   }
 };
 
@@ -401,14 +404,14 @@ gmf.profile.component.Controller_.prototype.updateEventsListening_ = function() 
  * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
  * @private
  */
-gmf.profile.component.Controller_.prototype.onPointerMove_ = function(e) {
+exports.Controller_.prototype.onPointerMove_ = function(e) {
   if (e.dragging || !this.line) {
     return;
   }
   const coordinate = this.map_.getEventCoordinate(e.originalEvent);
   const closestPoint = this.line.getClosestPoint(coordinate);
   // compute distance to line in pixels
-  const eventToLine = new ol.geom.LineString([closestPoint, coordinate]);
+  const eventToLine = new olGeomLineString([closestPoint, coordinate]);
   const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
@@ -429,7 +432,7 @@ gmf.profile.component.Controller_.prototype.onPointerMove_ = function(e) {
  * @return {number} A distance.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine,
+exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine,
   line) {
   let segment;
   let distOnLine = 0;
@@ -440,7 +443,7 @@ gmf.profile.component.Controller_.prototype.getDistanceOnALine_ = function(point
     pointOnLine[1] + 0.5
   ];
   this.line.forEachSegment((firstPoint, lastPoint) => {
-    segment = new ol.geom.LineString([firstPoint, lastPoint]);
+    segment = new olGeomLineString([firstPoint, lastPoint]);
     // Is the pointOnLine on this swegement ?
     if (segment.intersectsExtent(fakeExtent)) {
       // If the closestPoint is on the line, add the distance between the first
@@ -464,7 +467,7 @@ gmf.profile.component.Controller_.prototype.getDistanceOnALine_ = function(point
  *  @param {string} yUnits Y units label.
  * @private
  */
-gmf.profile.component.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits,
+exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits,
   elevationsRef, yUnits) {
   // Update information point.
   let ref;
@@ -478,7 +481,7 @@ gmf.profile.component.Controller_.prototype.hoverCallback_ = function(point, dis
   this.currentPoint.coordinate = coordinate;
 
   // Update hover.
-  const geom = new ol.geom.Point(coordinate);
+  const geom = new olGeomPoint(coordinate);
   this.createMeasureTooltip_();
   this.measureTooltipElement_.innerHTML = this.getTooltipHTML_();
   this.measureTooltip_.setPosition(coordinate);
@@ -489,7 +492,7 @@ gmf.profile.component.Controller_.prototype.hoverCallback_ = function(point, dis
 /**
  * @private
  */
-gmf.profile.component.Controller_.prototype.outCallback_ = function() {
+exports.Controller_.prototype.outCallback_ = function() {
   // Reset information point.
   this.currentPoint.coordinate = undefined;
   this.currentPoint.distance = undefined;
@@ -507,7 +510,7 @@ gmf.profile.component.Controller_.prototype.outCallback_ = function() {
  * @return {string} A texte formatted to a tooltip.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getTooltipHTML_ = function() {
+exports.Controller_.prototype.getTooltipHTML_ = function() {
   const separator = ' : ';
   let elevationName, translatedElevationName;
   const innerHTML = [];
@@ -537,11 +540,11 @@ gmf.profile.component.Controller_.prototype.getTooltipHTML_ = function() {
  * Creates a new 'hover' tooltip
  * @private
  */
-gmf.profile.component.Controller_.prototype.createMeasureTooltip_ = function() {
+exports.Controller_.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
   this.measureTooltipElement_ = document.createElement('div');
   this.measureTooltipElement_.className += 'tooltip ngeo-tooltip-measure';
-  this.measureTooltip_ = new ol.Overlay({
+  this.measureTooltip_ = new olOverlay({
     element: this.measureTooltipElement_,
     offset: [0, -15],
     positioning: 'bottom-center'
@@ -554,7 +557,7 @@ gmf.profile.component.Controller_.prototype.createMeasureTooltip_ = function() {
  * Destroy the 'hover' tooltip
  * @private
  */
-gmf.profile.component.Controller_.prototype.removeMeasureTooltip_ = function() {
+exports.Controller_.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
     this.measureTooltipElement_.parentNode.removeChild(
       this.measureTooltipElement_);
@@ -570,7 +573,7 @@ gmf.profile.component.Controller_.prototype.removeMeasureTooltip_ = function() {
  * @return {string|undefined} A HEX color or undefined is nothing is found.
  * @export
  */
-gmf.profile.component.Controller_.prototype.getColor = function(layerName) {
+exports.Controller_.prototype.getColor = function(layerName) {
   const lineConfiguration = this.linesConfiguration_[layerName];
   if (!lineConfiguration) {
     return undefined;
@@ -584,7 +587,7 @@ gmf.profile.component.Controller_.prototype.getColor = function(layerName) {
  * @return {Array.<string>} The names of layers.
  * @export
  */
-gmf.profile.component.Controller_.prototype.getLayersNames = function() {
+exports.Controller_.prototype.getLayersNames = function() {
   return this.layersNames_.slice(0);
 };
 
@@ -594,7 +597,7 @@ gmf.profile.component.Controller_.prototype.getLayersNames = function() {
  * @return {function(Object):number} Z extractor function.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getZFactory_ = function(layerName) {
+exports.Controller_.prototype.getZFactory_ = function(layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
    * @param {Object} item The item.
@@ -617,7 +620,7 @@ gmf.profile.component.Controller_.prototype.getZFactory_ = function(layerName) {
  * @return {number} The distance.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getDist_ = function(item) {
+exports.Controller_.prototype.getDist_ = function(item) {
   if ('dist' in item) {
     return item['dist'];
   }
@@ -629,7 +632,7 @@ gmf.profile.component.Controller_.prototype.getDist_ = function(item) {
  * Request the profile.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getJsonProfile_ = function() {
+exports.Controller_.prototype.getJsonProfile_ = function() {
   const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
@@ -660,7 +663,7 @@ gmf.profile.component.Controller_.prototype.getJsonProfile_ = function() {
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
+exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
   const profileData = resp.data['profile'];
   if (profileData instanceof Array) {
     this.profileData = profileData;
@@ -672,7 +675,7 @@ gmf.profile.component.Controller_.prototype.getProfileDataSuccess_ = function(re
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-gmf.profile.component.Controller_.prototype.getProfileDataError_ = function(resp) {
+exports.Controller_.prototype.getProfileDataError_ = function(resp) {
   this.isErrored = true;
   console.error('Can not get JSON profile.');
 };
@@ -682,7 +685,7 @@ gmf.profile.component.Controller_.prototype.getProfileDataError_ = function(resp
  * Request the csv profile with the current profile data.
  * @export
  */
-gmf.profile.component.Controller_.prototype.downloadCsv = function() {
+exports.Controller_.prototype.downloadCsv = function() {
   if (this.profileData.length === 0) {
     return;
   }
@@ -723,4 +726,7 @@ gmf.profile.component.Controller_.prototype.downloadCsv = function() {
 };
 
 
-gmf.profile.component.controller('GmfProfileController', gmf.profile.component.Controller_);
+exports.controller('GmfProfileController', exports.Controller_);
+
+
+export default exports;

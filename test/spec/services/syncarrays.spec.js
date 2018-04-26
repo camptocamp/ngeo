@@ -1,4 +1,4 @@
-goog.require('ngeo.misc.syncArrays');
+import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 
 describe('ngeo.misc.syncArrays', () => {
   let $rootScope;
@@ -14,7 +14,7 @@ describe('ngeo.misc.syncArrays', () => {
     let dereg;
 
     beforeEach(() => {
-      const ngeoSyncArrays = ngeo.misc.syncArrays;
+      const ngeoSyncArrays = ngeoMiscSyncArrays;
       arr1 = [0, 10, 1, 20, 2, 30, 3];
       arr2 = [];
       const filter = function(n) {
@@ -64,7 +64,7 @@ describe('ngeo.misc.syncArrays', () => {
 
     beforeEach(() => {
       angular.mock.inject(($injector) => {
-        const ngeoSyncArrays = ngeo.misc.syncArrays;
+        const ngeoSyncArrays = ngeoMiscSyncArrays;
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
         const filter = function(n) {

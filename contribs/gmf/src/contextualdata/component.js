@@ -1,18 +1,18 @@
-goog.provide('gmf.contextualdata.component');
-
-goog.require('gmf.raster.RasterService');
-goog.require('goog.asserts');
-goog.require('ol.Overlay');
-goog.require('ol.proj');
-goog.require('ol.events');
-goog.require('ol.obj');
-
+/**
+ * @module gmf.contextualdata.component
+ */
+import gmfRasterRasterService from 'gmf/raster/RasterService.js';
+import googAsserts from 'goog/asserts.js';
+import olOverlay from 'ol/Overlay.js';
+import * as olProj from 'ol/proj.js';
+import * as olEvents from 'ol/events.js';
+import * as olObj from 'ol/obj.js';
 
 /**
  * @type {angular.Module}
  */
-gmf.contextualdata.component = angular.module('gmfContextualdata', [
-  gmf.raster.RasterService.module.name,
+const exports = angular.module('gmfContextualdata', [
+  gmfRasterRasterService.module.name,
 ]);
 
 
@@ -51,7 +51,7 @@ gmf.contextualdata.component = angular.module('gmfContextualdata', [
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
-gmf.contextualdata.component.directive_ = function() {
+exports.directive_ = function() {
   return {
     restrict: 'A',
     scope: false,
@@ -73,8 +73,8 @@ gmf.contextualdata.component.directive_ = function() {
   };
 };
 
-gmf.contextualdata.component.directive('gmfContextualdata',
-  gmf.contextualdata.component.directive_);
+exports.directive('gmfContextualdata',
+  exports.directive_);
 
 
 /**
@@ -88,7 +88,7 @@ gmf.contextualdata.component.directive('gmfContextualdata',
  * @ngdoc controller
  * @ngInject
  */
-gmf.contextualdata.component.Controller_ = function($compile, $scope, gmfRaster) {
+exports.Controller_ = function($compile, $scope, gmfRaster) {
 
   /**
    * @type {ol.Map}
@@ -138,13 +138,13 @@ gmf.contextualdata.component.Controller_ = function($compile, $scope, gmfRaster)
 /**
  *
  */
-gmf.contextualdata.component.Controller_.prototype.init = function() {
+exports.Controller_.prototype.init = function() {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
-  goog.asserts.assertElement(mapDiv);
+  googAsserts.assertElement(mapDiv);
 
-  ol.events.listen(mapDiv, 'contextmenu',
+  olEvents.listen(mapDiv, 'contextmenu',
     this.handleMapContextMenu_, this);
 };
 
@@ -152,7 +152,7 @@ gmf.contextualdata.component.Controller_.prototype.init = function() {
  * @param {!Event} event Event.
  * @private
  */
-gmf.contextualdata.component.Controller_.prototype.handleMapContextMenu_ = function(event) {
+exports.Controller_.prototype.handleMapContextMenu_ = function(event) {
   this.$scope_.$apply(() => {
     const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -164,22 +164,22 @@ gmf.contextualdata.component.Controller_.prototype.handleMapContextMenu_ = funct
   });
 };
 
-gmf.contextualdata.component.Controller_.prototype.setContent_ = function(coordinate) {
+exports.Controller_.prototype.setContent_ = function(coordinate) {
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
   const mapProjection = this.map.getView().getProjection().getCode();
   this.projections.forEach((proj) => {
-    const coord = ol.proj.transform(coordinate, mapProjection, `EPSG:${proj}`);
+    const coord = olProj.transform(coordinate, mapProjection, `EPSG:${proj}`);
     scope[`coord_${proj}`] = coord;
     scope[`coord_${proj}_eastern`] = coord[0];
     scope[`coord_${proj}_northern`] = coord[1];
   });
 
   const getRasterSuccess = function(resp) {
-    ol.obj.assign(scope, resp);
+    olObj.assign(scope, resp);
     if (this.callback) {
-      ol.obj.assign(scope, this.callback.call(this, coordinate, resp));
+      olObj.assign(scope, this.callback.call(this, coordinate, resp));
     }
   }.bind(this);
   const getRasterError = function(resp) {
@@ -195,7 +195,7 @@ gmf.contextualdata.component.Controller_.prototype.setContent_ = function(coordi
 /**
  * @private
  */
-gmf.contextualdata.component.Controller_.prototype.preparePopover_ = function() {
+exports.Controller_.prototype.preparePopover_ = function() {
 
   const container = document.createElement('DIV');
   container.classList.add('popover');
@@ -210,7 +210,7 @@ gmf.contextualdata.component.Controller_.prototype.preparePopover_ = function() 
   this.content_.classList.add('popover-content');
   container.appendChild(this.content_);
 
-  this.overlay_ = new ol.Overlay({
+  this.overlay_ = new olOverlay({
     element: container,
     stopEvent: true,
     autoPan: true,
@@ -222,17 +222,17 @@ gmf.contextualdata.component.Controller_.prototype.preparePopover_ = function() 
   this.map.addOverlay(this.overlay_);
 };
 
-gmf.contextualdata.component.Controller_.prototype.showPopover = function() {
+exports.Controller_.prototype.showPopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'block');
 };
 
-gmf.contextualdata.component.Controller_.prototype.hidePopover = function() {
+exports.Controller_.prototype.hidePopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'none');
 };
 
-gmf.contextualdata.component.controller('GmfContextualdataController', gmf.contextualdata.component.Controller_);
+exports.controller('GmfContextualdataController', exports.Controller_);
 
 
 /**
@@ -263,7 +263,7 @@ gmf.contextualdata.component.controller('GmfContextualdataController', gmf.conte
  * @ngdoc directive
  * @ngname gmfContextualdatacontent
  */
-gmf.contextualdata.component.contentDirective_ = function(
+exports.contentDirective_ = function(
   gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
@@ -272,4 +272,7 @@ gmf.contextualdata.component.contentDirective_ = function(
   };
 };
 
-gmf.contextualdata.component.directive('gmfContextualdatacontent', gmf.contextualdata.component.contentDirective_);
+exports.directive('gmfContextualdatacontent', exports.contentDirective_);
+
+
+export default exports;

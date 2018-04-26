@@ -10,18 +10,6 @@ rules:
 globals:
     angular: false
     Cesium: false
-    goog: false
     google: false
-    d3: false
     Bloodhound: false
-    ol: false
-    olcs: false
-    proj4: false
-    saveAs: false
-    ngeo: false
-    gmf: false
-    app: false
-    gmfapp: false
-    jsts: false
-    moment: false
     DateFormatter: false

@@ -1,14 +1,17 @@
-goog.provide('app.popupservice');
+/**
+ * @module app.popupservice
+ */
+const exports = {};
 
-// webpack: import './popupservice.css';
-// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
-goog.require('ngeo.message.Popup');
+import './popupservice.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
 /** @type {!angular.Module} **/
-app.popupservice.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.message.Popup.module.name,
+  ngeoMessagePopup.module.name,
 ]);
 
 
@@ -18,7 +21,7 @@ app.popupservice.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.popupservice.MainController = function($sce, ngeoCreatePopup) {
+exports.MainController = function($sce, ngeoCreatePopup) {
 
   /**
    * @private
@@ -44,7 +47,7 @@ app.popupservice.MainController = function($sce, ngeoCreatePopup) {
 /**
  * @export
  */
-app.popupservice.MainController.prototype.simplePopup = function() {
+exports.MainController.prototype.simplePopup = function() {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.setTitle('Simple popup');
@@ -59,7 +62,7 @@ app.popupservice.MainController.prototype.simplePopup = function() {
 /**
  * @export
  */
-app.popupservice.MainController.prototype.iframePopup = function() {
+exports.MainController.prototype.iframePopup = function() {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.addClass('popup-with-iframe');
@@ -73,7 +76,7 @@ app.popupservice.MainController.prototype.iframePopup = function() {
 /**
  * @export
  */
-app.popupservice.MainController.prototype.heavyPopup = function() {
+exports.MainController.prototype.heavyPopup = function() {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.setTitle(
@@ -103,7 +106,7 @@ app.popupservice.MainController.prototype.heavyPopup = function() {
 /**
  * @export
  */
-app.popupservice.MainController.prototype.openPopupWithContent = function() {
+exports.MainController.prototype.openPopupWithContent = function() {
   const popup = this.createPopup_();
   const content = this.sce_.trustAsHtml(
     'This popup was opened using the <code>open</code> method.');
@@ -120,7 +123,7 @@ app.popupservice.MainController.prototype.openPopupWithContent = function() {
 /**
  * @export
  */
-app.popupservice.MainController.prototype.openPopupWithUrl = function() {
+exports.MainController.prototype.openPopupWithUrl = function() {
   const popup = this.createPopup_();
   popup.open({
     autoDestroy: true,
@@ -133,4 +136,7 @@ app.popupservice.MainController.prototype.openPopupWithUrl = function() {
 };
 
 
-app.popupservice.module.controller('MainController', app.popupservice.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

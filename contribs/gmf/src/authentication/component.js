@@ -1,20 +1,20 @@
-goog.provide('gmf.authentication.component');
+/**
+ * @module gmf.authentication.component
+ */
+import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import ngeoMessageMessage from 'ngeo/message/Message.js';
+import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
-goog.require('gmf'); // nowebpack
-goog.require('gmf.authentication.Service');
-goog.require('ngeo.message.Message');
-goog.require('ngeo.message.Notification');
 /** @suppress {extraRequire} */
-goog.require('ngeo.message.modalComponent');
-
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 /**
  * @type {angular.Module}
  */
-gmf.authentication.component = angular.module('gmfAuthentication', [
-  gmf.authentication.Service.module.name,
-  ngeo.message.Notification.module.name,
-  ngeo.message.modalComponent.name,
+const exports = angular.module('gmfAuthentication', [
+  gmfAuthenticationService.module.name,
+  ngeoMessageNotification.module.name,
+  ngeoMessageModalComponent.name,
 ]);
 
 
@@ -23,17 +23,16 @@ gmf.authentication.component = angular.module('gmfAuthentication', [
  * @param {angular.Attributes} attrs Attributes.
  * @return {string} Template URL.
  */
-gmf.authentication.component.gmfAuthenticationTemplateUrl_ = (element, attrs) => {
+exports.gmfAuthenticationTemplateUrl_ = (element, attrs) => {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
-    `${gmf.baseModuleTemplateUrl}/authentication/component.html`; // nowebpack
-  // webpack: 'gmf/authentication';
+    'gmf/authentication';
 };
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/authentication', require('./component.html'));
-// webpack: })
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/authentication', require('./component.html'));
+});
 
 
 /**
@@ -103,7 +102,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * @ngdoc component
  * @ngname gmfAuthentication
  */
-gmf.authentication.component.component_ = {
+exports.component_ = {
   bindings: {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
@@ -114,16 +113,16 @@ gmf.authentication.component.component_ = {
   templateUrl: gmfAuthenticationTemplateUrl
 };
 
-gmf.authentication.component.value('gmfAuthenticationTemplateUrl',
-  gmf.authentication.component.gmfAuthenticationTemplateUrl_);
+exports.value('gmfAuthenticationTemplateUrl',
+  exports.gmfAuthenticationTemplateUrl_);
 
-gmf.authentication.component.component('gmfAuthentication', gmf.authentication.component.component_);
+exports.component('gmfAuthentication', exports.component_);
 
 
 /**
  * @private
  */
-gmf.authentication.component.AuthenticationController_ = class {
+exports.AuthenticationController_ = class {
   /**
    * @private
    * @param {!angular.JQLite} $element Element.
@@ -429,7 +428,7 @@ gmf.authentication.component.AuthenticationController_ = class {
       this.notification_.notify({
         msg: error,
         target: container,
-        type: ngeo.message.Message.Type.ERROR
+        type: ngeoMessageMessage.Type.ERROR
       });
     }, this);
   }
@@ -443,5 +442,8 @@ gmf.authentication.component.AuthenticationController_ = class {
   }
 };
 
-gmf.authentication.component.controller('GmfAuthenticationController',
-  gmf.authentication.component.AuthenticationController_);
+exports.controller('GmfAuthenticationController',
+  exports.AuthenticationController_);
+
+
+export default exports;

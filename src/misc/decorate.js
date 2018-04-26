@@ -1,12 +1,14 @@
-goog.provide('ngeo.misc.decorate');
-
-goog.require('goog.asserts');
-goog.require('ol.interaction.Interaction');
-goog.require('ol.layer.Base');
-goog.require('ol.layer.Group');
-goog.require('ol.layer.Layer');
-goog.require('ol.source.Image');
-goog.require('ol.source.Tile');
+/**
+ * @module ngeo.misc.decorate
+ */
+const exports = {};
+import googAsserts from 'goog/asserts.js';
+import olInteractionInteraction from 'ol/interaction/Interaction.js';
+import olLayerBase from 'ol/layer/Base.js';
+import olLayerGroup from 'ol/layer/Group.js';
+import olLayerLayer from 'ol/layer/Layer.js';
+import olSourceImage from 'ol/source/Image.js';
+import olSourceTile from 'ol/source/Tile.js';
 
 
 /**
@@ -20,8 +22,8 @@ goog.require('ol.source.Tile');
  *
  * @param {ol.interaction.Interaction} interaction Interaction to decorate.
  */
-ngeo.misc.decorate.interaction = function(interaction) {
-  goog.asserts.assertInstanceof(interaction, ol.interaction.Interaction);
+exports.interaction = function(interaction) {
+  googAsserts.assertInstanceof(interaction, olInteractionInteraction);
 
   Object.defineProperty(interaction, 'active', {
     get: () => interaction.getActive(),
@@ -43,8 +45,8 @@ ngeo.misc.decorate.interaction = function(interaction) {
  *
  * @param {ol.layer.Base} layer Layer to decorate.
  */
-ngeo.misc.decorate.layer = function(layer) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+exports.layer = function(layer) {
+  googAsserts.assertInstanceof(layer, olLayerBase);
 
   Object.defineProperty(layer, 'visible', {
     configurable: true,
@@ -89,7 +91,7 @@ ngeo.misc.decorate.layer = function(layer) {
  * @param {ol.layer.Base} layer layer.
  * @param {angular.Scope} $scope Scope.
  */
-ngeo.misc.decorate.layerLoading = function(layer, $scope) {
+exports.layerLoading = function(layer, $scope) {
 
   let source;
 
@@ -117,25 +119,25 @@ ngeo.misc.decorate.layerLoading = function(layer, $scope) {
 
   layer.set('load_count', 0, true);
 
-  if (layer instanceof ol.layer.Group) {
+  if (layer instanceof olLayerGroup) {
     layer.getLayers().on('add', (olEvent) => {
       const newLayer = olEvent.element;
       newLayer.set('parent_group', layer);
     });
   }
 
-  if (layer instanceof ol.layer.Layer) {
+  if (layer instanceof olLayerLayer) {
     source = layer.getSource();
     if (source === null) {
       return;
-    } else if (source instanceof ol.source.Tile) {
+    } else if (source instanceof olSourceTile) {
       incrementEvents = ['tileloadstart'];
       decrementEvents = ['tileloadend', 'tileloaderror'];
-    } else if (source instanceof ol.source.Image) {
+    } else if (source instanceof olSourceImage) {
       incrementEvents = ['imageloadstart'];
       decrementEvents = ['imageloadend', 'imageloaderror'];
     } else {
-      goog.asserts.fail('unsupported source type');
+      googAsserts.fail('unsupported source type');
     }
 
     source.on(incrementEvents, () => {
@@ -182,3 +184,6 @@ ngeo.misc.decorate.layerLoading = function(layer, $scope) {
     }
   }
 };
+
+
+export default exports;

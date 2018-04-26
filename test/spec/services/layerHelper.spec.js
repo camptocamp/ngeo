@@ -1,8 +1,8 @@
-goog.require('ol.layer.Group');
-goog.require('ol.layer.Image');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.Collection');
-goog.require('ngeo.test.data.wmtsCapabilities');
+import olLayerGroup from 'ol/layer/Group.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olCollection from 'ol/Collection.js';
+import ngeoTestDataWmtsCapabilities from 'ngeo/test/data/wmtsCapabilities.js';
 
 describe('ngeo.map.LayerHelper', () => {
   let ngeoLayerHelper;
@@ -15,7 +15,7 @@ describe('ngeo.map.LayerHelper', () => {
     angular.mock.inject((_ngeoLayerHelper_, _$httpBackend_) => {
       ngeoLayerHelper = _ngeoLayerHelper_;
       $httpBackend = _$httpBackend_;
-      $httpBackend.when('GET', wmtsSrc).respond(ngeo.test.data.wmtsCapabilities);
+      $httpBackend.when('GET', wmtsSrc).respond(ngeoTestDataWmtsCapabilities);
     });
   });
 
@@ -26,9 +26,9 @@ describe('ngeo.map.LayerHelper', () => {
 
   it('Create a basic WMS layer', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('http://example.com/', 'a,b,c', 'image/jpeg');
-    expect(layer.constructor).toBe(ol.layer.Image);
+    expect(layer.constructor).toBe(olLayerImage);
     const source = layer.getSource();
-    expect(source.constructor).toBe(ol.source.ImageWMS);
+    expect(source.constructor).toBe(olSourceImageWMS);
     expect(source.getUrl()).toBe('http://example.com/');
     const params = source.getParams();
     expect(params.LAYERS).toBe('a,b,c');
@@ -49,7 +49,7 @@ describe('ngeo.map.LayerHelper', () => {
 
   it('Create a layergroup with layers', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
-    const collection = new ol.Collection();
+    const collection = new olCollection();
     collection.push(layer);
     const group = ngeoLayerHelper.createBasicGroup(collection);
     expect(group.getLayersArray().length).toBe(1);
@@ -57,9 +57,9 @@ describe('ngeo.map.LayerHelper', () => {
 
   it('Get an array of layer from a group', () => {
     layer = ngeoLayerHelper.createBasicWMSLayer('', '');
-    const collection = new ol.Collection();
+    const collection = new olCollection();
     collection.push(layer);
-    const group = new ol.layer.Group();
+    const group = new olLayerGroup();
     group.setLayers(collection);
     expect(ngeoLayerHelper.getFlatLayers(group).length).toBe(1);
   });
