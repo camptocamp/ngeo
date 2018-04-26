@@ -1,7 +1,6 @@
 /**
  * @module ngeo.search.searchDirective
  */
-import * as olBase from 'ol/index.js';
 
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's

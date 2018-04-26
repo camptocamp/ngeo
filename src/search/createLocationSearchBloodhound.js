@@ -1,7 +1,6 @@
 /**
  * @module ngeo.search.createLocationSearchBloodhound
  */
-import * as olBase from 'ol/index.js';
 import * as olObj from 'ol/obj.js';
 import * as olProj from 'ol/proj.js';
 
