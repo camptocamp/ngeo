@@ -49,7 +49,7 @@ gmf.drawprofilelineDirective = function() {
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.ContextualdataController} controller Controller.
+     * @param {gmf.DrawprofilelineController} controller Controller.
      */
     link(scope, element, attrs, controller) {
       controller.init();

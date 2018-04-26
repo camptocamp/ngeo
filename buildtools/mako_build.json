@@ -75,6 +75,7 @@ _ngeo_folder = '' if ngeo_folder is UNDEFINED else ngeo_folder
       ".build/externs/jquery-1.9.js",
 % if src_set == 'contribs_gmf':
       "${_ngeo_folder}contribs/gmf/externs/gmf-themes.js",
+      "${_ngeo_folder}contribs/gmf/externs/lidarprofile.js",
 % endif
       "${_ngeo_folder}externs/mapfish-print-v3.js"
     ],

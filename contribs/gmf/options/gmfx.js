@@ -114,6 +114,57 @@ gmfx.GridMergeTabs;
 
 
 /**
+ * The object containing all points in profile
+ * @typedef {{
+ *  autoWidth: (boolean|undefined),
+ *  margin: (Object.<string, number>|undefined),
+ *  pointAttributes: (gmfx.LidarPointAttributeList|undefined),
+ *  pointSum: (number|undefined),
+ *  tolerance: (number|undefined)
+ * }}
+ */
+gmfx.LidarProfileClientConfig;
+
+
+/**
+ * The object containing all points in profile
+ * @typedef {{
+ * distance: (Array.<number>|undefined),
+ * altitude: (Array.<number>|undefined),
+ * color_packed: (Array.<Array<number>>|undefined),
+ * intensity: (Array.<number>|undefined),
+ * classification: (Array.<number>|undefined),
+ * coords: (Array.<Array<number>>|undefined)
+ * }}
+ */
+gmfx.LidarProfilePoints;
+
+
+/**
+ * Profile point after measure or after parsing of the binary array returned by Pytree
+ * @typedef {{
+ * distance: (number|undefined),
+ * altitude: (number|undefined),
+ * color_packed: (Array.<number>|undefined),
+ * coords: (Array.<number>|undefined),
+ * intensity: (number|undefined),
+ * classification: (number|undefined),
+ * set: (boolean|undefined)
+ * }}
+ */
+gmfx.LidarPoint;
+
+
+/**
+ * The lidar point attribute list width default option
+ * @typedef {{
+ *   availableOptions: (Array.<lidarProfileServer.ConfigPointAttributes>|undefined),
+ *   selectedOption: (lidarProfileServer.ConfigPointAttributes|undefined)
+ * }}
+ */
+gmfx.LidarPointAttributeList;
+
+/**
  * Projection object for the MousePositionDirective. Define a label and a filter
  * to use to display coordinates for a projection.
  * @typedef {{
@@ -162,7 +213,6 @@ gmfx.ObjectEditingToolsOptions;
  * @type {number|undefined}
  */
 gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
-
 
 
 /**
@@ -684,7 +734,7 @@ cgxp.tools.openInfoWindow;
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
  */
-gmfx.openPopup_
+gmfx.openPopup_;
 
 /**
  * @typedef {{
