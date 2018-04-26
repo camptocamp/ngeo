@@ -47,6 +47,9 @@ install:
 - if [ ${IS_HOME} = TRUE ]; then chmod 600 $HOME/.ssh/id_rsa; fi
 - git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}
 
+after_failure:
+- df -h
+
 stages:
 - Lint
 - Tests
