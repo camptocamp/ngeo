@@ -103,7 +103,7 @@ const exports = function(opt_options) {
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
-    datumTokenizer: olBase.nullFunction,
+    datumTokenizer: () => {},
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
 

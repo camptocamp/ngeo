@@ -1,3 +1,0 @@
-#!/bin/bash
-sed -i 's/"name": "ngeo",/"name": "ngeo-es6",/g' package.json
-sed -i 'sY/ngeo\\/Y/ngeo-es6\\/Yg' buildtools/webpack.*.js
