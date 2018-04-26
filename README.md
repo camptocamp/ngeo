@@ -11,10 +11,6 @@ useful for developing applications combining AngularJS and OpenLayers.
 Ngeo uses [webpack](https://webpack.js.org): webpack gives you the possibility to use easily only the specific
 part of JavaScript, css and html that you need for your application.
 
-Ngeo uses [Closure Tools](https://developers.google.com/closure/): to keep the compatibility with ngeo 2.2
-users, ngeo still work with the Closure Library, and the code is still checked and compressed using Closure
-Compiler to guarantee a good quality of code.
-
 If you use ngeo we recommend that you also use webpack, because this is the way
 we design and use ngeo at Camptocamp. But using webpack is not strictly mandatory:
 standalone builds of ngeo can be created.
