@@ -1,6 +1,7 @@
-goog.provide('gmf.test.data.themes');
-
-gmf.test.data.themes = {
+/**
+ * @module gmf.test.data.themes
+ */
+const exports = {
   'themes': [
     {
       'name': 'Enseignement 2',
@@ -2066,3 +2067,6 @@ gmf.test.data.themes = {
     }
   }
 };
+
+
+export default exports;

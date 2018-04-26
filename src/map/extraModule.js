@@ -1,10 +1,14 @@
-goog.provide('ngeo.map.extraModule');
-
-goog.require('ngeo.map.LayerHelper');
+/**
+ * @module ngeo.map.extraModule
+ */
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.map.extraModule = angular.module('ngeoMapExtraModule', [
-  ngeo.map.LayerHelper.module.name,
+const exports = angular.module('ngeoMapExtraModule', [
+  ngeoMapLayerHelper.module.name,
 ]);
+
+
+export default exports;

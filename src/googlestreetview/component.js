@@ -1,24 +1,23 @@
-goog.provide('ngeo.googlestreetview.component');
-
-goog.require('goog.asserts');
-goog.require('ngeo'); // nowebpack
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ol.array');
-goog.require('ol.events');
-goog.require('ol.proj');
-goog.require('ol.Feature');
-goog.require('ol.geom.Point');
-
+/**
+ * @module ngeo.googlestreetview.component
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import * as olArray from 'ol/array.js';
+import * as olEvents from 'ol/events.js';
+import * as olProj from 'ol/proj.js';
+import olFeature from 'ol/Feature.js';
+import olGeomPoint from 'ol/geom/Point.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.googlestreetview.component = angular.module('ngeoGooglestreetview', [
-  ngeo.map.FeatureOverlayMgr.module.name
+const exports = angular.module('ngeoGooglestreetview', [
+  ngeoMapFeatureOverlayMgr.module.name
 ]);
 
 
-ngeo.googlestreetview.component.value('ngeoGooglestreetviewTemplateUrl',
+exports.value('ngeoGooglestreetviewTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -26,13 +25,12 @@ ngeo.googlestreetview.component.value('ngeoGooglestreetviewTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs['ngeoGooglestreetviewTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html`; // nowebpack
-    // webpack: 'ngeo/googlestreetview';
+      'ngeo/googlestreetview';
   });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/googlestreetview', require('./component.html'));
+});
 
 
 /**
@@ -49,7 +47,7 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
 /**
  * @private
  */
-ngeo.googlestreetview.component.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {angular.JQLite} $element Element.
@@ -112,13 +110,13 @@ ngeo.googlestreetview.component.Controller_ = class {
      * @type {!ol.Feature}
      * @private
      */
-    this.feature_ = new ol.Feature();
+    this.feature_ = new olFeature();
 
     /**
      * @type {!ngeo.map.FeatureOverlay}
      * @private
      */
-    this.featureOverlay_ = goog.asserts.assert(
+    this.featureOverlay_ = googAsserts.assert(
       ngeoFeatureOverlayMgr.getFeatureOverlay()
     );
 
@@ -168,7 +166,7 @@ ngeo.googlestreetview.component.Controller_ = class {
      * @type {ol.geom.Point}
      * @private
      */
-    this.point_ = new ol.geom.Point([0, 0]);
+    this.point_ = new olGeomPoint([0, 0]);
 
     this.feature_.setGeometry(this.point_);
 
@@ -256,10 +254,10 @@ ngeo.googlestreetview.component.Controller_ = class {
 
     if (active) {
       keys.push(
-        ol.events.listen(this.map, 'click', this.handleMapClick_, this)
+        olEvents.listen(this.map, 'click', this.handleMapClick_, this)
       );
     } else {
-      keys.forEach(ol.events.unlistenByKey);
+      keys.forEach(olEvents.unlistenByKey);
       keys.length = 0;
     }
   }
@@ -275,7 +273,7 @@ ngeo.googlestreetview.component.Controller_ = class {
     // (1) No need to do anything if the old value equals the new value
     if (location === oldLocation || (
       Array.isArray(location) && Array.isArray(oldLocation) &&
-        ol.array.equals(location, oldLocation)
+        olArray.equals(location, oldLocation)
     )) {
       return;
     }
@@ -374,7 +372,7 @@ ngeo.googlestreetview.component.Controller_ = class {
    * @return {ol.Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
-    return ol.proj.fromLonLat(
+    return olProj.fromLonLat(
       lonLat,
       this.map.getView().getProjection()
     );
@@ -385,7 +383,7 @@ ngeo.googlestreetview.component.Controller_ = class {
    * @return {ol.Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
-    return ol.proj.toLonLat(
+    return olProj.toLonLat(
       coordinate,
       this.map.getView().getProjection()
     );
@@ -393,13 +391,16 @@ ngeo.googlestreetview.component.Controller_ = class {
 };
 
 
-ngeo.googlestreetview.component.component('ngeoGooglestreetview', {
+exports.component('ngeoGooglestreetview', {
   bindings: {
     'active': '<',
     'featureStyle': '<?',
     'map': '<',
     'radius': '<?'
   },
-  controller: ngeo.googlestreetview.component.Controller_,
+  controller: exports.Controller_,
   templateUrl: ngeoGooglestreetviewTemplateUrl
 });
+
+
+export default exports;

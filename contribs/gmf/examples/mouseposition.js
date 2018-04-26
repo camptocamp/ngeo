@@ -1,31 +1,35 @@
-goog.provide('gmfapp.mouseposition');
+/**
+ * @module gmfapp.mouseposition
+ */
+const exports = {};
 
-// webpack: import './mouseposition.css';
+import './mouseposition.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.map.module');
-const EPSG2056 = goog.require('ngeo.proj.EPSG2056');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapModule from 'gmf/map/module.js';
+
+import EPSG2056 from 'ngeo/proj/EPSG2056.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.mouseposition.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.map.module.name,
+  gmfMapModule.name,
 ]);
 
-gmfapp.mouseposition.module.constant('defaultTheme', 'Demo');
-gmfapp.mouseposition.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.mouseposition.MainController = function() {
+exports.MainController = function() {
 
   const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 
@@ -51,17 +55,20 @@ gmfapp.mouseposition.MainController = function() {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [828042, 5933739],
       zoom: 8
     })
   });
 };
 
-gmfapp.mouseposition.module.controller('MainController', gmfapp.mouseposition.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

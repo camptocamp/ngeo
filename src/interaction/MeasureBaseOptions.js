@@ -1,4 +1,7 @@
-goog.provide('ngeo.interaction.MeasureBaseOptions');
+/**
+ * @module ngeo.interaction.MeasureBaseOptions
+ */
+const exports = {};
 
 
 /**
@@ -12,4 +15,7 @@ goog.provide('ngeo.interaction.MeasureBaseOptions');
  *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
  * }}
  */
-ngeo.interaction.MeasureBaseOptions;
+exports;
+
+
+export default exports;

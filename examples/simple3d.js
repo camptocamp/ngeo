@@ -1,21 +1,25 @@
-goog.provide('app.simple3d');
+/**
+ * @module app.simple3d
+ */
+const exports = {};
 
-// webpack: import './simple3d.css';
+import './simple3d.css';
 /** @suppress {extraRequire} */
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ngeo.olcs.olcsModule');
-goog.require('ngeo.map.module');
-goog.require('ngeo.olcs.Manager');
+import olMap from 'ol/Map.js';
+
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoOlcsOlcsModule from 'ngeo/olcs/olcsModule.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 
 /** @type {!angular.Module} **/
-app.simple3d.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.olcs.olcsModule.name
+  ngeoMapModule.name,
+  ngeoOlcsOlcsModule.name
 ]);
 
 
@@ -25,19 +29,19 @@ app.simple3d.module = angular.module('app', [
  * @param {angular.Scope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
  */
-app.simple3d.MainController = function($rootScope, ngeoOlcsService) {
+exports.MainController = function($rootScope, ngeoOlcsService) {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -50,7 +54,7 @@ app.simple3d.MainController = function($rootScope, ngeoOlcsService) {
    * @export
    * @type {olcs.contrib.Manager}
    */
-  this.ol3dm = new ngeo.olcs.Manager(cesiumUrl, $rootScope, {
+  this.ol3dm = new ngeoOlcsManager(cesiumUrl, $rootScope, {
     map: this.map
   });
 
@@ -58,4 +62,7 @@ app.simple3d.MainController = function($rootScope, ngeoOlcsService) {
   ngeoOlcsService.initialize(this.ol3dm);
 };
 
-app.simple3d.module.controller('MainController', app.simple3d.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,11 +1,15 @@
-goog.provide('ngeo.format.FeatureHashStyleType');
-
+/**
+ * @module ngeo.format.FeatureHashStyleType
+ */
 /**
  * @enum {string}
  * @export
  */
-ngeo.format.FeatureHashStyleType = {
+const exports = {
   LINE_STRING: 'LineString',
   POINT: 'Point',
   POLYGON: 'Polygon'
 };
+
+
+export default exports;

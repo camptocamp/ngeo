@@ -1,13 +1,10 @@
-goog.module('ngeo.olcs.controls3d');
-goog.module.declareLegacyNamespace();
-
-goog.require('goog.asserts');
-goog.require('ol.easing');
-goog.require('olcs.core');
-goog.require('ngeo'); // nowebpack
-
-
-exports = angular.module('ngeoOlcsControls3d', []);
+/**
+ * @module ngeo.olcs.controls3d
+ */
+import googAsserts from 'goog/asserts.js';
+import * as olEasing from 'ol/easing.js';
+import olcsCore from 'olcs/core.js';
+const exports = angular.module('ngeoOlcsControls3d', []);
 
 
 function shouldUpdate(older, newer) {
@@ -143,7 +140,7 @@ const Controller = class {
       this.maxTilt = 7 * Math.PI / 16;
     }
     if (!this.ol3dm) {
-      this.ol3dm = goog.asserts.assert(this.olcsService_.getManager());
+      this.ol3dm = googAsserts.assert(this.olcsService_.getManager());
     }
     this.tiltRightEl_ = this.element_.find('.ngeo-tilt-right');
     this.tiltLeftEl_ = this.element_.find('.ngeo-tilt-left');
@@ -193,7 +190,7 @@ const Controller = class {
       angle = this.maxTilt - tiltOnGlobe;
     }
     const scene = this.ol3dm.getCesiumScene();
-    olcs.core.rotateAroundBottomCenter(scene, angle);
+    olcsCore.rotateAroundBottomCenter(scene, angle);
   }
 
 
@@ -211,7 +208,7 @@ const Controller = class {
     view.animate({
       resolution: newResolution,
       duration: 250,
-      easing: ol.easing.easeOut
+      easing: olEasing.easeOut
     });
   }
 };
@@ -229,13 +226,12 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
   }
   const templateUrl = $attrs['ngeoOlcsControls3dTemplateUrl'];
   return templateUrl ? templateUrl :
-    `${ngeo.baseModuleTemplateUrl}/olcs/controls3d.html`; // nowebpack
-  // webpack: 'ngeo/olsc/controls3d';
+    'ngeo/olsc/controls3d';
 }
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
+});
 
 
 /**
@@ -270,3 +266,6 @@ const component = {
 exports.component('ngeoOlcsControls3d', component);
 
 exports.value('ngeoOlcsControls3dTemplateUrl', '');
+
+
+export default exports;

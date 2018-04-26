@@ -1,20 +1,20 @@
-goog.provide('ngeo.query.Querent');
+/**
+ * @module ngeo.query.Querent
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import olFormatWFS from 'ol/format/WFS.js';
+import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType.js';
+import olFormatWMSCapabilities from 'ol/format/WMSCapabilities.js';
+import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
+import * as olObj from 'ol/obj.js';
+import * as olUri from 'ol/uri.js';
+import * as olExtent from 'ol/extent.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.datasource.OGC');
-goog.require('ngeo.filter.RuleHelper');
-goog.require('ngeo.misc.WMSTime');
-goog.require('ol.format.WFS');
-goog.require('ngeo.WFSDescribeFeatureType');
-goog.require('ol.format.WMSCapabilities');
-goog.require('ol.format.WMTSCapabilities');
-goog.require('ol.obj');
-goog.require('ol.uri');
-goog.require('ol.extent');
-goog.require('ol.source.ImageWMS');
-
-
-ngeo.query.Querent = class {
+const exports = class {
 
   /**
    * The ngeo Querent is a service that issues all sorts of queries using
@@ -118,7 +118,7 @@ ngeo.query.Querent = class {
       queryableDataSources = options.queryableDataSources;
     } else {
       const dataSources = options.dataSources;
-      goog.asserts.assert(dataSources, 'DataSources should be set');
+      googAsserts.assert(dataSources, 'DataSources should be set');
       queryableDataSources = this.getQueryableDataSources(dataSources, map);
     }
 
@@ -162,7 +162,7 @@ ngeo.query.Querent = class {
       wfs: [],
       wms: []
     };
-    const resolution = goog.asserts.assertNumber(map.getView().getResolution());
+    const resolution = googAsserts.assertNumber(map.getView().getResolution());
 
     for (const dataSource of dataSources) {
 
@@ -171,7 +171,7 @@ ngeo.query.Querent = class {
         continue;
       }
 
-      if (dataSource instanceof ngeo.datasource.OGC) {
+      if (dataSource instanceof ngeoDatasourceOGC) {
         // (2) Split data sources
         if (dataSource.supportsWFS) {
           queryableDataSources.wfs.push(dataSource);
@@ -191,7 +191,7 @@ ngeo.query.Querent = class {
    */
   wfsDescribeFeatureType(dataSource) {
 
-    goog.asserts.assert(
+    googAsserts.assert(
       dataSource.supportsAttributes,
       `The data source must support WFS, have a single OGCLayer that
       is queryable in order to issue WFS DescribeFeatureType requests`
@@ -199,8 +199,8 @@ ngeo.query.Querent = class {
 
     const ogcLayerNames = dataSource.getOGCLayerNames();
 
-    const url = ol.uri.appendParams(
-      goog.asserts.assertString(dataSource.wfsUrl),
+    const url = olUri.appendParams(
+      googAsserts.assertString(dataSource.wfsUrl),
       {
         'REQUEST': 'DescribeFeatureType',
         'SERVICE': 'WFS',
@@ -210,7 +210,7 @@ ngeo.query.Querent = class {
     );
 
     return this.http_.get(url).then((response) => {
-      const format = new ngeo.WFSDescribeFeatureType();
+      const format = new ngeoWFSDescribeFeatureType();
       return format.read(response.data);
     });
   }
@@ -259,19 +259,19 @@ ngeo.query.Querent = class {
       'VERSION': '1.3.0'
     };
 
-    const url = ol.uri.appendParams(baseUrl, params);
+    const url = olUri.appendParams(baseUrl, params);
     let promise;
 
     if (!cache || !this.wmsGetCapabilitiesPromises_[baseUrl]) {
       promise = this.http_.get(url).then((response) => {
-        const format = new ol.format.WMSCapabilities();
+        const format = new olFormatWMSCapabilities();
         return format.read(response.data);
       });
     } else if (cache && this.wmsGetCapabilitiesPromises_[baseUrl]) {
       promise = this.wmsGetCapabilitiesPromises_[baseUrl];
     }
 
-    goog.asserts.assert(promise);
+    googAsserts.assert(promise);
 
     if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
       this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
@@ -313,14 +313,14 @@ ngeo.query.Querent = class {
 
     if (!cache || !this.wmtsGetCapabilitiesPromises_[url]) {
       promise = this.http_.get(url).then((response) => {
-        const format = new ol.format.WMTSCapabilities();
+        const format = new olFormatWMTSCapabilities();
         return format.read(response.data);
       });
     } else if (cache && this.wmtsGetCapabilitiesPromises_[url]) {
       promise = this.wmtsGetCapabilitiesPromises_[url];
     }
 
-    goog.asserts.assert(promise);
+    googAsserts.assert(promise);
 
     if (cache && !this.wmtsGetCapabilitiesPromises_[url]) {
       this.wmtsGetCapabilitiesPromises_[url] = promise;
@@ -385,7 +385,7 @@ ngeo.query.Querent = class {
         tooManyFeatures = true;
         totalFeatureCount = response;
       } else {
-        if (dataSource instanceof ngeo.datasource.OGC) {
+        if (dataSource instanceof ngeoDatasourceOGC) {
           features = this.readAndTypeFeatures_(dataSource, response.data, wfs);
         } else {
           features = [];
@@ -484,11 +484,11 @@ ngeo.query.Querent = class {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const maxFeatures = goog.asserts.assertNumber(options.limit);
+    const maxFeatures = googAsserts.assertNumber(options.limit);
 
     const map = options.map;
     const view = map.getView();
-    const resolution = goog.asserts.assertNumber(view.getResolution());
+    const resolution = googAsserts.assertNumber(view.getResolution());
     const projection = view.getProjection();
     const srsName = projection.getCode();
     const wfsCount = options.wfsCount === true;
@@ -498,10 +498,10 @@ ngeo.query.Querent = class {
     const coordinate = options.coordinate;
     if (coordinate) {
       const tolerancePx = options.tolerancePx;
-      goog.asserts.assert(tolerancePx);
+      googAsserts.assert(tolerancePx);
       const tolerance = tolerancePx * resolution;
-      bbox = ol.extent.buffer(
-        ol.extent.createOrUpdateFromCoordinate(coordinate),
+      bbox = olExtent.buffer(
+        olExtent.createOrUpdateFromCoordinate(coordinate),
         tolerance
       );
     } else {
@@ -509,7 +509,7 @@ ngeo.query.Querent = class {
     }
 
     // (2) Launch one request per combinaison of data sources
-    const wfsFormat = new ol.format.WFS();
+    const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
     for (const dataSources of combinedDataSources) {
 
@@ -541,7 +541,7 @@ ngeo.query.Querent = class {
           url = dataSource.wfsUrl;
 
           // All data sources combined share the same active dimensions
-          ol.obj.assign(params, dataSource.activeDimensions);
+          olObj.assign(params, dataSource.activeDimensions);
         }
 
         // (b) Add queryable layer names in featureTypes array
@@ -560,7 +560,7 @@ ngeo.query.Querent = class {
         } else if ((dataSource.filterRules && dataSource.filterRules.length) ||
             dataSource.timeRangeValue) {
 
-          goog.asserts.assert(
+          googAsserts.assert(
             dataSources.length === 1,
             `A data source having filterRules or timeRangeValue should issue
             a single query, alone.`
@@ -578,9 +578,9 @@ ngeo.query.Querent = class {
         }
       }
 
-      goog.asserts.assert(getFeatureCommonOptions);
+      googAsserts.assert(getFeatureCommonOptions);
       getFeatureCommonOptions.featureTypes = featureTypes;
-      goog.asserts.assert(url);
+      googAsserts.assert(url);
 
       // (4) Build query then launch
       //
@@ -603,7 +603,7 @@ ngeo.query.Querent = class {
       let countPromise;
       if (wfsCount) {
         const getCountOptions = /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
-          ol.obj.assign(
+          olObj.assign(
             {
               resultType: 'hits'
             },
@@ -639,7 +639,7 @@ ngeo.query.Querent = class {
         if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
 
           const getFeatureOptions = /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
-            ol.obj.assign(
+            olObj.assign(
               {
                 maxFeatures
               },
@@ -650,7 +650,7 @@ ngeo.query.Querent = class {
             getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(
             featureRequestXml);
-          goog.asserts.assertString(url);
+          googAsserts.assertString(url);
           const canceler = this.registerCanceler_();
           this.http_.post(
             url,
@@ -690,17 +690,17 @@ ngeo.query.Querent = class {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const FEATURE_COUNT = goog.asserts.assertNumber(options.limit);
+    const FEATURE_COUNT = googAsserts.assertNumber(options.limit);
 
     const map = options.map;
     const view = map.getView();
-    const resolution = goog.asserts.assertNumber(view.getResolution());
+    const resolution = googAsserts.assertNumber(view.getResolution());
     const projection = view.getProjection();
     const projCode = projection.getCode();
 
     // (1) Coordinate, which is required to issue WMS GetFeatureInfo requests
     const coordinate = options.coordinate;
-    goog.asserts.assert(coordinate);
+    googAsserts.assert(coordinate);
 
     // (2) Launch one request per combinaison of data sources
     for (const dataSources of combinedDataSources) {
@@ -732,7 +732,7 @@ ngeo.query.Querent = class {
         //     been combined together, therefore they share the same active
         //     dimensions.
         if (!activeDimensionsSet) {
-          ol.obj.assign(params, dataSource.activeDimensions);
+          olObj.assign(params, dataSource.activeDimensions);
           activeDimensionsSet = true;
         }
 
@@ -740,7 +740,7 @@ ngeo.query.Querent = class {
         //     then it is expected that one request will be sent for this
         //     data source only.
         if (dataSource.filterRules && dataSource.filterRules.length) {
-          goog.asserts.assert(dataSources.length === 1);
+          googAsserts.assert(dataSources.length === 1);
           filtrableLayerName = dataSource.getFiltrableOGCLayerName();
           filterString = this.ngeoRuleHelper_.createFilterString({
             dataSource: dataSource,
@@ -752,7 +752,7 @@ ngeo.query.Querent = class {
         //     If that's the case, then it is expected that one request will be
         //     sent for this data source only.
         if (dataSource.timeRangeValue !== null && dataSource.timeProperty) {
-          goog.asserts.assert(dataSources.length === 1);
+          googAsserts.assert(dataSources.length === 1);
           params['TIME'] = this.ngeoWMSTime_.formatWMSTimeParam(
             dataSource.timeProperty,
             dataSource.timeRangeValue
@@ -787,14 +787,14 @@ ngeo.query.Querent = class {
         params['FILTER'] = filterParamValue;
       }
 
-      goog.asserts.assert(url);
-      const wmsSource = new ol.source.ImageWMS({
+      googAsserts.assert(url);
+      const wmsSource = new olSourceImageWMS({
         params,
         url
       });
 
       // (4) Build query url, then launch
-      const wmsGetFeatureInfoUrl = goog.asserts.assertString(
+      const wmsGetFeatureInfoUrl = googAsserts.assertString(
         wmsSource.getGetFeatureInfoUrl(
           coordinate, resolution, projCode, {
             // Without extern, quoting is necessary
@@ -896,7 +896,7 @@ ngeo.query.Querent = class {
    */
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
-    if (queryable && ds instanceof ngeo.datasource.OGC) {
+    if (queryable && ds instanceof ngeoDatasourceOGC) {
       const ogcDS = /** @type {!ngeo.datasource.OGC} */ (ds);
       queryable = ogcDS.isAnyOGCLayerInRange(res, true);
     }
@@ -945,14 +945,17 @@ ngeo.query.Querent = class {
 /**
  * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>}
  */
-ngeo.query.Querent.CombinedDataSources;
+exports.CombinedDataSources;
 
 
 /**
  * @type {!angular.Module}
  */
-ngeo.query.Querent.module = angular.module('ngeoQuerent', [
-  ngeo.filter.RuleHelper.module.name,
-  ngeo.misc.WMSTime.module.name,
+exports.module = angular.module('ngeoQuerent', [
+  ngeoFilterRuleHelper.module.name,
+  ngeoMiscWMSTime.module.name,
 ]);
-ngeo.query.Querent.module.service('ngeoQuerent', ngeo.query.Querent);
+exports.module.service('ngeoQuerent', exports);
+
+
+export default exports;

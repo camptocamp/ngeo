@@ -1,20 +1,22 @@
-goog.provide('ngeo.profile.elevationComponent');
+/**
+ * @module ngeo.profile.elevationComponent
+ */
+import googAsserts from 'goog/asserts.js';
+import * as olEvents from 'ol/events.js';
+import * as olObj from 'ol/obj.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
 
-goog.require('goog.asserts');
-goog.require('ol.events');
-goog.require('ol.obj');
-goog.require('ngeo.misc.debounce');
-goog.require('ngeo.profile.d3Elevation');
-// webpack: import {select} from 'd3-selection';
-// webpack: const d3 = {
-// webpack:   select,
-// webpack: };
+import {select} from 'd3-selection';
+const d3 = {
+  select,
+};
 
 /**
  * @type {!angular.Module}
  */
-ngeo.profile.elevationComponent = angular.module('ngeoProfile', [
-  ngeo.misc.debounce.name
+const exports = angular.module('ngeoProfile', [
+  ngeoMiscDebounce.name
 ]);
 
 
@@ -47,7 +49,7 @@ ngeo.profile.elevationComponent = angular.module('ngeoProfile', [
  * @ngdoc directive
  * @ngname ngeoProfile
  */
-ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
+exports.directive_ = function(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
@@ -58,7 +60,7 @@ ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
     link: (scope, element, attrs) => {
 
       const optionsAttr = attrs['ngeoProfileOptions'];
-      goog.asserts.assert(optionsAttr !== undefined);
+      googAsserts.assert(optionsAttr !== undefined);
 
       const selection = d3.select(element[0]);
       let profile, elevationData, poiData;
@@ -66,7 +68,7 @@ ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
       scope.$watchCollection(optionsAttr, (newVal) => {
 
         const options = /** @type {ngeox.profile.ProfileOptions} */
-                (ol.obj.assign({}, newVal));
+                (olObj.assign({}, newVal));
 
         if (options !== undefined) {
 
@@ -95,7 +97,7 @@ ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
             };
           }
 
-          profile = ngeo.profile.d3Elevation(options);
+          profile = ngeoProfileD3Elevation(options);
           refreshData();
         }
       });
@@ -122,7 +124,7 @@ ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
           }
         });
 
-      ol.events.listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
+      olEvents.listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
       function refreshData() {
         if (profile !== undefined) {
@@ -136,4 +138,7 @@ ngeo.profile.elevationComponent.directive_ = function(ngeoDebounce) {
   };
 };
 
-ngeo.profile.elevationComponent.directive('ngeoProfile', ngeo.profile.elevationComponent.directive_);
+exports.directive('ngeoProfile', exports.directive_);
+
+
+export default exports;

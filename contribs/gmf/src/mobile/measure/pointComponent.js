@@ -1,25 +1,24 @@
-goog.provide('gmf.mobile.measure.pointComponent');
+/**
+ * @module gmf.mobile.measure.pointComponent
+ */
+import gmfRasterRasterService from 'gmf/raster/RasterService.js';
+import googAsserts from 'goog/asserts.js';
+import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import * as olEvents from 'ol/events.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
-goog.require('gmf'); // nowebpack
-goog.require('gmf.raster.RasterService');
-goog.require('goog.asserts');
-goog.require('ngeo.interaction.MeasurePointMobile');
-goog.require('ngeo.misc.debounce');
-goog.require('ngeo.misc.decorate');
-goog.require('ol.events');
-goog.require('ol.style.Fill');
-goog.require('ol.style.RegularShape');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-
-
-gmf.mobile.measure.pointComponent = angular.module('gmfMobileMeasurePoint', [
-  gmf.raster.RasterService.module.name,
-  ngeo.misc.debounce.name,
+const exports = angular.module('gmfMobileMeasurePoint', [
+  gmfRasterRasterService.module.name,
+  ngeoMiscDebounce.name,
 ]);
 
 
-gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
+exports.value('gmfMobileMeasurePointTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
    * @param {angular.Attributes} attrs Attributes.
@@ -28,13 +27,12 @@ gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/mobile/measure/pointComponent.html`; // nowebpack
-    // webpack: 'gmf/measure/pointComponent';
+      'gmf/measure/pointComponent';
   });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
+});
 
 
 /**
@@ -74,7 +72,7 @@ gmf.mobile.measure.pointComponent.value('gmfMobileMeasurePointTemplateUrl',
  * @ngdoc directive
  * @ngname gmfMobileMeasurePoint
  */
-gmf.mobile.measure.pointComponent.component_ =
+exports.component_ =
     function(gmfMobileMeasurePointTemplateUrl) {
       return {
         restrict: 'A',
@@ -102,8 +100,8 @@ gmf.mobile.measure.pointComponent.component_ =
     };
 
 
-gmf.mobile.measure.pointComponent.directive('gmfMobileMeasurepoint',
-  gmf.mobile.measure.pointComponent.component_);
+exports.directive('gmfMobileMeasurepoint',
+  exports.component_);
 
 
 /**
@@ -118,7 +116,7 @@ gmf.mobile.measure.pointComponent.directive('gmfMobileMeasurepoint',
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
  */
-gmf.mobile.measure.pointComponent.Controller_ = function(gettextCatalog, $scope, $filter,
+exports.Controller_ = function(gettextCatalog, $scope, $filter,
   gmfRaster, ngeoDebounce) {
 
   /**
@@ -183,17 +181,17 @@ gmf.mobile.measure.pointComponent.Controller_ = function(gettextCatalog, $scope,
   this.sketchStyle;
 
   if (this.sketchStyle === undefined) {
-    this.sketchStyle = new ol.style.Style({
-      fill: new ol.style.Fill({
+    this.sketchStyle = new olStyleStyle({
+      fill: new olStyleFill({
         color: 'rgba(255, 255, 255, 0.2)'
       }),
-      stroke: new ol.style.Stroke({
+      stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.5)',
         lineDash: [10, 10],
         width: 2
       }),
-      image: new ol.style.RegularShape({
-        stroke: new ol.style.Stroke({
+      image: new olStyleRegularShape({
+        stroke: new olStyleStroke({
           color: 'rgba(0, 0, 0, 0.7)',
           width: 2
         }),
@@ -234,8 +232,8 @@ gmf.mobile.measure.pointComponent.Controller_ = function(gettextCatalog, $scope,
 /**
  * Initialise the controller.
  */
-gmf.mobile.measure.pointComponent.Controller_.prototype.init = function() {
-  this.measure = new ngeo.interaction.MeasurePointMobile(
+exports.Controller_.prototype.init = function() {
+  this.measure = new ngeoInteractionMeasurePointMobile(
     /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
     this.format || '{x}, {y}',
     {
@@ -244,12 +242,12 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.init = function() {
     }
   );
   this.measure.setActive(this.active);
-  ngeo.misc.decorate.interaction(this.measure);
+  ngeoMiscDecorate.interaction(this.measure);
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (this.measure.getDrawInteraction());
-  ngeo.misc.decorate.interaction(this.drawInteraction);
+  ngeoMiscDecorate.interaction(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();
-  goog.asserts.assert(Array.isArray(layersConfig));
+  googAsserts.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
 
   this.map.addInteraction(this.measure);
@@ -260,7 +258,7 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.init = function() {
  * Deactivate the directive.
  * @export
  */
-gmf.mobile.measure.pointComponent.Controller_.prototype.deactivate = function() {
+exports.Controller_.prototype.deactivate = function() {
   this.active = false;
 };
 
@@ -270,7 +268,7 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.deactivate = function() 
  * @return {string} The translated text.
  * @export
  */
-gmf.mobile.measure.pointComponent.Controller_.prototype.translate = function(str) {
+exports.Controller_.prototype.translate = function(str) {
   return this.gettextCatalog_.getString(str);
 };
 
@@ -282,11 +280,11 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.translate = function(str
  * - on deactivate, unlisten
  * @private
  */
-gmf.mobile.measure.pointComponent.Controller_.prototype.handleMeasureActiveChange_ =
+exports.Controller_.prototype.handleMeasureActiveChange_ =
     function() {
       if (this.measure.getActive()) {
         const view = this.map.getView();
-        this.mapViewPropertyChangeEventKey_ = ol.events.listen(
+        this.mapViewPropertyChangeEventKey_ = olEvents.listen(
           view,
           'propertychange',
           this.ngeoDebounce_(
@@ -294,7 +292,7 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.handleMeasureActiveChang
           this);
         this.getMeasure_();
       } else if (this.mapViewPropertyChangeEventKey_) {
-        ol.events.unlistenByKey(this.mapViewPropertyChangeEventKey_);
+        olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
         this.mapViewPropertyChangeEventKey_ = null;
       }
     };
@@ -305,9 +303,9 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.handleMeasureActiveChang
  * the current map center location.
  * @private
  */
-gmf.mobile.measure.pointComponent.Controller_.prototype.getMeasure_ = function() {
+exports.Controller_.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
-  goog.asserts.assertArray(center);
+  googAsserts.assertArray(center);
   const params = {
     'layers': this.layersConfig.map(config => config.name).join(',')
   };
@@ -341,8 +339,8 @@ gmf.mobile.measure.pointComponent.Controller_.prototype.getMeasure_ = function()
 };
 
 
-gmf.mobile.measure.pointComponent.controller('GmfMobileMeasurePointController',
-  gmf.mobile.measure.pointComponent.Controller_);
+exports.controller('GmfMobileMeasurePointController',
+  exports.Controller_);
 
 /**
  * @typedef {{
@@ -351,4 +349,7 @@ gmf.mobile.measure.pointComponent.controller('GmfMobileMeasurePointController',
  *     unit: (string|undefined)
  * }}
  */
-gmf.mobile.measure.pointComponent.LayerConfig;
+exports.LayerConfig;
+
+
+export default exports;

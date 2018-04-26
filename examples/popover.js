@@ -1,12 +1,18 @@
-goog.provide('app.popover');
+/**
+ * @module app.popover
+ */
+const exports = {};
 
-// webpack: import './popover.css';
+import './popover.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.message.popoverComponent');
+import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 
 
 /** @type {!angular.Module} **/
-app.popover.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.message.popoverComponent.name,
+  ngeoMessagePopoverComponent.name,
 ]);
+
+
+export default exports;

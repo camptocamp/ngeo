@@ -1,32 +1,36 @@
-goog.provide('gmfapp.objecteditinghub');
+/**
+ * @module gmfapp.objecteditinghub
+ */
+const exports = {};
 
-// webpack: import './objecteditinghub.css';
-goog.require('goog.asserts');
-goog.require('gmf.editing.XSDAttributes');
-goog.require('gmf.objectediting.Manager');
-goog.require('gmf.theme.Themes');
-goog.require('ol.format.WFS');
-goog.require('ngeo.format.XSDAttribute');
+import './objecteditinghub.css';
+import googAsserts from 'goog/asserts.js';
+
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
+import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import olFormatWFS from 'ol/format/WFS.js';
+import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.objecteditinghub.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.editing.XSDAttributes.module.name,
-  gmf.objectediting.Manager.module.name,
-  gmf.theme.Themes.module.name,
+  gmfEditingXSDAttributes.module.name,
+  gmfObjecteditingManager.module.name,
+  gmfThemeThemes.module.name,
 ]);
 
 
-gmfapp.objecteditinghub.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.objecteditinghub.module.value('gmfLayersUrl',
+exports.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
-gmfapp.objecteditinghub.module.constant('defaultTheme', 'Demo');
-gmfapp.objecteditinghub.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -38,7 +42,7 @@ gmfapp.objecteditinghub.module.constant('angularLocaleScript', '../build/angular
  * @constructor
  * @ngInject
  */
-gmfapp.objecteditinghub.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
+exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.$http}
@@ -209,7 +213,7 @@ gmfapp.objecteditinghub.MainController = function($http, $q, $scope, gmfThemes, 
       const groupNode = theme.children[0];
 
       // (4) Set OGC server, which must support WFS for this example to work
-      goog.asserts.assert(groupNode.ogcServer);
+      googAsserts.assert(groupNode.ogcServer);
       const gmfServer = this.gmfServers_[groupNode.ogcServer];
       if (gmfServer && gmfServer.wfsSupport === true && gmfServer.urlWfs) {
         this.gmfServer_ = gmfServer;
@@ -239,23 +243,23 @@ gmfapp.objecteditinghub.MainController = function($http, $q, $scope, gmfThemes, 
 /**
  * @export
  */
-gmfapp.objecteditinghub.MainController.prototype.runEditor = function() {
+exports.MainController.prototype.runEditor = function() {
 
   const geomType = this.selectedGeomType;
   const feature = this.selectedFeature;
   const layer = this.selectedGmfLayerNode.id;
   const property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
-  goog.asserts.assert(property !== undefined);
+  googAsserts.assert(property !== undefined);
   const id = feature.get(property);
 
   const params = {};
-  params[gmf.objectediting.Manager.Param.GEOM_TYPE] = geomType;
-  params[gmf.objectediting.Manager.Param.ID] = id;
-  params[gmf.objectediting.Manager.Param.LAYER] = layer;
-  params[gmf.objectediting.Manager.Param.THEME] = this.themeName;
-  params[gmf.objectediting.Manager.Param.PROPERTY] = property;
+  params[gmfObjecteditingManager.Param.GEOM_TYPE] = geomType;
+  params[gmfObjecteditingManager.Param.ID] = id;
+  params[gmfObjecteditingManager.Param.LAYER] = layer;
+  params[gmfObjecteditingManager.Param.THEME] = this.themeName;
+  params[gmfObjecteditingManager.Param.PROPERTY] = property;
 
-  const url = gmfapp.objecteditinghub.MainController.appendParams(this.selectedUrl['url'], params);
+  const url = exports.MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);
 };
 
@@ -263,7 +267,7 @@ gmfapp.objecteditinghub.MainController.prototype.runEditor = function() {
 /**
  * @export
  */
-gmfapp.objecteditinghub.MainController.prototype.runViewerDev = function() {
+exports.MainController.prototype.runViewerDev = function() {
   this.runViewer_(this.viewerUrlDev_);
 };
 
@@ -271,7 +275,7 @@ gmfapp.objecteditinghub.MainController.prototype.runViewerDev = function() {
 /**
  * @export
  */
-gmfapp.objecteditinghub.MainController.prototype.runViewerHosted = function() {
+exports.MainController.prototype.runViewerHosted = function() {
   this.runViewer_(this.viewerUrlHosted_);
 };
 
@@ -280,13 +284,13 @@ gmfapp.objecteditinghub.MainController.prototype.runViewerHosted = function() {
  * @param {string} baseUrl Base url of the viewer.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.runViewer_ = function(baseUrl) {
+exports.MainController.prototype.runViewer_ = function(baseUrl) {
 
   const node = this.selectedGmfLayerNode;
   const nodeId = node.id;
   const nodeName = node.name;
   const nodeIdAttrFieldName = node.metadata.identifierAttributeField;
-  goog.asserts.assert(nodeIdAttrFieldName !== undefined);
+  googAsserts.assert(nodeIdAttrFieldName !== undefined);
   const ids = [];
 
   const features = this.featuresCache_[nodeId];
@@ -300,7 +304,7 @@ gmfapp.objecteditinghub.MainController.prototype.runViewer_ = function(baseUrl) 
   params['wfs_layer'] = nodeName;
   params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
-  const url = gmfapp.objecteditinghub.MainController.appendParams(baseUrl, params);
+  const url = exports.MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
@@ -310,7 +314,7 @@ gmfapp.objecteditinghub.MainController.prototype.runViewer_ = function(baseUrl) 
  * @return {angular.$q.Promise} The promise attached to the deferred object.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
+exports.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
   this.getFeaturesDeferred_ = this.q_.defer();
 
@@ -330,11 +334,11 @@ gmfapp.objecteditinghub.MainController.prototype.getFeatures_ = function(gmfLaye
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
+exports.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
   const id = gmfLayerNode.id;
 
-  const url = gmfapp.objecteditinghub.MainController.appendParams(
+  const url = exports.MainController.appendParams(
     this.gmfServer_.urlWfs,
     {
       'SERVICE': 'WFS',
@@ -345,7 +349,7 @@ gmfapp.objecteditinghub.MainController.prototype.issueGetFeatures_ = function(gm
   );
 
   this.http_.get(url).then((response) => {
-    const features = new ol.format.WFS().readFeatures(response.data);
+    const features = new olFormatWFS().readFeatures(response.data);
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
   });
@@ -356,7 +360,7 @@ gmfapp.objecteditinghub.MainController.prototype.issueGetFeatures_ = function(gm
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
+exports.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
   const features = /** @type Array.<ol.Feature> */ (
     this.getFeaturesFromCache_(gmfLayerNode));
   this.features = features;
@@ -369,7 +373,7 @@ gmfapp.objecteditinghub.MainController.prototype.handleGetFeatures_ = function(g
  * @return {?Array.<ol.Feature>} List of features
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
+exports.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
   const id = gmfLayerNode.id;
   const features = this.featuresCache_[id] || null;
   return features;
@@ -381,7 +385,7 @@ gmfapp.objecteditinghub.MainController.prototype.getFeaturesFromCache_ = functio
  * @return {angular.$q.Promise} The promise attached to the deferred object.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
+exports.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
   this.getGeometryTypeDeferred_ = this.q_.defer();
 
@@ -401,14 +405,14 @@ gmfapp.objecteditinghub.MainController.prototype.getGeometryType_ = function(gmf
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.issueGetAttributesRequest_ = function(
+exports.MainController.prototype.issueGetAttributesRequest_ = function(
   gmfLayerNode
 ) {
 
   this.gmfXSDAttributes_.getAttributes(gmfLayerNode.id).then(
     function(gmfLayerNode, attributes) {
       // Get geom type from attributes and set
-      const geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(attributes);
+      const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(attributes);
       if (geomAttr && geomAttr.geomType) {
         this.geomTypeCache_[gmfLayerNode.id] = geomAttr.geomType;
         this.getGeometryTypeDeferred_.resolve();
@@ -423,7 +427,7 @@ gmfapp.objecteditinghub.MainController.prototype.issueGetAttributesRequest_ = fu
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
+exports.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
   const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
   this.selectedGeomType = geomType;
 };
@@ -434,7 +438,7 @@ gmfapp.objecteditinghub.MainController.prototype.handleGetGeometryType_ = functi
  * @return {string|undefined} The type of geometry.
  * @private
  */
-gmfapp.objecteditinghub.MainController.prototype.getGeometryTypeFromCache_ = function(
+exports.MainController.prototype.getGeometryTypeFromCache_ = function(
   gmfLayerNode
 ) {
   const id = gmfLayerNode.id;
@@ -451,7 +455,7 @@ gmfapp.objecteditinghub.MainController.prototype.getGeometryTypeFromCache_ = fun
  *     and the values are arbitrary types or arrays.
  * @return {string} The new URI.
  */
-gmfapp.objecteditinghub.MainController.appendParams = function(uri, params) {
+exports.MainController.appendParams = function(uri, params) {
   const keyParams = [];
   // Skip any null or undefined parameter values
   Object.keys(params).forEach((k) => {
@@ -468,4 +472,7 @@ gmfapp.objecteditinghub.MainController.appendParams = function(uri, params) {
 };
 
 
-gmfapp.objecteditinghub.module.controller('MainController', gmfapp.objecteditinghub.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

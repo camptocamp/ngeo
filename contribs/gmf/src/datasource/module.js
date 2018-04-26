@@ -1,19 +1,22 @@
-goog.provide('gmf.datasource.module');
-
-goog.require('gmf.datasource.DataSourceBeingFiltered');
-goog.require('gmf.datasource.ExternalDataSourcesManager');
-goog.require('gmf.datasource.Helper');
-goog.require('gmf.datasource.Manager');
-goog.require('gmf.datasource.WFSAliases');
-
+/**
+ * @module gmf.datasource.module
+ */
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
+import gmfDatasourceManager from 'gmf/datasource/Manager.js';
+import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.datasource.module = angular.module('gmfDatasourceModule', [
-  gmf.datasource.DataSourceBeingFiltered.module.name,
-  gmf.datasource.ExternalDataSourcesManager.module.name,
-  gmf.datasource.Helper.module.name,
-  gmf.datasource.Manager.module.name,
-  gmf.datasource.WFSAliases.module.name,
+const exports = angular.module('gmfDatasourceModule', [
+  gmfDatasourceDataSourceBeingFiltered.module.name,
+  gmfDatasourceExternalDataSourcesManager.module.name,
+  gmfDatasourceHelper.module.name,
+  gmfDatasourceManager.module.name,
+  gmfDatasourceWFSAliases.module.name,
 ]);
+
+
+export default exports;

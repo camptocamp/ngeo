@@ -1,32 +1,38 @@
-goog.provide('app.bboxquery');
+/**
+ * @module app.bboxquery
+ */
+const exports = {};
 
-// webpack: import './bboxquery.css';
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.datasource.OGC');
-goog.require('ngeo.map.module');
+import './bboxquery.css';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.btnComponent');
-goog.require('ngeo.query.module');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.OSM');
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoQueryModule from 'ngeo/query/module.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} */
-app.bboxquery.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.datasource.DataSources.module.name,
-  ngeo.map.module.name,
-  ngeo.misc.btnComponent.name,
-  ngeo.query.module.name
+  ngeoDatasourceDataSources.module.name,
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+  ngeoQueryModule.name
 ]);
 
 
-app.bboxquery.module.value('ngeoQueryOptions', {
+exports.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -36,12 +42,12 @@ app.bboxquery.module.value('ngeoQueryOptions', {
  *
  * @type {!angular.Component}
  */
-app.bboxquery.queryresultComponent = {
+exports.queryresultComponent = {
   controller: 'AppQueryresultController',
   template: require('./partials/queryresult.html')
 };
 
-app.bboxquery.module.component('appQueryresult', app.bboxquery.queryresultComponent);
+exports.module.component('appQueryresult', exports.queryresultComponent);
 
 
 /**
@@ -49,7 +55,7 @@ app.bboxquery.module.component('appQueryresult', app.bboxquery.queryresultCompon
  * @constructor
  * @ngInject
  */
-app.bboxquery.QueryresultController = function(ngeoQueryResult) {
+exports.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -60,7 +66,7 @@ app.bboxquery.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-app.bboxquery.module.controller('AppQueryresultController', app.bboxquery.QueryresultController);
+exports.module.controller('AppQueryresultController', exports.QueryresultController);
 
 
 /**
@@ -70,7 +76,7 @@ app.bboxquery.module.controller('AppQueryresultController', app.bboxquery.Queryr
  * @constructor
  * @ngInject
  */
-app.bboxquery.MainController = function($scope, ngeoDataSources) {
+exports.MainController = function($scope, ngeoDataSources) {
 
   /**
    * @type {boolean}
@@ -78,15 +84,15 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
    */
   this.queryActive = true;
 
-  const informationLayer = new ol.layer.Image({
-    'source': new ol.source.ImageWMS({
+  const informationLayer = new olLayerImage({
+    'source': new olSourceImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
   });
 
-  const busStopLayer = new ol.layer.Image({
-    'source': new ol.source.ImageWMS({
+  const busStopLayer = new olLayerImage({
+    'source': new olSourceImageWMS({
       'url': 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
@@ -96,15 +102,15 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       }),
       informationLayer,
       busStopLayer
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
@@ -114,7 +120,7 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
 
   ngeoDataSources.map = this.map;
 
-  ngeoDataSources.collection.push(new ngeo.datasource.OGC({
+  ngeoDataSources.collection.push(new ngeoDatasourceOGC({
     id: 1,
     name: 'bus_stop',
     visible: true,
@@ -125,7 +131,7 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
     }]
   }));
 
-  ngeoDataSources.collection.push(new ngeo.datasource.OGC({
+  ngeoDataSources.collection.push(new ngeoDatasourceOGC({
     id: 2,
     name: 'information',
     visible: true,
@@ -137,4 +143,7 @@ app.bboxquery.MainController = function($scope, ngeoDataSources) {
   }));
 };
 
-app.bboxquery.module.controller('MainController', app.bboxquery.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

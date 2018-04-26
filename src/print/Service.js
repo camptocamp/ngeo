@@ -1,20 +1,20 @@
-goog.provide('ngeo.print.Service');
-
-goog.require('goog.asserts');
-goog.require('ngeo.print.VectorEncoder');
-goog.require('ngeo.map.LayerHelper');
-goog.require('ol.array');
-goog.require('ol.obj');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.math');
-goog.require('ol.size');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.TileWMS');
-goog.require('ol.source.WMTS');
-goog.require('ol.tilegrid.WMTS');
-
+/**
+ * @module ngeo.print.Service
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import * as olArray from 'ol/array.js';
+import * as olObj from 'ol/obj.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import * as olMath from 'ol/math.js';
+import * as olSize from 'ol/size.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceTileWMS from 'ol/source/TileWMS.js';
+import olSourceWMTS from 'ol/source/WMTS.js';
+import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 /**
  * Provides a function to create ngeo.print.Service objects used to
@@ -59,7 +59,7 @@ goog.require('ol.tilegrid.WMTS');
  * @param {angular.$http} $http Angular $http service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
-ngeo.print.Service = function(url, $http, ngeoLayerHelper) {
+const exports = function(url, $http, ngeoLayerHelper) {
   /**
    * @type {string}
    * @private
@@ -82,7 +82,7 @@ ngeo.print.Service = function(url, $http, ngeoLayerHelper) {
    * @type {ngeo.print.VectorEncoder}
    * @private
    */
-  this.vectorEncoder_ = new ngeo.print.VectorEncoder();
+  this.vectorEncoder_ = new ngeoPrintVectorEncoder();
 
   /**
    * @type {boolean}
@@ -99,7 +99,7 @@ ngeo.print.Service = function(url, $http, ngeoLayerHelper) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  * @export
  */
-ngeo.print.Service.prototype.cancel = function(ref, opt_httpConfig) {
+exports.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
     /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/cancel/${ref}`;
@@ -119,7 +119,7 @@ ngeo.print.Service.prototype.cancel = function(ref, opt_httpConfig) {
  * @return {MapFishPrintSpec} The print spec.
  * @export
  */
-ngeo.print.Service.prototype.createSpec = function(
+exports.prototype.createSpec = function(
   map, scale, dpi, layout, format, customAttributes) {
 
   const specMap = /** @type {MapFishPrintMap} */ ({
@@ -132,7 +132,7 @@ ngeo.print.Service.prototype.createSpec = function(
   const attributes = /** @type {!MapFishPrintAttributes} */ ({
     map: specMap
   });
-  ol.obj.assign(attributes, customAttributes);
+  olObj.assign(attributes, customAttributes);
 
   const spec = /** @type {MapFishPrintSpec} */ ({
     attributes,
@@ -150,15 +150,15 @@ ngeo.print.Service.prototype.createSpec = function(
  * @param {MapFishPrintMap} object Object.
  * @private
  */
-ngeo.print.Service.prototype.encodeMap_ = function(map, scale, object) {
+exports.prototype.encodeMap_ = function(map, scale, object) {
   const view = map.getView();
   const viewCenter = view.getCenter();
   const viewProjection = view.getProjection();
   const viewResolution = view.getResolution();
-  const viewRotation = object.rotation || ol.math.toDegrees(view.getRotation());
+  const viewRotation = object.rotation || olMath.toDegrees(view.getRotation());
 
-  goog.asserts.assert(viewCenter !== undefined);
-  goog.asserts.assert(viewProjection !== undefined);
+  googAsserts.assert(viewCenter !== undefined);
+  googAsserts.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
@@ -167,17 +167,17 @@ ngeo.print.Service.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
-  goog.asserts.assert(mapLayerGroup);
+  googAsserts.assert(mapLayerGroup);
   this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
   // Sort the layer by ZIndex
-  ol.array.stableSort(layers, (layer_a, layer_b) => layer_a.getZIndex() - layer_b.getZIndex());
+  olArray.stableSort(layers, (layer_a, layer_b) => layer_a.getZIndex() - layer_b.getZIndex());
   layers = layers.slice().reverse();
 
   layers.forEach((layer) => {
     if (layer.getVisible()) {
-      goog.asserts.assert(viewResolution !== undefined);
+      googAsserts.assert(viewResolution !== undefined);
       this.encodeLayer(object.layers, layer, viewResolution);
     }
   });
@@ -189,12 +189,12 @@ ngeo.print.Service.prototype.encodeMap_ = function(map, scale, object) {
  * @param {ol.layer.Base} layer Layer.
  * @param {number} resolution Resolution.
  */
-ngeo.print.Service.prototype.encodeLayer = function(arr, layer, resolution) {
-  if (layer instanceof ol.layer.Image) {
+exports.prototype.encodeLayer = function(arr, layer, resolution) {
+  if (layer instanceof olLayerImage) {
     this.encodeImageLayer_(arr, layer);
-  } else if (layer instanceof ol.layer.Tile) {
+  } else if (layer instanceof olLayerTile) {
     this.encodeTileLayer_(arr, layer);
-  } else if (layer instanceof ol.layer.Vector) {
+  } else if (layer instanceof olLayerVector) {
     this.vectorEncoder_.encodeVectorLayer(arr, layer, resolution);
   }
 };
@@ -205,10 +205,10 @@ ngeo.print.Service.prototype.encodeLayer = function(arr, layer, resolution) {
  * @param {ol.layer.Image} layer Layer.
  * @private
  */
-ngeo.print.Service.prototype.encodeImageLayer_ = function(arr, layer) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Image);
+exports.prototype.encodeImageLayer_ = function(arr, layer) {
+  googAsserts.assertInstanceof(layer, olLayerImage);
   const source = layer.getSource();
-  if (source instanceof ol.source.ImageWMS) {
+  if (source instanceof olSourceImageWMS) {
     this.encodeImageWmsLayer_(arr, layer);
   }
 };
@@ -219,11 +219,11 @@ ngeo.print.Service.prototype.encodeImageLayer_ = function(arr, layer) {
  * @param {ol.layer.Image} layer Layer.
  * @private
  */
-ngeo.print.Service.prototype.encodeImageWmsLayer_ = function(arr, layer) {
+exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
-  goog.asserts.assertInstanceof(layer, ol.layer.Image);
-  goog.asserts.assertInstanceof(source, ol.source.ImageWMS);
+  googAsserts.assertInstanceof(layer, olLayerImage);
+  googAsserts.assertInstanceof(source, olSourceImageWMS);
 
   const url = source.getUrl();
   if (url !== undefined) {
@@ -240,7 +240,7 @@ ngeo.print.Service.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  * @param {Object} params Url parameters
  * @private
  */
-ngeo.print.Service.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
+exports.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   if (url.startsWith('//')) {
     url = window.location.protocol  + url;
   }
@@ -264,7 +264,7 @@ ngeo.print.Service.prototype.encodeWmsLayer_ = function(arr, opacity, url, param
   delete customParams['VERSION'];
 
   const object = /** @type {MapFishPrintWmsLayer} */ ({
-    baseURL: ngeo.print.Service.getAbsoluteUrl_(url_url.origin + url_url.pathname),
+    baseURL: exports.getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
@@ -283,7 +283,7 @@ ngeo.print.Service.prototype.encodeWmsLayer_ = function(arr, opacity, url, param
  * @return {string} Absolute URL.
  * @private
  */
-ngeo.print.Service.getAbsoluteUrl_ = function(url) {
+exports.getAbsoluteUrl_ = function(url) {
   const a = document.createElement('a');
   a.href = encodeURI(url);
   return decodeURI(a.href);
@@ -295,12 +295,12 @@ ngeo.print.Service.getAbsoluteUrl_ = function(url) {
  * @param {ol.layer.Tile} layer Layer.
  * @private
  */
-ngeo.print.Service.prototype.encodeTileLayer_ = function(arr, layer) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Tile);
+exports.prototype.encodeTileLayer_ = function(arr, layer) {
+  googAsserts.assertInstanceof(layer, olLayerTile);
   const source = layer.getSource();
-  if (source instanceof ol.source.WMTS) {
+  if (source instanceof olSourceWMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
-  } else if (source instanceof ol.source.TileWMS) {
+  } else if (source instanceof olSourceTileWMS) {
     this.encodeTileWmsLayer_(arr, layer);
   }
 };
@@ -311,14 +311,14 @@ ngeo.print.Service.prototype.encodeTileLayer_ = function(arr, layer) {
  * @param {ol.layer.Tile} layer Layer.
  * @private
  */
-ngeo.print.Service.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
-  goog.asserts.assertInstanceof(layer, ol.layer.Tile);
+exports.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
+  googAsserts.assertInstanceof(layer, olLayerTile);
   const source = layer.getSource();
-  goog.asserts.assertInstanceof(source, ol.source.WMTS);
+  googAsserts.assertInstanceof(source, olSourceWMTS);
 
   const projection = source.getProjection();
   const tileGrid = source.getTileGrid();
-  goog.asserts.assertInstanceof(tileGrid, ol.tilegrid.WMTS);
+  googAsserts.assertInstanceof(tileGrid, olTilegridWMTS);
   const matrixIds = tileGrid.getMatrixIds();
 
   /** @type {Array.<MapFishPrintWmtsMatrix>} */
@@ -330,7 +330,7 @@ ngeo.print.Service.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
       identifier: matrixIds[i],
       scaleDenominator: tileGrid.getResolution(i) *
           projection.getMetersPerUnit() / 0.28E-3,
-      tileSize: ol.size.toSize(tileGrid.getTileSize(i)),
+      tileSize: olSize.toSize(tileGrid.getTileSize(i)),
       topLeftCorner: tileGrid.getOrigin(i),
       matrixSize: [
         tileRange.maxX - tileRange.minX,
@@ -366,11 +366,11 @@ ngeo.print.Service.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
  * @param {ol.layer.Tile} layer Layer.
  * @private
  */
-ngeo.print.Service.prototype.encodeTileWmsLayer_ = function(arr, layer) {
+exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
-  goog.asserts.assertInstanceof(layer, ol.layer.Tile);
-  goog.asserts.assertInstanceof(source, ol.source.TileWMS);
+  googAsserts.assertInstanceof(layer, olLayerTile);
+  googAsserts.assertInstanceof(source, olSourceTileWMS);
 
   this.encodeWmsLayer_(
     arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
@@ -383,10 +383,10 @@ ngeo.print.Service.prototype.encodeTileWmsLayer_ = function(arr, layer) {
  * @return {string} URL.
  * @private
  */
-ngeo.print.Service.prototype.getWmtsUrl_ = function(source) {
+exports.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
-  goog.asserts.assert(urls.length > 0);
-  return ngeo.print.Service.getAbsoluteUrl_(urls[0]);
+  googAsserts.assert(urls.length > 0);
+  return exports.getAbsoluteUrl_(urls[0]);
 };
 
 
@@ -397,7 +397,7 @@ ngeo.print.Service.prototype.getWmtsUrl_ = function(source) {
  * @return {angular.$http.HttpPromise} HTTP promise.
  * @export
  */
-ngeo.print.Service.prototype.createReport = function(printSpec, opt_httpConfig) {
+exports.prototype.createReport = function(printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
   const url = `${this.url_}/report.${format}`;
   const httpConfig = /** @type {!angular.$http.Config} */ ({
@@ -405,7 +405,7 @@ ngeo.print.Service.prototype.createReport = function(printSpec, opt_httpConfig) 
       'Content-Type': 'application/json; charset=UTF-8'
     }
   });
-  ol.obj.assign(httpConfig,
+  olObj.assign(httpConfig,
     opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };
@@ -418,7 +418,7 @@ ngeo.print.Service.prototype.createReport = function(printSpec, opt_httpConfig) 
  * @return {angular.$http.HttpPromise} HTTP promise.
  * @export
  */
-ngeo.print.Service.prototype.getStatus = function(ref, opt_httpConfig) {
+exports.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
     /** @type {angular.$http.Config} */ ({});
   const url = `${this.url_}/status/${ref}.json`;
@@ -432,7 +432,7 @@ ngeo.print.Service.prototype.getStatus = function(ref, opt_httpConfig) {
  * @return {string} The report URL for this ref.
  * @export
  */
-ngeo.print.Service.prototype.getReportUrl = function(ref) {
+exports.prototype.getReportUrl = function(ref) {
   return `${this.url_}/report/${ref}`;
 };
 
@@ -442,7 +442,7 @@ ngeo.print.Service.prototype.getReportUrl = function(ref) {
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
  * @return {angular.$http.HttpPromise} HTTP promise.
  */
-ngeo.print.Service.prototype.getCapabilities = function(opt_httpConfig) {
+exports.prototype.getCapabilities = function(opt_httpConfig) {
   const httpConfig =
     opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.$http.Config} */ ({
       withCredentials: true
@@ -460,21 +460,25 @@ ngeo.print.Service.prototype.getCapabilities = function(opt_httpConfig) {
  * @ngdoc service
  * @ngname ngeoCreatePrint
  */
-ngeo.print.Service.createPrintServiceFactory = function($http, ngeoLayerHelper) {
+exports.createPrintServiceFactory = function($http, ngeoLayerHelper) {
   return (
     /**
      * @param {string} url URL to MapFish print service.
      */
     function(url) {
-      return new ngeo.print.Service(url, $http, ngeoLayerHelper);
-    });
+      return new exports(url, $http, ngeoLayerHelper);
+    }
+  );
 };
 
 /**
  * @type {!angular.Module}
  */
-ngeo.print.Service.module = angular.module('ngeoPrint', [
-  ngeo.map.LayerHelper.module.name
+exports.module = angular.module('ngeoPrint', [
+  ngeoMapLayerHelper.module.name
 ]);
-ngeo.print.Service.module.service('ngeoPrintService', ngeo.print.Service);
-ngeo.print.Service.module.factory('ngeoCreatePrint', ngeo.print.Service.createPrintServiceFactory);
+exports.module.service('ngeoPrintService', exports);
+exports.module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
+
+
+export default exports;

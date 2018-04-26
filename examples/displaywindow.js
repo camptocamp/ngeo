@@ -1,13 +1,16 @@
-goog.provide('app.displaywindow');
+/**
+ * @module app.displaywindow
+ */
+const exports = {};
 
-// webpack: import './displaywindow.css';
-// webpack: import 'jquery-ui/ui/widgets/draggable.js';
-goog.require('ngeo.message.displaywindowComponent');
+import './displaywindow.css';
+import 'jquery-ui/ui/widgets/draggable.js';
+import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
 
 /** @type {!angular.Module} **/
-app.displaywindow.module = angular.module('app', [
-  ngeo.message.displaywindowComponent.name
+exports.module = angular.module('app', [
+  ngeoMessageDisplaywindowComponent.name
 ]);
 
 
@@ -16,7 +19,7 @@ app.displaywindow.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.displaywindow.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * @type {string}
@@ -94,4 +97,7 @@ app.displaywindow.MainController = function($scope) {
 };
 
 
-app.displaywindow.module.controller('MainController', app.displaywindow.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

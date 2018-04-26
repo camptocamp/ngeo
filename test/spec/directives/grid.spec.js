@@ -1,4 +1,4 @@
-goog.require('ngeo.grid.Config');
+import ngeoGridConfig from 'ngeo/grid/Config.js';
 
 describe('ngeo.grid.component', () => {
 
@@ -57,7 +57,7 @@ describe('ngeo.grid.component', () => {
     ];
 
     const data = {
-      configuration: new ngeo.grid.Config(gridConfigData, columnDefs)
+      configuration: new ngeoGridConfig(gridConfigData, columnDefs)
     };
     gridController = $controller(
       'ngeoGridController', {$scope}, data);

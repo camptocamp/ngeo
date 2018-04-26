@@ -1,12 +1,12 @@
-goog.provide('gmf.datasource.Helper');
+/**
+ * @module gmf.datasource.Helper
+ */
+import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import * as olArray from 'ol/array.js';
 
-goog.require('gmf.editing.EnumerateAttribute');
-goog.require('ngeo.datasource.Helper');
-goog.require('ngeo.format.AttributeType');
-goog.require('ol.array');
-
-
-gmf.datasource.Helper = class {
+const exports = class {
 
   /**
    * A service that provides utility methods to manipulate or get GMF data
@@ -104,15 +104,15 @@ gmf.datasource.Helper = class {
       if (enumAttributes && enumAttributes.length) {
         const promises = [];
         for (const attribute of attributes) {
-          if (ol.array.includes(enumAttributes, attribute.name) &&
-             attribute.type !== ngeo.format.AttributeType.SELECT &&
+          if (olArray.includes(enumAttributes, attribute.name) &&
+             attribute.type !== ngeoFormatAttributeType.SELECT &&
              (!attribute.choices || !attribute.choices.length)) {
             promises.push(
               this.gmfEnumerateAttribute_.getAttributeValues(
                 dataSource, attribute.name
               ).then((values) => {
                 const choices = values.map(choice => choice.value);
-                attribute.type = ngeo.format.AttributeType.SELECT;
+                attribute.type = ngeoFormatAttributeType.SELECT;
                 attribute.choices = choices;
               })
             );
@@ -135,8 +135,11 @@ gmf.datasource.Helper = class {
 /**
  * @type {!angular.Module}
  */
-gmf.datasource.Helper.module = angular.module('gmfDataSourcesHelper', [
-  ngeo.datasource.Helper.module.name,
-  gmf.editing.EnumerateAttribute.module.name,
+exports.module = angular.module('gmfDataSourcesHelper', [
+  ngeoDatasourceHelper.module.name,
+  gmfEditingEnumerateAttribute.module.name,
 ]);
-gmf.datasource.Helper.module.service('gmfDataSourcesHelper', gmf.datasource.Helper);
+exports.module.service('gmfDataSourcesHelper', exports);
+
+
+export default exports;

@@ -1,24 +1,23 @@
-goog.provide('gmf.layertree.datasourceGroupTreeComponent');
-
-goog.require('gmf'); // nowebpack
-goog.require('ngeo.datasource.DataSources');
-goog.require('ol');
-
+/**
+ * @module gmf.layertree.datasourceGroupTreeComponent
+ */
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import * as olBase from 'ol/index.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.layertree.datasourceGroupTreeComponent = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
-  ngeo.datasource.DataSources.module.name,
+const exports = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
+  ngeoDatasourceDataSources.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
+});
 
 
-gmf.layertree.datasourceGroupTreeComponent.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
+exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -26,8 +25,7 @@ gmf.layertree.datasourceGroupTreeComponent.value('gmfLayertreeDatasourceGroupTre
   ($attrs) => {
     const templateUrl = $attrs['gmfLayertreeDatasourceGroupTreeTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/layertree/datasourceGroupTreeComponent.html`; // nowebpack
-    // webpack: 'gmf/layertree/datasourceGroupTreeComponent';
+      'gmf/layertree/datasourceGroupTreeComponent';
   });
 
 
@@ -44,7 +42,7 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 /**
  * @private
  */
-gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -87,7 +85,7 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
    * @export
    */
   getGroupUid() {
-    return `datasourcegrouptree-${ol.getUid(this.group)}`;
+    return `datasourcegrouptree-${olBase.getUid(this.group)}`;
   }
 
   /**
@@ -131,10 +129,13 @@ gmf.layertree.datasourceGroupTreeComponent.Controller_ = class {
 };
 
 
-gmf.layertree.datasourceGroupTreeComponent.component('gmfDatasourcegrouptree', {
+exports.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<'
   },
-  controller: gmf.layertree.datasourceGroupTreeComponent.Controller_,
+  controller: exports.Controller_,
   templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl
 });
+
+
+export default exports;

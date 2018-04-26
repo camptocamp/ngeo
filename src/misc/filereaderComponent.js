@@ -1,10 +1,10 @@
-goog.provide('ngeo.misc.filereaderComponent');
-
-
+/**
+ * @module ngeo.misc.filereaderComponent
+ */
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.filereaderComponent = angular.module('ngeoFilereader', []);
+const exports = angular.module('ngeoFilereader', []);
 
 /**
  * This directive is to used on an input file element. When a file is selected
@@ -28,7 +28,7 @@ ngeo.misc.filereaderComponent = angular.module('ngeoFilereader', []);
  * @ngdoc directive
  * @ngname ngeoFilereader
  */
-ngeo.misc.filereaderComponent.component_ = function($window) {
+exports.component_ = function($window) {
   return {
     restrict: 'A',
     scope: {
@@ -65,5 +65,8 @@ ngeo.misc.filereaderComponent.component_ = function($window) {
 };
 
 
-ngeo.misc.filereaderComponent.directive('ngeoFilereader',
-  ngeo.misc.filereaderComponent.component_);
+exports.directive('ngeoFilereader',
+  exports.component_);
+
+
+export default exports;

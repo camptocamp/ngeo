@@ -1,7 +1,8 @@
-goog.provide('gmf.authentication.Service');
-
-goog.require('ngeo.CustomEvent');
-goog.require('ol.events.EventTarget');
+/**
+ * @module gmf.authentication.Service
+ */
+import ngeoCustomEvent from 'ngeo/CustomEvent.js';
+import olEventsEventTarget from 'ol/events/EventTarget.js';
 
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
@@ -17,7 +18,7 @@ goog.require('ol.events.EventTarget');
  *
  * @extends {ol.events.EventTarget}
  */
-gmf.authentication.Service = class extends ol.events.EventTarget {
+const exports = class extends olEventsEventTarget {
 
   /**
    * @param {angular.$http} $http Angular http service.
@@ -75,7 +76,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
    * @private
    */
   load_() {
-    const url = `${this.baseUrl_}/${gmf.authentication.Service.RouteSuffix.IS_LOGGED_IN}`;
+    const url = `${this.baseUrl_}/${exports.RouteSuffix.IS_LOGGED_IN}`;
     this.$http_.get(url, {withCredentials: true}).then(
       this.handleLogin_.bind(this, true)
     );
@@ -89,7 +90,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
    * @export
    */
   changePassword(oldPwd, newPwd, confPwd) {
-    const url = `${this.baseUrl_}/${gmf.authentication.Service.RouteSuffix.CHANGE_PASSWORD}`;
+    const url = `${this.baseUrl_}/${exports.RouteSuffix.CHANGE_PASSWORD}`;
 
     return this.$http_.post(url, $.param({
       'oldPassword': oldPwd,
@@ -111,7 +112,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
    * @export
    */
   login(login, pwd) {
-    const url = `${this.baseUrl_}/${gmf.authentication.Service.RouteSuffix.LOGIN}`;
+    const url = `${this.baseUrl_}/${exports.RouteSuffix.LOGIN}`;
 
     return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -126,7 +127,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
    */
   logout() {
     const noReload = this.user_['role_name'] === this.noReloadRole_;
-    const url = `${this.baseUrl_}/${gmf.authentication.Service.RouteSuffix.LOGOUT}`;
+    const url = `${this.baseUrl_}/${exports.RouteSuffix.LOGOUT}`;
     return this.$http_.get(url, {withCredentials: true}).then(() => {
       this.resetUser_(noReload);
     });
@@ -138,7 +139,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
    * @export
    */
   resetPassword(login) {
-    const url = `${this.baseUrl_}/${gmf.authentication.Service.RouteSuffix.RESET_PASSWORD}`;
+    const url = `${this.baseUrl_}/${exports.RouteSuffix.RESET_PASSWORD}`;
 
     /**
      * @param {angular.$http.Response} resp Ajax response.
@@ -180,7 +181,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
     this.setUser_(respData, !checkingLoginStatus);
     if (checkingLoginStatus) {
       /** @type {gmfx.AuthenticationEvent} */
-      const event = new ngeo.CustomEvent('ready', {user: this.user_});
+      const event = new ngeoCustomEvent('ready', {user: this.user_});
       this.dispatchEvent(event);
     }
     return resp;
@@ -197,7 +198,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
     }
     if (emitEvent && respData.username !== undefined) {
       /** @type {gmfx.AuthenticationEvent} */
-      const event = new ngeo.CustomEvent('login', {user: this.user_});
+      const event = new ngeoCustomEvent('login', {user: this.user_});
       this.dispatchEvent(event);
     }
   }
@@ -213,7 +214,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
       this.user_[key] = null;
     }
     /** @type {gmfx.AuthenticationEvent} */
-    const event = new ngeo.CustomEvent('logout', {user: this.user_});
+    const event = new ngeoCustomEvent('logout', {user: this.user_});
     this.dispatchEvent(event);
     if (!noReload) {
       this.load_();
@@ -224,7 +225,7 @@ gmf.authentication.Service = class extends ol.events.EventTarget {
 /**
  * @enum {string}
  */
-gmf.authentication.Service.RouteSuffix = {
+exports.RouteSuffix = {
   CHANGE_PASSWORD: 'loginchange',
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',
@@ -235,13 +236,16 @@ gmf.authentication.Service.RouteSuffix = {
 /**
  * @type {!angular.Module}
  */
-gmf.authentication.Service.module = angular.module('gmfAuthenticationService', []);
-gmf.authentication.Service.module.service('gmfAuthenticationService', gmf.authentication.Service);
+exports.module = angular.module('gmfAuthenticationService', []);
+exports.module.service('gmfAuthenticationService', exports);
 
-gmf.authentication.Service.module.value('gmfUser', {
+exports.module.value('gmfUser', {
   'functionalities': null,
   'is_password_changed': null,
   'role_id': null,
   'role_name': null,
   'username': null
 });
+
+
+export default exports;

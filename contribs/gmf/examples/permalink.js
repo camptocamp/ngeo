@@ -1,33 +1,37 @@
-goog.provide('gmfapp.permalink');
+/**
+ * @module gmfapp.permalink
+ */
+const exports = {};
 
-// webpack: import './permalink.css';
+import './permalink.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.RegularShape');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.permalink.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.map.component.name,
+  gmfMapComponent.name,
 ]);
 
-gmfapp.permalink.module.constant('defaultTheme', 'Demo');
-gmfapp.permalink.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-gmfapp.permalink.module.value('gmfPermalinkOptions',
+exports.module.value('gmfPermalinkOptions',
   /** @type {gmfx.PermalinkOptions} */ ({
-    crosshairStyle: new ol.style.Style({
-      image: new ol.style.RegularShape({
-        stroke: new ol.style.Stroke({
+    crosshairStyle: new olStyleStyle({
+      image: new olStyleRegularShape({
+        stroke: new olStyleStroke({
           color: 'rgba(0, 0, 255, 1)',
           width: 2
         }),
@@ -43,18 +47,18 @@ gmfapp.permalink.module.value('gmfPermalinkOptions',
  * @constructor
  * @ngInject
  */
-gmfapp.permalink.MainController = function() {
+exports.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
@@ -63,4 +67,7 @@ gmfapp.permalink.MainController = function() {
   });
 };
 
-gmfapp.permalink.module.controller('MainController', gmfapp.permalink.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,13 +1,13 @@
-goog.provide('ngeo.map.resizemap');
-
-goog.require('goog.asserts');
-goog.require('ol.Map');
-
+/**
+ * @module ngeo.map.resizemap
+ */
+import googAsserts from 'goog/asserts.js';
+import olMap from 'ol/Map.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.map.resizemap = angular.module('ngeoResizemap', []);
+const exports = angular.module('ngeoResizemap', []);
 
 /**
  * Provides a directive that resizes the map in an animation loop
@@ -30,7 +30,7 @@ ngeo.map.resizemap = angular.module('ngeoResizemap', []);
  * @ngdoc directive
  * @ngname ngeoResizemap
  */
-ngeo.map.resizemap.directive_ = function($window) {
+exports.directive_ = function($window) {
   const /** @type {number} */ duration = 1000;
 
   return {
@@ -44,10 +44,10 @@ ngeo.map.resizemap.directive_ = function($window) {
       const attr = 'ngeoResizemap';
       const prop = attrs[attr];
       const map = scope.$eval(prop);
-      goog.asserts.assertInstanceof(map, ol.Map);
+      googAsserts.assertInstanceof(map, olMap);
 
       const stateExpr = attrs['ngeoResizemapState'];
-      goog.asserts.assert(stateExpr !== undefined);
+      googAsserts.assert(stateExpr !== undefined);
 
       let start;
       let animationDelayKey;
@@ -80,4 +80,7 @@ ngeo.map.resizemap.directive_ = function($window) {
 };
 
 
-ngeo.map.resizemap.directive('ngeoResizemap', ngeo.map.resizemap.directive_);
+exports.directive('ngeoResizemap', exports.directive_);
+
+
+export default exports;

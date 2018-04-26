@@ -1,37 +1,39 @@
-goog.provide('ngeo.filter.component');
+/**
+ * @module ngeo.filter.component
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo'); // nowebpack
-goog.require('ngeo.query.MapQuerent');
-goog.require('ngeo.filter.Condition');
 /** @suppress {extraRequire} */
-goog.require('ngeo.filter.ruleComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filter.RuleHelper');
-goog.require('ngeo.format.AttributeType');
-goog.require('ngeo.rule.Geometry');
-goog.require('ngeo.map.FeatureOverlay');
-goog.require('ol');
-goog.require('ol.array');
+import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
 
+/** @suppress {extraRequire} */
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
+
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
+import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
+import * as olBase from 'ol/index.js';
+import * as olArray from 'ol/array.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.filter.component = angular.module('ngeoFilter', [
-  ngeo.filter.RuleHelper.module.name,
-  ngeo.filter.ruleComponent.name,
-  ngeo.map.FeatureOverlay.module.name,
-  ngeo.query.MapQuerent.module.name,
+const exports = angular.module('ngeoFilter', [
+  ngeoFilterRuleHelper.module.name,
+  ngeoFilterRuleComponent.name,
+  ngeoMapFeatureOverlay.module.name,
+  ngeoQueryMapQuerent.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/filter', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/filter', require('./component.html'));
+});
 
 
-ngeo.filter.component.value('ngeoFilterTemplateUrl',
+exports.value('ngeoFilterTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -39,8 +41,7 @@ ngeo.filter.component.value('ngeoFilterTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs['ngeoFilterTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/filter/component.html`; // nowebpack
-    // webpack: 'ngeo/filter';
+      'ngeo/filter';
   });
 
 /**
@@ -54,7 +55,7 @@ function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
 }
 
 
-ngeo.filter.component.component('ngeoFilter', {
+exports.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
     'customRules': '<',
@@ -73,7 +74,7 @@ ngeo.filter.component.component('ngeoFilter', {
 /**
  * @private
  */
-ngeo.filter.component.FilterController_ = class {
+exports.FilterController_ = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
@@ -177,15 +178,15 @@ ngeo.filter.component.FilterController_ = class {
     this.conditions = [
       {
         text: gettextCatalog.getString('All'),
-        value: ngeo.filter.Condition.AND
+        value: ngeoFilterCondition.AND
       },
       {
         text: gettextCatalog.getString('At least one'),
-        value: ngeo.filter.Condition.OR
+        value: ngeoFilterCondition.OR
       },
       {
         text: gettextCatalog.getString('None'),
-        value: ngeo.filter.Condition.NOT
+        value: ngeoFilterCondition.NOT
       }
     ];
 
@@ -225,9 +226,9 @@ ngeo.filter.component.FilterController_ = class {
     );
 
     // (1) Separate the attributes in 2: geometry and the others.
-    const attributes = goog.asserts.assert(this.datasource.attributes);
+    const attributes = googAsserts.assert(this.datasource.attributes);
     for (const attribute of attributes) {
-      if (attribute.type === ngeo.format.AttributeType.GEOMETRY) {
+      if (attribute.type === ngeoFormatAttributeType.GEOMETRY) {
         this.geometryAttributes.push(attribute);
       } else {
         this.otherAttributes.push(attribute);
@@ -311,7 +312,7 @@ ngeo.filter.component.FilterController_ = class {
       filterRules: filterRules,
       srsName: projCode
     });
-    goog.asserts.assert(filter);
+    googAsserts.assert(filter);
 
     this.ngeoMapQuerent_.issue({
       dataSources: [dataSource],
@@ -377,7 +378,7 @@ ngeo.filter.component.FilterController_ = class {
   removeCustomRule(rule) {
     rule.active = false;
     this.timeout_(() => {
-      ol.array.remove(this.customRules, rule);
+      olArray.remove(this.customRules, rule);
       this.unregisterRule_(rule);
       rule.destroy();
     });
@@ -388,13 +389,13 @@ ngeo.filter.component.FilterController_ = class {
    * @export
    */
   registerRule_(rule) {
-    const uid = ol.getUid(rule);
+    const uid = olBase.getUid(rule);
     this.ruleUnlisteners_[uid] = this.scope_.$watch(
       () => rule.active,
       this.handleRuleActiveChange_.bind(this)
     );
 
-    if (rule instanceof ngeo.rule.Geometry) {
+    if (rule instanceof ngeoRuleGeometry) {
       this.featureOverlay.addFeature(rule.feature);
     }
   }
@@ -404,13 +405,13 @@ ngeo.filter.component.FilterController_ = class {
    * @export
    */
   unregisterRule_(rule) {
-    const uid = ol.getUid(rule);
+    const uid = olBase.getUid(rule);
     const unlistener = this.ruleUnlisteners_[uid];
-    goog.asserts.assert(unlistener);
+    googAsserts.assert(unlistener);
     unlistener();
     delete this.ruleUnlisteners_[uid];
 
-    if (rule instanceof ngeo.rule.Geometry) {
+    if (rule instanceof ngeoRuleGeometry) {
       this.featureOverlay.removeFeature(rule.feature);
     }
   }
@@ -452,4 +453,7 @@ ngeo.filter.component.FilterController_ = class {
 
 };
 
-ngeo.filter.component.controller('ngeoFilterController', ngeo.filter.component.FilterController_);
+exports.controller('ngeoFilterController', exports.FilterController_);
+
+
+export default exports;

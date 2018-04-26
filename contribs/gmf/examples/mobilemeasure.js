@@ -1,38 +1,43 @@
-goog.provide('gmfapp.mobilemeasure');
+/**
+ * @module gmfapp.mobilemeasure
+ */
+const exports = {};
 
-// webpack: import './mobilemeasure.css';
+import './mobilemeasure.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
+import gmfMapComponent from 'gmf/map/component.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.permalink.Permalink');
-goog.require('gmf.mobile.measure.lengthComponent');
-goog.require('gmf.mobile.measure.pointComponent');
-goog.require('ngeo.misc.btnComponent');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.control.ScaleLine');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+
+import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
+import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olControlScaleLine from 'ol/control/ScaleLine.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.mobilemeasure.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.map.component.name,
-  gmf.permalink.Permalink.module.name,
-  gmf.mobile.measure.lengthComponent.name,
-  gmf.mobile.measure.pointComponent.name,
-  ngeo.misc.btnComponent.name,
+  gmfMapComponent.name,
+  gmfPermalinkPermalink.module.name,
+  gmfMobileMeasureLengthComponent.name,
+  gmfMobileMeasurePointComponent.name,
+  ngeoMiscBtnComponent.name,
 ]);
 
 
-gmfapp.mobilemeasure.module.value(
+exports.module.value(
   'gmfRasterUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
 
-gmfapp.mobilemeasure.module.constant('defaultTheme', 'Demo');
-gmfapp.mobilemeasure.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -40,7 +45,7 @@ gmfapp.mobilemeasure.module.constant('angularLocaleScript', '../build/angular-lo
  * @constructor
  * @ngInject
  */
-gmfapp.mobilemeasure.MainController = function(gmfPermalink) {
+exports.MainController = function(gmfPermalink) {
 
   const center = gmfPermalink.getMapCenter() || [537635, 152640];
   const zoom = gmfPermalink.getMapZoom() || 3;
@@ -49,13 +54,13 @@ gmfapp.mobilemeasure.MainController = function(gmfPermalink) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: center,
@@ -63,7 +68,7 @@ gmfapp.mobilemeasure.MainController = function(gmfPermalink) {
     })
   });
 
-  this.map.addControl(new ol.control.ScaleLine());
+  this.map.addControl(new olControlScaleLine());
 
   /**
    * @type {boolean}
@@ -89,4 +94,7 @@ gmfapp.mobilemeasure.MainController = function(gmfPermalink) {
 };
 
 
-gmfapp.mobilemeasure.module.controller('MainController', gmfapp.mobilemeasure.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

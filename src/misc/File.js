@@ -1,6 +1,6 @@
-goog.provide('ngeo.misc.File');
-
-
+/**
+ * @module ngeo.misc.File
+ */
 /**
  * @constructor
  * @param {angular.$q} $q .
@@ -8,7 +8,7 @@ goog.provide('ngeo.misc.File');
  * @param {gettext} gettext .
  * @ngInject
  */
-ngeo.misc.File = function($q, $http, gettext) {
+const exports = function($q, $http, gettext) {
   let fileReader, canceler;
 
   // Test the validity of the file size
@@ -90,6 +90,9 @@ ngeo.misc.File = function($q, $http, gettext) {
   };
 };
 
-ngeo.misc.File.module = angular.module('ngeoFile', []);
+exports.module = angular.module('ngeoFile', []);
 
-ngeo.misc.File.module.service('ngeoFile', ngeo.misc.File);
+exports.module.service('ngeoFile', exports);
+
+
+export default exports;

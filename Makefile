@@ -84,8 +84,10 @@ endif
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := $(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
+BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := \
+	$(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
+
 EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/angular.min.js \
 	.build/examples-hosted/lib/angular-animate.min.js \
@@ -209,18 +211,14 @@ help:
 	@echo "- apidoc                  Build the API documentation using JSDoc"
 	@echo "- examples-hosted         Build the hosted examples"
 	@echo "- lint                    Check the code with the linter"
-	@echo "- dist                    Compile the lib into an ngeo.js standalone build (in dist/)"
 	@echo "- gh-pages                Update the GitHub pages"
 	@echo
 
 .PHONY: apidoc
 apidoc: .build/apidoc
 
-.PHONY: dist
-dist: dist/ngeo.js dist/gmf.js
-
 .PHONY: check
-check: lint check-googs check-examples-checker check-examples test dist build-gmf-apps
+check: lint check-googs check-examples-checker check-examples test build-gmf-apps
 
 .PHONY: check-googs
 check-googs:
@@ -259,13 +257,12 @@ eof-newline:
 	buildtools/test-eof-newline
 
 .PHONY: test
-test: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
+test: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
-	@cat .build/coverage/coverage.txt
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
-test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/templatecache.js .build/gmftemplatecache.js .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
+test-debug: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
@@ -326,45 +323,6 @@ gh-pages:
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
-dist/ngeo.js: .build/ngeo.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js --config $< --output $@
-	echo '//# sourceMappingURL=ngeo.js.map' >> $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/ngeo.js
-	@$(STAT_COMPRESSED) /tmp/ngeo.js.gz
-	@rm /tmp/ngeo.js.gz
-
-dist/ngeo.js.map: dist/ngeo.js
-
-# At this point ngeo does not include its own CSS, so dist/ngeo.css is just
-# a minified version of ol.css. This will change in the future.
-dist/ngeo.css: node_modules/openlayers/css/ol.css .build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	./node_modules/.bin/cleancss $< > $@
-
-dist/gmf.js: .build/gmf.json \
-		$(EXTERNS_FILES) \
-		$(SRC_JS_FILES) \
-		$(GMF_SRC_JS_FILES) \
-		.build/gmftemplatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js --config $< --output $@
-	echo '//# sourceMappingURL=gmf.js.map' >> $@
-	@$(STAT_UNCOMPRESSED) $@
-	@cp $@ /tmp/
-	@gzip /tmp/gmf.js
-	@$(STAT_COMPRESSED) /tmp/gmf.js.gz
-	@rm /tmp/gmf.js.gz
-
-dist/gmf.js.map: dist/gmf.js
-
 .PRECIOUS: .build/examples/%.js
 .build/examples/%.js: .build/examples/%.json \
 		$(SRC_JS_FILES) \
@@ -387,11 +345,6 @@ dist/gmf.js.map: dist/gmf.js
 	mkdir -p $(dir $@)
 	node buildtools/build.js --config $< --output $@
 	echo '//# sourceMappingURL=$*.js.map' >> $@
-
-.PRECIOUS: .build/examples-hosted/lib/%.css
-.build/examples-hosted/lib/%.css: dist/%.css
-	mkdir -p $(dir $@)
-	cp $< $@
 
 .build/examples-hosted/lib/angular.min.js: node_modules/angular/angular.min.js
 	mkdir -p $(dir $@)
@@ -751,15 +704,13 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var lib=true \
-		--var src_set=ngeo \
-		--var source_map=dist/ngeo.js.map $< > $@
+		--var src_set=ngeo $< > $@
 
 .build/gmf.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
 	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
 		$(CLOSURE_VARS) \
 		--var lib=true \
-		--var src_set=contribs_gmf \
-		--var source_map=dist/gmf.js.map $< > $@
+		--var src_set=contribs_gmf $< > $@
 
 .PRECIOUS: .build/app-%.json
 .build/app-%.json: buildtools/mako_build.json $(PY_VENV_BIN)/mako-render
@@ -1003,9 +954,6 @@ clean:
 	rm -f .build/*.check.timestamp
 	rm -f .build/examples/*.js
 	rm -f .build/eslint.timestamp
-	rm -f .build/ol-deps.js
-	rm -f .build/ngeo-deps.js
-	rm -f .build/gmf-deps.js
 	rm -f .build/info.json
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
@@ -1019,7 +967,6 @@ clean:
 	rm -f .build/locale/gmf.pot
 	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
-	rm -f dist/*
 	rm -f $(EXTERNS_FILES)
 	rm -f $(ANGULAR_LOCALES_FILES)
 	rm -f contribs/gmf/fonts/FontAwesome.otf
@@ -1031,7 +978,6 @@ clean:
 .PHONY: cleanall
 cleanall: clean
 	rm -rf .build
-	rm -rf dist
 	rm -rf node_modules
 	rm -f .tx/config
 	rm -f $(L10N_PO_FILES)

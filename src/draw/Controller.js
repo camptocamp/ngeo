@@ -1,14 +1,17 @@
-goog.provide('ngeo.draw.Controller');
+/**
+ * @module ngeo.draw.Controller
+ */
+import googAsserts from 'goog/asserts.js';
 
-goog.require('goog.asserts');
 /** @suppress {extraRequire} */
-goog.require('ngeo.draw.features');
-goog.require('ngeo.format.FeatureProperties');
-goog.require('ngeo.GeometryType');
-goog.require('ngeo.misc.btnComponent');
-goog.require('ngeo.misc.decorate');
-goog.require('ngeo.misc.FeatureHelper');
-goog.require('ol.Feature');
+import ngeoDrawFeatures from 'ngeo/draw/features.js';
+
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import olFeature from 'ol/Feature.js';
 
 /**
  * @param {!angular.Scope} $scope Scope.
@@ -23,7 +26,7 @@ goog.require('ol.Feature');
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
+const exports = function($scope, $sce, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -146,11 +149,11 @@ ngeo.draw.Controller = function($scope, $sce, gettextCatalog,
  * @param {ol.interaction.Interaction} interaction Interaction to register.
  * @export
  */
-ngeo.draw.Controller.prototype.registerInteraction = function(
+exports.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
-  ngeo.misc.decorate.interaction(interaction);
+  ngeoMiscDecorate.interaction(interaction);
   this.map.addInteraction(interaction);
 };
 
@@ -162,7 +165,7 @@ ngeo.draw.Controller.prototype.registerInteraction = function(
  * @param {ol.Object.Event} event Event.
  * @export
  */
-ngeo.draw.Controller.prototype.handleActiveChange = function(event) {
+exports.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
@@ -174,7 +177,7 @@ ngeo.draw.Controller.prototype.handleActiveChange = function(event) {
  * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
-ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
+exports.prototype.handleDrawEnd = function(type, event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
@@ -183,27 +186,27 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
     // ngeox.MeasureEvent
     sketch = event.detail.feature;
   }
-  goog.asserts.assert(sketch);
+  googAsserts.assert(sketch);
 
   const azimut = sketch.get('azimut');
 
   const features = this.features || this.ngeoFeatures_;
 
-  const feature = new ol.Feature(sketch.getGeometry());
+  const feature = new olFeature(sketch.getGeometry());
 
-  const prop = ngeo.format.FeatureProperties;
+  const prop = ngeoFormatFeatureProperties;
 
   switch (type) {
-    case ngeo.GeometryType.CIRCLE:
+    case ngeoGeometryType.CIRCLE:
       feature.set(prop.IS_CIRCLE, true);
       if (azimut !== undefined) {
         feature.set(prop.AZIMUT, azimut);
       }
       break;
-    case ngeo.GeometryType.TEXT:
+    case ngeoGeometryType.TEXT:
       feature.set(prop.IS_TEXT, true);
       break;
-    case ngeo.GeometryType.RECTANGLE:
+    case ngeoGeometryType.RECTANGLE:
       feature.set(prop.IS_RECTANGLE, true);
       break;
     default:
@@ -219,7 +222,7 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
   /**
    * @type {string}
    */
-  const color = type !== ngeo.GeometryType.TEXT ? '#DB4436' : '#000000';
+  const color = type !== ngeoGeometryType.TEXT ? '#DB4436' : '#000000';
   feature.set(prop.COLOR, color);
 
   feature.set(prop.ANGLE, 0);
@@ -240,9 +243,12 @@ ngeo.draw.Controller.prototype.handleDrawEnd = function(type, event) {
 /**
  * @type {!angular.Module}
  */
-ngeo.draw.Controller.module = angular.module('ngeoDrawfeatureController', [
-  ngeo.draw.features.name,
-  ngeo.misc.btnComponent.name,
-  ngeo.misc.FeatureHelper.module.name,
+exports.module = angular.module('ngeoDrawfeatureController', [
+  ngeoDrawFeatures.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscFeatureHelper.module.name,
 ]);
-ngeo.draw.Controller.module.controller('ngeoDrawfeatureController', ngeo.draw.Controller);
+exports.module.controller('ngeoDrawfeatureController', exports);
+
+
+export default exports;

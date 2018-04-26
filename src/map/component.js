@@ -1,14 +1,14 @@
-goog.provide('ngeo.map.component');
-
-goog.require('goog.asserts');
-goog.require('ol.events');
-goog.require('ol.Map');
-
+/**
+ * @module ngeo.map.component
+ */
+import googAsserts from 'goog/asserts.js';
+import * as olEvents from 'ol/events.js';
+import olMap from 'ol/Map.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.map.component = angular.module('ngeoMap', []);
+const exports = angular.module('ngeoMap', []);
 
 
 /**
@@ -40,7 +40,7 @@ ngeo.map.component = angular.module('ngeoMap', []);
  * @ngname ngeoMap
  * @ngInject
  */
-ngeo.map.component.directive_ = function($window) {
+exports.directive_ = function($window) {
   return {
     restrict: 'A',
     /**
@@ -54,7 +54,7 @@ ngeo.map.component.directive_ = function($window) {
       const prop = attrs[attr];
 
       const map = scope.$eval(prop);
-      goog.asserts.assertInstanceof(map, ol.Map);
+      googAsserts.assertInstanceof(map, olMap);
 
       map.setTarget(element[0]);
 
@@ -74,7 +74,7 @@ ngeo.map.component.directive_ = function($window) {
         const resizeTransition = /** @type {number|undefined} */ (
           scope.$eval(resizeTransitionProp));
 
-        ol.events.listen(
+        olEvents.listen(
           $window,
           'resize',
           () => {
@@ -105,4 +105,7 @@ ngeo.map.component.directive_ = function($window) {
 };
 
 // Register the directive in the module
-ngeo.map.component.directive('ngeoMap', ngeo.map.component.directive_);
+exports.directive('ngeoMap', exports.directive_);
+
+
+export default exports;

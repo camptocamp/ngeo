@@ -1,7 +1,7 @@
-goog.provide('ngeo.misc.syncArrays');
-
-goog.require('goog.asserts');
-
+/**
+ * @module ngeo.misc.syncArrays
+ */
+import googAsserts from 'goog/asserts.js';
 
 /**
  * Provides a function that synchronizes two arrays, arr1 and
@@ -32,7 +32,7 @@ goog.require('goog.asserts');
  * @return {function()} Function to call to stop synchronization
  * @template T
  */
-ngeo.misc.syncArrays = function(arr1, arr2, reverse, scope, filter) {
+const exports = function(arr1, arr2, reverse, scope, filter) {
 
 
   // Update arr2 when elements are added to, or removed from, arr1.
@@ -66,14 +66,14 @@ ngeo.misc.syncArrays = function(arr1, arr2, reverse, scope, filter) {
           arr1[i] = arr2[j--];
         }
       }
-      goog.asserts.assert(j == -1);
+      googAsserts.assert(j == -1);
     } else {
       for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
         if (filter(arr1[i])) {
           arr1[i] = arr2[j++];
         }
       }
-      goog.asserts.assert(j == arr2.length);
+      googAsserts.assert(j == arr2.length);
     }
   });
 
@@ -82,3 +82,6 @@ ngeo.misc.syncArrays = function(arr1, arr2, reverse, scope, filter) {
     dereg2();
   };
 };
+
+
+export default exports;

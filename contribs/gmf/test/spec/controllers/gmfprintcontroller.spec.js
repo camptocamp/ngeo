@@ -1,6 +1,6 @@
-goog.require('gmf.test.data.printcapabilities');
-goog.require('ol.Map');
-goog.require('ol.View');
+import gmfTestDataPrintcapabilities from 'gmf/test/data/printcapabilities.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
 describe('GmfPrintController', () => {
 
@@ -17,14 +17,14 @@ describe('GmfPrintController', () => {
       $scope: $scope,
       gmfPrintUrl: ''
     });
-    gmfPrintCtrl.map = new ol.Map({
-      view: new ol.View({
+    gmfPrintCtrl.map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 4
       })
     });
     gmfPrintCtrl.map.setSize([100, 100]);
-    gmfPrintCtrl.parseCapabilities_({data: gmf.test.data.printcapabilities});
+    gmfPrintCtrl.parseCapabilities_({data: gmfTestDataPrintcapabilities});
   }));
 
   it('Set rotation', () => {

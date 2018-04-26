@@ -1,12 +1,16 @@
-goog.provide('ngeo.statemanager.module');
-
-goog.require('ngeo.statemanager.Location');
-goog.require('ngeo.statemanager.Service');
+/**
+ * @module ngeo.statemanager.module
+ */
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
+import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.statemanager.module = angular.module('ngeoStatemanagerModule', [
-  ngeo.statemanager.Location.module.name,
-  ngeo.statemanager.Service.module.name
+const exports = angular.module('ngeoStatemanagerModule', [
+  ngeoStatemanagerLocation.module.name,
+  ngeoStatemanagerService.module.name
 ]);
+
+
+export default exports;

@@ -1,26 +1,25 @@
-goog.provide('gmf.map.component');
-
-goog.require('gmf'); // nowebpack
-goog.require('gmf.permalink.Permalink');
-goog.require('gmf.editing.Snapping');
-goog.require('ngeo.map.component');
-goog.require('ngeo.map.FeatureOverlayMgr');
-
+/**
+ * @module gmf.map.component
+ */
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+import gmfEditingSnapping from 'gmf/editing/Snapping.js';
+import ngeoMapComponent from 'ngeo/map/component.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.map.component = angular.module('gmfMapComponent', [
-  gmf.permalink.Permalink.module.name,
-  gmf.editing.Snapping.module.name,
-  ngeo.map.component.name,
-  ngeo.map.FeatureOverlayMgr.module.name,
+const exports = angular.module('gmfMapComponent', [
+  gmfPermalinkPermalink.module.name,
+  gmfEditingSnapping.module.name,
+  ngeoMapComponent.name,
+  ngeoMapFeatureOverlayMgr.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/map', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/map', require('./component.html'));
+});
 
 
 /**
@@ -42,7 +41,7 @@ gmf.map.component = angular.module('gmfMapComponent', [
  * @ngdoc directive
  * @ngname gmfMap
  */
-gmf.map.component.directive_ = function() {
+exports.directive_ = function() {
   return {
     scope: {
       'map': '<gmfMapMap',
@@ -51,12 +50,11 @@ gmf.map.component.directive_ = function() {
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/map/component.html` // nowebpack
-    // webpack: templateUrl: 'gmf/map'
+    templateUrl: 'gmf/map'
   };
 };
 
-gmf.map.component.directive('gmfMap', gmf.map.component.directive_);
+exports.directive('gmfMap', exports.directive_);
 
 
 /**
@@ -69,7 +67,7 @@ gmf.map.component.directive('gmfMap', gmf.map.component.directive_);
  * @ngdoc controller
  * @ngname GmfMapController
  */
-gmf.map.component.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
+exports.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
 
   // Scope properties
 
@@ -117,11 +115,14 @@ gmf.map.component.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gm
 /**
  * Called on initialization of the controller.
  */
-gmf.map.component.Controller_.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
 };
 
 
-gmf.map.component.controller('GmfMapController', gmf.map.component.Controller_);
+exports.controller('GmfMapController', exports.Controller_);
+
+
+export default exports;

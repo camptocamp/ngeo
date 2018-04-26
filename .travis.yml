@@ -84,13 +84,11 @@ jobs:
     - JOB=webpack
     script:
     - npm install
-    - npm install https://api.github.com/repos/openlayers/openlayers/tarball/bfae19c7e138533ad0c1a071d8886d55aac9bd35
-    - buildtools/webpack-migration
     - git add -A  # for git-attributes
     - if [ "${TRAVIS_PULL_REQUEST}" == false ]; then export NODE_ENV=prod; else export NODE_ENV=dev; fi
     - TARGET=ngeo-examples node_modules/.bin/webpack --profile
     - TARGET=gmf-examples node_modules/.bin/webpack --profile
-    - TARGET=gmf-apps node_modules/.bin/webpack --profile
+#    - TARGET=gmf-apps node_modules/.bin/webpack --profile
     - export CHROME_BIN=/opt/google/chrome/chrome
     - export DISPLAY=:99.0
     - sh -e /etc/init.d/xvfb start
@@ -115,7 +113,7 @@ jobs:
     script:
     # Workaround to be able to build the apps
     - make .build/node_modules.timestamp
-    - buildtools/test_examples.py 1/1
+#    - buildtools/test_examples.py 1/1
     if: type = pull_request
   - stage: Build
     env:
@@ -123,7 +121,7 @@ jobs:
     - DEVELOPMENT=TRUE
     script:
     - make .build/node_modules.timestamp
-    - make examples-hosted-apps
+#    - make examples-hosted-apps
     if: type = pull_request
   - stage: Build
     env:
@@ -131,20 +129,10 @@ jobs:
     script:
     - make .build/apidoc
     if: type = pull_request
-  - stage: Build
-    env:
-    - JOB=build-dist
-    - DEVELOPMENT=TRUE
-    script:
-    - make dist/ngeo.js
-    - make dist/gmf.js
-    if: type = pull_request
   - stage: Build and publish
     env:
     - JOB=publish-npm
     script:
-#    - make dist/ngeo.js
-#    - make dist/gmf.js
     - make .build/node_modules.timestamp
     - gem install jgrep
     - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
@@ -154,12 +142,12 @@ jobs:
     - if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+$ ]]; then export TAG="--tag `echo $TRAVIS_TAG|awk -F[.-] '{print $4}'`"; fi
     - if [ "${PACKAGE_VERSION}" = "${TRAVIS_TAG}" ]; then npm publish $TAG; fi
     if: tag IS present AND repo = camptocamp/ngeo
-  - stage: Build and publish
-    env:
-    - JOB=publish-apps-gmf
-    script:
-    - buildtools/deploy.sh
-    if: type = push AND repo = camptocamp/ngeo AND branch IS present
+#  - stage: Build and publish
+#    env:
+#    - JOB=publish-apps-gmf
+#    script:
+#    - buildtools/deploy.sh
+#    if: type = push AND repo = camptocamp/ngeo AND branch IS present
   - stage: Build and publish
     env:
     - JOB=publish-api-docs

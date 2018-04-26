@@ -1,54 +1,61 @@
+/**
+ * @module gmfapp.importdatasource
+ */
+const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
-goog.provide('gmfapp.importdatasource');
+import './importdatasource.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+/** @suppress {extraRequire} */
+import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
-// webpack: import './importdatasource.css';
-// webpack: import 'jquery-ui/ui/widgets/tooltip.js';
+import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent.js';
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.Manager');
-goog.require('gmf.import.importdatasourceComponent');
-goog.require('gmf.layertree.component');
-goog.require('gmf.layertree.TreeManager');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-goog.require('gmf.theme.Themes');
-goog.require('ngeo.datasource.DataSources');
-/** @suppress {extraRequire} */
-goog.require('ngeo.query.bboxQueryComponent');
-goog.require('ngeo.query.mapQueryComponent');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.importdatasource.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.datasource.Manager.module.name,
-  gmf.import.importdatasourceComponent.name,
-  gmf.layertree.component.name,
-  gmf.layertree.TreeManager.module.name,
-  gmf.map.component.name,
-  gmf.theme.Themes.module.name,
-  ngeo.datasource.DataSources.module.name,
-  ngeo.query.bboxQueryComponent.name,
-  ngeo.query.mapQueryComponent.name,
+  gmfDatasourceManager.module.name,
+  gmfImportImportdatasourceComponent.name,
+  gmfLayertreeComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfMapComponent.name,
+  gmfThemeThemes.module.name,
+  ngeoDatasourceDataSources.module.name,
+  ngeoQueryBboxQueryComponent.name,
+  ngeoQueryMapQueryComponent.name,
 ]);
 
 
-gmfapp.importdatasource.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
-gmfapp.importdatasource.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.importdatasource.module.value('gmfLayersUrl',
+exports.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
-gmfapp.importdatasource.module.value('gmfExternalOGCServers', [{
+exports.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'https://wms.geo.admin.ch/?lang=fr'
@@ -62,11 +69,11 @@ gmfapp.importdatasource.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-gmfapp.importdatasource.module.constant('defaultTheme', 'Filters');
-gmfapp.importdatasource.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Filters');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-gmfapp.importdatasource.MainController = class {
+exports.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
@@ -99,13 +106,13 @@ gmfapp.importdatasource.MainController = class {
      * @type {ol.Map}
      * @export
      */
-    this.map = new ol.Map({
+    this.map = new olMap({
       layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
+        new olLayerTile({
+          source: new olSourceOSM()
         })
       ],
-      view: new ol.View({
+      view: new olView({
         projection: EPSG21781,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [537635, 152640],
@@ -144,4 +151,7 @@ gmfapp.importdatasource.MainController = class {
 };
 
 
-gmfapp.importdatasource.module.controller('MainController', gmfapp.importdatasource.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

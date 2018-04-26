@@ -1,4 +1,4 @@
-goog.require('gmf.test.data.themes');
+import gmfTestDataThemes from 'gmf/test/data/themes.js';
 
 describe('gmf.theme.Manager', () => {
   let gmfThemeManager_;
@@ -10,7 +10,7 @@ describe('gmf.theme.Manager', () => {
       //gmfTreeManager_ = gmfTreeManager;
 
       const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
-      $httpBackend.when('GET', reGmfTreeUrl).respond(gmf.test.data.themes);
+      $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
       $httpBackend.expectGET(reGmfTreeUrl);
       gmfThemes.loadThemes();
       $httpBackend.flush();
@@ -18,7 +18,7 @@ describe('gmf.theme.Manager', () => {
   });
 
   it('Add a theme', () => {
-    const theme0 = gmf.test.data.themes.themes[0];
+    const theme0 = gmfTestDataThemes.themes[0];
     gmfThemeManager_.addTheme(theme0);
     expect(gmfThemeManager_.getThemeName()).toEqual(theme0.name);
     //expect(gmfTreeManager_.root.children).toEqual(theme0.children);

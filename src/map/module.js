@@ -1,11 +1,12 @@
-goog.provide('ngeo.map.module');
-
-goog.require('ngeo.map.BackgroundLayerMgr');
-goog.require('ngeo.map.component');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.map.recenter');
-goog.require('ngeo.map.resizemap');
-goog.require('ngeo.map.scaleselector');
+/**
+ * @module ngeo.map.module
+ */
+import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
+import ngeoMapComponent from 'ngeo/map/component.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoMapRecenter from 'ngeo/map/recenter.js';
+import ngeoMapResizemap from 'ngeo/map/resizemap.js';
+import ngeoMapScaleselector from 'ngeo/map/scaleselector.js';
 
 /**
  * Also related to the map but not included in the module:
@@ -13,11 +14,14 @@ goog.require('ngeo.map.scaleselector');
  *
  * @type {!angular.Module}
  */
-ngeo.map.module = angular.module('ngeoMapModule', [
-  ngeo.map.BackgroundLayerMgr.module.name,
-  ngeo.map.component.name,
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.map.recenter.name,
-  ngeo.map.resizemap.name,
-  ngeo.map.scaleselector.name
+const exports = angular.module('ngeoMapModule', [
+  ngeoMapBackgroundLayerMgr.module.name,
+  ngeoMapComponent.name,
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMapRecenter.name,
+  ngeoMapResizemap.name,
+  ngeoMapScaleselector.name
 ]);
+
+
+export default exports;

@@ -1,12 +1,12 @@
-goog.provide('ngeo.datasource.File');
+/**
+ * @module ngeo.datasource.File
+ */
+import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
+import olCollection from 'ol/Collection.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceVector from 'ol/source/Vector.js';
 
-goog.require('ngeo.datasource.DataSource');
-goog.require('ol.Collection');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.Vector');
-
-
-ngeo.datasource.File = class extends ngeo.datasource.DataSource {
+const exports = class extends ngeoDatasourceDataSource {
 
   /**
    * A data source that contains vector features that were loaded from a file.
@@ -25,13 +25,13 @@ ngeo.datasource.File = class extends ngeo.datasource.DataSource {
      * @type {!ol.Collection.<!ol.Feature>}
      * @private
      */
-    this.featuresCollection_ = options.features || new ol.Collection();
+    this.featuresCollection_ = options.features || new olCollection();
 
     /**
      * @type {!ol.source.Vector}
      * @private
      */
-    this.source_ = new ol.source.Vector({
+    this.source_ = new olSourceVector({
       features: this.featuresCollection_,
       wrapX: false
     });
@@ -40,7 +40,7 @@ ngeo.datasource.File = class extends ngeo.datasource.DataSource {
      * @type {!ol.layer.Vector}
      * @private
      */
-    this.layer_ = new ol.layer.Vector({
+    this.layer_ = new olLayerVector({
       source: this.source_
     });
   }
@@ -92,3 +92,6 @@ ngeo.datasource.File = class extends ngeo.datasource.DataSource {
     return this.source_.getExtent();
   }
 };
+
+
+export default exports;

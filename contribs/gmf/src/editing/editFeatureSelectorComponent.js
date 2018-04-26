@@ -1,26 +1,27 @@
-goog.provide('gmf.editing.editFeatureSelectorComponent');
+/**
+ * @module gmf.editing.editFeatureSelectorComponent
+ */
+import googAsserts from 'goog/asserts.js';
 
-goog.require('gmf'); // nowebpack
-goog.require('goog.asserts');
 /** @suppress {extraRequire} */
-goog.require('gmf.editing.editFeatureComponent');
-goog.require('gmf.layertree.TreeManager');
-goog.require('gmf.theme.Themes');
+import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
 
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.editing.editFeatureSelectorComponent = angular.module('GmfEditingFeatureSelectorComponent', [
-  gmf.editing.editFeatureComponent.name,
-  gmf.layertree.TreeManager.module.name,
-  gmf.theme.Themes.module.name,
+const exports = angular.module('GmfEditingFeatureSelectorComponent', [
+  gmfEditingEditFeatureComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfThemeThemes.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html'));
+});
 
 
 /**
@@ -49,7 +50,7 @@ gmf.editing.editFeatureSelectorComponent = angular.module('GmfEditingFeatureSele
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
  */
-gmf.editing.editFeatureSelectorComponent.component_ = function() {
+exports.component_ = function() {
   return {
     controller: 'GmfEditfeatureselectorController as efsCtrl',
     scope: {
@@ -59,14 +60,13 @@ gmf.editing.editFeatureSelectorComponent.component_ = function() {
       'vectorLayer': '<gmfEditfeatureselectorVector'
     },
     bindToController: true,
-    templateUrl: `${gmf.baseModuleTemplateUrl}/editing/editFeatureSelectorComponent.html` // nowebpack
-    // webpack: templateUrl: 'gmf/editing/editFeatureSelectorComponent'
+    templateUrl: 'gmf/editing/editFeatureSelectorComponent'
   };
 };
 
 
-gmf.editing.editFeatureSelectorComponent.directive('gmfEditfeatureselector',
-  gmf.editing.editFeatureSelectorComponent.component_);
+exports.directive('gmfEditfeatureselector',
+  exports.component_);
 
 
 /**
@@ -80,7 +80,7 @@ gmf.editing.editFeatureSelectorComponent.directive('gmfEditfeatureselector',
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout, gmfThemes,
+exports.Controller_ = function($scope, $timeout, gmfThemes,
   gmfTreeManager) {
 
   // === Directive options ===
@@ -154,7 +154,7 @@ gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout
         editables.length = 0;
         this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.editable) {
-            goog.asserts.assert(treeCtrl.children.length === 0);
+            googAsserts.assert(treeCtrl.children.length === 0);
             editables.push(treeCtrl);
           }
         });
@@ -201,7 +201,7 @@ gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout
     () => this.selectedEditableTreeCtrl,
     (newValue, oldValue) => {
       this.dirty = false;
-      this.state = gmf.editing.editFeatureComponent.State.IDLE;
+      this.state = gmfEditingEditFeatureComponent.State.IDLE;
     }
   );
 
@@ -214,16 +214,16 @@ gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout
    * @type {string}
    * @export
    */
-  this.state = gmf.editing.editFeatureComponent.State.IDLE;
+  this.state = gmfEditingEditFeatureComponent.State.IDLE;
 
   $scope.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      if (newValue === gmf.editing.editFeatureComponent.State.STOP_EDITING_EXECUTE ||
-          newValue === gmf.editing.editFeatureComponent.State.DEACTIVATE_EXECUTE) {
+      if (newValue === gmfEditingEditFeatureComponent.State.STOP_EDITING_EXECUTE ||
+          newValue === gmfEditingEditFeatureComponent.State.DEACTIVATE_EXECUTE) {
         this.selectedEditableTreeCtrl = null;
       }
-      if (newValue === gmf.editing.editFeatureComponent.State.DEACTIVATE_EXECUTE) {
+      if (newValue === gmfEditingEditFeatureComponent.State.DEACTIVATE_EXECUTE) {
         this.active = false;
       }
     }
@@ -240,8 +240,8 @@ gmf.editing.editFeatureSelectorComponent.Controller_ = function($scope, $timeout
  * stop or if it requires confirmation due to unsaved modifications.
  * @export
  */
-gmf.editing.editFeatureSelectorComponent.Controller_.prototype.stopEditing = function() {
-  this.state = gmf.editing.editFeatureComponent.State.STOP_EDITING_PENDING;
+exports.Controller_.prototype.stopEditing = function() {
+  this.state = gmfEditingEditFeatureComponent.State.STOP_EDITING_PENDING;
 };
 
 
@@ -251,7 +251,7 @@ gmf.editing.editFeatureSelectorComponent.Controller_.prototype.stopEditing = fun
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-gmf.editing.editFeatureSelectorComponent.Controller_.prototype.handleActiveChange_ = function(active) {
+exports.Controller_.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     if (!this.dirty) {
       this.selectedEditableNode = null;
@@ -273,10 +273,13 @@ gmf.editing.editFeatureSelectorComponent.Controller_.prototype.handleActiveChang
 /**
  * @private
  */
-gmf.editing.editFeatureSelectorComponent.Controller_.prototype.handleDestroy_ = function() {
+exports.Controller_.prototype.handleDestroy_ = function() {
   this.treeCtrlsWatcherUnregister_();
 };
 
 
-gmf.editing.editFeatureSelectorComponent.controller('GmfEditfeatureselectorController',
-  gmf.editing.editFeatureSelectorComponent.Controller_);
+exports.controller('GmfEditfeatureselectorController',
+  exports.Controller_);
+
+
+export default exports;

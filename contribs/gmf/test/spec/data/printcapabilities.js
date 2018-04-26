@@ -1,6 +1,7 @@
-goog.provide('gmf.test.data.printcapabilities');
-
-gmf.test.data.printcapabilities = {
+/**
+ * @module gmf.test.data.printcapabilities
+ */
+const exports = {
   'app': 'demo',
   'layouts': [{
     'attributes': [{
@@ -541,3 +542,6 @@ gmf.test.data.printcapabilities = {
   }],
   'formats': ['bmp', 'gif', 'pdf', 'png', 'tif', 'tiff']
 };
+
+
+export default exports;

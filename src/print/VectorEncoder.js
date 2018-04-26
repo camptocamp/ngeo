@@ -1,32 +1,32 @@
-goog.provide('ngeo.print.VectorEncoder');
-
-goog.require('goog.asserts');
-goog.require('ngeo.utils');
-goog.require('ol');
-goog.require('ol.format.GeoJSON');
-goog.require('ol.source.Vector');
-goog.require('ol.style.RegularShape');
-goog.require('ol.math');
-goog.require('ol.style.Icon');
-goog.require('ol.style.Circle');
-goog.require('ol.color');
-
+/**
+ * @module ngeo.print.VectorEncoder
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoUtils from 'ngeo/utils.js';
+import * as olBase from 'ol/index.js';
+import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import * as olMath from 'ol/math.js';
+import olStyleIcon from 'ol/style/Icon.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import * as olColor from 'ol/color.js';
 
 /**
  * @constructor
  */
-ngeo.print.VectorEncoder = function() {
+const exports = function() {
   /**
    * @type {ol.format.GeoJSON}
    */
-  this.geojsonFormat = new ol.format.GeoJSON();
+  this.geojsonFormat = new olFormatGeoJSON();
 };
 
 
 /**
  * @enum {string}
  */
-ngeo.print.VectorEncoder.PrintStyleType = {
+exports.PrintStyleType = {
   LINE_STRING: 'LineString',
   POINT: 'Point',
   POLYGON: 'Polygon'
@@ -37,13 +37,13 @@ ngeo.print.VectorEncoder.PrintStyleType = {
  * @type {Object.<ol.geom.GeometryType, ngeo.print.VectorEncoder.PrintStyleType>}
  * @private
  */
-ngeo.print.VectorEncoder.PrintStyleTypes_ = {
-  'LineString': ngeo.print.VectorEncoder.PrintStyleType.LINE_STRING,
-  'Point': ngeo.print.VectorEncoder.PrintStyleType.POINT,
-  'Polygon': ngeo.print.VectorEncoder.PrintStyleType.POLYGON,
-  'MultiLineString': ngeo.print.VectorEncoder.PrintStyleType.LINE_STRING,
-  'MultiPoint': ngeo.print.VectorEncoder.PrintStyleType.POINT,
-  'MultiPolygon': ngeo.print.VectorEncoder.PrintStyleType.POLYGON
+exports.PrintStyleTypes_ = {
+  'LineString': exports.PrintStyleType.LINE_STRING,
+  'Point': exports.PrintStyleType.POINT,
+  'Polygon': exports.PrintStyleType.POLYGON,
+  'MultiLineString': exports.PrintStyleType.LINE_STRING,
+  'MultiPoint': exports.PrintStyleType.POINT,
+  'MultiPolygon': exports.PrintStyleType.POLYGON
 };
 
 
@@ -52,9 +52,9 @@ ngeo.print.VectorEncoder.PrintStyleTypes_ = {
  * @param {ol.layer.Vector} layer Layer.
  * @param {number} resolution Resolution.
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
   const source = layer.getSource();
-  goog.asserts.assertInstanceof(source, ol.source.Vector);
+  googAsserts.assertInstanceof(source, olSourceVector);
 
   const features = source.getFeatures();
 
@@ -81,13 +81,13 @@ ngeo.print.VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, reso
      * @type {Array<ol.style.Style>}
      */
     const styles = (styleData !== null && !Array.isArray(styleData)) ? [styleData] : styleData;
-    goog.asserts.assert(Array.isArray(styles));
+    googAsserts.assert(Array.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
       let isOriginalFeatureAdded = false;
       for (let j = 0, jj = styles.length; j < jj; ++j) {
         const style = styles[j];
-        const styleId = ol.getUid(style).toString();
+        const styleId = olBase.getUid(style).toString();
         let geometry = style.getGeometry();
         let geojsonFeature;
         if (!geometry) {
@@ -150,12 +150,12 @@ ngeo.print.VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, reso
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
-  if (!(geometryType in ngeo.print.VectorEncoder.PrintStyleTypes_)) {
+exports.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
+  if (!(geometryType in exports.PrintStyleTypes_)) {
     // unsupported geometry type
     return;
   }
-  const styleType = ngeo.print.VectorEncoder.PrintStyleTypes_[geometryType];
+  const styleType = exports.PrintStyleTypes_[geometryType];
   const key = `[${featureStyleProp} = '${styleId}']`;
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
@@ -169,16 +169,16 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyle = function(object, geometry
   const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
   const textStyle = style.getText();
-  if (styleType === ngeo.print.VectorEncoder.PrintStyleType.POLYGON) {
+  if (styleType === exports.PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
-  } else if (styleType === ngeo.print.VectorEncoder.PrintStyleType.LINE_STRING) {
+  } else if (styleType === exports.PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       this.encodeVectorStyleLine(styleObject.symbolizers, strokeStyle);
     }
-  } else if (styleType === ngeo.print.VectorEncoder.PrintStyleType.POINT) {
+  } else if (styleType === exports.PrintStyleType.POINT) {
     if (imageStyle !== null) {
       this.encodeVectorStylePoint(styleObject.symbolizers, imageStyle);
     }
@@ -194,13 +194,13 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyle = function(object, geometry
  * @param {!ol.style.Fill} fillStyle Fill style.
  * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
+exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
-    fillColor = ol.color.asArray(fillColor);
-    goog.asserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
-    symbolizer.fillColor = ngeo.utils.rgbArrayToHex(fillColor);
+    googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+    fillColor = olColor.asArray(fillColor);
+    googAsserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+    symbolizer.fillColor = ngeoUtils.rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
   }
 };
@@ -212,7 +212,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, 
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
+exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
@@ -227,9 +227,9 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleLine = function(symbolizers,
  * @param {!ol.style.Image} imageStyle Image style.
  * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
+exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
   let symbolizer;
-  if (imageStyle instanceof ol.style.Circle) {
+  if (imageStyle instanceof olStyleCircle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
       type: 'point'
     });
@@ -242,7 +242,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers
     if (strokeStyle !== null) {
       this.encodeVectorStyleStroke(symbolizer, strokeStyle);
     }
-  } else if (imageStyle instanceof ol.style.Icon) {
+  } else if (imageStyle instanceof olStyleIcon) {
     const src = imageStyle.getSrc();
     if (src !== undefined) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -266,9 +266,9 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers
       if (isNaN(rotation)) {
         rotation = 0;
       }
-      symbolizer.rotation = ol.math.toDegrees(rotation);
+      symbolizer.rotation = olMath.toDegrees(rotation);
     }
-  } else if (imageStyle instanceof ol.style.RegularShape) {
+  } else if (imageStyle instanceof olStyleRegularShape) {
     /**
      * Mapfish Print does not support image defined with ol.style.RegularShape.
      * As a workaround, I try to map the image on a well-known image name.
@@ -294,7 +294,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers
       }
       const rotationShape = imageStyle.getRotation();
       if (!isNaN(rotationShape) && rotationShape !== 0) {
-        symbolizer.rotation = ol.math.toDegrees(rotationShape);
+        symbolizer.rotation = olMath.toDegrees(rotationShape);
       }
       const opacityShape = imageStyle.getOpacity();
       if (opacityShape !== null) {
@@ -323,7 +323,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers
  * @param {ol.style.Stroke} strokeStyle Stroke style.
  * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
+exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
@@ -341,13 +341,13 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolize
  * @param {!ol.style.Stroke} strokeStyle Stroke style.
  * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
+exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
-    const strokeColorRgba = ol.color.asArray(strokeColor);
-    goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-    symbolizer.strokeColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
+    googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
+    const strokeColorRgba = olColor.asArray(strokeColor);
+    googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+    symbolizer.strokeColor = ngeoUtils.rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   const strokeDashstyle = strokeStyle.getLineDash();
@@ -371,7 +371,7 @@ ngeo.print.VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer
  * @param {!ol.style.Text} textStyle Text style.
  * @protected
  */
-ngeo.print.VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
+exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
@@ -419,10 +419,10 @@ ngeo.print.VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textS
     const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
       const strokeColor = strokeStyle.getColor();
-      goog.asserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
-      const strokeColorRgba = ol.color.asArray(strokeColor);
-      goog.asserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-      symbolizer.haloColor = ngeo.utils.rgbArrayToHex(strokeColorRgba);
+      googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
+      const strokeColorRgba = olColor.asArray(strokeColor);
+      googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+      symbolizer.haloColor = ngeoUtils.rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
       if (width !== undefined) {
@@ -434,10 +434,10 @@ ngeo.print.VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textS
     const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
       const fillColor = fillStyle.getColor();
-      goog.asserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
-      const fillColorRgba = ol.color.asArray(fillColor);
-      goog.asserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
-      symbolizer.fontColor = ngeo.utils.rgbArrayToHex(fillColorRgba);
+      googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+      const fillColorRgba = olColor.asArray(fillColor);
+      googAsserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
+      symbolizer.fontColor = ngeoUtils.rgbArrayToHex(fillColorRgba);
     }
 
     // Mapfish Print allows offset only if labelAlign is defined.
@@ -451,3 +451,6 @@ ngeo.print.VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textS
     symbolizers.push(symbolizer);
   }
 };
+
+
+export default exports;

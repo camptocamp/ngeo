@@ -1,11 +1,17 @@
-goog.provide('gmf.datasource.DataSourceBeingFiltered');
+/**
+ * @module gmf.datasource.DataSourceBeingFiltered
+ */
+const exports = {};
 
 
 /**
  * @type {!angular.Module}
  */
-gmf.datasource.DataSourceBeingFiltered.module = angular.module('gmfDataSourceBeingFiltered', []);
+exports.module = angular.module('gmfDataSourceBeingFiltered', []);
 // type gmfx.datasource.DataSourceBeingFiltered
-gmf.datasource.DataSourceBeingFiltered.module.value('gmfDataSourceBeingFiltered', {
+exports.module.value('gmfDataSourceBeingFiltered', {
   dataSource: null
 });
+
+
+export default exports;

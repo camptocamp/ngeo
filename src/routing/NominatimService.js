@@ -1,7 +1,7 @@
-goog.provide('ngeo.routing.NominatimService');
-
-goog.require('ngeo.misc.debounce');
-
+/**
+ * @module ngeo.routing.NominatimService
+ */
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 /**
  * Service to provide access to Nominatim, which allows to search for
@@ -17,7 +17,7 @@ goog.require('ngeo.misc.debounce');
  * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
-ngeo.routing.NominatimService = function($http, $injector, ngeoDebounce) {
+const exports = function($http, $injector, ngeoDebounce) {
 
   /**
    * @type {angular.$http}
@@ -84,7 +84,7 @@ ngeo.routing.NominatimService = function($http, $injector, ngeoDebounce) {
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  * @export
  */
-ngeo.routing.NominatimService.prototype.search = function(query, params) {
+exports.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
@@ -113,7 +113,7 @@ ngeo.routing.NominatimService.prototype.search = function(query, params) {
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  * @export
  */
-ngeo.routing.NominatimService.prototype.reverse = function(coordinate, params) {
+exports.prototype.reverse = function(coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
 
   params = Object.assign({}, params);
@@ -143,7 +143,7 @@ ngeo.routing.NominatimService.prototype.reverse = function(coordinate, params) {
  * @param {function(Array.<ngeox.NominatimSearchResult>)} asyncResults Callback for asynchronous execution
  * @private
  */
-ngeo.routing.NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
+exports.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   const onSuccess_ = function(resp) {
     /**
      * Parses result response.
@@ -169,8 +169,11 @@ ngeo.routing.NominatimService.prototype.typeaheadSource_ = function(query, syncR
 /**
  * @type {!angular.Module}
  */
-ngeo.routing.NominatimService.module = angular.module('ngeoNominatimService', [
-  ngeo.misc.debounce.name
+exports.module = angular.module('ngeoNominatimService', [
+  ngeoMiscDebounce.name
 ]);
 
-ngeo.routing.NominatimService.module.service('ngeoNominatimService', ngeo.routing.NominatimService);
+exports.module.service('ngeoNominatimService', exports);
+
+
+export default exports;

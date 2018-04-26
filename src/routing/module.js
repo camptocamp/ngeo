@@ -1,10 +1,14 @@
-goog.provide('ngeo.routing.module');
-
-goog.require('ngeo.routing.RoutingComponent');
+/**
+ * @module ngeo.routing.module
+ */
+import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';
 
 /**
  * @type {angular.Module}
  */
-ngeo.routing.module = angular.module('ngeoRoutingModule', [
-  ngeo.routing.RoutingComponent.module.name
+const exports = angular.module('ngeoRoutingModule', [
+  ngeoRoutingRoutingComponent.module.name
 ]);
+
+
+export default exports;

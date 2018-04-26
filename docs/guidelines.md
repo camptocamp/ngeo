@@ -283,13 +283,12 @@ ngeo.module.component.value('ngeoModuleComponentTemplateUrl',
     function($element, $attrs) {
       const templateUrl = $attrs['ngeoNameComponentTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-        `${ngeo.baseModuleTemplateUrl}/module/component.html`; // nowebpack
-        // webpack: 'ngeo/module/component';
+        'ngeo/module/component';
     });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/module/component', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/module/component', require('./component.html'));
+});
 
 /**
  * @param {!angular.JQLite} $element Element.

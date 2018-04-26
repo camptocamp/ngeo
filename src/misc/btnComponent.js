@@ -1,10 +1,10 @@
-goog.provide('ngeo.misc.btnComponent');
-
-
+/**
+ * @module ngeo.misc.btnComponent
+ */
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.btnComponent = angular.module('ngeoBtnComponent', []);
+const exports = angular.module('ngeoBtnComponent', []);
 
 
 /**
@@ -40,7 +40,7 @@ ngeo.misc.btnComponent = angular.module('ngeoBtnComponent', []);
  * @ngdoc directive
  * @ngname ngeoBtnGroup
  */
-ngeo.misc.btnComponent.btnGroupComponent_ = function($parse) {
+exports.btnGroupComponent_ = function($parse) {
   return {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
@@ -67,7 +67,7 @@ ngeo.misc.btnComponent.btnGroupComponent_ = function($parse) {
 };
 
 
-ngeo.misc.btnComponent.directive('ngeoBtnGroup', ngeo.misc.btnComponent.btnGroupComponent_);
+exports.directive('ngeoBtnGroup', exports.btnGroupComponent_);
 
 
 /**
@@ -78,7 +78,7 @@ ngeo.misc.btnComponent.directive('ngeoBtnGroup', ngeo.misc.btnComponent.btnGroup
  * @ngdoc controller
  * @ngname ngeoBtnGroupController
  */
-ngeo.misc.btnComponent.BtnGroupController = function($scope) {
+exports.BtnGroupController = function($scope) {
   /**
    * @type {!Array.<!angular.parse.Expression>}
    * @private
@@ -96,7 +96,7 @@ ngeo.misc.btnComponent.BtnGroupController = function($scope) {
 /**
  * @param {number} index Index of the button in buttons array.
  */
-ngeo.misc.btnComponent.BtnGroupController.prototype.activate = function(index) {
+exports.BtnGroupController.prototype.activate = function(index) {
   this.buttons_.forEach((expressionFn, i) => {
     if (i != index) {
       expressionFn.assign(this.scope_, false);
@@ -109,14 +109,14 @@ ngeo.misc.btnComponent.BtnGroupController.prototype.activate = function(index) {
  * @param {angular.parse.Expression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
-ngeo.misc.btnComponent.BtnGroupController.prototype.addButton = function(expressionFn) {
+exports.BtnGroupController.prototype.addButton = function(expressionFn) {
   this.buttons_.push(expressionFn);
   return this.buttons_.length - 1;
 };
 
 
-ngeo.misc.btnComponent.controller('ngeoBtnGroupController',
-  ngeo.misc.btnComponent.BtnGroupController);
+exports.controller('ngeoBtnGroupController',
+  exports.BtnGroupController);
 
 
 /**
@@ -137,7 +137,7 @@ ngeo.misc.btnComponent.controller('ngeoBtnGroupController',
  * @ngdoc directive
  * @ngname ngeoBtn
  */
-ngeo.misc.btnComponent.btnComponent_ = function($parse) {
+exports.btnComponent_ = function($parse) {
   return {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
@@ -183,4 +183,7 @@ ngeo.misc.btnComponent.btnComponent_ = function($parse) {
 };
 
 
-ngeo.misc.btnComponent.directive('ngeoBtn', ngeo.misc.btnComponent.btnComponent_);
+exports.directive('ngeoBtn', exports.btnComponent_);
+
+
+export default exports;

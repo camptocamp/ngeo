@@ -1,6 +1,8 @@
-goog.provide('ngeo.format.Attribute');
-
-goog.require('ngeo.format.AttributeType');
+/**
+ * @module ngeo.format.Attribute
+ */
+const exports = {};
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 
 
 /**
@@ -11,11 +13,11 @@ goog.require('ngeo.format.AttributeType');
  * @param {string} type Type.
  * @return {boolean} Whether both attribute type and geomType were set.
  */
-ngeo.format.Attribute.setGeometryType = function(attribute, type) {
+exports.setGeometryType = function(attribute, type) {
   const geomRegex =
     /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
   if (geomRegex.exec(type)) {
-    attribute.type = ngeo.format.AttributeType.GEOMETRY;
+    attribute.type = ngeoFormatAttributeType.GEOMETRY;
     if (/^gml:Point/.exec(type)) {
       attribute.geomType = 'Point';
     } else if (/^gml:LineString|^gml:Curve/.exec(type)) {
@@ -32,3 +34,6 @@ ngeo.format.Attribute.setGeometryType = function(attribute, type) {
   }
   return !!attribute.type && !!attribute.geomType;
 };
+
+
+export default exports;

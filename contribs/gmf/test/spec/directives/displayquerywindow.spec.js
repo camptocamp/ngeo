@@ -1,5 +1,5 @@
-goog.require('ol.style.Style');
-goog.require('ol.Feature');
+import olStyleStyle from 'ol/style/Style.js';
+import olFeature from 'ol/Feature.js';
 
 describe('gmf.query.windowComponent', () => {
 
@@ -17,7 +17,7 @@ describe('gmf.query.windowComponent', () => {
     $scope = $rootScope.$new();
     const data = {
       featuresStyleFn() {
-        return new ol.style.Style();
+        return new olStyleStyle();
       },
       selectedFeatureStyleFn() {
         return undefined;
@@ -40,10 +40,10 @@ describe('gmf.query.windowComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature({
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -72,10 +72,10 @@ describe('gmf.query.windowComponent', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature({
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -91,11 +91,11 @@ describe('gmf.query.windowComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature(),
-          new ol.Feature({
+          new olFeature(),
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -137,10 +137,10 @@ describe('gmf.query.windowComponent', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature({
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -156,11 +156,11 @@ describe('gmf.query.windowComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature(),
-          new ol.Feature({
+          new olFeature(),
+          new olFeature({
             bar: 'baz'
           })
         ],

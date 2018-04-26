@@ -1,14 +1,17 @@
-goog.provide('app.modal');
+/**
+ * @module app.modal
+ */
+const exports = {};
 
-// webpack: import './modal.css';
+import './modal.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.message.modalComponent');
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /** @type {!angular.Module} **/
-app.modal.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.message.modalComponent.name,
+  ngeoMessageModalComponent.name,
 ]);
 
 
@@ -16,7 +19,7 @@ app.modal.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.modal.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {boolean}
@@ -26,4 +29,7 @@ app.modal.MainController = function() {
 };
 
 
-app.modal.module.controller('MainController', app.modal.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

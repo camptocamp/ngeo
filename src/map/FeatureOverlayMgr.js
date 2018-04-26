@@ -1,13 +1,13 @@
-goog.provide('ngeo.map.FeatureOverlayMgr');
-
-goog.require('goog.asserts');
-goog.require('ngeo.map.FeatureOverlay');
-goog.require('ol');
-goog.require('ol.layer.Vector');
-goog.require('ol.obj');
-goog.require('ol.source.Vector');
-goog.require('ol.style.Style');
-
+/**
+ * @module ngeo.map.FeatureOverlayMgr
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
+import * as olBase from 'ol/index.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import * as olObj from 'ol/obj.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * Provides a service that wraps an "unmanaged" vector layer,
@@ -32,7 +32,7 @@ goog.require('ol.style.Style');
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */
-ngeo.map.FeatureOverlayMgr = function() {
+const exports = function() {
 
   /**
    * @type {Object.<string, number>}
@@ -50,7 +50,7 @@ ngeo.map.FeatureOverlayMgr = function() {
    * @type {ol.source.Vector}
    * @private
    */
-  this.source_ = new ol.source.Vector({
+  this.source_ = new olSourceVector({
     useSpatialIndex: false
   });
 
@@ -58,7 +58,7 @@ ngeo.map.FeatureOverlayMgr = function() {
    * @type {ol.layer.Vector}
    * @private
    */
-  this.layer_ = new ol.layer.Vector({
+  this.layer_ = new olLayerVector({
     source: this.source_,
     style: this.styleFunction_.bind(this),
     updateWhileAnimating: true,
@@ -73,10 +73,10 @@ ngeo.map.FeatureOverlayMgr = function() {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
-  goog.asserts.assert(groupIndex >= 0);
-  goog.asserts.assert(groupIndex < this.groups_.length);
-  const featureUid = ol.getUid(feature).toString();
+exports.prototype.addFeature = function(feature, groupIndex) {
+  googAsserts.assert(groupIndex >= 0);
+  googAsserts.assert(groupIndex < this.groups_.length);
+  const featureUid = olBase.getUid(feature).toString();
   this.featureUidToGroupIndex_[featureUid] = groupIndex;
   this.groups_[groupIndex].features[featureUid] = feature;
   this.source_.addFeature(feature);
@@ -88,10 +88,10 @@ ngeo.map.FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) 
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
-  goog.asserts.assert(groupIndex >= 0);
-  goog.asserts.assert(groupIndex < this.groups_.length);
-  const featureUid = ol.getUid(feature).toString();
+exports.prototype.removeFeature = function(feature, groupIndex) {
+  googAsserts.assert(groupIndex >= 0);
+  googAsserts.assert(groupIndex < this.groups_.length);
+  const featureUid = olBase.getUid(feature).toString();
   delete this.featureUidToGroupIndex_[featureUid];
   delete this.groups_[groupIndex].features[featureUid];
   this.source_.removeFeature(feature);
@@ -102,14 +102,14 @@ ngeo.map.FeatureOverlayMgr.prototype.removeFeature = function(feature, groupInde
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
-  goog.asserts.assert(groupIndex >= 0);
-  goog.asserts.assert(groupIndex < this.groups_.length);
+exports.prototype.clear = function(groupIndex) {
+  googAsserts.assert(groupIndex >= 0);
+  googAsserts.assert(groupIndex < this.groups_.length);
   const group = this.groups_[groupIndex];
   for (const featureUid in group.features) {
     this.removeFeature(group.features[featureUid], groupIndex);
   }
-  goog.asserts.assert(ol.obj.isEmpty(group.features));
+  googAsserts.assert(olObj.isEmpty(group.features));
 };
 
 
@@ -117,7 +117,7 @@ ngeo.map.FeatureOverlayMgr.prototype.clear = function(groupIndex) {
  * @return {ol.layer.Vector} The vector layer used internally.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.getLayer = function() {
+exports.prototype.getLayer = function() {
   return this.layer_;
 };
 
@@ -126,13 +126,13 @@ ngeo.map.FeatureOverlayMgr.prototype.getLayer = function() {
  * @return {ngeo.map.FeatureOverlay} Feature overlay.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
+exports.prototype.getFeatureOverlay = function() {
   const groupIndex = this.groups_.length;
   this.groups_.push({
-    styleFunction: ol.style.Style.defaultFunction,
+    styleFunction: olStyleStyle.defaultFunction,
     features: {}
   });
-  return new ngeo.map.FeatureOverlay(this, groupIndex);
+  return new ngeoMapFeatureOverlay(this, groupIndex);
 };
 
 
@@ -140,7 +140,7 @@ ngeo.map.FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
  * @param {ol.Map} map Map.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.init = function(map) {
+exports.prototype.init = function(map) {
   this.layer_.setMap(map);
 };
 
@@ -151,11 +151,11 @@ ngeo.map.FeatureOverlayMgr.prototype.init = function(map) {
  * @param {number} groupIndex Group index.
  * @export
  */
-ngeo.map.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
-  goog.asserts.assert(groupIndex >= 0);
-  goog.asserts.assert(groupIndex < this.groups_.length);
+exports.prototype.setStyle = function(style, groupIndex) {
+  googAsserts.assert(groupIndex >= 0);
+  googAsserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
-    ol.style.Style.defaultFunction : ol.style.Style.createFunction(style);
+    olStyleStyle.defaultFunction : olStyleStyle.createFunction(style);
 };
 
 
@@ -165,9 +165,9 @@ ngeo.map.FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
  * @return {Array.<ol.style.Style>|ol.style.Style} Styles.
  * @private
  */
-ngeo.map.FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
-  const featureUid = ol.getUid(feature).toString();
-  goog.asserts.assert(featureUid in this.featureUidToGroupIndex_);
+exports.prototype.styleFunction_ = function(feature, resolution) {
+  const featureUid = olBase.getUid(feature).toString();
+  googAsserts.assert(featureUid in this.featureUidToGroupIndex_);
   const groupIndex = this.featureUidToGroupIndex_[featureUid];
   const group = this.groups_[groupIndex];
   return group.styleFunction(feature, resolution);
@@ -177,7 +177,10 @@ ngeo.map.FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resoluti
 /**
  * @type {!angular.Module}
  */
-ngeo.map.FeatureOverlayMgr.module = angular.module('ngeoFeatureOverlayMgr', [
-  ngeo.map.FeatureOverlay.module.name
+exports.module = angular.module('ngeoFeatureOverlayMgr', [
+  ngeoMapFeatureOverlay.module.name
 ]);
-ngeo.map.FeatureOverlayMgr.module.service('ngeoFeatureOverlayMgr', ngeo.map.FeatureOverlayMgr);
+exports.module.service('ngeoFeatureOverlayMgr', exports);
+
+
+export default exports;

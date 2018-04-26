@@ -1,11 +1,14 @@
-goog.provide('ngeo.draw.features');
-
-goog.require('ol.Collection');
-
+/**
+ * @module ngeo.draw.features
+ */
+import olCollection from 'ol/Collection.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.draw.features = angular.module('ngeoFeatures', []);
+const exports = angular.module('ngeoFeatures', []);
 
-ngeo.draw.features.value('ngeoFeatures', new ol.Collection());
+exports.value('ngeoFeatures', new olCollection());
+
+
+export default exports;

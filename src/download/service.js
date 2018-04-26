@@ -1,12 +1,14 @@
-goog.provide('ngeo.download.service');
+/**
+ * @module ngeo.download.service
+ */
+import ngeoUtils from 'ngeo/utils.js';
 
-goog.require('ngeo.utils');
-// webpack: import {saveAs} from 'file-saver';
+import {saveAs} from 'file-saver';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.download.service = angular.module('ngeoDownload', []);
+const exports = angular.module('ngeoDownload', []);
 
 /**
  * A service to start a download for a file.
@@ -15,7 +17,7 @@ ngeo.download.service = angular.module('ngeoDownload', []);
  * @ngdoc service
  * @ngname ngeoDownload
  */
-ngeo.download.service.factory_ = function() {
+exports.factory_ = function() {
   /**
    * @param {string} content The file content.
    * @param {string} fileName The file name.
@@ -28,7 +30,7 @@ ngeo.download.service.factory_ = function() {
     // do a manual download with "Save as".
     // See also: https://github.com/eligrey/FileSaver.js/issues/12
     /** @type {string} */
-    const fileType = opt_fileType !== undefined && !ngeo.utils.isSafari() ?
+    const fileType = opt_fileType !== undefined && !ngeoUtils.isSafari() ?
       opt_fileType : 'text/plain;charset=utf-8';
 
     const blob = new Blob([content], {type: fileType});
@@ -38,4 +40,7 @@ ngeo.download.service.factory_ = function() {
   return download;
 };
 
-ngeo.download.service.factory('ngeoDownload', ngeo.download.service.factory_);
+exports.factory('ngeoDownload', exports.factory_);
+
+
+export default exports;

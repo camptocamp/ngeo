@@ -1,9 +1,8 @@
-goog.provide('gmf.mobile.navigation.component');
-
-goog.require('goog.asserts');
-
-
-gmf.mobile.navigation.component = angular.module('gmfMobileNav', []);
+/**
+ * @module gmf.mobile.navigation.component
+ */
+import googAsserts from 'goog/asserts.js';
+const exports = angular.module('gmfMobileNav', []);
 
 
 /**
@@ -45,7 +44,7 @@ gmf.mobile.navigation.component = angular.module('gmfMobileNav', []);
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-gmf.mobile.navigation.component.component_ = function() {
+exports.component_ = function() {
   return {
     restrict: 'A',
     controller: 'gmfMobileNavController as navCtrl',
@@ -63,7 +62,7 @@ gmf.mobile.navigation.component.component_ = function() {
   };
 };
 
-gmf.mobile.navigation.component.directive('gmfMobileNav', gmf.mobile.navigation.component.component_);
+exports.directive('gmfMobileNav', exports.component_);
 
 
 /**
@@ -73,7 +72,7 @@ gmf.mobile.navigation.component.directive('gmfMobileNav', gmf.mobile.navigation.
 * @ngdoc controller
 * @ngname gmfMobileNavController
 */
-gmf.mobile.navigation.component.Controller_ = function() {
+exports.Controller_ = function() {
   /**
    * Stack of slid-in items.
    * @private
@@ -111,15 +110,15 @@ gmf.mobile.navigation.component.Controller_ = function() {
   this.back = this.back_.bind(this);
 };
 
-gmf.mobile.navigation.component.controller('gmfMobileNavController', gmf.mobile.navigation.component.Controller_);
+exports.controller('gmfMobileNavController', exports.Controller_);
 
 
 /**
  * Initialize the directive with the linked element.
  * @param {angular.JQLite} element Element.
  */
-gmf.mobile.navigation.component.Controller_.prototype.init = function(element) {
-  const cls = gmf.mobile.navigation.component.Controller_.ClassName_;
+exports.Controller_.prototype.init = function(element) {
+  const cls = exports.Controller_.ClassName_;
   this.active_ = $(element.find(`.${cls.ACTIVE}.${cls.SLIDE}`));
   this.header_ = $(element.find('> header'));
   this.backButton_ = $(element.find(`header > .${cls.GO_BACK}`));
@@ -127,11 +126,11 @@ gmf.mobile.navigation.component.Controller_.prototype.init = function(element) {
   // watch for clicks on "slide-in" elements
   element.find('[data-toggle=slide-in]').on('click', (evt) => {
 
-    const cls = gmf.mobile.navigation.component.Controller_.ClassName_;
+    const cls = exports.Controller_.ClassName_;
 
     // the element to slide out is the div.slide parent
     const slideOut = $(evt.currentTarget).parents(`.${cls.SLIDE}`);
-    goog.asserts.assert(slideOut.length === 1);
+    googAsserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
     this.slid_.push(slideOut);
@@ -141,7 +140,7 @@ gmf.mobile.navigation.component.Controller_.prototype.init = function(element) {
 
     // element to slide in
     const slideIn = $($(evt.currentTarget).attr('data-target'));
-    goog.asserts.assert(slideIn.length === 1);
+    googAsserts.assert(slideIn.length === 1);
 
     // slide the "new" element in
     slideIn.addClass(cls.ACTIVE);
@@ -162,9 +161,9 @@ gmf.mobile.navigation.component.Controller_.prototype.init = function(element) {
  * @param {boolean} back Whether to move back.
  * @private
  */
-gmf.mobile.navigation.component.Controller_.prototype.updateNavigationHeader_ = function(
+exports.Controller_.prototype.updateNavigationHeader_ = function(
   active, back) {
-  const cls = gmf.mobile.navigation.component.Controller_.ClassName_;
+  const cls = exports.Controller_.ClassName_;
   this.header_.toggleClass(cls.BACK, back);
 
   // remove any inactive nav
@@ -199,7 +198,7 @@ gmf.mobile.navigation.component.Controller_.prototype.updateNavigationHeader_ = 
       // fix: calling `position()` makes sure that the animation
       // is always run
       nav.position();
-      nav.addClass(gmf.mobile.navigation.component.Controller_.ClassName_.ACTIVE);
+      nav.addClass(exports.Controller_.ClassName_.ACTIVE);
     }, 0);
   }, 0);
 };
@@ -209,12 +208,12 @@ gmf.mobile.navigation.component.Controller_.prototype.updateNavigationHeader_ = 
  * Return to the previous slide.
  * @private
  */
-gmf.mobile.navigation.component.Controller_.prototype.back_ = function() {
+exports.Controller_.prototype.back_ = function() {
   if (this.slid_.length <= 0) {
     return;
   }
 
-  const cls = gmf.mobile.navigation.component.Controller_.ClassName_;
+  const cls = exports.Controller_.ClassName_;
 
   // slide active item to the right
   this.active_.removeClass(cls.ACTIVE);
@@ -237,7 +236,7 @@ gmf.mobile.navigation.component.Controller_.prototype.back_ = function() {
  *
  * @param {Element} element The element to check.
  */
-gmf.mobile.navigation.component.Controller_.prototype.backIfActive = function(element) {
+exports.Controller_.prototype.backIfActive = function(element) {
   if (this.active_ !== null && this.active_.is(element)) {
     this.back_();
   }
@@ -250,7 +249,7 @@ gmf.mobile.navigation.component.Controller_.prototype.backIfActive = function(el
  * @private
  */
 
-gmf.mobile.navigation.component.Controller_.ClassName_ = {
+exports.Controller_.ClassName_ = {
   ACTIVE: 'gmf-mobile-nav-active',
   BACK: 'gmf-mobile-nav-back',
   GO_BACK: 'gmf-mobile-nav-go-back',
@@ -280,7 +279,7 @@ gmf.mobile.navigation.component.Controller_.ClassName_ = {
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-gmf.mobile.navigation.component.backDirective = function() {
+exports.backDirective = function() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -301,7 +300,7 @@ gmf.mobile.navigation.component.backDirective = function() {
   };
 };
 
-gmf.mobile.navigation.component.directive('gmfMobileNavBack', gmf.mobile.navigation.component.backDirective);
+exports.directive('gmfMobileNavBack', exports.backDirective);
 
 
 /**
@@ -322,7 +321,7 @@ gmf.mobile.navigation.component.directive('gmfMobileNavBack', gmf.mobile.navigat
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  */
-gmf.mobile.navigation.component.backOnClickDirective = function() {
+exports.backOnClickDirective = function() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -341,4 +340,7 @@ gmf.mobile.navigation.component.backOnClickDirective = function() {
   };
 };
 
-gmf.mobile.navigation.component.directive('gmfMobileNavBackOnClick', gmf.mobile.navigation.component.backOnClickDirective);
+exports.directive('gmfMobileNavBackOnClick', exports.backOnClickDirective);
+
+
+export default exports;

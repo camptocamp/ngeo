@@ -1,8 +1,8 @@
-goog.provide('ngeo.statemanager.Location');
-
-goog.require('goog.asserts');
-goog.require('ngeo.utils');
-
+/**
+ * @module ngeo.statemanager.Location
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoUtils from 'ngeo/utils.js';
 
 /**
  * Provides a service for interacting with the URL in the
@@ -31,7 +31,7 @@ goog.require('ngeo.utils');
  * @ngdoc service
  * @ngname ngeoLocation
  */
-ngeo.statemanager.Location = function(location, history) {
+const exports = function(location, history) {
   /**
    * @type {History}
    * @private
@@ -66,13 +66,13 @@ ngeo.statemanager.Location = function(location, history) {
    * @type {!Object.<string, string>}
    * @private
    */
-  this.queryData_ = ngeo.utils.decodeQueryString(location.search);
+  this.queryData_ = ngeoUtils.decodeQueryString(location.search);
 
   /**
    * @type {!Object.<string, string>}
    * @private
    */
-  this.fragment_ = ngeo.utils.decodeQueryString(location.hash);
+  this.fragment_ = ngeoUtils.decodeQueryString(location.hash);
 };
 
 
@@ -80,7 +80,7 @@ ngeo.statemanager.Location = function(location, history) {
  * @param {History} history History.
  * @param {string} state State.
  */
-ngeo.statemanager.Location.replaceState = function(history, state) {
+exports.replaceState = function(history, state) {
   try {
     history.replaceState(null, '', state);
   } catch (error) {
@@ -95,7 +95,7 @@ ngeo.statemanager.Location.replaceState = function(history, state) {
  * @return {string|undefined} The path.
  * @export
  */
-ngeo.statemanager.Location.prototype.getPath = function() {
+exports.prototype.getPath = function() {
   return this.path_;
 };
 
@@ -105,7 +105,7 @@ ngeo.statemanager.Location.prototype.getPath = function() {
  * @return {string} The URI.
  * @export
  */
-ngeo.statemanager.Location.prototype.getUriString = function() {
+exports.prototype.getUriString = function() {
   const out = [];
 
   if (this.schema_) {
@@ -129,12 +129,12 @@ ngeo.statemanager.Location.prototype.getUriString = function() {
     out.push(this.path_);
   }
 
-  const encodedQueryData = ngeo.utils.encodeQueryString(this.queryData_);
+  const encodedQueryData = ngeoUtils.encodeQueryString(this.queryData_);
   if (encodedQueryData.length > 0) {
     out.push('?', encodedQueryData);
   }
 
-  const encodedFragment = ngeo.utils.encodeQueryString(this.fragment_);
+  const encodedFragment = ngeoUtils.encodeQueryString(this.fragment_);
   if (encodedFragment.length > 0) {
     out.push('#', encodedFragment);
   }
@@ -148,7 +148,7 @@ ngeo.statemanager.Location.prototype.getUriString = function() {
  * @return {boolean} True if the param exists.
  * @export
  */
-ngeo.statemanager.Location.prototype.hasParam = function(key) {
+exports.prototype.hasParam = function(key) {
   return key in this.queryData_;
 };
 
@@ -159,7 +159,7 @@ ngeo.statemanager.Location.prototype.hasParam = function(key) {
  * @return {boolean} True if the param exists.
  * @export
  */
-ngeo.statemanager.Location.prototype.hasFragmentParam = function(key) {
+exports.prototype.hasFragmentParam = function(key) {
   return key in this.fragment_;
 };
 
@@ -170,7 +170,7 @@ ngeo.statemanager.Location.prototype.hasFragmentParam = function(key) {
  * @return {string|undefined} Param value.
  * @export
  */
-ngeo.statemanager.Location.prototype.getParam = function(key) {
+exports.prototype.getParam = function(key) {
   return this.queryData_[key];
 };
 
@@ -181,7 +181,7 @@ ngeo.statemanager.Location.prototype.getParam = function(key) {
  * @return {string|undefined} Param value.
  * @export
  */
-ngeo.statemanager.Location.prototype.getFragmentParam = function(key) {
+exports.prototype.getFragmentParam = function(key) {
   return this.fragment_[key];
 };
 
@@ -193,12 +193,12 @@ ngeo.statemanager.Location.prototype.getFragmentParam = function(key) {
  * @return {number|undefined} Param value.
  * @export
  */
-ngeo.statemanager.Location.prototype.getParamAsInt = function(key) {
+exports.prototype.getParamAsInt = function(key) {
   const value = this.getParam(key);
   if (value === undefined) {
     return undefined;
   }
-  goog.asserts.assertString(value);
+  googAsserts.assertString(value);
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
@@ -212,12 +212,12 @@ ngeo.statemanager.Location.prototype.getParamAsInt = function(key) {
  * @return {number|undefined} Param value.
  * @export
  */
-ngeo.statemanager.Location.prototype.getParamAsFloat = function(key) {
+exports.prototype.getParamAsFloat = function(key) {
   const value = this.getParam(key);
   if (value === undefined) {
     return undefined;
   }
-  goog.asserts.assertString(value);
+  googAsserts.assertString(value);
   const valueAsFloat = parseFloat(value);
   return isNaN(valueAsFloat) ? undefined : valueAsFloat;
 };
@@ -230,12 +230,12 @@ ngeo.statemanager.Location.prototype.getParamAsFloat = function(key) {
  * @return {number|undefined} Param value.
  * @export
  */
-ngeo.statemanager.Location.prototype.getFragmentParamAsInt = function(key) {
+exports.prototype.getFragmentParamAsInt = function(key) {
   const value = this.getFragmentParam(key);
   if (value === undefined) {
     return undefined;
   }
-  goog.asserts.assertString(value);
+  googAsserts.assertString(value);
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
@@ -246,7 +246,7 @@ ngeo.statemanager.Location.prototype.getFragmentParamAsInt = function(key) {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.statemanager.Location.prototype.getParamKeys = function() {
+exports.prototype.getParamKeys = function() {
   const keys = [];
   for (const key in this.queryData_) {
     keys.push(key);
@@ -260,7 +260,7 @@ ngeo.statemanager.Location.prototype.getParamKeys = function() {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.statemanager.Location.prototype.getFragmentParamKeys = function() {
+exports.prototype.getFragmentParamKeys = function() {
   const keys = [];
   for (const key in this.fragment_) {
     keys.push(key);
@@ -276,7 +276,7 @@ ngeo.statemanager.Location.prototype.getFragmentParamKeys = function() {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.statemanager.Location.prototype.getParamKeysWithPrefix = function(prefix) {
+exports.prototype.getParamKeysWithPrefix = function(prefix) {
   const keys = [];
   for (const key in this.queryData_) {
     if (key.indexOf(prefix) == 0) {
@@ -294,7 +294,7 @@ ngeo.statemanager.Location.prototype.getParamKeysWithPrefix = function(prefix) {
  * @return {Array.<string>} Param keys.
  * @export
  */
-ngeo.statemanager.Location.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
+exports.prototype.getFragmentParamKeysWithPrefix = function(prefix) {
   const keys = [];
   for (const key in this.fragment_) {
     if (key.indexOf(prefix) == 0) {
@@ -310,7 +310,7 @@ ngeo.statemanager.Location.prototype.getFragmentParamKeysWithPrefix = function(p
  * @param {!Object.<string, string>} params Parameters.
  * @export
  */
-ngeo.statemanager.Location.prototype.updateParams = function(params) {
+exports.prototype.updateParams = function(params) {
   for (const key in params) {
     this.queryData_[key] = params[key];
   }
@@ -322,7 +322,7 @@ ngeo.statemanager.Location.prototype.updateParams = function(params) {
  * @param {!Object.<string, string>} params Parameters.
  * @export
  */
-ngeo.statemanager.Location.prototype.updateFragmentParams = function(params) {
+exports.prototype.updateFragmentParams = function(params) {
   for (const key in params) {
     this.fragment_[key] = params[key];
   }
@@ -334,7 +334,7 @@ ngeo.statemanager.Location.prototype.updateFragmentParams = function(params) {
  * @param {string} key Param key.
  * @export
  */
-ngeo.statemanager.Location.prototype.deleteParam = function(key) {
+exports.prototype.deleteParam = function(key) {
   delete this.queryData_[key];
 };
 
@@ -344,7 +344,7 @@ ngeo.statemanager.Location.prototype.deleteParam = function(key) {
  * @param {string} key Param key.
  * @export
  */
-ngeo.statemanager.Location.prototype.deleteFragmentParam = function(key) {
+exports.prototype.deleteFragmentParam = function(key) {
   delete this.fragment_[key];
 };
 
@@ -353,8 +353,8 @@ ngeo.statemanager.Location.prototype.deleteFragmentParam = function(key) {
  * Refresh the the location's URI.
  * @export
  */
-ngeo.statemanager.Location.prototype.refresh = function() {
-  ngeo.statemanager.Location.replaceState(this.history_, this.getUriString());
+exports.prototype.refresh = function() {
+  exports.replaceState(this.history_, this.getUriString());
 };
 
 
@@ -363,7 +363,7 @@ ngeo.statemanager.Location.prototype.refresh = function() {
  * @param {string} path Path.
  * @export
  */
-ngeo.statemanager.Location.prototype.setPath = function(path) {
+exports.prototype.setPath = function(path) {
   this.path_ = path;
 };
 
@@ -376,9 +376,9 @@ ngeo.statemanager.Location.prototype.setPath = function(path) {
  * @return {ngeo.statemanager.Location} The ngeo location service.
  * @ngInject
  */
-ngeo.statemanager.Location.LocationFactory = function($rootScope, $window) {
+exports.LocationFactory = function($rootScope, $window) {
   const history = $window.history;
-  const service = new ngeo.statemanager.Location($window.location, $window.history);
+  const service = new exports($window.location, $window.history);
 
   let lastUri = service.getUriString();
   $rootScope.$watch(() => {
@@ -387,7 +387,7 @@ ngeo.statemanager.Location.LocationFactory = function($rootScope, $window) {
       $rootScope.$evalAsync(() => {
         lastUri = newUri;
         if (history !== undefined && history.replaceState !== undefined) {
-          ngeo.statemanager.Location.replaceState(history, newUri);
+          exports.replaceState(history, newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
       });
@@ -408,7 +408,7 @@ ngeo.statemanager.Location.LocationFactory = function($rootScope, $window) {
  *     provider.
  * @ngInject
  */
-ngeo.statemanager.Location.MockProvider = function($locationProvider) {
+exports.MockProvider = function($locationProvider) {
   /**
    * @return {angular.$location} Mock object for Angular location service.
    */
@@ -480,5 +480,8 @@ ngeo.statemanager.Location.MockProvider = function($locationProvider) {
  * FIXME add utils dependencies.
  * FIXME What about Mockup provider ?
  */
-ngeo.statemanager.Location.module = angular.module('ngeoLocation', []);
-ngeo.statemanager.Location.module.factory('ngeoLocation', ngeo.statemanager.Location.LocationFactory);
+exports.module = angular.module('ngeoLocation', []);
+exports.module.factory('ngeoLocation', exports.LocationFactory);
+
+
+export default exports;

@@ -1,24 +1,24 @@
-goog.provide('gmf.controllers.AbstractMobileController');
-
-goog.require('gmf.controllers.AbstractAppController');
-goog.require('gmf.mobile.measure.module');
-goog.require('gmf.mobile.navigation.module');
-goog.require('gmf.query.windowComponent');
-goog.require('ngeo.geolocation.mobile');
-goog.require('ol');
-goog.require('ol.obj');
-goog.require('ol.proj');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.control.ScaleLine');
-goog.require('ol.control.Zoom');
-goog.require('ol.control.Rotate');
-goog.require('ol.interaction');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-
+/**
+ * @module gmf.controllers.AbstractMobileController
+ */
+import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
+import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
+import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
+import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
+import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
+import * as olBase from 'ol/index.js';
+import * as olObj from 'ol/obj.js';
+import * as olProj from 'ol/proj.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olControlScaleLine from 'ol/control/ScaleLine.js';
+import olControlZoom from 'ol/control/Zoom.js';
+import olControlRotate from 'ol/control/Rotate.js';
+import * as olInteraction from 'ol/interaction.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * Mobile application abstract controller.
@@ -35,7 +35,7 @@ goog.require('ol.style.Style');
  * @ngInject
  * @export
  */
-gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
+const exports = function(config, $scope, $injector) {
 
   /**
    * @type {boolean}
@@ -68,17 +68,17 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
     }.bind(this)
   });
 
-  const positionFeatureStyle = config.positionFeatureStyle || new ol.style.Style({
-    image: new ol.style.Circle({
+  const positionFeatureStyle = config.positionFeatureStyle || new olStyleStyle({
+    image: new olStyleCircle({
       radius: 6,
-      fill: new ol.style.Fill({color: 'rgba(230, 100, 100, 1)'}),
-      stroke: new ol.style.Stroke({color: 'rgba(230, 40, 40, 1)', width: 2})
+      fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
+      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
     })
   });
 
-  const accuracyFeatureStyle = config.accuracyFeatureStyle || new ol.style.Style({
-    fill: new ol.style.Fill({color: 'rgba(100, 100, 230, 0.3)'}),
-    stroke: new ol.style.Stroke({color: 'rgba(40, 40, 230, 1)', width: 2})
+  const accuracyFeatureStyle = config.accuracyFeatureStyle || new olStyleStyle({
+    fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
+    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
   });
 
   /**
@@ -93,37 +93,37 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
   };
 
   const viewConfig = {
-    projection: ol.proj.get(`EPSG:${config.srid || 21781}`)
+    projection: olProj.get(`EPSG:${config.srid || 21781}`)
   };
-  ol.obj.assign(viewConfig, config.mapViewConfig || {});
+  olObj.assign(viewConfig, config.mapViewConfig || {});
 
-  const arrow = gmf.controllers.AbstractAppController.prototype.getLocationIcon();
+  const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     pixelRatio: config.mapPixelRatio,
     layers: [],
-    view: new ol.View(viewConfig),
+    view: new olView(viewConfig),
     controls: config.mapControls || [
-      new ol.control.ScaleLine(),
-      new ol.control.Zoom({
+      new olControlScaleLine(),
+      new olControlZoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
       }),
-      new ol.control.Rotate({
+      new olControlRotate({
         label: arrow,
         tipLabel: ''
       })
     ],
     interactions:
         config.mapInteractions ||
-        ol.interaction.defaults({pinchRotate: true})
+        olInteraction.defaults({pinchRotate: true})
   });
 
-  gmf.controllers.AbstractAppController.call(this, config, $scope, $injector);
+  gmfControllersAbstractAppController.call(this, config, $scope, $injector);
 
   this.manageResize = true;
   this.resizeTransition = 500;
@@ -135,13 +135,14 @@ gmf.controllers.AbstractMobileController = function(config, $scope, $injector) {
     }
   });
 };
-ol.inherits(gmf.controllers.AbstractMobileController, gmf.controllers.AbstractAppController);
+
+olBase.inherits(exports, gmfControllersAbstractAppController);
 
 
 /**
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
+exports.prototype.toggleLeftNavVisibility = function() {
   this.leftNavVisible = !this.leftNavVisible;
 };
 
@@ -149,7 +150,7 @@ gmf.controllers.AbstractMobileController.prototype.toggleLeftNavVisibility = fun
 /**
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.toggleRightNavVisibility = function() {
+exports.prototype.toggleRightNavVisibility = function() {
   this.rightNavVisible = !this.rightNavVisible;
 };
 
@@ -158,7 +159,7 @@ gmf.controllers.AbstractMobileController.prototype.toggleRightNavVisibility = fu
  * Hide both navigation menus.
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.hideNav = function() {
+exports.prototype.hideNav = function() {
   this.leftNavVisible = this.rightNavVisible = false;
 };
 
@@ -168,7 +169,7 @@ gmf.controllers.AbstractMobileController.prototype.hideNav = function() {
  * otherwise false.
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.navIsVisible = function() {
+exports.prototype.navIsVisible = function() {
   return this.leftNavVisible || this.rightNavVisible;
 };
 
@@ -177,7 +178,7 @@ gmf.controllers.AbstractMobileController.prototype.navIsVisible = function() {
  * Hide search overlay.
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.hideSearchOverlay = function() {
+exports.prototype.hideSearchOverlay = function() {
   this.searchOverlayVisible = false;
 };
 
@@ -187,7 +188,7 @@ gmf.controllers.AbstractMobileController.prototype.hideSearchOverlay = function(
  * otherwise false.
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.leftNavIsVisible = function() {
+exports.prototype.leftNavIsVisible = function() {
   return this.leftNavVisible;
 };
 
@@ -197,7 +198,7 @@ gmf.controllers.AbstractMobileController.prototype.leftNavIsVisible = function()
  * otherwise false.
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function() {
+exports.prototype.rightNavIsVisible = function() {
   return this.rightNavVisible;
 };
 
@@ -207,7 +208,7 @@ gmf.controllers.AbstractMobileController.prototype.rightNavIsVisible = function(
  * @param {string} target the data-target value.
  * @export
  */
-gmf.controllers.AbstractMobileController.prototype.openNavMenu = function(target) {
+exports.prototype.openNavMenu = function(target) {
   const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
   for (let i = 0; i < navElements.length; i++) {
     const element = navElements[i];
@@ -218,18 +219,21 @@ gmf.controllers.AbstractMobileController.prototype.openNavMenu = function(target
 };
 
 
-gmf.controllers.AbstractMobileController.module = angular.module('GmfAbstractMobileControllerModule', [
-  gmf.controllers.AbstractAppController.module.name,
-  gmf.mobile.measure.module.name,
-  gmf.mobile.navigation.module.name,
-  gmf.query.windowComponent.name,
-  ngeo.geolocation.mobile.name,
+exports.module = angular.module('GmfAbstractMobileControllerModule', [
+  gmfControllersAbstractAppController.module.name,
+  gmfMobileMeasureModule.name,
+  gmfMobileNavigationModule.name,
+  gmfQueryWindowComponent.name,
+  ngeoGeolocationMobile.name,
 ]);
 
-gmf.controllers.AbstractMobileController.module.controller('AbstractMobileController', gmf.controllers.AbstractMobileController);
+exports.module.controller('AbstractMobileController', exports);
 
-gmf.controllers.AbstractMobileController.module.value('isMobile', true);
+exports.module.value('isMobile', true);
 
-gmf.controllers.AbstractMobileController.module.value('ngeoQueryOptions', {
+exports.module.value('ngeoQueryOptions', {
   'tolerance': 10
 });
+
+
+export default exports;

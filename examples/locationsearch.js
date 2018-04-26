@@ -1,28 +1,32 @@
-goog.provide('app.locationsearch');
+/**
+ * @module app.locationsearch
+ */
+const exports = {};
 
-// webpack: import './locationsearch.css';
-goog.require('goog.asserts');
-goog.require('ngeo.map.module');
-goog.require('ngeo.search.module');
-goog.require('ol.proj');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import './locationsearch.css';
+import googAsserts from 'goog/asserts.js';
+
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoSearchModule from 'ngeo/search/module.js';
+import * as olProj from 'ol/proj.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
 const appmodule = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.search.module.name
+  ngeoMapModule.name,
+  ngeoSearchModule.name
 ]);
 
 
 /**
  * @type {!angular.Component}
  */
-app.locationsearch.locationSearchComponent = {
+exports.locationSearchComponent = {
   bindings: {
     'map': '=appSearchMap'
   },
@@ -35,7 +39,7 @@ app.locationsearch.locationSearchComponent = {
 };
 
 
-appmodule.component('appLocationSearch', app.locationsearch.locationSearchComponent);
+appmodule.component('appLocationSearch', exports.locationSearchComponent);
 
 
 /**
@@ -43,7 +47,7 @@ appmodule.component('appLocationSearch', app.locationsearch.locationSearchCompon
  * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
-app.locationsearch.SearchController = function(ngeoCreateLocationSearchBloodhound) {
+exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {ol.Map}
@@ -91,7 +95,7 @@ app.locationsearch.SearchController = function(ngeoCreateLocationSearchBloodhoun
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: app.locationsearch.SearchController.select_.bind(this)
+    select: exports.SearchController.select_.bind(this)
   });
 
 };
@@ -104,9 +108,9 @@ app.locationsearch.SearchController = function(ngeoCreateLocationSearchBloodhoun
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.locationsearch.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
-  const epsg3857 = ol.proj.get('EPSG:3857');
-  goog.asserts.assert(epsg3857 !== null);
+exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+  const epsg3857 = olProj.get('EPSG:3857');
+  googAsserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
     targetProjection: epsg3857,
     limit: limit,
@@ -130,35 +134,35 @@ app.locationsearch.SearchController.prototype.createAndInitBloodhound_ = functio
  * @this {app.locationsearch.SearchController}
  * @private
  */
-app.locationsearch.SearchController.select_ = function(event, suggestion, dataset) {
+exports.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
   const bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
-  goog.asserts.assert(size !== undefined);
+  googAsserts.assert(size !== undefined);
   const maxZoom = 16;
   this.map.getView().fit(bbox, {size, maxZoom});
 };
 
 
-appmodule.controller('AppSearchController', app.locationsearch.SearchController);
+appmodule.controller('AppSearchController', exports.SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.locationsearch.MainController = function() {
+exports.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -167,4 +171,7 @@ app.locationsearch.MainController = function() {
 };
 
 
-appmodule.controller('MainController', app.locationsearch.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

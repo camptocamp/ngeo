@@ -1,13 +1,16 @@
-goog.provide('gmf.query.extraModule');
-
-goog.require('gmf.query.gridComponent');
-goog.require('gmf.query.windowComponent');
-
+/**
+ * @module gmf.query.extraModule
+ */
+import gmfQueryGridComponent from 'gmf/query/gridComponent.js';
+import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.query.extraModule = angular.module('gmfQueryExtraModule', [
-  gmf.query.gridComponent.name,
-  gmf.query.windowComponent.name,
+const exports = angular.module('gmfQueryExtraModule', [
+  gmfQueryGridComponent.name,
+  gmfQueryWindowComponent.name,
 ]);
+
+
+export default exports;

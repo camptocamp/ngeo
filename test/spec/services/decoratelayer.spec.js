@@ -1,14 +1,14 @@
-goog.require('ngeo.misc.decorate');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 describe('ngeo.misc.DecorateLayer', () => {
   it('can change the visibility', () => {
-    const layer = new ol.layer.Tile({
-      source: new ol.source.OSM(),
+    const layer = new olLayerTile({
+      source: new olSourceOSM(),
       visible: false
     });
-    ngeo.misc.decorate.layer(layer);
+    ngeoMiscDecorate.layer(layer);
     layer.visible = true;
     expect(layer.getVisible()).toBe(true);
     layer.visible = false;
@@ -16,11 +16,11 @@ describe('ngeo.misc.DecorateLayer', () => {
   });
 
   it('can change the opacity', () => {
-    const layer = new ol.layer.Tile({
-      source: new ol.source.OSM(),
+    const layer = new olLayerTile({
+      source: new olSourceOSM(),
       opacity: 0.5
     });
-    ngeo.misc.decorate.layer(layer);
+    ngeoMiscDecorate.layer(layer);
     layer.opacity = 0.7;
     expect(layer.getOpacity()).toBe(0.7);
   });

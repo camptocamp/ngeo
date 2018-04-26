@@ -1,14 +1,15 @@
-goog.provide('ngeo.draw.rectangle');
-
-goog.require('ngeo.GeometryType');
-goog.require('ol.events');
-goog.require('ol.interaction.Draw');
-goog.require('ol.geom.Polygon');
+/**
+ * @module ngeo.draw.rectangle
+ */
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+import * as olEvents from 'ol/events.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.draw.rectangle = angular.module('ngeoDrawrectangle', []);
+const exports = angular.module('ngeoDrawrectangle', []);
 
 
 /**
@@ -17,7 +18,7 @@ ngeo.draw.rectangle = angular.module('ngeoDrawrectangle', []);
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
  */
-ngeo.draw.rectangle.directive_ = function() {
+exports.directive_ = function() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -29,11 +30,11 @@ ngeo.draw.rectangle.directive_ = function() {
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
-      const drawRectangle = new ol.interaction.Draw({
+      const drawRectangle = new olInteractionDraw({
         type: /** @type {ol.geom.GeometryType} */ ('LineString'),
         geometryFunction: (coordinates, geometry) => {
           if (!geometry) {
-            geometry = new ol.geom.Polygon(null);
+            geometry = new olGeomPolygon(null);
           }
           const start = coordinates[0];
           const end = coordinates[1];
@@ -48,14 +49,14 @@ ngeo.draw.rectangle.directive_ = function() {
       drawFeatureCtrl.registerInteraction(drawRectangle);
       drawFeatureCtrl.drawRectangle = drawRectangle;
 
-      ol.events.listen(
+      olEvents.listen(
         drawRectangle,
         'drawend',
         drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeo.GeometryType.RECTANGLE),
+          drawFeatureCtrl, ngeoGeometryType.RECTANGLE),
         drawFeatureCtrl
       );
-      ol.events.listen(
+      olEvents.listen(
         drawRectangle,
         'change:active',
         drawFeatureCtrl.handleActiveChange,
@@ -66,4 +67,7 @@ ngeo.draw.rectangle.directive_ = function() {
 };
 
 
-ngeo.draw.rectangle.directive('ngeoDrawrectangle', ngeo.draw.rectangle.directive_);
+exports.directive('ngeoDrawrectangle', exports.directive_);
+
+
+export default exports;

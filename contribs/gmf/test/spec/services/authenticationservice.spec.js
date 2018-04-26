@@ -1,5 +1,5 @@
-goog.require('gmf.authentication.Service');
-goog.require('ol.events');
+import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import * as olEvents from 'ol/events.js';
 
 describe('gmf.authentication.Service', () => {
   let gmfAuthentication;
@@ -14,9 +14,9 @@ describe('gmf.authentication.Service', () => {
       gmfAuthentication = _gmfAuthenticationService_;
       authenticationBaseUrl = _authenticationBaseUrl_;
 
-      isLoggedInUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.IS_LOGGED_IN}`;
-      loginUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.LOGIN}`;
-      logoutUrl = `${authenticationBaseUrl}/${gmf.authentication.Service.RouteSuffix.LOGOUT}`;
+      isLoggedInUrl = `${authenticationBaseUrl}/${gmfAuthenticationService.RouteSuffix.IS_LOGGED_IN}`;
+      loginUrl = `${authenticationBaseUrl}/${gmfAuthenticationService.RouteSuffix.LOGIN}`;
+      logoutUrl = `${authenticationBaseUrl}/${gmfAuthenticationService.RouteSuffix.LOGOUT}`;
 
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET', isLoggedInUrl).respond({});
@@ -35,7 +35,7 @@ describe('gmf.authentication.Service', () => {
   it('emits READY after login status check', () => {
     const spy = jasmine.createSpy();
     let event;
-    ol.events.listenOnce(
+    olEvents.listenOnce(
       gmfAuthentication, 'ready', (evt) => {
         event = evt;
         spy();
@@ -55,7 +55,7 @@ describe('gmf.authentication.Service', () => {
   it('logins successful', () => {
     const spy = jasmine.createSpy();
     let event;
-    ol.events.listenOnce(
+    olEvents.listenOnce(
       gmfAuthentication, 'login', (evt) => {
         event = evt;
         spy();
@@ -74,7 +74,7 @@ describe('gmf.authentication.Service', () => {
 
   it('trys to login with wrong credentials', () => {
     const spy = jasmine.createSpy();
-    ol.events.listenOnce(
+    olEvents.listenOnce(
       gmfAuthentication, 'login', spy);
 
     $httpBackend.when('POST', loginUrl).respond({});
@@ -87,7 +87,7 @@ describe('gmf.authentication.Service', () => {
 
   it('logs out', () => {
     const spy = jasmine.createSpy();
-    ol.events.listenOnce(
+    olEvents.listenOnce(
       gmfAuthentication, 'logout', spy);
 
     $httpBackend.when('GET', logoutUrl).respond('true');
