@@ -1,5 +1,6 @@
 goog.provide('ngeo.message.displaywindowComponent');
 
+goog.require('goog.asserts');
 goog.require('ngeo'); // nowebpack
 // webpack: import 'jquery-ui/ui/widgets/resizable.js';
 // webpack: import 'jquery-ui/ui/widgets/draggable.js';
@@ -51,7 +52,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
    * @param {!jQuery} $element Element.
    * @param {!angular.$sce} $sce Angular sce service.
    * @param {!angular.Scope} $scope Scope.
-   * @param {angular.$compile} $compile The compile provider.
+   * @param {!angular.$compile} $compile The compile provider.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -153,7 +154,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     this.sce_ = $sce;
 
     /**
-     * @type {angular.Scope}
+     * @type {!angular.Scope}
      * @private
      */
     this.scope_ = $scope;
@@ -201,10 +202,10 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     }
 
     if (this.contentTemplate) {
-      const scope = this.contentScope || this.scope_;
+      const scope = goog.asserts.assert(this.contentScope || this.scope_);
       const compiled = this.compile_(this.contentTemplate)(scope);
       const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container');
-      displayWindow.append(compiled);
+      displayWindow.append(/** @type {?} */ (compiled));
     }
   }
 
