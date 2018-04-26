@@ -2,14 +2,14 @@
  * @module ngeo.interaction.common
  */
 const exports = {};
-import olStyleStyle from 'ol/style/Style.js';
+import {createEditingStyle} from 'ol/style/Style.js';
 
 
 /**
  * @return {ol.StyleFunction} Styles.
  */
 exports.getDefaultDrawStyleFunction = function() {
-  const style = olStyleStyle.createDefaultEditing();
+  const style = createEditingStyle();
   return function(feature, resolution) {
     return style[feature.getGeometry().getType()];
   };
@@ -20,7 +20,7 @@ exports.getDefaultDrawStyleFunction = function() {
  * @return {ol.StyleFunction} Styles.
  */
 exports.getDefaultModifyStyleFunction = function() {
-  const style = olStyleStyle.createDefaultEditing();
+  const style = createEditingStyle();
   return function(feature, resolution) {
     return style[/**@type {ol.geom.GeometryType} */ ('Point')];
   };

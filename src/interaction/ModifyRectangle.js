@@ -82,7 +82,9 @@ const exports = function(options) {
   olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
   olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
-  this.features_.forEach(this.addFeature_, this);
+  this.features_.forEach((feature) => {
+    this.addFeature_(feature);
+  });
 
 };
 
