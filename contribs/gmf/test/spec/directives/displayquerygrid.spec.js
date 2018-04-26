@@ -1,7 +1,7 @@
-goog.require('ol.Map');
-goog.require('ol.style.Style');
-goog.require('ol.View');
-goog.require('ol.Feature');
+import olMap from 'ol/Map.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olView from 'ol/View.js';
+import olFeature from 'ol/Feature.js';
 
 /**
  * Compare two list of objects using only the properties of the expected objects.
@@ -38,14 +38,14 @@ describe('gmf.query.gridComponent', () => {
       $scope = $rootScope.$new();
       const data = {
         featuresStyleFn() {
-          return new ol.style.Style();
+          return new olStyleStyle();
         },
         selectedFeatureStyleFn() {
           return undefined;
         },
         getMapFn() {
-          return new ol.Map({
-            view: new ol.View({
+          return new olMap({
+            view: new olView({
               center: [0, 0],
               zoom: 0
             })
@@ -73,12 +73,12 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A',
             'empty_column': undefined
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B',
             'empty_column': undefined
@@ -129,12 +129,12 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A',
             'empty_column': undefined
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B',
             'empty_column': undefined
@@ -178,11 +178,11 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'empty_column': undefined,
             '2n-empty_column': undefined
           }),
-          new ol.Feature({
+          new olFeature({
             'empty_column': undefined,
             '2n-empty_column': undefined
           })
@@ -204,11 +204,11 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 3;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -225,7 +225,7 @@ describe('gmf.query.gridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 1234,
             'label': 'C'
           })
@@ -290,11 +290,11 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -364,11 +364,11 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -379,7 +379,7 @@ describe('gmf.query.gridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 123456,
             'name': 'C'
           })
@@ -390,7 +390,7 @@ describe('gmf.query.gridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 1234,
             'label': 'D'
           })
@@ -460,11 +460,11 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -483,7 +483,7 @@ describe('gmf.query.gridComponent', () => {
         totalFeatureCount: 351
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 1234,
             'label': 'D'
           })
@@ -523,7 +523,7 @@ describe('gmf.query.gridComponent', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           })
@@ -534,7 +534,7 @@ describe('gmf.query.gridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 2345,
             'label': 'C'
           })

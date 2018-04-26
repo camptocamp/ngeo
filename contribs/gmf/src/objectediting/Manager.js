@@ -1,9 +1,9 @@
-goog.provide('gmf.objectediting.Manager');
-
-goog.require('gmf.editing.EditFeature');
-goog.require('ngeo.statemanager.Location');
-goog.require('ol.Feature');
-
+/**
+ * @module gmf.objectediting.Manager
+ */
+import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
+import olFeature from 'ol/Feature.js';
 
 /**
  * A service that looks for certain parameters in the url and use them to fetch
@@ -16,7 +16,7 @@ goog.require('ol.Feature');
  * @struct
  * @ngInject
  */
-gmf.objectediting.Manager = function($q, gmfEditFeature, ngeoLocation) {
+const exports = function($q, gmfEditFeature, ngeoLocation) {
 
   /**
    * @type {angular.$q}
@@ -56,21 +56,21 @@ gmf.objectediting.Manager = function($q, gmfEditFeature, ngeoLocation) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.objectediting.Manager.prototype.getFeature = function() {
+exports.prototype.getFeature = function() {
 
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
 
     const geomType = this.ngeoLocation_.getParam(
-      gmf.objectediting.Manager.Param.GEOM_TYPE);
+      exports.Param.GEOM_TYPE);
     const id = this.ngeoLocation_.getParam(
-      gmf.objectediting.Manager.Param.ID);
+      exports.Param.ID);
     const layer = this.ngeoLocation_.getParam(
-      gmf.objectediting.Manager.Param.LAYER);
+      exports.Param.LAYER);
     const property = this.ngeoLocation_.getParam(
-      gmf.objectediting.Manager.Param.PROPERTY);
+      exports.Param.PROPERTY);
     const theme = this.ngeoLocation_.getParam(
-      gmf.objectediting.Manager.Param.THEME);
+      exports.Param.THEME);
 
     if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_.getFeaturesWithComparisonFilters(
@@ -95,9 +95,9 @@ gmf.objectediting.Manager.prototype.getFeature = function() {
  * @return {string|undefined} The geometry type.
  * @export
  */
-gmf.objectediting.Manager.prototype.getGeomType = function() {
+exports.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
-    gmf.objectediting.Manager.Param.GEOM_TYPE);
+    exports.Param.GEOM_TYPE);
 };
 
 
@@ -105,9 +105,9 @@ gmf.objectediting.Manager.prototype.getGeomType = function() {
  * @return {number|undefined} The gmf layer node id.
  * @export
  */
-gmf.objectediting.Manager.prototype.getLayerNodeId = function() {
+exports.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
-    gmf.objectediting.Manager.Param.LAYER);
+    exports.Param.LAYER);
 };
 
 
@@ -122,7 +122,7 @@ gmf.objectediting.Manager.prototype.getLayerNodeId = function() {
  * @param {Array.<ol.Feature>} features List of features.
  * @private
  */
-gmf.objectediting.Manager.prototype.handleGetFeatures_ = function(key, value, features) {
+exports.prototype.handleGetFeatures_ = function(key, value, features) {
   let feature;
 
   if (features.length) {
@@ -131,7 +131,7 @@ gmf.objectediting.Manager.prototype.handleGetFeatures_ = function(key, value, fe
     const featureProperties = {};
     featureProperties[key] = value;
     featureProperties['geometry'] = null;
-    feature = new ol.Feature(featureProperties);
+    feature = new olFeature(featureProperties);
   }
 
   this.getFeatureDefered_.resolve(feature);
@@ -142,7 +142,7 @@ gmf.objectediting.Manager.prototype.handleGetFeatures_ = function(key, value, fe
  * @enum {string}
  * @export
  */
-gmf.objectediting.Manager.Param = {
+exports.Param = {
   /**
    * @type {string}
    * @export
@@ -174,8 +174,11 @@ gmf.objectediting.Manager.Param = {
 /**
  * @type {!angular.Module}
  */
-gmf.objectediting.Manager.module = angular.module('gmfObjectEditingManager', [
-  gmf.editing.EditFeature.module.name,
-  ngeo.statemanager.Location.module.name,
+exports.module = angular.module('gmfObjectEditingManager', [
+  gmfEditingEditFeature.module.name,
+  ngeoStatemanagerLocation.module.name,
 ]);
-gmf.objectediting.Manager.module.service('gmfObjectEditingManager', gmf.objectediting.Manager);
+exports.module.service('gmfObjectEditingManager', exports);
+
+
+export default exports;

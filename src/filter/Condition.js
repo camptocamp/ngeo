@@ -1,10 +1,11 @@
-goog.provide('ngeo.filter.Condition');
-
+/**
+ * @module ngeo.filter.Condition
+ */
 /**
  * @enum {string}
  * @export
  */
-ngeo.filter.Condition = {
+const exports = {
   /**
    * @type {string}
    * @export
@@ -21,3 +22,6 @@ ngeo.filter.Condition = {
    */
   OR: '||'
 };
+
+
+export default exports;

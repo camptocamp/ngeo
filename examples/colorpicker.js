@@ -1,13 +1,16 @@
-goog.provide('app.colorpicker');
+/**
+ * @module app.colorpicker
+ */
+const exports = {};
 
-// webpack: import './colorpicker.css';
+import './colorpicker.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.colorpickerComponent');
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 /** @type {!angular.Module} **/
-app.colorpicker.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.misc.colorpickerComponent.name,
+  ngeoMiscColorpickerComponent.name,
 ]);
 
 
@@ -17,20 +20,20 @@ app.colorpicker.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.colorpicker.colorpickerComponent = {
+exports.colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
   controller: 'AppColorpickerController'
 };
 
 
-app.colorpicker.module.component('appColorpicker', app.colorpicker.colorpickerComponent);
+exports.module.component('appColorpicker', exports.colorpickerComponent);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.colorpicker.ColorPickerController = function() {
+exports.ColorPickerController = function() {
 
 
   /**
@@ -45,8 +48,8 @@ app.colorpicker.ColorPickerController = function() {
 
 };
 
-app.colorpicker.module.controller('AppColorpickerController',
-  app.colorpicker.ColorPickerController);
+exports.module.controller('AppColorpickerController',
+  exports.ColorPickerController);
 
 
 /**
@@ -54,7 +57,7 @@ app.colorpicker.module.controller('AppColorpickerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.colorpicker.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * Active color.
@@ -66,4 +69,7 @@ app.colorpicker.MainController = function($scope) {
 };
 
 
-app.colorpicker.module.controller('MainController', app.colorpicker.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

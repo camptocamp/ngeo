@@ -1,20 +1,20 @@
-goog.provide('gmf.profile.drawLineComponent');
-
-goog.require('goog.asserts');
-goog.require('ol.Collection');
-goog.require('ol.interaction.Draw');
-goog.require('ol.Map');
-goog.require('ol.style.Style');
-goog.require('ol.style.Stroke');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.misc.decorate');
-
+/**
+ * @module gmf.profile.drawLineComponent
+ */
+import googAsserts from 'goog/asserts.js';
+import olCollection from 'ol/Collection.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olMap from 'ol/Map.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.profile.drawLineComponent = angular.module('gmfDrawProfileLine', [
-  ngeo.map.FeatureOverlayMgr.module.name,
+const exports = angular.module('gmfDrawProfileLine', [
+  ngeoMapFeatureOverlayMgr.module.name,
 ]);
 
 
@@ -42,7 +42,7 @@ gmf.profile.drawLineComponent = angular.module('gmfDrawProfileLine', [
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
-gmf.profile.drawLineComponent.directive_ = function() {
+exports.directive_ = function() {
   return {
     scope: true,
     controller: 'GmfDrawprofilelineController as ctrl',
@@ -57,8 +57,8 @@ gmf.profile.drawLineComponent.directive_ = function() {
 };
 
 
-gmf.profile.drawLineComponent.directive('gmfDrawprofileline',
-  gmf.profile.drawLineComponent.directive_);
+exports.directive('gmfDrawprofileline',
+  exports.directive_);
 
 /**
  * @param {!angular.Scope} $scope Scope.
@@ -72,7 +72,7 @@ gmf.profile.drawLineComponent.directive('gmfDrawprofileline',
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
+exports.Controller_ = function($scope, $element, $timeout,
   ngeoFeatureOverlayMgr) {
 
   /**
@@ -98,7 +98,7 @@ gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
    * @type {!ol.Collection}
    * @private
    */
-  this.features_ = new ol.Collection();
+  this.features_ = new olCollection();
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
@@ -107,10 +107,10 @@ gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
   const styleFn = this['getStyleFn'];
   if (styleFn) {
     style = styleFn();
-    goog.asserts.assertInstanceof(style, ol.style.Style);
+    googAsserts.assertInstanceof(style, olStyleStyle);
   } else {
-    style = new ol.style.Style({
-      stroke: new ol.style.Stroke({
+    style = new olStyleStyle({
+      stroke: new olStyleStroke({
         color: '#ffcc33',
         width: 2
       })
@@ -122,12 +122,12 @@ gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
    * @type {!ol.interaction.Draw}
    * @export
    */
-  this.interaction = new ol.interaction.Draw({
+  this.interaction = new olInteractionDraw({
     type: /** @type {ol.geom.GeometryType} */ ('LineString'),
     features: this.features_
   });
 
-  ngeo.misc.decorate.interaction(this.interaction);
+  ngeoMiscDecorate.interaction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
   this.interaction.on('change:active', () => {
@@ -171,9 +171,9 @@ gmf.profile.drawLineComponent.Controller_ = function($scope, $element, $timeout,
 /**
  * Initialise the controller.
  */
-gmf.profile.drawLineComponent.Controller_.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   const map = this['getMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
+  googAsserts.assertInstanceof(map, olMap);
   this.map_ = map;
   this.map_.addInteraction(this.interaction);
 };
@@ -183,11 +183,14 @@ gmf.profile.drawLineComponent.Controller_.prototype.$onInit = function() {
  * Clear the overlay and profile line.
  * @private
  */
-gmf.profile.drawLineComponent.Controller_.prototype.clear_ = function() {
+exports.Controller_.prototype.clear_ = function() {
   this.features_.clear();
   this.line = null;
 };
 
 
-gmf.profile.drawLineComponent.controller('GmfDrawprofilelineController',
-  gmf.profile.drawLineComponent.Controller_);
+exports.controller('GmfDrawprofilelineController',
+  exports.Controller_);
+
+
+export default exports;

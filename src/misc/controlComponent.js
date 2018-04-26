@@ -1,14 +1,14 @@
-goog.provide('ngeo.misc.controlComponent');
-
-goog.require('goog.asserts');
-goog.require('ol.Map');
-goog.require('ol.control.Control');
-
+/**
+ * @module ngeo.misc.controlComponent
+ */
+import googAsserts from 'goog/asserts.js';
+import olMap from 'ol/Map.js';
+import olControlControl from 'ol/control/Control.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.controlComponent = angular.module('ngeoControl', []);
+const exports = angular.module('ngeoControl', []);
 
 
 /**
@@ -31,7 +31,7 @@ ngeo.misc.controlComponent = angular.module('ngeoControl', []);
  * @ngdoc directive
  * @ngname ngeoControl
  */
-ngeo.misc.controlComponent.component_ = function() {
+exports.component_ = function() {
   return {
     restrict: 'A',
     /**
@@ -43,11 +43,11 @@ ngeo.misc.controlComponent.component_ = function() {
 
       const control = /** @type {ol.control.Control} */
               (scope.$eval(attrs['ngeoControl']));
-      goog.asserts.assertInstanceof(control, ol.control.Control);
+      googAsserts.assertInstanceof(control, olControlControl);
 
       const map = /** @type {ol.Map} */
               (scope.$eval(attrs['ngeoControlMap']));
-      goog.asserts.assertInstanceof(map, ol.Map);
+      googAsserts.assertInstanceof(map, olMap);
 
       control.setTarget(element[0]);
       map.addControl(control);
@@ -56,4 +56,7 @@ ngeo.misc.controlComponent.component_ = function() {
 };
 
 
-ngeo.misc.controlComponent.directive('ngeoControl', ngeo.misc.controlComponent.component_);
+exports.directive('ngeoControl', exports.component_);
+
+
+export default exports;

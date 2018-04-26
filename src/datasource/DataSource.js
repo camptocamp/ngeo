@@ -1,10 +1,10 @@
-goog.provide('ngeo.datasource.DataSource');
-
-
+/**
+ * @module ngeo.datasource.DataSource
+ */
 /**
  * @implements {ngeox.datasource.DataSource}
  */
-ngeo.datasource.DataSource = class {
+const exports = class {
 
   /**
    * A `ngeo.datasource.DataSource` represents a single source of data, which
@@ -220,3 +220,6 @@ ngeo.datasource.DataSource = class {
     return this.maxResolution !== null || this.minResolution !== null;
   }
 };
+
+
+export default exports;

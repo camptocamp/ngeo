@@ -1,13 +1,13 @@
-goog.provide('ngeo.query.MapQuerent');
+/**
+ * @module ngeo.query.MapQuerent
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoQueryQuerent from 'ngeo/query/Querent.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
+import * as olObj from 'ol/obj.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.query.Querent');
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.datasource.Helper');
-goog.require('ol.obj');
-
-
-ngeo.query.MapQuerent = class {
+const exports = class {
 
   /**
    * The ngeo Map Querent is the service bound to a map that issues
@@ -111,7 +111,7 @@ ngeo.query.MapQuerent = class {
     // (3) Update query options, update the pending property and issue the
     //     request.
     const limit = options.limit !== undefined ? options.limit : this.limit_;
-    ol.obj.assign(options, {
+    olObj.assign(options, {
       queryableDataSources: queryableDataSources,
       limit: limit,
       tolerancePx: this.tolerancePx_,
@@ -153,7 +153,7 @@ ngeo.query.MapQuerent = class {
       const id = Number(idStr);
       const dataSource = this.ngeoDataSourcesHelper_.getDataSource(id);
       let label = dataSource.name;
-      goog.asserts.assert(dataSource);
+      googAsserts.assert(dataSource);
 
       const querentResultItem = response[id];
       const features = querentResultItem.features;
@@ -163,7 +163,7 @@ ngeo.query.MapQuerent = class {
 
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
-        const type = goog.asserts.assertString(feature.get('ngeo_feature_type_'));
+        const type = googAsserts.assertString(feature.get('ngeo_feature_type_'));
         if (!typeSeparatedFeatures[type]) {
           typeSeparatedFeatures[type] = [];
         }
@@ -213,20 +213,23 @@ ngeo.query.MapQuerent = class {
 /**
  * @type {!angular.Module}
  */
-ngeo.query.MapQuerent.module = angular.module('ngeoMapQuerent', [
-  ngeo.datasource.DataSources.module.name,
-  ngeo.datasource.Helper.module.name,
-  ngeo.query.Querent.module.name,
+exports.module = angular.module('ngeoMapQuerent', [
+  ngeoDatasourceDataSources.module.name,
+  ngeoDatasourceHelper.module.name,
+  ngeoQueryQuerent.module.name,
 ]);
-ngeo.query.MapQuerent.module.service('ngeoMapQuerent', ngeo.query.MapQuerent);
+exports.module.service('ngeoMapQuerent', exports);
 
 
 /**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-ngeo.query.MapQuerent.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
+exports.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
   sources: [],
   total: 0,
   pending: false
 }));
+
+
+export default exports;

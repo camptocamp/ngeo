@@ -1,29 +1,33 @@
-goog.provide('gmf.datasource.Manager');
+/**
+ * @module gmf.datasource.Manager
+ */
+import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
+import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
+import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import googAsserts from 'goog/asserts.js';
 
-goog.require('gmf.datasource.OGC');
-goog.require('gmf.datasource.WFSAliases');
-goog.require('gmf.layertree.SyncLayertreeMap');
-goog.require('gmf.layertree.TreeManager');
-goog.require('gmf.theme.Themes');
-goog.require('goog.asserts');
 /** @suppress {extraRequire} */
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.datasource.OGC');
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.filter.RuleHelper');
-goog.require('ngeo.map.BackgroundLayerMgr');
-goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.misc.WMSTime');
-goog.require('ol');
-goog.require('ol.events');
-goog.require('ol.layer.Tile');
-goog.require('ol.obj');
-goog.require('ol.layer.Image');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.TileWMS');
+import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
+import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import * as olBase from 'ol/index.js';
+import * as olEvents from 'ol/events.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import * as olObj from 'ol/obj.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceTileWMS from 'ol/source/TileWMS.js';
 
-gmf.datasource.Manager = class {
+const exports = class {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
@@ -171,13 +175,13 @@ gmf.datasource.Manager = class {
 
     // === Events ===
 
-    ol.events.listen(
+    olEvents.listen(
       this.ngeoBackgroundLayerMgr_,
       'change',
       this.handleNgeoBackgroundLayerChange_,
       this
     );
-    ol.events.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
+    olEvents.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
   }
 
 
@@ -217,7 +221,7 @@ gmf.datasource.Manager = class {
         // Create a DataSources for each theme
         for (const theme of themes) {
           for (const child of theme.children) {
-            goog.asserts.assert(child);
+            googAsserts.assert(child);
             this.createDataSource_(child, child, ogcServers);
           }
         }
@@ -325,7 +329,7 @@ gmf.datasource.Manager = class {
     }
 
     // (2) Clear the cache
-    ol.obj.clear(this.dataSourcesCache_);
+    olObj.clear(this.dataSourcesCache_);
   }
 
   /**
@@ -351,7 +355,7 @@ gmf.datasource.Manager = class {
     //     group node itself is **skipped**.
     if (children) {
       for (const child of children) {
-        goog.asserts.assert(child);
+        googAsserts.assert(child);
         this.createDataSource_(firstLevelGroup, child, ogcServers);
       }
       return;
@@ -361,7 +365,7 @@ gmf.datasource.Manager = class {
     const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
-    const id = ol.getUid(gmfLayer);
+    const id = olBase.getUid(gmfLayer);
     if (this.dataSourcesCache_[id]) {
       return;
     }
@@ -378,7 +382,7 @@ gmf.datasource.Manager = class {
     let ogcImageType;
     let timeProperty;
 
-    if (ogcType === gmf.theme.Themes.NodeType.WMTS) {
+    if (ogcType === gmfThemeThemes.NodeType.WMTS) {
       // (3) Manage WMTS
       const gmfLayerWMTS = /** @type {gmfThemes.GmfLayerWMTS} */ (gmfLayer);
 
@@ -406,7 +410,7 @@ gmf.datasource.Manager = class {
         ogcServer = ogcServers[meta.ogcServer];
       }
       ogcImageType = gmfLayerWMTS.imageType;
-    } else if (ogcType === gmf.theme.Themes.NodeType.WMS) {
+    } else if (ogcType === gmfThemeThemes.NodeType.WMS) {
       // (4) Manage WMS
       const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
 
@@ -427,7 +431,7 @@ gmf.datasource.Manager = class {
       // OGC Server
       const ogcServerName = (!firstLevelGroup || firstLevelGroup.mixed) ?
         gmfLayerWMS.ogcServer : firstLevelGroup.ogcServer;
-      goog.asserts.assert(ogcServerName);
+      googAsserts.assert(ogcServerName);
       ogcServer = ogcServers[ogcServerName];
       ogcImageType = ogcServer.imageType;
 
@@ -446,10 +450,10 @@ gmf.datasource.Manager = class {
       ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
 
-    let wfsOutputFormat = ngeo.datasource.OGC.WFSOutputFormat.GML3;
+    let wfsOutputFormat = ngeoDatasourceOGC.WFSOutputFormat.GML3;
     // qgis server only supports GML2 output
-    if (ogcServerType === ngeo.datasource.OGC.ServerType.QGISSERVER) {
-      wfsOutputFormat = ngeo.datasource.OGC.WFSOutputFormat.GML2;
+    if (ogcServerType === ngeoDatasourceOGC.ServerType.QGISSERVER) {
+      wfsOutputFormat = ngeoDatasourceOGC.WFSOutputFormat.GML2;
     }
 
     // (6) Snapping
@@ -486,7 +490,7 @@ gmf.datasource.Manager = class {
     const visible = meta.isChecked === true;
 
     // Create the data source and add it to the cache
-    this.dataSourcesCache_[id] = new gmf.datasource.OGC({
+    this.dataSourcesCache_[id] = new gmfDatasourceOGC({
       copyable,
       dimensions,
       dimensionsConfig,
@@ -528,9 +532,9 @@ gmf.datasource.Manager = class {
    */
   addTreeCtrlToCache_(treeCtrl) {
 
-    const id = ol.getUid(treeCtrl.node);
+    const id = olBase.getUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
-    goog.asserts.assert(dataSource, 'DataSource should be set');
+    googAsserts.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
 
     const stateWatcherUnregister = this.rootScope_.$watch(
@@ -552,7 +556,7 @@ gmf.datasource.Manager = class {
     let timeUpperValueWatcherUnregister;
     let wmsLayer;
     if (dataSource.timeProperty &&
-        dataSource.ogcType === ngeo.datasource.OGC.Type.WMS
+        dataSource.ogcType === ngeoDatasourceOGC.Type.WMS
     ) {
       timeLowerValueWatcherUnregister = this.rootScope_.$watch(
         () => dataSource.timeLowerValue,
@@ -566,9 +570,9 @@ gmf.datasource.Manager = class {
         );
       }
 
-      wmsLayer = goog.asserts.assertInstanceof(
-        gmf.layertree.SyncLayertreeMap.getLayer(treeCtrl),
-        ol.layer.Image
+      wmsLayer = googAsserts.assertInstanceof(
+        gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl),
+        olLayerImage
       );
     }
 
@@ -598,7 +602,7 @@ gmf.datasource.Manager = class {
 
     // (1) Remove data source
     const dataSource = item.treeCtrl.getDataSource();
-    goog.asserts.assert(dataSource, 'DataSource should be set');
+    googAsserts.assert(dataSource, 'DataSource should be set');
     this.dataSources_.remove(dataSource);
 
     // (2) Remove item and clear event listeners
@@ -611,7 +615,7 @@ gmf.datasource.Manager = class {
     if (item.timeUpperValueWatcherUnregister) {
       item.timeUpperValueWatcherUnregister();
     }
-    delete this.treeCtrlCache_[ol.getUid(item.treeCtrl.node)];
+    delete this.treeCtrlCache_[olBase.getUid(item.treeCtrl.node)];
   }
 
   /**
@@ -641,7 +645,7 @@ gmf.datasource.Manager = class {
    */
   handleTreeCtrlStateChange_(treeCtrl, newVal) {
     const treeDataSource = treeCtrl.getDataSource();
-    goog.asserts.assert(treeDataSource, 'DataSource should be set');
+    googAsserts.assert(treeDataSource, 'DataSource should be set');
     const visible = newVal === 'on';
     treeDataSource.visible = visible;
 
@@ -651,12 +655,12 @@ gmf.datasource.Manager = class {
     //
     // Note: we only need to do this ONCE, as there can be only one
     // data source being filtered at a time
-    const siblingDataSourceIds = gmf.layertree.SyncLayertreeMap.getLayer(
+    const siblingDataSourceIds = gmfLayertreeSyncLayertreeMap.getLayer(
       treeCtrl).get('querySourceIds');
     if (Array.isArray(siblingDataSourceIds)) {
       const dataSources = this.dataSources_.getArray();
       for (const dataSource of dataSources) {
-        if (dataSource instanceof gmf.datasource.OGC &&
+        if (dataSource instanceof gmfDatasourceOGC &&
             dataSource.filterRules !== null &&
             dataSource.id !== treeDataSource.id &&
             siblingDataSourceIds.includes(dataSource.id) &&
@@ -677,7 +681,7 @@ gmf.datasource.Manager = class {
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
-    return this.treeCtrlCache_[ol.getUid(treeCtrl.node)] || null;
+    return this.treeCtrlCache_[olBase.getUid(treeCtrl.node)] || null;
   }
 
   /**
@@ -698,26 +702,26 @@ gmf.datasource.Manager = class {
     // the WMS ogcType, i.e. those that do not have an OpenLayers layer
     // to update
     if (dataSource.filtrable !== true ||
-        dataSource.ogcType !== ngeo.datasource.OGC.Type.WMS
+        dataSource.ogcType !== ngeoDatasourceOGC.Type.WMS
     ) {
       return;
     }
 
-    const id = ol.getUid(dataSource.gmfLayer);
+    const id = olBase.getUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
-    goog.asserts.assert(item);
+    googAsserts.assert(item);
     const treeCtrl = item.treeCtrl;
 
-    const layer = gmf.layertree.SyncLayertreeMap.getLayer(treeCtrl);
-    goog.asserts.assert(
-      layer instanceof ol.layer.Image ||
-      layer instanceof ol.layer.Tile
+    const layer = gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
+    googAsserts.assert(
+      layer instanceof olLayerImage ||
+      layer instanceof olLayerTile
     );
 
     const source = layer.getSource();
-    goog.asserts.assert(
-      source instanceof ol.source.ImageWMS ||
-      source instanceof ol.source.TileWMS
+    googAsserts.assert(
+      source instanceof olSourceImageWMS ||
+      source instanceof olSourceTileWMS
     );
 
     const filtrableLayerName = dataSource.getFiltrableOGCLayerName();
@@ -736,7 +740,7 @@ gmf.datasource.Manager = class {
       const params = source.getParams();
       const layersParam = params['LAYERS'];
       const layersList = layersParam.split(',');
-      goog.asserts.assert(layersList.length >= 1);
+      googAsserts.assert(layersList.length >= 1);
 
       if (layersList.length === 1) {
         // When there's only one layer in the `LAYERS` parameters, then
@@ -775,16 +779,16 @@ gmf.datasource.Manager = class {
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
-    const id = ol.getUid(dataSource.gmfLayer);
+    const id = olBase.getUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
-    goog.asserts.assert(item);
-    const wmsLayer = goog.asserts.assert(item.wmsLayer);
-    const wmsSource = goog.asserts.assertInstanceof(
+    googAsserts.assert(item);
+    const wmsLayer = googAsserts.assert(item.wmsLayer);
+    const wmsSource = googAsserts.assertInstanceof(
       wmsLayer.getSource(),
-      ol.source.ImageWMS
+      olSourceImageWMS
     );
 
-    const timeProperty = goog.asserts.assert(dataSource.timeProperty);
+    const timeProperty = googAsserts.assert(dataSource.timeProperty);
     let timeParam;
     const range = dataSource.timeRangeValue;
     if (range) {
@@ -858,15 +862,18 @@ gmf.datasource.Manager = class {
 /**
  * @type {!angular.Module}
  */
-gmf.datasource.Manager.module = angular.module('gmfDataSourcesManager', [
-  gmf.datasource.WFSAliases.module.name,
-  gmf.layertree.SyncLayertreeMap.module.name,
-  gmf.layertree.TreeManager.module.name,
-  gmf.theme.Themes.module.name,
-  ngeo.filter.RuleHelper.module.name,
-  ngeo.datasource.DataSources.module.name,
-  ngeo.map.BackgroundLayerMgr.module.name,
-  ngeo.map.LayerHelper.module.name,
-  ngeo.misc.WMSTime.module.name,
+exports.module = angular.module('gmfDataSourcesManager', [
+  gmfDatasourceWFSAliases.module.name,
+  gmfLayertreeSyncLayertreeMap.module.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfThemeThemes.module.name,
+  ngeoFilterRuleHelper.module.name,
+  ngeoDatasourceDataSources.module.name,
+  ngeoMapBackgroundLayerMgr.module.name,
+  ngeoMapLayerHelper.module.name,
+  ngeoMiscWMSTime.module.name,
 ]);
-gmf.datasource.Manager.module.service('gmfDataSourcesManager', gmf.datasource.Manager);
+exports.module.service('gmfDataSourcesManager', exports);
+
+
+export default exports;

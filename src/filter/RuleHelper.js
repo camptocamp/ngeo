@@ -1,22 +1,24 @@
-goog.provide('ngeo.filter.RuleHelper');
+/**
+ * @module ngeo.filter.RuleHelper
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoFilterCondition from 'ngeo/filter/Condition.js';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import ngeoRuleDate from 'ngeo/rule/Date.js';
+import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
+import ngeoRuleRule from 'ngeo/rule/Rule.js';
+import ngeoRuleSelect from 'ngeo/rule/Select.js';
+import ngeoRuleText from 'ngeo/rule/Text.js';
+import olFormatWFS from 'ol/format/WFS.js';
+import * as olFormatFilter from 'ol/format/filter.js';
+import * as olArray from 'ol/array.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.filter.Condition');
-goog.require('ngeo.format.AttributeType');
-goog.require('ngeo.misc.FeatureHelper');
-goog.require('ngeo.misc.WMSTime');
-goog.require('ngeo.rule.Date');
-goog.require('ngeo.rule.Geometry');
-goog.require('ngeo.rule.Rule');
-goog.require('ngeo.rule.Select');
-goog.require('ngeo.rule.Text');
-goog.require('ol.format.WFS');
-goog.require('ol.format.filter');
-goog.require('ol.array');
-// webpack: import moment from 'moment';
+import moment from 'moment';
 
 
-ngeo.filter.RuleHelper = class {
+const exports = class {
 
   /**
    * A service that provides utility methods to create `ngeo.rule.Rule`
@@ -86,90 +88,90 @@ ngeo.filter.RuleHelper = class {
     // Todo: support geometry
 
     switch (attribute.type) {
-      case ngeo.format.AttributeType.DATE:
-      case ngeo.format.AttributeType.DATETIME:
+      case ngeoFormatAttributeType.DATE:
+      case ngeoFormatAttributeType.DATETIME:
         if (isCustom) {
-          rule = new ngeo.rule.Date({
+          rule = new ngeoRuleDate({
             name: name,
-            operator: ngeo.rule.Rule.TemporalOperatorType.EQUALS,
+            operator: ngeoRuleRule.TemporalOperatorType.EQUALS,
             operators: [
-              ngeo.rule.Rule.TemporalOperatorType.EQUALS,
-              ngeo.rule.Rule.TemporalOperatorType.BEGINS,
-              ngeo.rule.Rule.TemporalOperatorType.ENDS
+              ngeoRuleRule.TemporalOperatorType.EQUALS,
+              ngeoRuleRule.TemporalOperatorType.BEGINS,
+              ngeoRuleRule.TemporalOperatorType.ENDS
             ],
             propertyName: attribute.name,
             type: attribute.type
           });
         } else {
-          rule = new ngeo.rule.Date({
+          rule = new ngeoRuleDate({
             name: name,
-            operator: ngeo.rule.Rule.TemporalOperatorType.DURING,
+            operator: ngeoRuleRule.TemporalOperatorType.DURING,
             propertyName: attribute.name,
             type: attribute.type
           });
         }
         break;
-      case ngeo.format.AttributeType.GEOMETRY:
-        rule = new ngeo.rule.Geometry({
+      case ngeoFormatAttributeType.GEOMETRY:
+        rule = new ngeoRuleGeometry({
           name: name,
-          operator: ngeo.rule.Rule.SpatialOperatorType.WITHIN,
+          operator: ngeoRuleRule.SpatialOperatorType.WITHIN,
           operators: [
-            ngeo.rule.Rule.SpatialOperatorType.CONTAINS,
-            ngeo.rule.Rule.SpatialOperatorType.INTERSECTS,
-            ngeo.rule.Rule.SpatialOperatorType.WITHIN
+            ngeoRuleRule.SpatialOperatorType.CONTAINS,
+            ngeoRuleRule.SpatialOperatorType.INTERSECTS,
+            ngeoRuleRule.SpatialOperatorType.WITHIN
           ],
           propertyName: attribute.name,
           type: attribute.type
         });
         break;
-      case ngeo.format.AttributeType.NUMBER:
+      case ngeoFormatAttributeType.NUMBER:
         if (isCustom) {
-          rule = new ngeo.rule.Rule({
+          rule = new ngeoRuleRule({
             name: name,
-            operator: ngeo.rule.Rule.OperatorType.EQUAL_TO,
+            operator: ngeoRuleRule.OperatorType.EQUAL_TO,
             operators: [
-              ngeo.rule.Rule.OperatorType.EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.GREATER_THAN,
-              ngeo.rule.Rule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.LESSER_THAN,
-              ngeo.rule.Rule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+              ngeoRuleRule.OperatorType.EQUAL_TO,
+              ngeoRuleRule.OperatorType.GREATER_THAN,
+              ngeoRuleRule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
+              ngeoRuleRule.OperatorType.LESSER_THAN,
+              ngeoRuleRule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
+              ngeoRuleRule.OperatorType.NOT_EQUAL_TO
             ],
             propertyName: attribute.name,
-            type: ngeo.format.AttributeType.NUMBER
+            type: ngeoFormatAttributeType.NUMBER
           });
         } else {
-          rule = new ngeo.rule.Rule({
+          rule = new ngeoRuleRule({
             name: name,
-            operator: ngeo.rule.Rule.OperatorType.BETWEEN,
+            operator: ngeoRuleRule.OperatorType.BETWEEN,
             propertyName: attribute.name,
-            type: ngeo.format.AttributeType.NUMBER
+            type: ngeoFormatAttributeType.NUMBER
           });
         }
         break;
-      case ngeo.format.AttributeType.SELECT:
-        rule = new ngeo.rule.Select({
-          choices: goog.asserts.assert(attribute.choices),
+      case ngeoFormatAttributeType.SELECT:
+        rule = new ngeoRuleSelect({
+          choices: googAsserts.assert(attribute.choices),
           name: name,
           propertyName: attribute.name
         });
         break;
       default:
         if (isCustom) {
-          rule = new ngeo.rule.Text({
+          rule = new ngeoRuleText({
             name: name,
-            operator: ngeo.rule.Rule.OperatorType.LIKE,
+            operator: ngeoRuleRule.OperatorType.LIKE,
             operators: [
-              ngeo.rule.Rule.OperatorType.LIKE,
-              ngeo.rule.Rule.OperatorType.EQUAL_TO,
-              ngeo.rule.Rule.OperatorType.NOT_EQUAL_TO
+              ngeoRuleRule.OperatorType.LIKE,
+              ngeoRuleRule.OperatorType.EQUAL_TO,
+              ngeoRuleRule.OperatorType.NOT_EQUAL_TO
             ],
             propertyName: attribute.name
           });
         } else {
-          rule = new ngeo.rule.Text({
+          rule = new ngeoRuleText({
             name: name,
-            operator: ngeo.rule.Rule.OperatorType.LIKE,
+            operator: ngeoRuleRule.OperatorType.LIKE,
             propertyName: attribute.name
           });
         }
@@ -200,21 +202,21 @@ ngeo.filter.RuleHelper = class {
   createRule(options) {
     let rule;
     switch (options.type) {
-      case ngeo.format.AttributeType.DATE:
-      case ngeo.format.AttributeType.DATETIME:
-        rule = new ngeo.rule.Date(options);
+      case ngeoFormatAttributeType.DATE:
+      case ngeoFormatAttributeType.DATETIME:
+        rule = new ngeoRuleDate(options);
         break;
-      case ngeo.format.AttributeType.GEOMETRY:
-        rule = new ngeo.rule.Geometry(options);
+      case ngeoFormatAttributeType.GEOMETRY:
+        rule = new ngeoRuleGeometry(options);
         break;
-      case ngeo.format.AttributeType.SELECT:
+      case ngeoFormatAttributeType.SELECT:
         const selectOptions = /** @type {!ngeox.rule.SelectOptions} */ (
           options);
-        goog.asserts.assert(selectOptions.choices);
-        rule = new ngeo.rule.Select(selectOptions);
+        googAsserts.assert(selectOptions.choices);
+        rule = new ngeoRuleSelect(selectOptions);
         break;
       default:
-        rule = new ngeo.rule.Text(options);
+        rule = new ngeoRuleText(options);
         break;
     }
     return rule;
@@ -258,20 +260,20 @@ ngeo.filter.RuleHelper = class {
       upperBoundary
     };
 
-    if (rule instanceof ngeo.rule.Date) {
-      clone = new ngeo.rule.Date(options);
-    } else if (rule instanceof ngeo.rule.Geometry) {
-      clone = new ngeo.rule.Geometry(options);
+    if (rule instanceof ngeoRuleDate) {
+      clone = new ngeoRuleDate(options);
+    } else if (rule instanceof ngeoRuleGeometry) {
+      clone = new ngeoRuleGeometry(options);
       clone.feature.setProperties(
         this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature)
       );
-    } else if (rule instanceof ngeo.rule.Select) {
+    } else if (rule instanceof ngeoRuleSelect) {
       options.choices = rule.choices.slice(0);
-      clone = new ngeo.rule.Select(options);
-    } else if (rule instanceof ngeo.rule.Text) {
-      clone = new ngeo.rule.Text(options);
+      clone = new ngeoRuleSelect(options);
+    } else if (rule instanceof ngeoRuleText) {
+      clone = new ngeoRuleText(options);
     } else {
-      clone = new ngeo.rule.Rule(options);
+      clone = new ngeoRuleRule(options);
     }
 
     return clone;
@@ -305,8 +307,8 @@ ngeo.filter.RuleHelper = class {
       destRule.upperBoundary = sourceRule.upperBoundary;
     }
 
-    if (sourceRule instanceof ngeo.rule.Geometry &&
-       destRule instanceof ngeo.rule.Geometry
+    if (sourceRule instanceof ngeoRuleGeometry &&
+       destRule instanceof ngeoRuleGeometry
     ) {
       this.ngeoFeatureHelper_.clearNonSpatialProperties(destRule.feature);
       destRule.feature.setProperties(
@@ -360,12 +362,12 @@ ngeo.filter.RuleHelper = class {
       obj.upperBoundary = rule.upperBoundary;
     }
 
-    if (rule instanceof ngeo.rule.Geometry) {
+    if (rule instanceof ngeoRuleGeometry) {
       obj.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(
         rule.feature);
     }
 
-    if (rule instanceof ngeo.rule.Select) {
+    if (rule instanceof ngeoRuleSelect) {
       obj.choices = rule.choices;
     }
 
@@ -408,16 +410,16 @@ ngeo.filter.RuleHelper = class {
       if (conditions.length === 1) {
         mainFilter = conditions[0];
       } else if (conditions.length >= 2) {
-        if (condition === ngeo.filter.Condition.AND) {
-          mainFilter = ol.format.filter.and.apply(null, conditions);
-        } else if (condition === ngeo.filter.Condition.OR ||
-                   condition === ngeo.filter.Condition.NOT
+        if (condition === ngeoFilterCondition.AND) {
+          mainFilter = olFormatFilter.and.apply(null, conditions);
+        } else if (condition === ngeoFilterCondition.OR ||
+                   condition === ngeoFilterCondition.NOT
         ) {
-          mainFilter = ol.format.filter.or.apply(null, conditions);
+          mainFilter = olFormatFilter.or.apply(null, conditions);
         }
       }
-      if (mainFilter && condition === ngeo.filter.Condition.NOT) {
-        mainFilter = ol.format.filter.not(mainFilter);
+      if (mainFilter && condition === ngeoFilterCondition.NOT) {
+        mainFilter = olFormatFilter.not(mainFilter);
       }
     }
 
@@ -425,7 +427,7 @@ ngeo.filter.RuleHelper = class {
       const timeFilter = this.createTimeFilterFromDataSource_(dataSource);
       if (timeFilter) {
         if (mainFilter) {
-          mainFilter = ol.format.filter.and.apply(
+          mainFilter = olFormatFilter.and.apply(
             null,
             [
               mainFilter,
@@ -450,7 +452,7 @@ ngeo.filter.RuleHelper = class {
     let filterString = null;
     const filter = this.createFilter(options);
     if (filter) {
-      const filterNode = ol.format.WFS.writeFilter(filter);
+      const filterNode = olFormatWFS.writeFilter(filter);
       const xmlSerializer = new XMLSerializer();
       filterString = xmlSerializer.serializeToString(filterNode);
     }
@@ -480,9 +482,9 @@ ngeo.filter.RuleHelper = class {
     const propertyName = value.propertyName;
     const upperBoundary = value.upperBoundary;
 
-    const rot =  ngeo.rule.Rule.OperatorType;
-    const rsot = ngeo.rule.Rule.SpatialOperatorType;
-    const rtot = ngeo.rule.Rule.TemporalOperatorType;
+    const rot =  ngeoRuleRule.OperatorType;
+    const rsot = ngeoRuleRule.SpatialOperatorType;
+    const rtot = ngeoRuleRule.TemporalOperatorType;
 
     const spatialTypes = [
       rsot.CONTAINS,
@@ -497,7 +499,7 @@ ngeo.filter.RuleHelper = class {
       rot.LESSER_THAN_OR_EQUAL_TO
     ];
 
-    if (rule instanceof ngeo.rule.Date) {
+    if (rule instanceof ngeoRuleDate) {
       let beginValue;
       let endValue;
 
@@ -543,16 +545,16 @@ ngeo.filter.RuleHelper = class {
         );
       }
       if (beginValue && endValue) {
-        filter = ol.format.filter.during(
+        filter = olFormatFilter.during(
           propertyName,
           beginValue,
           endValue
         );
       }
-    } else if (rule instanceof ngeo.rule.Select) {
+    } else if (rule instanceof ngeoRuleSelect) {
       const selectedChoices = rule.selectedChoices;
       if (selectedChoices.length === 1) {
-        filter = ol.format.filter.equalTo(
+        filter = olFormatFilter.equalTo(
           propertyName,
           selectedChoices[0]
         );
@@ -560,68 +562,68 @@ ngeo.filter.RuleHelper = class {
         const conditions = [];
         for (const selectedChoice of selectedChoices) {
           conditions.push(
-            ol.format.filter.equalTo(
+            olFormatFilter.equalTo(
               propertyName,
               selectedChoice
             )
           );
         }
-        filter = ol.format.filter.or.apply(null, conditions);
+        filter = olFormatFilter.or.apply(null, conditions);
       }
-    } else if (ol.array.includes(spatialTypes, operator)) {
+    } else if (olArray.includes(spatialTypes, operator)) {
       const geometryName = dataSource.geometryName;
-      goog.asserts.assertInstanceof(rule, ngeo.rule.Geometry);
-      const geometry = goog.asserts.assert(rule.geometry);
+      googAsserts.assertInstanceof(rule, ngeoRuleGeometry);
+      const geometry = googAsserts.assert(rule.geometry);
       if (operator === rsot.CONTAINS) {
-        filter = ol.format.filter.contains(
+        filter = olFormatFilter.contains(
           geometryName,
           geometry,
           opt_srsName
         );
       } else if (operator === rsot.INTERSECTS) {
-        filter = ol.format.filter.intersects(
+        filter = olFormatFilter.intersects(
           geometryName,
           geometry,
           opt_srsName
         );
       } else if (operator === rsot.WITHIN) {
-        filter = ol.format.filter.within(
+        filter = olFormatFilter.within(
           geometryName,
           geometry,
           opt_srsName
         );
       }
-    } else if (ol.array.includes(numericTypes, operator)) {
-      const numericExpression = goog.asserts.assertNumber(expression);
+    } else if (olArray.includes(numericTypes, operator)) {
+      const numericExpression = googAsserts.assertNumber(expression);
       if (operator === rot.GREATER_THAN) {
-        filter = ol.format.filter.greaterThan(
+        filter = olFormatFilter.greaterThan(
           propertyName,
           numericExpression
         );
       } else if (operator === rot.GREATER_THAN_OR_EQUAL_TO) {
-        filter = ol.format.filter.greaterThanOrEqualTo(
+        filter = olFormatFilter.greaterThanOrEqualTo(
           propertyName,
           numericExpression
         );
       } else if (operator === rot.LESSER_THAN) {
-        filter = ol.format.filter.lessThan(
+        filter = olFormatFilter.lessThan(
           propertyName,
           numericExpression
         );
       } else if (operator === rot.LESSER_THAN_OR_EQUAL_TO) {
-        filter = ol.format.filter.lessThanOrEqualTo(
+        filter = olFormatFilter.lessThanOrEqualTo(
           propertyName,
           numericExpression
         );
       }
     } else if (operator === rot.BETWEEN) {
-      filter = ol.format.filter.between(
+      filter = olFormatFilter.between(
         propertyName,
         lowerBoundary,
         upperBoundary
       );
     } else if (operator === rot.EQUAL_TO) {
-      filter = ol.format.filter.equalTo(
+      filter = olFormatFilter.equalTo(
         propertyName,
         expression
       );
@@ -630,7 +632,7 @@ ngeo.filter.RuleHelper = class {
         .replace(/!/g, '!!')
         .replace(/\./g, '!.')
         .replace(/\*/g, '!*');
-      filter = ol.format.filter.like(
+      filter = olFormatFilter.like(
         propertyName,
         `*${stringExpression}*`,
         '*', /* wildCard */
@@ -639,7 +641,7 @@ ngeo.filter.RuleHelper = class {
         false /* matchCase */
       );
     } else if (operator === rot.NOT_EQUAL_TO) {
-      filter = ol.format.filter.notEqualTo(
+      filter = olFormatFilter.notEqualTo(
         propertyName,
         expression
       );
@@ -673,7 +675,7 @@ ngeo.filter.RuleHelper = class {
           range
         ).split('/');
 
-        filter = ol.format.filter.during(name, values[0], values[1]);
+        filter = olFormatFilter.during(name, values[0], values[1]);
       } else {
 
         // Case 2: we only have a 'start' value. We need to calculate the 'end'
@@ -705,7 +707,7 @@ ngeo.filter.RuleHelper = class {
         if (momentEnd) {
           const startValue = moment(value).format('YYYY-MM-DD HH:mm:ss');
           const endValue = momentEnd.format('YYYY-MM-DD HH:mm:ss');
-          filter = ol.format.filter.during(name, startValue, endValue);
+          filter = olFormatFilter.during(name, startValue, endValue);
         }
       }
     }
@@ -718,8 +720,11 @@ ngeo.filter.RuleHelper = class {
 /**
  * @type {!angular.Module}
  */
-ngeo.filter.RuleHelper.module = angular.module('ngeoRuleHelper', [
-  ngeo.misc.FeatureHelper.module.name,
-  ngeo.misc.WMSTime.module.name,
+exports.module = angular.module('ngeoRuleHelper', [
+  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscWMSTime.module.name,
 ]);
-ngeo.filter.RuleHelper.module.service('ngeoRuleHelper', ngeo.filter.RuleHelper);
+exports.module.service('ngeoRuleHelper', exports);
+
+
+export default exports;

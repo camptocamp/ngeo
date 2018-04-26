@@ -1,4 +1,4 @@
-goog.require('ngeo.print.Utils');
+import ngeoPrintUtils from 'ngeo/print/Utils.js';
 
 describe('ngeo.print.Utils', () => {
 
@@ -15,17 +15,17 @@ describe('ngeo.print.Utils', () => {
     let inchesPerMeter, dotsPerInch;
 
     beforeEach(() => {
-      inchesPerMeter = ngeo.print.Utils.INCHES_PER_METER_;
-      dotsPerInch = ngeo.print.Utils.DOTS_PER_INCH_;
+      inchesPerMeter = ngeoPrintUtils.INCHES_PER_METER_;
+      dotsPerInch = ngeoPrintUtils.DOTS_PER_INCH_;
 
       // consider 3200 dots per meter
-      ngeo.print.Utils.INCHES_PER_METER_ = 40;
-      ngeo.print.Utils.DOTS_PER_INCH_ = 80;
+      ngeoPrintUtils.INCHES_PER_METER_ = 40;
+      ngeoPrintUtils.DOTS_PER_INCH_ = 80;
     });
 
     afterEach(() => {
-      ngeo.print.Utils.INCHES_PER_METER_ = inchesPerMeter;
-      ngeo.print.Utils.DOTS_PER_INCH_ = dotsPerInch;
+      ngeoPrintUtils.INCHES_PER_METER_ = inchesPerMeter;
+      ngeoPrintUtils.DOTS_PER_INCH_ = dotsPerInch;
     });
 
     it('returns the optimal resolution', () => {

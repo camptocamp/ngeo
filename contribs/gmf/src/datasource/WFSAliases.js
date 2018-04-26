@@ -1,9 +1,9 @@
-goog.provide('gmf.datasource.WFSAliases');
+/**
+ * @module gmf.datasource.WFSAliases
+ */
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 
-goog.require('ngeo.datasource.Helper');
-
-
-gmf.datasource.WFSAliases = class {
+const exports = class {
 
   /**
    * Service that provides methods to get additional information and actions
@@ -43,7 +43,10 @@ gmf.datasource.WFSAliases = class {
 };
 
 
-gmf.datasource.WFSAliases.module = angular.module('gmfDatasourceWFSAliases', [
-  ngeo.datasource.Helper.module.name,
+exports.module = angular.module('gmfDatasourceWFSAliases', [
+  ngeoDatasourceHelper.module.name,
 ]);
-gmf.datasource.WFSAliases.module.service('gmfWFSAliases', gmf.datasource.WFSAliases);
+exports.module.service('gmfWFSAliases', exports);
+
+
+export default exports;

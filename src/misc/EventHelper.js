@@ -1,7 +1,7 @@
-goog.provide('ngeo.misc.EventHelper');
-
-goog.require('ol.events');
-
+/**
+ * @module ngeo.misc.EventHelper
+ */
+import * as olEvents from 'ol/events.js';
 
 /**
  * Provides methods to manage the listening/unlistening of OpenLayers events
@@ -12,7 +12,7 @@ goog.require('ol.events');
  * @ngname ngeoEventHelper
  * @ngInject
  */
-ngeo.misc.EventHelper = function() {
+const exports = function() {
 
   /**
    * @type {Object.<number|string, Array.<ol.EventsKey>>}
@@ -30,7 +30,7 @@ ngeo.misc.EventHelper = function() {
  * @param {ol.EventsKey} key Key.
  * @export
  */
-ngeo.misc.EventHelper.prototype.addListenerKey = function(uid, key) {
+exports.prototype.addListenerKey = function(uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
@@ -43,7 +43,7 @@ ngeo.misc.EventHelper.prototype.addListenerKey = function(uid, key) {
  * @param {number|string} uid Unique id.
  * @export
  */
-ngeo.misc.EventHelper.prototype.clearListenerKey = function(uid) {
+exports.prototype.clearListenerKey = function(uid) {
   this.initListenerKey_(uid);
 };
 
@@ -57,12 +57,12 @@ ngeo.misc.EventHelper.prototype.clearListenerKey = function(uid) {
  * @param {number|string} uid Unique id.
  * @private
  */
-ngeo.misc.EventHelper.prototype.initListenerKey_ = function(uid) {
+exports.prototype.initListenerKey_ = function(uid) {
   if (!this.listenerKeys_[uid]) {
     this.listenerKeys_[uid] = [];
   } else {
     if (this.listenerKeys_[uid].length) {
-      this.listenerKeys_[uid].forEach(ol.events.unlistenByKey);
+      this.listenerKeys_[uid].forEach(olEvents.unlistenByKey);
       this.listenerKeys_[uid].length = 0;
     }
   }
@@ -72,5 +72,8 @@ ngeo.misc.EventHelper.prototype.initListenerKey_ = function(uid) {
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.EventHelper.module = angular.module('ngeoEventHelper', []);
-ngeo.misc.EventHelper.module.service('ngeoEventHelper', ngeo.misc.EventHelper);
+exports.module = angular.module('ngeoEventHelper', []);
+exports.module.service('ngeoEventHelper', exports);
+
+
+export default exports;

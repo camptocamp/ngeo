@@ -1,10 +1,11 @@
-goog.provide('ngeo.GeometryType');
-
+/**
+ * @module ngeo.GeometryType
+ */
 /**
  * @enum {string}
  * @export
  */
-ngeo.GeometryType = {
+const exports = {
   /**
    * @type {string}
    * @export
@@ -51,3 +52,6 @@ ngeo.GeometryType = {
    */
   TEXT: 'Text'
 };
+
+
+export default exports;

@@ -1,25 +1,29 @@
-goog.provide('app.modifycircle');
+/**
+ * @module app.modifycircle
+ */
+const exports = {};
 
-// webpack: import './modifycircle.css';
-goog.require('ngeo.format.FeatureProperties');
-goog.require('ngeo.interaction.ModifyCircle');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
-goog.require('ol.geom.Circle');
-goog.require('ol.geom.Polygon');
-goog.require('ol.Collection');
-goog.require('ol.Feature');
-goog.require('ngeo.map.module');
+import './modifycircle.css';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+
+import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olGeomCircle from 'ol/geom/Circle.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import olCollection from 'ol/Collection.js';
+import olFeature from 'ol/Feature.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
 const appmodule = angular.module('app', [
   'gettext',
-  ngeo.map.module.name
+  ngeoMapModule.name
 ]);
 
 
@@ -27,19 +31,19 @@ const appmodule = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.modifycircle.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-10997148, 4569099],
       zoom: 4
     })
@@ -47,29 +51,29 @@ app.modifycircle.MainController = function() {
 
   const map = this.map;
 
-  const circle = new ol.geom.Circle([-10691093, 4966327], 465000);
+  const circle = new olGeomCircle([-10691093, 4966327], 465000);
 
   /**
    * @type {ol.Collection.<ol.Feature>}
    * @export
    */
-  this.features = new ol.Collection();
+  this.features = new olCollection();
 
-  const circleFeature = new ol.Feature({
-    geometry: ol.geom.Polygon.fromCircle(circle),
+  const circleFeature = new olFeature({
+    geometry: olGeomPolygon.fromCircle(circle),
     color: '#000000',
     label: 'Circle 1',
     opacity: '0.5',
     stroke: '2'
   });
 
-  circleFeature.set(ngeo.format.FeatureProperties.IS_CIRCLE, true);
+  circleFeature.set(ngeoFormatFeatureProperties.IS_CIRCLE, true);
   this.features.push(circleFeature);
 
-  const vectorSource = new ol.source.Vector({
+  const vectorSource = new olSourceVector({
     features: this.features
   });
-  const vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new olLayerVector({
     source: vectorSource
   });
 
@@ -81,7 +85,7 @@ app.modifycircle.MainController = function() {
    * @type {ngeo.interaction.ModifyCircle}
    * @export
    */
-  this.interaction = new ngeo.interaction.ModifyCircle(
+  this.interaction = new ngeoInteractionModifyCircle(
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features
     }));
@@ -93,4 +97,7 @@ app.modifycircle.MainController = function() {
 };
 
 
-appmodule.controller('MainController', app.modifycircle.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

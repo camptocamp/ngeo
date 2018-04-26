@@ -1,14 +1,18 @@
-goog.provide('ngeo.measure.module');
-
-goog.require('ngeo.measure.area');
-goog.require('ngeo.measure.azimut');
-goog.require('ngeo.measure.length');
+/**
+ * @module ngeo.measure.module
+ */
+import ngeoMeasureArea from 'ngeo/measure/area.js';
+import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
+import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.measure.module = angular.module('ngeoMeasureModule', [
-  ngeo.measure.area.name,
-  ngeo.measure.azimut.name,
-  ngeo.measure.length.name
+const exports = angular.module('ngeoMeasureModule', [
+  ngeoMeasureArea.name,
+  ngeoMeasureAzimut.name,
+  ngeoMeasureLength.name
 ]);
+
+
+export default exports;

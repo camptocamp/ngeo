@@ -1,7 +1,7 @@
-goog.provide('ngeo.misc.ToolActivateMgr');
-
-goog.require('goog.asserts');
-
+/**
+ * @module ngeo.misc.ToolActivateMgr
+ */
+import googAsserts from 'goog/asserts.js';
 
 /**
  * Provides a service to manage the activation of `ngeo.misc.ToolActivate` objects.
@@ -31,7 +31,7 @@ goog.require('goog.asserts');
  * @ngname ngeoToolActivateMgr
  * @ngInject
  */
-ngeo.misc.ToolActivateMgr = function($rootScope) {
+const exports = function($rootScope) {
 
   /**
    * @type {!Object.<string, Array.<ngeox.miscToolActivateMgrEntry>>}
@@ -56,7 +56,7 @@ ngeo.misc.ToolActivateMgr = function($rootScope) {
  *     when all other tools in the group are deactivated.
  * @export
  */
-ngeo.misc.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
+exports.prototype.registerTool = function(groupName, tool,
   opt_defaultActivate) {
   let entries = this.groups_[groupName];
   if (!entries) {
@@ -82,7 +82,7 @@ ngeo.misc.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
     unlisten: unlisten
   });
 
-  if (goog.asserts.ENABLE_ASSERTS) {
+  if (googAsserts.ENABLE_ASSERTS) {
     // check that only one default tool per group exists
     let defaultTools = 0;
     entries.forEach((entry) => {
@@ -90,7 +90,7 @@ ngeo.misc.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
         defaultTools++;
       }
     });
-    goog.asserts.assert(
+    googAsserts.assert(
       defaultTools <= 1, `more than one default tool in group ${groupName}`);
   }
 };
@@ -102,7 +102,7 @@ ngeo.misc.ToolActivateMgr.prototype.registerTool = function(groupName, tool,
  * @param {ngeo.misc.ToolActivate} tool Tool to unregister.
  * @export
  */
-ngeo.misc.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
+exports.prototype.unregisterTool = function(groupName, tool) {
   const entries = this.groups_[groupName];
   if (entries) {
     for (let i = 0; i < entries.length; i++) {
@@ -121,7 +121,7 @@ ngeo.misc.ToolActivateMgr.prototype.unregisterTool = function(groupName, tool) {
  * @param {string} groupName Name of the group of tools to unregister.
  * @export
  */
-ngeo.misc.ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
+exports.prototype.unregisterGroup = function(groupName) {
   const entries = this.groups_[groupName];
   if (entries) {
     for (let i = 0; i < entries.length; i++) {
@@ -137,7 +137,7 @@ ngeo.misc.ToolActivateMgr.prototype.unregisterGroup = function(groupName) {
  * @param {ngeo.misc.ToolActivate} tool Tool to activate.
  * @export
  */
-ngeo.misc.ToolActivateMgr.prototype.activateTool = function(tool) {
+exports.prototype.activateTool = function(tool) {
   tool.setActive(true);
 };
 
@@ -147,7 +147,7 @@ ngeo.misc.ToolActivateMgr.prototype.activateTool = function(tool) {
  * @param {ngeo.misc.ToolActivate} tool Tool to deactivate.
  * @export
  */
-ngeo.misc.ToolActivateMgr.prototype.deactivateTool = function(tool) {
+exports.prototype.deactivateTool = function(tool) {
   tool.setActive(false);
 };
 
@@ -159,7 +159,7 @@ ngeo.misc.ToolActivateMgr.prototype.deactivateTool = function(tool) {
  * @param {ngeo.misc.ToolActivate} tool Tool to activate.
  * @private
  */
-ngeo.misc.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool) {
+exports.prototype.deactivateTools_ = function(groupName, tool) {
   const entries = this.groups_[groupName];
   for (let i = 0; i < entries.length; i++) {
     if (tool != entries[i].tool) {
@@ -175,7 +175,7 @@ ngeo.misc.ToolActivateMgr.prototype.deactivateTools_ = function(groupName, tool)
  * @param {string} groupName Name of the group.
  * @private
  */
-ngeo.misc.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
+exports.prototype.activateDefault_ = function(groupName) {
   const entries = this.groups_[groupName];
   let defaultTool = null;
   let hasActiveTool = false;
@@ -194,5 +194,8 @@ ngeo.misc.ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
 };
 
 
-ngeo.misc.ToolActivateMgr.module = angular.module('ngeoToolActivateMgr', []);
-ngeo.misc.ToolActivateMgr.module.service('ngeoToolActivateMgr', ngeo.misc.ToolActivateMgr);
+exports.module = angular.module('ngeoToolActivateMgr', []);
+exports.module.service('ngeoToolActivateMgr', exports);
+
+
+export default exports;

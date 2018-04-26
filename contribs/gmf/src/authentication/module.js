@@ -1,14 +1,18 @@
-goog.provide('gmf.authentication.module');
+/**
+ * @module gmf.authentication.module
+ */
+import gmfAuthenticationComponent from 'gmf/authentication/component.js';
 
-goog.require('gmf.authentication.component');
 /** @suppress {extraRequire} */
-goog.require('gmf.authentication.Service');
-
+import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.authentication.module = angular.module('gmfAuthenticationModule', [
-  gmf.authentication.component.name,
-  gmf.authentication.Service.module.name
+const exports = angular.module('gmfAuthenticationModule', [
+  gmfAuthenticationComponent.name,
+  gmfAuthenticationService.module.name
 ]);
+
+
+export default exports;

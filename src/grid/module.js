@@ -1,6 +1,7 @@
-goog.provide('ngeo.grid.module');
-
-goog.require('ngeo.grid.component');
+/**
+ * @module ngeo.grid.module
+ */
+import ngeoGridComponent from 'ngeo/grid/component.js';
 
 /**
  * Also related to the grid but not included in the module:
@@ -8,6 +9,9 @@ goog.require('ngeo.grid.component');
  *
  * @type {!angular.Module}
  */
-ngeo.grid.module = angular.module('ngeoGridModule', [
-  ngeo.grid.component.name
+const exports = angular.module('ngeoGridModule', [
+  ngeoGridComponent.name
 ]);
+
+
+export default exports;

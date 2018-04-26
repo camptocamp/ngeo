@@ -1,12 +1,16 @@
-goog.provide('ngeo.download.module');
-
-goog.require('ngeo.download.Csv');
-goog.require('ngeo.download.service');
+/**
+ * @module ngeo.download.module
+ */
+import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import ngeoDownloadService from 'ngeo/download/service.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.download.module = angular.module('ngeoDownloadModule', [
-  ngeo.download.Csv.module.name,
-  ngeo.download.service.name,
+const exports = angular.module('ngeoDownloadModule', [
+  ngeoDownloadCsv.module.name,
+  ngeoDownloadService.name,
 ]);
+
+
+export default exports;

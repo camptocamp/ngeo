@@ -1,20 +1,24 @@
-goog.provide('app.backgroundlayer');
+/**
+ * @module app.backgroundlayer
+ */
+const exports = {};
 
-// webpack: import './backgroundlayer.css';
-goog.require('ngeo.source.AsitVD');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.ImageWMS');
-goog.require('ngeo.map.module');
+import './backgroundlayer.css';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
+
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.backgroundlayer.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name
+  ngeoMapModule.name
 ]);
 
 
@@ -31,7 +35,7 @@ app.backgroundlayer.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.backgroundlayer.backgroundlayerComponent = {
+exports.backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
@@ -40,7 +44,7 @@ app.backgroundlayer.backgroundlayerComponent = {
 };
 
 
-app.backgroundlayer.module.component('appBackgroundlayer', app.backgroundlayer.backgroundlayerComponent);
+exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent);
 
 
 /**
@@ -51,7 +55,7 @@ app.backgroundlayer.module.component('appBackgroundlayer', app.backgroundlayer.b
  * @export
  * @ngInject
  */
-app.backgroundlayer.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
 
   /**
    * @type {ol.Map}
@@ -92,7 +96,7 @@ app.backgroundlayer.BackgroundlayerController = function($http, ngeoBackgroundLa
  * it.
  * @export
  */
-app.backgroundlayer.BackgroundlayerController.prototype.change = function() {
+exports.BackgroundlayerController.prototype.change = function() {
   const layerSpec = this.bgLayer;
   const layer = this.getLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this.map, layer);
@@ -104,20 +108,20 @@ app.backgroundlayer.BackgroundlayerController.prototype.change = function() {
  * @return {ol.layer.Tile} The layer.
  * @private
  */
-app.backgroundlayer.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
+exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
   if (layerName === 'blank') {
-    return new ol.layer.Tile();
+    return new olLayerTile();
   }
 
-  const source = new ngeo.source.AsitVD({
+  const source = new ngeoSourceAsitVD({
     layer: layerName
   });
-  return new ol.layer.Tile({source});
+  return new olLayerTile({source});
 };
 
 
-app.backgroundlayer.module.controller('AppBackgroundlayerController',
-  app.backgroundlayer.BackgroundlayerController);
+exports.module.controller('AppBackgroundlayerController',
+  exports.BackgroundlayerController);
 
 
 /**
@@ -125,14 +129,14 @@ app.backgroundlayer.module.controller('AppBackgroundlayerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.backgroundlayer.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
-    view: new ol.View({
+  this.map = new olMap({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
@@ -144,8 +148,8 @@ app.backgroundlayer.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  const overlay = new ol.layer.Image({
-    source: new ol.source.ImageWMS({
+  const overlay = new olLayerImage({
+    source: new olSourceImageWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
       serverType: 'mapserver'
@@ -157,4 +161,7 @@ app.backgroundlayer.MainController = function($scope) {
 };
 
 
-app.backgroundlayer.module.controller('MainController', app.backgroundlayer.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

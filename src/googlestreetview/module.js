@@ -1,10 +1,14 @@
-goog.provide('ngeo.googlestreetview.module');
-
-goog.require('ngeo.googlestreetview.component');
+/**
+ * @module ngeo.googlestreetview.module
+ */
+import ngeoGooglestreetviewComponent from 'ngeo/googlestreetview/component.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.googlestreetview.module = angular.module('ngeoGooglestreetviewModule', [
-  ngeo.googlestreetview.component.name
+const exports = angular.module('ngeoGooglestreetviewModule', [
+  ngeoGooglestreetviewComponent.name
 ]);
+
+
+export default exports;

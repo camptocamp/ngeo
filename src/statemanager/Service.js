@@ -1,9 +1,8 @@
-goog.provide('ngeo.statemanager.Service');
-
-goog.require('goog.asserts');
-
-goog.require('ngeo.statemanager.Location');
-
+/**
+ * @module ngeo.statemanager.Service
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 
 /**
  * Provides a service for managing the application state.
@@ -14,7 +13,7 @@ goog.require('ngeo.statemanager.Location');
  * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
  */
-ngeo.statemanager.Service = function(ngeoLocation, ngeoUsedKeyRegexp) {
+const exports = function(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
@@ -50,7 +49,7 @@ ngeo.statemanager.Service = function(ngeoLocation, ngeoUsedKeyRegexp) {
   if (paramKeys.length === 0) {
     if (this.useLocalStorage_) {
       for (const key in window.localStorage) {
-        goog.asserts.assert(key);
+        googAsserts.assert(key);
 
         this.usedKeyRegexp.some((keyRegexp) => {
           if (key.match(keyRegexp)) {
@@ -85,7 +84,7 @@ ngeo.statemanager.Service = function(ngeoLocation, ngeoUsedKeyRegexp) {
  * @param {boolean} value Use localStorage
  * @return {boolean} localStorage will be used.
  */
-ngeo.statemanager.Service.prototype.setUseLocalStorage = function(value) {
+exports.prototype.setUseLocalStorage = function(value) {
   this.useLocalStorage_ = value;
 
   // check if localStorage is supported
@@ -110,7 +109,7 @@ ngeo.statemanager.Service.prototype.setUseLocalStorage = function(value) {
  * @param {string} key State key.
  * @return {string|undefined} State value.
  */
-ngeo.statemanager.Service.prototype.getInitialValue = function(key) {
+exports.prototype.getInitialValue = function(key) {
   return this.initialState[key];
 };
 
@@ -120,7 +119,7 @@ ngeo.statemanager.Service.prototype.getInitialValue = function(key) {
  * @param {string} key State key.
  * @return {string|undefined} State value.
  */
-ngeo.statemanager.Service.prototype.getInitialStringValue = function(key) {
+exports.prototype.getInitialStringValue = function(key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -134,7 +133,7 @@ ngeo.statemanager.Service.prototype.getInitialStringValue = function(key) {
  * @param {string} key State key.
  * @return {number|undefined} State value.
  */
-ngeo.statemanager.Service.prototype.getInitialNumberValue = function(key) {
+exports.prototype.getInitialNumberValue = function(key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -148,7 +147,7 @@ ngeo.statemanager.Service.prototype.getInitialNumberValue = function(key) {
  * @param {string} key State key.
  * @return {boolean|undefined} State value.
  */
-ngeo.statemanager.Service.prototype.getInitialBooleanValue = function(key) {
+exports.prototype.getInitialBooleanValue = function(key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -161,13 +160,13 @@ ngeo.statemanager.Service.prototype.getInitialBooleanValue = function(key) {
  * Update the application state with the values in `object`.
  * @param {!Object.<string, string>} object Object.
  */
-ngeo.statemanager.Service.prototype.updateState = function(object) {
+exports.prototype.updateState = function(object) {
   this.ngeoLocation.updateParams(object);
   if (this.useLocalStorage_) {
     for (const key in object) {
-      goog.asserts.assert(key);
+      googAsserts.assert(key);
       const value = object[key];
-      goog.asserts.assert(value !== undefined);
+      googAsserts.assert(value !== undefined);
       window.localStorage[key] = value;
     }
   }
@@ -178,7 +177,7 @@ ngeo.statemanager.Service.prototype.updateState = function(object) {
  * Delete a parameter
  * @param {string} key Key.
  */
-ngeo.statemanager.Service.prototype.deleteParam = function(key) {
+exports.prototype.deleteParam = function(key) {
   this.ngeoLocation.deleteParam(key);
   if (this.useLocalStorage_) {
     delete window.localStorage[key];
@@ -189,8 +188,11 @@ ngeo.statemanager.Service.prototype.deleteParam = function(key) {
 /**
  * @type {!angular.Module}
  */
-ngeo.statemanager.Service.module = angular.module('ngeoStateManager', [
-  ngeo.statemanager.Location.module.name
+exports.module = angular.module('ngeoStateManager', [
+  ngeoStatemanagerLocation.module.name
 ]);
-ngeo.statemanager.Service.module.service('ngeoStateManager', ngeo.statemanager.Service);
-ngeo.statemanager.Service.module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
+exports.module.service('ngeoStateManager', exports);
+exports.module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
+
+
+export default exports;

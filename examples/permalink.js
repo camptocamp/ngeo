@@ -1,27 +1,31 @@
-goog.provide('app.permalink');
+/**
+ * @module app.permalink
+ */
+const exports = {};
 
-// webpack: import './permalink.css';
-goog.require('ngeo.format.FeatureHash');
-goog.require('ngeo.map.module');
-goog.require('ngeo.misc.debounce');
-goog.require('ngeo.misc.decorate');
-goog.require('ngeo.statemanager.module');
-goog.require('ol.Map');
-goog.require('ol.interaction.Draw');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import './permalink.css';
+import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
+
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
+import olMap from 'ol/Map.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-app.permalink.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.misc.debounce.name,
-  ngeo.statemanager.module.name,
+  ngeoMapModule.name,
+  ngeoMiscDebounce.name,
+  ngeoStatemanagerModule.name,
 ]);
 
 /**
@@ -34,7 +38,7 @@ app.permalink.module = angular.module('app', [
  *
  * @type {!angular.Component}
  */
-app.permalink.mapComponent = {
+exports.mapComponent = {
   controller: 'AppMapController as ctrl',
   bindings: {
     'map': '=appMap'
@@ -43,7 +47,7 @@ app.permalink.mapComponent = {
 };
 
 
-app.permalink.module.component('appMap', app.permalink.mapComponent);
+exports.module.component('appMap', exports.mapComponent);
 
 
 /**
@@ -52,7 +56,7 @@ app.permalink.module.component('appMap', app.permalink.mapComponent);
  * @constructor
  * @ngInject
  */
-app.permalink.MapComponentController = function(ngeoLocation, ngeoDebounce) {
+exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   /**
    * @type {ol.Map}
    * @export
@@ -72,9 +76,9 @@ app.permalink.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.ngeoDebounce_ = ngeoDebounce;
 };
 
-app.permalink.module.controller('AppMapController', app.permalink.MapComponentController);
+exports.module.controller('AppMapController', exports.MapComponentController);
 
-app.permalink.MapComponentController.prototype.$onInit = function() {
+exports.MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
 
   let zoom = this.ngeoLocation_.getParam('z');
@@ -115,7 +119,7 @@ app.permalink.MapComponentController.prototype.$onInit = function() {
  *
  * @type {!angular.Component}
  */
-app.permalink.drawComponent = {
+exports.drawComponent = {
   controller: 'AppDrawController as ctrl',
   bindings: {
     'map': '=appDrawMap',
@@ -129,7 +133,7 @@ app.permalink.drawComponent = {
 };
 
 
-app.permalink.module.component('appDraw', app.permalink.drawComponent);
+exports.module.component('appDraw', exports.drawComponent);
 
 
 /**
@@ -139,7 +143,7 @@ app.permalink.module.component('appDraw', app.permalink.drawComponent);
  * @export
  * @ngInject
  */
-app.permalink.DrawComponentController = function($scope, ngeoLocation) {
+exports.DrawComponentController = function($scope, ngeoLocation) {
 
   /**
    * @type {ol.Map}
@@ -177,17 +181,17 @@ app.permalink.DrawComponentController = function($scope, ngeoLocation) {
   this.interaction;
 };
 
-app.permalink.DrawComponentController.prototype.$onInit = function() {
+exports.DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
-  this.interaction = new ol.interaction.Draw({
+  this.interaction = new olInteractionDraw({
     type: /** @type {ol.geom.GeometryType} */ ('LineString'),
     source: vectorSource
   });
 
   this.interaction.setActive(false);
   this.map.addInteraction(this.interaction);
-  ngeo.misc.decorate.interaction(this.interaction);
+  ngeoMiscDecorate.interaction(this.interaction);
 
   this.interaction.on('drawend', function(e) {
     e.feature.set('id', ++this.featureSeq_);
@@ -195,12 +199,12 @@ app.permalink.DrawComponentController.prototype.$onInit = function() {
 
   // Deal with the encoding and decoding of features in the URL.
 
-  const fhFormat = new ngeo.format.FeatureHash();
+  const fhFormat = new ngeoFormatFeatureHash();
 
   vectorSource.on('addfeature', (e) => {
     const feature = e.feature;
-    feature.setStyle(new ol.style.Style({
-      stroke: new ol.style.Stroke({
+    feature.setStyle(new olStyleStyle({
+      stroke: new olStyleStroke({
         color: [255, 0, 0, 1],
         width: 2
       })
@@ -225,40 +229,40 @@ app.permalink.DrawComponentController.prototype.$onInit = function() {
  * Clear the vector layer.
  * @export
  */
-app.permalink.DrawComponentController.prototype.clearLayer = function() {
+exports.DrawComponentController.prototype.clearLayer = function() {
   this.layer.getSource().clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };
 
-app.permalink.module.controller('AppDrawController', app.permalink.DrawComponentController);
+exports.module.controller('AppDrawController', exports.DrawComponentController);
 
 
 /**
  * @constructor
  */
-app.permalink.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ]
   });
 
 
-  const vectorSource = new ol.source.Vector();
+  const vectorSource = new olSourceVector();
 
   /**
    * @type {ol.layer.Vector}
    * @export
    */
-  this.vectorLayer = new ol.layer.Vector({
+  this.vectorLayer = new olLayerVector({
     source: vectorSource
   });
 
@@ -269,4 +273,7 @@ app.permalink.MainController = function() {
 };
 
 
-app.permalink.module.controller('MainController', app.permalink.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

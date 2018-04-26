@@ -1,29 +1,33 @@
-goog.provide('gmfapp.xsdattributes');
+/**
+ * @module gmfapp.xsdattributes
+ */
+const exports = {};
 
-// webpack: import './xsdattributes.css';
-goog.require('gmf.theme.Themes');
-goog.require('gmf.editing.XSDAttributes');
-goog.require('ngeo.editing.attributesComponent');
-goog.require('ngeo.format.XSDAttribute');
-goog.require('ol.Feature');
+import './xsdattributes.css';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+
+import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
+import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
+import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import olFeature from 'ol/Feature.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.xsdattributes.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.editing.XSDAttributes.module.name,
-  gmf.theme.Themes.module.name,
-  ngeo.editing.attributesComponent.name,
+  gmfEditingXSDAttributes.module.name,
+  gmfThemeThemes.module.name,
+  ngeoEditingAttributesComponent.name,
 ]);
 
 
-gmfapp.xsdattributes.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
-gmfapp.xsdattributes.module.value('gmfLayersUrl',
+exports.module.value('gmfLayersUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
 
-gmfapp.xsdattributes.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -33,7 +37,7 @@ gmfapp.xsdattributes.module.constant('angularLocaleScript', '../build/angular-lo
  * @constructor
  * @ngInject
  */
-gmfapp.xsdattributes.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
+exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.$timeout}
@@ -98,7 +102,7 @@ gmfapp.xsdattributes.MainController = function($timeout, gmfThemes, gmfXSDAttrib
  * @return {Array.<gmfThemes.GmfLayer>} All layers in all themes.
  * @export
  */
-gmfapp.xsdattributes.MainController.prototype.getSetLayers = function(value) {
+exports.MainController.prototype.getSetLayers = function(value) {
   if (value !== undefined) {
     this.xsdAttributes_.getAttributes(value.id).then(
       this.setAttributes_.bind(this));
@@ -111,7 +115,7 @@ gmfapp.xsdattributes.MainController.prototype.getSetLayers = function(value) {
  * @param {Array.<ngeox.Attribute>} attributes Attributes.
  * @export
  */
-gmfapp.xsdattributes.MainController.prototype.setAttributes_ = function(attributes) {
+exports.MainController.prototype.setAttributes_ = function(attributes) {
 
   // (1) Reset first
   this.feature = null;
@@ -119,7 +123,7 @@ gmfapp.xsdattributes.MainController.prototype.setAttributes_ = function(attribut
 
   // (2) Then set
   this.timeout_(() => {
-    this.feature = new ol.Feature();
+    this.feature = new olFeature();
     this.attributes = attributes;
   }, 0);
 };
@@ -129,10 +133,10 @@ gmfapp.xsdattributes.MainController.prototype.setAttributes_ = function(attribut
  * @return {string} Type of geometry.
  * @export
  */
-gmfapp.xsdattributes.MainController.prototype.getGeomType = function() {
+exports.MainController.prototype.getGeomType = function() {
   let type = 'N/A';
   if (this.attributes) {
-    const geomAttr = ngeo.format.XSDAttribute.getGeometryAttribute(
+    const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(
       this.attributes
     );
     if (geomAttr && geomAttr.geomType) {
@@ -149,7 +153,7 @@ gmfapp.xsdattributes.MainController.prototype.getGeomType = function() {
  * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
  * @export
  */
-gmfapp.xsdattributes.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
+exports.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let i;
   const children = node.children;
   if (children !== undefined) {
@@ -169,4 +173,7 @@ gmfapp.xsdattributes.MainController.prototype.getDistinctFlatNodes_ = function(n
 };
 
 
-gmfapp.xsdattributes.module.controller('MainController', gmfapp.xsdattributes.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

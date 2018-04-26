@@ -1,24 +1,28 @@
-goog.provide('app.drawfeature');
+/**
+ * @module app.drawfeature
+ */
+const exports = {};
 
-// webpack: import './drawfeature.css';
-goog.require('ngeo.draw.module');
-goog.require('ngeo.map.module');
-goog.require('ngeo.misc.ToolActivate');
-goog.require('ngeo.misc.ToolActivateMgr');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
+import './drawfeature.css';
+import ngeoDrawModule from 'ngeo/draw/module.js';
+
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.Module} **/
-app.drawfeature.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.draw.module.name,
-  ngeo.map.module.name,
-  ngeo.misc.ToolActivateMgr.module.name,
+  ngeoDrawModule.name,
+  ngeoMapModule.name,
+  ngeoMiscToolActivateMgr.module.name,
 ]);
 
 
@@ -30,7 +34,7 @@ app.drawfeature.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.drawfeature.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
+exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.Scope}
@@ -38,8 +42,8 @@ app.drawfeature.MainController = function($scope, ngeoFeatures, ngeoToolActivate
    */
   this.scope_ = $scope;
 
-  const vector = new ol.layer.Vector({
-    source: new ol.source.Vector({
+  const vector = new olLayerVector({
+    source: new olSourceVector({
       wrapX: false,
       features: ngeoFeatures
     })
@@ -49,14 +53,14 @@ app.drawfeature.MainController = function($scope, ngeoFeatures, ngeoToolActivate
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       }),
       vector
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 3
     })
@@ -68,7 +72,7 @@ app.drawfeature.MainController = function($scope, ngeoFeatures, ngeoToolActivate
    */
   this.drawActive = false;
 
-  const drawToolActivate = new ngeo.misc.ToolActivate(this, 'drawActive');
+  const drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawToolActivate, false);
 
   /**
@@ -77,9 +81,12 @@ app.drawfeature.MainController = function($scope, ngeoFeatures, ngeoToolActivate
    */
   this.dummyActive = true;
 
-  const dummyToolActivate = new ngeo.misc.ToolActivate(this, 'dummyActive');
+  const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 };
 
 
-app.drawfeature.module.controller('MainController', app.drawfeature.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

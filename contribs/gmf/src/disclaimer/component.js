@@ -1,25 +1,27 @@
-goog.provide('gmf.disclaimer.component');
+/**
+ * @module gmf.disclaimer.component
+ */
+import * as olBase from 'ol/index.js';
+import * as olEvents from 'ol/events.js';
+import olLayerBase from 'ol/layer/Base.js';
+import olLayerGroup from 'ol/layer/Group.js';
+import gmfBase from 'gmf/index.js';
+import googAsserts from 'goog/asserts.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoMessageMessage from 'ngeo/message/Message.js';
+import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
+import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 
-goog.require('ol');
-goog.require('ol.events');
-goog.require('ol.layer.Base');
-goog.require('ol.layer.Group');
-goog.require('gmf');
-goog.require('goog.asserts');
-goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.message.Message');
-goog.require('ngeo.message.Disclaimer');
-goog.require('ngeo.misc.EventHelper');
-// webpack: import 'angular-sanitize';
+import 'angular-sanitize';
 
 /**
  * @type {angular.Module}
  */
-gmf.disclaimer.component = angular.module('gmfDisclaimer', [
+const exports = angular.module('gmfDisclaimer', [
   'ngSanitize',
-  ngeo.map.LayerHelper.module.name,
-  ngeo.message.Disclaimer.module.name,
-  ngeo.misc.EventHelper.module.name,
+  ngeoMapLayerHelper.module.name,
+  ngeoMessageDisclaimer.module.name,
+  ngeoMiscEventHelper.module.name,
 ]);
 
 
@@ -40,7 +42,7 @@ gmf.disclaimer.component = angular.module('gmfDisclaimer', [
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-gmf.disclaimer.component.Controller_ = function($element, $scope, $sce, $timeout,
+exports.Controller_ = function($element, $scope, $sce, $timeout,
   gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
@@ -140,9 +142,9 @@ gmf.disclaimer.component.Controller_ = function($element, $scope, $sce, $timeout
 /**
  * Initialise the controller.
  */
-gmf.disclaimer.component.Controller_.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
-    gmf.DATALAYERGROUP_NAME);
+    gmfBase.DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
 };
 
@@ -150,10 +152,10 @@ gmf.disclaimer.component.Controller_.prototype.$onInit = function() {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-gmf.disclaimer.component.Controller_.prototype.handleLayersAdd_ = function(evt) {
+exports.Controller_.prototype.handleLayersAdd_ = function(evt) {
   this.timeout_(() => {
     const layer = evt.element;
-    goog.asserts.assertInstanceof(layer, ol.layer.Base);
+    googAsserts.assertInstanceof(layer, olLayerBase);
     this.registerLayer_(layer);
   });
 };
@@ -163,9 +165,9 @@ gmf.disclaimer.component.Controller_.prototype.handleLayersAdd_ = function(evt) 
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-gmf.disclaimer.component.Controller_.prototype.handleLayersRemove_ = function(evt) {
+exports.Controller_.prototype.handleLayersRemove_ = function(evt) {
   const layer = evt.element;
-  goog.asserts.assertInstanceof(layer, ol.layer.Base);
+  googAsserts.assertInstanceof(layer, olLayerBase);
   this.unregisterLayer_(layer);
 };
 
@@ -174,16 +176,16 @@ gmf.disclaimer.component.Controller_.prototype.handleLayersRemove_ = function(ev
  * @param {ol.layer.Base} layer Layer.
  * @private
  */
-gmf.disclaimer.component.Controller_.prototype.registerLayer_ = function(layer) {
+exports.Controller_.prototype.registerLayer_ = function(layer) {
 
-  const layerUid = ol.getUid(layer);
+  const layerUid = olBase.getUid(layer);
 
-  if (layer instanceof ol.layer.Group) {
+  if (layer instanceof olLayerGroup) {
 
     // (1) Listen to added/removed layers to this group
     this.eventHelper_.addListenerKey(
       layerUid,
-      ol.events.listen(
+      olEvents.listen(
         layer.getLayers(),
         'add',
         this.handleLayersAdd_,
@@ -192,7 +194,7 @@ gmf.disclaimer.component.Controller_.prototype.registerLayer_ = function(layer) 
     );
     this.eventHelper_.addListenerKey(
       layerUid,
-      ol.events.listen(
+      olEvents.listen(
         layer.getLayers(),
         'remove',
         this.handleLayersRemove_,
@@ -222,11 +224,11 @@ gmf.disclaimer.component.Controller_.prototype.registerLayer_ = function(layer) 
  * @param {ol.layer.Base} layer Layer.
  * @private
  */
-gmf.disclaimer.component.Controller_.prototype.unregisterLayer_ = function(layer) {
+exports.Controller_.prototype.unregisterLayer_ = function(layer) {
 
-  const layerUid = ol.getUid(layer);
+  const layerUid = olBase.getUid(layer);
 
-  if (layer instanceof ol.layer.Group) {
+  if (layer instanceof olLayerGroup) {
 
     // (1) Clear event listeners
     this.eventHelper_.clearListenerKey(layerUid);
@@ -248,7 +250,7 @@ gmf.disclaimer.component.Controller_.prototype.unregisterLayer_ = function(layer
 };
 
 
-gmf.disclaimer.component.Controller_.prototype.$onDestroy = function() {
+exports.Controller_.prototype.$onDestroy = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
 };
 
@@ -257,7 +259,7 @@ gmf.disclaimer.component.Controller_.prototype.$onDestroy = function() {
  * @param {string} msg Disclaimer message.
  * @private
  */
-gmf.disclaimer.component.Controller_.prototype.showDisclaimerMessage_ = function(msg) {
+exports.Controller_.prototype.showDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (this.msgs_.indexOf(msg) < 0) {
@@ -270,7 +272,7 @@ gmf.disclaimer.component.Controller_.prototype.showDisclaimerMessage_ = function
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeo.message.Message.Type.WARNING
+      type: ngeoMessageMessage.Type.WARNING
     });
   }
 };
@@ -280,7 +282,7 @@ gmf.disclaimer.component.Controller_.prototype.showDisclaimerMessage_ = function
  * @param {string} msg Disclaimer message.
  * @private
  */
-gmf.disclaimer.component.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
+exports.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
@@ -291,7 +293,7 @@ gmf.disclaimer.component.Controller_.prototype.closeDisclaimerMessage_ = functio
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeo.message.Message.Type.WARNING
+      type: ngeoMessageMessage.Type.WARNING
     });
   }
 };
@@ -346,8 +348,8 @@ gmf.disclaimer.component.Controller_.prototype.closeDisclaimerMessage_ = functio
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-gmf.disclaimer.component.component_ = {
-  controller: gmf.disclaimer.component.Controller_,
+exports.component_ = {
+  controller: exports.Controller_,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
     'map': '=gmfDisclaimerMap',
@@ -358,4 +360,7 @@ gmf.disclaimer.component.component_ = {
 };
 
 
-gmf.disclaimer.component.component('gmfDisclaimer', gmf.disclaimer.component.component_);
+exports.component('gmfDisclaimer', exports.component_);
+
+
+export default exports;

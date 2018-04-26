@@ -1,13 +1,13 @@
-goog.provide('ngeo.datasource.DataSources');
+/**
+ * @module ngeo.datasource.DataSources
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
+import olCollection from 'ol/Collection.js';
+import * as olEvents from 'ol/events.js';
+import olView from 'ol/View.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.datasource.DataSource');
-goog.require('ol.Collection');
-goog.require('ol.events');
-goog.require('ol.View');
-
-
-ngeo.datasource.DataSources = class {
+const exports = class {
 
   /**
    * This service is responsible of the synchronization between the ngeo
@@ -31,7 +31,7 @@ ngeo.datasource.DataSources = class {
      * @type {ngeox.datasource.DataSources}
      * @private
      */
-    this.collection_ = new ol.Collection();
+    this.collection_ = new olCollection();
 
     /**
      * @type {ol.Map}
@@ -45,7 +45,7 @@ ngeo.datasource.DataSources = class {
      */
     this.listenerKeys_ = [];
 
-    ol.events.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
+    olEvents.listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
   }
 
   /**
@@ -82,12 +82,12 @@ ngeo.datasource.DataSources = class {
     // (1) Event listeners
     const view = map.getView();
     this.listenerKeys_.push(
-      ol.events.listen(view, 'change:resolution', this.handleViewResolutionChange_, this)
+      olEvents.listen(view, 'change:resolution', this.handleViewResolutionChange_, this)
     );
 
     // (2) Sync resolution with existing data sources
     const resolution = view.getResolution();
-    goog.asserts.assertNumber(resolution);
+    googAsserts.assertNumber(resolution);
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -97,7 +97,7 @@ ngeo.datasource.DataSources = class {
    * @private
    */
   unbindMap_(map) {
-    this.listenerKeys_.forEach(ol.events.unlistenByKey);
+    this.listenerKeys_.forEach(olEvents.unlistenByKey);
     this.listenerKeys_ = [];
   }
 
@@ -109,9 +109,9 @@ ngeo.datasource.DataSources = class {
    */
   handleViewResolutionChange_(evt) {
     const view = evt.target;
-    goog.asserts.assertInstanceof(view, ol.View);
+    googAsserts.assertInstanceof(view, olView);
     const resolution = view.getResolution();
-    goog.asserts.assertNumber(resolution);
+    googAsserts.assertNumber(resolution);
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -160,11 +160,11 @@ ngeo.datasource.DataSources = class {
    * @private
    */
   handleDataSourcesAdd_(event) {
-    const dataSource = goog.asserts.assertInstanceof(
-      event.element, ngeo.datasource.DataSource);
+    const dataSource = googAsserts.assertInstanceof(
+      event.element, ngeoDatasourceDataSource);
     if (this.map_) {
       const resolution = this.map_.getView().getResolution();
-      goog.asserts.assertNumber(resolution);
+      googAsserts.assertNumber(resolution);
       this.syncDataSourceToResolution_(dataSource, resolution);
     }
   }
@@ -175,6 +175,9 @@ ngeo.datasource.DataSources = class {
 /**
  * @type {!angular.Module}
  */
-ngeo.datasource.DataSources.module = angular.module('ngeoDataSources', []);
+exports.module = angular.module('ngeoDataSources', []);
 // DataSources with the ngeox.datasource.DataSources type.
-ngeo.datasource.DataSources.module.service('ngeoDataSources', ngeo.datasource.DataSources);
+exports.module.service('ngeoDataSources', exports);
+
+
+export default exports;

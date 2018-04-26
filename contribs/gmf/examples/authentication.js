@@ -1,22 +1,24 @@
-goog.provide('gmfapp.authentication');
+/**
+ * @module gmfapp.authentication
+ */
+const exports = {};
 
-
-// webpack: import './authentication.css';
-goog.require('gmf.authentication.module');
+import './authentication.css';
+import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.authentication.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.authentication.module.name
+  gmfAuthenticationModule.name
 ]);
 
 
-gmfapp.authentication.module.value(
+exports.module.value(
   'authenticationBaseUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
-gmfapp.authentication.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -24,7 +26,7 @@ gmfapp.authentication.module.constant('angularLocaleScript', '../build/angular-l
  * @constructor
  * @ngInject
  */
-gmfapp.authentication.MainController = function(gettextCatalog) {
+exports.MainController = function(gettextCatalog) {
   /**
    * A password validator that check if the password as:
    *  - A minimal length of 8 characteres.
@@ -49,4 +51,7 @@ gmfapp.authentication.MainController = function(gettextCatalog) {
 };
 
 
-gmfapp.authentication.module.controller('MainController', gmfapp.authentication.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

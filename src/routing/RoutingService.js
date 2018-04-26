@@ -1,6 +1,6 @@
-goog.provide('ngeo.routing.RoutingService');
-
-
+/**
+ * @module ngeo.routing.RoutingService
+ */
 /**
  * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
@@ -13,7 +13,7 @@ goog.provide('ngeo.routing.RoutingService');
  * @export
  * @ngname ngeoRoutingService
  */
-ngeo.routing.RoutingService = function($http, $injector) {
+const exports = function($http, $injector) {
 
   /**
    * @type {angular.$http}
@@ -56,7 +56,7 @@ ngeo.routing.RoutingService = function($http, $injector) {
  * @param {?Object} config optional configuration
  * @return {!angular.$http.HttpPromise} promise of the OSRM API request
  */
-ngeo.routing.RoutingService.prototype.getRoute = function(coordinates, config) {
+exports.prototype.getRoute = function(coordinates, config) {
 
   config = config || {};
 
@@ -113,7 +113,7 @@ ngeo.routing.RoutingService.prototype.getRoute = function(coordinates, config) {
  * @return {!angular.$http.HttpPromise} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
-ngeo.routing.RoutingService.prototype.getNearest = function(coordinate, config) {
+exports.prototype.getNearest = function(coordinate, config) {
   config = config || {};
 
   // service is always nearest
@@ -157,7 +157,10 @@ ngeo.routing.RoutingService.prototype.getNearest = function(coordinate, config) 
 /**
  * @type {!angular.Module}
  */
-ngeo.routing.RoutingService.module = angular.module('ngeoRoutingService', [
+exports.module = angular.module('ngeoRoutingService', [
 ]);
 
-ngeo.routing.RoutingService.module.service('ngeoRoutingService', ngeo.routing.RoutingService);
+exports.module.service('ngeoRoutingService', exports);
+
+
+export default exports;

@@ -1,9 +1,9 @@
-goog.provide('ngeo.misc.WMSTime');
-
-goog.require('goog.asserts');
-goog.require('ngeo.misc.Time');
-goog.require('ol');
-
+/**
+ * @module ngeo.misc.WMSTime
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMiscTime from 'ngeo/misc/Time.js';
+import * as olBase from 'ol/index.js';
 
 /**
  * ngeo - WMS time service
@@ -16,7 +16,7 @@ goog.require('ol');
  * @ngdoc service
  * @ngname ngeoWMSTime
  */
-ngeo.misc.WMSTime  = function($filter, gettextCatalog) {
+const exports = function($filter, gettextCatalog) {
 
   /**
    * @private
@@ -30,9 +30,10 @@ ngeo.misc.WMSTime  = function($filter, gettextCatalog) {
    */
   this.gettextCatalog_ = gettextCatalog;
 
-  ngeo.misc.Time.call(this);
+  ngeoMiscTime.call(this);
 };
-ol.inherits(ngeo.misc.WMSTime, ngeo.misc.Time);
+
+olBase.inherits(exports, ngeoMiscTime);
 
 
 /**
@@ -44,7 +45,7 @@ ol.inherits(ngeo.misc.WMSTime, ngeo.misc.Time);
  * @param  {boolean=} opt_toUTC to get the UTC date
  * @return {string} Date string regarding the resolution.
  */
-ngeo.misc.WMSTime.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
+exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
   const date = new Date(time);
   const utc = opt_toUTC ? 'UTC' : undefined;
 
@@ -84,10 +85,10 @@ ngeo.misc.WMSTime.prototype.formatTimeValue = function(time, resolution, opt_use
  * WMS request
  * @export
  */
-ngeo.misc.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
-  goog.asserts.assert(wmsTimeProperty.resolution !== undefined);
+exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
+  googAsserts.assert(wmsTimeProperty.resolution !== undefined);
   if (wmsTimeProperty.mode === 'range') {
-    goog.asserts.assert(times.end !== undefined);
+    googAsserts.assert(times.end !== undefined);
     return (
       `${this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC)}/${
         this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`
@@ -101,7 +102,10 @@ ngeo.misc.WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.WMSTime.module = angular.module('ngeoWMSTime', [
-  ngeo.misc.Time.module.name,
+exports.module = angular.module('ngeoWMSTime', [
+  ngeoMiscTime.module.name,
 ]);
-ngeo.misc.WMSTime.module.service('ngeoWMSTime', ngeo.misc.WMSTime);
+exports.module.service('ngeoWMSTime', exports);
+
+
+export default exports;

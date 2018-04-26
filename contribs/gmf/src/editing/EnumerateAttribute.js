@@ -1,7 +1,7 @@
-goog.provide('gmf.editing.EnumerateAttribute');
-
-
-gmf.editing.EnumerateAttribute = class {
+/**
+ * @module gmf.editing.EnumerateAttribute
+ */
+const exports = class {
 
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
@@ -71,5 +71,8 @@ gmf.editing.EnumerateAttribute = class {
 /**
  * @type {!angular.Module}
  */
-gmf.editing.EnumerateAttribute.module = angular.module('gmfEnumerateAttribute', []);
-gmf.editing.EnumerateAttribute.module.service('gmfEnumerateAttribute', gmf.editing.EnumerateAttribute);
+exports.module = angular.module('gmfEnumerateAttribute', []);
+exports.module.service('gmfEnumerateAttribute', exports);
+
+
+export default exports;

@@ -1,20 +1,19 @@
-goog.provide('gmf.permalink.shareComponent');
+/**
+ * @module gmf.permalink.shareComponent
+ */
+import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
 
-goog.require('gmf'); // nowebpack
-goog.require('gmf.permalink.ShareService');
-
-
-gmf.permalink.shareComponent = angular.module('gmfPermalinkShareComponent', [
-  gmf.permalink.ShareService.module.name,
+const exports = angular.module('gmfPermalinkShareComponent', [
+  gmfPermalinkShareService.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
+});
 
 
-gmf.permalink.shareComponent.value('gmfPermalinkShareTemplateUrl',
+exports.value('gmfPermalinkShareTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -22,8 +21,7 @@ gmf.permalink.shareComponent.value('gmfPermalinkShareTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs['gmfPermalinkShareTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/permalink/shareComponent.html`; // nowebpack
-    // webpack: 'gmf/permalink/shareComponent';
+      'gmf/permalink/shareComponent';
   });
 
 
@@ -49,14 +47,14 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
  * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
  * @type {!angular.Component}
  */
-gmf.permalink.shareComponent.component_ = {
+exports.component_ = {
   bindings: {
     'enableEmail': '<gmfShareEmail'
   },
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl
 };
-gmf.permalink.shareComponent.component('gmfShare', gmf.permalink.shareComponent.component_);
+exports.component('gmfShare', exports.component_);
 
 
 /**
@@ -72,7 +70,7 @@ gmf.permalink.shareComponent.component('gmfShare', gmf.permalink.shareComponent.
  * @ngdoc controller
  * @ngname GmfShareController
  */
-gmf.permalink.shareComponent.Controller_ = function($scope, ngeoLocation, gmfShareService, $q, $attrs) {
+exports.Controller_ = function($scope, ngeoLocation, gmfShareService, $q, $attrs) {
 
   /**
    * @type {angular.Scope}
@@ -133,8 +131,8 @@ gmf.permalink.shareComponent.Controller_ = function($scope, ngeoLocation, gmfSha
    * @type {boolean}
    * @export
    */
-  this.showLengthWarning = this.permalink.length > gmf.permalink.ShareService.URL_MAX_LEN ||
-  ngeoLocation.getPath() > gmf.permalink.ShareService.URL_PATH_MAX_LEN;
+  this.showLengthWarning = this.permalink.length > gmfPermalinkShareService.URL_MAX_LEN ||
+  ngeoLocation.getPath() > gmfPermalinkShareService.URL_PATH_MAX_LEN;
 
   /**
    * @type {boolean}
@@ -163,7 +161,7 @@ gmf.permalink.shareComponent.Controller_ = function($scope, ngeoLocation, gmfSha
  * Get the short version of the permalink if the email is not provided
  * @export
  */
-gmf.permalink.shareComponent.Controller_.prototype.getShortUrl = function() {
+exports.Controller_.prototype.getShortUrl = function() {
   this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink))
     .then(
       onSuccess_.bind(this),
@@ -197,7 +195,7 @@ gmf.permalink.shareComponent.Controller_.prototype.getShortUrl = function() {
  * Send the short version of the permalink if the email is provided
  * @export
  */
-gmf.permalink.shareComponent.Controller_.prototype.sendShortUrl = function() {
+exports.Controller_.prototype.sendShortUrl = function() {
   if (this.$scope_['gmfShareForm'].$valid) {
     this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink, this.email, this.message))
       .then(
@@ -226,4 +224,7 @@ gmf.permalink.shareComponent.Controller_.prototype.sendShortUrl = function() {
 
 };
 
-gmf.permalink.shareComponent.controller('GmfShareController', gmf.permalink.shareComponent.Controller_);
+exports.controller('GmfShareController', exports.Controller_);
+
+
+export default exports;

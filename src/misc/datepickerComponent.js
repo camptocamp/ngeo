@@ -1,21 +1,22 @@
-goog.provide('ngeo.misc.datepickerComponent');
+/**
+ * @module ngeo.misc.datepickerComponent
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMiscTime from 'ngeo/misc/Time.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo'); // nowebpack
-goog.require('ngeo.misc.Time');
-// webpack: import 'angular-ui-date';
+import 'angular-ui-date';
 
 
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.datepickerComponent = angular.module('ngeoDatePicker', [
-  ngeo.misc.Time.module.name,
+const exports = angular.module('ngeoDatePicker', [
+  ngeoMiscTime.module.name,
   'ui.date',
 ]);
 
 
-ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
+exports.value('ngeoDatePickerTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
    * @param {angular.Attributes} attrs Attributes.
@@ -24,13 +25,12 @@ ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoDatePickerTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/misc/datepickerComponent.html`; // nowebpack
-    // webpack: 'ngeo/misc/datepickerComponent';
+      'ngeo/misc/datepickerComponent';
   });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
+});
 
 
 /**
@@ -45,7 +45,7 @@ ngeo.misc.datepickerComponent.value('ngeoDatePickerTemplateUrl',
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
-ngeo.misc.datepickerComponent.component_ = function(ngeoDatePickerTemplateUrl,  $timeout) {
+exports.component_ = function(ngeoDatePickerTemplateUrl,  $timeout) {
   return {
     scope: {
       onDateSelected: '&',
@@ -97,7 +97,7 @@ ngeo.misc.datepickerComponent.component_ = function(ngeoDatePickerTemplateUrl,  
   };
 };
 
-ngeo.misc.datepickerComponent.directive('ngeoDatePicker', ngeo.misc.datepickerComponent.component_);
+exports.directive('ngeoDatePicker', exports.component_);
 
 
 /**
@@ -113,7 +113,7 @@ ngeo.misc.datepickerComponent.directive('ngeoDatePicker', ngeo.misc.datepickerCo
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-ngeo.misc.datepickerComponent.Controller_ = function($scope, $injector,
+exports.Controller_ = function($scope, $injector,
   ngeoTime, gettextCatalog) {
 
   /**
@@ -216,7 +216,7 @@ ngeo.misc.datepickerComponent.Controller_ = function($scope, $injector,
 /**
  * Initialise the controller.
  */
-ngeo.misc.datepickerComponent.Controller_.prototype.init = function() {
+exports.Controller_.prototype.init = function() {
   //fetch the initial options for the component
   const initialOptions_ = this.ngeoTime_.getOptions(this.time);
   this.initialMinDate = new Date(initialOptions_.minDate);
@@ -224,14 +224,17 @@ ngeo.misc.datepickerComponent.Controller_.prototype.init = function() {
   this.isModeRange = this.time.mode === 'range';
 
   if (this.isModeRange) {
-    goog.asserts.assertArray(initialOptions_.values);
+    googAsserts.assertArray(initialOptions_.values);
     this.sdate = new Date(initialOptions_.values[0]);
     this.edate = new Date(initialOptions_.values[1]);
   } else {
-    goog.asserts.assertNumber(initialOptions_.values);
+    googAsserts.assertNumber(initialOptions_.values);
     this.sdate = new Date(initialOptions_.values);
   }
 };
 
-ngeo.misc.datepickerComponent.controller('ngeoDatePickerController',
-  ngeo.misc.datepickerComponent.Controller_);
+exports.controller('ngeoDatePickerController',
+  exports.Controller_);
+
+
+export default exports;

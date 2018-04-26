@@ -1,9 +1,11 @@
-goog.provide('ngeo.message.Notification');
+/**
+ * @module ngeo.message.Notification
+ */
+import 'bootstrap/js/alert.js';
+import googAsserts from 'goog/asserts.js';
 
-// webpack: import 'bootstrap/js/alert.js';
-goog.require('goog.asserts');
-goog.require('ngeo.message.Message');
-goog.require('ol');
+import ngeoMessageMessage from 'ngeo/message/Message.js';
+import * as olBase from 'ol/index.js';
 
 /**
  * Provides methods to display any sort of messages, notifications, errors,
@@ -19,9 +21,9 @@ goog.require('ol');
  * @abstract
  * @ngInject
  */
-ngeo.message.Notification = function($timeout) {
+const exports = function($timeout) {
 
-  ngeo.message.Message.call(this);
+  ngeoMessageMessage.call(this);
 
   /**
    * @type {angular.$timeout}
@@ -45,7 +47,8 @@ ngeo.message.Notification = function($timeout) {
   this.cache_ = {};
 
 };
-ol.inherits(ngeo.message.Notification, ngeo.message.Message);
+
+olBase.inherits(exports, ngeoMessageMessage);
 
 
 /**
@@ -53,7 +56,7 @@ ol.inherits(ngeo.message.Notification, ngeo.message.Message);
  * @type {number}
  * @private
  */
-ngeo.message.Notification.DEFAULT_DELAY_ = 7000;
+exports.DEFAULT_DELAY_ = 7000;
 
 
 // MAIN API METHODS
@@ -66,7 +69,7 @@ ngeo.message.Notification.DEFAULT_DELAY_ = 7000;
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-ngeo.message.Notification.prototype.notify = function(object) {
+exports.prototype.notify = function(object) {
   this.show(object);
 };
 
@@ -75,7 +78,7 @@ ngeo.message.Notification.prototype.notify = function(object) {
  * Clears all messages that are currently being shown.
  * @export
  */
-ngeo.message.Notification.prototype.clear = function() {
+exports.prototype.clear = function() {
   for (const uid in this.cache_) {
     this.clearMessageByCacheItem_(this.cache_[parseInt(uid, 10)]);
   }
@@ -85,22 +88,22 @@ ngeo.message.Notification.prototype.clear = function() {
 /**
  * @override
  */
-ngeo.message.Notification.prototype.showMessage = function(message) {
+exports.prototype.showMessage = function(message) {
   const type = message.type;
-  goog.asserts.assertString(type, 'Type should be set.');
+  googAsserts.assertString(type, 'Type should be set.');
 
   const classNames = ['alert', 'fade'];
   switch (type) {
-    case ngeo.message.Message.Type.ERROR:
+    case ngeoMessageMessage.Type.ERROR:
       classNames.push('alert-danger');
       break;
-    case ngeo.message.Message.Type.INFORMATION:
+    case ngeoMessageMessage.Type.INFORMATION:
       classNames.push('alert-info');
       break;
-    case ngeo.message.Message.Type.SUCCESS:
+    case ngeoMessageMessage.Type.SUCCESS:
       classNames.push('alert-success');
       break;
-    case ngeo.message.Message.Type.WARNING:
+    case ngeoMessageMessage.Type.WARNING:
       classNames.push('alert-warning');
       break;
     default:
@@ -120,7 +123,7 @@ ngeo.message.Notification.prototype.showMessage = function(message) {
   el.html(message.msg).addClass('in');
 
   const delay = message.delay !== undefined ? message.delay :
-    ngeo.message.Notification.DEFAULT_DELAY_;
+    exports.DEFAULT_DELAY_;
 
   const item = /** @type {ngeo.message.Notification.CacheItem} */ ({
     el
@@ -128,7 +131,7 @@ ngeo.message.Notification.prototype.showMessage = function(message) {
 
   // Keep a reference to the promise, in case we want to manually cancel it
   // before the delay
-  const uid = ol.getUid(el);
+  const uid = olBase.getUid(el);
   item.promise = this.timeout_(() => {
     el.alert('close');
     delete this.cache_[uid];
@@ -143,10 +146,10 @@ ngeo.message.Notification.prototype.showMessage = function(message) {
  * @param {ngeo.message.Notification.CacheItem} item Cache item.
  * @private
  */
-ngeo.message.Notification.prototype.clearMessageByCacheItem_ = function(item) {
+exports.prototype.clearMessageByCacheItem_ = function(item) {
   const el = item.el;
   const promise = item.promise;
-  const uid = ol.getUid(el);
+  const uid = olBase.getUid(el);
 
   // Close the message
   el.alert('close');
@@ -166,13 +169,16 @@ ngeo.message.Notification.prototype.clearMessageByCacheItem_ = function(item) {
  *     promise: angular.$q.Promise
  * }}
  */
-ngeo.message.Notification.CacheItem;
+exports.CacheItem;
 
 
 /**
  * @type {angular.Module}
  */
-ngeo.message.Notification.module = angular.module('ngeoNotification', [
+exports.module = angular.module('ngeoNotification', [
 ]);
 
-ngeo.message.Notification.module.service('ngeoNotification', ngeo.message.Notification);
+exports.module.service('ngeoNotification', exports);
+
+
+export default exports;

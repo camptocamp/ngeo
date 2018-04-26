@@ -1,14 +1,14 @@
-goog.provide('gmf.objectediting.getWMSFeatureComponent');
-
-goog.require('gmf.objectediting.Query');
-goog.require('ol.events');
-
+/**
+ * @module gmf.objectediting.getWMSFeatureComponent
+ */
+import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
+import * as olEvents from 'ol/events.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.objectediting.getWMSFeatureComponent = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
-  gmf.objectediting.Query.module.name,
+const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
+  gmfObjecteditingQuery.module.name,
 ]);
 
 
@@ -37,7 +37,7 @@ gmf.objectediting.getWMSFeatureComponent = angular.module('gmfObjecteditingGetWM
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
  */
-gmf.objectediting.getWMSFeatureComponent.directive_ = function() {
+exports.directive_ = function() {
   return {
     controller: 'gmfObjecteditinggetwmsfeatureController',
     scope: {
@@ -50,8 +50,8 @@ gmf.objectediting.getWMSFeatureComponent.directive_ = function() {
   };
 };
 
-gmf.objectediting.getWMSFeatureComponent.directive('gmfObjecteditinggetwmsfeature',
-  gmf.objectediting.getWMSFeatureComponent.directive_);
+exports.directive('gmfObjecteditinggetwmsfeature',
+  exports.directive_);
 
 
 /**
@@ -64,7 +64,7 @@ gmf.objectediting.getWMSFeatureComponent.directive('gmfObjecteditinggetwmsfeatur
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
-gmf.objectediting.getWMSFeatureComponent.Controller_ = function($scope,
+exports.Controller_ = function($scope,
   gmfObjectEditingQuery) {
 
   // Scope properties
@@ -114,16 +114,16 @@ gmf.objectediting.getWMSFeatureComponent.Controller_ = function($scope,
  * @param {boolean} active Active.
  * @private
  */
-gmf.objectediting.getWMSFeatureComponent.Controller_.prototype.handleActiveChange_ = function(active) {
+exports.Controller_.prototype.handleActiveChange_ = function(active) {
   if (active) {
-    ol.events.listen(
+    olEvents.listen(
       this.map,
       'click',
       this.handleMapClick_,
       this
     );
   } else {
-    ol.events.unlisten(
+    olEvents.unlisten(
       this.map,
       'click',
       this.handleMapClick_,
@@ -137,7 +137,7 @@ gmf.objectediting.getWMSFeatureComponent.Controller_.prototype.handleActiveChang
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
-gmf.objectediting.getWMSFeatureComponent.Controller_.prototype.handleMapClick_ = function(evt) {
+exports.Controller_.prototype.handleMapClick_ = function(evt) {
   this.gmfObjectEditingQuery_.getFeatureInfo(
     this.layerInfo,
     evt.coordinate,
@@ -149,5 +149,8 @@ gmf.objectediting.getWMSFeatureComponent.Controller_.prototype.handleMapClick_ =
   });
 };
 
-gmf.objectediting.getWMSFeatureComponent.controller('gmfObjecteditinggetwmsfeatureController',
-  gmf.objectediting.getWMSFeatureComponent.Controller_);
+exports.controller('gmfObjecteditinggetwmsfeatureController',
+  exports.Controller_);
+
+
+export default exports;

@@ -1,5 +1,5 @@
-goog.require('ngeo.test.data.geoAdminLocationSearch');
-goog.require('ol.proj');
+import ngeoTestDataGeoAdminLocationSearch from 'ngeo/test/data/geoAdminLocationSearch.js';
+import * as olProj from 'ol/proj.js';
 
 
 describe('ngeo.search.createLocationSearchBloodhound', () => {
@@ -14,12 +14,12 @@ describe('ngeo.search.createLocationSearchBloodhound', () => {
 
   it('Parses the features correctly', () => {
     const bloodhound = ngeoCreateLocationSearchBloodhound({
-      targetProjection: ol.proj.get('EPSG:3857'),
+      targetProjection: olProj.get('EPSG:3857'),
       limit: 5
     });
     const transform = bloodhound.remote.transform;
 
-    const features = transform(ngeo.test.data.geoAdminLocationSearch);
+    const features = transform(ngeoTestDataGeoAdminLocationSearch);
     expect(features.length).toBe(5);
 
     const feature = features[0];

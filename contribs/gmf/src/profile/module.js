@@ -1,13 +1,16 @@
-goog.provide('gmf.profile.module');
-
-goog.require('gmf.profile.component');
-goog.require('gmf.profile.drawLineComponent');
-
+/**
+ * @module gmf.profile.module
+ */
+import gmfProfileComponent from 'gmf/profile/component.js';
+import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.profile.module = angular.module('gmfProifleModule', [
-  gmf.profile.component.name,
-  gmf.profile.drawLineComponent.name,
+const exports = angular.module('gmfProifleModule', [
+  gmfProfileComponent.name,
+  gmfProfileDrawLineComponent.name,
 ]);
+
+
+export default exports;

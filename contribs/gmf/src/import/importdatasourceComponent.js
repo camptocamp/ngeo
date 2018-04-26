@@ -1,30 +1,34 @@
-goog.provide('gmf.import.importdatasourceComponent');
+/**
+ * @module gmf.import.importdatasourceComponent
+ */
 
-goog.require('gmf'); // nowebpack
 /** @suppress {extraRequire} */
-goog.require('gmf.datasource.ExternalDataSourcesManager');
-/** @suppress {extraRequire} */
-goog.require('gmf.import.wmsCapabilityLayertreeComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.import.wmtsCapabilityLayertreeComponent');
-goog.require('goog.asserts');
-goog.require('ngeo.query.Querent');
-goog.require('ngeo.datasource.OGC');
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
-gmf.import.importdatasourceComponent = angular.module('gmfImportdatasource', [
-  gmf.datasource.ExternalDataSourcesManager.module.name,
-  gmf.import.wmsCapabilityLayertreeComponent.name,
-  gmf.import.wmtsCapabilityLayertreeComponent.name,
-  ngeo.query.Querent.module.name,
+/** @suppress {extraRequire} */
+import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';
+
+/** @suppress {extraRequire} */
+import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
+
+import googAsserts from 'goog/asserts.js';
+import ngeoQueryQuerent from 'ngeo/query/Querent.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+
+const exports = angular.module('gmfImportdatasource', [
+  gmfDatasourceExternalDataSourcesManager.module.name,
+  gmfImportWmsCapabilityLayertreeComponent.name,
+  gmfImportWmtsCapabilityLayertreeComponent.name,
+  ngeoQueryQuerent.module.name,
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
+});
 
 
-gmf.import.importdatasourceComponent.value('gmfImportdatasourceTemplateUrl',
+exports.value('gmfImportdatasourceTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -32,8 +36,7 @@ gmf.import.importdatasourceComponent.value('gmfImportdatasourceTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs['gmfImportdatasourceTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/import/importdatasourceComponent.html`; // nowebpack
-    // webpack: 'gmf/import/importdatasourceComponent';
+      'gmf/import/importdatasourceComponent';
   });
 
 
@@ -51,7 +54,7 @@ function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) 
 /**
  * @private
  */
-gmf.import.importdatasourceComponent.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {!jQuery} $element Element.
@@ -153,15 +156,15 @@ gmf.import.importdatasourceComponent.Controller_ = class {
      * @type {string}
      * @export
      */
-    this.mode = gmf.import.importdatasourceComponent.Controller_.Mode.ONLINE;
+    this.mode = exports.Controller_.Mode.ONLINE;
 
     /**
      * @type {!Array.<string>}
      * @export
      */
     this.modes = [
-      gmf.import.importdatasourceComponent.Controller_.Mode.LOCAL,
-      gmf.import.importdatasourceComponent.Controller_.Mode.ONLINE
+      exports.Controller_.Mode.LOCAL,
+      exports.Controller_.Mode.ONLINE
     ];
 
     /**
@@ -217,10 +220,10 @@ gmf.import.importdatasourceComponent.Controller_ = class {
          * @return {Array.<string>} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
-          goog.asserts.assertString(datum);
+          googAsserts.assertString(datum);
           const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(
             datum);
-          goog.asserts.assert(originalDatumTokenizers);
+          googAsserts.assert(originalDatumTokenizers);
           const datumTokenizers = [];
           for (const originalDatumTokenizer of originalDatumTokenizers) {
             let i = 0;
@@ -261,7 +264,7 @@ gmf.import.importdatasourceComponent.Controller_ = class {
       // Timeout to let Angular render the placeholder of the input properly,
       // otherwise typeahead would copy the string with {{}} in it...
       this.timeout_(() => {
-        goog.asserts.assert(this.serversEngine_);
+        googAsserts.assert(this.serversEngine_);
         const $urlInput = this.element_.find('input[name=url]');
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput.typeahead({
@@ -295,11 +298,11 @@ gmf.import.importdatasourceComponent.Controller_ = class {
    * @export
    */
   connect() {
-    const url = goog.asserts.assertString(this.url);
-    const serviceType = ngeo.datasource.OGC.guessServiceTypeByUrl(url);
+    const url = googAsserts.assertString(this.url);
+    const serviceType = ngeoDatasourceOGC.guessServiceTypeByUrl(url);
 
     this.startWorking_();
-    if (serviceType === ngeo.datasource.OGC.Type.WMS) {
+    if (serviceType === ngeoDatasourceOGC.Type.WMS) {
       this.ngeoQuerent_.wmsGetCapabilities(url).then(
         (wmsCapabilities) => {
           this.wmsCapabilities = wmsCapabilities;
@@ -310,7 +313,7 @@ gmf.import.importdatasourceComponent.Controller_ = class {
           this.stopWorking_(true);
         }
       );
-    } else if (serviceType === ngeo.datasource.OGC.Type.WMTS) {
+    } else if (serviceType === ngeoDatasourceOGC.Type.WMTS) {
       this.ngeoQuerent_.wmtsGetCapabilities(url).then(
         (wmtsCapabilities) => {
           this.wmtsCapabilities = wmtsCapabilities;
@@ -334,7 +337,7 @@ gmf.import.importdatasourceComponent.Controller_ = class {
    * @export
    */
   load() {
-    const file = goog.asserts.assert(this.file);
+    const file = googAsserts.assert(this.file);
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file);
   }
 
@@ -393,16 +396,19 @@ gmf.import.importdatasourceComponent.Controller_ = class {
 /**
  * @enum {string}
  */
-gmf.import.importdatasourceComponent.Controller_.Mode = {
+exports.Controller_.Mode = {
   LOCAL: 'Local',
   ONLINE: 'Online'
 };
 
 
-gmf.import.importdatasourceComponent.component('gmfImportdatasource', {
+exports.component('gmfImportdatasource', {
   bindings: {
     'map': '<'
   },
-  controller: gmf.import.importdatasourceComponent.Controller_,
+  controller: exports.Controller_,
   templateUrl: gmfImportdatasourceTemplateUrl
 });
+
+
+export default exports;

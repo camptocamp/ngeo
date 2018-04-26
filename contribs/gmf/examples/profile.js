@@ -1,39 +1,44 @@
-goog.provide('gmfapp.profile');
+/**
+ * @module gmfapp.profile
+ */
+const exports = {};
 
-// webpack: import './profile.css';
+import './profile.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.permalink.Permalink');
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-goog.require('gmf.profile.module');
-goog.require('ngeo.map.module');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.interaction.Draw');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfProfileModule from 'gmf/profile/module.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.profile.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.permalink.Permalink.module.name,
-  gmf.map.component.name,
-  gmf.profile.module.name,
-  ngeo.map.module.name // for ngeo.map.FeatureOverlay, perhaps remove me
+  gmfPermalinkPermalink.module.name,
+  gmfMapComponent.name,
+  gmfProfileModule.name,
+  ngeoMapModule.name // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
 
-gmfapp.profile.module.value(
+exports.module.value(
   'gmfProfileJsonUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
 
-gmfapp.profile.module.constant('defaultTheme', 'Demo');
-gmfapp.profile.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -43,7 +48,7 @@ gmfapp.profile.module.constant('angularLocaleScript', '../build/angular-locale_{
  * @constructor
  * @ngInject
  */
-gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
+exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {ol.geom.LineString}
    * @export
@@ -71,13 +76,13 @@ gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
@@ -85,8 +90,8 @@ gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
     })
   });
 
-  const lineStyle = new ol.style.Style({
-    stroke: new ol.style.Stroke({
+  const lineStyle = new olStyleStyle({
+    stroke: new olStyleStroke({
       color: '#ffcc33',
       width: 2
     })
@@ -95,7 +100,7 @@ gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {ol.Collection.<ol.Feature>}
    */
-  const features = new ol.Collection();
+  const features = new olCollection();
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
@@ -110,7 +115,7 @@ gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawLine = new ol.interaction.Draw({
+  this.drawLine = new olInteractionDraw({
     type: /** @type {ol.geom.GeometryType} */ ('LineString'),
     features: features
   });
@@ -148,4 +153,7 @@ gmfapp.profile.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-gmfapp.profile.module.controller('MainController', gmfapp.profile.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

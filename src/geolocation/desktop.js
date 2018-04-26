@@ -1,28 +1,28 @@
-goog.provide('ngeo.geolocation.desktop');
-
-goog.require('goog.asserts');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.message.Notification');
-goog.require('ol.events');
-goog.require('ol.Feature');
-goog.require('ol.Geolocation');
-goog.require('ol.Map');
-goog.require('ol.geom.Point');
-
+/**
+ * @module ngeo.geolocation.desktop
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
+import ngeoMessageNotification from 'ngeo/message/Notification.js';
+import * as olEvents from 'ol/events.js';
+import olFeature from 'ol/Feature.js';
+import olGeolocation from 'ol/Geolocation.js';
+import olMap from 'ol/Map.js';
+import olGeomPoint from 'ol/geom/Point.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.geolocation.desktop = angular.module('ngeoDesktopGeolocation', [
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.message.Notification.module.name,
+const exports = angular.module('ngeoDesktopGeolocation', [
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMessageNotification.module.name,
 ]);
 
 
 /**
  * @enum {string}
  */
-ngeo.geolocation.desktop.GeolocationEventType = {
+exports.GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
@@ -49,7 +49,7 @@ ngeo.geolocation.desktop.GeolocationEventType = {
  * @ngdoc directive
  * @ngname ngeoDesktopGeolocation
  */
-ngeo.geolocation.desktop.directive_ = function() {
+exports.directive_ = function() {
   return {
     restrict: 'A',
     scope: {
@@ -61,7 +61,7 @@ ngeo.geolocation.desktop.directive_ = function() {
 };
 
 
-ngeo.geolocation.desktop.directive('ngeoDesktopGeolocation', ngeo.geolocation.desktop.directive_);
+exports.directive('ngeoDesktopGeolocation', exports.directive_);
 
 
 /**
@@ -77,13 +77,13 @@ ngeo.geolocation.desktop.directive('ngeoDesktopGeolocation', ngeo.geolocation.de
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
  */
-ngeo.geolocation.desktop.Controller_ = function($scope, $element,
+exports.Controller_ = function($scope, $element,
   ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
 
   const map = $scope['getDesktopMapFn']();
-  goog.asserts.assertInstanceof(map, ol.Map);
+  googAsserts.assertInstanceof(map, olMap);
 
   /**
    * @type {!ol.Map}
@@ -92,7 +92,7 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
   this.map_ = map;
 
   const options = $scope['getDesktopGeolocationOptionsFn']() || {};
-  goog.asserts.assertObject(options);
+  googAsserts.assertObject(options);
 
   /**
    * @type {!angular.Scope}
@@ -116,7 +116,7 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
    * @type {ol.Geolocation}
    * @private
    */
-  this.geolocation_ = new ol.Geolocation({
+  this.geolocation_ = new olGeolocation({
     projection: map.getView().getProjection()
   });
 
@@ -124,14 +124,14 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
   this.geolocation_.on('error', function(error) {
     this.deactivate_();
     this.notification_.error(error.message);
-    $scope.$emit(ngeo.geolocation.desktop.GeolocationEventType.ERROR, error);
+    $scope.$emit(exports.GeolocationEventType.ERROR, error);
   }, this);
 
   /**
    * @type {ol.Feature}
    * @private
    */
-  this.positionFeature_ = new ol.Feature();
+  this.positionFeature_ = new olFeature();
 
   if (options.positionFeatureStyle) {
     this.positionFeature_.setStyle(options.positionFeatureStyle);
@@ -141,7 +141,7 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
    * @type {ol.Feature}
    * @private
    */
-  this.accuracyFeature_ = new ol.Feature();
+  this.accuracyFeature_ = new olFeature();
 
   if (options.accuracyFeatureStyle) {
     this.accuracyFeature_.setStyle(options.accuracyFeatureStyle);
@@ -159,11 +159,11 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
    */
   this.active_ = false;
 
-  ol.events.listen(this.geolocation_, 'change:accuracyGeometry', () => {
+  olEvents.listen(this.geolocation_, 'change:accuracyGeometry', () => {
     this.accuracyFeature_.setGeometry(this.geolocation_.getAccuracyGeometry());
   });
 
-  ol.events.listen(this.geolocation_, 'change:position', (event) => {
+  olEvents.listen(this.geolocation_, 'change:position', (event) => {
     this.setPosition_(event);
   });
 
@@ -173,7 +173,7 @@ ngeo.geolocation.desktop.Controller_ = function($scope, $element,
 /**
  * @export
  */
-ngeo.geolocation.desktop.Controller_.prototype.toggle = function() {
+exports.Controller_.prototype.toggle = function() {
   if (this.active_) {
     this.deactivate_();
   } else {
@@ -185,7 +185,7 @@ ngeo.geolocation.desktop.Controller_.prototype.toggle = function() {
 /**
  * @private
  */
-ngeo.geolocation.desktop.Controller_.prototype.activate_ = function() {
+exports.Controller_.prototype.activate_ = function() {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.geolocation_.setTracking(true);
@@ -196,7 +196,7 @@ ngeo.geolocation.desktop.Controller_.prototype.activate_ = function() {
 /**
  * @private
  */
-ngeo.geolocation.desktop.Controller_.prototype.deactivate_ = function() {
+exports.Controller_.prototype.deactivate_ = function() {
   this.featureOverlay_.clear();
   this.active_ = false;
   this.notification_.clear();
@@ -207,9 +207,9 @@ ngeo.geolocation.desktop.Controller_.prototype.deactivate_ = function() {
  * @param {ol.Object.Event} event Event.
  * @private
  */
-ngeo.geolocation.desktop.Controller_.prototype.setPosition_ = function(event) {
+exports.Controller_.prototype.setPosition_ = function(event) {
   const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
-  const point = new ol.geom.Point(position);
+  const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
   this.map_.getView().setCenter(position);
@@ -221,5 +221,8 @@ ngeo.geolocation.desktop.Controller_.prototype.setPosition_ = function(event) {
   this.geolocation_.setTracking(false);
 };
 
-ngeo.geolocation.desktop.controller('ngeoGeolocationDesktopController',
-  ngeo.geolocation.desktop.Controller_);
+exports.controller('ngeoGeolocationDesktopController',
+  exports.Controller_);
+
+
+export default exports;

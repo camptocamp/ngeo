@@ -1,41 +1,47 @@
-goog.provide('gmfapp.layertree');
+/**
+ * @module gmfapp.layertree
+ */
+const exports = {};
 
-// webpack: import './layertree.css';
-goog.require('gmf.disclaimer.module');
-goog.require('gmf.layertree.component');
-goog.require('gmf.layertree.TreeManager');
+import './layertree.css';
+import gmfDisclaimerModule from 'gmf/disclaimer/module.js';
+
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-goog.require('gmf.theme.Manager');
-goog.require('gmf.theme.Themes');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.statemanager.Location');
-goog.require('ngeo.layertree.module');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfThemeManager from 'gmf/theme/Manager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
+import ngeoLayertreeModule from 'ngeo/layertree/module.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.layertree.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.layertree.component.name,
-  gmf.layertree.TreeManager.module.name,
-  gmf.map.component.name,
-  gmf.theme.Manager.module.name,
-  gmf.theme.Themes.module.name,
-  ngeo.statemanager.Location.module.name,
-  ngeo.layertree.module.name,
-  gmf.disclaimer.module.name,
+  gmfLayertreeComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfMapComponent.name,
+  gmfThemeManager.module.name,
+  gmfThemeThemes.module.name,
+  ngeoStatemanagerLocation.module.name,
+  ngeoLayertreeModule.name,
+  gmfDisclaimerModule.name,
 ]);
 
 
-gmfapp.layertree.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
 
-gmfapp.layertree.module.constant('defaultTheme', 'Demo');
-gmfapp.layertree.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -46,7 +52,7 @@ gmfapp.layertree.module.constant('angularLocaleScript', '../build/angular-locale
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @ngInject
  */
-gmfapp.layertree.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
+exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -54,13 +60,13 @@ gmfapp.layertree.MainController = function(gmfTreeManager, gmfThemes, gmfThemeMa
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
@@ -203,4 +209,7 @@ gmfapp.layertree.MainController = function(gmfTreeManager, gmfThemes, gmfThemeMa
   };
 };
 
-gmfapp.layertree.module.controller('MainController', gmfapp.layertree.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;
