@@ -136,27 +136,27 @@ exports.adaptListeners_ = function(object) {
   let typeaheadListeners;
   if (object === undefined) {
     typeaheadListeners = {
-      open: olBase.nullFunction,
-      close: olBase.nullFunction,
-      cursorchange: olBase.nullFunction,
-      datasetsempty: olBase.nullFunction,
-      select: olBase.nullFunction,
-      autocomplete: olBase.nullFunction
+      open() {},
+      close() {},
+      cursorchange() {},
+      datasetsempty() {},
+      select() {},
+      autocomplete() {}
     };
   } else {
     typeaheadListeners = {
       open: object.open !== undefined ?
-        object.open : olBase.nullFunction,
+        object.open : () => {},
       close: object.close !== undefined ?
-        object.close : olBase.nullFunction,
+        object.close : () => {},
       cursorchange: object.cursorchange !== undefined ?
-        object.cursorchange : olBase.nullFunction,
+        object.cursorchange : () => {},
       datasetsempty: object.datasetsempty !== undefined ?
-        object.datasetsempty : olBase.nullFunction,
+        object.datasetsempty : () => {},
       select: object.select !== undefined ?
-        object.select : olBase.nullFunction,
+        object.select : () => {},
       autocomplete: object.autocomplete !== undefined ?
-        object.autocomplete : olBase.nullFunction
+        object.autocomplete : () => {}
     };
   }
   return typeaheadListeners;

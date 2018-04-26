@@ -96,14 +96,14 @@ const exports = function(options) {
    * @type {function(Object, number, string, Object.<string, number>, string)}
    */
   const hoverCallback = options.hoverCallback !== undefined ?
-    options.hoverCallback : olBase.nullFunction;
+    options.hoverCallback : () => {};
 
   /**
    * Out callback function.
    * @type {function()}
    */
   const outCallback = options.outCallback !== undefined ?
-    options.outCallback : olBase.nullFunction;
+    options.outCallback : () => {};
 
   /**
    * Distance data extractor used to get the dist values.
