@@ -2,7 +2,6 @@
  * @module ngeo.profile.d3Elevation
  */
 import googAsserts from 'goog/asserts.js';
-import * as olBase from 'ol/index.js';
 import * as olObj from 'ol/obj.js';
 
 import 'd3-transition';

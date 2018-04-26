@@ -10,7 +10,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import * as olObj from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
-import olSourceWMTS from 'ol/source/WMTS.js';
+import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
 import * as olUri from 'ol/uri.js';
 
 /**
@@ -173,7 +173,7 @@ exports.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, l
       result = parser.read(response.data);
     }
     if (result) {
-      const options = olSourceWMTS.optionsFromCapabilities(result, {
+      const options = optionsFromCapabilities(result, {
         matrixSet: opt_matrixSet,
         crossOrigin: 'anonymous',
         layer: layerName
@@ -211,7 +211,7 @@ exports.prototype.createWMTSLayerFromCapabilititesObj = function(
   capabilities, layerCap, opt_dimensions
 ) {
 
-  const options = olSourceWMTS.optionsFromCapabilities(capabilities, {
+  const options = optionsFromCapabilities(capabilities, {
     crossOrigin: 'anonymous',
     layer: layerCap['Identifier']
   });

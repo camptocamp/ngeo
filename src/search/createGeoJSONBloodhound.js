@@ -1,7 +1,6 @@
 /**
  * @module ngeo.search.createGeoJSONBloodhound
  */
-import * as olBase from 'ol/index.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olObj from 'ol/obj.js';
 

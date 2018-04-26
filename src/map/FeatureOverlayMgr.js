@@ -7,7 +7,8 @@ import * as olBase from 'ol/index.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import * as olObj from 'ol/obj.js';
 import olSourceVector from 'ol/source/Vector.js';
-import olStyleStyle from 'ol/style/Style.js';
+import olStyleStyle, {toFunction as toStyleFunction} from 'ol/style/Style.js';
+
 
 /**
  * Provides a service that wraps an "unmanaged" vector layer,
@@ -155,7 +156,7 @@ exports.prototype.setStyle = function(style, groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
-    olStyleStyle.defaultFunction : olStyleStyle.createFunction(style);
+    olStyleStyle.defaultFunction : toStyleFunction(style);
 };
 
 

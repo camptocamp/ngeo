@@ -1,3 +1,4 @@
+ANGULAR_VERSION := $(shell grep '"angular"' package.json | cut -d\" -f4)
 SRC_JS_FILES := $(shell find src -type f -name '*.js')
 TEST_JS_FILES := $(shell find test -type f -name '*.js')
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
@@ -669,10 +670,9 @@ contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontaw
 	mkdir -p $(dir $@)
 	cp $< $@
 
-
-contribs/gmf/build/angular-locale_%.js: github_versions
+contribs/gmf/build/angular-locale_%.js: package.json
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/`grep ^angular.js= $< | cut -d = -f 2`/src/ngLocale/angular-locale_$*.js
+	wget -O $@ https://raw.githubusercontent.com/angular/angular.js/v$(ANGULAR_VERSION)/src/ngLocale/angular-locale_$*.js
 
 .build/python-venv:
 	mkdir -p $(dir $@)

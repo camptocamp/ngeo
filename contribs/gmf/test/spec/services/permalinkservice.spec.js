@@ -17,7 +17,7 @@ describe('Permalink service', () => {
     StateManagerService = _ngeoStateManager_;
     PermalinkService = _gmfPermalink_;
     ngeoLocation = _ngeoLocation_;
-    const map = new olMap({layers: [], view: new olView({projection: olProj.get('EPSG:2056')})});
+    const map = new olMap({layers: [], view: new olView({projection: olProj.get(ngeoProjEPSG2056)})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
@@ -184,7 +184,7 @@ describe('Permalink service', () => {
     });
 
     it('accepts flipped coordinates (x/y switched)', () => {
-      PermalinkService.sourceProjections_ = [olProj.get('EPSG:2056'), olProj.get('EPSG:4326')];
+      PermalinkService.sourceProjections_ = [olProj.get(ngeoProjEPSG2056), olProj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 46.7685575;
       StateManagerService.initialState['map_y'] = 6.6144562;
       const center = PermalinkService.getMapCenter();
@@ -193,7 +193,7 @@ describe('Permalink service', () => {
     });
 
     it('reprojects the center', () => {
-      PermalinkService.sourceProjections_ = [olProj.get('EPSG:2056'), olProj.get('EPSG:4326')];
+      PermalinkService.sourceProjections_ = [olProj.get(ngeoProjEPSG2056), olProj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 6.6144562;
       StateManagerService.initialState['map_y'] = 46.7685575;
       const center = PermalinkService.getMapCenter();
