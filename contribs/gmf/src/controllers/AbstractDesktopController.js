@@ -13,6 +13,7 @@ import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+import gmfImportModule from 'gmf/import/module.js';
 import * as olBase from 'ol/index.js';
 import * as olProj from 'ol/proj.js';
 import * as olObj from 'ol/obj.js';
@@ -237,6 +238,7 @@ exports.module = angular.module('GmfAbstractDesktopControllerModule', [
   ngeoDrawFeatures.name,
   ngeoMapResizemap.name,
   ngeoQueryBboxQueryComponent.name,
+  gmfImportModule.name,
 ]);
 
 exports.module.controller(
