@@ -129,20 +129,10 @@ jobs:
     script:
     - make .build/apidoc
     if: type = pull_request
-  - stage: Build
-    env:
-    - JOB=build-dist
-    - DEVELOPMENT=TRUE
-    script:
-    - make dist/ngeo.js
-    - make dist/gmf.js
-    if: type = pull_request
   - stage: Build and publish
     env:
     - JOB=publish-npm
     script:
-#    - make dist/ngeo.js
-#    - make dist/gmf.js
     - make .build/node_modules.timestamp
     - gem install jgrep
     - export PACKAGE_VERSION=`jgrep --simple=version --input=package.json`
