@@ -1,17 +1,17 @@
-goog.provide('ngeo.measure.area');
-
-goog.require('ngeo.draw.Controller');
-goog.require('ngeo.GeometryType');
-goog.require('ngeo.interaction.MeasureArea');
-goog.require('ol.events');
-goog.require('ol.style.Style');
-
+/**
+ * @module ngeo.measure.area
+ */
+import ngeoDrawController from 'ngeo/draw/Controller.js';
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
+import * as olEvents from 'ol/events.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.measure.area = angular.module('ngeoMeasurearea', [
-  ngeo.draw.Controller.module.name
+const exports = angular.module('ngeoMeasurearea', [
+  ngeoDrawController.module.name
 ]);
 
 
@@ -25,7 +25,7 @@ ngeo.measure.area = angular.module('ngeoMeasurearea', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $injector) {
+exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -41,8 +41,8 @@ ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $inje
       const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click starting point to finish');
 
-      const measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
-        style: new ol.style.Style(),
+      const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
+        style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
         precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined
@@ -51,14 +51,14 @@ ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $inje
       drawFeatureCtrl.registerInteraction(measureArea);
       drawFeatureCtrl.measureArea = measureArea;
 
-      ol.events.listen(
+      olEvents.listen(
         measureArea,
         'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeo.GeometryType.POLYGON),
+          drawFeatureCtrl, ngeoGeometryType.POLYGON),
         drawFeatureCtrl
       );
-      ol.events.listen(
+      olEvents.listen(
         measureArea,
         'change:active',
         drawFeatureCtrl.handleActiveChange,
@@ -69,4 +69,7 @@ ngeo.measure.area.directive_ = function($compile, gettextCatalog, $filter, $inje
 };
 
 
-ngeo.measure.area.directive('ngeoMeasurearea', ngeo.measure.area.directive_);
+exports.directive('ngeoMeasurearea', exports.directive_);
+
+
+export default exports;

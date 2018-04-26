@@ -1,10 +1,14 @@
-goog.provide('ngeo.editing.extraModule');
-
-goog.require('ngeo.editing.exportfeaturesComponent');
+/**
+ * @module ngeo.editing.extraModule
+ */
+import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
 
 /**
  * @type {angular.Module}
  */
-ngeo.editing.extraModule = angular.module('ngeoEditingExtraModule', [
-  ngeo.editing.exportfeaturesComponent.name,
+const exports = angular.module('ngeoEditingExtraModule', [
+  ngeoEditingExportfeaturesComponent.name,
 ]);
+
+
+export default exports;

@@ -1,13 +1,16 @@
-goog.provide('ngeo.datasource.module');
-
-goog.require('ngeo.datasource.DataSources');
-goog.require('ngeo.datasource.Helper');
-
+/**
+ * @module ngeo.datasource.module
+ */
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.datasource.module = angular.module('ngeoDatasourceModule', [
-  ngeo.datasource.DataSources.module.name,
-  ngeo.datasource.Helper.module.name,
+const exports = angular.module('ngeoDatasourceModule', [
+  ngeoDatasourceDataSources.module.name,
+  ngeoDatasourceHelper.module.name,
 ]);
+
+
+export default exports;

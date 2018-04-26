@@ -1,10 +1,14 @@
-goog.provide('gmf.mobile.navigation.module');
-
-goog.require('gmf.mobile.navigation.component');
+/**
+ * @module gmf.mobile.navigation.module
+ */
+import gmfMobileNavigationComponent from 'gmf/mobile/navigation/component.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.mobile.navigation.module = angular.module('gmfMobileNavigationModule', [
-  gmf.mobile.navigation.component.name,
+const exports = angular.module('gmfMobileNavigationModule', [
+  gmfMobileNavigationComponent.name,
 ]);
+
+
+export default exports;

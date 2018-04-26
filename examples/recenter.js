@@ -1,17 +1,21 @@
-goog.provide('app.recenter');
+/**
+ * @module app.recenter
+ */
+const exports = {};
 
-// webpack: import './recenter.css';
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ngeo.map.module');
+import './recenter.css';
+import olMap from 'ol/Map.js';
+
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
 const appmodule = angular.module('app', [
   'gettext',
-  ngeo.map.module.name
+  ngeoMapModule.name
 ]);
 
 
@@ -19,19 +23,19 @@ const appmodule = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.recenter.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -39,4 +43,7 @@ app.recenter.MainController = function() {
 };
 
 
-appmodule.controller('MainController', app.recenter.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

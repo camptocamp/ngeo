@@ -1,18 +1,22 @@
-goog.provide('gmfapp.timeslider');
+/**
+ * @module gmfapp.timeslider
+ */
+const exports = {};
 
-// webpack: import './timeslider.css';
-goog.require('gmf.layertree.timeSliderComponent');
-goog.require('ngeo.misc.WMSTime');
+import './timeslider.css';
+import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
+
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.timeslider.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.layertree.timeSliderComponent.name,
-  ngeo.misc.WMSTime.module.name,
+  gmfLayertreeTimeSliderComponent.name,
+  ngeoMiscWMSTime.module.name,
 ]);
 
-gmfapp.timeslider.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -21,7 +25,7 @@ gmfapp.timeslider.module.constant('angularLocaleScript', '../build/angular-local
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
-gmfapp.timeslider.MainController = function($scope, ngeoWMSTime) {
+exports.MainController = function($scope, ngeoWMSTime) {
 
   /**
    * @type {ngeo.misc.WMSTime}
@@ -84,4 +88,7 @@ gmfapp.timeslider.MainController = function($scope, ngeoWMSTime) {
 };
 
 
-gmfapp.timeslider.module.controller('MainController', gmfapp.timeslider.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

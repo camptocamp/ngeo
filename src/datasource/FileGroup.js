@@ -1,11 +1,11 @@
-goog.provide('ngeo.datasource.FileGroup');
+/**
+ * @module ngeo.datasource.FileGroup
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoDatasourceFile from 'ngeo/datasource/File.js';
+import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
-goog.require('goog.asserts');
-goog.require('ngeo.datasource.File');
-goog.require('ngeo.datasource.Group');
-
-
-ngeo.datasource.FileGroup = class extends ngeo.datasource.Group {
+const exports = class extends ngeoDatasourceGroup {
 
   /**
    * A FileGroup data source combines multiple `ngeo.datasource.File` objects.
@@ -44,7 +44,7 @@ ngeo.datasource.FileGroup = class extends ngeo.datasource.Group {
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
-    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.File);
+    googAsserts.assertInstanceof(dataSource, ngeoDatasourceFile);
     this.registerDataSource_(dataSource);
   }
 
@@ -76,7 +76,7 @@ ngeo.datasource.FileGroup = class extends ngeo.datasource.Group {
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
-    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.File);
+    googAsserts.assertInstanceof(dataSource, ngeoDatasourceFile);
     this.unregisterDataSource_(dataSource);
   }
 
@@ -89,3 +89,6 @@ ngeo.datasource.FileGroup = class extends ngeo.datasource.Group {
     delete this.unregister_[dataSource.id];
   }
 };
+
+
+export default exports;

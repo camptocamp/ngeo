@@ -1,13 +1,16 @@
-goog.provide('gmf.raster.module');
-
-goog.require('gmf.raster.component');
-goog.require('gmf.raster.RasterService');
-
+/**
+ * @module gmf.raster.module
+ */
+import gmfRasterComponent from 'gmf/raster/component.js';
+import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.raster.module = angular.module('gmfRasterModule', [
-  gmf.raster.component.name,
-  gmf.raster.RasterService.module.name,
+const exports = angular.module('gmfRasterModule', [
+  gmfRasterComponent.name,
+  gmfRasterRasterService.module.name,
 ]);
+
+
+export default exports;

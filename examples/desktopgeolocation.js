@@ -1,23 +1,27 @@
-goog.provide('app.desktopgeolocation');
+/**
+ * @module app.desktopgeolocation
+ */
+const exports = {};
 
-// webpack: import './desktopgeolocation.css';
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Style');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ngeo.map.module');
-goog.require('ngeo.geolocation.desktop');
+import './desktopgeolocation.css';
+import olMap from 'ol/Map.js';
+
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 
 
 /** @type {!angular.Module} **/
-app.desktopgeolocation.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.geolocation.desktop.name,
-  ngeo.map.module.name
+  ngeoGeolocationDesktop.name,
+  ngeoMapModule.name
 ]);
 
 
@@ -28,19 +32,19 @@ app.desktopgeolocation.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.desktopgeolocation.MainController = function($scope, ngeoFeatureOverlayMgr) {
+exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
 
-  const positionFeatureStyle = new ol.style.Style({
-    image: new ol.style.Circle({
+  const positionFeatureStyle = new olStyleStyle({
+    image: new olStyleCircle({
       radius: 6,
-      fill: new ol.style.Fill({color: 'rgba(230, 100, 100, 1)'}),
-      stroke: new ol.style.Stroke({color: 'rgba(230, 40, 40, 1)', width: 2})
+      fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
+      stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
     })
   });
 
-  const accuracyFeatureStyle = new ol.style.Style({
-    fill: new ol.style.Fill({color: 'rgba(100, 100, 230, 0.3)'}),
-    stroke: new ol.style.Stroke({color: 'rgba(40, 40, 230, 1)', width: 2})
+  const accuracyFeatureStyle = new olStyleStyle({
+    fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
+    stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
   });
 
   /**
@@ -57,13 +61,13 @@ app.desktopgeolocation.MainController = function($scope, ngeoFeatureOverlayMgr) 
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -73,4 +77,7 @@ app.desktopgeolocation.MainController = function($scope, ngeoFeatureOverlayMgr) 
 };
 
 
-app.desktopgeolocation.module.controller('MainController', app.desktopgeolocation.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

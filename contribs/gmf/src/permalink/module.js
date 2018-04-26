@@ -1,15 +1,18 @@
-goog.provide('gmf.permalink.module');
-
-goog.require('gmf.permalink.Permalink');
-goog.require('gmf.permalink.ShareService');
-goog.require('gmf.permalink.shareComponent');
-
+/**
+ * @module gmf.permalink.module
+ */
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
+import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.permalink.module = angular.module('gmfPermalinkModule', [
-  gmf.permalink.Permalink.module.name,
-  gmf.permalink.ShareService.module.name,
-  gmf.permalink.shareComponent.name,
+const exports = angular.module('gmfPermalinkModule', [
+  gmfPermalinkPermalink.module.name,
+  gmfPermalinkShareService.module.name,
+  gmfPermalinkShareComponent.name,
 ]);
+
+
+export default exports;

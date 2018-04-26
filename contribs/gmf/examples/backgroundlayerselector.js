@@ -1,30 +1,35 @@
-goog.provide('gmfapp.backgroundlayerselector');
+/**
+ * @module gmfapp.backgroundlayerselector
+ */
+const exports = {};
 
-// webpack: import './backgroundlayerselector.css';
-goog.require('gmf.backgroundlayerselector.module');
+import './backgroundlayerselector.css';
+import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.map.component');
-goog.require('gmf.theme.Themes');
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.backgroundlayerselector.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.backgroundlayerselector.module.name,
-  gmf.map.component.name,
-  gmf.theme.Themes.module.name,
+  gmfBackgroundlayerselectorModule.name,
+  gmfMapComponent.name,
+  gmfThemeThemes.module.name,
 ]);
 
 
-gmfapp.backgroundlayerselector.module.value(
+exports.module.value(
   'gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?' +
         'version=2&background=background');
 
-gmfapp.backgroundlayerselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -32,7 +37,7 @@ gmfapp.backgroundlayerselector.module.constant('angularLocaleScript', '../build/
  * @constructor
  * @ngInject
  */
-gmfapp.backgroundlayerselector.MainController = function(gmfThemes) {
+exports.MainController = function(gmfThemes) {
 
   gmfThemes.loadThemes();
 
@@ -40,9 +45,9 @@ gmfapp.backgroundlayerselector.MainController = function(gmfThemes) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [],
-    view: new ol.View({
+    view: new olView({
       center: [632464, 185457],
       projection: EPSG21781,
       minZoom: 3,
@@ -52,4 +57,7 @@ gmfapp.backgroundlayerselector.MainController = function(gmfThemes) {
 };
 
 
-gmfapp.backgroundlayerselector.module.controller('MainController', gmfapp.backgroundlayerselector.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

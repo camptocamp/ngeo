@@ -7,6 +7,8 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const plugins = [];
 const entry = {};
 
+const exampleFilenamePrefix = process.env.DEV_SERVER ? 'examples/' : '';
+
 for (const filename of ls('examples/*.html')) {
   const name = filename.name;
   entry[name] = [
@@ -14,11 +16,12 @@ for (const filename of ls('examples/*.html')) {
     'ngeo/mainmodule.js', // To have a big commons part
     `./examples/${name}.js`
   ];
+
   plugins.push(
     new HtmlWebpackPlugin({
       template: `examples/${name}.html`,
       chunksSortMode: 'manual',
-      filename: name + '.html',
+      filename: exampleFilenamePrefix + name + '.html',
       chunks: ['commons', name],
     })
   );
@@ -36,9 +39,6 @@ plugins.push(new CopyWebpackPlugin(
 ));
 
 module.exports = {
-  output: {
-    path: path.resolve(__dirname, '../.build/examples-hosted/'),
-  },
   entry: entry,
   optimization: {
     splitChunks: {
@@ -48,3 +48,11 @@ module.exports = {
   },
   plugins: plugins,
 };
+
+if (!process.env.DEV_SERVER) {
+  Object.assign(module.exports, {
+    output: {
+      path: path.resolve(__dirname, '../.build/examples-hosted/'),
+    },
+  });
+}

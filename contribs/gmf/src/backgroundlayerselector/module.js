@@ -1,11 +1,14 @@
-goog.provide('gmf.backgroundlayerselector.module');
-
-goog.require('gmf.backgroundlayerselector.component');
-
+/**
+ * @module gmf.backgroundlayerselector.module
+ */
+import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.backgroundlayerselector.module = angular.module('gmfBackgroundlayerselectorModule', [
-  gmf.backgroundlayerselector.component.name,
+const exports = angular.module('gmfBackgroundlayerselectorModule', [
+  gmfBackgroundlayerselectorComponent.name,
 ]);
+
+
+export default exports;

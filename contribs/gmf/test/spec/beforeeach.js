@@ -1,24 +1,25 @@
-// webpack: import 'angular-dynamic-locale';
-goog.require('gmf.contextualdata.component');
-goog.require('gmf.layertree.module');
-goog.require('gmf.map.component');
-goog.require('gmf.permalink.module');
-goog.require('gmf.print.component');
-goog.require('gmf.profile.module');
-goog.require('gmf.query.extraModule');
+import 'angular-dynamic-locale';
+import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
+
+import gmfLayertreeModule from 'gmf/layertree/module.js';
+import gmfMapComponent from 'gmf/map/component.js';
+import gmfPermalinkModule from 'gmf/permalink/module.js';
+import gmfPrintComponent from 'gmf/print/component.js';
+import gmfProfileModule from 'gmf/profile/module.js';
+import gmfQueryExtraModule from 'gmf/query/extraModule.js';
 
 const appModule = angular.module('gmfapp', []);
 
 beforeEach(() =>  {
   appModule.requires.push('gettext');
   appModule.requires.push('tmh.dynamicLocale');
-  appModule.requires.push(gmf.contextualdata.component.name);
-  appModule.requires.push(gmf.map.component.name);
-  appModule.requires.push(gmf.layertree.module.name);
-  appModule.requires.push(gmf.permalink.module.name);
-  appModule.requires.push(gmf.print.component.name);
-  appModule.requires.push(gmf.profile.module.name);
-  appModule.requires.push(gmf.query.extraModule.name);
+  appModule.requires.push(gmfContextualdataComponent.name);
+  appModule.requires.push(gmfMapComponent.name);
+  appModule.requires.push(gmfLayertreeModule.name);
+  appModule.requires.push(gmfPermalinkModule.name);
+  appModule.requires.push(gmfPrintComponent.name);
+  appModule.requires.push(gmfProfileModule.name);
+  appModule.requires.push(gmfQueryExtraModule.name);
 });
 
 beforeEach(angular.mock.module('gmfapp'));

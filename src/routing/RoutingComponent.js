@@ -1,36 +1,37 @@
-goog.provide('ngeo.routing.RoutingComponent');
+/**
+ * @module ngeo.routing.RoutingComponent
+ */
+const exports = {};
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
+import ngeoRoutingRoutingService from 'ngeo/routing/RoutingService.js';
+import ngeoRoutingRoutingFeatureComponent from 'ngeo/routing/RoutingFeatureComponent.js';
+import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import * as olProj from 'ol/proj.js';
+import olFeature from 'ol/Feature.js';
+import olGeomLineString from 'ol/geom/LineString.js';
 
-goog.require('ngeo'); // nowebpack
-goog.require('ngeo.misc.debounce');
-goog.require('ngeo.misc.filters');
-goog.require('ngeo.routing.NominatimService');
-goog.require('ngeo.routing.RoutingService');
-goog.require('ngeo.routing.RoutingFeatureComponent');
-goog.require('ol.format.GeoJSON');
-goog.require('ol.source.Vector');
-goog.require('ol.layer.Vector');
-goog.require('ol.style.Style');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.proj');
-goog.require('ol.Feature');
-goog.require('ol.geom.LineString');
-
-ngeo.routing.RoutingComponent.module = angular.module('ngeoRoutingComponent', [
-  ngeo.misc.debounce.name,
-  ngeo.misc.filters.name,
-  ngeo.routing.NominatimService.module.name,
-  ngeo.routing.RoutingService.module.name,
-  ngeo.routing.RoutingFeatureComponent.module.name
+exports.module = angular.module('ngeoRoutingComponent', [
+  ngeoMiscDebounce.name,
+  ngeoMiscFilters.name,
+  ngeoRoutingNominatimService.module.name,
+  ngeoRoutingRoutingService.module.name,
+  ngeoRoutingRoutingFeatureComponent.module.name
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/routing/routing', require('./routing.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/routing/routing', require('./routing.html'));
+});
 
 
-ngeo.routing.RoutingComponent.module.value('ngeoRoutingTemplateUrl',
+exports.module.value('ngeoRoutingTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -38,8 +39,7 @@ ngeo.routing.RoutingComponent.module.value('ngeoRoutingTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs['ngeoRoutingTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/routing/routing.html`; // nowebpack
-    // webpack: 'ngeo/routing/routing';
+      'ngeo/routing/routing';
   }
 );
 
@@ -69,7 +69,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @ngdoc controller
  * @ngname NgeoRoutingController
  */
-ngeo.routing.RoutingComponent.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
+exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
 
   /**
    * @type {angular.Scope}
@@ -172,7 +172,7 @@ ngeo.routing.RoutingComponent.Controller = function($injector, $scope, ngeoRouti
    * @type {ol.source.Vector}
    * @private
    */
-  this.routeSource_ = new ol.source.Vector({
+  this.routeSource_ = new olSourceVector({
     features: []
   });
 
@@ -180,13 +180,13 @@ ngeo.routing.RoutingComponent.Controller = function($injector, $scope, ngeoRouti
    * @type {ol.layer.Vector}
    * @private
    */
-  this.routeLayer_ = new ol.layer.Vector({
+  this.routeLayer_ = new olLayerVector({
     source: this.routeSource_,
-    style: new ol.style.Style({
-      fill: new ol.style.Fill({
+    style: new olStyleStyle({
+      fill: new olStyleFill({
         color: 'rgba(16, 112, 29, 0.6)'
       }),
-      stroke: new ol.style.Stroke({
+      stroke: new olStyleStroke({
         color: 'rgba(16, 112, 29, 0.6)',
         width: 5
       })
@@ -237,7 +237,7 @@ ngeo.routing.RoutingComponent.Controller = function($injector, $scope, ngeoRouti
 /**
  * Init the controller
  */
-ngeo.routing.RoutingComponent.Controller.prototype.$onInit = function() {
+exports.Controller.prototype.$onInit = function() {
   this.map.addLayer(this.routeLayer_);
 };
 
@@ -245,7 +245,7 @@ ngeo.routing.RoutingComponent.Controller.prototype.$onInit = function() {
  * Clears start, end and vias. Removes features from map.
  * @export
  */
-ngeo.routing.RoutingComponent.Controller.prototype.clearRoute = function() {
+exports.Controller.prototype.clearRoute = function() {
   this.startFeature_ = null;
   this.targetFeature_ = null;
   this.viaArray = [];
@@ -261,18 +261,18 @@ ngeo.routing.RoutingComponent.Controller.prototype.clearRoute = function() {
  * @return {ol.Coordinate} LonLat coordinate
  * @private
  */
-ngeo.routing.RoutingComponent.Controller.prototype.getLonLatFromPoint_ = function(point) {
+exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
-  return ol.proj.toLonLat(coords, projection);
+  return olProj.toLonLat(coords, projection);
 };
 
 /**
  * Flip start and target and re-calculate route.
  * @export
  */
-ngeo.routing.RoutingComponent.Controller.prototype.reverseRoute = function() {
+exports.Controller.prototype.reverseRoute = function() {
   // swap start and target
   const tmpFeature = this.startFeature_;
   this.startFeature_ = this.targetFeature_;
@@ -289,21 +289,21 @@ ngeo.routing.RoutingComponent.Controller.prototype.reverseRoute = function() {
  * @returns {Array<ol.Feature>} parsed route features
  * @private
  */
-ngeo.routing.RoutingComponent.Controller.prototype.parseRoute_ = function(route) {
+exports.Controller.prototype.parseRoute_ = function(route) {
   let parsedRoutes = [];
-  const format = new ol.format.GeoJSON();
+  const format = new olFormatGeoJSON();
   const formatConfig = {
     dataProjection: 'EPSG:4326',
     featureProjection: this.map.getView().getProjection()
   };
   // if there are is useful "legs" data, parse this
   if (route.legs) {
-    parsedRoutes = route.legs.map(leg => leg.steps.map(step => new ol.Feature({geometry: format.readGeometry(step.geometry, formatConfig)})));
+    parsedRoutes = route.legs.map(leg => leg.steps.map(step => new olFeature({geometry: format.readGeometry(step.geometry, formatConfig)})));
     // flatten
     parsedRoutes = [].concat(...parsedRoutes);
   } else if (route.geometry) {
   // otherwise parse (overview) geometry
-    parsedRoutes.push(new ol.Feature({geometry: format.readGeometry(route.geometry, formatConfig)}));
+    parsedRoutes.push(new olFeature({geometry: format.readGeometry(route.geometry, formatConfig)}));
   }
   return parsedRoutes;
 };
@@ -311,7 +311,7 @@ ngeo.routing.RoutingComponent.Controller.prototype.parseRoute_ = function(route)
 /**
  * @export
  */
-ngeo.routing.RoutingComponent.Controller.prototype.calculateRoute = function() {
+exports.Controller.prototype.calculateRoute = function() {
   if (this.startFeature_ && this.targetFeature_) {
     // remove rendered routes
     this.routeSource_.clear();
@@ -343,8 +343,8 @@ ngeo.routing.RoutingComponent.Controller.prototype.calculateRoute = function() {
       const startToRoute = [/** @type {ol.geom.Point} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
       const routeToEnd = [endRoute, /** @type {ol.geom.Point} */(this.targetFeature_.getGeometry()).getCoordinates()];
       const routeConnections = [
-        new ol.Feature(new ol.geom.LineString(startToRoute)),
-        new ol.Feature(new ol.geom.LineString(routeToEnd))
+        new olFeature(new olGeomLineString(startToRoute)),
+        new olFeature(new olGeomLineString(routeToEnd))
       ];
 
       // add them to the source
@@ -376,7 +376,7 @@ ngeo.routing.RoutingComponent.Controller.prototype.calculateRoute = function() {
 /**
  * @export
  */
-ngeo.routing.RoutingComponent.Controller.prototype.addVia = function() {
+exports.Controller.prototype.addVia = function() {
   this.viaArray.push(/** @type{ngeox.RoutingVia} */({
     feature: null,
     onSelect: null
@@ -387,7 +387,7 @@ ngeo.routing.RoutingComponent.Controller.prototype.addVia = function() {
  * @param {number} index Array index.
  * @export
  */
-ngeo.routing.RoutingComponent.Controller.prototype.deleteVia = function(index) {
+exports.Controller.prototype.deleteVia = function(index) {
   if (this.viaArray.length > index) {
     this.viaArray.splice(index, 1);
     this.calculateRoute();
@@ -395,10 +395,13 @@ ngeo.routing.RoutingComponent.Controller.prototype.deleteVia = function(index) {
 };
 
 
-ngeo.routing.RoutingComponent.module.component('ngeoRouting', {
-  controller: ngeo.routing.RoutingComponent.Controller,
+exports.module.component('ngeoRouting', {
+  controller: exports.Controller,
   bindings: {
     'map': '<ngeoRoutingMap'
   },
   templateUrl: ngeoRoutingTemplateUrl
 });
+
+
+export default exports;

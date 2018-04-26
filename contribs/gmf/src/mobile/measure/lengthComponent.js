@@ -1,22 +1,22 @@
-goog.provide('gmf.mobile.measure.lengthComponent');
+/**
+ * @module gmf.mobile.measure.lengthComponent
+ */
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import * as olEvents from 'ol/events.js';
+import olObject from 'ol/Object.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
-goog.require('gmf'); // nowebpack
-goog.require('ngeo.misc.filters');
-goog.require('ngeo.interaction.MeasureLengthMobile');
-goog.require('ngeo.misc.decorate');
-goog.require('ol.events');
-goog.require('ol.Object');
-goog.require('ol.style.Fill');
-goog.require('ol.style.RegularShape');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-
-gmf.mobile.measure.lengthComponent = angular.module('gmfMobileMeasureLength', [
-  ngeo.misc.filters.name,
+const exports = angular.module('gmfMobileMeasureLength', [
+  ngeoMiscFilters.name,
 ]);
 
 
-gmf.mobile.measure.lengthComponent.value('gmfMobileMeasureLengthTemplateUrl',
+exports.value('gmfMobileMeasureLengthTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
    * @param {angular.Attributes} attrs Attributes.
@@ -25,13 +25,12 @@ gmf.mobile.measure.lengthComponent.value('gmfMobileMeasureLengthTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseModuleTemplateUrl}/mobile/measure/lengthComponent.html`; // nowebpack
-    // webpack: 'gmf/measure/lengthComponent';
+      'gmf/measure/lengthComponent';
   });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/measure/lengthComponent', require('./lengthComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/measure/lengthComponent', require('./lengthComponent.html'));
+});
 
 
 /**
@@ -57,7 +56,7 @@ gmf.mobile.measure.lengthComponent.value('gmfMobileMeasureLengthTemplateUrl',
  * @ngdoc directive
  * @ngname gmfMobileMeasureLength
  */
-gmf.mobile.measure.lengthComponent.component_ =
+exports.component_ =
     function(gmfMobileMeasureLengthTemplateUrl) {
       return {
         restrict: 'A',
@@ -83,8 +82,8 @@ gmf.mobile.measure.lengthComponent.component_ =
     };
 
 
-gmf.mobile.measure.lengthComponent.directive('gmfMobileMeasurelength',
-  gmf.mobile.measure.lengthComponent.component_);
+exports.directive('gmfMobileMeasurelength',
+  exports.component_);
 
 
 /**
@@ -98,7 +97,7 @@ gmf.mobile.measure.lengthComponent.directive('gmfMobileMeasurelength',
  * @ngdoc controller
  * @ngname GmfMobileMeasureLengthController
  */
-gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter, gettextCatalog) {
+exports.Controller_ = function($scope, $filter, gettextCatalog) {
 
   /**
    * @type {angular.Scope}
@@ -144,17 +143,17 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter, gette
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
    * @export
    */
-  this.sketchStyle = new ol.style.Style({
-    fill: new ol.style.Fill({
+  this.sketchStyle = new olStyleStyle({
+    fill: new olStyleFill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
-    stroke: new ol.style.Stroke({
+    stroke: new olStyleStroke({
       color: 'rgba(0, 0, 0, 0.5)',
       lineDash: [10, 10],
       width: 2
     }),
-    image: new ol.style.RegularShape({
-      stroke: new ol.style.Stroke({
+    image: new olStyleRegularShape({
+      stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.7)',
         width: 2
       }),
@@ -199,22 +198,22 @@ gmf.mobile.measure.lengthComponent.Controller_ = function($scope, $filter, gette
 /**
  * Initialise the controller.
  */
-gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
+exports.Controller_.prototype.init = function() {
 
-  this.measure = new ngeo.interaction.MeasureLengthMobile(this.filter_('ngeoUnitPrefix'), this.gettextCatalog_, {
+  this.measure = new ngeoInteractionMeasureLengthMobile(this.filter_('ngeoUnitPrefix'), this.gettextCatalog_, {
     precision: this.precision,
     sketchStyle: this.sketchStyle
   });
 
   this.measure.setActive(this.active);
-  ngeo.misc.decorate.interaction(this.measure);
+  ngeoMiscDecorate.interaction(this.measure);
 
 
   this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
     this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;
-  ngeo.misc.decorate.interaction(drawInteraction);
+  ngeoMiscDecorate.interaction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
     get() {
@@ -222,9 +221,9 @@ gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
     }
   });
 
-  ol.events.listen(
+  olEvents.listen(
     drawInteraction,
-    ol.Object.getChangeEventType('dirty'),
+    olObject.getChangeEventType('dirty'),
     function() {
       this.dirty = drawInteraction.getDirty();
 
@@ -238,18 +237,18 @@ gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
     this
   );
 
-  ol.events.listen(
+  olEvents.listen(
     drawInteraction,
-    ol.Object.getChangeEventType('drawing'),
+    olObject.getChangeEventType('drawing'),
     function() {
       this.drawing = drawInteraction.getDrawing();
     },
     this
   );
 
-  ol.events.listen(
+  olEvents.listen(
     drawInteraction,
-    ol.Object.getChangeEventType('valid'),
+    olObject.getChangeEventType('valid'),
     function() {
       this.valid = drawInteraction.getValid();
     },
@@ -263,7 +262,7 @@ gmf.mobile.measure.lengthComponent.Controller_.prototype.init = function() {
  * Add current sketch point to line measure
  * @export
  */
-gmf.mobile.measure.lengthComponent.Controller_.prototype.addPoint = function() {
+exports.Controller_.prototype.addPoint = function() {
   this.drawInteraction.addToDrawing();
 };
 
@@ -272,7 +271,7 @@ gmf.mobile.measure.lengthComponent.Controller_.prototype.addPoint = function() {
  * Clear the sketch feature
  * @export
  */
-gmf.mobile.measure.lengthComponent.Controller_.prototype.clear = function() {
+exports.Controller_.prototype.clear = function() {
   this.drawInteraction.clearDrawing();
 };
 
@@ -281,7 +280,7 @@ gmf.mobile.measure.lengthComponent.Controller_.prototype.clear = function() {
  * Finish line measure
  * @export
  */
-gmf.mobile.measure.lengthComponent.Controller_.prototype.finish = function() {
+exports.Controller_.prototype.finish = function() {
   this.drawInteraction.finishDrawing();
 };
 
@@ -290,10 +289,13 @@ gmf.mobile.measure.lengthComponent.Controller_.prototype.finish = function() {
  * Deactivate the directive.
  * @export
  */
-gmf.mobile.measure.lengthComponent.Controller_.prototype.deactivate = function() {
+exports.Controller_.prototype.deactivate = function() {
   this.active = false;
 };
 
 
-gmf.mobile.measure.lengthComponent.controller('GmfMobileMeasureLengthController',
-  gmf.mobile.measure.lengthComponent.Controller_);
+exports.controller('GmfMobileMeasureLengthController',
+  exports.Controller_);
+
+
+export default exports;

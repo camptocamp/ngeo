@@ -1,10 +1,14 @@
-goog.provide('gmf.contextualdata.module');
-
-goog.require('gmf.contextualdata.component');
+/**
+ * @module gmf.contextualdata.module
+ */
+import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.contextualdata.module = angular.module('gmfContextualdataModule', [
-  gmf.contextualdata.component.name,
+const exports = angular.module('gmfContextualdataModule', [
+  gmfContextualdataComponent.name,
 ]);
+
+
+export default exports;

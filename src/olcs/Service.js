@@ -1,10 +1,11 @@
-goog.module('ngeo.olcs.Service');
-
-goog.require('goog.asserts');
-goog.require('ngeo.misc.debounce');
-goog.require('ngeo.statemanager.Location');
-goog.require('ngeo.olcs.constants');
-goog.require('ngeo.statemanager.Service');
+/**
+ * @module ngeo.olcs.Service
+ */
+import googAsserts from 'goog/asserts.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
+import ngeoOlcsConstants from 'ngeo/olcs/constants.js';
+import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
 const Service = class {
 
@@ -72,15 +73,15 @@ const Service = class {
   initialStateToCamera_() {
     const stateManager = this.ngeoStateManager_;
 
-    const lon = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.LON);
-    const lat = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.LAT);
-    const elevation = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.ELEVATION);
-    const heading = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.HEADING) || 0;
-    const pitch = stateManager.getInitialNumberValue(ngeo.olcs.constants.Permalink3dParam.PITCH) || 0;
+    const lon = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.LON);
+    const lat = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.LAT);
+    const elevation = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.ELEVATION);
+    const heading = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.HEADING) || 0;
+    const pitch = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.PITCH) || 0;
 
-    goog.asserts.assert(lon !== undefined);
-    goog.asserts.assert(lat !== undefined);
-    goog.asserts.assert(elevation !== undefined);
+    googAsserts.assert(lon !== undefined);
+    googAsserts.assert(lat !== undefined);
+    googAsserts.assert(elevation !== undefined);
     return this.manager_.set3dWithView(lon, lat, elevation, heading, pitch);
   }
 
@@ -95,12 +96,12 @@ const Service = class {
     camera.moveEnd.addEventListener(this.ngeoDebounce_(() => {
       const position = camera.positionCartographic;
       this.ngeoStateManager_.updateState({
-        [ngeo.olcs.constants.Permalink3dParam.ENABLED]: true,
-        [ngeo.olcs.constants.Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
-        [ngeo.olcs.constants.Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
-        [ngeo.olcs.constants.Permalink3dParam.ELEVATION]: position.height.toFixed(0),
-        [ngeo.olcs.constants.Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
-        [ngeo.olcs.constants.Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3)
+        [ngeoOlcsConstants.Permalink3dParam.ENABLED]: true,
+        [ngeoOlcsConstants.Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
+        [ngeoOlcsConstants.Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
+        [ngeoOlcsConstants.Permalink3dParam.ELEVATION]: position.height.toFixed(0),
+        [ngeoOlcsConstants.Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
+        [ngeoOlcsConstants.Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3)
       });
     }, 1000, true));
 
@@ -115,7 +116,7 @@ const Service = class {
    * @private
    */
   remove3dState_() {
-    this.ngeoLocation_.getParamKeysWithPrefix(ngeo.olcs.constants.Permalink3dParam.PREFIX).forEach((key) => {
+    this.ngeoLocation_.getParamKeysWithPrefix(ngeoOlcsConstants.Permalink3dParam.PREFIX).forEach((key) => {
       this.ngeoStateManager_.deleteParam(key);
     });
   }
@@ -124,9 +125,12 @@ const Service = class {
 
 const name = 'ngeoOlcsService';
 Service.module = angular.module(name, [
-  ngeo.misc.debounce.name,
-  ngeo.statemanager.Location.module.name,
-  ngeo.statemanager.Service.module.name,
+  ngeoMiscDebounce.name,
+  ngeoStatemanagerLocation.module.name,
+  ngeoStatemanagerService.module.name,
 ]).service(name, Service);
 
-exports = Service;
+const exports = Service;
+
+
+export default exports;

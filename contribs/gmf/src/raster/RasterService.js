@@ -1,6 +1,6 @@
-goog.provide('gmf.raster.RasterService');
-
-
+/**
+ * @module gmf.raster.RasterService
+ */
 /**
  * The Raster service.
  * Uses the c2cgeoportal's raster to obtain different kinds of
@@ -13,7 +13,7 @@ goog.provide('gmf.raster.RasterService');
  * @ngdoc service
  * @ngname gmfRaster
  */
-gmf.raster.RasterService = function($http, gmfRasterUrl) {
+const exports = function($http, gmfRasterUrl) {
 
   /**
    * @type {angular.$http}
@@ -35,11 +35,11 @@ gmf.raster.RasterService = function($http, gmfRasterUrl) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.raster.RasterService.prototype.getRaster = function(coordinate, opt_params) {
+exports.prototype.getRaster = function(coordinate, opt_params) {
 
   const params = opt_params || {};
-  params[gmf.raster.RasterService.Param.X] = coordinate[0];
-  params[gmf.raster.RasterService.Param.Y] = coordinate[1];
+  params[exports.Param.X] = coordinate[0];
+  params[exports.Param.Y] = coordinate[1];
 
   return this.$http_.get(this.url_, {
     params
@@ -52,7 +52,7 @@ gmf.raster.RasterService.prototype.getRaster = function(coordinate, opt_params) 
  * @return {Object.<string, number>} The response object.
  * @private
  */
-gmf.raster.RasterService.prototype.handleGetRaster_ = function(resp) {
+exports.prototype.handleGetRaster_ = function(resp) {
   return resp.data;
 };
 
@@ -60,7 +60,7 @@ gmf.raster.RasterService.prototype.handleGetRaster_ = function(resp) {
 /**
  * @enum {string}
  */
-gmf.raster.RasterService.Param = {
+exports.Param = {
   X: 'lon',
   Y: 'lat'
 };
@@ -69,5 +69,8 @@ gmf.raster.RasterService.Param = {
 /**
  * @type {!angular.Module}
  */
-gmf.raster.RasterService.module = angular.module('gmfRaster', []);
-gmf.raster.RasterService.module.service('gmfRaster', gmf.raster.RasterService);
+exports.module = angular.module('gmfRaster', []);
+exports.module.service('gmfRaster', exports);
+
+
+export default exports;

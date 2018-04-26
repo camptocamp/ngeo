@@ -61,10 +61,6 @@ We also use ES6 coding standards.
 
 ## Webpack
 
-In ngeo 2.3, we still use google-closure to check our code and build the applications in the
-`contribs/gmf/apps` folder. But we are also ready to use webpack, and examples can't be used anymore without
-it.
-
 ### Run the application
 
 If you want to run the applications, check, or lint the code, you can still do a simple `make <target>`.
@@ -283,13 +279,12 @@ ngeo.module.component.value('ngeoModuleComponentTemplateUrl',
     function($element, $attrs) {
       const templateUrl = $attrs['ngeoNameComponentTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-        `${ngeo.baseModuleTemplateUrl}/module/component.html`; // nowebpack
-        // webpack: 'ngeo/module/component';
+        'ngeo/module/component';
     });
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/module/component', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/module/component', require('./component.html'));
+});
 
 /**
  * @param {!angular.JQLite} $element Element.

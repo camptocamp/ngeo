@@ -1,17 +1,17 @@
-goog.require('ol.Feature');
-goog.require('ol.geom.MultiLineString');
-goog.require('ol.geom.MultiPoint');
-goog.require('ol.geom.MultiPolygon');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.Point');
-goog.require('ol.geom.Polygon');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
-goog.require('ol.style.Image');
-goog.require('ngeo.format.FeatureHash');
+import olFeature from 'ol/Feature.js';
+import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleText from 'ol/style/Text.js';
+import olStyleImage from 'ol/style/Image.js';
+import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 
 
 describe('ngeo.format.FeatureHash', () => {
@@ -19,8 +19,8 @@ describe('ngeo.format.FeatureHash', () => {
   let fhFormat;
 
   beforeEach(() => {
-    ngeo.format.FeatureHash.ACCURACY_ = 1; // Easier to test
-    fhFormat = new ngeo.format.FeatureHash();
+    ngeoFormatFeatureHash.ACCURACY_ = 1; // Easier to test
+    fhFormat = new ngeoFormatFeatureHash();
   });
 
   describe('decoding', () => {
@@ -29,7 +29,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a point', () => {
         const point = fhFormat.readGeometry('p(__)');
-        expect(point instanceof ol.geom.Point).toBeTruthy();
+        expect(point instanceof olGeomPoint).toBeTruthy();
         const coordinate = point.getCoordinates();
         expect(coordinate).toEqual([1, 1]);
       });
@@ -40,7 +40,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a multi point', () => {
         const multiPoint = fhFormat.readGeometry('P(..__)');
-        expect(multiPoint instanceof ol.geom.MultiPoint).toBeTruthy();
+        expect(multiPoint instanceof olGeomMultiPoint).toBeTruthy();
         const coordinates = multiPoint.getCoordinates();
         expect(coordinates.length).toBe(2);
         expect(coordinates[0]).toEqual([0, 0]);
@@ -53,7 +53,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a line', () => {
         const lineString = fhFormat.readGeometry('l(..__)');
-        expect(lineString instanceof ol.geom.LineString).toBeTruthy();
+        expect(lineString instanceof olGeomLineString).toBeTruthy();
         const coordinates = lineString.getCoordinates();
         expect(coordinates.length).toBe(2);
         expect(coordinates[0]).toEqual([0, 0]);
@@ -66,7 +66,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a multi line', () => {
         const multiLineString = fhFormat.readGeometry('L(..__\'--__)');
-        expect(multiLineString instanceof ol.geom.MultiLineString).toBeTruthy();
+        expect(multiLineString instanceof olGeomMultiLineString).toBeTruthy();
         const coordinates = multiLineString.getCoordinates();
         expect(coordinates.length).toBe(2);
         expect(coordinates[0][0]).toEqual([0, 0]);
@@ -81,7 +81,7 @@ describe('ngeo.format.FeatureHash', () => {
 
       it('correctly decodes a polygon', () => {
         const polygon = fhFormat.readGeometry('a(..DD.K\'!F_..!-.)');
-        expect(polygon instanceof ol.geom.Polygon).toBeTruthy();
+        expect(polygon instanceof olGeomPolygon).toBeTruthy();
         const linearRingCount = polygon.getLinearRingCount();
         expect(linearRingCount).toBe(2);
         let ring;
@@ -100,7 +100,7 @@ describe('ngeo.format.FeatureHash', () => {
       it('correctly decodes a multi polygon', () => {
         const multiPolygon = fhFormat.readGeometry(
           'A(..DD.K\'!F_..!-.)(!_!!.D)');
-        expect(multiPolygon instanceof ol.geom.MultiPolygon).toBeTruthy();
+        expect(multiPolygon instanceof olGeomMultiPolygon).toBeTruthy();
         const polygons = multiPolygon.getPolygons();
         expect(polygons.length).toBe(2);
         let polygon, linearRingCount, ring;
@@ -130,31 +130,31 @@ describe('ngeo.format.FeatureHash', () => {
           'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
             'fontSize*12px\'fontColor*%230101ff)');
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        expect(geometry instanceof olGeomPoint).toBeTruthy();
         const coordinate = geometry.getCoordinates();
         expect(coordinate).toEqual([1, 1]);
         expect(feature.get('foo')).toBe('foo');
         expect(feature.get('bar')).toBe('bar');
         const style = feature.getStyle();
-        expect(style instanceof ol.style.Style).toBeTruthy();
+        expect(style instanceof olStyleStyle).toBeTruthy();
         const fillStyle = style.getFill();
-        expect(fillStyle instanceof ol.style.Fill).toBeTruthy();
+        expect(fillStyle instanceof olStyleFill).toBeTruthy();
         const fillColor = fillStyle.getColor();
         expect(fillColor).toBe('#ff0101');
         const strokeStyle = style.getStroke();
-        expect(strokeStyle instanceof ol.style.Stroke).toBeTruthy();
+        expect(strokeStyle instanceof olStyleStroke).toBeTruthy();
         const strokeColor = strokeStyle.getColor();
         expect(strokeColor).toBe('#01ff01');
         const imageStyle = style.getImage();
         expect(imageStyle).toBe(null);
         const textStyle = style.getText();
-        expect(textStyle instanceof ol.style.Text);
+        expect(textStyle instanceof olStyleText);
         const font = textStyle.getFont();
         expect(font).toBe('12px sans-serif');
         const textFillStyle = textStyle.getFill();
-        expect(textFillStyle instanceof ol.style.Fill);
+        expect(textFillStyle instanceof olStyleFill);
         const textFillColor = textFillStyle.getColor();
         expect(textFillColor).toBe('#0101ff');
       });
@@ -167,29 +167,29 @@ describe('ngeo.format.FeatureHash', () => {
           'p(__~foo*foo\'bar*bar~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
             'pointRadius*4)');
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        expect(geometry instanceof olGeomPoint).toBeTruthy();
         const coordinate = geometry.getCoordinates();
         expect(coordinate).toEqual([1, 1]);
         expect(feature.get('foo')).toBe('foo');
         expect(feature.get('bar')).toBe('bar');
         const style = feature.getStyle();
-        expect(style instanceof ol.style.Style).toBeTruthy();
+        expect(style instanceof olStyleStyle).toBeTruthy();
         let fillStyle = style.getFill();
         expect(fillStyle).toBe(null);
         let strokeStyle = style.getStroke();
         expect(strokeStyle).toBe(null);
         const imageStyle = style.getImage();
-        expect(imageStyle instanceof ol.style.Image).toBeTruthy();
+        expect(imageStyle instanceof olStyleImage).toBeTruthy();
         const radius = imageStyle.getRadius();
         expect(radius).toBe(4);
         fillStyle = imageStyle.getFill();
-        expect(fillStyle instanceof ol.style.Fill).toBeTruthy();
+        expect(fillStyle instanceof olStyleFill).toBeTruthy();
         const fillColor = fillStyle.getColor();
         expect(fillColor).toBe('#ff0101');
         strokeStyle = imageStyle.getStroke();
-        expect(strokeStyle instanceof ol.style.Stroke).toBeTruthy();
+        expect(strokeStyle instanceof olStyleStroke).toBeTruthy();
         const strokeColor = strokeStyle.getColor();
         expect(strokeColor).toBe('#01ff01');
         const strokeWidth = strokeStyle.getWidth();
@@ -203,27 +203,27 @@ describe('ngeo.format.FeatureHash', () => {
           'p(__~~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
             'pointRadius*4)');
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        expect(geometry instanceof olGeomPoint).toBeTruthy();
         const coordinate = geometry.getCoordinates();
         expect(coordinate).toEqual([1, 1]);
         const style = feature.getStyle();
-        expect(style instanceof ol.style.Style).toBeTruthy();
+        expect(style instanceof olStyleStyle).toBeTruthy();
         let fillStyle = style.getFill();
         expect(fillStyle).toBe(null);
         let strokeStyle = style.getStroke();
         expect(strokeStyle).toBe(null);
         const imageStyle = style.getImage();
-        expect(imageStyle instanceof ol.style.Image).toBeTruthy();
+        expect(imageStyle instanceof olStyleImage).toBeTruthy();
         const radius = imageStyle.getRadius();
         expect(radius).toBe(4);
         fillStyle = imageStyle.getFill();
-        expect(fillStyle instanceof ol.style.Fill).toBeTruthy();
+        expect(fillStyle instanceof olStyleFill).toBeTruthy();
         const fillColor = fillStyle.getColor();
         expect(fillColor).toBe('#ff0101');
         strokeStyle = imageStyle.getStroke();
-        expect(strokeStyle instanceof ol.style.Stroke).toBeTruthy();
+        expect(strokeStyle instanceof olStyleStroke).toBeTruthy();
         const strokeColor = strokeStyle.getColor();
         expect(strokeColor).toBe('#01ff01');
         const strokeWidth = strokeStyle.getWidth();
@@ -234,9 +234,9 @@ describe('ngeo.format.FeatureHash', () => {
     describe('feature decoding with attributes, witout style', () => {
       it('correctly decodes a feature with attributes, witout style', () => {
         const feature = fhFormat.readFeature('p(__~foo*foo\'bar*bar~)');
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        expect(geometry instanceof olGeomPoint).toBeTruthy();
         const coordinate = geometry.getCoordinates();
         expect(coordinate).toEqual([1, 1]);
         expect(feature.get('foo')).toBe('foo');
@@ -251,15 +251,15 @@ describe('ngeo.format.FeatureHash', () => {
         expect(features.length).toBe(2);
         let feature, geometry, coordinates;
         feature = features[0];
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.Point).toBeTruthy();
+        expect(geometry instanceof olGeomPoint).toBeTruthy();
         coordinates = geometry.getCoordinates();
         expect(coordinates).toEqual([1, 1]);
         feature = features[1];
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.LineString).toBeTruthy();
+        expect(geometry instanceof olGeomLineString).toBeTruthy();
         coordinates = geometry.getCoordinates();
         expect(coordinates.length).toBe(2);
         expect(coordinates[0]).toEqual([0, 0]);
@@ -275,7 +275,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('point encoding', () => {
 
       it('correctly encodes a point', () => {
-        const point = new ol.geom.Point([1, 1]);
+        const point = new olGeomPoint([1, 1]);
         const result = fhFormat.writeGeometry(point);
         expect(result).toBe('p(__)');
       });
@@ -285,7 +285,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('multi point encoding', () => {
 
       it('correctly encodes a multi point', () => {
-        const multiPoint = new ol.geom.MultiPoint([[0, 0], [1, 1]]);
+        const multiPoint = new olGeomMultiPoint([[0, 0], [1, 1]]);
         const result = fhFormat.writeGeometry(multiPoint);
         expect(result).toBe('P(..__)');
       });
@@ -295,7 +295,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('line string encoding', () => {
 
       it('correctly encodes a line', () => {
-        const lineString = new ol.geom.LineString([[0, 0], [1, 1]]);
+        const lineString = new olGeomLineString([[0, 0], [1, 1]]);
         const result = fhFormat.writeGeometry(lineString);
         expect(result).toBe('l(..__)');
       });
@@ -305,7 +305,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('multi line string encoding', () => {
 
       it('correctly encodes a multi line', () => {
-        const multiLineString = new ol.geom.MultiLineString([
+        const multiLineString = new olGeomMultiLineString([
           [[0, 0], [1, 1]], [[0, 0], [1, 1]]
         ]);
         const result = fhFormat.writeGeometry(multiLineString);
@@ -317,7 +317,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('polygon encoding', () => {
 
       it('correctly encodes a polygon', () => {
-        const polygon = new ol.geom.Polygon([
+        const polygon = new olGeomPolygon([
           [[0, 0], [4, 4], [4, -4], [0, 0]],
           [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
         ]);
@@ -330,7 +330,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('multi polygon encoding', () => {
 
       it('correctly encodes a multi polygon', () => {
-        const multiPolygon = new ol.geom.MultiPolygon([
+        const multiPolygon = new olGeomMultiPolygon([
           [[[0, 0], [4, 4], [4, -4], [0, 0]],
             [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]],
           [[[0, 0], [-2, -2], [-2, 2], [0, 0]]]
@@ -344,19 +344,19 @@ describe('ngeo.format.FeatureHash', () => {
     describe('point feature encoding', () => {
 
       it('correctly encodes a point feature', () => {
-        const point = new ol.geom.Point([1, 1]);
-        const feature = new ol.Feature({
+        const point = new olGeomPoint([1, 1]);
+        const feature = new olFeature({
           geometry: point,
           foo: 'foo',
           bar: 'bar'
         });
-        feature.setStyle(new ol.style.Style({
-          image: new ol.style.Circle({
+        feature.setStyle(new olStyleStyle({
+          image: new olStyleCircle({
             radius: 3,
-            fill: new ol.style.Fill({
+            fill: new olStyleFill({
               color: [255, 1, 1, 1]
             }),
-            stroke: new ol.style.Stroke({
+            stroke: new olStyleStroke({
               color: [1, 255, 1, 1],
               width: 2
             })
@@ -373,14 +373,14 @@ describe('ngeo.format.FeatureHash', () => {
     describe('line string feature encoding', () => {
 
       it('correctly encodes a line string feature', () => {
-        const lineString = new ol.geom.LineString([[0, 0], [1, 1]]);
-        const feature = new ol.Feature({
+        const lineString = new olGeomLineString([[0, 0], [1, 1]]);
+        const feature = new olFeature({
           geometry: lineString,
           foo: 'foo',
           bar: 'bar'
         });
-        feature.setStyle(new ol.style.Style({
-          stroke: new ol.style.Stroke({
+        feature.setStyle(new olStyleStyle({
+          stroke: new olStyleStroke({
             width: 2,
             color: [255, 1, 1, 1]
           })
@@ -395,27 +395,27 @@ describe('ngeo.format.FeatureHash', () => {
     describe('polygon feature encoding', () => {
 
       it('correctly encodes a polygon feature', () => {
-        const polygon = new ol.geom.Polygon([
+        const polygon = new olGeomPolygon([
           [[0, 0], [4, 4], [4, -4], [0, 0]],
           [[2, 1], [3, 1], [3, -1], [2, -1], [2, 1]]
         ]);
-        const feature = new ol.Feature({
+        const feature = new olFeature({
           geometry: polygon,
           foo: 'foo',
           bar: 'bar'
         });
-        feature.setStyle(new ol.style.Style({
-          fill: new ol.style.Fill({
+        feature.setStyle(new olStyleStyle({
+          fill: new olStyleFill({
             color: [255, 1, 1, 1]
           }),
-          stroke: new ol.style.Stroke({
+          stroke: new olStyleStroke({
             color: [1, 255, 1, 1],
             width: 2
           }),
-          text: new ol.style.Text({
+          text: new olStyleText({
             label: 'foo', // not encoded
             font: 'bold 12px Verdana',
-            fill: new ol.style.Fill({
+            fill: new olStyleFill({
               color: [1, 255, 1, 1]
             })
           })
@@ -431,14 +431,14 @@ describe('ngeo.format.FeatureHash', () => {
     describe('features encoding', () => {
 
       it('correctly encodes features', () => {
-        const point = new ol.geom.Point([1, 1]);
-        const pointFeature = new ol.Feature({
+        const point = new olGeomPoint([1, 1]);
+        const pointFeature = new olFeature({
           geometry: point,
           foo: 'foo',
           bar: 'bar'
         });
-        const lineString = new ol.geom.LineString([[0, 0], [1, 1]]);
-        const lineStringFeature = new ol.Feature({
+        const lineString = new olGeomLineString([[0, 0], [1, 1]]);
+        const lineStringFeature = new olFeature({
           geometry: lineString,
           foo: 'foo',
           bar: 'bar'
@@ -464,15 +464,15 @@ describe('ngeo.format.FeatureHash', () => {
       //
 
       beforeEach(() => {
-        fhFormat = new ngeo.format.FeatureHash({accuracy: 0.1});
+        fhFormat = new ngeoFormatFeatureHash({accuracy: 0.1});
       });
 
       it('encodes as expected', () => {
-        const polygon = new ol.geom.Polygon([[
+        const polygon = new olGeomPolygon([[
           [538820, 153580], [538720, 151980], [540400, 151300],
           [541040, 151920], [541080, 153060], [540340, 154120],
           [538820, 153580]]]);
-        const polygonFeature = new ol.Feature({
+        const polygonFeature = new olFeature({
           geometry: polygon
         });
         const features = [polygonFeature];
@@ -485,9 +485,9 @@ describe('ngeo.format.FeatureHash', () => {
           'Fa(huv9Fhmrx_gy-z801u1-z9I1hHh4H1Uh9RgfJhqP)');
         expect(features.length).toBe(1);
         const feature = features[0];
-        expect(feature instanceof ol.Feature).toBeTruthy();
+        expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
-        expect(geometry instanceof ol.geom.Polygon).toBeTruthy();
+        expect(geometry instanceof olGeomPolygon).toBeTruthy();
         let coordinates = geometry.getCoordinates();
         expect(coordinates.length).toBe(1);
         coordinates = coordinates[0];
@@ -503,12 +503,12 @@ describe('ngeo.format.FeatureHash', () => {
 
     describe('With a user-provided feature properties function', () => {
       it('encodes feature properties as expected', () => {
-        fhFormat = new ngeo.format.FeatureHash({
+        fhFormat = new ngeoFormatFeatureHash({
           properties(feature) {
             return {foobar: feature.get('foo') + feature.get('bar')};
           }
         });
-        const feature = new ol.Feature(new ol.geom.Point([1, 1]));
+        const feature = new olFeature(new olGeomPoint([1, 1]));
         feature.set('foo', 'foo');
         feature.set('bar', 'bar');
         const result = fhFormat.writeFeature(feature);

@@ -1,13 +1,15 @@
-goog.provide('gmf.objectediting.geom');
-
-goog.require('gmf.objectediting.coordinate');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.MultiLineString');
-goog.require('ol.geom.MultiPoint');
-goog.require('ol.geom.MultiPolygon');
-goog.require('ol.geom.Point');
-goog.require('ol.geom.Polygon');
-goog.require('ol.geom.SimpleGeometry');
+/**
+ * @module gmf.objectediting.geom
+ */
+const exports = {};
+import gmfObjecteditingCoordinate from 'gmf/objectediting/coordinate.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
+import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
 
 
 /**
@@ -20,9 +22,9 @@ goog.require('ol.geom.SimpleGeometry');
  * @return {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
  */
-gmf.objectediting.geom.isEmpty = function(geom) {
+exports.isEmpty = function(geom) {
   let isEmpty = true;
-  if (geom && geom instanceof ol.geom.SimpleGeometry) {
+  if (geom && geom instanceof olGeomSimpleGeometry) {
     isEmpty = geom.getFlatCoordinates().length === 0;
   }
   return isEmpty;
@@ -35,28 +37,31 @@ gmf.objectediting.geom.isEmpty = function(geom) {
  *
  * @param {ol.geom.Geometry} geom Geometry
  */
-gmf.objectediting.geom.toXY = function(geom) {
-  if (geom instanceof ol.geom.Point) {
+exports.toXY = function(geom) {
+  if (geom instanceof olGeomPoint) {
     geom.setCoordinates(
-      gmf.objectediting.coordinate.toXY(geom.getCoordinates(), 0)
+      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 0)
     );
-  } else if (geom instanceof ol.geom.MultiPoint ||
-             geom instanceof ol.geom.LineString
+  } else if (geom instanceof olGeomMultiPoint ||
+             geom instanceof olGeomLineString
   ) {
     geom.setCoordinates(
-      gmf.objectediting.coordinate.toXY(geom.getCoordinates(), 1)
+      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 1)
     );
-  } else if (geom instanceof ol.geom.MultiLineString ||
-             geom instanceof ol.geom.Polygon
+  } else if (geom instanceof olGeomMultiLineString ||
+             geom instanceof olGeomPolygon
   ) {
     geom.setCoordinates(
-      gmf.objectediting.coordinate.toXY(geom.getCoordinates(), 2)
+      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 2)
     );
-  } else if (geom instanceof ol.geom.MultiPolygon) {
+  } else if (geom instanceof olGeomMultiPolygon) {
     geom.setCoordinates(
-      gmf.objectediting.coordinate.toXY(geom.getCoordinates(), 3)
+      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 3)
     );
   } else {
     throw 'gmf.objectediting.geom.toXY - unsupported geometry type';
   }
 };
+
+
+export default exports;

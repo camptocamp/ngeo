@@ -1,13 +1,16 @@
-goog.provide('gmf.filters.module');
-
-goog.require('gmf.filters.filterselectorComponent');
-goog.require('gmf.filters.SavedFilters');
-
+/**
+ * @module gmf.filters.module
+ */
+import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent.js';
+import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.filters.module = angular.module('gmfFiltersModule', [
-  gmf.filters.filterselectorComponent.name,
-  gmf.filters.SavedFilters.module.name,
+const exports = angular.module('gmfFiltersModule', [
+  gmfFiltersFilterselectorComponent.name,
+  gmfFiltersSavedFilters.module.name,
 ]);
+
+
+export default exports;

@@ -1,25 +1,27 @@
-goog.provide('ngeo.message.displaywindowComponent');
+/**
+ * @module ngeo.message.displaywindowComponent
+ */
+import googAsserts from 'goog/asserts.js';
 
-goog.require('ngeo'); // nowebpack
-// webpack: import 'jquery-ui/ui/widgets/resizable.js';
-// webpack: import 'jquery-ui/ui/widgets/draggable.js';
-// webpack: import 'angular-sanitize';
+import 'jquery-ui/ui/widgets/resizable.js';
+import 'jquery-ui/ui/widgets/draggable.js';
+import 'angular-sanitize';
 
 
 /**
  * @type {!angular.Module}
  */
-ngeo.message.displaywindowComponent = angular.module('ngeoMessageDisplaywindowComponent', [
+const exports = angular.module('ngeoMessageDisplaywindowComponent', [
   'ngSanitize',
 ]);
 
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
+});
 
 
-ngeo.message.displaywindowComponent.value('ngeoMessageDisplaywindowTemplateUrl',
+exports.value('ngeoMessageDisplaywindowTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} The template url.
@@ -27,8 +29,7 @@ ngeo.message.displaywindowComponent.value('ngeoMessageDisplaywindowTemplateUrl',
   ($attrs) => {
     const templateUrl = $attrs['ngeoMessageDisplaywindowTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/message/displaywindowComponent.html`; // nowebpack
-    // webpack: 'ngeo/message/displaywindowComponent';
+      'ngeo/message/displaywindowComponent';
   });
 
 /**
@@ -45,13 +46,13 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 /**
  * @private
  */
-ngeo.message.displaywindowComponent.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {!jQuery} $element Element.
    * @param {!angular.$sce} $sce Angular sce service.
    * @param {!angular.Scope} $scope Scope.
-   * @param {angular.$compile} $compile The compile provider.
+   * @param {!angular.$compile} $compile The compile provider.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -153,7 +154,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     this.sce_ = $sce;
 
     /**
-     * @type {angular.Scope}
+     * @type {!angular.Scope}
      * @private
      */
     this.scope_ = $scope;
@@ -201,10 +202,10 @@ ngeo.message.displaywindowComponent.Controller_ = class {
     }
 
     if (this.contentTemplate) {
-      const scope = this.contentScope || this.scope_;
+      const scope = googAsserts.assert(this.contentScope || this.scope_);
       const compiled = this.compile_(this.contentTemplate)(scope);
       const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container');
-      displayWindow.append(compiled);
+      displayWindow.append(/** @type {jQuery} */ (compiled));
     }
   }
 
@@ -297,7 +298,7 @@ ngeo.message.displaywindowComponent.Controller_ = class {
  * @ngdoc component
  * @ngname ngeoDisplaywindow
  */
-ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
+exports.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',
@@ -313,6 +314,9 @@ ngeo.message.displaywindowComponent.component('ngeoDisplaywindow', {
     'url': '=?',
     'width': '=?'
   },
-  controller: ngeo.message.displaywindowComponent.Controller_,
+  controller: exports.Controller_,
   templateUrl: ngeoMessageDisplaywindowTemplateUrl
 });
+
+
+export default exports;

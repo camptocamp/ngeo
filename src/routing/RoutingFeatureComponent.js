@@ -1,36 +1,37 @@
-goog.provide('ngeo.routing.RoutingFeatureComponent');
-
-goog.require('ngeo'); // nowebpack
-goog.require('ngeo.routing.NominatimService');
-goog.require('ngeo.routing.NominatimInputComponent');
-goog.require('ol.proj');
-goog.require('ol.Feature');
-goog.require('ol.Collection');
-goog.require('ol.source.Vector');
-goog.require('ol.layer.Vector');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.geom.Point');
-goog.require('ol.interaction.Modify');
-goog.require('ol.interaction.Draw');
+/**
+ * @module ngeo.routing.RoutingFeatureComponent
+ */
+const exports = {};
+import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
+import ngeoRoutingNominatimInputComponent from 'ngeo/routing/NominatimInputComponent.js';
+import * as olProj from 'ol/proj.js';
+import olFeature from 'ol/Feature.js';
+import olCollection from 'ol/Collection.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleText from 'ol/style/Text.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olInteractionModify from 'ol/interaction/Modify.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
 
 
 /**
  * @type {!angular.Module}
  */
-ngeo.routing.RoutingFeatureComponent.module = angular.module('ngeoRoutingFeatureComponent', [
-  ngeo.routing.NominatimService.module.name,
-  ngeo.routing.NominatimInputComponent.module.name
+exports.module = angular.module('ngeoRoutingFeatureComponent', [
+  ngeoRoutingNominatimService.module.name,
+  ngeoRoutingNominatimInputComponent.module.name
 ]);
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
+});
 
 
-ngeo.routing.RoutingFeatureComponent.module.value('ngeoRoutingFeatureTemplateUrl',
+exports.module.value('ngeoRoutingFeatureTemplateUrl',
   /**
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -38,8 +39,7 @@ ngeo.routing.RoutingFeatureComponent.module.value('ngeoRoutingFeatureTemplateUrl
   ($attrs) => {
     const templateUrl = $attrs['ngeoRoutingFeatureTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/routing/routingfeature.html`; // nowebpack
-    // webpack: 'ngeo/routing/routingfeature';
+      'ngeo/routing/routingfeature';
   }
 );
 
@@ -65,7 +65,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @ngdoc controller
  * @ngname NgeoRoutingFeatureController
  */
-ngeo.routing.RoutingFeatureComponent.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
+exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * @type {!angular.Scope}
@@ -131,13 +131,13 @@ ngeo.routing.RoutingFeatureComponent.Controller = function($scope, $timeout, $q,
    * @type {ol.Collection}
    * @private
    */
-  this.vectorFeatures_ = new ol.Collection();
+  this.vectorFeatures_ = new olCollection();
 
   /**
    * @type {ol.source.Vector}
    * @private
    */
-  this.vectorSource_ = new ol.source.Vector({
+  this.vectorSource_ = new olSourceVector({
     features: this.vectorFeatures_
   });
 
@@ -145,17 +145,17 @@ ngeo.routing.RoutingFeatureComponent.Controller = function($scope, $timeout, $q,
    * @type {ol.layer.Vector}
    * @private
    */
-  this.vectorLayer_ = new ol.layer.Vector({
+  this.vectorLayer_ = new olLayerVector({
     source: this.vectorSource_,
     style: (function(feature, resolution) {
-      return [new ol.style.Style({
-        text: new ol.style.Text({
-          fill: new ol.style.Fill({
+      return [new olStyleStyle({
+        text: new olStyleText({
+          fill: new olStyleFill({
             color: this.fillColor || '#000000'
           }),
           font: 'normal 30px FontAwesome',
           offsetY: -15,
-          stroke: new ol.style.Stroke({
+          stroke: new olStyleStroke({
             width: 3,
             color: this.strokeColor || '#000000'
           }),
@@ -170,7 +170,7 @@ ngeo.routing.RoutingFeatureComponent.Controller = function($scope, $timeout, $q,
    * @type {ol.interaction.Modify}
    * @private
    */
-  this.modifyFeature_ = new ol.interaction.Modify({
+  this.modifyFeature_ = new olInteractionModify({
     features: this.vectorFeatures_
   });
 
@@ -193,7 +193,7 @@ ngeo.routing.RoutingFeatureComponent.Controller = function($scope, $timeout, $q,
   this.errorMessage = '';
 };
 
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.$onInit = function() {
+exports.Controller.prototype.$onInit = function() {
   this.map.addLayer(this.vectorLayer_);
 
   // setup modify interaction
@@ -223,7 +223,7 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.$onInit = function() {
 /**
  * Cleanup, mostly relevant for vias.
  */
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.$onDestroy = function() {
+exports.Controller.prototype.$onDestroy = function() {
   this.map.removeLayer(this.vectorLayer_);
   this.modifyFeature_.setActive(false);
   this.map.removeInteraction(this.modifyFeature_);
@@ -232,12 +232,12 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.$onDestroy = function(
 /**
  * @export
  */
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.set = function() {
+exports.Controller.prototype.set = function() {
   if (this.draw_) {
     this.map.removeInteraction(this.draw_);
   }
 
-  this.draw_ = new ol.interaction.Draw({
+  this.draw_ = new olInteractionDraw({
     features: this.vectorFeatures_,
     type: /** @type {ol.geom.GeometryType} */ ('Point')
   });
@@ -265,18 +265,18 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.set = function() {
  * @param {string} label Feature name/label.
  * @private
  */
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.setFeature_ = function(coordinate, label) {
-  const transformedCoordinate = ol.proj.fromLonLat(coordinate, this.map.getView().getProjection());
+exports.Controller.prototype.setFeature_ = function(coordinate, label) {
+  const transformedCoordinate = olProj.fromLonLat(coordinate, this.map.getView().getProjection());
   if (label === '') {
     label = transformedCoordinate.join('/');
   }
-  this.feature = new ol.Feature({
-    geometry: new ol.geom.Point(transformedCoordinate),
+  this.feature = new olFeature({
+    geometry: new olGeomPoint(transformedCoordinate),
     name: label
   });
 };
 
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.onFeatureChange_ = function() {
+exports.Controller.prototype.onFeatureChange_ = function() {
   // update label
   this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
 
@@ -296,7 +296,7 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.onFeatureChange_ = fun
  * @param {ngeox.NominatimSearchResult} selected Selected result.
  * @private
  */
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.onSelect_ = function(selected) {
+exports.Controller.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
@@ -310,7 +310,7 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.onSelect_ = function(s
  * @param {ol.Feature} feature Feature to snap
  * @private
  */
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.snapFeature_ = function(feature) {
+exports.Controller.prototype.snapFeature_ = function(feature) {
   const coord = this.getLonLatFromPoint_(feature);
   const config = {};
 
@@ -337,11 +337,11 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.snapFeature_ = functio
  * @return {ol.Coordinate} LonLat coordinate
  * @private
  */
-ngeo.routing.RoutingFeatureComponent.Controller.prototype.getLonLatFromPoint_ = function(point) {
+exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
-  return ol.proj.toLonLat(coords, projection);
+  return olProj.toLonLat(coords, projection);
 };
 
 
@@ -371,8 +371,8 @@ ngeo.routing.RoutingFeatureComponent.Controller.prototype.getLonLatFromPoint_ = 
  * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */
-ngeo.routing.RoutingFeatureComponent.component_ = {
-  controller: ngeo.routing.RoutingFeatureComponent.Controller,
+exports.component_ = {
+  controller: exports.Controller,
   bindings: {
     'map': '<ngeoRoutingFeatureMap',
     'feature': '=ngeoRoutingFeatureFeature',
@@ -383,4 +383,7 @@ ngeo.routing.RoutingFeatureComponent.component_ = {
   templateUrl: ngeoRoutingFeatureTemplateUrl
 };
 
-ngeo.routing.RoutingFeatureComponent.module.component('ngeoRoutingFeature', ngeo.routing.RoutingFeatureComponent.component_);
+exports.module.component('ngeoRoutingFeature', exports.component_);
+
+
+export default exports;

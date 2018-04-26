@@ -1,14 +1,18 @@
-goog.provide('ngeo.editing.module');
-
-goog.require('ngeo.editing.attributesComponent');
-goog.require('ngeo.editing.createfeatureComponent');
-goog.require('ngeo.editing.createregularpolygonfromclickComponent');
+/**
+ * @module ngeo.editing.module
+ */
+import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
+import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
+import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.editing.module = angular.module('ngeoEditingModule', [
-  ngeo.editing.attributesComponent.name,
-  ngeo.editing.createfeatureComponent.name,
-  ngeo.editing.createregularpolygonfromclickComponent.name,
+const exports = angular.module('ngeoEditingModule', [
+  ngeoEditingAttributesComponent.name,
+  ngeoEditingCreatefeatureComponent.name,
+  ngeoEditingCreateregularpolygonfromclickComponent.name,
 ]);
+
+
+export default exports;

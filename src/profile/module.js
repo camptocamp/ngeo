@@ -1,10 +1,14 @@
-goog.provide('ngeo.profile.module');
-
-goog.require('ngeo.profile.elevationComponent');
+/**
+ * @module ngeo.profile.module
+ */
+import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.profile.module = angular.module('ngeoProfileModule', [
-  ngeo.profile.elevationComponent.name,
+const exports = angular.module('ngeoProfileModule', [
+  ngeoProfileElevationComponent.name,
 ]);
+
+
+export default exports;

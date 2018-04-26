@@ -1,17 +1,21 @@
-goog.provide('app.attributes');
+/**
+ * @module app.attributes
+ */
+const exports = {};
+import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
-goog.require('ngeo.format.XSDAttribute');
 /** @suppress {extraRequire} */
-goog.require('ngeo.editing.attributesComponent');
-goog.require('ol.Feature');
-goog.require('ngeo.map.module');
+import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
+
+import olFeature from 'ol/Feature.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} */
-app.attributes.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.editing.attributesComponent.name,
+  ngeoMapModule.name,
+  ngeoEditingAttributesComponent.name,
 ]);
 
 
@@ -22,7 +26,7 @@ app.attributes.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-app.attributes.MainController = function($http, $timeout, $scope) {
+exports.MainController = function($http, $timeout, $scope) {
 
   /**
    * @type {angular.$timeout}
@@ -46,7 +50,7 @@ app.attributes.MainController = function($http, $timeout, $scope) {
    * @type {ol.Feature}
    * @export
    */
-  this.feature = new ol.Feature({
+  this.feature = new olFeature({
     'name': 'A feature',
     'kind': 'house'
   });
@@ -88,8 +92,8 @@ app.attributes.MainController = function($http, $timeout, $scope) {
  * @return {Array.<ngeox.Attribute>} List of attributes.
  * @private
  */
-app.attributes.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
-  const format = new ngeo.format.XSDAttribute();
+exports.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
+  const format = new ngeoFormatXSDAttribute();
   const attributes = format.read(resp.data);
   this.attributes = attributes;
   return attributes;
@@ -99,7 +103,7 @@ app.attributes.MainController.prototype.handleXSDAttributeGet_ = function(resp) 
 /**
  * @export
  */
-app.attributes.MainController.prototype.updateName = function() {
+exports.MainController.prototype.updateName = function() {
   this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
   }, 0);
@@ -108,9 +112,12 @@ app.attributes.MainController.prototype.updateName = function() {
 /**
  * @param {string} newMessage New message to add to log.
  */
-app.attributes.MainController.prototype.appendLog = function(newMessage) {
+exports.MainController.prototype.appendLog = function(newMessage) {
   this.log = `${newMessage}\n${this.log}`;
 };
 
 
-app.attributes.module.controller('MainController', app.attributes.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

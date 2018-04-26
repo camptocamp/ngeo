@@ -1,6 +1,6 @@
-goog.require('gmf.test.data.printcapabilities');
-goog.require('ol.Map');
-goog.require('ol.View');
+import gmfTestDataPrintcapabilities from 'gmf/test/data/printcapabilities.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
 describe('GmfPrintController', () => {
 
@@ -11,25 +11,30 @@ describe('GmfPrintController', () => {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
+    const $element = angular.element('<div></div>');
     gmfPrintCtrl = $controller('GmfPrintController', {
+      $element: $element,
       $scope: $scope,
       gmfPrintUrl: ''
     });
-    gmfPrintCtrl.map = new ol.Map({
-      view: new ol.View({
+    gmfPrintCtrl.map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 4
       })
     });
     gmfPrintCtrl.map.setSize([100, 100]);
-    gmfPrintCtrl.parseCapabilities_({data: gmf.test.data.printcapabilities});
+    gmfPrintCtrl.parseCapabilities_({data: gmfTestDataPrintcapabilities});
   }));
 
-  it('Get Set rotation', () => {
+  it('Set rotation', () => {
     expect(gmfPrintCtrl.rotation).toBe(0);
-    gmfPrintCtrl.getSetRotation(25);
-    expect(gmfPrintCtrl.rotation).toBe(gmfPrintCtrl.getSetRotation());
+    gmfPrintCtrl.setRotation(25);
     expect(gmfPrintCtrl.rotation).toBe(25);
+    gmfPrintCtrl.setRotation(190);
+    expect(gmfPrintCtrl.rotation).toBe(180);
+    gmfPrintCtrl.setRotation(-1000);
+    expect(gmfPrintCtrl.rotation).toBe(-180);
   });
 
   it('Set layout and test depending layout informations changes', () => {

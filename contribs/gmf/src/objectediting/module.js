@@ -1,19 +1,22 @@
-goog.provide('gmf.objectediting.module');
-
-goog.require('gmf.objectediting.component');
-goog.require('gmf.objectediting.getWMSFeatureComponent');
-goog.require('gmf.objectediting.Manager');
-goog.require('gmf.objectediting.Query');
-goog.require('gmf.objectediting.toolsComponent');
-
+/**
+ * @module gmf.objectediting.module
+ */
+import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
+import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
+import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
+import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
+import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.objectediting.module = angular.module('gmfObjecteditingModule', [
-  gmf.objectediting.component.name,
-  gmf.objectediting.getWMSFeatureComponent.name,
-  gmf.objectediting.Manager.module.name,
-  gmf.objectediting.Query.module.name,
-  gmf.objectediting.toolsComponent.name,
+const exports = angular.module('gmfObjecteditingModule', [
+  gmfObjecteditingComponent.name,
+  gmfObjecteditingGetWMSFeatureComponent.name,
+  gmfObjecteditingManager.module.name,
+  gmfObjecteditingQuery.module.name,
+  gmfObjecteditingToolsComponent.name,
 ]);
+
+
+export default exports;

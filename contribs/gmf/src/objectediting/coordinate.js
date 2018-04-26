@@ -1,4 +1,7 @@
-goog.provide('gmf.objectediting.coordinate');
+/**
+ * @module gmf.objectediting.coordinate
+ */
+const exports = {};
 
 
 /**
@@ -9,15 +12,18 @@ goog.provide('gmf.objectediting.coordinate');
  * @param {number} nesting Nesting level.
  * @return {Array.<ol.Coordinate>|ol.Coordinate} Converted coordinates.
  */
-gmf.objectediting.coordinate.toXY = function(coordinates, nesting) {
+exports.toXY = function(coordinates, nesting) {
   if (nesting === 0) {
     if (coordinates.length > 2) {
       coordinates = [coordinates[0], coordinates[1]];
     }
   } else {
     for (let i = 0, ii = coordinates.length; i < ii; i++) {
-      coordinates[i] = gmf.objectediting.coordinate.toXY(coordinates[i], nesting - 1);
+      coordinates[i] = exports.toXY(coordinates[i], nesting - 1);
     }
   }
   return coordinates;
 };
+
+
+export default exports;

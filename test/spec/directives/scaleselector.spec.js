@@ -1,5 +1,5 @@
-goog.require('ol.Map');
-goog.require('ol.View');
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
 describe('ngeo.map.scaleselector', () => {
 
@@ -9,8 +9,8 @@ describe('ngeo.map.scaleselector', () => {
 
   beforeEach(() => {
 
-    map = new ol.Map({
-      view: new ol.View({
+    map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 0
       })

@@ -1,25 +1,29 @@
-goog.provide('app.elevationProfile');
+/**
+ * @module app.elevationProfile
+ */
+const exports = {};
 
-// webpack: import './elevationProfile.css';
-const EPSG21781 = goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Feature');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.Point');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.Vector');
-goog.require('ngeo.map.module');
-goog.require('ngeo.profile.elevationComponent');
+import './elevationProfile.css';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+
+import olFeature from 'ol/Feature.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceVector from 'ol/source/Vector.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
 /** @type {!angular.Module} **/
-app.elevationProfile.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.profile.elevationComponent.name,
+  ngeoMapModule.name,
+  ngeoProfileElevationComponent.name,
 ]);
 
 
@@ -29,7 +33,7 @@ app.elevationProfile.module = angular.module('app', [
  * @param {angular.Scope} $scope The $scope angular service.
  * @ngInject
  */
-app.elevationProfile.MainController = function($http, $scope) {
+exports.MainController = function($http, $scope) {
 
   /**
    * @type {angular.Scope}
@@ -37,16 +41,16 @@ app.elevationProfile.MainController = function($http, $scope) {
    */
   this.scope_ = $scope;
 
-  const source = new ol.source.Vector();
+  const source = new olSourceVector();
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Image({
-        source: new ol.source.ImageWMS({
+      new olLayerImage({
+        source: new olSourceImageWMS({
           url: 'http://wms.geo.admin.ch/',
           crossOrigin: 'anonymous',
           attributions: '&copy; ' +
@@ -59,11 +63,11 @@ app.elevationProfile.MainController = function($http, $scope) {
           serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
         })
       }),
-      new ol.layer.Vector({
+      new olLayerVector({
         source
       })
     ],
-    view: new ol.View({
+    view: new olView({
       projection: EPSG21781,
       extent: [420000, 30000, 900000, 350000],
       zoom: 0,
@@ -73,11 +77,11 @@ app.elevationProfile.MainController = function($http, $scope) {
 
   const map = this.map;
 
-  const vectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector()
+  const vectorLayer = new olLayerVector({
+    source: new olSourceVector()
   });
 
-  this.snappedPoint_ = new ol.Feature();
+  this.snappedPoint_ = new olFeature();
   vectorLayer.getSource().addFeature(this.snappedPoint_);
 
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
@@ -105,13 +109,13 @@ app.elevationProfile.MainController = function($http, $scope) {
 
     let i;
     const len = data.length;
-    const lineString = new ol.geom.LineString([],
+    const lineString = new olGeomLineString([],
       /** @type {ol.geom.GeometryLayout} */ ('XYM'));
     for (i = 0; i < len; i++) {
       const p = data[i];
       lineString.appendCoordinate([p.x, p.y, p.dist]);
     }
-    source.addFeature(new ol.Feature(lineString));
+    source.addFeature(new olFeature(lineString));
 
     const size = /** @type {ol.Size} */ (this.map.getSize());
     map.getView().fit(source.getExtent(), {size});
@@ -196,7 +200,7 @@ app.elevationProfile.MainController = function($http, $scope) {
   const hoverCallback = function(point) {
     // An item in the list of points given to the profile.
     this.point = point;
-    this.snappedPoint_.setGeometry(new ol.geom.Point([point.x, point.y]));
+    this.snappedPoint_.setGeometry(new olGeomPoint([point.x, point.y]));
   }.bind(this);
 
   const outCallback = function() {
@@ -235,7 +239,7 @@ app.elevationProfile.MainController = function($http, $scope) {
  * @param {ol.Coordinate} coordinate The current pointer coordinate.
  * @param {ol.geom.Geometry|undefined} geometry The geometry to snap to.
  */
-app.elevationProfile.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
+exports.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   const closestPoint = geometry.getClosestPoint(coordinate);
   // compute distance to line in pixels
   const dx = closestPoint[0] - coordinate[0];
@@ -252,4 +256,7 @@ app.elevationProfile.MainController.prototype.snapToGeometry = function(coordina
 };
 
 
-app.elevationProfile.module.controller('MainController', app.elevationProfile.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

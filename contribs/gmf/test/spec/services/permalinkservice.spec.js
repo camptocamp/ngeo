@@ -1,11 +1,11 @@
-goog.require('gmf.test.data.themes');
-goog.require('gmf');
-goog.require('ngeo.proj.EPSG2056');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.Collection');
-goog.require('ol.proj');
-goog.require('ol.obj');
+import gmfTestDataThemes from 'gmf/test/data/themes.js';
+import gmfBase from 'gmf/index.js';
+import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olCollection from 'ol/Collection.js';
+import * as olProj from 'ol/proj.js';
+import * as olObj from 'ol/obj.js';
 
 
 describe('Permalink service', () => {
@@ -17,24 +17,24 @@ describe('Permalink service', () => {
     StateManagerService = _ngeoStateManager_;
     PermalinkService = _gmfPermalink_;
     ngeoLocation = _ngeoLocation_;
-    const map = new ol.Map({layers: [], view: new ol.View({projection: ol.proj.get('EPSG:2056')})});
+    const map = new olMap({layers: [], view: new olView({projection: olProj.get('EPSG:2056')})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    const themesClone = ol.obj.assign({}, gmf.test.data.themes);
+    const themesClone = olObj.assign({}, gmfTestDataThemes);
     PermalinkService.themes_ = themesClone['themes'];
 
 
     //create fake layerTree
     const LayerHelper = _ngeoLayerHelper_;
 
-    const dataGroup = LayerHelper.getGroupFromMap(map, gmf.DATALAYERGROUP_NAME);
-    const firstLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([
+    const dataGroup = LayerHelper.getGroupFromMap(map, gmfBase.DATALAYERGROUP_NAME);
+    const firstLevelGroup = LayerHelper.createBasicGroup(new olCollection([
       LayerHelper.createBasicWMSLayer('', 'l_g1_1'),
       LayerHelper.createBasicWMSLayer('', 'l_g1_2')
     ]));
 
-    const secondLevelGroup = LayerHelper.createBasicGroup(new ol.Collection([
+    const secondLevelGroup = LayerHelper.createBasicGroup(new olCollection([
       LayerHelper.createBasicWMSLayer('', 'l_g2_1'),
       LayerHelper.createBasicWMSLayer('', 'l_g2_2')
     ]));
@@ -184,7 +184,7 @@ describe('Permalink service', () => {
     });
 
     it('accepts flipped coordinates (x/y switched)', () => {
-      PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
+      PermalinkService.sourceProjections_ = [olProj.get('EPSG:2056'), olProj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 46.7685575;
       StateManagerService.initialState['map_y'] = 6.6144562;
       const center = PermalinkService.getMapCenter();
@@ -193,7 +193,7 @@ describe('Permalink service', () => {
     });
 
     it('reprojects the center', () => {
-      PermalinkService.sourceProjections_ = [ol.proj.get('EPSG:2056'), ol.proj.get('EPSG:4326')];
+      PermalinkService.sourceProjections_ = [olProj.get('EPSG:2056'), olProj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 6.6144562;
       StateManagerService.initialState['map_y'] = 46.7685575;
       const center = PermalinkService.getMapCenter();

@@ -1,21 +1,21 @@
-goog.provide('ngeo.measure.azimut');
-
-goog.require('ngeo.draw.Controller');
-goog.require('ngeo.misc.filters');
-goog.require('ngeo.GeometryType');
-goog.require('ngeo.interaction.MeasureAzimut');
-goog.require('ol.events');
-goog.require('ol.Feature');
-goog.require('ol.geom.Polygon');
-goog.require('ol.style.Style');
-
+/**
+ * @module ngeo.measure.azimut
+ */
+import ngeoDrawController from 'ngeo/draw/Controller.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import * as olEvents from 'ol/events.js';
+import olFeature from 'ol/Feature.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.measure.azimut = angular.module('ngeoMeasureazimut', [
-  ngeo.draw.Controller.module.name,
-  ngeo.misc.filters.name,
+const exports = angular.module('ngeoMeasureazimut', [
+  ngeoDrawController.module.name,
+  ngeoMiscFilters.name,
 ]);
 
 
@@ -29,7 +29,7 @@ ngeo.measure.azimut = angular.module('ngeoMeasureazimut', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $injector) {
+exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -44,9 +44,9 @@ ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $in
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');
 
-      const measureAzimut = new ngeo.interaction.MeasureAzimut(
+      const measureAzimut = new ngeoInteractionMeasureAzimut(
         $filter('ngeoUnitPrefix'), $filter('number'), {
-          style: new ol.style.Style(),
+          style: new olStyleStyle(),
           startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
           continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
           precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined,
@@ -56,7 +56,7 @@ ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $in
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;
 
-      ol.events.listen(
+      olEvents.listen(
         measureAzimut,
         'measureend',
         /**
@@ -71,19 +71,19 @@ ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $in
                 (event.detail.feature.getGeometry());
           const circle = /** @type {ol.geom.Circle} */ (
             geometry.getGeometries()[1]);
-          const polygon = ol.geom.Polygon.fromCircle(circle, 64);
-          event.detail.feature = new ol.Feature(polygon);
-          const azimut = ngeo.interaction.MeasureAzimut.getAzimut(
+          const polygon = olGeomPolygon.fromCircle(circle, 64);
+          event.detail.feature = new olFeature(polygon);
+          const azimut = ngeoInteractionMeasureAzimut.getAzimut(
             /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
           );
           event.detail.feature.set('azimut', azimut);
 
-          drawFeatureCtrl.handleDrawEnd(ngeo.GeometryType.CIRCLE, event);
+          drawFeatureCtrl.handleDrawEnd(ngeoGeometryType.CIRCLE, event);
         },
         drawFeatureCtrl
       );
 
-      ol.events.listen(
+      olEvents.listen(
         measureAzimut,
         'change:active',
         drawFeatureCtrl.handleActiveChange,
@@ -94,4 +94,7 @@ ngeo.measure.azimut.directive_ = function($compile, gettextCatalog, $filter, $in
 };
 
 
-ngeo.measure.azimut.directive('ngeoMeasureazimut', ngeo.measure.azimut.directive_);
+exports.directive('ngeoMeasureazimut', exports.directive_);
+
+
+export default exports;

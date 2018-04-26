@@ -1,10 +1,10 @@
-goog.provide('ngeo.misc.debounce');
-
-
+/**
+ * @module ngeo.misc.debounce
+ */
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.debounce = angular.module('ngeoDebounce', []);
+const exports = angular.module('ngeoDebounce', []);
 
 
 /**
@@ -18,7 +18,7 @@ ngeo.misc.debounce = angular.module('ngeoDebounce', []);
  * @ngname ngeoDebounce
  * @ngInject
  */
-ngeo.misc.debounce.factory_ = function($timeout) {
+exports.factory_ = function($timeout) {
   return (
     // FIXME: eslint can't detect that the function returns a function
     /**
@@ -48,4 +48,7 @@ ngeo.misc.debounce.factory_ = function($timeout) {
     });
 };
 
-ngeo.misc.debounce.factory('ngeoDebounce', ngeo.misc.debounce.factory_);
+exports.factory('ngeoDebounce', exports.factory_);
+
+
+export default exports;

@@ -1,11 +1,14 @@
-goog.provide('gmf.print.module');
-
-goog.require('gmf.print.component');
-
+/**
+ * @module gmf.print.module
+ */
+import gmfPrintComponent from 'gmf/print/component.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.print.module = angular.module('gmfPrintModule', [
-  gmf.print.component.name,
+const exports = angular.module('gmfPrintModule', [
+  gmfPrintComponent.name,
 ]);
+
+
+export default exports;

@@ -1,21 +1,26 @@
-goog.provide('app.control');
+/**
+ * @module app.control
+ */
+const exports = {};
 
-// webpack: import './control.css';
-goog.require('ngeo.map.module');
+import './control.css';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.controlComponent');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.control.MousePosition');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olControlMousePosition from 'ol/control/MousePosition.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-app.control.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.misc.controlComponent.name,
+  ngeoMapModule.name,
+  ngeoMiscControlComponent.name,
 ]);
 
 
@@ -23,19 +28,19 @@ app.control.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-app.control.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -45,10 +50,13 @@ app.control.MainController = function() {
    * @type {ol.control.Control}
    * @export
    */
-  this.control = new ol.control.MousePosition({
+  this.control = new olControlMousePosition({
     className: 'mouse-position'
   });
 };
 
 
-app.control.module.controller('MainController', app.control.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

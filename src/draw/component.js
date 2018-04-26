@@ -1,30 +1,37 @@
-goog.provide('ngeo.draw.component');
+/**
+ * @module ngeo.draw.component
+ */
+import ngeoDrawController from 'ngeo/draw/Controller.js';
 
-goog.require('ngeo.draw.Controller');
 /** @suppress {extraRequire} */
-goog.require('ngeo.draw.point');
+import ngeoDrawPoint from 'ngeo/draw/point.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.draw.rectangle');
+import ngeoDrawRectangle from 'ngeo/draw/rectangle.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.draw.text');
+import ngeoDrawText from 'ngeo/draw/text.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.measure.area');
+import ngeoMeasureArea from 'ngeo/measure/area.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.measure.azimut');
+import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.measure.length');
+import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.draw.component = angular.module('ngeoDrawfeature', [
-  ngeo.draw.Controller.module.name,
-  ngeo.draw.point.name,
-  ngeo.draw.rectangle.name,
-  ngeo.draw.text.name,
-  ngeo.measure.area.name,
-  ngeo.measure.azimut.name,
-  ngeo.measure.length.name,
+const exports = angular.module('ngeoDrawfeature', [
+  ngeoDrawController.module.name,
+  ngeoDrawPoint.name,
+  ngeoDrawRectangle.name,
+  ngeoDrawText.name,
+  ngeoMeasureArea.name,
+  ngeoMeasureAzimut.name,
+  ngeoMeasureLength.name,
 ]);
 
 
@@ -101,7 +108,7 @@ ngeo.draw.component = angular.module('ngeoDrawfeature', [
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */
-ngeo.draw.component.directive_ = function() {
+exports.directive_ = function() {
   return {
     controller: 'ngeoDrawfeatureController as dfCtrl',
     scope: true,
@@ -114,4 +121,7 @@ ngeo.draw.component.directive_ = function() {
   };
 };
 
-ngeo.draw.component.directive('ngeoDrawfeature', ngeo.draw.component.directive_);
+exports.directive('ngeoDrawfeature', exports.directive_);
+
+
+export default exports;

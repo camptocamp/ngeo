@@ -1,18 +1,19 @@
-goog.provide('ngeo.measure.length');
-
-goog.require('ngeo.draw.Controller');
-goog.require('ngeo.misc.filters');
-goog.require('ngeo.GeometryType');
-goog.require('ngeo.interaction.MeasureLength');
-goog.require('ol.events');
-goog.require('ol.style.Style');
+/**
+ * @module ngeo.measure.length
+ */
+import ngeoDrawController from 'ngeo/draw/Controller.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
+import * as olEvents from 'ol/events.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 /**
  * @type {!angular.Module}
  */
-ngeo.measure.length = angular.module('ngeoMeasurelength', [
-  ngeo.draw.Controller.module.name,
-  ngeo.misc.filters.name,
+const exports = angular.module('ngeoMeasurelength', [
+  ngeoDrawController.module.name,
+  ngeoMiscFilters.name,
 ]);
 
 
@@ -26,7 +27,7 @@ ngeo.measure.length = angular.module('ngeoMeasurelength', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $injector) {
+exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -42,8 +43,8 @@ ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $in
       const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
           'Double-click or click last point to finish');
 
-      const measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
-        style: new ol.style.Style(),
+      const measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
+        style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
         precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined
@@ -52,14 +53,14 @@ ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $in
       drawFeatureCtrl.registerInteraction(measureLength);
       drawFeatureCtrl.measureLength = measureLength;
 
-      ol.events.listen(
+      olEvents.listen(
         measureLength,
         'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeo.GeometryType.LINE_STRING),
+          drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
         drawFeatureCtrl
       );
-      ol.events.listen(
+      olEvents.listen(
         measureLength,
         'change:active',
         drawFeatureCtrl.handleActiveChange,
@@ -70,4 +71,7 @@ ngeo.measure.length.directive_ = function($compile, gettextCatalog, $filter, $in
 };
 
 
-ngeo.measure.length.directive('ngeoMeasurelength', ngeo.measure.length.directive_);
+exports.directive('ngeoMeasurelength', exports.directive_);
+
+
+export default exports;

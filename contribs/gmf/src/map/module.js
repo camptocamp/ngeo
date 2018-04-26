@@ -1,13 +1,16 @@
-goog.provide('gmf.map.module');
-
-goog.require('gmf.map.component');
-goog.require('gmf.map.mousepositionComponent');
-
+/**
+ * @module gmf.map.module
+ */
+import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.map.module = angular.module('gmfMapModule', [
-  gmf.map.component.name,
-  gmf.map.mousepositionComponent.name,
+const exports = angular.module('gmfMapModule', [
+  gmfMapComponent.name,
+  gmfMapMousepositionComponent.name,
 ]);
+
+
+export default exports;

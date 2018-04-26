@@ -1,21 +1,25 @@
-goog.provide('gmfapp.themeselector');
+/**
+ * @module gmfapp.themeselector
+ */
+const exports = {};
 
-// webpack: import './themeselector.css';
+import './themeselector.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.theme.module');
-goog.require('gmf.layertree.TreeManager');
+import gmfThemeModule from 'gmf/theme/module.js';
+
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
 /** @type {!angular.Module} **/
-gmfapp.themeselector.module = angular.module('gmfapp', [
+exports.module = angular.module('gmfapp', [
   'gettext',
-  gmf.layertree.TreeManager.module.name,
-  gmf.theme.module.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfThemeModule.name,
 ]);
 
-gmfapp.themeselector.module.value('gmfTreeUrl',
+exports.module.value('gmfTreeUrl',
   'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
-gmfapp.themeselector.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -25,7 +29,7 @@ gmfapp.themeselector.module.constant('angularLocaleScript', '../build/angular-lo
  * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
-gmfapp.themeselector.MainController = function($http, gmfThemes, gmfThemeManager) {
+exports.MainController = function($http, gmfThemes, gmfThemeManager) {
 
   /**
    * @param {gmfThemes.GmfTheme} theme Theme.
@@ -46,4 +50,7 @@ gmfapp.themeselector.MainController = function($http, gmfThemes, gmfThemeManager
 };
 
 
-gmfapp.themeselector.module.controller('MainController', gmfapp.themeselector.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,7 +1,7 @@
-// webpack: import 'jquery';
-// webpack: import 'angular';
-// webpack: import 'angular-gettext';
-// webpack: import '../utils/watchwatchers.js';
+import 'jquery';
+import 'angular';
+import 'angular-gettext';
+import '../utils/watchwatchers.js';
 
-// webpack: import 'openlayers/css/ol.css';
-// webpack: import 'bootstrap/dist/css/bootstrap.css';
+import 'openlayers/css/ol.css';
+import 'bootstrap/dist/css/bootstrap.css';

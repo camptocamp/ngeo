@@ -1,4 +1,4 @@
-goog.require('gmf.test.data.themes');
+import gmfTestDataThemes from 'gmf/test/data/themes.js';
 
 describe('gmf.layertree.TreeManager', () => {
   let gmfTreeManager;
@@ -14,13 +14,13 @@ describe('gmf.layertree.TreeManager', () => {
       gmfThemes = _gmfThemes_;
       treeUrl = `${_gmfTreeUrl_}?cache_version=0`;
       $httpBackend = _$httpBackend_;
-      $httpBackend.when('GET', treeUrl).respond(gmf.test.data.themes);
+      $httpBackend.when('GET', treeUrl).respond(gmfTestDataThemes);
     });
   });
 
   it('Add some groups', () => {
-    const group0 = gmf.test.data.themes.themes[0].children[0];
-    const group1 = gmf.test.data.themes.themes[1].children[0];
+    const group0 = gmfTestDataThemes.themes[0].children[0];
+    const group1 = gmfTestDataThemes.themes[1].children[0];
     // Add a group
     gmfTreeManager.setFirstLevelGroups([group0]);
     $timeout.flush();
@@ -44,8 +44,8 @@ describe('gmf.layertree.TreeManager', () => {
 
   it('Add a group by name', () => {
     const spy = jasmine.createSpy();
-    const group0 = gmf.test.data.themes.themes[0].children[0];
-    const group1 = gmf.test.data.themes.themes[1].children[0];
+    const group0 = gmfTestDataThemes.themes[0].children[0];
+    const group1 = gmfTestDataThemes.themes[1].children[0];
     gmfTreeManager.addGroupByName(group0.name);
     gmfTreeManager.addGroupByName(group1.name, true);
 
@@ -62,8 +62,8 @@ describe('gmf.layertree.TreeManager', () => {
 
   it('Add a group by layer name', () => {
     const spy = jasmine.createSpy();
-    const group0 = gmf.test.data.themes.themes[0].children[0];
-    const group1 = gmf.test.data.themes.themes[1].children[0];
+    const group0 = gmfTestDataThemes.themes[0].children[0];
+    const group1 = gmfTestDataThemes.themes[1].children[0];
     gmfTreeManager.addGroupByLayerName(group0.children[0].name);
     gmfTreeManager.addGroupByLayerName(group1.children[0].name, true);
 
@@ -79,8 +79,8 @@ describe('gmf.layertree.TreeManager', () => {
   });
 
   it('Remove a group', () => {
-    const group0 = gmf.test.data.themes.themes[0].children[0];
-    const group1 = gmf.test.data.themes.themes[1].children[0];
+    const group0 = gmfTestDataThemes.themes[0].children[0];
+    const group1 = gmfTestDataThemes.themes[1].children[0];
     gmfTreeManager.setFirstLevelGroups([group0, group1]);
     $timeout.flush();
     gmfTreeManager.removeGroup(group0);

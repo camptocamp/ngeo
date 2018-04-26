@@ -1,10 +1,10 @@
-goog.provide('gmf.filters.SavedFilters');
+/**
+ * @module gmf.filters.SavedFilters
+ */
+import googAsserts from 'goog/asserts.js';
+import * as olArray from 'ol/array.js';
 
-goog.require('goog.asserts');
-goog.require('ol.array');
-
-
-gmf.filters.SavedFilters = class {
+const exports = class {
 
   /**
    * The GeoMapFish service responsible of storing filters that can be applied
@@ -124,7 +124,7 @@ gmf.filters.SavedFilters = class {
   loadItemsFromLocalStorage_() {
     if (window.localStorage[this.localStorageKey_]) {
       const items = JSON.parse(window.localStorage[this.localStorageKey_]);
-      goog.asserts.assertArray(items);
+      googAsserts.assertArray(items);
       this.items_ = items;
     }
   }
@@ -179,7 +179,7 @@ gmf.filters.SavedFilters = class {
   remove(item) {
 
     // (1) Remove the item
-    const found = ol.array.remove(this.items, item);
+    const found = olArray.remove(this.items, item);
 
     // (2) Update local storage
     if (found && this.useLocalStorage_) {
@@ -215,9 +215,9 @@ gmf.filters.SavedFilters = class {
 };
 
 
-gmf.filters.SavedFilters.module = angular.module('gmfSavedFilters', []);
+exports.module = angular.module('gmfSavedFilters', []);
 
-gmf.filters.SavedFilters.module.service('gmfSavedFilters', gmf.filters.SavedFilters);
+exports.module.service('gmfSavedFilters', exports);
 
 
 /**
@@ -226,7 +226,7 @@ gmf.filters.SavedFilters.module.service('gmfSavedFilters', gmf.filters.SavedFilt
  * @struct
  * @export
  */
-gmf.filters.SavedFilters.Item = function() {};
+exports.Item = function() {};
 
 
 /**
@@ -234,7 +234,7 @@ gmf.filters.SavedFilters.Item = function() {};
  * @type {string}
  * @export
  */
-gmf.filters.SavedFilters.Item.prototype.condition;
+exports.Item.prototype.condition;
 
 
 /**
@@ -242,7 +242,7 @@ gmf.filters.SavedFilters.Item.prototype.condition;
  * @type {!Array.<!ngeox.rule.AnyOptions>}
  * @export
  */
-gmf.filters.SavedFilters.Item.prototype.customRules;
+exports.Item.prototype.customRules;
 
 
 /**
@@ -250,7 +250,7 @@ gmf.filters.SavedFilters.Item.prototype.customRules;
  * @type {number}
  * @export
  */
-gmf.filters.SavedFilters.Item.prototype.dataSourceId;
+exports.Item.prototype.dataSourceId;
 
 
 /**
@@ -258,7 +258,7 @@ gmf.filters.SavedFilters.Item.prototype.dataSourceId;
  * @type {!Array.<!ngeox.rule.AnyOptions>}
  * @export
  */
-gmf.filters.SavedFilters.Item.prototype.directedRules;
+exports.Item.prototype.directedRules;
 
 
 /**
@@ -266,4 +266,7 @@ gmf.filters.SavedFilters.Item.prototype.directedRules;
  * @type {string}
  * @export
  */
-gmf.filters.SavedFilters.Item.prototype.name;
+exports.Item.prototype.name;
+
+
+export default exports;

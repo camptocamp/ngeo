@@ -1,7 +1,7 @@
-goog.provide('ngeo.download.Csv');
-
-goog.require('ngeo.download.service');
-
+/**
+ * @module ngeo.download.Csv
+ */
+import ngeoDownloadService from 'ngeo/download/service.js';
 
 /**
  * Service to generate and download a CSV file from tabular data.
@@ -15,7 +15,7 @@ goog.require('ngeo.download.service');
  * @ngname ngeoCsvDownload
  * @ngInject
  */
-ngeo.download.Csv = function($injector, gettextCatalog) {
+const exports = function($injector, gettextCatalog) {
 
   /**
    * @type {angularGettext.Catalog}
@@ -80,7 +80,7 @@ ngeo.download.Csv = function($injector, gettextCatalog) {
  * @return {string} The CSV file as string.
  * @export
  */
-ngeo.download.Csv.prototype.generateCsv = function(data, columnDefs) {
+exports.prototype.generateCsv = function(data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
     return '';
   }
@@ -102,7 +102,7 @@ ngeo.download.Csv.prototype.generateCsv = function(data, columnDefs) {
  * @return {string} CSV row.
  * @private
  */
-ngeo.download.Csv.prototype.getRow_ = function(values) {
+exports.prototype.getRow_ = function(values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
   const doubleQuote = this.quote_ + this.quote_;
 
@@ -128,7 +128,7 @@ ngeo.download.Csv.prototype.getRow_ = function(values) {
  * @param {string} fileName The CSV file name, without the extension.
  * @export
  */
-ngeo.download.Csv.prototype.startDownload = function(data, columnDefs, fileName) {
+exports.prototype.startDownload = function(data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);
   this.download_(
     fileContent, fileName, `text/csv;charset=${this.encoding_}`);
@@ -137,7 +137,10 @@ ngeo.download.Csv.prototype.startDownload = function(data, columnDefs, fileName)
 /**
  * @type {!angular.Module}
  */
-ngeo.download.Csv.module = angular.module('ngeoCsvDownload', [
-  ngeo.download.service.name
+exports.module = angular.module('ngeoCsvDownload', [
+  ngeoDownloadService.name
 ]);
-ngeo.download.Csv.module.service('ngeoCsvDownload', ngeo.download.Csv);
+exports.module.service('ngeoCsvDownload', exports);
+
+
+export default exports;

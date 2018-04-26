@@ -1,6 +1,7 @@
-goog.provide('ngeo.test.data.geoAdminLocationSearch');
-
-ngeo.test.data.geoAdminLocationSearch = {
+/**
+ * @module ngeo.test.data.geoAdminLocationSearch
+ */
+const exports = {
   'results': [{
     'id': 1883,
     'weight': 9,
@@ -93,3 +94,6 @@ ngeo.test.data.geoAdminLocationSearch = {
     }
   }]
 };
+
+
+export default exports;

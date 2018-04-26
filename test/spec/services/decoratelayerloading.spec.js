@@ -1,7 +1,7 @@
-goog.require('ngeo.misc.decorate');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Group');
-goog.require('ol.source.Image');
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerGroup from 'ol/layer/Group.js';
+import olSourceImage from 'ol/source/Image.js';
 
 
 describe('ngeo.misc.DecorateLayerLoading test suite', () => {
@@ -12,14 +12,14 @@ describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   }));
 
   it('should increment layerLoadingCount recursively', () => {
-    const imageSource = new ol.source.Image({});
-    const layer = new ol.layer.Image({source: imageSource});
-    const lg_1 = new ol.layer.Group();
-    const lg_2 = new ol.layer.Group();
+    const imageSource = new olSourceImage({});
+    const layer = new olLayerImage({source: imageSource});
+    const lg_1 = new olLayerGroup();
+    const lg_2 = new olLayerGroup();
 
-    ngeo.misc.decorate.layerLoading(layer, scope);
-    ngeo.misc.decorate.layerLoading(lg_1, scope);
-    ngeo.misc.decorate.layerLoading(lg_2, scope);
+    ngeoMiscDecorate.layerLoading(layer, scope);
+    ngeoMiscDecorate.layerLoading(lg_1, scope);
+    ngeoMiscDecorate.layerLoading(lg_2, scope);
 
     lg_1.getLayers().insertAt(0, layer);
     lg_2.getLayers().insertAt(0, lg_1);

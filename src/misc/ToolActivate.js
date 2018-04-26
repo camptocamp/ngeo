@@ -1,6 +1,6 @@
-goog.provide('ngeo.misc.ToolActivate');
-
-
+/**
+ * @module ngeo.misc.ToolActivate
+ */
 /**
  * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.
  *
@@ -16,7 +16,7 @@ goog.provide('ngeo.misc.ToolActivate');
  * @ngname ngeoToolActivate
  * @export
  */
-ngeo.misc.ToolActivate = function(toolContext, activePropertyName) {
+const exports = function(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
@@ -36,3 +36,6 @@ ngeo.misc.ToolActivate = function(toolContext, activePropertyName) {
     toolContext[activePropertyName] = newVal;
   };
 };
+
+
+export default exports;

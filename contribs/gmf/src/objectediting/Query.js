@@ -1,10 +1,10 @@
-goog.provide('gmf.objectediting.Query');
-
-goog.require('gmf.theme.Themes');
-goog.require('ngeo.datasource.OGC');
-goog.require('ol.format.WMSGetFeatureInfo');
-goog.require('ol.source.ImageWMS');
-
+/**
+ * @module gmf.objectediting.Query
+ */
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 /**
  * A service that collects all queryable layer nodes from all themes, stores
@@ -19,7 +19,7 @@ goog.require('ol.source.ImageWMS');
  * @struct
  * @ngInject
  */
-gmf.objectediting.Query = function($http, $q, gmfThemes) {
+const exports = function($http, $q, gmfThemes) {
 
   /**
    * @type {angular.$http}
@@ -52,7 +52,7 @@ gmf.objectediting.Query = function($http, $q, gmfThemes) {
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.objectediting.Query.prototype.getQueryableLayersInfo = function() {
+exports.prototype.getQueryableLayersInfo = function() {
 
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
@@ -64,7 +64,7 @@ gmf.objectediting.Query.prototype.getQueryableLayersInfo = function() {
 
         // Get all queryable nodes
         const allQueryableLayersInfo =
-            gmf.objectediting.Query.getQueryableLayersInfoFromThemes(
+            exports.getQueryableLayersInfoFromThemes(
               themes,
               ogcServers
             );
@@ -98,7 +98,7 @@ gmf.objectediting.Query.prototype.getQueryableLayersInfo = function() {
  *     queryable layers information.
  * @export
  */
-gmf.objectediting.Query.getQueryableLayersInfoFromThemes = function(
+exports.getQueryableLayersInfoFromThemes = function(
   themes, ogcServers
 ) {
   const queryableLayersInfo = [];
@@ -118,7 +118,7 @@ gmf.objectediting.Query.getQueryableLayersInfoFromThemes = function(
       }
 
       nodes = [];
-      gmf.theme.Themes.getFlatNodes(group, nodes);
+      gmfThemeThemes.getFlatNodes(group, nodes);
 
       for (let k = 0, kk = nodes.length; k < kk; k++) {
         node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayerWMS} */ (
@@ -159,20 +159,20 @@ gmf.objectediting.Query.getQueryableLayersInfoFromThemes = function(
  * @return {angular.$q.Promise} Promise.
  * @export
  */
-gmf.objectediting.Query.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
+exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
   const resolution = /** @type {number} */(view.getResolution());
-  const infoFormat = ngeo.datasource.OGC.WMSInfoFormat.GML;
+  const infoFormat = ngeoDatasourceOGC.WMSInfoFormat.GML;
   const layerNode = layerInfo.layerNode;
   const layersParam = layerNode.layers.split(',');
   const ogcServer = layerInfo.ogcServer;
 
-  const format = new ol.format.WMSGetFeatureInfo({
+  const format = new olFormatWMSGetFeatureInfo({
     layers: layersParam
   });
 
-  const wmsSource = new ol.source.ImageWMS({
+  const wmsSource = new olSourceImageWMS({
     url: ogcServer.url,
     params: {
       layers: layersParam
@@ -199,7 +199,10 @@ gmf.objectediting.Query.prototype.getFeatureInfo = function(layerInfo, coordinat
 /**
  * @type {!angular.Module}
  */
-gmf.objectediting.Query.module = angular.module('gmfObjectEditingQuery', [
-  gmf.theme.Themes.module.name,
+exports.module = angular.module('gmfObjectEditingQuery', [
+  gmfThemeThemes.module.name,
 ]);
-gmf.objectediting.Query.module.service('gmfObjectEditingQuery', gmf.objectediting.Query);
+exports.module.service('gmfObjectEditingQuery', exports);
+
+
+export default exports;

@@ -1,12 +1,13 @@
-goog.provide('ngeo.misc.datetimepickerComponent');
-
-// webpack: import 'jquery-datetimepicker';
+/**
+ * @module ngeo.misc.datetimepickerComponent
+ */
+import 'jquery-datetimepicker';
 
 
 /**
  * @type {!angular.Module}
  */
-ngeo.misc.datetimepickerComponent = angular.module('ngeoDateTimePicker', ['gettext']);
+const exports = angular.module('ngeoDateTimePicker', ['gettext']);
 
 /**
  * A directive used to display a date or time picker
@@ -22,10 +23,10 @@ ngeo.misc.datetimepickerComponent = angular.module('ngeoDateTimePicker', ['gette
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */
-ngeo.misc.datetimepickerComponent.component_ = function() {
+exports.component_ = function() {
   return {
     restrict: 'A',
-    controller: ngeo.misc.datetimepickerComponent.Controller_,
+    controller: exports.Controller_,
     bindToController: true,
     scope: {
       'options': '<ngeoDatetimepickerOptions'
@@ -33,7 +34,7 @@ ngeo.misc.datetimepickerComponent.component_ = function() {
   };
 };
 
-ngeo.misc.datetimepickerComponent.directive('ngeoDatetimepicker', ngeo.misc.datetimepickerComponent.component_);
+exports.directive('ngeoDatetimepicker', exports.component_);
 
 
 /**
@@ -46,7 +47,7 @@ ngeo.misc.datetimepickerComponent.directive('ngeoDatetimepicker', ngeo.misc.date
  * @ngdoc controller
  * @ngname ngeoDatetimepickerController
  */
-ngeo.misc.datetimepickerComponent.Controller_ = function($element, gettextCatalog) {
+exports.Controller_ = function($element, gettextCatalog) {
   /**
    * @const {!jQuery}
    * @private
@@ -72,7 +73,7 @@ ngeo.misc.datetimepickerComponent.Controller_ = function($element, gettextCatalo
 /**
  * Initialize the directive.
  */
-ngeo.misc.datetimepickerComponent.Controller_.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   const lang = this.gettextCatalog_.getCurrentLanguage();
   $.datetimepicker.setLocale(lang);
   if (typeof this.options === 'string') {
@@ -81,5 +82,8 @@ ngeo.misc.datetimepickerComponent.Controller_.prototype.$onInit = function() {
   this.element_.datetimepicker(this.options);
 };
 
-ngeo.misc.datetimepickerComponent.controller('ngeoDateTimePickerController',
-  ngeo.misc.datetimepickerComponent.Controller_);
+exports.controller('ngeoDateTimePickerController',
+  exports.Controller_);
+
+
+export default exports;

@@ -1,10 +1,10 @@
-goog.provide('ngeo.map.recenter');
-
-
+/**
+ * @module ngeo.map.recenter
+ */
 /**
  * @type {!angular.Module}
  */
-ngeo.map.recenter = angular.module('ngeoRecenter', []);
+const exports = angular.module('ngeoRecenter', []);
 
 /**
  * Provides the "ngeoRecenter" directive, a widget for recentering a map
@@ -33,7 +33,7 @@ ngeo.map.recenter = angular.module('ngeoRecenter', []);
  * @ngdoc directive
  * @ngname ngeoRecenter
  */
-ngeo.map.recenter.directive_ = function() {
+exports.directive_ = function() {
   return {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
@@ -68,4 +68,7 @@ ngeo.map.recenter.directive_ = function() {
 };
 
 // Register the directive in the module
-ngeo.map.recenter.directive('ngeoRecenter', ngeo.map.recenter.directive_);
+exports.directive('ngeoRecenter', exports.directive_);
+
+
+export default exports;

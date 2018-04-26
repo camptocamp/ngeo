@@ -1,74 +1,77 @@
-goog.provide('gmf.layertree.component');
+/**
+ * @module gmf.layertree.component
+ */
+import gmfBase from 'gmf/index.js';
+import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
+import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
+import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
-goog.require('gmf');
-goog.require('gmf.datasource.DataSourceBeingFiltered');
-goog.require('gmf.datasource.ExternalDataSourcesManager');
-goog.require('gmf.permalink.Permalink');
 /** @suppress {extraRequire} */
-goog.require('gmf.layertree.datasourceGroupTreeComponent');
-goog.require('gmf.layertree.SyncLayertreeMap');
-goog.require('gmf.layertree.TreeManager');
-goog.require('gmf.theme.Themes');
-goog.require('goog.asserts');
-goog.require('ngeo.datasource.OGC');
-/** @suppress {extraRequire} */
-goog.require('ngeo.layertree.component');
-goog.require('ngeo.layertree.Controller');
-goog.require('ngeo.map.LayerHelper');
-goog.require('ngeo.misc.syncArrays');
-goog.require('ngeo.misc.WMSTime');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Layer');
-goog.require('ol.obj');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.TileWMS');
-goog.require('ol.source.WMTS');
+import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent.js';
 
-// webpack: import 'bootstrap/js/collapse.js';
+import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import googAsserts from 'goog/asserts.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+
+/** @suppress {extraRequire} */
+import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
+
+import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
+import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
+import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerLayer from 'ol/layer/Layer.js';
+import * as olObj from 'ol/obj.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceTileWMS from 'ol/source/TileWMS.js';
+import olSourceWMTS from 'ol/source/WMTS.js';
+
+import 'bootstrap/js/collapse.js';
 
 /**
  * @type {!angular.Module}
  */
-gmf.layertree.component = angular.module('gmfLayertreeComponent', [
-  gmf.datasource.DataSourceBeingFiltered.module.name,
-  gmf.datasource.ExternalDataSourcesManager.module.name,
-  gmf.permalink.Permalink.module.name,
-  gmf.layertree.datasourceGroupTreeComponent.name,
-  gmf.layertree.SyncLayertreeMap.module.name,
-  gmf.layertree.TreeManager.module.name,
-  gmf.theme.Themes.module.name,
-  ngeo.layertree.component.name,
-  ngeo.layertree.Controller.module.name,
-  ngeo.map.LayerHelper.module.name,
-  ngeo.misc.WMSTime.module.name,
+const exports = angular.module('gmfLayertreeComponent', [
+  gmfDatasourceDataSourceBeingFiltered.module.name,
+  gmfDatasourceExternalDataSourcesManager.module.name,
+  gmfPermalinkPermalink.module.name,
+  gmfLayertreeDatasourceGroupTreeComponent.name,
+  gmfLayertreeSyncLayertreeMap.module.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfThemeThemes.module.name,
+  ngeoLayertreeComponent.name,
+  ngeoLayertreeController.module.name,
+  ngeoMapLayerHelper.module.name,
+  ngeoMiscWMSTime.module.name,
 ]);
 
 
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-gmf.layertree.component.value('ngeoLayertreeTemplateUrl',
+exports.value('ngeoLayertreeTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
    * @param {angular.Attributes} attrs Attributes.
    * @return {string} Template URL.
    */
-  (element, attrs) => `${gmf.baseModuleTemplateUrl}/layertree/component.html`); // nowebpack
-// webpack: (element, attrs) => 'gmf/layertree');
+  (element, attrs) => 'gmf/layertree');
 
-// webpack: exports.run(/* @ngInject */ ($templateCache) => {
-// webpack:   $templateCache.put('gmf/layertree', require('./component.html'));
-// webpack: });
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/layertree', require('./component.html'));
+});
 
 
-gmf.layertree.component.value('gmfLayertreeTemplate',
+exports.value('gmfLayertreeTemplate',
   /**
    * @param {!angular.JQLite} $element Element.
    * @param {!angular.Attributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
-    const subTemplateUrl = `${gmf.baseModuleTemplateUrl}/layertree/component.html`; // nowebpack
-    // webpack: const subTemplateUrl = 'gmf/layertree';
+    const subTemplateUrl = 'gmf/layertree';
     return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
           'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
           'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
@@ -128,7 +131,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  * @ngdoc component
  * @ngname gmfLayertreeComponent
  */
-gmf.layertree.component.component_ = {
+exports.component_ = {
   controller: 'GmfLayertreeController as gmfLayertreeCtrl',
   bindings: {
     'map': '=gmfLayertreeMap',
@@ -138,7 +141,7 @@ gmf.layertree.component.component_ = {
   template: gmfLayertreeTemplate
 };
 
-gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.component_);
+exports.component('gmfLayertree', exports.component_);
 
 
 /**
@@ -163,7 +166,7 @@ gmf.layertree.component.component('gmfLayertree', gmf.layertree.component.compon
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-gmf.layertree.component.Controller_ = function($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltered,
+exports.Controller_ = function($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltered,
   gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
 
   /**
@@ -215,7 +218,7 @@ gmf.layertree.component.Controller_ = function($element, $scope, ngeoLayerHelper
   this.gmfTreeManager_ = gmfTreeManager;
 
   const root = gmfTreeManager.root;
-  goog.asserts.assert(root);
+  googAsserts.assert(root);
 
   /**
    * @type {!gmfThemes.GmfRootNode}
@@ -275,12 +278,12 @@ gmf.layertree.component.Controller_ = function($element, $scope, ngeoLayerHelper
 /**
  * Init the controller,
  */
-gmf.layertree.component.Controller_.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-    gmf.DATALAYERGROUP_NAME);
+    gmfBase.DATALAYERGROUP_NAME);
 
-  ngeo.misc.syncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
+  ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
   this.scope_.$watchCollection(() => this.layers,
@@ -305,11 +308,11 @@ gmf.layertree.component.Controller_.prototype.$onInit = function() {
  * @param {ngeo.layertree.Controller} treeCtrl Layer tree controller.
  * @private
  */
-gmf.layertree.component.Controller_.prototype.updateDimensions_ = function(treeCtrl) {
+exports.Controller_.prototype.updateDimensions_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst((ctrl) => {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
-      goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+      googAsserts.assertInstanceof(layer, olLayerLayer);
       this.updateLayerDimensions_(layer, /** @type gmfThemes.GmfGroup|gmfThemes.GmfLayer */ (ctrl.node));
     }
   });
@@ -321,7 +324,7 @@ gmf.layertree.component.Controller_.prototype.updateDimensions_ = function(treeC
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layer tree node.
  * @private
  */
-gmf.layertree.component.Controller_.prototype.updateLayerDimensions_ = function(layer, node) {
+exports.Controller_.prototype.updateLayerDimensions_ = function(layer, node) {
   if (this.dimensions && node.dimensions) {
     const dimensions = {};
     for (const key in node.dimensions) {
@@ -334,16 +337,16 @@ gmf.layertree.component.Controller_.prototype.updateLayerDimensions_ = function(
         dimensions[key] = node.dimensions[key];
       }
     }
-    if (!ol.obj.isEmpty(dimensions)) {
+    if (!olObj.isEmpty(dimensions)) {
       const source = layer.getSource();
-      if (source instanceof ol.source.WMTS) {
+      if (source instanceof olSourceWMTS) {
         source.updateDimensions(dimensions);
-      } else if (source instanceof ol.source.TileWMS || source instanceof ol.source.ImageWMS) {
+      } else if (source instanceof olSourceTileWMS || source instanceof olSourceImageWMS) {
         source.updateParams(dimensions);
       } else {
         // the source is not ready yet
         layer.once('change:source', () => {
-          goog.asserts.assertInstanceof(layer, ol.layer.Layer);
+          googAsserts.assertInstanceof(layer, olLayerLayer);
           this.updateLayerDimensions_(layer, node);
         });
       }
@@ -362,7 +365,7 @@ gmf.layertree.component.Controller_.prototype.updateLayerDimensions_ = function(
  *     for the node.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.getLayer = function(treeCtrl) {
+exports.Controller_.prototype.getLayer = function(treeCtrl) {
   let opt_position;
   if (treeCtrl.parent.isRoot) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
@@ -374,7 +377,7 @@ gmf.layertree.component.Controller_.prototype.getLayer = function(treeCtrl) {
   const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
     this.dataLayerGroup_, opt_position);
 
-  if (layer instanceof ol.layer.Layer) {
+  if (layer instanceof olLayerLayer) {
     const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
     this.updateLayerDimensions_(layer, node);
   }
@@ -391,7 +394,7 @@ gmf.layertree.component.Controller_.prototype.getLayer = function(treeCtrl) {
  *     the current node.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.listeners = function(scope, treeCtrl) {
+exports.Controller_.prototype.listeners = function(scope, treeCtrl) {
   const dataLayerGroup = this.dataLayerGroup_;
   scope.$on('$destroy', () => {
     // Remove the layer from the map.
@@ -405,7 +408,7 @@ gmf.layertree.component.Controller_.prototype.listeners = function(scope, treeCt
  *     the current node.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.toggleActive = function(treeCtrl) {
+exports.Controller_.prototype.toggleActive = function(treeCtrl) {
   treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
 };
 
@@ -418,7 +421,7 @@ gmf.layertree.component.Controller_.prototype.toggleActive = function(treeCtrl) 
  * @return {string} 'on' or 'off' or 'indeterminate'.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.getNodeState = function(treeCtrl) {
+exports.Controller_.prototype.getNodeState = function(treeCtrl) {
   return treeCtrl.getState();
 };
 
@@ -438,14 +441,14 @@ gmf.layertree.component.Controller_.prototype.getNodeState = function(treeCtrl) 
  * and optionally the end datetime (for time range selection) selected by user
  * @export
  */
-gmf.layertree.component.Controller_.prototype.updateWMSTimeLayerState = function(
+exports.Controller_.prototype.updateWMSTimeLayerState = function(
   layertreeCtrl, time) {
   if (!time) {
     return;
   }
   const dataSource = layertreeCtrl.getDataSource();
   if (dataSource) {
-    goog.asserts.assertInstanceof(dataSource, ngeo.datasource.OGC);
+    googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
     dataSource.timeRangeValue = time;
   } else if (layertreeCtrl.children) {
     for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {
@@ -463,7 +466,7 @@ gmf.layertree.component.Controller_.prototype.updateWMSTimeLayerState = function
  * @return {string|undefined} The icon legend URL or undefined.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.getLegendIconURL = function(treeCtrl) {
+exports.Controller_.prototype.getLegendIconURL = function(treeCtrl) {
   const iconUrl = treeCtrl.node.metadata.iconUrl;
 
   if (iconUrl !== undefined) {
@@ -505,7 +508,7 @@ gmf.layertree.component.Controller_.prototype.getLegendIconURL = function(treeCt
  *     layer for each layer.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.getLegendsObject = function(treeCtrl) {
+exports.Controller_.prototype.getLegendsObject = function(treeCtrl) {
   const legendsObject = {};
   if (/** @type gmfThemes.GmfGroup */ (treeCtrl.node).children !== undefined) {
     return null;
@@ -520,7 +523,7 @@ gmf.layertree.component.Controller_.prototype.getLegendsObject = function(treeCt
 
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
-    goog.asserts.assertInstanceof(layer, ol.layer.Tile);
+    googAsserts.assertInstanceof(layer, olLayerTile);
     const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);
     legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
     return wmtsLegendURL ? legendsObject : null;
@@ -531,7 +534,7 @@ gmf.layertree.component.Controller_.prototype.getLegendsObject = function(treeCt
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Mutliple urls for other map
     // servers
-    if (gmfOgcServer.type === ngeo.datasource.OGC.ServerType.QGISSERVER) {
+    if (gmfOgcServer.type === ngeoDatasourceOGC.ServerType.QGISSERVER) {
       layersNames = [layersNames];
     } else {
       layersNames = layersNames.split(',');
@@ -551,7 +554,7 @@ gmf.layertree.component.Controller_.prototype.getLegendsObject = function(treeCt
  * @return {number} The number of Legends object.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.getNumberOfLegendsObject = function(treeCtrl) {
+exports.Controller_.prototype.getNumberOfLegendsObject = function(treeCtrl) {
   const legendsObject = this.getLegendsObject(treeCtrl);
   return legendsObject ? Object.keys(legendsObject).length : 0;
 };
@@ -562,7 +565,7 @@ gmf.layertree.component.Controller_.prototype.getNumberOfLegendsObject = functio
  * @return {number} Scale.
  * @private
  */
-gmf.layertree.component.Controller_.prototype.getScale_ = function() {
+exports.Controller_.prototype.getScale_ = function() {
   const view = this.map.getView();
   const resolution = view.getResolution();
   const mpu = view.getProjection().getMetersPerUnit();
@@ -577,7 +580,7 @@ gmf.layertree.component.Controller_.prototype.getScale_ = function() {
  *     the current node.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.displayMetadata = function(treeCtrl) {
+exports.Controller_.prototype.displayMetadata = function(treeCtrl) {
   const node = treeCtrl.node;
   const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
@@ -595,7 +598,7 @@ gmf.layertree.component.Controller_.prototype.displayMetadata = function(treeCtr
  * a reorder of the first-level groups. Then update the permalink.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.afterReorder = function() {
+exports.Controller_.prototype.afterReorder = function() {
   const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
   const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
   const treeCtrls = [];
@@ -628,7 +631,7 @@ gmf.layertree.component.Controller_.prototype.afterReorder = function() {
  * @param {gmfThemes.GmfGroup} node Layer tree node to remove.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.removeNode = function(node) {
+exports.Controller_.prototype.removeNode = function(node) {
   this.gmfTreeManager_.removeGroup(node);
 };
 
@@ -636,7 +639,7 @@ gmf.layertree.component.Controller_.prototype.removeNode = function(node) {
 /**
  * @export
  */
-gmf.layertree.component.Controller_.prototype.removeAllNodes = function() {
+exports.Controller_.prototype.removeAllNodes = function() {
   this.gmfTreeManager_.removeAll();
 };
 
@@ -645,7 +648,7 @@ gmf.layertree.component.Controller_.prototype.removeAllNodes = function() {
  * @return {number} first level node count.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.nodesCount = function() {
+exports.Controller_.prototype.nodesCount = function() {
   return this.gmfTreeManager_.root.children.length;
 };
 
@@ -659,13 +662,13 @@ gmf.layertree.component.Controller_.prototype.nodesCount = function() {
  * @return {string|undefined} 'out-of-resolution' or undefined.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.getResolutionStyle = function(gmfLayer) {
+exports.Controller_.prototype.getResolutionStyle = function(gmfLayer) {
   const resolution = this.map.getView().getResolution();
-  const minResolution = gmf.theme.Themes.getNodeMinResolution(gmfLayer);
+  const minResolution = gmfThemeThemes.getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     return 'out-of-resolution';
   }
-  const maxResolution = gmf.theme.Themes.getNodeMaxResolution(gmfLayer);
+  const maxResolution = gmfThemeThemes.getNodeMaxResolution(gmfLayer);
   if (maxResolution !== undefined && resolution > maxResolution) {
     return 'out-of-resolution';
   }
@@ -679,15 +682,15 @@ gmf.layertree.component.Controller_.prototype.getResolutionStyle = function(gmfL
  *     the current node.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.zoomToResolution = function(treeCtrl) {
+exports.Controller_.prototype.zoomToResolution = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
-  const minResolution = gmf.theme.Themes.getNodeMinResolution(gmfLayer);
+  const minResolution = gmfThemeThemes.getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     view.setResolution(view.constrainResolution(minResolution, 0, 1));
   } else {
-    const maxResolution = gmf.theme.Themes.getNodeMaxResolution(gmfLayer);
+    const maxResolution = gmfThemeThemes.getNodeMaxResolution(gmfLayer);
     if (maxResolution !== undefined && resolution > maxResolution) {
       view.setResolution(view.constrainResolution(maxResolution, 0, -1));
     }
@@ -700,7 +703,7 @@ gmf.layertree.component.Controller_.prototype.zoomToResolution = function(treeCt
  * @param {string} legendNodeId The DOM node legend id to toggle
  * @export
  */
-gmf.layertree.component.Controller_.prototype.toggleNodeLegend = function(legendNodeId) {
+exports.Controller_.prototype.toggleNodeLegend = function(legendNodeId) {
   $(legendNodeId).toggle({
     toggle: true
   });
@@ -711,7 +714,7 @@ gmf.layertree.component.Controller_.prototype.toggleNodeLegend = function(legend
  * @param {gmf.datasource.OGC} ds Data source to filter.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.toggleFiltrableDataSource = function(ds) {
+exports.Controller_.prototype.toggleFiltrableDataSource = function(ds) {
   this.gmfDataSourceBeingFiltered.dataSource = ds;
 };
 
@@ -721,7 +724,7 @@ gmf.layertree.component.Controller_.prototype.toggleFiltrableDataSource = functi
  * @return {boolean} Whenever the legend is currently displayed.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.isNodeLegendVisible = function(legendNodeId) {
+exports.Controller_.prototype.isNodeLegendVisible = function(legendNodeId) {
   return $(legendNodeId).is(':visible');
 };
 
@@ -744,7 +747,7 @@ gmf.layertree.component.Controller_.prototype.isNodeLegendVisible = function(leg
  *     "customized" or not.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.supportsCustomization = function(treeCtrl) {
+exports.Controller_.prototype.supportsCustomization = function(treeCtrl) {
   return !treeCtrl.isRoot &&
     (
       this.supportsLegend(treeCtrl) ||
@@ -759,7 +762,7 @@ gmf.layertree.component.Controller_.prototype.supportsCustomization = function(t
  *     legend being shown.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.supportsLegend = function(treeCtrl) {
+exports.Controller_.prototype.supportsLegend = function(treeCtrl) {
   const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
@@ -773,7 +776,7 @@ gmf.layertree.component.Controller_.prototype.supportsLegend = function(treeCtrl
  *     layer opacity being changed or not.
  * @export
  */
-gmf.layertree.component.Controller_.prototype.supportsOpacityChange = function(treeCtrl) {
+exports.Controller_.prototype.supportsOpacityChange = function(treeCtrl) {
   const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
   const parentNode = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
   return !!treeCtrl.layer &&
@@ -787,4 +790,7 @@ gmf.layertree.component.Controller_.prototype.supportsOpacityChange = function(t
     );
 };
 
-gmf.layertree.component.controller('GmfLayertreeController', gmf.layertree.component.Controller_);
+exports.controller('GmfLayertreeController', exports.Controller_);
+
+
+export default exports;

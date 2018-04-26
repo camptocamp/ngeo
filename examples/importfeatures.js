@@ -1,24 +1,29 @@
-goog.provide('app.importfeatures');
+/**
+ * @module app.importfeatures
+ */
+const exports = {};
 
-// webpack: import './importfeatures.css';
-goog.require('ngeo.map.module');
+import './importfeatures.css';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.misc.filereaderComponent');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.extent');
-goog.require('ol.format.KML');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
+import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import * as olExtent from 'ol/extent.js';
+import olFormatKML from 'ol/format/KML.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.Module} **/
-app.importfeatures.module = angular.module('app', [
+exports.module = angular.module('app', [
   'gettext',
-  ngeo.map.module.name,
-  ngeo.misc.filereaderComponent.name,
+  ngeoMapModule.name,
+  ngeoMiscFilereaderComponent.name,
 ]);
 
 
@@ -28,34 +33,34 @@ app.importfeatures.module = angular.module('app', [
  * @export
  * @ngInject
  */
-app.importfeatures.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * @private
    * @type {ol.format.KML}
    */
-  this.kmlFormat_ = new ol.format.KML();
+  this.kmlFormat_ = new olFormatKML();
 
   /**
    * @private
    * @type {ol.source.Vector}
    */
-  this.vectorSource_ = new ol.source.Vector();
+  this.vectorSource_ = new olSourceVector();
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       }),
-      new ol.layer.Vector({
+      new olLayerVector({
         source: this.vectorSource_
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 2
     })
@@ -83,7 +88,7 @@ app.importfeatures.MainController = function($scope) {
  * @param {string} kml KML document.
  * @private
  */
-app.importfeatures.MainController.prototype.importKml_ = function(kml) {
+exports.MainController.prototype.importKml_ = function(kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
   const features = this.kmlFormat_.readFeatures(kml, {
@@ -93,10 +98,13 @@ app.importfeatures.MainController.prototype.importKml_ = function(kml) {
   vectorSource.addFeatures(features);
   const extent = vectorSource.getExtent();
   const mapSize = map.getSize();
-  if (mapSize && !ol.extent.isEmpty(extent)) {
+  if (mapSize && !olExtent.isEmpty(extent)) {
     map.getView().fit(extent, mapSize);
   }
 };
 
 
-app.importfeatures.module.controller('MainController', app.importfeatures.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;
