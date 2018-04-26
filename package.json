@@ -17,8 +17,7 @@
     "url": "https://github.com/camptocamp/ngeo/issues"
   },
   "bin": {
-    "compile-catalog": "buildtools/compile-catalog.js",
-    "ngeo-build": "buildtools/build.js"
+    "compile-catalog": "buildtools/compile-catalog.js"
   },
   "devDependencies": {
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
