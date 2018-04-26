@@ -217,10 +217,6 @@ check: lint check-googs check-examples-checker check-examples test build-gmf-app
 check-googs:
 	buildtools/check-no-goog.sh
 
-.PHONY: check-ngeox
-check-ngeox: options/ngeox.js
-	if grep -nE "ngeo.rule.Rule|ngeo.DataSource" options/ngeox.js; then echo "Only use ngeox.rule.Rule and ngeox.DataSource in options/ngeox.js"; false ; else true; fi
-
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
 	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES))) \
@@ -236,7 +232,7 @@ check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 check-examples-webpack: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK)
 
 .PHONY: lint
-lint: .build/eslint.timestamp git-attributes eof-newline check-ngeox
+lint: .build/eslint.timestamp git-attributes eof-newline
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp
