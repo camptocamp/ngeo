@@ -4,7 +4,6 @@
     <title ng-bind-template="{{'ObjectEditing - Viewer Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="image/favicon.ico"/>
-    <link rel="stylesheet" href="../../build/oeview.css">
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
     <header>
@@ -125,81 +124,5 @@
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
     </footer>
-    <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../../third-party/jquery-ui/jquery-ui.js"></script>
-    <script src="../../../../node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
-    <script src="../../../../node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"></script>
-    <script src="../../../../node_modules/angular/angular.js"></script>
-    <script src="../../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../../node_modules/floatthead/dist/jquery.floatThead.js"></script>
-    <script src="../../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../../node_modules/corejs-typeahead/dist/typeahead.bundle.js"></script>
-    <script src="../../../../node_modules/proj4/dist/proj4-src.js"></script>
-    <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../../node_modules/jsts/dist/jsts.js"></script>
-    <script src="../../../../node_modules/d3/build/d3.js"></script>
-    <script src="../../../../node_modules/moment/moment.js"></script>
-    <script src="../../../../node_modules/file-saver/FileSaver.js"></script>
-    <script src="/@?main=oeview/js/controller.js"></script>
-    <script src="../default.js"></script>
-    <script src="../../../../utils/watchwatchers.js"></script>
-    <script>
-      (function() {
-        var cacheVersion = '0';
-        var urlElements = window.location.pathname.split('/');
-
-        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
-        angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js?cache_version=' + cacheVersion);
-
-        var gmfModule = angular.module('GmfAbstractAppControllerModule');
-        gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
-
-        var langUrls = {};
-        ['en', 'fr', 'de'].forEach(function(lang) {
-          var langUrlElements = urlElements.slice(0, urlElements.length - 3);
-          langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
-          langUrls[lang] = langUrlElements.join('/')
-        });
-
-        var module = angular.module('AppOEView');
-        module.constant('defaultTheme', 'ObjectEditing');
-        module.constant('defaultLang', 'en');
-        module.constant('langUrls', langUrls);
-        module.constant('cacheVersion', cacheVersion);
-        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
-        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
-        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
-        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
-        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/printproxy');
-        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
-        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
-        module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/short/create');
-        module.constant('gmfSearchGroups', ['osm','district']);
-        // Requires that the gmfSearchGroups is specified
-        module.constant('gmfSearchActions', [
-                {action: 'add_theme', title: 'Add a theme'},
-                {action: 'add_group', title: 'Add a sub theme'},
-                {action: 'add_layer', title: 'Add a layer'}
-        ]);
-        module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
-        module.value('ngeoWfsPermalinkOptions',
-            /** @type {ngeox.WfsPermalinkOptions} */ ({
-              url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
-              wfsTypes: [
-                {featureType: 'line', label: 'name'},
-                {featureType: 'point', label: 'name'},
-                {featureType: 'polygon', label: 'name'}
-              ],
-              defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-              defaultFeaturePrefix: 'feature'
-            }));
-      })();
-    </script>
   </body>
 /html>

@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const plugins = [];
 const entry = {};
 
-for (const filename of ls('contribs/gmf/apps-webpack/*/index.html')) {
+for (const filename of ls('contribs/gmf/apps/*/index.html')) {
   const name = path.basename(filename.path);
   entry[name] = `./${filename.path}/js/Controller.js`;
   plugins.push(

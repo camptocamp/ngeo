@@ -1,6 +1,9 @@
 /**
  * @module gmf.controllers.AbstractAppController
  */
+import 'jquery';
+import 'angular';
+import 'angular-gettext';
 import 'angular-dynamic-locale';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 

@@ -7,15 +7,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="image/favicon.ico"/>
-    <link rel="stylesheet" href="../../build/mobile.css">
-    <script>
-      if (!window.requestAnimationFrame) {
-        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
-            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
-            + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
-        window.location = 'http://geomapfish.org/'
-      }
-    </script>
   </head>
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
@@ -175,76 +166,5 @@
         </gmf-authentication>
       </div>
     </ngeo-modal>
-
-    <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../../third-party/jquery-ui/jquery-ui.js"></script>
-    <script src="../../../../node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
-    <script src="../../../../node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"></script>
-    <script src="../../../../node_modules/angular/angular.js"></script>
-    <script src="../../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../../node_modules/floatthead/dist/jquery.floatThead.js"></script>
-    <script src="../../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../../node_modules/corejs-typeahead/dist/typeahead.bundle.js"></script>
-    <script src="../../../../node_modules/proj4/dist/proj4-src.js"></script>
-    <script src="../../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="../../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../../node_modules/jsts/dist/jsts.js"></script>
-    <script src="../../../../node_modules/d3/build/d3.js"></script>
-    <script src="../../../../node_modules/moment/moment.js"></script>
-    <script src="../../../../node_modules/file-saver/FileSaver.js"></script>
-    <script src="../../../../node_modules/url-polyfill/url-polyfill.js"></script>
-    <script src="/@?main=mobile/js/controller.js"></script>
-    <script src="../default.js"></script>
-    <script src="../../../../utils/ios-overlap-fix.js"></script>
-    <script src="../../../../utils/watchwatchers.js"></script>
-    <script>
-      (function() {
-        var cacheVersion = '0';
-        var urlElements = window.location.pathname.split('/');
-
-        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
-        angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js?cache_version=' + cacheVersion);
-
-        var gmfModule = angular.module('GmfAbstractAppControllerModule');
-        gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
-
-        var langUrls = {};
-        ['en', 'fr', 'de'].forEach(function(lang) {
-          var langUrlElements = urlElements.slice(0, urlElements.length - 3);
-          langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
-          langUrls[lang] = langUrlElements.join('/')
-        });
-
-        var module = angular.module('AppMobile');
-        module.constant('defaultTheme', 'Demo');
-        module.constant('defaultLang', 'en');
-        module.constant('langUrls', langUrls);
-        module.constant('cacheVersion', cacheVersion);
-        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
-        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=20&interface=mobile');
-        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=mobile');
-        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers');
-        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
-        module.constant('gmfShortenerCreateUrl', '');
-        module.constant('gmfSearchGroups', []);
-        // Requires that the gmfSearchGroups is specified
-        module.constant('gmfSearchActions', []);
-        module.value('ngeoWfsPermalinkOptions',
-            /** @type {ngeox.WfsPermalinkOptions} */ ({
-              url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
-              wfsTypes: [
-                {featureType: 'fuel', label: 'display_name'},
-                {featureType: 'osm_scale', label: 'display_name'}
-              ],
-              defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-              defaultFeaturePrefix: 'feature'
-            }));
-       })();
-    </script>
   </body>
 </html>

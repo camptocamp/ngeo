@@ -8,34 +8,20 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import appBase from '../index.js';
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
-import gmfImportModule from 'gmf/import/module.js';
-import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import '../../../../../utils/watchwatchers.js';
+import '../less/main.less';
+import appBase from '../../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
 
-appBase.desktop.module = angular.module('AppDesktop', [
-  appBase.module.name,
-  gmfControllersAbstractDesktopController.module.name,
-  ngeoGooglestreetviewModule.name,
-  gmfImportModule.name,
-]);
-
-appBase.desktop.module.value('gmfExternalOGCServers', [{
-  'name': 'Swiss Topo WMS',
-  'type': 'WMS',
-  'url': 'https://wms.geo.admin.ch/?lang=fr'
-}, {
-  'name': 'ASIT VD',
-  'type': 'WMTS',
-  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
-}, {
-  'name': 'Swiss Topo WMTS',
-  'type': 'WMTS',
-  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
-}]);
+if (!window.requestAnimationFrame) {
+  alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+    + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+    + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
+  window.location = 'http://geomapfish.org/';
+}
 
 /**
  * @param {angular.Scope} $scope Scope.
@@ -116,8 +102,75 @@ const exports = function($scope, $injector) {
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
 
+exports.module = angular.module('AppDesktop', [
+  appBase.module.name,
+  gmfControllersAbstractDesktopController.module.name,
+]);
 
-appBase.desktop.module.controller('DesktopController', exports);
+exports.module.controller('DesktopController', exports);
 
+exports.module.value('gmfExternalOGCServers', [{
+  'name': 'Swiss Topo WMS',
+  'type': 'WMS',
+  'url': 'https://wms.geo.admin.ch/?lang=fr'
+}, {
+  'name': 'ASIT VD',
+  'type': 'WMTS',
+  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
+}, {
+  'name': 'Swiss Topo WMTS',
+  'type': 'WMTS',
+  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
+}]);
+
+(function() {
+  const cacheVersion = '0';
+  const urlElements = window.location.pathname.split('/');
+
+  const angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
+  angularLocaleScriptUrlElements.push('build', `angular-locale_{{locale}}.js?cache_version=${cacheVersion}`);
+
+  const gmfModule = angular.module('GmfAbstractAppControllerModule');
+  gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
+
+  const langUrls = {};
+  ['en', 'fr', 'de'].forEach((lang) => {
+    const langUrlElements = urlElements.slice(0, urlElements.length - 3);
+    langUrlElements.push('build', `gmf-${lang}.json?cache_version=${cacheVersion}`);
+    langUrls[lang] = langUrlElements.join('/');
+  });
+
+  const module = angular.module('AppDesktop');
+  module.constant('defaultTheme', 'Demo');
+  module.constant('defaultLang', 'en');
+  module.constant('langUrls', langUrls);
+  module.constant('cacheVersion', cacheVersion);
+  module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
+  module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+  module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
+  module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
+  module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/printproxy');
+  module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
+  module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+  module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/short/create');
+  module.constant('gmfSearchGroups', ['osm', 'district']);
+  // Requires that the gmfSearchGroups is specified
+  module.constant('gmfSearchActions', [
+    {action: 'add_theme', title: 'Add a theme'},
+    {action: 'add_group', title: 'Add a sub theme'},
+    {action: 'add_layer', title: 'Add a layer'}
+  ]);
+  module.constant('gmfContextualdatacontentTemplateUrl', `${window.location.pathname}contextualdata.html`);
+  module.value('ngeoWfsPermalinkOptions',
+    /** @type {ngeox.WfsPermalinkOptions} */ ({
+      url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+      wfsTypes: [
+        {featureType: 'fuel', label: 'display_name'},
+        {featureType: 'osm_scale', label: 'display_name'}
+      ],
+      defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+      defaultFeaturePrefix: 'feature'
+    }));
+})();
 
 export default exports;
