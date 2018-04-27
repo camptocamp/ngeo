@@ -22,58 +22,6 @@ GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
 GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
-DEVELOPMENT ?= FALSE
-ifeq ($(DEVELOPMENT), TRUE)
-GMF_APPS_LIBS_JS_FILES += \
-	examples/https.js \
-	node_modules/jquery/dist/jquery.js \
-	node_modules/angular/angular.js \
-	node_modules/angular-animate/angular-animate.js \
-	node_modules/angular-float-thead/angular-floatThead.js \
-	node_modules/angular-gettext/dist/angular-gettext.js \
-	node_modules/angular-sanitize/angular-sanitize.js \
-	node_modules/angular-touch/angular-touch.js \
-	node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js \
-	node_modules/angular-ui-date/dist/date.js \
-	node_modules/angular-ui-slider/src/slider.js \
-	node_modules/bootstrap/dist/js/bootstrap.js \
-	node_modules/floatthead/dist/jquery.floatThead.js \
-	node_modules/proj4/dist/proj4-src.js \
-	node_modules/d3/build/d3.js \
-	node_modules/file-saver/FileSaver.js \
-	node_modules/corejs-typeahead/dist/typeahead.bundle.js \
-	node_modules/jsts/dist/jsts.js \
-	node_modules/moment/moment.js \
-	node_modules/url-polyfill/url-polyfill.js \
-	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.js \
-	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js \
-	utils/ios-overlap-fix.js
-else
-GMF_APPS_LIBS_JS_FILES += \
-	examples/https.js \
-	node_modules/jquery/dist/jquery.min.js \
-	node_modules/angular/angular.min.js \
-	node_modules/angular-animate/angular-animate.min.js \
-	node_modules/angular-float-thead/angular-floatThead.js \
-	node_modules/angular-gettext/dist/angular-gettext.min.js \
-	node_modules/angular-sanitize/angular-sanitize.min.js \
-	node_modules/angular-touch/angular-touch.min.js \
-	node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js \
-	node_modules/angular-ui-date/dist/date.js \
-	node_modules/angular-ui-slider/src/slider.js \
-	node_modules/bootstrap/dist/js/bootstrap.min.js \
-	node_modules/floatthead/dist/jquery.floatThead.min.js \
-	node_modules/proj4/dist/proj4.js \
-	node_modules/file-saver/FileSaver.min.js \
-	node_modules/d3/build/d3.min.js \
-	node_modules/corejs-typeahead/dist/typeahead.bundle.min.js \
-	node_modules/jsts/dist/jsts.min.js \
-	node_modules/moment/min/moment.min.js \
-	node_modules/url-polyfill/url-polyfill.min.js \
-	node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js \
-	node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.min.js \
-	utils/ios-overlap-fix.js
-endif
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
@@ -82,45 +30,6 @@ BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := \
 	$(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
 
-EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
-	.build/examples-hosted/lib/angular.min.js \
-	.build/examples-hosted/lib/angular-animate.min.js \
-	.build/examples-hosted/lib/angular-floatThead.js \
-	.build/examples-hosted/lib/angular-gettext.min.js \
-	.build/examples-hosted/lib/angular-sanitize.min.js \
-	.build/examples-hosted/lib/angular-touch.min.js \
-	.build/examples-hosted/lib/date.min.js \
-	.build/examples-hosted/lib/jquery.floatThead.min.js \
-	.build/examples-hosted/lib/slider.min.js \
-	.build/examples-hosted/lib/tmhDynamicLocale.min.js \
-	.build/examples-hosted/lib/bootstrap.min.js \
-	.build/examples-hosted/lib/bootstrap.min.css \
-	.build/examples-hosted/lib/jquery.min.js \
-	.build/examples-hosted/lib/jquery-ui.min.js \
-	.build/examples-hosted/lib/jquery-ui.min.css \
-	.build/examples-hosted/contribs/gmf/build/images/ \
-	.build/examples-hosted/lib/images/ \
-	.build/examples-hosted/lib/d3.min.js \
-	.build/examples-hosted/lib/FileSaver.min.js \
-	.build/examples-hosted/lib/watchwatchers.js \
-	.build/examples-hosted/lib/typeahead.bundle.min.js \
-	.build/examples-hosted/lib/proj4.js \
-	.build/examples-hosted/lib/jsts.min.js \
-	.build/examples-hosted/lib/moment.min.js \
-	.build/examples-hosted/lib/transpile.js \
-	.build/examples-hosted/https.js \
-	.build/examples-hosted/lib/font-awesome.min.css \
-	.build/examples-hosted/lib/url-polyfill.min.js \
-	$(addprefix .build/examples-hosted/fonts/fontawesome-webfont.,eot ttf woff woff2) \
-	$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
-NGEO_EXAMPLES_HOSTED_REQUIREMENTS = $(EXAMPLES_HOSTED_REQUIREMENTS) \
-	$(subst examples,.build/examples-hosted,$(NGEO_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/data \
-	.build/templatecache.js
-GMF_EXAMPLES_PARTIALS_FILES = $(EXAMPLES_PARTIALS_FILES) \
-	$(subst contibs/gmf/examples,.build/examples-hosted/contribs/gmf,$(GMF_EXAMPLES_PARTIALS_FILES)) \
-	.build/examples-hosted/contribs/gmf/data \
-	.build/gmftemplatecache.js
 
 # Git
 GITHUB_USERNAME ?= camptocamp
@@ -150,12 +59,6 @@ NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_DEMO_HTML = $(shell find contribs/gmf/apps -type f -name '*.html')
 GMF_DEMO_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
-
-EXTERNS_ANGULAR = .build/externs/angular-1.6.js
-EXTERNS_ANGULAR_Q = .build/externs/angular-1.6-q_templated.js
-EXTERNS_ANGULAR_HTTP_PROMISE = .build/externs/angular-1.6-http-promise_templated.js
-EXTERNS_JQUERY = .build/externs/jquery-1.9.js
-EXTERNS_FILES = $(EXTERNS_ANGULAR) $(EXTERNS_ANGULAR_Q) $(EXTERNS_ANGULAR_HTTP_PROMISE) $(EXTERNS_JQUERY)
 
 ifeq ($(OS),Darwin)
 	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
@@ -249,12 +152,12 @@ eof-newline:
 	buildtools/test-eof-newline
 
 .PHONY: test
-test: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js
+test: .build/node_modules.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
-test-debug: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .build/node_modules_karma-chrome-launcher.timestamp
+test-debug: .build/node_modules.timestamp .build/node_modules_karma-chrome-launcher.timestamp
 	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
@@ -292,10 +195,6 @@ examples-hosted-gmf: \
 examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
-.build/glob2.timestamp: requirements.txt .build/python-venv
-	$(PY_VENV_BIN)/pip install `grep ^glob2== $< --colour=never`
-	touch $@
-
 .build/requests.timestamp: requirements.txt .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^requests== $< --colour=never`
 	touch $@
@@ -322,133 +221,6 @@ gh-pages:
 		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
-
-.PRECIOUS: .build/examples/%.js
-.build/examples/%.js: .build/examples/%.json \
-		$(SRC_JS_FILES) \
-		$(EXTERNS_FILES) \
-		examples/%.js \
-		.build/templatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js --config $< --output $@
-	echo '//# sourceMappingURL=$*.js.map' >> $@
-
-.PRECIOUS: .build/contribs/gmf/examples/%.js
-.build/contribs/gmf/examples/%.js: .build/contribs/gmf/examples/%.json \
-		$(SRC_JS_FILES) \
-		$(GMF_SRC_JS_FILES) \
-		$(EXTERNS_FILES) \
-		contribs/gmf/examples/%.js \
-		.build/gmftemplatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js --config $< --output $@
-	echo '//# sourceMappingURL=$*.js.map' >> $@
-
-.build/examples-hosted/lib/angular.min.js: node_modules/angular/angular.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-animate.min.js: node_modules/angular-animate/angular-animate.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-floatThead.js: node_modules/angular-float-thead/angular-floatThead.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery.floatThead.min.js: node_modules/floatthead/dist/jquery.floatThead.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-gettext.min.js: node_modules/angular-gettext/dist/angular-gettext.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-sanitize.min.js: node_modules/angular-sanitize/angular-sanitize.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/angular-touch.min.js: node_modules/angular-touch/angular-touch.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/tmhDynamicLocale.min.js: node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/date.min.js: node_modules/angular-ui-date/dist/date.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/slider.min.js: node_modules/angular-ui-slider/src/slider.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/bootstrap.min.js: node_modules/bootstrap/dist/js/bootstrap.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/contribs/gmf/bootstrap.min.css: node_modules/bootstrap/dist/css/bootstrap.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery.min.js: node_modules/jquery/dist/jquery.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jquery.ui.touch-punch.min.js: node_modules/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/d3.min.js: node_modules/d3/build/d3.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/FileSaver.min.js: node_modules/file-saver/FileSaver.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/watchwatchers.js: utils/watchwatchers.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/ios-overlap-fix.js: utils/ios-overlap-fix.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/typeahead.bundle.min.js: node_modules/corejs-typeahead/dist/typeahead.bundle.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/proj4.js: node_modules/proj4/dist/proj4.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/jsts.min.js: node_modules/jsts/dist/jsts.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/moment.min.js: node_modules/moment/min/moment.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/font-awesome.min.css: node_modules/font-awesome/css/font-awesome.min.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/lib/url-polyfill.min.js: node_modules/url-polyfill/url-polyfill.min.js
-	mkdir -p $(dir $@)
-	cp $< $@
 
 .PRECIOUS: .build/examples-hosted/fonts/%
 .build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
@@ -497,8 +269,6 @@ gh-pages:
 .build/examples-hosted/https.js: examples/https.js
 	mkdir -p $(dir $@)
 	cp $< $@
-
-node_modules/angular/angular.min.js: .build/node_modules.timestamp
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
@@ -585,8 +355,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		buildtools/examples-index.mako.html \
 		$(EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
-		.build/beautifulsoup4.timestamp \
-		.build/examples-hosted/bootstrap.min.css
+		.build/beautifulsoup4.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
 
@@ -594,8 +363,7 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 		buildtools/examples-index.mako.html \
 		$(GMF_EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
-		.build/beautifulsoup4.timestamp \
-		.build/examples-hosted/contribs/gmf/bootstrap.min.css
+		.build/beautifulsoup4.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
@@ -635,16 +403,6 @@ node_modules/angular/angular.min.js: .build/node_modules.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	@# re-installing the node packages, while 'make serve' is still running
-	@# might freeze the system. ask for confirmation in that case.
-	@if ps a | grep -v grep | grep 'node buildtools/serve.js'; then \
-		echo "Affected process:"; \
-		ps a | grep -v grep | grep 'node buildtools/serve.js'; \
-		read -r -p "'make serve' might be running, which may cause problems. Abort? [Yn]" ABORT; \
-		if [ "$$ABORT" != "n" ]; then \
-			exit 1; \
-		fi \
-	fi
 	npm install
 	mkdir -p $(dir $@)
 	touch $@
@@ -675,25 +433,6 @@ $(PY_VENV_BIN)/mako-render: requirements.txt .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
-.PRECIOUS: .build/templatecache.js
-.build/templatecache.js: buildtools/templatecache.mako.js \
-		.build/glob2.timestamp \
-		$(PY_VENV_BIN)/mako-render \
-		$(NGEO_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		--var "partials=ngeo:src" \
-		--var "app=app" $< > $@
-
-.PRECIOUS: .build/gmftemplatecache.js
-.build/gmftemplatecache.js: buildtools/templatecache.mako.js \
-		.build/glob2.timestamp \
-		$(PY_VENV_BIN)/mako-render \
-		$(NGEO_PARTIALS_FILES) \
-		$(GMF_PARTIALS_FILES)
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		--var "partials=ngeo:src gmf:contribs/gmf/src" \
-		--var "app=app" $< > $@
-
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
 
@@ -708,34 +447,6 @@ $(PY_VENV_BIN)/mako-render: requirements.txt .build/python-venv
 contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
 	convert $< $@
 
-.PRECIOUS: .build/%.js
-.build/%.js: .build/app-%.json \
-		$(EXTERNS_FILES) \
-		${SRC_JS_FILES} \
-		${GMF_APPS_JS_FILES} \
-		$(GMF_SRC_JS_FILES) \
-		contribs/gmf/apps/%/js/controller.js \
-		.build/gmftemplatecache.js \
-		.build/node_modules.timestamp
-	mkdir -p $(dir $@)
-	node buildtools/build.js --config $< --output $@
-	echo '//# sourceMappingURL=$*.js.map' >> $@
-
-.PRECIOUS: contribs/gmf/build/%.js
-contribs/gmf/build/%.js: .build/%.js $(GMF_APPS_LIBS_JS_FILES)
-	awk 'FNR==1{print ""}1' $(GMF_APPS_LIBS_JS_FILES) $< > $@
-
-.PHONY: compile-css
-compile-css: $(addprefix contribs/gmf/build/,$(addsuffix .css,$(GMF_APPS)))
-
-.PRECIOUS: contribs/gmf/build/%.css
-contribs/gmf/build/%.css: contribs/gmf/apps/%/less/main.less \
-		$(GMF_APPS_LESS_FILES) \
-		.build/node_modules.timestamp \
-		$(FONTAWESOME_WEBFONT) \
-		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
-	mkdir -p $(dir $@)
-	./node_modules/.bin/lessc --autoprefix --clean-css="--s0" $< $@
 
 # i18n
 
@@ -862,7 +573,6 @@ clean:
 	rm -f .build/locale/gmf.pot
 	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
-	rm -f $(EXTERNS_FILES)
 	rm -f $(ANGULAR_LOCALES_FILES)
 	rm -f contribs/gmf/fonts/FontAwesome.otf
 	rm -f contribs/gmf/fonts/fontawesome-webfont.*
