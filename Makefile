@@ -117,11 +117,7 @@ help:
 apidoc: .build/apidoc
 
 .PHONY: check
-check: lint check-googs check-examples-checker check-examples test build-gmf-apps
-
-.PHONY: check-googs
-check-googs:
-	buildtools/check-no-goog.sh
+check: lint check-examples-checker check-examples test build-gmf-apps
 
 .PHONY: build-gmf-apps
 build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
