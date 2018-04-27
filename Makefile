@@ -25,8 +25,7 @@ GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
-	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS)))
-BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK := \
+	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS))) \
 	$(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
 
@@ -129,9 +128,6 @@ check-example-checker: $(CHECK_EXAMPLE_CHECKER)
 
 .PHONY: check-examples
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
-
-.PHONY: check-examples-webpack
-check-examples-webpack: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES_WEBPACK)
 
 .PHONY: lint
 lint: .build/eslint.timestamp git-attributes eof-newline
