@@ -192,6 +192,9 @@ help:
 	@echo "Main targets:"
 	@echo
 	@echo "- help                    Display this help message"
+	@echo "- serve-ngeo              Run a development web server for running the ngeo examples"
+	@echo "- serve-gmf               Run a development web server for running the gmf examples"
+	@echo "- serve-gmf-apps          Run a development web server for running the gmf apps"
 	@echo "- check                   Perform a number of checks on the code"
 	@echo "- test                    Run the test suite"
 	@echo "- test-debug              Run the test suite in the browser"
@@ -259,6 +262,17 @@ test-debug: .build/node_modules.timestamp .build/examples-hosted/lib/proj4.js .b
 	mkdir -p $(dir $@)
 	touch $@
 
+.PHONY: serve-ngeo
+serve-ngeo: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	npm run serve-ngeo-examples
+
+.PHONY: serve-gmf
+serve-gmf: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	npm run serve-gmf-examples
+
+.PHONY: serve-gmf-apps
+serve-gmf-apps: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	npm run serve-gmf-apps
 
 .PHONY: examples-hosted
 examples-hosted: \

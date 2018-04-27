@@ -6,6 +6,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const plugins = [];
 const entry = {};
 
+const exampleFilenamePrefix = process.env.DEV_SERVER ? 'contribs/gmf/examples/' : '';
+
 for (const filename of ls('contribs/gmf/examples/*.html')) {
   const name = filename.name;
   entry[name] = [
@@ -17,16 +19,13 @@ for (const filename of ls('contribs/gmf/examples/*.html')) {
     new HtmlWebpackPlugin({
       template: `contribs/gmf/examples/${name}.html`,
       chunksSortMode: 'manual',
-      filename: name + '.html',
-      chunks: ['commons', name],
-    }),
+      filename: exampleFilenamePrefix + name + '.html',
+      chunks: ['commons', name]
+    })
   );
 }
 
 module.exports = {
-  output: {
-    path: path.resolve(__dirname, '../.build/examples-hosted/contribs/gmf'),
-  },
   entry: entry,
   optimization: {
     splitChunks: {
@@ -36,3 +35,11 @@ module.exports = {
   },
   plugins: plugins,
 };
+
+if (!process.env.DEV_SERVER) {
+  Object.assign(module.exports, {
+    output: {
+      path: path.resolve(__dirname, '../.build/examples-hosted/contribs/gmf'),
+    },
+  });
+}
