@@ -1,32 +1,30 @@
 ANGULAR_VERSION := $(shell grep '"angular"' package.json | cut -d\" -f4)
-SRC_JS_FILES := $(shell find src -type f -name '*.js')
-TEST_JS_FILES := $(shell find test -type f -name '*.js')
-ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
-NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
-GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
-NGEO_EXAMPLES_PARTIALS_FILES := $(shell ls -1 examples/partials/*.html)
-GMF_EXAMPLES_PARTIALS_FILES := $(shell ls -1 contribs/gmf/examples/partials/*.html)
 
 OS := $(shell uname)
-
-EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
-EXAMPLES_JS_FILES := $(EXAMPLES_HTML_FILES:.html=.js)
-
-
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
+ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 
+NGEO_JS_FILES = $(shell find src -type f -name '*.js')
+NGEO_TEST_JS_FILES := $(shell find test -type f -name '*.js')
+NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
+NGEO_EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
+NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
+
+
+GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
+
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
-GMF_APPS_JS_FILES := $(shell find contribs/gmf/apps/ -type f -name '*.js')
-GMF_APPS_LESS_FILES := $(shell find contribs/gmf/less -type f -name '*.less')
+GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
 	$(addprefix .build/contribs/gmf/apps/,$(addsuffix .check.timestamp,$(GMF_APPS))) \
-	$(patsubst examples/%.html,.build/%.check.timestamp,$(EXAMPLES_HTML_FILES)) \
+	$(patsubst examples/%.html,.build/%.check.timestamp,$(NGEO_EXAMPLES_HTML_FILES)) \
 	$(patsubst contribs/gmf/examples/%.html,.build/contribs/gmf/%.check.timestamp,$(GMF_EXAMPLES_HTML_FILES))
 
 
@@ -53,11 +51,6 @@ TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell date --iso-8601=seconds)" $(HOME)/.trans
 else
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell $(STAT_LAST_MODIFIED) $(HOME)/.transifexrc)" $(HOME)/.transifexrc
 endif
-
-NGEO_JS_FILES = $(shell find src -type f -name '*.js')
-GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
-GMF_DEMO_HTML = $(shell find contribs/gmf/apps -type f -name '*.html')
-GMF_DEMO_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
 
 ifeq ($(OS),Darwin)
 	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
@@ -177,7 +170,7 @@ examples-hosted: \
 
 .PHONY: examples-hosted-ngeo
 examples-hosted-ngeo: \
-		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(EXAMPLES_HTML_FILES)) \
+		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(NGEO_EXAMPLES_HTML_FILES)) \
 
 .PHONY: examples-hosted-gmf
 examples-hosted-gmf: \
@@ -204,64 +197,17 @@ gh-pages:
 	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
 
 .build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
-		$(SRC_JS_FILES) \
-		$(TEST_JS_FILES) \
+		$(NGEO_JS_FILES) \
+		$(NGEO_TEST_JS_FILES) \
+		$(NGEO_EXAMPLES_JS_FILES) \
 		$(GMF_TEST_JS_FILES) \
-		$(EXAMPLES_JS_FILES) \
 		$(GMF_SRC_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
-.PRECIOUS: .build/examples-hosted/fonts/%
-.build/examples-hosted/fonts/%: node_modules/font-awesome/fonts/%
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/cursors/%
-.build/examples-hosted/contribs/gmf/cursors/%: contribs/gmf/cursors/%
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/data: examples/data
-	mkdir -p $@
-	cp examples/data/* $@
-
-.build/examples-hosted/contribs/gmf/data: contribs/gmf/examples/data
-	mkdir -p $@
-	cp contribs/gmf/examples/data/* $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/fonts/gmf-icons.%
-.build/examples-hosted/contribs/gmf/fonts/gmf-icons.%: contribs/gmf/fonts/gmf-icons.%
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont.%
-.build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont.%: contribs/gmf/fonts/fontawesome-webfont.%
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/build/%.js
-.build/examples-hosted/contribs/gmf/build/%.js: contribs/gmf/build/%.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/build/%.css
-.build/examples-hosted/contribs/gmf/build/%.css: contribs/gmf/build/%.css
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/build/%.json
-.build/examples-hosted/contribs/gmf/build/%.json: contribs/gmf/build/%.json
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/https.js
-.build/examples-hosted/https.js: examples/https.js
-	mkdir -p $(dir $@)
-	cp $< $@
-
+# FIXME: what to do with this rule?
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
@@ -277,70 +223,15 @@ gh-pages:
 		-e "s/var cacheVersion = '0';/var cacheVersion = '`git rev-parse HEAD`';/g" \
 		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
 		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/contextualdata.html
-.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html: contribs/gmf/apps/%/contextualdata.html
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/partials/%.html
-.build/examples-hosted/partials/%.html: examples/partials/%.html
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/partials/%.html
-.build/examples-hosted/contribs/gmf/partials/%.html: contribs/gmf/examples/partials/%.html
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico
-.build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico: contribs/gmf/apps/%/image/favicon.ico
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/logo.png
-.build/examples-hosted/contribs/gmf/apps/%/image/logo.png: contribs/gmf/apps/%/image/logo.png
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png
-.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png: contribs/gmf/apps/%/image/background-layer-button.png
-	mkdir -p $(dir $@)
-	cp $< $@
-
-.build/examples-hosted/contribs/gmf/apps/desktop_alt/contextualdata.html:
-	# no contextualdata partial for the desktop_alt
-
-.build/examples-hosted/contribs/gmf/apps/mobile_alt/contextualdata.html:
-	# no contextualdata partial for the mobile_alt
-
-.build/examples-hosted/contribs/gmf/apps/mobile/contextualdata.html:
-	# no contextualdata partial for the mobile
-
-.build/examples-hosted/contribs/gmf/apps/mobile_alt/image/logo.png:
-	# no logo for the mobile_alt
-
-.build/examples-hosted/contribs/gmf/apps/mobile/image/logo.png:
-	# no logo for the mobile
-
-.build/examples-hosted/contribs/gmf/apps/mobile_alt/image/background-layer-button.png:
-	# no background layer button for the mobile_alt
-
-.build/examples-hosted/contribs/gmf/apps/mobile/image/background-layer-button.png:
-	# no background layer button for the mobile
-
-.PRECIOUS: .build/examples-hosted/contribs/gmf/%.js
-.build/examples-hosted/contribs/gmf/%.js: .build/contribs/gmf/examples/%.js
-	mkdir -p $(dir $@)
-	cp $< $@
+	# FIXME: here we should call webpack to generate the gmf apps
 
 .build/examples-hosted/index.html: \
 		buildtools/examples-index.mako.html \
-		$(EXAMPLES_HTML_FILES) \
+		$(NGEO_EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
 		.build/beautifulsoup4.timestamp
 	mkdir -p $(dir $@)
-	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py $< $(EXAMPLES_HTML_FILES) > $@
+	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py $< $(NGEO_EXAMPLES_HTML_FILES) > $@
 
 .build/examples-hosted/contribs/gmf/index.html: \
 		buildtools/examples-index.mako.html \
@@ -422,7 +313,7 @@ $(PY_VENV_BIN)/mako-render: requirements.txt .build/python-venv
 .build/jsdocOl3.js: jsdoc/get-ol3-doc-ref.js .build/node_modules.timestamp
 	node $< > $@
 
-.build/apidoc: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(SRC_JS_FILES)
+.build/apidoc: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(NGEO_JS_FILES)
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
 
@@ -455,14 +346,14 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako $(PY_VENV_BIN)/m
 	node buildtools/extract-messages $(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
-		$(GMF_PARTIALS_FILES) $(GMF_JS_FILES)
+		$(GMF_PARTIALS_FILES) $(GMF_SRC_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_JS_FILES) > $@
+	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_SRC_JS_FILES) > $@
 
 .build/locale/apps.pot: lingua.cfg .build/node_modules.timestamp \
-		$(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES)
+		$(GMF_APPS_HTML_FILES) $(GMF_APPS_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(GMF_DEMO_HTML) $(GMF_DEMO_JS_FILES) > $@
+	node buildtools/extract-messages $(GMF_APPS_HTML_FILES) $(GMF_APPS_JS_FILES) > $@
 
 $(PY_VENV_BIN)/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
 	$(PY_VENV_BIN)/pip install `grep ^transifex-client== $< --colour=never | sed 's/\#.*//g'`
@@ -547,8 +438,6 @@ clean:
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
 	rm -f .build/app-*.json
-	rm -f .build/templatecache.js
-	rm -f .build/gmftemplatecache.js
 	rm -rf .build/apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
