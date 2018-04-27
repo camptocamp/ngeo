@@ -272,15 +272,6 @@ gh-pages:
 
 .PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
 .build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
-		.build/examples-hosted/contribs/gmf/apps/%/contextualdata.html \
-		.build/examples-hosted/contribs/gmf/apps/%/image/favicon.ico \
-		.build/examples-hosted/contribs/gmf/apps/%/image/logo.png \
-		.build/examples-hosted/contribs/gmf/apps/%/image/background-layer-button.png \
-		.build/examples-hosted/contribs/gmf/build/%.js \
-		.build/examples-hosted/contribs/gmf/build/%.css \
-		.build/examples-hosted/contribs/gmf/build/images \
-		.build/examples-hosted/lib/watchwatchers.js \
-		.build/examples-hosted/lib/ios-overlap-fix.js \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
 		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
