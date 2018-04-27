@@ -15,7 +15,7 @@ for (const filename of ls('contribs/gmf/apps/*/index.html')) {
     new HtmlWebpackPlugin({
       template: filename.full,
       chunksSortMode: 'manual',
-      filename: filenamePrefix + name + '.html',
+      filename: filenamePrefix + name,
       chunks: ['commons', name]
     })
   );
