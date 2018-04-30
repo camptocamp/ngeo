@@ -177,29 +177,29 @@ examples-hosted: \
 		examples-hosted-apps
 
 .PHONY: examples-hosted-ngeo
-examples-hosted-ngeo: .build/examples-ngeo.timestamp
+examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/index.html
 
-.build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp .build/examples-hosted/index.html
+.build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
 	npm run build-ngeo-examples
 	touch $@
 
 .PHONY: examples-hosted-gmf
-examples-hosted-gmf: .build/examples-gmf.timestamp
+examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
-.build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp .build/examples-hosted/contribs/gmf/index.html
+.build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
 	npm run build-gmf-examples
 	touch $@
 
 .PHONY: examples-hosted-apps
-examples-hosted-apps: .build/gmf-apps.timestamp
+examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
 
-.build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
+.build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
 	npm run build-gmf-apps
 	touch $@
 
-.PHONY: python-buildtools-deps
-python-buildtools-deps: .build/requests.timestamp .build/urllib3.timestamp .build/beautifulsoup4.timestamp
+.build/python-buildtools-deps.timestamp: .build/requests.timestamp .build/urllib3.timestamp .build/beautifulsoup4.timestamp
 	# needed for the generate-examples-index.py, gh-pages-cleanup and deploy helper scripts
+	touch $@
 
 .build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^beautifulsoup4== $< --colour=never`
@@ -214,7 +214,7 @@ python-buildtools-deps: .build/requests.timestamp .build/urllib3.timestamp .buil
 	touch $@
 
 .PHONY: gh-pages
-gh-pages: python-buildtools-deps
+gh-pages: .build/python-buildtools-deps.timestamp
 	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
@@ -239,14 +239,17 @@ gh-pages: python-buildtools-deps
 		$(addprefix contribs/gmf/fonts/gmf-icons., eot ttf woff) \
 		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
 	mkdir -p .build/examples-hosted/contribs/gmf
-	$(foreach f,$^,mkdir -p .build/examples-hosted/`dirname $(f)`; cp $(f) .build/examples-hosted/$(f);)
+	# We need the files for each app
+	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
+	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
+	cd .build/examples-hosted/gmfappsdeps/contribs/gmf; $(foreach app, $(GMF_APPS), rsync -r . ../../../contribs/gmf/apps/$(app)/;)
 	touch $@
 
 .build/examples-hosted/index.html: \
 		buildtools/examples-index.mako.html \
 		$(NGEO_EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
-		python-buildtools-deps
+		.build/python-buildtools-deps.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py $< $(NGEO_EXAMPLES_HTML_FILES) > $@
 
@@ -254,7 +257,7 @@ gh-pages: python-buildtools-deps
 		buildtools/examples-index.mako.html \
 		$(GMF_EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
-		python-buildtools-deps
+		.build/python-buildtools-deps.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \

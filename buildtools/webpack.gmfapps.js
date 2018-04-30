@@ -2,6 +2,7 @@ const path = require('path');
 const ls = require('ls');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const plugins = [];
 const entry = {};
@@ -19,7 +20,19 @@ for (const filename of ls('contribs/gmf/apps/*/index.html')) {
       chunks: ['commons', name]
     })
   );
+
+  plugins.push(new CopyWebpackPlugin([
+      {
+        from: filename.path + '/image',
+        to: name + '/image',
+        flatten: true
+      },
+    ], {
+      debug: 'debug'
+    }
+  ));
 }
+
 
 module.exports = {
   entry: entry,
