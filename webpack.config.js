@@ -3,11 +3,12 @@ const commons = require('./buildtools/webpack.commons');
 
 let config = commons.config;
 
-switch (process.env.NODE_ENV) {
-  case 'dev':
+const nodeEnv = process.env['NODE_ENV'] || 'development';
+switch (nodeEnv) {
+  case 'development':
     config = webpackMerge(config, require('./buildtools/webpack.dev'));
     break;
-  case 'prod':
+  case 'production':
     config = webpackMerge(config, require('./buildtools/webpack.prod'));
     break;
   default:

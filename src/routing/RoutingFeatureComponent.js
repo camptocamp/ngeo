@@ -26,7 +26,7 @@ exports.module = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimInputComponent.module.name
 ]);
 
-exports.run(/* @ngInject */ ($templateCache) => {
+exports.module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
 });
 
