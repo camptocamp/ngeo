@@ -235,14 +235,12 @@ gh-pages: .build/python-buildtools-deps.timestamp
 .build/examples-hosted-gmf-apps-deps.timestamp: \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
 		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
-		$(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
-		$(addprefix contribs/gmf/fonts/gmf-icons., eot ttf woff) \
 		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
 	mkdir -p .build/examples-hosted/contribs/gmf
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	cd .build/examples-hosted/gmfappsdeps/contribs/gmf; $(foreach app, $(GMF_APPS), rsync -r . ../../../contribs/gmf/apps/$(app)/;)
+	$(foreach app, $(GMF_APPS), rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/$(app)/;)
 	touch $@
 
 .build/examples-hosted/index.html: \
