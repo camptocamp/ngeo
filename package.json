@@ -37,7 +37,7 @@
     "babel-core": "6.26.0",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.6.1",
-    "bootstrap": "3.3.7",
+    "bootstrap": "4.1.1",
     "commander": "2.15.1",
     "console-control-strings": "1.1.0",
     "copy-webpack-plugin": "4.5.1",
