@@ -35,7 +35,7 @@ module.exports = {
 if (!process.env.DEV_SERVER) {
   Object.assign(module.exports, {
     output: {
-      path: path.resolve(__dirname, '../.build/contribs-gmf-apps'),
+      path: path.resolve(__dirname, '../.build/examples-hosted/contribs/gmf/apps'),
     },
   });
 }
