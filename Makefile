@@ -4,7 +4,7 @@ FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot t
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
-NGEO_JS_FILES = $(shell find src -type f -name '*.js')
+NGEO_JS_FILES = $(shell find src/ -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
 NGEO_TEST_JS_FILES := $(shell find test/ -type f -name '*.js')
