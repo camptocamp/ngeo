@@ -16,6 +16,7 @@ import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 import * as olBase from 'ol/index.js';
 import * as olArray from 'ol/array.js';
+import 'font-awesome/css/font-awesome.css';
 
 /**
  * @type {!angular.Module}

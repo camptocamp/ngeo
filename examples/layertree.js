@@ -50,7 +50,7 @@ exports.layertreeComponent = {
       '</div>'
 };
 
-exports.run(/* @ngInject */ ($templateCache) => {
+exports.module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('examples/layertree', require('./partials/layertree.html'));
 });
 

@@ -5,6 +5,7 @@ import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import olMap from 'ol/Map.js';
 import * as olEvents from 'ol/events.js';
+import 'bootstrap/js/dropdown.js';
 
 /**
  * @type {!angular.Module}

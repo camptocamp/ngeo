@@ -30,7 +30,7 @@ exports.module = angular.module('app', [
  * @type {!angular.Component}
  */
 exports.searchComponent = {
-  bndings: {
+  bindings: {
     'map': '=appSearchMap'
   },
   controller: 'AppSearchController',

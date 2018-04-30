@@ -16,7 +16,7 @@ import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
-import olInteractionPointer from 'ol/interaction/Pointer.js';
+import olInteractionPointer, {handleEvent as pointerHandleEvent} from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStructsRBush from 'ol/structs/RBush.js';
@@ -117,7 +117,7 @@ const exports = function(options) {
    */
   this.features_ = options.features;
 
-  this.features_.forEach(this.addFeature_, this);
+  this.features_.forEach(() => this.addFeature_);
   olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
   olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
@@ -394,7 +394,7 @@ exports.handleEvent = function(mapBrowserEvent) {
     this.handlePointerMove_(mapBrowserEvent);
   }
 
-  return olInteractionPointer.handleEvent.call(this, mapBrowserEvent) &&
+  return pointerHandleEvent.call(this, mapBrowserEvent) &&
       !handled;
 };
 

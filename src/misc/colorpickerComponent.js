@@ -93,6 +93,7 @@ exports.Controller_ = function($scope, $element, $attrs) {
   /**
    * The selected color
    * @type {undefined|string}
+   * @export
    */
   this.color;
 };

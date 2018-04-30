@@ -163,7 +163,7 @@ exports.prototype.setState_ = function() {
   });
 
   if (active && map) {
-    this.features_.forEach(this.addFeature_, this);
+    this.features_.forEach(() => this.addFeature_);
     keys.push(
       olEvents.listen(this.features_, 'add', this.handleFeaturesAdd_, this),
       olEvents.listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
@@ -171,7 +171,7 @@ exports.prototype.setState_ = function() {
   } else {
     keys.forEach(olEvents.unlistenByKey);
     keys.length = 0;
-    this.features_.forEach(this.removeFeature_, this);
+    this.features_.forEach(() => this.removeFeature_);
   }
 };
 

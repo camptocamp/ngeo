@@ -14,7 +14,7 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olGeomCircle from 'ol/geom/Circle.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import {fromCircle} from 'ol/geom/Polygon.js';
 import olCollection from 'ol/Collection.js';
 import olFeature from 'ol/Feature.js';
 import ngeoMapModule from 'ngeo/map/module.js';
@@ -60,7 +60,7 @@ exports.MainController = function() {
   this.features = new olCollection();
 
   const circleFeature = new olFeature({
-    geometry: olGeomPolygon.fromCircle(circle),
+    geometry: fromCircle(circle),
     color: '#000000',
     label: 'Circle 1',
     opacity: '0.5',

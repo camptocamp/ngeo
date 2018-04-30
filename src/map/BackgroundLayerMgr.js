@@ -10,6 +10,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
+import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 /**
  * Provides a service for setting/unsetting background layers
@@ -211,7 +212,9 @@ exports.prototype.updateDimensions = function(map, dimensions) {
 /**
  * @type {!angular.Module}
  */
-exports.module = angular.module('ngeoBackgroundLayerMgr', []);
+exports.module = angular.module('ngeoBackgroundLayerMgr', [
+  ngeoLayerHelper.module.name
+]);
 exports.module.service('ngeoBackgroundLayerMgr', exports);
 
 /**

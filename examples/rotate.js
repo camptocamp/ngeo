@@ -138,13 +138,13 @@ exports.MainController = function() {
   interaction.setActive(false);
   map.addInteraction(interaction);
 
-  map.on('singleclick', function(evt) {
+  map.on('singleclick', (evt) => {
     const feature = this.map.forEachFeatureAtPixel(evt.pixel,
       feature => feature);
     if (feature) {
       this.interaction.setActive(true);
     }
-  }, this);
+  });
 };
 
 
