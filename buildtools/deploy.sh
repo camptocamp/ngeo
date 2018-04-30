@@ -16,9 +16,7 @@ then
     make .build/apidoc
 fi
 
-make .build/ngeo-${GITHUB_USERNAME}-gh-pages \
-    .build/requests.timestamp \
-    .build/urllib3.timestamp
+make .build/ngeo-${GITHUB_USERNAME}-gh-pages
 
 cd .build/ngeo-${GITHUB_USERNAME}-gh-pages
 git fetch ${GIT_REMOTE_NAME}
