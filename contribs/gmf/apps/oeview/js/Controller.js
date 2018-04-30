@@ -9,7 +9,6 @@
  */
 
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
-import '../../../../../utils/watchwatchers.js';
 import '../less/main.less';
 import appBase from '../../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';

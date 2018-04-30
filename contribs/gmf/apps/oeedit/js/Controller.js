@@ -9,7 +9,6 @@
  */
 
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
-import '../../../../../utils/watchwatchers.js';
 import '../less/main.less';
 import appBase from '../../appmodule.js';
 import gmfObjecteditingModule from 'gmf/objectediting/module.js';
