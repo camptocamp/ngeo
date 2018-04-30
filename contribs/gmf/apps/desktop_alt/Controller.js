@@ -1,5 +1,5 @@
 /**
- * @module app.oeedit.Controller
+ * @module app.desktop_alt.Controller
  */
 /**
  * Application entry point.
@@ -9,17 +9,15 @@
  */
 
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
-import '../../../../../utils/watchwatchers.js';
-import '../less/main.less';
-import appBase from '../../appmodule.js';
-import gmfObjecteditingModule from 'gmf/objectediting/module.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import './less/main.less';
+import appBase from '../appmodule.js';
+import gmfImportModule from 'gmf/import/module.js';
+import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
-import olCollection from 'ol/Collection.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -31,20 +29,15 @@ if (!window.requestAnimationFrame) {
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {ngeo.misc.File} ngeoFile The file service.
+ * @param {gettext} gettext The gettext service
+ * @param {angular.$q} $q Angular $q.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector, $timeout) {
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.oeEditActive = false;
-
+const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -55,106 +48,22 @@ const exports = function($scope, $injector, $timeout) {
   }, $scope, $injector);
 
   /**
-   * The ngeo ToolActivate manager service.
-   * @type {ngeo.misc.ToolActivateMgr}
-   */
-  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-
-  ngeoToolActivateMgr.unregisterGroup('mapTools');
-
-  const oeEditToolActivate = new ngeoMiscToolActivate(this, 'oeEditActive');
-  ngeoToolActivateMgr.registerTool('mapTools', oeEditToolActivate, true);
-
-  const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
-  ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
-
-  // Set edit tool as default active one
-  $timeout(() => {
-    this.oeEditActive = true;
-  });
-
-  /**
-   * @type {ol.source.Vector}
-   * @private
-   */
-  this.vectorSource_ = new olSourceVector({
-    wrapX: false
-  });
-
-  /**
-   * @type {ol.layer.Vector}
-   * @private
-   */
-  this.vectorLayer_ = new olLayerVector({
-    source: this.vectorSource_
-  });
-
-  /**
-   * @type {ol.Collection.<ol.Feature>}
-   * @export
-   */
-  this.sketchFeatures = new olCollection();
-
-  /**
-   * @type {ol.layer.Vector}
-   * @private
-   */
-  this.sketchLayer_ = new olLayerVector({
-    source: new olSourceVector({
-      features: this.sketchFeatures,
-      wrapX: false
-    })
-  });
-
-  /**
-   * @type {gmf.theme.Themes} gmfObjectEditingManager The gmf theme service
-   */
-  const gmfThemes = $injector.get('gmfThemes');
-
-  gmfThemes.getThemesObject().then((themes) => {
-    if (themes) {
-      // Add layer vector after
-      this.map.addLayer(this.vectorLayer_);
-      this.map.addLayer(this.sketchLayer_);
-    }
-  });
-
-  /**
-   * @type {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
-   *     ObjectEditing manager service.
-   */
-  const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
-
-  /**
-   * @type {string|undefined}
-   * @export
-   */
-  this.oeGeomType = gmfObjectEditingManager.getGeomType();
-
-  /**
-   * @type {number|undefined}
-   * @export
-   */
-  this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
-
-  /**
-   * @type {?ol.Feature}
-   * @export
-   */
-  this.oeFeature = null;
-
-  gmfObjectEditingManager.getFeature().then((feature) => {
-    this.oeFeature = feature;
-    if (feature) {
-      this.vectorSource_.addFeature(feature);
-    }
-  });
-
-  /**
    * @type {Array.<string>}
    * @export
    */
   this.searchCoordinatesProjections = [ngeoProjEPSG21781, ngeoProjEPSG2056, 'EPSG:4326'];
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.searchDelay = 500;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.showInfobar = true;
 
   /**
    * @type {!Array.<number>}
@@ -166,21 +75,14 @@ const exports = function($scope, $injector, $timeout) {
    * @type {Array.<string>}
    * @export
    */
-  this.elevationLayers = ['aster', 'srtm'];
-
-  /**
-   * @type {string}
-   * @export
-   */
-  this.selectedElevationLayer = this.elevationLayers[0];
+  this.elevationLayers = ['srtm'];
 
   /**
    * @type {Object.<string, gmfx.ProfileLineConfiguration>}
    * @export
    */
   this.profileLinesconfiguration = {
-    'aster': {color: '#0000A0'},
-    'srtm': {color: '#00A000'}
+    'srtm': {}
   };
 
   /**
@@ -188,11 +90,11 @@ const exports = function($scope, $injector, $timeout) {
    * @export
    */
   this.mousePositionProjections = [{
-    code: ngeoProjEPSG2056,
+    code: 'EPSG:2056',
     label: 'CH1903+ / LV95',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
-    code: ngeoProjEPSG21781,
+    code: 'EPSG:21781',
     label: 'CH1903 / LV03',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
@@ -201,23 +103,85 @@ const exports = function($scope, $injector, $timeout) {
     filter: 'ngeoDMSCoordinates:2'
   }];
 
+  /**
+   * @type {gmfx.GridMergeTabs}
+   * @export
+   */
+  this.gridMergeTabs = {
+    'OSM_time_merged': ['osm_time', 'osm_time2'],
+    'transport (merged)': ['fuel', 'parking'],
+    'Learning [merged]': ['information', 'bus_stop']
+  };
+
   // Allow angular-gettext-tools to collect the strings to translate
   /** @type {angularGettext.Catalog} */
   const gettextCatalog = $injector.get('gettextCatalog');
+  gettextCatalog.getString('OSM_time_merged');
+  gettextCatalog.getString('OSM_time (merged)');
+  gettextCatalog.getString('Learning [merged]');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
   gettextCatalog.getString('Add a layer');
+
+  /**
+   * @type {string}
+   * @export
+   */
+  this.bgOpacityOptions = 'Test aus Olten';
 };
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('AppOEEdit', [
+
+/**
+ * @param {jQuery.Event} event keydown event.
+ * @export
+ */
+exports.prototype.onKeydown = function(event) {
+  if (event.ctrlKey && event.key === 'p') {
+    this.printPanelActive = true;
+    event.preventDefault();
+  }
+};
+
+
+exports.module = angular.module('AppDesktopAlt', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
-  gmfObjecteditingModule.name,
+  gmfImportModule.name,
+  ngeoRoutingModule.name,
+  ngeoGooglestreetviewModule.name,
+  ngeoStatemanagerWfsPermalink.module.name,
 ]);
 
-exports.module.controller('OEEditController', exports);
+exports.module.controller('AlternativeDesktopController', exports);
+
+exports.module.value('ngeoQueryOptions', {
+  'limit': 20,
+  'queryCountFirst': true,
+  'cursorHover': true
+});
+
+exports.module.value('gmfExternalOGCServers', [{
+  'name': 'Swiss Topo WMS',
+  'type': 'WMS',
+  'url': 'https://wms.geo.admin.ch/?lang=fr'
+}, {
+  'name': 'ASIT VD',
+  'type': 'WMTS',
+  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
+}, {
+  'name': 'Swiss Topo WMTS',
+  'type': 'WMTS',
+  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
+}]);
+
+exports.module.value('gmfPrintOptions', {
+  'scaleInput': true
+});
+
+exports.module.value('ngeoMeasurePrecision', 6);
+exports.module.value('ngeoMeasureDecimals', 2);
 
 (function() {
   const cacheVersion = '0';
@@ -236,19 +200,32 @@ exports.module.controller('OEEditController', exports);
     langUrls[lang] = langUrlElements.join('/');
   });
 
-  const module = angular.module('AppOEEdit');
-  module.constant('defaultTheme', 'ObjectEditing');
+  const module = angular.module('AppDesktopAlt');
+  module.constant('defaultTheme', 'Demo');
   module.constant('defaultLang', 'en');
   module.constant('langUrls', langUrls);
   module.constant('cacheVersion', cacheVersion);
   module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
-  module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+  module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop&ranksystem=ts_rank_cd');
   module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
-  module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
   module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/printproxy');
+  module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
   module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=desktop');
   module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
-  module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/short/create');
+  module.constant('gmfShortenerCreateUrl', '');
+  module.constant('ngeoRoutingOptions', {
+    'backendUrl': 'https://routing.osm.ch/',
+    'profiles': [
+      {label: 'Car', profile: 'routed-car'},
+      {label: 'Bike (City)', profile: 'routed-bike'},
+      {label: 'Bike (Touring)', profile: 'routed-bike-touring'},
+      {label: 'Foot', profile: 'routed-foot'},
+      {label: 'Hiking', profile: 'routed-hiking'}
+    ]
+  });
+  module.constant('ngeoNominatimSearchDefaultParams', {
+    'countrycodes': 'CH'
+  });
   module.constant('gmfSearchGroups', ['osm', 'district']);
   // Requires that the gmfSearchGroups is specified
   module.constant('gmfSearchActions', [
@@ -256,7 +233,8 @@ exports.module.controller('OEEditController', exports);
     {action: 'add_group', title: 'Add a sub theme'},
     {action: 'add_layer', title: 'Add a layer'}
   ]);
-  module.constant('gmfContextualdatacontentTemplateUrl', `${window.location.pathname}contextualdata.html`);
+  module.constant('gmfTreeManagerModeFlush', false);
+  module.value('gmfPermalinkOptions', {projectionCodes: ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'], useLocalStorage: false});
   module.value('ngeoWfsPermalinkOptions',
     /** @type {ngeox.WfsPermalinkOptions} */ ({
       url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
@@ -267,6 +245,10 @@ exports.module.controller('OEEditController', exports);
       defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
       defaultFeaturePrefix: 'feature'
     }));
+  module.constant('ngeoTilesPreloadingLimit', 0);
+  module.constant('ngeoQueryOptions', {
+    limit: 50
+  });
 })();
 
 export default exports;

@@ -1,5 +1,5 @@
 /**
- * @module app.desktop.Controller
+ * @module app.oeview.Controller
  */
 /**
  * Application entry point.
@@ -9,9 +9,8 @@
  */
 
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
-import '../../../../../utils/watchwatchers.js';
-import '../less/main.less';
-import appBase from '../../appmodule.js';
+import './less/main.less';
+import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
@@ -102,26 +101,12 @@ const exports = function($scope, $injector) {
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('AppDesktop', [
+exports.module = angular.module('AppOEView', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
 ]);
 
 exports.module.controller('DesktopController', exports);
-
-exports.module.value('gmfExternalOGCServers', [{
-  'name': 'Swiss Topo WMS',
-  'type': 'WMS',
-  'url': 'https://wms.geo.admin.ch/?lang=fr'
-}, {
-  'name': 'ASIT VD',
-  'type': 'WMTS',
-  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
-}, {
-  'name': 'Swiss Topo WMTS',
-  'type': 'WMTS',
-  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
-}]);
 
 (function() {
   const cacheVersion = '0';
@@ -140,8 +125,8 @@ exports.module.value('gmfExternalOGCServers', [{
     langUrls[lang] = langUrlElements.join('/');
   });
 
-  const module = angular.module('AppDesktop');
-  module.constant('defaultTheme', 'Demo');
+  const module = angular.module('AppOEView');
+  module.constant('defaultTheme', 'ObjectEditing');
   module.constant('defaultLang', 'en');
   module.constant('langUrls', langUrls);
   module.constant('cacheVersion', cacheVersion);
@@ -165,8 +150,9 @@ exports.module.value('gmfExternalOGCServers', [{
     /** @type {ngeox.WfsPermalinkOptions} */ ({
       url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
       wfsTypes: [
-        {featureType: 'fuel', label: 'display_name'},
-        {featureType: 'osm_scale', label: 'display_name'}
+        {featureType: 'line', label: 'name'},
+        {featureType: 'point', label: 'name'},
+        {featureType: 'polygon', label: 'name'}
       ],
       defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
       defaultFeaturePrefix: 'feature'

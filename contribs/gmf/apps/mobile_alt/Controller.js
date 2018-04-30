@@ -1,5 +1,5 @@
 /**
- * @module app.mobile.Controller
+ * @module app.mobile_alt.Controller
  */
 /**
  * Application entry point.
@@ -9,12 +9,15 @@
  */
 
 import gmfControllersAbstractMobileController from 'gmf/controllers/AbstractMobileController.js';
-import '../../../../../utils/watchwatchers.js';
-import '../less/main.less';
-import appBase from '../../appmodule.js';
+import './less/main.less';
+import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -33,7 +36,8 @@ if (!window.requestAnimationFrame) {
  */
 const exports = function($scope, $injector) {
   gmfControllersAbstractMobileController.call(this, {
-    autorotate: false,
+    autorotate: true,
+    mapPixelRatio: 1,
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -52,21 +56,54 @@ const exports = function($scope, $injector) {
   ];
 
   /**
+   * @type {number}
+   * @export
+   */
+  this.searchDelay = 50;
+
+  /**
    * @type {Array.<string>}
    * @export
    */
   this.searchCoordinatesProjections = [ngeoProjEPSG21781, ngeoProjEPSG2056, 'EPSG:4326'];
 
+
+  /**
+   * @type {ol.style.Style}
+   * @export
+   */
+  this.customMeasureStyle = new olStyleStyle({
+    fill: new olStyleFill({
+      color: 'rgba(255, 128, 128, 0.2)'
+    }),
+    stroke: new olStyleStroke({
+      color: 'rgba(255, 0, 0, 0.5)',
+      lineDash: [10, 10],
+      width: 2
+    }),
+    image: new olStyleRegularShape({
+      stroke: new olStyleStroke({
+        color: 'rgba(255, 0, 0, 0.7)',
+        width: 2
+      }),
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
+
 };
 
 olBase.inherits(exports, gmfControllersAbstractMobileController);
 
-exports.module = angular.module('AppMobile', [
+
+exports.module = angular.module('AppMobileAlt', [
   appBase.module.name,
   gmfControllersAbstractMobileController.module.name,
 ]);
 
-exports.module.controller('MobileController', exports);
+exports.module.controller('AlternativeMobileController', exports);
 
 (function() {
   const cacheVersion = '0';
@@ -85,7 +122,7 @@ exports.module.controller('MobileController', exports);
     langUrls[lang] = langUrlElements.join('/');
   });
 
-  const module = angular.module('AppMobile');
+  const module = angular.module('AppMobileAlt');
   module.constant('defaultTheme', 'Demo');
   module.constant('defaultLang', 'en');
   module.constant('langUrls', langUrls);
@@ -99,6 +136,7 @@ exports.module.controller('MobileController', exports);
   module.constant('gmfSearchGroups', []);
   // Requires that the gmfSearchGroups is specified
   module.constant('gmfSearchActions', []);
+  module.constant('gmfTreeManagerModeFlush', false);
   module.value('ngeoWfsPermalinkOptions',
     /** @type {ngeox.WfsPermalinkOptions} */ ({
       url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
@@ -109,6 +147,7 @@ exports.module.controller('MobileController', exports);
       defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
       defaultFeaturePrefix: 'feature'
     }));
+  module.constant('ngeoTilesPreloadingLimit', 0);
 })();
 
 export default exports;
