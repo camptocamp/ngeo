@@ -2,22 +2,26 @@ ANGULAR_VERSION := $(shell grep '"angular"' package.json | cut -d\" -f4)
 
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
+WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
-NGEO_TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
+NGEO_ALL_SRC_FILES := $(shell find src -type f)
+NGEO_TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src -type f)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
-GMF_JS_FILES = $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
+GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps -type f -name '*.html')
+GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps -type f)
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
@@ -173,16 +177,25 @@ examples-hosted: \
 		examples-hosted-apps
 
 .PHONY: examples-hosted-ngeo
-examples-hosted-ngeo: \
-		$(patsubst examples/%.html,.build/examples-hosted/%.html,$(NGEO_EXAMPLES_HTML_FILES)) \
+examples-hosted-ngeo: .build/examples-ngeo.timestamp
+
+.build/examples-ngeo.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp .build/examples-hosted/index.html
+	npm run build-ngeo-examples
+	touch $@
 
 .PHONY: examples-hosted-gmf
-examples-hosted-gmf: \
-		$(patsubst contribs/gmf/examples/%.html,.build/examples-hosted/contribs/gmf/%.html,$(GMF_EXAMPLES_HTML_FILES)) \
+examples-hosted-gmf: .build/examples-gmf.timestamp
+
+.build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp .build/examples-hosted/contribs/gmf/index.html
+	npm run build-gmf-examples
+	touch $@
 
 .PHONY: examples-hosted-apps
-examples-hosted-apps: \
-		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
+examples-hosted-apps: .build/gmf-apps.timestamp
+
+.build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
+	npm run build-gmf-apps
+	touch $@
 
 .PHONY: python-buildtools-deps
 python-buildtools-deps: .build/requests.timestamp .build/urllib3.timestamp .build/beautifulsoup4.timestamp
@@ -219,23 +232,15 @@ gh-pages: python-buildtools-deps
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
-# FIXME: what to do with this rule?
-.PRECIOUS: .build/examples-hosted/contribs/gmf/apps/%/index.html
-.build/examples-hosted/contribs/gmf/apps/%/index.html: contribs/gmf/apps/%/index.html \
-		$(addprefix .build/examples-hosted/contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
-		$(addprefix .build/examples-hosted/contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
-		$(addprefix .build/examples-hosted/contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
-		$(addprefix .build/examples-hosted/contribs/gmf/fonts/gmf-icons., eot ttf woff) \
-		$(addprefix .build/examples-hosted/contribs/gmf/cursors/,grab.cur grabbing.cur)
-	mkdir -p $(dir $@)
-	sed -e '/stylesheet\/less" href="..\/..\//d' \
-		-e '/\/node_modules\//d' \
-		-e '/default\.js/d' \
-		-e '/utils\/ios-overlap-fix\.js/d' \
-		-e "s/var cacheVersion = '0';/var cacheVersion = '`git rev-parse HEAD`';/g" \
-		-e 's|utils/watchwatchers\.js|lib/watchwatchers.js|' \
-		-e 's|/@?main=$*/js/controller\.js|../../build/$*.js|' $< > $@
-	# FIXME: here we should call webpack to generate the gmf apps
+.build/examples-hosted-gmf-apps-deps.timestamp: \
+		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
+		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
+		$(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2) \
+		$(addprefix contribs/gmf/fonts/gmf-icons., eot ttf woff) \
+		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
+	mkdir -p .build/examples-hosted/contribs/gmf
+	$(foreach f,$^,mkdir -p .build/examples-hosted/`dirname $(f)`; cp $(f) .build/examples-hosted/$(f);)
+	touch $@
 
 .build/examples-hosted/index.html: \
 		buildtools/examples-index.mako.html \
@@ -359,9 +364,9 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako $(PY_VENV_BIN)/m
 	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_SRC_JS_FILES) > $@
 
 .build/locale/apps.pot: lingua.cfg .build/node_modules.timestamp \
-		$(GMF_APPS_HTML_FILES) $(GMF_APPS_JS_FILES)
+		$(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(GMF_APPS_HTML_FILES) $(GMF_APPS_JS_FILES) > $@
+	node buildtools/extract-messages $(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES) > $@
 
 $(PY_VENV_BIN)/tx: requirements.txt .build/python-venv $(HOME)/.transifexrc
 	$(PY_VENV_BIN)/pip install `grep ^transifex-client== $< --colour=never | sed 's/\#.*//g'`
