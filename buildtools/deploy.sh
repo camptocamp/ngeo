@@ -1,6 +1,7 @@
 #!/bin/bash -ex
 
 make .build/node_modules.timestamp
+make .build/python-venv.timestamp
 
 if [ "${JOB}" == publish-examples ]
 then
