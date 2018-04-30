@@ -12,7 +12,7 @@ NGEO_EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.h
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
-GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
+GMF_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
 GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src -type f)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
@@ -226,7 +226,7 @@ gh-pages: .build/python-buildtools-deps.timestamp
 		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
 		$(GMF_TEST_JS_FILES) \
-		$(GMF_SRC_JS_FILES) \
+		$(GMF_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES)
 	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
@@ -362,9 +362,9 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako $(PY_VENV_BIN)/m
 	node buildtools/extract-messages $(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
 
 .build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
-		$(GMF_PARTIALS_FILES) $(GMF_SRC_JS_FILES)
+		$(GMF_PARTIALS_FILES) $(GMF_JS_FILES)
 	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_SRC_JS_FILES) > $@
+	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_JS_FILES) > $@
 
 .build/locale/apps.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES)
