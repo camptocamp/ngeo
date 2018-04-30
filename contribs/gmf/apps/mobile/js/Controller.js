@@ -67,47 +67,4 @@ exports.module = angular.module('AppMobile', [
 
 exports.module.controller('MobileController', exports);
 
-(function() {
-  const cacheVersion = '0';
-  const urlElements = window.location.pathname.split('/');
-
-  const angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
-  angularLocaleScriptUrlElements.push('build', `angular-locale_{{locale}}.js?cache_version=${cacheVersion}`);
-
-  const gmfModule = angular.module('GmfAbstractAppControllerModule');
-  gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
-
-  const langUrls = {};
-  ['en', 'fr', 'de'].forEach((lang) => {
-    const langUrlElements = urlElements.slice(0, urlElements.length - 3);
-    langUrlElements.push('build', `gmf-${lang}.json?cache_version=${cacheVersion}`);
-    langUrls[lang] = langUrlElements.join('/');
-  });
-
-  const module = angular.module('AppMobile');
-  module.constant('defaultTheme', 'Demo');
-  module.constant('defaultLang', 'en');
-  module.constant('langUrls', langUrls);
-  module.constant('cacheVersion', cacheVersion);
-  module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
-  module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=20&interface=mobile');
-  module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background&interface=mobile');
-  module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers');
-  module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
-  module.constant('gmfShortenerCreateUrl', '');
-  module.constant('gmfSearchGroups', []);
-  // Requires that the gmfSearchGroups is specified
-  module.constant('gmfSearchActions', []);
-  module.value('ngeoWfsPermalinkOptions',
-    /** @type {ngeox.WfsPermalinkOptions} */ ({
-      url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
-      wfsTypes: [
-        {featureType: 'fuel', label: 'display_name'},
-        {featureType: 'osm_scale', label: 'display_name'}
-      ],
-      defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-      defaultFeaturePrefix: 'feature'
-    }));
-})();
-
 export default exports;
