@@ -1,6 +1,5 @@
 ANGULAR_VERSION := $(shell grep '"angular"' package.json | cut -d\" -f4)
 
-OS := $(shell uname)
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 
@@ -9,7 +8,6 @@ NGEO_TEST_JS_FILES := $(shell find test -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
-
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_SRC_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
@@ -36,6 +34,7 @@ export GITHUB_USERNAME
 export GIT_BRANCH
 export GIT_REMOTE_NAME
 
+
 # i18n
 L10N_LANGUAGES = fr de
 L10N_PO_FILES = \
@@ -52,6 +51,9 @@ else
 TOUCHBACK_TXRC = $(TOUCH_DATE) "$(shell $(STAT_LAST_MODIFIED) $(HOME)/.transifexrc)" $(HOME)/.transifexrc
 endif
 
+
+# OS compatibility
+OS := $(shell uname)
 ifeq ($(OS),Darwin)
 	STAT_COMPRESSED = stat -f '  compressed: %z bytes'
 	STAT_UNCOMPRESSED = stat -f 'uncompressed: %z bytes'
@@ -73,6 +75,7 @@ else
 	PY_VENV_BIN = .build/python-venv/bin
 	PY_VERSION = --python python3
 endif
+
 
 # Disabling Make built-in rules to speed up execution time
 .SUFFIXES:
@@ -112,9 +115,10 @@ apidoc: .build/apidoc
 check: lint check-examples-checker check-examples test build-gmf-apps
 
 .PHONY: build-gmf-apps
-build-gmf-apps: $(foreach APP,$(GMF_APPS),$(addprefix contribs/gmf/build/$(APP),.js .css)) \
+build-gmf-apps: \
 	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES))) \
 	$(ANGULAR_LOCALES_FILES)
+	# TODO: call webpack to build the gmf apps (in contribs/gmf/build)
 
 .PHONY: check-examples-checker
 check-example-checker: $(CHECK_EXAMPLE_CHECKER)
@@ -180,6 +184,14 @@ examples-hosted-gmf: \
 examples-hosted-apps: \
 		$(addprefix .build/examples-hosted/contribs/gmf/apps/,$(addsuffix /index.html,$(GMF_APPS)))
 
+.PHONY: python-buildtools-deps
+python-buildtools-deps: .build/requests.timestamp .build/urllib3.timestamp .build/beautifulsoup4.timestamp
+	# needed for the generate-examples-index.py, gh-pages-cleanup and deploy helper scripts
+
+.build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
+	$(PY_VENV_BIN)/pip install `grep ^beautifulsoup4== $< --colour=never`
+	touch $@
+
 .build/requests.timestamp: requirements.txt .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^requests== $< --colour=never`
 	touch $@
@@ -189,7 +201,7 @@ examples-hosted-apps: \
 	touch $@
 
 .PHONY: gh-pages
-gh-pages:
+gh-pages: python-buildtools-deps
 	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
@@ -229,7 +241,7 @@ gh-pages:
 		buildtools/examples-index.mako.html \
 		$(NGEO_EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
-		.build/beautifulsoup4.timestamp
+		python-buildtools-deps
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py $< $(NGEO_EXAMPLES_HTML_FILES) > $@
 
@@ -237,7 +249,7 @@ gh-pages:
 		buildtools/examples-index.mako.html \
 		$(GMF_EXAMPLES_HTML_FILES) \
 		$(PY_VENV_BIN)/mako-render \
-		.build/beautifulsoup4.timestamp
+		python-buildtools-deps
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
 		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
@@ -301,10 +313,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 
 $(PY_VENV_BIN)/mako-render: requirements.txt .build/python-venv
 	$(PY_VENV_BIN)/pip install `grep ^Mako== $< --colour=never` `grep ^htmlmin== $< --colour=never`
-	touch $@
-
-.build/beautifulsoup4.timestamp: requirements.txt .build/python-venv
-	$(PY_VENV_BIN)/pip install `grep ^beautifulsoup4== $< --colour=never`
 	touch $@
 
 .build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
