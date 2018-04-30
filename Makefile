@@ -6,22 +6,22 @@ WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webp
 
 NGEO_JS_FILES = $(shell find src -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
-NGEO_ALL_SRC_FILES := $(shell find src -type f)
-NGEO_TEST_JS_FILES := $(shell find test -type f -name '*.js')
-NGEO_EXAMPLES_HTML_FILES := $(shell find examples -maxdepth 1 -type f -name '*.html')
+NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
+NGEO_TEST_JS_FILES := $(shell find test/ -type f -name '*.js')
+NGEO_EXAMPLES_HTML_FILES := $(shell find examples/ -maxdepth 1 -type f -name '*.html')
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
-GMF_JS_FILES := $(shell find contribs/gmf/src -type f -name '*.js')
-GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src -type f)
-GMF_TEST_JS_FILES := $(shell find contribs/gmf/test -type f -name '*.js')
-GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples -maxdepth 1 -type f -name '*.html')
+GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
+GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f)
+GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
+GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples/ -maxdepth 1 -type f -name '*.html')
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
-GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps -type f -name '*.js')
-GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps -type f -name '*.html')
-GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps -type f)
+GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js')
+GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html')
+GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f)
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
