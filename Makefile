@@ -358,6 +358,7 @@ transifex-get: $(L10N_PO_FILES) \
 transifex-send: \
 		.build/python-venv.timestamp
 		.tx/config \
+		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
@@ -368,6 +369,7 @@ transifex-send: \
 .PHONY: transifex-init
 transifex-init: .build/python-venv.timestamp \
 		.tx/config \
+		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/gmf.pot \
@@ -378,15 +380,15 @@ transifex-init: .build/python-venv.timestamp \
 	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --source --force --no-interactive
 	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --translations --force --no-interactive
 
-.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config .build/python-venv.timestamp
+.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
-.build/locale/%/LC_MESSAGES/gmf.po: .tx/config .build/python-venv.timestamp
+.build/locale/%/LC_MESSAGES/gmf.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
-.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config .build/python-venv.timestamp
+.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	cd contribs/gmf/apps/
 	$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed
 	cd .
