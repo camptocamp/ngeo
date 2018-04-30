@@ -8,7 +8,7 @@ switch (nodeEnv) {
   case 'dev':
     config = webpackMerge(config, require('./buildtools/webpack.dev'));
     break;
-  case 'prod':
+  case 'production':
     config = webpackMerge(config, require('./buildtools/webpack.prod'));
     break;
   default:
