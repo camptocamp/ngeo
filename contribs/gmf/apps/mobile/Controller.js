@@ -9,8 +9,8 @@
  */
 
 import gmfControllersAbstractMobileController from 'gmf/controllers/AbstractMobileController.js';
-import '../less/main.less';
-import appBase from '../../appmodule.js';
+import 'gmf/less/mobile.less';
+import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';

@@ -1,5 +1,5 @@
 /**
- * @module app.oeedit.Controller
+ * @module app.oeview.Controller
  */
 /**
  * Application entry point.
@@ -9,16 +9,11 @@
  */
 
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
-import '../less/main.less';
-import appBase from '../../appmodule.js';
-import gmfObjecteditingModule from 'gmf/objectediting/module.js';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import './less/main.less';
+import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
-import olCollection from 'ol/Collection.js';
-import olLayerVector from 'ol/layer/Vector.js';
-import olSourceVector from 'ol/source/Vector.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -30,20 +25,12 @@ if (!window.requestAnimationFrame) {
 /**
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
- * @param {angular.$timeout} $timeout Angular timeout service.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector, $timeout) {
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.oeEditActive = false;
-
+const exports = function($scope, $injector) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -52,102 +39,6 @@ const exports = function($scope, $injector, $timeout) {
       resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
     }
   }, $scope, $injector);
-
-  /**
-   * The ngeo ToolActivate manager service.
-   * @type {ngeo.misc.ToolActivateMgr}
-   */
-  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-
-  ngeoToolActivateMgr.unregisterGroup('mapTools');
-
-  const oeEditToolActivate = new ngeoMiscToolActivate(this, 'oeEditActive');
-  ngeoToolActivateMgr.registerTool('mapTools', oeEditToolActivate, true);
-
-  const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
-  ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
-
-  // Set edit tool as default active one
-  $timeout(() => {
-    this.oeEditActive = true;
-  });
-
-  /**
-   * @type {ol.source.Vector}
-   * @private
-   */
-  this.vectorSource_ = new olSourceVector({
-    wrapX: false
-  });
-
-  /**
-   * @type {ol.layer.Vector}
-   * @private
-   */
-  this.vectorLayer_ = new olLayerVector({
-    source: this.vectorSource_
-  });
-
-  /**
-   * @type {ol.Collection.<ol.Feature>}
-   * @export
-   */
-  this.sketchFeatures = new olCollection();
-
-  /**
-   * @type {ol.layer.Vector}
-   * @private
-   */
-  this.sketchLayer_ = new olLayerVector({
-    source: new olSourceVector({
-      features: this.sketchFeatures,
-      wrapX: false
-    })
-  });
-
-  /**
-   * @type {gmf.theme.Themes} gmfObjectEditingManager The gmf theme service
-   */
-  const gmfThemes = $injector.get('gmfThemes');
-
-  gmfThemes.getThemesObject().then((themes) => {
-    if (themes) {
-      // Add layer vector after
-      this.map.addLayer(this.vectorLayer_);
-      this.map.addLayer(this.sketchLayer_);
-    }
-  });
-
-  /**
-   * @type {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
-   *     ObjectEditing manager service.
-   */
-  const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
-
-  /**
-   * @type {string|undefined}
-   * @export
-   */
-  this.oeGeomType = gmfObjectEditingManager.getGeomType();
-
-  /**
-   * @type {number|undefined}
-   * @export
-   */
-  this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
-
-  /**
-   * @type {?ol.Feature}
-   * @export
-   */
-  this.oeFeature = null;
-
-  gmfObjectEditingManager.getFeature().then((feature) => {
-    this.oeFeature = feature;
-    if (feature) {
-      this.vectorSource_.addFeature(feature);
-    }
-  });
 
   /**
    * @type {Array.<string>}
@@ -210,13 +101,12 @@ const exports = function($scope, $injector, $timeout) {
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('AppOEEdit', [
+exports.module = angular.module('AppOEView', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
-  gmfObjecteditingModule.name,
 ]);
 
-exports.module.controller('OEEditController', exports);
+exports.module.controller('DesktopController', exports);
 
 (function() {
   const cacheVersion = '0';
@@ -235,7 +125,7 @@ exports.module.controller('OEEditController', exports);
     langUrls[lang] = langUrlElements.join('/');
   });
 
-  const module = angular.module('AppOEEdit');
+  const module = angular.module('AppOEView');
   module.constant('defaultTheme', 'ObjectEditing');
   module.constant('defaultLang', 'en');
   module.constant('langUrls', langUrls);
@@ -260,8 +150,9 @@ exports.module.controller('OEEditController', exports);
     /** @type {ngeox.WfsPermalinkOptions} */ ({
       url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
       wfsTypes: [
-        {featureType: 'fuel', label: 'display_name'},
-        {featureType: 'osm_scale', label: 'display_name'}
+        {featureType: 'line', label: 'name'},
+        {featureType: 'point', label: 'name'},
+        {featureType: 'polygon', label: 'name'}
       ],
       defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
       defaultFeaturePrefix: 'feature'
