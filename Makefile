@@ -8,14 +8,14 @@ NGEO_JS_FILES = $(shell find src/ -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
 NGEO_TEST_JS_FILES := $(shell find test/ -type f -name '*.js')
-NGEO_EXAMPLES_HTML_FILES := $(shell find examples/ -maxdepth 1 -type f -name '*.html')
+NGEO_EXAMPLES_HTML_FILES := $(shell ls -1 examples/*.html)
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
 GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(NGEO_ALL_SRC_FILES)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
-GMF_EXAMPLES_HTML_FILES := $(shell find contribs/gmf/examples/ -maxdepth 1 -type f -name '*.html')
+GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
