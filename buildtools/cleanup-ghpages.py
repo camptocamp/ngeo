@@ -13,8 +13,9 @@ urllib3.disable_warnings()
 def main():
     url = "https://api.github.com/repos/{}/ngeo/branches?per_page=100".format(sys.argv[1])
     try:
+        json = requests.get(url).json()
         expected = [
-            branch["name"] for branch in loads(requests.get(url).content)
+            branch["name"] for branch in json
         ]
         expected.append("index.html")
         expected.append(".git")
