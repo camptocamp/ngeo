@@ -206,10 +206,6 @@ examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-
 gh-pages: .build/python-venv.timestamp
 	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
 
-.build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
-.build/ngeo-$(GITHUB_USERNAME)-gh-pages:
-	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
-
 .build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
