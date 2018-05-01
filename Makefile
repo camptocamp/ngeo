@@ -198,7 +198,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-
 	touch $@
 
 .PHONY: gh-pages
-gh-pages: .build/python-buildtools-deps.timestamp
+gh-pages: .build/python-venv.timestamp
 	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
 
 .build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
