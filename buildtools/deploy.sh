@@ -41,6 +41,8 @@ cd $GH_PAGES_DIRECTORY
 git pull ${GIT_REMOTE_NAME} gh-pages
 cd -
 
+
+# Some actions started from the target directory
 mkdir -p $GH_PAGES_DIRECTORY/${GIT_BRANCH}
 cd $GH_PAGES_DIRECTORY/${GIT_BRANCH}
 if [ "${JOB}" == publish-examples ]
@@ -52,7 +54,6 @@ then
     git rm --ignore-unmatch -r --quiet --force examples/partials || true
     git rm --ignore-unmatch --quiet --force examples/contribs/gmf/*.js examples/contribs/gmf/*.html || true
 fi
-
 if [ "${JOB}" == publish-apps-gmf ]
 then
     git rm --ignore-unmatch -r --quiet --force examples/lib || true
@@ -61,28 +62,27 @@ then
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/fonts || true
     git rm --ignore-unmatch -r --quiet --force examples/contribs/gmf/cursors || true
 fi
-
 if [ "${JOB}" == publish-api-docs ]
 then
     git rm --ignore-unmatch -r --quiet --force apidoc || true
 fi
 cd -
 
+
+# Some actions started from the root directory
 if [ "${JOB}" == publish-examples ]
 then
-    mkdir -p $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
-    cp -r .build/examples-hosted/* $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/
-    cp -r .build/examples-hosted/contribs/gmf/* $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
+    TARGET="$GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/"
+    mkdir -p $TARGET
+    cp -r .build/examples-hosted/* $TARGET
 fi
 
 if [ "${JOB}" == publish-apps-gmf ]
 then
-    mkdir -p $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
-    cp -r .build/examples-hosted/lib $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/
-    cp -r .build/examples-hosted/contribs/gmf/apps $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
-    cp -r .build/examples-hosted/contribs/gmf/build $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
-    cp -r .build/examples-hosted/contribs/gmf/fonts $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
-    cp -r .build/examples-hosted/contribs/gmf/cursors $GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/
+    TARGET="$GH_PAGES_DIRECTORY/${GIT_BRANCH}/examples/contribs/gmf/"
+    mkdir -p $TARGET
+    cp -r .build/examples-hosted/contribs/gmf/apps $TARGET
+    cp -r .build/examples-hosted/contribs/gmf/build $TARGET
 fi
 
 if [ "${JOB}" == publish-api-docs ]
