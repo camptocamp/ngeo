@@ -44,11 +44,13 @@ cp -r .build/examples-hosted/contribs/gmf/build $TARGET
 # publish-api-docs
 cp -r .build/apidoc $TMP/${GIT_BRANCH}/
 
-# Force pushing the updated github pages
+# Cleanup the git tree by creating a single commit with all content
 cd $TMP
 git add -A
 git status
-git commit --amend -m 'Latest GitHub pages' || true
+FIRST_COMMIT=`git log --format='%H' | tail -1`
+git reset --mixed $FIRST_COMMIT
+git commit -a -m 'Latest GitHub pages'
 git push ${GIT_REMOTE_NAME} gh-pages -f
 
 # Cleanup
