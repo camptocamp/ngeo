@@ -48,7 +48,7 @@ cp -r .build/apidoc $TMP/${GIT_BRANCH}/
 cd $TMP
 git add -A
 git status
-FIRST_COMMIT=`git log --format='%H' | tail -1`
+FIRST_COMMIT=$(git log --format='%H' | tail -1)
 git reset --mixed $FIRST_COMMIT
 git commit -a -m 'Latest GitHub pages'
 git push ${GIT_REMOTE_NAME} gh-pages -f

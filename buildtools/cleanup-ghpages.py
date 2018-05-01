@@ -5,7 +5,6 @@ import requests
 import urllib3
 from os import listdir
 from shutil import rmtree
-from json import loads
 
 urllib3.disable_warnings()
 

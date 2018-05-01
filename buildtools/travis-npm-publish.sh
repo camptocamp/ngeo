@@ -10,7 +10,7 @@ then
   if [[ $TRAVIS_TAG =~ ^[0-9]+\.[0-9]+\.[0-9]+-[a-z]+\.[0-9]+$ ]]
   then
     echo "This is a regular version (not a dev version)"
-    export TAG="--tag `echo $TRAVIS_TAG | awk -F[.-] '{print $4}'`"
+    export TAG="--tag $(echo $TRAVIS_TAG | awk -F[.-] '{print $4}')"
   else
     echo "This is not a regular version"
   fi

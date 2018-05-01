@@ -1,4 +1,4 @@
-#/bin/bash -e
+#!/bin/bash -e
 
 # Not enabling -x to hide the secrets
 
