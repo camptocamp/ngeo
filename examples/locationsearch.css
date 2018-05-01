@@ -3,7 +3,7 @@
   width: 600px;
   height: 400px;
 }
-/* CSS stolen from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ */
+/* CSS from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ (MIT license) */
 span.twitter-typeahead .tt-menu {
   position: absolute;
   top: 100%;
