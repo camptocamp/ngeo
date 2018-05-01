@@ -198,9 +198,7 @@ const config = {
       'jsts': 'jsts/org/locationtech/jts',
       'ol/ol.css': 'openlayers/css/ol.css',
       'ol': 'openlayers/src/ol',
-      // For angular-ui-date
-      'jquery-ui/datepicker' : 'jquery-ui/ui/widgets/datepicker',
-      'jquery-ui' : 'jquery-ui/ui',
+      'jquery-ui/datepicker' : 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
       'proj4': 'proj4/lib',
     }
   }

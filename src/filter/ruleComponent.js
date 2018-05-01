@@ -34,6 +34,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olGeomGeometry from 'ol/geom/Geometry.js';
+import 'font-awesome/css/font-awesome.css';
 
 /**
  * @type {angular.Module}

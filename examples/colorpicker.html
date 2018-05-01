@@ -13,8 +13,9 @@
       Select color:
       <app-colorpicker></app-colorpicker>
     </label>
+    <hr />
     Color: {{mainCtrl.color}}
-    <div ngeo-colorpicker="" ngeo-colorpicker-color=""></div>
+    <div ngeo-colorpicker="" ngeo-colorpicker-color="mainCtrl.color"></div>
     <div>
       <p id="desc">This example shows how to write an application-specific directive (<code>app-colorpicker</code>) based on <code>ngeo-colorpicker</code>to create a color picker.</p>
     </div>

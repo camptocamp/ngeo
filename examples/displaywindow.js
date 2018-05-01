@@ -4,7 +4,6 @@
 const exports = {};
 
 import './displaywindow.css';
-import 'jquery-ui/ui/widgets/draggable.js';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
 

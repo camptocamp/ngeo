@@ -7,7 +7,7 @@ import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import {fromCircle} from 'ol/geom/Polygon.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /**
@@ -71,7 +71,7 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
                 (event.detail.feature.getGeometry());
           const circle = /** @type {ol.geom.Circle} */ (
             geometry.getGeometries()[1]);
-          const polygon = olGeomPolygon.fromCircle(circle, 64);
+          const polygon = fromCircle(circle, 64);
           event.detail.feature = new olFeature(polygon);
           const azimut = ngeoInteractionMeasureAzimut.getAzimut(
             /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
