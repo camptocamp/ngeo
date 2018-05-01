@@ -6,6 +6,10 @@ const exports = {};
 /**
  * This example shows the ngeo routing directive.
  */
+import './routing.css';
+import 'openlayers/css/ol.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';

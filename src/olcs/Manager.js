@@ -3,7 +3,7 @@
  */
 import olcsContribManager from 'olcs/contrib/Manager.js';
 
-const Manager = class extends olcsContribManager {
+class Manager extends olcsContribManager {
   /**
    * @param {string} url .
    * @param {angular.Scope} $rootScope .
@@ -31,9 +31,7 @@ const Manager = class extends olcsContribManager {
       this.rootScope_.$apply();
     });
   }
-};
-
-const exports = Manager;
+}
 
 
-export default exports;
+export default Manager;

@@ -62,6 +62,17 @@ const olRule = {
   }
 };
 
+const olcsRule = {
+  test: /olcs\/.*\.js$/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      babelrc: false,
+      presets: babelPresets,
+    }
+  }
+};
+
 
 const angularRule = {
   test: require.resolve('angular'),
@@ -151,6 +162,7 @@ const config = {
   module: {
     rules: [
       olRule,
+      olcsRule,
       angularRule,
       typeaheadRule,
       dateFormatterRule,
