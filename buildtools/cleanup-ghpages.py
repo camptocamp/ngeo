@@ -20,7 +20,7 @@ def main():
         expected.append("index.html")
         expected.append(".git")
         for path in listdir(sys.argv[2]):
-            if path not in expected:
+            if path not in expected or path.startswith("greenkeeper/"):
                 print("Remove: {}".format(path))
                 rmtree("{}/{}".format(sys.argv[2], path))
     except Exception as e:
