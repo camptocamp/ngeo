@@ -356,7 +356,7 @@ transifex-get: $(L10N_PO_FILES) \
 
 .PHONY: transifex-send
 transifex-send: \
-		.build/python-venv.timestamp
+		.build/python-venv.timestamp \
 		.tx/config \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
