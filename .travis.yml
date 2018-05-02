@@ -67,5 +67,5 @@ deploy:
     skip_cleanup: true
     script: buildtools/travis-deploy.sh
     on:
-      repo: camptocamp/c2cgeoportal
+      repo: camptocamp/ngeo
       all_branches: true
