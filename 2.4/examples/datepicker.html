@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Datepicker example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="datepicker.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>ngeo-date-picker</code> directive.</p>
+    <ul>
+      <li>Select a period with a datepicker
+          <ngeo-date-picker time="ctrl.timeRangeMode" on-date-selected="ctrl.onDateRangeSelected(time)"></ngeo-date-picker>
+      </li>
+      <li style="margin-top: 50px">
+        Date value for period:
+        <pre>
+          {{ctrl.rangeValue}}
+        </pre>
+      </li>
+      <li>Select a single date with a datepicker
+          <ngeo-date-picker time="ctrl.timeValueMode" on-date-selected="ctrl.onDateSelected(time)"></ngeo-date-picker>
+      </li>
+      <li style="margin-top: 50px">
+        Date value for single datepicker:
+        <pre>
+          {{ctrl.value}}
+        </pre>
+      </li>
+    </ul>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="datepicker.js"></script></body>
+</html>
