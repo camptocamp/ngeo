@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="gmfapp">
+  <head>
+    <title>GeoMapFish Timeslider example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+  <script defer src="commons.js"></script><script defer src="timeslider.js"></script><link href="commons-9aef78.css" rel="stylesheet"><link href="timeslider-13502b.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>gmf-timeslider</code> component.</p>
+    <ul>
+      <li>Select a period with a timeslider</li>
+      <li>
+        <gmf-timeslider
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="ctrl.onDateRangeSelected(time)"
+          ng-prop-time="ctrl.wmsTimeRangeMode"
+        ></gmf-timeslider>
+      </li>
+
+      <li style="margin-top: 50px">
+        Date formatted for a WMS request (resolution set on 'day'):
+        <pre>
+          {{ctrl.sliderRangeValue}}
+        </pre>
+      </li>
+
+      <li style="margin-top: 50px">Select a single date with a timeslider</li>
+      <li>
+        <gmf-timeslider
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="ctrl.onDateSelected(time)"
+          ng-prop-time="ctrl.wmsTimeValueMode"
+        ></gmf-timeslider>
+      </li>
+
+      <li style="margin-top: 50px">
+        Date formatted for a WMS request (resolution set on 'year'):
+        <pre>
+          {{ctrl.sliderValue}}
+        </pre>
+      </li>
+    </ul>
+
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  </body>
+</html>
