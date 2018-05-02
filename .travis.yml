@@ -62,12 +62,10 @@ script:
 # Generate API doc
 - make .build/apidoc
 
-
-after_success:
-- if [ ${IS_HOME} = TRUE -a "${TRAVIS_BRANCH}" = "master" ]; then make transifex-send; fi
-# Deploy
-- if [ ${IS_HOME} = TRUE ]; then buildtools/deploy.sh; fi
-# Send coverage
-- cat .build/coverage/lcov.info | node ./node_modules/coveralls/bin/coveralls.js
-# Publish to npm
-- buildtools/travis-npm-publish.sh
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: buildtools/travis-deploy.sh
+    on:
+      repo: camptocamp/c2cgeoportal
+      all_branches: true
