@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>GoogleStreetView Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="lib/font-awesome.min.css" type="text/css">
+
+    <style>
+      ngeo-googlestreetview {
+        display: block;
+      }
+      ngeo-googlestreetview,
+      #map {
+        border: 1px solid #666666;
+        height: 40rem;
+        float: left;
+        margin: 0.5rem;
+        width: 60rem;
+      }
+
+      .desc {
+        clear: both;
+        margin: 1rem;
+      }
+
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <ngeo-googlestreetview
+        active="ctrl.googleStreetViewActive"
+        feature-style="ctrl.style"
+        map="ctrl.map"
+        radius="ctrl.radius">
+    </ngeo-googlestreetview>
+
+    <div class="desc">
+      <p id="desc">
+        This example shows how to use the <code>ngeo-googlestreetview</code>
+        component.
+      </p>
+
+      <div class="panel panel-default panel-body">
+        <input
+            type="checkbox"
+            id="checkbox-googlestreetview"
+            ng-model="ctrl.googleStreetViewActive" />
+        <label for="checkbox-googlestreetview"> GoogleStreetView</label>
+
+        <input type="checkbox"
+               id="checkbox-dummy"
+               ng-model="ctrl.dummyActive" />
+        <label for="checkbox-dummy"> Dummy tool</label>
+      </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-animate.min.js"></script>
+    <script src="lib/angular-touch.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="googlestreetview.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>
