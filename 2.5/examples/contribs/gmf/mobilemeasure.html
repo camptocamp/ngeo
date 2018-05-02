@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>Mobile Measure Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="mobilemeasure.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map id="map" gmf-map-map="::ctrl.map"></gmf-map>
+
+    <div ngeo-btn-group class="btn-group">
+      <button ngeo-btn
+        class="btn btn-primary"
+        ng-class="{active: ctrl.measureAreaActive}"
+        ng-model="ctrl.measureAreaActive">Area</button>
+      <button ngeo-btn
+        class="btn btn-primary"
+        ng-class="{active: ctrl.measureLengthActive}"
+        ng-model="ctrl.measureLengthActive">Length</button>
+      <button ngeo-btn
+        class="btn btn-primary"
+        ng-class="{active: ctrl.measurePointActive}"
+        ng-model="ctrl.measurePointActive">Point</button>
+      </div>
+    <div
+      gmf-mobile-measurearea=""
+      gmf-mobile-measurearea-active="ctrl.measureAreaActive"
+      gmf-mobile-measurearea-map="::ctrl.map">
+    </div>
+    <div
+      gmf-mobile-measurelength=""
+      gmf-mobile-measurelength-active="ctrl.measureLengthActive"
+      gmf-mobile-measurelength-map="::ctrl.map">
+    </div>
+    <div
+      gmf-mobile-measurepoint=""
+      gmf-mobile-measurepoint-active="ctrl.measurePointActive"
+      gmf-mobile-measurepoint-coordinateDecimals="2"
+      gmf-mobile-measurepoint-layersconfig="::ctrl.measurePointLayersConfig"
+      gmf-mobile-measurepoint-map="::ctrl.map">
+    </div>
+
+    <p id="desc">
+      This example shows how to use the
+      <code>gmf-mobile-measurearea</code>,
+      <code>gmf-mobile-measurelength</code> and
+      <code>gmf-mobile-measure-point</code> directives in combination with
+      <code>ngeo.interaction.MobileDraw</code> interaction objects to allow
+      mobile users to measure areas, distances and know the center
+      coordinate on their devices. The point measure also uses the
+      <code>gmfRaster</code> service to also obtain the height of the
+      location as well.
+    </p>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="mobilemeasure.js"></script></body>
+</html>
