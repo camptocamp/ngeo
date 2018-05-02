@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>GeoMapFish Timeslider example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="timeslider.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>gmf-time-slider</code> directive.</p>
+    <ul>
+      <li>
+        Select a period with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.wmsTimeRangeMode" gmf-time-slider-on-date-selected="ctrl.onDateRangeSelected(time)"></gmf-time-slider>
+      </li>
+      <li style="margin-top: 50px">
+        Date formatted for a WMS request (resolution set on 'day'):
+        <pre>
+          {{ctrl.sliderRangeValue}}
+        </pre>
+      </li>
+      <li style="margin-top: 50px;">
+        Select a single date with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.wmsTimeValueMode" gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)"></gmf-time-slider>
+      </li>
+      <li style="margin-top: 50px">
+        Date formatted for a WMS request (resolution set on 'year'):
+        <pre>
+          {{ctrl.sliderValue}}
+        </pre>
+      </li>
+    </ul>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="timeslider.js"></script></body>
+</html>

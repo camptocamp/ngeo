@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Search example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="search.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container-fluid">
+      <div id="map" ngeo-map="ctrl.map"></div>
+      <p>Search for 'lausanne' for example…<p>
+      <app-search app-search-map="ctrl.map"></app-search>
+      <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.searchDirective.html" title="Read our documentation">ngeo-search</a></code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+    </div>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="search.js"></script></body>
+</html>
