@@ -30,7 +30,6 @@ import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
-import olObject from 'ol/Object.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -677,7 +676,7 @@ exports.Controller.prototype.toggle_ = function(active) {
     keys.push(
       olEvents.listen(
         this.feature,
-        olObject.getChangeEventType(this.feature.getGeometryName()),
+        `change:${this.feature.getGeometryName()}`,
         this.handleFeatureGeometryChange_,
         this
       )

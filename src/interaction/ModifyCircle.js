@@ -15,7 +15,7 @@ import * as olExtent from 'ol/extent.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import {fromCircle} from 'ol/geom/Polygon.js';
 import olInteractionPointer, {handleEvent as pointerHandleEvent} from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -117,7 +117,7 @@ const exports = function(options) {
    */
   this.features_ = options.features;
 
-  this.features_.forEach(() => this.addFeature_);
+  this.features_.forEach(feature => this.addFeature_(feature));
   olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
   olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
@@ -343,7 +343,7 @@ exports.handleDragEvent_ = function(evt) {
    * @type {ol.geom.Circle}
    */
   const circle = new olGeomCircle(center, line.getLength());
-  const coordinates = olGeomPolygon.fromCircle(circle, 64).getCoordinates();
+  const coordinates = fromCircle(circle, 64).getCoordinates();
   this.setGeometryCoordinates_(geometry, coordinates);
 
 

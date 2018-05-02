@@ -146,7 +146,7 @@ exports.prototype.setState_ = function() {
   const keys = this.listenerKeys_;
 
   if (map && active && features) {
-    features.forEach(this.addFeature_, this);
+    features.forEach(feature => this.addFeature_(feature));
     keys.push(
       olEvents.listen(features, 'add', this.handleFeaturesAdd_, this),
       olEvents.listen(features, 'remove', this.handleFeaturesRemove_, this)
@@ -160,7 +160,7 @@ exports.prototype.setState_ = function() {
 
     keys.forEach(olEvents.unlistenByKey);
     keys.length = 0;
-    features.forEach(this.removeFeature_, this);
+    features.forEach(feature => this.removeFeature_(feature));
   }
 };
 

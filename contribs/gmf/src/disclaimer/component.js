@@ -234,7 +234,7 @@ exports.Controller_.prototype.unregisterLayer_ = function(layer) {
     this.eventHelper_.clearListenerKey(layerUid);
 
     // (2) Unregister existing layers in the group
-    layer.getLayers().forEach(this.unregisterLayer_, this);
+    layer.getLayers().forEach(layer => this.unregisterLayer_(layer));
 
   } else {
 

@@ -280,22 +280,21 @@ exports.Controller_.prototype.translate = function(str) {
  * - on deactivate, unlisten
  * @private
  */
-exports.Controller_.prototype.handleMeasureActiveChange_ =
-    function() {
-      if (this.measure.getActive()) {
-        const view = this.map.getView();
-        this.mapViewPropertyChangeEventKey_ = olEvents.listen(
-          view,
-          'propertychange',
-          this.ngeoDebounce_(
-            this.getMeasure_.bind(this), 300, /* invokeApply */ true),
-          this);
-        this.getMeasure_();
-      } else if (this.mapViewPropertyChangeEventKey_) {
-        olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
-        this.mapViewPropertyChangeEventKey_ = null;
-      }
-    };
+exports.Controller_.prototype.handleMeasureActiveChange_ = function() {
+  if (this.measure.getActive()) {
+    const view = this.map.getView();
+    this.mapViewPropertyChangeEventKey_ = olEvents.listen(
+      view,
+      'propertychange',
+      this.ngeoDebounce_(
+        this.getMeasure_.bind(this), 300, /* invokeApply */ true),
+      this);
+    this.getMeasure_();
+  } else if (this.mapViewPropertyChangeEventKey_) {
+    olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
+    this.mapViewPropertyChangeEventKey_ = null;
+  }
+};
 
 
 /**
