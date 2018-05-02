@@ -27,8 +27,8 @@ pushd ${TMP}
 FIRST_COMMIT=$(git log --format='%H' | tail -1)
 git reset --mixed $FIRST_COMMIT
 git add -A
-git commit --amend
-git push ${GIT_REMOTE_NAME} gh-pages -f
+git commit --amend --message="Update GitHub pages"
+git push origin gh-pages -f
 popd
 
 # Cleanup
