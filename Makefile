@@ -204,7 +204,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-
 
 .PHONY: gh-pages
 gh-pages: .build/python-venv.timestamp
-	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
+	buildtools/deploy.sh
 
 .build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
 		$(NGEO_JS_FILES) \
