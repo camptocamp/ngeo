@@ -45,7 +45,7 @@
     "console-control-strings": "1.1.0",
     "copy-webpack-plugin": "4.5.1",
     "corejs-typeahead": "1.2.1",
-    "coveralls": "3.0.0",
+    "coveralls": "3.0.1",
     "css-loader": "0.28.11",
     "d3-array": "1.2.1",
     "d3-axis": "1.0.8",
