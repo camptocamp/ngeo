@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>GeoMapFish Datepicker example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      li {
+        margin: 20px;
+        list-style: none;
+      }
+      .ngeo-datepicker-end-date {
+        display: inline-block;
+      }
+      .ngeo-datepicker-start-date {
+        display: inline-block;
+      }
+      pre {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>ngeo-date-picker</code> directive with the gmf WMS time service in order to format the date for WMS.</p>
+    <ul>
+      <li>Select a period with a datepicker
+          <ngeo-date-picker time="ctrl.wmsTimeRangeMode" on-date-selected="ctrl.onDateRangeSelected(time)"></ngeo-date-picker>
+      </li>
+      <li style="margin-top: 50px">
+        Date formated for a WMS request (resolution set on 'day'):
+        <pre>
+          {{ctrl.rangeValue}}
+        </pre>
+      </li>
+      <li>Select a single date with a datepicker
+          <ngeo-date-picker time="ctrl.wmsTimeValueMode" on-date-selected="ctrl.onDateSelected(time)"></ngeo-date-picker>
+      </li>
+      <li style="margin-top: 50px">
+        Date formated for a WMS request (resolution set on 'month'):
+        <pre>
+          {{ctrl.value}}
+        </pre>
+      </li>
+    </ul>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="datepicker.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

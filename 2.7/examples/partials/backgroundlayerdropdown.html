@@ -1,0 +1,10 @@
+<div class="dropdown">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    {{$ctrl.currentBgLayer.name}}
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-item" ng-repeat="layer in ::$ctrl.bgLayers">
+      <a href ng-click="$ctrl.setLayer(layer)">{{::layer.name}}</a>
+    </li>
+  </ul>
+</div>

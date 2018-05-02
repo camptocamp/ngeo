@@ -1,0 +1,70 @@
+<!DOCTYPE>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>GeoMapFish Theme Selector Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      .gmf-theme-selector {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 300px;
+      }
+      .gmf-theme-selector li {
+        cursor: pointer;
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        border: 0.1rem solid black;
+      }
+      .gmf-text {
+        flex: 1;
+      }
+      .gmf-thumb {
+        height: 60px;
+      }
+      li.gmf-theme-selector-active {
+        border: 0.1rem solid blue;
+      }
+      .gmf-theme-selector-active::after {
+        color: blue;
+        content: 'X';
+        margin: 0 1rem 0 0;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container">
+      <gmf-themeselector gmf-themeselector-filter="::ctrl.filter"></gmf-themeselector>
+      <div> The theme selected is {{ctrl.manager.getThemeName()}}</div>
+
+    </div>
+    <p id="desc">This example shows how to use the <code>gmf.themeselector</code> directive from a c2c geoportal theme service.</p>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="themeselector.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

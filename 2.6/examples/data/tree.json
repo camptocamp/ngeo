@@ -1,0 +1,40 @@
+{
+    "name": "OSM",
+    "children": [{
+        "name": "Stamen 0",
+        "children": [{
+            "name": "Watercolor",
+            "layerType": "stamenWatercolor"
+        }, {
+            "name": "Terrain labels",
+            "layerType": "stamenTerrain-labels"
+        }]
+    }, {
+        "name": "OpenStreetMap 0",
+        "children": [{
+            "name": "OpenStreetMap 00",
+            "children": [{
+                "name": "OpenStreetMap 01",
+                "children": [{
+                    "name": "Humanitarian",
+                    "layerType": "osmHumanitarian"
+                }, {
+                    "name": "Cycle Map",
+                    "layerType": "osmCycle"
+                }, {
+                    "name": "Transport Map",
+                    "layerType": "osmTransport"
+                }]
+            }]
+        }, {
+            "name": "Stamen 1",
+            "children": [{
+                "name": "Stamen 10",
+                "children": [{
+                    "name": "Watercolor",
+                    "layerType": "stamenWatercolor"
+                }]
+            }]
+        }]
+    }]
+}

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>Simple GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="simple.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <p id="desc">This example shows how to use the <code>gmf-map</code> directive to insert an OpenLayers map in a GeoMapFish page.</p>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="simple.js"></script></body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>Mobile Measure Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+        #map {
+          width: 800px;
+          height: 400px;
+          max-width:100%;
+        }
+        [ngeo-btn-group] {
+          padding: 5px;
+        }
+        .tooltip {
+          position: relative;
+          background: rgba(0, 0, 0, 0.5);
+          border-radius: 4px;
+          color: white;
+          padding: 4px 8px;
+          opacity: 0.7;
+          white-space: nowrap;
+        }
+        .ngeo-tooltip-measure {
+          opacity: 1;
+          font-weight: bold;
+        }
+        .ngeo-tooltip-static {
+          background-color: #ffcc33;
+          color: black;
+          border: 1px solid white;
+        }
+        .ngeo-tooltip-measure:before,
+        .ngeo-tooltip-static:before {
+          border-top: 6px solid rgba(0, 0, 0, 0.5);
+          border-right: 6px solid transparent;
+          border-left: 6px solid transparent;
+          content: "";
+          position: absolute;
+          bottom: -6px;
+          margin-left: -7px;
+          left: 50%;
+        }
+        .ngeo-tooltip-static:before {
+          border-top-color: #ffcc33;
+        }
+
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map id="map" gmf-map-map="::ctrl.map"></gmf-map>
+
+    <div ngeo-btn-group class="btn-group">
+      <a ngeo-btn
+        class="btn btn-default"
+        ng-model="ctrl.measureLengthActive">Length</a>
+      <a ngeo-btn
+        class="btn btn-default"
+        ng-model="ctrl.measurePointActive">Point</a>
+      </div>
+    <div
+      gmf-mobile-measure-length=""
+      gmf-mobile-measure-length-active="ctrl.measureLengthActive"
+      gmf-mobile-measure-length-precision="2"
+      gmf-mobile-measure-length-map="::ctrl.map">
+    </div>
+    <div
+      gmf-mobile-measure-point=""
+      gmf-mobile-measure-point-active="ctrl.measurePointActive"
+      gmf-mobile-measure-point-coordinateDecimals="2"
+      gmf-mobile-measure-point-layersconfig="::ctrl.measurePointLayersConfig"
+      gmf-mobile-measure-point-map="::ctrl.map">
+    </div>
+
+    <p id="desc">
+      This example shows how to use the <code>gmf-mobile-measure-length</code>
+      and <code>gmf-mobile-measure-point</code> directives in combination with
+      <code>ngeo.interaction.MobileDraw</code> interaction objects to allow
+      mobile users to measure distances and know the center coordinate on
+      their devices. The point measure also uses the <code>gmfRaster</code>
+      service to also obtain the height of the location as well.
+    </p>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="mobilemeasure.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+  </body>
+</html>
