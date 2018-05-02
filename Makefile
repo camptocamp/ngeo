@@ -1,4 +1,4 @@
-ANGULAR_VERSION := $(shell grep '"angular"' package.json | cut -d\" -f4)
+ANGULAR_VERSION := $(shell buildtools/get-version.sh angular)
 
 FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
@@ -131,7 +131,12 @@ check-example-checker: $(CHECK_EXAMPLE_CHECKER)
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp git-attributes eof-newline
+lint: .build/eslint.timestamp git-attributes eof-newline lint-extra
+
+.PHONY: lint-extra
+lint-extra:
+	if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
+	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp
@@ -199,11 +204,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-
 
 .PHONY: gh-pages
 gh-pages: .build/python-venv.timestamp
-	EXAMPLES_NGEO=TRUE API=TRUE EXAMPLES_GMF=TRUE APPS_GMF=TRUE buildtools/deploy.sh
-
-.build/ngeo-$(GITHUB_USERNAME)-gh-pages: GIT_REMOTE_URL ?= git@github.com:$(GITHUB_USERNAME)/ngeo.git
-.build/ngeo-$(GITHUB_USERNAME)-gh-pages:
-	git clone --depth=1 --branch gh-pages $(GIT_REMOTE_URL) $@
+	buildtools/deploy.sh
 
 .build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
 		$(NGEO_JS_FILES) \
