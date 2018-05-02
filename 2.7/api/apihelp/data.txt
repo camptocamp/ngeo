@@ -1,0 +1,6 @@
+id	point	title	description	icon	iconSize	iconOffset
+1	1216300,2553000	Information	Office de l'information<br />Tél: 032 000 00 00<br>Email: <a href="mailto:info@example.com">info@example.com</a><br />Internet: <a href="http://fr.wikipedia.org/wiki/La_Chaux-de-Fonds" target=new>Cliquer ici</a>	https://geomapfish-demo-2-7.camptocamp.com/static/0/img/markers/marker.png	21,25	-10.5,-25
+2	1215600,2554250	Ma première station	Diesel pas cher	https://geomapfish-demo-2-7.camptocamp.com/static/0/img/markers/marker-blue.png	21,25	-10.5,-25
+3	1215864,2552556	Mon parking	C'est celui-là le meilleur.	https://geomapfish-demo-2-7.camptocamp.com/static/0/img/markers/marker-gold.png	21,25	-10.5,-25
+4	1217126,2554489	Mon parking	Ce parking est<br/>le meillleur.	https://geomapfish-demo-2-7.camptocamp.com/static/0/img/markers/marker-gold.png	21,25	-10.5,-25
+5	1217326,2554089	Ma deuxième station	Sans-plomb pas cher.	https://geomapfish-demo-2-7.camptocamp.com/static/0/img/markers/marker-blue.png	21,25	-10.5,-25
