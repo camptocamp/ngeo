@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>GeoMapFish Print example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      gmf-map,
+      #tree-container {
+        float: left;
+      }
+      .clear-left {
+        clear: left;
+      }
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      .printpanel {
+        width: 250px;
+        margin: 10px;
+        padding: 10px;
+        background-color: #D3E5D7;
+      }
+      .tools-content-heading {
+        border-bottom: solid 1px;
+      }
+      .tools-content-heading .close {
+        line-height: 0;
+      }
+      input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+      }
+      input[type=range]:focus {
+        outline: none;
+      }
+      input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 5px;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+        background: rgba(148, 172, 154, 0.78);
+        border-radius: 1px;
+        border: 0.2px solid rgba(1, 1, 1, 0.2);
+      }
+      input[type=range]::-webkit-slider-thumb {
+        box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
+        border: 1px solid rgba(0, 0, 30, 0.2);
+        height: 20px;
+        width: 10px;
+        border-radius: 5px;
+        background: #ffffff;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -7.7px;
+      }
+      input[type=range]:focus::-webkit-slider-runnable-track {
+        background: rgba(205, 217, 208, 0.78);
+      }
+      input[type=range]::-moz-range-track {
+        width: 100%;
+        height: 5px;
+        cursor: pointer;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+        background: rgba(148, 172, 154, 0.78);
+        border-radius: 1px;
+        border: 0.2px solid rgba(1, 1, 1, 0.2);
+      }
+      input[type=range]::-moz-range-thumb {
+        box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
+        border: 1px solid rgba(0, 0, 30, 0.2);
+        height: 20px;
+        width: 10px;
+        border-radius: 5px;
+        background: #ffffff;
+        cursor: pointer;
+      }
+      /* Layertree */
+      ul {
+        list-style-type: none;
+      }
+      gmf-layertree a{
+        color: black;
+        text-decoration: none;
+        padding-right: 5px;
+      }
+      gmf-layertree .gmf-layertree-metadata a:before {
+        font-family: FontAwesome;
+        content: "\f129";
+      }
+      gmf-layertree .gmf-layertree-layer-icon {
+        display: inline-flex;
+        width: 20px;
+        height: 10px;
+      }
+      gmf-layertree .gmf-layertree-zoom {
+        display: none;
+      }
+      gmf-layertree .gmf-layertree-zoom:hover {
+        cursor: pointer;
+      }
+      gmf-layertree .gmf-layertree-zoom:before {
+        font-family: FontAwesome;
+        content: "\f18e";
+      }
+      gmf-layertree .outOfResolution .gmf-layertree-legend {
+        display: none;
+      }
+      gmf-layertree .gmf-layertree-legend-button a:after {
+        font-family: FontAwesome;
+        content: "\f036";
+      }
+      gmf-layertree .gmf-layertree-legend img {
+        padding-left: 15px;
+      }
+      gmf-layertree .noSource {
+        opacity: 0.3;
+      }
+      gmf-layertree .noSource:after {
+        content: "(source not available)";
+      }
+      gmf-layertree .outOfResolution {
+        opacity: 0.6;
+      }
+      gmf-layertree .outOfResolution .gmf-layertree-zoom {
+        display: inline;
+      }
+      gmf-layertree .gmf-layertree-state {
+        font-family: FontAwesome;
+        font-weight: lighter;
+      }
+      gmf-layertree .on .gmf-layertree-state:before {
+        content: "\f14a";
+      }
+      gmf-layertree .off .gmf-layertree-state:before {
+        content: "\f096";
+      }
+      gmf-layertree .indeterminate .gmf-layertree-state:before {
+        content: "\f147";
+      }
+
+      @media (max-width: 768px) {
+        #map {
+          height: 200px;
+          width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+  <div style="display: none;"><gmf-authentication></gmf-authentication></div>
+  <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <div id="tree-container">
+      <div>
+        <span>Theme:
+        <select
+            ng-model="ctrl.treeSource"
+            ng-options="theme.name for theme in ctrl.themes">
+        </select>
+        </span>
+      </div>
+      <gmf-layertree
+          gmf-layertree-map="::ctrl.map"
+          gmf-layertree-openlinksinnewwindow="::true">
+      </gmf-layertree>
+    </div>
+
+    <div class="clear-left"></div>
+
+    <p id="desc">
+      This example shows how to use the <code>gmf.printDirective</code>.
+      Directive that generates layout information and manages tools to print with a
+      MapFishPrint v3.
+    </p>
+
+    <button ng-init="printActive = false"  ng-show="printActive === false" ng-click="printActive = true">Show print panel</button>
+    <div class="printpanel" ng-show="printActive">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="tools-content-heading">
+            Print
+            <a class="btn close" ng-click="printActive = false">&times;</a>
+          </div>
+          <gmf-print
+            gmf-print-map="ctrl.map"
+            gmf-print-active="printActive"
+            gmf-print-fieldvalues="ctrl.defaulPrintFieldstValues"
+            gmf-print-hiddenattributes="['title', 'comments']"
+            gmf-print-attributes-out="attributes">
+            <div
+              ng-repeat="attribute in attributes"
+              class="gmf-print-layoutinfo">
+
+              <div ng-if="attribute.name == 'title'" class="form-group" style="margin-top: 1rem;">
+                <label class="control-label col-md-5">{{ "Title" | translate }}</label>
+                <div class="col-md-7">
+                  <div class="btn-group btn-block">
+                    <button
+                      type="button"
+                      class="btn btn-default form-control"
+                      data-toggle="dropdown">
+                      <span>{{attribute.value | translate}}&nbsp;</span>
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
+                      <li><a
+                          ng-click="attribute.value = 'First title'"
+                          href="">{{ 'First title' | translate}}</a>
+                      </li>
+                      <li><a
+                          ng-click="attribute.value = 'Second title'"
+                          href="">{{ 'Second title' | translate}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div ng-if="attribute.name == 'comments'" class="form-group">
+                <label class="control-label col-md-5">{{ "Comment" | translate }}</label>
+                <div class="col-md-7">
+                  <div class="btn-group btn-block">
+                    <button
+                      type="button"
+                      class="btn btn-default form-control"
+                      data-toggle="dropdown">
+                      <span>{{attribute.value | translate}}&nbsp;</span>
+                      <i class="fa fa-caret-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right btn-block" role="menu">
+                      <li><a
+                          ng-click="attribute.value = 'First comment'"
+                          href="">{{ 'First comment' | translate}}</a>
+                      </li>
+                      <li><a
+                          ng-click="attribute.value = 'Second comment'"
+                          href="">{{ 'Second comment' | translate}}</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </gmf-print>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="print.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

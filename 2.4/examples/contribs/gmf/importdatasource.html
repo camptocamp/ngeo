@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>GeoMapFish Import DataSource example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="importdatasource.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map
+      gmf-map-map="ctrl.map"
+      ngeo-map-query=""
+      ngeo-map-query-map="::ctrl.map"
+      ngeo-map-query-active="ctrl.queryActive"
+      ngeo-bbox-query=""
+      ngeo-bbox-query-map="::ctrl.map"
+      ngeo-bbox-query-active="ctrl.queryActive">
+    </gmf-map>
+
+    <div class="panel panel-default panel-body">
+      <p id="desc">
+        This example shows how to use the <code>gmf-importdatasource</code>
+        component, which allows the addition of external WMS/WMTS layers
+        in the map. It also supports the addition of files, such as
+        KML and GPX.
+      </p>
+      <p>
+        You can also issue queries on the map by clicking on it or use the
+        <code>Ctrl</code> key to draw boxes on the map.
+      </p>
+    </div>
+
+    <gmf-layertree
+        class="panel panel-default panel-body"
+        gmf-layertree-map="::ctrl.map">
+    </gmf-layertree>
+
+    <div
+      class="panel panel-default panel-body"
+      style="clear: both; float: none">
+      <gmf-importdatasource
+          map="ctrl.map">
+      </gmf-importdatasource>
+    </div>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="importdatasource.js"></script></body>
+</html>
