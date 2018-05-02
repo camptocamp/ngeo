@@ -24,11 +24,10 @@ cp -r .build/apidoc $TMP/${GIT_BRANCH}/
 
 # Cleanup the git tree by creating a single commit with all content
 pushd $TMP
-git add -A
-git status
 FIRST_COMMIT=$(git log --format='%H' | tail -1)
 git reset --mixed $FIRST_COMMIT
-git commit -a -m 'Latest GitHub pages'
+git add -A
+git commit -m 'Latest GitHub pages'
 git push ${GIT_REMOTE_NAME} gh-pages -f
 popd
 
