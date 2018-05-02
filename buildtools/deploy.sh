@@ -22,12 +22,12 @@ popd
 cp -r .build/examples-hosted/* $TMP/${GIT_BRANCH}/examples/
 cp -r .build/apidoc $TMP/${GIT_BRANCH}/
 
-# Cleanup the git tree by creating a single commit with all content
+# Rewrite root commit and force push
 pushd $TMP
 FIRST_COMMIT=$(git log --format='%H' | tail -1)
 git reset --mixed $FIRST_COMMIT
 git add -A
-git commit -m 'Latest GitHub pages'
+git commit --amend
 git push ${GIT_REMOTE_NAME} gh-pages -f
 popd
 
