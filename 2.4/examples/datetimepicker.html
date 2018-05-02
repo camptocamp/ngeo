@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Datepicker example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="datetimepicker.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>ngeo-datetimepicker</code> directive.</p>
+    <p><input
+      ng-model="ctrl.date"
+      ngeo-datetimepicker
+      ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', mask: '9999-19-39'}"></p>
+    <p><input
+      ng-model="ctrl.time"
+      ngeo-datetimepicker
+      ngeo-datetimepicker-options="{datepicker: false, format: 'H:i:s', mask: '29:59:59'}"></p>
+    <p><input
+      ng-model="ctrl.datetime"
+      ngeo-datetimepicker
+      ngeo-datetimepicker-options="{scrollTime: false, format: 'Y-m-d H:i:s', mask: '9999-19-39 29:59:59'}"></p>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="datetimepicker.js"></script></body>
+</html>

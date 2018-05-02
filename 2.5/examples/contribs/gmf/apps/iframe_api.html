@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="{{mainCtrl.lang}}" ng-controller="IframeAPIController as mainCtrl" ng-strict-di>
+  <head>
+    <title ng-bind-template="{{'Iframe API Application'|translate}}">GeoMapFish</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-2-5.camptocamp.com/dynamic.json">
+    <meta name="interface" content="iframe_api">
+    <link rel="shortcut icon" href="favicon.ico" />
+    
+    <link href="iframe_api.css" rel="stylesheet">
+    
+  </head>
+  <body>
+    <div ng-show="mainCtrl.loading" class="loading-mask">
+      <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"><circle cx="256" cy="48" r="48"></circle><circle cx="109.17" cy="108.313" r="43"></circle><circle cx="46.537" cy="257.328" r="38"></circle><circle cx="108.028" cy="403.972" r="33"></circle><circle cx="255.794" cy="463.935" r="28"></circle><circle cx="402.894" cy="402.936" r="23"></circle><circle cx="463.623" cy="256.106" r="18"></circle></svg>
+      </i>
+    </div>
+    <main>
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+        <div id="ol-zoom-control"></div>
+        <ngeo-displaywindow
+          content="mainCtrl.displaywindowContent"
+          desktop="true"
+          height="mainCtrl.displaywindowHeight"
+          open="mainCtrl.displaywindowOpen"
+          title="mainCtrl.displaywindowTitle"
+          url="mainCtrl.displaywindowUrl"
+          width="mainCtrl.displaywindowWidth"
+        ></ngeo-displaywindow>
+        <div class="gmf-app-map-bottom-controls">
+          <div class="gmf-backgroundlayerbutton btn-group dropup">
+            <button
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown">
+              <img src="background-layer-button.png" alt="" />
+            </button>
+            <gmf-backgroundlayerselector
+              gmf-backgroundlayerselector-map="::mainCtrl.map"
+              class="dropdown-menu">
+            </gmf-backgroundlayerselector>
+          </div>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map">
+            </gmf-disclaimer>
+          </div>
+          <gmf-displayquerywindow
+            gmf-displayquerywindow-draggable-containment="::mainCtrl.displaywindowDraggableContainment"
+            gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
+            gmf-displayquerywindow-desktop="true">
+          </gmf-displayquerywindow>
+        </div>
+        <gmf-map
+          class="gmf-map"
+          gmf-map-map="mainCtrl.map"
+          gmf-map-manage-resize="mainCtrl.manageResize"
+          gmf-map-resize-transition="mainCtrl.resizeTransition">
+        </gmf-map>
+        <ngeo-query
+          active="mainCtrl.queryActive"
+          autoclear="mainCtrl.queryAutoClear"
+          map="::mainCtrl.map">
+        </ngeo-query>
+        <div id="scaleline"></div>
+        <gmf-layertree
+          gmf-layertree-dimensions="mainCtrl.dimensions"
+          gmf-layertree-map="::mainCtrl.map">
+        </gmf-layertree>
+      </div>
+      <ngeo-modal ng-model="mainCtrl.modalShareShown">
+        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"></gmf-share>
+      </ngeo-modal>
+    </main>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values"></script>
+    <script src="../../../dist/vendor.js?dev"></script>
+    
+    <script src="iframe_api.js"></script>
+    
+  </body>
+</html>

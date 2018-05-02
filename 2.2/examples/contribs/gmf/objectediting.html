@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>ObjectEditing example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      gmf-objectediting {
+        border: 1px solid #ddd;
+        display: block;
+        margin: 10px 0;
+        padding: 4px;
+        width: 400px;
+      }
+      gmf-objecteditingtools {
+        border-bottom: 0.1rem solid #595959;
+        display: block;
+        margin: 0 0 1rem 0;
+        padding: 0 0 1rem 0;
+      }
+      gmf-layertree {
+        display: none;
+      }
+
+      /* measure tooltips  */
+      .tooltip {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        color: white;
+        padding: 4px 8px;
+        opacity: 0.7;
+        white-space: nowrap;
+      }
+      .ngeo-tooltip-measure {
+        opacity: 1;
+        font-weight: bold;
+      }
+      .ngeo-tooltip-static {
+        display: none;
+      }
+      .ngeo-tooltip-measure:before,
+      .ngeo-tooltip-static:before {
+        border-top: 6px solid rgba(0, 0, 0, 0.5);
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        margin-left: -7px;
+        left: 50%;
+      }
+      .ngeo-tooltip-static:before {
+        border-top-color: #ffcc33;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <gmf-layertree
+        class="panel panel-default panel-body"
+        gmf-layertree-map="::ctrl.map">
+    </gmf-layertree>
+
+    <input type="checkbox"
+       id="checkbox-objectediting"
+       ng-model="ctrl.objectEditingActive" />
+    <label for="checkbox-objectediting"> ObjectEditing</label>
+
+    <input type="checkbox"
+       id="checkbox-dummy"
+       ng-model="ctrl.dummyActive" />
+    <label for="checkbox-dummy"> Dummy tool</label>
+
+    <h2>ObjectEditing</h2>
+
+    <gmf-objectediting
+      ng-if="ctrl.objectEditingActive === true && ctrl.objectEditingFeature && ctrl.objectEditingLayerNodeId"
+      gmf-objectediting-active="ctrl.objectEditingActive"
+      gmf-objectediting-feature="ctrl.objectEditingFeature"
+      gmf-objectediting-geomtype="::ctrl.objectEditingGeomType"
+      gmf-objectediting-layernodeid="::ctrl.objectEditingLayerNodeId"
+      gmf-objectediting-map="::ctrl.map"
+      gmf-objectediting-sketchfeatures="::ctrl.sketchFeatures">
+    </gmf-objectediting>
+
+    <p id="desc">
+      This example shows how to use the <code>gmf-objectediting</code>
+      directive to edit a single feature with advanced editing tools.
+    </p>
+    <p>
+      In order for this example to work properly, you must:
+      <ul>
+        <li>be <a href="authentication.html">logged in</a> first</li>
+        <li>
+          come from the
+          <a href="objecteditinghub.html">ObjectEditing Hub</a> example page
+        </li>
+      </ul>
+    </p>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/jsts.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="objectediting.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'ObjectEditing');
+      gmfModule.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+      gmfModule.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+      gmfModule.constant('gmfTreeManagerModeFlush', true);
+      gmfModule.constant('gmfObjectEditingToolsOptions', {
+        regularPolygonRadius: 150
+      });
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>
