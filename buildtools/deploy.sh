@@ -13,12 +13,11 @@ git clone --single-branch --branch gh-pages git@github.com:${GITHUB_USERNAME}/ng
 # Cleanup unused
 .build/python-venv/bin/python buildtools/cleanup-ghpages.py ${GITHUB_USERNAME} ${TMP}
 
-mkdir -p ${TMP}/${GIT_BRANCH}/examples
-
 pushd ${TMP}
 git rm --ignore-unmatch -r --quiet --force ${GIT_BRANCH} || true
 popd
 
+mkdir -p ${TMP}/${GIT_BRANCH}/examples
 cp -r .build/examples-hosted/* ${TMP}/${GIT_BRANCH}/examples/
 cp -r .build/apidoc ${TMP}/${GIT_BRANCH}/
 
