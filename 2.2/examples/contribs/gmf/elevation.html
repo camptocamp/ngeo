@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>GMF elevation indicator example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <span gmf-elevation
+          gmf-elevation-active="elevationActive"
+          gmf-elevation-elevation="elevationValue"
+          gmf-elevation-loading="elevationLoading"
+          gmf-elevation-layer="ctrl.selectedElevationLayer"
+          gmf-elevation-map="::ctrl.map">
+    </span>
+
+    <div class="btn-group dropdown">
+      <button type="button" class="btn btn-default" data-toggle="dropdown" aria-expanded="false">
+        Raster layer
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li ng-repeat="elevationItem in ::ctrl.elevationLayers">
+          <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
+            <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
+            {{::elevationItem}}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      Elevation: {{elevationValue}}<span ng-show="elevationValue">m</span>
+      <span class="loading" ng-if="elevationLoading">Loading</span>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" ng-model="elevationActive" />
+        Elevation active
+      </label>
+    </div>
+
+    <p id="desc">This example shows how to use the <code>gmf-elevation</code> directive to get elevation under the mouse position.</p>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="elevation.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

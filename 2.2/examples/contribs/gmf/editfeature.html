@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>EditFeature GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css" />
+    <style>
+      body {
+        padding: 0.5rem;
+      }
+      gmf-map > div {
+        width: 60rem;
+        height: 40rem;
+      }
+      .panel {
+        display: block;
+        width: 30rem;
+      }
+      .no-feature:before {
+        content: "No feature";
+      }
+      .pending:before {
+        content: "Query in progress...";
+      }
+      .form {
+        margin: 1rem 0 0 0;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <p id="desc">
+      This example shows how to use the <code>gmf.EditFeature</code>
+      service to insert, update and delete features from a layer using
+      a GeoMapFish server. First, you must log in. Then, you can either
+      click on the <em>Insert</em> button to insert a random feature, or
+      click on a feature on the map to either <em>Update</em> or
+      <em>Delete</em> it.
+    </p>
+    <gmf-authentication
+        class="panel panel-default panel-body">
+    </gmf-authentication>
+
+    <div
+        ng-if="ctrl.gmfUser.username"
+        class="panel panel-default panel-body">
+      <div>
+        <a
+            href
+            class="btn btn-success"
+            ng-click="ctrl.insertFeature()"
+            title="Insert a new feature at a random location">Insert</a>
+        <a
+            href
+            class="btn btn-primary"
+            ng-class="{disabled: !ctrl.feature}"
+            ng-click="ctrl.updateFeature()"
+            title="Update current feature with a new name">Update</a>
+        <a
+            href
+            class="btn btn-danger"
+            ng-class="{disabled: !ctrl.feature}"
+            ng-click="ctrl.deleteFeature()"
+            title="Delete current feature">Delete</a>
+      </div>
+      <div class="form">
+        <div class="form-group">
+          <label>Feature id</label>
+          <span
+              class="form-control"
+              ng-switch="ctrl.feature">
+            <span
+                ng-switch-when="null"
+                class="no-feature"
+                ng-class="{'pending': ctrl.pending === true}">
+            </span>
+            <span ng-switch-default>{{ ctrl.feature.getId() }}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="editfeature.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

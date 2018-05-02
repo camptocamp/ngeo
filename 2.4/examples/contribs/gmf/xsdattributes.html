@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>XSD Attributes in GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="xsdattributes.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <p id="desc">
+            This example shows how to use the <code>gmf.editing.XSDAttributes</code>
+            service, which is used to obtain the attributes from a GeoMapFish
+            server using a given layer id. The attributes received are read
+            and transformed into a form using the <code>ngeo-attributes</code>
+            directive.
+          </p>
+          <select
+            class="layers-list"
+            ng-model="ctrl.getSetLayers"
+            ng-model-options="{getterSetter: true}"
+            ng-options="layer.name for layer in ctrl.layers">
+            <option value="">-- Choose a layer --</option>
+          </select>
+          <div>
+            Geometry type:
+            <span>{{ ctrl.getGeomType() }}</span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <form name="xsdAttributesForm">
+            <ngeo-attributes
+              ng-if="ctrl.attributes"
+              ngeo-attributes-attributes="::ctrl.attributes"
+              ngeo-attributes-feature="::ctrl.feature">
+            </ngeo-attributes>
+          </form>
+        </div>
+      </div>
+    </div>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="xsdattributes.js"></script></body>
+</html>
