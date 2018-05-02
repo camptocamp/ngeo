@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <title>Routing example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+  <script defer src="commons.js"></script><script defer src="routing.js"></script><link href="commons-3ca360.css" rel="stylesheet"><link href="routing-1e98c2.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as mainCtrl">
+    <div>
+      <div>
+        <gmf-map id="map" gmf-map-map="mainCtrl.map"></gmf-map>
+      </div>
+      <div>
+        <ngeo-routing ngeo-routing-map="mainCtrl.map"> </ngeo-routing>
+      </div>
+    </div>
+
+    <p id="desc">
+      This example shows how to use ngeo's routing component (<code
+        ><a href="../apidoc/ngeo.routingComponent.html" title="Read our documentation"
+          >ngeo-routingComponent</a
+        ></code
+      >)..
+    </p>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  </body>
+</html>
