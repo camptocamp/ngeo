@@ -4,6 +4,8 @@
 import gmfSearchComponent from 'gmf/search/component.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 
+import './search.less';
+
 /**
  * @type {!angular.Module}
  */

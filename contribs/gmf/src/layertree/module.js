@@ -7,6 +7,8 @@ import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
+import './common.less';
+
 /**
  * @type {!angular.Module}
  */

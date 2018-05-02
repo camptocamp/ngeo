@@ -3,6 +3,8 @@
  */
 import gmfPrintComponent from 'gmf/print/component.js';
 
+import './print.less';
+
 /**
  * @type {!angular.Module}
  */

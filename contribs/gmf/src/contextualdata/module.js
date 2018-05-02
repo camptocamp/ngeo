@@ -3,6 +3,8 @@
  */
 import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
 
+import './contextualdata.less';
+
 /**
  * @type {!angular.Module}
  */
