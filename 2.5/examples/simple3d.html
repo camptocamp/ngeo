@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Simple OL-Cesium 3d example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="simple3d.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as $ctrl">
+    <input type="button" value="Enable/disable 3D" ng-click="$ctrl.ol3dm.toggle3d()" />
+
+    <div id="map-container">
+      <div id="map" ngeo-map="$ctrl.map"></div>
+      <ngeo-olcs-controls3d ng-if="$ctrl.ol3dm && $ctrl.ol3dm.is3dEnabled()" ol3dm="$ctrl.ol3dm"></ngeo-olcs-controls3d>
+    </div>
+    <p id="desc">
+      This example shows how to use <code>ngeo.olcs.Manager</code> and the
+      <code><a href="../apidoc/ngeo.olcs.ngeoOlcsControls3d.html" title="Read our documentation">ngeo-olcs-controls3d</a></code>
+      component to control an 3D view.<br>
+      It also shows how 3d navigation interacts with permalink.
+      <br><br>
+      Here an example of permalink format: <code>?3d_enabled=true&3d_lon=26.81533&3d_lat=-21.85790&3d_elevation=1274213&3d_heading=360.000&3d_pitch=-63.995</code><br>
+      3d permalink is managed in <code><a href="../apidoc/ngeo.olcs.ngeoOlcsService.html" title="Read our documentation">ngeo-olcs-service</a></code>.
+    </p>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="simple3d.js"></script></body>
+</html>
