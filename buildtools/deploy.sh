@@ -24,9 +24,9 @@ cp -r .build/apidoc ${TMP}/${GIT_BRANCH}/
 # Rewrite root commit and force push
 pushd ${TMP}
 FIRST_COMMIT=$(git log --format='%H' | tail -1)
-git reset --mixed $FIRST_COMMIT
+git reset --quiet --mixed $FIRST_COMMIT
 git add -A
-git commit --amend --message="Update GitHub pages"
+git commit --quiet --amend --message="Update GitHub pages"
 git push origin gh-pages -f
 popd
 
