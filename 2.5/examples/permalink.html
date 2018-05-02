@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Permalink example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="permalink.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <app-map app-map="::ctrl.map"></app-map>
+    <app-draw app-draw-map="::ctrl.map" app-draw-layer="::ctrl.vectorLayer"></app-draw>
+    <p id="desc">This example shows how to create an application-specific map component based on the <code><a href="../apidoc/ngeo.map.component.html" title="Read our documentation">ngeoMap</a></code> directive that uses the <code><a href="../apidoc/ngeo.statemanager.Location.html" title="Read our documentation">ngeoLocation</a></code> and <code><a href="../apidoc/ngeo.misc.debounce.html" title="Read our documentation">ngeoDebounce</a></code> services to update the browser address bar URL when the map view changes.</p>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="permalink.js"></script></body>
+</html>

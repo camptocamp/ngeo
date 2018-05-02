@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>GeoMapFish Timeslider example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css">
+    <style>
+      ul {
+        width: 50%;
+      }
+      li {
+        list-style: none;
+      }
+      .tooltip {
+        min-width: 6.5rem;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code>gmf-time-slider</code> directive.</p>
+    <ul>
+      <li>
+        Select a period with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.wmsTimeRangeMode" gmf-time-slider-on-date-selected="ctrl.onDateRangeSelected(time)"></gmf-time-slider>
+      </li>
+      <li style="margin-top: 50px">
+        Date formated for a WMS request (resolution set on 'day'):
+        <pre>
+          {{ctrl.sliderRangeValue}}
+        </pre>
+      </li>
+      <li style="margin-top: 50px;">
+        Select a single date with a timeslider
+      </li>
+      <li>
+        <gmf-time-slider gmf-time-slider-time="ctrl.wmsTimeValueMode" gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)"></gmf-time-slider>
+      </li>
+      <li style="margin-top: 50px">
+        Date formated for a WMS request (resolution set on 'year'):
+        <pre>
+          {{ctrl.sliderValue}}
+        </pre>
+      </li>
+    </ul>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="timeslider.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

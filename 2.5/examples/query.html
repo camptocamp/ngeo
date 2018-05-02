@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Query example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+  <link href="query.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div
+      id="map"
+      ngeo-map="ctrl.map">
+    </div>
+
+    <div class='app-query'>
+      <ngeo-query
+        active="ctrl.queryActive"
+        autoclear="ctrl.queryAutoClear"
+        map="::ctrl.map">
+      </ngeo-query>
+
+      <button
+        ngeo-btn=""
+        class="btn btn-default"
+        ng-model="ctrl.getSetQueryActive"
+        ng-model-options="{getterSetter: true}">Query</button>
+
+      <ngeo-query-panel ng-if="ctrl.queryActive"></ngeo-query-panel>
+    </div>
+
+    <p id="desc">
+      This example shows how to configure and use the
+      <code>
+        <a
+          href="../apidoc/ngeo.query.component.html"
+          title="Read our documentation">ngeo-query</a>
+      </code>
+      and
+      <code>
+        <a
+          href="../apidoc/ngeo.query.panelComponent.html"
+          title="Read our documentation">ngeo-query-panel</a>
+      </code>
+      components. It also shows how the
+      <code>
+        <a
+          href="../apidoc/ngeo.misc.ToolActivateMgr.html"
+          title="Read our documentation">ngeo.misc.ToolActivate</a>
+      </code>
+      can be used to make the component inactive when an other tool
+      becomes active. You can how queries are made on the map and what
+      to do with the results using the panel. You can also temporarily
+      change them using keyboard shortcuts:
+      <ul>
+        <li>
+          Hold down the "ctrl" key (meta on MAC) to set the query mode
+          to drawing boxes on the map.
+        </li>
+        <li>
+          Hold the A key to add the results to existing ones.
+        </li>
+        <li>
+          Hold the X key to remove the results from the existing ones.
+        </li>
+      </ul>
+    </p>
+
+    <br />
+
+    <app-queryresult></app-queryresult>
+
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="query.js"></script></body>
+</html>
