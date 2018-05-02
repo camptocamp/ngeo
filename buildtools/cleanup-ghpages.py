@@ -18,6 +18,7 @@ def main():
         ]
         expected.append("index.html")
         expected.append(".git")
+        expected.append(".nojekyll")
         for path in listdir(sys.argv[2]):
             if path not in expected:
                 print("Remove: {}".format(path))
