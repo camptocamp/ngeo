@@ -1,0 +1,80 @@
+/*!*****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./src/sass/vars.scss ***!
+  \*****************************************************************************************************************************************/
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) Camptocamp SA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2021-2024 Camptocamp SA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+:root {
+  --brand-primary: #94ac9a;
+  --brand-secondary: #d3e5d7;
+  --nav-bg: white;
+  --color: #555;
+  --color-light: rgb(123.25, 123.25, 123.25);
+  --color-04: rgba(85, 85, 85, 0.4);
+  --nav-header-bg: rgb(127.5, 127.5, 127.5);
+  --map-tools-bg-color: white;
+  --map-tools-color: black;
+  --onhover-color: rgb(216.75, 216.75, 216.75);
+  --onhover-color-darken: rgb(178.5, 178.5, 178.5);
+  --main-bg-color: #e2e3df;
+  --main-bg-color-lighten: rgb(244.4875, 244.85, 243.4);
+  --main-bg-color-09: rgba(226, 227, 223, 0.9);
+  --main-bg-color-08: rgba(226, 227, 223, 0.8);
+  --input-border-focus: rgb(106.3710526316, 137.1289473684, 114.0605263158);
+  --input-border-focus-darken: rgb(72.9526315789, 94.0473684211, 78.2263157895);
+  --light-box-shadow-color: rgba(0, 0, 0, 0.1);
+  --eavy-box-shadow-color: rgba(0, 0, 0, 0.3);
+  --grid-gutter-width: 1.88rem;
+  --border-color: rgb(106.3710526316, 137.1289473684, 114.0605263158);
+  --hover-background-color: rgb(191.0815789474, 205.4184210526, 194.6657894737);
+  --brand-secondary-dark: rgb(162.9142857143, 200.5857142857, 171.2857142857);
+  --gmf-gray-dark: #333333;
+  --btn-default-border: #ccc;
+  --link-color: hsl(135, 25%, 50%);
+  --link-hover-color: hsl(135, 25%, 35%);
+  --table-border-color: rgb(106.3710526316, 137.1289473684, 114.0605263158);
+  --input-btn-focus-color: rgba(148, 172, 154, 0.25);
+  --danger-color: #dc3545;
+  --current-infobar-height: 0px;
+}

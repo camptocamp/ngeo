@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>GeoMapFish Map Query example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href="displayquerygrid.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+
+    <ngeo-query
+        active="ctrl.queryActive"
+        map="::ctrl.map">
+    </ngeo-query>
+
+    <div id="tree-container">
+      <div>
+        <span>Theme:
+        <select
+            class="form-control"
+            ng-model="ctrl.treeSource"
+            ng-options="theme.name for theme in ctrl.themes">
+        </select>
+        </span>
+      </div>
+      <div class="gmf-hidden">
+        <gmf-layertree
+            gmf-layertree-map="::ctrl.map"
+            gmf-layertree-openlinksinnewwindow="::true">
+        </gmf-layertree>
+      </div>
+    </div>
+
+    <div class="clear-left"></div>
+
+    <p id="desc">
+      TODO
+    </p>
+
+    <input type="checkbox" ng-model="ctrl.queryActive" /> Query-Tool active
+
+    <gmf-displayquerygrid
+        gmf-displayquerygrid-active="ctrl.queryGridActive"
+        gmf-displayquerygrid-featuresstyle="ctrl.featureStyle"
+        gmf-displayquerygrid-map="::ctrl.map">
+    </gmf-displayquerygrid>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="displayquerygrid.js"></script></body>
+</html>

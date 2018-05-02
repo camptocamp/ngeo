@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>ObjectEditing - Hub</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      .gmf-oe-hub-form {
+        padding: 10px;
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <p id="desc">
+      This example serves as a hub for other examples and applications
+      that uses the ObjectEditing tools. You need to be logged in too.
+    </p>
+
+    <div class='gmf-oe-hub-form'>
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedUrl"
+          ng-options="url.name for url in ctrl.urls">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedGmfLayerNode"
+          ng-options="gmfTreeNode.layers | translate for gmfTreeNode in ctrl.gmfLayerNodes">
+        <option value="" translate>-- Choose a layer --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedFeature"
+          ng-options="feature.get('name') | translate for feature in ctrl.features">
+        <option value="">-- Choose a feature --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === undefined"
+          ng-click="ctrl.runEditor()"
+          type="button"
+          class="form-control btn btn-primary"
+          title="Load selected feature in OE editor"
+          aria-label="Left Align">
+          </span> Launch Editor
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === undefined"
+          ng-click="ctrl.runViewerHosted()"
+          type="button"
+          class="form-control btn btn-info"
+          title="Load all features of selected layer in OE viewer"
+          aria-label="Left Align">
+          </span> Launch Viewer (hosted)
+        </button>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === undefined"
+          ng-click="ctrl.runViewerDev()"
+          type="button"
+          class="form-control btn btn-info"
+          title="Load all features of selected layer in OE viewer"
+          aria-label="Left Align">
+          </span> Launch Viewer (dev)
+        </button>
+      </div>
+
+    </div>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="objecteditinghub.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>

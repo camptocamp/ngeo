@@ -1,0 +1,20 @@
+<!doctype html>
+<html ng-app="gmfapp">
+  <head>
+    <title>GeoMapFish Theme Selector Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+  <script defer src="commons.js"></script><script defer src="themeselector.js"></script><link href="commons-9aef78.css" rel="stylesheet"><link href="themeselector-d3a1e1.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container">
+      <gmf-themeselector gmf-themeselector-filter="::ctrl.filter"></gmf-themeselector>
+      <div>The theme selected is {{ctrl.manager.getThemeName()}}</div>
+    </div>
+    <p id="desc">
+      This example shows how to use the <code>gmf.themeselector</code> directive from a c2c geoportal theme
+      service.
+    </p>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  </body>
+</html>

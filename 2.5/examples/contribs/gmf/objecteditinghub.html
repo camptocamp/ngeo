@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>ObjectEditing - Hub</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="objecteditinghub.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+
+    <p id="desc">
+      This example serves as a hub for other examples and applications
+      that uses the ObjectEditing tools. You need to be logged in too.
+    </p>
+
+    <div class='gmf-oe-hub-form'>
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedUrl"
+          ng-options="url.name for url in ctrl.urls">
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedGmfLayerNode"
+          ng-options="gmfTreeNode.layers | translate for gmfTreeNode in ctrl.gmfLayerNodes">
+        <option value="" translate>-- Choose a layer --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          ng-model="ctrl.selectedFeature"
+          ng-options="feature.get('name') | translate for feature in ctrl.features">
+        <option value="">-- Choose a feature --</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <button
+          ng-disabled="ctrl.selectedFeature === null || ctrl.selectedGmfLayerNode === null || ctrl.selectedGeomType === undefined"
+          ng-click="ctrl.runEditor()"
+          type="button"
+          class="form-control btn btn-primary"
+          title="Load selected feature in OE editor"
+          aria-label="Left Align">
+          </span> Launch Editor
+        </button>
+      </div>
+    </div>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="objecteditinghub.js"></script></body>
+</html>

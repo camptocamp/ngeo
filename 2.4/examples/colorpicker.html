@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Color picker example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="colorpicker.css" rel="stylesheet"></head>
+
+  <body ng-controller="MainController as mainCtrl" ng-cloak>
+    <label>
+      Select color:
+      <app-colorpicker></app-colorpicker>
+    </label>
+    <hr />
+    Color: {{mainCtrl.color}}
+    <div ngeo-colorpicker="" ngeo-colorpicker-color="mainCtrl.color"></div>
+    <div>
+      <p id="desc">This example shows how to write an application-specific directive (<code>app-colorpicker</code>) based on <code>ngeo-colorpicker</code>to create a color picker.</p>
+    </div>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="colorpicker.js"></script></body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>XSD Attributes in GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      .layers-list {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <p id="desc">
+            This example shows how to use the <code>gmf.XSDAttributes</code>
+            service, which is used to obtain the attributes from a GeoMapFish
+            server using a given layer id. The attributes received are read
+            and transformed into a form using the <code>ngeo-attributes</code>
+            directive.
+          </p>
+          <select
+            class="layers-list"
+            ng-model="ctrl.getSetLayers"
+            ng-model-options="{getterSetter: true}"
+            ng-options="layer.name for layer in ctrl.layers">
+            <option value="">-- Choose a layer --</option>
+          </select>
+          <div>
+            Geometry type:
+            <span>{{ ctrl.getGeomType() }}</span>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <ngeo-attributes
+            ng-if="ctrl.attributes"
+            ngeo-attributes-attributes="::ctrl.attributes"
+            ngeo-attributes-feature="::ctrl.feature">
+          </ngeo-attributes>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="xsdattributes.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+    </script>
+  </body>
+</html>
