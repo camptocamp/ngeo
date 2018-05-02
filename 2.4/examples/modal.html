@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app='app' ng-cloak>
+  <head>
+    <title>Modal example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="modal.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.message.modalComponent.html" title="Read our documentation">ngeo-modal</a></code> directive to open a modal.</p>
+    <button
+        class="btn btn-primary"
+        ng-click="ctrl.modalShown = true">Show modal</button>
+    <ngeo-modal ng-model="ctrl.modalShown">
+      <div class="modal-header ui-draggable-handle">
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </ngeo-modal>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="modal.js"></script></body>
+</html>
