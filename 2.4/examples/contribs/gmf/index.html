@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+    <title>ngeo examples</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h2>Examples index</h2>
+      <div>
+        <a href="apps/mobile.html"><b>Mobile application</b></a>
+        <p>The mobile example application for GeoMapFish.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="apps/desktop.html"><b>Desktop application</b></a>
+        <p>The desktop example application for GeoMapFish.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="apps/mobile_alt.html"><b>Alternate mobile application</b></a>
+        <p>An alternate mobile example application for GeoMapFish.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="apps/desktop_alt.html"><b>Alternate desktop application</b></a>
+        <p>An alternate desktop example application for GeoMapFish.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="apps/iframe_api.html"><b>Iframe api application</b></a>
+        <p>A desktop application for GeoMapFish without any tools that can be used within an iframe.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="apps/oeedit.html?objectediting_geomtype=MultiPolygon&objectediting_id=Test&objectediting_layer=112&objectediting_theme=ObjectEditing&objectediting_property=name&tree_groups=ObjectEditing"><b>Object editing editor</b></a>
+        <p>An example application for editing an object.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="authentication.html">GeoMapFish Authentication example</a>
+        <p>
+      This example shows how to use the <code>gmf-authentication</code>
+      directive to insert an authentication panel in a GeoMapFish page.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="backgroundlayerselector.html">GeoMapFish's background layer selector example</a>
+        <p>This example shows how to use the
+    <code>gmf-backgroundlayerselector</code>
+    directive to select the map background layer.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="contextualdata.html">Contextual Data GeoMapFish example</a>
+        <p>This example shows how to use the <code>gmf-contextualdata</code> directive to display coordinates or data related to the point after a right click on the map.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="datepicker.html">GeoMapFish Datepicker example</a>
+        <p>This example shows how to use the <code>ngeo-date-picker</code> directive with the gmf WMS time service in order to format the date for WMS.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="displayquerygrid.html">GeoMapFish Map Query example</a>
+        <p>
+      TODO
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="displayquerywindow.html">GeoMapFish Map Query example</a>
+        <p>
+      This example shows how to use the <code>ngeo-map-query</code>
+      directive in combination with the
+      <code>gmf.datasource.Manager</code>.
+      The DataSourcesManager fetches the themes returned by the theme
+      service and adds one DataSource, which is used by the querent service
+      per layer definition found. In this example, the layer tree is
+      responsible of creating the layer. You can switch theme and turn
+      on/off layers to see the impact it has on results returned by the
+      query service.  To display results, this example use the
+      <code>gmf-displayquerywindow </code> component. Here, this last
+      directive uses a custom style to display all selected features.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="drawfeature.html">Draw Feature Example</a>
+        <p>
+      This example shows how to use the <code>gmf-drawfeature</code>
+      directive to create, modify and delete vector features on a map and
+      style them as we please.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="editfeature.html">EditFeature GeoMapFish example</a>
+        <p>
+      This example shows how to use the <code>gmf.editing.EditFeature</code>
+      service to insert, update and delete features from a layer using
+      a GeoMapFish server. First, you must log in. Then, you can either
+      click on the <em>Insert</em> button to insert a random feature, or
+      click on a feature on the map to either <em>Update</em> or
+      <em>Delete</em> it.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="editfeatureselector.html">GeoMapFish EditFeature selector example</a>
+        <p>
+      This example shows how to use the <code>gmf-editfeatureselector</code>
+      directive to edit vector features from editable layers that are defined
+      in the GeoMapFish themes. First, you need to login. Then, select the
+      layer you wish to edit. Finally, you can either click on an existing
+      feature on map to modify or delete it, or you can create a new one using
+      the "Draw" button.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="elevation.html">GMF elevation indicator example</a>
+        <p>This example shows how to use the <code>gmf-elevation</code> directive to get elevation under the mouse position.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="featurestyle.html">Feature Style Example</a>
+        <p>
+      This example shows how to use the <code>gmf-featurestyle</code>
+      directive to style a vector feature. Click on a feature to show the
+      directive.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="filterselector.html">GeoMapFish Filter selector example</a>
+        <p>
+        This example shows how to use the <code>gmf-filterselector</code>
+        directive to apply filters on the layers on the map.
+      </p>
+      </div>
+      <hr>
+      <div>
+        <a href="importdatasource.html">GeoMapFish Import DataSource example</a>
+        <p>
+        This example shows how to use the <code>gmf-importdatasource</code>
+        component, which allows the addition of external WMS/WMTS layers
+        in the map. It also supports the addition of files, such as
+        KML and GPX.
+      </p>
+      </div>
+      <hr>
+      <div>
+        <a href="layertreeadd.html">GeoMapFish Layer Tree Example</a>
+        <p>This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="layertree.html">GeoMapFish Layer Tree Example</a>
+        <p>This example shows how to use the <code>gmf.Layertree</code> directive. This layertree needs a source object (that can change) that describes layers like the c2cgeoportal themes service. The wmsUrl is used by internals WMS layers but you can use WMS externals layers and WMTS layers too.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="lidarprofile.html">GMF profile example</a>
+        <p>This example shows how to use the <code>gmf-lidarprofile</code> with the <code>gmf-lidar-panel</code>.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="mobilemeasure.html">Mobile Measure Example</a>
+        <p>
+      This example shows how to use the
+      <code>gmf-mobile-measurearea</code>,
+      <code>gmf-mobile-measurelength</code> and
+      <code>gmf-mobile-measure-point</code> directives in combination with
+      <code>ngeo.interaction.MobileDraw</code> interaction objects to allow
+      mobile users to measure areas, distances and know the center
+      coordinate on their devices. The point measure also uses the
+      <code>gmfRaster</code> service to also obtain the height of the
+      location as well.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="mouseposition.html">GeoMapFish Mouse Position Example</a>
+        <p>This example shows how to use the <code>gmf.mouseposition</code> directive.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="objectediting.html">ObjectEditing example</a>
+        <p>
+      This example shows how to use the <code>gmf-objectediting</code>
+      directive to edit a single feature with advanced editing tools.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="objecteditinghub.html">ObjectEditing - Hub</a>
+        <p>
+      This example serves as a hub for other examples and applications
+      that uses the ObjectEditing tools. You need to be logged in too.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="permalink.html">GeoMapFish Permalink example</a>
+        <p>
+      This example demonstrates the use of the <code>gmf-permalink</code>
+      service, which is injected inside the <code>gmf-map</code> directive.
+      The following links demonstrate the different features:
+      <ul>
+<li>
+<a href="?map_crosshair=true">map_crosshair=true</a>
+          When set, a marker is added either at the location of the
+          <code>map_x</code> and <code>map_y</code> if those parameters
+          are set, otherwise it is added at the center of the map.
+        </li>
+<li>
+<a href="?map_tooltip=hello">map_tooltip=hello</a>
+          When set, a tooltip is added with the content equal to the value
+          set either at the location of the <code>map_x</code> and
+          <code>map_y</code> if those parameters are set, otherwise it is
+          added at the center of the map.
+        </li>
+<li><a href="?">no param</a></li>
+</ul>
+      This example also demonstrates the use of the
+      <code>gmfPermalinkOptions</code> to customize the permalink crosshair
+      feature style.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="print.html">GeoMapFish Print example</a>
+        <p>
+      This example shows how to use the <code>gmf.print.component</code>.
+      Component that generates layout information and manages tools to print with a
+      MapFishPrint v3.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="profile.html">GMF profile example</a>
+        <p>This example shows how to use the <code>gmf-profile</code>.
+    The draw tool and hover feedback on the map are completely independent of
+    the gmf-profile components. This profile relies on the ngeo.profile (d3) and
+    ngeo.ProfileDirective. It passes a custom css through the optional
+    gmf-profile-options attribute</p>
+      </div>
+      <hr>
+      <div>
+        <a href="search.html">Search GeoMapFish example</a>
+        <p>This example shows how to use the <code>gmf-search</code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="share.html">GMF Share permalink example</a>
+        <p>This example shows how to use the <code>gmf-share</code> directive to get a shorten permalink</p>
+      </div>
+      <hr>
+      <div>
+        <a href="simple.html">Simple GeoMapFish example</a>
+        <p>This example shows how to use the <code>gmf-map</code> directive to insert an OpenLayers map in a GeoMapFish page.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="themeselector.html">GeoMapFish Theme Selector Example</a>
+        <p>This example shows how to use the <code>gmf.themeselector</code> directive from a c2c geoportal theme service.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="timeslider.html">GeoMapFish Timeslider example</a>
+        <p>This example shows how to use the <code>gmf-time-slider</code> directive.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="wfspermalink.html">GeoMapFish WFS Permalink example</a>
+        <p>
+      This example demonstrates the use of the <code>ngeoWfsPermalink</code>
+      service, which is injected inside the <code>gmf-map</code> directive.
+      The following links demonstrate the different features:
+      <ul>
+<li>
+<a href="?wfs_layer=fuel&amp;wfs_osm_id=1420918679">
+            ?wfs_layer=fuel&amp;wfs_osm_id=1420918679
+          </a>
+</li>
+<li>
+<a href="?wfs_layer=fuel&amp;wfs_osm_id=1420918679&amp;wfs_showFeatures=0">
+            ?wfs_layer=fuel&amp;wfs_osm_id=1420918679&amp;wfs_showFeatures=0
+          </a>
+</li>
+<li>
+<a href="?wfs_layer=fuel&amp;wfs_osm_id=1420918679,441134960">
+            ?wfs_layer=fuel&amp;wfs_osm_id=1420918679,441134960
+          </a>
+</li>
+<li>
+<a href="?wfs_layer=osm_scale&amp;wfs_highway=bus_stop&amp;wfs_name=Grand-Pont&amp;wfs_operator=TL">
+            ?wfs_layer=osm_scale&amp;wfs_highway=bus_stop&amp;wfs_name=Grand-Pont&amp;wfs_operator=TL
+          </a>
+</li>
+<li>
+<a href="?wfs_layer=osm_scale&amp;wfs_ngroups=2&amp;wfs_0_ele=380&amp;wfs_0_highway=bus_stop&amp;wfs_0_operator=TL&amp;wfs_1_highway=bus_stop&amp;wfs_1_name=Grand-Pont&amp;wfs_1_operator=TL">
+            ?wfs_layer=osm_scale&amp;wfs_ngroups=2&amp;wfs_0_ele=380&amp;wfs_0_highway=bus_stop&amp;wfs_0_operator=TL&amp;wfs_1_highway=bus_stop&amp;wfs_1_name=Grand-Pont&amp;wfs_1_operator=TL
+          </a>
+</li>
+</ul>
+</p>
+      </div>
+      <hr>
+      <div>
+        <a href="xsdattributes.html">XSD Attributes in GeoMapFish example</a>
+        <p>
+            This example shows how to use the <code>gmf.editing.XSDAttributes</code>
+            service, which is used to obtain the attributes from a GeoMapFish
+            server using a given layer id. The attributes received are read
+            and transformed into a form using the <code>ngeo-attributes</code>
+            directive.
+          </p>
+      </div>
+      <hr>
+    </div>
+  </body>
+</html>
+

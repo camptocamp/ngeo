@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <script src="../../https.js"></script>
+    <title>Search GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="../../lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../lib/jquery-ui.min.css">
+    <style>
+      #message {
+        width: 300px;
+      }
+      .ngeo-colorpicker-palette {
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .ngeo-colorpicker-palette td {
+        position: relative;
+        padding: 0;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 1px;
+      }
+      .ngeo-colorpicker-palette td > div {
+        position: relative;
+        height: 12px;
+        width: 12px;
+        border: 1px solid #fff;
+        box-sizing: content-box;
+      }
+      .ngeo-colorpicker-palette td:hover > div::after {
+        display: block;
+        content: '';
+        background: inherit;
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        top: -10px;
+        left: -10px;
+        border: 2px solid #fff;
+        -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+        z-index: 11;
+      }
+      .ngeo-colorpicker-palette td.ngeo-colorpicker-selected > div::after {
+        border: 2px solid #444;
+        margin: 0;
+        content: '';
+        display: block;
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        left: -3px;
+        top: -3px;
+        box-sizing: content-box;
+        z-index: 10;
+      }
+
+      gmf-map > div {
+        width: 600px;
+        height: 400px;
+      }
+      span.twitter-typeahead {
+        width: 300px;
+      }
+      .gmf-search > * {
+        float: left;
+      }
+      .gmf-search > .gmf-clear-button{
+        margin-left: -15px;
+        padding: 3px 0 2px;
+        position: relative;
+      }
+      .gmf-search > .gmf-clear-button:hover{
+        cursor: pointer;
+      }
+      .gmf-search > .gmf-clear-button:after{
+        content: 'x';
+      }
+      /* CSS stolen from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ */
+      span.twitter-typeahead .tt-menu {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        left: 0;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        list-style: none;
+        font-size: 14px;
+        text-align: left;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+      }
+      span.twitter-typeahead .header {
+       background-color: #CCDDEE;
+       padding: 4px 0;
+      }
+      span.twitter-typeahead .tt-suggestion {
+        display: block;
+        padding: 3px 20px;
+        margin-bottom: 0px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.42857143;
+        color: #333333;
+        white-space: nowrap;
+      }
+      span.twitter-typeahead .tt-suggestion:hover,
+      span.twitter-typeahead .tt-suggestion:focus {
+        color: #ffffff;
+        text-decoration: none;
+        outline: 0;
+        background-color: #428bca;
+      }
+      span.twitter-typeahead .tt-suggestion.tt-cursor {
+        color: #ffffff;
+        background-color: #428bca;
+      }
+      span.twitter-typeahead .tt-suggestion button {
+        background: none;
+        border: 0;
+        float: right;
+      }
+      .input-group span.twitter-typeahead {
+        display: block !important;
+      }
+      .input-group span.twitter-typeahead .tt-menu {
+        top: 32px !important;
+      }
+      .input-group.input-group-lg span.twitter-typeahead .tt-menu {
+        top: 44px !important;
+      }
+      .input-group.input-group-sm span.twitter-typeahead .tt-menu {
+        top: 28px !important;
+      }
+      #desc {
+        clear: left;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container-fluid">
+      <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+      <gmf-search
+        gmf-search-map="ctrl.map"
+        gmf-search-options="ctrl.searchOptions"
+        gmf-search-styles="ctrl.searchStyles"
+        gmf-search-datasources="ctrl.searchDatasources"
+        gmf-search-input-value="ctrl.inputValue"
+        gmf-search-colorchooser="true"
+        gmf-search-placeholder="Search for « Laus » for example…"
+        gmf-search-clearbutton="true"
+        gmf-search-on-init="ctrl.searchIsReady()"
+        gmf-search-delay="50">
+      </gmf-search>
+      <p id="desc">This example shows how to use the <code>gmf-search</code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+      <p>You typed: {{ctrl.inputValue}}</p>
+      <div id="message"></div>
+    </div>
+    <script src="../../lib/jquery.min.js"></script>
+    <script src="../../lib/jquery-ui.min.js"></script>
+    <script src="../../lib/angular.min.js"></script>
+    <script src="../../lib/angular-animate.min.js"></script>
+    <script src="../../lib/angular-sanitize.min.js"></script>
+    <script src="../../lib/angular-touch.min.js"></script>
+    <script src="../../lib/angular-gettext.min.js"></script>
+    <script src="../../lib/date.min.js"></script>
+    <script src="../../lib/angular-floatThead.js"></script>
+    <script src="../../lib/jquery.floatThead.min.js"></script>
+    <script src="../../lib/slider.min.js"></script>
+    <script src="../../lib/tmhDynamicLocale.min.js"></script>
+    <script src="../../lib/typeahead.bundle.min.js"></script>
+    <script src="../../lib/proj4.js"></script>
+    <script src="../../lib/bootstrap.min.js"></script>
+    <script src="../../lib/transpile.js"></script>
+    <script src="search.js"></script>
+    <script src="../../lib/watchwatchers.js"></script>
+    <script>
+      var gmfModule = angular.module('gmf');
+      gmfModule.constant('defaultTheme', 'Demo');
+      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+      gmfModule.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+    </script>
+  </body>
+</html>

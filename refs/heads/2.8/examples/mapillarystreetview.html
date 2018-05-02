@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <title>Mapillary Example</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width" />
+    <meta name="mobile-web-app-capable" content="yes" />
+  <link href="mapillarystreetview.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <gmf-map id="map" gmf-map-map="ctrl.map"></gmf-map>
+    <ngeo-streetview
+      active="ctrl.streetViewActive"
+      feature-style="ctrl.style"
+      map="ctrl.map"
+      options-name="ngeoStreetviewOptions"
+    >
+    </ngeo-streetview>
+
+    <div class="desc">
+      <p id="desc">
+        This example shows how to use the <code>ngeo-streetview</code>
+        component with Mapillary.
+      </p>
+
+      <div class="panel panel-default panel-body">
+        <input type="checkbox" id="checkbox-streetview" ng-model="ctrl.streetViewActive" />
+        <label for="checkbox-mapillaryStreetview"> Mapillary</label>
+
+        <input type="checkbox" id="checkbox-dummy" ng-model="ctrl.dummyActive" />
+        <label for="checkbox-dummy"> Dummy tool</label>
+      </div>
+    </div>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script src="commons.js"></script><script src="mapillarystreetview.js"></script></body>
+</html>
