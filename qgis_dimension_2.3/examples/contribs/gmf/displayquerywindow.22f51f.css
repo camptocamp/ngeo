@@ -1,0 +1,122 @@
+gmf-map,
+#tree-container {
+  float: left;
+}
+.clear-left {
+  clear: left;
+}
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
+
+/* Layertree */
+ul {
+  list-style-type: none;
+}
+gmf-layertree a{
+  color: black;
+  text-decoration: none;
+  padding-right: 5px;
+}
+gmf-layertree .gmf-layertree-metadata a:before {
+  font-family: FontAwesome;
+  content: "\F129";
+}
+gmf-layertree .gmf-layertree-layer-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 10px;
+}
+gmf-layertree .gmf-layertree-zoom {
+  display: none;
+}
+gmf-layertree .gmf-layertree-zoom:hover {
+  cursor: pointer;
+}
+gmf-layertree .gmf-layertree-zoom:before {
+  font-family: FontAwesome;
+  content: "\F18E";
+}
+gmf-layertree .outOfResolution .gmf-layertree-legend {
+  display: none;
+}
+gmf-layertree .gmf-layertree-legend-button a:after {
+  font-family: FontAwesome;
+  content: "\F036";
+}
+gmf-layertree .gmf-layertree-legend img {
+  padding-left: 15px;
+}
+gmf-layertree .noSource {
+  opacity: 0.3;
+}
+gmf-layertree .noSource:after {
+  content: "(source not available)";
+}
+gmf-layertree .outOfResolution {
+  opacity: 0.6;
+}
+gmf-layertree .outOfResolution .gmf-layertree-zoom {
+  display: inline;
+}
+gmf-layertree .gmf-layertree-state {
+  font-family: FontAwesome;
+  font-weight: lighter;
+}
+gmf-layertree .on .gmf-layertree-state:before {
+  content: "\F14A";
+}
+gmf-layertree .off .gmf-layertree-state:before {
+  content: "\F096";
+}
+gmf-layertree .indeterminate .gmf-layertree-state:before {
+  content: "\F147";
+}
+[ngeo-popup] {
+  top: 20px;
+  max-width: 350px;
+  width: 350px;
+  margin-left: -175px;
+  left: 50%;
+  right: 50%;
+  max-height: 400px;
+  position: fixed;
+}
+[ngeo-popup] .popover-content {
+  overflow: auto;
+  /*
+   * popup's height - popover-title's height
+   * should be computed using bootstrap variables
+   */
+  max-height: calc(400px - 38px);
+}
+@media (max-width: 768px) {
+  #map {
+    height: 200px;
+    width: 200px;
+  }
+  [ngeo-popup] {
+    position: fixed;
+    top: 0;
+    left: auto;
+    right: auto;
+    max-width: 100%;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    max-height: none;
+    margin: 10px;
+  }
+}
+@media (max-width: 768px) {
+  [ngeo-popup] .popover-content {
+    /*
+     * popup's height - popover-title's height
+     * should be computed using bootstrap variables
+     */
+    max-height: calc(100% - 32px);
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/*# sourceMappingURL=displayquerywindow.22f51f.css.map*/

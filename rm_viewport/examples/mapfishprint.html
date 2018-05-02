@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Print example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="mapfishprint.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <button
+        class="btn btn-primary"
+        ng-click="ctrl.print()">Print</button>
+    <span ng-bind="ctrl.printState"></span>
+    <p id="desc">This example shows how to use <code><a href="../apidoc/ngeo.createPrintServiceFactory.html" title="Read our documentation">ngeo.Print</a></code> to print an OpenLayers map with MapFish Print v3.</p>
+    <p>In this example the best print scale is chosen based on the current map resolution.</p>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="mapfishprint.js"></script></body>
+</html>

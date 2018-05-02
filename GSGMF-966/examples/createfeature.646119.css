@@ -1,0 +1,46 @@
+
+#map {
+  width: 60rem;
+  height: 40rem;
+}
+.ngeo-createfeature-point:before {
+  content: 'Point'
+}
+.ngeo-createfeature-linestring:before {
+  content: 'Line'
+}
+.ngeo-createfeature-polygon:before {
+  content: 'Polygon'
+}
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.ngeo-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ngeo-tooltip-static {
+  display: none;
+}
+.ngeo-tooltip-measure:before,
+.ngeo-tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.ngeo-tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+
+/*# sourceMappingURL=createfeature.646119.css.map*/

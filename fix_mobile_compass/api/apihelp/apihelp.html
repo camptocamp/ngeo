@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>API description</title>
+        <style type="text/css">
+         body {
+             background: none repeat scroll 0 0 #EEEEEE;
+             margin: 0;
+             padding: 0;
+             font-family: Helvetica,arial,freesans,clean,sans-serif;
+         }
+         #wrapper {
+             width: 1220px;
+             background: none repeat scroll 0 0 #FFFFFF;
+             box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+             margin: 0 auto;
+             padding: 20px;
+         }
+         pre {
+             border: 1px solid #ccc;
+             box-shadow: 0 0 15px #ddd;
+             border-radius: 5px;
+             margin-top: 0;
+         }
+         #wrapper pre {
+             padding: 6px 10px;
+         }
+         .api pre {
+             width: 560px;
+         }
+         .api .map, .api pre {
+             display: inline-block;
+             vertical-align: top;
+         }
+         .map {
+             width: 600px;
+             height: 400px;
+         }
+        </style>
+        <link href="github.css" rel="stylesheet" type="text/css" media="screen">
+        <script src="rainbow-custom.min.js"></script>
+        <script src="../api.js"></script>
+        <link href="../api.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <h1>Simple API Help</h1>
+            <p>
+                This page describes how to use the <em>Simple API</em>. The Simple API
+                provides a JavaScript API for inserting simple maps into web pages.
+            </p>
+            <h2>Basis</h2>
+            <p>To use the API you should add the following HTML:</p>
+            <pre><code data-language="html">
+&lt;script src="https://geomapfish-demo.camptocamp.com/2.4/wsgi/api.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+window.onload = function() {
+    // add the code here
+};
+&lt;/script&gt;
+            </code></pre>
+            <p>To put a new map in the page you'll have to put a <em>div</em> element with a
+                certain <em>id</em> where you want your map to be:
+                <pre><code data-language="html">&lt;div id='map1' style='width:700px;height:400px;'&gt;&lt;/div&gt;</code></pre>
+
+                <div class="api">
+                    <h2>A map</h2>
+                    <div id='map1' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map1', // id of the div element to put the map in
+    zoom: 4,
+    center: [544500, 210100]
+});
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>A map with a marker on its center</h2>
+                    <div id='map2' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map2',
+    zoom: 8,
+    center: [544500, 210100]
+});
+map.addMarker();
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>A map with several custom markers</h2>
+                    <div id='map3' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map3',
+    zoom: 8,
+    center: [544500, 210100]
+});
+map.addMarker({
+    position: [544410, 210100],
+    size: [14, 14],
+    icon: 'img/info.png'
+});
+map.addMarker({
+    position: [544450, 210000],
+    size: [18, 18],
+    icon: 'img/essence.png'
+});
+map.addMarker({
+    position: [544310, 210200],
+    size: [14, 14],
+    icon: 'img/parking.png'
+});
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>A map with a subset of overlays</h2>
+                    <div id='map4' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map4',
+    zoom: 0,
+    center: [590000, 170000],
+    layers: ['ch.astra.ausnahmetransportrouten', 'polygon', 'point']
+});
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>A map with some additional controls</h2>
+                    <div id='map5' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map5',
+    zoom: 3,
+    center: [544500, 210100],
+    layers: ['bank'],
+    addLayerSwitcher: true,
+    addMiniMap: true,
+    miniMapExpanded: true,
+    showCoords: true
+});
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>Recenter the map to given coordinates</h2>
+                    <button id="button1">Click me!</button>
+                    <button id="button2">Click me!</button>
+                    <br />
+                    <div id='map6' class="map"></div>
+                    <pre data-language="javascript">
+var map_ = new demo.Map({
+    div: 'map6',
+    addMiniMap: true,
+    miniMapExpanded: true
+});
+var button1 = document.getElementById('button1');
+button1.onclick = function() {
+    map_.recenter([543500, 202154], 7);
+}
+var button2 = document.getElementById('button2');
+button2.onclick = function() {
+    map_.recenter([564500, 216100], 9);
+}
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>Recenter the map on objects</h2>
+                    <div id='map7' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map7',
+    layers: ['polygon']
+});
+map.recenterOnObjects(
+    /* the layer name */
+    'polygon',
+    /* the ids of the objects */
+    ['94', '125'],
+    /* whether to highlight the objects or not */
+    true
+);
+                    </pre>
+                </div>
+
+                <div class="api">
+                    <h2>Load data from a text file</h2>
+                    See <a href="data.txt" target="_blank">data.txt</a>.
+                    <br />
+                    <div id='map9' class="map"></div>
+                    <pre data-language="javascript">
+var map = new demo.Map({
+    div: 'map9'
+});
+map.addCustomLayer('text', 'My custom txt layer', 'data.txt', {
+  success: function() {
+    map.selectObject(2);
+  }
+});
+                    </pre>
+                </div>
+
+        </div>
+        <script>
+         var apis = document.getElementsByTagName('pre');
+         for (var i = 0; i < apis.length; i++) {
+           var language = apis[i].attributes.getNamedItem('data-language');
+           if (language && language.nodeValue == 'javascript') {
+             eval(apis[i].innerHTML)
+           }
+         }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,293 @@
+/**
+ * Fonts definition
+ */
+@font-face {
+  font-family: "gmf-icons";
+  src: url(gmf-icons.21aba4.eot);
+  src: url(gmf-icons.21aba4.eot?#iefix) format("embedded-opentype"),
+       url(gmf-icons.e81dac.woff) format("woff"),
+       url(gmf-icons.75c2e8.ttf) format("truetype"),
+       url(gmf-icons.6ced65.svg#gmf-icons) format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+/* CSS stolen from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ */
+span.twitter-typeahead .tt-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 14px;
+  text-align: left;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+span.twitter-typeahead .tt-suggestion {
+  display: block;
+  padding: 3px 20px;
+  margin-bottom: 0px;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333333;
+  white-space: nowrap;
+}
+span.twitter-typeahead .tt-suggestion.tt-cursor,
+span.twitter-typeahead .tt-suggestion:hover,
+span.twitter-typeahead .tt-suggestion:focus {
+  color: #ffffff;
+  text-decoration: none;
+  outline: 0;
+  background-color: #428bca;
+}
+span.twitter-typeahead .tt-suggestion button {
+  background: none;
+  border: 0;
+  float: right;
+}
+span.twitter-typeahead {
+  width: 100%;
+}
+.input-group span.twitter-typeahead {
+  display: block !important;
+}
+.input-group span.twitter-typeahead .tt-menu {
+  top: 32px !important;
+}
+.input-group.input-group-lg span.twitter-typeahead .tt-menu {
+  top: 44px !important;
+}
+.input-group.input-group-sm span.twitter-typeahead .tt-menu {
+  top: 28px !important;
+}
+
+
+/* CSS for this example */
+
+body {
+  padding: 0;
+}
+.panel {
+  display: block;
+  width: 60rem;
+}
+gmf-map > div {
+  width: 71rem;
+  height: 40rem;
+}
+gmf-map > div,
+.panel {
+  float: left;
+  margin: 0.5rem;
+}
+gmf-filterselector {
+  display: block;
+  width: 30rem;
+}
+
+/* GMF Layer Tree */
+gmf-layertree  ul {
+  list-style-type: none;
+}
+gmf-layertree a{
+  color: black;
+  text-decoration: none;
+  padding-right: 5px;
+}
+gmf-layertree .gmf-layertree-metadata a:before {
+  font-family: FontAwesome;
+  content: "\F129";
+}
+gmf-layertree .gmf-layertree-layer-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 10px;
+}
+gmf-layertree .gmf-layertree-zoom {
+  display: none;
+}
+gmf-layertree .gmf-layertree-zoom:hover {
+  cursor: pointer;
+}
+gmf-layertree .gmf-layertree-zoom:before {
+  font-family: FontAwesome;
+  content: "\F18E";
+}
+gmf-layertree .outOfResolution .gmf-layertree-legend {
+  display: none;
+}
+gmf-layertree .gmf-layertree-legend-button a:after {
+  font-family: FontAwesome;
+  content: "\F036";
+}
+gmf-layertree .gmf-layertree-legend img {
+  padding-left: 15px;
+}
+gmf-layertree .noSource {
+  opacity: 0.3;
+}
+gmf-layertree .noSource:after {
+  content: "(source not available)";
+}
+gmf-layertree .outOfResolution {
+  opacity: 0.6;
+}
+gmf-layertree .outOfResolution .gmf-layertree-zoom {
+  display: inline;
+}
+gmf-layertree .gmf-layertree-state {
+  font-family: FontAwesome;
+  font-weight: lighter;
+}
+gmf-layertree .on .gmf-layertree-state:before {
+  content: "\F14A";
+}
+gmf-layertree .off .gmf-layertree-state:before {
+  content: "\F096";
+}
+gmf-layertree .indeterminate .gmf-layertree-state:before {
+  content: "\F147";
+}
+gmf-layertree .on {
+  color: green;
+}
+gmf-layertree .off {
+  color: red;
+}
+gmf-layertree .indeterminate {
+  color: orange;
+}
+gmf-layertree a.gmf-layertree-expand-node.fa {
+  display: inline-block;
+}
+gmf-layertree a.gmf-layertree-expand-node.fa::before {
+    content: "\F054";
+}
+gmf-layertree a.gmf-layertree-expand-node.fa[aria-expanded="true"]::before {
+    content: "\F078";
+}
+
+/* ImportDataSource */
+gmf-importdatasource input[type=file] {
+  display: none;
+}
+
+gmf-wmscapabilitylayertreenode {
+  display: block;
+}
+
+gmf-wmscapabilitylayertreenode a {
+  color: black;
+  text-decoration: none;
+}
+
+gmf-wmscapabilitylayertreenode a:focus,
+gmf-wmscapabilitylayertreenode a:hover {
+  text-decoration: none;
+}
+
+gmf-wmscapabilitylayertreenode ul {
+  margin: 0;
+  padding: 0;
+}
+
+gmf-wmscapabilitylayertreenode li {
+  list-style: none;
+}
+
+gmf-wmscapabilitylayertreenode > ul > li > gmf-wmscapabilitylayertreenode {
+  margin: 0 0 0 2.5rem;
+}
+
+.gmf-importdatasource-layers > gmf-wmscapabilitylayertreenode {
+  border: 0.1rem solid #ccc;
+  max-height: 20rem;
+  padding: 1rem 1rem 1rem 3rem;
+  overflow-y: auto;
+}
+
+a.gmf-wmscapabilitylayertreenode-expand-node.fa {
+  display: inline-block;
+}
+a.gmf-wmscapabilitylayertreenode-expand-node.fa::before {
+    content: "\F054";
+}
+a.gmf-wmscapabilitylayertreenode-expand-node.fa[aria-expanded="true"]::before {
+    content: "\F078";
+}
+
+.gmf-wmscapabilitylayertreenode-group:before {
+  content: "\E600";
+  font-family: gmf-icons;
+}
+
+.gmf-wmscapabilitylayertreenode-popover-content ul {
+  margin: 0;
+  padding: 0;
+}
+
+.gmf-wmscapabilitylayertreenode-popover-content li {
+  list-style: none;
+}
+
+.gmf-wmscapabilitylayertreenode-popover-content a {
+  cursor: pointer;
+}
+
+.gmf-wmscapabilitylayertreenode-actions {
+  cursor: pointer;
+  opacity: 0;
+  margin: 0 0 0 -2rem;
+}
+
+.gmf-wmscapabilitylayertreenode-header:hover > span > .gmf-wmscapabilitylayertreenode-actions {
+  opacity: 1;
+}
+
+.gmf-wmscapabilitylayertreenode-no-icon {
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.gmf-wmscapabilitylayertreenode-description {
+  background-color: #fafafa;
+  border: 0.1rem solid #ddd;
+  padding: 1rem;
+}
+
+.gmf-wmscapabilitylayertreenode-description a {
+  color: #929292;
+  cursor: pointer;
+  font-size: 9pt;
+}
+
+.gmf-wmscapabilitylayertreenode-description a:hover {
+  text-decoration: underline;
+}
+
+.gmf-wmscapabilitylayertreenode-description-toggle {
+  /* display: none; */
+  display: block;
+  text-align: right;
+}
+
+/*
+.gmf-wmscapabilitylayertreenode-description:hover .gmf-wmscapabilitylayertreenode-description-toggle {
+  display: block;
+}
+*/
+
+/*# sourceMappingURL=importdatasource.c6d097.css.map*/

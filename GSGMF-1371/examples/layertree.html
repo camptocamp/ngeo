@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Layer tree example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="layertree.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as mainCtrl">
+    <div id="map" ngeo-map="mainCtrl.map"></div>
+    <app-layertree app-layertree-map="::mainCtrl.map"></app-layertree>
+    <p id="desc">This example shows how to use ngeo's layer tree directive (<code><a href="../apidoc/ngeo.layertree.component.html" title="Read our documentation">ngeo-layertree</a></code>). It also shows how to define an application-specific HTML partial for the tree nodes.</p>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="layertree.js"></script></body>
+</html>

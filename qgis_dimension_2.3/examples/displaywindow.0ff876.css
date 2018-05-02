@@ -1,0 +1,70 @@
+.windowcontainer {
+  background-color: #fbf5ef;
+  border: solid 1px black;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  margin: 1rem;
+}
+
+.animation-container {
+  position: relative;
+  overflow: hidden;
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+}
+
+.details {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.ui-draggable .ui-draggable-handle {
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  z-index: 1;
+}
+
+.fa-close:before {
+  font-family: FontAwesome;
+  content: "\F00D";
+}
+
+.ui-resizable-se {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 1em;
+  height: 1em;
+}
+
+.ui-resizable-se:before {
+  font-family: FontAwesome;
+  content: "\F0C9";
+}
+
+#textBindingOutput {
+  border: 1px dotted #0e0e0e;
+  padding: 10px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  width: 50px;
+  float: left;
+}
+
+/*# sourceMappingURL=displaywindow.0ff876.css.map*/

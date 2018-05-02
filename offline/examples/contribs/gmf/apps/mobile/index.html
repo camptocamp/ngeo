@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="MobileController as mainCtrl">
+  <head>
+    <title ng-bind-template="{{'Mobile Application'|translate}}">GeoMapFish</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" href="image/favicon.ico"/>
+    <link rel="stylesheet" href="../../build/mobile.css">
+    <script>
+      if (!window.requestAnimationFrame) {
+        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+            + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
+        window.location = 'http://geomapfish.org/'
+      }
+    </script>
+  </head>
+  <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
+                   'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
+                   'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+    <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
+      <gmf-map
+        gmf-map-map="mainCtrl.map"
+        gmf-map-manage-resize="mainCtrl.manageResize"
+        gmf-map-resize-transition="mainCtrl.resizeTransition"
+        ngeo-map-query=""
+        ngeo-map-query-map="::mainCtrl.map"
+        ngeo-map-query-active="mainCtrl.queryActive"></gmf-map>
+      <gmf-displayquerywindow
+        gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
+        gmf-displayquerywindow-defaultcollapsed="false">
+      </gmf-displayquerywindow>
+      <div
+        class="gmf-mobile-measure"
+        gmf-mobile-measurelength
+        gmf-mobile-measurelength-active="mainCtrl.measureLengthActive"
+        gmf-mobile-measurelength-precision="2"
+        gmf-mobile-measurelength-map="::mainCtrl.map">
+      </div>
+      <div
+        class="gmf-mobile-measure"
+        gmf-mobile-measurepoint
+        gmf-mobile-measurepoint-active="mainCtrl.measurePointActive"
+        gmf-mobile-measurepoint-coordinateDecimals="2"
+        gmf-mobile-measurepoint-layersconfig="::mainCtrl.elevationLayersConfig"
+        gmf-mobile-measurepoint-map="::mainCtrl.map">
+      </div>
+      <button class="gmf-mobile-nav-trigger gmf-mobile-nav-left-trigger"
+        ng-click="mainCtrl.toggleLeftNavVisibility()">
+        <span class="gmf-icon gmf-icon-layers"></span>
+      </button>
+      <gmf-search gmf-search-map="::mainCtrl.map"
+        gmf-search-datasources="::mainCtrl.searchDatasources"
+        gmf-search-clearbutton="::true"
+        gmf-search-placeholder="{{'Search…'|translate}}"
+        gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
+        gmf-search-listeners="::mainCtrl.searchListeners"
+        gmf-search-delay="mainCtrl.searchDelay">
+      </gmf-search>
+      <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
+        ng-click="mainCtrl.toggleRightNavVisibility()">
+        <i class="fa fa-wrench"></i>
+      </button>
+      <div class="overlay" ng-click="mainCtrl.hideNav()"></div>
+      <div
+        class="gmf-search-overlay"
+        ng-click="mainCtrl.hideSearchOverlay()">
+      </div>
+      <button ngeo-mobile-geolocation=""
+        ngeo-mobile-geolocation-map="::mainCtrl.map"
+        ngeo-mobile-geolocation-options="::mainCtrl.mobileGeolocationOptions">
+        <span class="fa fa-dot-circle-o"></span>
+      </button>
+      <ngeo-displaywindow
+        content="mainCtrl.displaywindowContent"
+        desktop="false"
+        height="mainCtrl.displaywindowHeight"
+        open="mainCtrl.displaywindowOpen"
+        title="mainCtrl.displaywindowTitle"
+        url="mainCtrl.displaywindowUrl"
+        width="mainCtrl.displaywindowWidth"
+      ></ngeo-displaywindow>
+      <div class="gmf-app-map-messages">
+        <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
+        <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
+          <span translate
+            translate-params-url="'http://camptocamp.github.io/ngeo/master/examples/contribs/gmf/apps/desktop/?no_redirect'">
+            You're using the mobile application. Check out the <a href="{{url}}">standard application</a>.</span>
+        </div>
+      </div>
+    </main>
+    <nav class="gmf-mobile-nav-left" gmf-mobile-nav>
+      <header>
+        <a class="gmf-mobile-nav-go-back" href>{{'Back' | translate}}</a>
+      </header>
+      <!-- main menu -->
+      <div class="gmf-mobile-nav-active gmf-mobile-nav-slide">
+        <ul>
+          <li>
+            <a href data-target="#background" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Background' | translate}}</a>
+          </li>
+          <li>
+            <a href data-target="#themes" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Themes' | translate}}</a>
+          </li>
+        </ul>
+        <gmf-layertree
+          gmf-layertree-dimensions="mainCtrl.dimensions"
+          gmf-layertree-map="::mainCtrl.map"
+          gmf-layertree-openlinksinnewwindow="::true">
+        </gmf-layertree>
+      </div>
+      <gmf-backgroundlayerselector
+        id="background"
+        class="gmf-mobile-nav-slide"
+        data-header-title="{{'Background' | translate}}"
+        gmf-backgroundlayerselector-dimensions="::mainCtrl.dimensions"
+        gmf-backgroundlayerselector-map="::mainCtrl.map"
+        gmf-backgroundlayerselector-select="mainCtrl.hideNav()">
+      </gmf-backgroundlayerselector>
+      <gmf-themeselector
+        id="themes"
+        class="gmf-mobile-nav-slide"
+        data-header-title="{{'Themes' | translate}}"
+        gmf-themeselector-currenttheme="mainCtrl.theme"
+        gmf-themeselector-filter="::mainCtrl.filter"
+        gmf-mobile-nav-back-on-click>
+      </gmf-themeselector>
+    </nav>
+    <nav class="gmf-mobile-nav-right" gmf-mobile-nav>
+      <header>
+        <a class="gmf-mobile-nav-go-back" href>{{'Back' | translate}}</a>
+      </header>
+      <!-- main menu -->
+      <div class="gmf-mobile-nav-active gmf-mobile-nav-slide">
+        <ul>
+          <li>
+            <a href data-target="#measure-tools" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Measure tools' | translate}}</a>
+            <a href data-target="#login" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Login' | translate}}</a>
+          </li>
+        </ul>
+      </div>
+      <div id="measure-tools" class="gmf-mobile-nav-slide" data-header-title="{{'Measure tools' | translate}}">
+        <ul>
+          <li>
+            <a ngeo-btn
+              ng-click="mainCtrl.hideNav()"
+              class="gmf-mobile-nav-button"
+              ng-model="mainCtrl.measurePointActive">
+              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
+              {{'Coordinate' | translate}}
+            </a>
+          </li>
+          <li>
+            <a ngeo-btn
+              ng-click="mainCtrl.hideNav()"
+              class="gmf-mobile-nav-button"
+              ng-model="mainCtrl.measureLengthActive">
+              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
+              {{'Length' | translate}}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <gmf-authentication id="login" class="gmf-mobile-nav-slide" data-header-title="{{'Login' | translate}}"
+        gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
+      </gmf-authentication>
+    </nav>
+    <script src="../../build/mobile.js"></script>
+    <script src="../../../../lib/watchwatchers.js"></script>
+    <script>
+      (function() {
+        var cacheVersion = 'd736fff8ea0301cbe7ffca4616688aa064b386bf';
+        var urlElements = window.location.pathname.split('/');
+
+        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
+        angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js?cache_version=' + cacheVersion);
+
+        var gmfModule = angular.module('gmf');
+        gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
+
+        var langUrls = {};
+        ['en', 'fr', 'de'].forEach(function(lang) {
+          var langUrlElements = urlElements.slice(0, urlElements.length - 3);
+          langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
+          langUrls[lang] = langUrlElements.join('/')
+        });
+
+        var module = angular.module('app');
+        module.constant('defaultTheme', 'Demo');
+        module.constant('defaultLang', 'en');
+        module.constant('langUrls', langUrls);
+        module.constant('cacheVersion', cacheVersion);
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=20&interface=mobile');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=mobile');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers');
+        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+        module.constant('gmfShortenerCreateUrl', '');
+        module.constant('gmfSearchGroups', []);
+        // Requires that the gmfSearchGroups is specified
+        module.constant('gmfSearchActions', []);
+        module.value('ngeoWfsPermalinkOptions',
+            /** @type {ngeox.WfsPermalinkOptions} */ ({
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+              wfsTypes: [
+                {featureType: 'fuel', label: 'display_name'},
+                {featureType: 'osm_scale', label: 'display_name'}
+              ],
+              defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+              defaultFeaturePrefix: 'feature'
+            }));
+       })();
+    </script>
+  </body>
+</html>

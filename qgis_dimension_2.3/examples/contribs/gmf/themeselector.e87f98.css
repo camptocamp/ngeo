@@ -1,0 +1,29 @@
+.gmf-theme-selector {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+}
+.gmf-theme-selector li {
+  cursor: pointer;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  border: 0.1rem solid black;
+}
+.gmf-text {
+  flex: 1;
+}
+.gmf-thumb {
+  height: 60px;
+}
+li.gmf-theme-selector-active {
+  border: 0.1rem solid blue;
+}
+.gmf-theme-selector-active::after {
+  color: blue;
+  content: 'X';
+  margin: 0 1rem 0 0;
+}
+
+/*# sourceMappingURL=themeselector.e87f98.css.map*/

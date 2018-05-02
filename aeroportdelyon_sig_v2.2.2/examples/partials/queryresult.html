@@ -1,0 +1,48 @@
+<h3>Total: {{ qrCtrl.result.total }}</h3>
+
+<ul class="nav nav-tabs"
+    role="tablist">
+  <li ng-repeat="source in qrCtrl.result.sources"
+      role="presentation"
+      ng-class="::{active: $index == 0}">
+    <a href="#{{ ::source.label }}"
+       aria-controls="{{ ::source.label }}"
+       role="tab"
+       data-toggle="tab">
+      <span>{{ ::source.label }}</span>
+      <span ng-switch="source.pending">
+        <span ng-switch-when="true">(...)</span>
+        <span ng-switch-default="">({{ ::source.features.length }})</span>
+      </span>
+    </a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div ng-repeat="source in qrCtrl.result.sources"
+       role="tabpanel"
+       class="tab-pane"
+       ng-class="::{active: $index == 0}"
+       id="{{ ::source.label }}">
+    <div ng-switch="source.features.length">
+      <div ng-switch-when="0">
+        <span ng-switch="source.pending">
+          <h3 ng-switch-when="true">Pending...</h3>
+          <h3 ng-switch-default="">No result</h3>
+        </span>
+      </div>
+      <div ng-switch-default="">
+        <div ng-repeat="feature in ::source.features">
+          <h3>{{ ::feature.get('display_name') }}</h3>
+          <div ng-repeat="(key, value) in ::feature.getProperties()"
+               ng-init="value = value !== undefined ? value : ''">
+            <span ng-if="::(key !== feature.getGeometryName() && key !== 'ngeo_feature_type_')">
+              <span ng-bind="::key"></span>:
+              <span ng-bind="::value"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

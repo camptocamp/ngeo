@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Recenter example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="recenter.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.recenter.directive.html" title="Read our documentation">ngeo-recenter</a></code> directive to jump between some predefined areas.</p>
+
+    <span>Move to:</span>
+    <select ngeo-recenter ngeo-recenter-map="::ctrl.map">
+      <option ngeo-extent="[-1898084, 4676723, 3972279, 8590299]" translate>Europe</option>
+      <option ngeo-extent="[727681, 5784754, 1094579, 6029353]" translate>Switzerland</option>
+      <option ngeo-extent="[-2778639, 9133308, -1311048, 10111701]" translate>Iceland</option>
+      <option ngeo-extent="[12044030, -4921322, 17914393, -1007746]" translate>Australia</option>
+    </select>
+
+    <div ngeo-recenter ngeo-recenter-map="::ctrl.map">
+      <button ngeo-extent="[-1898084, 4676723, 3972279, 8590299]" translate>Move to Europe</button>
+    </div>
+
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="recenter.js"></script></body>
+</html>

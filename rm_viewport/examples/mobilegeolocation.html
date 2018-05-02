@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Mobile geolocation example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="mobilegeolocation.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div>
+      <div id="map" ngeo-map="::ctrl.map"></div>
+      <button ngeo-mobile-geolocation=""
+        ngeo-mobile-geolocation-map="::ctrl.map"
+        ngeo-mobile-geolocation-options="::ctrl.mobileGeolocationOptions">
+      </button>
+      <p id="desc">
+        This example shows how to use the <code><a href="../apidoc/ngeo.geolocation.mobile.html" title="Read our documentation">ngeo-mobile-geolocation</a></code>
+        directive.
+      </p>
+    </div>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="mobilegeolocation.js"></script></body>
+</html>

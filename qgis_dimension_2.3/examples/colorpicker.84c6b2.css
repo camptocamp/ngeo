@@ -1,0 +1,57 @@
+
+body {
+  padding: 10px;
+}
+.ngeo-colorpicker-palette {
+  padding-left: 20px;
+  border-collapse: separate;
+  border-spacing: 0px;
+}
+.ngeo-colorpicker-palette tr {
+  cursor: default;
+}
+.ngeo-colorpicker-palette td {
+  position: relative;
+  padding: 0px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1px;
+  cursor: pointer;
+}
+.ngeo-colorpicker-palette td > div {
+  position: relative;
+  height: 12px;
+  width: 12px;
+  border: 1px solid #fff;
+  box-sizing: content-box;
+}
+.ngeo-colorpicker-palette td:hover > div::after {
+  display: block;
+  content: '';
+  background: inherit;
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  top: -10px;
+  left: -10px;
+  border: 2px solid #fff;
+  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+  box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+  z-index: 11;
+}
+.ngeo-colorpicker-palette td.ngeo-colorpicker-selected > div::after {
+  border: 2px solid #444;
+  margin: 0;
+  content: '';
+  display: block;
+  width: 14px;
+  height: 14px;
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  box-sizing: content-box;
+  z-index: 10;
+}
+
+/*# sourceMappingURL=colorpicker.84c6b2.css.map*/

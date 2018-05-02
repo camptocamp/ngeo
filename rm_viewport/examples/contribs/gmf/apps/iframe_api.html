@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="{{mainCtrl.lang}}" ng-controller="IframeAPIController as mainCtrl" ng-strict-di>
+  <head>
+    <title ng-bind-template="{{'Iframe API Application'|translate}}">GeoMapFish</title>
+    <meta charset="utf-8">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-2-5.camptocamp.com/dynamic.json">
+    <meta name="interface" content="iframe_api">
+    <link rel="shortcut icon" href="favicon.ico" />
+    
+    <link href="iframe_api.css" rel="stylesheet">
+    
+  </head>
+  <body>
+    <div ng-show="mainCtrl.loading" class="loading-mask">
+      <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+    </div>
+    <main>
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+        <ngeo-displaywindow
+          content="mainCtrl.displaywindowContent"
+          desktop="true"
+          height="mainCtrl.displaywindowHeight"
+          open="mainCtrl.displaywindowOpen"
+          title="mainCtrl.displaywindowTitle"
+          url="mainCtrl.displaywindowUrl"
+          width="mainCtrl.displaywindowWidth"
+        ></ngeo-displaywindow>
+        <div class="gmf-app-map-bottom-controls">
+          <div class="gmf-backgroundlayerbutton btn-group dropup">
+            <button
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown">
+              <img src="background-layer-button.png" alt="" />
+            </button>
+            <gmf-backgroundlayerselector
+              gmf-backgroundlayerselector-map="::mainCtrl.map"
+              class="dropdown-menu">
+            </gmf-backgroundlayerselector>
+          </div>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map">
+            </gmf-disclaimer>
+          </div>
+          <gmf-displayquerywindow
+            gmf-displayquerywindow-draggable-containment="::mainCtrl.displaywindowDraggableContainment"
+            gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
+            gmf-displayquerywindow-desktop="true">
+          </gmf-displayquerywindow>
+        </div>
+        <gmf-map
+          class="gmf-map"
+          gmf-map-map="mainCtrl.map"
+          gmf-map-manage-resize="mainCtrl.manageResize"
+          gmf-map-resize-transition="mainCtrl.resizeTransition"
+          ngeo-map-query=""
+          ngeo-map-query-map="::mainCtrl.map"
+          ngeo-map-query-active="mainCtrl.queryActive"
+          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
+          ngeo-bbox-query=""
+          ngeo-bbox-query-map="::mainCtrl.map"
+          ngeo-bbox-query-active="mainCtrl.queryActive"
+          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+        </gmf-map>
+        <div id="scaleline"></div>
+        <gmf-layertree
+          gmf-layertree-dimensions="mainCtrl.dimensions"
+          gmf-layertree-map="::mainCtrl.map">
+        </gmf-layertree>
+      </div>
+      <ngeo-modal ng-model="mainCtrl.modalShareShown">
+        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"></gmf-share>
+      </ngeo-modal>
+      <ngeo-modal
+          ngeo-modal-closable="false"
+          ng-model="mainCtrl.userMustChangeItsPassword">
+        <div class="modal-header ui-draggable-handle">
+          <h4 class="modal-title">
+            {{'You must change your password' | translate}}
+          </h4>
+        </div>
+        <div class="modal-body">
+          <gmf-authentication
+            gmf-authentication-force-password-change="::true">
+          </gmf-authentication>
+        </div>
+      </ngeo-modal>
+    </main>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries,Object.values"></script>
+    <script src="../../../dist/vendor.js?dev"></script>
+    
+    <script src="iframe_api.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
+    <title>ngeo examples</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h2>Examples index</h2>
+      <div>
+        <a href="contribs/gmf/"><b>GeoMapFish</b></a>
+        <p>GeoMapFish examples.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="animation.html">Animation example</a>
+        <p>This example shows how to animate the resizing of a map without distortions of the map during the animation. This uses the <code><a href="../apidoc/ngeo.map.resizemap.html" title="Read our documentation">ngeoResizemap</a></code> directive.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="asitvd.html">ASITVD source example</a>
+        <p>
+      This example shows how to use the <code>ngeo.source.AsitVD</code> source to access tiles from the
+      <a href="https://asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html">ASIT VD tile server</a>.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="attributes.html">Attributes example</a>
+        <p>
+            This example shows how to use the <code>ngeo-attributes</code>
+            directive, which binds a form to the inner properties of a
+            <code>ol.Feature</code> object. Changes made through the form are
+            applied to the feature and vice-versa. Try playing with the form
+            or click
+            <input ng-click="ctrl.updateName()" type="button" value="Change name"/>
+            
+            to change the name. You can also
+            <label for="disable">Disable the form</label>
+<input id="disable" ng-model="ctrl.disabled" type="checkbox"/>.
+          </p>
+      </div>
+      <hr>
+      <div>
+        <a href="backgroundlayerdropdown.html">Background layer selection example</a>
+        <p>This example shows how to write an application-specific directive (<code>app-backgroundlayer</code>) to create a background layer selector. The directive is based on Bootstrap's <code>dropdown</code> jQuery plugin, and on the <code><a href="../apidoc/ngeo.map.BackgroundLayerMgr.html" title="Read our documentation">ngeoBackgroundLayerMgr</a></code> service.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="backgroundlayer.html">Background layer selection example</a>
+        <p>This example shows how to write an application-specific directive (<code>app-backgroundlayer</code>) to create a background layer selector. The directive is based on Angular's <code>select</code>, <code>ngOptions</code>, <code>ngModel</code> and <code>ngChange</code> directives, and on the <code><a href="../apidoc/ngeo.map.BackgroundLayerMgr.html" title="Read our documentation">ngeoBackgroundLayerMgr</a></code> service.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="bboxquery.html">BBox Query example</a>
+        <p>
+      This example shows how to use the <code><a href="../apidoc/ngeo.query.bboxQueryComponent.html" title="Read our documentation">ngeo-mobile-query</a></code>
+      directive. Press <code>Ctrl</code> (or <code>Cmd</code> on Mac) and draw a query bbox on the map.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="colorpicker.html">Color picker example</a>
+        <p>This example shows how to write an application-specific directive (<code>app-colorpicker</code>) based on <code>ngeo-colorpicker</code>to create a color picker.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="control.html">Control example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.misc.controlComponent.html" title="Read our documentation">ngeo-control</a></code> directive to insert an OpenLayers control in the page.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="createfeature.html">Create Feature Example</a>
+        <p>
+      This example shows how to use the <code>ngeo-createfeature</code>
+      directive to draw point, linestring or polygon vector features on
+      a map.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="datepicker.html">Datepicker example</a>
+        <p>This example shows how to use the <code>ngeo-date-picker</code> directive.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="datetimepicker.html">Datepicker example</a>
+        <p>This example shows how to use the <code>ngeo-datetimepicker</code> directive.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="desktopgeolocation.html">Desktop geolocation example</a>
+        <p>
+        This example shows how to use the <code><a href="../apidoc/ngeo.geolocation.desktop.html" title="Read our documentation">ngeo-desktop-geolocation</a></code>
+        directive.
+      </p>
+      </div>
+      <hr>
+      <div>
+        <a href="disclaimer.html">Disclaimer example</a>
+        <p>
+      This example shows how to use the <code>ngeo-disclaimer</code>
+      service to show dismissable messages. Only one unique message
+      per type may be displayed at a time, i.e. 2 different "success"
+      messages may be displayed, but not twice the same one. The same
+      message can be displayed one in "success" the other "info", for
+      example.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="displaywindow.html">ngeoDisplaywindow</a>
+        <p>
+      This example shows how to use the <code>ngeoDisplaywindow</code> component.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="drawfeature.html">Draw Feature Example</a>
+        <p>
+      This example shows how to use the <code>ngeo-drawfeature</code>
+      directive to draw vector features on the map.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="elevationProfile.html">Elevation profile example</a>
+        <p>This example shows how to use <code><a href="../apidoc/ngeo.profile.elevationComponent.html" title="Read our documentation">ngeo-profile</a></code> to create a D3-based elevation profile graphic.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="googlestreetview.html">GoogleStreetView Example</a>
+        <p>
+        This example shows how to use the <code>ngeo-googlestreetview</code>
+        component.
+      </p>
+      </div>
+      <hr>
+      <div>
+        <a href="grid.html">Grid example</a>
+        <p>This example shows how to use the <code>ngeo-grid</code> component.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="importfeatures.html">Import features example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.misc.filereaderComponent.html" title="Read our documentation">ngeo-filereader</a></code> directive to import features from a KML file read from the user's file system.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="interactionbtngroup.html">Interaction button group example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.misc.btnComponent.html" title="Read our documentation">ngeo-btn-group</a></code> and <code><a href="../apidoc/ngeo.misc.btnComponent.html" title="Read our documentation">ngeo-btn</a></code> directives to activate/deactivate OpenLayers interactions in a toggle group.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="layerorder.html">Layer order example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.misc.sortableComponent.html" title="Read our documentation">ngeo-sortable</a></code> directive and the <code><a href="../apidoc/ngeo.misc.syncArrays.html" title="Read our documentation">ngeo.misc.syncArrays</a></code> function to create a list of layers where the order of layers can be changed using drag-and-drop.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="layertree.html">Layer tree example</a>
+        <p>This example shows how to use ngeo's layer tree directive (<code><a href="../apidoc/ngeo.layertree.component.html" title="Read our documentation">ngeo-layertree</a></code>). It also shows how to define an application-specific HTML partial for the tree nodes.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="locationsearch.html">Location-search example</a>
+        <p>This example shows how to use the
+      <code><a href="../apidoc/ngeo%2520search.module_directive%2520namespace-ngeo.search.searchDirective.html" title="Read our documentation">ngeo-search</a></code>
+      directive with the
+      <code><a href="../apidoc/module-ngeo%2520location%2520search%2520namespace-ngeo.search.CreateLocationSearchBloodhound.html" title="Read our documentation">ngeoCreateLocationSearchBloodhound</a></code>
+      service and the <code><a href="../apidoc/search.html#LocationSearchOptions" title="Read our documentation">LocationSearchOptions</a></code>
+      options together with the <a href="http://api3.geo.admin.ch/services/sdiservices.html#search">GeoAdmin Location Search API</a>.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="mapfishprint.html">Print example</a>
+        <p>This example shows how to use <code><a href="../apidoc/ngeo.createPrintServiceFactory.html" title="Read our documentation">ngeo.Print</a></code> to print an OpenLayers map with MapFish Print v3.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="mapquery.html">Map Query example</a>
+        <p>
+      This example shows how to use the <code><a href="../apidoc/ngeo.query.mapQueryComponent.html" title="Read our documentation">ngeo-map-query</a></code>
+      directive. It also shows how the <code><a href="../apidoc/ngeo.misc.ToolActivateMgr.html" title="Read our documentation">ngeo.misc.ToolActivate</a></code> can be
+      used to make the directive inactive when an other tool becomes active.
+      The "Dummy" button here does nothing, but when toggled the query
+      directive becomes inactive.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="measure.html">Measure example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.interaction.MeasureLength.html" title="Read our documentation">ngeo.interaction.MeasureLength</a></code>, <code><a href="../apidoc/ngeo.interaction.MeasureArea.html" title="Read our documentation">ngeo.interaction.MeasureArea</a></code>, and <code><a href="../apidoc/ngeo.interaction.MeasureAzimut.html" title="Read our documentation">ngeo.interaction.MeasureAzimut</a></code> interactions to create measure tools for an OpenLayers map.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="mobilegeolocation.html">Mobile geolocation example</a>
+        <p>
+        This example shows how to use the <code><a href="../apidoc/ngeo.geolocation.mobile.html" title="Read our documentation">ngeo-mobile-geolocation</a></code>
+        directive.
+      </p>
+      </div>
+      <hr>
+      <div>
+        <a href="modal.html">Modal example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.message.modalComponent.html" title="Read our documentation">ngeo-modal</a></code> directive to open a modal.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="modifycircle.html">Modify circle example</a>
+        <p>
+      This examples shows how to use the
+      <code>ngeo.interaction.ModifyCircle</code>. This interaction allows to
+      resize a circle-shaped polygon.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="modifyrectangle.html">Modify rectangle example</a>
+        <p>
+      This examples shows how to use the
+      <code>ngeo.interaction.ModifyRectangle</code>. This interaction allows to
+      resize a rectangle-shaped polygon.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="notification.html">Notification service example</a>
+        <p>
+      This example shows how to use the <code>ngeo-notification</code>
+      service to display all sorts of messages. By default, those are
+      displayed at a specific location, but you can define where to
+      display the messages. You can also define all sorts of options:
+      the type of message, the delay, etc.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="offline.html">Offline example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.offline.component.html" title="Read our documentation">ngeo-offline</a></code> component.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="permalink.html">Permalink example</a>
+        <p>This example shows how to create an application-specific map component based on the <code><a href="../apidoc/ngeo.map.component.html" title="Read our documentation">ngeoMap</a></code> directive that uses the <code><a href="../apidoc/ngeo.statemanager.Location.html" title="Read our documentation">ngeoLocation</a></code> and <code><a href="../apidoc/ngeo.misc.debounce.html" title="Read our documentation">ngeoDebounce</a></code> services to update the browser address bar URL when the map view changes.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="popover.html">Popover example</a>
+        <p>This example shows how to use the <code>ngeo-popover</code> directive to open a popover</p>
+      </div>
+      <hr>
+      <div>
+        <a href="popupservice.html">ngeoCreatePopup service factory example</a>
+        <p>
+      This example shows how to use the <code>ngeoCreatePopup</code>
+      service factory to display all sorts of modals. One can display plain
+      text or display an external web page within an iframe.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="recenter.html">Recenter example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.recenter.directive.html" title="Read our documentation">ngeo-recenter</a></code> directive to jump between some predefined areas.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="rotate.html">Rotate interaction example</a>
+        <p>
+      This examples shows how to use the
+      <code>ngeo.interaction.Rotate</code>. This interaction allows to
+      rotate a feature. Click on the feature to activate the interaction,
+      then click and drag to rotate it.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="routing.html">Routing example</a>
+        <p>This example shows how to use ngeo's routing component (<code><a href="../apidoc/ngeo.routingComponent.html" title="Read our documentation">ngeo-routingComponent</a></code>)..</p>
+      </div>
+      <hr>
+      <div>
+        <a href="scaleselector.html">Scale selector example</a>
+        <p>This example shows how to write an application-specific directive (<code>app-scaleselecor</code>) based on <code><a href="../apidoc/ngeo.map.scaleselector.html" title="Read our documentation">ngeo-scaleselector</a></code>to create a scale selector.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="search.html">Search example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.searchDirective.html" title="Read our documentation">ngeo-search</a></code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="simple3d.html">Simple OL-Cesium 3d example</a>
+        <p>
+      This example shows how to use <code>ngeo.olcs.Manager</code> and the
+      <code><a href="../apidoc/ngeo.olcs.ngeoOlcsControls3d.html" title="Read our documentation">ngeo-olcs-controls3d</a></code>
+      component to control an 3D view.<br/>
+      It also shows how 3d navigation interacts with permalink.
+      <br/><br/>
+      Here an example of permalink format: <code>?3d_enabled=true&amp;3d_lon=26.81533&amp;3d_lat=-21.85790&amp;3d_elevation=1274213&amp;3d_heading=360.000&amp;3d_pitch=-63.995</code><br/>
+      3d permalink is managed in <code><a href="../apidoc/ngeo.olcs.ngeoOlcsService.html" title="Read our documentation">ngeo-olcs-service</a></code>.
+    </p>
+      </div>
+      <hr>
+      <div>
+        <a href="simple.html">Simple example</a>
+        <p>This example shows how to use the <code><a href="../apidoc/ngeo.map.component.html" title="Read our documentation">ngeo-map</a></code> component to insert an OpenLayers map in a page.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="svg.html">SVG example</a>
+        <p>This example shows different ways to include an SVG in the application using Webpack.</p>
+      </div>
+      <hr>
+      <div>
+        <a href="toolActivate.html">Activate tools example</a>
+        <p>This example shows how to use <code><a href="../apidoc/ngeo.misc.ToolActivate.html" title="Read our documentation">ngeo.misc.ToolActivate</a></code> objects with the <code><a href="../apidoc/ngeo.misc.ToolActivateMgr.html" title="Read our documentation">ngeo.misc.ToolActivateMgr</a></code>to active only one map control at once. If none draw control is choose, the click on the map is enabled.</p>
+      </div>
+      <hr>
+    </div>
+  </body>
+</html>
+

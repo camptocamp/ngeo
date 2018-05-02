@@ -1,0 +1,10 @@
+
+#map {
+  width: 600px;
+  height: 400px;
+}
+.ol-dragbox, .ol-dragzoom {
+  border-color: #455248;
+}
+
+/*# sourceMappingURL=bboxquery.646119.css.map*/

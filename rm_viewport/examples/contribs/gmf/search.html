@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>Search GeoMapFish example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="search.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div class="container-fluid">
+      <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+      <gmf-search
+        gmf-search-map="::ctrl.map"
+        gmf-search-options="::ctrl.searchOptions"
+        gmf-search-styles="::ctrl.searchStyles"
+        gmf-search-datasources="::ctrl.searchDatasources"
+        gmf-search-input-value="ctrl.inputValue"
+        gmf-search-colorchooser="::true"
+        gmf-search-placeholder="Search for « Laus » for example…"
+        gmf-search-clearbutton="::true"
+        gmf-search-on-init="::ctrl.searchIsReady"
+        gmf-search-delay="::50">
+      </gmf-search>
+      <p id="desc">This example shows how to use the <code>gmf-search</code> directive, which
+      is based on Twitter's <code>typeahead</code> component.</p>
+      <p>You typed: {{ctrl.inputValue}}</p>
+      <div id="message"></div>
+    </div>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="search.js"></script></body>
+</html>

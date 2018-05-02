@@ -1,0 +1,147 @@
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
+
+/* Display queries */
+.gmf-displayquerywindow {
+  max-height: 400px;
+  width: 350px;
+  max-width: 350px;
+  margin-left: -175px;
+  position: fixed;
+  top: 20px;
+  right: 0px;
+}
+.gmf-displayquerywindow button {
+  background: none;
+  border: none;
+  font-family: FontAwesome;
+  width: 32px;
+}
+.gmf-displayquerywindow button.close {
+  padding: 5px 5px 0 0;
+}
+.gmf-displayquerywindow .collapse-button {
+  background-color: white;
+  border: solid 1px black;
+  border-bottom-width: 0;
+  border-radius: 4px 4px 0 0;
+  line-height: 0.5;
+  height: 28px;
+  width: 48px;
+  margin-left: calc(50% - 24px);
+}
+.collapse-button-up:after {
+  content: "\F077";
+}
+.collapse-button-down:after {
+  content: "\F078";
+}
+.windowcontainer {
+  background-color: white;
+  border: solid 1px black;
+}
+.animation-container {
+  position: relative;
+  overflow: hidden;
+  height: 60px;
+  margin: 0 15px;
+  transition: 0.3s ease-in all;
+}
+.animation-container-detailed {
+  height: 160px;
+}
+.animation-container .slide-animation {
+  height: 100%;
+  padding: 5px 5px 0;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.slide-animation.ng-enter, .slide-animation.ng-leave {
+  transition: 0.3s ease-in all;
+}
+/* Left to right animation */
+.next .slide-animation.ng-enter {
+  left: 100%;
+}
+.next .slide-animation.ng-enter-active {
+  left: 0;
+}
+.next .slide-animation.ng-leave {
+  left: 0;
+}
+.next .slide-animation.ng-leave-active {
+  left: -100%;
+}
+/* Right to left animation */
+.previous .slide-animation.ng-enter {
+  left: -100%;
+}
+.previous .slide-animation.ng-enter-active {
+  left: 0;
+}
+.previous .slide-animation.ng-leave {
+  left: 0;
+}
+.previous .slide-animation.ng-leave-active {
+  left: 100%;
+}
+.title {
+  font-weight: bold;
+}
+.subtitle {
+  margin-left: 10px;
+  height: 2ex;
+}
+.details {
+  height: 65%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 10px;
+  padding-bottom: 10px
+}
+.details table {
+  font-size: 0.9em;
+}
+.details-key {
+  padding-right: 25px;
+}
+.slide-animation.ng-enter-active .details-value {
+  white-space: nowrap;
+}
+.navigate {
+  border-top: solid 1px black;
+  text-align: center;
+  margin-top: 10px;
+  padding-top: 5px;
+  height: 32px;
+}
+.navigate .previous {
+  float: left;
+}
+.navigate .previous:after {
+  content: "\F053";
+}
+.navigate .next {
+  float: right;
+}
+.navigate .next:after {
+  content: "\F054";
+}
+@media (max-width: 768px) {
+  .gmf-displayquerywindow {
+    width: 100%;
+    max-width: 100%;
+    margin-left: -50%;
+    top: initial;
+    bottom: 0;
+  }
+}
+
+/*# sourceMappingURL=wfspermalink.c6d097.css.map*/

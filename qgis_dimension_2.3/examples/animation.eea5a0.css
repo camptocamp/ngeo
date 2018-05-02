@@ -1,0 +1,37 @@
+
+html, body {
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+#container {
+  position: relative;
+  height: 600px;
+  border: 1px solid red;
+}
+app-map > div {
+  width: auto;
+  height: 100%;
+  background-color: #dfdfdf;
+  position: relative;
+  overflow: hidden;
+}
+#sidebar {
+  display: block;
+  float: left;
+  width: 300px;
+  height: 100%;
+  background-color: #efffcc;
+  margin-left: -300px;
+  -webkit-transition: all 300ms ease-out 0s;
+  -o-transition: all 300ms ease-out 0s;
+  transition: all 300ms ease-out 0s;
+}
+#sidebar.open {
+  margin-left: 0;
+}
+
+/*# sourceMappingURL=animation.eea5a0.css.map*/

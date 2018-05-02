@@ -1,0 +1,65 @@
+body {
+  padding: 1rem;
+}
+.panel {
+  display: block;
+  float: left;
+  margin: 0 1rem 0 0;
+  width: 35rem;
+}
+gmf-map > div {
+  width: 60rem;
+  height: 40rem;
+}
+gmf-editfeatureselector {
+  display: block;
+  width: 30rem;
+}
+gmf-editfeature {
+  display: block;
+}
+.gmf-editfeatureselector-stopediting {
+  float: right;
+}
+ngeo-attributes {
+  border-top: 0.1rem solid black;
+  display: block;
+  padding: 1rem 0;
+}
+.gmf-editfeature-btn-delete {
+  float: right;
+}
+
+/* measure tooltips  */
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.ngeo-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ngeo-tooltip-static {
+  display: none;
+}
+.ngeo-tooltip-measure:before,
+.ngeo-tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.ngeo-tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+
+/*# sourceMappingURL=editfeatureselector.8e6e6a.css.map*/

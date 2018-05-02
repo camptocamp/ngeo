@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="DesktopController as mainCtrl">
+  <head>
+    <title ng-bind-template="{{'ObjectEditing - Viewer Application'|translate}}">GeoMapFish</title>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="image/favicon.ico"/>
+    <link rel="stylesheet" href="../../build/oeview.css">
+  </head>
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
+    <header>
+      <div class="logo">
+        <img src="image/logo.png" />
+        <span>by Camptocamp</span>
+      </div>
+    </header>
+    <main>
+      <div class="gmf-app-data-panel" ng-cloak>
+        <div class="gmf-app-header">
+          <div class="dropdown">
+            <a href class="btn btn-default btn-block btn-primary"
+              data-toggle="dropdown">
+              <span class="fa fa-grid"></span>
+              <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
+                <span translate>Theme:</span>
+                <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading...</b>
+                <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
+              </span>
+              <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
+                <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
+              </span>
+              <span class="caret"></span>
+            </a>
+            <gmf-themeselector class="dropdown-menu"
+              gmf-themeselector-currenttheme="mainCtrl.theme"
+              gmf-themeselector-filter="::mainCtrl.filter">
+            </gmf-themeselector>
+          </div>
+        </div>
+        <div class="gmf-app-content">
+          <gmf-layertree
+            gmf-layertree-dimensions="mainCtrl.dimensions"
+            gmf-layertree-map="::mainCtrl.map"
+            gmf-layertree-openlinksinnewwindow="::true">
+          </gmf-layertree>
+        </div>
+      </div>
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+        <gmf-search gmf-search-map="mainCtrl.map"
+          gmf-search-datasources="mainCtrl.searchDatasources"
+          gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
+          gmf-search-colorchooser="false"
+          gmf-search-placeholder="{{'Search…'|translate}}"
+          gmf-search-clearbutton="true">
+        </gmf-search>
+        <div class="gmf-app-map-bottom-controls">
+          <div class="gmf-backgroundlayerbutton btn-group dropup">
+            <button
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown">
+              <img src="image/background-layer-button.png" alt="" />
+            </button>
+            <gmf-backgroundlayerselector
+              gmf-backgroundlayerselector-dimensions="::mainCtrl.dimensions"
+              gmf-backgroundlayerselector-map="::mainCtrl.map"
+              class="dropdown-menu">
+            </gmf-backgroundlayerselector>
+          </div>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map">
+            </gmf-disclaimer>
+          </div>
+          <gmf-displayquerywindow
+            gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
+            gmf-displayquerywindow-desktop="true">
+          </gmf-displayquerywindow>
+        </div>
+        <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
+          gmf-contextualdata=""
+          gmf-contextualdata-map="::mainCtrl.map"
+          gmf-contextualdata-projections="::[21781, 4326]"
+          ngeo-map-query=""
+          ngeo-map-query-map="::mainCtrl.map"
+          ngeo-map-query-active="mainCtrl.queryActive"
+          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
+          ngeo-bbox-query=""
+          ngeo-bbox-query-map="::mainCtrl.map"
+          ngeo-bbox-query-active="mainCtrl.queryActive"
+          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+        </gmf-map>
+
+        <!--infobar-->
+        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">
+          <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
+                  ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
+
+          <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
+               ngeo-scaleselector-map="mainCtrl.map"
+               ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
+          <div id="scaleline"></div>
+          <div class="pull-right">
+            <gmf-elevationwidget
+                gmf-elevationwidget-map="::mainCtrl.map"
+                gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+                gmf-elevationwidget-active="mainCtrl.showInfobar">
+            </gmf-elevationwidget>
+            <gmf-mouseposition
+                 gmf-mouseposition-map="mainCtrl.map"
+                 gmf-mouseposition-projections="::mainCtrl.mousePositionProjections"
+                 class="text-center">
+            </gmf-mouseposition>
+          </div>
+        </div>
+      </div>
+      <ngeo-modal ng-model="mainCtrl.modalShareShown" ngeo-modal-destroy-content-on-hide="true">
+        <gmf-share gmf-share-email="true"/>
+      </ngeo-modal>
+    </main>
+    <footer>
+      <gmf-profile
+        gmf-profile-active="profileChartActive"
+        gmf-profile-line="mainCtrl.profileLine"
+        gmf-profile-map="::mainCtrl.map"
+        gmf-profile-linesconfiguration="::mainCtrl.profileLinesconfiguration"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="profileChartActive">
+      </gmf-profile>
+    </footer>
+    <script src="../../build/oeview.js"></script>
+    <script src="../../../../lib/watchwatchers.js"></script>
+    <script>
+      (function() {
+        var cacheVersion = 'd736fff8ea0301cbe7ffca4616688aa064b386bf';
+        var urlElements = window.location.pathname.split('/');
+
+        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
+        angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js?cache_version=' + cacheVersion);
+
+        var gmfModule = angular.module('gmf');
+        gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
+
+        var langUrls = {};
+        ['en', 'fr', 'de'].forEach(function(lang) {
+          var langUrlElements = urlElements.slice(0, urlElements.length - 3);
+          langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
+          langUrls[lang] = langUrlElements.join('/')
+        });
+
+        var module = angular.module('app');
+        module.constant('defaultTheme', 'ObjectEditing');
+        module.constant('defaultLang', 'en');
+        module.constant('langUrls', langUrls);
+        module.constant('cacheVersion', cacheVersion);
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+        module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/short/create');
+        module.constant('gmfSearchGroups', ['osm','district']);
+        // Requires that the gmfSearchGroups is specified
+        module.constant('gmfSearchActions', [
+                {action: 'add_theme', title: 'Add a theme'},
+                {action: 'add_group', title: 'Add a sub theme'},
+                {action: 'add_layer', title: 'Add a layer'}
+        ]);
+        module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
+        module.value('ngeoWfsPermalinkOptions',
+            /** @type {ngeox.WfsPermalinkOptions} */ ({
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+              wfsTypes: [
+                {featureType: 'line', label: 'name'},
+                {featureType: 'point', label: 'name'},
+                {featureType: 'polygon', label: 'name'}
+              ],
+              defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+              defaultFeaturePrefix: 'feature'
+            }));
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="{{mainCtrl.lang}}" ng-controller="DesktopController as mainCtrl" ng-strict-di>
+  <head>
+    <title ng-bind-template="{{'ObjectEditing - Viewer Application'|translate}}">GeoMapFish</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-2-4.camptocamp.com/dynamic.json">
+    <meta name="interface" content="oeview">
+    <link rel="shortcut icon" href="favicon.ico" />
+    
+    <link href="oeview.css" rel="stylesheet">
+    
+  </head>
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
+    <header>
+      <div class="logo">
+        <img src="logo.png" />
+        <span>by Camptocamp</span>
+      </div>
+    </header>
+    <main>
+      <div class="gmf-app-data-panel" ng-cloak>
+        <div class="gmf-app-header">
+          <div class="dropdown">
+            <a href class="btn btn-block prime dropdown-toggle"
+              data-toggle="dropdown">
+              <span class="fa fa-grid"></span>
+              <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
+                <span translate>Theme:</span>
+                <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading...</b>
+                <b ng-if="mainCtrl.gmfThemeManager.getThemeName()">{{mainCtrl.gmfThemeManager.getThemeName()|translate}}</b>
+              </span>
+              <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
+                <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
+              </span>
+            </a>
+            <gmf-themeselector class="dropdown-menu"
+              gmf-themeselector-currenttheme="mainCtrl.theme"
+              gmf-themeselector-filter="::mainCtrl.filter">
+            </gmf-themeselector>
+          </div>
+        </div>
+        <div class="gmf-app-content">
+          <gmf-layertree
+            gmf-layertree-dimensions="mainCtrl.dimensions"
+            gmf-layertree-map="::mainCtrl.map"
+            gmf-layertree-openlinksinnewwindow="::true">
+          </gmf-layertree>
+        </div>
+      </div>
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+        <gmf-search gmf-search-map="mainCtrl.map"
+          gmf-search-datasources="mainCtrl.searchDatasources"
+          gmf-search-coordinatesprojections="mainCtrl.searchCoordinatesProjections"
+          gmf-search-colorchooser="false"
+          gmf-search-clearbutton="true">
+        </gmf-search>
+        <div class="gmf-app-map-bottom-controls">
+          <div class="gmf-backgroundlayerbutton btn-group dropup">
+            <button
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown">
+              <img src="background-layer-button.png" alt="" />
+            </button>
+            <gmf-backgroundlayerselector
+              gmf-backgroundlayerselector-dimensions="::mainCtrl.dimensions"
+              gmf-backgroundlayerselector-map="::mainCtrl.map"
+              class="dropdown-menu">
+            </gmf-backgroundlayerselector>
+          </div>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map">
+            </gmf-disclaimer>
+          </div>
+          <gmf-displayquerywindow
+            gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
+            gmf-displayquerywindow-desktop="true">
+          </gmf-displayquerywindow>
+        </div>
+        <gmf-map class="gmf-map" gmf-map-map="mainCtrl.map"
+          gmf-contextualdata=""
+          gmf-contextualdata-map="::mainCtrl.map"
+          gmf-contextualdata-projections="::[21781, 4326]"
+          ngeo-map-query=""
+          ngeo-map-query-map="::mainCtrl.map"
+          ngeo-map-query-active="mainCtrl.queryActive"
+          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
+          ngeo-bbox-query=""
+          ngeo-bbox-query-map="::mainCtrl.map"
+          ngeo-bbox-query-active="mainCtrl.queryActive"
+          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+        </gmf-map>
+
+        <!--infobar-->
+        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">
+          <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
+                  ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
+
+          <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
+               ngeo-scaleselector-map="mainCtrl.map"
+               ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
+          <div id="scaleline"></div>
+          <div class="pull-right">
+            <gmf-elevationwidget
+                gmf-elevationwidget-map="::mainCtrl.map"
+                gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+                gmf-elevationwidget-active="mainCtrl.showInfobar">
+            </gmf-elevationwidget>
+            <gmf-mouseposition
+                 gmf-mouseposition-map="mainCtrl.map"
+                 gmf-mouseposition-projections="::mainCtrl.mousePositionProjections"
+                 class="text-center">
+            </gmf-mouseposition>
+          </div>
+        </div>
+      </div>
+      <ngeo-modal ng-model="mainCtrl.modalShareShown">
+        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"/>
+      </ngeo-modal>
+    </main>
+    <footer>
+      <gmf-profile
+        gmf-profile-active="profileChartActive"
+        gmf-profile-line="mainCtrl.profileLine"
+        gmf-profile-map="::mainCtrl.map"
+        gmf-profile-linesconfiguration="::mainCtrl.profileLinesconfiguration"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="profileChartActive">
+      </gmf-profile>
+    </footer>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries"></script>
+    
+    <script src="oeview.js"></script>
+    
+  </body>
+</html>

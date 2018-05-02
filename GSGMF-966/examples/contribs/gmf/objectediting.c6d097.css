@@ -1,0 +1,54 @@
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
+gmf-objectediting {
+  border: 1px solid #ddd;
+  display: block;
+  margin: 10px 0;
+  padding: 4px;
+  width: 400px;
+}
+gmf-objecteditingtools {
+  border-bottom: 0.1rem solid #595959;
+  display: block;
+  margin: 0 0 1rem 0;
+  padding: 0 0 1rem 0;
+}
+gmf-layertree {
+  display: none;
+}
+
+/* measure tooltips  */
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.ngeo-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ngeo-tooltip-static {
+  display: none;
+}
+.ngeo-tooltip-measure:before,
+.ngeo-tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.ngeo-tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+
+/*# sourceMappingURL=objectediting.c6d097.css.map*/

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>GeoMapFish Map Query example</title>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href="displayquerywindow.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+
+    <gmf-map gmf-map-map="ctrl.map"
+        ngeo-map-query=""
+        ngeo-map-query-map="::ctrl.map"
+        ngeo-map-query-active="ctrl.queryActive"
+        ngeo-bbox-query=""
+        ngeo-bbox-query-map="::ctrl.map"
+        ngeo-bbox-query-active="ctrl.queryActive">
+    </gmf-map>
+
+    <div id="tree-container">
+      <div>
+        <span>Theme:
+        <select
+            class="form-control"
+            ng-model="ctrl.treeSource"
+            ng-options="theme.name for theme in ctrl.themes">
+        </select>
+        </span>
+      </div>
+      <div class="gmf-hidden">
+        <gmf-layertree
+            gmf-layertree-map="::ctrl.map"
+            gmf-layertree-openlinksinnewwindow="::true">
+        </gmf-layertree>
+      </div>
+    </div>
+
+    <div class="clear-left"></div>
+
+    <p id="desc">
+      This example shows how to use the <code>ngeo-map-query</code>
+      directive in combination with the
+      <code>gmf.datasource.Manager</code>.
+      The DataSourcesManager fetches the themes returned by the theme
+      service and adds one DataSource, which is used by the querent service
+      per layer definition found. In this example, the layer tree is
+      responsible of creating the layer. You can switch theme and turn
+      on/off layers to see the impact it has on results returned by the
+      query service.  To display results, this example use the
+      <code>gmf-displayquerywindow </code> component. Here, this last
+      directive uses a custom style to display all selected features.
+    </p>
+
+    <input type="checkbox"
+       ng-model="ctrl.queryActive" /> Query-Tool active
+
+    <gmf-displayquerywindow
+      gmf-displayquerywindow-desktop="::ctrl.desktop"
+      gmf-displayquerywindow-featuresstyle="ctrl.featureStyle">
+    </gmf-displayquerywindow>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="displayquerywindow.js"></script></body>
+</html>

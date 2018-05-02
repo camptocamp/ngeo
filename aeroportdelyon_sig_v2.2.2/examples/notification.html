@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Notification service example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link href="lib/bootstrap.min.css"
+          rel="stylesheet" type="text/css">
+    <style>
+      .buttons {
+        width: 300px;
+      }
+      .buttons .btn {
+        margin: 0 0 5px 0;
+      }
+      .ngeo-notification {
+        left: 50%;
+        margin: 0 0 0 -100px;
+        position: absolute;
+        top: 0;
+        width: 200px;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">
+      This example shows how to use the <code>ngeo-notification</code>
+      service to display all sorts of messages. By default, those are
+      displayed at a specific location, but you can define where to
+      display the messages. You can also define all sorts of options:
+      the type of message, the delay, etc.
+    </p>
+    <div class="buttons">
+      <button
+          ng-click="ctrl.notification.success('A success message')"
+          title="Displays a single success message using default options."
+          type="button"
+          class="btn btn-success">Success</button>
+      <button
+          ng-click="ctrl.notification.info('An information')"
+          title="Displays a single info message using default options."
+          type="button"
+          class="btn btn-info">Info</button>
+      <button
+          ng-click="ctrl.notification.warn('A warning')"
+          title="Displays a single warning message using default options."
+          type="button"
+          class="btn btn-warning">Warning</button>
+      <button
+          ng-click="ctrl.notification.error('An error')"
+          title="Displays a single error message using default options."
+          type="button"
+          class="btn btn-danger">Error</button>
+      <button
+          ng-click="ctrl.notifyMulti()"
+          title="Displays multiple messages in one call using default options."
+          type="button"
+          class="btn btn-primary">Multiple</button>
+      <button
+          ng-click="ctrl.notifyTarget()"
+          title="Displays a message in an other target."
+          type="button"
+          class="btn btn-default">Target</button>
+      <button
+          ng-click="ctrl.notifyQuick()"
+          title="Displays a message that lasts only 1 second."
+          type="button"
+          class="btn btn-default">1 sec.</button>
+      <button
+          ng-click="ctrl.notification.clear()"
+          title="Clears all messages."
+          type="button"
+          class="btn btn-danger">Clear</button>
+    </div>
+    <div id="my-messages"></div>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="notification.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>

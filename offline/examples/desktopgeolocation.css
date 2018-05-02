@@ -1,0 +1,17 @@
+
+#map {
+  width: 600px;
+  height: 400px;
+}
+button[ngeo-desktop-geolocation]:after {
+  content: 'Toggle'
+}
+.ngeo-notification {
+  left: 50%;
+  margin: 0 0 0 -100px;
+  position: absolute;
+  top: 0;
+  width: 200px;
+}
+
+/*# sourceMappingURL=desktopgeolocation.css.map*/

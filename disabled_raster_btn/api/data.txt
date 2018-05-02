@@ -1,0 +1,6 @@
+id	point	title	description	icon	iconSize	iconOffset
+1	553000,216300	Information	Office de l'information<br />Tél: 032 000 00 00<br>Email: <a href="mailto:info@example.com">info@example.com</a><br />Internet: <a href="http://fr.wikipedia.org/wiki/La_Chaux-de-Fonds" target=new>Cliquer ici</a>	http://dev.openlayers.org/releases/OpenLayers-2.13.1/img/marker.png	21,25	-10.5,-12.5
+2	554250,215600	Ma première station	Diesel pas cher	http://dev.openlayers.org/releases/OpenLayers-2.13.1/img/marker-blue.png	21,25	-10.5,-12.5
+3	552556,215864	Mon parking	C'est celui-là le meilleur.	http://dev.openlayers.org/releases/OpenLayers-2.13.1/img/marker-gold.png	21,25	-10.5,-12.5
+4	554489,217126	Mon parking	Ce parking est<br/>le meillleur.	http://dev.openlayers.org/releases/OpenLayers-2.13.1/img/marker-gold.png	21,25	-10.5,-12.5
+5	554089,217326	Ma deuxième station	Sans-plomb pas cher.	http://dev.openlayers.org/releases/OpenLayers-2.13.1/img/marker-blue.png	21,25	-10.5,-12.5

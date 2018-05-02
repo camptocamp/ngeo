@@ -1,0 +1,44 @@
+gmf-map > div {
+  width: 80rem;
+  height: 40rem;
+}
+.gmf-profile-container {
+  display: flex;
+}
+.gmf-profile-container .ngeo-profile {
+  display: inline-block;
+  width: calc(100% - 15rem);
+  height: 20rem;
+}
+.gmf-profile-container .gmf-profile-legend {
+  display: inline-block;
+  vertical-align: top;
+  list-style-type: none;
+  padding: 0;
+  width: 13rem;
+}
+.tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 0.5rem;
+  color: white;
+  padding: 0.5rem 1rem;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.ngeo-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.ngeo-tooltip-measure:before {
+  border-top: 0.5rem solid rgba(0, 0, 0, 0.5);
+  border-right: 0.5rem solid transparent;
+  border-left: 0.5rem solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  margin-left: -0.5rem;
+  left: 50%;
+}
+
+/*# sourceMappingURL=profile.50ee25.css.map*/

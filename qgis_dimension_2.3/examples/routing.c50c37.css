@@ -1,0 +1,96 @@
+#map {
+  width: 600px;
+  height: 400px;
+}
+@media (max-width: 768px) {
+  #map {
+    height: 200px;
+    width: 200px;
+  }
+}
+.ngeo-routing-error {
+  color: darkred;
+}
+
+.ngeo-routing-start .fa-map-marker {
+  color: #6BE62E;
+  text-shadow: -1px 0 #4CB01E, 0 1px #4CB01E, 1px 0 #4CB01E, 0 -1px #4CB01E;
+}
+
+.ngeo-routing-destination .fa-map-marker {
+  color: #FF3E13;
+  text-shadow: -1px 0 #CD3412, 0 1px #CD3412, 1px 0 #CD3412, 0 -1px #CD3412;
+}
+
+.ngeo-routing-vias .fa-map-marker {
+  color: #767676;
+  text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+}
+
+.ngeo-nominatim-input {
+  height: 30px;
+}
+
+.tt-menu {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+
+.tt-suggestion.tt-is-under-cursor, .tt-suggestion:hover {
+  color: #fff;
+  background-color: #0097cf;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.ngeo-nominatim-input .twitter-typeahead {
+  width: 100%;
+}
+
+.ngeo-routing-vias .form-inline .input-group .form-control {
+  width: 185px;
+}
+.ngeo-routing-error {
+  color: darkred;
+}
+.ngeo-routing-start .fa-map-marker {
+  color: #6BE62E;
+  text-shadow: -1px 0 #4CB01E, 0 1px #4CB01E, 1px 0 #4CB01E, 0 -1px #4CB01E;
+}
+.ngeo-routing-destination .fa-map-marker {
+  color: #FF3E13;
+  text-shadow: -1px 0 #CD3412, 0 1px #CD3412, 1px 0 #CD3412, 0 -1px #CD3412;
+}
+.ngeo-routing-vias .fa-map-marker {
+  color: #767676;
+  text-shadow: -1px 0 #000000, 0 1px #000000, 1px 0 #000000, 0 -1px #000000;
+}
+.ngeo-nominatim-input {
+  height: 30px;
+}
+/**
+ * Typeahead
+ */
+.tt-menu {
+  background-color: #fff;
+  border: 1px solid #ccc;
+}
+.tt-suggestion.tt-is-under-cursor,
+.tt-suggestion:hover {
+  color: #fff;
+  background-color: #0097cf;
+}
+.tt-suggestion p {
+  margin: 0;
+}
+.ngeo-nominatim-input .twitter-typeahead {
+  width: 100%;
+  background: #fff;
+}
+.ngeo-routing-vias .form-inline .input-group .form-control {
+  width: 185px;
+}
+
+/*# sourceMappingURL=routing.c50c37.css.map*/

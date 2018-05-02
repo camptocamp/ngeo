@@ -1,0 +1,145 @@
+gmf-map,
+#tree-container {
+  float: left;
+}
+.clear-left {
+  clear: left;
+}
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
+.printpanel {
+  width: 250px;
+  margin: 10px;
+  padding: 10px;
+  background-color: #D3E5D7;
+}
+.tools-content-heading {
+  border-bottom: solid 1px;
+}
+.tools-content-heading .close {
+  line-height: 0;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  background: rgba(148, 172, 154, 0.78);
+  border-radius: 1px;
+  border: 0.2px solid rgba(1, 1, 1, 0.2);
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
+  border: 1px solid rgba(0, 0, 30, 0.2);
+  height: 20px;
+  width: 10px;
+  border-radius: 5px;
+  background: #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7.7px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: rgba(205, 217, 208, 0.78);
+}
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
+  background: rgba(148, 172, 154, 0.78);
+  border-radius: 1px;
+  border: 0.2px solid rgba(1, 1, 1, 0.2);
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
+  border: 1px solid rgba(0, 0, 30, 0.2);
+  height: 20px;
+  width: 10px;
+  border-radius: 5px;
+  background: #ffffff;
+  cursor: pointer;
+}
+/* Layertree */
+ul {
+  list-style-type: none;
+}
+gmf-layertree a{
+  color: black;
+  text-decoration: none;
+  padding-right: 5px;
+}
+gmf-layertree .gmf-layertree-metadata a:before {
+  font-family: FontAwesome;
+  content: "\F129";
+}
+gmf-layertree .gmf-layertree-layer-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 10px;
+}
+gmf-layertree .gmf-layertree-zoom {
+  display: none;
+}
+gmf-layertree .gmf-layertree-zoom:hover {
+  cursor: pointer;
+}
+gmf-layertree .gmf-layertree-zoom:before {
+  font-family: FontAwesome;
+  content: "\F18E";
+}
+gmf-layertree .outOfResolution .gmf-layertree-legend {
+  display: none;
+}
+gmf-layertree .gmf-layertree-legend-button a:after {
+  font-family: FontAwesome;
+  content: "\F036";
+}
+gmf-layertree .gmf-layertree-legend img {
+  padding-left: 15px;
+}
+gmf-layertree .noSource {
+  opacity: 0.3;
+}
+gmf-layertree .noSource:after {
+  content: "(source not available)";
+}
+gmf-layertree .outOfResolution {
+  opacity: 0.6;
+}
+gmf-layertree .outOfResolution .gmf-layertree-zoom {
+  display: inline;
+}
+gmf-layertree .gmf-layertree-state {
+  font-family: FontAwesome;
+  font-weight: lighter;
+}
+gmf-layertree .on .gmf-layertree-state:before {
+  content: "\F14A";
+}
+gmf-layertree .off .gmf-layertree-state:before {
+  content: "\F096";
+}
+gmf-layertree .indeterminate .gmf-layertree-state:before {
+  content: "\F147";
+}
+
+@media (max-width: 768px) {
+  #map {
+    height: 200px;
+    width: 200px;
+  }
+}
+
+/*# sourceMappingURL=print.50ee25.css.map*/

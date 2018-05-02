@@ -1,0 +1,476 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ngeo</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">ngeo</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> ngeo</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h1 id="ngeo">ngeo</h1>
+				<p><a href="https://greenkeeper.io/"><img src="https://badges.greenkeeper.io/camptocamp/ngeo.svg" alt="Greenkeeper badge"></a></p>
+				<p>ngeo is a JS library that aims to ease the development of applications based on
+				<a href="https://angularjs.org/">AngularJS</a> and <a href="http://openlayers.org">OpenLayers</a>.</p>
+				<p>More specifically, ngeo is a collection of AngularJS Components and Services
+				useful for developing applications combining AngularJS and OpenLayers.</p>
+				<p>Ngeo uses <a href="https://webpack.js.org">webpack</a>: webpack gives you the possibility to use easily only the specific
+				part of JavaScript, css and html that you need for your application.</p>
+				<p>If you use ngeo we recommend that you also use webpack, because this is the way
+					we design and use ngeo at Camptocamp. But using webpack is not strictly mandatory:
+				standalone builds of ngeo can be created.</p>
+				<p>To know more about ngeo take a look at:</p>
+				<ul>
+					<li>The <a href="https://camptocamp.github.io/ngeo/master/examples">examples</a></li>
+					<li>The <a href="https://camptocamp.github.io/ngeo/master/api/apihelp.html">simple API help</a></li>
+					<li>The documentation can be found in each file. There is currently no API web-documentation for this
+					version (you may also use <a href="https://camptocamp.github.io/ngeo/master/apidoc/index.html">API documentation</a>).</li>
+				</ul>
+				<p>ngeo also includes a <a href="contribs">contribs</a> directory where non-core
+					contributions may be placed. ngeo currently includes one contrib: <code>gmf</code>.  That
+					contrib includes components specific to the
+					<a href="https://geomapfish.org/">GeoMapFish</a> project, that is components that rely on
+					GeoMapFish-specific web services. The <code>gmf</code> contrib examples are also available
+				<a href="https://camptocamp.github.io/ngeo/master/examples/contribs/gmf/">online</a>.</p>
+				<h2 id="requirements">Requirements</h2>
+				<ul>
+					<li><a href="https://www.gnu.org/software/make/">make</a> – GNU Make.</li>
+					<li><a href="https://www.nodejs.org/">node</a> – nodejs JS runtime environment.</li>
+					<li><a href="https://www.npmjs.com/">npm</a> – npm package manager.</li>
+				</ul>
+				<h2 id="how-to-start">How to start</h2>
+				<h3 id="run-the-application">Run the application</h3>
+				<pre><code>git clone git@github<span class="hljs-selector-class">.com</span>:camptocamp/ngeo<span class="hljs-selector-class">.git</span>
+cd ngeo
+make serve-ngeo</code></pre><p>The ngeo examples are now available on your <a href="http://localhost:3000/examples/">http://localhost:3000/examples/</a>.</p>
+				<h3 id="run-geomapfish">Run GeoMapFish</h3>
+				<p>To run the GeoMapFish examples:</p>
+				<pre><code><span class="hljs-attribute">make serve-gmf</span></code></pre><p>then visit <a href="http://localhost:3000/contribs/gmf/examples/">http://localhost:3000/contribs/gmf/examples/</a>.</p>
+				<p>To run the GeoMapFish applications:</p>
+				<pre><code><span class="hljs-attribute">serve-gmf-apps</span></code></pre><p>then visit them using
+					<a href="http://localhost:3000/contribs/gmf/apps/">http://localhost:3000/contribs/gmf/apps/</a><app_name>.html, for example:
+				<a href="http://localhost:3000/contribs/gmf/apps/desktop.html">http://localhost:3000/contribs/gmf/apps/desktop.html</a></p>
+				<h3 id="go-further">Go further</h3>
+				<ul>
+					<li><a href="docs/developer-guide.md">Developer guide</a> – This guide is for ngeo developers.</li>
+					<li><a href="docs/guidelines.md">Application development guidelines</a> – This guide is for
+					application developers using ngeo.</li>
+				</ul>
+				<h2 id="how-to-migrate-from-ngeo-2-2-to-ngeo-2-3-">How to migrate from ngeo 2.2 to ngeo 2.3 ?</h2>
+				<ul>
+					<li><a href="docs/how_to_migrate_from_2.2_to_2.3.md">The migration guide - from 2.2 to 2.3</a> – This guide is for
+					integrators <strong>still</strong> on ngeo 2.2 and wanting to use ngeo 2.3.</li>
+				</ul>
+				<h2 id="other-docs-related-to-ngeo-">Other docs related to ngeo:</h2>
+				<ul>
+					<li><a href="https://www.transifex.com/camptocamp/ngeo/">Transifex</a> – Translation platform.</li>
+					<li><a href="https://travis-ci.org/camptocamp/ngeo">Travis</a> – Continuous integration.</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-class">
+						<a href="classes/abstractapicontroller.html" class="tsd-kind-icon">AbstractAPIController</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/abstractdesktopcontroller.html" class="tsd-kind-icon">Abstract<wbr>Desktop<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/abstractmobilecontroller.html" class="tsd-kind-icon">Abstract<wbr>Mobile<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-not-exported">
+						<a href="classes/googlestreetviewcontroller.html" class="tsd-kind-icon">Google<wbr>Streetview<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#abstractappcontroller" class="tsd-kind-icon">Abstract<wbr>App<wbr>Controller</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#dmscoordinatesfilter" class="tsd-kind-icon">DMSCoordinates<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#durationfilter" class="tsd-kind-icon">Duration<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#geolocationdesktopcomponent" class="tsd-kind-icon">Geolocation<wbr>Desktop<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#numbercoordinatesfilter" class="tsd-kind-icon">Number<wbr>Coordinates<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#numberfilter" class="tsd-kind-icon">Number<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#scalifyfilter" class="tsd-kind-icon">Scalify<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#unitprefixfilter" class="tsd-kind-icon">Unit<wbr>Prefix<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#wfspermalinkservice" class="tsd-kind-icon">Wfs<wbr>Permalink<wbr>Service</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#buttoncomponent" class="tsd-kind-icon">button<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#buttongroupcomponent" class="tsd-kind-icon">button<wbr>Group<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#colorpickercomponent" class="tsd-kind-icon">color<wbr>Picker<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#contextualdatacomponent" class="tsd-kind-icon">contextual<wbr>Data<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#contextualdatacomponentcontent" class="tsd-kind-icon">contextual<wbr>Data<wbr>Component<wbr>Content</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#controlcomponent" class="tsd-kind-icon">control<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="globals.html#createlocationsearchbloodhoundfunction" class="tsd-kind-icon">create<wbr>Location<wbr>Search<wbr>Bloodhound<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-private">
+						<a href="globals.html#d3elevation" class="tsd-kind-icon">d3<wbr>Elevation</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#datepickercomponent" class="tsd-kind-icon">date<wbr>Picker<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#datetimecomponent" class="tsd-kind-icon">date<wbr>Time<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#drawcomponent" class="tsd-kind-icon">draw<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#drawpointcomponent" class="tsd-kind-icon">draw<wbr>Point<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#drawrectanglecomponent" class="tsd-kind-icon">draw<wbr>Rectangle<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#drawtextcomponent" class="tsd-kind-icon">draw<wbr>Text<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#drawinfdrawfeaturecomponent" class="tsd-kind-icon">drawinf<wbr>Draw<wbr>Feature<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#drawingdrawfeaturecomponent" class="tsd-kind-icon">drawing<wbr>Draw<wbr>Feature<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#editingcreatefeaturecomponent" class="tsd-kind-icon">editing<wbr>Create<wbr>Feature<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#editingcreateregularpolygonfromclickcomponent" class="tsd-kind-icon">editing<wbr>Create<wbr>Regular<wbr>Polygon<wbr>From<wbr>Click<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#editingeditfeaturecomponent" class="tsd-kind-icon">editing<wbr>Edit<wbr>Feature<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#editingexportfeaturescomponent" class="tsd-kind-icon">editing<wbr>Export<wbr>Features<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#geolocationmobilecomponent" class="tsd-kind-icon">geolocation<wbr>Mobile<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-protected">
+						<a href="globals.html#getlocationicon" class="tsd-kind-icon">get<wbr>Location<wbr>Icon</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#gmfmapcomponent" class="tsd-kind-icon">gmf<wbr>Map<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#interactiondecoration" class="tsd-kind-icon">interaction<wbr>Decoration</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#layerdecoration" class="tsd-kind-icon">layer<wbr>Decoration</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#layerloading" class="tsd-kind-icon">layer<wbr>Loading</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#layertreetimeslidercomponent" class="tsd-kind-icon">layertree<wbr>Time<wbr>Slider<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mapcomponent" class="tsd-kind-icon">map<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mapresentercomponent" class="tsd-kind-icon">map<wbr>Resenter<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mapresizecomponent" class="tsd-kind-icon">map<wbr>Resize<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mapscaleselectorcomponent" class="tsd-kind-icon">map<wbr>Scaleselector<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#measureareacomponent" class="tsd-kind-icon">measure<wbr>Area<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#measureazimutcomponent" class="tsd-kind-icon">measure<wbr>Azimut<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#measurelengthcomponent" class="tsd-kind-icon">measure<wbr>Length<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#messagepopopcomponent" class="tsd-kind-icon">message<wbr>Popop<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#messagepopoveraanchorcomponent" class="tsd-kind-icon">message<wbr>Popover<wbr>Aanchor<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#messagepopovercomponent" class="tsd-kind-icon">message<wbr>Popover<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#messagepopovercontentcomponent" class="tsd-kind-icon">message<wbr>Popover<wbr>Content<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mobilemeasureareacomponent" class="tsd-kind-icon">mobile<wbr>Measure<wbr>Area<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mobilemeasurelenthcomponent" class="tsd-kind-icon">mobile<wbr>Measure<wbr>Lenth<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mobilemeasurepointcomponent" class="tsd-kind-icon">mobile<wbr>Measure<wbr>Point<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mobilenavigationbackcomponent" class="tsd-kind-icon">mobile<wbr>Navigation<wbr>Back<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mobilenavigationbackonclickcomponent" class="tsd-kind-icon">mobile<wbr>Navigation<wbr>Back<wbr>OnClick<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#mobilenavigationcomponent" class="tsd-kind-icon">mobile<wbr>Navigation<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#objecteditinggetwmsfeaturecomponent" class="tsd-kind-icon">object<wbr>Editing<wbr>GetWMSFeature<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#objecteditingtoolscomponent" class="tsd-kind-icon">object<wbr>Editing<wbr>Tools<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#profiledarwlinecomponent" class="tsd-kind-icon">profile<wbr>Darw<wbr>Line<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#profileelevationcomponent" class="tsd-kind-icon">profile<wbr>Elevation<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#querybboxcomponent" class="tsd-kind-icon">query<wbr>Bbox<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#querymapcomponent" class="tsd-kind-icon">query<wbr>Map<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#rastercomponent" class="tsd-kind-icon">raster<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#sortablecomponent" class="tsd-kind-icon">sortable<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#trusthtmlautofilter" class="tsd-kind-icon">trust<wbr>Html<wbr>Auto<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-function tsd-is-not-exported">
+						<a href="globals.html#trusthtmlfilter" class="tsd-kind-icon">trust<wbr>Html<wbr>Filter</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#authenticationcomponent" class="tsd-kind-icon">authentication<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#backgroundlayerselectorcomponent" class="tsd-kind-icon">backgroundlayerselector<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#disclamercomponent" class="tsd-kind-icon">disclamer<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#editingattributecomponent" class="tsd-kind-icon">editing<wbr>Attribute<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#gridcomponent" class="tsd-kind-icon">grid<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#layertreecomponent" class="tsd-kind-icon">layertree<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#lidarprofilecomponent" class="tsd-kind-icon">lidarprofile<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#lidarprofilepanelcomponent" class="tsd-kind-icon">lidarprofile<wbr>Panel<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#mapmousepositioncomponent" class="tsd-kind-icon">map<wbr>Mouseposition<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#messagemodalcomponent" class="tsd-kind-icon">message<wbr>Modal<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#ngeomessagedisplaywindowcomponent" class="tsd-kind-icon">ngeo<wbr>Message<wbr>Displaywindow<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#objecteditingcomponent" class="tsd-kind-icon">objectediting<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#olsccontrols3dcomponent" class="tsd-kind-icon">olsc<wbr>Controls3d<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#permalinksharecomponent" class="tsd-kind-icon">permalink<wbr>Share<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#printcomponent" class="tsd-kind-icon">print<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#profilecomponent" class="tsd-kind-icon">profile<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#querygridcomponent" class="tsd-kind-icon">query<wbr>Grid<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#querywindowcomponent" class="tsd-kind-icon">query<wbr>Window<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#rasterwidgetcomponent" class="tsd-kind-icon">raster<wbr>Widget<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#routingfeaturecomponent" class="tsd-kind-icon">routing<wbr>Feature<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#routingnominatiminputcomponent" class="tsd-kind-icon">routing<wbr>Nominatim<wbr>Input<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#searchcomponent" class="tsd-kind-icon">search<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-object-literal tsd-is-not-exported">
+						<a href="globals.html#themeselectorcomponent" class="tsd-kind-icon">theme<wbr>Selector<wbr>Component</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>

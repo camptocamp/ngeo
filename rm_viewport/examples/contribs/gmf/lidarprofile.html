@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>GMF profile example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="lidarprofile.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div style="position: relative; float:left; margin-right:10px;">
+      <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+      <p id="desc">This example shows how to use the <code>gmf-lidarprofile</code> with the <code>gmf-lidar-panel</code>.</p>
+      <button ng-click="ctrl.panelActivated = !ctrl.panelActivated">Active panel</button>
+      <gmf-lidarprofile
+        gmf-lidarprofile-active="ctrl.panelActivated"
+        gmf-lidarprofile-line="ctrl.profileLine">
+      </gmf-lidarprofile>
+    </div>
+    <div style="float:left;" ng-show="ctrl.panelActivated">
+    <gmf-lidarprofile-panel
+      gmf-lidarprofile-panel-active="ctrl.panelActivated"
+      gmf-lidarprofile-panel-map="::ctrl.map"
+      gmf-lidarprofile-panel-line="ctrl.profileLine">
+    </gmf-lidarprofile-panel>
+    </div>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="lidarprofile.js"></script></body>
+</html>

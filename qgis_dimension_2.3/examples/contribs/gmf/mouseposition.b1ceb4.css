@@ -1,0 +1,22 @@
+gmf-map > div {
+  width: 600px;
+  height: 400px;
+}
+gmf-mouseposition>div {
+  min-width: 260px;
+}
+.dropdown-menu {
+  min-width: 260px;
+}
+.gmf-mouseposition-control {
+  display: inline-block;
+  min-width: 200px;
+}
+.footer {
+  text-align: right;
+  min-height: 30px;
+  background-color: rgba(224, 224, 224, 0.8);
+  width: 600px;
+}
+
+/*# sourceMappingURL=mouseposition.b1ceb4.css.map*/

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+<head>
+  <title>Routing example</title>
+  <meta charset="utf-8">
+  <meta name="mobile-web-app-capable" content="yes">
+<link href="routing.css" rel="stylesheet"></head>
+<body ng-controller="MainController as mainCtrl">
+<div>
+    <div>
+      <div id="map" ngeo-map="mainCtrl.map"></div>
+    </div>
+    <div>
+      <ngeo-routing ngeo-routing-map="mainCtrl.map">
+      </ngeo-routing>
+    </div>
+</div>
+
+<p id="desc">This example shows how to use ngeo's routing component (<code><a href="../apidoc/ngeo.routingComponent.html" title="Read our documentation">ngeo-routingComponent</a></code>)..</p>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+<script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="routing.js"></script></body>
+</html>

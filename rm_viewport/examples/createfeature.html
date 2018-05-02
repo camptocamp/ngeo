@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Create Feature Example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+
+  <link href="createfeature.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+
+    <div
+        ngeo-btn-group
+        class="btn-group">
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-createfeature
+        ngeo-createfeature-active="ctrl.createPointActive"
+        ngeo-createfeature-features="ctrl.features"
+        ngeo-createfeature-geom-type="ctrl.pointGeomType"
+        ngeo-createfeature-map="::ctrl.map"
+        class="btn btn-default ngeo-createfeature-point"
+        ng-class="{active: ctrl.createPointActive}"
+        ng-model="ctrl.createPointActive">
+      </a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-createfeature
+        ngeo-createfeature-active="ctrl.createLineStringActive"
+        ngeo-createfeature-features="ctrl.features"
+        ngeo-createfeature-geom-type="ctrl.lineStringGeomType"
+        ngeo-createfeature-map="::ctrl.map"
+        class="btn btn-default ngeo-createfeature-linestring"
+        ng-class="{active: ctrl.createLineStringActive}"
+        ng-model="ctrl.createLineStringActive">
+      </a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-createfeature
+        ngeo-createfeature-active="ctrl.createPolygonActive"
+        ngeo-createfeature-features="ctrl.features"
+        ngeo-createfeature-geom-type="ctrl.polygonGeomType"
+        ngeo-createfeature-map="::ctrl.map"
+        class="btn btn-default ngeo-createfeature-polygon"
+        ng-class="{active: ctrl.createPolygonActive}"
+        ng-model="ctrl.createPolygonActive">
+      </a>
+    </div>
+
+    <input type="checkbox"
+       ng-model="ctrl.dummyActive" /> Dummy
+
+    <p id="desc">
+      This example shows how to use the <code>ngeo-createfeature</code>
+      directive to draw point, linestring or polygon vector features on
+      a map.
+    </p>
+
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="createfeature.js"></script></body>
+</html>

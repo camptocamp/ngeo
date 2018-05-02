@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>GoogleStreetView Example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+
+  <link href="googlestreetview.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+    <ngeo-googlestreetview
+        active="ctrl.googleStreetViewActive"
+        feature-style="ctrl.style"
+        map="ctrl.map"
+        radius="ctrl.radius">
+    </ngeo-googlestreetview>
+
+    <div class="desc">
+      <p id="desc">
+        This example shows how to use the <code>ngeo-googlestreetview</code>
+        component.
+      </p>
+
+      <div class="panel panel-default panel-body">
+        <input
+            type="checkbox"
+            id="checkbox-googlestreetview"
+            ng-model="ctrl.googleStreetViewActive" />
+        <label for="checkbox-googlestreetview"> GoogleStreetView</label>
+
+        <input type="checkbox"
+               id="checkbox-dummy"
+               ng-model="ctrl.dummyActive" />
+        <label for="checkbox-dummy"> Dummy tool</label>
+      </div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyA3NVIy-HOYT0a0CkChA6nFwqEFqHYWBVk"></script>
+
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="googlestreetview.js"></script></body>
+</html>

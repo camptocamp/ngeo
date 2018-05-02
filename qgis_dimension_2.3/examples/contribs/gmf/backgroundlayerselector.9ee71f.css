@@ -1,0 +1,33 @@
+gmf-map > div {
+  width: 50rem;
+  height: 30rem;
+}
+.gmf-backgroundlayerselector {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 20rem;
+}
+.gmf-backgroundlayerselector li {
+  cursor: pointer;
+  margin: 0.2rem 0;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border: 0.1rem solid lightgrey;
+}
+.gmf-text {
+  flex: 1;
+}
+.gmf-thumb {
+  height: 60px;
+}
+li.gmf-backgroundlayerselector-active {
+  border: 0.1rem solid blue;
+}
+.gmf-backgroundlayerselector-active::after {
+  content: ' X';
+  color: blue;
+}
+
+/*# sourceMappingURL=backgroundlayerselector.9ee71f.css.map*/

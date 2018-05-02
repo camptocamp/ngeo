@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <title>Location-search example</title>
+    <meta charset="utf-8">
+    <meta name="mobile-web-app-capable" content="yes">
+  <link href="locationsearch.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <div>
+      <div id="map" ngeo-map="ctrl.map"></div>
+      <p>Search for 'lausanne' for example…<p>
+      <app-location-search app-search-map="ctrl.map"></app-location-search>
+      <p id="desc">This example shows how to use the
+      <code><a href="../apidoc/ngeo%2520search.module_directive%2520namespace-ngeo.search.searchDirective.html" title="Read our documentation">ngeo-search</a></code>
+      directive with the
+      <code><a href="../apidoc/module-ngeo%2520location%2520search%2520namespace-ngeo.search.CreateLocationSearchBloodhound.html" title="Read our documentation">ngeoCreateLocationSearchBloodhound</a></code>
+      service and the <code><a href="../apidoc/search.html#LocationSearchOptions" title="Read our documentation">LocationSearchOptions</a></code>
+      options together with the <a href="http://api3.geo.admin.ch/services/sdiservices.html#search">GeoAdmin Location Search API</a>.
+    </div>
+    <script type="text/javascript" src="dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="locationsearch.js"></script></body>
+</html>

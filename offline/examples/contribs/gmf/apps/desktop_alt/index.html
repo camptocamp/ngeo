@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="{{mainCtrl.lang}}" ng-app="app" ng-controller="AlternativeDesktopController as mainCtrl">
+  <head>
+    <title ng-bind-template="{{'Alternative Desktop Application'|translate}}">GeoMapFish</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <link rel="shortcut icon" href="image/favicon.ico"/>
+    <link rel="stylesheet" href="../../build/desktop_alt.css">
+    <script>
+      if (!window.requestAnimationFrame) {
+        alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
+            + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. Vous allez être redirigé.\n\n'
+            + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. Sie werden weitergeleitet.');
+        window.location = 'http://geomapfish.org/'
+      }
+    </script>
+  </head>
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
+    <header>
+      <div class="logo">
+        <img src="image/logo.png" />
+        <span>by Camptocamp</span>
+      </div>
+    </header>
+    <main>
+      <div class="gmf-app-data-panel">
+        <div class="gmf-app-header">
+          <div class="dropdown" ng-cloak>
+            <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+              <span ng-if="mainCtrl.gmfThemeManager.isLoading()">
+                <span translate>Loading...</span>
+              </span>
+              <span ng-if="!mainCtrl.gmfThemeManager.isLoading()">
+                <span class="fa fa-grid"></span>
+                <span translate>Themes</span>
+                <span class="caret"></span>
+              </span>
+            </a>
+            <gmf-themeselector class="dropdown-menu"
+              gmf-themeselector-currenttheme="mainCtrl.theme"
+              gmf-themeselector-filter="::mainCtrl.filter">
+            </gmf-themeselector>
+          </div>
+        </div>
+        <div class="gmf-app-content">
+          <gmf-layertree
+            gmf-layertree-dimensions="mainCtrl.dimensions"
+            gmf-layertree-map="::mainCtrl.map">
+          </gmf-layertree>
+        </div>
+      </div>
+      <div class="gmf-app-tools" ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="mainCtrl.toolsActive">
+        <div class="gmf-app-bar">
+          <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
+              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
+              <span class="fa fa-print"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
+              <span class="fa fa-paint-brush"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
+              <span class="fa fa-filter"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
+              ng-show="mainCtrl.hasEditableLayers" ng-cloak>
+              <span class="fa fa-pencil"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
+              <span class="fa fa-area-chart"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
+              <span class="fa fa-street-view"></span>
+            </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
+              <span class="fa fa-upload"></span>
+            </button>
+          </div>
+          <br/>
+          <br/>
+          <span data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.modalShareShown">
+              <span class="fa fa-share-alt"></span>
+            </button>
+          </span>
+        </div>
+        <div
+            class="gmf-app-tools-content container-fluid"
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-googlestreetview-active': mainCtrl.googleStreetViewActive }">
+          <div ng-show="mainCtrl.loginActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Login' | translate}}
+                <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
+              </div>
+              <gmf-authentication
+                  gmf-authentication-allow-password-reset="::false"
+                  gmf-authentication-allow-password-change="::false">
+              </gmf-authentication>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.printPanelActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Print' | translate}}
+                <a class="btn close" ng-click="mainCtrl.printPanelActive = false">&times;</a>
+              </div>
+              <gmf-print
+                gmf-print-map="::mainCtrl.map"
+                gmf-print-active="mainCtrl.printActive"
+                gmf-print-hiddenattributes="::['debug']"
+                gmf-print-rotatemask="::true"
+                gmf-print-attributes-out="::attributes">
+                  <span ng-if="mainCtrl.gmfUser.username">
+                    <div ng-repeat="attribute in ::attributes">
+                      <label ng-if="attribute.name == 'debug'">
+                        <input ng-model="attribute.value" type="checkbox">
+                        <span translate>debug</span>
+                      </label>
+                    </div>
+                  </span>
+              </gmf-print>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.drawFeatureActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Draw & Measure'|translate}}
+                <a class="btn close" ng-click="mainCtrl.drawFeatureActive = false">&times;</a>
+              </div>
+              <gmf-drawfeature
+                  gmf-drawfeature-active="mainCtrl.drawFeatureActive"
+                  gmf-drawfeature-layer="::mainCtrl.drawFeatureLayer"
+                  gmf-drawfeature-map="::mainCtrl.map">
+              </gmf-drawfeature>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.filterSelectorActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Filter'|translate}}
+                <a class="btn close" ng-click="mainCtrl.filterSelectorActive = false">&times;</a>
+              </div>
+              <gmf-filterselector
+                  active="mainCtrl.filterSelectorActive"
+                  map="mainCtrl.map"
+                  tool-group="mainCtrl.mapToolsGroup">
+              </gmf-filterselector>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.editFeatureActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Editing'|translate}}
+                <a class="btn close" ng-click="mainCtrl.editFeatureActive = false">&times;</a>
+              </div>
+              <div ng-switch="mainCtrl.gmfUser.username">
+                <div ng-switch-when="null">
+                  {{'In order to use the editing tool, you must log in first.' | translate}}
+                </div>
+                <gmf-editfeatureselector
+                    ng-switch-default
+                    gmf-editfeatureselector-active="mainCtrl.editFeatureActive"
+                    gmf-editfeatureselector-map="::mainCtrl.map"
+                    gmf-editfeatureselector-vector="::mainCtrl.editFeatureVectorLayer">
+                </gmf-editfeatureselector>
+              </div>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.drawProfilePanelActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Profile'|translate}}
+                <a class="btn close" ng-click="mainCtrl.drawProfilePanelActive = false">&times;</a>
+              </div>
+              <div gmf-drawprofileline
+                   gmf-drawprofileline-active="mainCtrl.drawProfilePanelActive"
+                   gmf-drawprofileline-map="::mainCtrl.map"
+                   gmf-drawprofileline-line="mainCtrl.profileLine">
+                 <p>
+                  <button class="btn btn-default"
+                    ngeo-btn ng-model="ctrl.interaction.active"
+                    translate>
+                    Draw profile line
+                  </button>
+                </p>
+                <p>
+                  <em translate ng-if="ctrl.interaction.active" class="text-muted small">
+                    Draw a line on the map to display the corresponding elevation profile.
+                    Use double-click to finish the drawing.
+                  </em>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Street View'|translate}}
+                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
+              </div>
+              <ngeo-googlestreetview
+                  active="mainCtrl.googleStreetViewActive"
+                  feature-style="mainCtrl.googleStreetViewStyle"
+                  map="mainCtrl.map">
+              </ngeo-googlestreetview>
+            </div>
+          </div>
+          <div ng-show="mainCtrl.importDataSourceActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Import Layer'|translate}}
+                <a class="btn close" ng-click="mainCtrl.importDataSource = false">&times;</a>
+              </div>
+              <gmf-importdatasource
+                  map="mainCtrl.map">
+              </gmf-importdatasource>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
+        <gmf-search gmf-search-map="::mainCtrl.map"
+          gmf-search-datasources="::mainCtrl.searchDatasources"
+          gmf-search-coordinatesprojections="::mainCtrl.searchCoordinatesProjections"
+          gmf-search-colorchooser="::true"
+          gmf-search-placeholder="{{'Search…'|translate}}"
+          gmf-search-delay="mainCtrl.searchDelay"
+          gmf-search-clearbutton="::true">
+        </gmf-search>
+        <ngeo-displaywindow
+          content="mainCtrl.displaywindowContent"
+          desktop="true"
+          draggable-containment="mainCtrl.displaywindowDraggableContainment"
+          height="mainCtrl.displaywindowHeight"
+          open="mainCtrl.displaywindowOpen"
+          title="mainCtrl.displaywindowTitle"
+          url="mainCtrl.displaywindowUrl"
+          width="mainCtrl.displaywindowWidth"
+        ></ngeo-displaywindow>
+        <div class="gmf-app-map-bottom-controls">
+          <div class="gmf-backgroundlayerbutton btn-group dropup">
+            <button
+                class="btn btn-default dropdown-toggle"
+                data-toggle="dropdown">
+              <img src="image/background-layer-button.png" alt="" />
+            </button>
+            <gmf-backgroundlayerselector
+              gmf-backgroundlayerselector-dimensions="::mainCtrl.dimensions"
+              gmf-backgroundlayerselector-map="::mainCtrl.map"
+              class="dropdown-menu">
+            </gmf-backgroundlayerselector>
+          </div>
+          <div class="gmf-app-map-messages">
+            <gmf-disclaimer
+              gmf-disclaimer-map="::mainCtrl.map"
+              gmf-disclaimer-external="::true"
+              gmf-disclaimer-external-msg="disclaimerMsg"
+              gmf-disclaimer-external-visibility="disclaimerVisibility">
+            </gmf-disclaimer>
+          </div>
+        </div>
+        <gmf-map
+          class="gmf-map"
+          gmf-map-map="mainCtrl.map"
+          gmf-map-manage-resize="mainCtrl.manageResize"
+          gmf-map-resize-transition="mainCtrl.resizeTransition"
+          ngeo-map-query=""
+          ngeo-map-query-map="::mainCtrl.map"
+          ngeo-map-query-active="mainCtrl.queryActive"
+          ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
+          ngeo-bbox-query=""
+          ngeo-bbox-query-map="::mainCtrl.map"
+          ngeo-bbox-query-active="mainCtrl.queryActive"
+          ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
+        </gmf-map>
+
+        <!--infobar-->
+        <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.showInfobar}">
+          <button class="btn fa gmf-app-map-info ng-cloak" ng-click="mainCtrl.showInfobar = !mainCtrl.showInfobar"
+                  ng-class="{'fa-angle-double-up': !mainCtrl.showInfobar, 'fa-angle-double-down': mainCtrl.showInfobar}"></button>
+
+          <div ngeo-scaleselector="mainCtrl.scaleSelectorValues"
+               ngeo-scaleselector-map="mainCtrl.map"
+               ngeo-scaleselector-options="mainCtrl.scaleSelectorOptions"></div>
+          <div id="scaleline"></div>
+          <div class="pull-right">
+            <gmf-elevationwidget
+                gmf-elevationwidget-map="::mainCtrl.map"
+                gmf-elevationwidget-layers="mainCtrl.elevationLayers"
+                gmf-elevationwidget-active="mainCtrl.showInfobar">
+            </gmf-elevationwidget>
+            <gmf-mouseposition
+                 gmf-mouseposition-map="mainCtrl.map"
+                 gmf-mouseposition-projections="::mainCtrl.mousePositionProjections"
+                 class="text-center">
+            </gmf-mouseposition>
+          </div>
+        </div>
+      </div>
+      <ngeo-modal ng-model="mainCtrl.modalShareShown" ngeo-modal-destroy-content-on-hide="true">
+        <gmf-share gmf-share-email="false"/>
+      </ngeo-modal>
+      <ngeo-modal ng-model="disclaimerVisibility" ngeo-modal-destroy-content-on-hide="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div ng-bind-html="disclaimerMsg"></div>
+        </div>
+      </ngeo-modal>
+    </main>
+    <footer>
+      <gmf-profile
+        gmf-profile-active="profileChartActive"
+        gmf-profile-line="mainCtrl.profileLine"
+        gmf-profile-map="::mainCtrl.map"
+        gmf-profile-linesconfiguration="::mainCtrl.profileLinesconfiguration"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="profileChartActive">
+      </gmf-profile>
+
+      <gmf-displayquerygrid
+        gmf-displayquerygrid-active="queryGridActive"
+        gmf-displayquerygrid-featuresstyle="::mainCtrl.queryFeatureStyle"
+        gmf-displayquerygrid-map="::mainCtrl.map"
+        gmf-displayquerygrid-removeemptycolumns="true"
+        gmf-displayquerygrid-mergetabs="::mainCtrl.gridMergeTabs"
+        ngeo-resizemap="mainCtrl.map"
+        ngeo-resizemap-state="queryGridActive">
+      </gmf-displayquerygrid>
+    </footer>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
+    <script src="../../build/desktop_alt.js"></script>
+    <script src="../../../../lib/watchwatchers.js"></script>
+    <script>
+      (function() {
+        var cacheVersion = 'd736fff8ea0301cbe7ffca4616688aa064b386bf';
+        var urlElements = window.location.pathname.split('/');
+
+        var angularLocaleScriptUrlElements = urlElements.slice(0, urlElements.length - 3);
+        angularLocaleScriptUrlElements.push('build', 'angular-locale_{{locale}}.js?cache_version=' + cacheVersion);
+
+        var gmfModule = angular.module('gmf');
+        gmfModule.constant('angularLocaleScript', angularLocaleScriptUrlElements.join('/'));
+
+        var langUrls = {};
+        ['en', 'fr', 'de'].forEach(function(lang) {
+          var langUrlElements = urlElements.slice(0, urlElements.length - 3);
+          langUrlElements.push('build', 'gmf-' + lang + '.json?cache_version=' + cacheVersion)
+          langUrls[lang] = langUrlElements.join('/')
+        });
+
+        var module = angular.module('app');
+        module.constant('defaultTheme', 'Demo');
+        module.constant('defaultLang', 'en');
+        module.constant('langUrls', langUrls);
+        module.constant('cacheVersion', cacheVersion);
+        module.constant('authenticationBaseUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+        module.constant('fulltextsearchUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+        module.constant('gmfRasterUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+        module.constant('gmfPrintUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+        module.constant('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+        module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background&interface=desktop');
+        module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+        module.constant('gmfShortenerCreateUrl', '');
+        module.constant('gmfSearchGroups', ['osm','district']);
+        // Requires that the gmfSearchGroups is specified
+        module.constant('gmfSearchActions', [
+                {action: 'add_theme', title: 'Add a theme'},
+                {action: 'add_group', title: 'Add a sub theme'},
+                {action: 'add_layer', title: 'Add a layer'}
+        ]);
+        module.constant('gmfTreeManagerModeFlush', false);
+        module.value('gmfPermalinkOptions', {projectionCodes: ['EPSG:21781', 'EPSG:2056', 'EPSG:4326'], useLocalStorage: false});
+        module.value('ngeoWfsPermalinkOptions',
+            /** @type {ngeox.WfsPermalinkOptions} */ ({
+              url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+              wfsTypes: [
+                {featureType: 'fuel', label: 'display_name'},
+                {featureType: 'osm_scale', label: 'display_name'}
+              ],
+              defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+              defaultFeaturePrefix: 'feature'
+            }));
+        module.constant('ngeoQueryOptions', {
+          limit: 50
+        })
+      })();
+    </script>
+  </body>
+</html>

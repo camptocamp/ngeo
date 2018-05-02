@@ -1,0 +1,19 @@
+
+ngeo-googlestreetview {
+  display: block;
+}
+ngeo-googlestreetview,
+#map {
+  border: 1px solid #666666;
+  height: 40rem;
+  float: left;
+  margin: 0.5rem;
+  width: 60rem;
+}
+
+.desc {
+  clear: both;
+  margin: 1rem;
+}
+
+/*# sourceMappingURL=googlestreetview.css.map*/

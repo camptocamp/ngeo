@@ -1,0 +1,28 @@
+
+#map {
+  width: 600px;
+  height: 400px;
+}
+.ngeo-disclaimer {
+  left: 50%;
+  margin: 0 0 0 -15rem;
+  position: absolute;
+  top: 0;
+  width: 30rem;
+}
+#disclaimers-in-map {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  width: 30rem;
+}
+#disclaimers-in-map .alert {
+  padding: 0.5rem 1rem;
+  margin: 0 0 0.5rem 0;
+}
+#disclaimers-in-map .alert-dismissable .close,
+#disclaimers-in-map .alert-dismissible .close {
+  right: -5px;
+}
+
+/*# sourceMappingURL=disclaimer.2e02cd.css.map*/

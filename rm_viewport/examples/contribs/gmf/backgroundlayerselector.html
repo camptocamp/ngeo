@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app='gmfapp'>
+  <head>
+    <title>GeoMapFish's background layer selector example</title>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  <link href="backgroundlayerselector.css" rel="stylesheet"></head>
+  <body ng-controller="MainController as ctrl">
+    <p id="desc">This example shows how to use the
+    <code>gmf-backgroundlayerselector</code>
+    directive to select the map background layer.</p>
+    <div>
+        <gmf-backgroundlayerselector
+          gmf-backgroundlayerselector-map="::ctrl.map">
+        </gmf-backgroundlayerselector>
+    </div>
+    <gmf-map gmf-map-map="ctrl.map"></gmf-map>
+    <script type="text/javascript" src="../../dist/vendor.js"></script>
+  <script type="text/javascript" src="commons.js"></script><script type="text/javascript" src="backgroundlayerselector.js"></script></body>
+</html>

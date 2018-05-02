@@ -1,0 +1,16 @@
+
+.buttons {
+  width: 300px;
+}
+.buttons .btn {
+  margin: 0 0 5px 0;
+}
+.ngeo-notification {
+  left: 50%;
+  margin: 0 0 0 -100px;
+  position: absolute;
+  top: 0;
+  width: 200px;
+}
+
+/*# sourceMappingURL=notification.881936.css.map*/

@@ -1,0 +1,22 @@
+
+
+      .ngeo-popover {
+        margin: 30px
+      }
+
+      .popover {
+        border-radius: 0;
+      }
+
+      .content {
+        width: 10vw;
+        height: 100vh;
+        background-color: grey;
+        overflow: scroll;
+      }
+
+      .blank{
+        height: 100vh;
+      }
+
+/*# sourceMappingURL=popover.149711.css.map*/

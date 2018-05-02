@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Draw Feature Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+
+    <style>
+      #map {
+        width: 600px;
+        height: 400px;
+      }
+      ngeo-drawfeature {
+        margin: 10px 0;
+      }
+      .ngeo-drawfeature-circle:before {
+        content: 'Circle'
+      }
+      .ngeo-drawfeature-linestring:before {
+        content: 'LineString'
+      }
+      .ngeo-drawfeature-point:before {
+        content: 'Point'
+      }
+      .ngeo-drawfeature-polygon:before {
+        content: 'Polygon'
+      }
+      .ngeo-drawfeature-rectangle:before {
+        content: 'Rectangle'
+      }
+      .ngeo-drawfeature-text:before {
+        content: 'Text'
+      }
+      .tooltip {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        color: white;
+        padding: 4px 8px;
+        opacity: 0.7;
+        white-space: nowrap;
+      }
+      .ngeo-tooltip-measure {
+        opacity: 1;
+        font-weight: bold;
+      }
+      .ngeo-tooltip-static {
+        display: none;
+      }
+      .ngeo-tooltip-measure:before,
+      .ngeo-tooltip-static:before {
+        border-top: 6px solid rgba(0, 0, 0, 0.5);
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        margin-left: -7px;
+        left: 50%;
+      }
+      .ngeo-tooltip-static:before {
+        border-top-color: #ffcc33;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+
+    <ngeo-drawfeature
+        ngeo-btn-group
+        class="btn-group"
+        ngeo-drawfeature-active="ctrl.drawActive"
+        ngeo-drawfeature-map="ctrl.map">
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-drawpoint
+        class="btn btn-default ngeo-drawfeature-point"
+        ng-class="{active: dfCtrl.drawPoint.active}"
+        ng-model="dfCtrl.drawPoint.active"></a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-measurelength
+        class="btn btn-default ngeo-drawfeature-linestring"
+        ng-class="{active: dfCtrl.measureLength.active}"
+        ng-model="dfCtrl.measureLength.active"></a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-measurearea
+        class="btn btn-default ngeo-drawfeature-polygon"
+        ng-class="{active: dfCtrl.measureArea.active}"
+        ng-model="dfCtrl.measureArea.active"></a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-measureazimut
+        class="btn btn-default ngeo-drawfeature-circle"
+        ng-class="{active: dfCtrl.measureAzimut.active}"
+        ng-model="dfCtrl.measureAzimut.active"></a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-drawrectangle
+        class="btn btn-default ngeo-drawfeature-rectangle"
+        ng-class="{active: dfCtrl.drawRectangle.active}"
+        ng-model="dfCtrl.drawRectangle.active"></a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-drawtext
+        class="btn btn-default ngeo-drawfeature-text"
+        ng-class="{active: dfCtrl.drawText.active}"
+        ng-model="dfCtrl.drawText.active"></a>
+    </ngeo-drawfeature>
+
+    <input type="checkbox"
+       ng-model="ctrl.dummyActive" /> Dummy
+
+    <p id="desc">
+      This example shows how to use the <code>ngeo-drawfeature</code>
+      directive to draw vector features on the map.
+    </p>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-animate.min.js"></script>
+    <script src="lib/angular-touch.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="drawfeature.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>

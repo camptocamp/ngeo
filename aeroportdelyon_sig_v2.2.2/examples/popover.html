@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Popover example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+    <style>
+
+      .ngeo-popover {
+        margin: 30px
+      }
+
+      .popover {
+        border-radius: 0;
+      }
+
+      .content {
+        width: 10vw;
+        height: 100vh;
+        background-color: grey;
+        overflow: scroll;
+      }
+
+      .blank{
+        height: 100vh;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <p id="desc">This example shows how to use the <code>ngeo-popover</code> directive to open a popover</p>
+    <div class="content">
+      <div ngeo-popover class="ngeo-popover">
+        <a ngeo-popover-anchor class="btn btn-info">anchor 1</a>
+        <div ngeo-popover-content>
+          <ul>
+            <li>action 1:
+              <input type="range" />
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div ngeo-popover class="ngeo-popover" ngeo-popover-placement="bottom" ngeo-popover-dismiss=".content">
+        <a ngeo-popover-anchor class="btn btn-info">anchor 2</a>
+        <div ngeo-popover-content>
+          <ul>
+            <li>
+              Placement attribute set to bottom
+            </li>
+            <li>
+              Dismissed on scroll
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="blank"></div>
+      <div ngeo-popover class="ngeo-popover">
+        <a ngeo-popover-anchor class="btn btn-info">anchor 3</a>
+        <div ngeo-popover-content>
+          <ul>
+            <li>action 3:
+              <input type="range" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="popover.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>

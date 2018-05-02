@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <script src="https.js"></script>
+    <title>Create Feature Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="lib/ngeo.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css" type="text/css">
+
+    <style>
+      #map {
+        width: 60rem;
+        height: 40rem;
+      }
+      .ngeo-createfeature-point:before {
+        content: 'Point'
+      }
+      .ngeo-createfeature-linestring:before {
+        content: 'Line'
+      }
+      .ngeo-createfeature-polygon:before {
+        content: 'Polygon'
+      }
+      .tooltip {
+        position: relative;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        color: white;
+        padding: 4px 8px;
+        opacity: 0.7;
+        white-space: nowrap;
+      }
+      .ngeo-tooltip-measure {
+        opacity: 1;
+        font-weight: bold;
+      }
+      .ngeo-tooltip-static {
+        display: none;
+      }
+      .ngeo-tooltip-measure:before,
+      .ngeo-tooltip-static:before {
+        border-top: 6px solid rgba(0, 0, 0, 0.5);
+        border-right: 6px solid transparent;
+        border-left: 6px solid transparent;
+        content: "";
+        position: absolute;
+        bottom: -6px;
+        margin-left: -7px;
+        left: 50%;
+      }
+      .ngeo-tooltip-static:before {
+        border-top-color: #ffcc33;
+      }
+    </style>
+  </head>
+  <body ng-controller="MainController as ctrl">
+    <div id="map" ngeo-map="ctrl.map"></div>
+
+    <div
+        ngeo-btn-group
+        class="btn-group">
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-createfeature
+        ngeo-createfeature-active="ctrl.createPointActive"
+        ngeo-createfeature-features="ctrl.features"
+        ngeo-createfeature-geom-type="ctrl.pointGeomType"
+        ngeo-createfeature-map="::ctrl.map"
+        class="btn btn-default ngeo-createfeature-point"
+        ng-class="{active: ctrl.createPointActive}"
+        ng-model="ctrl.createPointActive">
+      </a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-createfeature
+        ngeo-createfeature-active="ctrl.createLineStringActive"
+        ngeo-createfeature-features="ctrl.features"
+        ngeo-createfeature-geom-type="ctrl.lineStringGeomType"
+        ngeo-createfeature-map="::ctrl.map"
+        class="btn btn-default ngeo-createfeature-linestring"
+        ng-class="{active: ctrl.createLineStringActive}"
+        ng-model="ctrl.createLineStringActive">
+      </a>
+      <a
+        href
+        translate
+        ngeo-btn
+        ngeo-createfeature
+        ngeo-createfeature-active="ctrl.createPolygonActive"
+        ngeo-createfeature-features="ctrl.features"
+        ngeo-createfeature-geom-type="ctrl.polygonGeomType"
+        ngeo-createfeature-map="::ctrl.map"
+        class="btn btn-default ngeo-createfeature-polygon"
+        ng-class="{active: ctrl.createPolygonActive}"
+        ng-model="ctrl.createPolygonActive">
+      </a>
+    </div>
+
+    <input type="checkbox"
+       ng-model="ctrl.dummyActive" /> Dummy
+
+    <p id="desc">
+      This example shows how to use the <code>ngeo-createfeature</code>
+      directive to draw point, linestring or polygon vector features on
+      a map.
+    </p>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-animate.min.js"></script>
+    <script src="lib/angular-touch.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular-gettext.min.js"></script>
+    <script src="lib/date.min.js"></script>
+    <script src="lib/angular-floatThead.js"></script>
+    <script src="lib/jquery.floatThead.min.js"></script>
+    <script src="lib/proj4.js"></script>
+    <script src="lib/transpile.js"></script>
+    <script src="createfeature.js"></script>
+    <script src="lib/watchwatchers.js"></script>
+  </body>
+</html>
