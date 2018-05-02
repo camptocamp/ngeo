@@ -1,0 +1,80 @@
+/*!*****************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./src/sass/vars.scss ***!
+  \*****************************************************************************************************************************************/
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) Camptocamp SA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+/**
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2021-2024 Camptocamp SA
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+ * the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+ * FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+ * IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+:root {
+  --brand-primary: #94ac9a;
+  --brand-secondary: #d3e5d7;
+  --nav-bg: white;
+  --color: #555;
+  --color-light: #7b7b7b;
+  --color-04: rgba(85, 85, 85, 0.4);
+  --nav-header-bg: gray;
+  --map-tools-bg-color: white;
+  --map-tools-color: black;
+  --onhover-color: #d9d9d9;
+  --onhover-color-darken: #b3b3b3;
+  --main-bg-color: #e2e3df;
+  --main-bg-color-lighten: #f4f5f3;
+  --main-bg-color-09: rgba(226, 227, 223, 0.9);
+  --main-bg-color-08: rgba(226, 227, 223, 0.8);
+  --input-border-focus: #6a8972;
+  --input-border-focus-darken: #495e4e;
+  --light-box-shadow-color: rgba(0, 0, 0, 0.1);
+  --eavy-box-shadow-color: rgba(0, 0, 0, 0.3);
+  --grid-gutter-width: 1.88rem;
+  --border-color: #6a8972;
+  --hover-background-color: #bfcdc3;
+  --brand-secondary-dark: #a3c9ab;
+  --gmf-gray-dark: #333333;
+  --btn-default-border: #ccc;
+  --link-color: hsl(135, 25%, 50%);
+  --link-hover-color: #43704e;
+  --table-border-color: #6a8972;
+  --input-btn-focus-color: rgba(148, 172, 154, 0.25);
+  --danger-color: #dc3545;
+  --current-infobar-height: 0px;
+}
