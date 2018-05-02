@@ -8,7 +8,7 @@ fi
 
 # Cloning gh-pages into a local temporary directory
 TMP=".build/ngeo-${GITHUB_USERNAME}-gh-pages"
-git clone --single-branch --branch gh-pages ${GIT_REMOTE_URL} ${TMP}
+git clone --single-branch --branch gh-pages git@github.com:${GITHUB_USERNAME}/ngeo.git ${TMP}
 
 # Cleanup unused
 .build/python-venv/bin/python buildtools/cleanup-ghpages.py ${GITHUB_USERNAME} ${TMP}
