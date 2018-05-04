@@ -210,7 +210,7 @@ const exports = function($scope, $injector, $timeout) {
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('AppOEEdit', [
+exports.module = angular.module('Appoeedit', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
   gmfObjecteditingModule.name,

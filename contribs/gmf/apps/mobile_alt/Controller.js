@@ -98,7 +98,7 @@ const exports = function($scope, $injector) {
 olBase.inherits(exports, gmfControllersAbstractMobileController);
 
 
-exports.module = angular.module('AppMobileAlt', [
+exports.module = angular.module('Appmobile_alt', [
   appBase.module.name,
   gmfControllersAbstractMobileController.module.name,
 ]);

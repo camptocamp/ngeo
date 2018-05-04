@@ -9,6 +9,10 @@ import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import googAsserts from 'goog/asserts.js';
+import DateFormatter from 'ngeo/misc/php-date-formatter.js';
+import 'jquery-datetimepicker/jquery.datetimepicker.js';
+import 'jquery-datetimepicker/jquery.datetimepicker.css';
+
 
 /** @suppress {extraRequire} */
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
@@ -469,6 +473,9 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
  * Called on initialization of the controller.
  */
 exports.Controller_.prototype.$onInit = function() {
+  const lang = this.gettextCatalog_.getCurrentLanguage();
+  $.datetimepicker.setLocale(lang);
+  $.datetimepicker.setDateFormatter(new DateFormatter());
 
   // (1) Set default values and other properties
   this.dirty = this.dirty === true;
