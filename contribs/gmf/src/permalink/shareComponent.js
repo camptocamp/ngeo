@@ -2,9 +2,11 @@
  * @module gmf.permalink.shareComponent
  */
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
+import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 
 const exports = angular.module('gmfPermalinkShareComponent', [
   gmfPermalinkShareService.module.name,
+  ngeoStatemanagerLocation.module.name,
 ]);
 
 
