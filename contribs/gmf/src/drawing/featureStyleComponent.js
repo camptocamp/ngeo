@@ -3,7 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
-import olObject from 'ol/Object.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
 /** @suppress {extraRequire} */
@@ -162,7 +161,7 @@ exports.Controller_.prototype.handleFeatureSet_ = function(
       keys.push(
         olEvents.listen(
           newFeature,
-          olObject.getChangeEventType(propName),
+          `change:${propName}`,
           this.handleFeatureChange_,
           this
         )

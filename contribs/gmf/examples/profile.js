@@ -141,15 +141,15 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
     this.profileLine = null; // To reset the profile.
   };
 
-  this.drawLine.on('drawstart', function() {
+  this.drawLine.on('drawstart', () => {
     this.clear_();
-  }, this);
+  });
 
-  this.drawLine.on('drawend', function(e) {
+  this.drawLine.on('drawend', (e) => {
     // Update the profile with the new geometry
     this.profileLine = e.feature.getGeometry();
     $scope.$digest();
-  }, this);
+  });
 };
 
 

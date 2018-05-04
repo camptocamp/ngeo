@@ -7,7 +7,7 @@ import * as olBase from 'ol/index.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import * as olObj from 'ol/obj.js';
 import olSourceVector from 'ol/source/Vector.js';
-import olStyleStyle, {toFunction as toStyleFunction} from 'ol/style/Style.js';
+import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunction} from 'ol/style/Style.js';
 
 
 /**
@@ -130,7 +130,7 @@ exports.prototype.getLayer = function() {
 exports.prototype.getFeatureOverlay = function() {
   const groupIndex = this.groups_.length;
   this.groups_.push({
-    styleFunction: olStyleStyle.defaultFunction,
+    styleFunction: olStyleDefaultFunction,
     features: {}
   });
   return new ngeoMapFeatureOverlay(this, groupIndex);

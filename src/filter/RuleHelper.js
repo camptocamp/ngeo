@@ -11,7 +11,7 @@ import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 import ngeoRuleSelect from 'ngeo/rule/Select.js';
 import ngeoRuleText from 'ngeo/rule/Text.js';
-import olFormatWFS from 'ol/format/WFS.js';
+import {writeFilter} from 'ol/format/WFS.js';
 import * as olFormatFilter from 'ol/format/filter.js';
 import * as olArray from 'ol/array.js';
 
@@ -452,7 +452,7 @@ const exports = class {
     let filterString = null;
     const filter = this.createFilter(options);
     if (filter) {
-      const filterNode = olFormatWFS.writeFilter(filter);
+      const filterNode = writeFilter(filter);
       const xmlSerializer = new XMLSerializer();
       filterString = xmlSerializer.serializeToString(filterNode);
     }

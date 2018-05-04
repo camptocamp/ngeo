@@ -5,7 +5,6 @@ import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import * as olEvents from 'ol/events.js';
-import olObject from 'ol/Object.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -223,7 +222,7 @@ exports.Controller_.prototype.init = function() {
 
   olEvents.listen(
     drawInteraction,
-    olObject.getChangeEventType('dirty'),
+    'change:dirty',
     function() {
       this.dirty = drawInteraction.getDirty();
 
@@ -239,7 +238,7 @@ exports.Controller_.prototype.init = function() {
 
   olEvents.listen(
     drawInteraction,
-    olObject.getChangeEventType('drawing'),
+    'change:drawing',
     function() {
       this.drawing = drawInteraction.getDrawing();
     },
@@ -248,7 +247,7 @@ exports.Controller_.prototype.init = function() {
 
   olEvents.listen(
     drawInteraction,
-    olObject.getChangeEventType('valid'),
+    'change:valid',
     function() {
       this.valid = drawInteraction.getValid();
     },

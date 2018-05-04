@@ -80,10 +80,10 @@ exports.MainController = function(gmfPermalink) {
    * @type {Object.<string, gmf.mobile.measure.pointComponent.LayerConfig>}
    * @export
    */
-  this.measurePointLayersConfig = {
-    'aster': {unit: 'm', decimals: 2},
-    'srtm': {unit: 'm'}
-  };
+  this.measurePointLayersConfig = [
+    {name: 'aster', unit: 'm', decimals: 2},
+    {name: 'srtm', unit: 'm'}
+  ];
 
   /**
    * @type {boolean}

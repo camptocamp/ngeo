@@ -4,7 +4,6 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
-import olObject from 'ol/Object.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -62,7 +61,7 @@ const exports = class extends ngeoRuleRule {
     this.listenerKeys.push(
       olEvents.listen(
         this.feature_,
-        olObject.getChangeEventType(this.feature.getGeometryName()),
+        `change:${this.feature.getGeometryName()}`,
         this.handleFeatureGeometryChange_,
         this
       )

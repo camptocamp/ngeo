@@ -142,7 +142,7 @@ exports.prototype.setActive = function(active) {
       this.handleKeyUp_,
       this
     );
-    this.features_.forEach(() => this.addFeature_);
+    this.features_.forEach(feature => this.addFeature_(feature));
     this.listenerKeys_.push(
       olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this),
       olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this)
@@ -151,7 +151,7 @@ exports.prototype.setActive = function(active) {
   } else {
     this.listenerKeys_.forEach(olEvents.unlistenByKey);
     this.listenerKeys_.length = 0;
-    this.features_.forEach(() => this.removeFeature_);
+    this.features_.forEach(feature => this.removeFeature_(feature));
   }
 };
 
