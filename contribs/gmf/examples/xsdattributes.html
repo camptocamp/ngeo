@@ -32,11 +32,13 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <ngeo-attributes
-            ng-if="ctrl.attributes"
-            ngeo-attributes-attributes="::ctrl.attributes"
-            ngeo-attributes-feature="::ctrl.feature">
-          </ngeo-attributes>
+          <form name="xsdAttributesForm">
+            <ngeo-attributes
+              ng-if="ctrl.attributes"
+              ngeo-attributes-attributes="::ctrl.attributes"
+              ngeo-attributes-feature="::ctrl.feature">
+            </ngeo-attributes>
+          </form>
         </div>
       </div>
     </div>
