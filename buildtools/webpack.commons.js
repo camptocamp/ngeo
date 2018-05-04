@@ -15,12 +15,12 @@ const providePlugin = new webpack.ProvidePlugin({
   $: 'jquery',
 });
 
-babelPresets = [['env', {
-  "targets": {
-    "browsers": ["last 2 versions", "Firefox ESR", "ie 11"],
+const babelPresets = [['env', {
+  'targets': {
+    'browsers': ['last 2 versions', 'Firefox ESR', 'ie 11'],
   },
-  "modules": false,
-  "loose": true,
+  'modules': false,
+  'loose': true,
 }]];
 
 const babelAnnotateUse = {
@@ -29,27 +29,27 @@ const babelAnnotateUse = {
     presets: babelPresets,
     plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
   }
-}
+};
 
 const ngeoRule = {
   test: /ngeo\/src\/.*\.js$/,
   use: babelAnnotateUse,
-}
+};
 
 const ngeoExamplesRule = {
   test: /ngeo\/examples\/.*\.js$/,
   use: babelAnnotateUse,
-}
+};
 
 const gmfRule = {
   test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
   use: babelAnnotateUse,
-}
+};
 
 const gmfExamplesRule = {
   test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
   use: babelAnnotateUse,
-}
+};
 
 const olRule = {
   test: /openlayers\/src\/.*\.js$/,
@@ -88,14 +88,6 @@ const typeaheadRule = {
   use: {
     loader: 'expose-loader',
     options: 'Bloodhound'
-  }
-};
-
-const dateFormatterRule = {
-  test: require.resolve('jquery-datetimepicker'),
-  use: {
-    loader: 'expose-loader',
-    options: 'DateFormatter'
   }
 };
 
@@ -165,7 +157,6 @@ const config = {
       olcsRule,
       angularRule,
       typeaheadRule,
-      dateFormatterRule,
       cssRule,
       lessRule,
       htmlRule,
@@ -199,7 +190,7 @@ const config = {
       'ol/ol.css': 'openlayers/css/ol.css',
       'ol': 'openlayers/src/ol',
       'olcs': 'ol-cesium/src/olcs',
-      'jquery-ui/datepicker' : 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
+      'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
       'proj4': 'proj4/lib',
     }
   }
