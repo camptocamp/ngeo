@@ -132,7 +132,7 @@ const htmlRule = {
 };
 
 const iconRule = {
-  test: /\.(png|svg)$/,
+  test: /\.(png|svg|ico)$/,
   use: {
     loader: 'url-loader'
   }
