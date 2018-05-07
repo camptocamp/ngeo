@@ -132,7 +132,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
     })
   });
 
-  this.map.on('singleclick', this.handleMapSingleClick_, this);
+  this.map.on('singleclick', this.handleMapSingleClick_.bind(this));
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
