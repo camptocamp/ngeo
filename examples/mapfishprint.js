@@ -62,7 +62,7 @@ exports.PRINT_FORMAT_ = 'pdf';
  * @const
  * @private
  */
-exports.PRINT_LAYOUT_ = 'A4 portrait';
+exports.PRINT_LAYOUT_ = '1 A4 portrait';
 
 
 /**
