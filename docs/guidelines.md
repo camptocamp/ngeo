@@ -11,16 +11,13 @@ or PR from persons outside of Camptocamp customers or developpers.
 ## Table of content
 
 - [Main principle](#main-principle)
-- [Style guide](#style-guide)
-- [Webpack](#webpack)
-  - [Run the application](#run-the-application)
-  - [Main changes in our manner to code](#main-changes-in-our-manner-to-code)
-  - [Webpack - no-webpack code parts](#webpack---no-webpack-code-parts)
-- [Exports and symbols names](#exports-and-symbols-names)
+- [Coding style guide](#coding-style-guide)
+- [Main changes in the code between ngeo 2.2 and 2.2](#main-changes-in-the-code-between-ngeo-22-and-23)
 - [AngularJS names ](#angularJS-names)
 - [Module management](#module-management)
 - [Property renaming](#property-renaming)
-- [Object typing](#object-typing)
+  - [Exports vs private elements](#exports-vs-private-elements)
+  - [Object typing](#object-typing)
 - [Good practices on components creation](#good-practices-on-components-creation)
 - [Limit the use of ng-controller](#limit-the-use-of-ng-controller)
 - [Templating](#templating)
@@ -30,8 +27,9 @@ or PR from persons outside of Camptocamp customers or developpers.
 - [Watch your watchers!](#watch-your-watchers)
 - [API documentation](#api-documentation)
 - [Declaring an event](#declaring-an-event)
-- [CSS class names convention](#css-class-names-convention)
-- [Styling with less](#styling-with-less)
+- [Styling](#styling)
+  - [CSS class names convention](#css-class-names-convention)
+  - [Styling with less](#styling-with-less)
 
 ## Main principle
 Before starting to code a new feature in `gmf`, you must determine if this feature
@@ -52,85 +50,27 @@ In `ngeo`, we want to have very generic code that is shared between `gmf` and
 other web map applications. When you add some code in `ngeo`, you need to follow
 some rules that helps the code to be easly usable and customisable.
 
-## Style guide
+## Coding style guide
 
 We more or less follow the [AngularJS Style Guide for Closure Users at
 Google](https://google.github.io/styleguide/angularjs-google-style.html).
 
 We also use ES6 coding standards.
 
-## Webpack
+## Main changes in the code between ngeo 2.2 and 2.3
 
-### Run the application
-
-If you want to run the applications, check, or lint the code, you can still do a simple `make <target>`.
-
-If you want to test the examples, check, or lint the code with webpack, you must transform it:
-```
-npm install https://api.github.com/repos/openlayers/openlayers/tarball/bfae19c7e138533ad0c1a071d8886d55aac9bd35
-buildtools/webpack-migration
-```
-
-/!\The OpenLayers version above can be outdated.
-You can see in the `travis.yaml` file how it's done (JOB=webpack).
-Also, if you use the non-webpack version again, you must reinstall the version of openlayers described in your
-`package.json`.
-
-Then, to run your application, use `npm run serve-ngeo-examples`, `npm run serve-gmf-examples`, or `npm run serve-gmf-apps` (as defined
-in the `script` block of your `package.json`).
-
-To know more, see the [webpack documentation](https://webpack.js.org) and our configuration in the
-`webpack.config.js` file.
-
-### Main changes in our manner to code
+With Webpack, some things have changed between the current ngeo 2.3 version, and the lasts ones.
 
 - Functions from the goog library are not more allowed.
-- We must have only one provide per file and this file effectively provide one only object.
+- We export only one object per file. (That also means taht we have splitted some files in mutiple files).
 - We must have no more global value in the attached to the window (except in some very rare cases).
-- All AngularJS elements of are now in a small modules (see below in this documentation).
-- All modules require only what they need to work. not less, not more.
-
-### Webpack - no-webpack code parts
-
-The `buildtools/webpack-migration` script automatically transforms a lot of things for us, and so, the code is
-ready to use in webpack. But in some case, we can't transforms the code automatically. That's why you can
-see sometimes the following `no-webpack` or `webpack` comments:
-
-```js
-const no_webpack_code = "This code part will be removed after the transformation" // no-webpack
-// webpack const webpack_code = "This code part will be uncommented after the transformation"
-```
-
-## Exports and symbols names
-
-The name provided by a goog.provide in named `symbol`.
-
-The naming of a symbol is determinated by it's own location. For example, a component located in
-`ngeo/src/example/search.js` must provide a `ngeo.example.search` symbol.
-
-A file must provide only one symbol per file. and inside a file, only on element must be linked to this symbol.
-Because after the webpack transformation, all elements with the name of the symbol is transformed to export.
-Example:
-
-```js
-goog.provide('ngeo.example.search');
-
-ngeo.example.search = my_element;
-
-ngeo.example.foo = my_wrong_element;
-```
-
-In this case, `ngeo.example.search` become `exports` after the webpack transformation and will be usable.
-The `ngeo.example.foo` will be not renamed and won't pass the check because otherwise, it would become a
-global "flying freely" value in the code.
-
-If you are in this situation, you can create a file per element, use the element as a variable (
-`const ngeo.example.foo`, or attach the `foo` value to the `ngeo.example.search` element).
+- All AngularJS elements are now in a small modules (see below in this documentation).
+- All modules import only what they need to work. Not less, not more.
 
 ## AngularJS names
 
-Be as logical as possble.  In the prvious example, the AngularJS name should be `ngeoExampleSearch`. For
-a service in `contribs/gmf/src/sample/MyService.js`, the name must be `GmfSampleMyService`.
+Be as logical as possble.  In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
+a service in `contribs/gmf/src/sample/MyService.js`, the name must be `GmfSampleMyservice`.
 
 Don't change a name after it's choosed. Because that change the html in the code of all user of ngeo !
 
@@ -140,34 +80,44 @@ Since ngeo 2.3, every elements are grouped by functionnality (there is no more g
 nor `service` directories). That also means that every element provide it's own AngularJS module; we no more
 link all elements to a global `ngeo` or `gmf` module.
 
-That means that in every file we need to create am AngularJS module, and this module must require all modules
-it need to work. And then, we declare AngularJS `component`, `service`, etc from this module. Example:
+That means that in every file where we want to provide something to AngularJS, we need to create an
+AngularJS module, and this module must require all modules it needs to work. And then, we declare
+AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
-goog.provide('ngeo.example.Service');
+/**
+ * @module ngeo.example.Service
+ */
+const exports = {};
+import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 
 /**
  * @type {!angular.Module}
  */
-ngeo.example.Service.module = angular.module('ngeoExampleService', [
-  ngeo.my_required_module.Service.module.name
+exports.module = angular.module('ngeoExampleService', [
+  ngeoMyRequiredService.module.name
 ]);
-ngeo.example.Service.module.service('ngeoExampleService', ngeo.example.Service);
+exports.module.service('ngeoExampleService', exports);
+export default exports;
 ```
 
 You can see that we stock the module in a `module` variable on the class. For Component, we prefers to stock
 the module in the value we export directly like:
 
 ```js
-goog.provide('gmf.authentication.component');
+/**
+ * @module ngeo.example.component
+ */
+const exports = {};
 
 /**
  * @type {angular.Module}
  */
-gmf.authentication.component = angular.module('gmfAuthentication', [...]);
+exports = angular.module('ngeoExample', [...]);
 
-gmf.authentication.component.value(...);
-gmf.authentication.component.component(the_component);
+exports.value(...);
+exports.component(the_component);
+export default exports;
 ```
 
 To be able to require a whole functionality at once, we always create a `module.js` file in each directories.
@@ -175,8 +125,11 @@ This file always create and provide a module that require all the modules of fol
 
 ## Property renaming
 
-The ngeo code is compiled with Closure Compiler in *advanced* mode. This
-means we should conform to the restrictions imposed by the compiler.
+The ngeo code *was* compiled with Closure Compiler in *advanced* mode. We don't anymore uses it but we want
+to keep the same restrictions imposed by the compiler. Because in the version 2.3.1, we will run a script
+that transforms the Closure Compiler annotation in our new typing system.
+
+### Exports vs private elements
 
 In particular, Angular controllers and components typically set properties on
 the controller instance (`this`) or on the `$scope`. These properties are then
@@ -189,7 +142,7 @@ The way to do that is to add the right tag on each variable, function and classe
     name not understainable outside of the current file.
  -  And nothing, without final underscore, if the element is used freely in the code, but never in the html.
 
-## Object typing
+### Object typing
 
 For each custom object we define in ngeo we must provide a type for the compiler.
 You can define your owns in the `src/options/ngeox.js` or (equivalent in the contribs section).
@@ -203,7 +156,7 @@ Take a look in these file to know owe to write your own.
 
 ## Good practices on components creation
 
- - Never create a old `directive` element, use `component` instead.
+ - Never create an old `directive` element, use `component` instead.
  - Don't name your controller, in your partial, use the `$ctrl` notation instead.
  - Don't use the `&` binding notation to have a one-time binding. In your html, use `::` instead.
  - Don't forget to initialize your component's bindings in the $onInit function.
@@ -270,7 +223,7 @@ When we use a template URL it should be overwritten by an attribute.
 For that we should use this kind of code:
 
 ```js
-ngeo.module.component.value('ngeoModuleComponentTemplateUrl',
+exports.value('ngeoModuleComponentTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -301,7 +254,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentT
  * @ngdoc component
  * @ngname ngeoModuleComponent
  */
-ngeo.module.component.component_ = {
+exports.component_ = {
   templateUrl: ngeoModuleComponentTemplateUrl
 }
 
@@ -321,7 +274,7 @@ Be careful when you use isolate scope (`bindings` or `scope`) objects to pass
 variable through scope inheritance.
 
 ```js
-ngeo.bar.component = {
+exports.component_ = {
   bindings: {
     foo: '='
   },
@@ -356,7 +309,7 @@ provides a very good overview.
 
 ## API documentation
 
-/!\ The doc generated by JS-DOC is not really usable for now in version 2.3. Please, read the documntation
+/!\ The doc generated by JS-DOC is not really usable for now in version 2.3. Please, read the documentation
 directly in the code or in a previous version of ngeo.
 
 `ngeo` uses the [Angular-JSDoc](https://github.com/allenhwkim/angular-jsdoc)
@@ -389,7 +342,7 @@ For example:
 const my_component = function() {
   // …
 };
-ngeo.misc.component.component('ngeoMisc', my_component);
+exports.component('ngeoMisc', my_component);
 ```
 
 ## Declaring an event
@@ -409,8 +362,12 @@ this.geolocation_.on('change:accuracyGeometry', function() {
 This is the correct syntax:
 
 ```js
-ol.events.listen(this.geolocation_,
-  ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+import olObject from 'ol/object.js';
+import olGeolocationProperty from 'ol/GeolocationProperty.js';
+import * as olEvents from 'ol/events.js';
+
+olEvents.listen(this.geolocation_,
+  olObject.getChangeEventType(olGeolocationProperty.ACCURACY_GEOMETRY),
   function() {
     ...
   }, this);
@@ -422,14 +379,14 @@ OpenLayers allows passing custom properties to classes inheriting from
 `ol.Object`. For example:
 
 ```js
-let layer = new ol.layer.Tile({
+let layer = new olLayerTile({
   maxResolution: 5000,
   title: 'A title',
-  source: new ol.source.OSM()
+  source: new olSourceOSM()
 });
 ```
 
-`title` is the custom property in this example. (While `maxResolution` is an ol3 built-in layer property.)
+`title` is the custom property in this example. (While `maxResolution` is an ol built-in layer property.)
 You can then use the `get` methods to get that property's value:
 
 ```js
@@ -438,21 +395,27 @@ let layerTitle = layer.get('title');
 
 **But** this won't work in the case of the ngeo, or any code compiled in with
 Closure Compiler in ADVANCED mode. The compiler is indeed going to rename the
-key `title` in the options object passed to the `ol.layer.Tile` constructor.
+key `title` in the options object passed to the `olLayerTile` constructor.
 
 One option to work-around the issue involves using the `set` method after
 the construction of the layer:
 
 ```js
-let layer = new ol.layer.Tile({
+let layer = new olLayerTile({
   maxResolution: 5000,
-  source: new ol.source.OSM()
+  source: new olSourceOSM()
 });
 // use `set` to set custom layer properties
 layer.set('title', 'A title');
 ```
 
-## CSS class names convention
+## Styling
+
+If your component have an associated `less` file, add it next to the component, with the same name (for
+`mycomponent.js` file, you should have a `mycomponent.less` file). Then, don't require it directly in your
+component, leave this to the final application.
+
+### CSS class names convention
 
 CSS class names, in both ngeo and gmf, follow a set of rules that determines their value.  A CSS class name:
 
@@ -468,7 +431,7 @@ possible to have multiple instances of your component, and so multiple identical
 a unique CSS class name, inject the `$element` service in your controller and use Angular jqLite selector
 to get the element needed.
 
-## Styling with less
+### Styling with less
 
 To be able to do calculations directly with less we encourage to use a subset of the CSS units.
 We choose units that don't depend on parent tags and are relative.
