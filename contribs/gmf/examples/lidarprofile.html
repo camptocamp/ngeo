@@ -6,112 +6,23 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css" type="text/css">
-    <style>
-        gmf-map > div {
-          width: 80rem;
-          height: 40rem;
-        }
-        #gmf-lidar-profile-container {
-          position: relative;
-          overflow: hidden;
-          padding: 2rem;
-          border-top: solid 1px black;
-          background-color: white;
-          height: 35rem;
-          display: flex;
-        }
-
-        #gmf-lidar-profile-container .lidar-profile {
-          width: 60rem;
-          background-color: #f5f5f5;
-        }
-
-        #gmf-lidar-profile-container .lidar-legend {
-          list-style-type: none;
-          width: 15rem;
-          padding: 2rem;
-        }
-
-        #gmf-lidar-profile-container .close {
-          display: none;
-        }
-
-        #gmf-lidar-profile-container .lidar-error {
-          visibility: hidden;
-          position: absolute;
-          color: #4b717f;
-          padding-left: 100px;
-          padding-top: 100px;
-          z-index: 10;
-          font-size: 1.5em;
-          opacity: 1;
-          background: #e1f1f7;
-          width: 90%;
-          height: 100%;
-        }
-
-        #gmf-lidar-profile-container .lod-info {
-          max-height: 90px;
-          overflow-y: auto;
-        }
-
-        .gmf-lidar-profile-automatic-width {
-          color: gray;
-        }
-
-        .gmf-lidar-profile-chart-active main {
-          height: 60rem;
-        }
-
-        .gmf-tooltip-measure {
-          font-weight: bold;
-        }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <div style="position: relative; float:left; margin-right:10px;">
       <gmf-map gmf-map-map="ctrl.map"></gmf-map>
-      <p id="desc">This example shows how to use the <code>gmf-lidar-profile</code> with the <code>gmf-lidar-panel</code>.</p>
+      <p id="desc">This example shows how to use the <code>gmf-lidarprofile</code> with the <code>gmf-lidar-panel</code>.</p>
       <button ng-click="ctrl.panelActivated = !ctrl.panelActivated">Active panel</button>
-      <gmf-lidar-profile
-        gmf-lidar-profile-active="ctrl.panelActivated"
-        gmf-lidar-profile-line="ctrl.profileLine">
-      </gmf-lidar-profile>
+      <gmf-lidarprofile
+        gmf-lidarprofile-active="ctrl.panelActivated"
+        gmf-lidarprofile-line="ctrl.profileLine">
+      </gmf-lidarprofile>
     </div>
     <div style="float:left;" ng-show="ctrl.panelActivated">
-    <gmf-lidar-panel
-      gmf-lidar-panel-active="ctrl.panelActivated"
-      gmf-lidar-panel-map="::ctrl.map"
-      gmf-lidar-panel-line="ctrl.profileLine">
-    </gmf-lidar-panel>
+    <gmf-lidarprofile-panel
+      gmf-lidarprofile-panel-active="ctrl.panelActivated"
+      gmf-lidarprofile-panel-map="::ctrl.map"
+      gmf-lidarprofile-panel-line="ctrl.profileLine">
+    </gmf-lidarprofile-panel>
     </div>
-    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../../../node_modules/angular/angular.js"></script>
-    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="../../../node_modules/d3/build/d3.js"></script>
-    <script src="../../../node_modules/file-saver/FileSaver.min.js"></script>
-    <script src="/@?main=lidarprofile.js"></script>
-    <script src="default.js"></script>
-    <script src="../../../utils/watchwatchers.js"></script>
-    <script>
-      var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'Demo');
-      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-    </script>
   </body>
 </html>

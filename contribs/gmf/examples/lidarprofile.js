@@ -1,33 +1,37 @@
-goog.provide('gmfapp.lidarprofile');
+/**
+ * @module gmfapp.lidarprofile
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('gmf.drawprofilelineDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.lidarPanelComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.lidarProfileComponent');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG2056');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import './lidarprofile.css';
+import gmfMapComponent from 'gmf/map/component.js';
+import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
+import EPSG2056 from 'ngeo/proj/EPSG2056.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfMapComponent.name,
+  gmfLidarprofileModule.name,
+  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
-gmfapp.module.value('pytreeLidarProfileJsonUrl', 'https://sitn.ne.ch/pytree/pytree_dev/');
+exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree/pytree_dev/');
+
 
 /**
  * @param {angular.Scope} $scope Angular scope.
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function($scope) {
+exports.MainController = function($scope) {
   /**
    * @type {ol.geom.LineString}
    * @export
@@ -44,14 +48,14 @@ gmfapp.MainController = function($scope) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
-      projection: 'EPSG:2056',
+    view: new olView({
+      projection: EPSG2056,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [2551894, 1202362],
       zoom: 3
@@ -60,4 +64,7 @@ gmfapp.MainController = function($scope) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

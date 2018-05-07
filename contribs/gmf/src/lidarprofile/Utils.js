@@ -1,19 +1,25 @@
-goog.provide('gmf.lidarProfile.Utils');
+/**
+ * @module gmf.lidarprofile.Utils
+ */
+import olFeature from 'ol/Feature.js';
+import olGeomLineString from 'ol/geom/LineString.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import {saveAs} from 'file-saver';
+import {select} from 'd3-selection';
+const d3 = {
+  select,
+};
 
-goog.require('ol.Feature');
-goog.require('ol.geom.LineString');
-goog.require('ol.geom.Point');
-goog.require('ol.style.Fill');
-goog.require('ol.style.RegularShape');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
 
-
-gmf.lidarProfile.Utils = class {
+const exports = class {
 
   /**
    * Clip a linstring with start and end measure givent by d3 Chart domain
-   * @param {gmf.lidarProfile.Config} config the LIDAR profile config instance
+   * @param {gmf.lidarprofile.Config} config the LIDAR profile config instance
    * @param {number} map_resolution the current resolution of the map
    * @param {ol.geom.LineString} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum
@@ -22,7 +28,7 @@ gmf.lidarProfile.Utils = class {
    */
   clipLineByMeasure(config, map_resolution, linestring, dLeft, dRight) {
 
-    const clippedLine = new ol.geom.LineString([]);
+    const clippedLine = new olGeomLineString([]);
     let mileage_start = 0;
     let mileage_end = 0;
 
@@ -35,7 +41,7 @@ gmf.lidarProfile.Utils = class {
 
     linestring.forEachSegment((segStart, segEnd) => {
       counter += 1;
-      const segLine = new ol.geom.LineString([segStart, segEnd]);
+      const segLine = new olGeomLineString([segStart, segEnd]);
       mileage_end += segLine.getLength();
 
       if (dLeft == mileage_start) {
@@ -53,7 +59,7 @@ gmf.lidarProfile.Utils = class {
       } else if (dRight > mileage_start && dRight < mileage_end) {
         clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
       } else if  (dRight > mileage_start && dRight > mileage_end && counter === segNumber) {
-         clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
+        clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
       }
 
       mileage_start += segLine.getLength();
@@ -66,14 +72,14 @@ gmf.lidarProfile.Utils = class {
     } else {
       profileWidth = config.serverConfig.width;
     }
-    const feat = new ol.Feature({
+    const feat = new olFeature({
       geometry: clippedLine
     });
 
     const widthInMapsUnits = profileWidth / map_resolution;
 
-    const lineStyle = new ol.style.Style({
-      stroke: new ol.style.Stroke({
+    const lineStyle = new olStyleStyle({
+      stroke: new olStyleStroke({
         color: 'rgba(255,0,0,1)',
         width: widthInMapsUnits,
         lineCap: 'square'
@@ -109,13 +115,13 @@ gmf.lidarProfile.Utils = class {
     const lineStart = clippedLine.getFirstCoordinate();
 
     styles.push(
-      new ol.style.Style({
-        geometry: new ol.geom.Point(lineStart),
-        image: new ol.style.RegularShape({
-          fill: new ol.style.Fill({
+      new olStyleStyle({
+        geometry: new olGeomPoint(lineStart),
+        image: new olStyleRegularShape({
+          fill: new olStyleFill({
             color: 'rgba(255, 0, 0, 1)'
           }),
-          stroke: new ol.style.Stroke({
+          stroke: new olStyleStroke({
             color: 'rgba(255,0,0,1)',
             width: 1,
             lineCap: 'square'
@@ -126,13 +132,13 @@ gmf.lidarProfile.Utils = class {
           angle: Math.PI / 3
         })
       }),
-      new ol.style.Style({
-        geometry: new ol.geom.Point(lineEnd),
-        image: new ol.style.RegularShape({
-          fill: new ol.style.Fill({
+      new olStyleStyle({
+        geometry: new olGeomPoint(lineEnd),
+        image: new olStyleRegularShape({
+          fill: new olStyleFill({
             color: 'rgba(255, 0, 0, 1)'
           }),
-          stroke: new ol.style.Stroke({
+          stroke: new olStyleStroke({
             color: 'rgba(255,0,0,1)',
             width: 1,
             lineCap: 'square'
@@ -159,7 +165,7 @@ gmf.lidarProfile.Utils = class {
    * Get a LOD and with for a given chart span
    * Configuration is set up in Pytree configuration
    * @param {number} span domain extent
-   * @param {lidarProfileServer.ConfigLevels} max_levels levels defined by a LIDAR server
+   * @param {lidarprofileServer.ConfigLevels} max_levels levels defined by a LIDAR server
    * @return {{maxLOD: number, width: number}} Object with optimized LOD and width for this profile span
    */
   getNiceLOD(span, max_levels) {
@@ -181,11 +187,11 @@ gmf.lidarProfile.Utils = class {
 
   /**
    * Create a image file by combining SVG and canvas elements and let the user downloads it.
-   * @param {gmfx.LidarProfileClientConfig} profileClientConfig The profile client configuration.
+   * @param {gmfx.LidarprofileClientConfig} profileClientConfig The profile client configuration.
    * @export
    */
   downloadProfileAsImageFile(profileClientConfig) {
-    const profileSVG = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
+    const profileSVG = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
     const w = parseInt(profileSVG.attr('width'), 10);
     const h = parseInt(profileSVG.attr('height'), 10);
     const margin = profileClientConfig.margin;
@@ -200,7 +206,7 @@ gmf.lidarProfile.Utils = class {
     ctx.fillRect(0, 0, w, h);
 
     // Draw the profile canvas (the points) into the new canvas.
-    const profileCanvas = d3.select('#gmf-lidar-profile-container .lidar-canvas').node();
+    const profileCanvas = d3.select('#gmf-lidarprofile-container .lidar-canvas').node();
     ctx.drawImage(profileCanvas, margin.left, margin.top,
       w - (margin.left + margin.right), h - (margin.top + margin.bottom));
 
@@ -214,23 +220,23 @@ gmf.lidarProfile.Utils = class {
     exportImage.id = img_id;
     exportImage.src = `data:image/svg+xml;base64, ${btoa(svgStr)}`;
     exportImage.style.setProperty('display', 'none');
-    const main = document.getElementsByTagName('main')[0];
+    const body = document.getElementsByTagName('body')[0];
     // The image must be loaded to be drawn.
     exportImage.onload = () => {
       ctx.drawImage(exportImage, 0, 0, w, h);
-      main.removeChild(document.getElementById(img_id));
+      body.removeChild(document.getElementById(img_id));
       // Let the user download the image.
       canvas.toBlob((blob) => {
         saveAs(blob, 'LIDAR_profile.png');
       });
     };
-    main.appendChild(exportImage);
+    body.appendChild(exportImage);
   }
 
 
   /**
-   * Transforms a lidarProfile into mutliple single points sorted by distance.
-   * @param {gmfx.LidarProfilePoints} profilePoints in the profile
+   * Transforms a lidarprofile into mutliple single points sorted by distance.
+   * @param {gmfx.LidarprofilePoints} profilePoints in the profile
    * @return {Array.<gmfx.LidarPoint>} An array of Lidar Points.
    */
   getFlatPointsByDistance(profilePoints) {
@@ -320,13 +326,13 @@ gmf.lidarProfile.Utils = class {
 
   /**
    * Find the profile's closest point in profile data to the chart mouse position
-   * @param {gmfx.LidarProfilePoints} points Object containing points properties as arrays
+   * @param {gmfx.LidarprofilePoints} points Object containing points properties as arrays
    * @param {number} xs mouse x coordinate on canvas element
    * @param {number} ys mouse y coordinate on canvas element
    * @param {number} tolerance snap sensibility
    * @param {Function} sx d3.scalelinear x scale
    * @param {Function} sy d3.scalelinear y scale
-   * @param {lidarProfileServer.ConfigClassifications} classification_colors classification colors
+   * @param {lidarprofileServer.ConfigClassifications} classification_colors classification colors
    * @return {gmfx.LidarPoint} closestPoint the closest point to the clicked coordinates
    */
   getClosestPoint(points, xs, ys, tolerance, sx, sy, classification_colors) {
@@ -370,3 +376,6 @@ gmf.lidarProfile.Utils = class {
     return closestPoint;
   }
 };
+
+
+export default exports;

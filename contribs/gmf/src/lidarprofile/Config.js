@@ -1,22 +1,22 @@
-goog.provide('gmf.lidarProfile.Config');
+/**
+ * @module gmf.lidarprofile.Config
+ */
 
-goog.require('gmf');
 
-
-gmf.lidarProfile.Config = class {
+const exports = class {
 
   /**
-   * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarProfile instance
+   * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarprofile instance
    * Requires a Pytree service: https://github.com/sitn/pytree
    *
    * @struct
    * @param {angular.$http} $http Angular http service.
-   * @param {string} pytreeLidarProfileJsonUrl pytree Lidar profile URL.
+   * @param {string} pytreeLidarprofileJsonUrl pytree Lidar profile URL.
    * @ngInject
    * @ngdoc service
-   * @ngname gmfLidarProfileConfig
+   * @ngname gmfLidarprofileConfig
    */
-  constructor($http, pytreeLidarProfileJsonUrl) {
+  constructor($http, pytreeLidarprofileJsonUrl) {
 
     /**
      * @type {angular.$http}
@@ -27,7 +27,7 @@ gmf.lidarProfile.Config = class {
     /**
      * @type {string}
      */
-    this.pytreeLidarProfileJsonUrl = pytreeLidarProfileJsonUrl;
+    this.pytreeLidarprofileJsonUrl = pytreeLidarprofileJsonUrl;
 
     /**
      * @type {boolean}
@@ -36,7 +36,7 @@ gmf.lidarProfile.Config = class {
 
     /**
      * The client configuration.
-     * @type {gmfx.LidarProfileClientConfig}
+     * @type {gmfx.LidarprofileClientConfig}
      */
     this.clientConfig = {
       autoWidth: true,
@@ -53,7 +53,7 @@ gmf.lidarProfile.Config = class {
 
     /**
      * The configuration from the LIDAR server.
-     * @type {lidarProfileServer.Config}
+     * @type {lidarprofileServer.Config}
      */
     this.serverConfig = null;
   }
@@ -65,9 +65,9 @@ gmf.lidarProfile.Config = class {
    * @export
    */
   initProfileConfig() {
-    return this.$http_.get(`${this.pytreeLidarProfileJsonUrl}/profile/config`).then((resp) => {
+    return this.$http_.get(`${this.pytreeLidarprofileJsonUrl}/profile/config`).then((resp) => {
 
-      this.serverConfig = /** @type {lidarProfileServer.Config} */ ({
+      this.serverConfig = /** @type {lidarprofileServer.Config} */ ({
         classification_colors: resp.data['classification_colors'] || null,
         debug: !!resp.data['debug'],
         default_attribute: resp.data['default_attribute'] || '',
@@ -100,4 +100,11 @@ gmf.lidarProfile.Config = class {
   }
 };
 
-gmf.module.service('gmfLidarProfileConfig', gmf.lidarProfile.Config);
+
+/**
+ * @type {!angular.Module}
+ */
+exports.module = angular.module('gmfLidarprofileConfig', []);
+exports.module.service('gmfLidarprofileConfig', exports);
+
+export default exports;

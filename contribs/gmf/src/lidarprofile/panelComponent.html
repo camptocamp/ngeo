@@ -61,7 +61,7 @@
         <span translate>Automatic width</span>
         <input type="checkbox"  ng-model="$ctrl.getSetAutoWidth" ng-model-options="{getterSetter: true}" checked>
       </p>
-      <div ng-class="[{'gmf-lidar-profile-automatic-width':$ctrl.getSetAutoWidth()}]">
+      <div ng-class="[{'gmf-lidarprofile-automatic-width':$ctrl.getSetAutoWidth()}]">
         <span translate>Manual width</span>
         <input ng-disabled="$ctrl.getSetAutoWidth()" type="number" pattern="^(0|[1-9][0-9]*)$" min=1 max=100 step=1 ng-model="$ctrl.getSetWidth" ng-model-options="{getterSetter: true}" ng-value="$ctrl.getSetWidth()"></input>
         <span>[m]</span>

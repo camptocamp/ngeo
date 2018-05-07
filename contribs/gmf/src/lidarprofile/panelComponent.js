@@ -1,79 +1,108 @@
-goog.provide('gmf.lidarPanelComponent');
+/**
+ * @module gmf.lidarprofile.panelComponent
+ */
+import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
+import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
+import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+import ngeoDownloadCsv from 'ngeo/download/Csv.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
-goog.require('gmf');
-goog.require('gmf.lidarProfile.Config');
-goog.require('gmf.lidarProfile.Manager');
-/** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
-goog.require('ngeo.CsvDownload');
-goog.require('ngeo.ToolActivateMgr');
-goog.require('ngeo.ToolActivate');
-goog.require('ol.geom.LineString');
+
+/**
+ * @type {!angular.Module}
+ */
+const exports = angular.module('gmfLidarprofilePanel', [
+  gmfLidarprofileConfig.module.name,
+  gmfLidarprofileManager.module.name,
+  gmfProfileDrawLineComponent.name,
+  ngeoMiscBtnComponent.name,
+  ngeoDownloadCsv.module.name,
+  ngeoMiscToolActivateMgr.module.name,
+]);
 
 
-gmf.module.value('gmfLidarPanelTemplateUrl',
+exports.value('gmfLidarprofilePanelTemplateUrl',
   /**
      * @param {!angular.JQLite} $element Element.
      * @param {!angular.Attributes} $attrs Attributes.
      * @return {string} Template.
      */
   ($element, $attrs) => {
-    const templateUrl = $attrs['gmfLidarPanelTemplateUrl'];
+    const templateUrl = $attrs['gmfLidarprofilePanelTemplateUrl'];
     return templateUrl !== undefined ? templateUrl :
-      `${gmf.baseTemplateUrl}/lidarpanel.html`;
+      'gmf/lidarprofilePanel';
   });
+
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
+});
 
 
 /**
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLidarPanelTemplateUrl Template function.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLidarprofilePanelTemplateUrl
+ *     Template function.
  * @return {string} Template URL.
  * @ngInject
  */
-function gmfLidarPanelTemplateUrl($element, $attrs, gmfLidarPanelTemplateUrl) {
-  return gmfLidarPanelTemplateUrl($element, $attrs);
+function gmfLidarprofilePanelTemplateUrl($element, $attrs, gmfLidarprofilePanelTemplateUrl) {
+  return gmfLidarprofilePanelTemplateUrl($element, $attrs);
 }
 
 
 /**
  * Provide a component that display a lidar profile panel.
+ * You can have only one lidarprofile in your page.
+ *
+ * Example:
+ *
+ *      <gmf-lidarprofile-panel
+ *        gmf-lidarprofile-panel-active="ctrl.profileActive"
+ *        gmf-lidarprofile-panel-map="::ctrl.map"
+ *        gmf-lidarprofile-panel-line="ctrl.profileLine">
+ *      </gmf-lidarprofile-panel>
+ *
+ * You must also have a pytreeLidarprofileJsonUrl constant defined like:
+ * `module.constant('pytreeLidarprofileJsonUrl', 'https://sample.com/pytree/');`
+ *
  * @ngdoc component
- * @ngname gmfLidarPanel
+ * @ngname gmfLidarprofilePanel
  */
-gmf.lidarPanelComponent = {
-  controller: 'gmfLidarPanelController',
+exports.component_ = {
+  controller: 'gmfLidarprofilePanelController',
   bindings: {
-    'active': '=gmfLidarPanelActive',
-    'map': '<gmfLidarPanelMap',
-    'line': '=gmfLidarPanelLine'
+    'active': '=gmfLidarprofilePanelActive',
+    'map': '<gmfLidarprofilePanelMap',
+    'line': '=gmfLidarprofilePanelLine'
   },
-  templateUrl: gmfLidarPanelTemplateUrl
+  templateUrl: gmfLidarprofilePanelTemplateUrl
 };
 
 
-gmf.module.component('gmfLidarPanel', gmf.lidarPanelComponent);
+exports.component('gmfLidarprofilePanel', exports.component_);
 
 
 /**
  * @private
  */
-gmf.LidarPanelController_ = class {
+exports.Controller_ = class {
 
   /**
    * @param {angular.Scope} $scope Angular scope.
-   * @param {gmf.lidarProfile.Manager} gmfLidarProfileManager gmf gmfLidarProfileManager.
-   * @param {gmf.lidarProfile.Config} gmfLidarProfileConfig gmf Lidar profile config.
-   * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service
-   * @param {ngeo.ToolActivate} ngeoToolActivate Ngeo ToolActivate service.
-   * @param {ngeo.CsvDownload} ngeoCsvDownload CSV Download service.
+   * @param {gmf.lidarprofile.Manager} gmfLidarprofileManager gmf gmfLidarprofileManager.
+   * @param {gmf.lidarprofile.Config} gmfLidarprofileConfig gmf Lidar profile config.
+   * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service
+   * @param {ngeo.download.Csv} ngeoCsvDownload CSV Download service.
    * @private
    * @ngInject
    * @ngdoc controller
-   * @ngname gmfLidarPanelController
+   * @ngname gmfLidarprofilePanelController
    */
-  constructor($scope, gmfLidarProfileManager, gmfLidarProfileConfig, ngeoToolActivateMgr,
-    ngeoToolActivate, ngeoCsvDownload) {
+  constructor($scope, gmfLidarprofileManager, gmfLidarprofileConfig, ngeoToolActivateMgr,
+    ngeoCsvDownload) {
 
     /**
      * @type {boolean}
@@ -82,15 +111,15 @@ gmf.LidarPanelController_ = class {
     this.ready = false;
 
     /**
-     * @type {gmf.lidarProfile.Config}
+     * @type {gmf.lidarprofile.Config}
      * @private
      */
-    this.profileConfig_ = gmfLidarProfileConfig;
+    this.profileConfig_ = gmfLidarprofileConfig;
 
     /**
-     * @type {gmf.lidarProfile.Manager}
+     * @type {gmf.lidarprofile.Manager}
      */
-    this.profile = gmfLidarProfileManager;
+    this.profile = gmfLidarprofileManager;
 
     /**
      * @type {boolean}
@@ -119,19 +148,19 @@ gmf.LidarPanelController_ = class {
     this.measureActive = false;
 
     /**
-     * @type {ngeo.CsvDownload}
+     * @type {ngeo.download.Csv}
      * @private
      */
     this.ngeoCsvDownload_ = ngeoCsvDownload;
 
     /**
-     * @type {ngeo.ToolActivateMgr}
+     * @type {ngeo.misc.ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
     // Initialize the tools inside of the tool manager
-    this.tool = new ngeo.ToolActivate(this, 'active');
+    this.tool = new ngeoMiscToolActivate(this, 'active');
     this.ngeoToolActivateMgr_.registerTool('mapTools', this.tool, false);
 
     // Activate the controls inside the panel.
@@ -252,7 +281,7 @@ gmf.LidarPanelController_ = class {
 
   /**
    * Get all available point attributes.
-   * @return {Array.<lidarProfileServer.ConfigPointAttributes>|undefined} available point attributes.
+   * @return {Array.<lidarprofileServer.ConfigPointAttributes>|undefined} available point attributes.
    * @export
    */
   getAvailablePointAttributes() {
@@ -262,8 +291,8 @@ gmf.LidarPanelController_ = class {
 
   /**
    * Get / Set the selected point attribute
-   * @param {lidarProfileServer.ConfigPointAttributes=} opt_selectedOption the new selected point attribute.
-   * @return {lidarProfileServer.ConfigPointAttributes|undefined} Selected point attribute
+   * @param {lidarprofileServer.ConfigPointAttributes=} opt_selectedOption the new selected point attribute.
+   * @return {lidarprofileServer.ConfigPointAttributes|undefined} Selected point attribute
    * @export
    */
   getSetSelectedPointAttribute(opt_selectedOption) {
@@ -278,7 +307,7 @@ gmf.LidarPanelController_ = class {
   /**
    * Get the available classifications for this dataset
    * @export
-   * @return {lidarProfileServer.ConfigClassifications} classification list
+   * @return {lidarprofileServer.ConfigClassifications} classification list
    */
   getClassification() {
     return this.profileConfig_.serverConfig.classification_colors;
@@ -288,7 +317,7 @@ gmf.LidarPanelController_ = class {
   /**
    * Sets the visible classification in the profile
    * @export
-   * @param {lidarProfileServer.ConfigClassification} classification selected value
+   * @param {lidarprofileServer.ConfigClassification} classification selected value
    * @param {number} key of the classification code
    */
   setClassification(classification, key) {
@@ -364,4 +393,8 @@ gmf.LidarPanelController_ = class {
   }
 };
 
-gmf.module.controller('gmfLidarPanelController', gmf.LidarPanelController_);
+
+exports.controller('gmfLidarprofilePanelController', exports.Controller_);
+
+
+export default exports;

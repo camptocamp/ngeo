@@ -117,7 +117,7 @@ gmfx.GridMergeTabs;
  *  tolerance: (number|undefined)
  * }}
  */
-gmfx.LidarProfileClientConfig;
+gmfx.LidarprofileClientConfig;
 
 
 /**
@@ -131,7 +131,7 @@ gmfx.LidarProfileClientConfig;
  * coords: (Array.<Array<number>>|undefined)
  * }}
  */
-gmfx.LidarProfilePoints;
+gmfx.LidarprofilePoints;
 
 
 /**
@@ -152,8 +152,8 @@ gmfx.LidarPoint;
 /**
  * The lidar point attribute list width default option
  * @typedef {{
- *   availableOptions: (Array.<lidarProfileServer.ConfigPointAttributes>|undefined),
- *   selectedOption: (lidarProfileServer.ConfigPointAttributes|undefined)
+ *   availableOptions: (Array.<lidarprofileServer.ConfigPointAttributes>|undefined),
+ *   selectedOption: (lidarprofileServer.ConfigPointAttributes|undefined)
  * }}
  */
 gmfx.LidarPointAttributeList;

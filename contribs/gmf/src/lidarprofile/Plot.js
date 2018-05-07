@@ -1,28 +1,41 @@
-goog.provide('gmf.lidarProfile.Plot');
+/**
+ * @module gmf.lidarprofile.Plot
+ */
+import olFeature from 'ol/Feature.js';
+import olGeomPoint from 'ol/geom/Point.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStyle from 'ol/style/Style.js';
+import {axisBottom, axisLeft} from 'd3-axis';
+import {scaleLinear} from 'd3-scale';
+import {event as d3Event, mouse, select} from 'd3-selection';
+import {zoom} from 'd3-zoom';
+const d3 = {
+  axisBottom,
+  axisLeft,
+  mouse,
+  scaleLinear,
+  select,
+  zoom,
+};
 
-goog.require('ol.Feature');
-goog.require('ol.geom.Point');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Style');
 
-
-gmf.lidarProfile.Plot = class {
+const exports = class {
 
   /**
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mecanism.
    *
    * @struct
-   * @param {gmf.lidarProfile.Manager} gmfLidarProfileManagerInstance gmf lidar profile manager instance
+   * @param {gmf.lidarprofile.Manager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
    */
-  constructor(gmfLidarProfileManagerInstance) {
+  constructor(gmfLidarprofileManagerInstance) {
 
     /**
-     * @type {gmf.lidarProfile.Manager}
+     * @type {gmf.lidarprofile.Manager}
      * @private
      */
-    this.manager_ = gmfLidarProfileManagerInstance;
+    this.manager_ = gmfLidarprofileManagerInstance;
 
     /**
      * d3.scaleLinear X scale.
@@ -81,14 +94,14 @@ gmf.lidarProfile.Plot = class {
 
   /**
    * Draw the points to the canvas element
-   * @param {gmfx.LidarProfilePoints} points of the profile
+   * @param {gmfx.LidarprofilePoints} points of the profile
    * @export
    */
   drawPoints(points) {
     let i = -1;
     const nPoints = points.distance.length;
     let cx, cy;
-    const ctx = d3.select('#gmf-lidar-profile-container .lidar-canvas').node().getContext('2d');
+    const ctx = d3.select('#gmf-lidarprofile-container .lidar-canvas').node().getContext('2d');
     const profileServerConfig = this.manager_.config.serverConfig;
 
     while (++i < nPoints) {
@@ -130,13 +143,13 @@ gmf.lidarProfile.Plot = class {
    * @export
    */
   setupPlot(rangeX, rangeY) {
-    const canvas = d3.select('#gmf-lidar-profile-container .lidar-canvas');
+    const canvas = d3.select('#gmf-lidarprofile-container .lidar-canvas');
     const canvasEl = canvas.node();
     const ctx = canvasEl.getContext('2d');
     ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
     const margin = this.manager_.config.clientConfig.margin;
-    const containerEl = d3.select('#gmf-lidar-profile-container').node();
+    const containerEl = d3.select('#gmf-lidarprofile-container').node();
     const containerWidth = containerEl.getBoundingClientRect().width;
     const containerHeight = containerEl.getBoundingClientRect().height;
     this.width_ = containerWidth - (margin.left + margin.right);
@@ -195,7 +208,7 @@ gmf.lidarProfile.Plot = class {
     this.updateScaleX = this.scaleX;
     this.updateScaleY = this.scaleY;
 
-    const svg = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
+    const svg = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
 
     svg.call(zoom).on('dblclick.zoom', null);
 
@@ -238,11 +251,11 @@ gmf.lidarProfile.Plot = class {
    * @export
    */
   zoomEnd() {
-    if (d3.event.sourceEvent && this.moved_ === false) {
+    if (d3Event.sourceEvent && this.moved_ === false) {
       return;
     }
     this.moved_ = false;
-    const ctx = d3.select('#gmf-lidar-profile-container .lidar-canvas')
+    const ctx = d3.select('#gmf-lidarprofile-container .lidar-canvas')
       .node().getContext('2d');
     ctx.clearRect(0, 0, this.width_, this.height_);
     this.manager_.updateData();
@@ -254,17 +267,17 @@ gmf.lidarProfile.Plot = class {
    * @export
    */
   zoomed() {
-    if (d3.event.sourceEvent && d3.event.sourceEvent.type === 'mousemove') {
+    if (d3Event.sourceEvent && d3Event.sourceEvent.type === 'mousemove') {
       this.moved_ = true;
-      if (d3.event.sourceEvent.movementX == 0 && d3.event.sourceEvent.movementY == 0) {
+      if (d3Event.sourceEvent.movementX == 0 && d3Event.sourceEvent.movementY == 0) {
         return;
       }
     }
 
     this.manager_.measure.clearMeasure();
 
-    const tr = d3.event.transform;
-    const svg = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
+    const tr = d3Event.transform;
+    const svg = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
     const xAxis = d3.axisBottom(this.scaleX);
     const yAxis = d3.axisLeft(this.scaleY)
       .tickSize(-this.width_);
@@ -275,7 +288,7 @@ gmf.lidarProfile.Plot = class {
     svg.select('.x.axis').call(xAxis.scale(new_scaleX));
     svg.select('.y.axis').call(yAxis.scale(new_scaleY));
 
-    const ctx = d3.select('#gmf-lidar-profile-container .lidar-canvas')
+    const ctx = d3.select('#gmf-lidarprofile-container .lidar-canvas')
       .node().getContext('2d');
     ctx.clearRect(0, 0, this.width_, this.height_);
 
@@ -295,13 +308,13 @@ gmf.lidarProfile.Plot = class {
    */
   pointHighlight() {
 
-    const svg = d3.select('#gmf-lidar-profile-container svg.lidar-svg');
-    const lidarInfo = d3.select('#gmf-lidar-profile-container .lidar-info');
+    const svg = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
+    const lidarInfo = d3.select('#gmf-lidarprofile-container .lidar-info');
     const pointSize = this.manager_.config.serverConfig.point_size;
     const margin = this.manager_.config.clientConfig.margin;
     const tolerance = this.manager_.config.clientConfig.tolerance || 0;
 
-    const canvasCoordinates = d3.mouse(d3.select('#gmf-lidar-profile-container .lidar-canvas').node());
+    const canvasCoordinates = d3.mouse(d3.select('#gmf-lidarprofile-container .lidar-canvas').node());
     const classification_colors = this.manager_.config.serverConfig.classification_colors;
 
     let cx, cy;
@@ -336,13 +349,13 @@ gmf.lidarProfile.Plot = class {
       this.manager_.cartoHighlight.setElement(el);
       this.manager_.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
       this.manager_.lidarPointHighlight.getSource().clear();
-      const lidarPointGeom = new ol.geom.Point([p.coords[0], p.coords[1]]);
-      const lidarPointFeature = new ol.Feature(lidarPointGeom);
+      const lidarPointGeom = new olGeomPoint([p.coords[0], p.coords[1]]);
+      const lidarPointFeature = new olFeature(lidarPointGeom);
       if (typeof (pointClassification.color) !== undefined) {
 
-        lidarPointFeature.setStyle(new ol.style.Style({
-          image: new ol.style.Circle({
-            fill: new ol.style.Fill({
+        lidarPointFeature.setStyle(new olStyleStyle({
+          image: new olStyleCircle({
+            fill: new olStyleFill({
               color: `rgba(${pointClassification.color}, 1)`
             }),
             radius: 3
@@ -362,7 +375,7 @@ gmf.lidarProfile.Plot = class {
 
   /**
    * @param {gmfx.LidarPoint} point the concerned point.
-   * @param {lidarProfileServer.ConfigClassification} classification_color the classification
+   * @param {lidarprofileServer.ConfigClassification} classification_color the classification
    *     object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.
    * @return {string} the text for the html info.
@@ -406,7 +419,7 @@ gmf.lidarProfile.Plot = class {
   */
   changeStyle(material) {
     this.material = material;
-    const canvasEl = d3.select('#gmf-lidar-profile-container .lidar-canvas').node();
+    const canvasEl = d3.select('#gmf-lidarprofile-container .lidar-canvas').node();
     const ctx = canvasEl.getContext('2d');
     ctx.clearRect(0, 0, canvasEl.width, canvasEl.height);
     this.drawPoints(this.manager_.profilePoints);
@@ -415,7 +428,7 @@ gmf.lidarProfile.Plot = class {
 
   /**
   * Show/Hide classes in the profile
-  * @param {lidarProfileServer.ConfigClassifications} classification value as defined in the Pytree classification_colors
+  * @param {lidarprofileServer.ConfigClassifications} classification value as defined in the Pytree classification_colors
   *     configuration
   * @param {string} material  value as defined in Pytree attribute configuration
   * @export
@@ -425,3 +438,6 @@ gmf.lidarProfile.Plot = class {
     this.changeStyle(material);
   }
 };
+
+
+export default exports;

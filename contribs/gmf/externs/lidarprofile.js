@@ -8,182 +8,182 @@
 /**
  * @type {Object}
  */
-let lidarProfileServer;
+let lidarprofileServer;
 
 
 /**
- * @typedef {Object.<number, !lidarProfileServer.ConfigClassification>}
+ * @typedef {Object.<number, !lidarprofileServer.ConfigClassification>}
  */
-lidarProfileServer.ConfigClassifications;
+lidarprofileServer.ConfigClassifications;
 
 /**
  * @constructor
  * @struct
  */
-lidarProfileServer.ConfigClassification = function() {};
+lidarprofileServer.ConfigClassification = function() {};
 
 /**
  * @type string
  */
-lidarProfileServer.ConfigClassification.prototype.color;
+lidarprofileServer.ConfigClassification.prototype.color;
 
 /**
  * @type string
  */
-lidarProfileServer.ConfigClassification.prototype.name;
+lidarprofileServer.ConfigClassification.prototype.name;
 
 /**
  * @type string
  */
-lidarProfileServer.ConfigClassification.prototype.value;
+lidarprofileServer.ConfigClassification.prototype.value;
 
 /**
  * @type boolean
  */
-lidarProfileServer.ConfigClassification.prototype.visible;
+lidarprofileServer.ConfigClassification.prototype.visible;
 
 
 /**
- * @typedef {!Object<number, !lidarProfileServer.ConfigLevel>}
+ * @typedef {!Object<number, !lidarprofileServer.ConfigLevel>}
  */
-lidarProfileServer.ConfigLevels;
-
-/**
- * @constructor
- * @struct
- */
-lidarProfileServer.ConfigLevel = function() {};
-
-/**
- * @type number
- */
-lidarProfileServer.ConfigLevel.prototype.max;
-
-/**
- * @type number
- */
-lidarProfileServer.ConfigLevel.prototype.width;
-
-
-/**
- * @typedef {Object.<string, !lidarProfileServer.ConfigPointAttribute>}
- */
-lidarProfileServer.ConfigPointAttributes;
+lidarprofileServer.ConfigLevels;
 
 /**
  * @constructor
  * @struct
  */
-lidarProfileServer.ConfigPointAttribute = function() {};
+lidarprofileServer.ConfigLevel = function() {};
 
 /**
  * @type number
  */
-lidarProfileServer.ConfigPointAttribute.prototype.bytes;
+lidarprofileServer.ConfigLevel.prototype.max;
 
 /**
  * @type number
  */
-lidarProfileServer.ConfigPointAttribute.prototype.elements;
+lidarprofileServer.ConfigLevel.prototype.width;
+
+
+/**
+ * @typedef {Object.<string, !lidarprofileServer.ConfigPointAttribute>}
+ */
+lidarprofileServer.ConfigPointAttributes;
+
+/**
+ * @constructor
+ * @struct
+ */
+lidarprofileServer.ConfigPointAttribute = function() {};
+
+/**
+ * @type number
+ */
+lidarprofileServer.ConfigPointAttribute.prototype.bytes;
+
+/**
+ * @type number
+ */
+lidarprofileServer.ConfigPointAttribute.prototype.elements;
 
 /**
  * @type string
  */
-lidarProfileServer.ConfigPointAttribute.prototype.name;
+lidarprofileServer.ConfigPointAttribute.prototype.name;
 
 /**
  * @type string
  */
-lidarProfileServer.ConfigPointAttribute.prototype.value;
+lidarprofileServer.ConfigPointAttribute.prototype.value;
 
 /**
  * @type number
  */
-lidarProfileServer.ConfigPointAttribute.prototype.visible;
+lidarprofileServer.ConfigPointAttribute.prototype.visible;
 
 
 /**
  * @constructor
  * @struct
  */
-lidarProfileServer.Config = function() {};
+lidarprofileServer.Config = function() {};
 
 /**
  * @type Object.<number, string>
  */
-lidarProfileServer.Config.prototype.classes_names_normalized;
+lidarprofileServer.Config.prototype.classes_names_normalized;
 
 /**
  * @type Object.<number, string>
  */
-lidarProfileServer.Config.prototype.classes_names_standard;
+lidarprofileServer.Config.prototype.classes_names_standard;
 
 /**
- * @type lidarProfileServer.ConfigClassifications
+ * @type lidarprofileServer.ConfigClassifications
  */
-lidarProfileServer.Config.prototype.classification_colors;
+lidarprofileServer.Config.prototype.classification_colors;
 
 /**
  * @type boolean
  */
-lidarProfileServer.Config.prototype.debug;
+lidarprofileServer.Config.prototype.debug;
 
 /**
  * @type string
  */
-lidarProfileServer.Config.prototype.default_attribute;
+lidarprofileServer.Config.prototype.default_attribute;
 
 /**
  * @type string
  */
-lidarProfileServer.Config.prototype.default_color;
+lidarprofileServer.Config.prototype.default_color;
 
 /**
  * @type string
  */
-lidarProfileServer.Config.prototype.default_point_attribute;
+lidarprofileServer.Config.prototype.default_point_attribute;
 
 /**
  * @type string
  */
-lidarProfileServer.Config.prototype.default_point_cloud;
+lidarprofileServer.Config.prototype.default_point_cloud;
 
 /**
  * @type number
  */
-lidarProfileServer.Config.prototype.initialLOD;
+lidarprofileServer.Config.prototype.initialLOD;
 
 /**
- * @type lidarProfileServer.ConfigLevels
+ * @type lidarprofileServer.ConfigLevels
  */
-lidarProfileServer.Config.prototype.max_levels;
-
-/**
- * @type number
- */
-lidarProfileServer.Config.prototype.max_point_number;
+lidarprofileServer.Config.prototype.max_levels;
 
 /**
  * @type number
  */
-lidarProfileServer.Config.prototype.minLOD;
-
-/**
- * @type lidarProfileServer.ConfigPointAttributes
- */
-lidarProfileServer.Config.prototype.point_attributes;
+lidarprofileServer.Config.prototype.max_point_number;
 
 /**
  * @type number
  */
-lidarProfileServer.Config.prototype.point_size;
+lidarprofileServer.Config.prototype.minLOD;
+
+/**
+ * @type lidarprofileServer.ConfigPointAttributes
+ */
+lidarprofileServer.Config.prototype.point_attributes;
 
 /**
  * @type number
  */
-lidarProfileServer.Config.prototype.vertical_pan_tolerance;
+lidarprofileServer.Config.prototype.point_size;
 
 /**
  * @type number
  */
-lidarProfileServer.Config.prototype.width;
+lidarprofileServer.Config.prototype.vertical_pan_tolerance;
+
+/**
+ * @type number
+ */
+lidarprofileServer.Config.prototype.width;

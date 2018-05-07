@@ -9,7 +9,7 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>
   </head>
-  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive, 'gmf-lidar-profile-chart-active': !!lidarProfileChartActive}" ng-keydown="mainCtrl.onKeydown($event)">
+  <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
     <header>
       <div class="logo">
         <img src="<%=require("./image/logo.png")%>" />
@@ -71,10 +71,6 @@
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-area-chart"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawLidarProfilePanelActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Lidar Profile'|translate}}">
-              <span class="fa fa-line-chart"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
@@ -178,19 +174,6 @@
                     gmf-editfeatureselector-vector="::mainCtrl.editFeatureVectorLayer">
                 </gmf-editfeatureselector>
               </div>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.drawLidarProfilePanelActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Lidar profile'|translate}}
-                <a class="btn close" ng-click="mainCtrl.drawLidarProfilePanelActive = false">&times;</a>
-              </div>
-              <gmf-lidar-panel
-               gmf-lidar-panel-active="mainCtrl.drawLidarProfilePanelActive"
-               gmf-lidar-panel-map="::mainCtrl.map"
-               gmf-lidar-panel-line="mainCtrl.lidarProfileLine">
-              </gmf-lidar-panel>
             </div>
           </div>
           <div ng-show="mainCtrl.drawProfilePanelActive" class="row">
@@ -365,13 +348,6 @@
         ngeo-resizemap="mainCtrl.map"
         ngeo-resizemap-state="queryGridActive">
       </gmf-displayquerygrid>
-
-      <gmf-lidar-profile
-        gmf-lidar-profile-active="lidarProfileChartActive"
-        gmf-lidar-profile-line="mainCtrl.lidarProfileLine"
-        ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="lidarProfileChartActive">
-      </gmf-lidar-profile>
     </footer>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
