@@ -9,12 +9,13 @@ const entry = {};
 
 const filenamePrefix = process.env.DEV_SERVER ? 'contribs/gmf/apps/' : '';
 
-for (const filename of ls('contribs/gmf/apps/*/index.html')) {
+for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
   const name = path.basename(filename.path);
   entry[name] = `./${filename.path}/Controller.js`;
   plugins.push(
     new HtmlWebpackPlugin({
       template: filename.full,
+      inject: false,
       chunksSortMode: 'manual',
       filename: filenamePrefix + name + '/index.html',
       chunks: ['commons', name]
