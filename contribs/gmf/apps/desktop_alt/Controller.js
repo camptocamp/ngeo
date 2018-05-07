@@ -145,7 +145,7 @@ exports.prototype.onKeydown = function(event) {
 };
 
 
-exports.module = angular.module('AppDesktopAlt', [
+exports.module = angular.module('Appdesktop_alt', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
   gmfImportModule.name,

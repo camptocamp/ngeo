@@ -101,7 +101,7 @@ const exports = function($scope, $injector) {
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('AppOEView', [
+exports.module = angular.module('Appoeview', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
 ]);

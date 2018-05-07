@@ -60,7 +60,7 @@ const exports = function($scope, $injector) {
 
 olBase.inherits(exports, gmfControllersAbstractMobileController);
 
-exports.module = angular.module('AppMobile', [
+exports.module = angular.module('Appmobile', [
   appBase.module.name,
   gmfControllersAbstractMobileController.module.name,
 ]);
