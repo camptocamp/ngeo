@@ -17,7 +17,7 @@ import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import * as olExtent from 'ol/extent.js';
-import olGeomPoint from 'ol/geom/Point.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olSourceOSM from 'ol/source/OSM.js';
@@ -132,7 +132,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
     })
   });
 
-  this.map.on('singleclick', this.handleMapSingleClick_, this);
+  this.map.on('singleclick', this.handleMapSingleClick_.bind(this));
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
@@ -213,13 +213,15 @@ exports.MainController.prototype.insertFeature = function() {
   const deltaY = top - bottom;
   const coordinate = [
     left + Math.random() * deltaX,
-    right + Math.random() * deltaY
+    bottom + Math.random() * deltaY
   ];
 
   const feature = new olFeature({
-    'geometry': new olGeomPoint(coordinate),
+    'geometry': new olGeomMultiPoint([coordinate]),
     'name': 'New point'
   });
+
+  this.feature = null; // clear selected feature
 
   // (2) Launch request
   this.editFeature_.insertFeatures(
@@ -251,9 +253,6 @@ exports.MainController.prototype.updateFeature = function() {
   ).then(
     this.handleEditFeature_.bind(this)
   );
-
-  // (3) Reset selected feature
-  this.feature = null;
 };
 
 
