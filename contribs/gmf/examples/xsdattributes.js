@@ -10,6 +10,7 @@ import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 import olFeature from 'ol/Feature.js';
+import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
 /** @type {!angular.Module} **/
@@ -103,9 +104,8 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
  * @export
  */
 exports.MainController.prototype.getSetLayers = function(value) {
-  if (value !== undefined) {
-    this.xsdAttributes_.getAttributes(value.id).then(
-      this.setAttributes_.bind(this));
+  if (value !== undefined && value !== null) {
+    this.xsdAttributes_.getAttributes(value.id).then(attr => this.setAttributes_(attr));
   }
   return this.layers;
 };
