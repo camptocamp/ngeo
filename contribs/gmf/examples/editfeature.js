@@ -213,7 +213,7 @@ exports.MainController.prototype.insertFeature = function() {
   const deltaY = top - bottom;
   const coordinate = [
     left + Math.random() * deltaX,
-    right + Math.random() * deltaY
+    bottom + Math.random() * deltaY
   ];
 
   const feature = new olFeature({
