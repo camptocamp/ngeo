@@ -221,6 +221,8 @@ exports.MainController.prototype.insertFeature = function() {
     'name': 'New point'
   });
 
+  this.feature = null; // clear selected feature
+
   // (2) Launch request
   this.editFeature_.insertFeatures(
     this.layerId_,
@@ -251,9 +253,6 @@ exports.MainController.prototype.updateFeature = function() {
   ).then(
     this.handleEditFeature_.bind(this)
   );
-
-  // (3) Reset selected feature
-  this.feature = null;
 };
 
 
