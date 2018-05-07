@@ -9,7 +9,7 @@ import './profile.less';
 /**
  * @type {!angular.Module}
  */
-const exports = angular.module('gmfProifleModule', [
+const exports = angular.module('gmfProfileModule', [
   gmfProfileComponent.name,
   gmfProfileDrawLineComponent.name,
 ]);
