@@ -41,6 +41,11 @@ const ngeoExamplesRule = {
   use: babelAnnotateUse,
 };
 
+const gmfAppsRule = {
+  test: /ngeo\/contribs\/gmf\/apps\/.*\.js$/,
+  use: babelAnnotateUse,
+};
+
 const gmfRule = {
   test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
   use: babelAnnotateUse,
@@ -164,6 +169,7 @@ const config = {
       cursorRule,
       ngeoRule,
       ngeoExamplesRule,
+      gmfAppsRule,
       gmfRule,
       gmfExamplesRule,
     ]
