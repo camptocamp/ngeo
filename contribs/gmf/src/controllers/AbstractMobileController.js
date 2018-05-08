@@ -134,6 +134,12 @@ const exports = function(config, $scope, $injector) {
       this.rightNavVisible = false;
     }
   });
+
+  /**
+   * @const {string}
+   * @export
+   */
+  this.redirectUrl = $injector.get('redirectUrl');
 };
 
 olBase.inherits(exports, gmfControllersAbstractAppController);
