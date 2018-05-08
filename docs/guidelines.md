@@ -63,13 +63,13 @@ We also use ES6 coding standards.
 
 ## Main changes in the code between ngeo 2.2 and 2.3
 
-With Webpack, some things have changed between the current ngeo 2.3 version, and the lasts ones.
+With Webpack, some things have changed between the current ngeo 2.3 version, and the last ones.
 
-- Functions from the goog library are not more allowed.
-- We export only one object per file. (That also means taht we have splitted some files in mutiple files).
+- Functions from the goog library are no more allowed.
+- We export only one object per file. (That also means that we have splitted some files in multiple files).
 - We must have no more global value in the attached to the window (except in some very rare cases).
-- All AngularJS elements are now in a small modules (see below in this documentation).
-- All modules import only what they need to work. Not less, not more.
+- All AngularJS elements are now in a small module (see below in this documentation).
+- All modules import only what they need to work. No less, no more.
 
 
 ## AngularJS names
@@ -251,7 +251,7 @@ Be careful when you use isolate scope (`bindings` or `scope`) objects to pass
 variable through scope inheritance.
 
 ```js
-exports.component_ = {
+const component = {
   bindings: {
     foo: '='
   },
@@ -385,9 +385,7 @@ We choose units that don't depend on parent tags and are relative.
 
 ## Property renaming
 
-:warning: The ngeo code **was** compiled with Closure Compiler in *advanced* mode. We don't anymore uses it
-but we want to keep the same restrictions imposed by the compiler. Because in the next version, we will
-run a script that transforms the Closure Compiler annotations in a new typing system.
+:warning: The ngeo code **was** compiled with Closure Compiler in *advanced* mode. We don't use it anymore but we want to keep the same restrictions imposed by the compiler for now.
 
 ### Exports vs private elements
 
@@ -407,12 +405,12 @@ The way to do that is to add the right tag on each variable, function and classe
 For each custom object we define in ngeo we must provide a type for the compiler.
 You can define your owns in the `src/options/ngeox.js` or (equivalent in the contribs section).
 
-It's the same thing for object that come from an external library, or from a server's response. In this case,
+It's the same thing for objects that come from an external library, or from a server's response. In this case,
 That's an `extern` and it can be defined in the `externs/<source>.js`.
 
 Provided class or function with `@constructor` are usable as a type.
 
-Take a look in these file to know owe to write your own.
+Take a look to these file to know how to write your owns.
 
 
 ## API documentation
@@ -427,7 +425,7 @@ This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
 `@ngdoc` is used to define the Angular type (component, service, controller
 or filter) and `@ngname` defines the name used to register this component.
 
-For component the used HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
+For components the used HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
 
 The usage of a component should be shown with an example.
 
