@@ -17,11 +17,9 @@ standalone builds of ngeo can be created.
 
 To know more about ngeo take a look at:
 
-* The [API documentation (2.2)](https://camptocamp.github.io/ngeo/2.2/apidoc/index.html)
 * The [examples](https://camptocamp.github.io/ngeo/master/examples)
-
-*We must still adapt our documentation to webpack. If you have to read the documentation, please read it
-directly in the code for now.*
+* The documentation can be found in each file. There is currently no API web-documentation for this
+  version (you may also use [API documentation (2.2)](https://camptocamp.github.io/ngeo/2.2/apidoc/index.html)).
 
 ngeo also includes a [contribs](contribs) directory where non-core
 contributions may be placed. ngeo currently includes one contrib: `gmf`.  That
@@ -30,16 +28,38 @@ contrib includes components specific to the
 GeoMapFish-specific web services. The `gmf` contrib examples are also available
 [online](https://camptocamp.github.io/ngeo/master/examples/contribs/gmf/).
 
-Other docs on ngeo:
 
+## Requirements
+
+* [make](https://www.gnu.org/software/make/) – GNU Make.
+* [node](https://www.nodejs.org/) – nodejs JS runtime environment.
+* [npm](https://www.npmjs.com/) – npm package manager.
+
+## How to start
+
+### Run the application
+
+```
+git clone git@github.com:camptocamp/ngeo.git
+cd ngeo
+make serve-ngeo
+```
+
+The ngeo examples are now available on your http://localhost:3000.
+
+### Go further
+
+* [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
 * [Application development guidelines](docs/guidelines.md) – This guide is for
   application developers using ngeo.
-* [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
-* [The migration guide - from 2.2 to 2.3](docs/how_to_migrate_from_2.2_to_2.3.md) – This guide is for
-  integrators still on ngeo 2.2 and wanting to use ngeo 2.3.
 
-Other docs related to ngeo:
-* [npm](https://www.npmjs.com/package/ngeo) – Package on npm.
+
+## How to migrate from ngeo 2.2 to ngeo 2.3 ?
+* [The migration guide - from 2.2 to 2.3](docs/how_to_migrate_from_2.2_to_2.3.md) – This guide is for
+  integrators **still** on ngeo 2.2 and wanting to use ngeo 2.3.
+
+
+## Other docs related to ngeo:
 * [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
 * [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.
 * [coveralls](https://coveralls.io/github/camptocamp/ngeo) – Test coverage.

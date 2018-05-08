@@ -2,18 +2,9 @@
 
 This document provides information for developers working on ngeo.
 
-## Requirements
-
-The Closure Compiler requires Java 7 or higher. You can use [OpenJDK](http://openjdk.java.net/install/).
-Check it with `java -version`.
-
 ## Run our code.
 
-Type `make help` to see available targets.
-
-If you want to test the webpack transformed version of our code (to test the examples for instance),
-transform your code like described in the `.travis.yaml` file (JOB=webpack). The the same rules will be
-available excepted for`make serve`. Use the target described in the `package.json` instead.
+Type `make help` to display available targets.
 
 ## Publish examples to GitHub Pages
 
@@ -42,20 +33,20 @@ The published examples use the `ngeo.js` standalone build.
 
 Example: https://camptocamp.github.io/ngeo/master/examples/simple.html.
 
-### Unit tests
+## Unit tests
 
-#### Writing tests
+### Writing tests
 
 The unit tests are located in `test/spec/` and uses the [Jasmine Framework](http://jasmine.github.io/1.3/introduction.html).
 Please refer to the [AngularJS's unit-testing guide](https://docs.angularjs.org/guide/unit-testing) for
 how to write unit tests.
 
-#### Running tests
+### Running tests
 
 To run the unit tests on the command line, just run `make test`. All the tests will be
 run inside [PhantomJS](http://phantomjs.org/).
 
-#### Running tests in debug mode
+### Running tests in debug mode
 
 For debugging purposes it is useful to run the unit tests in an actual browser with
 `make test-debug`. This task starts the Karma server and opens Chrome/Chromium. Click on
@@ -70,7 +61,7 @@ fdescribe('...', function() {
   fit('...', function() {
 ```
 
-### Create a package on npm
+## Create a package on npm
 
 Set the version in the `package.json` file.
 
@@ -78,7 +69,7 @@ Create a tag named the same as the version.
 
 Travis will create a new package on npm.
 
-### Create a new stabilisation branch
+## Create a new stabilisation branch
 
 When we create a new stabilisation branch we should also duplicate the localisation.
 
