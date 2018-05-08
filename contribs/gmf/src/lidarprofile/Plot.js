@@ -197,7 +197,7 @@ const exports = class {
     }
 
     const zoom = d3.zoom()
-      .scaleExtent([1, 100])
+      .scaleExtent([-10, 100])
       .translateExtent([[0, 0], [this.width_, this.height_]])
       .extent([[0, 0], [this.width_, this.height_]])
       .on('zoom', this.zoomed.bind(this));

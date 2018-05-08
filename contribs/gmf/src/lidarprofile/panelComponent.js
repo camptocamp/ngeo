@@ -330,42 +330,6 @@ exports.Controller_ = class {
 
 
   /**
-   * Get the profile width or set the profil width and request new profile from Pytree.
-   * @param {number=} opt_profileWidth the new profile width.
-   * @return {number} width of the profile
-   * @export
-   */
-  getSetWidth(opt_profileWidth) {
-    if (opt_profileWidth !== undefined) {
-      this.profileConfig_.serverConfig.width = opt_profileWidth;
-      if (this.line) {
-        this.profile.clearBuffer();
-        this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
-      }
-    }
-    return this.profileConfig_.serverConfig.width;
-  }
-
-
-  /**
-   * Use profile width defined per span and LOD in Pytree config
-   * @param {boolean=} opt_autoWidth use a precalculated profile width from pytree if true.
-   * @return {boolean} The autoWidth state
-   * @export
-   */
-  getSetAutoWidth(opt_autoWidth) {
-    if (opt_autoWidth !== undefined) {
-      this.profileConfig_.clientConfig.autoWidth = opt_autoWidth;
-      if (this.line) {
-        this.profile.clearBuffer();
-        this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
-      }
-    }
-    return !!this.profileConfig_.clientConfig.autoWidth;
-  }
-
-
-  /**
    * Export the profile data to CSV file
    * @export
    */

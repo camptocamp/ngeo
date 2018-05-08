@@ -56,18 +56,6 @@
     </select>
     </div>
     <hr>
-    <div>
-      <p>
-        <span translate>Automatic width</span>
-        <input type="checkbox"  ng-model="$ctrl.getSetAutoWidth" ng-model-options="{getterSetter: true}" checked>
-      </p>
-      <div ng-class="[{'gmf-lidarprofile-automatic-width':$ctrl.getSetAutoWidth()}]">
-        <span translate>Manual width</span>
-        <input ng-disabled="$ctrl.getSetAutoWidth()" type="number" pattern="^(0|[1-9][0-9]*)$" min=1 max=100 step=1 ng-model="$ctrl.getSetWidth" ng-model-options="{getterSetter: true}" ng-value="$ctrl.getSetWidth()"></input>
-        <span>[m]</span>
-      </div>
-    </div>
-    <hr>
     <p translate>Classes</p>
     <div ng-repeat="(key, classification) in ::$ctrl.getClassification()">
       <input ng-true-value="1" ng-false-value="0" ng-model="classification.visible" ng-change="$ctrl.setClassification(classification, key)" ng-checked="!!classification.visible" type="checkbox">

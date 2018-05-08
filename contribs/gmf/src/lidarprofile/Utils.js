@@ -66,22 +66,14 @@ const exports = class {
 
     });
 
-    let profileWidth;
-    if (config.clientConfig.autoWidth) {
-      profileWidth = this.getNiceLOD(clippedLine.getLength(), config.serverConfig.max_levels).width;
-    } else {
-      profileWidth = config.serverConfig.width;
-    }
     const feat = new olFeature({
       geometry: clippedLine
     });
 
-    const widthInMapsUnits = profileWidth / map_resolution;
-
     const lineStyle = new olStyleStyle({
       stroke: new olStyleStroke({
         color: 'rgba(255,0,0,1)',
-        width: widthInMapsUnits,
+        width: 2,
         lineCap: 'square'
       })
     });
