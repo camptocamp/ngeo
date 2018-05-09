@@ -86,8 +86,7 @@ exports.prototype.tryProjections = function(coordinates,
         return true;
       }
     } catch (e) {
-      // wrong transform may throw an exception
-      console.log(e);
+      // Wrong coordinate leads to a transform error and ol throw an exception that we won't log.
     }
     position = null;
   });
