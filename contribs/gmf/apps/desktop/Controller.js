@@ -106,6 +106,11 @@ exports.module = angular.module('Appdesktop', [
   gmfControllersAbstractDesktopController.module.name,
 ]);
 
+exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
+exports.module.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
+});
+
 exports.module.controller('DesktopController', exports);
 
 export default exports;
