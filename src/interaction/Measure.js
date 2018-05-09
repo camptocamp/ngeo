@@ -205,7 +205,7 @@ olBase.inherits(exports, olInteractionInteraction);
  */
 exports.getFormattedArea = function(polygon, projection, precision, format) {
   const geom = /** @type {ol.geom.Polygon} */ (polygon.clone().transform(projection, 'EPSG:4326'));
-  const area = Math.abs(olSphere.getArea(geom));
+  const area = Math.abs(olSphere.getArea(geom, {'projection': 'EPSG:4326'}));
   return format(area, 'm²', 'square', precision);
 };
 
