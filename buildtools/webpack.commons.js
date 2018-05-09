@@ -176,8 +176,8 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin('[name].css'),
-    new ExtractTextPlugin('[name].less'),
+    new ExtractTextPlugin('[name].[chunkhash].css'),
+    new ExtractTextPlugin('[name].[chunkhash].less'),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
   resolve: {
