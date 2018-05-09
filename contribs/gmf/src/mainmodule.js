@@ -11,6 +11,7 @@ import gmfEditingModule from 'gmf/editing/module.js';
 import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfImportModule from 'gmf/import/module.js';
 import gmfLayertreeModule from 'gmf/layertree/module.js';
+import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
 import gmfMapModule from 'gmf/map/module.js';
 import gmfObjecteditingModule from 'gmf/objectediting/module.js';
 import gmfPermalinkModule from 'gmf/permalink/module.js';
@@ -32,6 +33,7 @@ const exports = angular.module('gmf', [
   gmfFiltersModule.name,
   gmfImportModule.name,
   gmfLayertreeModule.name,
+  gmfLidarprofileModule.name,
   gmfMapModule.name,
   gmfObjecteditingModule.name,
   gmfPermalinkModule.name,
