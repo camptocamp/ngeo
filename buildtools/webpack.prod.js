@@ -9,7 +9,7 @@ const resourcesRule = {
     loader: 'url-loader',
     options: {
       limit: 1000,
-      name: 'build/[name].[hash:20].[ext]'
+      name: '[name].[hash:6].[ext]'
     }
   }
 };
@@ -19,7 +19,7 @@ const fontRule = {
   use: {
     loader: 'file-loader',
     options: {
-      name: 'build/[name].[hash:20].[ext]'
+      name: '[name].[hash:6].[ext]'
     }
   }
 };
@@ -27,7 +27,7 @@ const fontRule = {
 module.exports = {
   mode: 'production',
   output: {
-    filename: '[name].[chunkhash:20].js'
+    filename: '[name].[chunkhash:6].js'
   },
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),

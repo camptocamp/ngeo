@@ -241,12 +241,12 @@ gh-pages: .build/python-venv.timestamp
 		.build/python-venv.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/python buildtools/generate-examples-index.py \
-		--app 'Mobile application' apps/mobile/index.html 'The mobile example application for GeoMapFish.' \
-		--app 'Desktop application' apps/desktop/index.html 'The desktop example application for GeoMapFish.' \
-		--app 'Alternate mobile application' apps/mobile_alt/index.html 'An alternate mobile example application for GeoMapFish.' \
-		--app 'Alternate desktop application' apps/desktop_alt/index.html 'An alternate desktop example application for GeoMapFish.' \
-		--app 'Object editing viewer' apps/oeview/index.html 'An example application for viewing an object.' \
-		--app 'Object editing editor' apps/oeedit/index.html 'An example application for editing an object.' \
+		--app 'Mobile application' apps/mobile.html 'The mobile example application for GeoMapFish.' \
+		--app 'Desktop application' apps/desktop.html 'The desktop example application for GeoMapFish.' \
+		--app 'Alternate mobile application' apps/mobile_alt.html 'An alternate mobile example application for GeoMapFish.' \
+		--app 'Alternate desktop application' apps/desktop_alt.html 'An alternate desktop example application for GeoMapFish.' \
+		--app 'Object editing viewer' apps/oeview.html 'An example application for viewing an object.' \
+		--app 'Object editing editor' apps/oeedit.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@
 
 .build/test-check-example/%.check.timestamp: test/check-example/%.html \

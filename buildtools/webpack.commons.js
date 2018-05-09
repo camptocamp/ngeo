@@ -161,7 +161,7 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin(devMode ? '[name].css' : '[name].[chunkhash:20].css'),
+    new ExtractTextPlugin(devMode ? '[name].css' : '[name].[chunkhash:6].css'),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
   resolve: {

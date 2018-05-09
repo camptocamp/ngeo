@@ -17,21 +17,10 @@ for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
       template: filename.full,
       inject: false,
       chunksSortMode: 'manual',
-      filename: filenamePrefix + name + '/index.html',
+      filename: filenamePrefix + name + '.html',
       chunks: ['commons', name]
     })
   );
-
-  plugins.push(new CopyWebpackPlugin([
-      {
-        from: filename.path + '/image',
-        to: name + '/image',
-        flatten: true
-      },
-    ], {
-      debug: 'debug'
-    }
-  ));
 }
 
 
