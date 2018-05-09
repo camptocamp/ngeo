@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoprefix = require('less-plugin-autoprefix');
 
+const devMode = process.env.NODE_ENV !== 'production'
 
 const providePlugin = new webpack.ProvidePlugin({
   // Make sure that Angular finds jQuery and does not fall back to jqLite
@@ -136,20 +137,6 @@ const htmlRule = {
   }]
 };
 
-const iconRule = {
-  test: /\.(png|svg|ico)$/,
-  use: {
-    loader: 'url-loader'
-  }
-};
-
-const cursorRule = {
-  test: /\.cur$/,
-  use: {
-    loader: 'url-loader'
-  }
-};
-
 const config = {
   context: path.resolve(__dirname, '../'),
   devtool: 'source-map',
@@ -165,8 +152,6 @@ const config = {
       cssRule,
       lessRule,
       htmlRule,
-      iconRule,
-      cursorRule,
       ngeoRule,
       ngeoExamplesRule,
       gmfAppsRule,
@@ -176,8 +161,7 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin('[name].css'),
-    new ExtractTextPlugin('[name].less'),
+    new ExtractTextPlugin(devMode ? '[name].css' : '[name].[chunkhash:6].css'),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
   resolve: {
