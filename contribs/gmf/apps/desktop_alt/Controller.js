@@ -12,7 +12,6 @@ import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDes
 import './less/main.less';
 import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
@@ -150,7 +149,6 @@ exports.module = angular.module('Appdesktop_alt', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
   gmfImportModule.name,
-  gmfLidarprofileModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
   ngeoStatemanagerWfsPermalink.module.name,
