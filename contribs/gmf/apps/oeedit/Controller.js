@@ -216,6 +216,11 @@ exports.module = angular.module('Appoeedit', [
   gmfObjecteditingModule.name,
 ]);
 
+exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
+exports.module.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
+});
+
 exports.module.controller('OEEditController', exports);
 
 export default exports;
