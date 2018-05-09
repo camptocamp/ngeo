@@ -4,6 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoprefix = require('less-plugin-autoprefix');
 
+const devMode = process.env.NODE_ENV !== 'production'
 
 const providePlugin = new webpack.ProvidePlugin({
   // Make sure that Angular finds jQuery and does not fall back to jqLite
@@ -176,8 +177,7 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin('[name].css'),
-    new ExtractTextPlugin('[name].less'),
+    new ExtractTextPlugin(devMode ? '[name].css' : '[name].[chunkhash:20].css'),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
   resolve: {
