@@ -137,20 +137,6 @@ const htmlRule = {
   }]
 };
 
-const iconRule = {
-  test: /\.(png|svg|ico)$/,
-  use: {
-    loader: 'url-loader'
-  }
-};
-
-const cursorRule = {
-  test: /\.cur$/,
-  use: {
-    loader: 'url-loader'
-  }
-};
-
 const config = {
   context: path.resolve(__dirname, '../'),
   devtool: 'source-map',
@@ -166,8 +152,6 @@ const config = {
       cssRule,
       lessRule,
       htmlRule,
-      iconRule,
-      cursorRule,
       ngeoRule,
       ngeoExamplesRule,
       gmfAppsRule,

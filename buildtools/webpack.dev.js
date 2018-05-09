@@ -2,7 +2,7 @@ const webpack = require('webpack');
 
 
 const resourcesRule = {
-  test: /\.(eot|jpeg|ttf|woff|woff2)$/,
+  test: /\.(jpeg|png|svg|ico|cur|eot|ttf|woff|woff2)$/,
   use: {
     loader: 'file-loader',
     options: {

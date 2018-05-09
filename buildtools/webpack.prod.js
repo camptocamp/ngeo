@@ -4,11 +4,11 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 
 const resourcesRule = {
-  test: /\.jpeg$/,
+  test: /\.(jpeg|png|svg|ico|cur)$/,
   use: {
     loader: 'url-loader',
     options: {
-      limit: 10000,
+      limit: 1000,
       name: 'build/[name].[hash:20].[ext]'
     }
   }
