@@ -39,6 +39,7 @@ goog.require('ol.render.Feature');
 goog.require('ol.source.VectorTile');
 /** @suppress {extraRequire} */
 goog.require('ol.style.AtlasManager');
+// webpack: import 'angular';
 // webpack: import 'angular-gettext';
 // webpack: import 'angular-ui-date';
 // webpack: import 'floatthead';

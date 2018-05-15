@@ -23,7 +23,7 @@ ngeo.module.requires.push(ngeo.googlestreetview.component.name);
 /**
  * @private
  */
-ngeo.googlestreetview.Controller_ = class {
+ngeo.googlestreetview.component.Controller_ = class {
 
   /**
    * @param {angular.JQLite} $element Element.
@@ -374,6 +374,6 @@ ngeo.googlestreetview.component.component('ngeoGooglestreetview', {
     'map': '<',
     'radius': '<?'
   },
-  controller: ngeo.googlestreetview.Controller_,
+  controller: ngeo.googlestreetview.component.Controller_,
   templateUrl: () => `${ngeo.baseModuleTemplateUrl}/googlestreetview/component.html`
 });
