@@ -9,6 +9,8 @@ const providePlugin = new webpack.ProvidePlugin({
   // Make sure that Angular finds jQuery and does not fall back to jqLite
   // See https://github.com/webpack/webpack/issues/582
   'window.jQuery': 'jquery',
+  // For Bootstrap
+  'jQuery': 'jquery',
   // For own scripts
   $: 'jquery',
 });
