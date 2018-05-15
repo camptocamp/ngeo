@@ -13,7 +13,6 @@ import './less/main.less';
 import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
@@ -151,7 +150,6 @@ exports.module = angular.module('Appdesktop_alt', [
   gmfImportModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
-  ngeoStatemanagerWfsPermalink.module.name,
 ]);
 
 exports.module.controller('AlternativeDesktopController', exports);

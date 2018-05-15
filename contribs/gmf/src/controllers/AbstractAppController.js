@@ -23,6 +23,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
@@ -734,6 +735,7 @@ exports.module = angular.module('GmfAbstractAppControllerModule', [
   ngeoQueryMapQuerent.module.name,
   ngeoQueryMapQueryComponent.name,
   ngeoStatemanagerModule.name,
+  ngeoStatemanagerWfsPermalink.module.name,
 ]);
 
 
