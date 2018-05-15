@@ -1,0 +1,83 @@
+<div class="main-button">
+  <span ng-if="!$ctrl.hasData">
+    <div class="no-data" ng-click="$ctrl.toggleDisplayExtentSelection()"></div>
+  </span>
+  <span ng-if="$ctrl.hasData">
+    <div class="with-data" ng-click="$ctrl.showMenu()"></div>
+  </span>
+</div>
+
+<div ng-if="$ctrl.selectingExtent" class="validate-extent btn btn-primary">
+  <div ng-if="!$ctrl.downloading" ng-click="$ctrl.displayAlertLoadData = true" translate>Save map</div>
+  <div ng-if="$ctrl.downloading" ng-click="$ctrl.abortDownload()" translate>Abort</div>
+</div>
+
+<ngeo-modal ng-model="$ctrl.menuDisplayed">
+  <div class="modal-header">
+    <button type="button" class="close"
+              data-dismiss="modal"
+              aria-label="{{'Close' | translate}}">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4 class="modal-title" translate>Offline map</h4>
+  </div>
+  <div class="modal-body">
+    <div ng-if="$ctrl.hasData">
+      <button type="button" class="extent-zoom btn btn-default"
+              ng-click="$ctrl.zoomToExtent()"
+              translate>Zoom to extent
+      </button>
+      <button type="button" class="extent-show btn btn-default"
+              ng-click="$ctrl.toggleExtent()">
+        <span ng-if="$ctrl.visibleExtent" translate>Hide extent</span>
+        <span ng-if="!$ctrl.visibleExtent" translate >Show extent</span>
+      </button>
+      <button type="button" class="delete btn btn-default"
+              ng-click="$ctrl.displayAlertDestroyData = true"
+              translate>Delete data
+      </button>
+    </div>
+    <div ng-if="!$ctrl.hasData">
+      <button type="button" class="new-data btn btn-default"
+              ng-click="$ctrl.toggleDisplayExtentSelection()"
+              translate>Save new map
+      </button>
+    </div>
+  </div>
+</ngeo-modal>
+
+<ngeo-modal ng-model="$ctrl.displayAlertLoadData">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Warning</h4>
+  </div>
+  <div class="modal-body">
+      <p translate>~50MB of maps will be downloaded (until scale 1:25'000) - Don't lock your device or navigate away from this site during the download process. Deactivate "private" mode of your browser.</p>
+      <button type="button" class="validate btn btn-primary"
+              data-dismiss="modal"
+              ng-click="$ctrl.validateExtent()"
+              translate>Ok
+      </button>
+      <button type="button" class="delete btn btn-default"
+              data-dismiss="modal"
+              translate>Cancel
+      </button>
+  </div>
+</ngeo-modal>
+
+<ngeo-modal ng-model="$ctrl.displayAlertDestroyData">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Warning</h4>
+  </div>
+  <div class="modal-body">
+      <p translate>Do you really want to remove your data ?</p>
+      <button type="button" class="validate btn btn-primary"
+              data-dismiss="modal"
+              ng-click="$ctrl.deleteData()"
+              translate>Ok
+      </button>
+      <button type="button" class="delete btn btn-default"
+              data-dismiss="modal"
+              translate>Cancel
+      </button>
+  </div>
+</ngeo-modal>
