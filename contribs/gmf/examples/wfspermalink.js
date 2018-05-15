@@ -9,6 +9,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 
 /** @suppress {extraRequire} */
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
 import EPSG21781 from 'ngeo/proj/EPSG21781.js';
 import olMap from 'ol/Map.js';
@@ -26,6 +27,7 @@ exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfQueryWindowComponent.name,
+  ngeoStatemanagerWfsPermalink.name,
 ]);
 
 exports.module.value('ngeoWfsPermalinkOptions',
