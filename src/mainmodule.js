@@ -10,6 +10,7 @@ goog.require('ngeo.grid.module');
 goog.require('ngeo.layertree.module');
 goog.require('ngeo.map.module');
 goog.require('ngeo.measure.module');
+goog.require('ngeo.offline.module');
 goog.require('ngeo.print.module');
 goog.require('ngeo.profile.module');
 goog.require('ngeo.query.module');
@@ -28,6 +29,7 @@ ngeo.mainmodule = angular.module('ngeo', [
   ngeo.grid.module.name,
   ngeo.layertree.module.name,
   ngeo.map.module.name,
+  ngeo.offline.module.name,
   ngeo.print.module.name,
   ngeo.profile.module.name,
   ngeo.query.module.name,

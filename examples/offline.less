@@ -1,0 +1,47 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+#map {
+  width: 600px;
+  height: 400px;
+  position: relative;
+}
+
+ngeo-offline {
+  div {
+    z-index: 1;
+  }
+  .main-button {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 5rem;
+    background-color: white;
+    height: 2rem;
+    width: 4rem;
+    cursor: pointer;
+    .no-data:after {
+      content: '[save]';
+    }
+    .with-data:after {
+      content: '[menu]';
+    }
+  }
+
+  .validate-extent {
+    position: absolute;
+    bottom: 0.5rem;
+    width: 10rem;
+    left: calc(~"50% - 5rem");
+  }
+
+  .modal-content {
+    width: 30rem;
+  }
+
+  .modal-body {
+    button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 25rem;
+    }
+  }
+}
