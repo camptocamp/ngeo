@@ -59,174 +59,164 @@ exports.component_ = {
 exports.component('gmfShare', exports.component_);
 
 
-/**
- * The controller for the share component
- * @param {angular.Scope} $scope Scope.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
- * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
- * @param {angular.$q} $q Angular q service
- * @param {angular.Attributes} $attrs Attributes.
- * @constructor
- * @private
- * @ngInject
- * @ngdoc controller
- * @ngname GmfShareController
- */
-exports.Controller_ = function($scope, ngeoLocation, gmfShareService, $q, $attrs) {
-
+class ShareComponentController {
   /**
-   * @type {angular.Scope}
-   * @private
+   * The controller for the share component
+   * @param {angular.Scope} $scope Scope.
+   * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
+   * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
+   * @param {angular.$q} $q Angular q service
+   * @param {angular.Attributes} $attrs Attributes.
+   * @constructor
+   * @ngInject
+   * @ngdoc controller
+   * @ngname GmfShareController
    */
-  this.$scope_ = $scope;
+  constructor($scope, ngeoLocation, gmfShareService, $q, $attrs) {
+    /**
+     * @type {angular.Scope}
+     * @private
+     */
+    this.$scope_ = $scope;
 
-  /**
-   * @type {gmf.permalink.ShareService}
-   * @private
-   */
-  this.gmfShareService_ = gmfShareService;
+    /**
+     * @type {gmf.permalink.ShareService}
+     * @private
+     */
+    this.gmfShareService_ = gmfShareService;
 
-  /**
-   * @type {angular.$q}
-   * @private
-   */
-  this.$q_ = $q;
+    /**
+     * @type {angular.$q}
+     * @private
+     */
+    this.$q_ = $q;
 
-  /**
-   * @type {ngeo.statemanager.Location}
-   * @private
-   */
-  this.ngeoLocation_ = ngeoLocation;
+    /**
+     * @type {ngeo.statemanager.Location}
+     * @private
+     */
+    this.ngeoLocation_ = ngeoLocation;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.enableEmail;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.enableEmail;
 
-  /**
-   * @type {string}
-   * @export
-   */
-  this.permalink = ngeoLocation.getUriString();
+    /**
+     * @type {string}
+     * @export
+     */
+    this.shortLink;
 
-  /**
-   * @type {string}
-   * @export
-   */
-  this.shortLink;
+    /**
+     * @type {string}
+     * @export
+     */
+    this.email;
 
-  /**
-   * @type {string}
-   * @export
-   */
-  this.email;
+    /**
+     * @type {string}
+     * @export
+     */
+    this.message;
 
+    /**
+     * @type {string}
+     * @private
+     */
+    this.permalink_ = this.ngeoLocation_.getUriString();
 
-  /**
-   * @type {string}
-   * @export
-   */
-  this.message;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.showLengthWarning = this.permalink_.length > gmfPermalinkShareService.URL_MAX_LEN ||
+    ngeoLocation.getPath() > gmfPermalinkShareService.URL_PATH_MAX_LEN;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.showLengthWarning = this.permalink.length > gmfPermalinkShareService.URL_MAX_LEN ||
-  ngeoLocation.getPath() > gmfPermalinkShareService.URL_PATH_MAX_LEN;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.successfullySent = false;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.successfullySent = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.errorOnsend = false;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.errorOnsend = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.errorOnGetShortUrl = false;
-
-  this.getShortUrl();
-
-};
-
-
-/**
- * Get the short version of the permalink if the email is not provided
- * @export
- */
-exports.Controller_.prototype.getShortUrl = function() {
-  this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink))
-    .then(
-      onSuccess_.bind(this),
-      onError_.bind(this)
-    );
-
-  /**
-   * Success handler when trying to fetch a short url for the permalink
-   * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-   * @private
-   */
-  function onSuccess_(resp) {
-    this.shortLink = resp.data.short_url;
+    /**
+     * @type {boolean}
+     * @export
+     */
     this.errorOnGetShortUrl = false;
+
+    this.getShortUrl();
   }
 
   /**
-   * Error handler when trying to fetch a short url for the permalink
-   * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-   * @private
+   * Get the short version of the permalink if the email is not provided
+   * @export
    */
-  function onError_(resp) {
-    this.shortLink = this.permalink;
-    this.errorOnGetShortUrl = true;
+  getShortUrl() {
+    /**
+     * Success handler when trying to fetch a short url for the permalink
+     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
+     */
+    const onSuccess = (resp) => {
+      this.shortLink = resp.data.short_url;
+      this.errorOnGetShortUrl = false;
+    };
+
+    /**
+     * Error handler when trying to fetch a short url for the permalink
+     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
+     */
+    const onError = (resp) => {
+      this.shortLink = this.permalink;
+      this.errorOnGetShortUrl = true;
+    };
+
+    this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
+      .then(onSuccess, onError);
   }
 
-};
-
-
-/**
- * Send the short version of the permalink if the email is provided
- * @export
- */
-exports.Controller_.prototype.sendShortUrl = function() {
-  if (this.$scope_['gmfShareForm'].$valid) {
-    this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink, this.email, this.message))
-      .then(
-        onSuccess_.bind(this),
-        onError_.bind(this)
-      );
-  }
 
   /**
-   * Success handler when trying to send the short version of the permalink
-   * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-   * @private
+   * Send the short version of the permalink if the email is provided
+   * @export
    */
-  function onSuccess_(resp) {
-    this.successfullySent = true;
+  sendShortUrl() {
+    if (this.$scope_['gmfShareForm'].$valid) {
+      this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message))
+        .then(
+          onSuccess_.bind(this),
+          onError_.bind(this)
+        );
+    }
+
+    /**
+     * Success handler when trying to send the short version of the permalink
+     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
+     * @private
+     */
+    function onSuccess_(resp) {
+      this.successfullySent = true;
+    }
+
+    /**
+     * Error handler when trying to to send the short version of the permalink
+     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
+     * @private
+     */
+    function onError_(resp) {
+      this.errorOnsend = true;
+    }
   }
+}
 
-  /**
-   * Error handler when trying to to send the short version of the permalink
-   * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-   * @private
-   */
-  function onError_(resp) {
-    this.errorOnsend = true;
-  }
-
-};
-
-exports.controller('GmfShareController', exports.Controller_);
+exports.controller('GmfShareController', ShareComponentController);
 
 
 export default exports;

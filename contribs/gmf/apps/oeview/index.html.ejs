@@ -114,7 +114,7 @@
         </div>
       </div>
       <ngeo-modal ng-model="mainCtrl.modalShareShown">
-        <gmf-share gmf-share-email="true"/>
+        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"/>
       </ngeo-modal>
     </main>
     <footer>
