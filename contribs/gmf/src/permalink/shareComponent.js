@@ -160,28 +160,15 @@ class ShareComponentController {
    * @export
    */
   getShortUrl() {
-    /**
-     * Success handler when trying to fetch a short url for the permalink
-     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-     */
-    const onSuccess = (resp) => {
-      this.shortLink = resp.data.short_url;
-      this.errorOnGetShortUrl = false;
-    };
-
-    /**
-     * Error handler when trying to fetch a short url for the permalink
-     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-     */
-    const onError = (resp) => {
-      this.shortLink = this.permalink;
-      this.errorOnGetShortUrl = true;
-    };
-
     this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
-      .then(onSuccess, onError);
+      .then((resp) => {
+        this.shortLink = resp.data.short_url;
+        this.errorOnGetShortUrl = false;
+      }, (resp) => {
+        this.shortLink = this.permalink;
+        this.errorOnGetShortUrl = true;
+      });
   }
-
 
   /**
    * Send the short version of the permalink if the email is provided
@@ -190,28 +177,11 @@ class ShareComponentController {
   sendShortUrl() {
     if (this.$scope_['gmfShareForm'].$valid) {
       this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message))
-        .then(
-          onSuccess_.bind(this),
-          onError_.bind(this)
-        );
-    }
-
-    /**
-     * Success handler when trying to send the short version of the permalink
-     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-     * @private
-     */
-    function onSuccess_(resp) {
-      this.successfullySent = true;
-    }
-
-    /**
-     * Error handler when trying to to send the short version of the permalink
-     * @param  {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} resp service response
-     * @private
-     */
-    function onError_(resp) {
-      this.errorOnsend = true;
+        .then((resp) => {
+          this.successfullySent = true;
+        }, (resp) => {
+          this.errorOnsend = true;
+        });
     }
   }
 }
