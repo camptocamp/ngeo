@@ -1,13 +1,20 @@
 goog.provide('ngeo.offline.component');
 
 goog.require('ngeo');
+goog.require('ngeo.map.FeatureOverlayMgr');
 goog.require('ngeo.message.modalComponent');
+goog.require('ol.Collection');
+goog.require('ol.Observable');
+goog.require('ol.Feature');
+goog.require('ol.geom.Polygon');
+goog.require('ol.has');
 
 
 /**
  * @type {!angular.Module}
  */
 ngeo.offline.component = angular.module('ngeoOffline', [
+  ngeo.map.FeatureOverlayMgr.module.name,
   ngeo.message.modalComponent.name
 ]);
 
@@ -43,19 +50,22 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  * Example:
  *
  *     <ngeo-offline
- *       ngeo-offline-map="ctrl.map">
+ *       ngeo-offline-map="ctrl.map"
+ *       ngeo-offline-extentsize="ctrl.offlineExtentSize">
  *     </ngeo-offline>
  *
  * See our live example: [../examples/offline.html](../examples/offline.html)
  *
  * @htmlAttribute {ol.Map} ngeo-offline-map The map.
+ * @htmlAttribute {number} ngeo-offline-extentsize The size, in map units, of a side of the extent.
  * @ngInject
  * @ngdoc component
  * @ngname ngeoOffline
  */
 ngeo.offline.component.component_ = {
   bindings: {
-    'map': '<'
+    'map': '<ngeoOfflineMap',
+    'extentSize': '<ngeoOfflineExtentsize'
   },
   controller: 'ngeoOfflineController',
   templateUrl: ngeoOfflineTemplateUrl
@@ -73,11 +83,12 @@ ngeo.offline.component.Controller_ = class {
   /**
    * @private
    * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {ngeoFeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
-  constructor($timeout) {
+  constructor($timeout, ngeoFeatureOverlayMgr) {
 
     /**
      * @type {angular.$timeout}
@@ -86,55 +97,105 @@ ngeo.offline.component.Controller_ = class {
     this.$timeout_ = $timeout;
 
     /**
+     * The map.
      * @type {!ol.Map}
      * @export
      */
     this.map;
 
     /**
-     * @type {boolean}
+     * The size, in map units, of a side of the extent.
+     * @type {number}
      * @export
      */
-    this.hasData = false;
+    this.extentSize;
 
     /**
+     * @type {!ngeo.map.FeatureOverlay}
+     * @private
+     */
+    this.featuresOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+
+    /**
+     * @type {!ol.Collection}
+     * @private
+     */
+    this.overlayCollection_ = new ol.Collection();
+
+    this.featuresOverlay_.setFeatures(this.overlayCollection_);
+
+    /**
+     * @type {function(ol.render.Event)}
+     */
+    this.postcomposeListener_;
+
+    /**
+     * @type {ol.EventsKey|Array.<ol.EventsKey>}
+     * @private
+     */
+    this.postComposeListenerKey_ = null;
+
+
+    /**
+     * @type {ol.geom.Polygon}
+     * @private
+     */
+    this.dataPolygon_ = null;
+
+    /**
+     * Whether the current view is the extent selection.
      * @type {boolean}
      * @export
      */
     this.selectingExtent = false;
 
     /**
+     * Whether the current view is downloading one.
      * @type {boolean}
      * @export
      */
     this.downloading = false;
 
     /**
+     * Whether the menu is currently displayed.
      * @type {boolean}
      * @export
      */
     this.menuDisplayed = false;
-
-    /**
-     * @type {boolean}
-     * @export
-     */
-    this.visibleExtent = true;
   }
 
   $onInit() {
-    console.log('Offline component is initialized');
+    this.postcomposeListener_ = this.createMaskPostcompose_();
   }
 
   /**
+   * @return {boolean} True if data are accessible offline.
    * @export
    */
-  toggleDisplayExtentSelection() {
-    this.menuDisplayed = false;
-    this.selectingExtent = !this.selectingExtent;
+  hasData() {
+    return !!this.dataPolygon_;
   }
 
   /**
+   * Toggle the selecting extent view.
+   * @export
+   */
+  toggleViewExtentSelection() {
+    this.menuDisplayed = false;
+    this.selectingExtent = !this.selectingExtent;
+
+    if (this.postComposeListenerKey_) {
+      ol.Observable.unByKey(this.postComposeListenerKey_);
+      this.postComposeListenerKey_ = null;
+    }
+    if (this.selectingExtent && !this.postComposeListenerKey_) {
+      this.postComposeListenerKey_ = this.map.on('postcompose', this.postcomposeListener_);
+    }
+    this.map.render();
+  }
+
+  /**
+   * Validate the current extent and download data.
    * @export
    */
   validateExtent() {
@@ -142,13 +203,15 @@ ngeo.offline.component.Controller_ = class {
     this.$timeout_(() => { // for demo purpose, remove me
       if (this.downloading) {
         this.downloading = false;
-        this.hasData = true;
-        this.selectingExtent = false;
+        this.dataPolygon_ = this.createPolygonToSave_();
+        this.displayExtent_();
+        this.toggleViewExtentSelection();
       }
     }, 3000);
   }
 
   /**
+   * Abort the download of data.
    * @export
    */
   abortDownload() {
@@ -156,6 +219,7 @@ ngeo.offline.component.Controller_ = class {
   }
 
   /**
+   * Show the main menu.
    * @export
    */
   showMenu() {
@@ -163,26 +227,129 @@ ngeo.offline.component.Controller_ = class {
   }
 
   /**
+   * Zoom to the extent of that data.
    * @export
    */
   zoomToExtent() {
-    console.log('Zoom to extent - TODO');
+    const size = /** @type {ol.Size} */ (this.map.getSize());
+    this.map.getView().fit(this.dataPolygon_, {size});
     this.menuDisplayed = false;
+    this.displayExtent_();
   }
 
   /**
+   * Toggle the visibility of the data's extent.
    * @export
    */
-  toggleExtent() {
-    this.visibleExtent = !this.visibleExtent;
+  toggleExtentVisibility() {
+    if (this.isExtentVisible()) {
+      this.overlayCollection_.clear();
+    } else {
+      this.displayExtent_();
+    }
   }
 
   /**
+   * @return {boolean} True if the extent is currently visible. False otherwise.
+   * @export
+   */
+  isExtentVisible() {
+    return this.overlayCollection_.getLength() > 0;
+  }
+
+  /**
+   * Delete the saved data.
    * @export
    */
   deleteData() {
-    this.hasData = false;
+    this.overlayCollection_.clear();
+    this.dataPolygon_ = null;
   }
+
+  /**
+   * @private
+   */
+  displayExtent_() {
+    if (!this.isExtentVisible()) {
+      const feature = new ol.Feature(this.dataPolygon_);
+      this.overlayCollection_.push(feature);
+    }
+  }
+
+  /**
+   * @return {function(ol.render.Event)} Function to use as a map postcompose listener.
+   * @private
+   */
+  createMaskPostcompose_() {
+    return ((evt) => {
+      const context = evt.context;
+      const frameState = evt.frameState;
+      const resolution = frameState.viewState.resolution;
+
+      const viewportWidth = frameState.size[0] * frameState.pixelRatio;
+      const viewportHeight = frameState.size[1] * frameState.pixelRatio;
+
+      const center = [viewportWidth / 2, viewportHeight / 2];
+
+      const extentLength = this.extentSize / resolution * ol.has.DEVICE_PIXEL_RATIO;
+      const extentHalfLength = Math.ceil(extentLength / 2);
+
+      // Draw a mask on the whole map.
+      context.beginPath();
+      context.moveTo(0, 0);
+      context.lineTo(viewportWidth, 0);
+      context.lineTo(viewportWidth, viewportHeight);
+      context.lineTo(0, viewportHeight);
+      context.lineTo(0, 0);
+      context.closePath();
+
+      // Draw the get data zone
+      const extent = this.getExtent_(center, extentHalfLength);
+
+      context.moveTo(extent[0], extent[1]);
+      context.lineTo(extent[0], extent[3]);
+      context.lineTo(extent[2], extent[3]);
+      context.lineTo(extent[2], extent[1]);
+      context.lineTo(extent[0], extent[1]);
+      context.closePath();
+
+      // Fill the mask
+      context.fillStyle = 'rgba(0, 5, 25, 0.5)';
+      context.fill();
+    });
+  }
+
+  /**
+   * @return {ol.geom.Polygon} Polygon to save, based on the center of the map and the extentSize property.
+   * @private
+   */
+  createPolygonToSave_() {
+    const center = this.map.getView().getCenter();
+    const halfLength = Math.ceil(this.extentSize / 2);
+    const extent = this.getExtent_(center, halfLength);
+    return new ol.geom.Polygon([[
+      [extent[0], extent[1]],
+      [extent[0], extent[3]],
+      [extent[2], extent[3]],
+      [extent[2], extent[1]],
+      [extent[0], extent[1]]
+    ]], 'XY');
+  }
+
+  /**
+   * @param {ol.Size} center, a xy point.
+   * @param {number} halfLength a half length of a square's side.
+   * @return {Array.<number>} an extent.
+   * @private
+   */
+  getExtent_(center, halfLength) {
+    const minx = center[0] - halfLength;
+    const miny = center[1] - halfLength;
+    const maxx = center[0] + halfLength;
+    const maxy = center[1] + halfLength;
+    return [minx, miny, maxx, maxy];
+  }
+
 };
 
 

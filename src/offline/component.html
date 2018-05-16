@@ -1,8 +1,8 @@
 <div class="main-button">
-  <span ng-if="!$ctrl.hasData">
-    <div class="no-data" ng-click="$ctrl.toggleDisplayExtentSelection()"></div>
+  <span ng-if="!$ctrl.hasData()">
+    <div class="no-data" ng-click="$ctrl.toggleViewExtentSelection()"></div>
   </span>
-  <span ng-if="$ctrl.hasData">
+  <span ng-if="$ctrl.hasData()">
     <div class="with-data" ng-click="$ctrl.showMenu()"></div>
   </span>
 </div>
@@ -22,24 +22,24 @@
     <h4 class="modal-title" translate>Offline map</h4>
   </div>
   <div class="modal-body">
-    <div ng-if="$ctrl.hasData">
+    <div ng-if="$ctrl.hasData()">
       <button type="button" class="extent-zoom btn btn-default"
               ng-click="$ctrl.zoomToExtent()"
               translate>Zoom to extent
       </button>
       <button type="button" class="extent-show btn btn-default"
-              ng-click="$ctrl.toggleExtent()">
-        <span ng-if="$ctrl.visibleExtent" translate>Hide extent</span>
-        <span ng-if="!$ctrl.visibleExtent" translate >Show extent</span>
+              ng-click="$ctrl.toggleExtentVisibility()">
+        <span ng-if="$ctrl.isExtentVisible()" translate>Hide extent</span>
+        <span ng-if="!$ctrl.isExtentVisible()" translate >Show extent</span>
       </button>
       <button type="button" class="delete btn btn-default"
               ng-click="$ctrl.displayAlertDestroyData = true"
               translate>Delete data
       </button>
     </div>
-    <div ng-if="!$ctrl.hasData">
+    <div ng-if="!$ctrl.hasData()">
       <button type="button" class="new-data btn btn-default"
-              ng-click="$ctrl.toggleDisplayExtentSelection()"
+              ng-click="$ctrl.toggleViewExtentSelection()"
               translate>Save new map
       </button>
     </div>

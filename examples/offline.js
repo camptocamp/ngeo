@@ -27,10 +27,18 @@ app.offline.module = angular.module('app', [
 
 
 /**
+ * @param {ngeoFeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
  * @constructor
  * @ngInject
  */
-app.offline.MainController = function() {
+app.offline.MainController = function(ngeoFeatureOverlayMgr) {
+
+  /**
+   * Save a square of 10 km sideways (Map's unit is the meter).
+   * @type {number}
+   * @export
+   */
+  this.offlineExtentSize = 10000;
 
   /**
    * @type {ol.Map}
@@ -47,6 +55,8 @@ app.offline.MainController = function() {
       zoom: 4
     })
   });
+
+  ngeoFeatureOverlayMgr.init(this.map);
 };
 
 
