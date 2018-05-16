@@ -4,6 +4,11 @@
     <title ng-bind-template="{{'ObjectEditing - Edit Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
+    <script>
+    if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
+      window.location = 'https:' + window.location.href.substr(5);
+    }
+    </script>
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>
