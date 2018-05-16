@@ -33,7 +33,7 @@ const exports = function($http, $injector) {
    * @type {string}
    * @private
    */
-  this.ngeoOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'http://router.project-osrm.org/';
+  this.ngeoOsrmBackendUrl_ = this.routingOptions_.backendUrl || 'https://router.project-osrm.org/';
 
   // the url is expected to end with a slash
   if (this.ngeoOsrmBackendUrl_.substr(-1) !== '/') {
