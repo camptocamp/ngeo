@@ -5,6 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
+    <script>
+    if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
+      window.location = 'https:' + window.location.href.substr(5);
+    }
+    </script>
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>

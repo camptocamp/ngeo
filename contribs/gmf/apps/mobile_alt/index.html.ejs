@@ -7,6 +7,11 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
+    <script>
+    if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
+      window.location = 'https:' + window.location.href.substr(5);
+    }
+    </script>
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>
