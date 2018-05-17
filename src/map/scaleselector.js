@@ -81,7 +81,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoScaleselector
  */
-exports.directive_ = function(ngeoScaleselectorTemplateUrl) {
+const directive = function(ngeoScaleselectorTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
@@ -91,7 +91,7 @@ exports.directive_ = function(ngeoScaleselectorTemplateUrl) {
 };
 
 
-exports.directive('ngeoScaleselector', exports.directive_);
+exports.directive('ngeoScaleselector', directive);
 
 
 /**
@@ -105,7 +105,7 @@ exports.directive('ngeoScaleselector', exports.directive_);
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
  */
-exports.ScaleselectorController_ = function($scope, $element, $attrs) {
+const ScaleselectorController = function($scope, $element, $attrs) {
 
   const scalesExpr = $attrs['ngeoScaleselector'];
 
@@ -145,7 +145,7 @@ exports.ScaleselectorController_ = function($scope, $element, $attrs) {
    * @type {!ngeox.ScaleselectorOptions}
    * @export
    */
-  this.options = exports.ScaleselectorController_.getOptions_(options);
+  this.options = ScaleselectorController.getOptions_(options);
 
   /**
    * @type {angular.Scope}
@@ -187,7 +187,7 @@ exports.ScaleselectorController_ = function($scope, $element, $attrs) {
  * @return {!ngeox.ScaleselectorOptions} Options object.
  * @private
  */
-exports.ScaleselectorController_.getOptions_ = function(options) {
+ScaleselectorController.getOptions_ = function(options) {
   let dropup = false;
   if (options !== undefined) {
     dropup = options['dropup'] == true;
@@ -203,7 +203,7 @@ exports.ScaleselectorController_.getOptions_ = function(options) {
  * @return {number} Scale.
  * @export
  */
-exports.ScaleselectorController_.prototype.getScale = function(zoom) {
+ScaleselectorController.prototype.getScale = function(zoom) {
   return this.scales[zoom];
 };
 
@@ -212,7 +212,7 @@ exports.ScaleselectorController_.prototype.getScale = function(zoom) {
  * @param {number} zoom Zoom level.
  * @export
  */
-exports.ScaleselectorController_.prototype.changeZoom = function(zoom) {
+ScaleselectorController.prototype.changeZoom = function(zoom) {
   this.map_.getView().setZoom(zoom);
 };
 
@@ -221,7 +221,7 @@ exports.ScaleselectorController_.prototype.changeZoom = function(zoom) {
  * @param {ol.Object.Event} e OpenLayers object event.
  * @private
  */
-exports.ScaleselectorController_.prototype.handleResolutionChange_ = function(e) {
+ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
   const view = this.map_.getView();
   const currentScale = this.scales[/** @type {number} */ (view.getZoom())];
 
@@ -248,7 +248,7 @@ exports.ScaleselectorController_.prototype.handleResolutionChange_ = function(e)
  * @param {ol.Object.Event} e OpenLayers object event.
  * @private
  */
-exports.ScaleselectorController_.prototype.handleViewChange_ = function(e) {
+ScaleselectorController.prototype.handleViewChange_ = function(e) {
   this.registerResolutionChangeListener_();
   this.handleResolutionChange_(null);
 };
@@ -257,7 +257,7 @@ exports.ScaleselectorController_.prototype.handleViewChange_ = function(e) {
 /**
  * @private
  */
-exports.ScaleselectorController_.prototype.registerResolutionChangeListener_ = function() {
+ScaleselectorController.prototype.registerResolutionChangeListener_ = function() {
   if (this.resolutionChangeKey_ !== null) {
     olEvents.unlistenByKey(this.resolutionChangeKey_);
   }
@@ -268,8 +268,7 @@ exports.ScaleselectorController_.prototype.registerResolutionChangeListener_ = f
 };
 
 
-exports.controller('NgeoScaleselectorController',
-  exports.ScaleselectorController_);
+exports.controller('NgeoScaleselectorController', ScaleselectorController);
 
 
 export default exports;
