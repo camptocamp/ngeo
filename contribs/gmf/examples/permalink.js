@@ -5,7 +5,7 @@ const exports = {};
 
 import './permalink.css';
 /** @suppress {extraRequire} */
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapModule from 'gmf/map/module.js';
 
 import EPSG21781 from 'ngeo/proj/EPSG21781.js';
 import olMap from 'ol/Map.js';
@@ -20,7 +20,7 @@ import olStyleStyle from 'ol/style/Style.js';
 /** @type {!angular.Module} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfMapComponent.name,
+  gmfMapModule.name,
 ]);
 
 exports.module.constant('defaultTheme', 'Demo');
