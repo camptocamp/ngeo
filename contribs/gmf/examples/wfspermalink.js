@@ -5,7 +5,7 @@ const exports = {};
 
 import './wfspermalink.css';
 /** @suppress {extraRequire} */
-import gmfMapComponent from 'gmf/map/component.js';
+import gmfMapModule from 'gmf/map/module.js';
 
 /** @suppress {extraRequire} */
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
@@ -25,9 +25,9 @@ import olStyleCircle from 'ol/style/Circle.js';
 /** @type {!angular.Module} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfMapComponent.name,
+  gmfMapModule.name,
   gmfQueryWindowComponent.name,
-  ngeoStatemanagerWfsPermalink.name,
+  ngeoStatemanagerWfsPermalink.module.name,
 ]);
 
 exports.module.value('ngeoWfsPermalinkOptions',

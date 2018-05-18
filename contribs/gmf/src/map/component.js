@@ -1,7 +1,7 @@
 /**
  * @module gmf.map.component
  */
-import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
+import gmfPermalinkModule from 'gmf/permalink/module.js';
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
@@ -10,7 +10,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
  * @type {!angular.Module}
  */
 const exports = angular.module('gmfMapComponent', [
-  gmfPermalinkPermalink.module.name,
+  gmfPermalinkModule.name,
   gmfEditingSnapping.module.name,
   ngeoMapModule.name,
   ngeoMapFeatureOverlayMgr.module.name,
