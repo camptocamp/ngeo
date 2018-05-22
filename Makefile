@@ -97,7 +97,7 @@ help:
 	@echo "- serve-ngeo                  Run a development web server for running the ngeo examples"
 	@echo "- serve-gmf                   Run a development web server for running the gmf examples"
 	@echo "- serve-gmf-apps-desktop      Run a development web server for running the gmf app desktop"
-	@echo "- serve-gmf-apps-desktopalti  Run a development web server for running the gmf app desktop_alt"
+	@echo "- serve-gmf-apps-desktopalt   Run a development web server for running the gmf app desktop_alt"
 	@echo "- serve-gmf-apps-mobile       Run a development web server for running the gmf app mobile"
 	@echo "- serve-gmf-apps-mobilealt    Run a development web server for running the gmf app mobile_alt"
 	@echo "- serve-gmf-apps-oeedit       Run a development web server for running the gmf app oeedit"
