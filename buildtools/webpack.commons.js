@@ -6,6 +6,14 @@ const LessPluginAutoprefix = require('less-plugin-autoprefix');
 
 const devMode = process.env.NODE_ENV !== 'production'
 
+const themes = {
+  'desktop': '"~gmf/controllers/desktop-theme.less"',
+  'desktop_alt': '"' + path.resolve('contribs/gmf/apps/desktop_alt/less/theme.less') + '"',
+}
+
+const theme = process.env.THEME
+
+
 const providePlugin = new webpack.ProvidePlugin({
   // Make sure that Angular finds jQuery and does not fall back to jqLite
   // See https://github.com/webpack/webpack/issues/582
@@ -107,7 +115,9 @@ const cssRule = {
 const cssLessLoaderConfigs = [
   {
     loader: 'css-loader',
-    options: {importLoaders: 1}
+    options: {
+      importLoaders: 1
+    }
   },
   {
     loader: 'less-loader',
@@ -115,7 +125,10 @@ const cssLessLoaderConfigs = [
       lessPlugins: [
         new LessPluginCleanCSS(),
         new LessPluginAutoprefix()
-      ]
+      ],
+      modifyVars: {
+        'THEME': themes[theme],
+      }
     }
   }
 ];
@@ -161,7 +174,10 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin(devMode ? '[name].css' : '[name].[chunkhash:6].css'),
+    new ExtractTextPlugin({
+        ignoreOrder: true,
+        filename: devMode ? '[name].css' : '[name].[chunkhash:6].css'
+    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
   resolve: {

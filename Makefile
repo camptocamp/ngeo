@@ -93,21 +93,29 @@ help:
 	@echo
 	@echo "Main targets:"
 	@echo
-	@echo "- help                    Display this help message"
-	@echo "- serve-ngeo              Run a development web server for running the ngeo examples"
-	@echo "- serve-gmf               Run a development web server for running the gmf examples"
-	@echo "- serve-gmf-apps          Run a development web server for running the gmf apps"
-	@echo "- check                   Perform a number of checks on the code"
-	@echo "- test                    Run the test suite"
-	@echo "- test-debug              Run the test suite in the browser"
-	@echo "- clean                   Remove generated files"
-	@echo "- cleanall                Remove all the build artefacts"
-	@echo "- cleanallcache           Remove all the build artefacts and the extra caches (npm and pip)"
+	@echo "- help                        Display this help message"
+	@echo "- serve-ngeo                  Run a development web server for running the ngeo examples"
+	@echo "- serve-gmf                   Run a development web server for running the gmf examples"
+	@echo "- serve-gmf-apps-desktop      Run a development web server for running the gmf app desktop"
+	@echo "- serve-gmf-apps-desktopalti  Run a development web server for running the gmf app desktop_alt"
+	@echo "- serve-gmf-apps-mobile       Run a development web server for running the gmf app mobile"
+	@echo "- serve-gmf-apps-mobilealt    Run a development web server for running the gmf app mobile_alt"
+	@echo "- serve-gmf-apps-oeedit       Run a development web server for running the gmf app oeedit"
+	@echo "- serve-gmf-apps-oeview       Run a development web server for running the gmf app oeview"
+	@echo "- examples-hosted             Build the hosted examples"
+	@echo "- examples-hosted-ngeo        Build the ngeo hosted examples"
+	@echo "- examples-hosted-gmf         Build the gmf hosted examples"
+	@echo "- examples-hosted-apps        Build the gmf apps hosted examples"
+	@echo "- check                       Perform a number of checks on the code"
+	@echo "- test                        Run the test suite"
+	@echo "- test-debug                  Run the test suite in the browser"
+	@echo "- clean                       Remove generated files"
+	@echo "- cleanall                    Remove all the build artefacts"
+	@echo "- cleanallcache               Remove all the build artefacts and the extra caches (npm and pip)"
 	@echo
 	@echo "Secondary targets:"
 	@echo
 	@echo "- apidoc                  Build the API documentation using JSDoc"
-	@echo "- examples-hosted         Build the hosted examples"
 	@echo "- lint                    Check the code with the linter"
 	@echo "- gh-pages                Update the GitHub pages"
 	@echo
@@ -116,13 +124,7 @@ help:
 apidoc: .build/apidoc
 
 .PHONY: check
-check: lint check-examples-checker check-examples test build-gmf-apps
-
-.PHONY: build-gmf-apps
-build-gmf-apps: \
-	$(addprefix contribs/gmf/build/gmf-,$(addsuffix .json, $(LANGUAGES))) \
-	$(ANGULAR_LOCALES_FILES)
-	# TODO: call webpack to build the gmf apps (in contribs/gmf/build)
+check: lint check-examples-checker check-examples test examples-hosted-apps
 
 .PHONY: check-examples-checker
 check-example-checker: $(CHECK_EXAMPLE_CHECKER)
@@ -171,9 +173,29 @@ serve-ngeo: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCAL
 serve-gmf: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
-.PHONY: serve-gmf-apps
-serve-gmf-apps: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	npm run serve-gmf-apps
+.PHONY: serve-gmf-apps-desktop
+serve-gmf-apps-desktop: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	APP=desktop THEME=desktop npm run serve-gmf-apps
+
+.PHONY: serve-gmf-apps-desktopalt
+serve-gmf-apps-desktopalt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	APP=desktop_alt THEME=desktop_alt npm run serve-gmf-apps
+
+.PHONY: serve-gmf-apps-mobile
+serve-gmf-apps-mobile: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	APP=mobile npm run serve-gmf-apps
+
+.PHONY: serve-gmf-apps-mobilealt
+serve-gmf-apps-mobilealt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	APP=mobile_alt npm run serve-gmf-apps
+
+.PHONY: serve-gmf-apps-oeedit
+serve-gmf-apps-oeedit: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	APP=oeedit THEME=desktop npm run serve-gmf-apps
+
+.PHONY: serve-gmf-apps-oeview
+serve-gmf-apps-oeview: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+	APP=oeview THEME=desktop npm run serve-gmf-apps
 
 .PHONY: examples-hosted
 examples-hosted: \
@@ -199,7 +221,12 @@ examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contri
 examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
 
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
-	npm run build-gmf-apps
+	APP=desktop THEME=desktop npm run build-gmf-apps
+	APP=desktop_alt THEME=desktop_alt npm run build-gmf-apps
+	APP=mobile npm run build-gmf-apps
+	APP=mobile_alt npm run build-gmf-apps
+	APP=oeedit THEME=desktop npm run build-gmf-apps
+	APP=oeview THEME=desktop npm run build-gmf-apps
 	touch $@
 
 .PHONY: gh-pages

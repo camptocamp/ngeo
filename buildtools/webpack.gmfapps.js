@@ -1,5 +1,4 @@
 const path = require('path');
-const ls = require('ls');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -8,20 +7,19 @@ const plugins = [];
 const entry = {};
 
 const filenamePrefix = process.env.DEV_SERVER ? 'contribs/gmf/apps/' : '';
+const name = process.env.APP
 
-for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
-  const name = path.basename(filename.path);
-  entry[name] = `./${filename.path}/Controller.js`;
-  plugins.push(
-    new HtmlWebpackPlugin({
-      template: filename.full,
-      inject: false,
-      chunksSortMode: 'manual',
-      filename: filenamePrefix + name + '.html',
-      chunks: ['commons', name]
-    })
-  );
-}
+const folder = `contribs/gmf/apps/${name}`;
+entry[name] = `./${folder}/Controller.js`;
+plugins.push(
+new HtmlWebpackPlugin({
+  template: `${folder}/index.html.ejs`,
+  inject: false,
+  chunksSortMode: 'manual',
+  filename: filenamePrefix + name + '.html',
+  chunks: ['commons', name]
+})
+);
 
 
 module.exports = {
