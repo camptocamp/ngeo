@@ -26,7 +26,7 @@
           ng-switch-when="date|datetime"
           ng-switch-when-separator="|">
         <div ng-switch="$ctrl.clone.operator">
-          <div ng-switch-when="..">
+          <div ng-switch-when="..|time_during" ng-switch-when-separator="|">
             <ngeo-date-picker
                 time="$ctrl.timeRangeMode"
                 on-date-selected="$ctrl.onDateRangeSelected(time)">
@@ -237,7 +237,7 @@
         ng-switch-when="date|datetime"
         ng-switch-when-separator="|">
       <div ng-switch="$ctrl.rule.operator">
-        <div ng-switch-when="..">
+        <div ng-switch-when="..|time_during" ng-switch-when-separator="|">
           <span translate>From </span>
           <span>{{ $ctrl.timeToDate($ctrl.rule.lowerBoundary) }}</span>
           <span translate> to </span>
@@ -284,7 +284,7 @@
 
     <div ng-switch-default>
       <div ng-switch="$ctrl.rule.operator">
-        <div ng-switch-when="..">
+        <div ng-switch-when="..|time_during" ng-switch-when-separator="|">
           <span translate>Between </span>
           <span>{{ $ctrl.rule.lowerBoundary }}</span>
           <span translate> and </span>

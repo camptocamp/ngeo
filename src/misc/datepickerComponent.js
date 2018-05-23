@@ -7,6 +7,12 @@ import ngeoMiscTime from 'ngeo/misc/Time.js';
 import 'angular-ui-date';
 import 'jquery-ui/themes/base/all.css';
 
+// FIXME: import the locales in the applications
+import 'jquery-ui/ui/i18n/datepicker-fr.js';
+import 'jquery-ui/ui/i18n/datepicker-en-GB.js';
+import 'jquery-ui/ui/i18n/datepicker-de.js';
+import 'jquery-ui/ui/i18n/datepicker-it.js';
+
 
 /**
  * @type {!angular.Module}

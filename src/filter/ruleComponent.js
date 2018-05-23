@@ -227,12 +227,12 @@ exports.RuleController_ = class {
      * @export
      */
     this.timeRangeMode = {
-      widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('datepicker'),
+      widget: 'datepicker',
       maxValue: this.createDate_(),
       minValue: this.createWeekAgoDate_(),
       maxDefValue: null,
       minDefValue: null,
-      mode: /** @type {ngeox.TimePropertyModeEnum} */ ('range'),
+      mode: 'range',
       interval: [0, 1, 0, 0]
     };
 
@@ -243,12 +243,12 @@ exports.RuleController_ = class {
      * @export
      */
     this.timeValueMode = {
-      widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('datepicker'),
+      widget: 'datepicker',
       maxValue: this.createDate_(),
       minValue: this.createDate_(),
       maxDefValue: null,
       minDefValue: null,
-      mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
+      mode: 'value',
       interval: [0, 1, 0, 0]
     };
 
