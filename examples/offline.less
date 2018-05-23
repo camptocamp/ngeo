@@ -1,4 +1,5 @@
 @import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/less/font-awesome.less";
 
 #map {
   width: 600px;
@@ -12,17 +13,25 @@ ngeo-offline {
   }
   .main-button {
     position: absolute;
-    right: 0.5rem;
+    right: 1rem;
     bottom: 5rem;
-    background-color: white;
-    height: 2rem;
-    width: 4rem;
     cursor: pointer;
-    .no-data:after {
-      content: '[save]';
+    .no-data {
+      color: black;
     }
-    .with-data:after {
-      content: '[menu]';
+    .with-data {
+      color: red;
+    }
+    .no-data, .with-data {
+      background-color: white;
+      text-align: center;
+      font-size: 2.5rem;
+      line-height: 2rem;
+      border-radius: 2rem;
+      font-family: FontAwesome;
+      &::after {
+        content: @fa-var-arrow-circle-o-down;
+      }
     }
   }
 
@@ -31,6 +40,17 @@ ngeo-offline {
     bottom: 0.5rem;
     width: 10rem;
     left: calc(~"50% - 5rem");
+  }
+
+  .in-progress {
+    position: absolute;
+    left: calc(~"50% - 3.3rem");
+    top: calc(~"50% - 3rem");
+    color: white;
+    font-weight: bold;
+    background-color: #337ab7;
+    padding: 2rem 2rem;
+    border-radius: 1rem;
   }
 
   .modal-content {
