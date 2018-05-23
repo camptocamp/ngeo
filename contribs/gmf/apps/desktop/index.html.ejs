@@ -290,7 +290,7 @@
         </div>
       </div>
       <ngeo-modal ng-model="mainCtrl.modalShareShown">
-        <gmf-share gmf-share-email="true"></gmf-share>
+        <gmf-share ng-if="mainCtrl.modalShareShown" gmf-share-email="true"></gmf-share>
       </ngeo-modal>
       <ngeo-modal
           ngeo-modal-closable="false"
