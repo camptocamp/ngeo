@@ -25,13 +25,15 @@ app.offline.module = angular.module('app', [
   ngeo.offline.module.name
 ]);
 
+app.offline.module.value('ngeoOfflineTestUrl', '../../src/offline/component.html');
 
 /**
  * @param {ngeoFeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
+ * @param {ngeoNetworkStatus} ngeoNetworkStatus ngeo network status service.
  * @constructor
  * @ngInject
  */
-app.offline.MainController = function(ngeoFeatureOverlayMgr) {
+exports.MainController = function(ngeoFeatureOverlayMgr, ngeoNetworkStatus) {
 
   /**
    * Save a square of 10 km sideways (Map's unit is the meter).
@@ -39,6 +41,12 @@ app.offline.MainController = function(ngeoFeatureOverlayMgr) {
    * @export
    */
   this.offlineExtentSize = 10000;
+
+  /**
+   * @type {ngeoNetworkStatus}
+   * @export
+   */
+  this.ngeoNetworkStatus = ngeoNetworkStatus;
 
   /**
    * @type {ol.Map}

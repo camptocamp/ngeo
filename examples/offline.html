@@ -6,8 +6,17 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
+    <style>
+      .offline-msg {
+        display: none;
+      }
+      .offline .offline-msg {
+        display: block;
+      }
+    </style>
   </head>
-  <body ng-controller="MainController as ctrl">
+  <body ng-controller="MainController as ctrl" ng-class="{offline: ctrl.ngeoNetworkStatus.offline}">
+  <div class="offline-msg alert-danger" translate>You are currently offline.</div>
     <div id="map" ngeo-map="ctrl.map">
       <ngeo-offline
         ngeo-offline-map="ctrl.map"

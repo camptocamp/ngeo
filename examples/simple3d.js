@@ -23,8 +23,7 @@ app.simple3d.module = angular.module('app', [
 ]);
 
 
-/**
- * @constructor
+/*** @constructor
  * @ngInject
  * @param {angular.Scope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
