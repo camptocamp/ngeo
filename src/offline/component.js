@@ -97,6 +97,12 @@ ngeo.offline.component.Controller_ = class {
     this.$timeout_ = $timeout;
 
     /**
+     * @type {angular.$q.Promise}
+     * @private
+     */
+    this.$timeoutPromise_ = null;
+
+    /**
      * The map.
      * @type {!ol.Map}
      * @export
@@ -157,11 +163,25 @@ ngeo.offline.component.Controller_ = class {
     this.downloading = false;
 
     /**
+     * The progression of the data loading (0-100%).
+     * @type {number}
+     * @export
+     */
+    this.progressPercents = 0;
+
+    /**
      * Whether the menu is currently displayed.
      * @type {boolean}
      * @export
      */
     this.menuDisplayed = false;
+
+    /**
+     * Whether the cancel downlaod modal is displayed.
+     * @type {boolean}
+     * @export
+     */
+    this.displayAlertAbortDownload = false;
   }
 
   $onInit() {
@@ -199,15 +219,44 @@ ngeo.offline.component.Controller_ = class {
    * @export
    */
   validateExtent() {
+    this.progressPercents = 0;
     this.downloading = true;
-    this.$timeout_(() => { // for demo purpose, remove me
-      if (this.downloading) {
-        this.downloading = false;
-        this.dataPolygon_ = this.createPolygonToSave_();
-        this.displayExtent_();
-        this.toggleViewExtentSelection();
-      }
-    }, 3000);
+    this.followDownloadProgression_();
+  }
+
+  /**
+   * FIXME For demo purpose, adapt me with real code.
+   * @private
+   */
+  followDownloadProgression_() {
+    if (this.progressPercents < 99) {
+      this.$timeoutPromise_ = this.$timeout_(() => {
+        this.progressPercents++;
+        this.followDownloadProgression_();
+      }, 50);
+    } else {
+      this.finishDownload_();
+    }
+  }
+
+  /**
+   * @private
+   */
+  finishDownload_() {
+    this.downloading = false;
+    this.dataPolygon_ = this.createPolygonToSave_();
+    this.displayExtent_();
+    this.toggleViewExtentSelection();
+  }
+
+  /**
+   * Ask to abort the download of data.
+   * @export
+   */
+  askAbortDownload() {
+    this.$timeout_.cancel(this.$timeoutPromise_);
+    this.$timeoutPromise_ = null;
+    this.displayAlertAbortDownload = true;
   }
 
   /**
