@@ -228,10 +228,10 @@ exports.RuleController_ = class {
      */
     this.timeRangeMode = {
       widget: 'datepicker',
-      maxValue: this.createDate_(),
-      minValue: this.createWeekAgoDate_(),
-      maxDefValue: null,
-      minDefValue: null,
+      maxValue: null,
+      minValue: null,
+      maxDefValue: this.createDate_(),
+      minDefValue: this.createWeekAgoDate_(),
       mode: 'range',
       interval: [0, 1, 0, 0]
     };
@@ -244,10 +244,10 @@ exports.RuleController_ = class {
      */
     this.timeValueMode = {
       widget: 'datepicker',
-      maxValue: this.createDate_(),
-      minValue: this.createDate_(),
-      maxDefValue: null,
-      minDefValue: null,
+      maxValue: null,
+      minValue: null,
+      maxDefValue: this.createDate_(),
+      minDefValue: this.createDate_(),
       mode: 'value',
       interval: [0, 1, 0, 0]
     };
@@ -424,24 +424,21 @@ exports.RuleController_ = class {
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.getExpression(),
         (newVal) => {
-          const value = newVal === null ? this.createDate_() : newVal;
-          this.timeValueMode.minValue = value;
+          this.timeValueMode.minValue = newVal;
         }
       ));
       // Watch 'lowerBoundary'
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.lowerBoundary,
         (newVal) => {
-          const value = newVal === null ? this.createWeekAgoDate_() : newVal;
-          this.timeRangeMode.minValue = value;
+          this.timeRangeMode.minValue = newVal;
         }
       ));
       // Watch 'upperBoundary'
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.upperBoundary,
         (newVal) => {
-          const value = newVal === null ? this.createDate_() : newVal;
-          this.timeRangeMode.maxValue = value;
+          this.timeRangeMode.maxValue = newVal;
         }
       ));
     } else if (this.clone.type === ngeoFormatAttributeType.GEOMETRY) {

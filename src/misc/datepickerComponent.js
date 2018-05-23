@@ -212,8 +212,8 @@ exports.Controller_ = function($scope, $injector,
     if (angular.isDate(sDate) && (!this.isModeRange || angular.isDate(eDate))) {
       this.onDateSelected({
         time: {
-          start: sDate.getTime(),
-          end: eDate ? eDate.getTime() : null
+          start: this.ngeoTime_.getTime(sDate),
+          end: this.ngeoTime_.getTime(eDate)
         }
       });
     }
@@ -226,17 +226,17 @@ exports.Controller_ = function($scope, $injector,
 exports.Controller_.prototype.init = function() {
   //fetch the initial options for the component
   const initialOptions_ = this.ngeoTime_.getOptions(this.time);
-  this.initialMinDate = new Date(initialOptions_.minDate);
-  this.initialMaxDate = new Date(initialOptions_.maxDate);
+  this.initialMinDate = this.ngeoTime_.createDate(initialOptions_.minDate);
+  this.initialMaxDate = this.ngeoTime_.createDate(initialOptions_.maxDate);
   this.isModeRange = this.time.mode === 'range';
 
   if (this.isModeRange) {
     googAsserts.assertArray(initialOptions_.values);
-    this.sdate = new Date(initialOptions_.values[0]);
-    this.edate = new Date(initialOptions_.values[1]);
+    this.sdate = this.ngeoTime_.createDate(initialOptions_.values[0]);
+    this.edate = this.ngeoTime_.createDate(initialOptions_.values[1]);
   } else {
     googAsserts.assertNumber(initialOptions_.values);
-    this.sdate = new Date(initialOptions_.values);
+    this.sdate = this.ngeoTime_.createDate(initialOptions_.values);
   }
 };
 

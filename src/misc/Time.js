@@ -11,6 +11,23 @@
  */
 const exports = function() {};
 
+/**
+ * @param {number|string|null} value The value
+ * @param {Date} defaultValue The default value
+ * @return {Date} the date
+ */
+exports.prototype.createDate = function(value, defaultValue = null) {
+  return value !== null ? new Date(value) : defaultValue;
+};
+
+/**
+ * @param {Date} date The date
+ * @param {number|null=} defaultValue The default value
+ * @return {number|null} the time
+ */
+exports.prototype.getTime = function(date, defaultValue = null) {
+  return date ? date.getTime() : defaultValue;
+};
 
 /**
  * Get options regarding the time property of a node;
@@ -25,21 +42,19 @@ const exports = function() {};
  */
 exports.prototype.getOptions = function(time) {
 
-  const minDate = new Date(time.minValue);
-  const maxDate = new Date(time.maxValue);
+  const minDate = this.createDate(time.minValue);
+  const maxDate = this.createDate(time.maxValue);
 
-  const minDefaultDate = (time.minDefValue) ?
-    new Date(time.minDefValue) : minDate;
-  const maxDefaultDate = (time.maxDefValue) ?
-    new Date(time.maxDefValue) : maxDate;
+  const minDefaultDate = this.createDate(time.minDefValue, minDate);
+  const maxDefaultDate = this.createDate(time.maxDefValue, maxDate);
 
   const defaultValues = (time.mode === 'range') ?
-    [minDefaultDate.getTime(), maxDefaultDate.getTime()] :
-    minDefaultDate.getTime();
+    [this.getTime(minDefaultDate), this.getTime(maxDefaultDate)] :
+    this.getTime(minDefaultDate);
 
   return {
-    minDate: minDate.getTime(),
-    maxDate: maxDate.getTime(),
+    minDate: this.getTime(minDate),
+    maxDate: this.getTime(maxDate),
     values: defaultValues
   };
 };
