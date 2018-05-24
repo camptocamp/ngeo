@@ -78,3 +78,5 @@ Object editing | Edit one feature | X | -
 . | Copy from | X | -
 . | Cut from | X | -
 . | Query other features | X | -
+
+("X" = working, "-" = not working, "(<version>)" = targeted version for solving)
