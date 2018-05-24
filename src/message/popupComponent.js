@@ -34,7 +34,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * Things to know about this directive:
  *
- * - This directive is intented to be used along with the popup service.
+ * - This directive is intended to be used along with the popup service.
  *
  * - By default the directive uses "popup.html" as its templateUrl. This can be
  *   changed by redefining the "ngeoPopupTemplateUrl" value.

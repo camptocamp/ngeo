@@ -110,8 +110,8 @@ help:
 	@echo "- test                        Run the test suite"
 	@echo "- test-debug                  Run the test suite in the browser"
 	@echo "- clean                       Remove generated files"
-	@echo "- cleanall                    Remove all the build artefacts"
-	@echo "- cleanallcache               Remove all the build artefacts and the extra caches (npm and pip)"
+	@echo "- cleanall                    Remove all the build artifacts"
+	@echo "- cleanallcache               Remove all the build artifacts and the extra caches (npm and pip)"
 	@echo
 	@echo "Secondary targets:"
 	@echo

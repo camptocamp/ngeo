@@ -1,12 +1,12 @@
 # Development guidelines
 
-The purpose of this guideline is to help the developper to contribute in the
+The purpose of this guideline is to help the developer to contribute in the
 best way to `ngeo` and `gmf` cores.
 It describe the golbal philosophy of `ngeo` design, and set base rules to
 apply when you want to add a new feature.
 
 You are free to read and fork this library. But you must know that we have currently no time to handle issues
-or PR from persons outside of Camptocamp customers or developpers.
+or PR from persons outside of Camptocamp customers or developers.
 
 
 ## Table of content
@@ -66,7 +66,7 @@ We also use ES6 coding standards.
 With Webpack, some things have changed between the current ngeo 2.3 version, and the last ones.
 
 - Functions from the goog library are no more allowed.
-- We export only one object per file. (That also means that we have splitted some files in multiple files).
+- We export only one object per file. (That also means that we have split some files in multiple files).
 - We must have no more global value in the attached to the window (except in some very rare cases).
 - All AngularJS elements are now in a small module (see below in this documentation).
 - All modules import only what they need to work. No less, no more.
@@ -77,12 +77,12 @@ With Webpack, some things have changed between the current ngeo 2.3 version, and
 Be as logical as possble.  In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
 a service in `contribs/gmf/src/sample/MyService.js`, the name must be `GmfSampleMyservice`.
 
-Don't change a name after it's choosed. Because that change the html in the code of all user of ngeo !
+Don't change a name after it's chosen. Because that change the html in the code of all user of ngeo !
 
 
 ## Module management
 
-Since ngeo 2.3, every elements are grouped by functionnality (there is no more gloables `directive`,
+Since ngeo 2.3, every elements are grouped by functionality (there is no more gloables `directive`,
 nor `service` directories). That also means that every element provide it's own AngularJS module; we no more
 link all elements to a global `ngeo` or `gmf` module.
 
@@ -264,7 +264,7 @@ property and the `$parent` scope property whose name is given in `foo` HTML attr
 
 It's important to note that they don't share the same reference, but both are
 watched and updated concurrently. AngularJs adds `$watchers` each time you
-have a two-way bindings pattern in your application. As mentionned before, this
+have a two-way bindings pattern in your application. As mentioned before, this
 should be avoided when not needed.
 
 In angularJs, `$scope` values are mapped to HTML view through expressions.
@@ -394,7 +394,7 @@ the controller instance (`this`) or on the `$scope`. These properties are then
 referenced by their names in HTML pages and templates. So it is required to
 prevent the compiler from renaming these properties.
 
-The way to do that is to add the right tag on each variable, function and classe.
+The way to do that is to add the right tag on each variable, function and class.
  -  `@export`: this tell the compiler to not rename the element (and so it is usable in the html).
  -  `@private`: With a final underscore (`this.my_private_variable_`) tell the compilier to rename it with a
     name not understainable outside of the current file.

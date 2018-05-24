@@ -3,7 +3,7 @@ To check before create a new issue:
 * I am using the latest minor version of the major version (`x.y.last`).
 * I create one issue per subject (do not put more than one thing in the same issue).
 
-For commiters:
+For committers:
 
 * I have assigned a blue and a green label.
 * I have assigned a milestone.

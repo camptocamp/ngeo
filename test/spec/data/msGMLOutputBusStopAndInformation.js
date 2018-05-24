@@ -7,7 +7,7 @@ const exports = '<?xml version="1.0" encoding="UTF-8"?>' +
 '	 xmlns:xlink="http://www.w3.org/1999/xlink"' +
 '	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">' +
 '	<information_layer>' +
-'	<gml:name>Informations</gml:name>' +
+'	<gml:name>Information</gml:name>' +
 '		<information_feature>' +
 '			<gml:boundedBy>' +
 '				<gml:Box srsName="EPSG:21781">' +
