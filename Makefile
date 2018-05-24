@@ -124,7 +124,7 @@ help:
 apidoc: .build/apidoc
 
 .PHONY: check
-check: lint check-examples-checker check-examples test examples-hosted-apps
+check: lint spell check-examples-checker check-examples test examples-hosted-apps
 
 .PHONY: check-examples-checker
 check-example-checker: $(CHECK_EXAMPLE_CHECKER)
@@ -139,6 +139,14 @@ lint: .build/eslint.timestamp git-attributes eof-newline lint-extra
 lint-extra:
 	if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
 	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
+
+.PHONY: spell
+spell: .build/python-venv.timestamp
+	$(PY_VENV_BIN)/codespell --quiet-level=2 --ignore-words=spell-ignore-words.txt \
+		$(shell find -name 'node_modules' -prune -or -name '.build' -prune -or -name '.git' -prune \
+		-or -name '__pycache__' -prune -or -name 'build' -prune \
+		-or \( -type f -and -not -name '*.png' -and -not -name '*.mo' -and -not -name '*.po*' -and -not -name '*_translation' \
+		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js'  -and -not -name 'prettify.js' \) -print)
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp
