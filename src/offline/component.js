@@ -58,7 +58,6 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  *
  * @htmlAttribute {ol.Map} ngeo-offline-map The map.
  * @htmlAttribute {number} ngeo-offline-extentsize The size, in map units, of a side of the extent.
- * @ngInject
  * @ngdoc component
  * @ngname ngeoOffline
  */
@@ -83,7 +82,7 @@ ngeo.offline.component.Controller_ = class {
   /**
    * @private
    * @param {angular.$timeout} $timeout Angular timeout service.
-   * @param {ngeoFeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
+   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
@@ -117,7 +116,7 @@ ngeo.offline.component.Controller_ = class {
     this.extentSize;
 
     /**
-     * @type {!ngeo.map.FeatureOverlay}
+     * @type {ngeo.map.FeatureOverlay}
      * @private
      */
     this.featuresOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -373,7 +372,7 @@ ngeo.offline.component.Controller_ = class {
    * @private
    */
   createPolygonToSave_() {
-    const center = this.map.getView().getCenter();
+    const center = /** @type {ol.Coordinate}*/(this.map.getView().getCenter());
     const halfLength = Math.ceil(this.extentSize / 2);
     const extent = this.getExtent_(center, halfLength);
     return new ol.geom.Polygon([[
@@ -386,7 +385,7 @@ ngeo.offline.component.Controller_ = class {
   }
 
   /**
-   * @param {ol.Size} center, a xy point.
+   * @param {ol.Coordinate} center, a xy point.
    * @param {number} halfLength a half length of a square's side.
    * @return {Array.<number>} an extent.
    * @private
