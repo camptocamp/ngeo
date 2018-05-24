@@ -110,7 +110,7 @@ exports.prototype.selectAll = function() {
 
 
 /**
- * Unselect all rows.
+ * Deselect all rows.
  * @export
  */
 exports.prototype.unselectAll = function() {

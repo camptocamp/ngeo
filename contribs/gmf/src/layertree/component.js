@@ -98,7 +98,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  * This component creates a layertree based on the c2cgeoportal JSON themes
  * source and a {@link ngeo.layertreeComponent}. The controller used by this
  * component defines some functions for each node that are created by a default
- * template. This default template can be overrided by setting the value
+ * template. This default template can be overridden by setting the value
  * 'gmf.layertreeTemplateUrl' but you will have to adapt the
  * ngeoLayertreeTemplateUrl value too (to define the children's nodes template
  * path).
@@ -532,7 +532,7 @@ exports.Controller_.prototype.getLegendsObject = function(treeCtrl) {
     let layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
-    // QGIS can handle multiple layers natively. Use Mutliple urls for other map
+    // QGIS can handle multiple layers natively. Use Multiple URLs for other map
     // servers
     if (gmfOgcServer.type === ngeoDatasourceOGC.ServerType.QGISSERVER) {
       layersNames = [layersNames];

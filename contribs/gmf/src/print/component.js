@@ -154,7 +154,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *     value in each of your print panel field. The key refers to the
  *     property's name of the field.
  *     Example: {'comments': 'demo', 'legend': false}. Doesn't work for the dpi
- *     and the scale. Server's values are used in priorty.
+ *     and the scale. Server's values are used in priority.
  * @htmlAttribute {Array.<string>} gmf-print-hiddenattributes The list of attributes that should be hidden.
  * @ngdoc component
  * @ngname gmfPrint
@@ -533,7 +533,7 @@ exports.Controller_ = class {
    * @return {number} Scale of the map to print.
    */
   getScaleFn(frameState) {
-    // Don't compute an optimal scale if the user manualy choose a value not in
+    // Don't compute an optimal scale if the user manually choose a value not in
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
     googAsserts.assert(this.layoutInfo.scales);
     googAsserts.assert(this.layoutInfo.scale !== undefined);
@@ -780,7 +780,7 @@ exports.Controller_ = class {
     if (this.active && originalEvent.altKey && originalEvent.shiftKey && mapCenter) {
       const center = this.map.getPixelFromCoordinate(mapCenter);
       const pixel = e.pixel;
-      // Reset previous position between two differents sessions of drags events.
+      // Reset previous position between two different sessions of drags events.
       if (this.rotationTimeoutPromise_ === null) {
         this.onDragPreviousMousePosition_ = null;
       } else {

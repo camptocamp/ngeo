@@ -178,7 +178,7 @@ gmfx.MousePositionProjection.prototype.code;
 
 
 /**
- * The label to diplay with this projection.
+ * The label to display with this projection.
  * @type {string}
  */
 gmfx.MousePositionProjection.prototype.label;
@@ -753,7 +753,7 @@ gmfx.datasource.OGCOptions;
 
 /**
  * A reference to the GMF layer node that was used to create the data source.
- * It may contains additionnal information, such as metadata, about the data
+ * It may contains additional information, such as metadata, about the data
  * source.
  * @type {gmfThemes.GmfLayer}
  */

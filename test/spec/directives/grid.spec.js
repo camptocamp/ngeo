@@ -122,7 +122,7 @@ describe('ngeo.grid.component', () => {
       expect(gridController.configuration.isRowSelected(firstRow)).toBe(true);
       expect(gridController.configuration.isRowSelected(sndRow)).toBe(true);
 
-      // unselect the 2nd row
+      // deselect the 2nd row
       gridController.clickRow_(sndRow, false, true);
       expect(gridController.configuration.isRowSelected(firstRow)).toBe(true);
       expect(gridController.configuration.isRowSelected(sndRow)).toBe(false);

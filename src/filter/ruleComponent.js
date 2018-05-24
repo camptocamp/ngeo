@@ -176,31 +176,31 @@ exports.RuleController_ = class {
      */
     this.clone;
 
-    const ot = ngeoRuleRule.OperatorType;
-    const sot = ngeoRuleRule.SpatialOperatorType;
-    const tot = ngeoRuleRule.TemporalOperatorType;
+    const operatorType = ngeoRuleRule.OperatorType;
+    const spatialOperatorType = ngeoRuleRule.SpatialOperatorType;
+    const temporalOperatorType = ngeoRuleRule.TemporalOperatorType;
 
     /**
      * @type {Object.<string, string>}
      * @export
      */
     this.operators = {
-      [ot.EQUAL_TO]: gettextCatalog.getString('Is equal to'),
-      [ot.GREATER_THAN]: gettextCatalog.getString('Is greater than'),
-      [ot.GREATER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
+      [operatorType.EQUAL_TO]: gettextCatalog.getString('Is equal to'),
+      [operatorType.GREATER_THAN]: gettextCatalog.getString('Is greater than'),
+      [operatorType.GREATER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
         'Is greater than or equal to'),
-      [ot.LESSER_THAN]: gettextCatalog.getString('Is lesser than'),
-      [ot.LESSER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
+      [operatorType.LESSER_THAN]: gettextCatalog.getString('Is lesser than'),
+      [operatorType.LESSER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
         'Is lesser than or equal to'),
-      [ot.NOT_EQUAL_TO]: gettextCatalog.getString('Is not equal to'),
-      [ot.LIKE]: gettextCatalog.getString('Contains'),
-      [sot.CONTAINS]: gettextCatalog.getString('Contains'),
-      [sot.INTERSECTS]: gettextCatalog.getString('Intersects'),
-      [sot.WITHIN]: gettextCatalog.getString('Is inside of'),
-      [tot.BEGINS]: gettextCatalog.getString('Begins at'),
-      [tot.DURING]: gettextCatalog.getString('During'),
-      [tot.ENDS]: gettextCatalog.getString('Ends at'),
-      [tot.EQUALS]: gettextCatalog.getString('Is equal to')
+      [operatorType.NOT_EQUAL_TO]: gettextCatalog.getString('Is not equal to'),
+      [operatorType.LIKE]: gettextCatalog.getString('Contains'),
+      [spatialOperatorType.CONTAINS]: gettextCatalog.getString('Contains'),
+      [spatialOperatorType.INTERSECTS]: gettextCatalog.getString('Intersects'),
+      [spatialOperatorType.WITHIN]: gettextCatalog.getString('Is inside of'),
+      [temporalOperatorType.BEGINS]: gettextCatalog.getString('Begins at'),
+      [temporalOperatorType.DURING]: gettextCatalog.getString('During'),
+      [temporalOperatorType.ENDS]: gettextCatalog.getString('Ends at'),
+      [temporalOperatorType.EQUALS]: gettextCatalog.getString('Is equal to')
     };
 
     /**
@@ -208,16 +208,16 @@ exports.RuleController_ = class {
      * @export
      */
     this.operatorsShortFormat = {
-      [ot.EQUAL_TO]: '=',
-      [ot.GREATER_THAN]: '>',
-      [ot.GREATER_THAN_OR_EQUAL_TO]: '>=',
-      [ot.LESSER_THAN]: '<',
-      [ot.LESSER_THAN_OR_EQUAL_TO]: '<=',
-      [ot.NOT_EQUAL_TO]: '!=',
-      [ot.LIKE]: '~',
-      [tot.BEGINS]: '>=',
-      [tot.ENDS]: '<=',
-      [tot.EQUALS]: '='
+      [operatorType.EQUAL_TO]: '=',
+      [operatorType.GREATER_THAN]: '>',
+      [operatorType.GREATER_THAN_OR_EQUAL_TO]: '>=',
+      [operatorType.LESSER_THAN]: '<',
+      [operatorType.LESSER_THAN_OR_EQUAL_TO]: '<=',
+      [operatorType.NOT_EQUAL_TO]: '!=',
+      [operatorType.LIKE]: '~',
+      [temporalOperatorType.BEGINS]: '>=',
+      [temporalOperatorType.ENDS]: '<=',
+      [temporalOperatorType.EQUALS]: '='
     };
 
     /**
