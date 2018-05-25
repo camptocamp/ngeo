@@ -11,7 +11,7 @@
   <div class="dropdown-menu form-group">
 
     <select
-        class="form-control input-sm ngeo-rule-operators-list"
+        class="form-control ngeo-rule-operators-list"
         ng-disabled="$ctrl.drawActive"
         ng-if="::$ctrl.clone.operators"
         ng-model="$ctrl.clone.operator"
@@ -181,22 +181,22 @@
           <div ng-switch-when="..">
             <input
                 type="number"
-                class="form-control input-sm"
+                class="form-control"
                 ng-model="$ctrl.clone.lowerBoundary"/>
             <input
                 type="number"
-                class="form-control input-sm"
+                class="form-control"
                 ng-model="$ctrl.clone.upperBoundary"/>
           </div>
           <div ng-switch-default>
             <input
                 type="number"
-                class="form-control input-sm"
+                class="form-control"
                 ng-if="$ctrl.clone.type === 'number'"
                 ng-model="$ctrl.clone.expression"/>
             <input
                 type="text"
-                class="form-control input-sm"
+                class="form-control"
                 ng-if="$ctrl.clone.type !== 'number'"
                 ng-model="$ctrl.clone.expression"/>
           </div>
