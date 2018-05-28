@@ -31,7 +31,9 @@
     display: inline;
     line-height: inherit;
     padding-left: 0;
-    text-decoration: none;
+    &:hover, &:focus {
+      text-decoration: none;
+    }
 
     &.gmf-layertree-expand-node.fa {
       color : @color-light;
