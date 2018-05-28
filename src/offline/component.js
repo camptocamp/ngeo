@@ -381,7 +381,7 @@ ngeo.offline.component.Controller_ = class {
       [extent[2], extent[3]],
       [extent[2], extent[1]],
       [extent[0], extent[1]]
-    ]], 'XY');
+    ]], ol.geom.GeometryLayout.XY);
   }
 
   /**
