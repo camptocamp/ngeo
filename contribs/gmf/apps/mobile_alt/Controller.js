@@ -18,6 +18,8 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import Raven from 'raven-js/src/raven.js';
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -93,6 +95,11 @@ const exports = function($scope, $injector) {
     })
   });
 
+  if ($injector.has('sentryUrl')) {
+    Raven.config($injector.get('sentryUrl'))
+      .addPlugin(RavenPluginsAngular)
+      .install();
+  }
 };
 
 olBase.inherits(exports, gmfControllersAbstractMobileController);
@@ -101,6 +108,7 @@ olBase.inherits(exports, gmfControllersAbstractMobileController);
 exports.module = angular.module('Appmobile_alt', [
   appBase.module.name,
   gmfControllersAbstractMobileController.module.name,
+  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.controller('AlternativeMobileController', exports);
