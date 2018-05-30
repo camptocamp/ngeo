@@ -127,7 +127,7 @@ const cssLessLoaderConfigs = [
         new LessPluginAutoprefix()
       ],
       modifyVars: {
-        'THEME': themes[theme],
+        'THEME': themes[theme] ? themes[theme] : theme,
       }
     }
   }
