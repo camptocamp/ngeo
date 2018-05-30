@@ -161,7 +161,7 @@ eof-newline:
 
 .PHONY: test
 test: .build/node_modules.timestamp
-	./node_modules/karma/bin/karma start karma-conf.js --single-run
+	THEME=mobile ./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
