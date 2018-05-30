@@ -179,7 +179,7 @@ serve-ngeo: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCAL
 
 .PHONY: serve-gmf
 serve-gmf: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	npm run serve-gmf-examples
+	THEME=mobile npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps-desktop
 serve-gmf-apps-desktop: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
@@ -222,7 +222,7 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
 .build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
-	npm run build-gmf-examples
+	THEME=mobile npm run build-gmf-examples
 	touch $@
 
 .PHONY: examples-hosted-apps
