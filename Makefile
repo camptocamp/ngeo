@@ -191,11 +191,11 @@ serve-gmf-apps-desktopalt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) 
 
 .PHONY: serve-gmf-apps-mobile
 serve-gmf-apps-mobile: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile npm run serve-gmf-apps
+	APP=mobile npm THEME=mobile run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-mobilealt
 serve-gmf-apps-mobilealt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile_alt npm run serve-gmf-apps
+	APP=mobile_alt THEME=mobile npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-oeedit
 serve-gmf-apps-oeedit: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
@@ -231,8 +231,8 @@ examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
 	APP=desktop THEME=desktop npm run build-gmf-apps
 	APP=desktop_alt THEME=desktop_alt npm run build-gmf-apps
-	APP=mobile npm run build-gmf-apps
-	APP=mobile_alt npm run build-gmf-apps
+	APP=mobile THEME=mobile npm run build-gmf-apps
+	APP=mobile_alt THEME=mobile npm run build-gmf-apps
 	APP=oeedit THEME=desktop npm run build-gmf-apps
 	APP=oeview THEME=desktop npm run build-gmf-apps
 	touch $@
