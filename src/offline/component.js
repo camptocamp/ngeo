@@ -7,6 +7,7 @@ goog.require('ol.Collection');
 goog.require('ol.Observable');
 goog.require('ol.Feature');
 goog.require('ol.geom.Polygon');
+goog.require('ol.geom.GeometryLayout');
 goog.require('ol.has');
 
 
@@ -58,6 +59,7 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  *
  * @htmlAttribute {ol.Map} ngeo-offline-map The map.
  * @htmlAttribute {number} ngeo-offline-extentsize The size, in map units, of a side of the extent.
+ * @private
  * @ngdoc component
  * @ngname ngeoOffline
  */
@@ -83,11 +85,12 @@ ngeo.offline.component.Controller_ = class {
    * @private
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
+   * @param {ngeo.offline.ServiceManager} ngeoOfflineServiceManager ngeo offline service Manager.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
-  constructor($timeout, ngeoFeatureOverlayMgr) {
+  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager) {
 
     /**
      * @type {angular.$timeout}
@@ -100,6 +103,12 @@ ngeo.offline.component.Controller_ = class {
      * @private
      */
     this.$timeoutPromise_ = null;
+
+    /**
+     * @type {ngeo.offline.ServiceManager}
+     * @private
+     */
+    this.ngeoOfflineServiceManager_ = ngeoOfflineServiceManager;
 
     /**
      * The map.
@@ -219,6 +228,7 @@ ngeo.offline.component.Controller_ = class {
    */
   validateExtent() {
     this.progressPercents = 0;
+    this.ngeoOfflineServiceManager_.save();
     this.downloading = true;
     this.followDownloadProgression_();
   }
