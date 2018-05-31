@@ -252,7 +252,7 @@ exports.Controller_.prototype.stopEditing = function() {
 exports.Controller_.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     if (!this.dirty) {
-      this.selectedEditableNode = null;
+      this.stopEditing();
     } else {
       // There are unsaved modifications. Prevent the deactivation and
       // set the state accordingly for the `gmf-editfeature` directive
