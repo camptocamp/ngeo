@@ -65,8 +65,7 @@ exports.component_ = function() {
 };
 
 
-exports.directive('gmfEditfeatureselector',
-  exports.component_);
+exports.directive('gmfEditfeatureselector', exports.component_);
 
 
 /**
@@ -80,8 +79,7 @@ exports.directive('gmfEditfeatureselector',
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-exports.Controller_ = function($scope, $timeout, gmfThemes,
-  gmfTreeManager) {
+exports.Controller_ = function($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   // === Directive options ===
 
@@ -254,7 +252,7 @@ exports.Controller_.prototype.stopEditing = function() {
 exports.Controller_.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     if (!this.dirty) {
-      this.selectedEditableNode = null;
+      this.stopEditing();
     } else {
       // There are unsaved modifications. Prevent the deactivation and
       // set the state accordingly for the `gmf-editfeature` directive
@@ -278,8 +276,7 @@ exports.Controller_.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfEditfeatureselectorController',
-  exports.Controller_);
+exports.controller('GmfEditfeatureselectorController', exports.Controller_);
 
 
 export default exports;
