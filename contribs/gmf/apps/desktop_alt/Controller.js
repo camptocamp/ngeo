@@ -131,7 +131,9 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   this.bgOpacityOptions = 'Test aus Olten';
 
   if ($injector.has('sentryUrl')) {
-    Raven.config($injector.get('sentryUrl'))
+    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+    const raven = new Raven();
+    raven.config($injector.get('sentryUrl'), options)
       .addPlugin(RavenPluginsAngular)
       .install();
   }
@@ -158,7 +160,6 @@ exports.module = angular.module('Appdesktop_alt', [
   gmfImportModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
-  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.controller('AlternativeDesktopController', exports);

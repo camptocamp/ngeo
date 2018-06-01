@@ -210,7 +210,9 @@ const exports = function($scope, $injector, $timeout) {
   gettextCatalog.getString('Add a layer');
 
   if ($injector.has('sentryUrl')) {
-    Raven.config($injector.get('sentryUrl'))
+    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+    const raven = new Raven();
+    raven.config($injector.get('sentryUrl'), options)
       .addPlugin(RavenPluginsAngular)
       .install();
   }
@@ -222,7 +224,6 @@ exports.module = angular.module('Appoeedit', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
   gmfObjecteditingModule.name,
-  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
