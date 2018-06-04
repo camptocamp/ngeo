@@ -89,7 +89,7 @@
     "less-plugin-autoprefix": "1.5.1",
     "less-plugin-clean-css": "1.5.1",
     "ls": "0.2.1",
-    "moment": "2.22.1",
+    "moment": "2.22.2",
     "ol-cesium": "2.0.0",
     "openlayers": "https://api.github.com/repos/openlayers/openlayers/tarball/f284b95cb897b3ce1b49b985b58ebe1ca76be1fe",
     "phantomjs-polyfill-string-includes": "1.0.0",
