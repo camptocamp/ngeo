@@ -101,7 +101,9 @@ const exports = function($scope, $injector) {
   gettextCatalog.getString('Add a layer');
 
   if ($injector.has('sentryUrl')) {
-    Raven.config($injector.get('sentryUrl'))
+    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+    const raven = new Raven();
+    raven.config($injector.get('sentryUrl'), options)
       .addPlugin(RavenPluginsAngular)
       .install();
   }
@@ -112,7 +114,6 @@ olBase.inherits(exports, gmfControllersAbstractDesktopController);
 exports.module = angular.module('Appdesktop', [
   appBase.module.name,
   gmfControllersAbstractDesktopController.module.name,
-  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');

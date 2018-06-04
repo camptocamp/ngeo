@@ -96,7 +96,9 @@ const exports = function($scope, $injector) {
   });
 
   if ($injector.has('sentryUrl')) {
-    Raven.config($injector.get('sentryUrl'))
+    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+    const raven = new Raven();
+    raven.config($injector.get('sentryUrl'), options)
       .addPlugin(RavenPluginsAngular)
       .install();
   }
@@ -108,7 +110,6 @@ olBase.inherits(exports, gmfControllersAbstractMobileController);
 exports.module = angular.module('Appmobile_alt', [
   appBase.module.name,
   gmfControllersAbstractMobileController.module.name,
-  RavenPluginsAngular.moduleName,
 ]);
 
 exports.module.controller('AlternativeMobileController', exports);
