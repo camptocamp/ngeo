@@ -103,7 +103,7 @@
     "url-loader": "1.0.1",
     "url-polyfill": "1.0.13",
     "webpack": "4.10.2",
-    "webpack-cli": "2.1.5",
+    "webpack-cli": "3.0.2",
     "webpack-dev-server": "3.1.4",
     "webpack-merge": "4.1.2"
   },
