@@ -1,4 +1,5 @@
 goog.module('ngeo.offline.module');
+goog.module.declareLegacyNamespace();
 
 const ngeoBase = goog.require('ngeo');
 const ngeoOfflineComponent = goog.require('ngeo.offline.component');
