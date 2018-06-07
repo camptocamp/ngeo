@@ -183,6 +183,7 @@ const Service = class {
   }
 
   /**
+   * @param {boolean} offline whether it's offline or not.
    * @private
    */
   triggerChangeStatusEvent_(offline) {
@@ -200,7 +201,7 @@ Service.module = angular.module(name, [
 ]);
 Service.module.factory('httpInterceptor', HttpInterceptor);
 Service.module.service(name, Service);
-Service.module.config(function($httpProvider) {
+Service.module.config(($httpProvider) => {
   $httpProvider.interceptors.push('httpInterceptor');
 });
 
