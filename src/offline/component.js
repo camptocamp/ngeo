@@ -66,7 +66,8 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
 exports.component_ = {
   bindings: {
     'map': '<ngeoOfflineMap',
-    'extentSize': '<ngeoOfflineExtentsize'
+    'extentSize': '<ngeoOfflineExtentsize',
+    'debug': '<',
   },
   controller: 'ngeoOfflineController',
   templateUrl: ngeoOfflineTemplateUrl
@@ -91,6 +92,12 @@ exports.Controller_ = class {
    * @ngname ngeoOfflineController
    */
   constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager) {
+
+    /**
+     * @export
+     * @type {boolean}
+     */
+    this.debug;
 
     /**
      * @type {angular.$timeout}
@@ -209,6 +216,11 @@ exports.Controller_ = class {
    * @export
    */
   toggleViewExtentSelection() {
+    if (this.debug) { // FIXME, remove this when downloader is implemented
+      const extent = this.getDowloadExtent_();
+      this.ngeoOfflineServiceManager_.save(extent);
+      return;
+    }
     this.menuDisplayed = false;
     this.selectingExtent = !this.selectingExtent;
 
@@ -282,6 +294,10 @@ exports.Controller_ = class {
    * @export
    */
   showMenu() {
+    if (this.debug) {
+      this.validateExtent();
+      return;
+    }
     this.menuDisplayed = true;
   }
 
