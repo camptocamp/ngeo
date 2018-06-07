@@ -1,9 +1,9 @@
-goog.provide('ngeo.offline.ServiceManager');
+goog.module('ngeo.offline.ServiceManager');
 
-goog.require('ngeo');
+const ngeoBase = goog.require('ngeo');
 
 
-ngeo.offline.ServiceManager = class {
+exports = class {
 
   /**
    * @param {angular.$injector} $injector Main injector.
@@ -90,6 +90,6 @@ ngeo.offline.ServiceManager = class {
 /**
  * @type {!angular.Module}
  */
-ngeo.offline.ServiceManager.module = angular.module('ngeoOfflineServiceManager', []);
-ngeo.offline.ServiceManager.module.service('ngeoOfflineServiceManager', ngeo.offline.ServiceManager);
-ngeo.module.requires.push(ngeo.offline.ServiceManager.module.name);
+exports.module = angular.module('ngeoOfflineServiceManager', []);
+exports.module.service('ngeoOfflineServiceManager', exports);
+ngeoBase.module.requires.push(exports.module.name);

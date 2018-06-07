@@ -1,16 +1,16 @@
-goog.provide('ngeo.offline.module');
+goog.module('ngeo.offline.module');
 
-goog.require('ngeo');
-goog.require('ngeo.offline.component');
-goog.require('ngeo.offline.NetworkStatus');
-goog.require('ngeo.offline.ServiceManager');
+const ngeoBase = goog.require('ngeo');
+const ngeoOfflineComponent = goog.require('ngeo.offline.component');
+const ngeoOfflineNetworkStatus = goog.require('ngeo.offline.NetworkStatus');
+const ngeoOfflineServiceManager = goog.require('ngeo.offline.ServiceManager');
 
 /**
  * @type {!angular.Module}
  */
-ngeo.offline.module = angular.module('ngeoOfflineModule', [
-  ngeo.module.name, // Change me when all dependencies are in a module.
-  ngeo.offline.component.name,
+exports = angular.module('ngeoOfflineModule', [
+  ngeoBase.module.name, // Change me when all dependencies are in a module.
+  ngeoOfflineComponent.name,
   'ngeoNetworkStatus',
-  ngeo.offline.ServiceManager.module.name,
+  ngeoOfflineServiceManager.module.name,
 ]);

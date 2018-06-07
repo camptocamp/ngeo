@@ -1,8 +1,8 @@
-goog.provide('ngeo.offline.component');
+goog.module('ngeo.offline.component');
 
-goog.require('ngeo');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.message.modalComponent');
+const ngeoBase = goog.require('ngeo');
+const ngeoMapFeatureOverlayMgr = goog.require('ngeo.map.FeatureOverlayMgr');
+const ngeoMessageModalComponent = goog.require('ngeo.message.modalComponent');
 goog.require('ol.Collection');
 goog.require('ol.Observable');
 goog.require('ol.Feature');
@@ -14,13 +14,13 @@ goog.require('ol.has');
 /**
  * @type {!angular.Module}
  */
-ngeo.offline.component = angular.module('ngeoOffline', [
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.message.modalComponent.name
+exports = angular.module('ngeoOffline', [
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMessageModalComponent.name
 ]);
 
 
-ngeo.offline.component.value('ngeoOfflineTemplateUrl',
+exports.value('ngeoOfflineTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -29,7 +29,7 @@ ngeo.offline.component.value('ngeoOfflineTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoOfflineTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/offline/component.html`;
+      `${ngeoBase.baseModuleTemplateUrl}/offline/component.html`;
   });
 
 
@@ -63,7 +63,7 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoOffline
  */
-ngeo.offline.component.component_ = {
+exports.component_ = {
   bindings: {
     'map': '<ngeoOfflineMap',
     'extentSize': '<ngeoOfflineExtentsize'
@@ -73,13 +73,13 @@ ngeo.offline.component.component_ = {
 };
 
 
-ngeo.offline.component.component('ngeoOffline', ngeo.offline.component.component_);
+exports.component('ngeoOffline', exports.component_);
 
 
 /**
  * @private
  */
-ngeo.offline.component.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @private
@@ -419,4 +419,4 @@ ngeo.offline.component.Controller_ = class {
 };
 
 
-ngeo.offline.component.controller('ngeoOfflineController', ngeo.offline.component.Controller_);
+exports.controller('ngeoOfflineController', exports.Controller_);

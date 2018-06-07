@@ -1,6 +1,6 @@
 goog.module('ngeo.offline.NetworkStatus');
 
-goog.require('ngeo.misc.debounce');
+const ngeoMiscDebounce = goog.require('ngeo.misc.debounce');
 
 
 /**
@@ -180,7 +180,7 @@ const Service = class {
 const name = 'ngeoNetworkStatus';
 
 Service.module = angular.module(name, [
-  ngeo.misc.debounce.name
+  ngeoMiscDebounce.name
 ]);
 Service.module.factory('httpInterceptor', httpInterceptor);
 Service.module.service(name, Service);
