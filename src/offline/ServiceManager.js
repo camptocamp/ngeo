@@ -65,13 +65,14 @@ ngeo.offline.ServiceManager = class {
 
   /**
    * Ask the provided service to save the data to an offline purpose
+   * @param {ol.Extent} extent The extent to dowload.
    */
-  save() {
+  save(extent) {
     if (!this.saveService_) {
       console.warn('You must register a saveService first');
       return;
     }
-    this.saveService_.save();
+    this.saveService_.save(extent);
   }
 
   /**

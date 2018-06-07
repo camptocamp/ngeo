@@ -228,7 +228,8 @@ ngeo.offline.component.Controller_ = class {
    */
   validateExtent() {
     this.progressPercents = 0;
-    this.ngeoOfflineServiceManager_.save();
+    const extent = this.getDowloadExtent_();
+    this.ngeoOfflineServiceManager_.save(extent);
     this.downloading = true;
     this.followDownloadProgression_();
   }
@@ -362,7 +363,7 @@ ngeo.offline.component.Controller_ = class {
       context.closePath();
 
       // Draw the get data zone
-      const extent = this.getExtent_(center, extentHalfLength);
+      const extent = this.createExtent_(center, extentHalfLength);
 
       context.moveTo(extent[0], extent[1]);
       context.lineTo(extent[0], extent[3]);
@@ -382,9 +383,7 @@ ngeo.offline.component.Controller_ = class {
    * @private
    */
   createPolygonToSave_() {
-    const center = /** @type {ol.Coordinate}*/(this.map.getView().getCenter());
-    const halfLength = Math.ceil(this.extentSize / 2);
-    const extent = this.getExtent_(center, halfLength);
+    const extent = this.getDowloadExtent_();
     return new ol.geom.Polygon([[
       [extent[0], extent[1]],
       [extent[0], extent[3]],
@@ -400,7 +399,7 @@ ngeo.offline.component.Controller_ = class {
    * @return {Array.<number>} an extent.
    * @private
    */
-  getExtent_(center, halfLength) {
+  createExtent_(center, halfLength) {
     const minx = center[0] - halfLength;
     const miny = center[1] - halfLength;
     const maxx = center[0] + halfLength;
@@ -408,6 +407,15 @@ ngeo.offline.component.Controller_ = class {
     return [minx, miny, maxx, maxy];
   }
 
+  /**
+   * @return {Array.<number>} the download extent.
+   * @private
+   */
+  getDowloadExtent_() {
+    const center = /** @type {ol.Coordinate}*/(this.map.getView().getCenter());
+    const halfLength = Math.ceil(this.extentSize / 2);
+    return this.createExtent_(center, halfLength);
+  }
 };
 
 
