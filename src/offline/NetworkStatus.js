@@ -3,48 +3,31 @@ goog.module('ngeo.offline.NetworkStatus');
 goog.require('ngeo.misc.debounce');
 
 
-class HttpInterceptor {
-
-  /**
-   * @ngInject
-   * @param {angular.$q} $q The Angular $q service.
-   * @param {ngeox.miscDebounce} ngeoDebounce ngeo debounce service.
-   * @param {ngeo.offline.NetworkStatus} ngeoNetworkStatus ngeo network status service.
-   */
-  constructor($q, ngeoDebounce, ngeoNetworkStatus) {
-    /**
-     * @private
-     * @type {angular.$q}
-     */
-    this.$q = $q;
-
-    /**
-     * @private
-     * @type {ngeox.miscDebounce}
-     */
-    this.ngeoDebounce_ = ngeoDebounce;
-
-    /**
-     * @private
-     * @type {ngeo.offline.NetworkStatus}
-     */
-    this.ngeoNetworkStatus_ = ngeoNetworkStatus;
-  }
-
-  request(config) {
-    return config;
-  }
-  requestError(rejection) {
-    return this.$q.reject(rejection);
-  }
-  response(response) {
-    return response;
-  }
-  responseError(rejection) {
-    this.ngeoDebounce_(() => this.ngeoNetworkStatus_.check(undefined), 2000, false);
-    return this.$q.reject(rejection);
-  }
-}
+/**
+ * @ngInject
+ * @param {angular.$q} $q The Angular $q service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo debounce service.
+ * @param {ngeo.offline.NetworkStatus} ngeoNetworkStatus ngeo network status service.
+ * @return {angular.$http.Interceptor} the interceptor
+ */
+const httpInterceptor = function($q, ngeoDebounce, ngeoNetworkStatus) {
+  const debouncedCheck = ngeoDebounce(() => ngeoNetworkStatus.check(undefined), 2000, false);
+  return {
+    request(config) {
+      return config;
+    },
+    requestError(rejection) {
+      return $q.reject(rejection);
+    },
+    response(response) {
+      return response;
+    },
+    responseError(rejection) {
+      debouncedCheck();
+      return $q.reject(rejection);
+    }
+  };
+};
 
 const Service = class {
 
@@ -149,16 +132,16 @@ const Service = class {
   /**
    * Check fir network status
    *
-   * @param {number|undefined} timeout Delay for timeout.
+   * @param {number=} timeout Delay for timeout.
    */
   check(timeout) {
     if (this.promise_) {
       this.$timeout_.cancel(this.promise_);
       this.promise_ = undefined;
     }
-    if (timeout) {
+    if (timeout !== undefined) {
       this.count_++;
-      this.promise_ = this.$timeout_(this.check.bind(this), timeout);
+      this.promise_ = this.$timeout_(() => this.check(), timeout);
       return;
     }
     $.ajax({
@@ -199,11 +182,18 @@ const name = 'ngeoNetworkStatus';
 Service.module = angular.module(name, [
   ngeo.misc.debounce.name
 ]);
-Service.module.factory('httpInterceptor', HttpInterceptor);
+Service.module.factory('httpInterceptor', httpInterceptor);
 Service.module.service(name, Service);
-Service.module.config(($httpProvider) => {
+
+/**
+ * @ngInject
+ * @private
+ * @param {angular.$HttpProvider} $httpProvider .
+ */
+Service.module.configFunction_ = function($httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');
-});
+};
+Service.module.config(Service.module.configFunction_);
 
 Service.module.value('ngeoOfflineTestUrl', '');
 
