@@ -1,8 +1,8 @@
-goog.provide('ngeo.offline.component');
+goog.module('ngeo.offline.component');
 
-goog.require('ngeo');
-goog.require('ngeo.map.FeatureOverlayMgr');
-goog.require('ngeo.message.modalComponent');
+const ngeoBase = goog.require('ngeo');
+const ngeoMapFeatureOverlayMgr = goog.require('ngeo.map.FeatureOverlayMgr');
+const ngeoMessageModalComponent = goog.require('ngeo.message.modalComponent');
 goog.require('ol.Collection');
 goog.require('ol.Observable');
 goog.require('ol.Feature');
@@ -14,13 +14,13 @@ goog.require('ol.has');
 /**
  * @type {!angular.Module}
  */
-ngeo.offline.component = angular.module('ngeoOffline', [
-  ngeo.map.FeatureOverlayMgr.module.name,
-  ngeo.message.modalComponent.name
+exports = angular.module('ngeoOffline', [
+  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMessageModalComponent.name
 ]);
 
 
-ngeo.offline.component.value('ngeoOfflineTemplateUrl',
+exports.value('ngeoOfflineTemplateUrl',
   /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
@@ -29,7 +29,7 @@ ngeo.offline.component.value('ngeoOfflineTemplateUrl',
   (element, attrs) => {
     const templateUrl = attrs['ngeoOfflineTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      `${ngeo.baseModuleTemplateUrl}/offline/component.html`;
+      `${ngeoBase.baseModuleTemplateUrl}/offline/component.html`;
   });
 
 
@@ -63,23 +63,24 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoOffline
  */
-ngeo.offline.component.component_ = {
+exports.component_ = {
   bindings: {
     'map': '<ngeoOfflineMap',
-    'extentSize': '<ngeoOfflineExtentsize'
+    'extentSize': '<ngeoOfflineExtentsize',
+    'debug': '<',
   },
   controller: 'ngeoOfflineController',
   templateUrl: ngeoOfflineTemplateUrl
 };
 
 
-ngeo.offline.component.component('ngeoOffline', ngeo.offline.component.component_);
+exports.component('ngeoOffline', exports.component_);
 
 
 /**
  * @private
  */
-ngeo.offline.component.Controller_ = class {
+exports.Controller_ = class {
 
   /**
    * @private
@@ -91,6 +92,12 @@ ngeo.offline.component.Controller_ = class {
    * @ngname ngeoOfflineController
    */
   constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager) {
+
+    /**
+     * @export
+     * @type {boolean}
+     */
+    this.debug;
 
     /**
      * @type {angular.$timeout}
@@ -209,6 +216,11 @@ ngeo.offline.component.Controller_ = class {
    * @export
    */
   toggleViewExtentSelection() {
+    if (this.debug) { // FIXME, remove this when downloader is implemented
+      const extent = this.getDowloadExtent_();
+      this.ngeoOfflineServiceManager_.save(extent);
+      return;
+    }
     this.menuDisplayed = false;
     this.selectingExtent = !this.selectingExtent;
 
@@ -228,7 +240,8 @@ ngeo.offline.component.Controller_ = class {
    */
   validateExtent() {
     this.progressPercents = 0;
-    this.ngeoOfflineServiceManager_.save();
+    const extent = this.getDowloadExtent_();
+    this.ngeoOfflineServiceManager_.save(extent);
     this.downloading = true;
     this.followDownloadProgression_();
   }
@@ -281,6 +294,10 @@ ngeo.offline.component.Controller_ = class {
    * @export
    */
   showMenu() {
+    if (this.debug) {
+      this.validateExtent();
+      return;
+    }
     this.menuDisplayed = true;
   }
 
@@ -362,7 +379,7 @@ ngeo.offline.component.Controller_ = class {
       context.closePath();
 
       // Draw the get data zone
-      const extent = this.getExtent_(center, extentHalfLength);
+      const extent = this.createExtent_(center, extentHalfLength);
 
       context.moveTo(extent[0], extent[1]);
       context.lineTo(extent[0], extent[3]);
@@ -382,9 +399,7 @@ ngeo.offline.component.Controller_ = class {
    * @private
    */
   createPolygonToSave_() {
-    const center = /** @type {ol.Coordinate}*/(this.map.getView().getCenter());
-    const halfLength = Math.ceil(this.extentSize / 2);
-    const extent = this.getExtent_(center, halfLength);
+    const extent = this.getDowloadExtent_();
     return new ol.geom.Polygon([[
       [extent[0], extent[1]],
       [extent[0], extent[3]],
@@ -400,7 +415,7 @@ ngeo.offline.component.Controller_ = class {
    * @return {Array.<number>} an extent.
    * @private
    */
-  getExtent_(center, halfLength) {
+  createExtent_(center, halfLength) {
     const minx = center[0] - halfLength;
     const miny = center[1] - halfLength;
     const maxx = center[0] + halfLength;
@@ -408,7 +423,16 @@ ngeo.offline.component.Controller_ = class {
     return [minx, miny, maxx, maxy];
   }
 
+  /**
+   * @return {Array.<number>} the download extent.
+   * @private
+   */
+  getDowloadExtent_() {
+    const center = /** @type {ol.Coordinate}*/(this.map.getView().getCenter());
+    const halfLength = Math.ceil(this.extentSize / 2);
+    return this.createExtent_(center, halfLength);
+  }
 };
 
 
-ngeo.offline.component.controller('ngeoOfflineController', ngeo.offline.component.Controller_);
+exports.controller('ngeoOfflineController', exports.Controller_);
