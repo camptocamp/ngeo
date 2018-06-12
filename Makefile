@@ -13,7 +13,7 @@ NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
-GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(NGEO_ALL_SRC_FILES)
+GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(shell find contribs/gmf/cursors/ -type f) $(NGEO_ALL_SRC_FILES)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
@@ -254,8 +254,7 @@ gh-pages: .build/python-venv.timestamp
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
-		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
-		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
+		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 	mkdir -p .build/examples-hosted/contribs/gmf
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
@@ -345,10 +344,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 .build/apidoc: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(NGEO_JS_FILES)
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
-
-.PRECIOUS: contribs/gmf/cursors/%.cur
-contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
-	convert $< $@
 
 
 # i18n
