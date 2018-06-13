@@ -2,9 +2,15 @@ goog.module('ngeo.offline.DefaultConfiguration');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol.Observable');
+goog.require('ol.layer.Layer');
+goog.require('ol.layer.Vector');
+goog.require('ol.layer.Tile');
+goog.require('ol.layer.Image');
+
 goog.require('ngeo.CustomEvent');
 
 const utils = goog.require('ngeo.offline.utils');
+
 
 /**
  * @implements {ngeox.OfflineConfiguration}
@@ -13,6 +19,11 @@ exports = class extends ol.Observable {
 
   constructor() {
     super();
+    localforage.config({
+      'name': 'ngeoOfflineStorage',
+      'version': 1.0,
+      'storeName': 'storage'
+    });
     /**
      * @param {number} progress new progress.
      */
@@ -24,16 +35,44 @@ exports = class extends ol.Observable {
   }
 
   /**
+   * @param {string} key
+   * @return {Promise<*>}
+   */
+  getItem(key) {
+    return localforage.getItem(key);
+  }
+
+  /**
+   * @param {string} key
+   * @param {*} value
+   * @return {Promise<*>}
+   */
+  setItem(key, value) {
+    return localforage.setItem(key, value);
+  }
+
+  /**
+   * @return {Promise<*>}
+   */
+  clear() {
+    return localforage.clear();
+  }
+
+  /**
+   * @param {ngeox.OfflineLayerMetadata} layerItem
+   * @return {string} A key identifying an offline layer and used during restore.
+   */
+  getLayerKey(layerItem) {
+    return layerItem.layer.get('label');
+  }
+
+  /**
    * @override
    * @return {ngeox.OfflineCallbacks} Offline callbacks.
    */
   getCallbacks() {
     const dispatchProgress = this.dispatchProgress_.bind(this);
     return {
-      onCompleteDownload(success, errors, total) {
-        console.log('Complete downloading offline tiles', success, '/', total);
-        dispatchProgress(success / total);
-      },
       onLoad(progress) {
         console.log(100 * progress, '%');
         dispatchProgress(progress);
@@ -42,11 +81,26 @@ exports = class extends ol.Observable {
         console.log('X');
         dispatchProgress(progress);
       },
-      readResponse(tile, response, contentType) {
-        tile.response = response;
-        console.log('Read some', contentType, 'for tile', tile.url);
-      }
     };
+  }
+
+  /**
+    * @param {ol.Map} map
+    * @param {ol.layer.Layer} layer
+    * @param {Array<ol.layer.Group>} ancestors
+    * @param {ol.Extent} userExtent The extent selected by the user.
+    * @return {ngeox.OfflineExtentByZoom}
+   */
+  getExtentByZoom(map, layer, ancestors, userExtent) {
+    const currentZoom = map.getView().getZoom();
+    // const viewportExtent = map.calculateExtent(map.getSize());
+
+    return [0, 1, 2, 3, 4].map((dz) => {
+      return {
+        zoom: currentZoom + dz,
+        extent: userExtent
+      };
+    });
   }
 
   /**
@@ -57,32 +111,30 @@ exports = class extends ol.Observable {
    */
   createLayerMetadatas(map, userExtent) {
     const layersItems = [];
+
     /**
      * @param {ol.layer.Base} layer .
      * @param {Array<ol.layer.Group>} ancestors .
-     * @return {boolean} continue traversal
+     * @return {boolean} whether to traverse this layer children.
      */
     const visitLayer = (layer, ancestors) => {
-      console.log('Traversing layer', layer.getProperties());
-      const extentByZoom = [{
-        zoom: 0,
-        extent: userExtent
-      }, {
-        zoom: 1,
-        extent: userExtent
-      }, {
-        zoom: 3,
-        extent: userExtent
-      }, {
-        zoom: 4,
-        extent: userExtent
-      }];
-      layersItems.push({
-        map,
-        extentByZoom,
-        layer,
-        ancestors
-      });
+      if (layer instanceof ol.layer.Layer) {
+        const extentByZoom = this.getExtentByZoom(map, layer, ancestors, userExtent);
+        let type;
+        if (layer instanceof ol.layer.Vector) {
+          type = 'vector';
+        } else if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
+          type = 'tile';
+        }
+
+        layersItems.push({
+          map,
+          extentByZoom,
+          type,
+          layer,
+          ancestors
+        });
+      }
       return true;
     };
     map.getLayers().forEach((root) => {
