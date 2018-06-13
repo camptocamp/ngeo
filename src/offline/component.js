@@ -19,13 +19,14 @@ exports = angular.module('ngeoOffline', [
   ngeoMessageModalComponent.name
 ]);
 
+const MASK_MIN_MARGIN = 100;
 
 exports.value('ngeoOfflineTemplateUrl',
   /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @return {string} Template URL.
-     */
+   * @param {angular.JQLite} element Element.
+   * @param {angular.Attributes} attrs Attributes.
+   * @return {string} Template URL.
+   */
   (element, attrs) => {
     const templateUrl = attrs['ngeoOfflineTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
@@ -66,7 +67,7 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
 exports.component_ = {
   bindings: {
     'map': '<ngeoOfflineMap',
-    'extentSize': '<ngeoOfflineExtentsize',
+    'extentSize': '<?ngeoOfflineExtentsize',
     'debug': '<',
   },
   controller: 'ngeoOfflineController',
@@ -377,7 +378,10 @@ exports.Controller_ = class {
 
       const center = [viewportWidth / 2, viewportHeight / 2];
 
-      const extentLength = this.extentSize / resolution * ol.has.DEVICE_PIXEL_RATIO;
+      const extentLength = this.extentSize ?
+        this.extentSize / resolution * ol.has.DEVICE_PIXEL_RATIO :
+        Math.min(viewportWidth, viewportHeight) - MASK_MIN_MARGIN * 2;
+
       const extentHalfLength = Math.ceil(extentLength / 2);
 
       // Draw a mask on the whole map.
@@ -440,8 +444,15 @@ exports.Controller_ = class {
    */
   getDowloadExtent_() {
     const center = /** @type {ol.Coordinate}*/(this.map.getView().getCenter());
-    const halfLength = Math.ceil(this.extentSize / 2);
+    const halfLength = Math.ceil(this.extentSize || this.getExtentSize_()) / 2;
     return this.createExtent_(center, halfLength);
+  }
+
+  getExtentSize_() {
+    const mapSize = this.map.getSize();
+    const maskSizePixel =  Math.min(mapSize[0], mapSize[1]) - MASK_MIN_MARGIN * 2;
+    const maskSizeMeter = maskSizePixel * this.map.getView().getResolution() / ol.has.DEVICE_PIXEL_RATIO;
+    return maskSizeMeter;
   }
 };
 
