@@ -3,6 +3,21 @@ goog.module('ngeo.offline.TilesDownloader');
 goog.require('goog.asserts');
 
 
+/**
+ * @param {!Blob} blob A blob
+ * @return {Promise<string>} data URL
+ */
+function blobToDataUrl(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function() {
+      resolve(reader.result);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
 exports = class {
 
   /**
@@ -68,29 +83,46 @@ exports = class {
     const xhr = new XMLHttpRequest();
     xhr.tileUrl = tile.url;
     xhr.open('GET', tileUrl, true);
-    xhr.responseType = 'arraybuffer';
+    xhr.responseType = 'blob';
     const onTileDownloaded = () => {
       if (this.allCount_ === this.tiles_.length) {
         this.resolvePromise_();
       }
     };
-    const onloadCallback = (e) => {
-      const response = e.target.response;
-      if (response && response.byteLength !== 0) { // non-empty tile
-        const contentType = e.target.getResponseHeader('content-type');
-        this.callbacks_.readResponse(tile, response, contentType);
-      }
-      ++this.allCount_;
-      ++this.okCount_;
-      this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, e);
-      onTileDownloaded();
-    };
+
     const errorCallback = (e) => {
       ++this.allCount_;
       ++this.koCount_;
       this.callbacks_.onError(this.allCount_ / this.tiles_.length, e);
       onTileDownloaded();
     };
+
+    const onloadCallback = (e) => {
+      /**
+       * @type {Blob}
+       */
+      const response = e.target.response;
+      if (response && response.size !== 0) { // non-empty tile
+        blobToDataUrl(response).then(
+          (dataUrl) => {
+            ++this.allCount_;
+            ++this.okCount_;
+            tile.response = dataUrl;
+            this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, e);
+            onTileDownloaded();
+          },
+          () => {
+            errorCallback(e);
+          }
+        );
+      } else {
+        ++this.allCount_;
+        ++this.okCount_;
+        this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, e);
+        onTileDownloaded();
+      }
+    };
+
     xhr.onload = onloadCallback;
     xhr.onerror = errorCallback;
     xhr.onabort = errorCallback;
