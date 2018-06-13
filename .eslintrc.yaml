@@ -7,8 +7,15 @@ env:
 rules:
     no-console: 0
     comma-dangle: 0
+    valid-jsdoc:
+      - error
+      -
+        requireReturn: false
+        requireParamDescription: false
+        requireReturnDescription: false
 globals:
     angular: false
+    localforage: false
     Cesium: false
     goog: false
     google: false
