@@ -2724,3 +2724,62 @@ ngeox.CreatePrint;
  * }}
  */
 ngeox.FilterCondition;
+
+/**
+ * @typedef {{
+ *   map: ol.Map,
+ *   extentByZoom: Array<{zoom: number, extent: ol.Extent}>,
+ *   content: string,
+ *   contentType: string,
+ *   layer: ol.layer.Layer,
+ *   ancestors: Array<ol.layer.Group>
+ * }}
+ */
+ngeox.OfflineLayerMetadata;
+
+/**
+ * @typedef {{
+ *   onLoad: function(number, ProgressEvent),
+ *   onError: function(number, ProgressEvent),
+ *   readResponse: function(Object, string, string)
+ * }}
+ */
+ngeox.OfflineCallbacks;
+
+/**
+ * @interface
+ * @struct
+ */
+ngeox.OfflineConfiguration = function() {};
+
+/**
+ * @return {ngeox.OfflineCallbacks} Offline callbacks.
+ */
+ngeox.OfflineConfiguration.prototype.getCallbacks = function() {};
+
+/**
+ * @param {ol.Map} map The map to work on.
+ * @param {ol.Extent} userExtent The extent selected by the user.
+ * @return {!Array<ngeox.OfflineLayerMetadata>} the downloadable layers and metadata.
+ */
+ngeox.OfflineConfiguration.prototype.createLayerMetadatas = function(map, userExtent) {};
+
+/**
+ * @param {string} type .
+ * @param {function(ngeo.CustomEvent)} listener .
+ */
+ngeox.OfflineConfiguration.prototype.on = function(type, listener) {};
+
+/**
+ * @param {string} type .
+ * @param {function(ngeo.CustomEvent)} listener .
+ */
+ngeox.OfflineConfiguration.prototype.un = function(type, listener) {};
+
+/**
+ * @typedef {{
+ *   coord: ol.Coordinate,
+ *   url: string
+ * }}
+ */
+ngeox.OfflineTile;
