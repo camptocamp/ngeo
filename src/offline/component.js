@@ -87,11 +87,12 @@ exports.Controller_ = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
    * @param {ngeo.offline.ServiceManager} ngeoOfflineServiceManager ngeo offline service Manager.
+   * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration ngeo offline configuration service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
-  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager) {
+  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration) {
 
     /**
      * @export
@@ -116,6 +117,12 @@ exports.Controller_ = class {
      * @private
      */
     this.ngeoOfflineServiceManager_ = ngeoOfflineServiceManager;
+
+    /**
+     * @private
+     * @type {ngeox.OfflineConfiguration}
+     */
+    this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
 
     /**
      * The map.
@@ -197,10 +204,28 @@ exports.Controller_ = class {
      * @export
      */
     this.displayAlertAbortDownload = false;
+
+    /**
+     * @private
+     * @param {ngeo.CustomEvent} event the progress event.
+     */
+    this.progressCallback_ = (event) => {
+      const progress = event.detail['progress'];
+      this.progressPercents = Math.floor(progress * 100);
+      if (progress === 1) {
+        this.finishDownload_();
+      }
+      this.$timeout_(() => {}, 0); // FIXME: force redraw
+    };
   }
 
   $onInit() {
     this.postcomposeListener_ = this.createMaskPostcompose_();
+    this.ngeoOfflineConfiguration_.on('progress', this.progressCallback_);
+  }
+
+  $onDestroy() {
+    this.ngeoOfflineConfiguration_.un('progress', this.progressCallback_);
   }
 
   /**
@@ -213,12 +238,13 @@ exports.Controller_ = class {
 
   /**
    * Toggle the selecting extent view.
+   * @param {boolean=} finished If just finished downloading.
    * @export
    */
-  toggleViewExtentSelection() {
-    if (this.debug) { // FIXME, remove this when downloader is implemented
+  toggleViewExtentSelection(finished) {
+    if (this.debug && !finished) { // FIXME, remove this when downloader is implemented
       const extent = this.getDowloadExtent_();
-      this.ngeoOfflineServiceManager_.save(extent);
+      this.ngeoOfflineServiceManager_.save(extent, this.map);
       return;
     }
     this.menuDisplayed = false;
@@ -241,25 +267,10 @@ exports.Controller_ = class {
   validateExtent() {
     this.progressPercents = 0;
     const extent = this.getDowloadExtent_();
-    this.ngeoOfflineServiceManager_.save(extent);
+    this.ngeoOfflineServiceManager_.save(extent, this.map);
     this.downloading = true;
-    this.followDownloadProgression_();
   }
 
-  /**
-   * FIXME For demo purpose, adapt me with real code.
-   * @private
-   */
-  followDownloadProgression_() {
-    if (this.progressPercents < 99) {
-      this.$timeoutPromise_ = this.$timeout_(() => {
-        this.progressPercents++;
-        this.followDownloadProgression_();
-      }, 50);
-    } else {
-      this.finishDownload_();
-    }
-  }
 
   /**
    * @private
@@ -268,7 +279,7 @@ exports.Controller_ = class {
     this.downloading = false;
     this.dataPolygon_ = this.createPolygonToSave_();
     this.displayExtent_();
-    this.toggleViewExtentSelection();
+    this.toggleViewExtentSelection(true);
   }
 
   /**
