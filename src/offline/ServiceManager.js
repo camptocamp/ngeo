@@ -1,24 +1,33 @@
 goog.module('ngeo.offline.ServiceManager');
 
+goog.require('ngeo.offline.NetworkStatus');
 const ngeoBase = goog.require('ngeo');
 
 
 exports = class {
 
   /**
+   * @param {!angular.Scope} $rootScope Angular rootScope.
    * @param {angular.$injector} $injector Main injector.
+   * @param {ngeo.offline.NetworkStatus} ngeoNetworkStatus ngeo Network Status.
    * @struct
    * @ngInject
    * @ngdoc service
    * @ngname ngeoOfflineServiceManager
    */
-  constructor($injector) {
+  constructor($injector, $rootScope, ngeoNetworkStatus) {
 
     /**
      * @type {angular.$injector}
      * @private
      */
     this.$injector_ = $injector;
+
+    /**
+     * @type {ngeo.offline.NetworkStatus}
+     * @private
+     */
+    this.ngeoNetworkStatus_ = ngeoNetworkStatus;
 
     /**
      * @type {*}
@@ -31,6 +40,22 @@ exports = class {
      * @private
      */
     this.restoreService_ = null;
+
+    /**
+     * @type {boolean}
+     * @private
+     */
+    this.isRestored_ = false;
+
+    $rootScope.$watch(
+        () => {
+            return this.ngeoNetworkStatus_.offline;
+        }, () => {
+        if (this.ngeoNetworkStatus_.offline && !this.isRestored_) {
+          this.isRestored_ = true;
+          this.restore();
+        }
+      });
   }
 
   /**
@@ -84,7 +109,7 @@ exports = class {
       console.warn('You must register a restoreService first');
       return;
     }
-    this.restoreService_.save();
+    this.restoreService_.restore();
   }
 };
 
