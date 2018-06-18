@@ -1,8 +1,5 @@
 goog.module('ngeo.offline.Downloader');
 
-goog.require('ol.layer.Vector');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Image');
 goog.require('ol.has');
 goog.require('ol.source.Image');
 goog.require('ol.source.TileWMS');
@@ -49,21 +46,6 @@ const Downloader = class {
     this.tileDownloader = null;
   }
 
-
-  queueLayer_(layerMetadata, queue) {
-    const layer = layerMetadata.layer;
-    if (layer instanceof ol.layer.Vector) {
-      this.queueVectorLayer_(layerMetadata, queue);
-    } else if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
-      this.queueLayerTiles_(layerMetadata, queue);
-    } else {
-      console.log('Unsupported layer', layerMetadata, layer.constructor.name);
-    }
-  }
-
-  queueVectorLayer_(layerMetadata, queue) {
-    console.log('Implement vector layer download');
-  }
 
   sourceImageWMSToTileWMS_(source, projection) {
     if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
@@ -134,9 +116,11 @@ const Downloader = class {
 
     const queue = [];
     for (const layerItem of layersMetadatas) {
-      const tiles = layerItem.tiles = [];
-      this.queueLayer_(layerItem, tiles);
-      queue.push(...tiles);
+      if (layerItem.type === 'tile') {
+        const tiles = layerItem.tiles = [];
+        this.queueLayerTiles_(layerItem, tiles);
+        queue.push(...tiles);
+      }
     }
 
     const callbacks = this.configuration_.getCallbacks();
@@ -151,12 +135,14 @@ const Downloader = class {
           tilesContentByUrl[tile.url] = tile.response;
         }
         persistenceObject.push({
-          // FIXME: define the format
-          name: layerItem.layer.get('label'), // FIXME find a proper key
+          type: layerItem.type,
+          opacity: layerItem.opacity,
+          visibility: layerItem.visibility,
+          key: this.configuration_.getLayerKey(layerItem),
           tiles: tilesContentByUrl
         });
       }
-      window.localStorage.setItem('offline_layers', JSON.stringify(persistenceObject));
+      this.configuration_.setItem('offline_layers', persistenceObject);
     });
   }
 };

@@ -2725,10 +2725,19 @@ ngeox.CreatePrint;
  */
 ngeox.FilterCondition;
 
+
+/**
+ * @typedef {{
+ *   zoom: number,
+ *   extent: ol.Extent
+ * }}
+ */
+ngeox.OfflineExtentByZoom;
+
 /**
  * @typedef {{
  *   map: ol.Map,
- *   extentByZoom: Array<{zoom: number, extent: ol.Extent}>,
+ *   extentByZoom: Array<ngeox.OfflineExtentByZoom>,
  *   content: string,
  *   contentType: string,
  *   layer: ol.layer.Layer,
@@ -2740,8 +2749,7 @@ ngeox.OfflineLayerMetadata;
 /**
  * @typedef {{
  *   onLoad: function(number, ProgressEvent),
- *   onError: function(number, ProgressEvent),
- *   readResponse: function(Object, string, string)
+ *   onError: function(number, ProgressEvent)
  * }}
  */
 ngeox.OfflineCallbacks;

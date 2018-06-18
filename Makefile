@@ -107,6 +107,7 @@ EXAMPLES_HOSTED_REQUIREMENTS = .build/examples-hosted/lib/ngeo.css \
 	.build/examples-hosted/lib/d3.min.js \
 	.build/examples-hosted/lib/FileSaver.min.js \
 	.build/examples-hosted/lib/watchwatchers.js \
+	.build/examples-hosted/lib/localforage.min.js \
 	.build/examples-hosted/lib/typeahead.bundle.min.js \
 	.build/examples-hosted/lib/proj4.js \
 	.build/examples-hosted/lib/jsts.min.js \
@@ -406,6 +407,10 @@ dist/gmf.js.map: dist/gmf.js
 	cp $< $@
 
 .build/examples-hosted/lib/angular-sanitize.min.js: node_modules/angular-sanitize/angular-sanitize.min.js
+	mkdir -p $(dir $@)
+	cp $< $@
+
+.build/examples-hosted/lib/localforage.min.js: node_modules/localforage/dist/localforage.min.js
 	mkdir -p $(dir $@)
 	cp $< $@
 
