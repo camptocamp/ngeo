@@ -17,7 +17,10 @@ const utils = goog.require('ngeo.offline.utils');
  */
 exports = class extends ol.Observable {
 
-  constructor() {
+  /**
+   * @param {!angular.Scope} $rootScope The rootScope provider.
+   */
+  constructor($rootScope) {
     super();
     localforage.config({
       'name': 'ngeoOfflineStorage',
@@ -32,6 +35,33 @@ exports = class extends ol.Observable {
         'progress': progress
       }));
     };
+
+    /**
+     * @private
+     */
+    this.rootScope_ = $rootScope;
+
+    /**
+     * @private
+     * @type {boolean}
+     */
+    this.hasDataPreviousValue_ = false;
+    this.hasOfflineDataForWatcher();
+  }
+
+  /**
+   * A method to be used by Angular watchers to synchronously get whether some offline data is available in the storage.
+   * @return {boolean}
+   */
+  hasOfflineDataForWatcher() {
+    localforage.length().then((numberOfKeys) => {
+      const hasData = numberOfKeys !== 0;
+      if (hasData ^ this.hasDataPreviousValue_) {
+        this.hasDataPreviousValue_ = hasData;
+        this.rootScope_.$apply();
+      }
+    });
+    return this.hasDataPreviousValue_;
   }
 
   /**

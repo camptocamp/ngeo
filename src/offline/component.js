@@ -233,7 +233,7 @@ exports.Controller_ = class {
    * @export
    */
   hasData() {
-    return !!this.dataPolygon_;
+    return this.ngeoOfflineConfiguration_.hasOfflineDataForWatcher();
   }
 
   /**
