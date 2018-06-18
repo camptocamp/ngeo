@@ -350,6 +350,7 @@ exports.Controller_ = class {
   deleteData() {
     this.overlayCollection_.clear();
     this.dataPolygon_ = null;
+    this.ngeoOfflineConfiguration_.clear();
   }
 
   /**
