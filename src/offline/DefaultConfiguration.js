@@ -25,7 +25,7 @@ exports = class extends ol.Observable {
     localforage.config({
       'name': 'ngeoOfflineStorage',
       'version': 1.0,
-      'storeName': 'storage'
+      'storeName': 'offlineStorage'
     });
     /**
      * @param {number} progress new progress.
@@ -38,6 +38,7 @@ exports = class extends ol.Observable {
 
     /**
      * @private
+     * @param {!angular.Scope} $rootScope The rootScope provider.
      */
     this.rootScope_ = $rootScope;
 
@@ -50,8 +51,8 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * A method to be used by Angular watchers to synchronously get whether some offline data is available in the storage.
-   * @return {boolean}
+   * A synchronous method to be used by Angular watchers.
+   * @return {boolean} whether some offline data is available in the storage
    */
   hasOfflineDataForWatcher() {
     localforage.length().then((numberOfKeys) => {
