@@ -19,8 +19,6 @@ exports = angular.module('ngeoOffline', [
   ngeoMessageModalComponent.name
 ]);
 
-const MASK_MIN_MARGIN = 100;
-
 exports.value('ngeoOfflineTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
@@ -54,6 +52,10 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  *     <ngeo-offline
  *       ngeo-offline-map="ctrl.map"
  *       ngeo-offline-extentsize="ctrl.offlineExtentSize">
+ *       ngeo-offline-mask-margin="::100"
+ *       ngeo-offline-min_zoom="::11"
+ *       ngeo-offline-max_zoom="::15"
+ *       debug="::true"
  *     </ngeo-offline>
  *
  * See our live example: [../examples/offline.html](../examples/offline.html)
@@ -68,6 +70,9 @@ exports.component_ = {
   bindings: {
     'map': '<ngeoOfflineMap',
     'extentSize': '<?ngeoOfflineExtentsize',
+    'maskMargin': '<?ngeoOfflineMaskMargin',
+    'minZoom': '<?ngeoOfflineMinZoom',
+    'maxZoom': '<?ngeoOfflineMaxZoom',
     'debug': '<',
   },
   controller: 'ngeoOfflineController',
@@ -207,6 +212,41 @@ exports.Controller_ = class {
     this.displayAlertAbortDownload = false;
 
     /**
+     * Offline mask minimum margin in pixels.
+     * @type {number}
+     * @export
+     */
+    this.maskMargin = 100;
+
+    /**
+     * Minimum zoom where offline is enable.
+     * @type {number}
+     * @export
+     */
+    this.minZoom = 10;
+
+    /**
+     * Maximum zoom where offline is enable.
+     * @type {number}
+     * @export
+     */
+    this.maxZoom = 15;
+
+    /**
+     * Map view max zoom constraint.
+     * @type {number}
+     * @export
+     */
+    this.originalMinZoom;
+
+    /**
+     * Map view min zoom constraint.
+     * @type {number}
+     * @export
+     */
+    this.originalMaxZoom;
+
+    /**
      * @private
      * @param {ngeo.CustomEvent} event the progress event.
      */
@@ -254,8 +294,10 @@ exports.Controller_ = class {
     if (this.postComposeListenerKey_) {
       ol.Observable.unByKey(this.postComposeListenerKey_);
       this.postComposeListenerKey_ = null;
+      this.removeZoomConstraints_();
     }
     if (this.selectingExtent && !this.postComposeListenerKey_) {
+      this.addZoomConstraints_();
       this.postComposeListenerKey_ = this.map.on('postcompose', this.postcomposeListener_);
     }
     this.map.render();
@@ -364,6 +406,36 @@ exports.Controller_ = class {
   }
 
   /**
+   * When enabling mask extent, zoom the view to the defined zoom range and
+   * add constraints to the view to not allow user to move out of this range.
+   * @private
+   */
+  addZoomConstraints_() {
+    const view = this.map.getView();
+    const zoom = view.getZoom();
+
+    this.originalMinZoom = view.getMinZoom();
+    this.originalMaxZoom = view.getMaxZoom();
+
+    if (zoom < this.minZoom) {
+      view.setZoom(this.minZoom);
+    } else if (zoom > this.maxZoom) {
+      view.setZoom(this.maxZoom);
+    }
+    view.setMaxZoom(this.maxZoom);
+    view.setMinZoom(this.minZoom);
+  }
+
+  /**
+   * @private
+   */
+  removeZoomConstraints_() {
+    const view = this.map.getView();
+    view.setMaxZoom(this.originalMaxZoom);
+    view.setMinZoom(this.originalMinZoom);
+  }
+
+  /**
    * @return {function(ol.render.Event)} Function to use as a map postcompose listener.
    * @private
    */
@@ -380,7 +452,7 @@ exports.Controller_ = class {
 
       const extentLength = this.extentSize ?
         this.extentSize / resolution * ol.has.DEVICE_PIXEL_RATIO :
-        Math.min(viewportWidth, viewportHeight) - MASK_MIN_MARGIN * 2;
+        Math.min(viewportWidth, viewportHeight) - this.maskMargin * 2;
 
       const extentHalfLength = Math.ceil(extentLength / 2);
 
@@ -450,7 +522,7 @@ exports.Controller_ = class {
 
   getExtentSize_() {
     const mapSize = this.map.getSize();
-    const maskSizePixel =  Math.min(mapSize[0], mapSize[1]) - MASK_MIN_MARGIN * 2;
+    const maskSizePixel =  Math.min(mapSize[0], mapSize[1]) - this.maskMargin * 2;
     const maskSizeMeter = maskSizePixel * this.map.getView().getResolution() / ol.has.DEVICE_PIXEL_RATIO;
     return maskSizeMeter;
   }
