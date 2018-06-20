@@ -2773,6 +2773,35 @@ ngeox.OfflineConfiguration.prototype.getCallbacks = function() {};
 ngeox.OfflineConfiguration.prototype.createLayerMetadatas = function(map, userExtent) {};
 
 /**
+ * @param {ngeox.OfflineLayerMetadata} metadata
+ * @return {string}
+ */
+ngeox.OfflineConfiguration.prototype.getLayerKey = function(metadata) {};
+
+/**
+ * @param {string} key
+ * @return {Promise<*>}
+ */
+ngeox.OfflineConfiguration.prototype.getItem = function(key, value) {};
+
+/**
+ * @param {string} key
+ * @param {*} value
+ * @return {Promise}
+ */
+ngeox.OfflineConfiguration.prototype.setItem = function(key, value) {};
+
+/**
+ * @return {Promise}
+ */
+ngeox.OfflineConfiguration.prototype.clear = function() {};
+
+/**
+ * @return {boolean}
+ */
+ngeox.OfflineConfiguration.prototype.hasOfflineDataForWatcher = function() {};
+
+/**
  * @param {string} type .
  * @param {function(ngeo.CustomEvent)} listener .
  */

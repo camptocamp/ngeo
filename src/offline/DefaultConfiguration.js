@@ -18,6 +18,7 @@ const utils = goog.require('ngeo.offline.utils');
 exports = class extends ol.Observable {
 
   /**
+   * @ngInject
    * @param {!angular.Scope} $rootScope The rootScope provider.
    */
   constructor($rootScope) {
@@ -38,7 +39,7 @@ exports = class extends ol.Observable {
 
     /**
      * @private
-     * @param {!angular.Scope} $rootScope The rootScope provider.
+     * @type {!angular.Scope}
      */
     this.rootScope_ = $rootScope;
 
@@ -53,6 +54,7 @@ exports = class extends ol.Observable {
   /**
    * A synchronous method to be used by Angular watchers.
    * @return {boolean} whether some offline data is available in the storage
+   * @override
    */
   hasOfflineDataForWatcher() {
     localforage.length().then((numberOfKeys) => {
@@ -68,6 +70,7 @@ exports = class extends ol.Observable {
   /**
    * @param {string} key
    * @return {Promise<*>}
+   * @override
    */
   getItem(key) {
     return localforage.getItem(key);
@@ -76,14 +79,16 @@ exports = class extends ol.Observable {
   /**
    * @param {string} key
    * @param {*} value
-   * @return {Promise<*>}
+   * @return {Promise}
+   * @override
    */
   setItem(key, value) {
     return localforage.setItem(key, value);
   }
 
   /**
-   * @return {Promise<*>}
+   * @return {Promise}
+   * @override
    */
   clear() {
     return localforage.clear();
@@ -92,9 +97,10 @@ exports = class extends ol.Observable {
   /**
    * @param {ngeox.OfflineLayerMetadata} layerItem
    * @return {string} A key identifying an offline layer and used during restore.
+   * @override
    */
   getLayerKey(layerItem) {
-    return layerItem.layer.get('label');
+    return /** @type {string} */ (layerItem.layer.get('label'));
   }
 
   /**
@@ -105,11 +111,9 @@ exports = class extends ol.Observable {
     const dispatchProgress = this.dispatchProgress_.bind(this);
     return {
       onLoad(progress) {
-        console.log(100 * progress, '%');
         dispatchProgress(progress);
       },
       onError(progress) {
-        console.log('X');
         dispatchProgress(progress);
       },
     };
@@ -120,18 +124,20 @@ exports = class extends ol.Observable {
     * @param {ol.layer.Layer} layer
     * @param {Array<ol.layer.Group>} ancestors
     * @param {ol.Extent} userExtent The extent selected by the user.
-    * @return {ngeox.OfflineExtentByZoom}
+    * @return {Array<ngeox.OfflineExtentByZoom>}
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
     // const viewportExtent = map.calculateExtent(map.getSize());
 
-    return [0, 1, 2, 3, 4].map((dz) => {
-      return {
+    const results = [];
+    [0, 1, 2, 3, 4].forEach((dz) => {
+      results.push({
         zoom: currentZoom + dz,
         extent: userExtent
-      };
+      });
     });
+    return results;
   }
 
   /**
