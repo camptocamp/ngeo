@@ -92,6 +92,7 @@ const Service = class {
 
     /**
      * @type {!boolean|undefined}
+     * @export
      */
     this.offline;
 
