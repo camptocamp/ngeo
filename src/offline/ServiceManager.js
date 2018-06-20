@@ -78,13 +78,15 @@ exports = class {
 
   /**
    * Ask the provided service to restore the saved data on the map
+   * @param {ol.Map} map The map to work on.
+   * @return {Promise<ol.Extent>}
    */
-  restore() {
+  restore(map) {
     if (!this.restoreService_) {
       console.warn('You must register a restoreService first');
-      return;
+      return Promise.reject();
     }
-    this.restoreService_.save();
+    return this.restoreService_.restore(map);
   }
 };
 

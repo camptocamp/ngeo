@@ -69,7 +69,7 @@ exports = class extends ol.Observable {
 
   /**
    * @param {string} key
-   * @return {Promise<*>}
+   * @return {Promise<?>}
    * @override
    */
   getItem(key) {

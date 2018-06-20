@@ -277,7 +277,8 @@ exports.Controller_ = class {
    */
   finishDownload_() {
     this.downloading = false;
-    this.dataPolygon_ = this.createPolygonToSave_();
+    const extent = this.getDowloadExtent_();
+    this.dataPolygon_ = this.createPolygonFromExtent_(extent);
     this.displayExtent_();
     this.toggleViewExtentSelection(true);
   }
@@ -317,10 +318,14 @@ exports.Controller_ = class {
    * @export
    */
   zoomToExtent() {
-    const size = /** @type {ol.Size} */ (this.map.getSize());
-    this.map.getView().fit(this.dataPolygon_, {size});
-    this.menuDisplayed = false;
-    this.displayExtent_();
+    console.log('FIXME: prevent parallel calls to zoomToExtent');
+    this.ngeoOfflineServiceManager_.restore(this.map).then((extent) => {
+      this.dataPolygon_ = this.createPolygonFromExtent_(extent);
+      const size = /** @type {ol.Size} */ (this.map.getSize());
+      this.map.getView().fit(this.dataPolygon_, {size});
+      this.menuDisplayed = false;
+      this.displayExtent_();
+    });
   }
 
   /**
@@ -407,11 +412,11 @@ exports.Controller_ = class {
   }
 
   /**
+   * @param {ol.Extent} extent
    * @return {ol.geom.Polygon} Polygon to save, based on the center of the map and the extentSize property.
    * @private
    */
-  createPolygonToSave_() {
-    const extent = this.getDowloadExtent_();
+  createPolygonFromExtent_(extent) {
     return new ol.geom.Polygon([[
       [extent[0], extent[1]],
       [extent[0], extent[3]],

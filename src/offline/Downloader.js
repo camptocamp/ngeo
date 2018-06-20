@@ -128,13 +128,16 @@ const Downloader = class {
     const downloadCompletePromise = this.tileDownloader.download();
 
     return downloadCompletePromise.then(() => {
-      const persistenceObject = [];
+      /**
+       * @type {Array<ngeox.OfflinePersistentLayer>}
+       */
+      const persistentLayers = [];
       for (const layerItem of layersMetadatas) {
         const tilesContentByUrl = {};
         for (const tile of layerItem.tiles) {
           tilesContentByUrl[tile.url] = tile.response;
         }
-        persistenceObject.push({
+        persistentLayers.push({
           type: layerItem.type,
           opacity: layerItem.opacity,
           visibility: layerItem.visibility,
@@ -142,7 +145,16 @@ const Downloader = class {
           tiles: tilesContentByUrl
         });
       }
-      this.configuration_.setItem('offline_layers', persistenceObject);
+
+      /**
+       * @type {ngeox.OfflinePersistentContent}
+       */
+      const persistentObject = {
+        extent: extent,
+        layers: persistentLayers
+
+      };
+      this.configuration_.setItem('offline_content', persistentObject);
     });
   }
 };

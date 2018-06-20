@@ -2748,6 +2748,25 @@ ngeox.OfflineLayerMetadata;
 
 /**
  * @typedef {{
+ *   type: string,
+ *   opacity: number,
+ *   visibility: number,
+ *   key: string,
+ *   tiles: Object<string, string>
+ * }}
+ */
+ngeox.OfflinePersistentLayer;
+
+/**
+ * @typedef {{
+ *   extent: ol.Extent,
+ *   layers: Array<ngeox.OfflinePersistentLayer>
+ * }}
+ */
+ngeox.OfflinePersistentContent;
+
+/**
+ * @typedef {{
  *   onLoad: function(number, ProgressEvent),
  *   onError: function(number, ProgressEvent)
  * }}
@@ -2780,9 +2799,9 @@ ngeox.OfflineConfiguration.prototype.getLayerKey = function(metadata) {};
 
 /**
  * @param {string} key
- * @return {Promise<*>}
+ * @return {Promise<?>}
  */
-ngeox.OfflineConfiguration.prototype.getItem = function(key, value) {};
+ngeox.OfflineConfiguration.prototype.getItem = function(key) {};
 
 /**
  * @param {string} key
