@@ -21,14 +21,16 @@ class Restorer {
    */
   restore(map) {
     console.log('should restore something');
-    return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore_(offlineContent));
+    return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore_(map, offlineContent));
   }
 
   /**
+   * @param {ol.Map} map
    * @param {ngeox.OfflinePersistentContent} offlineContent
    * @return {ol.Extent}
    */
-  doRestore_(offlineContent) {
+  doRestore_(map, offlineContent) {
+
     return offlineContent.extent;
   }
 }
