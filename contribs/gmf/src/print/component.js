@@ -833,8 +833,7 @@ exports.Controller_ = class {
     const datasource = this.getDataSource_();
 
     const customAttributes = {
-      'datasource': datasource,
-      'scale': scale
+      'datasource': datasource
     };
 
     if (this.layoutInfo.simpleAttributes) {
