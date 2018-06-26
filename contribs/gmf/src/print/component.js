@@ -830,13 +830,11 @@ exports.Controller_ = class {
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution() || 0;
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
-    const rotation = this.rotateMask ? -this.rotation : this.rotation;
     const datasource = this.getDataSource_();
 
     const customAttributes = {
       'datasource': datasource,
       'lang': this.gettextCatalog_.currentLanguage,
-      'rotation': rotation,
       'scale': scale
     };
 
