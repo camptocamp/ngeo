@@ -123,6 +123,7 @@ describe('ngeo.print.Service', () => {
             foo: 'fooval',
             bar: 'barval'
           },
+          lang: 'en',
           format: 'pdf',
           layout: 'foo layout'
         });
@@ -181,6 +182,7 @@ describe('ngeo.print.Service', () => {
             foo: 'fooval',
             bar: 'barval'
           },
+          lang: 'en',
           format: 'pdf',
           layout: 'foo layout'
         });
@@ -277,6 +279,7 @@ describe('ngeo.print.Service', () => {
             foo: 'fooval',
             bar: 'barval'
           },
+          lang: 'en',
           format: 'pdf',
           layout: 'foo layout'
         });
@@ -553,6 +556,7 @@ describe('ngeo.print.Service', () => {
             foo: 'fooval',
             bar: 'barval'
           },
+          lang: 'en',
           format: 'pdf',
           layout: 'foo layout'
         });
