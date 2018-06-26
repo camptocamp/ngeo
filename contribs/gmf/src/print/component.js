@@ -834,7 +834,6 @@ exports.Controller_ = class {
 
     const customAttributes = {
       'datasource': datasource,
-      'lang': this.gettextCatalog_.currentLanguage,
       'scale': scale
     };
 
