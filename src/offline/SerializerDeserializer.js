@@ -8,7 +8,25 @@ goog.require('ol.source.WMTS');
 goog.require('ol.layer.Tile');
 
 
-exports = class {
+const SerDes = class {
+  /**
+   * @private
+   * @param {ol.Object} olObject
+   * @return {Object}
+   */
+  createBaseObject_(olObject) {
+    const properties = olObject.getProperties();
+    const obj = {};
+    for (const key in properties) {
+      const value = properties[key];
+      const typeOf = typeof value;
+      if (typeOf === 'string' || typeOf === 'number') {
+        obj[key] = value;
+      }
+    }
+    return obj;
+  }
+
   /**
    * @param {ol.tilegrid.TileGrid} tilegrid
    * @return {string}
@@ -68,7 +86,7 @@ exports = class {
    * @return {string}
    */
   serializeSourceTileWMS(source) {
-    const obj = {};
+    const obj = this.createBaseObject_(source);
     obj['params'] = source.getParams();
     obj['urls'] = source.getUrls();
     obj['tileGrid'] = this.serializeTilegrid(source.getTileGrid());
@@ -99,7 +117,7 @@ exports = class {
    * @return {string}
    */
   serializeSourceWMTS(source) {
-    const obj = {};
+    const obj = this.createBaseObject_(source);
     obj['dimensions'] = source.getDimensions();
     obj['format'] = source.getFormat();
     obj['urls'] = source.getUrls();
@@ -151,7 +169,7 @@ exports = class {
    * @return {string}
    */
   serializeTileLayer(layer, source) {
-    const obj = {};
+    const obj = this.createBaseObject_(layer);
     obj['opacity'] = layer.getOpacity();
     obj['visible'] = layer.getVisible();
     obj['minResolution'] = layer.getMinResolution();
@@ -184,3 +202,5 @@ exports = class {
     return new ol.layer.Tile(options);
   }
 };
+
+exports = SerDes;
