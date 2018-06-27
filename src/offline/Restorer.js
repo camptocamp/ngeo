@@ -30,15 +30,16 @@ class Restorer {
    * @return {Promise<ol.Extent>}
    */
   restore(map) {
-    return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore_(map, offlineContent));
+    return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore(map, offlineContent));
   }
 
   /**
+   * @protected
    * @param {ol.Map} map
    * @param {ngeox.OfflinePersistentContent} offlineContent
    * @return {ol.Extent}
    */
-  doRestore_(map, offlineContent) {
+  doRestore(map, offlineContent) {
     map.getLayerGroup().getLayers().clear();
     for (const offlineLayer of offlineContent.layers) {
       const layer = this.configuration_.recreateOfflineLayer(offlineLayer);
