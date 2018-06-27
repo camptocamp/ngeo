@@ -1,17 +1,27 @@
 goog.module('ngeo.offline.Restorer');
 
+goog.require('ngeo.map.BackgroundLayerMgr');
+
+
 class Restorer {
 
   /**
    * @ngInject
    * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
    */
-  constructor(ngeoOfflineConfiguration) {
+  constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {
     /**
      * @private
      * @type {ngeox.OfflineConfiguration}
      */
     this.configuration_ = ngeoOfflineConfiguration;
+
+    /**
+     * @private
+     * @type {ngeo.map.BackgroundLayerMgr}
+     */
+    this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
   }
 
   /**
@@ -34,6 +44,9 @@ class Restorer {
       const layer = this.configuration_.recreateOfflineLayer(offlineLayer);
       if (layer) {
         map.addLayer(layer);
+        if (offlineLayer.backgroundLayer) {
+          this.ngeoBackgroundLayerMgr_.set(map, layer);
+        }
       }
     }
     return offlineContent.extent;
@@ -41,6 +54,8 @@ class Restorer {
 }
 
 const name = 'ngeoOfflineRestorer';
-Restorer.module = angular.module(name, []).service(name, Restorer);
+Restorer.module = angular.module(name, [
+  ngeo.map.BackgroundLayerMgr.module.name
+]).service(name, Restorer);
 
 exports = Restorer;

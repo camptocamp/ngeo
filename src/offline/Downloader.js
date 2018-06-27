@@ -126,6 +126,7 @@ const Downloader = class {
           }
         }
         persistentLayers.push({
+          backgroundLayer: layerItem.backgroundLayer,
           layerType: layerItem.layerType,
           layerSerialization: layerItem.layerSerialization,
           key: this.configuration_.getLayerKey(layerItem),

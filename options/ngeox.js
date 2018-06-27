@@ -2744,6 +2744,7 @@ ngeox.OfflineExtentByZoom;
  *   source: ol.source.Source,
  *   layerType: string,
  *   layerSerialization: string,
+ *   backgroundLayer: boolean,
  *   ancestors: Array<ol.layer.Group>
  * }}
  */
@@ -2753,6 +2754,7 @@ ngeox.OfflineLayerMetadata;
  * @typedef {{
  *   layerType: string,
  *   layerSerialization: string,
+ *   backgroundLayer: boolean,
  *   key: string,
  *   tiles: Object<string, string>
  * }}
@@ -2762,7 +2764,7 @@ ngeox.OfflinePersistentLayer;
 /**
  * @typedef {{
  *   extent: ol.Extent,
- *   layers: Array<ngeox.OfflinePersistentLayer>
+ *   layers: !Array<ngeox.OfflinePersistentLayer>
  * }}
  */
 ngeox.OfflinePersistentContent;

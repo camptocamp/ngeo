@@ -27,8 +27,9 @@ exports = class extends ol.Observable {
   /**
    * @ngInject
    * @param {!angular.Scope} $rootScope The rootScope provider.
+   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
    */
-  constructor($rootScope) {
+  constructor($rootScope, ngeoBackgroundLayerMgr) {
     super();
     localforage.config({
       'name': 'ngeoOfflineStorage',
@@ -56,6 +57,17 @@ exports = class extends ol.Observable {
      */
     this.hasDataPreviousValue_ = false;
     this.hasOfflineDataForWatcher();
+
+    /**
+     * @private
+     * @type {ngeo.map.BackgroundLayerMgr}
+     */
+    this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
+
+    /**
+     * @private
+     * @type {ngeo.offline.SerializerDeserializer}
+     */
     this.serDes_ = new SerializerDeserializer();
   }
 
@@ -197,6 +209,7 @@ exports = class extends ol.Observable {
         }
 
         layersItems.push({
+          backgroundLayer: this.ngeoBackgroundLayerMgr_.get(map) === layer,
           map,
           extentByZoom,
           layerType,
