@@ -7,9 +7,17 @@ goog.require('ol.layer.Vector');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Image');
 
+goog.require('ol.source.Image');
+goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
+goog.require('ol.source.WMTS');
+goog.require('ol.tilegrid');
+const SerializerDeserializer = goog.require('ngeo.offline.SerializerDeserializer');
+
 goog.require('ngeo.CustomEvent');
 
 const utils = goog.require('ngeo.offline.utils');
+const defaultImageLoadFunction = ol.source.Image.defaultImageLoadFunction;
 
 
 /**
@@ -49,6 +57,7 @@ exports = class extends ol.Observable {
      */
     this.hasDataPreviousValue_ = false;
     this.hasOfflineDataForWatcher();
+    this.serDes_ = new SerializerDeserializer();
   }
 
   /**
@@ -140,6 +149,20 @@ exports = class extends ol.Observable {
     return results;
   }
 
+  sourceImageWMSToTileWMS_(source, projection) {
+    if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
+      const tileGrid = ol.tilegrid.getForProjection(source.getProjection() || projection);
+      source = new ol.source.TileWMS({
+        url: source.getUrl(),
+        tileGrid: tileGrid,
+        attributions: source.getAttributions(),
+        projection: source.getProjection(),
+        params: source.getParams()
+      });
+    }
+    return source;
+  }
+
   /**
    * @override
    * @param {ol.Map} map The map to work on.
@@ -157,18 +180,24 @@ exports = class extends ol.Observable {
     const visitLayer = (layer, ancestors) => {
       if (layer instanceof ol.layer.Layer) {
         const extentByZoom = this.getExtentByZoom(map, layer, ancestors, userExtent);
-        let type;
-        if (layer instanceof ol.layer.Vector) {
-          type = 'vector';
-        } else if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
-          type = 'tile';
+        const projection = map.getView().getProjection();
+        const source = this.sourceImageWMSToTileWMS_(layer.getSource(), projection);
+        let layerType;
+        let layerSerialization;
+        if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
+          layerType = 'tile';
+          layerSerialization = this.serDes_.serializeTileLayer(layer, source);
+        } else if (layer instanceof ol.layer.Vector) {
+          layerType = 'vector';
         }
 
         layersItems.push({
           map,
           extentByZoom,
-          type,
+          layerType,
+          layerSerialization,
           layer,
+          source,
           ancestors
         });
       }
@@ -178,5 +207,34 @@ exports = class extends ol.Observable {
       utils.traverseLayer(root, [], visitLayer);
     });
     return layersItems;
+  }
+
+  /**
+   * @private
+   * @param {ngeox.OfflinePersistentLayer} layerMetadata
+   * @return {function(Object, string)}
+   */
+  createTileLoadFunction_(layerMetadata) {
+    // The tile load function which loads tiles from persistent storage
+    const tileLoadFunction = function(imageTile, src) {
+      const content = layerMetadata.tiles[utils.normalizeURL(src)]; // FIXME: ideally we should not load all the storage in memory
+      imageTile.getImage().src = content;
+    };
+    return tileLoadFunction;
+  }
+
+  /**
+   * @override
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer
+   * @return {ol.layer.Layer} the layer.
+   */
+  recreateOfflineLayer(offlineLayer) {
+    if (offlineLayer.layerType === 'tile') {
+      const serialization = offlineLayer.layerSerialization;
+      const tileLoadFunction = this.createTileLoadFunction_(offlineLayer);
+      const layer = this.serDes_.deserializeTileLayer(serialization, tileLoadFunction);
+      return layer;
+    }
+    return null;
   }
 };

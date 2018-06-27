@@ -1,17 +1,14 @@
 goog.module('ngeo.offline.Downloader');
 
 goog.require('ol.has');
-goog.require('ol.source.Image');
-goog.require('ol.source.TileWMS');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.tilegrid');
 
 goog.require('goog.asserts');
+goog.require('ol.source.TileWMS');
+goog.require('ol.source.WMTS');
 
-
+const utils = goog.require('ngeo.offline.utils');
 const TilesDownloader = goog.require('ngeo.offline.TilesDownloader');
 
-const defaultImageLoadFunction = ol.source.Image.defaultImageLoadFunction;
 
 /**
  * @param {ol.Coordinate} a Some coordinates.
@@ -47,33 +44,18 @@ const Downloader = class {
   }
 
 
-  sourceImageWMSToTileWMS_(source, projection) {
-    if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
-      const tileGrid = ol.tilegrid.getForProjection(source.getProjection() || projection);
-      source = new ol.source.TileWMS({
-        url: source.getUrl(),
-        tileGrid: tileGrid,
-        attributions: source.getAttributions(),
-        projection: source.getProjection(),
-        params: source.getParams()
-      });
-    }
-    return source;
-  }
-
-
   /**
    * @param {ngeox.OfflineLayerMetadata} layerMetadata Layers metadata.
    * @param {Array<ngeox.OfflineTile>} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
-    const {map, layer, extentByZoom} = layerMetadata;
+    const {map, source, extentByZoom} = layerMetadata;
 
-    const projection = map.getView().getProjection();
-    const source = this.sourceImageWMSToTileWMS_(layer.getSource(), projection);
     if (!source) {
       return;
     }
+    goog.asserts.assert(source instanceof ol.source.TileWMS || source instanceof ol.source.WMTS);
+    const projection = map.getView().getProjection();
     const tileGrid = source.getTileGrid();
     const tileUrlFunction = source.getTileUrlFunction();
 
@@ -83,20 +65,20 @@ const Downloader = class {
       const extent = extentZoom.extent;
       const queueByZ = [];
       let minX, minY, maxX, maxY;
-      tileGrid.forEachTileCoord(extent, z, (tileCoord) => {
-        maxX = tileCoord[1];
-        maxY = tileCoord[2];
+      tileGrid.forEachTileCoord(extent, z, (coord) => {
+        maxX = coord[1];
+        maxY = coord[2];
         if (minX === undefined) {
-          minX = tileCoord[1];
-          minY = tileCoord[2];
+          minX = coord[1];
+          minY = coord[2];
         }
+        const url = tileUrlFunction(coord, ol.has.DEVICE_PIXEL_RATIO, projection);
+        goog.asserts.assert(url);
+
         /**
          * @type {ngeox.OfflineTile}
          */
-        const tile = {
-          coord: tileCoord,
-          url: tileUrlFunction(tileCoord, ol.has.DEVICE_PIXEL_RATIO, projection)
-        };
+        const tile = {coord, url};
         queueByZ.push(tile);
       });
 
@@ -112,11 +94,14 @@ const Downloader = class {
    * @return {Promise} A promise resolving when save is finished.
    */
   save(extent, map) {
+    /**
+     * @type {!Array<ngeox.OfflineLayerMetadata>}
+     */
     const layersMetadatas = this.configuration_.createLayerMetadatas(map, extent);
 
     const queue = [];
     for (const layerItem of layersMetadatas) {
-      if (layerItem.type === 'tile') {
+      if (layerItem.layerType === 'tile') {
         const tiles = layerItem.tiles = [];
         this.queueLayerTiles_(layerItem, tiles);
         queue.push(...tiles);
@@ -129,18 +114,20 @@ const Downloader = class {
 
     return downloadCompletePromise.then(() => {
       /**
-       * @type {Array<ngeox.OfflinePersistentLayer>}
+       * @type {!Array<ngeox.OfflinePersistentLayer>}
        */
       const persistentLayers = [];
       for (const layerItem of layersMetadatas) {
         const tilesContentByUrl = {};
-        for (const tile of layerItem.tiles) {
-          tilesContentByUrl[tile.url] = tile.response;
+        if (layerItem.layerType === 'tile') {
+          for (const tile of layerItem.tiles) {
+            const tileKey = utils.normalizeURL(tile.url);
+            tilesContentByUrl[tileKey] = tile.response;
+          }
         }
         persistentLayers.push({
-          type: layerItem.type,
-          opacity: layerItem.opacity,
-          visibility: layerItem.visibility,
+          layerType: layerItem.layerType,
+          layerSerialization: layerItem.layerSerialization,
           key: this.configuration_.getLayerKey(layerItem),
           tiles: tilesContentByUrl
         });
@@ -152,7 +139,6 @@ const Downloader = class {
       const persistentObject = {
         extent: extent,
         layers: persistentLayers
-
       };
       this.configuration_.setItem('offline_content', persistentObject);
     });
