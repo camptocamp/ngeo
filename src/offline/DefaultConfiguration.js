@@ -10,7 +10,6 @@ goog.require('ol.layer.Image');
 goog.require('ol.source.Image');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
-goog.require('ol.source.WMTS');
 goog.require('ol.tilegrid');
 const SerializerDeserializer = goog.require('ngeo.offline.SerializerDeserializer');
 
