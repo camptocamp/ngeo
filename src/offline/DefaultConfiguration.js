@@ -217,7 +217,7 @@ exports = class extends ol.Observable {
   /**
    * @private
    * @param {ngeox.OfflinePersistentLayer} offlineLayer
-   * @return {function(Object, string)}
+   * @return {function(ol.ImageTile, string)}
    */
   createTileLoadFunction_(offlineLayer) {
     /**

@@ -100,7 +100,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization
-   * @param {function(Object, string)=} tileLoadFunction
+   * @param {function(ol.ImageTile, string)=} tileLoadFunction
    * @return {ol.source.TileWMS} source
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
@@ -139,7 +139,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization
-   * @param {function(Object, string)=} tileLoadFunction
+   * @param {function(ol.ImageTile, string)=} tileLoadFunction
    * @return {ol.source.WMTS}
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
@@ -188,7 +188,7 @@ const SerDes = class {
 
   /**
    * @param {string} serialization
-   * @param {function(Object, string)=} tileLoadFunction
+   * @param {function(ol.ImageTile, string)=} tileLoadFunction
    * @return {ol.layer.Tile}
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
