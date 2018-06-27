@@ -364,7 +364,6 @@ exports.Controller_ = class {
    * @export
    */
   zoomToExtent() {
-    console.log('FIXME: prevent parallel calls to zoomToExtent');
     this.ngeoOfflineServiceManager_.restore(this.map).then((extent) => {
       this.dataPolygon_ = this.createPolygonFromExtent_(extent);
       const size = /** @type {ol.Size} */ (this.map.getSize());

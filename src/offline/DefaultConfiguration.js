@@ -6,10 +6,17 @@ goog.require('ol.layer.Layer');
 goog.require('ol.layer.Vector');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Image');
+goog.require('ol.proj');
+goog.require('ol.source.Image');
+goog.require('ol.source.ImageWMS');
+goog.require('ol.source.TileWMS');
+goog.require('ol.tilegrid');
+const SerializerDeserializer = goog.require('ngeo.offline.SerializerDeserializer');
 
 goog.require('ngeo.CustomEvent');
 
 const utils = goog.require('ngeo.offline.utils');
+const defaultImageLoadFunction = ol.source.Image.defaultImageLoadFunction;
 
 
 /**
@@ -20,8 +27,9 @@ exports = class extends ol.Observable {
   /**
    * @ngInject
    * @param {!angular.Scope} $rootScope The rootScope provider.
+   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
    */
-  constructor($rootScope) {
+  constructor($rootScope, ngeoBackgroundLayerMgr) {
     super();
     localforage.config({
       'name': 'ngeoOfflineStorage',
@@ -49,6 +57,18 @@ exports = class extends ol.Observable {
      */
     this.hasDataPreviousValue_ = false;
     this.hasOfflineDataForWatcher();
+
+    /**
+     * @private
+     * @type {ngeo.map.BackgroundLayerMgr}
+     */
+    this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
+
+    /**
+     * @private
+     * @type {ngeo.offline.SerializerDeserializer}
+     */
+    this.serDes_ = new SerializerDeserializer();
   }
 
   /**
@@ -141,6 +161,26 @@ exports = class extends ol.Observable {
   }
 
   /**
+   * @private
+   * @param {ol.source.Source} source
+   * @param {ol.proj.Projection} projection
+   * @return {ol.source.Source}
+   */
+  sourceImageWMSToTileWMS_(source, projection) {
+    if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
+      const tileGrid = ol.tilegrid.getForProjection(source.getProjection() || projection);
+      source = new ol.source.TileWMS({
+        url: source.getUrl(),
+        tileGrid: tileGrid,
+        attributions: source.getAttributions(),
+        projection: source.getProjection(),
+        params: source.getParams()
+      });
+    }
+    return source;
+  }
+
+  /**
    * @override
    * @param {ol.Map} map The map to work on.
    * @param {ol.Extent} userExtent The extent selected by the user.
@@ -157,18 +197,25 @@ exports = class extends ol.Observable {
     const visitLayer = (layer, ancestors) => {
       if (layer instanceof ol.layer.Layer) {
         const extentByZoom = this.getExtentByZoom(map, layer, ancestors, userExtent);
-        let type;
-        if (layer instanceof ol.layer.Vector) {
-          type = 'vector';
-        } else if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
-          type = 'tile';
+        const projection = ol.proj.get(map.getView().getProjection());
+        const source = this.sourceImageWMSToTileWMS_(layer.getSource(), projection);
+        let layerType;
+        let layerSerialization;
+        if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
+          layerType = 'tile';
+          layerSerialization = this.serDes_.serializeTileLayer(layer, source);
+        } else if (layer instanceof ol.layer.Vector) {
+          layerType = 'vector';
         }
 
         layersItems.push({
+          backgroundLayer: this.ngeoBackgroundLayerMgr_.get(map) === layer,
           map,
           extentByZoom,
-          type,
+          layerType,
+          layerSerialization,
           layer,
+          source,
           ancestors
         });
       }
@@ -178,5 +225,43 @@ exports = class extends ol.Observable {
       utils.traverseLayer(root, [], visitLayer);
     });
     return layersItems;
+  }
+
+  /**
+   * @private
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer
+   * @return {function(ol.ImageTile, string)}
+   */
+  createTileLoadFunction_(offlineLayer) {
+    /**
+     * Load the tile from persistent storage.
+     * @param {ol.ImageTile} imageTile
+     * @param {string} src
+     */
+    const tileLoadFunction = function(imageTile, src) {
+      // FIXME: ideally we should not load all the storage in memory
+      let content = offlineLayer.tiles[utils.normalizeURL(src)];
+      if (!content) {
+        // use a white 1x1 image to make the map consistent
+        content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
+      }
+      imageTile.getImage().src = content;
+    };
+    return tileLoadFunction;
+  }
+
+  /**
+   * @override
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer
+   * @return {ol.layer.Layer} the layer.
+   */
+  recreateOfflineLayer(offlineLayer) {
+    if (offlineLayer.layerType === 'tile') {
+      const serialization = offlineLayer.layerSerialization;
+      const tileLoadFunction = this.createTileLoadFunction_(offlineLayer);
+      const layer = this.serDes_.deserializeTileLayer(serialization, tileLoadFunction);
+      return layer;
+    }
+    return null;
   }
 };

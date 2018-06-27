@@ -14,7 +14,7 @@ const restorer = goog.require('ngeo.offline.Restorer');
 exports = angular.module('ngeoOfflineModule', [
   ngeoBase.module.name, // Change me when all dependencies are in a module.
   ngeoOfflineComponent.name,
-  'ngeoNetworkStatus',
+  ngeoOfflineNetworkStatus.module.name,
   ngeoOfflineServiceManager.module.name,
   downloader.module.name,
   restorer.module.name

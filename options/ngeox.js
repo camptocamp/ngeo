@@ -2741,6 +2741,10 @@ ngeox.OfflineExtentByZoom;
  *   content: string,
  *   contentType: string,
  *   layer: ol.layer.Layer,
+ *   source: ol.source.Source,
+ *   layerType: string,
+ *   layerSerialization: string,
+ *   backgroundLayer: boolean,
  *   ancestors: Array<ol.layer.Group>
  * }}
  */
@@ -2748,9 +2752,9 @@ ngeox.OfflineLayerMetadata;
 
 /**
  * @typedef {{
- *   type: string,
- *   opacity: number,
- *   visibility: number,
+ *   layerType: string,
+ *   layerSerialization: string,
+ *   backgroundLayer: boolean,
  *   key: string,
  *   tiles: Object<string, string>
  * }}
@@ -2760,7 +2764,7 @@ ngeox.OfflinePersistentLayer;
 /**
  * @typedef {{
  *   extent: ol.Extent,
- *   layers: Array<ngeox.OfflinePersistentLayer>
+ *   layers: !Array<ngeox.OfflinePersistentLayer>
  * }}
  */
 ngeox.OfflinePersistentContent;
@@ -2831,6 +2835,12 @@ ngeox.OfflineConfiguration.prototype.on = function(type, listener) {};
  * @param {function(ngeo.CustomEvent)} listener .
  */
 ngeox.OfflineConfiguration.prototype.un = function(type, listener) {};
+
+/**
+* @param {ngeox.OfflinePersistentLayer} offlineLayer
+* @return {ol.layer.Layer}
+ */
+ngeox.OfflineConfiguration.prototype.recreateOfflineLayer = function(offlineLayer) {};
 
 /**
  * @typedef {{
