@@ -867,7 +867,7 @@ exports.Controller_.prototype.selectAll = function() {
 
 
 /**
- * Unselect all rows of the currently active grid.
+ * Deselect all rows of the currently active grid.
  * @export
  */
 exports.Controller_.prototype.unselectAll = function() {

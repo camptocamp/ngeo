@@ -83,7 +83,7 @@ const exports = class {
     this.map_ = null;
 
     /**
-     * The hovered point attributes in d3 profile highlighted on the 2D map
+     * The hovered point attributes in D3 profile highlighted on the 2D map
      * @type {ol.Overlay}
      */
     this.cartoHighlight = new olOverlay({
@@ -92,7 +92,7 @@ const exports = class {
     });
 
     /**
-     * The hovered point geometry (point) in d3 profile highlighted on the 2D map
+     * The hovered point geometry (point) in D3 profile highlighted on the 2D map
      * @type {ol.layer.Vector}
      */
     this.lidarPointHighlight = new olLayerVector({
@@ -201,11 +201,11 @@ const exports = class {
 
 
   /**
-   * Load profile data (lidar points) by succesive Levels Of Details using asynchronous requests
+   * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
    * @param {Array} clippedLine an array of the clipped line coordinates
-   * @param {number} distanceOffset the left side of d3 profile domain at current zoom and pan configuration
-   * @param {boolean} resetPlot wether to reset d3 plot or not
-   * @param {number} minLOD minimum level of detail
+   * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
+   * @param {boolean} resetPlot whether to reset D3 plot or not
+   * @param {number} minLOD minimum Level Of Detail
    * @export
    */
   getProfileByLOD(clippedLine, distanceOffset, resetPlot, minLOD) {
@@ -265,14 +265,14 @@ const exports = class {
 
   /**
    * Request to Pytree service for a range of Level Of Detail (LOD)
-   * @param {number} minLOD minimum level of detail of the request
-   * @param {number} maxLOD maximum level of detail of the request
+   * @param {number} minLOD minimum Level Of Detail of the request
+   * @param {number} maxLOD maximum Level Of Detail of the request
    * @param {number} iter the iteration in profile requests cycle
    * @param {string} coordinates linestring in cPotree format
-   * @param {number} distanceOffset the left side of d3 profile domain at current zoom and pan configuration
+   * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param {boolean} lastLOD the deepest level to retrieve for this profile
    * @param {number} width the width of the profile
-   * @param {boolean} resetPlot wether to reset d3 plot or not, used for first LOD
+   * @param {boolean} resetPlot whether to reset D3 plot or not, used for first LOD
    * @private
    */
   queryPytree_(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot) {
@@ -312,9 +312,9 @@ const exports = class {
    * Process the binary array return by Pytree (cPotree)
    * @param {ArrayBuffer} profile binary array returned by cPotree executable called by Pytree
    * @param {number} iter the iteration in profile requests cycle
-   * @param {number} distanceOffset the left side of d3 profile domain at current zoom and pan configuration
+   * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param {boolean} lastLOD the deepest level to retrieve for this profile
-   * @param {boolean} resetPlot wether to reset d3 plot or not
+   * @param {boolean} resetPlot whether to reset D3 plot or not
    * @private
    */
   processBuffer_(profile, iter, distanceOffset, lastLOD, resetPlot) {
@@ -449,7 +449,7 @@ const exports = class {
   }
 
   /**
-   * Update the profile data according to d3 chart zoom and pan level
+   * Update the profile data according to D3 chart zoom and pan level
    * The update will wait on a 200ms pause on the actions of users before to do the update.
    * @export
    */

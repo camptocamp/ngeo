@@ -228,7 +228,7 @@ ngeox.IssueGetFeaturesOptions.prototype.extent;
 
 
 /**
- * A filter to additionnally use with the query. Only used by WFS requests.
+ * A filter to additionally use with the query. Only used by WFS requests.
  * If a filter is defined, then it is used instead of the data source's
  * filter rules.
  * @type {ol.format.filter.Filter|undefined}

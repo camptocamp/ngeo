@@ -8,3 +8,4 @@ Makefile* text whitespace=indent-with-non-tab,tabwidth=2 eol=lf
 *.gif binary
 *.ico binary
 *.enc binary
+*.cur binary

@@ -37,7 +37,7 @@ describe('GmfPrintController', () => {
     expect(gmfPrintCtrl.rotation).toBe(-180);
   });
 
-  it('Set layout and test depending layout informations changes', () => {
+  it('Set layout and test depending layout information changes', () => {
     const title = 'title';
     gmfPrintCtrl.layoutInfo.title = title;
 

@@ -354,7 +354,7 @@ exports.Controller_ = class {
 
   /**
    * Called when the active property changes. Toggle data source registration.
-   * Also, when deactivated, unselect data source.
+   * Also, when deactivated, deselect data source.
    * @param {boolean} active Active.
    * @private
    */
@@ -454,7 +454,7 @@ exports.Controller_ = class {
 
   /**
    * Unregister a data source if it's filtrable. Also, if it's the one
-   * that was currently selected, unselect it.
+   * that was currently selected, deselect it.
    * @param {gmf.datasource.OGC} dataSource Data source
    * @private
    */

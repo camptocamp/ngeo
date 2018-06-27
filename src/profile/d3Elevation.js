@@ -115,7 +115,7 @@ const exports = function(options) {
   const linesConfiguration = options.linesConfiguration;
 
   /**
-   * Number of differents configurations for the line.
+   * Number of different configurations for the line.
    */
   const numberOfLines = Object.keys(linesConfiguration).length;
 

@@ -18,7 +18,7 @@ const d3 = {
 const exports = class {
 
   /**
-   * Clip a linstring with start and end measure givent by d3 Chart domain
+   * Clip a linstring with start and end measure given by D3 Chart domain
    * @param {gmf.lidarprofile.Config} config the LIDAR profile config instance
    * @param {number} map_resolution the current resolution of the map
    * @param {ol.geom.LineString} linestring an OpenLayer Linestring
@@ -154,11 +154,11 @@ const exports = class {
 
 
   /**
-   * Get a LOD and with for a given chart span
+   * Get a Level Of Details and with for a given chart span
    * Configuration is set up in Pytree configuration
    * @param {number} span domain extent
    * @param {lidarprofileServer.ConfigLevels} max_levels levels defined by a LIDAR server
-   * @return {{maxLOD: number, width: number}} Object with optimized LOD and width for this profile span
+   * @return {{maxLOD: number, width: number}} Object with optimized Level Of Details and width for this profile span
    */
   getNiceLOD(span, max_levels) {
     let maxLOD = 0;
@@ -227,7 +227,7 @@ const exports = class {
 
 
   /**
-   * Transforms a lidarprofile into mutliple single points sorted by distance.
+   * Transforms a lidarprofile into multiple single points sorted by distance.
    * @param {gmfx.LidarprofilePoints} profilePoints in the profile
    * @return {Array.<gmfx.LidarPoint>} An array of Lidar Points.
    */

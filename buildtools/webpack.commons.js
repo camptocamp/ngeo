@@ -7,6 +7,7 @@ const LessPluginAutoprefix = require('less-plugin-autoprefix');
 const devMode = process.env.NODE_ENV !== 'production'
 
 const themes = {
+  'mobile': '"~gmf/controllers/mobile-theme.less"',
   'desktop': '"~gmf/controllers/desktop-theme.less"',
   'desktop_alt': '"' + path.resolve('contribs/gmf/apps/desktop_alt/less/theme.less') + '"',
 }
@@ -127,7 +128,7 @@ const cssLessLoaderConfigs = [
         new LessPluginAutoprefix()
       ],
       modifyVars: {
-        'THEME': themes[theme],
+        'THEME': themes[theme] ? themes[theme] : theme,
       }
     }
   }

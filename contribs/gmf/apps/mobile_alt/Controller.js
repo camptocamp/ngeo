@@ -18,6 +18,8 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import Raven from 'raven-js/src/raven.js';
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -93,6 +95,13 @@ const exports = function($scope, $injector) {
     })
   });
 
+  if ($injector.has('sentryUrl')) {
+    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+    const raven = new Raven();
+    raven.config($injector.get('sentryUrl'), options)
+      .addPlugin(RavenPluginsAngular)
+      .install();
+  }
 };
 
 olBase.inherits(exports, gmfControllersAbstractMobileController);

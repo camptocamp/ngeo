@@ -80,6 +80,7 @@ exports.directive('gmfContextualdata',
 /**
  *
  * @param {angular.$compile} $compile Angular compile service.
+ * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {!angular.Scope} $scope Scope.
  * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
  *
@@ -88,7 +89,7 @@ exports.directive('gmfContextualdata',
  * @ngdoc controller
  * @ngInject
  */
-exports.Controller_ = function($compile, $scope, gmfRaster) {
+exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
 
   /**
    * @type {ol.Map}
@@ -119,6 +120,12 @@ exports.Controller_ = function($compile, $scope, gmfRaster) {
    * @private
    */
   this.$compile_ = $compile;
+
+  /**
+   * @type {angular.$timeout}
+   * @private
+   */
+  this.timeout_ = $timeout;
 
   /**
    * @type {angular.Scope}
@@ -160,7 +167,11 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(event) {
     event.preventDefault();
     this.hidePopover();
     this.showPopover();
-    this.overlay_.setPosition(coordinate);
+
+    // Use timeout to let the popover content to be rendered before displaying it.
+    this.timeout_(() => {
+      this.overlay_.setPosition(coordinate);
+    });
   });
 };
 

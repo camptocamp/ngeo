@@ -929,7 +929,7 @@ exports.GEOMETRY_WRITERS_ = {
 
 
 /**
- * Read a logical sequence of characters and return (or complet then return)
+ * Read a logical sequence of characters and return (or complete then return)
  * an array of numbers. The coordinates are assumed to be in
  * two dimensions and in latitude, longitude order.
  * corresponding to a geometry's coordinates.

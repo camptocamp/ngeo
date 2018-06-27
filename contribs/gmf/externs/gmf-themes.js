@@ -146,7 +146,7 @@ gmfThemes.GmfGroup.prototype.ogcServer;
 
 
 /**
- * On non mixed first level group with more then one time layer, it is the time informations.
+ * On non mixed first level group with more then one time layer, it is the time information.
  * @type {ngeox.TimeProperty|undefined}
  */
 gmfThemes.GmfGroup.prototype.time;
@@ -232,7 +232,7 @@ gmfThemes.GmfLayerWMS.prototype.ogcServer;
 
 
 /**
- * The time informations if the layer directly manage it, see
+ * The time information if the layer directly manage it, see
  * also {gmfThemes.GmfGroup.time}.
  * @type {ngeox.TimeProperty|undefined}
  */
@@ -378,7 +378,7 @@ gmfThemes.GmfFunctionalities.prototype.default_basemap;
 
 /**
  * When set, contains the name of the panel to open upon loading an application.
- * Note: altough this is a list, only one can be defined.
+ * Note: although this is a list, only one can be defined.
  * @type {Array.<!string>|undefined}
  */
 gmfThemes.GmfFunctionalities.prototype.open_panel;
@@ -387,7 +387,7 @@ gmfThemes.GmfFunctionalities.prototype.open_panel;
 /**
  * Name of the layer (data source) that should be toggled in the filter tool
  * upon loading an application.
- * Note: altough this is a list, only one can be defined.
+ * Note: although this is a list, only one can be defined.
  * @type {Array.<!string>|undefined}
  */
 gmfThemes.GmfFunctionalities.prototype.preset_layer_filter;
@@ -561,7 +561,7 @@ gmfThemes.GmfMetaData.prototype.maxResolution;
 
 
 /**
- * The URL to the informations on this layer.
+ * The URL to the information on this layer.
  * For WMS and WMTS layers.
  * @type {string|undefined}
  */

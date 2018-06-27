@@ -126,7 +126,7 @@ describe('Permalink service', () => {
       expect(PermalinkService.getWfsPermalinkData_()).toEqual(expectedQueryParams);
     });
 
-    it('works with multipe filter groups', () => {
+    it('works with multiple filter groups', () => {
       // ?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&wfs_0_highway=bus_stop&
       // wfs_0_operator=TL&wfs_1_highway=bus_stop&wfs_1_name=Grand-Pont&wfs_1_operator=TL
       ngeoLocation.updateParams({
