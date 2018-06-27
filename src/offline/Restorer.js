@@ -29,7 +29,6 @@ class Restorer {
    * @return {ol.Extent}
    */
   doRestore_(map, offlineContent) {
-    // First clear all layers
     map.getLayerGroup().getLayers().clear();
     for (const offlineLayer of offlineContent.layers) {
       const layer = this.configuration_.recreateOfflineLayer(offlineLayer);

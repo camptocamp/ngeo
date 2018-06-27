@@ -148,6 +148,12 @@ exports = class extends ol.Observable {
     return results;
   }
 
+  /**
+   * @private
+   * @param {ol.source.Source} source
+   * @param {ol.proj.ProjectionLike} projection
+   * @return {ol.source.Source}
+   */
   sourceImageWMSToTileWMS_(source, projection) {
     if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
       const tileGrid = ol.tilegrid.getForProjection(source.getProjection() || projection);
@@ -210,13 +216,22 @@ exports = class extends ol.Observable {
 
   /**
    * @private
-   * @param {ngeox.OfflinePersistentLayer} layerMetadata
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer
    * @return {function(Object, string)}
    */
-  createTileLoadFunction_(layerMetadata) {
-    // The tile load function which loads tiles from persistent storage
+  createTileLoadFunction_(offlineLayer) {
+    /**
+     * Load the tile from persistent storage.
+     * @param {ol.ImageTile} imageTile
+     * @param {string} src
+     */
     const tileLoadFunction = function(imageTile, src) {
-      const content = layerMetadata.tiles[utils.normalizeURL(src)]; // FIXME: ideally we should not load all the storage in memory
+      // FIXME: ideally we should not load all the storage in memory
+      let content = offlineLayer.tiles[utils.normalizeURL(src)];
+      if (!content) {
+        // use a white 1x1 image to make the map consistent
+        content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
+      }
       imageTile.getImage().src = content;
     };
     return tileLoadFunction;
