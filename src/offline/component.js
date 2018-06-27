@@ -216,21 +216,21 @@ exports.Controller_ = class {
      * @type {number}
      * @export
      */
-    this.maskMargin = 100;
+    this.maskMargin;
 
     /**
      * Minimum zoom where offline is enable.
      * @type {number}
      * @export
      */
-    this.minZoom = 10;
+    this.minZoom;
 
     /**
      * Maximum zoom where offline is enable.
      * @type {number}
      * @export
      */
-    this.maxZoom = 15;
+    this.maxZoom;
 
     /**
      * Map view max zoom constraint.
@@ -263,6 +263,9 @@ exports.Controller_ = class {
   $onInit() {
     this.postcomposeListener_ = this.createMaskPostcompose_();
     this.ngeoOfflineConfiguration_.on('progress', this.progressCallback_);
+    this.maskMargin = this.maskMargin || 100;
+    this.minZoom = this.minZoom || 10;
+    this.maxZoom = this.maxZoom || 15;
   }
 
   $onDestroy() {
