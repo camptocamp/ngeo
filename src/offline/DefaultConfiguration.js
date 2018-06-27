@@ -6,7 +6,7 @@ goog.require('ol.layer.Layer');
 goog.require('ol.layer.Vector');
 goog.require('ol.layer.Tile');
 goog.require('ol.layer.Image');
-
+goog.require('ol.proj');
 goog.require('ol.source.Image');
 goog.require('ol.source.ImageWMS');
 goog.require('ol.source.TileWMS');
@@ -151,7 +151,7 @@ exports = class extends ol.Observable {
   /**
    * @private
    * @param {ol.source.Source} source
-   * @param {ol.proj.ProjectionLike} projection
+   * @param {ol.proj.Projection} projection
    * @return {ol.source.Source}
    */
   sourceImageWMSToTileWMS_(source, projection) {
@@ -185,7 +185,7 @@ exports = class extends ol.Observable {
     const visitLayer = (layer, ancestors) => {
       if (layer instanceof ol.layer.Layer) {
         const extentByZoom = this.getExtentByZoom(map, layer, ancestors, userExtent);
-        const projection = map.getView().getProjection();
+        const projection = ol.proj.get(map.getView().getProjection());
         const source = this.sourceImageWMSToTileWMS_(layer.getSource(), projection);
         let layerType;
         let layerSerialization;
