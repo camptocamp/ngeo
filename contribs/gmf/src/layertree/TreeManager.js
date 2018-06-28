@@ -88,7 +88,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
 
   /**
    * The controller of the (unique) root layer tree.
-   * The array of top level layer trees is avaible through `rootCtrl.children`.
+   * The array of top level layer trees is available through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
    * @type {ngeo.layertree.Controller}
    * @export
@@ -576,7 +576,7 @@ exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
     });
   }
 
-  // Set the metadata with the fullState object informations.
+  // Set the metadata with the fullState object information.
   const metadata = node.metadata;
   metadata.isChecked = fullState.isChecked;
   metadata.isExpanded = fullState.isExpanded;

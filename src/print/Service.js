@@ -57,9 +57,10 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @struct
  * @param {string} url URL to MapFish print web service.
  * @param {angular.$http} $http Angular $http service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
-const exports = function(url, $http, ngeoLayerHelper) {
+const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   /**
    * @type {string}
    * @private
@@ -71,6 +72,12 @@ const exports = function(url, $http, ngeoLayerHelper) {
    * @private
    */
   this.$http_ = $http;
+
+  /**
+   * @type {!angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog_ = gettextCatalog;
 
   /**
    * @type {ngeo.map.LayerHelper}
@@ -134,9 +141,12 @@ exports.prototype.createSpec = function(
   });
   olObj.assign(attributes, customAttributes);
 
+  const lang = this.gettextCatalog_.currentLanguage;
+
   const spec = /** @type {MapFishPrintSpec} */ ({
     attributes,
     format,
+    lang,
     layout
   });
 
@@ -454,19 +464,20 @@ exports.prototype.getCapabilities = function(opt_httpConfig) {
 
 /**
  * @param {angular.$http} $http Angular $http service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {ngeox.CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
  */
-exports.createPrintServiceFactory = function($http, ngeoLayerHelper) {
+exports.createPrintServiceFactory = function($http, gettextCatalog, ngeoLayerHelper) {
   return (
     /**
      * @param {string} url URL to MapFish print service.
      */
     function(url) {
-      return new exports(url, $http, ngeoLayerHelper);
+      return new exports(url, $http, gettextCatalog, ngeoLayerHelper);
     }
   );
 };

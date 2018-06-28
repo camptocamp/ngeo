@@ -13,7 +13,7 @@ NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
-GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(NGEO_ALL_SRC_FILES)
+GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(shell find contribs/gmf/cursors/ -type f) $(NGEO_ALL_SRC_FILES)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
@@ -110,8 +110,8 @@ help:
 	@echo "- test                        Run the test suite"
 	@echo "- test-debug                  Run the test suite in the browser"
 	@echo "- clean                       Remove generated files"
-	@echo "- cleanall                    Remove all the build artefacts"
-	@echo "- cleanallcache               Remove all the build artefacts and the extra caches (npm and pip)"
+	@echo "- cleanall                    Remove all the build artifacts"
+	@echo "- cleanallcache               Remove all the build artifacts and the extra caches (npm and pip)"
 	@echo
 	@echo "Secondary targets:"
 	@echo
@@ -124,7 +124,7 @@ help:
 apidoc: .build/apidoc
 
 .PHONY: check
-check: lint check-examples-checker check-examples test examples-hosted-apps
+check: lint spell check-examples-checker check-examples test examples-hosted-apps
 
 .PHONY: check-examples-checker
 check-example-checker: $(CHECK_EXAMPLE_CHECKER)
@@ -140,6 +140,14 @@ lint-extra:
 	if [ "`git grep @fileoverview src contribs`" != "" ]; then echo "Using @fileoverview breaks the documentation main page"; false; fi
 	if [ "`git grep @example src contribs`" != "" ]; then echo "We don't use @example to have the example in the description"; false; fi
 
+.PHONY: spell
+spell: .build/python-venv.timestamp
+	$(PY_VENV_BIN)/codespell --quiet-level=2 --ignore-words=spell-ignore-words.txt \
+		$(shell find -name 'node_modules' -prune -or -name '.build' -prune -or -name '.git' -prune \
+		-or -name '__pycache__' -prune -or -name 'build' -prune \
+		-or \( -type f -and -not -name '*.png' -and -not -name '*.mo' -and -not -name '*.po*' -and -not -name '*_translation' \
+		-and -not -name 'themescapabilities.js' -and -not -name 'themes.js'  -and -not -name 'prettify.js' \) -print)
+
 .PHONY: eslint
 eslint: .build/eslint.timestamp
 
@@ -153,7 +161,7 @@ eof-newline:
 
 .PHONY: test
 test: .build/node_modules.timestamp
-	./node_modules/karma/bin/karma start karma-conf.js --single-run
+	THEME=mobile ./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
@@ -171,7 +179,7 @@ serve-ngeo: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCAL
 
 .PHONY: serve-gmf
 serve-gmf: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	npm run serve-gmf-examples
+	THEME=mobile npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps-desktop
 serve-gmf-apps-desktop: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
@@ -183,11 +191,11 @@ serve-gmf-apps-desktopalt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) 
 
 .PHONY: serve-gmf-apps-mobile
 serve-gmf-apps-mobile: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile npm run serve-gmf-apps
+	APP=mobile npm THEME=mobile run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-mobilealt
 serve-gmf-apps-mobilealt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile_alt npm run serve-gmf-apps
+	APP=mobile_alt THEME=mobile npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-oeedit
 serve-gmf-apps-oeedit: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
@@ -214,7 +222,7 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
 .build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
-	npm run build-gmf-examples
+	THEME=mobile npm run build-gmf-examples
 	touch $@
 
 .PHONY: examples-hosted-apps
@@ -223,8 +231,8 @@ examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
 	APP=desktop THEME=desktop npm run build-gmf-apps
 	APP=desktop_alt THEME=desktop_alt npm run build-gmf-apps
-	APP=mobile npm run build-gmf-apps
-	APP=mobile_alt npm run build-gmf-apps
+	APP=mobile THEME=mobile npm run build-gmf-apps
+	APP=mobile_alt THEME=mobile npm run build-gmf-apps
 	APP=oeedit THEME=desktop npm run build-gmf-apps
 	APP=oeview THEME=desktop npm run build-gmf-apps
 	touch $@
@@ -246,8 +254,7 @@ gh-pages: .build/python-venv.timestamp
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \
 		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
-		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES))) \
-		$(addprefix contribs/gmf/cursors/,grab.cur grabbing.cur)
+		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 	mkdir -p .build/examples-hosted/contribs/gmf
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
@@ -337,10 +344,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 .build/apidoc: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(NGEO_JS_FILES)
 	rm -rf $@
 	./node_modules/.bin/jsdoc -c $< --destination $@
-
-.PRECIOUS: contribs/gmf/cursors/%.cur
-contribs/gmf/cursors/%.cur: contribs/gmf/cursors/%.png
-	convert $< $@
 
 
 # i18n

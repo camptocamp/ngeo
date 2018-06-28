@@ -24,7 +24,7 @@ const exports = class {
 
   /**
    * Provides a service to create an SVG element with defined axis and a LIDAR
-   * point drawing mecanism.
+   * point drawing mechanism.
    *
    * @struct
    * @param {gmf.lidarprofile.Manager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
@@ -137,7 +137,7 @@ const exports = class {
 
 
   /**
-   * Setup the SVG components of the d3 chart
+   * Setup the SVG components of the D3 chart
    * @param {Array.<number>} rangeX range of the x scale
    * @param {Array.<number>} rangeY range of the y scale
    * @export

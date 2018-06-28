@@ -287,13 +287,13 @@ exports.Controller_ = class {
  * @htmlAttribute {angular.Scope=} ngeo-displaywindow-content-scope Scope used for ngeo-displaywindow-content-template.
  * @htmlAttribute {boolean=} ngeo-displaywindow-desktop If true, the window is draggable and resizable. If
  *     not set, you must set manually both parameter.
- * @htmlAttribute {boolean=} ngeo-displaywindow-draggable Wheter the window is draggable or not.
- * @htmlAttribute {string=} ngeo-displaywindow-draggable-containment The zone (css selector) where the window
+ * @htmlAttribute {boolean=} ngeo-displaywindow-draggable Whether the window is draggable or not.
+ * @htmlAttribute {string=} ngeo-displaywindow-draggable-containment The zone (CSS selector) where the window
  *     is authorized to be dragged.
  * @htmlAttribute {string=} ngeo-displaywindow-height The default height of the window.
- * @htmlAttribute {boolean=} ngeo-displaywindow-open Wheter the window is open or not.
+ * @htmlAttribute {boolean=} ngeo-displaywindow-open Whether the window is open or not.
  * @htmlAttribute {string=} ngeo-displaywindow-title The html title of the window.
- * @htmlAttribute {string=} ngeo-displaywindow-url The url to open in an iframe, in the window. The content
+ * @htmlAttribute {string=} ngeo-displaywindow-url The URL to open in an iframe, in the window. The content
  *     attribute must not be provided.
  * @htmlAttribute {string=} ngeo-displaywindow-width The default width of the window.
  * @ngdoc component

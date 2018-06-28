@@ -17,6 +17,8 @@ import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
+import Raven from 'raven-js/src/raven.js';
+import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
   alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
@@ -127,6 +129,14 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
    * @export
    */
   this.bgOpacityOptions = 'Test aus Olten';
+
+  if ($injector.has('sentryUrl')) {
+    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+    const raven = new Raven();
+    raven.config($injector.get('sentryUrl'), options)
+      .addPlugin(RavenPluginsAngular)
+      .install();
+  }
 };
 
 olBase.inherits(exports, gmfControllersAbstractDesktopController);
