@@ -242,8 +242,8 @@ exports = class extends ol.Observable {
       // FIXME: ideally we should not load all the storage in memory
       let content = offlineLayer.tiles[utils.normalizeURL(src)];
       if (!content) {
-        // use a white 1x1 image to make the map consistent
-        content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII=';
+        // use a transparent 1x1 image to make the map consistent
+        content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
       }
       imageTile.getImage().src = content;
     };
