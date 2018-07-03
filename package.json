@@ -27,7 +27,7 @@
     "@camptocamp/cesium": "1.45.0",
     "angular": "1.7.2",
     "angular-animate": "1.7.2",
-    "angular-dynamic-locale": "0.1.36",
+    "angular-dynamic-locale": "0.1.37",
     "angular-float-thead": "0.1.2",
     "angular-gettext": "2.4.0",
     "angular-gettext-tools": "2.3.9",
