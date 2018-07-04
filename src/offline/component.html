@@ -29,10 +29,18 @@
   <div class="modal-body">
     <div ng-if="$ctrl.hasData()">
       <button type="button" class="extent-zoom btn btn-default"
-              ng-click="$ctrl.zoomToExtent()"
-              translate>Zoom to extent
+              ng-if="!$ctrl.offlineState.isOfflineDataLoaded()"
+              ng-click="$ctrl.activateOfflineMode()"
+              translate>Activate offline mode
       </button>
+      <button type="button" class="extent-zoom btn btn-default"
+              ng-if="$ctrl.offlineState.isOfflineDataLoaded()"
+              ng-click="$ctrl.deactivateOfflineMode()"
+              translate>Deactivate offline mode
+      </button>
+
       <button type="button" class="extent-show btn btn-default"
+              ng-if="$ctrl.offlineState.isOfflineDataLoaded()"
               ng-click="$ctrl.toggleExtentVisibility()">
         <span ng-if="$ctrl.isExtentVisible()" translate>Hide extent</span>
         <span ng-if="!$ctrl.isExtentVisible()" translate >Show extent</span>
