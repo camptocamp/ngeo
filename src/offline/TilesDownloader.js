@@ -31,6 +31,7 @@ exports = class {
     this.wasStarted_ = false;
 
     /**
+     * @type {Array<ngeox.OfflineTile>}
      * @private
      */
     this.tiles_ = tiles;
@@ -72,13 +73,22 @@ exports = class {
      * @type {Promise}
      */
     this.promise_ = null;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.tileIndex_ = 0;
   }
 
   /**
-   * @private
-   * @param {ngeox.OfflineTile} tile The tile to download.
+   * @private to download.
    */
-  dowloadTile_(tile) {
+  downloadTile_() {
+    if (this.tileIndex_ >= this.tiles_.length) {
+      return;
+    }
+    const tile = this.tiles_[this.tileIndex_++];
     const tileUrl = tile.url;
     const xhr = new XMLHttpRequest();
     xhr.tileUrl = tile.url;
@@ -88,12 +98,13 @@ exports = class {
       if (this.allCount_ === this.tiles_.length) {
         this.resolvePromise_();
       }
+      this.downloadTile_();
     };
 
     const errorCallback = (e) => {
       ++this.allCount_;
       ++this.koCount_;
-      this.callbacks_.onError(this.allCount_ / this.tiles_.length, e);
+      this.callbacks_.onError(this.allCount_ / this.tiles_.length, tile);
       onTileDownloaded();
     };
 
@@ -108,7 +119,7 @@ exports = class {
             ++this.allCount_;
             ++this.okCount_;
             tile.response = dataUrl;
-            this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, e);
+            this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, tile);
             onTileDownloaded();
           },
           () => {
@@ -118,7 +129,7 @@ exports = class {
       } else {
         ++this.allCount_;
         ++this.okCount_;
-        this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, e);
+        this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, tile);
         onTileDownloaded();
       }
     };
@@ -144,8 +155,9 @@ exports = class {
     });
 
     goog.asserts.assert(this.tiles_);
-    for (const tile of this.tiles_) {
-      this.dowloadTile_(tile);
+    const workers = 6;
+    for (let i = 0; i < workers; ++i) {
+      this.downloadTile_();
     }
 
     return this.promise_;

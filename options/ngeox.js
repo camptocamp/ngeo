@@ -2755,8 +2755,7 @@ ngeox.OfflineLayerMetadata;
  *   layerType: string,
  *   layerSerialization: string,
  *   backgroundLayer: boolean,
- *   key: string,
- *   tiles: Object<string, string>
+ *   key: string
  * }}
  */
 ngeox.OfflinePersistentLayer;
@@ -2771,8 +2770,8 @@ ngeox.OfflinePersistentContent;
 
 /**
  * @typedef {{
- *   onLoad: function(number, ProgressEvent),
- *   onError: function(number, ProgressEvent)
+ *   onLoad: function(number, !ngeox.OfflineTile),
+ *   onError: function(number, !ngeox.OfflineTile)
  * }}
  */
 ngeox.OfflineCallbacks;

@@ -108,41 +108,32 @@ const Downloader = class {
       }
     }
 
+    /**
+     * @type {!Array<ngeox.OfflinePersistentLayer>}
+     */
+    const persistentLayers = [];
+    for (const layerItem of layersMetadatas) {
+      persistentLayers.push({
+        backgroundLayer: layerItem.backgroundLayer,
+        layerType: layerItem.layerType,
+        layerSerialization: layerItem.layerSerialization,
+        key: this.configuration_.getLayerKey(layerItem),
+      });
+    }
+
+    /**
+     * @type {ngeox.OfflinePersistentContent}
+     */
+    const persistentObject = {
+      extent: extent,
+      layers: persistentLayers
+    };
+    this.configuration_.setItem('offline_content', persistentObject);
+
+
     const callbacks = this.configuration_.getCallbacks();
     this.tileDownloader = new TilesDownloader(queue, callbacks);
-    const downloadCompletePromise = this.tileDownloader.download();
-
-    return downloadCompletePromise.then(() => {
-      /**
-       * @type {!Array<ngeox.OfflinePersistentLayer>}
-       */
-      const persistentLayers = [];
-      for (const layerItem of layersMetadatas) {
-        const tilesContentByUrl = {};
-        if (layerItem.layerType === 'tile') {
-          for (const tile of layerItem.tiles) {
-            const tileKey = utils.normalizeURL(tile.url);
-            tilesContentByUrl[tileKey] = tile.response;
-          }
-        }
-        persistentLayers.push({
-          backgroundLayer: layerItem.backgroundLayer,
-          layerType: layerItem.layerType,
-          layerSerialization: layerItem.layerSerialization,
-          key: this.configuration_.getLayerKey(layerItem),
-          tiles: tilesContentByUrl
-        });
-      }
-
-      /**
-       * @type {ngeox.OfflinePersistentContent}
-       */
-      const persistentObject = {
-        extent: extent,
-        layers: persistentLayers
-      };
-      this.configuration_.setItem('offline_content', persistentObject);
-    });
+    return this.tileDownloader.download();
   }
 };
 
