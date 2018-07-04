@@ -7,6 +7,7 @@ const ngeoOfflineNetworkStatus = goog.require('ngeo.offline.NetworkStatus');
 const ngeoOfflineServiceManager = goog.require('ngeo.offline.ServiceManager');
 const downloader = goog.require('ngeo.offline.Downloader');
 const restorer = goog.require('ngeo.offline.Restorer');
+const state = goog.require('ngeo.offline.State');
 
 /**
  * @type {!angular.Module}
@@ -17,5 +18,6 @@ exports = angular.module('ngeoOfflineModule', [
   ngeoOfflineNetworkStatus.module.name,
   ngeoOfflineServiceManager.module.name,
   downloader.module.name,
-  restorer.module.name
+  restorer.module.name,
+  state.module.name
 ]);
