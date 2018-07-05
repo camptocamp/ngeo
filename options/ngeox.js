@@ -2755,8 +2755,7 @@ ngeox.OfflineLayerMetadata;
  *   layerType: string,
  *   layerSerialization: string,
  *   backgroundLayer: boolean,
- *   key: string,
- *   tiles: Object<string, string>
+ *   key: string
  * }}
  */
 ngeox.OfflinePersistentLayer;
@@ -2771,76 +2770,11 @@ ngeox.OfflinePersistentContent;
 
 /**
  * @typedef {{
- *   onLoad: function(number, ProgressEvent),
- *   onError: function(number, ProgressEvent)
+ *   onLoad: function(number, !ngeox.OfflineTile),
+ *   onError: function(number, !ngeox.OfflineTile)
  * }}
  */
 ngeox.OfflineCallbacks;
-
-/**
- * @interface
- * @struct
- */
-ngeox.OfflineConfiguration = function() {};
-
-/**
- * @return {ngeox.OfflineCallbacks} Offline callbacks.
- */
-ngeox.OfflineConfiguration.prototype.getCallbacks = function() {};
-
-/**
- * @param {ol.Map} map The map to work on.
- * @param {ol.Extent} userExtent The extent selected by the user.
- * @return {!Array<ngeox.OfflineLayerMetadata>} the downloadable layers and metadata.
- */
-ngeox.OfflineConfiguration.prototype.createLayerMetadatas = function(map, userExtent) {};
-
-/**
- * @param {ngeox.OfflineLayerMetadata} metadata
- * @return {string}
- */
-ngeox.OfflineConfiguration.prototype.getLayerKey = function(metadata) {};
-
-/**
- * @param {string} key
- * @return {Promise<?>}
- */
-ngeox.OfflineConfiguration.prototype.getItem = function(key) {};
-
-/**
- * @param {string} key
- * @param {*} value
- * @return {Promise}
- */
-ngeox.OfflineConfiguration.prototype.setItem = function(key, value) {};
-
-/**
- * @return {Promise}
- */
-ngeox.OfflineConfiguration.prototype.clear = function() {};
-
-/**
- * @return {boolean}
- */
-ngeox.OfflineConfiguration.prototype.hasOfflineDataForWatcher = function() {};
-
-/**
- * @param {string} type .
- * @param {function(ngeo.CustomEvent)} listener .
- */
-ngeox.OfflineConfiguration.prototype.on = function(type, listener) {};
-
-/**
- * @param {string} type .
- * @param {function(ngeo.CustomEvent)} listener .
- */
-ngeox.OfflineConfiguration.prototype.un = function(type, listener) {};
-
-/**
-* @param {ngeox.OfflinePersistentLayer} offlineLayer
-* @return {ol.layer.Layer}
- */
-ngeox.OfflineConfiguration.prototype.recreateOfflineLayer = function(offlineLayer) {};
 
 /**
  * @typedef {{

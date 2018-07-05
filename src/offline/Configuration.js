@@ -1,4 +1,4 @@
-goog.module('ngeo.offline.DefaultConfiguration');
+goog.module('ngeo.offline.Configuration');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol.Observable');
@@ -20,7 +20,6 @@ const defaultImageLoadFunction = ol.source.Image.defaultImageLoadFunction;
 
 
 /**
- * @implements {ngeox.OfflineConfiguration}
  */
 exports = class extends ol.Observable {
 
@@ -74,7 +73,6 @@ exports = class extends ol.Observable {
   /**
    * A synchronous method to be used by Angular watchers.
    * @return {boolean} whether some offline data is available in the storage
-   * @override
    */
   hasOfflineDataForWatcher() {
     localforage.length().then((numberOfKeys) => {
@@ -90,7 +88,6 @@ exports = class extends ol.Observable {
   /**
    * @param {string} key
    * @return {Promise<?>}
-   * @override
    */
   getItem(key) {
     return localforage.getItem(key);
@@ -100,7 +97,6 @@ exports = class extends ol.Observable {
    * @param {string} key
    * @param {*} value
    * @return {Promise}
-   * @override
    */
   setItem(key, value) {
     return localforage.setItem(key, value);
@@ -108,33 +104,45 @@ exports = class extends ol.Observable {
 
   /**
    * @return {Promise}
-   * @override
    */
   clear() {
     return localforage.clear();
   }
 
   /**
+   * @param {!ol.Map} map
+   * @return {number}
+   */
+  estimateLoadDataSize(map) {
+    return 50;
+  }
+
+  /**
    * @param {ngeox.OfflineLayerMetadata} layerItem
    * @return {string} A key identifying an offline layer and used during restore.
-   * @override
    */
   getLayerKey(layerItem) {
     return /** @type {string} */ (layerItem.layer.get('label'));
   }
 
   /**
-   * @override
    * @return {ngeox.OfflineCallbacks} Offline callbacks.
    */
   getCallbacks() {
-    const dispatchProgress = this.dispatchProgress_.bind(this);
+    const that = this;
     return {
-      onLoad(progress) {
-        dispatchProgress(progress);
+      /**
+       * @param {number} progress
+       * @param {ngeox.OfflineTile} tile
+       */
+      onLoad(progress, tile) {
+        if (tile.response) {
+          that.setItem(utils.normalizeURL(tile.url), tile.response);
+        }
+        that.dispatchProgress_(progress);
       },
       onError(progress) {
-        dispatchProgress(progress);
+        that.dispatchProgress_(progress);
       },
     };
   }
@@ -181,7 +189,6 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @override
    * @param {ol.Map} map The map to work on.
    * @param {ol.Extent} userExtent The extent selected by the user.
    * @return {!Array<ngeox.OfflineLayerMetadata>} the downloadable layers and metadata.
@@ -233,25 +240,25 @@ exports = class extends ol.Observable {
    * @return {function(ol.ImageTile, string)}
    */
   createTileLoadFunction_(offlineLayer) {
+    const that = this;
     /**
      * Load the tile from persistent storage.
      * @param {ol.ImageTile} imageTile
      * @param {string} src
      */
     const tileLoadFunction = function(imageTile, src) {
-      // FIXME: ideally we should not load all the storage in memory
-      let content = offlineLayer.tiles[utils.normalizeURL(src)];
-      if (!content) {
-        // use a transparent 1x1 image to make the map consistent
-        content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
-      }
-      imageTile.getImage().src = content;
+      that.getItem(utils.normalizeURL(src)).then((content) => {
+        if (!content) {
+          // use a transparent 1x1 image to make the map consistent
+          content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+        }
+        imageTile.getImage().src = content;
+      });
     };
     return tileLoadFunction;
   }
 
   /**
-   * @override
    * @param {ngeox.OfflinePersistentLayer} offlineLayer
    * @return {ol.layer.Layer} the layer.
    */

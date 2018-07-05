@@ -28,21 +28,25 @@ const Downloader = class {
 
   /**
    * @ngInject
-   * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration A service for customizing offline behaviour.
    */
   constructor(ngeoOfflineConfiguration) {
     /**
      * @private
-     * @type {ngeox.OfflineConfiguration}
+     * @type {ngeo.offline.Configuration}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 
     /**
      * @type {TilesDownloader}
+     * @private
      */
-    this.tileDownloader = null;
+    this.tileDownloader_ = null;
   }
 
+  cancel() {
+    this.tileDownloader_.cancel();
+  }
 
   /**
    * @param {ngeox.OfflineLayerMetadata} layerMetadata Layers metadata.
@@ -108,41 +112,32 @@ const Downloader = class {
       }
     }
 
+    /**
+     * @type {!Array<ngeox.OfflinePersistentLayer>}
+     */
+    const persistentLayers = [];
+    for (const layerItem of layersMetadatas) {
+      persistentLayers.push({
+        backgroundLayer: layerItem.backgroundLayer,
+        layerType: layerItem.layerType,
+        layerSerialization: layerItem.layerSerialization,
+        key: this.configuration_.getLayerKey(layerItem),
+      });
+    }
+
+    /**
+     * @type {ngeox.OfflinePersistentContent}
+     */
+    const persistentObject = {
+      extent: extent,
+      layers: persistentLayers
+    };
+    this.configuration_.setItem('offline_content', persistentObject);
+
+
     const callbacks = this.configuration_.getCallbacks();
-    this.tileDownloader = new TilesDownloader(queue, callbacks);
-    const downloadCompletePromise = this.tileDownloader.download();
-
-    return downloadCompletePromise.then(() => {
-      /**
-       * @type {!Array<ngeox.OfflinePersistentLayer>}
-       */
-      const persistentLayers = [];
-      for (const layerItem of layersMetadatas) {
-        const tilesContentByUrl = {};
-        if (layerItem.layerType === 'tile') {
-          for (const tile of layerItem.tiles) {
-            const tileKey = utils.normalizeURL(tile.url);
-            tilesContentByUrl[tileKey] = tile.response;
-          }
-        }
-        persistentLayers.push({
-          backgroundLayer: layerItem.backgroundLayer,
-          layerType: layerItem.layerType,
-          layerSerialization: layerItem.layerSerialization,
-          key: this.configuration_.getLayerKey(layerItem),
-          tiles: tilesContentByUrl
-        });
-      }
-
-      /**
-       * @type {ngeox.OfflinePersistentContent}
-       */
-      const persistentObject = {
-        extent: extent,
-        layers: persistentLayers
-      };
-      this.configuration_.setItem('offline_content', persistentObject);
-    });
+    this.tileDownloader_ = new TilesDownloader(queue, callbacks);
+    return this.tileDownloader_.download();
   }
 };
 

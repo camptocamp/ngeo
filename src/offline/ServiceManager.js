@@ -63,6 +63,14 @@ exports = class {
     }
   }
 
+  cancel() {
+    if (!this.saveService_) {
+      console.warn('You must register a saveService first');
+      return;
+    }
+    this.saveService_.cancel();
+  }
+
   /**
    * Ask the provided service to save the data to an offline purpose
    * @param {ol.Extent} extent The extent to dowload.

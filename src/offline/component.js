@@ -93,7 +93,7 @@ exports.Controller_ = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
    * @param {ngeo.offline.ServiceManager} ngeoOfflineServiceManager ngeo offline service Manager.
-   * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration ngeo offline configuration service.
+   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration ngeo offline configuration service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
@@ -113,12 +113,6 @@ exports.Controller_ = class {
     this.$timeout_ = $timeout;
 
     /**
-     * @type {angular.$q.Promise}
-     * @private
-     */
-    this.$timeoutPromise_ = null;
-
-    /**
      * @type {ngeo.offline.ServiceManager}
      * @private
      */
@@ -126,7 +120,7 @@ exports.Controller_ = class {
 
     /**
      * @private
-     * @type {ngeox.OfflineConfiguration}
+     * @type {ngeo.offline.Configuration}
      */
     this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
 
@@ -205,11 +199,18 @@ exports.Controller_ = class {
     this.menuDisplayed = false;
 
     /**
-     * Whether the cancel downlaod modal is displayed.
+     * Whether the cancel download modal is displayed.
      * @type {boolean}
      * @export
      */
     this.displayAlertAbortDownload = false;
+
+    /**
+     * Whether the load data modal is displayed.
+     * @type {boolean}
+     * @export
+     */
+    this.displayAlertLoadData = false;
 
     /**
      * Offline mask minimum margin in pixels.
@@ -247,6 +248,12 @@ exports.Controller_ = class {
     this.originalMaxZoom;
 
     /**
+     * @type {number}
+     * @export
+     */
+    this.estimatedLoadDataSize;
+
+    /**
      * @private
      * @param {ngeo.CustomEvent} event the progress event.
      */
@@ -280,6 +287,13 @@ exports.Controller_ = class {
     return this.ngeoOfflineConfiguration_.hasOfflineDataForWatcher();
   }
 
+  /**
+   * @export
+   */
+  computeSizeAndDisplayAlertLoadData() {
+    this.estimatedLoadDataSize = this.ngeoOfflineConfiguration_.estimateLoadDataSize(this.map);
+    this.displayAlertLoadData = true;
+  }
   /**
    * Toggle the selecting extent view.
    * @param {boolean=} finished If just finished downloading.
@@ -334,8 +348,6 @@ exports.Controller_ = class {
    * @export
    */
   askAbortDownload() {
-    this.$timeout_.cancel(this.$timeoutPromise_);
-    this.$timeoutPromise_ = null;
     this.displayAlertAbortDownload = true;
   }
 
@@ -345,6 +357,8 @@ exports.Controller_ = class {
    */
   abortDownload() {
     this.downloading = false;
+    this.ngeoOfflineServiceManager_.cancel();
+    this.deleteData();
   }
 
   /**
