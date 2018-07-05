@@ -1,4 +1,4 @@
-goog.module('ngeo.offline.DefaultConfiguration');
+goog.module('ngeo.offline.Configuration');
 goog.module.declareLegacyNamespace();
 
 goog.require('ol.Observable');
@@ -20,7 +20,6 @@ const defaultImageLoadFunction = ol.source.Image.defaultImageLoadFunction;
 
 
 /**
- * @implements {ngeox.OfflineConfiguration}
  */
 exports = class extends ol.Observable {
 
@@ -74,7 +73,6 @@ exports = class extends ol.Observable {
   /**
    * A synchronous method to be used by Angular watchers.
    * @return {boolean} whether some offline data is available in the storage
-   * @override
    */
   hasOfflineDataForWatcher() {
     localforage.length().then((numberOfKeys) => {
@@ -90,7 +88,6 @@ exports = class extends ol.Observable {
   /**
    * @param {string} key
    * @return {Promise<?>}
-   * @override
    */
   getItem(key) {
     return localforage.getItem(key);
@@ -100,7 +97,6 @@ exports = class extends ol.Observable {
    * @param {string} key
    * @param {*} value
    * @return {Promise}
-   * @override
    */
   setItem(key, value) {
     return localforage.setItem(key, value);
@@ -108,23 +104,28 @@ exports = class extends ol.Observable {
 
   /**
    * @return {Promise}
-   * @override
    */
   clear() {
     return localforage.clear();
   }
 
   /**
+   * @param {!ol.Map} map
+   * @return {number}
+   */
+  estimateLoadDataSize(map) {
+    return 50;
+  }
+
+  /**
    * @param {ngeox.OfflineLayerMetadata} layerItem
    * @return {string} A key identifying an offline layer and used during restore.
-   * @override
    */
   getLayerKey(layerItem) {
     return /** @type {string} */ (layerItem.layer.get('label'));
   }
 
   /**
-   * @override
    * @return {ngeox.OfflineCallbacks} Offline callbacks.
    */
   getCallbacks() {
@@ -188,7 +189,6 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @override
    * @param {ol.Map} map The map to work on.
    * @param {ol.Extent} userExtent The extent selected by the user.
    * @return {!Array<ngeox.OfflineLayerMetadata>} the downloadable layers and metadata.
@@ -259,7 +259,6 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @override
    * @param {ngeox.OfflinePersistentLayer} offlineLayer
    * @return {ol.layer.Layer} the layer.
    */

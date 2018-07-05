@@ -7,13 +7,13 @@ class Restorer {
 
   /**
    * @ngInject
-   * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration A service for customizing offline behaviour.
    * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
    */
   constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {
     /**
      * @private
-     * @type {ngeox.OfflineConfiguration}
+     * @type {ngeo.offline.Configuration}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 

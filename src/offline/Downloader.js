@@ -28,19 +28,20 @@ const Downloader = class {
 
   /**
    * @ngInject
-   * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration A service for customizing offline behaviour.
+   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration A service for customizing offline behaviour.
    */
   constructor(ngeoOfflineConfiguration) {
     /**
      * @private
-     * @type {ngeox.OfflineConfiguration}
+     * @type {ngeo.offline.Configuration}
      */
     this.configuration_ = ngeoOfflineConfiguration;
 
     /**
      * @type {TilesDownloader}
+     * @private
      */
-    this.tileDownloader = null;
+    this.tileDownloader_ = null;
   }
 
 
@@ -132,8 +133,8 @@ const Downloader = class {
 
 
     const callbacks = this.configuration_.getCallbacks();
-    this.tileDownloader = new TilesDownloader(queue, callbacks);
-    return this.tileDownloader.download();
+    this.tileDownloader_ = new TilesDownloader(queue, callbacks);
+    return this.tileDownloader_.download();
   }
 };
 

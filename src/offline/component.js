@@ -93,7 +93,7 @@ exports.Controller_ = class {
    * @param {angular.$timeout} $timeout Angular timeout service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr ngeo feature overlay manager service.
    * @param {ngeo.offline.ServiceManager} ngeoOfflineServiceManager ngeo offline service Manager.
-   * @param {ngeox.OfflineConfiguration} ngeoOfflineConfiguration ngeo offline configuration service.
+   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration ngeo offline configuration service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
@@ -126,7 +126,7 @@ exports.Controller_ = class {
 
     /**
      * @private
-     * @type {ngeox.OfflineConfiguration}
+     * @type {ngeo.offline.Configuration}
      */
     this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
 
@@ -247,6 +247,12 @@ exports.Controller_ = class {
     this.originalMaxZoom;
 
     /**
+     * @type {number}
+     * @export
+     */
+    this.estimatedLoadDataSize;
+
+    /**
      * @private
      * @param {ngeo.CustomEvent} event the progress event.
      */
@@ -280,6 +286,13 @@ exports.Controller_ = class {
     return this.ngeoOfflineConfiguration_.hasOfflineDataForWatcher();
   }
 
+  /**
+   * @export
+   */
+  computeSizeAndDisplayAlertLoadData() {
+    this.estimatedLoadDataSize = this.ngeoOfflineConfiguration_.estimateLoadDataSize(this.map);
+    this.displayAlertLoadData = true;
+  }
   /**
    * Toggle the selecting extent view.
    * @param {boolean=} finished If just finished downloading.

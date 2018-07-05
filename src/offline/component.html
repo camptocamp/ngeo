@@ -8,7 +8,7 @@
 </div>
 
 <div ng-if="$ctrl.selectingExtent" class="validate-extent btn btn-primary">
-  <div ng-if="!$ctrl.downloading" ng-click="$ctrl.displayAlertLoadData = true" translate>Save map</div>
+  <div ng-if="!$ctrl.downloading" ng-click="$ctrl.computeSizeAndDisplayAlertLoadData()" translate>Save map</div>
   <div ng-if="$ctrl.downloading" ng-click="$ctrl.askAbortDownload()" translate>Abort</div>
 </div>
 
@@ -56,7 +56,7 @@
     <h4 class="modal-title" translate>Warning</h4>
   </div>
   <div class="modal-body">
-      <p translate>~50MB of maps will be downloaded (until scale 1:25'000) - Don't lock your device or navigate away from this site during the download process. Deactivate "private" mode of your browser.</p>
+      <p translate>~{{$ctrl.estimatedLoadDataSize}}MB of maps will be downloaded (until scale 1:25'000) - Don't lock your device or navigate away from this site during the download process. Deactivate "private" mode of your browser.</p>
       <button type="button" class="validate btn btn-primary"
               data-dismiss="modal"
               ng-click="$ctrl.validateExtent()"
