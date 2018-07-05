@@ -86,7 +86,7 @@ exports.component('ngeoOffline', exports.component_);
 /**
  * @private
  */
-exports.Controller_ = class {
+exports.Controller = class {
 
   /**
    * @private
@@ -275,6 +275,7 @@ exports.Controller_ = class {
   }
 
   $onInit() {
+    this.offlineMode.registerComponent(this);
     this.postcomposeListener_ = this.createMaskPostcompose_();
     this.ngeoOfflineConfiguration_.on('progress', this.progressCallback_);
     this.maskMargin = this.maskMargin || 100;
@@ -569,4 +570,4 @@ exports.Controller_ = class {
 };
 
 
-exports.controller('ngeoOfflineController', exports.Controller_);
+exports.controller('ngeoOfflineController', exports.Controller);

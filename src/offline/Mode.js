@@ -17,6 +17,13 @@ exports = class {
      * @private
      */
     this.enabled_ = false;
+
+    /**
+     * Offline component.
+     * @type {ngeo.offline.component.Controller|undefined}
+     * @private
+     */
+    this.component_;
   }
 
   /**
@@ -34,6 +41,22 @@ exports = class {
    */
   enable() {
     this.enabled_ = true;
+  }
+
+  /**
+   *
+   * @param {ngeo.offline.component.Controller} component Offline component.
+   * @export
+   */
+  registerComponent(component) {
+    this.component_ = component;
+  }
+
+  /**
+   * @export
+   */
+  activateOfflineMode() {
+    this.component_.activateOfflineMode();
   }
 };
 
