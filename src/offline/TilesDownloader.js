@@ -79,13 +79,23 @@ exports = class {
      * @private
      */
     this.tileIndex_ = 0;
+
+    /**
+     * @type {boolean}
+     * @private
+     */
+    this.cancel_ = false;
+  }
+
+  cancel() {
+    this.cancel_ = true;
   }
 
   /**
    * @private to download.
    */
   downloadTile_() {
-    if (this.tileIndex_ >= this.tiles_.length) {
+    if (this.cancel_ || this.tileIndex_ >= this.tiles_.length) {
       return;
     }
     const tile = this.tiles_[this.tileIndex_++];
@@ -102,6 +112,9 @@ exports = class {
     };
 
     const errorCallback = (e) => {
+      if (this.cancel_) {
+        return;
+      }
       ++this.allCount_;
       ++this.koCount_;
       this.callbacks_.onError(this.allCount_ / this.tiles_.length, tile);
@@ -116,6 +129,9 @@ exports = class {
       if (response && response.size !== 0) { // non-empty tile
         blobToDataUrl(response).then(
           (dataUrl) => {
+            if (this.cancel_) {
+              return;
+            }
             ++this.allCount_;
             ++this.okCount_;
             tile.response = dataUrl;
@@ -123,10 +139,16 @@ exports = class {
             onTileDownloaded();
           },
           () => {
+            if (this.cancel_) {
+              return;
+            }
             errorCallback(e);
           }
         );
       } else {
+        if (this.cancel_) {
+          return;
+        }
         ++this.allCount_;
         ++this.okCount_;
         this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, tile);

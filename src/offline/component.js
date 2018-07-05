@@ -113,12 +113,6 @@ exports.Controller_ = class {
     this.$timeout_ = $timeout;
 
     /**
-     * @type {angular.$q.Promise}
-     * @private
-     */
-    this.$timeoutPromise_ = null;
-
-    /**
      * @type {ngeo.offline.ServiceManager}
      * @private
      */
@@ -205,11 +199,18 @@ exports.Controller_ = class {
     this.menuDisplayed = false;
 
     /**
-     * Whether the cancel downlaod modal is displayed.
+     * Whether the cancel download modal is displayed.
      * @type {boolean}
      * @export
      */
     this.displayAlertAbortDownload = false;
+
+    /**
+     * Whether the load data modal is displayed.
+     * @type {boolean}
+     * @export
+     */
+    this.displayAlertLoadData = false;
 
     /**
      * Offline mask minimum margin in pixels.
@@ -347,8 +348,6 @@ exports.Controller_ = class {
    * @export
    */
   askAbortDownload() {
-    this.$timeout_.cancel(this.$timeoutPromise_);
-    this.$timeoutPromise_ = null;
     this.displayAlertAbortDownload = true;
   }
 
@@ -358,6 +357,8 @@ exports.Controller_ = class {
    */
   abortDownload() {
     this.downloading = false;
+    this.ngeoOfflineServiceManager_.cancel();
+    this.deleteData();
   }
 
   /**

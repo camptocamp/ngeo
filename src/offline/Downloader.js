@@ -44,6 +44,9 @@ const Downloader = class {
     this.tileDownloader_ = null;
   }
 
+  cancel() {
+    this.tileDownloader_.cancel();
+  }
 
   /**
    * @param {ngeox.OfflineLayerMetadata} layerMetadata Layers metadata.
