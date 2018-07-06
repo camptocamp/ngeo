@@ -495,7 +495,7 @@ exports.Controller_.prototype.getLegendIconURL = function(treeCtrl) {
   const layerName = gmfLayerWMS.layers.split(',')[0];
   const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
   return this.layerHelper_.getWMSLegendURL(
-    gmfOgcServer.url, layerName, undefined, legendRule
+    gmfOgcServer.url, layerName, undefined, legendRule, 20, 20
   );
 };
 
