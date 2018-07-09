@@ -7,7 +7,7 @@
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
   </head>
-  <body ng-controller="MainController as ctrl" ng-class="{offline: ctrl.ngeoNetworkStatus.offline}">
+  <body ng-controller="MainController as ctrl" ng-class="{offline: ctrl.ngeoNetworkStatus.isDisconnected()}">
   <div class="offline-msg alert-danger" translate>You are currently offline.</div>
     <div id="map" ngeo-map="ctrl.map">
       <ngeo-offline

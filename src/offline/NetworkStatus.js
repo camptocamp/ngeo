@@ -92,9 +92,9 @@ const Service = class {
 
     /**
      * @type {!boolean|undefined}
-     * @export
+     * @private
      */
-    this.offline;
+    this.offline_;
 
     /**
      * @private
@@ -107,7 +107,7 @@ const Service = class {
   }
 
   initialize_() {
-    this.offline = !this.$window_.navigator.onLine;
+    this.offline_ = !this.$window_.navigator.onLine;
 
     // airplane mode, works offline(firefox)
     this.$window_.addEventListener('offline', () => {
@@ -151,14 +151,14 @@ const Service = class {
       timeout: 1000,
       success: () => {
         this.count_ = 0;
-        if (this.offline) {
+        if (this.offline_) {
           this.triggerChangeStatusEvent_(false);
         }
       },
       error: () => {
         this.count_++;
         // We consider we are offline after 3 requests failed
-        if (this.count_ > 2 && !this.offline) {
+        if (this.count_ > 2 && !this.offline_) {
           this.triggerChangeStatusEvent_(true);
         }
       }
@@ -171,11 +171,18 @@ const Service = class {
    * @private
    */
   triggerChangeStatusEvent_(offline) {
-    this.offline = offline;
+    this.offline_ = offline;
     // this.$rootScope_.$broadcast('ngeoNetworkStatusChange', net.offline);
     this.$rootScope_.$digest();
   }
 
+  /**
+   * @return {boolean} True if we are disconnected.
+   * @export
+   */
+  isDisconnected() {
+    return !!this.offline_;
+  }
 };
 
 const name = 'ngeoNetworkStatus';
