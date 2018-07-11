@@ -2769,12 +2769,22 @@ ngeox.OfflinePersistentLayer;
 ngeox.OfflinePersistentContent;
 
 /**
- * @typedef {{
- *   onLoad: function(number, !ngeox.OfflineTile),
- *   onError: function(number, !ngeox.OfflineTile)
- * }}
+ * @interface
  */
-ngeox.OfflineCallbacks;
+ngeox.OfflineOnTileDownload;
+
+/**
+ * @param {number} progress
+ * @param {ngeox.OfflineTile} tile
+ * @return {Promise}
+ */
+ngeox.OfflineOnTileDownload.prototype.onTileDownloadSuccess = function(progress, tile) {};
+
+/**
+ * @param {number} progress
+ * @return {Promise}
+ */
+ngeox.OfflineOnTileDownload.prototype.onTileDownloadError = function(progress) {};
 
 /**
  * @typedef {{

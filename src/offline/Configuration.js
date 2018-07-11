@@ -25,6 +25,7 @@ exports = class extends ol.Observable {
 
   /**
    * @ngInject
+   * @implement {ngeox.OfflineOnTileDownload}
    * @param {!angular.Scope} $rootScope The rootScope provider.
    * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
    */
@@ -86,20 +87,31 @@ exports = class extends ol.Observable {
   }
 
   /**
+   * Hook to allow measuring get/set item performance.
+   * @param {string} msg
+   * @param {string} key
+   * @param {Promise<?>} promise
+   * @return {Promise<?>}
+   */
+  traceGetSetItem(msg, key, promise) {
+    return promise;
+  }
+
+  /**
    * @param {string} key
    * @return {Promise<?>}
    */
   getItem(key) {
-    return localforage.getItem(key);
+    return this.traceGetSetItem('getItem', key, localforage.getItem(key));
   }
 
   /**
    * @param {string} key
    * @param {*} value
-   * @return {Promise}
+   * @return {Promise<?>}
    */
   setItem(key, value) {
-    return localforage.setItem(key, value);
+    return this.traceGetSetItem('setItem', key, localforage.setItem(key, value));
   }
 
   /**
@@ -126,25 +138,29 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @return {ngeox.OfflineCallbacks} Offline callbacks.
+   * @override
+   * @param {number} progress
+   * @param {ngeox.OfflineTile} tile
+   * @return {Promise}
    */
-  getCallbacks() {
-    const that = this;
-    return {
-      /**
-       * @param {number} progress
-       * @param {ngeox.OfflineTile} tile
-       */
-      onLoad(progress, tile) {
-        if (tile.response) {
-          that.setItem(utils.normalizeURL(tile.url), tile.response);
-        }
-        that.dispatchProgress_(progress);
-      },
-      onError(progress) {
-        that.dispatchProgress_(progress);
-      },
-    };
+  onTileDownloadSuccess(progress, tile) {
+    this.dispatchProgress_(progress);
+
+    if (tile.response) {
+      return this.setItem(utils.normalizeURL(tile.url), tile.response);
+    }
+    return Promise.resolve();
+  }
+
+  /**
+   * @override
+   * @param {number} progress
+   * @param {ngeox.OfflineTile} tile
+   * @return {Promise}
+   */
+  onTileDownloadError(progress) {
+    this.dispatchProgress_(progress);
+    return Promise.resolve();
   }
 
   /**
@@ -270,5 +286,12 @@ exports = class extends ol.Observable {
       return layer;
     }
     return null;
+  }
+
+  /**
+   * @return {number}
+   */
+  getMaxNumberOfParallelDownloads() {
+    return 11;
   }
 };

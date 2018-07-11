@@ -22,9 +22,16 @@ exports = class {
 
   /**
    * @param {Array<ngeox.OfflineTile>} tiles An array of tiles to download.
-   * @param {ngeox.OfflineCallbacks} callbacks The callbacks.
+   * @param {ngeox.OfflineOnTileDownload} callbacks The callbacks.
+   * @param {number} workers The maximum number of workers.
    */
-  constructor(tiles, callbacks) {
+  constructor(tiles, callbacks, workers) {
+    /**
+     * @private
+     * @type {number}
+     */
+    this.maxNumberOfWorkers_ = workers;
+
     /**
      * @private
      */
@@ -38,7 +45,7 @@ exports = class {
 
     /**
      * @private
-     * @type {ngeox.OfflineCallbacks}
+     * @type {ngeox.OfflineOnTileDownload}
      */
     this.callbacks_ = callbacks;
 
@@ -117,8 +124,8 @@ exports = class {
       }
       ++this.allCount_;
       ++this.koCount_;
-      this.callbacks_.onError(this.allCount_ / this.tiles_.length, tile);
-      onTileDownloaded();
+      const progress = this.allCount_ / this.tiles_.length;
+      this.callbacks_.onTileDownloadError(progress).finally(onTileDownloaded);
     };
 
     const onloadCallback = (e) => {
@@ -135,8 +142,8 @@ exports = class {
             ++this.allCount_;
             ++this.okCount_;
             tile.response = dataUrl;
-            this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, tile);
-            onTileDownloaded();
+            const progress = this.allCount_ / this.tiles_.length;
+            this.callbacks_.onTileDownloadSuccess(progress, tile).finally(onTileDownloaded);
           },
           () => {
             if (this.cancel_) {
@@ -151,8 +158,7 @@ exports = class {
         }
         ++this.allCount_;
         ++this.okCount_;
-        this.callbacks_.onLoad(this.allCount_ / this.tiles_.length, tile);
-        onTileDownloaded();
+        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).finally(onTileDownloaded);
       }
     };
 
@@ -177,8 +183,7 @@ exports = class {
     });
 
     goog.asserts.assert(this.tiles_);
-    const workers = 6;
-    for (let i = 0; i < workers; ++i) {
+    for (let i = 0; i < this.maxNumberOfWorkers_; ++i) {
       this.downloadTile_();
     }
 

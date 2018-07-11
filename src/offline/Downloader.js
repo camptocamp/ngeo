@@ -135,8 +135,7 @@ const Downloader = class {
     this.configuration_.setItem('offline_content', persistentObject);
 
 
-    const callbacks = this.configuration_.getCallbacks();
-    this.tileDownloader_ = new TilesDownloader(queue, callbacks);
+    this.tileDownloader_ = new TilesDownloader(queue, this.configuration_, this.configuration_.getMaxNumberOfParallelDownloads());
     return this.tileDownloader_.download();
   }
 };
