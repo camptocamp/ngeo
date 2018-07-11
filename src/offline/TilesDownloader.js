@@ -125,7 +125,7 @@ exports = class {
       ++this.allCount_;
       ++this.koCount_;
       const progress = this.allCount_ / this.tiles_.length;
-      this.callbacks_.onTileDownloadError(progress).finally(onTileDownloaded);
+      this.callbacks_.onTileDownloadError(progress).then(onTileDownloaded, onTileDownloaded);
     };
 
     const onloadCallback = (e) => {
@@ -143,7 +143,7 @@ exports = class {
             ++this.okCount_;
             tile.response = dataUrl;
             const progress = this.allCount_ / this.tiles_.length;
-            this.callbacks_.onTileDownloadSuccess(progress, tile).finally(onTileDownloaded);
+            this.callbacks_.onTileDownloadSuccess(progress, tile).then(onTileDownloaded, onTileDownloaded);
           },
           () => {
             if (this.cancel_) {
@@ -158,7 +158,7 @@ exports = class {
         }
         ++this.allCount_;
         ++this.okCount_;
-        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).finally(onTileDownloaded);
+        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).then(onTileDownloaded, onTileDownloaded);
       }
     };
 

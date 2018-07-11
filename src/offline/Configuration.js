@@ -20,12 +20,12 @@ const defaultImageLoadFunction = ol.source.Image.defaultImageLoadFunction;
 
 
 /**
+ * @implements {ngeox.OfflineOnTileDownload}
  */
 exports = class extends ol.Observable {
 
   /**
    * @ngInject
-   * @implement {ngeox.OfflineOnTileDownload}
    * @param {!angular.Scope} $rootScope The rootScope provider.
    * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
    */
@@ -155,7 +155,6 @@ exports = class extends ol.Observable {
   /**
    * @override
    * @param {number} progress
-   * @param {ngeox.OfflineTile} tile
    * @return {Promise}
    */
   onTileDownloadError(progress) {
