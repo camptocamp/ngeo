@@ -855,7 +855,7 @@ exports.prototype.defaultThemeName = function() {
   // check if we have a theme in url
   const pathElements = this.ngeoLocation_.getPath().split('/');
   if (this.themeInUrl_(pathElements)) {
-    return pathElements[pathElements.length - 1];
+    return decodeURI(pathElements[pathElements.length - 1]);
   }
 
   // check if we have a theme in the local storage
