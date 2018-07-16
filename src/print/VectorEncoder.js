@@ -87,7 +87,6 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
       let isOriginalFeatureAdded = false;
       for (let j = 0, jj = styles.length; j < jj; ++j) {
         const style = styles[j];
-        const styleId = olBase.getUid(style).toString();
         let geometry = style.getGeometry();
         let geojsonFeature;
         if (!geometry) {
@@ -116,6 +115,7 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
         }
 
         const featureStyleProp = `_ngeo_style_${j}`;
+        const styleId = `${olBase.getUid(style).toString()}-${geometryType}`;
         this.encodeVectorStyle(mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
       }

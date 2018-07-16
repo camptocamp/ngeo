@@ -13,7 +13,7 @@ or PR from persons outside of Camptocamp customers or developers.
 
 - [Main principle](#main-principle)
 - [Coding style guide](#coding-style-guide)
-- [Main changes in the code between ngeo 2.2 and 2.2](#main-changes-in-the-code-between-ngeo-22-and-23)
+- [Main changes in the code between ngeo 2.2 and 2.3](#main-changes-in-the-code-between-ngeo-22-and-23)
 - [AngularJS names ](#angularJS-names)
 - [Module management](#module-management)
 - [Good practices on components creation](#good-practices-on-components-creation)
@@ -149,6 +149,11 @@ const myComponent = {
   templateUrl: ngeoMyComponentTemplateUrl
 };
 ```
+
+## `$injector` usage
+
+`$injector` should be used only for the optional requirements.
+The only exception is for the abstract controllers (in `gmf/controleurs`) to ease upgrade.
 
 ## Limit the use of `ng-controller`
 

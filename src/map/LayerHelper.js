@@ -366,11 +366,13 @@ exports.prototype.getWMTSLegendURL = function(layer) {
  * @param {string} layerName The name of a wms layer.
  * @param {number=} opt_scale A scale.
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.
+ * @param {number=} opt_legendWidth the legend width.
+ * @param {number=} opt_legendHeight the legend height.
  * @return {string|undefined} The legend URL or undefined.
  * @export
  */
 exports.prototype.getWMSLegendURL = function(url,
-  layerName, opt_scale, opt_legendRule) {
+  layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight) {
   if (!url) {
     return undefined;
   }
@@ -387,6 +389,12 @@ exports.prototype.getWMSLegendURL = function(url,
   }
   if (opt_legendRule !== undefined) {
     queryString['RULE'] = opt_legendRule;
+    if (opt_legendWidth !== undefined) {
+      queryString['WIDTH'] = opt_legendWidth;
+    }
+    if (opt_legendHeight !== undefined) {
+      queryString['HEIGHT'] = opt_legendHeight;
+    }
   }
   return olUri.appendParams(url, queryString);
 };
