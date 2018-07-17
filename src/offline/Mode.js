@@ -5,11 +5,12 @@ const ngeoBase = goog.require('ngeo');
 exports = class {
 
   /**
+   * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration ngeo offline configuration service.
    * @ngInject
    * @ngdoc service
    * @ngname ngeoOfflineState
    */
-  constructor() {
+  constructor(ngeoOfflineConfiguration) {
 
     /**
      * Offline mode is enabled or not.
@@ -24,6 +25,12 @@ exports = class {
      * @private
      */
     this.component_;
+
+    /**
+     * @private
+     * @type {ngeo.offline.Configuration}
+     */
+    this.ngeoOfflineConfiguration_ = ngeoOfflineConfiguration;
   }
 
   /**
@@ -58,6 +65,15 @@ exports = class {
   activateOfflineMode() {
     this.component_.activateOfflineMode();
   }
+
+  /**
+   * @return {boolean} True if data are accessible offline.
+   * @export
+   */
+  hasData() {
+    return this.ngeoOfflineConfiguration_.hasOfflineDataForWatcher();
+  }
+
 };
 
 /**
