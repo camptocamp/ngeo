@@ -95,11 +95,12 @@ exports.Controller = class {
    * @param {ngeo.offline.ServiceManager} ngeoOfflineServiceManager ngeo offline service Manager.
    * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration ngeo offline configuration service.
    * @param {ngeo.offline.Mode} ngeoOfflineMode Offline mode manager.
+   * @param {ngeo.offline.NetworkStatus} ngeoNetworkStatus ngeo network status service.
    * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
-  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration, ngeoOfflineMode) {
+  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration, ngeoOfflineMode, ngeoNetworkStatus) {
 
     /**
      * @export
@@ -130,6 +131,12 @@ exports.Controller = class {
      * @export
      */
     this.offlineMode = ngeoOfflineMode;
+
+    /**
+     * @type {ngeo.offline.NetworkStatus}
+     * @export
+     */
+    this.networkStatus = ngeoNetworkStatus;
 
     /**
      * The map.
@@ -396,6 +403,7 @@ exports.Controller = class {
       this.offlineMode.enable();
     });
   }
+
   /**
    *
    * Deactivate offline mode.
@@ -434,6 +442,9 @@ exports.Controller = class {
     this.overlayCollection_.clear();
     this.dataPolygon_ = null;
     this.ngeoOfflineConfiguration_.clear();
+    if (this.networkStatus.isDisconnected()) {
+      this.menuDisplayed = false;
+    }
   }
 
   /**

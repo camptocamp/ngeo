@@ -7,7 +7,7 @@
   </span>
 </div>
 
-<div ng-if="$ctrl.selectingExtent" class="validate-extent btn btn-primary">
+<div ng-if="$ctrl.selectingExtent && !$ctrl.networkStatus.isDisconnected()" class="validate-extent btn btn-primary">
   <div ng-if="!$ctrl.downloading" ng-click="$ctrl.computeSizeAndDisplayAlertLoadData()" translate>Save map</div>
   <div ng-if="$ctrl.downloading" ng-click="$ctrl.askAbortDownload()" translate>Abort</div>
 </div>
@@ -50,7 +50,7 @@
               translate>Delete data
       </button>
     </div>
-    <div ng-if="!$ctrl.hasData()">
+    <div ng-if="!$ctrl.hasData() && !$ctrl.networkStatus.isDisconnected()">
       <button type="button" class="new-data btn btn-default"
               ng-click="$ctrl.toggleViewExtentSelection()"
               translate>Save new map
