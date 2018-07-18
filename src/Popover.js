@@ -67,7 +67,7 @@ exports.prototype.setMap = function(map) {
 
   if (map) {
     const contentEl = this.contentEl_;
-    // wait for the overlay to be rendered in the map before poping over
+    // wait for the overlay to be rendered in the map before popping over
     window.setTimeout(() => {
       $(element)
         .popover({

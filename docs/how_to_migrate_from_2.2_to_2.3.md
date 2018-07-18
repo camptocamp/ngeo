@@ -78,7 +78,7 @@ It can help to see how `component`, `service`, `factory`, etc. are made in ngeo 
 
 Note for GeoMapFish:
 Your application main controllers (files in `static-ngeo/js/<application>.js`). Are also concerned.
-But as the build expects to find the interface name in the 'goog.provide', you must potentialy rename
+But as the build expects to find the interface name in the 'goog.provide', you must potentially rename
 your file to match the interface name.
 Example: you have a `ngeodesktop` interface, that means that your file must be named `ngeodesktop.js` and the
 file must provide `<an_app_name>_ngeodesktop`. You may have to exceptionnaly adapt this line in your
@@ -284,7 +284,7 @@ these values to the module of your controller like this:
   moduleValue('myValueForThePrint': 'b');
   // etc.
 
-  // You can assign all contant and value to your main module.
+  // You can assign all constant and value to your main module.
   // The only exception is for the 'angularLocaleScript' because it must be loaded first.
   // It must be provided like that:
   var gmfAbstractAppControllerModule = angular.module('GmfAbstractAppControllerModule');
