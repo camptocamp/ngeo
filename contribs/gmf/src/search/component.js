@@ -732,14 +732,12 @@ exports.SearchController_ = class {
       prepare: (query, settings) => {
         const url = settings.url;
         const lang = gettextCatalog.currentLanguage;
-        const interfaceName = 'mobile'; // FIXME dynamic interfaces
         settings.xhrFields = {
           withCredentials: true
         };
         settings.url = olUri.appendParams(url, {
           'query': query,
           'lang': lang,
-          'interface': interfaceName
         });
         return settings;
       }
