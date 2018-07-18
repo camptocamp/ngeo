@@ -29,7 +29,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 exports.MainController = function(gettextCatalog) {
   /**
    * A password validator that check if the password as:
-   *  - A minimal length of 8 characteres.
+   *  - A minimal length of 8 characters.
    *  - At least one lowercase letter.
    *  - At least one Uppercase letter.
    *  - At least one digit.

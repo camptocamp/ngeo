@@ -498,7 +498,7 @@ exports.prototype.refreshFirstLevelGroups_ = function(themes) {
     }
   });
 
-  // Readd the firstlevelgroups.
+  // Re add the firstlevelgroups.
   this.setFirstLevelGroups(nodesToRestore);
 
   // Wait that Angular has created the layetree, then update the permalink.

@@ -74,7 +74,7 @@ With Webpack, some things have changed between the current ngeo 2.3 version, and
 
 ## AngularJS names
 
-Be as logical as possble.  In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
+Be as logical as possible.  In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
 a service in `contribs/gmf/src/sample/MyService.js`, the name must be `GmfSampleMyservice`.
 
 Don't change a name after it's chosen. Because that change the html in the code of all user of ngeo !
