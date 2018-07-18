@@ -12,7 +12,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   }
   .animation-container {
     // height with 2em: 1em per text (title, subtitle)
-    height: calc(4 * $app-margin + $half-app-margin + $map-tools-size ~"+ 2em");
+    height: 4 * $app-margin + $half-app-margin + $map-tools-size + 2em;
   }
 }
 
@@ -79,7 +79,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
     }
   }
   .animation-container-detailed {
-    height: ~"calc(100% - 3rem)";
+    height: calc(100% - 3rem);
     .details {
       display: block;
     }
@@ -206,7 +206,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
       font-size: 21px;
     }
     .slide-animation {
-      height: calc(~"100% -" $map-tools-size + $app-margin);
+      height: calc(100% - ($map-tools-size + $app-margin));
     }
 
     .animation-container-detailed {
@@ -226,12 +226,12 @@ $media (max-width: $screen-sm-min) {
     /** prevent glitch for swipe animation **/
     .details table {
       .details-key {
-        min-width: calc(~"30vw -" 2 * $app-margin);
-        max-width: calc(~"30vw -" 2 * $app-margin);
+        min-width: calc(30vw - 2 * $app-margin);
+        max-width: calc(30vw - 2 * $app-margin);
       }
       .details-value {
-        min-width: calc(~"70vw -" 2 * $app-margin);
-        max-width: calc(~"70vw -" 2 * $app-margin);
+        min-width: calc(70vw - 2 * $app-margin);
+        max-width: calc(70vw - 2 * $app-margin);
       }
     }
   }
