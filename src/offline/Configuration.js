@@ -52,11 +52,11 @@ exports = class extends ol.Observable {
     this.rootScope_ = $rootScope;
 
     /**
-     * @private
+     * @protected
      * @type {boolean}
      */
-    this.hasDataPreviousValue_ = false;
-    this.hasOfflineDataForWatcher();
+    this.hasData = false;
+    this.initializeHasOfflineData();
 
     /**
      * @private
@@ -72,18 +72,28 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * A synchronous method to be used by Angular watchers.
+   * @protected
+   */
+  initializeHasOfflineData() {
+    this.getItem('offline_content').then(value => this.setHasOfflineData(!!value));
+  }
+
+  /**
    * @return {boolean} whether some offline data is available in the storage
    */
-  hasOfflineDataForWatcher() {
-    localforage.length().then((numberOfKeys) => {
-      const hasData = numberOfKeys !== 0;
-      if (hasData ^ this.hasDataPreviousValue_) {
-        this.hasDataPreviousValue_ = hasData;
-        this.rootScope_.$apply();
-      }
-    });
-    return this.hasDataPreviousValue_;
+  hasOfflineData() {
+    return this.hasData;
+  }
+
+  /**
+   * @param {boolean} value whether there is offline data available in the storage.
+   */
+  setHasOfflineData(value) {
+    const needDigest = value ^ this.hasData;
+    this.hasData = value;
+    if (needDigest) {
+      this.rootScope_.$applyAsync(); // force update of the UI
+    }
   }
 
   /**
@@ -118,7 +128,8 @@ exports = class extends ol.Observable {
    * @return {Promise}
    */
   clear() {
-    return localforage.clear();
+    this.setHasOfflineData(false);
+    return this.traceGetSetItem('clear', '', localforage.clear());
   }
 
   /**

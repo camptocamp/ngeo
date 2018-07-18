@@ -132,11 +132,15 @@ const Downloader = class {
       extent: extent,
       layers: persistentLayers
     };
-    this.configuration_.setItem('offline_content', persistentObject);
-
+    const setOfflineContentPromise = this.configuration_.setItem('offline_content', persistentObject);
 
     this.tileDownloader_ = new TilesDownloader(queue, this.configuration_, this.configuration_.getMaxNumberOfParallelDownloads());
-    return this.tileDownloader_.download();
+    const tileDownloadPromise = this.tileDownloader_.download();
+
+    const allPromise = Promise.all([setOfflineContentPromise, tileDownloadPromise]);
+    const setHasOfflineData = () => this.configuration_.setHasOfflineData(true);
+    allPromise.then(setHasOfflineData, setHasOfflineData);
+    return allPromise;
   }
 };
 
