@@ -3,9 +3,9 @@
  */
 @import (inline) '~openlayers/css/ol.css';
 @import (inline) '../../css/reset.css';
-@import '~bootstrap/less/bootstrap.less';
+@import '~bootstrap/scss/bootstrap.scss';
 
-@import '~gmf/less/vars.less';
+@import '~gmf/sass/vars.scss';
 
 html, body {
   height: 100%;

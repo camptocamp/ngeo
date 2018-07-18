@@ -1,5 +1,5 @@
-@import "~font-awesome/less/variables.less";
-@import "~gmf/less/vars.less";
+@import "~font-awesome/scss/_variables.scss";
+@import "~gmf/sass/vars.scss";
 
 @grid-height: 25rem;
 @table-height: @grid-height - @app-margin - 2 * @map-tools-size;

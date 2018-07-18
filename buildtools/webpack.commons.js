@@ -1,18 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const LessPluginCleanCSS = require('less-plugin-clean-css');
-const LessPluginAutoprefix = require('less-plugin-autoprefix');
 
 const devMode = process.env.NODE_ENV !== 'production'
-
-const themes = {
-  'mobile': '"~gmf/controllers/mobile-theme.less"',
-  'desktop': '"~gmf/controllers/desktop-theme.less"',
-  'desktop_alt': '"' + path.resolve('contribs/gmf/apps/desktop_alt/less/theme.less') + '"',
-}
-
-const theme = process.env.THEME
 
 
 const providePlugin = new webpack.ProvidePlugin({
@@ -113,7 +103,7 @@ const cssRule = {
   })
 };
 
-const cssLessLoaderConfigs = [
+const cssSassLoaderConfigs = [
   {
     loader: 'css-loader',
     options: {
@@ -121,23 +111,14 @@ const cssLessLoaderConfigs = [
     }
   },
   {
-    loader: 'less-loader',
-    options: {
-      lessPlugins: [
-        new LessPluginCleanCSS(),
-        new LessPluginAutoprefix()
-      ],
-      modifyVars: {
-        'THEME': themes[theme] ? themes[theme] : theme,
-      }
-    }
+    loader: 'sass-loader',
   }
 ];
 
-const lessRule = {
-  test: /\.less$/,
+const sassRule = {
+  test: /\.scss$/,
   use: ExtractTextPlugin.extract({
-    use: cssLessLoaderConfigs
+    use: cssSassLoaderConfigs
   })
 };
 
@@ -164,7 +145,7 @@ const config = {
       angularRule,
       typeaheadRule,
       cssRule,
-      lessRule,
+      sassRule,
       htmlRule,
       ngeoRule,
       ngeoExamplesRule,

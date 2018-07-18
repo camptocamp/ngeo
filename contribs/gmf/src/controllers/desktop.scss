@@ -1,17 +1,17 @@
 /**
  * Entry point for all styles required for the desktop application.
  */
-@import '~gmf/less/vars.less';
-@import '~gmf/less/font.less';
-@import '~gmf/less/base.less';
-@import '~gmf/less/map.less';
-@import '~gmf/less/icons.less';
-@import '~gmf/less/input-range.less';
-@import '~gmf/less/popover.less';
-@import '~gmf/less/datepicker.less';
-@import '~gmf/less/fullscreenpopup.less';
+@import '~gmf/sass/vars.scss';
+@import '~gmf/sass/font.scss';
+@import '~gmf/sass/base.scss';
+@import '~gmf/sass/map.scss';
+@import '~gmf/sass/icons.scss';
+@import '~gmf/sass/input-range.scss';
+@import '~gmf/sass/popover.scss';
+@import '~gmf/sass/datepicker.scss';
+@import '~gmf/sass/fullscreenpopup.scss';
 
-@import '~gmf/layertree/desktop.less';
+@import '~gmf/layertree/desktop.scss';
 
 html, body {
   position: relative;

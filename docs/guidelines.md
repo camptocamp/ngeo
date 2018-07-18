@@ -26,7 +26,7 @@ or PR from persons outside of Camptocamp customers or developers.
 - [Declaring an event](#declaring-an-event)
 - [Styling](#styling)
   - [CSS class names convention](#css-class-names-convention)
-  - [Styling with less](#styling-with-less)
+  - [Styling with sass](#styling-with-sass)
 - [Property renaming](#property-renaming)
   - [Exports vs private elements](#exports-vs-private-elements)
   - [Object typing](#object-typing)
@@ -358,8 +358,8 @@ layer.set('title', 'A title');
 
 ## Styling
 
-If your component have an associated `less` file, add it next to the component, with the same name (for
-`mycomponent.js` file, you should have a `mycomponent.less` file). Then, don't require it directly in your
+If your component have an associated `scss` file, add it next to the component, with the same name (for
+`mycomponent.js` file, you should have a `mycomponent.scss` file). Then, don't require it directly in your
 component, leave this to the final application.
 
 ### CSS class names convention
@@ -378,9 +378,9 @@ possible to have multiple instances of your component, and so multiple identical
 a unique CSS class name, inject the `$element` service in your controller and use Angular jqLite selector
 to get the element needed.
 
-### Styling with less
+### Styling with sass
 
-To be able to do calculations directly with less we encourage to use a subset of the CSS units.
+To be able to do calculations directly with sass we encourage to use a subset of the CSS units.
 We choose units that don't depend on parent tags and are relative.
 
  * rem: 1 rem is the font size of the root element (<html>).
