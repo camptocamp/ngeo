@@ -34,7 +34,7 @@
               translate>Activate offline mode
       </button>
       <button type="button" class="extent-zoom btn btn-default"
-              ng-if="$ctrl.offlineMode.isEnabled()"
+              ng-if="$ctrl.offlineMode.isEnabled() && !$ctrl.networkStatus.isDisconnected()"
               ng-click="$ctrl.deactivateOfflineMode()"
               translate>Deactivate offline mode
       </button>
@@ -46,6 +46,7 @@
         <span ng-if="!$ctrl.isExtentVisible()" translate >Show extent</span>
       </button>
       <button type="button" class="delete btn btn-default"
+              ng-if="!$ctrl.networkStatus.isDisconnected()"
               ng-click="$ctrl.displayAlertDestroyData = true"
               translate>Delete data
       </button>
