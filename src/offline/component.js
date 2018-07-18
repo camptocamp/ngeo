@@ -55,7 +55,6 @@ function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
  *       ngeo-offline-mask-margin="::100"
  *       ngeo-offline-min_zoom="::11"
  *       ngeo-offline-max_zoom="::15"
- *       debug="::true"
  *     </ngeo-offline>
  *
  * See our live example: [../examples/offline.html](../examples/offline.html)
@@ -73,7 +72,6 @@ exports.component_ = {
     'maskMargin': '<?ngeoOfflineMaskMargin',
     'minZoom': '<?ngeoOfflineMinZoom',
     'maxZoom': '<?ngeoOfflineMaxZoom',
-    'debug': '<',
   },
   controller: 'ngeoOfflineController',
   templateUrl: ngeoOfflineTemplateUrl
@@ -101,12 +99,6 @@ exports.Controller = class {
    * @ngname ngeoOfflineController
    */
   constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration, ngeoOfflineMode, ngeoNetworkStatus) {
-
-    /**
-     * @export
-     * @type {boolean}
-     */
-    this.debug;
 
     /**
      * @type {angular.$timeout}
@@ -326,11 +318,6 @@ exports.Controller = class {
    * @export
    */
   toggleViewExtentSelection(finished) {
-    if (this.debug && !finished) { // FIXME, remove this when downloader is implemented
-      const extent = this.getDowloadExtent_();
-      this.ngeoOfflineServiceManager_.save(extent, this.map);
-      return;
-    }
     this.menuDisplayed = false;
     this.selectingExtent = !this.selectingExtent;
 
@@ -389,10 +376,6 @@ exports.Controller = class {
    * @export
    */
   showMenu() {
-    if (this.debug) {
-      this.validateExtent();
-      return;
-    }
     this.menuDisplayed = true;
   }
 
