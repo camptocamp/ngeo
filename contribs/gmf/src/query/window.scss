@@ -12,7 +12,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   }
   .animation-container {
     // height with 2em: 1em per text (title, subtitle)
-    height: 4 * $app-margin + $half-app-margin + $map-tools-size + 2em;
+    height: 4 * $app-margin + $half-app-margin + $map-tools-size + 2rem;
   }
 }
 
@@ -215,7 +215,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   }
 }
 
-@media (max-width: $screen-sm-min) {
+@media (max-width: map-get($grid-breakpoints, "sm")) {
   .gmf-displayquerywindow.mobile {
     width: 100%;
     max-width: 100%;

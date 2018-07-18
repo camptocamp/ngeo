@@ -1,6 +1,10 @@
-@import "~bootstrap/scss/_variables.scss";
+@import "~bootstrap/scss/bootstrap.scss";
 
-$search-width: 6 * $map-tools-size;
+$brand-primary: #94ac9a;
+$brand-secondary: #d3e5d7;
+$primary: $brand-primary;
+$secondary: $brand-secondary;
+$font-size-small: 0.9em;
 
 $app-margin: 1rem;
 $half-app-margin: 0.5rem;
@@ -10,12 +14,14 @@ $nav-bg: white;
 $color: #555;
 $color-light: lighten($color, $standard-variation);
 $nav-header-bg: darken($nav-bg, 50%);
-$link-color: hsv(hue($brand-primary), 40%, 60%);
+$link-color: hsl(hue($brand-primary), 40%, 60%);
 $map-tools-bg-color: white;
 $map-tools-color: black;
 $map-tools-size: 4rem;
 $onhover-color: darken($nav-bg, $standard-variation);
 $main-bg-color: #e2e3df; // grey light
+
+$search-width: 6 * $map-tools-size;
 
 // Z-indexes
 $below-content-index: 1;
@@ -33,7 +39,3 @@ $border-radius-base: 0;
 $border-radius-small: 0;
 $border-color: black;
 $input-border-focus: darken($brand-primary, $standard-variation);
-
-$brand-primary: #94ac9a;
-$brand-secondary: #d3e5d7;
-$font-size-small: 0.9em;
