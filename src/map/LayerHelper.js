@@ -4,7 +4,7 @@
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import olLayerGroup from 'ol/layer/Group.js';
+import OlLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import * as olObj from 'ol/obj.js';
@@ -241,7 +241,7 @@ exports.prototype.createWMTSLayerFromCapabilititesObj = function(
  * @export
  */
 exports.prototype.createBasicGroup = function(opt_layers) {
-  const group = new olLayerGroup();
+  const group = new OlLayerGroup();
   if (opt_layers) {
     group.setLayers(opt_layers);
   }
@@ -287,26 +287,44 @@ exports.prototype.getGroupFromMap = function(map, groupName) {
  * @export
  */
 exports.prototype.getFlatLayers = function(layer) {
-  return this.getFlatLayers_(layer, []);
+  if (layer instanceof OlLayerGroup) {
+    const sublayers = layer.getLayers().getArray();
+    const hasGroupLayer = sublayers.some(sublayer => sublayer instanceof OlLayerGroup);
+    if (!hasGroupLayer) {
+      return sublayers.slice();
+    }
+  }
+  return this.getFlatLayers_(layer, [], undefined);
 };
 
 
 /**
  * Get an array of all layers in a group. The group can contain multiple levels
- * of others groups.
+ * of others groups. When we flatten a group, we get the child layers.
+ * If opacity is defined on the group, this value is lost.
+ * Computed opacity is a custom 'back-up' value that contains
+ * the calculated value of all ancestors and the given layer.
  * @param {ol.layer.Base} layer The base layer, mostly a group of layers.
  * @param {Array.<ol.layer.Base>} array An array to add layers.
+ * @param {number|undefined} computedOpacity Opacity inherited from ancestor layer groups.
  * @return {Array.<ol.layer.Layer>} Layers.
  * @private
  */
-exports.prototype.getFlatLayers_ = function(layer, array) {
-  if (layer instanceof olLayerGroup) {
+exports.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
+  const opacity = layer.getOpacity();
+  if (computedOpacity !== undefined) {
+    computedOpacity *= opacity;
+  } else {
+    computedOpacity = opacity;
+  }
+  if (layer instanceof OlLayerGroup) {
     const sublayers = layer.getLayers();
     sublayers.forEach((l) => {
-      this.getFlatLayers_(l, array);
+      this.getFlatLayers_(l, array, computedOpacity);
     });
   } else {
     if (array.indexOf(layer) < 0) {
+      layer.set('inheritedOpacity', computedOpacity, true);
       array.push(layer);
     }
   }
@@ -326,7 +344,7 @@ exports.prototype.getFlatLayers_ = function(layer, array) {
 exports.prototype.getLayerByName = function(layerName, layers) {
   let found = null;
   layers.some((layer) => {
-    if (layer instanceof olLayerGroup) {
+    if (layer instanceof OlLayerGroup) {
       const sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
     } else if (layer.get('layerNodeName') === layerName) {
@@ -440,7 +458,7 @@ exports.prototype.refreshWMSLayer = function(layer) {
  * @param {number} ZIndex The ZIndex for children element.
  */
 exports.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
-  if (!(element instanceof olLayerGroup)) {
+  if (!(element instanceof OlLayerGroup)) {
     return;
   }
   const innerGroupLayers = element.getLayers();
