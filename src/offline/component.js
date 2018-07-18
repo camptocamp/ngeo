@@ -299,7 +299,7 @@ exports.Controller = class {
    * @export
    */
   hasData() {
-    return this.ngeoOfflineConfiguration_.hasOfflineDataForWatcher();
+    return this.ngeoOfflineConfiguration_.hasOfflineData();
   }
 
   /**
@@ -441,10 +441,16 @@ exports.Controller = class {
   deleteData() {
     this.overlayCollection_.clear();
     this.dataPolygon_ = null;
-    this.ngeoOfflineConfiguration_.clear();
     if (this.networkStatus.isDisconnected()) {
       this.menuDisplayed = false;
     }
+
+    const reloadIfInOfflineMode = () => {
+      if (this.offlineMode.isEnabled()) {
+        this.deactivateOfflineMode();
+      }
+    };
+    this.ngeoOfflineConfiguration_.clear().then(reloadIfInOfflineMode);
   }
 
   /**

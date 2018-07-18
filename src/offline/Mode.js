@@ -71,7 +71,7 @@ exports = class {
    * @export
    */
   hasData() {
-    return this.ngeoOfflineConfiguration_.hasOfflineDataForWatcher();
+    return this.ngeoOfflineConfiguration_.hasOfflineData();
   }
 
 };
