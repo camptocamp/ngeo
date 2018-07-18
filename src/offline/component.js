@@ -345,9 +345,6 @@ exports.Controller = class {
    */
   finishDownload_() {
     this.downloading = false;
-    const extent = this.getDowloadExtent_();
-    this.dataPolygon_ = this.createPolygonFromExtent_(extent);
-    this.displayExtent_();
     this.toggleViewExtentSelection(true);
   }
 
