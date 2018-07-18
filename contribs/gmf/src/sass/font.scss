@@ -1,7 +1,7 @@
 /**
  * Fonts definition
  */
-@font-face {
+$font-face {
   font-family: "gmf-icons";
   src: url("../../fonts/gmf-icons.eot");
   src: url("../../fonts/gmf-icons.eot?#iefix") format("embedded-opentype"),
@@ -13,4 +13,4 @@
 }
 
 @import "~font-awesome/scss/_font-awesome.scss";
-@fa-font-path: "../fonts";
+$fa-font-path: "../fonts";

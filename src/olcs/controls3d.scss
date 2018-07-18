@@ -1,21 +1,21 @@
-@controls3d-border: 20px;
-@controls3d-button-padding: 17px;
+$controls3d-border: 20px;
+$controls3d-button-padding: 17px;
 
 ngeo-olcs-controls3d {
   position: absolute;
-  bottom: 20px - @controls3d-border;
+  bottom: 20px - $controls3d-border;
   left: 0;
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  width: 180px + 2 * @controls3d-border;
+  width: 180px + 2 * $controls3d-border;
   button {
     width: 24px;
     height: 20px;
     background-color: transparent;
     background-repeat: no-repeat;
     border: 0;
-    padding: @controls3d-button-padding;
+    padding: $controls3d-button-padding;
     cursor: pointer;
     &.ngeo-left {
       background-image: data-uri('img/left.png');

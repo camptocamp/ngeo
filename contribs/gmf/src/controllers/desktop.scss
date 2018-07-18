@@ -22,7 +22,7 @@ html, body {
 }
 
 body {
-  padding-top: @topbar-height;
+  padding-top: $topbar-height;
 }
 
 header {
@@ -30,12 +30,12 @@ header {
   top: 0;
   right: 0;
   left: 0;
-  height: @topbar-height;
-  z-index: @zindex-navbar-fixed;
+  height: $topbar-height;
+  z-index: $zindex-navbar-fixed;
   .logo {
     height: 100%;
-    line-height: @topbar-height;
-    margin-left: @app-margin;
+    line-height: $topbar-height;
+    margin-left: $app-margin;
     img {
       height: 100%;
       vertical-align: bottom;
@@ -50,7 +50,7 @@ main {
   overflow: hidden;
 }
 
-@footer-height: @input-height-base + 2 * @padding-base-vertical;
+$footer-height: $input-height-base + 2 * $padding-base-vertical;
 
 .gmf-app-map-container {
   width: auto;
@@ -58,7 +58,7 @@ main {
   overflow: hidden;
   position: relative;
   display: block;
-  border-top-color: @btn-default-border;
+  border-top-color: $btn-default-border;
   border-top-width: 1px;
   border-top-style: solid;
   .gmf-map,
@@ -71,19 +71,19 @@ main {
   }
 
   .gmf-app-footer {
-    padding: @padding-small-vertical;
+    padding: $padding-small-vertical;
     position: absolute;
     z-index: 2;
-    bottom:  -@footer-height;
+    bottom:  -$footer-height;
     // prevent footer to be displayed on 2 lines when screen width is small
-    max-height: @footer-height;
-    background-color: fade(@main-bg-color, 90%);
+    max-height: $footer-height;
+    background-color: fade($main-bg-color, 90%);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
     /* buttons or inputs in bar are supposed to be '-sm' */
     transition: 0.2s ease-out all;
-    border: solid @border-color;
+    border: solid $border-color;
     border-width: 1px 0 0;
     &.gmf-app-active {
       bottom: 0;
@@ -95,17 +95,17 @@ main {
     button.gmf-app-map-info {
       position: absolute;
       /* button is supposed to be .btn-sm */
-      bottom: @footer-height - 1;
-      background-color: fade(@main-bg-color, 80%);
+      bottom: $footer-height - 1;
+      background-color: fade($main-bg-color, 80%);
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       padding: 0;
       left: 50%;
-      @width: 4rem;
-      width: @width;
-      margin-left: -(@width / 2);
+      $width: 4rem;
+      width: $width;
+      margin-left: -($width / 2);
       border-bottom: 0;
-      border: solid @border-color;
+      border: solid $border-color;
       border-width: 1px 1px 0 1px;
     }
   }
@@ -142,7 +142,7 @@ main {
 
 gmf-search {
   position: absolute;
-  left: 2 * @app-margin + @map-tools-size;
+  left: 2 * $app-margin + $map-tools-size;
 
   .gmf-clear-button {
     top: 0;
@@ -155,12 +155,12 @@ gmf-search {
     }
 
     .tt-menu {
-      border-radius: @border-radius-base;
+      border-radius: $border-radius-base;
 
       .gmf-search-header {
-        padding: @app-margin;
+        padding: $app-margin;
         display: block;
-        font-size: @font-size-small;
+        font-size: $font-size-small;
         background-color: #eee;
         text-transform: uppercase;
         color: #666;
@@ -174,42 +174,42 @@ gmf-search {
 }
 
 .ol-zoom {
-  left: @app-margin;
-  top: @app-margin;
+  left: $app-margin;
+  top: $app-margin;
 }
 
 .ol-rotate {
-  right: @app-margin;
-  top: @app-margin;
+  right: $app-margin;
+  top: $app-margin;
 }
 
 .gmf-app-data-panel {
   display: block;
   float: left;
-  background-color: @brand-secondary;
-  width: @left-panel-width;
+  background-color: $brand-secondary;
+  width: $left-panel-width;
   height: 100%;
   display: flex;
   flex-flow: column;
 
   .gmf-app-header {
     flex: 0 1 auto;
-    padding: @app-margin @app-margin 0 @app-margin;
+    padding: $app-margin $app-margin 0 $app-margin;
   }
 
   .gmf-app-content {
     flex: 1 1 auto;
     overflow-y: auto;
     position: relative;
-    margin-top: @app-margin;
-    margin-bottom: @app-margin;
+    margin-top: $app-margin;
+    margin-bottom: $app-margin;
   }
 
 }
 
 gmf-themeselector {
-  width: 1.5 * @left-panel-width;
-  max-height: 1.5 * @left-panel-width;
+  width: 1.5 * $left-panel-width;
+  max-height: 1.5 * $left-panel-width;
   overflow: hidden;
   overflow-y: auto;
 }
@@ -218,13 +218,13 @@ gmf-backgroundlayerselector {
 }
 gmf-themeselector,
 gmf-backgroundlayerselector {
-  padding: @half-app-margin !important;
+  padding: $half-app-margin !important;
 }
 
-@theme-selector-columns: 2;
+$theme-selector-columns: 2;
 .gmf-theme-selector li {
   float: left;
-  width: ~"calc((100% - @{theme-selector-columns} * 2 * @{half-app-margin}) / @{theme-selector-columns})";
+  width: ~"calc((100% - ${theme-selector-columns} * 2 * ${half-app-margin}) / ${theme-selector-columns})";
 }
 .gmf-backgroundlayerselector {
   margin-bottom: 0;
@@ -233,18 +233,18 @@ gmf-backgroundlayerselector {
 .gmf-theme-selector,
 .gmf-backgroundlayerselector {
   li {
-    margin: @half-app-margin;
+    margin: $half-app-margin;
   }
 }
 
 .gmf-app-tools {
   display: block;
   float: right;
-  background-color: @brand-secondary;
+  background-color: $brand-secondary;
 
   .gmf-app-tools-content {
-    width: @right-panel-width;
-    margin-right: -@right-panel-width;
+    width: $right-panel-width;
+    margin-right: -$right-panel-width;
     transition: margin-right 0.2s ease, width 0.001s ease;
     float: right;
     height: 100%;
@@ -263,8 +263,8 @@ gmf-backgroundlayerselector {
 
     .close {
       padding: 0;
-      line-height: @half-app-margin;
-      margin-bottom: @app-margin;
+      line-height: $half-app-margin;
+      margin-bottom: $app-margin;
     }
 
     textarea {
@@ -272,12 +272,12 @@ gmf-backgroundlayerselector {
     }
 
     .gmf-app-tools-content-heading {
-      @color: lighten(@text-color, @standard-variation);
-      color: @color;
-      padding-bottom: @app-margin;
-      margin-bottom: @app-margin;
-      margin-top: @grid-gutter-width / 2;
-      border-bottom: 1px solid @color;
+      $color: lighten($text-color, $standard-variation);
+      color: $color;
+      padding-bottom: $app-margin;
+      margin-bottom: $app-margin;
+      margin-top: $grid-gutter-width / 2;
+      border-bottom: 1px solid $color;
     }
 
     &.gmf-app-googlestreetview-active {
@@ -286,8 +286,8 @@ gmf-backgroundlayerselector {
   }
 
   .gmf-app-bar {
-    background-color: @brand-primary;
-    border-left: 1px solid @border-color;
+    background-color: $brand-primary;
+    border-left: 1px solid $border-color;
 
     float: right;
     height: 100%;
@@ -301,18 +301,18 @@ gmf-backgroundlayerselector {
     .btn {
       width: 100%;
       border-width: 0;
-      background-color: @brand-primary;
+      background-color: $brand-primary;
       margin-left: 0;
       border-radius: 0 !important;
       &:hover {
-        background-color: lighten(@brand-primary, @standard-variation);
+        background-color: lighten($brand-primary, $standard-variation);
       }
     }
 
     .btn-group-vertical {
       width: 100%;
       .btn {
-        border: 1px solid @border-color;
+        border: 1px solid $border-color;
         border-right-width: 0;
         border-left-width: 0;
 
@@ -321,8 +321,8 @@ gmf-backgroundlayerselector {
           box-shadow: none;
         }
         &.active {
-          background-color: @brand-secondary;
-          border-left: 1px solid @brand-secondary;
+          background-color: $brand-secondary;
+          border-left: 1px solid $brand-secondary;
           margin-left: -1px;
         }
       }
@@ -338,14 +338,14 @@ gmf-backgroundlayerselector {
 
 
 ::-webkit-scrollbar-track {
-  background: @main-bg-color;
+  background: $main-bg-color;
 }
 
 ::-webkit-scrollbar {
-  width: @half-app-margin;
+  width: $half-app-margin;
 }
 ::-webkit-scrollbar-thumb {
-  background: @brand-primary;
+  background: $brand-primary;
 }
 
 
@@ -361,12 +361,12 @@ gmf-backgroundlayerselector {
 }
 
 hr.gmf-drawfeature-separator {
-  border-color: @color;
+  border-color: $color;
   margin: 10px 0;
 }
 
 .gmf-drawfeature-featurelist {
-  margin-top: @app-margin;
+  margin-top: $app-margin;
 }
 
 
@@ -417,7 +417,7 @@ hr.gmf-drawfeature-separator {
  */
 gmf-featurestyle {
   display: block;
-  margin-top: @app-margin;
+  margin-top: $app-margin;
 }
 
 
@@ -499,7 +499,7 @@ gmf-featurestyle {
  */
 .gmf-app-map-bottom-controls {
   .gmf-app-infobar-active & {
-    bottom: @footer-height;
+    bottom: $footer-height;
   }
   transition: 0.2s ease-out bottom;
   position: absolute;
@@ -513,11 +513,11 @@ gmf-featurestyle {
  */
 .gmf-backgroundlayerbutton {
   position: absolute;
-  bottom: @app-margin;
-  left: @app-margin;
+  bottom: $app-margin;
+  left: $app-margin;
 
   button {
-    padding: @padding-small-vertical;
+    padding: $padding-small-vertical;
   }
 
   button,
@@ -528,15 +528,15 @@ gmf-featurestyle {
 
 .gmf-displayquerywindow {
   position: absolute;
-  right: @app-margin;
+  right: $app-margin;
 }
 
 /** Disclaimer */
-@bgselector-image-size: 48px;
+$bgselector-image-size: 48px;
 .gmf-app-map-messages {
   position: absolute;
   vertical-align: bottom;
-  left: ~"calc(2 * @{app-margin} + @{bgselector-image-size} + 2 * @{padding-small-vertical})";
+  left: ~"calc(2 * ${app-margin} + ${bgselector-image-size} + 2 * ${padding-small-vertical})";
 }
 
 
@@ -566,7 +566,7 @@ gmf-objecteditingtools {
  */
 .gmf-filterselector-separator {
   margin: 1.5rem 0 0.5rem 0;
-  border-color: @color;
+  border-color: $color;
 }
 
 .gmf-filterselector-savefilter-desc {
@@ -664,7 +664,7 @@ hr.ngeo-filter-separator-criteria {
 
 hr.ngeo-filter-separator-criteria,
 hr.ngeo-filter-separator-rules {
-  border-color: @color;
+  border-color: $color;
 }
 
 /**
@@ -675,7 +675,7 @@ ngeo-rule {
   margin: 1rem 2.5rem 1rem 0;
 
   .form-control {
-    font-size: @font-size-small;
+    font-size: $font-size-small;
   }
 
   .dropdown > a.btn {

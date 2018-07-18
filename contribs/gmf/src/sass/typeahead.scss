@@ -10,18 +10,18 @@
     width: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: @map-tools-bg-color;
+    background-color: $map-tools-bg-color;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-    border: solid 1px @border-color;
+    border: solid 1px $border-color;
 
     .tt-suggestion {
       text-align: left;
-      padding: @app-margin;
-      border-bottom: solid 1px @border-color;
+      padding: $app-margin;
+      border-bottom: solid 1px $border-color;
 
       &:hover, &.tt-cursor {
         cursor: pointer;
-        background-color: @onhover-color;
+        background-color: $onhover-color;
       }
     }
   }

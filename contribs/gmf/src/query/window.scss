@@ -1,10 +1,10 @@
 @import "~font-awesome/scss/_variables.scss";
 @import "~gmf/sass/vars.scss";
 
-@displayquerywindow-tablet-width: 8 * @map-tools-size;
-@displayquerywindow-detailed-header-height: 5rem;
-@displayquerywindow-detailed-details-line-height: 2rem;
-@displayquerywindow-detailed-details-height: 8 * @displayquerywindow-detailed-details-line-height;
+$displayquerywindow-tablet-width: 8 * $map-tools-size;
+$displayquerywindow-detailed-header-height: 5rem;
+$displayquerywindow-detailed-details-line-height: 2rem;
+$displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-details-line-height;
 
 .gmf-displayquerywindow {
   .details {
@@ -12,7 +12,7 @@
   }
   .animation-container {
     // height with 2em: 1em per text (title, subtitle)
-    height: calc(4 * @app-margin + @half-app-margin + @map-tools-size ~"+ 2em");
+    height: calc(4 * $app-margin + $half-app-margin + $map-tools-size ~"+ 2em");
   }
 }
 
@@ -24,33 +24,33 @@
 }
 
 .gmf-displayquerywindow, .ngeo-displaywindow {
-  right: @app-margin + @map-tools-size + @app-margin;
+  right: $app-margin + $map-tools-size + $app-margin;
   left: initial;
-  bottom: @app-margin;
-  width: @displayquerywindow-tablet-width;
-  max-width: @displayquerywindow-tablet-width;
-  margin-left: -@displayquerywindow-tablet-width / 2;
-  max-height: 10 * @map-tools-size;
+  bottom: $app-margin;
+  width: $displayquerywindow-tablet-width;
+  max-width: $displayquerywindow-tablet-width;
+  margin-left: -$displayquerywindow-tablet-width / 2;
+  max-height: 10 * $map-tools-size;
   position: fixed;
-  z-index: @above-all;
+  z-index: $above-all;
   .collapse-button {
-    background-color: @nav-bg;
-    border: solid 1px @border-color;
+    background-color: $nav-bg;
+    border: solid 1px $border-color;
     border-bottom-width: 0;
-    border-radius: @border-radius-base @border-radius-base 0 0;
+    border-radius: $border-radius-base $border-radius-base 0 0;
     line-height: 0.5;
-    height: @map-tools-size;
-    width: @map-tools-size + @map-tools-size * 2/3;
+    height: $map-tools-size;
+    width: $map-tools-size + $map-tools-size * 2/3;
   }
   .collapse-button-up::after {
-    content: @fa-var-chevron-up;
+    content: $fa-var-chevron-up;
   }
   .collapse-button-down::after {
-    content: @fa-var-chevron-down;
+    content: $fa-var-chevron-down;
   }
   .windowcontainer {
-    background-color: @nav-bg;
-    border: solid 1px @border-color;
+    background-color: $nav-bg;
+    border: solid 1px $border-color;
     position: relative;
     height: 100%;
     width: 100%;
@@ -65,7 +65,7 @@
       flex-direction: column;
       width: 100%;
       height: 100%;
-      padding: @app-margin;
+      padding: $app-margin;
       text-align: left;
       white-space: nowrap;
       overflow: hidden;
@@ -117,11 +117,11 @@
   }
   .details {
     flex: 1;
-    line-height: @displayquerywindow-detailed-details-line-height;
+    line-height: $displayquerywindow-detailed-details-line-height;
     overflow-x: hidden;
     overflow-y: auto;
     .details-key {
-      padding-right: @app-margin;
+      padding-right: $app-margin;
     }
 
     /** word wrapping */
@@ -134,8 +134,8 @@
     }
   }
   .navigate {
-    border-top: solid 1px @border-color;
-    height: @map-tools-size;
+    border-top: solid 1px $border-color;
+    height: $map-tools-size;
     display: flex;
     justify-content: space-between;
     position: absolute;
@@ -153,34 +153,34 @@
     }
     .previous {
       &::before {
-        content: @fa-var-chevron-left;
+        content: $fa-var-chevron-left;
       }
     }
     .next {
       &::after {
-        content: @fa-var-chevron-right;
+        content: $fa-var-chevron-right;
       }
     }
     button {
       width: inherit;
-      padding: 0 @app-margin;
+      padding: 0 $app-margin;
     }
   }
   button {
-    background-color: @nav-bg;
+    background-color: $nav-bg;
     border: none;
     height: 100%;
-    width: @map-tools-size;
+    width: $map-tools-size;
     &:hover {
-      background-color: @nav-bg;
+      background-color: $nav-bg;
     }
     &.close {
-      z-index: @above-content-index;
+      z-index: $above-content-index;
       position: absolute;
       top: 0;
       right: 0;
-      width: @map-tools-size;
-      height: @map-tools-size;
+      width: $map-tools-size;
+      height: $map-tools-size;
       font-weight: normal;
       font-size: 15px;
     }
@@ -206,16 +206,16 @@
       font-size: 21px;
     }
     .slide-animation {
-      height: calc(~"100% -" @map-tools-size + @app-margin);
+      height: calc(~"100% -" $map-tools-size + $app-margin);
     }
 
     .animation-container-detailed {
-      height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3) + @map-tools-size;
+      height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
     }
   }
 }
 
-@media (max-width: @screen-sm-min) {
+$media (max-width: $screen-sm-min) {
   .gmf-displayquerywindow.mobile {
     width: 100%;
     max-width: 100%;
@@ -226,12 +226,12 @@
     /** prevent glitch for swipe animation **/
     .details table {
       .details-key {
-        min-width: calc(~"30vw -" 2 * @app-margin);
-        max-width: calc(~"30vw -" 2 * @app-margin);
+        min-width: calc(~"30vw -" 2 * $app-margin);
+        max-width: calc(~"30vw -" 2 * $app-margin);
       }
       .details-value {
-        min-width: calc(~"70vw -" 2 * @app-margin);
-        max-width: calc(~"70vw -" 2 * @app-margin);
+        min-width: calc(~"70vw -" 2 * $app-margin);
+        max-width: calc(~"70vw -" 2 * $app-margin);
       }
     }
   }

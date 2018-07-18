@@ -3,17 +3,17 @@
 
 .gmf-layertree-root-tools {
   text-align: right;
-  padding: @micro-app-margin;
+  padding: $micro-app-margin;
 }
 
 .gmf-layertree-node {
   /**
    * Style rules for treenodes in the layertree
    */
-  margin-left: @app-margin; // left shifting (indentation)
+  margin-left: $app-margin; // left shifting (indentation)
 
   &.gmf-layertree-depth-1 {
-    margin: 0 @micro-app-margin @app-margin @micro-app-margin;
+    margin: 0 $micro-app-margin $app-margin $micro-app-margin;
   }
 
   ul {
@@ -27,7 +27,7 @@
   }
 
   a {
-    color: @color;
+    color: $color;
     display: inline;
     line-height: inherit;
     padding-left: 0;
@@ -36,20 +36,20 @@
     }
 
     &.gmf-layertree-expand-node.fa {
-      color : @color-light;
+      color : $color-light;
       display: inline-block;
       &::before {
-        content: @fa-var-chevron-right;
+        content: $fa-var-chevron-right;
       }
       &[aria-expanded="true"]::before {
-        content: @fa-var-chevron-down;
+        content: $fa-var-chevron-down;
       }
     }
   }
 
   .gmf-layertree-state {
     font-family: gmf-icons;
-    color: @color;
+    color: $color;
   }
 
   .off,
@@ -60,7 +60,7 @@
   .gmf-layertree-leaf,
   .gmf-layertree-group {
     position: relative;
-    padding: @micro-app-margin;
+    padding: $micro-app-margin;
     display: flex;
 
     > * {
@@ -120,15 +120,15 @@
     overflow: hidden;
     text-overflow: ellipsis;
     flex: 2;
-    padding-left: @half-app-margin;
-    padding-right: @half-app-margin;
+    padding-left: $half-app-margin;
+    padding-right: $half-app-margin;
   }
 
   .gmf-layertree-metadata {
     a {
       padding: 0;
       &::after {
-        content: @fa-var-info;
+        content: $fa-var-info;
         display: inline;
         font-family: FontAwesome;
       }
@@ -157,14 +157,14 @@
   }
 
   .gmf-layertree-legend {
-    margin: 0 @app-margin;
+    margin: 0 $app-margin;
     position: relative;
-    border: 1px solid @main-bg-color;
-    background-color: lighten(@main-bg-color, 8%);
+    border: 1px solid $main-bg-color;
+    background-color: lighten($main-bg-color, 8%);
     a {
       display: none;
       position: absolute;
-      right: @half-app-margin;
+      right: $half-app-margin;
       font-size: 1.1rem;
 
       &::before {

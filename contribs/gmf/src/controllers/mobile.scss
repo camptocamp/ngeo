@@ -23,10 +23,10 @@ main>* {
 }
 
 main button {
-  height: @map-tools-size;
-  width: @map-tools-size;
+  height: $map-tools-size;
+  width: $map-tools-size;
   padding: 0;
-  border-radius: @border-radius-base;
+  border-radius: $border-radius-base;
 }
 
 gmf-map {
@@ -41,12 +41,12 @@ gmf-map {
 }
 
 .gmf-mobile-measure {
-  bottom: @app-margin;
-  right: @app-margin;
+  bottom: $app-margin;
+  right: $app-margin;
   a {
     display: block;
     float: left;
-    margin-left: @micro-app-margin;
+    margin-left: $micro-app-margin;
   }
 }
 
@@ -54,31 +54,31 @@ gmf-map {
   .tooltip {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
     color: white;
-    padding: @half-app-margin @app-margin;
+    padding: $half-app-margin $app-margin;
     opacity: 0.7;
     white-space: nowrap;
   }
   .ngeo-tooltip-measure {
     opacity: 1;
     font-weight: bold;
-    z-index: @content-index;
+    z-index: $content-index;
   }
   .ngeo-tooltip-static {
     background-color: #ffcc33;
-    color: @color;
+    color: $color;
     border: 1px solid white;
   }
   .ngeo-tooltip-measure::before,
   .ngeo-tooltip-static::before {
-    border-top: @half-app-margin solid @border-color;
-    border-right: @half-app-margin solid transparent;
-    border-left: @half-app-margin solid transparent;
+    border-top: $half-app-margin solid $border-color;
+    border-right: $half-app-margin solid transparent;
+    border-left: $half-app-margin solid transparent;
     content: "";
     position: absolute;
-    bottom: -@half-app-margin;
-    margin-left: -@half-app-margin;
+    bottom: -$half-app-margin;
+    margin-left: -$half-app-margin;
     left: 50%;
   }
   .ngeo-tooltip-static::before {
@@ -87,22 +87,22 @@ gmf-map {
 }
 
 .ol-rotate {
-  top: 4 * @map-tools-size + 2 * @app-margin + 3 * @micro-app-margin;
-  right: @app-margin;
+  top: 4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin;
+  right: $app-margin;
   left: auto;
   .ol-rotate-reset {
     font-size: 2rem;
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
   }
 }
 
 .ol-zoom {
-  top: @app-margin + @map-tools-size + @app-margin;
-  right: @app-margin;
+  top: $app-margin + $map-tools-size + $app-margin;
+  right: $app-margin;
   left: auto;
   .ol-zoom-in, .ol-zoom-out {
     font-size: 2rem;
-    border-radius: @border-radius-base;
+    border-radius: $border-radius-base;
   }
 }
 
@@ -110,19 +110,19 @@ gmf-map {
 .ol-zoom {
   button {
     &:hover {
-      background-color: @map-tools-bg-color;
+      background-color: $map-tools-bg-color;
     }
   }
 }
 
 .ol-scale-line {
-  bottom: @app-margin;
-  left: @app-margin;
+  bottom: $app-margin;
+  left: $app-margin;
 }
 
 button[ngeo-mobile-geolocation] {
-  right: @app-margin;
-  top: 3 * @map-tools-size + 2 * @app-margin + 2 * @micro-app-margin;
+  right: $app-margin;
+  top: 3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin;
 }
 
 .ngeo-notification {
@@ -135,20 +135,20 @@ button[ngeo-mobile-geolocation] {
 }
 
 // Overrides for tablet devices and up
-@media (min-width: @screen-sm-min) {
+$media (min-width: $screen-sm-min) {
   .gmf-mobile-measure {
-    right: 2 * @app-margin + @map-tools-size;
+    right: 2 * $app-margin + $map-tools-size;
   }
   .ol-rotate {
-    top: @app-margin + @map-tools-size + @micro-app-margin;
+    top: $app-margin + $map-tools-size + $micro-app-margin;
   }
   .ol-zoom {
     top: auto;
-    bottom: @app-margin + @map-tools-size;
+    bottom: $app-margin + $map-tools-size;
   }
   button[ngeo-mobile-geolocation] {
     top: auto;
-    bottom: @app-margin;
+    bottom: $app-margin;
   }
 }
 

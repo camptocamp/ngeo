@@ -2,11 +2,11 @@
 @import "~gmf/sass/vars.scss";
 @import "~gmf/sass/typeahead.scss";
 
-@search-results-max-height: calc(~"100vh -" 6 * @app-margin);
+$search-results-max-height: calc(~"100vh -" 6 * $app-margin);
 
 gmf-search {
-  top: @app-margin;
-  z-index: @content-index;
+  top: $app-margin;
+  z-index: $content-index;
 
   & > * {
     display: inline-block;
@@ -14,8 +14,8 @@ gmf-search {
   }
 
   .gmf-search {
-    background-color: @map-tools-bg-color;
-    height: @map-tools-size;
+    background-color: $map-tools-bg-color;
+    height: $map-tools-size;
     position: relative;
   }
   // hide the native "clear x" in Edge
@@ -24,14 +24,14 @@ gmf-search {
   }
   .gmf-clear-button {
     position: absolute;
-    top: @half-app-margin;
-    right: @app-margin;
-    height: @map-tools-size;
+    top: $half-app-margin;
+    right: $app-margin;
+    height: $map-tools-size;
     opacity: 0.5;
     &::after {
       position: absolute;
-      content: @fa-var-close;
-      color: @map-tools-color;
+      content: $fa-var-close;
+      color: $map-tools-color;
       font-family: FontAwesome;
       font-size: 2rem;
       right: 0;
@@ -42,35 +42,35 @@ gmf-search {
     }
   }
   .gmf-color-button {
-    width: @map-tools-size;
-    height: @map-tools-size;
-    background-color: @map-tools-bg-color;
-    border: solid 1px @border-color;
-    color: @map-tools-color;
+    width: $map-tools-size;
+    height: $map-tools-size;
+    background-color: $map-tools-bg-color;
+    border: solid 1px $border-color;
+    color: $map-tools-color;
     &:hover {
-      background-color: @onhover-color;
+      background-color: $onhover-color;
     }
   }
   .form-control {
     box-shadow: none;
     height: 100%;
-    padding: @half-app-margin @map-tools-size;
-    border: 1px solid @border-color;
+    padding: $half-app-margin $map-tools-size;
+    border: 1px solid $border-color;
     &:focus {
-      border-color: @border-color;
+      border-color: $border-color;
       box-shadow: none;
     }
   }
 
   .gmf-search-is-active & {
-    z-index: @search-index;
+    z-index: $search-index;
   }
 
   .twitter-typeahead {
     .tt-menu {
-      max-height: @search-results-max-height;
+      max-height: $search-results-max-height;
       .gmf-search-no-results {
-        padding: @app-margin;
+        padding: $app-margin;
         cursor: default;
       }
       border-top: none;
@@ -82,10 +82,10 @@ gmf-search {
           margin: 0;
         }
         .gmf-search-label {
-          color: @color;
+          color: $color;
         }
         .gmf-search-group {
-          color: @color-light;
+          color: $color-light;
           font-size: 80%;
         }
       }
@@ -97,37 +97,37 @@ gmf-search {
 }
 
 // Overrides for small browser widths only
-@media (max-width: @screen-xs-max) {
+$media (max-width: $screen-xs-max) {
   gmf-search {
     .gmf-search {
       width: 100%;
     }
     .form-control {
-      padding-left: @half-app-margin;
+      padding-left: $half-app-margin;
     }
   }
 }
 
 // Overrides for tablet devices and up
-@media (min-width: @screen-sm-min) {
+$media (min-width: $screen-sm-min) {
   gmf-search {
     .gmf-search {
-      width: @search-width;
+      width: $search-width;
     }
     .gmf-clear-button {
-      margin-right: @app-margin;
+      margin-right: $app-margin;
       right: 0;
     }
 
     span.twitter-typeahead {
       &::before {
-        content: @fa-var-search;
+        content: $fa-var-search;
         font-family: FontAwesome;
-        color: @color;
+        color: $color;
         position: absolute;
         font-size: 2rem;
-        top: @half-app-margin;
-        left: @app-margin;
+        top: $half-app-margin;
+        left: $app-margin;
       }
     }
   }

@@ -2,29 +2,29 @@
  * Styles for mobile navigation menus (side menus).
  */
 
-@duration: 0.3s;
-@nav-bar-height: @map-tools-size + @app-margin;
-@nav-back-width: 1.5 * @map-tools-size;
-@menu-item-height: @nav-bar-height;
-@back-color: darken(@nav-bg, @standard-variation);
+$duration: 0.3s;
+$nav-bar-height: $map-tools-size + $app-margin;
+$nav-back-width: 1.5 * $map-tools-size;
+$menu-item-height: $nav-bar-height;
+$back-color: darken($nav-bg, $standard-variation);
 
 main {
   position: fixed;
-  background-color: @main-bg-color;
-  box-shadow: 0 0 @app-margin black;
+  background-color: $main-bg-color;
+  box-shadow: 0 0 $app-margin black;
   width: 100%;
   height: 100%;
-  z-index: @content-index;
+  z-index: $content-index;
   text-align: center;
 
   transform: translateZ(0);
-  transition: transform @duration;
+  transition: transform $duration;
   will-change: transform;
   .gmf-mobile-nav-left-is-visible & {
-    transform: translateX(@nav-width);
+    transform: translateX($nav-width);
   }
   .gmf-mobile-nav-right-is-visible & {
-    transform: translateX(-@nav-width);
+    transform: translateX(-$nav-width);
   }
 
   &.dragging {
@@ -34,17 +34,17 @@ main {
   .overlay {
     /* shadow layer visible when navigation is active */
     position: absolute;
-    z-index: @above-search-index;
+    z-index: $above-search-index;
     height: 100vh;
     width: 100vw;
     top: 0;
     left: 0;
     cursor: pointer;
-    background-color: fade(@color, 40%);
+    background-color: fade($color, 40%);
     visibility: hidden;
     opacity: 0;
 
-    .transition(opacity @duration, visibility @duration;);
+    .transition(opacity $duration, visibility $duration;);
     .backface-visibility(hidden);
 
     .gmf-mobile-nav-is-visible & {
@@ -57,7 +57,7 @@ main {
 .gmf-search-overlay {
   /* shadow layer visible when search is active */
   position: absolute;
-  z-index: @above-menus-index;
+  z-index: $above-menus-index;
   height: 100vh;
   width: 100vw;
   top: 0;
@@ -67,10 +67,10 @@ main {
   visibility: hidden;
   opacity: 0;
 
-  .transition(opacity @duration, visibility @duration;);
+  .transition(opacity $duration, visibility $duration;);
   .backface-visibility(hidden);
 
-  @media (max-width: @screen-xs-max) {
+  $media (max-width: $screen-xs-max) {
     .gmf-search-is-active & {
       visibility: visible;
       opacity: 1;
@@ -78,7 +78,7 @@ main {
   }
 }
 
-@nav-bar-height: 50px;
+$nav-bar-height: 50px;
 
 .gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-right,
 .gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left  {
@@ -94,20 +94,20 @@ nav.gmf-mobile-nav-left,
 nav.gmf-mobile-nav-right {
   position: fixed;
   top: 0;
-  width: @nav-width;
+  width: $nav-width;
   height: 100%;
-  background-color: @nav-bg;
+  background-color: $nav-bg;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  z-index: @below-content-index;
+  z-index: $below-content-index;
   visibility: hidden;
 
   header {
     display: block;
-    height: @nav-bar-height;
-    line-height: @nav-bar-height;
-    background-color: @nav-header-bg;
+    height: $nav-bar-height;
+    line-height: $nav-bar-height;
+    background-color: $nav-header-bg;
 
     .gmf-mobile-nav-go-back {
       position: absolute;
@@ -117,10 +117,10 @@ nav.gmf-mobile-nav-right {
       will-change: opacity, visibility;
       opacity: 0;
       visibility: hidden;
-      height: @nav-bar-height;
-      width: @nav-back-width;
+      height: $nav-bar-height;
+      width: $nav-back-width;
       padding-left: 24px;
-      color: @back-color;
+      color: $back-color;
 
       &.gmf-mobile-nav-active {
         opacity: 1;
@@ -129,17 +129,17 @@ nav.gmf-mobile-nav-right {
 
       &::before, &::after {
         transform-origin: 1px 50%;
-        left: @app-margin;
+        left: $app-margin;
       }
     }
 
 
     > nav {
       position: absolute;
-      width: @nav-width;
-      left: @nav-width;
+      width: $nav-width;
+      left: $nav-width;
       transform: translateX(0);
-      transition: transform @duration, opacity @duration;
+      transition: transform $duration, opacity $duration;
       will-change: transform, opacity;
       opacity: 0;
       text-align: center;
@@ -170,7 +170,7 @@ nav.gmf-mobile-nav-right {
 
   a[data-toggle] {
     position: relative;
-    padding-right: @map-tools-size;
+    padding-right: $map-tools-size;
 
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
@@ -189,8 +189,8 @@ nav.gmf-mobile-nav-right {
       margin-top: -1px;
       display: inline-block;
       height: 2px;
-      width: @app-margin;
-      background: @back-color;
+      width: $app-margin;
+      background: $back-color;
       .backface-visibility(hidden);
     }
 
@@ -204,15 +204,15 @@ nav.gmf-mobile-nav-right {
 
   .gmf-mobile-nav-slide {
     position: fixed;
-    height: ~"calc(100% - @{nav-bar-height})";
-    width: @nav-width;
+    height: ~"calc(100% - ${nav-bar-height})";
+    width: $nav-width;
     transform: translateX(100%);
-    transition: transform @duration, opacity @duration;
+    transition: transform $duration, opacity $duration;
     will-change: transform, opacity;
     opacity: 0;
     overflow-y: auto;
     & > * {
-      padding: @app-margin;
+      padding: $app-margin;
       margin: 0;
       // make it so tags like "gmf-layertree" are correctly displayed
       //  (ie. that padding and margin correctly apply)
@@ -232,7 +232,7 @@ nav.gmf-mobile-nav-right {
 
 // For small devices (in portrait mode) we want the navigation menus to take
 // 90% of the viewport width
-@media (max-width: @screen-xs-max) {
+$media (max-width: $screen-xs-max) {
   main {
     .gmf-mobile-nav-left-is-visible & {
       transform: translateX(90vw);
@@ -268,24 +268,24 @@ nav.gmf-mobile-nav-right {
  * Buttons to open right and left navigation menus
  */
 .gmf-mobile-nav-trigger {
-  top: @app-margin;
-  background-color: @map-tools-bg-color;
-  color: @map-tools-color;
-  z-index: @above-search-index;
-  height: @map-tools-size;
-  border: 1px solid @border-color;
+  top: $app-margin;
+  background-color: $map-tools-bg-color;
+  color: $map-tools-color;
+  z-index: $above-search-index;
+  height: $map-tools-size;
+  border: 1px solid $border-color;
   .fa, .gmf-icon {
     font-size: 2rem;
   }
 }
 
 .gmf-mobile-nav-left-trigger {
-  left: @app-margin;
+  left: $app-margin;
   border-right: none;
 }
 
 .gmf-mobile-nav-right-trigger {
-  right: @app-margin;
+  right: $app-margin;
   border-left: none;
 }
 
@@ -294,7 +294,7 @@ nav.gmf-mobile-nav-right {
  */
 .gmf-mobile-nav-button {
   display: block;
-  padding: @app-margin 0;
+  padding: $app-margin 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -305,14 +305,14 @@ nav.gmf-mobile-nav-right {
 
 
 //For tablet only
-@media (min-width: @screen-sm-min) {
+$media (min-width: $screen-sm-min) {
   main button:hover{
-    background-color: @onhover-color;
+    background-color: $onhover-color;
   }
 
   .gmf-mobile-nav-trigger {
     margin: 0;
-    border: solid 1px @border-color;
+    border: solid 1px $border-color;
   }
 
   .gmf-mobile-nav-right-trigger {

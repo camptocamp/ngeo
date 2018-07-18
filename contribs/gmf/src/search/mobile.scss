@@ -1,24 +1,24 @@
 @import "search.scss";
 
 // Overrides for tablet devices and up
-@media (min-width: @screen-sm-min) {
+$media (min-width: $screen-sm-min) {
   gmf-search {
-    left: 2 * @app-margin + @map-tools-size;
+    left: 2 * $app-margin + $map-tools-size;
   }
 }
 
 // Overrides for phone devices only
-@media (max-width: @screen-xs-max) {
+$media (max-width: $screen-xs-max) {
   gmf-search {
     left: 0;
     right: 0;
-    margin: 0 @app-margin + @map-tools-size;
+    margin: 0 $app-margin + $map-tools-size;
     .gmf-search {
       width: 100%;
     }
     .tt-menu {
       position: fixed !important;
-      top: @app-margin + @map-tools-size !important;
+      top: $app-margin + $map-tools-size !important;
       right: 0;
       bottom: 0;
       max-height: none;
