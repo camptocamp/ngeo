@@ -70,7 +70,7 @@ main {
   .transition(opacity $duration, visibility $duration;);
   .backface-visibility(hidden);
 
-  $media (max-width: $screen-xs-max) {
+  @media (max-width: $screen-xs-max) {
     .gmf-search-is-active & {
       visibility: visible;
       opacity: 1;
@@ -232,7 +232,7 @@ nav.gmf-mobile-nav-right {
 
 // For small devices (in portrait mode) we want the navigation menus to take
 // 90% of the viewport width
-$media (max-width: $screen-xs-max) {
+@media (max-width: $screen-xs-max) {
   main {
     .gmf-mobile-nav-left-is-visible & {
       transform: translateX(90vw);
@@ -305,7 +305,7 @@ $media (max-width: $screen-xs-max) {
 
 
 //For tablet only
-$media (min-width: $screen-sm-min) {
+@media (min-width: $screen-sm-min) {
   main button:hover{
     background-color: $onhover-color;
   }

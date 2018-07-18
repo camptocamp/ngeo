@@ -32,7 +32,7 @@
 /**
  * Only affects webkit desktop browsers
  */
-$media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio:0) {
   .ol-rotate,
   .ol-zoom {
     button {

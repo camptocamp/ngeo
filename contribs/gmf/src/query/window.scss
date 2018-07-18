@@ -215,7 +215,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   }
 }
 
-$media (max-width: $screen-sm-min) {
+@media (max-width: $screen-sm-min) {
   .gmf-displayquerywindow.mobile {
     width: 100%;
     max-width: 100%;

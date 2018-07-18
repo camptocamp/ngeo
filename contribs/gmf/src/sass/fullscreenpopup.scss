@@ -30,7 +30,7 @@
   }
 }
 
-$media (min-width: $screen-sm-min) {
+@media (min-width: $screen-sm-min) {
   $fullscreenpopup-tablet-width: 12 * $map-tools-size;
   $fullscreenpopup-topbar-height: 4.5rem; // Same value as the topbar-height in desktop.scss
   $fullscreenpopup-tablet-top: $fullscreenpopup-topbar-height + $app-margin + 2 * $map-tools-size;

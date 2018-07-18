@@ -135,7 +135,7 @@ button[ngeo-mobile-geolocation] {
 }
 
 // Overrides for tablet devices and up
-$media (min-width: $screen-sm-min) {
+@media (min-width: $screen-sm-min) {
   .gmf-mobile-measure {
     right: 2 * $app-margin + $map-tools-size;
   }
