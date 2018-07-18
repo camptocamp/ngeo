@@ -161,7 +161,7 @@ eof-newline:
 
 .PHONY: test
 test: .build/node_modules.timestamp
-	THEME=mobile ./node_modules/karma/bin/karma start karma-conf.js --single-run
+	./node_modules/karma/bin/karma start karma-conf.js --single-run
 	@echo "\nFull coverage report in: .build/coverage/lcov-report"
 
 .PHONY: test-debug
@@ -179,31 +179,31 @@ serve-ngeo: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCAL
 
 .PHONY: serve-gmf
 serve-gmf: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	THEME=mobile npm run serve-gmf-examples
+	npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps-desktop
 serve-gmf-apps-desktop: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=desktop THEME=desktop npm run serve-gmf-apps
+	APP=desktop npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-desktopalt
 serve-gmf-apps-desktopalt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=desktop_alt THEME=desktop_alt npm run serve-gmf-apps
+	APP=desktop_alt npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-mobile
 serve-gmf-apps-mobile: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile npm THEME=mobile run serve-gmf-apps
+	APP=mobile npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-mobilealt
 serve-gmf-apps-mobilealt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile_alt THEME=mobile npm run serve-gmf-apps
+	APP=mobile_alt npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-oeedit
 serve-gmf-apps-oeedit: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=oeedit THEME=desktop npm run serve-gmf-apps
+	APP=oeedit npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-oeview
 serve-gmf-apps-oeview: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=oeview THEME=desktop npm run serve-gmf-apps
+	APP=oeview npm run serve-gmf-apps
 
 .PHONY: examples-hosted
 examples-hosted: \
@@ -222,19 +222,19 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
 .build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
-	THEME=mobile npm run build-gmf-examples
+	npm run build-gmf-examples
 	touch $@
 
 .PHONY: examples-hosted-apps
 examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
 
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
-	APP=desktop THEME=desktop npm run build-gmf-apps
-	APP=desktop_alt THEME=desktop_alt npm run build-gmf-apps
-	APP=mobile THEME=mobile npm run build-gmf-apps
-	APP=mobile_alt THEME=mobile npm run build-gmf-apps
-	APP=oeedit THEME=desktop npm run build-gmf-apps
-	APP=oeview THEME=desktop npm run build-gmf-apps
+	APP=desktop npm run build-gmf-apps
+	APP=desktop_alt npm run build-gmf-apps
+	APP=mobile npm run build-gmf-apps
+	APP=mobile_alt npm run build-gmf-apps
+	APP=oeedit npm run build-gmf-apps
+	APP=oeview npm run build-gmf-apps
 	touch $@
 
 .PHONY: gh-pages

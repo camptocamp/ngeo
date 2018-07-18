@@ -1,5 +1,10 @@
 @import '~gmf/controllers/desktop.scss';
 
+$brand-primary: #9FB6CC;
+$brand-secondary: #D3DBE3;
+
+$theme-selector-columns: 3;
+
 .gmf-theme-selector li {
   flex-direction: column;
 }
