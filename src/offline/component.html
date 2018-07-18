@@ -78,6 +78,19 @@
   </div>
 </ngeo-modal>
 
+<ngeo-modal ng-model="$ctrl.displayAlertNoLayer">
+  <div class="modal-header">
+    <h4 class="modal-title" translate>Warning</h4>
+  </div>
+  <div class="modal-body">
+      <p translate>No maps selected for saving.</p>
+      <button type="button" class="delete btn btn-default"
+              data-dismiss="modal"
+              translate>Ok
+      </button>
+  </div>
+</ngeo-modal>
+
 <ngeo-modal ng-model="$ctrl.displayAlertDestroyData">
   <div class="modal-header">
     <h4 class="modal-title" translate>Warning</h4>

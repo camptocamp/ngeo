@@ -227,6 +227,13 @@ exports.Controller = class {
     this.displayAlertLoadData = false;
 
     /**
+     * Whether the "no layer" modal is displayed.
+     * @type {boolean}
+     * @export
+     */
+    this.displayAlertNoLayer = false;
+
+    /**
      * Offline mask minimum margin in pixels.
      * @type {number}
      * @export
@@ -307,7 +314,11 @@ exports.Controller = class {
    */
   computeSizeAndDisplayAlertLoadData() {
     this.estimatedLoadDataSize = this.ngeoOfflineConfiguration_.estimateLoadDataSize(this.map);
-    this.displayAlertLoadData = true;
+    if (this.estimatedLoadDataSize > 0) {
+      this.displayAlertLoadData = true;
+    } else {
+      this.displayAlertNoLayer = true;
+    }
   }
   /**
    * Toggle the selecting extent view.
