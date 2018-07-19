@@ -97,7 +97,7 @@ gmf-search {
 }
 
 // Overrides for small browser widths only
-@media (max-width: $screen-xs-max) {
+@media (max-width: map-get($grid-breakpoints, "sm")) {
   gmf-search {
     .gmf-search {
       width: 100%;
@@ -109,7 +109,7 @@ gmf-search {
 }
 
 // Overrides for tablet devices and up
-@media (min-width: $screen-sm-min) {
+@media (min-width: map-get($grid-breakpoints, "sm")) {
   gmf-search {
     .gmf-search {
       width: $search-width;
