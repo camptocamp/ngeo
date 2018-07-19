@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const importer = require("node-sass-importer");
 
 const devMode = process.env.NODE_ENV !== 'production'
 
@@ -112,6 +113,11 @@ const cssSassLoaderConfigs = [
   },
   {
     loader: 'sass-loader',
+    options: {
+      sassConfig: {
+        importer: importer
+      }
+    }
   }
 ];
 
