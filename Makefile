@@ -13,7 +13,7 @@ NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
 GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js')
-GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(shell find contribs/gmf/cursors/ -type f) $(NGEO_ALL_SRC_FILES)
+GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(shell find contribs/gmf/src/cursors/ -type f) $(NGEO_ALL_SRC_FILES)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
@@ -320,7 +320,7 @@ gh-pages: .build/python-venv.timestamp
 node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
 	touch -c $@
 
-contribs/gmf/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
+contribs/gmf/src/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
 	mkdir -p $(dir $@)
 	cp $< $@
 
@@ -439,15 +439,15 @@ contribs/gmf/build/gmf-%.json: \
 	node buildtools/compile-catalog $(filter-out .build/node_modules.timestamp, $^) > $@
 
 .PHONY: generate-gmf-fonts
-generate-gmf-fonts: contribs/gmf/fonts/gmf-icons.ttf contribs/gmf/fonts/gmf-icons.eot contribs/gmf/fonts/gmf-icons.woff
+generate-gmf-fonts: contribs/gmf/src/fonts/gmf-icons.ttf contribs/gmf/src/fonts/gmf-icons.eot contribs/gmf/src/fonts/gmf-icons.woff
 
-contribs/gmf/fonts/gmf-icons.ttf: contribs/gmf/fonts/gmf-icons.svg .build/node_modules.timestamp
+contribs/gmf/src/fonts/gmf-icons.ttf: contribs/gmf/src/fonts/gmf-icons.svg .build/node_modules.timestamp
 	node_modules/svg2ttf/svg2ttf.js $< $@
 
-contribs/gmf/fonts/gmf-icons.eot: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
+contribs/gmf/src/fonts/gmf-icons.eot: contribs/gmf/src/fonts/gmf-icons.ttf .build/node_modules.timestamp
 	node_modules/ttf2eot/ttf2eot.js $< $@
 
-contribs/gmf/fonts/gmf-icons.woff: contribs/gmf/fonts/gmf-icons.ttf .build/node_modules.timestamp
+contribs/gmf/src/fonts/gmf-icons.woff: contribs/gmf/src/fonts/gmf-icons.ttf .build/node_modules.timestamp
 	node_modules/ttf2woff/ttf2woff.js $< $@
 
 # clean
@@ -471,9 +471,9 @@ clean:
 	rm -f $(ANGULAR_LOCALES_FILES)
 	rm -f contribs/gmf/fonts/FontAwesome.otf
 	rm -f contribs/gmf/fonts/fontawesome-webfont.*
-	rm -f contribs/gmf/fonts/gmf-icons.eot
-	rm -f contribs/gmf/fonts/gmf-icons.ttf
-	rm -f contribs/gmf/fonts/gmf-icons.woff
+	rm -f contribs/gmf/src/fonts/gmf-icons.eot
+	rm -f contribs/gmf/src/fonts/gmf-icons.ttf
+	rm -f contribs/gmf/src/fonts/gmf-icons.woff
 
 .PHONY: cleanall
 cleanall: clean
