@@ -3,7 +3,7 @@
  */
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 
-import 'bootstrap/js/collapse.js'; // needed to collapse a layertree
+import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 
 
 /**

@@ -28,7 +28,7 @@ import * as olEvents from 'ol/events.js';
 import * as olArray from 'ol/array.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 const exports = angular.module('gmfFilterselector', [

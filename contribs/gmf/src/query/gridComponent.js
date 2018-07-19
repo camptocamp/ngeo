@@ -26,7 +26,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

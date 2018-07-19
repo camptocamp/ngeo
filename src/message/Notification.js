@@ -1,7 +1,7 @@
 /**
  * @module ngeo.message.Notification
  */
-import 'bootstrap/js/alert.js';
+import 'bootstrap/js/src/alert.js';
 import googAsserts from 'goog/asserts.js';
 
 import ngeoMessageMessage from 'ngeo/message/Message.js';
