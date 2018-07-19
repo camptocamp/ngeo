@@ -1,6 +1,6 @@
 ANGULAR_VERSION := $(shell buildtools/get-version.sh angular)
 
-FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/fonts/fontawesome-webfont., eot ttf woff woff2)
+FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/src/fonts/fontawesome-webfont., eot ttf woff woff2)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
@@ -469,8 +469,8 @@ clean:
 	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
 	rm -f $(ANGULAR_LOCALES_FILES)
-	rm -f contribs/gmf/fonts/FontAwesome.otf
-	rm -f contribs/gmf/fonts/fontawesome-webfont.*
+	rm -f contribs/gmf/src/fonts/FontAwesome.otf
+	rm -f contribs/gmf/src/fonts/fontawesome-webfont.*
 	rm -f contribs/gmf/src/fonts/gmf-icons.eot
 	rm -f contribs/gmf/src/fonts/gmf-icons.ttf
 	rm -f contribs/gmf/src/fonts/gmf-icons.woff
