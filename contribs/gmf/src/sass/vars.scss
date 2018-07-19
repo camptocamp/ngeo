@@ -30,6 +30,7 @@ $above-content-index: 3;
 $above-menus-index: 4;
 $search-index: 5;
 $above-search-index: 6;
+$zindex-navbar-fixed: 7;
 $above-all: 9999;
 
 
@@ -43,3 +44,4 @@ $input-border-focus: darken($brand-primary, $standard-variation) !default;
 // Bootstrap 3 compatibility layer
 $padding-small-vertical: 0.36rem;
 $padding-small-horizontal: 0.72rem;
+$input-height-base: 1.5rem;
