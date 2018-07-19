@@ -8,8 +8,8 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
 import './sass/main.scss';
+import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';

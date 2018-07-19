@@ -1,7 +1,24 @@
 /**
  * Entry point for all styles required for the desktop application.
  */
+
+$map-tools-size: 1.88rem !default;
+$button-size: 2.50rem !default;
+$left-panel-width: 20rem !default;
+$right-panel-width: 17.50rem !default;
+$topbar-height: 2.81rem !default;
+$border-color: darken($brand-primary, $standard-variation) !default;
+$search-width: 8 * $map-tools-size !default;
+$font-size-base: 0.8rem !default;
+$padding-base-vertical: 0.31rem !default;
+$padding-base-horizontal: 0.62rem !default;
+$form-group-margin-bottom: 0.62rem !default;
+$search-results-max-height: calc(100vh - $topbar-height + $map-tools-size + (2 * $app-margin)) !default;
+
 @import '~gmf/sass/vars.scss';
+
+$border-color: darken($brand-primary, $standard-variation) !default;
+
 @import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
 @import '~gmf/sass/map.scss';
@@ -12,19 +29,6 @@
 @import '~gmf/sass/fullscreenpopup.scss';
 
 @import '~gmf/layertree/desktop.scss';
-
-$map-tools-size: 1.88rem;
-$button-size: 2.50rem;
-$left-panel-width: 20rem;
-$right-panel-width: 17.50rem;
-$topbar-height: 2.81rem;
-$border-color: darken($brand-primary, $standard-variation);
-$search-width: 8 * $map-tools-size;
-$font-size-base: 0.81rem;
-$padding-base-vertical: 0.31rem;
-$padding-base-horizontal: 0.62rem;
-$form-group-margin-bottom: 0.62rem;
-$search-results-max-height: calc(100vh - $topbar-height + $map-tools-size + (2 * $app-margin));
 
 html, body {
   position: relative;
