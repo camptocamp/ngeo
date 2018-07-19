@@ -2,7 +2,7 @@
 
 $gmf-input-range-track-box-shadow : 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0), 0 0 0.1rem rgba(13, 13, 13, 0);
 $gmf-input-range-track-height: 0.5rem;
-$gmf-input-range-track-border: 0.2px solid rgba(1, 1, 1, 0.2);
+$gmf-input-range-track-border: 0.02rem solid rgba(1, 1, 1, 0.2);
 $gmf-input-range-track-border-radius: 0.1rem;
 $gmf-input-range-thumb-height: 2rem;
 $gmf-input-range-thumb-width: 1rem;
@@ -46,7 +46,7 @@ input[type=range]::-webkit-slider-thumb {
   background: $gmf-input-range-thumb-background;
   cursor: $gmf-input-range-cursor;
   -webkit-appearance: none;
-  margin-top: -7.7px;
+  margin-top: -0.77rem;
 }
 input[type=range]::-moz-range-track {
   width: 100%;

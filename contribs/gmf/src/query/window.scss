@@ -35,7 +35,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   z-index: $above-all;
   .collapse-button {
     background-color: $nav-bg;
-    border: solid 1px $border-color;
+    border: solid 0.1rem $border-color;
     border-bottom-width: 0;
     border-radius: $border-radius-base $border-radius-base 0 0;
     line-height: 0.5;
@@ -50,7 +50,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   }
   .windowcontainer {
     background-color: $nav-bg;
-    border: solid 1px $border-color;
+    border: solid 0.1rem $border-color;
     position: relative;
     height: 100%;
     width: 100%;
@@ -134,7 +134,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
     }
   }
   .navigate {
-    border-top: solid 1px $border-color;
+    border-top: solid 0.1rem $border-color;
     height: $map-tools-size;
     display: flex;
     justify-content: space-between;
@@ -182,7 +182,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
       width: $map-tools-size;
       height: $map-tools-size;
       font-weight: normal;
-      font-size: 15px;
+      font-size: 1.5rem;
     }
     &::before, &::after {
       font-family: FontAwesome;
@@ -203,7 +203,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   }
   &.mobile {
     button.close {
-      font-size: 21px;
+      font-size: 2.1rem;
     }
     .slide-animation {
       height: calc(100% - ($map-tools-size + $app-margin));

@@ -10,7 +10,7 @@
     max-height: calc(100vh - 2 * $app-margin);
     margin: $app-margin;
     /* Like bootstrap modal border-radius */
-    border-radius: 6px;
+    border-radius: 0.6rem;
     /* Under bootstrap modal */
     z-index: 1040;
   }

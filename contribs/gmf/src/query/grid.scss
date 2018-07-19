@@ -6,7 +6,7 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
 
 .panel.gmf-displayquerygrid {
   padding: $half-app-margin;
-  border-top: solid 1px black;
+  border-top: solid 0.1rem black;
   background-color: white;
   height: $grid-height;
 
@@ -36,8 +36,8 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
   }
 
   .nav-pills > li > a {
-    padding: 2px 7px;
-    margin-right: 0px;
+    padding: 0.2rem 0.7rem;
+    margin-right: 0rem;
   }
 
   .navbar {
@@ -48,7 +48,7 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
       margin-right: 0;
     }
     .navbar-text {
-      padding: 1px 5px;
+      padding: 0.1rem 0.5rem;
       margin: 0;
       line-height: 1.5;
     }
@@ -59,11 +59,11 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
   table>tfoot>tr>th,
   table>thead>tr>td,
   table>thead>tr>th {
-    padding: 2px;
+    padding: 0.2rem;
   }
 
   .gmf-displayquerygrid-message {
-    width: 300px;
+    width: 30rem;
     text-align: center;
     font-style: italic;
     margin-left: auto;

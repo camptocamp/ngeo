@@ -68,7 +68,7 @@ gmf-map {
   .ngeo-tooltip-static {
     background-color: #ffcc33;
     color: $color;
-    border: 1px solid white;
+    border: 0.1rem solid white;
   }
   .ngeo-tooltip-measure::before,
   .ngeo-tooltip-static::before {

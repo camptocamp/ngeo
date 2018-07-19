@@ -11,7 +11,7 @@
     height: $map-tools-size;
     width: $map-tools-size;
     background-color: $map-tools-bg-color;
-    border: solid 1px $border-color;
+    border: solid 0.1rem $border-color;
     color: $map-tools-color;
     &:hover {
       background-color: $onhover-color;
@@ -38,7 +38,7 @@
     button {
       &:active {
         background-color: $onhover-color;
-        outline: -webkit-focus-ring-color auto 5px;
+        outline: -webkit-focus-ring-color auto 0.5rem;
       }
     }
   }
@@ -51,13 +51,13 @@
 .ol-scale-line, .ol-scale-line-inner {
   background-color: $map-tools-bg-color;
   border-color: $border-color;
-  border-width: 2px;
+  border-width: 0.2rem;
   color: $map-tools-color;
 }
 
 button[ngeo-mobile-geolocation] {
   background-color: $map-tools-bg-color;
-  border: solid 1px $border-color;
+  border: solid 0.1rem $border-color;
   color: $map-tools-color;
   .fa {
     font-size: 2rem;
@@ -73,7 +73,7 @@ button[ngeo-mobile-geolocation] {
     display: flex;
     align-items: center;
     min-height: 3rem;
-    border: 1px solid transparent;
+    border: 0.1rem solid transparent;
     padding: $half-app-margin;
 
     &::before {

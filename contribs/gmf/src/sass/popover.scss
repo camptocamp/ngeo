@@ -11,7 +11,7 @@ $popover-text-color : $color-light;
     ul {
       margin-bottom: 0;
       /* fix issue with IE11 not sizing correctly the popover box */
-      min-width: 180px;
+      min-width: 18rem;
     }
 
     li {

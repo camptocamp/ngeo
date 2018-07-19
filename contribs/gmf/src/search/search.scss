@@ -45,7 +45,7 @@ gmf-search {
     width: $map-tools-size;
     height: $map-tools-size;
     background-color: $map-tools-bg-color;
-    border: solid 1px $border-color;
+    border: solid 0.1rem $border-color;
     color: $map-tools-color;
     &:hover {
       background-color: $onhover-color;
@@ -55,7 +55,7 @@ gmf-search {
     box-shadow: none;
     height: 100%;
     padding: $half-app-margin $map-tools-size;
-    border: 1px solid $border-color;
+    border: 0.1rem solid $border-color;
     &:focus {
       border-color: $border-color;
       box-shadow: none;
