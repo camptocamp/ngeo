@@ -42,13 +42,13 @@ gmf-wmtscapabilitylayertree {
 }
 
 .gmf-importdatasource-layers {
-  height: ~"calc(100% - 19rem)";
+  height: calc(100% - 19rem);
 
   > gmf-wmscapabilitylayertreenode,
   > gmf-wmtscapabilitylayertree {
     background-color: white;
     border: 0.1rem solid #ccc;
-    height: ~"calc(100% - 2rem)";
+    height: calc(100% - 2rem);
     padding: 0.5rem 0.5rem 0.5rem 2rem;
     overflow-y: auto;
   }
