@@ -42,6 +42,10 @@ $border-color: black !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;
 
 // Bootstrap 3 compatibility layer
-$padding-small-vertical: 0.36rem;
-$padding-small-horizontal: 0.72rem;
-$input-height-base: 1.5rem;
+$gray-base: #000 !default;
+$gray-dark: lighten($gray-base, 20%) !default;   // #333
+$padding-small-vertical: 0.36rem !default;
+$padding-small-horizontal: 0.72rem !default;
+$input-height-base: 1.5rem !default;
+$btn-default-border: #ccc !default;
+$text-color: $gray-dark !default;
