@@ -1,8 +1,8 @@
 /**
  * Styles shared between the different apps (mobile and desktop).
  */
-@import (inline) '~openlayers/css/ol.css';
-@import (inline) '../../css/reset.css';
+@import '~openlayers/css/ol.css';
+@import '../../css/reset.css';
 @import '~bootstrap/scss/bootstrap.scss';
 
 @import '~gmf/sass/vars.scss';
