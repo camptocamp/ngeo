@@ -1,13 +1,13 @@
 /**
  * Fonts definition
- */
+ *h
 @font-face {
   font-family: "gmf-icons";
-  src: url("../fonts/gmf-icons.eot");
-  src: url("../fonts/gmf-icons.eot?#iefix") format("embedded-opentype"),
-       url("../fonts/gmf-icons.woff") format("woff"),
-       url("../fonts/gmf-icons.ttf") format("truetype"),
-       url("../fonts/gmf-icons.svg#gmf-icons") format("svg");
+  src: url("~gmf/fonts/gmf-icons.eot");
+  src: url("~gmf/fonts/gmf-icons.eot?#iefix") format("embedded-opentype"),
+       url("~gmf/fonts/gmf-icons.woff") format("woff"),
+       url("~gmf/fonts/gmf-icons.ttf") format("truetype"),
+       url("~gmf/fonts/gmf-icons.svg#gmf-icons") format("svg");
   font-weight: normal;
   font-style: normal;
 }

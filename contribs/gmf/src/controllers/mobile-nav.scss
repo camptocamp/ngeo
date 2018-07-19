@@ -44,8 +44,8 @@ main {
     visibility: hidden;
     opacity: 0;
 
-    .transition(opacity $duration, visibility $duration;);
-    .backface-visibility(hidden);
+    transition: opacity $duration, visibility $duration;
+    backface-visibility: hidden;
 
     .gmf-mobile-nav-is-visible & {
       visibility: visible;
@@ -67,8 +67,8 @@ main {
   visibility: hidden;
   opacity: 0;
 
-  .transition(opacity $duration, visibility $duration;);
-  .backface-visibility(hidden);
+  transition: opacity $duration, visibility $duration;
+  backface-visibility: hidden;
 
   @media (max-width: map-get($grid-breakpoints, "sm")) {
     .gmf-search-is-active & {
@@ -191,7 +191,7 @@ nav.gmf-mobile-nav-right {
       height: 0.12rem;
       width: $app-margin;
       background: $back-color;
-      .backface-visibility(hidden);
+      backface-visibility: hidden;
     }
 
     &::before {
@@ -204,7 +204,7 @@ nav.gmf-mobile-nav-right {
 
   .gmf-mobile-nav-slide {
     position: fixed;
-    height: ~"calc(100% - ${nav-bar-height})";
+    height: calc(100% - $nav-bar-height);
     width: $nav-width;
     transform: translateX(100%);
     transition: transform $duration, opacity $duration;
