@@ -95,7 +95,7 @@
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",
     "proj4": "2.4.4",
-    "raven-js": "3.24.2",
+    "raven-js": "3.26.4",
     "svg2ttf": "4.1.0",
     "ttf2eot": "2.0.0",
     "ttf2woff": "2.0.1",
