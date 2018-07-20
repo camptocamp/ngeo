@@ -572,7 +572,7 @@ exports.Controller = class {
   getExtentSize_() {
     const mapSize = this.map.getSize();
     const maskSizePixel = ol.has.DEVICE_PIXEL_RATIO * Math.min(mapSize[0], mapSize[1]) - this.maskMargin * 2;
-    const maskSizeMeter = maskSizePixel * this.map.getView().getResolution();
+    const maskSizeMeter = maskSizePixel * this.map.getView().getResolution() / ol.has.DEVICE_PIXEL_RATIO;
     return maskSizeMeter;
   }
 };
