@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const plugins = [];
@@ -19,6 +20,9 @@ new HtmlWebpackPlugin({
   filename: filenamePrefix + name + '.html',
   chunks: ['commons', name]
 })
+);
+plugins.push(
+new HtmlWebpackIncludeAssetsPlugin({ assets: ['all.css'], append: true })
 );
 
 

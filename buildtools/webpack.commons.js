@@ -1,9 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const importer = require("node-sass-importer");
+const SassPlugin = require('./webpack.plugin.js');
 
-const devMode = process.env.NODE_ENV !== 'production'
+const devMode = process.env.NODE_ENV !== 'production';
 
 
 const providePlugin = new webpack.ProvidePlugin({
@@ -99,33 +98,15 @@ const typeaheadRule = {
 
 const cssRule = {
   test: /\.css$/,
-  use: ExtractTextPlugin.extract({
-    use: 'css-loader'
-  })
+  use: 'file-loader',
 };
-
-const cssSassLoaderConfigs = [
-  {
-    loader: 'css-loader',
-    options: {
-      importLoaders: 1
-    }
-  },
-  {
-    loader: 'sass-loader',
-    options: {
-      sassConfig: {
-        importer: importer
-      }
-    }
-  }
-];
 
 const sassRule = {
   test: /\.scss$/,
-  use: ExtractTextPlugin.extract({
-    use: cssSassLoaderConfigs
-  })
+  use: [{
+    loader: './buildtools/webpack.scss-loader',
+    options: {}
+  }]
 };
 
 const htmlRule = {
@@ -162,9 +143,12 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin({
-        ignoreOrder: true,
-        filename: devMode ? '[name].css' : '[name].[chunkhash:6].css'
+    new SassPlugin({
+      //filename: devMode ? '[name].css' : '[name].[chunkhash:6].css',
+      filename: devMode ? 'all.css' : '[name].[chunkhash:6].css',
+      sassConfig: {
+        //importer: require('node-sass-import-once'),
+      }
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],
