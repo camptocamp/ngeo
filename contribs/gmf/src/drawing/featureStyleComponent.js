@@ -2,6 +2,7 @@
  * @module gmf.drawing.featureStyleComponent
  */
 import googAsserts from 'goog/asserts.js';
+import * as olBase from 'ol/index.js';
 import * as olEvents from 'ol/events.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
@@ -65,6 +66,12 @@ exports.directive('gmfFeaturestyle',
  * @ngname GmfFeaturestyleController
  */
 exports.Controller_ = function($scope, ngeoFeatureHelper) {
+
+  /**
+   * @type {number}
+   * @export
+   */
+  this.uid = olBase.getUid(this);
 
   /**
    * @type {?ol.Feature}
