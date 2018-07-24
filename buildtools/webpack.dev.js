@@ -11,7 +11,7 @@ const resourcesRule = {
   }
 };
 
-const loaderOptionsPlugin = new webpack.LoaderOptionsPlugin({
+new webpack.LoaderOptionsPlugin({
   debug: false
 });
 

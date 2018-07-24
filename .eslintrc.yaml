@@ -4,6 +4,8 @@ extends:
 env:
     jquery: true
     jasmine: true
+parserOptions:
+    ecmaVersion: 2017
 rules:
     no-console: 0
     comma-dangle: 0

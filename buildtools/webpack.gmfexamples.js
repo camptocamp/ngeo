@@ -19,7 +19,7 @@ for (const filename of ls('contribs/gmf/examples/*.html')) {
     new HtmlWebpackPlugin({
       template: `contribs/gmf/examples/${name}.html`,
       chunksSortMode: 'manual',
-      filename: exampleFilenamePrefix + name + '.html',
+      filename: `${exampleFilenamePrefix}${name}.html`,
       chunks: ['commons', name]
     })
   );

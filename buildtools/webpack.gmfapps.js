@@ -13,16 +13,19 @@ const name = process.env.APP
 const folder = `contribs/gmf/apps/${name}`;
 entry[name] = `./${folder}/Controller.js`;
 plugins.push(
-new HtmlWebpackPlugin({
-  template: `${folder}/index.html.ejs`,
-  inject: false,
-  chunksSortMode: 'manual',
-  filename: filenamePrefix + name + '.html',
-  chunks: ['commons', name]
-})
+  new HtmlWebpackPlugin({
+    template: `${folder}/index.html.ejs`,
+    inject: false,
+    chunksSortMode: 'manual',
+    filename: filenamePrefix + name + '.html',
+    chunks: ['commons', name]
+  })
 );
 plugins.push(
-new HtmlWebpackIncludeAssetsPlugin({ assets: ['all.css'], append: true })
+  new HtmlWebpackIncludeAssetsPlugin({
+    assets: ['all.css'],
+    append: true,
+  })
 );
 
 
