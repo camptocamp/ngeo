@@ -48,5 +48,6 @@ $input-height-base: 1.5rem !default;
 $btn-default-border: #ccc !default;
 $text-color: $gray-dark !default;
 
-@import "~bootstrap/scss/bootstrap.scss";
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
 @import "~font-awesome/scss/_variables.scss";

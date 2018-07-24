@@ -144,11 +144,9 @@ const config = {
   plugins: [
     providePlugin,
     new SassPlugin({
-      //filename: devMode ? '[name].css' : '[name].[chunkhash:6].css',
-      filename: devMode ? 'all.css' : '[name].[chunkhash:6].css',
-      sassConfig: {
-        //importer: require('node-sass-import-once'),
-      }
+      //filename: devMode ? '[name].css' : '[name].[hash:6].css',
+      filename: devMode ? 'all.css' : '[name].[hash:6].css',
+      assetname: '[name].[hash:6].[ext]',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],

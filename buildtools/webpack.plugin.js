@@ -9,7 +9,6 @@ const replaceAsync = require('fast-sass-loader/lib/replace');
 const utils = require('fast-sass-loader/lib/utils');
 const loaderUtils = require('loader-utils');
 const assert = require('assert');
-const fileLoader = require('file-loader');
 
 
 const BOM_HEADER = '\uFEFF';
@@ -101,6 +100,9 @@ function * mergeSources(opts, entry, resolve, level) {
 
       // test again
       if (loaderUtils.isUrlRequest(file)) {
+        if (file.startsWith('~') || file.startsWith('data:')) {
+          return `url(${left}${file}${right})`;
+        }
         const absoluteFile = path.normalize(path.resolve(entryDir, file));
         let relativeFile = path.relative(opts.baseEntryDir, absoluteFile).replace(/\\/g, '/'); // fix for windows path
 
@@ -191,6 +193,7 @@ function * mergeSources(opts, entry, resolve, level) {
 
   return yield replaceAsync(content, MATCH_IMPORTS, co.wrap(importReplacer));
 }
+
 function resolver(ctx) {
   return function(dir, importFile) {
     return new Promise((resolve, reject) => {
@@ -204,84 +207,164 @@ function resolver(ctx) {
     });
   };
 }
+
 class SassPlugin {
   constructor(options) {
     this.options = options;
   }
 
   apply(compiler) {
-    const options = this.options;
     compiler.plugin('emit', (compilation, callback) => {
+      let usedContext;
       const promise = new Promise((resolve, reject) => {
-        const contents = [];
-        const browse = function(position) {
-          if (position < sassLoader.entries.length) {
-            const entry = sassLoader.entries[position];
+        try {
+          const contents = [];
+          const browse = function(position) {
+            if (position < sassLoader.entries.length) {
+              const entry = sassLoader.entries[position];
+              if (!usedContext) {
+                usedContext = entry.ctx;
+              }
 
-            const merged = mergeSources(entry.options, {
-              file: entry.entry,
-              content: entry.content
-            }, resolver(entry.ctx));
-            const merged2 = [];
-            for (const content of merged) {
-              merged2.push(content);
+              const merged = mergeSources(entry.options, {
+                file: entry.entry,
+                content: entry.content
+              }, resolver(entry.ctx));
+              const merged2 = [];
+              for (const content of merged) {
+                merged2.push(content);
+              }
+              assert.strictEqual(merged2.length, 1);
+              merged2[0].then((content) => {
+                contents.push(content);
+                position++;
+                browse(position);
+              }, () => {
+                reject(`${position}, ${entry.entry}`);
+              });
+            } else {
+              resolve(contents);
             }
-            assert.strictEqual(merged2.length, 1);
-            merged2[0].then((content) => {
-              contents.push(content);
-              position++;
-              browse(position);
-            }, () => {
-              reject([position, entry.entry]);
-            });
-          } else {
-            resolve(contents);
-          }
-        };
-        browse(0);
+          };
+          browse(0);
+        } catch (e) {
+          console.error(e.stack || e);
+          reject(e);
+        }
       });
 
-      promise.then((contents) => {
-        try {
-          const result = nodeSass.renderSync(Object.assign(
-            {}, options.sassConfig, {
-              data: contents.join('\n'),
-              functions: {
-                'url($url)': function(url, context) {
-                  try {
-                    let assetUrl = loaderUtils.urlToRequest(url.getValue());
-                    if (assetUrl.startsWith('./data:')) {
-                      assetUrl = assetUrl.substring(2);
-                    }
+      const pluginOptions = this.options;
+      promise.then(async (contents) => {
+        if (pluginOptions.tempfile) {
+          fs.writeFile(pluginOptions.tempfile, contents.join('\n'));
+        }
 
-                    if (!assetUrl.startsWith('data:')) {
-                      const context = {
-                        emitFile: function(name, content) {
-                          compilation.assets[name] = {
-                            source: () => content,
-                            size: () => content.length
-                          };
-                        }
-                      };
-                      fileLoader.bind(context)(url.getValue());
-                    }
-                    console.log(`url(${assetUrl})`);
-                    return nodeSass.types.String(`url(${assetUrl})`);
-                  } catch (e) {
-                    console.error(e.stack || e);
+        try {
+          const replacements = {};
+          const promises = [];
+          const options = Object.assign(
+            {}, pluginOptions.sassConfig, {
+              data: contents.join('\n'),
+              functions: {},
+            }
+          );
+          // Double parse the Sass files to be able to return in a synchronous function things
+          // that we can only get asynchronously.
+          const preparseOptions = Object.assign({}, options);
+          preparseOptions.functions['url($url)'] = function(url) {
+            if (url.getValue().startsWith('data:')) {
+              return url;
+            }
+            try {
+              const assetUrl = url.getValue();
+
+              if (assetUrl.startsWith('~')) {
+                let assetName = url.getValue().substr(1);
+                let queryString = '';
+                const questionMarkIndex = assetName.indexOf('?');
+                if (questionMarkIndex > 0) {
+                  queryString = assetName.substr(questionMarkIndex);
+                  assetName = assetName.substr(0, questionMarkIndex);
+                } else {
+                  const sharpIndex = assetName.indexOf('#');
+                  if (sharpIndex > 0) {
+                    queryString = assetName.substr(sharpIndex);
+                    assetName = assetName.substr(0, sharpIndex);
                   }
                 }
+                promises.push(new Promise((resolve, reject) => {
+
+                  usedContext.resolve(usedContext.resourcePath, assetName, (err, resolvedFile) => {
+                    if (err) {
+                      console.log(err);
+                      reject(err);
+                    } else {
+                      fs.readFile(resolvedFile, 'utf8', (err, data) => {
+                        if (err) {
+                          console.log(err);
+                          reject(err);
+                        } else {
+                          usedContext.resourcePath = assetName;
+                          const name = loaderUtils.interpolateName(usedContext, pluginOptions.assetname, {
+                            content: data
+                          });
+                          compilation.assets[name] = {
+                            source: () => data,
+                            size: () => data.length
+                          };
+                          replacements[assetUrl] = name + queryString;
+                          resolve();
+                        }
+                      });
+                    }
+                  });
+                }));
+              } else {
+                fs.readFile(assetName, 'utf8', (err, data) => {
+                  if (err) {
+                    console.log(err);
+                    reject(err);
+                  } else {
+                    usedContext.resourcePath = assetName;
+                    const name = loaderUtils.interpolateName(usedContext, pluginOptions.assetname, {
+                      content: data
+                    });
+                    compilation.assets[name] = {
+                      source: () => data,
+                      size: () => data.length
+                    };
+                    replacements[assetUrl] = name + queryString;
+                  }
+                });
               }
+            } catch (e) {
+              console.error(e.stack || e);
             }
-          ));
+            return url;
+          };
+          const originalResourcePath = usedContext.resourcePath;
+          nodeSass.renderSync(preparseOptions);
+          usedContext.resourcePath = originalResourcePath;
+          await Promise.all(promises);
+          const parseOptions = Object.assign({}, options);
+          parseOptions.functions['url($url)'] = function(url) {
+            const assetUrl = url.getValue();
+            if (assetUrl.startsWith('data:')) {
+              return url;
+            }
+            return nodeSass.types.String(`url(${replacements[assetUrl]})`);
+          };
+          const result = nodeSass.renderSync(parseOptions);
           const content = result.css;
           const srcmap = result.map;
-          compilation.assets[options.filename] = {
+          const asset = {
             source: () => content,
             size: () => content.length
           };
+          const assetName = loaderUtils.interpolateName(usedContext, pluginOptions.filename, asset);
+          compilation.assets[assetName] = asset;
           if (srcmap) {
-            compilation.assets[`${options.filename}.map`] = {
+            compilation.assets[`${assetName}.map`] = {
               source: () => srcmap,
               size: () => srcmap.length
             };
@@ -291,8 +374,8 @@ class SassPlugin {
           console.error(e.stack || e);
           callback();
         }
-      }, (position) => {
-        callback(`SCSS dependencies error, ${position[0]}, ${position[1]}`);
+      }, (error) => {
+        callback(`SCSS dependencies error, ${error}`);
       });
     });
   }

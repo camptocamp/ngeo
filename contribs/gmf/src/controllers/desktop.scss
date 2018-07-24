@@ -7,9 +7,7 @@ $button-size: 2.50rem !default;
 $left-panel-width: 20rem !default;
 $right-panel-width: 17.50rem !default;
 $topbar-height: 2.81rem !default;
-$border-color: darken($brand-primary, $standard-variation) !default;
 $search-width: 8 * $map-tools-size !default;
-$font-size-base: 0.8rem !default;
 $padding-base-vertical: 0.31rem !default;
 $padding-base-horizontal: 0.62rem !default;
 $form-group-margin-bottom: 0.62rem !default;
@@ -40,6 +38,7 @@ html, body {
 
 body {
   padding-top: $topbar-height;
+  font-size: 0.8rem;
 }
 
 header {
