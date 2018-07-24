@@ -10,13 +10,13 @@
       ng-if="fsCtrl.type !== 'Text'"
       class="form-group">
         <input
-          id="gmf-featurestyle-showlabel"
+          id="gmf-featurestyle-showlabel-{{::fsCtrl.uid}}"
           type="checkbox"
           ng-model="fsCtrl.getSetShowLabel"
           ng-model-options="{getterSetter: true}"/>
         <label
           ng-switch="fsCtrl.type"
-          for="gmf-featurestyle-showlabel"
+          for="gmf-featurestyle-showlabel-{{::fsCtrl.uid}}"
           class="control-label">
           {{'Display label' | translate}}
         </label>
@@ -25,13 +25,13 @@
       ng-if="fsCtrl.type !== 'Text'"
       class="form-group">
       <input
-          id="gmf-featurestyle-showmeasure"
+          id="gmf-featurestyle-showmeasure-{{::fsCtrl.uid}}"
           type="checkbox"
           ng-model="fsCtrl.getSetShowMeasure"
           ng-model-options="{getterSetter: true}"/>
       <label
           ng-switch="fsCtrl.type"
-          for="gmf-featurestyle-showmeasure"
+          for="gmf-featurestyle-showmeasure-{{::fsCtrl.uid}}"
           class="control-label">
         <span ng-switch-when="Circle">
           {{'Display azimuth and radius' | translate}}

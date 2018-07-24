@@ -5,8 +5,8 @@
 <div class="modal-body">
   <form role="form" name="gmfShareForm" novalidate>
     <div class="form-group">
-      <label for="gmfShareInputShortLink" translate>Permalink</label>
-      <input type="text" class="form-control" id="gmfShareInputShortLink" onclick="this.select()" ng-model="$ctrl.shortLink" readonly="True">
+      <label for="gmfShareInputShortLink-{{::$ctrl.uid}}" translate>Permalink</label>
+      <input type="text" class="form-control" id="gmfShareInputShortLink-{{::$ctrl.uid}}" onclick="this.select()" ng-model="$ctrl.shortLink" readonly="True">
       <p class="help-block" translate>Copy this link to share it.</p>
       <p class="text-danger" ng-if="$ctrl.showLengthWarning">
         <span class="fa fa-exclamation-triangle"></span>
@@ -20,8 +20,8 @@
     <hr>
     <div class="gmf-share-email" ng-if="::$ctrl.enableEmail">
       <div class="form-group">
-        <label for="gmfShareInputEmail" translate>Send this link to</label>
-        <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail" placeholder="E-mail" ng-model="$ctrl.email" required>
+        <label for="gmfShareInputEmail-{{::$ctrl.uid}}" translate>Send this link to</label>
+        <input type="email" class="form-control"  name="inputEmail" id="gmfShareInputEmail-{{::$ctrl.uid}}" placeholder="E-mail" ng-model="$ctrl.email" required>
         <span ng-show="gmfShareForm.$submitted || gmfShareForm.inputEmail.$touched">
           <span class="text-danger" ng-show="gmfShareForm.inputEmail.$error.email || gmfShareForm.inputEmail.$error.required">
             <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
