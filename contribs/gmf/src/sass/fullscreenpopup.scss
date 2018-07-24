@@ -10,7 +10,7 @@
     max-height: calc(100vh - 2 * $app-margin);
     margin: $app-margin;
     /* Like bootstrap modal border-radius */
-    border-radius: 0.6rem;
+    border-radius: 0.37rem;
     /* Under bootstrap modal */
     z-index: 1040;
   }
@@ -32,7 +32,7 @@
 
 @media (min-width: map-get($grid-breakpoints, "sm")) {
   $fullscreenpopup-tablet-width: 12 * $map-tools-size;
-  $fullscreenpopup-topbar-height: 4.5rem; // Same value as the topbar-height in desktop.scss
+  $fullscreenpopup-topbar-height: 2.81rem; // Same value as the topbar-height in desktop.scss
   $fullscreenpopup-tablet-top: $fullscreenpopup-topbar-height + $app-margin + 2 * $map-tools-size;
   [ngeo-popup] {
     &.popover {

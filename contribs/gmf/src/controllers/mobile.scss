@@ -68,7 +68,7 @@ gmf-map {
   .ngeo-tooltip-static {
     background-color: #ffcc33;
     color: $color;
-    border: 0.1rem solid white;
+    border: 0.06rem solid white;
   }
   .ngeo-tooltip-measure::before,
   .ngeo-tooltip-static::before {
@@ -91,7 +91,7 @@ gmf-map {
   right: $app-margin;
   left: auto;
   .ol-rotate-reset {
-    font-size: 2rem;
+    font-size: 1.25rem;
     border-radius: $border-radius-base;
   }
 }
@@ -101,7 +101,7 @@ gmf-map {
   right: $app-margin;
   left: auto;
   .ol-zoom-in, .ol-zoom-out {
-    font-size: 2rem;
+    font-size: 1.25rem;
     border-radius: $border-radius-base;
   }
 }
@@ -127,10 +127,10 @@ button[ngeo-mobile-geolocation] {
 
 .ngeo-notification {
   left: 50%;
-  margin: 0 0 0 -10rem;
+  margin: 0 0 0 -6.25rem;
   position: absolute;
   top: 0;
-  width: 20rem;
+  width: 12.50rem;
   z-index: 2;
 }
 
@@ -157,7 +157,7 @@ main .gmf-app-map-messages {
   text-align: left;
 
   button {
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 0.94rem;
+    width: 0.94rem;
   }
 }

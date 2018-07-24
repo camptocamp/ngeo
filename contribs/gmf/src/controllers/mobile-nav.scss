@@ -78,7 +78,7 @@ main {
   }
 }
 
-$nav-bar-height: 5rem;
+$nav-bar-height: 3.12rem;
 
 .gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-right,
 .gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left  {
@@ -119,7 +119,7 @@ nav.gmf-mobile-nav-right {
       visibility: hidden;
       height: $nav-bar-height;
       width: $nav-back-width;
-      padding-left: 2.4rem;
+      padding-left: 1.50rem;
       color: $back-color;
 
       &.gmf-mobile-nav-active {
@@ -128,7 +128,7 @@ nav.gmf-mobile-nav-right {
       }
 
       &::before, &::after {
-        transform-origin: 0.1rem 50%;
+        transform-origin: 0.06rem 50%;
         left: $app-margin;
       }
     }
@@ -175,7 +175,7 @@ nav.gmf-mobile-nav-right {
     &::before, &::after {
       /* arrow goes on the right side - children navigation */
       right: 0;
-      transform-origin: 0.9rem 50%;
+      transform-origin: 0.56rem 50%;
     }
   }
 
@@ -186,9 +186,9 @@ nav.gmf-mobile-nav-right {
       content: '';
       position: absolute;
       top: 50%;
-      margin-top: -0.1rem;
+      margin-top: -0.06rem;
       display: inline-block;
-      height: 0.2rem;
+      height: 0.12rem;
       width: $app-margin;
       background: $back-color;
       .backface-visibility(hidden);
@@ -273,9 +273,9 @@ nav.gmf-mobile-nav-right {
   color: $map-tools-color;
   z-index: $above-search-index;
   height: $map-tools-size;
-  border: 0.1rem solid $border-color;
+  border: 0.06rem solid $border-color;
   .fa, .gmf-icon {
-    font-size: 2rem;
+    font-size: 1.25rem;
   }
 }
 
@@ -312,7 +312,7 @@ nav.gmf-mobile-nav-right {
 
   .gmf-mobile-nav-trigger {
     margin: 0;
-    border: solid 0.1rem $border-color;
+    border: solid 0.06rem $border-color;
   }
 
   .gmf-mobile-nav-right-trigger {

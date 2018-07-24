@@ -1,15 +1,15 @@
 @import "~gmf/sass/vars.scss";
 
-$gmf-input-range-track-box-shadow : 0.1rem 0.1rem 0.1rem rgba(0, 0, 0, 0), 0 0 0.1rem rgba(13, 13, 13, 0);
-$gmf-input-range-track-height: 0.5rem;
-$gmf-input-range-track-border: 0.02rem solid rgba(1, 1, 1, 0.2);
-$gmf-input-range-track-border-radius: 0.1rem;
-$gmf-input-range-thumb-height: 2rem;
-$gmf-input-range-thumb-width: 1rem;
-$gmf-input-range-thumb-border-radius: 0.5rem;
-$gmf-input-range-thumb-border: 0.1rem solid rgba(0, 0, 30, 0.2);
+$gmf-input-range-track-box-shadow : 0.06rem 0.06rem 0.06rem rgba(0, 0, 0, 0), 0 0 0.06rem rgba(13, 13, 13, 0);
+$gmf-input-range-track-height: 0.31rem;
+$gmf-input-range-track-border: 0.01rem solid rgba(1, 1, 1, 0.2);
+$gmf-input-range-track-border-radius: 0.06rem;
+$gmf-input-range-thumb-height: 1.25rem;
+$gmf-input-range-thumb-width: 0.62rem;
+$gmf-input-range-thumb-border-radius: 0.31rem;
+$gmf-input-range-thumb-border: 0.06rem solid rgba(0, 0, 30, 0.2);
 $gmf-input-range-thumb-background: #ffffff;
-$gmf-input-range-thumb-box-shadow: 0.1rem 0.1rem 0.1rem rgba(0, 0, 49, 0.2), 0 0 0.1rem rgba(0, 0, 75, 0.2);
+$gmf-input-range-thumb-box-shadow: 0.06rem 0.06rem 0.06rem rgba(0, 0, 49, 0.2), 0 0 0.06rem rgba(0, 0, 75, 0.2);
 $gmf-input-range-cursor: pointer;
 
 input[type=range] {
@@ -46,7 +46,7 @@ input[type=range]::-webkit-slider-thumb {
   background: $gmf-input-range-thumb-background;
   cursor: $gmf-input-range-cursor;
   -webkit-appearance: none;
-  margin-top: -0.77rem;
+  margin-top: -0.48rem;
 }
 input[type=range]::-moz-range-track {
   width: 100%;
@@ -81,13 +81,13 @@ input[type=range]::-ms-track {
 input[type=range]::-ms-fill-lower {
   background: $brand-primary;
   border: $gmf-input-range-track-border;
-  border-radius: 0.2rem;
+  border-radius: 0.12rem;
   box-shadow: $gmf-input-range-track-box-shadow;
 }
 input[type=range]::-ms-fill-upper {
   background: $brand-secondary;
   border: $gmf-input-range-track-border;
-  border-radius: 0.2rem;
+  border-radius: 0.12rem;
   box-shadow: $gmf-input-range-track-box-shadow;
 }
 input[type=range]::-ms-thumb {

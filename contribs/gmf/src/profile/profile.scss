@@ -1,12 +1,12 @@
 @import "~gmf/sass/vars.scss";
 
-$profile-height: 20rem;
+$profile-height: 12.50rem;
 .panel.gmf-profile-container {
   position: relative;
   overflow: hidden;
-  $profile-legend-width: 15rem;
+  $profile-legend-width: 9.38rem;
   padding: $app-margin;
-  border-top: solid 0.1rem black;
+  border-top: solid 0.06rem black;
   background-color: white;
   height: $profile-height;
   display: flex;
@@ -33,7 +33,7 @@ $profile-height: 20rem;
   }
 
   .close {
-    height: 1rem;
+    height: 0.62rem;
   }
 }
 

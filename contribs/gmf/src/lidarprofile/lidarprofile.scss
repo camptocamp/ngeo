@@ -1,12 +1,12 @@
 @import "~gmf/sass/vars.scss";
 
-$lidarprofile-height: 35rem;
-$profile-legend-width: 15rem;
+$lidarprofile-height: 21.88rem;
+$profile-legend-width: 9.38rem;
 #gmf-lidarprofile-container {
   position: relative;
   overflow: hidden;
   padding: $app-margin;
-  border-top: solid 0.1rem black;
+  border-top: solid 0.06rem black;
   background-color: white;
   height: $lidarprofile-height;
   display: flex;
@@ -23,7 +23,7 @@ $profile-legend-width: 15rem;
   }
 
   .close {
-    height: 1rem;
+    height: 0.62rem;
   }
 
   .lidar-error {
@@ -31,10 +31,10 @@ $profile-legend-width: 15rem;
     position: absolute;
     z-index: 10;
     margin: $app-margin;
-    padding-left: 10rem;
-    padding-top: 10rem;
-    width:  ~"calc(100% - 5rem - ${profile-legend-width})";
-    height: ~"calc(${lidarprofile-height} - 5rem)";
+    padding-left: 6.25rem;
+    padding-top: 6.25rem;
+    width:  ~"calc(100% - 3.12rem - ${profile-legend-width})";
+    height: ~"calc(${lidarprofile-height} - 3.12rem)";
     font-size: 1.5em;
     opacity: 1;
     background: #e1f1f7;
@@ -42,7 +42,7 @@ $profile-legend-width: 15rem;
   }
 
   .lod-info {
-    max-height: 10rem;
+    max-height: 6.25rem;
     overflow-y: auto;
   }
 }

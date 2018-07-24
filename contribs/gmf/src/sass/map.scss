@@ -11,7 +11,7 @@
     height: $map-tools-size;
     width: $map-tools-size;
     background-color: $map-tools-bg-color;
-    border: solid 0.1rem $border-color;
+    border: solid 0.06rem $border-color;
     color: $map-tools-color;
     &:hover {
       background-color: $onhover-color;
@@ -38,7 +38,7 @@
     button {
       &:active {
         background-color: $onhover-color;
-        outline: -webkit-focus-ring-color auto 0.5rem;
+        outline: -webkit-focus-ring-color auto 0.31rem;
       }
     }
   }
@@ -51,16 +51,16 @@
 .ol-scale-line, .ol-scale-line-inner {
   background-color: $map-tools-bg-color;
   border-color: $border-color;
-  border-width: 0.2rem;
+  border-width: 0.12rem;
   color: $map-tools-color;
 }
 
 button[ngeo-mobile-geolocation] {
   background-color: $map-tools-bg-color;
-  border: solid 0.1rem $border-color;
+  border: solid 0.06rem $border-color;
   color: $map-tools-color;
   .fa {
-    font-size: 2rem;
+    font-size: 1.25rem;
   }
 }
 
@@ -72,8 +72,8 @@ button[ngeo-mobile-geolocation] {
     cursor: pointer;
     display: flex;
     align-items: center;
-    min-height: 3rem;
-    border: 0.1rem solid transparent;
+    min-height: 1.88rem;
+    border: 0.06rem solid transparent;
     padding: $half-app-margin;
 
     &::before {
@@ -124,7 +124,7 @@ button[ngeo-mobile-geolocation] {
   }
 
   input.gmf-backgroundlayerselector-opacity-slider {
-    margin: 1rem 0 2rem 0;
+    margin: 0.62rem 0 1.25rem 0;
     padding-left: $half-app-margin !important;
     padding-right: $half-app-margin !important;
   }
@@ -135,7 +135,7 @@ button[ngeo-mobile-geolocation] {
   position: absolute;
   bottom: $app-margin;
   left: $app-margin;
-  width: 30rem;
+  width: 18.75rem;
   z-index: $above-content-index;
 
   .alert {
@@ -145,7 +145,7 @@ button[ngeo-mobile-geolocation] {
 
   .alert-dismissable .close,
   .alert-dismissible .close {
-    right: -0.5rem;
+    right: -0.31rem;
     height: inherit;
   }
 }

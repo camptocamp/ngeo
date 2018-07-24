@@ -101,7 +101,7 @@
       text-align: center;
     }
 
-    width: 2rem;
+    width: 1.25rem;
     padding: 0;
     display: flex;
 
@@ -109,7 +109,7 @@
       // don't let the legend icons images to break the layout by being too
       // tall or too large
       max-width: 100%;
-      max-height: 2rem;
+      max-height: 1.25rem;
       vertical-align: initial;
       margin-left: auto;
       margin-right: auto;
@@ -138,7 +138,7 @@
   .gmf-layertree-zoom {
     display: none;
     // leave space after text label
-    padding-left: 0.4rem;
+    padding-left: 0.25rem;
     &:hover {
       cursor: pointer;
     }
@@ -159,13 +159,13 @@
   .gmf-layertree-legend {
     margin: 0 $app-margin;
     position: relative;
-    border: 0.1rem solid $main-bg-color;
+    border: 0.06rem solid $main-bg-color;
     background-color: lighten($main-bg-color, 8%);
     a {
       display: none;
       position: absolute;
       right: $half-app-margin;
-      font-size: 1.1rem;
+      font-size: 0.69rem;
 
       &::before {
         display: none;
@@ -176,10 +176,10 @@
       }
     }
     p {
-      margin: 0 0 0 1rem;
+      margin: 0 0 0 0.62rem;
     }
     img {
-      margin-bottom: 1rem;
+      margin-bottom: 0.62rem;
     }
   }
 }

@@ -3,8 +3,8 @@
 
 .gmf-time-slider {
 
-  // 28 px come from bs popover class .popover-content { padding: 0.9rem 1.4rem; }
-  min-width: $popover-max-width - 2.8rem;
+  // 28 px come from bs popover class .popover-content { padding: 0.56rem 0.87rem; }
+  min-width: $popover-max-width - 1.75rem;
 
   .ui-widget-content {
     border: none;
@@ -35,7 +35,7 @@
   }
 
   .tooltip {
-    min-width: 6.5rem;
+    min-width: 4.06rem;
   }
 }
 
