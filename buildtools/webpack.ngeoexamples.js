@@ -1,6 +1,5 @@
 const path = require('path');
 const ls = require('ls');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -21,7 +20,7 @@ for (const filename of ls('examples/*.html')) {
     new HtmlWebpackPlugin({
       template: `examples/${name}.html`,
       chunksSortMode: 'manual',
-      filename: exampleFilenamePrefix + name + '.html',
+      filename: `${exampleFilenamePrefix}${name}.html`,
       chunks: ['commons', name],
     })
   );

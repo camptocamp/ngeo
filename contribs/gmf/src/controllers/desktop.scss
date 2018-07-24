@@ -17,6 +17,10 @@ $search-results-max-height: calc(100vh - $topbar-height + $map-tools-size + (2 *
 
 $border-color: darken($brand-primary, $standard-variation) !default;
 
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~font-awesome/scss/_variables.scss";
+
 @import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
 @import '~gmf/sass/map.scss';
@@ -93,7 +97,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     bottom:  -$footer-height;
     // prevent footer to be displayed on 2 lines when screen width is small
     max-height: $footer-height;
-    background-color: fade($main-bg-color, 90%);
+    background-color: rgba($main-bg-color, .9);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
@@ -112,9 +116,11 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       position: absolute;
       /* button is supposed to be .btn-sm */
       bottom: $footer-height - 1;
-      background-color: fade($main-bg-color, 80%);
+      border-top-left-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
+      background-color: rgba($main-bg-color, .8);
       padding: 0;
       left: 50%;
       $width: 2.50rem;

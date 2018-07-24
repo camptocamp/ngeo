@@ -40,7 +40,7 @@ main {
     top: 0;
     left: 0;
     cursor: pointer;
-    background-color: fade($color, 40%);
+    background-color: rgba($color, .4);
     visibility: hidden;
     opacity: 0;
 

@@ -1,6 +1,5 @@
 const path = require('path');
 const ls = require('ls');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const plugins = [];

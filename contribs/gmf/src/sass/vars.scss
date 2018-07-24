@@ -15,11 +15,9 @@ $nav-header-bg: darken($nav-bg, 50%) !default;
 $link-color: hsl(hue($brand-primary), 40%, 60%) !default;
 $map-tools-bg-color: white !default;
 $map-tools-color: black !default;
-$map-tools-size: 2.50rem !default;
 $onhover-color: darken($nav-bg, $standard-variation) !default;
 $main-bg-color: #e2e3df !default; // grey light
 
-$search-width: 6 * $map-tools-size;
 
 // Z-indexes
 $below-content-index: 1;
@@ -34,9 +32,8 @@ $above-all: 9999;
 
 $nav-width: 20rem !default;
 
-$border-radius-base: 0 !default;
-$border-radius-small: 0 !default;
-$border-color: black !default;
+$border-radius-base: 2px !default;
+$border-radius-small: 1px !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;
 
 // Bootstrap 3 compatibility layer
@@ -47,7 +44,3 @@ $padding-small-horizontal: 0.72rem !default;
 $input-height-base: 1.5rem !default;
 $btn-default-border: #ccc !default;
 $text-color: $gray-dark !default;
-
-@import "~bootstrap/scss/_functions.scss";
-@import "~bootstrap/scss/_variables.scss";
-@import "~font-awesome/scss/_variables.scss";

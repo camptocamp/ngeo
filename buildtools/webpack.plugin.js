@@ -277,23 +277,22 @@ class SassPlugin {
             }
             try {
               const assetUrl = url.getValue();
-
-              if (assetUrl.startsWith('~')) {
-                let assetName = url.getValue().substr(1);
-                let queryString = '';
-                const questionMarkIndex = assetName.indexOf('?');
-                if (questionMarkIndex > 0) {
-                  queryString = assetName.substr(questionMarkIndex);
-                  assetName = assetName.substr(0, questionMarkIndex);
-                } else {
-                  const sharpIndex = assetName.indexOf('#');
-                  if (sharpIndex > 0) {
-                    queryString = assetName.substr(sharpIndex);
-                    assetName = assetName.substr(0, sharpIndex);
-                  }
+              let assetName = url.getValue().substr(1);
+              let queryString = '';
+              const questionMarkIndex = assetName.indexOf('?');
+              if (questionMarkIndex > 0) {
+                queryString = assetName.substr(questionMarkIndex);
+                assetName = assetName.substr(0, questionMarkIndex);
+              } else {
+                const sharpIndex = assetName.indexOf('#');
+                if (sharpIndex > 0) {
+                  queryString = assetName.substr(sharpIndex);
+                  assetName = assetName.substr(0, sharpIndex);
                 }
-                promises.push(new Promise((resolve, reject) => {
+              }
 
+              promises.push(new Promise((resolve, reject) => {
+                if (assetUrl.startsWith('~')) {
                   usedContext.resolve(usedContext.resourcePath, assetName, (err, resolvedFile) => {
                     if (err) {
                       console.log(err);
@@ -318,25 +317,26 @@ class SassPlugin {
                       });
                     }
                   });
-                }));
-              } else {
-                fs.readFile(assetName, 'utf8', (err, data) => {
-                  if (err) {
-                    console.log(err);
-                    reject(err);
-                  } else {
-                    usedContext.resourcePath = assetName;
-                    const name = loaderUtils.interpolateName(usedContext, pluginOptions.assetname, {
-                      content: data
-                    });
-                    compilation.assets[name] = {
-                      source: () => data,
-                      size: () => data.length
-                    };
-                    replacements[assetUrl] = name + queryString;
-                  }
-                });
-              }
+                } else {
+                  fs.readFile(assetName, 'utf8', (err, data) => {
+                    if (err) {
+                      console.log(err);
+                      reject(err);
+                    } else {
+                      usedContext.resourcePath = assetName;
+                      const name = loaderUtils.interpolateName(usedContext, pluginOptions.assetname, {
+                        content: data
+                      });
+                      compilation.assets[name] = {
+                        source: () => data,
+                        size: () => data.length
+                      };
+                      replacements[assetUrl] = name + queryString;
+                      resolve();
+                    }
+                  });
+                }
+              }));
             } catch (e) {
               console.error(e.stack || e);
             }
