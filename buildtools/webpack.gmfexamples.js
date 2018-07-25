@@ -1,6 +1,5 @@
 const path = require('path');
 const ls = require('ls');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const plugins = [];
@@ -19,7 +18,7 @@ for (const filename of ls('contribs/gmf/examples/*.html')) {
     new HtmlWebpackPlugin({
       template: `contribs/gmf/examples/${name}.html`,
       chunksSortMode: 'manual',
-      filename: exampleFilenamePrefix + name + '.html',
+      filename: `${exampleFilenamePrefix}${name}.html`,
       chunks: ['commons', name]
     })
   );

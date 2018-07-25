@@ -20,7 +20,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 /** @suppress {extraRequire} */
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

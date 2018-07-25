@@ -2,7 +2,7 @@
  * @module ngeo.message.modalComponent
  */
 import 'jquery-ui/ui/widgets/draggable.js';
-import 'bootstrap/js/modal.js';
+import 'bootstrap/js/src/modal.js';
 import googAsserts from 'goog/asserts.js';
 
 /**

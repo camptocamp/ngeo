@@ -4,7 +4,7 @@
 import gmfProfileComponent from 'gmf/profile/component.js';
 import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
 
-import './profile.less';
+import './profile.scss';
 
 /**
  * @type {!angular.Module}

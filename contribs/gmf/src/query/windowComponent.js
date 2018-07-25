@@ -21,8 +21,8 @@ import olStyleStyle from 'ol/style/Style.js';
 import 'jquery-ui/ui/widgets/resizable.js';
 import 'angular-animate';
 import 'angular-touch';
-import 'bootstrap/js/collapse.js';
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/collapse.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

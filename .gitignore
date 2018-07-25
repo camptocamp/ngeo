@@ -11,11 +11,11 @@
 /contribs/gmf/apps/.tx/ngeo.gmf-*
 /examples/simple.min.js
 /contribs/gmf/build/
-/contribs/gmf/fonts/gmf-icons.eot
-/contribs/gmf/fonts/gmf-icons.ttf
-/contribs/gmf/fonts/gmf-icons.woff
-/contribs/gmf/fonts/FontAwesome*
-/contribs/gmf/fonts/fontawesome*
+/contribs/gmf/src/fonts/gmf-icons.eot
+/contribs/gmf/src/fonts/gmf-icons.ttf
+/contribs/gmf/src/fonts/gmf-icons.woff
+/contribs/gmf/src/fonts/FontAwesome*
+/contribs/gmf/src/fonts/fontawesome*
 /contribs/gmf/examples/https.js
 /test/spec/templatecache.js
 /test/spec/gmftemplatecache.js

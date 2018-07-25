@@ -10,7 +10,7 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 import * as olBase from 'ol/index.js';
 
-import 'bootstrap/js/collapse.js';
+import 'bootstrap/js/src/collapse.js';
 
 
 const exports = angular.module('gmfWmscapabilitylayertreenode', [

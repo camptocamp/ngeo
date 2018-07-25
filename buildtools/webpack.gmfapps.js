@@ -1,24 +1,29 @@
 const path = require('path');
-const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
 const plugins = [];
 const entry = {};
 
 const filenamePrefix = process.env.DEV_SERVER ? 'contribs/gmf/apps/' : '';
-const name = process.env.APP
+const name = process.env.APP;
 
 const folder = `contribs/gmf/apps/${name}`;
 entry[name] = `./${folder}/Controller.js`;
 plugins.push(
-new HtmlWebpackPlugin({
-  template: `${folder}/index.html.ejs`,
-  inject: false,
-  chunksSortMode: 'manual',
-  filename: filenamePrefix + name + '.html',
-  chunks: ['commons', name]
-})
+  new HtmlWebpackPlugin({
+    template: `${folder}/index.html.ejs`,
+    inject: false,
+    chunksSortMode: 'manual',
+    filename: `${filenamePrefix}${name}.html`,
+    chunks: ['commons', name]
+  })
+);
+plugins.push(
+  new HtmlWebpackIncludeAssetsPlugin({
+    assets: ['all.css'],
+    append: true,
+  })
 );
 
 

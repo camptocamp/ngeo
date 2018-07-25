@@ -22,7 +22,7 @@ import olLayerGroup from 'ol/layer/Group.js';
 import olMap from 'ol/Map.js';
 import * as olMath from 'ol/math.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

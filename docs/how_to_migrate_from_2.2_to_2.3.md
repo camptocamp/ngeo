@@ -295,13 +295,13 @@ these values to the module of your controller like this:
 
 ### Adapt paths for 'less'
 
-You must import your `<interface.less>` in each application controller you have by something
-like: `import '../../less/<interface>.less'`.
+You must import your `<interface.scss>` in each application controller you have by something
+like: `import '../../sass/<interface>.scss'`.
 
 With Webpack (`less-loader`), to reference a file by it's relative URL, the beginning of the path must be the
-current file. That means that, if in a file `a/b/c/d.js` you want to import the `.less` file  located
-in `a/x/y/z.less`, the import must be written like this: `import '../../x/y/z.less'`. Paths must also be
-adapted for url in each `.less` file (for instance, for a `background-image: url("../../images/office.svg");`
+current file. That means that, if in a file `a/b/c/d.js` you want to import the `.scss` file  located
+in `a/x/y/z.scss`, the import must be written like this: `import '../../x/y/z.scss'`. Paths must also be
+adapted for url in each `.scss` file (for instance, for a `background-image: url("../../images/office.svg");`
 
 ### Test your application
 

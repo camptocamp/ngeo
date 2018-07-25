@@ -12,7 +12,7 @@ switch (nodeEnv) {
     config = webpackMerge(config, require('./buildtools/webpack.prod'));
     break;
   default:
-    console.log(`The 'NODE_ENV' environment variable is set to an invalid value: ${process.env.NODE_ENV}.` )
+    console.log(`The 'NODE_ENV' environment variable is set to an invalid value: ${process.env.NODE_ENV}.`);
     process.exit(2);
 }
 
@@ -27,8 +27,8 @@ switch (process.env.TARGET) {
     config = webpackMerge(config, require('./buildtools/webpack.gmfapps'));
     break;
   default:
-    console.log(`The 'TARGET' environment variable is set to an invalid value: ${process.env.TARGET}.` )
+    console.log(`The 'TARGET' environment variable is set to an invalid value: ${process.env.TARGET}.`);
     process.exit(2);
 }
 
-module.exports = config
+module.exports = config;

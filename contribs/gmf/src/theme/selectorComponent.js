@@ -5,7 +5,7 @@ import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import * as olEvents from 'ol/events.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

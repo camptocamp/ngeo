@@ -1,13 +1,13 @@
 /**
  * @module ngeo.message.Disclaimer
  */
-import 'bootstrap/js/alert.js';
+import 'bootstrap/js/src/alert.js';
 import googAsserts from 'goog/asserts.js';
 
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import * as olBase from 'ol/index.js';
-import 'font-awesome/css/font-awesome.css';
+import 'font-awesome/scss/font-awesome.scss';
 
 /**
  * Provides methods to display any sort of messages, disclaimers, errors,

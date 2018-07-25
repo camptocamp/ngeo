@@ -4,8 +4,8 @@
 import gmfQueryGridComponent from 'gmf/query/gridComponent.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 
-import './grid.less';
-import './window.less';
+import './grid.scss';
+import './window.scss';
 
 /**
  * @type {!angular.Module}

@@ -5,7 +5,7 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 import 'jquery-ui/ui/widgets/slider.js';
 import 'angular-ui-slider';
-import './timeslider.less';
+import './timeslider.scss';
 
 /**
  * @type {!angular.Module}

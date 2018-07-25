@@ -1,18 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const LessPluginCleanCSS = require('less-plugin-clean-css');
-const LessPluginAutoprefix = require('less-plugin-autoprefix');
+const SassPlugin = require('./webpack.plugin.js');
 
-const devMode = process.env.NODE_ENV !== 'production'
-
-const themes = {
-  'mobile': '"~gmf/controllers/mobile-theme.less"',
-  'desktop': '"~gmf/controllers/desktop-theme.less"',
-  'desktop_alt': '"' + path.resolve('contribs/gmf/apps/desktop_alt/less/theme.less') + '"',
-}
-
-const theme = process.env.THEME
+const devMode = process.env.NODE_ENV !== 'production';
 
 
 const providePlugin = new webpack.ProvidePlugin({
@@ -108,37 +98,15 @@ const typeaheadRule = {
 
 const cssRule = {
   test: /\.css$/,
-  use: ExtractTextPlugin.extract({
-    use: 'css-loader'
-  })
+  use: 'file-loader',
 };
 
-const cssLessLoaderConfigs = [
-  {
-    loader: 'css-loader',
-    options: {
-      importLoaders: 1
-    }
-  },
-  {
-    loader: 'less-loader',
-    options: {
-      lessPlugins: [
-        new LessPluginCleanCSS(),
-        new LessPluginAutoprefix()
-      ],
-      modifyVars: {
-        'THEME': themes[theme] ? themes[theme] : theme,
-      }
-    }
-  }
-];
-
-const lessRule = {
-  test: /\.less$/,
-  use: ExtractTextPlugin.extract({
-    use: cssLessLoaderConfigs
-  })
+const sassRule = {
+  test: /\.scss$/,
+  use: [{
+    loader: './buildtools/webpack.scss-loader',
+    options: {}
+  }]
 };
 
 const htmlRule = {
@@ -164,7 +132,7 @@ const config = {
       angularRule,
       typeaheadRule,
       cssRule,
-      lessRule,
+      sassRule,
       htmlRule,
       ngeoRule,
       ngeoExamplesRule,
@@ -175,9 +143,10 @@ const config = {
   },
   plugins: [
     providePlugin,
-    new ExtractTextPlugin({
-        ignoreOrder: true,
-        filename: devMode ? '[name].css' : '[name].[chunkhash:6].css'
+    new SassPlugin({
+      //filename: devMode ? '[name].css' : '[name].[hash:6].css',
+      filename: devMode ? 'all.css' : '[name].[hash:6].css',
+      assetname: '[name].[hash:6].[ext]',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],

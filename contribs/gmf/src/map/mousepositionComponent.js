@@ -6,7 +6,7 @@ import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olControlMousePosition from 'ol/control/MousePosition.js';
 import * as olProj from 'ol/proj.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

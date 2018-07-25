@@ -9,7 +9,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import * as olEvents from 'ol/events.js';
 
-import 'bootstrap/js/dropdown.js';
+import 'bootstrap/js/src/dropdown.js';
 
 
 /**

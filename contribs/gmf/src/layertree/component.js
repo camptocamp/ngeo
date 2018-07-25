@@ -29,7 +29,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
 
-import 'bootstrap/js/collapse.js';
+import 'bootstrap/js/src/collapse.js';
 
 /**
  * @type {!angular.Module}
