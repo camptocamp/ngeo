@@ -40,6 +40,7 @@
     <div class="form-group">
       <button
         class="btn btn-sm btn-default form-control"
+        ng-class="{'has-error': $ctrl.hasError}"
         title="{{'Load a file from local' | translate}}"
         type="submit"
         ng-click="idsl_form.$valid && $ctrl.load()"
@@ -70,6 +71,7 @@
     <div class="form-group">
       <button
         class="btn btn-sm btn-default form-control gmf-importdatasource-connect-btn"
+        ng-class="{'has-error': $ctrl.hasError}"
         title="{{'Connect to online resource' | translate}}"
         type="submit"
         ng-click="idsc_form.$valid && $ctrl.connect()"

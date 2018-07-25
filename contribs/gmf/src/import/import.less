@@ -1,6 +1,7 @@
 @import "~font-awesome/less/variables.less";
 @import "~gmf/less/typeahead.less";
 @import "~gmf/less/vars.less";
+@import "~bootstrap/less/variables.less";
 
 gmf-importdatasource {
   input[type=file] {
@@ -9,6 +10,9 @@ gmf-importdatasource {
 
   .gmf-importdatasource-url-form-group {
     background-color: #fff;
+  }
+  .btn.has-error {
+    color: @brand-danger;
   }
 }
 
