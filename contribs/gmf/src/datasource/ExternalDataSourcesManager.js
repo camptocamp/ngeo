@@ -464,9 +464,11 @@ const exports = class {
 
   /**
    * @param {!File} file File.
+   * @param {function(boolean):*?} opt_callback Callback called with true if the file is loaded and added.
+   *     Otherwise with false.
    * @export
    */
-  createAndAddDataSourceFromFile(file) {
+  createAndAddDataSourceFromFile(file, opt_callback) {
     this.getFileDataSource_(file).then(
       (dataSource) => {
         const fileGroup = this.fileGroup_;
@@ -488,9 +490,17 @@ const exports = class {
 
         // (5) Finally, add it to the ngeo collection
         this.dataSources_.push(dataSource);
+
+        // call the callback.
+        if (opt_callback) {
+          opt_callback(true);
+        }
       },
       (rejections) => {
-        googAsserts.fail(`Failed to load file: ${file.name}`);
+        console.error(`Failed to load file: ${file.name}`);
+        if (opt_callback) {
+          opt_callback(false);
+        }
       }
     );
   }
