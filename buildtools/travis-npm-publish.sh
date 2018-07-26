@@ -27,7 +27,7 @@ then
         then
             echo "Publish daily version"
             $RUN npm install --no-save fluid-publish
-            $RUN node_modules/.bin/fluid-publish devTag="daily"
+            $RUN node_modules/.bin/fluid-publish
         fi
     fi
 fi
