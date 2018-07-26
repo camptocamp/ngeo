@@ -128,7 +128,7 @@ exports.prototype.showMessage = function(message) {
       }
     });
 
-    this.messages_[uid] =  popup;
+    this.messages_[uid] = popup;
 
   } else {
     // display the message using a boostrap dismissible alert
@@ -175,7 +175,7 @@ exports.prototype.showMessage = function(message) {
       this.closeMessage_(message);
     });
 
-    this.messages_[uid] =  el;
+    this.messages_[uid] = el;
   }
 };
 

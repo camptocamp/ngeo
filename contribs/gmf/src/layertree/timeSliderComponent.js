@@ -291,7 +291,7 @@ exports.Controller_.prototype.getClosestValue_ = function(timestamp) {
       // two months at once
       const next = new Date(startDate.getTime());
       next.setFullYear(startDate.getFullYear() + i * this.time.interval[0]);
-      next.setMonth(startDate.getMonth() + i *  this.time.interval[1],
+      next.setMonth(startDate.getMonth() + i * this.time.interval[1],
         startDate.getDate() + i * this.time.interval[2]);
       next.setSeconds(startDate.getSeconds() + i * this.time.interval[3]);
 

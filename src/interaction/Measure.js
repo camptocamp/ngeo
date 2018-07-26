@@ -116,7 +116,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
     this.startMsg = options.startMsg;
   } else {
     this.startMsg = document.createElement('span');
-    this.startMsg.textContent =  'Click to start drawing.';
+    this.startMsg.textContent = 'Click to start drawing.';
   }
 
   /**

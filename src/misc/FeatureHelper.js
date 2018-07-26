@@ -227,8 +227,8 @@ exports.prototype.getLineStringStyle_ = function(feature) {
   if (showLabel) {
     textLabelValues.push(this.getNameProperty(feature));
   }
-  if (showLabel ||  showMeasure) {
-    // display both label using  \n
+  if (showLabel || showMeasure) {
+    // display both label using \n
     const textLabelValue = textLabelValues.join('\n');
     styles.push(new olStyleStyle({
       text: this.createTextStyle_({
@@ -266,8 +266,8 @@ exports.prototype.getPointStyle_ = function(feature) {
   if (showLabel) {
     textLabelValues.push(this.getNameProperty(feature));
   }
-  if (showLabel ||  showMeasure) {
-    // display both label using  \n
+  if (showLabel || showMeasure) {
+    // display both label using \n
     const textLabelValue = textLabelValues.join('\n');
     const font_size = 10;
     // https://reeddesign.co.uk/test/points-pixels.html
@@ -401,8 +401,8 @@ exports.prototype.getPolygonStyle_ = function(feature) {
       if (showLabel) {
         textLabelValues.push(this.getNameProperty(feature));
       }
-      if (showLabel ||  showMeasure) {
-        // display both label using  \n
+      if (showLabel || showMeasure) {
+        // display both label using \n
         const textLabelValue = textLabelValues.join('\n');
         styles.push(new olStyleStyle({
           text: this.createTextStyle_({

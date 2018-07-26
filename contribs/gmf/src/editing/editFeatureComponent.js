@@ -657,7 +657,7 @@ exports.Controller_.prototype.save = function() {
     (response) => {
       this.showServerError = true;
       this.pending = false;
-      this.serverErrorType =  `error type : ${response.data['error_type']}`;
+      this.serverErrorType = `error type : ${response.data['error_type']}`;
       this.serverErrorMessage = `error message : ${response.data['message']}`;
     }
   );
@@ -750,7 +750,7 @@ exports.Controller_.prototype.delete = function() {
       (response) => {
         this.showServerError = true;
         this.pending = false;
-        this.serverErrorType =  `error type : ${response.data['error_type']}`;
+        this.serverErrorType = `error type : ${response.data['error_type']}`;
         this.serverErrorMessage = `error message : ${response.data['message']}`;
       }
     );

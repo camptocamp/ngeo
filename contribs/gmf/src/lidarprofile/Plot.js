@@ -183,7 +183,7 @@ const exports = class {
       this.scaleY['domain'](rangeY);
       this.scaleY['range']([this.height_, 0]);
     } else {
-      domainScale =  domainRatio / rangeRatio;
+      domainScale = domainRatio / rangeRatio;
       const domainScaledHeight = domainProfileHeight * domainScale;
       const domainHeightCentroid = (rangeY[1] + rangeY[0]) / 2;
       this.scaleX = d3.scaleLinear();
