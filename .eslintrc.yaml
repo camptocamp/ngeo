@@ -9,6 +9,7 @@ parserOptions:
 rules:
     no-console: 0
     comma-dangle: 0
+    import/no-unresolved: 0
 globals:
     angular: false
     Cesium: false
