@@ -252,7 +252,7 @@ exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  */
 exports.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   if (url.startsWith('//')) {
-    url = window.location.protocol  + url;
+    url = window.location.protocol + url;
   }
   const url_url = new URL(url);
   const customParams = {'TRANSPARENT': true};

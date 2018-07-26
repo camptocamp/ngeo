@@ -273,7 +273,7 @@ const exports = function(options) {
           .x(d => x(distanceExtractor(d)))
           .y0(height)
           .y1((d) => {
-            const firstLineName =  Object.keys(linesConfiguration)[0];
+            const firstLineName = Object.keys(linesConfiguration)[0];
             return y(linesConfiguration[firstLineName].zExtractor(d));
           });
       }

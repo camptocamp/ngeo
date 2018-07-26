@@ -858,7 +858,7 @@ exports.RuleController_ = class {
     if (feature) {
 
       const type = this.ngeoFeatureHelper_.getType(feature);
-      const  gettextCatalog = this.gettextCatalog_;
+      const gettextCatalog = this.gettextCatalog_;
 
       if (type == ngeoGeometryType.CIRCLE ||
           type == ngeoGeometryType.LINE_STRING ||

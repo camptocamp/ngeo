@@ -63,7 +63,7 @@ const exports = class extends olEventsEventTarget {
       * @type {?string}
       * @private
       */
-    this.noReloadRole_ =  $injector.has('gmfAuthenticationNoReloadRole')
+    this.noReloadRole_ = $injector.has('gmfAuthenticationNoReloadRole')
       ? $injector.get('gmfAuthenticationNoReloadRole')
       : null;
 

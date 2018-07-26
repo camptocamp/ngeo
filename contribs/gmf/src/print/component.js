@@ -207,7 +207,7 @@ exports.Controller_ = class {
    * @ngname GmfPrintController
    */
   constructor($element, $rootScope, $scope, $timeout, $q, $injector,
-    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr,  ngeoPrintUtils,
+    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr, ngeoPrintUtils,
     ngeoCreatePrint, gmfPrintUrl, gmfAuthenticationService, ngeoQueryResult,
     $filter, gmfPrintState, gmfThemes) {
 
@@ -1132,7 +1132,7 @@ exports.Controller_ = class {
 
     });
 
-    return legend['classes'].length > 0 ?  legend : null;
+    return legend['classes'].length > 0 ? legend : null;
   }
 
 

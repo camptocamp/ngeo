@@ -10,7 +10,7 @@ import gmfQueryExtraModule from 'gmf/query/extraModule.js';
 
 const appModule = angular.module('gmfapp', []);
 
-beforeEach(() =>  {
+beforeEach(() => {
   appModule.requires.push('gettext');
   appModule.requires.push('tmh.dynamicLocale');
   appModule.requires.push(gmfContextualdataComponent.name);

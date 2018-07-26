@@ -97,7 +97,7 @@ const exports = function(opt_options) {
    * @type {Object.<string, string>}
    * @private
    */
-  exports.LegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
+  exports.LegacyProperties_ = (options.propertiesType !== undefined) && options.propertiesType;
 
 };
 

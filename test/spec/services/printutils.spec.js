@@ -29,9 +29,9 @@ describe('ngeo.print.Utils', () => {
     });
 
     it('returns the optimal resolution', () => {
-      const mapSize = [2, 1];  // px
-      const printMapSize = [640, 320];  // dots
-      const printScale = 10;  // scale denominator
+      const mapSize = [2, 1]; // px
+      const printMapSize = [640, 320]; // dots
+      const printScale = 10; // scale denominator
       const optimalResolution = ngeoPrintUtilsService.getOptimalResolution(
         mapSize, printMapSize, printScale);
       expect(optimalResolution).toBe(1);

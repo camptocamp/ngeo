@@ -388,12 +388,12 @@ const exports = class {
           points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
           this.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
 
-        } else if (attributes[k]['value']  == 'CLASSIFICATION') {
+        } else if (attributes[k]['value'] == 'CLASSIFICATION') {
           const classif = view.getUint8(aoffset);
           points.classification.push(classif);
           this.profilePoints.classification.push(classif);
 
-        } else if (attributes[k]['value']  == 'INTENSITY') {
+        } else if (attributes[k]['value'] == 'INTENSITY') {
           const intensity = view.getUint8(aoffset);
           points.intensity.push(intensity);
           this.profilePoints.intensity.push(intensity);
@@ -405,7 +405,7 @@ const exports = class {
           points.color_packed.push([r, g, b]);
           this.profilePoints.color_packed.push([r, g, b]);
 
-        } else if (attributes[k]['value']  == 'POSITION_CARTESIAN') {
+        } else if (attributes[k]['value'] == 'POSITION_CARTESIAN') {
           const x = view.getInt32(aoffset, true) * scale + jHeader['boundingBox']['lx'];
           const y = view.getInt32(aoffset + 4, true) * scale + jHeader['boundingBox']['ly'];
           const z = view.getInt32(aoffset + 8, true) * scale + jHeader['boundingBox']['lz'];

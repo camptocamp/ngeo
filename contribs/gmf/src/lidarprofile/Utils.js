@@ -58,7 +58,7 @@ const exports = class {
         clippedLine.appendCoordinate(segEnd);
       } else if (dRight > mileage_start && dRight < mileage_end) {
         clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
-      } else if  (dRight > mileage_start && dRight > mileage_end && counter === segNumber) {
+      } else if (dRight > mileage_start && dRight > mileage_end && counter === segNumber) {
         clippedLine.appendCoordinate(linestring.getCoordinateAt(fractionEnd));
       }
 
@@ -336,7 +336,7 @@ const exports = class {
     for (let i = 0; i < d.distance.length; i++) {
 
       if (sx(d.distance[i]) < xs + tol && sx(d.distance[i]) > xs - tol && sy(d.altitude[i]) < ys + tol && sy(d.altitude[i]) > ys - tol) {
-        const pDistance =  Math.sqrt(Math.pow((sx(d.distance[i]) - xs), 2) + Math.pow((sy(d.altitude[i]) - ys), 2));
+        const pDistance = Math.sqrt(Math.pow((sx(d.distance[i]) - xs), 2) + Math.pow((sy(d.altitude[i]) - ys), 2));
         const cClassif = classification_colors[d.classification[i]];
         if (cClassif && cClassif.visible == 1) {
 

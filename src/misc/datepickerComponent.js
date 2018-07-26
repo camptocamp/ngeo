@@ -46,13 +46,13 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  * ngeoDatePickerTemplateUrl Template for the directive.
- * @param  {angular.$timeout} $timeout angular timeout service
+ * @param {angular.$timeout} $timeout angular timeout service
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
-exports.component_ = function(ngeoDatePickerTemplateUrl,  $timeout) {
+exports.component_ = function(ngeoDatePickerTemplateUrl, $timeout) {
   return {
     scope: {
       onDateSelected: '&',
@@ -65,7 +65,7 @@ exports.component_ = function(ngeoDatePickerTemplateUrl,  $timeout) {
     link: (scope, element, attrs, ctrl) => {
       ctrl.init();
 
-      const lang =  ctrl.gettextCatalog_.getCurrentLanguage();
+      const lang = ctrl.gettextCatalog_.getCurrentLanguage();
       $['datepicker']['setDefaults']($['datepicker']['regional'][lang]);
 
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {

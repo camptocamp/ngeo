@@ -482,7 +482,7 @@ const exports = class {
     const propertyName = value.propertyName;
     const upperBoundary = value.upperBoundary;
 
-    const rot =  ngeoRuleRule.OperatorType;
+    const rot = ngeoRuleRule.OperatorType;
     const rsot = ngeoRuleRule.SpatialOperatorType;
     const rtot = ngeoRuleRule.TemporalOperatorType;
 

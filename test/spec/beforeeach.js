@@ -7,7 +7,7 @@ import ngeoMainmodule from 'ngeo/mainmodule.js';
 
 exports.module = angular.module('app', []);
 
-beforeEach(() =>  {
+beforeEach(() => {
   exports.module.requires.push(ngeoMainmodule.name);
 });
 
@@ -44,7 +44,7 @@ beforeEach(() => {
             }
           }
 
-          result.message =  `expected ${actual} to sort of equal ${expected}`;
+          result.message = `expected ${actual} to sort of equal ${expected}`;
 
           return result;
         }
