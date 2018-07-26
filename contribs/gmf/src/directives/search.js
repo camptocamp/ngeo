@@ -771,13 +771,19 @@ gmf.SearchController.prototype.getSearchStyle_ = function(feature, resolution) {
     if (fillStyle) {
       fillStyle.setColor(fillColor);
     }
-    const image = style.getImage();
-    if (image) {
-      style.setImage(new ol.style.Circle({
-        fill: new ol.style.Fill({color: fillColor}),
-        radius: 5,
-        stroke: new ol.style.Stroke({color: strokeColor})
-      }));
+    // the image style can't be changed in place, the colors are updated on a clone.
+    let imageStyle = style.getImage();
+    if (imageStyle) {
+      imageStyle = imageStyle.clone();
+      const imageStrokeStyle = imageStyle.getStroke();
+      if (imageStrokeStyle) {
+        imageStrokeStyle.setColor(strokeColor);
+      }
+      const imageFillStyle = imageStyle.getFill();
+      if (imageFillStyle) {
+        imageFillStyle.setColor(fillColor);
+      }
+      style.setImage(imageStyle);
     }
   }
   return style;
