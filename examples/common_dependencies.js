@@ -1,3 +1,4 @@
+import './common_dependencies.scss'
 import 'jquery';
 import 'angular';
 import 'angular-gettext';

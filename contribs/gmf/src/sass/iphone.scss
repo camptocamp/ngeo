@@ -1,3 +1,5 @@
+@import '~gmf/sass/vars.scss';
+
 // Hack for ios Safari browser (UI overlapping on iOS 10)
 @media all and (orientation: landscape) {
   $ios-margin: 3.12rem;

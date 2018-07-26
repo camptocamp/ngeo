@@ -1,6 +1,6 @@
 'use strict';
 
-const entries = [];
+const entries = {};
 
 const loaderUtils = require('loader-utils');
 const path = require('path');
@@ -43,12 +43,12 @@ function getLoaderConfig(ctx) {
 }
 
 module.exports = function(content) {
-  entries.push({
+  entries[this.resourcePath] = {
     'content': content,
-    'entry': this.resourcePath,
     'options': getLoaderConfig(this),
     'ctx': this,
-  });
+  };
+  this.dependency(this.resourcePath);
   return '';
 };
 

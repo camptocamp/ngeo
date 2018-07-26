@@ -1,3 +1,5 @@
+@import '~gmf/sass/vars.scss';
+
 /**
  * Fonts definition
  */
@@ -12,5 +14,4 @@
   font-style: normal;
 }
 
-$fa-font-path: "~font-awesome/fonts";
 @import "~font-awesome/scss/font-awesome.scss";
