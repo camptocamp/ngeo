@@ -6,7 +6,6 @@ goog.require('goog.asserts');
 goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
 
-const utils = goog.require('ngeo.offline.utils');
 const TilesDownloader = goog.require('ngeo.offline.TilesDownloader');
 
 
@@ -103,25 +102,30 @@ const Downloader = class {
      */
     const layersMetadatas = this.configuration_.createLayerMetadatas(map, extent);
 
-    const queue = [];
-    for (const layerItem of layersMetadatas) {
-      if (layerItem.layerType === 'tile') {
-        const tiles = layerItem.tiles = [];
-        this.queueLayerTiles_(layerItem, tiles);
-        queue.push(...tiles);
-      }
-    }
-
     /**
      * @type {!Array<ngeox.OfflinePersistentLayer>}
      */
     const persistentLayers = [];
+    const queue = [];
+    const zooms = [];
     for (const layerItem of layersMetadatas) {
+      if (layerItem.layerType === 'tile') {
+        const tiles = [];
+        this.queueLayerTiles_(layerItem, tiles);
+        queue.push(...tiles);
+      }
       persistentLayers.push({
         backgroundLayer: layerItem.backgroundLayer,
         layerType: layerItem.layerType,
         layerSerialization: layerItem.layerSerialization,
         key: this.configuration_.getLayerKey(layerItem),
+      });
+
+      layerItem.extentByZoom.forEach((obj) => {
+        const zoom = obj.zoom;
+        if (zooms.indexOf(zoom) < 0) {
+          zooms.push(zoom);
+        }
       });
     }
 
@@ -130,7 +134,8 @@ const Downloader = class {
      */
     const persistentObject = {
       extent: extent,
-      layers: persistentLayers
+      layers: persistentLayers,
+      zooms: zooms.sort((a, b) => (a < b ? -1 : 1))
     };
     const setOfflineContentPromise = this.configuration_.setItem('offline_content', persistentObject);
 
