@@ -133,6 +133,12 @@ ngeo.format.FeatureHash = function(opt_options) {
    */
   ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
 
+  /**
+   * @type {Object.<string, *>}
+   * @private
+   */
+  this.defaultValues_ = options.defaultValues !== undefined ? options.defaultValues : {};
+
 };
 ol.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
 
@@ -1091,6 +1097,16 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
     features.push(feature);
     text = text.substring(index + 1);
   }
+
+  // set default values
+  features.forEach((feature) => {
+    for (const key in this.defaultValues_) {
+      const property = ngeo.format.FeatureHashLegacyProperties_[key];
+      if (feature.get(property) === undefined) {
+        feature.set(property, this.defaultValues_[key].call(null, feature));
+      }
+    }
+  });
   return features;
 };
 
