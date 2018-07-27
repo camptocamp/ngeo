@@ -216,7 +216,7 @@ function fillDependency(pluginOptions, usedContext, compilation, assetName, asse
           console.log(err);
           reject(err);
         } else {
-          fs.readFile(resolvedFile, 'utf8', (err, data) => {
+          fs.readFile(resolvedFile, (err, data) => {
             if (err) {
               console.log(err);
               reject(err);
@@ -236,7 +236,7 @@ function fillDependency(pluginOptions, usedContext, compilation, assetName, asse
         }
       });
     } else {
-      fs.readFile(assetName, 'utf8', (err, data) => {
+      fs.readFile(assetName, (err, data) => {
         if (err) {
           console.log(err);
           reject(err);
