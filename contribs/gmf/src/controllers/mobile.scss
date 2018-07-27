@@ -3,10 +3,9 @@
  */
 
 $map-tools-size: 2.50rem !default;
-$search-width: 6 * $map-tools-size !default;
 $border-color: black !default;
 
-@import '~gmf/sass/vars.scss';
+@import '~gmf/sass/vars_only.scss';
 
 @import "~bootstrap/scss/_functions.scss";
 @import "~bootstrap/scss/_variables.scss";

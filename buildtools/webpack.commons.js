@@ -144,9 +144,33 @@ const config = {
   plugins: [
     providePlugin,
     new SassPlugin({
-      //filename: devMode ? '[name].css' : '[name].[hash:6].css',
-      filename: devMode ? 'all.css' : '[name].[hash:6].css',
+      filename: devMode ? '[name].css' : '[name].[hash:6].css',
       assetname: '[name].[hash:6].[ext]',
+      //tempfile: '/tmp/t.scss',
+      blacklistedChunks: ['commons'],
+      filesOrder: (chunk, chunksFiles) => {
+        const files = chunksFiles.commons
+          ? chunksFiles[chunk.name].concat(chunksFiles.commons)
+          : chunksFiles[chunk.name];
+        files.sort((f1, f2) => {
+          for (const reg of [
+            '/apps/',
+            '/controllers/',
+            '/vars.scss',
+            '/vars_only.scss',
+            '/common_dependencies.scss',
+          ]) {
+            if (f1.indexOf(reg) >= 0) {
+              return -1;
+            }
+            if (f2.indexOf(reg) >= 0) {
+              return 1;
+            }
+          }
+          return 0;
+        });
+        return files;
+      }
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ],

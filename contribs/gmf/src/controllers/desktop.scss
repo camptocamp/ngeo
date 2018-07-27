@@ -13,7 +13,7 @@ $padding-base-horizontal: 0.62rem !default;
 $form-group-margin-bottom: 0.62rem !default;
 $search-results-max-height: calc(100vh - $topbar-height + $map-tools-size + (2 * $app-margin)) !default;
 
-@import '~gmf/sass/vars.scss';
+@import '~gmf/sass/vars_only.scss';
 
 $border-color: darken($brand-primary, $standard-variation) !default;
 

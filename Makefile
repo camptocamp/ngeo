@@ -1,6 +1,5 @@
 ANGULAR_VERSION := $(shell buildtools/get-version.sh angular)
 
-FONTAWESOME_WEBFONT = $(addprefix contribs/gmf/src/fonts/fontawesome-webfont., eot ttf woff woff2)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
@@ -96,12 +95,7 @@ help:
 	@echo "- help                        Display this help message"
 	@echo "- serve-ngeo                  Run a development web server for running the ngeo examples"
 	@echo "- serve-gmf                   Run a development web server for running the gmf examples"
-	@echo "- serve-gmf-apps-desktop      Run a development web server for running the gmf app desktop"
-	@echo "- serve-gmf-apps-desktopalt   Run a development web server for running the gmf app desktop_alt"
-	@echo "- serve-gmf-apps-mobile       Run a development web server for running the gmf app mobile"
-	@echo "- serve-gmf-apps-mobilealt    Run a development web server for running the gmf app mobile_alt"
-	@echo "- serve-gmf-apps-oeedit       Run a development web server for running the gmf app oeedit"
-	@echo "- serve-gmf-apps-oeview       Run a development web server for running the gmf app oeview"
+	@echo "- serve-gmf-apps              Run a development web server for running the gmf apps"
 	@echo "- examples-hosted             Build the hosted examples"
 	@echo "- examples-hosted-ngeo        Build the ngeo hosted examples"
 	@echo "- examples-hosted-gmf         Build the gmf hosted examples"
@@ -174,36 +168,16 @@ test-debug: .build/node_modules.timestamp .build/node_modules_karma-chrome-launc
 	touch $@
 
 .PHONY: serve-ngeo
-serve-ngeo: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+serve-ngeo: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
 	npm run serve-ngeo-examples
 
 .PHONY: serve-gmf
-serve-gmf: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
+serve-gmf: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
-.PHONY: serve-gmf-apps-desktop
-serve-gmf-apps-desktop: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=desktop npm run serve-gmf-apps
-
-.PHONY: serve-gmf-apps-desktopalt
-serve-gmf-apps-desktopalt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=desktop_alt npm run serve-gmf-apps
-
-.PHONY: serve-gmf-apps-mobile
-serve-gmf-apps-mobile: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile npm run serve-gmf-apps
-
-.PHONY: serve-gmf-apps-mobilealt
-serve-gmf-apps-mobilealt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile_alt npm run serve-gmf-apps
-
-.PHONY: serve-gmf-apps-oeedit
-serve-gmf-apps-oeedit: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=oeedit npm run serve-gmf-apps
-
-.PHONY: serve-gmf-apps-oeview
-serve-gmf-apps-oeview: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=oeview npm run serve-gmf-apps
+.PHONY: serve-gmf-apps
+serve-gmf-apps: .build/node_modules.timestamp $(ANGULAR_LOCALES_FILES)
+	npm run serve-gmf-apps
 
 .PHONY: examples-hosted
 examples-hosted: \
@@ -229,12 +203,7 @@ examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contri
 examples-hosted-apps: .build/gmf-apps.timestamp .build/examples-hosted-gmf-apps-deps.timestamp
 
 .build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) .build/node_modules.timestamp
-	APP=desktop npm run build-gmf-apps
-	APP=desktop_alt npm run build-gmf-apps
-	APP=mobile npm run build-gmf-apps
-	APP=mobile_alt npm run build-gmf-apps
-	APP=oeedit npm run build-gmf-apps
-	APP=oeview npm run build-gmf-apps
+	npm run build-gmf-apps
 	touch $@
 
 .PHONY: gh-pages
@@ -260,7 +229,7 @@ gh-pages: .build/python-venv.timestamp
 	# We need the files for each app
 	# To simplify processing, we first copy them in gmfappsdeps directory, then from there to each app
 	$(foreach f,$^,mkdir -p .build/examples-hosted/gmfappsdeps/`dirname $(f)`; cp $(f) .build/examples-hosted/gmfappsdeps/$(f);)
-	$(foreach app, $(GMF_APPS), rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/$(app)/;)
+	rsync --recursive .build/examples-hosted/gmfappsdeps/contribs/gmf/ .build/examples-hosted/contribs/gmf/apps/;)
 	touch $@
 
 .build/examples-hosted/index.html: \
@@ -307,7 +276,7 @@ gh-pages: .build/python-venv.timestamp
 	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
 
-.build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%/index.html
+.build/contribs/gmf/apps/%.check.timestamp: .build/examples-hosted/contribs/gmf/apps/%.html
 	mkdir -p $(dir $@)
 	./node_modules/.bin/phantomjs --local-to-remote-url-access=true buildtools/check-example.js $<
 	touch $@
@@ -316,14 +285,6 @@ gh-pages: .build/python-venv.timestamp
 	npm install
 	mkdir -p $(dir $@)
 	touch $@
-
-.PRECIOUS: node_modules/font-awesome/fonts/fontawesome-webfont.%
-node_modules/font-awesome/fonts/fontawesome-webfont.%: .build/node_modules.timestamp
-	touch -c $@
-
-contribs/gmf/src/fonts/fontawesome-webfont.%: node_modules/font-awesome/fonts/fontawesome-webfont.%
-	mkdir -p $(dir $@)
-	cp $< $@
 
 contribs/gmf/build/angular-locale_%.js: package.json
 	mkdir -p $(dir $@)
@@ -470,8 +431,6 @@ clean:
 	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
 	rm -f $(ANGULAR_LOCALES_FILES)
-	rm -f contribs/gmf/src/fonts/FontAwesome.otf
-	rm -f contribs/gmf/src/fonts/fontawesome-webfont.*
 	rm -f contribs/gmf/src/fonts/gmf-icons.eot
 	rm -f contribs/gmf/src/fonts/gmf-icons.ttf
 	rm -f contribs/gmf/src/fonts/gmf-icons.woff
