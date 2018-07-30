@@ -17,15 +17,15 @@
         <div
           class="header ui-draggable-handle"
           ng-if="$ctrl.title !== null">
-          <p class="title">{{ $ctrl.title }}</p>
+          <p class="title">{{$ctrl.title | translate}}</p>
         </div>
         <div
-          class="details"
+          class="details content"
           ng-if="$ctrl.content"
           ng-bind-html="$ctrl.content">
         </div>
         <div
-          class="details"
+          class="details iframe"
           ng-if="$ctrl.url !== null">
           <iframe
             frameborder="0"
