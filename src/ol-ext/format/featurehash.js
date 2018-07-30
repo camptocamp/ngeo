@@ -134,7 +134,7 @@ ngeo.format.FeatureHash = function(opt_options) {
   ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
 
   /**
-   * @type {Object.<string, *>}
+   * @type {Object.<string, function(ol.Feature)>}
    * @private
    */
   this.defaultValues_ = options.defaultValues !== undefined ? options.defaultValues : {};

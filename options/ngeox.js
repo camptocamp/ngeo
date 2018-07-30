@@ -1325,6 +1325,7 @@ ngeox.format = {};
 /**
  * @typedef {{
  *    accuracy: (number|undefined),
+ *    defaultValues: (Object.<string, function(ol.Feature)>|undefined),
  *    encodeStyles: (boolean|undefined),
  *    properties: (function(ol.Feature): Object.<string, (string|undefined)>|undefined),
  *    setStyle: (boolean|undefined)
@@ -1338,6 +1339,11 @@ ngeox.format.FeatureHashOptions;
  * @type {number|undefined}
  */
 ngeox.format.FeatureHashOptions.prototype.accuracy;
+
+/**
+ * @type {Object.<string, function(ol.Feature)>|undefined}
+ */
+ngeox.format.FeatureHashOptions.prototype.defaultValues;
 
 
 /**
