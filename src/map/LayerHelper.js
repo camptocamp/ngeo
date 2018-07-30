@@ -386,11 +386,16 @@ exports.prototype.getWMTSLegendURL = function(layer) {
  * @param {string=} opt_legendRule rule parameters to add to the returned URL.
  * @param {number=} opt_legendWidth the legend width.
  * @param {number=} opt_legendHeight the legend height.
+ * @param {string=} opt_servertype the OpenLayers server type.
+ * @param {number=} opt_dpi the DPI.
+ * @param {Array.number=} opt_bbox the bbox.
+ * @param {string=} opt_srs The projection code.
  * @return {string|undefined} The legend URL or undefined.
  * @export
  */
 exports.prototype.getWMSLegendURL = function(url,
-  layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight) {
+  layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight,
+  opt_servertype, opt_dpi, opt_bbox, opt_srs) {
   if (!url) {
     return undefined;
   }
@@ -412,6 +417,15 @@ exports.prototype.getWMSLegendURL = function(url,
     }
     if (opt_legendHeight !== undefined) {
       queryString['HEIGHT'] = opt_legendHeight;
+    }
+  }
+  if (opt_servertype == 'qgis') {
+    if (opt_dpi != undefined) {
+      queryString['DPI'] = opt_dpi;
+    }
+    if (opt_bbox != undefined && opt_srs != undefined) {
+      queryString['BBOX'] = opt_bbox.join(',');
+      queryString['SRS'] = opt_srs;
     }
   }
   return olUri.appendParams(url, queryString);

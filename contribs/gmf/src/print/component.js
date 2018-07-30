@@ -843,9 +843,18 @@ exports.Controller_ = class {
     }
 
     if (this.layoutInfo.legend) {
-      const legend = this.getLegend_(scale);
+      const center = this.map.getView().getCenter();
+      const deltaX = this.paperSize_[0] * scale / 2 / ngeoPrintUtils.INCHES_PER_METER_ / ngeoPrintUtils.DOTS_PER_INCH_;
+      const deltaY = this.paperSize_[1] * scale / 2 / ngeoPrintUtils.INCHES_PER_METER_ / ngeoPrintUtils.DOTS_PER_INCH_;
+      const bbox = [
+        center[0] - deltaX,
+        center[1] - deltaY,
+        center[0] + deltaX,
+        center[1] + deltaY,
+      ];
+      const legend = this.getLegend_(scale, this.layoutInfo.dpi, bbox);
       if (legend !== null) {
-        customAttributes['legend'] = this.getLegend_(scale);
+        customAttributes['legend'] = legend;
       }
     }
 
@@ -1072,10 +1081,12 @@ exports.Controller_ = class {
 
   /**
    * @param {number} scale The scale to get the legend (for wms layers only).
+   * @param {number} dpi The DPI.
+   * @param {Array.number} bbox The bbox.
    * @return {Object?} Legend object for print report or null.
    * @private
    */
-  getLegend_(scale) {
+  getLegend_(scale, dpi, bbox) {
     const legend = {'classes': []};
     let classes, layerNames, layerName, icons;
     const gettextCatalog = this.gettextCatalog_;
@@ -1111,7 +1122,9 @@ exports.Controller_ = class {
             icons = this.getMetadataLegendImage_(name);
             if (!icons) {
               icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-                scale);
+                scale, undefined, undefined, undefined, source.serverType_, dpi, bbox,
+                this.map.getView().getProjection().getCode()
+              );
             }
             // Don't add classes without legend url or from layers without any
             // active name.
