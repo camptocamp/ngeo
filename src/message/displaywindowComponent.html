@@ -20,12 +20,12 @@
           <p class="title">{{ $ctrl.title }}</p>
         </div>
         <div
-          class="details"
+          class="details content"
           ng-if="$ctrl.content"
           ng-bind-html="$ctrl.content">
         </div>
         <div
-          class="details"
+          class="details iframe"
           ng-if="$ctrl.url !== null">
           <iframe
             frameborder="0"

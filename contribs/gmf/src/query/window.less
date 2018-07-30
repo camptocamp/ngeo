@@ -6,20 +6,20 @@
 @displayquerywindow-detailed-details-line-height: 2rem;
 @displayquerywindow-detailed-details-height: 8 * @displayquerywindow-detailed-details-line-height;
 
-.gmf-displayquerywindow {
+div.gmf-displayquerywindow {
   .details {
     display: none;
   }
-  .animation-container {
-    // height with 2em: 1em per text (title, subtitle)
-    height: calc(4 * @app-margin + @half-app-margin + @map-tools-size ~"+ 2em");
-  }
 }
 
-.ngeo-displaywindow {
+div.ngeo-displaywindow {
+  margin: 0 auto;
   .animation-container {
     height: 100%;
     width: 100%;
+  }
+  .details.iframe {
+    overflow: hidden;
   }
 }
 
@@ -28,9 +28,7 @@
   left: initial;
   bottom: @app-margin;
   width: @displayquerywindow-tablet-width;
-  max-width: @displayquerywindow-tablet-width;
   margin-left: -@displayquerywindow-tablet-width / 2;
-  max-height: 10 * @map-tools-size;
   position: fixed;
   z-index: @above-all;
   .collapse-button {
