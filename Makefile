@@ -191,7 +191,7 @@ serve-gmf-apps-desktopalt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) 
 
 .PHONY: serve-gmf-apps-mobile
 serve-gmf-apps-mobile: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	APP=mobile npm THEME=mobile run serve-gmf-apps
+	APP=mobile THEME=mobile npm run serve-gmf-apps
 
 .PHONY: serve-gmf-apps-mobilealt
 serve-gmf-apps-mobilealt: .build/node_modules.timestamp $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
