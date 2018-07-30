@@ -133,6 +133,12 @@ ngeo.format.FeatureHash = function(opt_options) {
    */
   ngeo.format.FeatureHashLegacyProperties_ = (options.propertiesType !== undefined) &&  options.propertiesType;
 
+  /**
+   * @type {Object.<string, *>}
+   * @private
+   */
+  this.defaultValues_ = options.defaultValues !== undefined ? options.defaultValues : {};
+
 };
 ol.inherits(ngeo.format.FeatureHash, ol.format.TextFeature);
 
@@ -1080,6 +1086,8 @@ ngeo.format.FeatureHash.prototype.readFeatureFromText = function(text, opt_optio
  */
 ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
   goog.asserts.assert(text[0] === 'F');
+  this.prevX_ = 0;
+  this.prevY_ = 0;
   /** @type {Array.<ol.Feature>} */
   const features = [];
   text = text.substring(1);
@@ -1091,6 +1099,16 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
     features.push(feature);
     text = text.substring(index + 1);
   }
+
+  // set default values
+  features.forEach((feature) => {
+    for (const key in this.defaultValues_) {
+      const property = ngeo.format.FeatureHashLegacyProperties_[key];
+      if (feature.get(property) === undefined) {
+        feature.set(property, this.defaultValues_[key].call(null, feature));
+      }
+    }
+  });
   return features;
 };
 
@@ -1106,8 +1124,6 @@ ngeo.format.FeatureHash.prototype.readFeaturesFromText = function(text, opt_opti
 ngeo.format.FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
   const geometryReader = ngeo.format.FeatureHash.GEOMETRY_READERS_[text[0]];
   goog.asserts.assert(geometryReader !== undefined);
-  this.prevX_ = 0;
-  this.prevY_ = 0;
   return geometryReader.call(this, text);
 };
 
@@ -1195,6 +1211,8 @@ ngeo.format.FeatureHash.prototype.writeFeatureText = function(feature, opt_optio
  * @override
  */
 ngeo.format.FeatureHash.prototype.writeFeaturesText = function(features, opt_options) {
+  this.prevX_ = 0;
+  this.prevY_ = 0;
   const textArray = [];
   if (features.length > 0) {
     textArray.push('F');
@@ -1220,7 +1238,5 @@ ngeo.format.FeatureHash.prototype.writeGeometryText = function(geometry, opt_opt
   goog.asserts.assert(geometryWriter !== undefined);
   const transformedGeometry = /** @type {ol.geom.Geometry} */
       (ol.format.Feature.transformWithOptions(geometry, true, opt_options));
-  this.prevX_ = 0;
-  this.prevY_ = 0;
   return geometryWriter.call(this, transformedGeometry);
 };

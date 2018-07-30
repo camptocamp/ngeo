@@ -86,13 +86,14 @@ gmf.module.value('gmfPermalinkOptions',
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.StateManager} ngeoStateManager The ngeo StateManager service.
  * @param {ngeo.Location} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
-gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
+gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog,
   ngeoStateManager, ngeoLocation) {
 
   /**
@@ -335,6 +336,12 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce,
       'showMeasure': ngeo.FeatureProperties.SHOW_MEASURE,
       'strokeColor': ngeo.FeatureProperties.COLOR,
       'strokeWidth': ngeo.FeatureProperties.STROKE
+    },
+    defaultValues: {
+      'name': feature => gettextCatalog.getString(feature.getGeometry().getType()),
+      'fillOpacity': () => 0.5,
+      'showLabel': () => false,
+      'showMeasure': () => false
     }
   });
 
