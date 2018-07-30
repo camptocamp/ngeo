@@ -2763,7 +2763,8 @@ ngeox.OfflinePersistentLayer;
 /**
  * @typedef {{
  *   extent: ol.Extent,
- *   layers: !Array<ngeox.OfflinePersistentLayer>
+ *   layers: !Array<ngeox.OfflinePersistentLayer>,
+ *   zooms: !Array<number>
  * }}
  */
 ngeox.OfflinePersistentContent;
