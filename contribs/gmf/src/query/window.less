@@ -208,8 +208,11 @@ div.ngeo-displaywindow {
       height: calc(~"100% -" @map-tools-size + @app-margin);
     }
 
-    .animation-container-detailed {
-      height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3) + @map-tools-size;
+    .animation-container {
+      height: @map-tools-size * 2;
+      &.animation-container-detailed {
+        height: (@displayquerywindow-detailed-header-height + @displayquerywindow-detailed-details-height / 2 + @app-margin * 3) + @map-tools-size;
+      }
     }
   }
 }
