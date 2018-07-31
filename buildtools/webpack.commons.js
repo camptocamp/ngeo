@@ -111,13 +111,21 @@ const sassRule = {
 
 const htmlRule = {
   test: /\.html$/,
+  use: 'ejs-loader',
+};
+
+const svgRule = {
+  test: /\.svg$/,
   use: [{
-    loader: 'html-loader',
+    loader: 'svg-inline-loader',
     options: {
-      minimize: true
-    }
+      removeSVGTagAttrs: false,
+    },
+  }, {
+    loader: 'svgo-loader',
   }]
 };
+
 
 const config = {
   context: path.resolve(__dirname, '../'),
@@ -134,6 +142,7 @@ const config = {
       cssRule,
       sassRule,
       htmlRule,
+      svgRule,
       ngeoRule,
       ngeoExamplesRule,
       gmfAppsRule,

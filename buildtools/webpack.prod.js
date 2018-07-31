@@ -4,18 +4,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 const resourcesRule = {
-  test: /\.(jpeg|png|svg|ico|cur)$/,
-  use: {
-    loader: 'url-loader',
-    options: {
-      limit: 1000,
-      name: '[name].[hash:6].[ext]'
-    }
-  }
-};
-
-const fontRule = {
-  test: /\.(eot|ttf|woff|woff2)$/,
+  test: /\.(jpeg|png|ico|cur|eot|ttf|woff|woff2)$/,
   use: {
     loader: 'file-loader',
     options: {
@@ -35,7 +24,6 @@ module.exports = {
   module: {
     rules: [
       resourcesRule,
-      fontRule,
     ]
   },
   optimization: {

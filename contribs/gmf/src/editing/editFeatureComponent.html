@@ -15,27 +15,27 @@
       ng-model="efCtrl.createActive">
       <span ng-switch="::efCtrl.geomType">
         <span ng-switch-when="Point">
-          <span class="gmf-icon gmf-icon-point"></span>
+          <%=require('gmf/icons/point.svg')%>
           {{'Draw new point' | translate}}
         </span>
         <span ng-switch-when="MultiPoint">
-          <span class="gmf-icon gmf-icon-point"></span>
+          <%=require('gmf/icons/point.svg')%>
           {{'Draw new point' | translate}}
         </span>
         <span ng-switch-when="LineString">
-          <span class="gmf-icon gmf-icon-line"></span>
+          <%=require('gmf/icons/line.svg')%>
           {{'Draw new linestring' | translate}}
         </span>
         <span ng-switch-when="MultiLineString">
-          <span class="gmf-icon gmf-icon-line"></span>
+          <%=require('gmf/icons/line.svg')%>
           {{'Draw new linestring' | translate}}
         </span>
         <span ng-switch-when="Polygon">
-          <span class="gmf-icon gmf-icon-polygon"></span>
+          <%=require('gmf/icons/polygon.svg')%>
           {{'Draw new polygon' | translate}}
         </span>
         <span ng-switch-when="MultiPolygon">
-          <span class="gmf-icon gmf-icon-polygon"></span>
+          <%=require('gmf/icons/polygon.svg')%>
           {{'Draw new polygon' | translate}}
         </span>
       </span>

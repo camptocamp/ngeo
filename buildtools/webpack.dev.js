@@ -2,12 +2,12 @@ const webpack = require('webpack');
 
 
 const resourcesRule = {
-  test: /\.(jpeg|png|svg|ico|cur|eot|ttf|woff|woff2)$/,
+  test: /\.(jpeg|png|ico|cur|eot|ttf|woff|woff2)$/,
   use: {
     loader: 'file-loader',
     options: {
-      name: 'build/[path][name].[ext]'
-    }
+      name: '[name].[ext]'
+    },
   }
 };
 

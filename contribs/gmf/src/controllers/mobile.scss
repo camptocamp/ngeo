@@ -11,10 +11,8 @@ $border-color: black !default;
 @import "~bootstrap/scss/_variables.scss";
 @import "~font-awesome/scss/_variables.scss";
 
-@import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
 @import '~gmf/sass/map.scss';
-@import '~gmf/sass/icons.scss';
 @import '~gmf/sass/input-range.scss';
 @import '~gmf/sass/fullscreenpopup.scss';
 @import '~gmf/sass/iphone.scss';
@@ -22,6 +20,8 @@ $border-color: black !default;
 @import '~gmf/search/mobile.scss';
 
 @import '~gmf/layertree/mobile.scss';
+
+@import "~font-awesome/scss/font-awesome.scss";
 
 /**
  * Mobile specific css only !

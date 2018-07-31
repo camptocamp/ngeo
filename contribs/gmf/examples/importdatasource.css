@@ -1,18 +1,3 @@
-/**
- * Fonts definition
- */
-@font-face {
-  font-family: "gmf-icons";
-  src: url("~gmf/fonts/gmf-icons.eot");
-  src: url("~gmf/fonts/gmf-icons.eot?#iefix") format("embedded-opentype"),
-       url("~gmf/fonts/gmf-icons.woff") format("woff"),
-       url("~gmf/fonts/gmf-icons.ttf") format("truetype"),
-       url("~gmf/fonts/gmf-icons.svg#gmf-icons") format("svg");
-  font-weight: normal;
-  font-style: normal;
-}
-
-
 /* CSS stolen from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ */
 span.twitter-typeahead .tt-menu {
   position: absolute;
