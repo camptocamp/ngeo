@@ -34,4 +34,4 @@ exports.normalizeURL = function(url) {
  * https://mapproxy.org/docs/nightly/labeling.html
  * @type {number}
  */
-exports.GUTTER_HACK = 128;
+exports.GUTTER_HACK = 64;
