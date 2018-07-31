@@ -3,6 +3,7 @@ goog.module('ngeo.offline.component');
 const ngeoBase = goog.require('ngeo');
 const ngeoMapFeatureOverlayMgr = goog.require('ngeo.map.FeatureOverlayMgr');
 const ngeoMessageModalComponent = goog.require('ngeo.message.modalComponent');
+const ngeoUtils = goog.require('ngeo.utils');
 goog.require('ol.Collection');
 goog.require('ol.Observable');
 goog.require('ol.Feature');
@@ -531,18 +532,18 @@ exports.Controller = class {
   }
 
   /**
+   * A polygon on the whole extent of the projection, with a hole for the offline extent.
    * @param {ol.Extent} extent
-   * @return {ol.geom.Polygon} Polygon to save, based on the center of the map and the extentSize property.
+   * @return {ol.geom.Polygon} Polygon to save, based on the projection extent, the center of the map and
+   *     the extentSize property.
    * @private
    */
   createPolygonFromExtent_(extent) {
-    return new ol.geom.Polygon([[
-      [extent[0], extent[1]],
-      [extent[0], extent[3]],
-      [extent[2], extent[3]],
-      [extent[2], extent[1]],
-      [extent[0], extent[1]]
-    ]], ol.geom.GeometryLayout.XY);
+    const projExtent = this.map.getView().getProjection().getExtent();
+    return new ol.geom.Polygon([
+      ngeoUtils.extentToRectangle(projExtent),
+      ngeoUtils.extentToRectangle(extent),
+    ], ol.geom.GeometryLayout.XY);
   }
 
   /**
