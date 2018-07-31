@@ -1,6 +1,7 @@
 goog.provide('ngeo.utils');
 
 goog.require('ol.events.condition');
+goog.require('ol.extent');
 goog.require('ol.geom.LineString');
 goog.require('ol.geom.MultiPoint');
 goog.require('ol.geom.MultiLineString');
@@ -48,6 +49,21 @@ ngeo.utils.isSafari = function() {
  */
 ngeo.utils.colorZeroPadding = function(hex) {
   return hex.length == 1 ? `0${hex}` : hex;
+};
+
+/**
+ * Takes an ol.Extent and return an Array of ol.Coordinate representing a rectangle polygon.
+ * @param {ol.Extent} extent The extent.
+ * @return {Array.<ol.Coordinate>} The Array of coordinate of the rectangle.
+ */
+ngeo.utils.extentToRectangle = function(extent) {
+  return [
+    ol.extent.getTopLeft(extent),
+    ol.extent.getTopRight(extent),
+    ol.extent.getBottomRight(extent),
+    ol.extent.getBottomLeft(extent),
+    ol.extent.getTopLeft(extent),
+  ];
 };
 
 /**
