@@ -9,11 +9,13 @@ gmf-search {
   z-index: @content-index;
 
   & > * {
-    display: inline-block;
+    display: block;
+    float: left;
     vertical-align: top;
   }
 
   .gmf-search {
+    margin-right: @half-app-margin;
     background-color: @map-tools-bg-color;
     height: @map-tools-size;
     position: relative;
