@@ -37,6 +37,7 @@ const SerDes = class {
     obj['minZoom'] = tilegrid.getMinZoom();
     obj['origin'] = tilegrid.getOrigin(0); // hack
     obj['resolutions'] = tilegrid.getResolutions();
+    obj['tileSize'] = tilegrid.getTileSize(tilegrid.getMinZoom());
     return JSON.stringify(obj);
   }
 

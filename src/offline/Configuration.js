@@ -195,12 +195,12 @@ exports = class extends ol.Observable {
   }
 
   /**
-   * @private
+   * @protected
    * @param {ol.source.Source} source
    * @param {ol.proj.Projection} projection
    * @return {ol.source.Source}
    */
-  sourceImageWMSToTileWMS_(source, projection) {
+  sourceImageWMSToTileWMS(source, projection) {
     if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
       const tileGrid = ol.tilegrid.getForProjection(source.getProjection() || projection);
       source = new ol.source.TileWMS({
@@ -231,7 +231,7 @@ exports = class extends ol.Observable {
       if (layer instanceof ol.layer.Layer) {
         const extentByZoom = this.getExtentByZoom(map, layer, ancestors, userExtent);
         const projection = ol.proj.get(map.getView().getProjection());
-        const source = this.sourceImageWMSToTileWMS_(layer.getSource(), projection);
+        const source = this.sourceImageWMSToTileWMS(layer.getSource(), projection);
         let layerType;
         let layerSerialization;
         if (layer instanceof ol.layer.Tile || layer instanceof ol.layer.Image) {
