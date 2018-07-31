@@ -202,8 +202,9 @@ exports = class extends ol.Observable {
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
-      const tileGrid = ol.tilegrid.getForProjection(source.getProjection() || projection);
+      const tileGrid = ol.tilegrid.createForProjection(source.getProjection() || projection, 42, 256);
       source = new ol.source.TileWMS({
+        gutter: utils.GUTTER_HACK,
         url: source.getUrl(),
         tileGrid: tileGrid,
         attributions: source.getAttributions(),

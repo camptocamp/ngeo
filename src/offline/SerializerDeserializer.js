@@ -7,6 +7,8 @@ goog.require('ol.source.TileWMS');
 goog.require('ol.source.WMTS');
 goog.require('ol.layer.Tile');
 
+const utils = goog.require('ngeo.offline.utils');
+
 
 const SerDes = class {
   /**
@@ -110,6 +112,7 @@ const SerDes = class {
     if (options['tileGrid']) {
       options['tileGrid'] = this.deserializeTilegrid(options['tileGrid']);
     }
+    options['gutter'] = utils.GUTTER_HACK;
     return new ol.source.TileWMS(options);
   }
 
