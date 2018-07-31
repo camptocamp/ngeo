@@ -23,6 +23,7 @@
     "compile-catalog": "buildtools/compile-catalog.js"
   },
   "devDependencies": {
+    "@babel/polyfill": "7.0.0-beta.55",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.45.0",
     "angular": "1.7.0",

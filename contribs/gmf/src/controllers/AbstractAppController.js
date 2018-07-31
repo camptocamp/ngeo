@@ -1,6 +1,7 @@
 /**
  * @module gmf.controllers.AbstractAppController
  */
+import '@babel/polyfill';
 import 'jquery';
 import 'angular';
 import 'angular-gettext';
