@@ -20,6 +20,7 @@ import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowCompone
 import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoPolyfill from 'ngeo/polyfill.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
@@ -50,6 +51,8 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @export
  */
 const exports = function(config, $scope, $injector) {
+
+  ngeoPolyfill.fill();
 
   /**
    * Location service
