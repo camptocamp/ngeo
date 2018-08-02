@@ -163,6 +163,7 @@
         gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
       </gmf-authentication>
     </nav>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
