@@ -28,8 +28,9 @@ exports = class extends ol.Observable {
    * @ngInject
    * @param {!angular.Scope} $rootScope The rootScope provider.
    * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
+   * @param {number} ngeoOfflineGutter
    */
-  constructor($rootScope, ngeoBackgroundLayerMgr) {
+  constructor($rootScope, ngeoBackgroundLayerMgr, ngeoOfflineGutter) {
     super();
     localforage.config({
       'name': 'ngeoOfflineStorage',
@@ -68,7 +69,13 @@ exports = class extends ol.Observable {
      * @private
      * @type {ngeo.offline.SerializerDeserializer}
      */
-    this.serDes_ = new SerializerDeserializer();
+    this.serDes_ = new SerializerDeserializer({gutter: ngeoOfflineGutter});
+
+    /**
+     * @private
+     * @type {number}
+     */
+    this.gutter_ = ngeoOfflineGutter;
   }
 
   /**
@@ -204,7 +211,7 @@ exports = class extends ol.Observable {
     if (source instanceof ol.source.ImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
       const tileGrid = ol.tilegrid.createForProjection(source.getProjection() || projection, 42, 256);
       source = new ol.source.TileWMS({
-        gutter: utils.GUTTER_HACK,
+        gutter: this.gutter_,
         url: source.getUrl(),
         tileGrid: tileGrid,
         attributions: source.getAttributions(),

@@ -27,11 +27,3 @@ exports.normalizeURL = function(url) {
   const matches = url.match(extractor);
   return matches[1];
 };
-
-/**
- * Openlayers does not expose the gutter property of the TileWMS source. So a value is hardcoded here.
- * This property triggers downloading of larger WMS tiles to avoid some edge effects. See
- * https://mapproxy.org/docs/nightly/labeling.html
- * @type {number}
- */
-exports.GUTTER_HACK = 64;

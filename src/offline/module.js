@@ -21,3 +21,4 @@ exports = angular.module('ngeoOfflineModule', [
   restorer.module.name,
   mode.module.name
 ]);
+exports.value('ngeoOfflineGutter', 96);
