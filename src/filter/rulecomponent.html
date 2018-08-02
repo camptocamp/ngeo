@@ -46,24 +46,24 @@
           ng-switch-when="geometry">
         <div ng-switch="$ctrl.geomType">
           <span
-              class="gmf-icon gmf-icon-point"
               ng-switch-when="Point">
+          <%=require('gmf/icons/point.svg')%>
           </span>
           <span
-              class="gmf-icon gmf-icon-line"
               ng-switch-when="LineString">
+          <%=require('gmf/icons/line.svg')%>
           </span>
           <span
-              class="gmf-icon gmf-icon-polygon"
               ng-switch-when="Polygon">
+          <%=require('gmf/icons/polygon.svg')%>
           </span>
           <span
-              class="gmf-icon gmf-icon-circle"
               ng-switch-when="Circle">
+          <%=require('gmf/icons/circle.svg')%>
           </span>
           <span
-              class="gmf-icon gmf-icon-rectangle"
               ng-switch-when="Rectangle">
+          <%=require('gmf/icons/rectangle.svg')%>
           </span>
         </div>
         <ngeo-drawfeature
@@ -83,7 +83,7 @@
                 ng-show="['intersects', 'within'].indexOf($ctrl.clone.operator) !== -1"
                 ng-class="{active: dfCtrl.drawPoint.active}"
                 ng-model="dfCtrl.drawPoint.active">
-                <span class="gmf-icon gmf-icon-point"></span>
+                <%=require('gmf/icons/point.svg')%>
               </a>
               <a
                 data-toggle="tooltip"
@@ -95,7 +95,7 @@
                 ng-show="['intersects', 'within'].indexOf($ctrl.clone.operator) !== -1"
                 ng-class="{active: dfCtrl.measureLength.active}"
                 ng-model="dfCtrl.measureLength.active">
-                <span class="gmf-icon gmf-icon-line"></span>
+                <%=require('gmf/icons/line.svg')%>
               </a>
               <a
                 data-toggle="tooltip"
@@ -106,7 +106,7 @@
                 class="btn btn-sm btn-default ngeo-drawfeature-polygon"
                 ng-class="{active: dfCtrl.measureArea.active}"
                 ng-model="dfCtrl.measureArea.active">
-                <span class="gmf-icon gmf-icon-polygon"></span>
+                <%=require('gmf/icons/polygon.svg')%>
               </a>
               <a
                 data-toggle="tooltip"
@@ -117,7 +117,7 @@
                 class="btn btn-sm btn-default ngeo-drawfeature-circle"
                 ng-class="{active: dfCtrl.measureAzimut.active}"
                 ng-model="dfCtrl.measureAzimut.active">
-                <span class="gmf-icon gmf-icon-circle"></span>
+                <%=require('gmf/icons/circle.svg')%>
               </a>
               <a
                 data-toggle="tooltip"
@@ -128,7 +128,7 @@
                 class="btn btn-sm btn-default ngeo-drawfeature-rectangle"
                 ng-class="{active: dfCtrl.drawRectangle.active}"
                 ng-model="dfCtrl.drawRectangle.active">
-                <span class="gmf-icon gmf-icon-rectangle"></span>
+                <%=require('gmf/icons/rectangle.svg')%>
               </a>
           </div>
 

@@ -13,7 +13,7 @@
     class="btn btn-default ngeo-drawfeature-point"
     ng-class="{active: dfCtrl.drawPoint.active}"
     ng-model="dfCtrl.drawPoint.active">
-    <span class="gmf-icon gmf-icon-point"></span>
+    <%=require('gmf/icons/point.svg')%>
   </a>
   <a
     data-toggle="tooltip"
@@ -24,7 +24,7 @@
     class="btn btn-default ngeo-drawfeature-linestring"
     ng-class="{active: dfCtrl.measureLength.active}"
     ng-model="dfCtrl.measureLength.active">
-    <span class="gmf-icon gmf-icon-line"></span>
+    <%=require('gmf/icons/line.svg')%>
   </a>
   <a
     data-toggle="tooltip"
@@ -35,7 +35,7 @@
     class="btn btn-default ngeo-drawfeature-polygon"
     ng-class="{active: dfCtrl.measureArea.active}"
     ng-model="dfCtrl.measureArea.active">
-    <span class="gmf-icon gmf-icon-polygon"></span>
+    <%=require('gmf/icons/polygon.svg')%>
   </a>
   <a
     data-toggle="tooltip"
@@ -46,7 +46,7 @@
     class="btn btn-default ngeo-drawfeature-circle"
     ng-class="{active: dfCtrl.measureAzimut.active}"
     ng-model="dfCtrl.measureAzimut.active">
-    <span class="gmf-icon gmf-icon-circle"></span>
+    <%=require('gmf/icons/circle.svg')%>
   </a>
   <a
     data-toggle="tooltip"
@@ -57,7 +57,7 @@
     class="btn btn-default ngeo-drawfeature-rectangle"
     ng-class="{active: dfCtrl.drawRectangle.active}"
     ng-model="dfCtrl.drawRectangle.active">
-    <span class="gmf-icon gmf-icon-rectangle"></span>
+    <%=require('gmf/icons/rectangle.svg')%>
   </a>
   <a
     data-toggle="tooltip"
@@ -68,7 +68,7 @@
     class="btn btn-default ngeo-drawfeature-text"
     ng-class="{active: dfCtrl.drawText.active}"
     ng-model="dfCtrl.drawText.active">
-    <span class="gmf-icon gmf-icon-text"></span>
+    <%=require('gmf/icons/text.svg')%>
   </a>
 </ngeo-drawfeature>
 

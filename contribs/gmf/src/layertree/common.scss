@@ -26,6 +26,7 @@
 
   a {
     color: $color;
+    fill: $color;
     display: inline;
     line-height: inherit;
     padding-left: 0;
@@ -46,8 +47,8 @@
   }
 
   .gmf-layertree-state {
-    font-family: gmf-icons;
     color: $color;
+    fill: $color;
   }
 
   .off,
@@ -72,8 +73,14 @@
   }
 
   .gmf-layertree-group {
-    .gmf-layertree-state::after {
-      content: "\e600";
+    .gmf-layertree-state.gmf-intermediate {
+      display: none;
+    }
+    &.indeterminate .gmf-layertree-state.gmf-not-intermediate {
+      display: none;
+    }
+    &.indeterminate .gmf-layertree-state.gmf-intermediate {
+      display: inline;
     }
     .gmf-layertree-layer-icon {
       display: none;
@@ -85,20 +92,9 @@
         color: black;
       }
     }
-
-    &.indeterminate .gmf-layertree-state::after {
-      content: "\e900";
-    }
   }
 
   .gmf-layertree-layer-icon {
-    &.gmf-layertree-no-layer-icon::after {
-      font-family: gmf-icons;
-      content: "\e907";
-      width: 100%;
-      text-align: center;
-    }
-
     width: 1.25rem;
     padding: 0;
     display: flex;

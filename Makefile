@@ -400,19 +400,6 @@ contribs/gmf/build/gmf-%.json: \
 	mkdir -p $(dir $@)
 	node buildtools/compile-catalog $(filter-out .build/node_modules.timestamp, $^) > $@
 
-.PHONY: generate-gmf-fonts
-generate-gmf-fonts: contribs/gmf/src/fonts/gmf-icons.ttf contribs/gmf/src/fonts/gmf-icons.eot contribs/gmf/src/fonts/gmf-icons.woff
-
-contribs/gmf/src/fonts/gmf-icons.ttf: contribs/gmf/src/fonts/gmf-icons.svg .build/node_modules.timestamp
-	node_modules/svg2ttf/svg2ttf.js $< $@
-
-contribs/gmf/src/fonts/gmf-icons.eot: contribs/gmf/src/fonts/gmf-icons.ttf .build/node_modules.timestamp
-	node_modules/ttf2eot/ttf2eot.js $< $@
-
-contribs/gmf/src/fonts/gmf-icons.woff: contribs/gmf/src/fonts/gmf-icons.ttf .build/node_modules.timestamp
-	node_modules/ttf2woff/ttf2woff.js $< $@
-
-# clean
 
 .PHONY: clean
 clean:
@@ -431,9 +418,6 @@ clean:
 	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
 	rm -f $(ANGULAR_LOCALES_FILES)
-	rm -f contribs/gmf/src/fonts/gmf-icons.eot
-	rm -f contribs/gmf/src/fonts/gmf-icons.ttf
-	rm -f contribs/gmf/src/fonts/gmf-icons.woff
 
 .PHONY: cleanall
 cleanall: clean

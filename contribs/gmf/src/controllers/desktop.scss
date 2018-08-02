@@ -24,13 +24,14 @@ $border-color: darken($brand-primary, $standard-variation) !default;
 @import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
 @import '~gmf/sass/map.scss';
-@import '~gmf/sass/icons.scss';
 @import '~gmf/sass/input-range.scss';
 @import '~gmf/sass/popover.scss';
 @import '~gmf/sass/datepicker.scss';
 @import '~gmf/sass/fullscreenpopup.scss';
 
 @import '~gmf/layertree/desktop.scss';
+
+@import "~font-awesome/scss/font-awesome.scss";
 
 html, body {
   position: relative;

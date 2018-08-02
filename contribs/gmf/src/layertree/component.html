@@ -30,21 +30,41 @@
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    ng-if="::!layertreeCtrl.node.children" ng-class="::{'gmf-layertree-no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}"
-    class="gmf-layertree-layer-icon">
-
+    ng-if="::!layertreeCtrl.node.children && gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)"
+    class="gmf-layertree-layer-icon"
+  >
     <img
       ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
       ng-src="{{::legendIconUrl}}">
     </img>
   </a>
+  <a
+    href
+    ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
+    ng-if="::!layertreeCtrl.node.children && !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)"
+    class="gmf-layertree-layer-icon gmf-layertree-no-layer-icon"
+  ><%=require('gmf/icons/dot.svg')%></a>
+
+  </a>
 
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    ng-if="::layertreeCtrl.node.children"
-    ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'gmf-layertree-state' : 'fa-refresh fa-spin']">
-  </a>
+    ng-if="layertreeCtrl.node.children && layertreeCtrl.layer.loading"
+    class="fa fa-fw fa-refresh fa-spin"
+  ></a>
+  <a
+    href
+    ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
+    ng-if="layertreeCtrl.node.children && !layertreeCtrl.layer.loading"
+    class="gmf-layertree-state gmf-not-intermediate"
+  ><%=require('gmf/icons/stack.svg')%></a>
+  <a
+    href
+    ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
+    ng-if="layertreeCtrl.node.children && !layertreeCtrl.layer.loading"
+    class="gmf-layertree-state gmf-intermediate"
+  ><%=require('gmf/icons/stack-indeterminate.svg')%></a>
 
   <a
     href
@@ -57,13 +77,13 @@
     {{layertreeCtrl.node.name | translate}}
 
     <i
-      class="gmf-icon gmf-icon-search-go gmf-layertree-zoom"
+      class="gmf-layertree-zoom"
       data-toggle="tooltip"
       data-placement="bottom"
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
-      ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'">
-    </i>
+      ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"
+    ><%=require('gmf/icons/search-go.svg')%></i>
 
     <span
       ngeo-popover

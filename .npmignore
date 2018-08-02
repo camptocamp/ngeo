@@ -1,9 +1,6 @@
 /karma-conf.js
 /lingua.cfg
 /Makefile
-/ngeo_deploy_key
-/TODO.md
-/npm.mk
 /secrets.tar
 /secrets.tar.enc
 /test/
