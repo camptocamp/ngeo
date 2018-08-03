@@ -95,7 +95,7 @@
     "openlayers": "https://api.github.com/repos/openlayers/openlayers/tarball/f284b95cb897b3ce1b49b985b58ebe1ca76be1fe",
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",
-    "popper.js": "1.14.3",
+    "popper.js": "1.14.4",
     "proj4": "2.4.4",
     "raven-js": "3.26.4",
     "svg-inline-loader": "0.8.0",
