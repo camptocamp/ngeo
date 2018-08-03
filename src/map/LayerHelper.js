@@ -73,11 +73,12 @@ exports.REFRESH_PARAM = 'random';
  * @param {string=} opt_time time parameter for layer queryable by time/periode
  * @param {Object.<string, string>=} opt_params WMS parameters.
  * @param {string=} opt_crossOrigin crossOrigin.
+ * @param {Object=} opt_customOptions Some initial options.
  * @return {ol.layer.Image} WMS Layer.
  * @export
  */
 exports.prototype.createBasicWMSLayer = function(sourceURL,
-  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin) {
+  sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin, opt_customOptions) {
 
   const params = {
     'FORMAT': sourceFormat,
@@ -92,12 +93,13 @@ exports.prototype.createBasicWMSLayer = function(sourceURL,
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
     olServerType = opt_serverType.replace('qgisserver', 'qgis');
   }
-  const source = new olSourceImageWMS({
+  const options = Object.assign({}, opt_customOptions, {
     url: sourceURL,
     params: params,
     serverType: olServerType,
     crossOrigin: opt_crossOrigin
   });
+  const source = new olSourceImageWMS(options);
   if (opt_params) {
     source.updateParams(opt_params);
   }
@@ -156,11 +158,12 @@ exports.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {string} layerName The name of the layer.
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
+ * @param {Object=} opt_customOptions Some initial options.
  * @return {angular.$q.Promise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
  *     no layer else.
  * @export
  */
-exports.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions) {
+exports.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions) {
   const parser = new olFormatWMTSCapabilities();
   const layer = new olLayerTile({
     preload: this.tilesPreloadingLimit_
@@ -173,12 +176,11 @@ exports.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, l
       result = parser.read(response.data);
     }
     if (result) {
-      const options = optionsFromCapabilities(result, {
+      const options = Object.assign({}, opt_customOptions, optionsFromCapabilities(result, {
         matrixSet: opt_matrixSet,
         crossOrigin: 'anonymous',
         layer: layerName
-      });
-      googAsserts.assert(options);
+      }));
       const source = new olSourceWMTS(/** @type {olx.source.WMTSOptions} */ (options));
       if (opt_dimensions && !olObj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
