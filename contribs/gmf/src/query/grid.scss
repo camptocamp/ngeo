@@ -8,6 +8,8 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
   border-top: solid 0.06rem black;
   background-color: white;
   height: $grid-height;
+  position: fixed;
+  width: 100%;
 
   .ngeo-grid-table-container {
     height: $table-height;

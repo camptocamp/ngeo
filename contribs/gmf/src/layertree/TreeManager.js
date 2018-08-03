@@ -407,7 +407,7 @@ exports.prototype.notifyCantAddGroups_ = function(groups) {
   const names = [];
   const gettextCatalog = this.gettextCatalog_;
   groups.forEach((group) => {
-    names.push(group.name);
+    names.push(gettextCatalog.getString(group.name));
   });
   const msg = (names.length < 2) ?
     gettextCatalog.getString('group is already loaded.') :

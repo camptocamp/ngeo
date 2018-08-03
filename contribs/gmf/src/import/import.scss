@@ -9,6 +9,9 @@ gmf-importdatasource {
   .gmf-importdatasource-url-form-group {
     background-color: #fff;
   }
+  .btn.has-error {
+    color: $danger;
+  }
 }
 
 gmf-wmscapabilitylayertreenode,

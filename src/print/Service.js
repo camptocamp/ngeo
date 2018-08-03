@@ -238,19 +238,19 @@ exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const url = source.getUrl();
   if (url !== undefined) {
     this.encodeWmsLayer_(
-      arr, layer.getOpacity(), url, source.getParams());
+      arr, layer, url, source.getParams());
   }
 };
 
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {number} opacity Opacity of the layer.
+ * @param {ol.layer.Image} layer The layer.
  * @param {string} url Url of the WMS server.
  * @param {Object} params Url parameters
  * @private
  */
-exports.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
+exports.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
   if (url.startsWith('//')) {
     url = window.location.protocol + url;
   }
@@ -280,7 +280,7 @@ exports.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
     customParams: customParams,
     serverType: params['SERVERTYPE'],
     type: 'wms',
-    opacity: opacity,
+    opacity: this.getOpacityOrInherited_(layer),
     version: params['VERSION'],
     useNativeAngle: this.printNativeAngle_,
   });
@@ -360,7 +360,7 @@ exports.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
     layer: source.getLayer(),
     matrices: matrices,
     matrixSet: source.getMatrixSet(),
-    opacity: layer.getOpacity(),
+    opacity: this.getOpacityOrInherited_(layer),
     requestEncoding: source.getRequestEncoding(),
     style: source.getStyle(),
     type: 'WMTS',
@@ -383,7 +383,7 @@ exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   googAsserts.assertInstanceof(source, olSourceTileWMS);
 
   this.encodeWmsLayer_(
-    arr, layer.getOpacity(), source.getUrls()[0], source.getParams());
+    arr, layer, source.getUrls()[0], source.getParams());
 };
 
 
@@ -399,6 +399,18 @@ exports.prototype.getWmtsUrl_ = function(source) {
   return exports.getAbsoluteUrl_(urls[0]);
 };
 
+/**
+ * Return an opacity value for the specified layer.
+ * @param {ol.layer.Base} layer Layer.
+ * @returns {number} opacity Opacity value.
+ * @private
+ */
+exports.prototype.getOpacityOrInherited_ = function(layer) {
+  if (layer.get('inheritedOpacity') !== undefined) {
+    return layer.get('inheritedOpacity');
+  }
+  return layer.getOpacity();
+};
 
 /**
  * Send a create report request to the MapFish Print service.

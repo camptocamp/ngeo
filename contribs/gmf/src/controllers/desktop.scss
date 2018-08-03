@@ -554,6 +554,13 @@ gmf-featurestyle {
   right: $app-margin;
 }
 
+/** ngeo-displayquery-window */
+main div.ngeo-displaywindow {
+  top: $topbar-height + 2 * $app-margin + 2 * $map-tools-size;
+  left: $nav-width + $app-margin;
+  right: inherit
+}
+
 /** Disclaimer */
 $bgselector-image-size: 3.00rem;
 .gmf-app-map-messages {

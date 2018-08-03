@@ -99,6 +99,12 @@ const exports = function(opt_options) {
    */
   exports.LegacyProperties_ = (options.propertiesType !== undefined) && options.propertiesType;
 
+  /**
+   * @type {Object.<string, function(ol.Feature)>}
+   * @private
+   */
+  this.defaultValues_ = options.defaultValues !== undefined ? options.defaultValues : {};
+
 };
 
 olBase.inherits(exports, olFormatTextFeature);
@@ -1061,6 +1067,8 @@ exports.prototype.readFeatureFromText = function(text, opt_options) {
  */
 exports.prototype.readFeaturesFromText = function(text, opt_options) {
   googAsserts.assert(text[0] === 'F');
+  this.prevX_ = 0;
+  this.prevY_ = 0;
   /** @type {Array.<ol.Feature>} */
   const features = [];
   text = text.substring(1);
@@ -1072,6 +1080,16 @@ exports.prototype.readFeaturesFromText = function(text, opt_options) {
     features.push(feature);
     text = text.substring(index + 1);
   }
+
+  // set default values
+  features.forEach((feature) => {
+    for (const key in this.defaultValues_) {
+      const property = exports.LegacyProperties_[key];
+      if (feature.get(property) === undefined) {
+        feature.set(property, this.defaultValues_[key].call(null, feature));
+      }
+    }
+  });
   return features;
 };
 
@@ -1087,8 +1105,6 @@ exports.prototype.readFeaturesFromText = function(text, opt_options) {
 exports.prototype.readGeometryFromText = function(text, opt_options) {
   const geometryReader = exports.GEOMETRY_READERS_[text[0]];
   googAsserts.assert(geometryReader !== undefined);
-  this.prevX_ = 0;
-  this.prevY_ = 0;
   return geometryReader.call(this, text);
 };
 
@@ -1176,6 +1192,8 @@ exports.prototype.writeFeatureText = function(feature, opt_options) {
  * @override
  */
 exports.prototype.writeFeaturesText = function(features, opt_options) {
+  this.prevX_ = 0;
+  this.prevY_ = 0;
   const textArray = [];
   if (features.length > 0) {
     textArray.push('F');
@@ -1201,8 +1219,6 @@ exports.prototype.writeGeometryText = function(geometry, opt_options) {
   googAsserts.assert(geometryWriter !== undefined);
   const transformedGeometry = /** @type {ol.geom.Geometry} */
       (olFormatFeature.transformWithOptions(geometry, true, opt_options));
-  this.prevX_ = 0;
-  this.prevY_ = 0;
   return geometryWriter.call(this, transformedGeometry);
 };
 

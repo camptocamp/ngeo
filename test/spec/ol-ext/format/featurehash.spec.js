@@ -247,7 +247,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('features decoding', () => {
 
       it('correctly decodes features', () => {
-        const features = fhFormat.readFeatures('Fp(__)l(..__)');
+        const features = fhFormat.readFeatures('Fp(__)l(--__)');
         expect(features.length).toBe(2);
         let feature, geometry, coordinates;
         feature = features[0];
@@ -445,7 +445,7 @@ describe('ngeo.format.FeatureHash', () => {
         });
         const features = [pointFeature, lineStringFeature];
         const result = fhFormat.writeFeatures(features);
-        expect(result).toBe('Fp(__~foo*foo\'bar*bar)l(..__~foo*foo\'bar*bar)');
+        expect(result).toBe('Fp(__~foo*foo\'bar*bar)l(--__~foo*foo\'bar*bar)');
       });
     });
 

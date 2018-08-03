@@ -15,6 +15,7 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
 import * as olBase from 'ol/index.js';
+import {isEmpty} from 'ol/extent.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatGPX from 'ol/format/GPX.js';
@@ -464,33 +465,48 @@ const exports = class {
 
   /**
    * @param {!File} file File.
+   * @param {function(boolean):*?} opt_callback Callback called with true if the file is loaded and added.
+   *     Otherwise with false.
    * @export
    */
-  createAndAddDataSourceFromFile(file) {
+  createAndAddDataSourceFromFile(file, opt_callback) {
     this.getFileDataSource_(file).then(
       (dataSource) => {
+        let success = true;
         const fileGroup = this.fileGroup_;
 
-        // (1) No need to do anything if the file has already been added...
-        if (fileGroup.dataSources.includes(dataSource)) {
-          return;
+        // Look if the extent is valid (and so at least one geometry)
+        if (isEmpty(dataSource.extent)) {
+          success = false;
+
+        } else {
+          // (1) No need to do anything if the file has already been added...
+          if (fileGroup.dataSources.includes(dataSource)) {
+            return;
+          }
+
+          // (2) Okay, we need to add this data source. First, add its layer  to the map.
+          this.addLayer_(dataSource.layer);
+
+          // (3) Add it to the file group
+          fileGroup.addDataSource(dataSource);
+
+          // (4) Recenter the map view onto its extent if there is at least one geometry (and so a valid extent)
+          this.map_.getView().fit(dataSource.extent);
+
+          // (5) Finally, add it to the ngeo collection
+          this.dataSources_.push(dataSource);
         }
-
-        // (2) Okay, we need to add this data source. First, add its layer
-        //     to the map.
-        this.addLayer_(dataSource.layer);
-
-        // (3) Add it to the file group
-        fileGroup.addDataSource(dataSource);
-
-        // (4) Recenter the map view onto its extent
-        this.map_.getView().fit(dataSource.extent);
-
-        // (5) Finally, add it to the ngeo collection
-        this.dataSources_.push(dataSource);
+        // Call the callback.
+        if (opt_callback) {
+          opt_callback(success);
+        }
       },
       (rejections) => {
-        googAsserts.fail(`Failed to load file: ${file.name}`);
+        console.error(`Failed to load file: ${file.name}`);
+        if (opt_callback) {
+          opt_callback(false);
+        }
       }
     );
   }

@@ -39,8 +39,17 @@ a {
   padding: $padding-small-vertical $padding-small-horizontal;
 }
 
+.input-sm, select.input-sm {
+  height: inherit;
+  line-height: inherit;
+}
+
 i, cite, em, var, address, dfn {
   font-style: italic;
+}
+
+.small {
+  font-size: 90%;
 }
 
 // removes the margin at the bottom of a form-group

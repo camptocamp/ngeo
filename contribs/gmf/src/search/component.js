@@ -732,14 +732,12 @@ exports.SearchController_ = class {
       prepare: (query, settings) => {
         const url = settings.url;
         const lang = gettextCatalog.currentLanguage;
-        const interfaceName = 'mobile'; // FIXME dynamic interfaces
         settings.xhrFields = {
           withCredentials: true
         };
         settings.url = olUri.appendParams(url, {
           'query': query,
           'lang': lang,
-          'interface': interfaceName
         });
         return settings;
       }
@@ -842,13 +840,19 @@ exports.SearchController_ = class {
       if (fillStyle) {
         fillStyle.setColor(fillColor);
       }
-      const image = style.getImage();
-      if (image) {
-        style.setImage(new olStyleCircle({
-          fill: new olStyleFill({color: fillColor}),
-          radius: 5,
-          stroke: new olStyleStroke({color: strokeColor})
-        }));
+      // the image style can't be changed in place, the colors are updated on a clone.
+      let imageStyle = style.getImage();
+      if (imageStyle) {
+        imageStyle = imageStyle.clone();
+        const imageStrokeStyle = imageStyle.getStroke();
+        if (imageStrokeStyle) {
+          imageStrokeStyle.setColor(strokeColor);
+        }
+        const imageFillStyle = imageStyle.getFill();
+        if (imageFillStyle) {
+          imageFillStyle.setColor(fillColor);
+        }
+        style.setImage(imageStyle);
       }
     }
     return style;
