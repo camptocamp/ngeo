@@ -290,6 +290,7 @@ exports.Controller_ = class {
    * @export
    */
   browse() {
+    this.hasError = false;
     this.element_.find('input[type=file][name=file]').click();
   }
 
@@ -338,7 +339,11 @@ exports.Controller_ = class {
    */
   load() {
     const file = googAsserts.assert(this.file);
-    this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file);
+    this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file, (success) => {
+      if (!success) {
+        this.hasError = true;
+      }
+    });
   }
 
   /**

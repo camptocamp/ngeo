@@ -559,7 +559,7 @@ const exports = function(config, $scope, $injector) {
    * @type {?string}
    * @export
    */
-  this.displaywindowHeight = null;
+  this.displaywindowHeight = '50vh';
 
   /**
    * @type {boolean}
@@ -583,7 +583,7 @@ const exports = function(config, $scope, $injector) {
    * @type {?string}
    * @export
    */
-  this.displaywindowWidth = null;
+  this.displaywindowWidth = '50vw';
 };
 
 

@@ -53,10 +53,9 @@ before_script:
 script:
 # Lint
 - make lint
-- make check-examples-checker
-# Unit tests
-- make test
 - make spell
+- make check-examples-checker
+- make test
 # Webpack build of ngeo/gmf examples and gmf apps
 - if [ "${TRAVIS_PULL_REQUEST}" = false ]; then export NODE_ENV=production; fi
 - make examples-hosted

@@ -180,6 +180,8 @@ exports.Controller_ = class {
     this.desktop = this.desktop !== false;
     this.draggableContainment = this.draggableContainment || 'document';
     this.open = this.open === true;
+    this.height = this.height || '240px';
+    this.width = this.width || '240px';
 
     this.draggable = this.draggable !== undefined ?
       this.draggable : this.desktop;
@@ -226,8 +228,8 @@ exports.Controller_ = class {
    */
   get style() {
     return {
-      'height': this.height || '240px',
-      'width': this.width || '240px'
+      'height': this.height,
+      'width': this.width
     };
   }
 
@@ -246,10 +248,8 @@ exports.Controller_ = class {
    */
   clear_() {
     this.content = null;
-    this.height = null;
     this.title = null;
     this.url = null;
-    this.width = null;
   }
 };
 

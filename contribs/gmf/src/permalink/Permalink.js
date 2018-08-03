@@ -58,6 +58,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
@@ -65,7 +66,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @ngdoc service
  * @ngname gmfPermalink
  */
-const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeoEventHelper,
+const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
   ngeoStateManager, ngeoLocation) {
 
   /**
@@ -330,6 +331,12 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, ngeo
       'showMeasure': ngeoFormatFeatureProperties.SHOW_MEASURE,
       'strokeColor': ngeoFormatFeatureProperties.COLOR,
       'strokeWidth': ngeoFormatFeatureProperties.STROKE
+    },
+    defaultValues: {
+      'name': feature => gettextCatalog.getString(feature.getGeometry().getType()),
+      'fillOpacity': () => 0.5,
+      'showLabel': () => false,
+      'showMeasure': () => false
     }
   });
 

@@ -5,20 +5,20 @@ $displayquerywindow-detailed-header-height: 3.12rem;
 $displayquerywindow-detailed-details-line-height: 1.25rem;
 $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-details-line-height;
 
-.gmf-displayquerywindow {
+div.gmf-displayquerywindow {
   .details {
     display: none;
   }
-  .animation-container {
-    // height with 2em: 1em per text (title, subtitle)
-    height: 4 * $app-margin + $half-app-margin + $map-tools-size + 1.25rem;
-  }
 }
 
-.ngeo-displaywindow {
+div.ngeo-displaywindow {
+  margin: 0 auto;
   .animation-container {
     height: 100%;
     width: 100%;
+  }
+  .details.iframe {
+    overflow: hidden;
   }
 }
 
@@ -27,9 +27,7 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
   left: initial;
   bottom: $app-margin;
   width: $displayquerywindow-tablet-width;
-  max-width: $displayquerywindow-tablet-width;
   margin-left: -$displayquerywindow-tablet-width / 2;
-  max-height: 10 * $map-tools-size;
   position: fixed;
   z-index: $above-all;
   .collapse-button {
@@ -208,8 +206,11 @@ $displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-de
       height: calc(100% - ($map-tools-size + $app-margin));
     }
 
-    .animation-container-detailed {
-      height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
+    .animation-container {
+      height: $map-tools-size * 2;
+      &.animation-container-detailed {
+        height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
+      }
     }
   }
 }
