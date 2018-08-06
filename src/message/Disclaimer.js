@@ -7,7 +7,7 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import * as olBase from 'ol/index.js';
-import 'font-awesome/scss/font-awesome.scss';
+import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 
 /**
  * Provides methods to display any sort of messages, disclaimers, errors,

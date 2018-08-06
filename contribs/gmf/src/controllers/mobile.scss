@@ -9,7 +9,7 @@ $border-color: black !default;
 
 @import "~bootstrap/scss/_functions.scss";
 @import "~bootstrap/scss/_variables.scss";
-@import "~font-awesome/scss/_variables.scss";
+@import "~@fortawesome/fontawesome-free/scss/_variables.scss";
 
 @import '~gmf/sass/base.scss';
 @import '~gmf/sass/map.scss';
@@ -21,7 +21,7 @@ $border-color: black !default;
 
 @import '~gmf/layertree/mobile.scss';
 
-@import "~font-awesome/scss/font-awesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
 /**
  * Mobile specific css only !

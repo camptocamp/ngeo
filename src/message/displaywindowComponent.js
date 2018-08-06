@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-import 'font-awesome/scss/font-awesome.scss';
+import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
 import 'jquery-ui/ui/widgets/resizable.js';
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'angular-sanitize';
