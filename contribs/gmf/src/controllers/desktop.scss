@@ -19,7 +19,7 @@ $border-color: darken($brand-primary, $standard-variation) !default;
 
 @import "~bootstrap/scss/_functions.scss";
 @import "~bootstrap/scss/_variables.scss";
-@import "~font-awesome/scss/_variables.scss";
+@import "~@fortawesome/fontawesome-free/scss/_variables.scss";
 
 @import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
@@ -31,7 +31,7 @@ $border-color: darken($brand-primary, $standard-variation) !default;
 
 @import '~gmf/layertree/desktop.scss';
 
-@import "~font-awesome/scss/font-awesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
 html, body {
   position: relative;

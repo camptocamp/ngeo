@@ -33,7 +33,7 @@ gmf-search {
     opacity: 0.5;
     &::after {
       position: absolute;
-      content: $fa-var-close;
+      content: $fa-var-times;
       color: $map-tools-color;
       font-family: FontAwesome;
       font-size: 1.25rem;

@@ -38,7 +38,7 @@ $border-radius-base: 2px !default;
 $border-radius-small: 1px !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;
 
-$fa-font-path: "~font-awesome/fonts";
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 
 // Bootstrap 3 compatibility layer
 $gray-base: #000 !default;
