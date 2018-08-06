@@ -70,7 +70,7 @@
     "html-webpack-include-assets-plugin": "1.0.4",
     "html-webpack-plugin": "3.2.0",
     "istanbul-instrumenter-loader": "3.0.1",
-    "jasmine-core": "2.99.0",
+    "jasmine-core": "3.1.0",
     "jquery": "3.3.1",
     "jquery-datetimepicker": "2.5.20",
     "jquery-mousewheel": "3.1.13",
