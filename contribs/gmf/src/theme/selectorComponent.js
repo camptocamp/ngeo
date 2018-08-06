@@ -52,7 +52,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * Example:
  *
- *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+ *      <a href class="btn btn-block btn-primary" data-toggle="dropdown">
  *          <span class="fa fa-grid"></span>
  *          <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
  *            <span translate>Theme:</span>
@@ -75,7 +75,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * Example in 'add' mode:
  *
- *      <a href class="btn btn-default btn-block btn-primary" data-toggle="dropdown">
+ *      <a href class="btn btn-block btn-primary" data-toggle="dropdown">
  *          <span class="fa fa-grid"></span>
  *          <span translate>Themes</span>
  *          <span class="caret"></span>
