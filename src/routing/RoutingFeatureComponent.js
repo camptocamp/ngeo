@@ -16,7 +16,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+import 'ngeo/sass/font.scss';
 
 
 /**

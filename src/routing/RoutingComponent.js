@@ -16,7 +16,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import * as olProj from 'ol/proj.js';
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+import 'ngeo/sass/font.scss';
 
 exports.module = angular.module('ngeoRoutingComponent', [
   ngeoMiscDebounce.name,
