@@ -27,7 +27,6 @@ gmf-search {
   }
   .gmf-clear-button {
     position: absolute;
-    top: $half-app-margin;
     right: $app-margin;
     height: $map-tools-size;
     opacity: 0.5;
@@ -128,7 +127,7 @@ gmf-search {
         font-family: FontAwesome;
         color: $color;
         position: absolute;
-        font-size: 1.25rem;
+        font-size: 0.9rem;
         top: $half-app-margin;
         left: $app-margin;
       }

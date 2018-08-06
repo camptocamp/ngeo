@@ -12,7 +12,7 @@ $nav-bg: white !default;
 $color: #555 !default;
 $color-light: lighten($color, $standard-variation);
 $nav-header-bg: darken($nav-bg, 50%) !default;
-$link-color: hsl(hue($brand-primary), 40%, 60%) !default;
+$link-color: hsl(hue($brand-primary), 25%, 50%) !default;
 $map-tools-size: 2rem !default;
 $map-tools-bg-color: white !default;
 $map-tools-color: black !default;
@@ -34,17 +34,22 @@ $above-all: 9999;
 
 $nav-width: 20rem !default;
 
-$border-radius-base: 2px !default;
-$border-radius-small: 1px !default;
+$border-radius-base: 0 !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;
 
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts" !default;
 
 // Bootstrap 3 compatibility layer
+$border-radius: $border-radius-base !default;
+$border-radius-lg: $border-radius-base !default;
+$border-radius-sm: $border-radius-base !default;
+$font-size-base: 0.8rem !default;
+$input-btn-padding-y: 0.25rem !default;
+$input-btn-padding-x: 0.5rem !default;
 $gray-base: #000 !default;
 $gray-dark: lighten($gray-base, 20%) !default;   // #333
 $padding-small-vertical: 0.36rem !default;
 $padding-small-horizontal: 0.72rem !default;
-$input-height-base: 1.5rem !default;
+$input-height-base: 1.88rem !default;
 $btn-default-border: #ccc !default;
 $text-color: $gray-dark !default;
