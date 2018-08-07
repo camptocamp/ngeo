@@ -91,7 +91,7 @@
     "moment": "2.22.2",
     "node-sass": "4.9.2",
     "node-sass-importer": "1.0.0",
-    "ol-cesium": "2.0.0",
+    "ol-cesium": "2.2.0",
     "openlayers": "https://api.github.com/repos/openlayers/openlayers/tarball/f284b95cb897b3ce1b49b985b58ebe1ca76be1fe",
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",
