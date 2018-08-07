@@ -8,7 +8,7 @@ import * as olHas from 'ol/has.js';
 
 import 'floatthead';
 import 'angular-float-thead';
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss';
+import 'ngeo/sass/font.scss';
 
 
 /**

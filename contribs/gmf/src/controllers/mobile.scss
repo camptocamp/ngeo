@@ -11,6 +11,7 @@ $border-color: black !default;
 @import "~bootstrap/scss/_variables.scss";
 @import "~@fortawesome/fontawesome-free/scss/_variables.scss";
 
+@import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
 @import '~gmf/sass/map.scss';
 @import '~gmf/sass/input-range.scss';
@@ -21,7 +22,6 @@ $border-color: black !default;
 
 @import '~gmf/layertree/mobile.scss';
 
-@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
 /**
  * Mobile specific css only !
