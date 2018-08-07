@@ -193,6 +193,9 @@ const exports = class extends olEventsEventTarget {
    * @private
    */
   setUser_(respData, emitEvent) {
+    for (const key in this.user_) {
+      this.user_[key] = null;
+    }
     for (const key in respData) {
       this.user_[key] = respData[key];
     }
