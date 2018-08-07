@@ -4,7 +4,7 @@
 .gmf-time-slider {
 
   // 1.75rem come from bootstrap popover class .popover-content { padding: 0.56rem 0.87rem; }
-  min-width: calc($popover-max-width - 1.75rem);
+  min-width: calc(#{$popover-max-width} - 1.75rem);
 
   .ui-widget-content {
     border: none;

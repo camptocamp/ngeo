@@ -84,5 +84,5 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
 }
 
 .gmf-query-grid-active main {
-  height: calc(100% - $grid-height);
+  height: calc(100% - #{$grid-height});
 }

@@ -1,7 +1,7 @@
 @import '~gmf/sass/vars.scss';
 @import "~gmf/sass/typeahead.scss";
 
-$search-results-max-height: calc(100vh - 6 * $app-margin);
+$search-results-max-height: calc(100vh - 6 * #{$app-margin});
 
 gmf-search {
   top: $app-margin;

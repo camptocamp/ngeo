@@ -11,10 +11,10 @@ $search-width: 8 * $map-tools-size !default;
 $padding-base-vertical: 0.31rem !default;
 $padding-base-horizontal: 0.62rem !default;
 $form-group-margin-bottom: 0.62rem !default;
-$search-results-max-height: calc(100vh - $topbar-height + $map-tools-size + (2 * $app-margin)) !default;
 
 @import '~gmf/sass/vars_only.scss';
 
+$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
 
 @import "~bootstrap/scss/_functions.scss";
@@ -579,7 +579,7 @@ $bgselector-image-size: 3.00rem;
 .gmf-app-map-messages {
   position: absolute;
   vertical-align: bottom;
-  left: calc(2 * $app-margin + $bgselector-image-size + 2 * $padding-small-vertical);
+  left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
 }
 
 
