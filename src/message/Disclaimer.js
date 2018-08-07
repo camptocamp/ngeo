@@ -132,7 +132,7 @@ exports.prototype.showMessage = function(message) {
 
   } else {
     // display the message using a boostrap dismissible alert
-    const classNames = ['alert', 'fade', 'alert-dismissible'];
+    const classNames = ['alert', 'fade', 'alert-dismissible', 'show'];
     switch (type) {
       case ngeoMessageMessage.Type.ERROR:
         classNames.push('alert-danger');

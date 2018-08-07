@@ -92,7 +92,7 @@ exports.prototype.showMessage = function(message) {
   const type = message.type;
   googAsserts.assertString(type, 'Type should be set.');
 
-  const classNames = ['alert', 'fade'];
+  const classNames = ['alert', 'fade', 'show'];
   switch (type) {
     case ngeoMessageMessage.Type.ERROR:
       classNames.push('alert-danger');
