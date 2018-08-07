@@ -39,7 +39,8 @@ describe('gmf.authentication.Service', () => {
       gmfAuthentication, 'ready', (evt) => {
         event = evt;
         spy();
-      });
+      }
+    );
 
     $httpBackend.when('GET', isLoggedInUrl).respond({});
 
