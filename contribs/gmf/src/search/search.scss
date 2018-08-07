@@ -1,7 +1,7 @@
 @import '~gmf/sass/vars.scss';
 @import "~gmf/sass/typeahead.scss";
 
-$search-results-max-height: calc(100vh - 6 * $app-margin);
+$search-results-max-height: calc(100vh - 6 * #{$app-margin});
 
 gmf-search {
   top: $app-margin;
@@ -27,7 +27,6 @@ gmf-search {
   }
   .gmf-clear-button {
     position: absolute;
-    top: $half-app-margin;
     right: $app-margin;
     height: $map-tools-size;
     opacity: 0.5;
@@ -128,7 +127,7 @@ gmf-search {
         font-family: FontAwesome;
         color: $color;
         position: absolute;
-        font-size: 1.25rem;
+        font-size: 0.9rem;
         top: $half-app-margin;
         left: $app-margin;
       }

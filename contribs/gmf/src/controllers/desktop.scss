@@ -2,19 +2,19 @@
  * Entry point for all styles required for the desktop application.
  */
 
-$map-tools-size: 1.88rem !default;
-$button-size: 2.50rem !default;
+$map-tools-size: 1.9rem !default;
+$button-size: 2.5rem !default;
 $left-panel-width: 20rem !default;
-$right-panel-width: 17.50rem !default;
-$topbar-height: 2.81rem !default;
+$right-panel-width: 17.5rem !default;
+$topbar-height: 2.8rem !default;
 $search-width: 8 * $map-tools-size !default;
 $padding-base-vertical: 0.31rem !default;
 $padding-base-horizontal: 0.62rem !default;
 $form-group-margin-bottom: 0.62rem !default;
-$search-results-max-height: calc(100vh - $topbar-height + $map-tools-size + (2 * $app-margin)) !default;
 
 @import '~gmf/sass/vars_only.scss';
 
+$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
 
 @import "~bootstrap/scss/_functions.scss";
@@ -42,7 +42,6 @@ html, body {
 
 body {
   padding-top: $topbar-height;
-  font-size: 0.8rem;
 }
 
 header {
@@ -68,6 +67,16 @@ main {
   height: 100%;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAAAAABzHgM7AAAAAnRSTlMAAHaTzTgAAAARSURBVHgBY3iKBFEAOp/+MgB+UQnYeBZPWAAAAABJRU5ErkJggg==');
   overflow: hidden;
+}
+
+.dropdown-menu > li > a {
+  color: $color;
+  padding: $input-btn-padding-y $input-btn-padding-x;
+  display: block;
+  &:hover {
+    text-decoration: none;
+    background-color: $onhover-color;
+  }
 }
 
 $footer-height: $input-height-base + 2 * $padding-base-vertical;
@@ -115,7 +124,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     button.gmf-app-map-info {
       position: absolute;
       /* button is supposed to be .btn-sm */
-      bottom: $footer-height - 1;
+      bottom: $footer-height;
       border-top-left-radius: $border-radius-base;
       border-top-right-radius: $border-radius-base;
       border-bottom-left-radius: 0;
@@ -246,7 +255,7 @@ gmf-backgroundlayerselector {
 $theme-selector-columns: 2;
 .gmf-theme-selector li {
   float: left;
-  width: calc((100% - $theme-selector-columns * 2 * $half-app-margin) / $theme-selector-columns);
+  width: calc((100% - #{$theme-selector-columns} * 2 * #{$half-app-margin}) / #{$theme-selector-columns});
 }
 .gmf-backgroundlayerselector {
   margin-bottom: 0;
@@ -539,13 +548,18 @@ gmf-featurestyle {
   left: $app-margin;
 
   button {
+    background-color: $map-tools-bg-color;
     padding: $padding-small-vertical;
+    &::after {
+      display: none !important;
+    }
   }
 
   button,
   gmf-backgroundlayerselector {
     box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.175);
   }
+
 }
 
 .gmf-displayquerywindow {
@@ -565,7 +579,7 @@ $bgselector-image-size: 3.00rem;
 .gmf-app-map-messages {
   position: absolute;
   vertical-align: bottom;
-  left: calc(2 * $app-margin + $bgselector-image-size + 2 * $padding-small-vertical);
+  left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
 }
 
 

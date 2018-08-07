@@ -203,7 +203,7 @@ div.ngeo-displaywindow {
       font-size: 1.31rem;
     }
     .slide-animation {
-      height: calc(100% - ($map-tools-size + $app-margin));
+      height: calc(100% - (#{$map-tools-size} + #{$app-margin}));
     }
 
     .animation-container {
@@ -226,12 +226,12 @@ div.ngeo-displaywindow {
     /** prevent glitch for swipe animation **/
     .details table {
       .details-key {
-        min-width: calc(30vw - 2 * $app-margin);
-        max-width: calc(30vw - 2 * $app-margin);
+        min-width: calc(30vw - 2 * #{$app-margin});
+        max-width: calc(30vw - 2 * #{$app-margin});
       }
       .details-value {
-        min-width: calc(70vw - 2 * $app-margin);
-        max-width: calc(70vw - 2 * $app-margin);
+        min-width: calc(70vw - 2 * #{$app-margin});
+        max-width: calc(70vw - 2 * #{$app-margin});
       }
     }
   }

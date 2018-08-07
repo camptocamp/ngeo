@@ -204,7 +204,7 @@ nav.gmf-mobile-nav-right {
 
   .gmf-mobile-nav-slide {
     position: fixed;
-    height: calc(100% - $nav-bar-height);
+    height: calc(100% - #{$nav-bar-height});
     width: $nav-width;
     transform: translateX(100%);
     transition: transform $duration, opacity $duration;

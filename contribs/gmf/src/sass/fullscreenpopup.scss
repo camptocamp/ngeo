@@ -6,10 +6,10 @@
     top: 0;
     left: auto;
     right: auto;
-    max-width: calc(100vw - 2 * $app-margin);
-    width: calc(100vw - 2 * $app-margin);
-    height: calc(100vh - 2 * $app-margin);
-    max-height: calc(100vh - 2 * $app-margin);
+    max-width: calc(100vw - 2 * #{$app-margin});
+    width: calc(100vw - 2 * #{$app-margin});
+    height: calc(100vh - 2 * #{$app-margin});
+    max-height: calc(100vh - 2 * #{$app-margin});
     margin: $app-margin;
     /* Like bootstrap modal border-radius */
     border-radius: 0.37rem;
@@ -41,14 +41,14 @@
       position: fixed;
       top: $fullscreenpopup-tablet-top;
       left: $nav-width;
-      max-width: calc(100vw - (2 * $nav-width + 2 * $app-margin));
+      max-width: calc(100vw - (2 * #{$nav-width} + 2 * #{$app-margin}));
       width: $fullscreenpopup-tablet-width;
-      max-height: calc(100vh - ($fullscreenpopup-tablet-top + $app-margin));
+      max-height: calc(100vh - (#{$fullscreenpopup-tablet-top} + #{$app-margin}));
       height: $fullscreenpopup-tablet-width + $map-tools-size;
     }
     .popover-content {
       overflow: auto;
-      height: calc(100% - 4 * $app-margin);
+      height: calc(100% - 4 * #{$app-margin});
     }
   }
 }

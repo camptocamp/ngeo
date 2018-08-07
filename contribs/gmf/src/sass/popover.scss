@@ -28,7 +28,7 @@ $popover-text-color : $color-light;
 
       i {
         margin-right: $half-app-margin;
-        max-width: calc($popover-icon-max-width - $half-app-margin);
+        max-width: calc(#{$popover-icon-max-width} - #{$half-app-margin});
       }
 
       span {
@@ -42,7 +42,7 @@ $popover-text-color : $color-light;
       input {
         margin-left: $half-app-margin;
         display: inline-block;
-        max-width: calc($popover-action-max-width - $half-app-margin);
+        max-width: calc(#{$popover-action-max-width} - #{$half-app-margin});
         /* fix issue with IE11 not sizing correctly the popover box */
         padding: 0;
       }

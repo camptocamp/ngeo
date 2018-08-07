@@ -1,9 +1,8 @@
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts" !default;
+
 $brand-primary: #94ac9a !default;
 $brand-secondary: #d3e5d7 !default;
-$primary: $brand-primary;
-$secondary: $brand-secondary;
 $font-size-small: 0.9em !default;
-
 $app-margin: 0.62rem !default;
 $half-app-margin: 0.31rem !default;
 $micro-app-margin: 0.12rem !default;
@@ -12,14 +11,16 @@ $nav-bg: white !default;
 $color: #555 !default;
 $color-light: lighten($color, $standard-variation);
 $nav-header-bg: darken($nav-bg, 50%) !default;
-$link-color: hsl(hue($brand-primary), 40%, 60%) !default;
+$link-color: hsl(hue($brand-primary), 25%, 50%) !default;
 $map-tools-size: 2rem !default;
 $map-tools-bg-color: white !default;
 $map-tools-color: black !default;
 $onhover-color: darken($nav-bg, $standard-variation) !default;
 $main-bg-color: #e2e3df !default; // grey light
 $search-width: 6 * $map-tools-size !default;
-
+$border-radius-base: 0 !default;
+$nav-width: 20rem !default;
+$input-border-focus: darken($brand-primary, $standard-variation) !default;
 
 // Z-indexes
 $below-content-index: 1;
@@ -31,20 +32,21 @@ $above-search-index: 6;
 $zindex-navbar-fixed: 7;
 $above-all: 9999;
 
-
-$nav-width: 20rem !default;
-
-$border-radius-base: 2px !default;
-$border-radius-small: 1px !default;
-$input-border-focus: darken($brand-primary, $standard-variation) !default;
-
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts" !default;
-
 // Bootstrap 3 compatibility layer
 $gray-base: #000 !default;
 $gray-dark: lighten($gray-base, 20%) !default;   // #333
 $padding-small-vertical: 0.36rem !default;
 $padding-small-horizontal: 0.72rem !default;
-$input-height-base: 1.5rem !default;
+$input-height-base: 1.88rem !default;
 $btn-default-border: #ccc !default;
 $text-color: $gray-dark !default;
+
+// Bootstrap 4 customization
+$border-radius: $border-radius-base !default;
+$border-radius-lg: $border-radius-base !default;
+$border-radius-sm: $border-radius-base !default;
+$font-size-base: 0.8rem !default;
+$input-btn-padding-y: 0.25rem !default;
+$input-btn-padding-x: 0.5rem !default;
+$primary: $brand-primary !default;
+$secondary: $brand-secondary !default;
