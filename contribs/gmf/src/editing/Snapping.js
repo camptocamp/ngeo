@@ -450,6 +450,15 @@ exports.prototype.loadAllItems_ = function() {
 
 
 /**
+ * Manually refresh all features
+ * @export
+ */
+exports.prototype.refresh = function() {
+  this.loadAllItems_();
+};
+
+
+/**
  * For a specific cache item, issue a new WFS GetFeatures request. The returned
  * features set in the item collection of features (they replace any existing
  * ones first).
