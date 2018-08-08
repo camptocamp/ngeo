@@ -160,7 +160,7 @@ test: .build/node_modules.timestamp
 
 .PHONY: test-debug
 test-debug: .build/node_modules.timestamp .build/node_modules_karma-chrome-launcher.timestamp
-	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
+	THEME=mobile ./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
 	npm install karma-chrome-launcher
