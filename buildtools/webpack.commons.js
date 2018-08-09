@@ -23,61 +23,32 @@ const babelPresets = [['env', {
   'loose': true,
 }]];
 
-const babelAnnotateUse = {
-  loader: 'babel-loader',
-  options: {
-    presets: babelPresets,
-    plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
-  }
-};
-
 const ngeoRule = {
-  test: /ngeo\/src\/.*\.js$/,
-  use: babelAnnotateUse,
+  test: /\/ngeo\/(?!node_modules\/).*\.js$/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: babelPresets,
+      plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
+    }
+  }
 };
 
-const ngeoExamplesRule = {
-  test: /ngeo\/examples\/.*\.js$/,
-  use: babelAnnotateUse,
-};
 
-const gmfAppsRule = {
-  test: /ngeo\/contribs\/gmf\/apps\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const gmfRule = {
-  test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const gmfExamplesRule = {
-  test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const olRule = {
-  test: /openlayers\/src\/.*\.js$/,
+const otherRule = {
+  test: /\/node_modules\/(?!ngeo\/|angular\/).*\.js$/,
   use: {
     loader: 'babel-loader',
     options: {
       babelrc: false,
       presets: babelPresets,
+      plugins: [
+        'babel-plugin-transform-object-rest-spread',
+        'babel-plugin-transform-es2015-spread',
+      ]
     }
   }
 };
-
-const olcsRule = {
-  test: /olcs\/.*\.js$/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      babelrc: false,
-      presets: babelPresets,
-    }
-  }
-};
-
 
 const angularRule = {
   test: require.resolve('angular'),
@@ -135,8 +106,6 @@ const config = {
   },
   module: {
     rules: [
-      olRule,
-      olcsRule,
       angularRule,
       typeaheadRule,
       cssRule,
@@ -144,10 +113,7 @@ const config = {
       htmlRule,
       svgRule,
       ngeoRule,
-      ngeoExamplesRule,
-      gmfAppsRule,
-      gmfRule,
-      gmfExamplesRule,
+      otherRule,
     ]
   },
   plugins: [
