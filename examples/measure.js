@@ -1,61 +1,59 @@
-goog.provide('app.measure');
+/**
+ * @module app.measure
+ */
+const exports = {};
 
-goog.require('ngeo.DecorateInteraction');
+import './measure.css';
+import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
+
+import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
-goog.require('ngeo.interaction.MeasureArea');
-goog.require('ngeo.interaction.MeasureAzimut');
-goog.require('ngeo.interaction.MeasureLength');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.control.ScaleLine');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Style');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Fill');
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olControlScaleLine from 'ol/control/ScaleLine.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleFill from 'ol/style/Fill.js';
+import 'angular-sanitize';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscFilters.name,
+  'ngSanitize',
+]);
 
 
 /**
- * App-specific directive wrapping the measure tools. The directive's
+ * App-specific component wrapping the measure tools. The component's
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.measuretoolsDirective = function() {
-  return {
-    restrict: 'A',
-    scope: {
-      'map': '=appMeasuretoolsMap',
-      'lang': '=appMeasuretoolsLang'
-    },
-    controller: 'AppMeasuretoolsController as ctrl',
-    bindToController: true,
-    templateUrl: 'partials/measuretools.html',
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {app.MeasuretoolsController} controller Controller.
-     */
-    link(scope, element, attrs, controller) {
-      controller.init();
-    }
-  };
+exports.measuretoolsComponent = {
+  bindings: {
+    'map': '=appMeasuretoolsMap',
+    'lang': '=appMeasuretoolsLang'
+  },
+  controller: 'AppMeasuretoolsController',
+  template: require('./partials/measuretools.html')
 };
 
-app.module.directive('appMeasuretools', app.measuretoolsDirective);
+exports.module.component('appMeasuretools', exports.measuretoolsComponent);
 
 
 /**
@@ -63,13 +61,12 @@ app.module.directive('appMeasuretools', app.measuretoolsDirective);
  * @param {angular.$compile} $compile Angular compile service.
  * @param {angular.$sce} $sce Angular sce service.
  * @param {angular.$filter} $filter Angular filter service.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  */
-app.MeasuretoolsController = function($scope, $compile, $sce,
-  $filter, ngeoDecorateInteraction) {
+exports.MeasuretoolsController = function($scope, $compile, $sce,
+  $filter, gettextCatalog) {
 
   /**
    * @type {ol.Map}
@@ -153,21 +150,21 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
   });
 
-  const style = new ol.style.Style({
-    fill: new ol.style.Fill({
+  const style = new olStyleStyle({
+    fill: new olStyleFill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
-    stroke: new ol.style.Stroke({
+    stroke: new olStyleStroke({
       color: 'rgba(0, 0, 0, 0.5)',
       lineDash: [10, 10],
       width: 2
     }),
-    image: new ol.style.Circle({
+    image: new olStyleCircle({
       radius: 5,
-      stroke: new ol.style.Stroke({
+      stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.7)'
       }),
-      fill: new ol.style.Fill({
+      fill: new olStyleFill({
         color: 'rgba(255, 255, 255, 0.2)'
       })
     })
@@ -177,33 +174,33 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
    * @type {ngeo.interaction.MeasureLength}
    * @export
    */
-  this.measureLength = new ngeo.interaction.MeasureLength($filter('ngeoUnitPrefix'), {
+  this.measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureLengthContinueMsg[0]
   });
 
   this.measureLength.setActive(false);
-  ngeoDecorateInteraction(this.measureLength);
+  ngeoMiscDecorate.interaction(this.measureLength);
 
   /**
    * @type {ngeo.interaction.MeasureArea}
    * @export
    */
-  this.measureArea = new ngeo.interaction.MeasureArea($filter('ngeoUnitPrefix'), {
+  this.measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
     continueMsg: measureAreaContinueMsg[0]
   });
 
   this.measureArea.setActive(false);
-  ngeoDecorateInteraction(this.measureArea);
+  ngeoMiscDecorate.interaction(this.measureArea);
 
   /**
    * @type {ngeo.interaction.MeasureAzimut}
    * @export
    */
-  this.measureAzimut = new ngeo.interaction.MeasureAzimut(
+  this.measureAzimut = new ngeoInteractionMeasureAzimut(
     $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
       sketchStyle: style,
       startMsg: measureStartMsg[0],
@@ -211,7 +208,7 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
     });
 
   this.measureAzimut.setActive(false);
-  ngeoDecorateInteraction(this.measureAzimut);
+  ngeoMiscDecorate.interaction(this.measureAzimut);
 
 
   // the following code shows how one can add additional information to the
@@ -223,9 +220,9 @@ app.MeasuretoolsController = function($scope, $compile, $sce,
   });
 };
 
-app.module.controller('AppMeasuretoolsController', app.MeasuretoolsController);
+exports.module.controller('AppMeasuretoolsController', exports.MeasuretoolsController);
 
-app.MeasuretoolsController.prototype.init = function() {
+exports.MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);
@@ -235,7 +232,7 @@ app.MeasuretoolsController.prototype.init = function() {
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {string}
@@ -247,20 +244,23 @@ app.MainController = function() {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [692114.718759744, 5743119.914347709],
       zoom: 15
     })
   });
 
-  this.map.addControl(new ol.control.ScaleLine());
+  this.map.addControl(new olControlScaleLine());
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

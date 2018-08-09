@@ -1,0 +1,67 @@
+<div
+  class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.group.visibilityState}}"
+>
+  <a
+    data-toggle="collapse"
+    href="#gmf-layertree-layer-group-{{::$ctrl.getGroupUid()}}"
+    aria-expanded="true"
+    class="fa gmf-layertree-expand-node fa-fw">
+  </a>
+
+  <a
+    class="fa fa-fw gmf-layertree-state"
+    href
+    ng-click="$ctrl.toggle()"
+  ><%=require('gmf/icons/stack.svg')%></a>
+
+  <a
+    class="gmf-layertree-name"
+    href
+    ng-click="$ctrl.toggle()"
+  >
+    <span>{{$ctrl.group.title | translate}}</span>
+  </a>
+
+  <span class="gmf-layertree-right-buttons">
+    <a
+      href=""
+      ng-click="$ctrl.remove()">
+      <span class="fa fa-trash"></span>
+    </a>
+  </span>
+</div>
+
+<ul
+  id="gmf-layertree-layer-group-{{::$ctrl.getGroupUid()}}"
+  class="collapse in"
+>
+  <li
+    class="gmf-layertree-node gmf-layertree-depth-2"
+    ng-class="[dataSource.visible ? 'on' : 'off']"
+    ng-repeat="dataSource in $ctrl.group.dataSources"
+  >
+    <div class="gmf-layertree-leaf">
+      <a
+        href
+        ng-click="$ctrl.toggleDataSource(dataSource)"
+        class="gmf-layertree-layer-icon gmf-layertree-no-layer-icon"
+      >
+      </a>
+      <a
+        class="gmf-layertree-name"
+        href
+        ng-click="$ctrl.toggleDataSource(dataSource)"
+      >
+        <span>{{dataSource.name | translate}}</span>
+      </a>
+
+      <span class="gmf-layertree-right-buttons">
+        <a
+          href=""
+          ng-click="$ctrl.removeDataSource(dataSource)">
+          <span class="fa fa-trash"></span>
+        </a>
+  </span>
+    </div>
+  </li>
+</ul>

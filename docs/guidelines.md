@@ -1,41 +1,36 @@
 # Development guidelines
 
-The purpose of this guideline is to help the developper to contribute in the
+The purpose of this guideline is to help the developer to contribute in the
 best way to `ngeo` and `gmf` cores.
-It will describe the golbal philosophy of `ngeo` design, and set base rules to
+It describe the golbal philosophy of `ngeo` design, and set base rules to
 apply when you want to add a new feature.
+
+You are free to read and fork this library. But you must know that we have currently no time to handle issues
+or PR from persons outside of Camptocamp customers or developers.
+
 
 ## Table of content
 
 - [Main principle](#main-principle)
-- [Google style guide](#google-style-guide)
-- [Property renaming](#property-renaming)
-- [Property renaming and directives](#property-renaming-and-directives)
-- [Directive name or attributes names in the DOM](#directive-name-or-attributes-names-in-the-dom)
-- [API documentation](#api-documentation)
-- [Custom  properties](#custom-olobject-properties)
-- [Service typing](#service-typing)
+- [Coding style guide](#coding-style-guide)
+- [Main changes in the code between ngeo 2.2 and 2.3](#main-changes-in-the-code-between-ngeo-22-and-23)
+- [AngularJS names ](#angularJS-names)
+- [Module management](#module-management)
+- [Good practices on components creation](#good-practices-on-components-creation)
 - [Limit the use of ng-controller](#limit-the-use-of-ng-controller)
-- [Use the controller-as syntax](#use-the-controller-as-syntax)
-- [Use @export for controllers](#use-export-for-controllers)
 - [Templating](#templating)
-  - [In ngeo avoid template when not needed.](#in-ngeo-avoid-template-when-not-needed)
-  - [In gmf you can use specific templates](#in-gmf-you-can-use-specific-templates)
-  - [template vs templateUrl](#template-vs-templateurl)
-  - [Template Url](#template-url)
-  - [Template caching](#template-caching)
-- [Directive scoping](#directive-scoping)
-  - [In ngeo, prefer non-isolate scopes](#in-ngeo-prefer-non-isolate-scopes)
-  - [In gmf isolate scopes are more appropriated](#in-gmf-isolate-scopes-are-more-appropriated)
-- [Avoid two-way bindings when not needed](#avoid-two-way-bindings-when-not-needed)
-  - [In templates](#in-templates)
-  - [Through directive scopes](#through-directive-scopes)
-- [Authoring examples](#authoring-examples)
-- [Usage of the closure-library](#usage-of-the-closure-library)
-  - [Use native javascript object methods instead](#use-native-javascript-object-methods-instead)
-  - [Declaring an event](#declaring-an-event)
+  - [In `ngeo` avoid template when not needed](#in-ngeo-avoid-template-when-not-needed)
+  - [Template vs templateUrl](#template-vs-templateUrl)
+  - [Template URL](#template-url)
 - [Watch your watchers!](#watch-your-watchers)
-- [Styling with less](#styling-with-less)
+- [Declaring an event](#declaring-an-event)
+- [Styling](#styling)
+  - [CSS class names convention](#css-class-names-convention)
+  - [Styling with sass](#styling-with-sass)
+- [Property renaming](#property-renaming)
+  - [Exports vs private elements](#exports-vs-private-elements)
+  - [Object typing](#object-typing)
+- [API documentation](#api-documentation)
 
 
 ## Main principle
@@ -44,8 +39,7 @@ is 100% `gmf` specific, or if the feature is generic and could be added to `ngeo
 core. You also need to check in `ngeo` core and examples if you don't find
 anything that could fit with your needs.
 
-The main principle is to put everything you can in `ngeo`, and put in `gmf` only
-what is specific.
+The main principle is to put everything you can in `ngeo`, and put in `gmf` only what is specific.
 When you develop into `gmf` contribs, you must consider that you are developing a
 client application, and try your best to extract from your code all things that
 could go into `ngeo`, and be shared with other projects.
@@ -54,665 +48,229 @@ importance to put your stuff into `ngeo` or `gmf` cores, it does.
 This point is essential to be sure `ngeo` is going in the good direction:
 maintainable, reusable, evolving.
 
-In `ngeo`, we want to have very generic code that will be shared between `gmf` and
+In `ngeo`, we want to have very generic code that is shared between `gmf` and
 other web map applications. When you add some code in `ngeo`, you need to follow
 some rules that helps the code to be easly usable and customisable.
 
-## Google style guide
+
+## Coding style guide
 
 We more or less follow the [AngularJS Style Guide for Closure Users at
-Google](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html).
+Google](https://google.github.io/styleguide/angularjs-google-style.html).
 
-## Property renaming
-
-The ngeo code is compiled with Closure Compiler in *advanced* mode. This
-means we should conform to the restrictions imposed by the compiler.
-
-In particular, Angular controllers and directives typically set properties on
-the controller instance (`this`) or on the `$scope`. These properties are then
-referenced by their names in HTML pages and templates. So it is required to
-prevent the compiler from renaming these properties.
-
-The way to do that is to add the `@export` tag when declaring a variable;
-this will tell the compiler to not rename the variable.
-For example if you need to set a property `foo` on the controller instance
-you should do as follows:
-
-```js
-/**
- * @constructor
- * @ngInject
- */
-app.MainController = function() {
-
-  /**
-   * @type {string}
-   * @export
-   */
-  this.foo = 'bar';
-  // …
-};
-```
-
-## Property renaming and directives
-
-In the definition of a directive, if an object is used for the `scope` property
-(*isolate scope*) then quotes must be used for the keys in that object. And in
-the `link` function, the `[]` notation, instead of the `.` notation, must be
-used when accessing these properties. See the example below.
-
-```js
-ngeo.exampleDirective = function(…) {
-  return {
-    restrict: 'A',
-    scope: {
-      map: '=ngeoExampleMap'
-    }
-    controller: function() {
-      let m = this['map'];
-      // Then, for Closure-Compiler, assert and type this value.
-      // …
-    },
-    controllerAs: 'ctrl',
-    // …
-  });
-```
-
-But if you bind your directive to the controller, you must
-use the `.` notation. See the example below :
-
-```js
-ngeo.exampleDirective = function(…) {
-  return {
-    restrict: 'A',
-    scope: {
-      map: '=ngeoExampleMap'
-    }
-    bindToController: true,
-    controller: function() {
-      /**
-       * This value will always be the value of 'ngeoExampleMap' and vice versa.
-       * The '@type …' and the '@export' below are only for Closure-Compiler.
-       * @type {ol.Map}
-       * @export
-       */
-      this.map;
-      // …
-    },
-    controllerAs: 'ctrl',
-    // …
-  });
-```
-
-Note also that if you use the `&` binding, you will still get a function
-instead of your ol.Map but directly in the scope of your controller.
-
-## Directive name or attributes names in the DOM
-
-The naming of a directive or the name of a directive attribute
-as represented in the DOM must follow this rule:
-`base-(platform-)directive(-attribute)`
-
-Where:
-- `Base` can be `ngeo` or a contribs prefix.
-- `platform` is optional and can be for instance `mobile` or `desktop`.
-- `directive` is the name of the directive.
-- `attribute` is the name of your attribute.
-
-So, for a *ngeo* *my example* directive, exclusif for *mobile* and with, for
-example, the existing attribute *title*, you will have a DOM like this:
-
-````html
-<ngeo-mobile-myexample
-  ngeo-mobile-myexample-title="hello">
-<ngeo-mobile-myexample>
-````
-
-And in the directive, a scope like this:
-
-```js
-ngeo.mobileMyexampleDirective = function(…) {
-  return {
-    scope: {
-      t: '=ngeoMobileMyexampleTitle'
-    },
-    // …
-  };
-};
-```
-
-## API documentation
-
-`ngeo` uses the [Angular-JSDoc](https://github.com/allenhwkim/angular-jsdoc)
-plugin in addition to JSDoc to create the API documentation.
-
-This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
-`@ngdoc` is used to define the Angular type (directive, service, controller
-or filter) and `@ngname` defines the name used to register this component.
-
-For directives the used HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
-
-The used metadata should be documented.
-
-The usage of a directive should be shown with an example.
-
-For example:
-```js
-/**
- * Description.
- *
- * Example:
- *
- *      <example />
- *
- * Used UI metadata:
- *
- *  * theMetadata: Description.
- *
- * @return {angular.Directive} The directive specs.
- * @htmlAttribute {ol.Map} ngeo-control-map The map.
- * @ngInject
- * @ngdoc directive
- * @ngname ngeoControl
- */
-ngeo.controlDirective = function() {
-  // …
-};
-ngeo.module.directive('ngeoControl', ngeo.controlDirective);
-```
+We also use ES6 coding standards.
 
 
-## Custom `ol.Object` properties
+## Main changes in the code between ngeo 2.2 and 2.3
 
-OpenLayers allows passing custom properties to classes inheriting from
-`ol.Object`. For example:
+With Webpack, some things have changed between the current ngeo 2.3 version, and the last ones.
 
-```js
-let layer = new ol.layer.Tile({
-  maxResolution: 5000,
-  title: 'A title',
-  source: new ol.source.OSM()
-});
-```
+- Functions from the goog library are no more allowed.
+- We export only one object per file. (That also means that we have split some files in multiple files).
+- We must have no more global value in the attached to the window (except in some very rare cases).
+- All AngularJS elements are now in a small module (see below in this documentation).
+- All modules import only what they need to work. No less, no more.
 
-`title` is the custom property in this example. (While `maxResolution` is an
-ol3 built-in layer property.)
 
-You can then use the `get` methods to get that property's value:
+## AngularJS names
 
-```js
-let layerTitle = layer.get('title');
-```
+Be as logical as possible.  In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
+a service in `contribs/gmf/src/sample/MyService.js`, the name must be `GmfSampleMyservice`.
 
-**But** this won't work in the case of the ngeo, or any code compiled in with
-Closure Compiler in ADVANCED mode. The compiler is indeed going to rename the
-key `title` in the options object passed to the `ol.layer.Tile` constructor.
+Don't change a name after it's chosen. Because that change the html in the code of all user of ngeo !
 
-One option to work-around the issue involves using the `set` method after
-the construction of the layer:
 
-```js
-let layer = new ol.layer.Tile({
-  maxResolution: 5000,
-  source: new ol.source.OSM()
-});
-// use `set` to set custom layer properties
-layer.set('title', 'A title');
-```
+## Module management
 
-## Service typing
+Since ngeo 2.3, every elements are grouped by functionality (there is no more gloables `directive`,
+nor `service` directories). That also means that every element provide it's own AngularJS module; we no more
+link all elements to a global `ngeo` or `gmf` module.
 
-`ngeo` defines Angular services. They're located in the `src/services`
-directory. Angular services may be of any type : objects, functions, etc.
-
-For each type we define in `ngeo` we must provide a type. This allows having
-a type for `@param` when using (injecting) an `ngeo` service in a function.
-
-If the service is a function the type will be defined using a `@typedef`.
-For example:
+That means that in every file where we want to provide something to AngularJS, we need to create an
+AngularJS module, and this module must require all modules it needs to work. And then, we declare
+AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
 /**
- * @typedef {function(ol.layer.Layer)}
+ * @module ngeo.example.Service
  */
-ngeo.DecorateLayer;
+const exports = {};
+import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
+
+/**
+ * @type {!angular.Module}
+ */
+exports.module = angular.module('ngeoExampleService', [
+  ngeoMyRequiredService.module.name
+]);
+exports.module.service('ngeoExampleService', exports);
+export default exports;
 ```
 
-If the service is an object a `@constructor` must be defined. For example:
+You can see that we stock the module in a `module` variable on the class. For Component, we prefers to stock
+the module in the value we export directly like:
 
 ```js
 /**
- * The ngeo Permalink type.
- * @constructor
- * @param {!ngeo.Location} ngeoLocation Location.
- * @param {!History} history History.
+ * @module ngeo.example.component
  */
-ngeo.Permalink = function(ngeoLocation, history) {
-  /**
-   * @type {!History}
-   * @private
-   */
-  this.history_ = history;
+const exports = {};
 
-  /**
-   * @type {!ngeo.Location}
-   * @private
-   */
-  this.uri_ = ngeoLocation;
+/**
+ * @type {angular.Module}
+ */
+exports = angular.module('ngeoExample', [...]);
+
+exports.value(...);
+exports.component(the_component);
+export default exports;
+```
+
+To be able to require a whole functionality at once, we always create a `module.js` file in each directories.
+This file always create and provide a module that require all the modules of folder.
+
+
+## Good practices on components creation
+
+ - Never create an old `directive` element, use `component` instead.
+ - Don't name your controller, in your partial, use the `$ctrl` notation instead.
+ - Don't use the `&` binding notation to have a one-time binding. In your html, use `::` instead.
+ - Don't forget to initialize your component's bindings in the $onInit function.
+ - Use a function that takes an url as argument to provide your templateUrl.
+
+Example of a component:
+
+```js
+const myComponent = {
+  bindings: {
+    'map': '<ngeoExampleMap'
+  }
+  controller: ngeoMyComponentController,
+  templateUrl: ngeoMyComponentTemplateUrl
 };
 ```
 
-And in both cases a `goog.provide` must be added for the type. For
-example:
+## `$injector` usage
 
-```js
-goog.provide('ngeo.DecorateLayer');
-```
-
-```js
-goog.provide('ngeo.Location');
-```
+`$injector` should be used only for the optional requirements.
+The only exception is for the abstract controllers (in `gmf/controleurs`) to ease upgrade.
 
 ## Limit the use of `ng-controller`
 
 Use one `ng-controller` only, the "main controller", somewhere at the root of
 the DOM tree, at the `<html>` element for example.
 
-And instead of `ng-controller` instances use application-specific directives,
-and store the directive-specific data in the directive itself. For that, use
-a directive controller, with `controller` and `bindToController`.
+And instead of `ng-controller` instances use application-specific components,
+and store the component-specific data in the component itself, within its controller.
 
-[The `permalink`
-example](https://github.com/camptocamp/ngeo/tree/master/examples/permalink.js)
-shows how to create an application-specific map directive wrapping the
-`ngeo-map` directive.
-
-The "main controller" is where we create the application's `map` instance,
-which we store in the controller itself (`this`) or in the controller's scope
-(`$scope`).
+The "main controller" is where we create the application's shared object instances
+which we store in the controller itself (`this`) or in the controller's scope (`$scope`).
 
 See [this blog
 post](http://teropa.info/blog/2014/10/24/how-ive-improved-my-angular-apps-by-banning-ng-controller.html)
 for explanations on why using many `ng-controller` instances may cause trouble.
 
-## Use the `controller as` syntax
+### In `ngeo` avoid template when not needed
 
-When `ng-controller` is used in the HTML code it is recommended to use
-the `controller as` syntax. For example:
-
-```html
-<body ng-controller="MainController as ctrl">
-  …
-  …
-  <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>
-```
-
-In this way it is clear by reading the HTML that the `drawPoint` interaction is
-defined in the `MainController`.
-
-See [this blog
-post](http://toddmotto.com/digging-into-angulars-controller-as-syntax/) for
-more details.
-
-## Use `@export` for controllers
-
-So following the
-[angularjs-google-style](http://google-styleguide.googlecode.com/svn/trunk/angularjs-google-style.html)
-controllers are written as classes, and controller functions should be defined
-on the constructor prototype.
-
-Here is an example:
+For example, if you want to create a new small component with only an action on click. It's preferable to
+avoid to have a specific template. it can be preferable to add the action on the content of your element:
 
 ```js
-/**
- * Application main controller.
- *
- * @param {!angular.Scope} $scope Scope.
- * @constructor
- * @ngInject
- * @export
- */
-app.MainController = function($scope) {
-
   /**
-   * @type {string}
-   * @export
-   */
-  this.title = 'Addition';
-
-  // …
-};
-
-
-/**
- * @param {number} a
- * @param {number} b
- * @return {number} Result.
- * @export
- */
-app.MainController.prototype.add = function(a, b) {
-   return a + b;
-};
-
-
-angular.module('MainController', app.MainController);
-```
-
-And this is the template:
-
-```html
-<div ng-controller="MainController as ctrl">
-  <h2>{{ctrl.title}}</h2>
-  <span>{{ctrl.add(2, 3)}}</span>
-</div>
-```
-
-For this to work the `title` and `add` properties must exist on the controller
-object. This is why the `app.MainController` constructor, the `add` method, and
-the `title` property, are annotated with `@export`. The `@export` annotation
-tells Closure Compiler to generate exports in the build for the annotated
-functions, and to not rename the annotated properties.
-
-Note that the compiler flags
-
-```
-"--generate_exports"
-"--export_local_property_definitions"
-```
-
-are required for the Compiler to actually take the `@export` annotations into
-account.
-
-And remember to `@export` the constructor as well! If you just export the
-method (`add` here) this is the code the compiler will generate for the export:
-
-```js
-t("app.MainController.prototype.add",cw.prototype.d)
-```
-
-`t` is actually `goog.exportSymbol` here (renamed). What this function does
-is basically the following:
-
-```js
-app = {};
-app.MainController = {};
-app.MainController.prototype = {};
-app.MainController.prototype.add = cw.prototype.d;
-```
-
-which does not help. If the constructor is `@export`'ed as well this is
-what the compiler will generate:
-
-```js
-t("app.MainController",cw);
-cw.prototype.add=cw.prototype.d;
-```
-
-which looks much better!
-
-## Templating
-
-### In `ngeo` avoid template when not needed.
-
-For example, if you want to create a new directive for a button that will have
-an action on click.
-The bad way to write it in ngeo:
-
-```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    restricted: 'E',
-    template: '<button ng-click="ctrl.doAction()" />',
-    controllerAs: 'ctrl',
-    ....
-  }
-};
-
-/**
- * @constructor
- * @ngInject
- * @export
- */
-ngeo.NgeoFoobarController = function() {
-  this.doAction = function() {console.log('Action');}
-};
-```
-
-Now the right approach:
-
-```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    restricted: 'A',
-    ....
-  }
-};
-```
-
-You can then bind the click in from the controller of your directive :
-
-```js
-/**
- * @constructor
- * @param {angular.JQLite} $element Element.
- * @ngInject
- * @export
- */
-ngeo.NgeoFoobarController = function($element) {
-  $element.on('click', function() {console.log('Action');});
-};
-```
-
-Or from the link function of your directive:
-
-```js
-link:
-  /**
-   * @param {!angular.Scope} scope Scope.
+   * Function in a controller, that injects its own element.
    * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
-   * @param {!Array.<!Object>} ctrls Controllers.
    */
-  function(scope, element, attrs, ctrls) {
+  function(element) {
     element.on('click', function() {console.log('Action');});
-};
-```
-
-In the second case, the directive has no template and is restricted to the
-attribute declaration. It will just add custom behavior to the HTML element
-it's attached to.
-Try to create directive in this perspective the more you can when you are
-in `ngeo`.
-
-This example of the `<button>` tag could be extended to the use of `<select>`
-`<options>` `<a href="">` or any other HTML tags.
-
-### In `gmf` you can use specific templates
-
-In `gmf`, if you are sure that all the UIs will use the exact same HTML view,
-you can add templates to your directives, even small templates that just define
-a button.
-
-Generally, if your widget could be in `ngeo`, you have to create a new directive
-with no template in `ngeo`, then to avoid to have too much HTML in the main
-`gmf` view, you can create a new directive in `gmf` on top of the `ngeo` one, that
-will just define a template including the `ngeo` directive.
-
-For example, the `gmf` directive `gmf-layertree` will declare a template that will
-include the `ngeo-layertree` directive.
-
-```js
-/**
- * @return {angular.Directive} The directive Definition Object.
- * @ngInject
- */
-gmf.layertreeComponent = function() {
-  return {
-    ...
-    template:
-        '<div ngeo-layertree="gmfLayertreeCtrl.tree" ' +
-        'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
-        'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(node)" ' +
-        'ngeo-layertree-templateurl="' + gmf.layertreeTemplateUrl + '"' +
-        '<div>'
   };
 ```
 
-In general, when creating a new directive in `gmf`, you must rely as much as
-possible on `ngeo` core directives. For example in the layertree, it would
-make no sense to create a new directive from scratch, you must rely on `ngeo`
-layer tree.
+It adds custom behavior to the HTML element it's attached to. that allows the integrator to bind this
+action on the element it wants (a `button`, a `select`, and so on).
+Try to create components in this perspective the more you can when you are in `ngeo`.
 
-Taking care of this point will help you to create more generic directives
-in `ngeo`.
+### Template vs templateUrl
 
-### template vs templateUrl
+The technical reason to use `templateUrl` instead of `template` is that the template doesn't support
+i18n and it can't be overridden.
 
-The only technical reason to use `templateUrl` instead of `template` is that the
-template doesn't support i18n.
-
-It's up to you to determine if the template is simple enough to be written
-inline in the directive code with the `template` attribute.
-
-If the template looks too complex, please put it in an extern file and use the
-`templateUrl` attribute to point on it. In that case, the path of the template
-file should follow the following rule:
-
-All directives templates must be stored in the sub `partials/` folder of the
-directive folder:
-- `src/directives/partials` for `ngeo` directives.
-- `contribs/gmf/src/directives/partials` for `gmf` directives.
+It's up to you to determine if the template is simple enough to be written inline in the template code with
+the `template` attribute. But it most case, please, put it in an extern file and use the `templateUrl`
+attribute to point on it. In that case, the path of the template file should follow the following rule:
 
 ### Template URL
 
-First of all the partials should be in the folder `src/directives/partials`.
-
 When we use a template URL it should be overwritten by an attribute.
-
 For that we should use this kind of code:
 
 ```js
-ngeo.module.value('ngeo<Name>TemplateUrl',
+exports.value('ngeoModuleComponentTemplateUrl',
     /**
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
+     * @return {string} Template URL.
      */
-    function(element, attrs) {
-      let templateUrl = attrs['ngeo<Name>Templateurl'];
+    function($element, $attrs) {
+      const templateUrl = $attrs['ngeoNameComponentTemplateurl'];
       return templateUrl !== undefined ? templateUrl :
-          ngeo.baseTemplateUrl + '/<name>.html';
+        'ngeo/module/component';
     });
 
-ngeo.<name>Directive = function(ngeo<Name>TemplateUrl) {
-    return {
-        templateUrl: ngeo<Name>TemplateUrl,
-        ...
+exports.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('ngeo/module/component', require('./component.html'));
+});
+
+/**
+ * @param {!angular.JQLite} $element Element.
+ * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @return {string} Template URL.
+ * @ngInject
+ */
+function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentTemplateUrl) {
+  return gmfDisplayquerywindowTemplateUrl($element, $attrs);
+}
+
+/*
+ * @ngdoc component
+ * @ngname ngeoModuleComponent
+ */
+exports.component_ = {
+  templateUrl: ngeoModuleComponentTemplateUrl
+}
+
 ```
 
-Where `<Name>` is the directive name in title case and `<name>` in lower case.
+It can be adapted for `contrib/gmf` by replacing `ngeo` by `gmf`, module by the right one, and so on.
 
-It can be adapted for `contrib/gmf` by replacing `ngeo` by `gmf`.
-
-Note that the default template of a `ngeo` directive can be overloaded in 2 ways:
+Note that the default template of a `ngeo` component can be overloaded in 2 ways:
 - Send the template url via dom attributes. This will overload the template for
-the instance of the directive that is defined in the HTML.
-- Overload the angular value `ngeo<Name>TemplateUrl`. This will have effect on
-all instances of the directive.
+  the instance of the component that is defined in the HTML.
+- Overload the angular value `ngeoModuleComponentTemplateUrl`. This will have effect on
+  all instances of the component.
 
-### Template caching
 
-External directive template files are resolved by angular with a http request
-to the path defined by the `templateUrl` attribute. In avdanced build mode, we
-don't want the application to call http requests to resolve templates, so we
-store them in the `templateCache`. Watch [AngularJs doc](https://docs.angularjs.org/api/ng/service/$templateCache).
+## Watch your watchers!
 
-Two template caches are generated during build through two different targets:
-- one for `ngeo` that will contain all template files of `ngeo` directives.
-- one for `gmf` that will contain both all template files from `ngeo` and `gmf`
-directives.
-
-Those generated files are attached to the build of `ngeo` and `gmf` distribs.
-
-For this to work in any case (examples, applications, built or not), just refer
-the `templateUrl` as a relative path to the directive. The definition of the
-variable `ngeo.baseTemplateUrl` and `gmf.baseTemplateUrl` will resolve,
-depending on the case, the correct paths.
-
-## Directive scoping
-
-### In `ngeo`, prefer non-isolate scopes
-
-When creating a "widget" directive (i.e. directive with templates/partials) it
-is usually recommended to use an *isolate* scope for the directive.
-
-In the case of `ngeo` we want to be able to override directive templates at the
-application level. And when overriding a directive's template one expects to be
-able to use properties of an application-defined scope. This is not possible if
-the template is processed in the context of an isolate scope.
-
-So this is what `ngeo` "widget" directives should look like:
+Be careful when you use isolate scope (`bindings` or `scope`) objects to pass
+variable through scope inheritance.
 
 ```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    restrict: 'A',
-    scope: true,
-    templateUrl: …
-    // …
-  };
-};
+const component = {
+  bindings: {
+    foo: '='
+  },
+  ...
 ```
 
-We still use `scope: true` so that a new, non-isolate, scope is created for the
-directive. In this way the directive will write to its own scope when adding
-new properties to the scope passed to `link` or to the directive's controller.
+A declaration like the one above with the symbol `'='` create an isolate
+scope for the component and create a two-way data bindings between the isolate scope `foo`
+property and the `$parent` scope property whose name is given in `foo` HTML attribute.
 
-Note that even with a `scope: true` definition, a directive can take benefit
-of the `bindToController` and `controllerAs` declarations.
-Even with a non-isolate scope, you can bind attributes variable to the
-directive controller (as the isolate scope does). For this, you need to use
-the `bindToController` as an object for mapping definitions:
-
-```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    restrict: 'A',
-    scope: true,
-    bindToController: {
-     prop1: '='
-    },
-    controllerAs: 'myCtrl',
-    templateUrl: …
-    // …
-  };
-};
-```
-
-Here the `prop1` property of the parent scope will be bound to the `prop1`
-property of the directive controller.
-
-### In `gmf` isolate scopes are more appropriated
-
-In `gmf`, you are pretty sure of what template you want to bind to your directive.
-Regarding this point, you are not under the constraint not to use an `isolate
-scope`.
-
-
-## Avoid two-way bindings when not needed
-
-### In templates
+It's important to note that they don't share the same reference, but both are
+watched and updated concurrently. AngularJs adds `$watchers` each time you
+have a two-way bindings pattern in your application. As mentioned before, this
+should be avoided when not needed.
 
 In angularJs, `$scope` values are mapped to HTML view through expressions.
 Add `::` at the beginning of the expression to mark it as a single evaluated
@@ -721,89 +279,18 @@ expression won't be evaluated again.
 
 See [AnguarJs doc](https://docs.angularjs.org/guide/expression#one-time-binding).
 
-### Through directive scopes
+The is the one-binding syntax:
 
-Be careful when you use isolate scope and `bindToController` objects to pass
-variable through scope inheritance.
-
-```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    scope: {
-      foo: '='
-    }
+```html
+<ngeo-bar-foo="::a_property"></ngeo-bar-foo>
 ```
 
-A declaration like the one above with the symbol `'='` will create an isolate
-scope for the directive and
-will create a two-way data bindings between the isolate scope `foo` property
-and the `$parent` scope property whose name is given in `foo` HTML attribute.
+There are other techniques to reduce the number of watchers in Angular applications. [This blog
+post](http://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)
+provides a very good overview.
 
-It's important to note that they don't share the same reference, but both are
-watched and updated concurrently. AngularJs adds `$watchers` each time you
-have a two-way bindings pattern in your application. As mentionned before, this
-should be avoided when not needed.
 
-Here the way to get a one time binding when using `scope` or `bindToController`
-as an object:
-
-```js
-/**
- * @return {angular.Directive} Directive Definition Object.
- */
-ngeo.foobarDirective = function() {
-  return {
-    scope: {
-      fooFn: '&'
-    }
-    // …
-};
-
-/**
- * @constructor
- * @param {angular.Scope} $scope The directive's scope.
- * @ngInject
- * @export
- */
-ngeo.NgeoFoobarController = function($scope) {
-  let foo = $scope['fooFn']();
-};
-```
-
-In this example we tell Angular to create a function `fooFn` that evaluates
-the expression in the context of the parent/user scope. There is no binding,
-just an expression, and we get the `foo` variable only once.
-
-Note:
-- if you need consistency, of course use the `'='` symbol.
-- if you need a one time binding to a string, use the `'&'` symbol.
-
-## Authoring examples
-
-A number of constraints must be respected when developing examples for `ngeo`.
-
-As described above the `gh-pages` make target can be used to publish the
-examples to github.io. The examples published on github.io are not compiled,
-they rely on the standalone `ngeo.js` build.
-
-Because of that the examples cannot rely on non-exported symbols or properties.
-For example they cannot use `goog` objects and they cannot use `ol` objects
-that are not part of the OpenLayers API (that is marked with `@api` in the
-OpenLayers source code).
-
-There's one exception to the rule: the examples (must) use `goog.provide` and
-`goog.require`. This is necessary for running the examples in development mode
-and for compiling them (see below). The `goog.provide` and `goog.require`
-statements are removed before publication of the examples on github.io.
-
-Even though the examples are not compiled on github.io the `check` target does
-compile them, as a verification step. This means that the examples must use
-compiler annotations and respect the constraints imposed by the compiler.
-
-### Declaring an event
+## Declaring an event
 
 When you declare an event on ol3 object, please use
 - the `ol.events.listen` function
@@ -820,56 +307,151 @@ this.geolocation_.on('change:accuracyGeometry', function() {
 This is the correct syntax:
 
 ```js
-ol.events.listen(this.geolocation_,
-  ol.Object.getChangeEventType(ol.GeolocationProperty.ACCURACY_GEOMETRY),
+import olObject from 'ol/object.js';
+import olGeolocationProperty from 'ol/GeolocationProperty.js';
+import * as olEvents from 'ol/events.js';
+
+olEvents.listen(this.geolocation_,
+  olObject.getChangeEventType(olGeolocationProperty.ACCURACY_GEOMETRY),
   function() {
     ...
   }, this);
 ```
 
-## Watch your watchers!
 
-Angular runs something called a *digest cycle*. This digest cycle is a loop
-through the application's bindings (or *watchers*) that checks if values have
-changed. The more watchers the slower the digest cycle!
+## Custom `ol.Object` properties
 
-Angular 1.3 has introduced the concept of *one-time binding*. With one-time
-binding the data is rendered once and then persisted and not affected by future
-updates to the model.
+OpenLayers allows passing custom properties to classes inheriting from
+`ol.Object`. For example:
 
-This is the one-binding syntax:
-
-```html
-<h1>{{ ::title }}</h1>
+```js
+let layer = new olLayerTile({
+  maxResolution: 5000,
+  title: 'A title',
+  source: new olSourceOSM()
+});
 ```
 
-It is important to use one-time binding when possible!
+`title` is the custom property in this example. (While `maxResolution` is an ol built-in layer property.)
+You can then use the `get` methods to get that property's value:
 
-There are other techniques to reduce the number of watchers in Angular
-applications. [This blog
-post](http://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)
-provides a very good overview.
+```js
+let layerTitle = layer.get('title');
+```
 
-ngeo [includes](../utils/watchwatchers.js) a JavaScript script that can be used
-to watch the number of watchers in an Angular application. Look at this file to
-know how to use it.
+**But** this won't work in the case of the ngeo, or any code compiled in with
+Closure Compiler in ADVANCED mode. The compiler is indeed going to rename the
+key `title` in the options object passed to the `olLayerTile` constructor.
 
-## Styling with less
+One option to work-around the issue involves using the `set` method after
+the construction of the layer:
 
-To be able to do calculations directly with less we encourage to use a subset of the CSS units.
+```js
+let layer = new olLayerTile({
+  maxResolution: 5000,
+  source: new olSourceOSM()
+});
+// use `set` to set custom layer properties
+layer.set('title', 'A title');
+```
+
+
+## Styling
+
+If your component have an associated `scss` file, add it next to the component, with the same name (for
+`mycomponent.js` file, you should have a `mycomponent.scss` file). Then, don't require it directly in your
+component, leave this to the final application.
+
+### CSS class names convention
+
+CSS class names, in both ngeo and gmf, follow a set of rules that determines their value.  A CSS class name:
+
+ * always begins with the `ngeo-` or `gmf-` prefix depending on its origin
+ * always begins with the name of the component in which it is defined, for example in a layer tree
+   component in gmf, a name starts with `gmf-layertree`, like `gmf-layertree-name`, `gmf-layertree-node`,
+   `gmf-layertree` (for the main `<div>`), etc.
+
+In the gmf applications, CSS class names should begins with `gmf-app`.
+
+In partial, you should avoid using `ìd` with a combination of `document.getElementById` because it's always
+possible to have multiple instances of your component, and so multiple identical ids ! Instead, define
+a unique CSS class name, inject the `$element` service in your controller and use Angular jqLite selector
+to get the element needed.
+
+### Styling with sass
+
+To be able to do calculations directly with sass we encourage to use a subset of the CSS units.
 We choose units that don't depend on parent tags and are relative.
 
  * rem: 1 rem is the font size of the root element (<html>).
  * vw: 1 vw is 1/100th of the width of the viewport.
  * vh: 1 vh is 1/100th of the height of the viewport.
 
-## CSS class names convention
 
-CSS class names, in both ngeo and gmf, follow a set of rules that determines their value.  A CSS class name:
+## Property renaming
 
- * always begins with the `ngeo-` or `gmf-` prefix depending on its origin
- * always begins with the name of the component in which it is defined, for example in a layer tree directive in gmf, a name starts with `gmf-layertree`, like `gmf-layertree-name`, `gmf-layertree-node`, `gmf-layertree` (for the main `<div>`), etc.
+:warning: The ngeo code **was** compiled with Closure Compiler in *advanced* mode. We don't use it anymore but we want to keep the same restrictions imposed by the compiler for now.
 
-In the gmf applications, CSS class names should begins with `gmf-app`.
+### Exports vs private elements
 
-In directive html templates, you should avoid using `ìd` with a combination of `document.getElementById`.  Instead, define a unique CSS class name, inject the `$element` service in your controller and use Angular jqLite selector to get the element needed.
+In particular, Angular controllers and components typically set properties on
+the controller instance (`this`) or on the `$scope`. These properties are then
+referenced by their names in HTML pages and templates. So it is required to
+prevent the compiler from renaming these properties.
+
+The way to do that is to add the right tag on each variable, function and class.
+ -  `@export`: this tell the compiler to not rename the element (and so it is usable in the html).
+ -  `@private`: With a final underscore (`this.my_private_variable_`) tell the compilier to rename it with a
+    name not understainable outside of the current file.
+ -  And nothing, without final underscore, if the element is used freely in the code, but never in the html.
+
+### Object typing
+
+For each custom object we define in ngeo we must provide a type for the compiler.
+You can define your owns in the `src/options/ngeox.js` or (equivalent in the contribs section).
+
+It's the same thing for objects that come from an external library, or from a server's response. In this case,
+That's an `extern` and it can be defined in the `externs/<source>.js`.
+
+Provided class or function with `@constructor` are usable as a type.
+
+Take a look to these file to know how to write your owns.
+
+
+## API documentation
+
+/!\ The doc generated by JS-DOC is not really usable for now in version 2.3. Please, read the documentation
+directly in the code or in a previous version of ngeo.
+
+`ngeo` uses the [Angular-JSDoc](https://github.com/allenhwkim/angular-jsdoc)
+plugin in addition to JSDoc to create the API documentation.
+
+This plugin provides the `@ngdoc <type>` and `@ngname <name>` tags.
+`@ngdoc` is used to define the Angular type (component, service, controller
+or filter) and `@ngname` defines the name used to register this component.
+
+For components the used HTML attributes are declared with `@htmlAttribute {<type>} <name> <description>.`.
+
+The usage of a component should be shown with an example.
+
+For example:
+```js
+/**
+ * Description.
+ *
+ * Example of implementation:
+ *
+ *      <ngeo-misc
+ *       ngeo-misc-map="ctrl.map">
+ *      </example>
+ *
+ * @htmlAttribute {ol.Map} ngeo-misc-map The map.
+ * @ngInject
+ * @ngdoc component
+ * @ngname ngeoControl
+ */
+const my_component = function() {
+  // …
+};
+exports.component('ngeoMisc', my_component);
+```

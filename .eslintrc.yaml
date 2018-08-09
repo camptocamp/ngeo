@@ -4,24 +4,15 @@ extends:
 env:
     jquery: true
     jasmine: true
+parserOptions:
+    ecmaVersion: 2017
 rules:
     no-console: 0
+    comma-dangle: 0
+    import/no-unresolved: 0
 globals:
     angular: false
     Cesium: false
-    goog: false
     google: false
-    d3: false
     Bloodhound: false
-    ol: false
-    olcs: false
-    proj4: false
-    saveAs: false
-    ngeo: false
-    gmf: false
-    app: false
-    gmfapp: false
-    inject: false
-    jsts: false
-    moment: false
     DateFormatter: false

@@ -1,35 +1,44 @@
-goog.provide('app.asitvd');
+/**
+ * @module app.asitvd
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ngeo.source.AsitVD');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
+import './asitvd.css';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+/** @type {!angular.Module} */
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name
+]);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ngeo.source.AsitVD({
+      new olLayerTile({
+        source: new ngeoSourceAsitVD({
           layer: 'asitvd.fond_couleur'
         })
       })
     ],
-    view: new ol.View({
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [250, 100, 50, 20, 10, 5, 2.5, 2, 1.5, 1, 0.5],
       center: [535000, 154000],
       zoom: 0
@@ -37,4 +46,7 @@ app.MainController = function() {
   });
 };
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,0 +1,179 @@
+
+.gmf-layertree-root-tools {
+  text-align: right;
+  padding: $micro-app-margin;
+}
+
+.gmf-layertree-node {
+  /**
+   * Style rules for treenodes in the layertree
+   */
+  margin-left: $app-margin; // left shifting (indentation)
+
+  &.gmf-layertree-depth-1 {
+    margin: 0 $micro-app-margin $app-margin $micro-app-margin;
+  }
+
+  ul {
+    ul {
+      //nested ul (i.e node groups into node groups should not add extra padding)
+      padding-right: 0;
+      li:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  a {
+    color: $color;
+    fill: $color;
+    display: inline;
+    line-height: inherit;
+    padding-left: 0;
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+
+    &.gmf-layertree-expand-node.fa {
+      color : $color-light;
+      display: inline-block;
+      &::before {
+        content: $fa-var-chevron-right;
+      }
+      &[aria-expanded="true"]::before {
+        content: $fa-var-chevron-down;
+      }
+    }
+  }
+
+  .gmf-layertree-state {
+    color: $color;
+    fill: $color;
+  }
+
+  .off,
+  .off .gmf-layertree-legend img {
+    opacity: 0.5;
+  }
+
+  .gmf-layertree-leaf,
+  .gmf-layertree-group {
+    position: relative;
+    padding: $micro-app-margin;
+    display: flex;
+
+    > * {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
+  }
+
+  .gmf-layertree-leaf .gmf-layertree-state::after {
+    content: "\e603";
+  }
+
+  .gmf-layertree-group {
+    .gmf-layertree-state.gmf-intermediate {
+      display: none;
+    }
+    &.indeterminate .gmf-layertree-state.gmf-not-intermediate {
+      display: none;
+    }
+    &.indeterminate .gmf-layertree-state.gmf-intermediate {
+      display: inline;
+    }
+    .gmf-layertree-layer-icon {
+      display: none;
+    }
+
+    &.gmf-layertree-depth-1 {
+      .gmf-layertree-name {
+        font-weight: bold;
+        color: black;
+      }
+    }
+  }
+
+  .gmf-layertree-layer-icon {
+    width: 1.25rem;
+    padding: 0;
+    display: flex;
+
+    img {
+      // don't let the legend icons images to break the layout by being too
+      // tall or too large
+      max-width: 100%;
+      max-height: 1.25rem;
+      vertical-align: initial;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .gmf-layertree-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 2;
+    padding-left: $half-app-margin;
+    padding-right: $half-app-margin;
+  }
+
+  .gmf-layertree-metadata {
+    a {
+      padding: 0;
+      &::after {
+        content: $fa-var-info;
+        display: inline;
+        font-family: FontAwesome;
+      }
+    }
+  }
+
+  .gmf-layertree-zoom {
+    display: none;
+    // leave space after text label
+    padding-left: 0.25rem;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .out-of-resolution {
+    .gmf-layertree-name {
+      font-style: italic;
+    }
+    .gmf-layertree-zoom {
+      display: inline;
+    }
+    &.gmf-layertree-leaf .gmf-layertree-state::after {
+      content: "\e604";
+    }
+  }
+
+  .gmf-layertree-legend {
+    margin: 0 $app-margin;
+    position: relative;
+    border: 0.06rem solid $main-bg-color;
+    background-color: lighten($main-bg-color, 8%);
+    a {
+      display: none;
+      position: absolute;
+      right: $half-app-margin;
+      font-size: 0.69rem;
+
+      &::before {
+        display: none;
+      }
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    p {
+      margin: 0 0 0 0.62rem;
+    }
+    img {
+      margin-bottom: 0.62rem;
+    }
+  }
+}

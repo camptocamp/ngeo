@@ -1,57 +1,63 @@
-goog.provide('app.interactionbtngroup');
+/**
+ * @module app.interactionbtngroup
+ */
+const exports = {};
 
-goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureOverlayMgr');
+import './interactionbtngroup.css';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.interaction.Draw');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+]);
 
 
 /**
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
+exports.MainController = function(ngeoFeatureOverlayMgr) {
 
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
    * @type {ol.Collection.<ol.Feature>}
    */
-  const features = new ol.Collection();
+  const features = new olCollection();
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
-  overlay.setStyle(new ol.style.Style({
-    fill: new ol.style.Fill({
+  overlay.setStyle(new olStyleStyle({
+    fill: new olStyleFill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
-    stroke: new ol.style.Stroke({
+    stroke: new olStyleStroke({
       color: '#ffcc33',
       width: 2
     }),
-    image: new ol.style.Circle({
+    image: new olStyleCircle({
       radius: 7,
-      fill: new ol.style.Fill({
+      fill: new olStyleFill({
         color: '#ffcc33'
       })
     })
@@ -61,13 +67,13 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-10997148, 4569099],
       zoom: 4
     })
@@ -82,49 +88,52 @@ app.MainController = function(ngeoDecorateInteraction, ngeoFeatureOverlayMgr) {
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawPolygon = new ol.interaction.Draw(
+  this.drawPolygon = new olInteractionDraw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'Polygon',
-      features
+      features: features
     }));
 
   const drawPolygon = this.drawPolygon;
 
   drawPolygon.setActive(false);
-  ngeoDecorateInteraction(drawPolygon);
+  ngeoMiscDecorate.interaction(drawPolygon);
   map.addInteraction(drawPolygon);
 
   /**
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawPoint = new ol.interaction.Draw(
+  this.drawPoint = new olInteractionDraw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'Point',
-      features
+      features: features
     }));
 
   const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
-  ngeoDecorateInteraction(drawPoint);
+  ngeoMiscDecorate.interaction(drawPoint);
   map.addInteraction(drawPoint);
 
   /**
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawLine = new ol.interaction.Draw(
+  this.drawLine = new olInteractionDraw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'LineString',
-      features
+      features: features
     }));
 
   const drawLine = this.drawLine;
   drawLine.setActive(false);
-  ngeoDecorateInteraction(drawLine);
+  ngeoMiscDecorate.interaction(drawLine);
   map.addInteraction(drawLine);
 
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

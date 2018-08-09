@@ -1,25 +1,32 @@
-goog.provide('app.permalink');
+/**
+ * @module app.permalink
+ */
+const exports = {};
 
-goog.require('ngeo.Debounce');
-goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.Location');
-goog.require('ngeo.format.FeatureHash');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.geom.GeometryType');
-goog.require('ol.interaction.Draw');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import './permalink.css';
+import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
+
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
+import olMap from 'ol/Map.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
-
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscDebounce.name,
+  ngeoStatemanagerModule.name,
+]);
 
 /**
  * An application-specific map component that updates the URL in the browser
@@ -31,7 +38,7 @@ app.module = angular.module('app', ['ngeo']);
  *
  * @type {!angular.Component}
  */
-app.mapComponent = {
+exports.mapComponent = {
   controller: 'AppMapController as ctrl',
   bindings: {
     'map': '=appMap'
@@ -40,16 +47,16 @@ app.mapComponent = {
 };
 
 
-app.module.component('appMap', app.mapComponent);
+exports.module.component('appMap', exports.mapComponent);
 
 
 /**
- * @param {ngeo.Location} ngeoLocation ngeo Location service.
- * @param {ngeo.Debounce} ngeoDebounce ngeo Debounce service.
+ * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
+ * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
  */
-app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
+exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   /**
    * @type {ol.Map}
    * @export
@@ -57,21 +64,21 @@ app.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.map;
 
   /**
-   * @type {ngeo.Location}
+   * @type {ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {ngeo.Debounce}
+   * @type {ngeox.miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
 };
 
-app.module.controller('AppMapController', app.MapComponentController);
+exports.module.controller('AppMapController', exports.MapComponentController);
 
-app.MapComponentController.prototype.$onInit = function() {
+exports.MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
 
   let zoom = this.ngeoLocation_.getParam('z');
@@ -94,8 +101,8 @@ app.MapComponentController.prototype.$onInit = function() {
   view.on('propertychange',
     this.ngeoDebounce_(
       /**
-           * @param {ol.ObjectEventType} e Object event.
-           */
+       * @param {ol.Object.Event} e Object event.
+       */
       (e) => {
         const center = view.getCenter();
         const params = {
@@ -112,7 +119,7 @@ app.MapComponentController.prototype.$onInit = function() {
  *
  * @type {!angular.Component}
  */
-app.drawComponent = {
+exports.drawComponent = {
   controller: 'AppDrawController as ctrl',
   bindings: {
     'map': '=appDrawMap',
@@ -126,19 +133,17 @@ app.drawComponent = {
 };
 
 
-app.module.component('appDraw', app.drawComponent);
+exports.module.component('appDraw', exports.drawComponent);
 
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {!ngeo.DecorateInteraction} ngeoDecorateInteraction Decorate
- *     interaction service.
- * @param {!ngeo.Location} ngeoLocation ngeo Location service.
+ * @param {!ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
  */
-app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLocation) {
+exports.DrawComponentController = function($scope, ngeoLocation) {
 
   /**
    * @type {ol.Map}
@@ -152,7 +157,7 @@ app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLoca
   this.layer;
 
   /**
-   * @type {!ngeo.Location}
+   * @type {!ngeo.statemanager.Location}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -170,29 +175,23 @@ app.DrawComponentController = function($scope, ngeoDecorateInteraction, ngeoLoca
   this.featureSeq_ = 0;
 
   /**
-   * @type {!ngeo.DecorateInteraction}
-   * @private
-   */
-  this.ngeoDecorateInteraction_ = ngeoDecorateInteraction;
-
-  /**
    * @type {ol.interaction.Draw}
    * @export
    */
   this.interaction;
 };
 
-app.DrawComponentController.prototype.$onInit = function() {
+exports.DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
-  this.interaction = new ol.interaction.Draw({
+  this.interaction = new olInteractionDraw({
     type: /** @type {ol.geom.GeometryType} */ ('LineString'),
     source: vectorSource
   });
 
   this.interaction.setActive(false);
   this.map.addInteraction(this.interaction);
-  this.ngeoDecorateInteraction_(this.interaction);
+  ngeoMiscDecorate.interaction(this.interaction);
 
   this.interaction.on('drawend', function(e) {
     e.feature.set('id', ++this.featureSeq_);
@@ -200,12 +199,12 @@ app.DrawComponentController.prototype.$onInit = function() {
 
   // Deal with the encoding and decoding of features in the URL.
 
-  const fhFormat = new ngeo.format.FeatureHash();
+  const fhFormat = new ngeoFormatFeatureHash();
 
   vectorSource.on('addfeature', (e) => {
     const feature = e.feature;
-    feature.setStyle(new ol.style.Style({
-      stroke: new ol.style.Stroke({
+    feature.setStyle(new olStyleStyle({
+      stroke: new olStyleStroke({
         color: [255, 0, 0, 1],
         width: 2
       })
@@ -230,40 +229,40 @@ app.DrawComponentController.prototype.$onInit = function() {
  * Clear the vector layer.
  * @export
  */
-app.DrawComponentController.prototype.clearLayer = function() {
+exports.DrawComponentController.prototype.clearLayer = function() {
   this.layer.getSource().clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };
 
-app.module.controller('AppDrawController', app.DrawComponentController);
+exports.module.controller('AppDrawController', exports.DrawComponentController);
 
 
 /**
  * @constructor
  */
-app.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ]
   });
 
 
-  const vectorSource = new ol.source.Vector();
+  const vectorSource = new olSourceVector();
 
   /**
    * @type {ol.layer.Vector}
    * @export
    */
-  this.vectorLayer = new ol.layer.Vector({
+  this.vectorLayer = new olLayerVector({
     source: vectorSource
   });
 
@@ -274,4 +273,7 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

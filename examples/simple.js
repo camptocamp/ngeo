@@ -1,34 +1,41 @@
-goog.provide('app.simple');
+/**
+ * @module app.simple
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import './simple.css';
+import olMap from 'ol/Map.js';
+
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name
+]);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -36,4 +43,7 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

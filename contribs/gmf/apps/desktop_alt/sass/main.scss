@@ -1,0 +1,22 @@
+$brand-primary: #9FB6CC;
+$brand-secondary: #D3DBE3;
+
+$theme-selector-columns: 3;
+
+@import '~gmf/controllers/desktop.scss';
+
+.gmf-theme-selector li {
+  flex-direction: column;
+}
+
+.gmf-layertree-node .gmf-layertree-legend {
+  border: none;
+  background-color: transparent;
+}
+
+div .ngeo-displaywindow {
+  $displaywindow-min-height: 15rem;
+  left: $app-margin + $left-panel-width + $displaywindow-min-height / 2;
+  right: initial;
+  top: $topbar-height + $app-margin + 3 * $map-tools-size;
+}

@@ -1,29 +1,35 @@
-goog.provide('gmfapp.themeselector');
+/**
+ * @module gmfapp.themeselector
+ */
+const exports = {};
 
+import './themeselector.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.Themes');
-/** @suppress {extraRequire} */
-goog.require('gmf.TreeManager');
-/** @suppress {extraRequire} */
-goog.require('gmf.themeselectorDirective');
+import gmfThemeModule from 'gmf/theme/module.js';
 
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfLayertreeTreeManager.module.name,
+  gmfThemeModule.name,
+]);
 
+exports.module.value('gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
-gmfapp.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @param {angular.$http} $http Angular's $http service.
- * @param {gmf.Themes} gmfThemes Themes service.
- * @param {gmf.ThemeManager} gmfThemeManager gmf Tree Manager service.
+ * @param {gmf.theme.Themes} gmfThemes Themes service.
+ * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
-gmfapp.MainController = function($http, gmfThemes, gmfThemeManager) {
+exports.MainController = function($http, gmfThemes, gmfThemeManager) {
 
   /**
    * @param {gmfThemes.GmfTheme} theme Theme.
@@ -35,7 +41,7 @@ gmfapp.MainController = function($http, gmfThemes, gmfThemeManager) {
   };
 
   /**
-   * @type {gmf.ThemeManager}
+   * @type {gmf.theme.Manager}
    * @export
    */
   this.manager = gmfThemeManager;
@@ -44,4 +50,7 @@ gmfapp.MainController = function($http, gmfThemes, gmfThemeManager) {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

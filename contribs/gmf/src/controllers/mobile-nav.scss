@@ -1,0 +1,321 @@
+/**
+ * Styles for mobile navigation menus (side menus).
+ */
+
+$duration: 0.3s;
+$nav-bar-height: $map-tools-size + $app-margin;
+$nav-back-width: 1.5 * $map-tools-size;
+$menu-item-height: $nav-bar-height;
+$back-color: darken($nav-bg, $standard-variation);
+
+main {
+  position: fixed;
+  background-color: $main-bg-color;
+  box-shadow: 0 0 $app-margin black;
+  width: 100%;
+  height: 100%;
+  z-index: $content-index;
+  text-align: center;
+
+  transform: translateZ(0);
+  transition: transform $duration;
+  will-change: transform;
+  .gmf-mobile-nav-left-is-visible & {
+    transform: translateX($nav-width);
+  }
+  .gmf-mobile-nav-right-is-visible & {
+    transform: translateX(-$nav-width);
+  }
+
+  &.dragging {
+    transition: none;
+  }
+
+  .overlay {
+    /* shadow layer visible when navigation is active */
+    position: absolute;
+    z-index: $above-search-index;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    background-color: rgba($color, .4);
+    visibility: hidden;
+    opacity: 0;
+
+    transition: opacity $duration, visibility $duration;
+    backface-visibility: hidden;
+
+    .gmf-mobile-nav-is-visible & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+.gmf-search-overlay {
+  /* shadow layer visible when search is active */
+  position: absolute;
+  z-index: $above-menus-index;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  background-color: white;
+  visibility: hidden;
+  opacity: 0;
+
+  transition: opacity $duration, visibility $duration;
+  backface-visibility: hidden;
+
+  @media (max-width: map-get($grid-breakpoints, "sm")) {
+    .gmf-search-is-active & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}
+
+$nav-bar-height: 3.12rem;
+
+.gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-right,
+.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left  {
+  display: none;
+}
+
+.gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-left,
+.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-right  {
+  visibility: visible;
+}
+
+nav.gmf-mobile-nav-left,
+nav.gmf-mobile-nav-right {
+  position: fixed;
+  top: 0;
+  width: $nav-width;
+  height: 100%;
+  background-color: $nav-bg;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  z-index: $below-content-index;
+  visibility: hidden;
+
+  header {
+    display: block;
+    height: $nav-bar-height;
+    line-height: $nav-bar-height;
+    background-color: $nav-header-bg;
+
+    .gmf-mobile-nav-go-back {
+      position: absolute;
+      left: 0;
+      z-index: 2;
+      transition: opacity 1s;
+      will-change: opacity, visibility;
+      opacity: 0;
+      visibility: hidden;
+      height: $nav-bar-height;
+      width: $nav-back-width;
+      padding-left: 1.50rem;
+      color: $back-color;
+
+      &.gmf-mobile-nav-active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      &::before, &::after {
+        transform-origin: 0.06rem 50%;
+        left: $app-margin;
+      }
+    }
+
+
+    > nav {
+      position: absolute;
+      width: $nav-width;
+      left: $nav-width;
+      transform: translateX(0);
+      transition: transform $duration, opacity $duration;
+      will-change: transform, opacity;
+      opacity: 0;
+      text-align: center;
+
+
+      &.gmf-mobile-nav-active {
+        transform: translateX(-100%);
+        opacity: 1;
+      }
+      &.gmf-mobile-nav-slide-out {
+        transform: translateX(-120%);
+        opacity: 0;
+      }
+    }
+
+    &.gmf-mobile-nav-back {
+      > nav {
+        transform: translate(-120%);
+      }
+      > nav.gmf-mobile-nav-active {
+        transform: translateX(-100%);
+      }
+      > nav.gmf-mobile-nav-slide-out {
+        transform: translateX(0);
+      }
+    }
+  }
+
+  a[data-toggle] {
+    position: relative;
+    padding-right: $map-tools-size;
+
+    &::before, &::after {
+      /* arrow goes on the right side - children navigation */
+      right: 0;
+      transform-origin: 0.56rem 50%;
+    }
+  }
+
+  .gmf-mobile-nav-go-back,
+  a[data-toggle=slide-in] {
+    &::before, &::after {
+      /* arrow icon in CSS - for element with nested unordered lists */
+      content: '';
+      position: absolute;
+      top: 50%;
+      margin-top: -0.06rem;
+      display: inline-block;
+      height: 0.12rem;
+      width: $app-margin;
+      background: $back-color;
+      backface-visibility: hidden;
+    }
+
+    &::before {
+      transform: rotate(45deg);
+    }
+    &::after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  .gmf-mobile-nav-slide {
+    position: fixed;
+    height: calc(100% - #{$nav-bar-height});
+    width: $nav-width;
+    transform: translateX(100%);
+    transition: transform $duration, opacity $duration;
+    will-change: transform, opacity;
+    opacity: 0;
+    overflow-y: auto;
+    & > * {
+      padding: $app-margin;
+      margin: 0;
+      // make it so tags like "gmf-layertree" are correctly displayed
+      //  (ie. that padding and margin correctly apply)
+      display: block;
+    }
+
+    &.gmf-mobile-nav-active {
+      transform: translateX(0%);
+      opacity: 1;
+    }
+    &.gmf-mobile-nav-slide-out {
+      transform: translateX(-20%);
+      opacity: 0;
+    }
+  }
+}
+
+// For small devices (in portrait mode) we want the navigation menus to take
+// 90% of the viewport width
+@media (max-width: map-get($grid-breakpoints, "sm")) {
+  main {
+    .gmf-mobile-nav-left-is-visible & {
+      transform: translateX(90vw);
+    }
+    .gmf-mobile-nav-right-is-visible & {
+      transform: translateX(-90vw);
+    }
+  }
+  nav.gmf-mobile-nav-left,
+  nav.gmf-mobile-nav-right {
+    width: 90vw;
+    .gmf-mobile-nav-slide {
+      width: 90vw;
+    }
+
+    header > nav {
+      width: 90vw;
+      left: 90vw;
+    }
+  }
+}
+
+.gmf-mobile-nav-left {
+  left: 0;
+  right: auto;
+}
+
+.gmf-mobile-nav-right {
+  right: 0;
+}
+
+/**
+ * Buttons to open right and left navigation menus
+ */
+.gmf-mobile-nav-trigger {
+  top: $app-margin;
+  background-color: $map-tools-bg-color;
+  color: $map-tools-color;
+  z-index: $above-search-index;
+  height: $map-tools-size;
+  border: 0.06rem solid $border-color;
+  .fa {
+    font-size: 1.25rem;
+  }
+}
+
+.gmf-mobile-nav-left-trigger {
+  left: $app-margin;
+  border-right: none;
+}
+
+.gmf-mobile-nav-right-trigger {
+  right: $app-margin;
+  border-left: none;
+}
+
+/**
+ * Buttons for tool buttons (for example measure tools)
+ */
+.gmf-mobile-nav-button {
+  display: block;
+  padding: $app-margin 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+
+//For tablet only
+@media (min-width: map-get($grid-breakpoints, "sm")) {
+  main button:hover{
+    background-color: $onhover-color;
+  }
+
+  .gmf-mobile-nav-trigger {
+    margin: 0;
+    border: solid 0.06rem $border-color;
+  }
+
+  .gmf-mobile-nav-right-trigger {
+    left: auto;
+  }
+}

@@ -1,43 +1,41 @@
-goog.provide('app.animation');
+/**
+ * @module app.animation
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.resizemapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import './animation.css';
+import olMap from 'ol/Map.js';
+
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} */
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name
+]);
 
 
 /**
- * App-specific directive wrapping the ngeo map directive. The directive's
+ * App-specific component wrapping the ngeo map component. The component's
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.mapDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appMap',
-      'class': '=appMapClass'
-    },
-    controller() {},
-    controllerAs: 'ctrl',
-    bindToController: true,
-    template: '<div ngeo-map="ctrl.map"></div>'
-  };
+exports.mapComponent = {
+  bindings: {
+    'map': '=appMap',
+    'class': '=appMapClass'
+  },
+  template: '<div ngeo-map="$ctrl.map"></div>'
 };
 
 
-app.module.directive('appMap', app.mapDirective);
+exports.module.component('appMap', exports.mapComponent);
 
 
 /**
@@ -47,18 +45,18 @@ app.module.directive('appMap', app.mapDirective);
  * @constructor
  * @ngInject
  */
-app.MainController = function($timeout) {
+exports.MainController = function($timeout) {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -82,4 +80,7 @@ app.MainController = function($timeout) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

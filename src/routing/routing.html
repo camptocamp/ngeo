@@ -1,0 +1,96 @@
+<div class="ngeo-routing">
+  <div class="ngeo-routing-start form-group">
+    <ngeo-routing-feature
+      ngeo-routing-feature-map="$ctrl.map"
+      ngeo-routing-feature-feature="$ctrl.startFeature_"
+      ngeo-routing-feature-fill-color="$ctrl.colors['start.fill']"
+      ngeo-routing-feature-stroke-color="$ctrl.colors['start.stroke']"
+      ngeo-routing-feature-on-change="$ctrl.handleChange">
+    </ngeo-routing-feature>
+  </div>
+
+    <div class="ngeo-routing-vias form-group" ng-repeat="(index, via) in $ctrl.viaArray">
+      <div class="form-inline">
+        <div class="form-group">
+          <ngeo-routing-feature
+            ngeo-routing-feature-map="$ctrl.map"
+            ngeo-routing-feature-feature="via.feature"
+            ngeo-routing-feature-fill-color="$ctrl.colors['via.fill']"
+            ngeo-routing-feature-stroke-color="$ctrl.colors['via.stroke']"
+            ngeo-routing-feature-on-change="$ctrl.handleChange">
+          </ngeo-routing-feature>
+        </div>
+        <button type="button" class="btn prime delete-via" ng-click="$ctrl.deleteVia(index)">
+          <span class="fa fa-trash-o"></span>
+        </button>
+      </div>
+    </div>
+
+  <div class="ngeo-routing-destination form-group">
+    <ngeo-routing-feature
+      ngeo-routing-feature-map="$ctrl.map"
+      ngeo-routing-feature-feature="$ctrl.targetFeature_"
+      ngeo-routing-feature-fill-color="$ctrl.colors['destination.fill']"
+      ngeo-routing-feature-stroke-color="$ctrl.colors['destination.stroke']"
+      ngeo-routing-feature-on-change="$ctrl.handleChange">
+    </ngeo-routing-feature>
+  </div>
+
+  <div class="form-group pull-right">
+    <button type="button" class="btn prime" ng-click="$ctrl.clearRoute()">
+      <span class="fa fa-trash-o"></span> <span translate>Clear</span>
+    </button>
+    <button type="button" class="btn prime" ng-click="$ctrl.reverseRoute()">
+      <span class="fa fa-exchange"></span> <span translate>Reverse</span>
+    </button>
+    <button type="button" class="btn prime" ng-click="$ctrl.addVia()">
+      <span class="fa fa-plus"></span> <span translate>Add via</span>
+    </button>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="form-horizontal"
+       ng-if="$ctrl.routingProfiles.length > 1">
+    <div class="form-group">
+      <label class="control-label col-md-4" translate>Profile</label>
+      <div class="col-md-8">
+        <select class="form-control" ng-model="$ctrl.selectedRoutingProfile">
+          <option ng-repeat="profile in $ctrl.routingProfiles" ng-value="profile">{{profile.label}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="ngeo-routing-error form-group clearfix"
+       ng-hide="$ctrl.errorMessage === ''">
+    {{$ctrl.errorMessage}}
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="form-horizontal" ng-hide="$ctrl.routeDuration === null && $ctrl.routeDistance <= 0">
+    <div class="row">
+      <div class="col-md-12">
+        <strong translate>Route statistics</strong>
+      </div>
+    </div>
+    <div class="row" ng-hide="$ctrl.routeDuration === null">
+      <div class="col-md-4 text-right" translate>
+        Duration
+      </div>
+      <div class="col-md-8">
+        {{$ctrl.routeDuration | ngeoDuration}}
+      </div>
+    </div>
+
+    <div class="row" ng-hide="$ctrl.routeDistance <= 0">
+      <div class="col-md-4 text-right" translate>
+        Distance
+      </div>
+      <div class="col-md-8">
+        {{$ctrl.routeDistance | ngeoUnitPrefix:'m'}}
+      </div>
+    </div>
+  </div>
+</div>

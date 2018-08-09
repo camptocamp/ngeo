@@ -6,17 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css" />
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css" />
-    <style>
-      #map {
-        width: 600px;
-        height: 400px;
-      }
-      .ol-dragbox, .ol-dragzoom {
-        border-color: #455248;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <div
@@ -29,7 +18,7 @@
     </div>
 
     <p id="desc">
-      This example shows how to use the <code><a href="../apidoc/ngeo.bboxQueryDirective.html" title="Read our documentation">ngeo-mobile-query</a></code>
+      This example shows how to use the <code><a href="../apidoc/ngeo.query.bboxQueryComponent.html" title="Read our documentation">ngeo-mobile-query</a></code>
       directive. Press <code>Ctrl</code> (or <code>Cmd</code> on Mac) and draw a query bbox on the map.
     </p>
 
@@ -37,18 +26,5 @@
 
     <app-queryresult></app-queryresult>
 
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../node_modules/moment/min/moment.min.js"></script>
-    <script src="/@?main=bboxquery.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

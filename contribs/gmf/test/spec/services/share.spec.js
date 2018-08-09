@@ -1,6 +1,4 @@
-goog.require('gmf.ShareService');
-
-describe('gmf.ShareService', () => {
+describe('gmf.permalink.ShareService', () => {
   let $httpBackend;
   const successResponse = {
     short_url: 'http://fake/gmf'
@@ -15,10 +13,10 @@ describe('gmf.ShareService', () => {
     let shortenerUrl;
     let gmfShareService;
 
-    inject(($injector) => {
-      $httpBackend = $injector.get('$httpBackend');
-      gmfShareService = $injector.get('gmfShareService');
-      shortenerUrl = $injector.get('gmfShortenerCreateUrl');
+    angular.mock.inject((_$httpBackend_, _gmfShareService_, _gmfShortenerCreateUrl_) => {
+      $httpBackend = _$httpBackend_;
+      gmfShareService = _gmfShareService_;
+      shortenerUrl = _gmfShortenerCreateUrl_;
       $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
 
@@ -42,14 +40,14 @@ describe('gmf.ShareService', () => {
     let shortenerUrl;
     let gmfShareService;
 
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       $provide.value('gmfShortenerCreateUrl', '');
     });
 
-    inject(($injector) => {
-      $httpBackend = $injector.get('$httpBackend');
-      gmfShareService = $injector.get('gmfShareService');
-      shortenerUrl = $injector.get('gmfShortenerCreateUrl');
+    angular.mock.inject((_$httpBackend_, _gmfShareService_, _gmfShortenerCreateUrl_) => {
+      $httpBackend = _$httpBackend_;
+      gmfShareService = _gmfShareService_;
+      shortenerUrl = _gmfShortenerCreateUrl_;
       $httpBackend.when('POST', shortenerUrl).respond(successResponse);
     });
 

@@ -6,14 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width" />
     <meta name="mobile-web-app-capable" content="yes" />
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css" />
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css" />
-    <style>
-      #map {
-        width: 600px;
-        height: 400px;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <div
@@ -26,8 +18,8 @@
     </div>
 
     <p id="desc">
-      This example shows how to use the <code><a href="../apidoc/ngeo.mapQueryDirective.html" title="Read our documentation">ngeo-map-query</a></code>
-      directive. It also shows how the <code><a href="../apidoc/ngeo.ToolActivateMgr.html" title="Read our documentation">ngeo.ToolActivate</a></code> can be
+      This example shows how to use the <code><a href="../apidoc/ngeo.query.mapQueryComponent.html" title="Read our documentation">ngeo-map-query</a></code>
+      directive. It also shows how the <code><a href="../apidoc/ngeo.misc.ToolActivateMgr.html" title="Read our documentation">ngeo.misc.ToolActivate</a></code> can be
       used to make the directive inactive when an other tool becomes active.
       The "Dummy" button here does nothing, but when toggled the query
       directive becomes inactive.
@@ -43,18 +35,5 @@
 
     <app-queryresult></app-queryresult>
 
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="../node_modules/moment/min/moment.min.js"></script>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/@?main=mapquery.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

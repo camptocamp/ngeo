@@ -1,47 +1,50 @@
-goog.provide('app.layerorder');
+/**
+ * @module app.layerorder
+ */
+const exports = {};
 
-goog.require('ngeo.DecorateLayer');
+import './layerorder.css';
+import ngeoMapModule from 'ngeo/map/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.SortableOptions');
-goog.require('ngeo.SyncArrays');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.sortableDirective');
-goog.require('ngeo.source.AsitVD');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.TileWMS');
+import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
+
+import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscSortableComponent.name,
+]);
 
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.DecorateLayer} ngeoDecorateLayer Decorate layer service.
- * @param {ngeo.SyncArrays} ngeoSyncArrays Array sync service.
  * @constructor
  * @export
  * @ngInject
  */
-app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
+exports.MainController = function($scope) {
 
   /** @type {ol.layer.Tile} */
-  const asitvd = new ol.layer.Tile({
-    source: new ngeo.source.AsitVD({
+  const asitvd = new olLayerTile({
+    source: new ngeoSourceAsitVD({
       layer: 'asitvd.fond_couleur'
     })
   });
   asitvd.set('name', 'asitvd');
 
   /** @type {ol.layer.Tile} */
-  const boundaries = new ol.layer.Tile({
-    source: new ol.source.TileWMS({
+  const boundaries = new olLayerTile({
+    source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill'},
       serverType: 'mapserver'
@@ -50,8 +53,8 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   boundaries.set('name', 'Boundaries');
 
   /** @type {ol.layer.Tile} */
-  const waterBodies = new ol.layer.Tile({
-    source: new ol.source.TileWMS({
+  const waterBodies = new olLayerTile({
+    source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.geologie-gravimetrischer_atlas'},
       serverType: 'mapserver'
@@ -60,8 +63,8 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
   waterBodies.set('name', 'Water bodies');
 
   /** @type {ol.layer.Tile} */
-  const cities = new ol.layer.Tile({
-    source: new ol.source.TileWMS({
+  const cities = new olLayerTile({
+    source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
       serverType: 'mapserver'
@@ -73,15 +76,15 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
       asitvd,
       boundaries,
       waterBodies,
       cities
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 1
@@ -94,8 +97,8 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
    * @type {ol.layer.Tile}
    * @private
    */
-  this.roads_ = new ol.layer.Tile({
-    source: new ol.source.TileWMS({
+  this.roads_ = new olLayerTile({
+    source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.bafu.laerm-strassenlaerm_tag'},
       serverType: 'mapserver'
@@ -112,7 +115,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
 
   const selectedLayers = this.selectedLayers;
 
-  ngeoSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
+  ngeoMiscSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
     layerFilter);
 
   // watch any change on layers array to refresh the map
@@ -141,7 +144,7 @@ app.MainController = function($scope, ngeoDecorateLayer, ngeoSyncArrays) {
  *     function is used as setter.
  * @export
  */
-app.MainController.prototype.toggleRoadsLayer = function(val) {
+exports.MainController.prototype.toggleRoadsLayer = function(val) {
   if (val === undefined) {
     return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {
@@ -154,4 +157,7 @@ app.MainController.prototype.toggleRoadsLayer = function(val) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

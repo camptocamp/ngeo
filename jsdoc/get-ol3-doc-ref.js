@@ -1,11 +1,19 @@
-var http = require("http");
-var jsdom = require("jsdom");
-var jquery = require("jquery");
+const https = require("https");
+const jsdom = require("jsdom");
+const jquery = require("jquery");
 
-jsdom.env({
-    url: "http://openlayers.org/en/master/apidoc/index.html",
-    done: function(err, window) {
-        $ = jquery(window);
+const { JSDOM } = jsdom;
+var data = "";
+
+https.get('https://openlayers.org/en/master/apidoc/index.html', function (result) {
+    result.setEncoding('utf8');
+
+    result.on('data', function(chunk) {
+        data += chunk;
+    });
+
+    result.on('end', function() {
+        $ = jquery(new JSDOM(data).window);
         console.log("exports.registerOl3Link = function(helper) {");
         $('[data-name]').each(function (index, element) {
             if (element.querySelector('a') != null) {
@@ -19,5 +27,5 @@ jsdom.env({
             }
         });
         console.log("}");
-    }
+    });
 });

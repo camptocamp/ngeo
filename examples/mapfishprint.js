@@ -1,30 +1,37 @@
-goog.provide('app.mapfishprint');
+/**
+ * @module app.mapfishprint
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.CreatePrint');
-goog.require('ngeo.Print');
-goog.require('ngeo.PrintUtils');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.format.GeoJSON');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.Vector');
+import './mapfishprint.css';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+
+import ngeoPrintService from 'ngeo/print/Service.js';
+import ngeoPrintUtils from 'ngeo/print/Utils.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olFormatGeoJSON from 'ol/format/GeoJSON.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceVector from 'ol/source/Vector.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+const appmodule = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoPrintService.module.name,
+  ngeoPrintUtils.module.name,
+]);
 
 
 /**
  * @const
  * @private
  */
-app.WMS_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
+exports.WMS_URL_ = 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/' +
     'mapserv_proxy';
 
 
@@ -32,7 +39,7 @@ app.WMS_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
  * @const
  * @private
  */
-app.PRINT_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
+exports.PRINT_URL_ = 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/' +
     'printproxy';
 
 
@@ -40,7 +47,7 @@ app.PRINT_URL_ = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/' +
  * @const
  * @private
  */
-app.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
+exports.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
   100000, 500000];
 
 
@@ -48,65 +55,65 @@ app.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
  * @const
  * @private
  */
-app.PRINT_FORMAT_ = 'pdf';
+exports.PRINT_FORMAT_ = 'pdf';
 
 
 /**
  * @const
  * @private
  */
-app.PRINT_LAYOUT_ = 'A4 portrait';
+exports.PRINT_LAYOUT_ = '1 A4 portrait';
 
 
 /**
  * @const
  * @private
  */
-app.PRINT_DPI_ = 72;
+exports.PRINT_DPI_ = 72;
 
 
 /**
  * @const
  * @private
  */
-app.PRINT_PAPER_SIZE_ = [555, 675];
+exports.PRINT_PAPER_SIZE_ = [555, 675];
 
 
 /**
  * @constructor
  * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {ngeo.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
- * @param {ngeo.PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
+ * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+ * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @export
  */
-app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
+exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Image({
-        source: new ol.source.ImageWMS({
-          url: app.WMS_URL_,
+      new olLayerImage({
+        source: new olSourceImageWMS({
+          url: exports.WMS_URL_,
           params: {
             'LAYERS': 'osm'
           },
           serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
         })
       }),
-      new ol.layer.Vector({
-        source: new ol.source.Vector({
+      new olLayerVector({
+        source: new olSourceVector({
           url: 'data/polygon-swizerland.json',
-          format: new ol.format.GeoJSON({
-            defaultDataProjection: 'EPSG:21781'
+          format: new olFormatGeoJSON({
+            defaultDataProjection: EPSG21781
           })
         })
       })
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1],
       center: [537635, 152640],
       zoom: 3
@@ -127,13 +134,13 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {ngeo.Print}
+   * @type {ngeo.print.Service}
    * @private
    */
-  this.print_ = ngeoCreatePrint(app.PRINT_URL_);
+  this.print_ = ngeoCreatePrint(exports.PRINT_URL_);
 
   /**
-   * @type {ngeo.PrintUtils}
+   * @type {ngeo.print.Utils}
    * @private
    */
   this.printUtils_ = ngeoPrintUtils;
@@ -145,7 +152,7 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     /**
        * @return {ol.Size} Size in dots of the map to print.
        */
-    () => app.PRINT_PAPER_SIZE_,
+    () => exports.PRINT_PAPER_SIZE_,
     /**
        * @param {olx.FrameState} frameState Frame state.
        * @return {number} Scale of the map to print.
@@ -156,8 +163,8 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
       // we test mapSize and mapResolution just to please the compiler
       return mapSize !== undefined && mapResolution !== undefined ?
         ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
-          app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
-        app.PRINT_SCALES_[0];
+          exports.PRINT_PAPER_SIZE_, exports.PRINT_SCALES_) :
+        exports.PRINT_SCALES_[0];
     });
 
   /**
@@ -170,7 +177,7 @@ app.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
 /**
  * @export
  */
-app.MainController.prototype.print = function() {
+exports.MainController.prototype.print = function() {
   const map = this.map;
 
   const mapSize = map.getSize();
@@ -179,12 +186,12 @@ app.MainController.prototype.print = function() {
   // we test mapSize and viewResolution just to please the compiler
   const scale = mapSize !== undefined && viewResolution !== undefined ?
     this.printUtils_.getOptimalScale(mapSize, viewResolution,
-      app.PRINT_PAPER_SIZE_, app.PRINT_SCALES_) :
-    app.PRINT_SCALES_[0];
+      exports.PRINT_PAPER_SIZE_, exports.PRINT_SCALES_) :
+    exports.PRINT_SCALES_[0];
 
-  const dpi = app.PRINT_DPI_;
-  const format = app.PRINT_FORMAT_;
-  const layout = app.PRINT_LAYOUT_;
+  const dpi = exports.PRINT_DPI_;
+  const format = exports.PRINT_FORMAT_;
+  const layout = exports.PRINT_LAYOUT_;
 
   this.printState = 'Printing...';
 
@@ -206,7 +213,7 @@ app.MainController.prototype.print = function() {
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-app.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
+exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
   const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
   this.getStatus_(mfResp.ref);
 };
@@ -216,7 +223,7 @@ app.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
  * @param {string} ref Ref.
  * @private
  */
-app.MainController.prototype.getStatus_ = function(ref) {
+exports.MainController.prototype.getStatus_ = function(ref) {
   this.print_.getStatus(ref).then(
     this.handleGetStatusSuccess_.bind(this, ref),
     this.handleGetStatusError_.bind(this)
@@ -228,7 +235,7 @@ app.MainController.prototype.getStatus_ = function(ref) {
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-app.MainController.prototype.handleCreateReportError_ = function(resp) {
+exports.MainController.prototype.handleCreateReportError_ = function(resp) {
   this.printState = 'Print error';
 };
 
@@ -238,7 +245,7 @@ app.MainController.prototype.handleCreateReportError_ = function(resp) {
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-app.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
+exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
   const mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
   const done = mfResp.done;
   if (done) {
@@ -259,9 +266,12 @@ app.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  * @param {!angular.$http.Response} resp Response.
  * @private
  */
-app.MainController.prototype.handleGetStatusError_ = function(resp) {
+exports.MainController.prototype.handleGetStatusError_ = function(resp) {
   this.printState = 'Print error';
 };
 
 
-app.module.controller('MainController', app.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

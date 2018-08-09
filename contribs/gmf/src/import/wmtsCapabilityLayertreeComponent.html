@@ -1,0 +1,71 @@
+<ul>
+  <li ng-repeat="layer in ::$ctrl.layers">
+    <div class="gmf-wmscapabilitylayertreenode-header">
+
+      <span
+        class="gmf-wmscapabilitylayertreenode-popover-container"
+        ngeo-popover
+        ngeo-popover-dismiss=".content"
+        ngeo-popover-placement="left"
+      >
+        <span
+          ngeo-popover-anchor
+          class="fa fa-cog gmf-wmscapabilitylayertreenode-actions">
+        </span>
+
+        <div
+          class="gmf-wmscapabilitylayertreenode-popover-content"
+          ngeo-popover-content
+        >
+          <ul>
+            <li>
+              <i class="fa fa-plus fa-fw"></i>
+              <a
+                href=""
+                ng-click="$ctrl.createAndAddDataSource(layer); popoverCtrl.dismissPopover()"
+              >
+                <span translate>Add layer</span>
+              </a>
+            </li>
+            <li
+              ng-if="::(layer.Abstract !== undefined)">
+              <i class="fa fa-th-list fa-fw"></i>
+              <a
+                aria-expanded="false"
+                data-toggle="collapse"
+                href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+                ng-click="popoverCtrl.dismissPopover()"
+              >
+                <span translate>Open/Close description</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </span>
+
+      <a class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw"></a>
+      <span
+        class="gmf-wmscapabilitylayertreenode-title"
+      >{{ ::layer.Title }}</span>
+
+      <div
+        class="collapse gmf-wmscapabilitylayertreenode-description"
+        id="gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+        ng-if="::(layer.Abstract !== undefined)"
+      >
+        <a
+          aria-expanded="false"
+          class="gmf-wmscapabilitylayertreenode-description-toggle"
+          data-toggle="collapse"
+          href="#gmf-wmscapabilitylayertreenode-description-{{::$ctrl.getUid(layer)}}"
+        >
+          <span translate>Hide description</span>
+        </a>
+        <span
+          class="gmf-wmscapabilitylayertreenode-description-content"
+        >{{ ::layer.Abstract }}</span>
+
+      </div>
+    </div>
+  </li>
+</ul>

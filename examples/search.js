@@ -1,73 +1,66 @@
-goog.provide('app.search');
+/**
+ * @module app.search
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ngeo');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.proj');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
-goog.require('goog.asserts');
+import './search.css';
+import googAsserts from 'goog/asserts.js';
 
-goog.require('ngeo.search.searchModule');
+import ngeoMapModule from 'ngeo/map/module.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import ngeoSearchModule from 'ngeo/search/module.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import * as olProj from 'ol/proj.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
-  ngeo.module.name,
-  ngeo.search.searchModule.module.name
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoSearchModule.name
 ]);
 
 
 /**
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.searchDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appSearchMap'
-    },
-    controller: 'AppSearchController as ctrl',
-    bindToController: true,
-    template:
-        '<input type="text" placeholder="search…" ' +
-        'ngeo-search="ctrl.options" ' +
-        'ngeo-search-datasets="ctrl.datasets" ' +
-        'ngeo-search-listeners="ctrl.listeners">',
-    /**
-     * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Atttributes.
-     */
-    link(scope, element, attrs) {
-      // Empty the search field on focus and blur.
-      element.find('input').on('focus blur', function() {
-        $(this).val('');
-      });
-    }
-  };
+exports.searchComponent = {
+  bindings: {
+    'map': '=appSearchMap'
+  },
+  controller: 'AppSearchController',
+  template:
+      '<input type="text" placeholder="search…" ' +
+      'ngeo-search="$ctrl.options" ' +
+      'ngeo-search-datasets="$ctrl.datasets" ' +
+      'ngeo-search-listeners="$ctrl.listeners">'
 };
 
 
-app.module.directive('appSearch', app.searchDirective);
+exports.module.component('appSearch', exports.searchComponent);
 
 
 /**
  * @constructor
+ * @param {angular.JQLite} $element Element.
  * @param {angular.Scope} $rootScope Angular root scope.
  * @param {angular.$compile} $compile Angular compile service.
  * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+  /**
+   * @private
+   * @type {angular.JQLite}
+   */
+  this.$element = $element;
+
 
   /**
    * @type {ol.Map}
@@ -101,15 +94,13 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
-    display(suggestion) {
+    display: (suggestion) => {
       const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label');
     },
     templates: {
-      header() {
-        return '<div class="ngeo-header">Addresses</div>';
-      },
-      suggestion(suggestion) {
+      header: () => '<div class="ngeo-header">Addresses</div>',
+      suggestion: (suggestion) => {
         const feature = /** @type {ol.Feature} */ (suggestion);
 
         // A scope for the ng-click on the suggestion's « i » button.
@@ -132,9 +123,20 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: app.SearchController.select_.bind(this)
+    select: exports.SearchController.select_.bind(this)
   });
+};
 
+
+/**
+ * @export
+ */
+exports.SearchController.prototype.$onInit = function() {
+  // Empty the search field on focus and blur.
+  const input = this.$element.find('input');
+  input.on('focus blur', () => {
+    input.val('');
+  });
 };
 
 
@@ -142,9 +144,9 @@ app.SearchController = function($rootScope, $compile, ngeoSearchCreateGeoJSONBlo
  * @return {ol.layer.Vector} The vector layer.
  * @private
  */
-app.SearchController.prototype.createVectorLayer_ = function() {
-  const vectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector()
+exports.SearchController.prototype.createVectorLayer_ = function() {
+  const vectorLayer = new olLayerVector({
+    source: new olSourceVector()
   });
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
   // makes the vector layer "unmanaged", meaning that it is always on top.
@@ -159,10 +161,9 @@ app.SearchController.prototype.createVectorLayer_ = function() {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
-  const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch?query=%QUERY';
-  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(
-    url, undefined, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:21781'));
+exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
+  const url = 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?query=%QUERY';
+  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG21781);
   bloodhound.initialize();
   return bloodhound;
 };
@@ -172,41 +173,44 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCre
  * @param {jQuery.Event} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
- * @this {app.SearchController}
+ * @this {app.search.SearchController}
  * @private
  */
-app.SearchController.select_ = function(event, suggestion, dataset) {
+exports.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
   const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
       (feature.getGeometry());
   const size = this.map.getSize();
-  goog.asserts.assert(size !== undefined);
+  googAsserts.assert(size !== undefined);
   const source = this.vectorLayer_.getSource();
   source.clear(true);
   source.addFeature(feature);
-  this.map.getView().fit(featureGeometry, {size, maxZoom: 16});
+  this.map.getView().fit(featureGeometry, {
+    size: size,
+    maxZoom: 16
+  });
 };
 
 
-app.module.controller('AppSearchController', app.SearchController);
+exports.module.controller('AppSearchController', exports.SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -215,4 +219,7 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

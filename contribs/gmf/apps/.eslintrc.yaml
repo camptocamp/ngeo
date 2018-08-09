@@ -1,0 +1,26 @@
+plugins:
+  - googshift
+
+rules:
+  googshift/no-duplicate-requires: error
+
+  googshift/no-missing-requires:
+    - warn
+    - prefixes: [gmf, ngeo, ol]
+
+  googshift/no-unused-requires: warn
+
+  googshift/one-provide-or-module:
+    - warn
+    - entryPoints: [app]
+      root: apps
+
+  googshift/requires-first: error
+
+  googshift/valid-provide-and-module:
+    - warn
+    - entryPoints: [apps]
+      root: src/module
+      replace: ../../contribs/gmf/apps|apps
+
+  googshift/valid-requires: error

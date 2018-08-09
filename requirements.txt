@@ -1,9 +1,10 @@
-beautifulsoup4==4.6.0
-glob2==0.5
-htmlmin==0.1.10
+beautifulsoup4==4.6.1
+codespell==1.13.0
+glob2==0.6
+htmlmin==0.1.12
 Mako==1.0.7
-pip==9.0.1
-requests==2.18.3
-setuptools==36.2.7
-transifex-client==0.12.4
-urllib3==1.22
+pip==18.0
+requests==2.19.1
+setuptools==40.0.0
+transifex-client==0.12.5  # rq.filter: <=0.12.5
+urllib3==1.23

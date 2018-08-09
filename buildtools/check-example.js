@@ -4,7 +4,7 @@
 // without errors. This script is executed by the Makefile's
 // check-examples target.
 
-
+require('phantomjs-polyfill-string-includes');
 var args = require('system').args;
 if (args.length != 2) {
   phantom.exit(1);
@@ -18,7 +18,7 @@ page.onError = function(msg, trace) {
     msgStack.push('TRACE:');
     trace.forEach(function(t) {
       if (t.file.startsWith('https://maps.googleapis.com/maps/api/js')) {
-        // Ignore google referer error
+        // Ignore google referrer error
         return;
       }
       msgStack.push(' -> ' + t.file + ': ' + t.line + (t.function ? ' (in function "' + t.function + '")' : ''));
@@ -37,8 +37,12 @@ page.onAlert = function(msg) {
 };
 page.onResourceError = function(resourceError) {
   if (resourceError.url.includes('tile.openstreetmap.org')) {
-    console.warn('Ignoring ressource error from openstreetmap');
-  } else {
+    console.warn('Ignoring resource error from OpenStreetMap');
+  } else if (resourceError.url.includes('https://maps.googleapis.com/maps/api/js')) {
+    console.warn('Ignoring resource error from Google');
+  } else if (resourceError.url.includes('https://csi.gstatic.com/')) {
+    console.warn('Ignoring resource error from Google static');
+  } else if (resourceError.errorCode >= 400) {
     console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
     exitCode = 2;
   }
@@ -53,7 +57,7 @@ page.open(examplePath, function(s) {
   }
 
   setTimeout(function() {
-//    page.render(examplePath + '.png')
+    //page.render(examplePath + '.png')
     var consoleControl = require('console-control-strings');
 
     var color = exitCode == 0 ? 'green' : 'red';

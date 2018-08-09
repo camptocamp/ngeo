@@ -6,54 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css" type="text/css">
-    <style>
-        gmf-map > div {
-          width: 80rem;
-          height: 40rem;
-        }
-        .gmf-profile-container {
-          display: flex;
-        }
-        .gmf-profile-container .ngeo-profile {
-          display: inline-block;
-          width: calc(100% - 15rem);
-          height: 20rem;
-        }
-        .gmf-profile-container .gmf-profile-legend {
-          display: inline-block;
-          vertical-align: top;
-          list-style-type: none;
-          padding: 0;
-          width: 13rem;
-        }
-        .tooltip {
-          position: relative;
-          background: rgba(0, 0, 0, 0.5);
-          border-radius: 0.5rem;
-          color: white;
-          padding: 0.5rem 1rem;
-          opacity: 0.7;
-          white-space: nowrap;
-        }
-        .ngeo-tooltip-measure {
-          opacity: 1;
-          font-weight: bold;
-        }
-        .ngeo-tooltip-measure:before {
-          border-top: 0.5rem solid rgba(0, 0, 0, 0.5);
-          border-right: 0.5rem solid transparent;
-          border-left: 0.5rem solid transparent;
-          content: "";
-          position: absolute;
-          bottom: -0.5rem;
-          margin-left: -0.5rem;
-          left: 50%;
-        }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
 
@@ -61,7 +13,7 @@
     <button class="btn btn-primary" data-toggle="button" ng-click="ctrl.toggleDrawLineActive()">Draw a line</button>
 
     <p id="desc">This example shows how to use the <code>gmf-profile</code>.
-    The draw tool and hover feedback on the map are completely independant of
+    The draw tool and hover feedback on the map are completely independent of
     the gmf-profile components. This profile relies on the ngeo.profile (d3) and
     ngeo.ProfileDirective. It passes a custom css through the optional
     gmf-profile-options attribute</p>
@@ -73,30 +25,5 @@
       gmf-profile-linesconfiguration="::ctrl.profileLinesconfiguration"
       gmf-profile-options="::ctrl.profileOptions">
     </gmf-profile>
-
-    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../../../node_modules/angular/angular.js"></script>
-    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="../../../node_modules/d3/build/d3.js"></script>
-    <script src="../../../node_modules/file-saver/FileSaver.min.js"></script>
-    <script src="/@?main=profile.js"></script>
-    <script src="default.js"></script>
-    <script src="../../../utils/watchwatchers.js"></script>
-    <script>
-      var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'Demo');
-      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-    </script>
   </body>
 </html>

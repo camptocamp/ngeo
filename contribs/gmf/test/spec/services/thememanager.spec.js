@@ -1,18 +1,16 @@
-/* global themes */
-goog.require('gmf.ThemeManager');
-goog.require('gmf.test.data.themes');
+import gmfTestDataThemes from 'gmf/test/data/themes.js';
 
-describe('gmf.ThemeManager', () => {
+describe('gmf.theme.Manager', () => {
   let gmfThemeManager_;
   //var gmfTreeManager_;
 
   beforeEach(() => {
-    inject((gmfThemeManager, /*gmfTreeManager, */gmfThemes, gmfTreeUrl, $httpBackend) => {
+    angular.mock.inject((gmfThemeManager, /*gmfTreeManager, */gmfThemes, gmfTreeUrl, $httpBackend) => {
       gmfThemeManager_ = gmfThemeManager;
       //gmfTreeManager_ = gmfTreeManager;
 
       const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
-      $httpBackend.when('GET', reGmfTreeUrl).respond(themes);
+      $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
       $httpBackend.expectGET(reGmfTreeUrl);
       gmfThemes.loadThemes();
       $httpBackend.flush();
@@ -20,7 +18,7 @@ describe('gmf.ThemeManager', () => {
   });
 
   it('Add a theme', () => {
-    const theme0 = themes.themes[0];
+    const theme0 = gmfTestDataThemes.themes[0];
     gmfThemeManager_.addTheme(theme0);
     expect(gmfThemeManager_.getThemeName()).toEqual(theme0.name);
     //expect(gmfTreeManager_.root.children).toEqual(theme0.children);

@@ -1,41 +1,39 @@
-goog.provide('app.colorpicker');
+/**
+ * @module app.colorpicker
+ */
+const exports = {};
 
+import './colorpicker.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.colorpickerDirective');
-
+import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMiscColorpickerComponent.name,
+]);
 
 
 /**
- * The application-specific color picker directive, based on the
- * ngeo-colorpicker directive.
+ * The application-specific color picker component, based on the
+ * ngeo-colorpicker component.
  *
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.colorpickerDirective = function() {
-  return {
-    restrict: 'E',
-    scope: true,
-    template: '<div ngeo-colorpicker="ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
-    bindToController: true,
-    controller: 'AppColorpickerController as ctrl'
-  };
+exports.colorpickerComponent = {
+  template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
+  controller: 'AppColorpickerController'
 };
 
 
-app.module.directive('appColorpicker', app.colorpickerDirective);
+exports.module.component('appColorpicker', exports.colorpickerComponent);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.ColorPickerController = function() {
+exports.ColorPickerController = function() {
 
 
   /**
@@ -50,8 +48,8 @@ app.ColorPickerController = function() {
 
 };
 
-app.module.controller('AppColorpickerController',
-  app.ColorPickerController);
+exports.module.controller('AppColorpickerController',
+  exports.ColorPickerController);
 
 
 /**
@@ -59,7 +57,7 @@ app.module.controller('AppColorpickerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * Active color.
@@ -71,4 +69,7 @@ app.MainController = function($scope) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

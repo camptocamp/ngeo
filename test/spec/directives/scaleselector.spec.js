@@ -1,7 +1,7 @@
-goog.require('ol.Map');
-goog.require('ngeo.scaleselectorDirective');
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
-describe('ngeo.scaleselectorDirective', () => {
+describe('ngeo.map.scaleselector', () => {
 
   let element;
   let map;
@@ -9,8 +9,8 @@ describe('ngeo.scaleselectorDirective', () => {
 
   beforeEach(() => {
 
-    map = new ol.Map({
-      view: new ol.View({
+    map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 0
       })
@@ -21,7 +21,7 @@ describe('ngeo.scaleselectorDirective', () => {
             'ngeo-scaleselector-map="map">' +
         '</div>');
 
-    inject(($rootScope, $compile, $sce) => {
+    angular.mock.inject(($rootScope, $compile, $sce) => {
       scales = {
         '0': $sce.trustAsHtml('1&nbsp;:&nbsp;200\'000\'000'),
         '1': $sce.trustAsHtml('1&nbsp;:&nbsp;100\'000\'000'),

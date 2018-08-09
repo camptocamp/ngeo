@@ -1,44 +1,51 @@
-goog.provide('app.modifyrectangle');
+/**
+ * @module app.modifyrectangle
+ */
+const exports = {};
 
-goog.require('ngeo.interaction.ModifyRectangle');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
-goog.require('ol.geom.Polygon');
-goog.require('ol.Collection');
-goog.require('ol.Feature');
-goog.require('ol.style.Style');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
+import './modifyrectangle.css';
+import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
+import olCollection from 'ol/Collection.js';
+import olFeature from 'ol/Feature.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-const module = angular.module('app', ['ngeo']);
+const appmodule = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name
+]);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-10997148, 4569099],
       zoom: 4
     })
@@ -46,7 +53,7 @@ app.MainController = function() {
 
   const map = this.map;
 
-  const rectangle = new ol.geom.Polygon([[
+  const rectangle = new olGeomPolygon([[
     [-9e6, 4e6], [-11e6, 4e6], [-11e6, 6e6], [-9e6, 6e6]
   ]]);
 
@@ -54,9 +61,9 @@ app.MainController = function() {
    * @type {ol.Collection.<ol.Feature>}
    * @export
    */
-  this.features = new ol.Collection();
+  this.features = new olCollection();
 
-  this.features.push(new ol.Feature({
+  this.features.push(new olFeature({
     geometry: rectangle,
     'isRectangle': true
   }));
@@ -64,19 +71,19 @@ app.MainController = function() {
   const style = (function() {
     const styles = {};
     styles['Polygon'] = [
-      new ol.style.Style({
-        fill: new ol.style.Fill({
+      new olStyleStyle({
+        fill: new olStyleFill({
           color: [255, 255, 255, 0.5]
         })
       }),
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
+      new olStyleStyle({
+        stroke: new olStyleStroke({
           color: [255, 255, 255, 1],
           width: 5
         })
       }),
-      new ol.style.Style({
-        stroke: new ol.style.Stroke({
+      new olStyleStyle({
+        stroke: new olStyleStroke({
           color: [0, 153, 255, 1],
           width: 3
         })
@@ -84,13 +91,13 @@ app.MainController = function() {
     ];
 
     styles['Point'] = [
-      new ol.style.Style({
-        image: new ol.style.Circle({
+      new olStyleStyle({
+        image: new olStyleCircle({
           radius: 7,
-          fill: new ol.style.Fill({
+          fill: new olStyleFill({
             color: [0, 153, 255, 1]
           }),
-          stroke: new ol.style.Stroke({
+          stroke: new olStyleStroke({
             color: [255, 255, 255, 0.75],
             width: 1.5
           })
@@ -105,10 +112,10 @@ app.MainController = function() {
     };
   })();
 
-  const vectorSource = new ol.source.Vector({
+  const vectorSource = new olSourceVector({
     features: this.features
   });
-  const vectorLayer = new ol.layer.Vector({
+  const vectorLayer = new olLayerVector({
     source: vectorSource
   });
 
@@ -120,10 +127,10 @@ app.MainController = function() {
    * @type {ngeo.interaction.ModifyRectangle}
    * @export
    */
-  this.interaction = new ngeo.interaction.ModifyRectangle(
+  this.interaction = new ngeoInteractionModifyRectangle(
     /** @type {olx.interaction.ModifyOptions} */({
       features: this.features,
-      style
+      style: style
     }));
 
   const interaction = this.interaction;
@@ -133,4 +140,7 @@ app.MainController = function() {
 };
 
 
-module.controller('MainController', app.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

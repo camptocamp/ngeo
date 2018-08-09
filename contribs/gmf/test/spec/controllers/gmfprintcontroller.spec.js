@@ -1,32 +1,30 @@
-/* global printCapabilities */
-goog.require('gmf.printDirective');
-goog.require('gmf.test.data.printcapabilities');
+import gmfTestDataPrintcapabilities from 'gmf/test/data/printcapabilities.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
 describe('GmfPrintController', () => {
 
   let $controller, $rootScope, $scope;
   let gmfPrintCtrl;
 
-  beforeEach(inject((_$controller_, _$rootScope_) => {
+  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
     $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     const $element = angular.element('<div></div>');
-    gmfPrintCtrl = $controller('GmfPrintController',
-      {
-        $element,
-        $scope,
-        gmfPrintUrl: ''
-      }
-    );
-    gmfPrintCtrl.map = new ol.Map({
-      view: new ol.View({
+    gmfPrintCtrl = $controller('GmfPrintController', {
+      $element: $element,
+      $scope: $scope,
+      gmfPrintUrl: ''
+    });
+    gmfPrintCtrl.map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 4
       })
     });
     gmfPrintCtrl.map.setSize([100, 100]);
-    gmfPrintCtrl.parseCapabilities_({data: printCapabilities});
+    gmfPrintCtrl.parseCapabilities_({data: gmfTestDataPrintcapabilities});
   }));
 
   it('Set rotation', () => {
@@ -39,7 +37,7 @@ describe('GmfPrintController', () => {
     expect(gmfPrintCtrl.rotation).toBe(-180);
   });
 
-  it('Set layout and test depending layout informations changes', () => {
+  it('Set layout and test depending layout information changes', () => {
     const title = 'title';
     gmfPrintCtrl.layoutInfo.title = title;
 

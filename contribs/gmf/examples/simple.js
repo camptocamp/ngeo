@@ -1,34 +1,45 @@
-goog.provide('gmfapp.simple');
+/**
+ * @module gmfapp.simple
+ */
+const exports = {};
 
+import './simple.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfMapComponent.name,
+]);
+
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -36,4 +47,7 @@ gmfapp.MainController = function() {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

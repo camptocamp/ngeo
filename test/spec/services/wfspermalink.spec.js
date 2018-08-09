@@ -1,32 +1,35 @@
-/* global msGMLOutputFuel */
-goog.require('ngeo.WfsPermalink');
-goog.require('ol.format.filter');
-goog.require('ol.format.filter.LogicalNary');
-goog.require('ngeo.test.data.msGMLOutputFuel');
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import * as olProj from 'ol/proj.js';
+import * as olFormatFilter from 'ol/format/filter.js';
+import olFormatFilterEqualTo from 'ol/format/filter/EqualTo.js';
+import olFormatFilterLogicalNary from 'ol/format/filter/LogicalNary.js';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+import ngeoTestDataMsGMLOutputFuel from 'ngeo/test/data/msGMLOutputFuel.js';
 
-describe('ngeo.WfsPermalink', () => {
+describe('ngeo.statemanager.WfsPermalink', () => {
 
   let ngeoWfsPermalink;
   let ngeoQueryResult;
 
   beforeEach(() => {
-    module('ngeo', ($provide) => {
+    angular.mock.module('ngeo', ($provide) => {
       $provide.value('ngeoWfsPermalinkOptions', {
-        url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+        url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
         defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
         defaultFeaturePrefix: 'ms'
       });
     });
 
-    inject(($injector) => {
-      ngeoWfsPermalink = $injector.get('ngeoWfsPermalink');
-      ngeoQueryResult = $injector.get('ngeoQueryResult');
+    angular.mock.inject((_ngeoWfsPermalink_, _ngeoQueryResult_) => {
+      ngeoWfsPermalink = _ngeoWfsPermalink_;
+      ngeoQueryResult = _ngeoQueryResult_;
     });
   });
 
   it('creates a service', () => {
-    expect(ngeoWfsPermalink instanceof ngeo.WfsPermalink).toBe(true);
+    expect(ngeoWfsPermalink instanceof ngeoStatemanagerWfsPermalink).toBe(true);
   });
 
   describe('#issue', () => {
@@ -35,20 +38,19 @@ describe('ngeo.WfsPermalink', () => {
     let map;
 
     beforeEach(() => {
-      const url = 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy';
-      inject(($injector) => {
-        $httpBackend = $injector.get('$httpBackend');
-        $httpBackend.when('POST', url).respond(msGMLOutputFuel);
-        $httpBackend = $injector.get('$httpBackend');
+      const url = 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy';
+      angular.mock.inject((_$httpBackend_) => {
+        $httpBackend = _$httpBackend_;
+        $httpBackend.when('POST', url).respond(ngeoTestDataMsGMLOutputFuel);
       });
 
-      const projection = ol.proj.get('EPSG:21781');
+      const projection = olProj.get('EPSG:21781');
       projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
-      map = new ol.Map({
+      map = new olMap({
         layers: [],
-        view: new ol.View({
-          projection,
+        view: new olView({
+          projection: projection,
           resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
           center: [537635, 152640],
           zoom: 0
@@ -85,13 +87,13 @@ describe('ngeo.WfsPermalink', () => {
   describe('#createFilters_', () => {
     const expectFiltersToEqual = function(filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
-      if (filter1 instanceof ol.format.filter.LogicalNary) {
+      if (filter1 instanceof olFormatFilterLogicalNary) {
         expectFiltersToEqual(filter1.conditions.length, filter2.conditions.length);
         for (let i = 0; i < filter1.conditions.length; ++i) {
           expectFiltersToEqual(filter1.conditions[i], filter2.conditions[i]);
         }
       } else {
-        expect(filter1 instanceof ol.format.filter.EqualTo);
+        expect(filter1 instanceof olFormatFilterEqualTo);
         expect(filter1.propertyName).toBe(filter2.propertyName);
         expect(filter1.expression).toBe(filter2.expression);
       }
@@ -119,7 +121,7 @@ describe('ngeo.WfsPermalink', () => {
           }
         ]
       };
-      const f = ol.format.filter;
+      const f = olFormatFilter;
       const expectedFilters = f.or(
         f.or(
           f.and(

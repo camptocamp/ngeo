@@ -1,0 +1,238 @@
+@import '~gmf/sass/vars.scss';
+
+$displayquerywindow-tablet-width: 8 * $map-tools-size;
+$displayquerywindow-detailed-header-height: 3.12rem;
+$displayquerywindow-detailed-details-line-height: 1.25rem;
+$displayquerywindow-detailed-details-height: 8 * $displayquerywindow-detailed-details-line-height;
+
+div.gmf-displayquerywindow {
+  .details {
+    display: none;
+  }
+}
+
+div.ngeo-displaywindow {
+  margin: 0 auto;
+  .animation-container {
+    height: 100%;
+    width: 100%;
+  }
+  .details.iframe {
+    overflow: hidden;
+  }
+}
+
+.gmf-displayquerywindow, .ngeo-displaywindow {
+  right: $app-margin + $map-tools-size + $app-margin;
+  left: initial;
+  bottom: $app-margin;
+  width: $displayquerywindow-tablet-width;
+  margin-left: -$displayquerywindow-tablet-width / 2;
+  position: fixed;
+  z-index: $above-all;
+  .collapse-button {
+    background-color: $nav-bg;
+    border: solid 0.06rem $border-color;
+    border-bottom-width: 0;
+    border-radius: $border-radius-base $border-radius-base 0 0;
+    line-height: 0.5;
+    height: $map-tools-size;
+    width: $map-tools-size + $map-tools-size * 2/3;
+  }
+  .collapse-button-up::after {
+    content: $fa-var-chevron-up;
+  }
+  .collapse-button-down::after {
+    content: $fa-var-chevron-down;
+  }
+  .windowcontainer {
+    background-color: $nav-bg;
+    border: solid 0.06rem $border-color;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+  .animation-container {
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    transition: 0.3s ease-in all;
+    .slide-animation {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      padding: $app-margin;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      &.ng-enter, &.ng-leave {
+        transition: 0.3s ease-in all;
+      }
+    }
+  }
+  .animation-container-detailed {
+    height: calc(100% - 1.88rem);
+    .details {
+      display: block;
+    }
+  }
+  .next {
+    .slide-animation {
+      &.ng-enter,
+      &.ng-enter-prepare {
+        left: 100%;
+      }
+      &.ng-enter-active, &.ng-leave {
+        left: 0;
+      }
+      &.ng-leave-active {
+        left: -100%;
+      }
+    }
+  }
+  .previous {
+    .slide-animation {
+      &.ng-enter,
+      &.ng-enter-prepare {
+        left: -100%;
+      }
+      &.ng-enter-active, &.ng-leave {
+        left: 0;
+      }
+      &.ng-leave-active {
+        left: 100%;
+      }
+    }
+  }
+  .title {
+    font-weight: bold;
+  }
+  .details {
+    flex: 1;
+    line-height: $displayquerywindow-detailed-details-line-height;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .details-key {
+      padding-right: $app-margin;
+    }
+
+    /** word wrapping */
+    .details-key, .details-value {
+      white-space: normal;
+    }
+
+    .slide-animation.ng-enter-active .details .details-value {
+      white-space: nowrap;
+    }
+  }
+  .navigate {
+    border-top: solid 0.06rem $border-color;
+    height: $map-tools-size;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    .placeholder {
+      // these elements are necessary when only the middle element (results)
+      // is shown to center it in the middle (with 'justify-content')
+      height: 100%;
+    }
+    .results {
+      .dropup {
+        display: inline;
+      }
+    }
+    .previous {
+      &::before {
+        content: $fa-var-chevron-left;
+      }
+    }
+    .next {
+      &::after {
+        content: $fa-var-chevron-right;
+      }
+    }
+    button {
+      width: inherit;
+      padding: 0 $app-margin;
+    }
+  }
+  button {
+    background-color: $nav-bg;
+    border: none;
+    height: 100%;
+    width: $map-tools-size;
+    &:hover {
+      background-color: $nav-bg;
+    }
+    &.close {
+      z-index: $above-content-index;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: $map-tools-size;
+      height: $map-tools-size;
+      font-weight: normal;
+      font-size: 0.94rem;
+    }
+    &::before, &::after {
+      font-family: FontAwesome;
+    }
+  }
+  .ui-draggable {
+    tr {
+      cursor: text;
+    }
+  }
+  &.desktop {
+    .windowcontainer {
+      height: 15rem;
+      .slide-animation {
+        height: 100%;
+      }
+    }
+  }
+  &.mobile {
+    button.close {
+      font-size: 1.31rem;
+    }
+    .slide-animation {
+      height: calc(100% - (#{$map-tools-size} + #{$app-margin}));
+    }
+
+    .animation-container {
+      height: $map-tools-size * 2;
+      &.animation-container-detailed {
+        height: ($displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 + $app-margin * 3) + $map-tools-size;
+      }
+    }
+  }
+}
+
+@media (max-width: map-get($grid-breakpoints, "sm")) {
+  .gmf-displayquerywindow.mobile {
+    width: 100%;
+    max-width: 100%;
+    margin-left: -50%;
+    right: 50%;
+    left: 50%;
+    bottom: 0;
+    /** prevent glitch for swipe animation **/
+    .details table {
+      .details-key {
+        min-width: calc(30vw - 2 * #{$app-margin});
+        max-width: calc(30vw - 2 * #{$app-margin});
+      }
+      .details-value {
+        min-width: calc(70vw - 2 * #{$app-margin});
+        max-width: calc(70vw - 2 * #{$app-margin});
+      }
+    }
+  }
+}

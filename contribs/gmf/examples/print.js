@@ -1,48 +1,68 @@
-goog.provide('gmfapp.print');
+/**
+ * @module gmfapp.print
+ */
+const exports = {};
 
-goog.require('gmf.Themes');
+import './print.css';
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+import gmfMapComponent from 'gmf/map/component.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.printDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfPrintComponent from 'gmf/print/component.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfLayertreeComponent.name,
+  gmfMapComponent.name,
+  gmfPrintComponent.name,
+  gmfThemeThemes.module.name,
+  ngeoMapModule.name //for ngeo.map.FeatureOverlay, perhaps remove me
+]);
 
 
-gmfapp.module.value(
+exports.module.value(
   'gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?' +
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?' +
         'version=2&background=background');
 
 
-gmfapp.module.value('gmfPrintUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/printproxy');
+exports.module.value('gmfPrintUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/printproxy');
 
 
-gmfapp.module.value(
+exports.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi'
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi'
 );
+
+
+exports.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
- * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
+exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
@@ -50,14 +70,14 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 3
@@ -95,4 +115,7 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

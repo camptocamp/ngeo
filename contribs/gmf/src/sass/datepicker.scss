@@ -1,0 +1,24 @@
+$datepicker-font-size : 0.69rem;
+#ui-datepicker-div {
+  font-family: $font-family-base;
+  font-size: $datepicker-font-size;
+  border-radius: inherit;
+  box-shadow: 0 0.62rem 1.25rem rgba(0,0,0,0.19), 0 0.37rem 0.37rem rgba(0,0,0,0.23);
+
+  .ui-datepicker-header {
+    border-radius: inherit;
+  }
+}
+
+.ngeo-datepicker {
+  font-size: $datepicker-font-size;
+  .ngeo-datepicker-form {
+    .ngeo-datepicker-start-date,
+    .ngeo-datepicker-end-date {
+      display: inline-block;
+      input {
+        max-width: 4.38rem;
+      }
+    }
+  }
+}

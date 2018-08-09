@@ -1,6 +1,17 @@
+/**
+ * @module app
+ */
+const exports = {};
 /*eslint valid-jsdoc: 0 */
+import ngeoMainmodule from 'ngeo/mainmodule.js';
 
-goog.require('ngeo.search.searchModule');
+exports.module = angular.module('app', []);
+
+beforeEach(() => {
+  exports.module.requires.push(ngeoMainmodule.name);
+});
+
+beforeEach(angular.mock.module('app'));
 
 beforeEach(() => {
   jasmine.addMatchers({
@@ -33,7 +44,7 @@ beforeEach(() => {
             }
           }
 
-          result.message =  `expected ${actual} to sort of equal ${expected}`;
+          result.message = `expected ${actual} to sort of equal ${expected}`;
 
           return result;
         }
@@ -41,3 +52,6 @@ beforeEach(() => {
     }
   });
 });
+
+
+export default exports;

@@ -1,54 +1,58 @@
-goog.provide('app.toolActivate');
+/**
+ * @module app.toolActivate
+ */
+const exports = {};
 
-goog.require('ngeo.DecorateInteraction');
-goog.require('ngeo.FeatureOverlayMgr');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol');
-goog.require('ol.coordinate');
-goog.require('ol.interaction.Draw');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import './toolActivate.css';
+import ngeoMapModule from 'ngeo/map/module.js';
 
+/** @suppress {extraRequire} */
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import * as olCoordinate from 'ol/coordinate.js';
+import olInteractionDraw from 'ol/interaction/Draw.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscToolActivateMgr.module.name,
+]);
 
 
 /**
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
- * @param {ngeo.DecorateInteraction} ngeoDecorateInteraction Interaction
-  *    decorator.
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
-  ngeoDecorateInteraction) {
+exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [1444682, 5979706],
       zoom: 4
     })
@@ -64,21 +68,21 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * overlay used to render the drawn features.
    * @type {ol.Collection.<ol.Feature>}
    */
-  const features = new ol.Collection();
+  const features = new olCollection();
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
-  overlay.setStyle(new ol.style.Style({
-    fill: new ol.style.Fill({
+  overlay.setStyle(new olStyleStyle({
+    fill: new olStyleFill({
       color: 'rgba(255, 255, 255, 0.2)'
     }),
-    stroke: new ol.style.Stroke({
+    stroke: new olStyleStroke({
       color: '#ffcc33',
       width: 2
     }),
-    image: new ol.style.Circle({
+    image: new olStyleCircle({
       radius: 7,
-      fill: new ol.style.Fill({
+      fill: new olStyleFill({
         color: '#ffcc33'
       })
     })
@@ -90,12 +94,12 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
   const content = document.getElementById('popup-content');
   this.map.on('singleclick', (evt) => {
     if (this.mapClickIsEnabled) {
-      const c = ol.coordinate.toStringXY(evt.coordinate);
+      const c = olCoordinate.toStringXY(evt.coordinate);
       content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
     }
   });
 
-  const mapClickTool = new ngeo.ToolActivate(this, 'mapClickIsEnabled');
+  const mapClickTool = new ngeoMiscToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);
 
 
@@ -104,16 +108,16 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawPoint = new ol.interaction.Draw(
+  this.drawPoint = new olInteractionDraw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'Point',
-      features
+      features: features
     }));
   this.drawPoint.setActive(false);
-  ngeoDecorateInteraction(this.drawPoint);
+  ngeoMiscDecorate.interaction(this.drawPoint);
   map.addInteraction(this.drawPoint);
 
-  const drawPointTool = new ngeo.ToolActivate(this.drawPoint, 'active');
+  const drawPointTool = new ngeoMiscToolActivate(this.drawPoint, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPointTool);
 
   // draw line interaction
@@ -121,16 +125,16 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawLine = new ol.interaction.Draw(
+  this.drawLine = new olInteractionDraw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'LineString',
-      features
+      features: features
     }));
   this.drawLine.setActive(false);
-  ngeoDecorateInteraction(this.drawLine);
+  ngeoMiscDecorate.interaction(this.drawLine);
   map.addInteraction(this.drawLine);
 
-  const drawLineTool = new ngeo.ToolActivate(this.drawLine, 'active');
+  const drawLineTool = new ngeoMiscToolActivate(this.drawLine, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawLineTool);
 
   // draw polygon interaction
@@ -138,18 +142,21 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr,
    * @type {ol.interaction.Draw}
    * @export
    */
-  this.drawPolygon = new ol.interaction.Draw(
+  this.drawPolygon = new olInteractionDraw(
     /** @type {olx.interaction.DrawOptions} */ ({
       type: 'Polygon',
-      features
+      features: features
     }));
   this.drawPolygon.setActive(false);
-  ngeoDecorateInteraction(this.drawPolygon);
+  ngeoMiscDecorate.interaction(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
 
-  const drawPolygonTool = new ngeo.ToolActivate(this.drawPolygon, 'active');
+  const drawPolygonTool = new ngeoMiscToolActivate(this.drawPolygon, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

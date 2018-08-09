@@ -1,22 +1,14 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html ng-app='app' ng-cloak>
   <head>
     <title>Modal example</title>
     <meta charset="utf-8">
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <style>
-      #map {
-        width: 600px;
-        height: 400px;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.modalDirective.html" title="Read our documentation">ngeo-modal</a></code> directive to open a modal.</p>
+    <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.message.modalComponent.html" title="Read our documentation">ngeo-modal</a></code> directive to open a modal.</p>
     <button ng-click="ctrl.modalShown = true">Show modal</button>
     <ngeo-modal ng-model="ctrl.modalShown">
       <div class="modal-header">
@@ -31,16 +23,5 @@
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </ngeo-modal>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=modal.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

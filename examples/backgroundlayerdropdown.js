@@ -1,56 +1,56 @@
-goog.provide('app.backgroundlayerdropdown');
+/**
+ * @module app.backgroundlayerdropdown
+ */
+const exports = {};
 
-goog.require('ngeo.BackgroundLayerMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ngeo.source.AsitVD');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.ImageWMS');
+import './backgroundlayerdropdown.css';
+import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
+
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name
+]);
 
 
 /**
- * The application-specific background layer directive.
+ * The application-specific background layer component.
  *
- * The directive is based on Bootstrap's dropdown jQuery plugin and on
+ * The component is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.backgroundlayerDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appBackgroundlayerMap'
-    },
-    templateUrl: 'partials/backgroundlayerdropdown.html',
-    bindToController: true,
-    controller: 'AppBackgroundlayerController as ctrl'
-  };
+exports.backgroundlayerComponent = {
+  bindings: {
+    'map': '=appBackgroundlayerMap'
+  },
+  template: require('./partials/backgroundlayerdropdown.html'),
+  controller: 'AppBackgroundlayerController'
 };
 
 
-app.module.directive('appBackgroundlayer', app.backgroundlayerDirective);
+exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent);
 
 
 /**
  * @constructor
  * @param {angular.$http} $http Angular http service.
- * @param {ngeo.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+ * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export
  * @ngInject
  */
-app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
     (resp) => {
       const bgLayers = resp.data;
@@ -59,7 +59,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
     });
 
   /**
-   * @type {ngeo.BackgroundLayerMgr}
+   * @type {ngeo.map.BackgroundLayerMgr}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
@@ -72,7 +72,7 @@ app.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * @param {Object} layerSpec Layer specification object.
  * @export
  */
-app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
+exports.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;
   const layer = this.createLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this['map'], layer);
@@ -84,20 +84,20 @@ app.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
  * @return {ol.layer.Tile} The layer.
  * @private
  */
-app.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
+exports.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
   if (layerName === 'blank') {
-    return new ol.layer.Tile();
+    return new olLayerTile();
   }
 
-  const source = new ngeo.source.AsitVD({
+  const source = new ngeoSourceAsitVD({
     layer: layerName
   });
-  return new ol.layer.Tile({source});
+  return new olLayerTile({source});
 };
 
 
-app.module.controller('AppBackgroundlayerController',
-  app.BackgroundlayerController);
+exports.module.controller('AppBackgroundlayerController',
+  exports.BackgroundlayerController);
 
 
 /**
@@ -105,14 +105,14 @@ app.module.controller('AppBackgroundlayerController',
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
    */
-  const map = new ol.Map({
-    view: new ol.View({
-      projection: 'EPSG:21781',
+  const map = new olMap({
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 1
@@ -124,8 +124,8 @@ app.MainController = function($scope) {
    * An overlay layer.
    * @type {ol.layer.Image}
    */
-  const overlay = new ol.layer.Image({
-    source: new ol.source.ImageWMS({
+  const overlay = new olLayerImage({
+    source: new olSourceImageWMS({
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
       serverType: 'mapserver'
@@ -137,4 +137,7 @@ app.MainController = function($scope) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

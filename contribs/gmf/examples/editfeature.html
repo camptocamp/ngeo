@@ -6,36 +6,11 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css" />
-    <style>
-      body {
-        padding: 0.5rem;
-      }
-      gmf-map > div {
-        width: 60rem;
-        height: 40rem;
-      }
-      .panel {
-        display: block;
-        width: 30rem;
-      }
-      .no-feature:before {
-        content: "No feature";
-      }
-      .pending:before {
-        content: "Query in progress...";
-      }
-      .form {
-        margin: 1rem 0 0 0;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
     <p id="desc">
-      This example shows how to use the <code>gmf.EditFeature</code>
+      This example shows how to use the <code>gmf.editing.EditFeature</code>
       service to insert, update and delete features from a layer using
       a GeoMapFish server. First, you must log in. Then, you can either
       click on the <em>Insert</em> button to insert a random feature, or
@@ -84,27 +59,5 @@
         </div>
       </div>
     </div>
-    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../../../node_modules/angular/angular.js"></script>
-    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="/@?main=editfeature.js"></script>
-    <script src="default.js"></script>
-    <script src="../../../utils/watchwatchers.js"></script>
-    <script>
-      var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'Demo');
-      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-    </script>
   </body>
 </html>

@@ -1,19 +1,18 @@
-/* global themes capabilities */
-goog.require('gmf.Themes');
-goog.require('gmf.ThemesEventType');
-goog.require('gmf.test.data.themes');
+import gmfTestDataThemes from 'gmf/test/data/themes.js';
+import gmfTestDataThemescapabilities from 'gmf/test/data/themescapabilities.js';
+import * as olEvents from 'ol/events.js';
 
-describe('gmf.Themes', () => {
+describe('gmf.theme.Themes', () => {
   let gmfThemes;
   let treeUrl;
   let $httpBackend;
 
   beforeEach(() => {
-    inject(($injector) => {
-      gmfThemes = $injector.get('gmfThemes');
-      treeUrl = `${$injector.get('gmfTreeUrl')}?cache_version=0`;
-      $httpBackend = $injector.get('$httpBackend');
-      $httpBackend.when('GET', treeUrl).respond(themes);
+    angular.mock.inject((_gmfThemes_, _gmfTreeUrl_, _$httpBackend_) => {
+      gmfThemes = _gmfThemes_;
+      treeUrl = `${_gmfTreeUrl_}?cache_version=0`;
+      $httpBackend = _$httpBackend_;
+      $httpBackend.when('GET', treeUrl).respond(gmfTestDataThemes);
     });
   });
 
@@ -28,9 +27,9 @@ describe('gmf.Themes', () => {
     const urls = [];
 
     $httpBackend.expectGET(treeUrl);
-    themes.background_layers.forEach((bgLayer) => {
-      const response = bgLayer.name == 'OSM' ? capabilities.map :
-        capabilities.asitvd;
+    gmfTestDataThemes.background_layers.forEach((bgLayer) => {
+      const response = bgLayer.name == 'OSM' ? gmfTestDataThemescapabilities.map :
+        gmfTestDataThemescapabilities.asitvd;
       $httpBackend.when('GET', bgLayer.url).respond(response);
       if (!urls.includes(bgLayer.url)) {
         urls.push(bgLayer.url);
@@ -44,7 +43,7 @@ describe('gmf.Themes', () => {
     const response = spy.calls.mostRecent().args[0];
     expect(response.length).toBe(4);
     const responseFirstBgName = response[1].get('label');
-    const firstBgName = themes.background_layers[0].name;
+    const firstBgName = gmfTestDataThemes.background_layers[0].name;
     expect(responseFirstBgName).toBe(firstBgName);
     expect(response[1].get('querySourceIds')).toBeDefined();
   });
@@ -65,7 +64,7 @@ describe('gmf.Themes', () => {
   it('Emit change event', () => {
     const spy = jasmine.createSpy();
     const eventSpy = jasmine.createSpy();
-    ol.events.listen(gmfThemes, gmf.ThemesEventType.CHANGE, eventSpy);
+    olEvents.listen(gmfThemes, 'change', eventSpy);
 
     gmfThemes.promise_.then(spy);
 
@@ -85,7 +84,7 @@ describe('gmf.Themes', () => {
 
     expect(spy.calls.count()).toBe(1);
     const data = spy.calls.mostRecent().args[0];
-    expect(Object.keys(data)[0]).toBe(Object.keys(themes)[0]);
+    expect(Object.keys(data)[0]).toBe(Object.keys(gmfTestDataThemes)[0]);
   });
 
   it('Get themes object', () => {
@@ -99,7 +98,7 @@ describe('gmf.Themes', () => {
     expect(spy.calls.count()).toBe(1);
     const resultThemes = spy.calls.mostRecent().args[0];
     const dataFirstKey = Object.keys(resultThemes[0])[0];
-    const themesThemesFirstKey = Object.keys(themes.themes[0])[0];
+    const themesThemesFirstKey = Object.keys(gmfTestDataThemes.themes[0])[0];
     expect(dataFirstKey).toBe(themesThemesFirstKey);
   });
 

@@ -1,31 +1,25 @@
-/*global describe beforeEach inject expect it */
-/*eslint no-undef: "error"*/
-
-goog.require('ngeo.DecorateLayerLoading');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Group');
-goog.require('ol.source.Image');
-goog.require('ol.Collection');
+import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerGroup from 'ol/layer/Group.js';
+import olSourceImage from 'ol/source/Image.js';
 
 
-describe('DecorateLayerLoading test suite', () => {
-  let decorateLayerLoading;
+describe('ngeo.misc.DecorateLayerLoading test suite', () => {
   let scope;
 
-  beforeEach(inject(($injector, $rootScope) => {
-    decorateLayerLoading = $injector.get('ngeoDecorateLayerLoading');
+  beforeEach(angular.mock.inject(($rootScope) => {
     scope = $rootScope.$new();
   }));
 
   it('should increment layerLoadingCount recursively', () => {
-    const imageSource = new ol.source.Image({});
-    const layer = new ol.layer.Image({source: imageSource});
-    const lg_1 = new ol.layer.Group();
-    const lg_2 = new ol.layer.Group();
+    const imageSource = new olSourceImage({});
+    const layer = new olLayerImage({source: imageSource});
+    const lg_1 = new olLayerGroup();
+    const lg_2 = new olLayerGroup();
 
-    decorateLayerLoading(layer, scope);
-    decorateLayerLoading(lg_1, scope);
-    decorateLayerLoading(lg_2, scope);
+    ngeoMiscDecorate.layerLoading(layer, scope);
+    ngeoMiscDecorate.layerLoading(lg_1, scope);
+    ngeoMiscDecorate.layerLoading(lg_2, scope);
 
     lg_1.getLayers().insertAt(0, layer);
     lg_2.getLayers().insertAt(0, lg_1);
@@ -45,6 +39,5 @@ describe('DecorateLayerLoading test suite', () => {
     expect(layer.get('load_count')).toBe(0);
     expect(lg_1.get('load_count')).toBe(0);
     expect(lg_2.get('load_count')).toBe(0);
-
   });
 });

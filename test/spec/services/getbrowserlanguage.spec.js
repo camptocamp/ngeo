@@ -1,16 +1,14 @@
-goog.require('ngeo.GetBrowserLanguage');
-
-describe('ngeo.GetBrowserLanguage', () => {
+describe('ngeo.misc.getBrowserLanguage', () => {
   let win;
   let ngeoGetBrowserLanguage;
 
   beforeEach(() => {
     win = {navigator: {}};
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       $provide.value('$window', win);
     });
-    inject(($injector) => {
-      ngeoGetBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
+    angular.mock.inject((_ngeoGetBrowserLanguage_) => {
+      ngeoGetBrowserLanguage = _ngeoGetBrowserLanguage_;
     });
   });
 

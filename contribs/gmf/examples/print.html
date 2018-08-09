@@ -6,159 +6,9 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
-    <style>
-      gmf-map,
-      #tree-container {
-        float: left;
-      }
-      .clear-left {
-        clear: left;
-      }
-      gmf-map > div {
-        width: 600px;
-        height: 400px;
-      }
-      .printpanel {
-        width: 250px;
-        margin: 10px;
-        padding: 10px;
-        background-color: #D3E5D7;
-      }
-      .tools-content-heading {
-        border-bottom: solid 1px;
-      }
-      .tools-content-heading .close {
-        line-height: 0;
-      }
-      input[type=range] {
-        -webkit-appearance: none;
-        width: 100%;
-        padding-right: 0 !important;
-        padding-left: 0 !important;
-      }
-      input[type=range]:focus {
-        outline: none;
-      }
-      input[type=range]::-webkit-slider-runnable-track {
-        width: 100%;
-        height: 5px;
-        cursor: pointer;
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
-        background: rgba(148, 172, 154, 0.78);
-        border-radius: 1px;
-        border: 0.2px solid rgba(1, 1, 1, 0.2);
-      }
-      input[type=range]::-webkit-slider-thumb {
-        box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-        border: 1px solid rgba(0, 0, 30, 0.2);
-        height: 20px;
-        width: 10px;
-        border-radius: 5px;
-        background: #ffffff;
-        cursor: pointer;
-        -webkit-appearance: none;
-        margin-top: -7.7px;
-      }
-      input[type=range]:focus::-webkit-slider-runnable-track {
-        background: rgba(205, 217, 208, 0.78);
-      }
-      input[type=range]::-moz-range-track {
-        width: 100%;
-        height: 5px;
-        cursor: pointer;
-        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0px 0px 1px rgba(13, 13, 13, 0);
-        background: rgba(148, 172, 154, 0.78);
-        border-radius: 1px;
-        border: 0.2px solid rgba(1, 1, 1, 0.2);
-      }
-      input[type=range]::-moz-range-thumb {
-        box-shadow: 0.9px 0.9px 1px rgba(0, 0, 49, 0.2), 0px 0px 0.9px rgba(0, 0, 75, 0.2);
-        border: 1px solid rgba(0, 0, 30, 0.2);
-        height: 20px;
-        width: 10px;
-        border-radius: 5px;
-        background: #ffffff;
-        cursor: pointer;
-      }
-      /* Layertree */
-      ul {
-        list-style-type: none;
-      }
-      gmf-layertree a{
-        color: black;
-        text-decoration: none;
-        padding-right: 5px;
-      }
-      gmf-layertree .gmf-layertree-metadata a:before {
-        font-family: FontAwesome;
-        content: "\f129";
-      }
-      gmf-layertree .gmf-layertree-layer-icon {
-        display: inline-flex;
-        width: 20px;
-        height: 10px;
-      }
-      gmf-layertree .gmf-layertree-zoom {
-        display: none;
-      }
-      gmf-layertree .gmf-layertree-zoom:hover {
-        cursor: pointer;
-      }
-      gmf-layertree .gmf-layertree-zoom:before {
-        font-family: FontAwesome;
-        content: "\f18e";
-      }
-      gmf-layertree .outOfResolution .gmf-layertree-legend {
-        display: none;
-      }
-      gmf-layertree .gmf-layertree-legend-button a:after {
-        font-family: FontAwesome;
-        content: "\f036";
-      }
-      gmf-layertree .gmf-layertree-legend img {
-        padding-left: 15px;
-      }
-      gmf-layertree .noSource {
-        opacity: 0.3;
-      }
-      gmf-layertree .noSource:after {
-        content: "(source not available)";
-      }
-      gmf-layertree .outOfResolution {
-        opacity: 0.6;
-      }
-      gmf-layertree .outOfResolution .gmf-layertree-zoom {
-        display: inline;
-      }
-      gmf-layertree .gmf-layertree-state {
-        font-family: FontAwesome;
-        font-weight: lighter;
-      }
-      gmf-layertree .on .gmf-layertree-state:before {
-        content: "\f14a";
-      }
-      gmf-layertree .off .gmf-layertree-state:before {
-        content: "\f096";
-      }
-      gmf-layertree .indeterminate .gmf-layertree-state:before {
-        content: "\f147";
-      }
-
-      @media (max-width: 768px) {
-        #map {
-          height: 200px;
-          width: 200px;
-        }
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
 
-  <div style="display: none;"><gmf-authentication></gmf-authentication></div>
   <gmf-map gmf-map-map="ctrl.map"></gmf-map>
 
     <div id="tree-container">
@@ -179,8 +29,8 @@
     <div class="clear-left"></div>
 
     <p id="desc">
-      This example shows how to use the <code>gmf.printDirective</code>.
-      Directive that generates layout information and manages tools to print with a
+      This example shows how to use the <code>gmf.print.component</code>.
+      Component that generates layout information and manages tools to print with a
       MapFishPrint v3.
     </p>
 
@@ -193,11 +43,11 @@
             <a class="btn close" ng-click="printActive = false">&times;</a>
           </div>
           <gmf-print
-            gmf-print-map="ctrl.map"
+            gmf-print-map="::ctrl.map"
             gmf-print-active="printActive"
-            gmf-print-fieldvalues="ctrl.defaulPrintFieldstValues"
-            gmf-print-hiddenattributes="['title', 'comments']"
-            gmf-print-attributes-out="attributes">
+            gmf-print-fieldvalues="::ctrl.defaulPrintFieldstValues"
+            gmf-print-hiddenattributes="::['title', 'comments']"
+            gmf-print-attributes-out="::attributes">
             <div
               ng-repeat="attribute in attributes"
               class="gmf-print-layoutinfo">
@@ -256,28 +106,5 @@
         </div>
       </div>
     </div>
-
-    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../../../node_modules/angular/angular.js"></script>
-    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=print.js"></script>
-    <script src="default.js"></script>
-    <script src="../../../utils/watchwatchers.js"></script>
-    <script>
-      var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'Demo');
-      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-    </script>
   </body>
 </html>

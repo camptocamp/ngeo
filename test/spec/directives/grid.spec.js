@@ -1,13 +1,12 @@
-goog.require('ngeo.GridConfig');
-goog.require('ngeo.gridComponent');
+import ngeoGridConfig from 'ngeo/grid/Config.js';
 
-describe('ngeo.gridComponent', () => {
+describe('ngeo.grid.component', () => {
 
   let gridController;
   let $scope;
   let $rootScope;
 
-  beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
+  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
     const $controller = _$controller_;
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
@@ -58,7 +57,7 @@ describe('ngeo.gridComponent', () => {
     ];
 
     const data = {
-      configuration: new ngeo.GridConfig(gridConfigData, columnDefs)
+      configuration: new ngeoGridConfig(gridConfigData, columnDefs)
     };
     gridController = $controller(
       'ngeoGridController', {$scope}, data);
@@ -123,7 +122,7 @@ describe('ngeo.gridComponent', () => {
       expect(gridController.configuration.isRowSelected(firstRow)).toBe(true);
       expect(gridController.configuration.isRowSelected(sndRow)).toBe(true);
 
-      // unselect the 2nd row
+      // deselect the 2nd row
       gridController.clickRow_(sndRow, false, true);
       expect(gridController.configuration.isRowSelected(firstRow)).toBe(true);
       expect(gridController.configuration.isRowSelected(sndRow)).toBe(false);

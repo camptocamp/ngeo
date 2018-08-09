@@ -1,10 +1,10 @@
-<h3>Total: {{ qrCtrl.result.total }}</h3>
+<h3>Total: {{ $ctrl.result.total }}</h3>
 
 <ul class="nav nav-tabs"
     role="tablist">
   <!-- sources are dynamically added in GMF after reading the themes, so
        no one-time binding here -->
-  <li ng-repeat="source in qrCtrl.result.sources"
+  <li ng-repeat="source in $ctrl.result.sources"
       role="presentation"
       ng-if="source.features.length">
     <a href="#{{ ::source.id }}"
@@ -19,7 +19,7 @@
 
 <div class="tab-content">
   <!-- same thing here -->
-  <div ng-repeat="source in qrCtrl.result.sources"
+  <div ng-repeat="source in $ctrl.result.sources"
        role="tabpanel"
        class="tab-pane"
        ng-if="source.features.length"

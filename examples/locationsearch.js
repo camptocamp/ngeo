@@ -1,43 +1,45 @@
-goog.provide('app.locationsearch');
+/**
+ * @module app.locationsearch
+ */
+const exports = {};
 
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ngeo');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-/** @suppress {extraRequire} */
-goog.require('ngeo.search.createLocationSearchBloodhound');
-goog.require('goog.asserts');
+import './locationsearch.css';
+import googAsserts from 'goog/asserts.js';
+
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoSearchModule from 'ngeo/search/module.js';
+import * as olProj from 'ol/proj.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [ngeo.module.name]);
+const appmodule = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoSearchModule.name
+]);
 
 
 /**
- * @return {angular.Directive} Directive Definition Object.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.locationSearchDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {
-      'map': '=appSearchMap'
-    },
-    controller: 'AppSearchController as ctrl',
-    bindToController: true,
-    template:
-        '<input type="text" placeholder="Search…" ' +
-        'ngeo-search="ctrl.options" ' +
-        'ngeo-search-datasets="ctrl.datasets" ' +
-        'ngeo-search-listeners="ctrl.listeners">'
-  };
+exports.locationSearchComponent = {
+  bindings: {
+    'map': '=appSearchMap'
+  },
+  controller: 'AppSearchController',
+  template:
+      '<input type="text" placeholder="Search…" ' +
+      'ngeo-search="$ctrl.options" ' +
+      'ngeo-search-datasets="$ctrl.datasets" ' +
+      'ngeo-search-listeners="$ctrl.listeners">'
 };
 
 
-app.module.directive('appLocationSearch', app.locationSearchDirective);
+appmodule.component('appLocationSearch', exports.locationSearchComponent);
 
 
 /**
@@ -45,7 +47,7 @@ app.module.directive('appLocationSearch', app.locationSearchDirective);
  * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
-app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
+exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {ol.Map}
@@ -74,16 +76,14 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
    */
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
-    limit,
-    display(suggestion) {
+    limit: limit,
+    display: (suggestion) => {
       const feature = /** @type {ol.Feature} */ (suggestion);
       return feature.get('label_no_html');
     },
     templates: {
-      header() {
-        return '<div class="ngeo-header">Locations</div>';
-      },
-      suggestion(suggestion) {
+      header: () => '<div class="ngeo-header">Locations</div>',
+      suggestion: (suggestion) => {
         const feature = /** @type {ol.Feature} */ (suggestion);
         return `<p>${feature.get('label')}</p>`;
       }
@@ -95,7 +95,7 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
    * @export
    */
   this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
-    select: app.SearchController.select_.bind(this)
+    select: exports.SearchController.select_.bind(this)
   });
 
 };
@@ -108,14 +108,14 @@ app.SearchController = function(ngeoCreateLocationSearchBloodhound) {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
-  const epsg3857 = ol.proj.get('EPSG:3857');
-  goog.asserts.assert(epsg3857 !== null);
+exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+  const epsg3857 = olProj.get('EPSG:3857');
+  googAsserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
     targetProjection: epsg3857,
-    limit,
+    limit: limit,
     origins: 'gazetteer',
-    prepare(query, settings) {
+    prepare: (query, settings) => {
       // in a real application the interface language could be used here
       const lang = 'fr';
       settings.url += `&lang=${lang}`;
@@ -131,38 +131,38 @@ app.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLoc
  * @param {jQuery.Event} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
- * @this {app.SearchController}
+ * @this {app.locationsearch.SearchController}
  * @private
  */
-app.SearchController.select_ = function(event, suggestion, dataset) {
+exports.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
   const bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
-  goog.asserts.assert(size !== undefined);
+  googAsserts.assert(size !== undefined);
   const maxZoom = 16;
   this.map.getView().fit(bbox, {size, maxZoom});
 };
 
 
-app.module.controller('AppSearchController', app.SearchController);
+appmodule.controller('AppSearchController', exports.SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -171,4 +171,7 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+appmodule.controller('MainController', exports.MainController);
+
+
+export default exports;

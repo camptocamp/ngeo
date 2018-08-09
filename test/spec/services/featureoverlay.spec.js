@@ -1,15 +1,18 @@
-goog.require('ngeo.FeatureOverlayMgr');
+import olMap from 'ol/Map.js';
+import olCollection from 'ol/Collection.js';
+import olFeature from 'ol/Feature.js';
+import olStyleStyle from 'ol/style/Style.js';
 
-describe('ngeo.FeatureOverlayMgr', () => {
+describe('ngeo.map.FeatureOverlayMgr', () => {
   let ngeoFeatureOverlayMgr;
   let map;
   let layer;
 
   beforeEach(() => {
-    map = new ol.Map({});
+    map = new olMap({});
 
-    inject(($injector) => {
-      ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
+    angular.mock.inject((_ngeoFeatureOverlayMgr_) => {
+      ngeoFeatureOverlayMgr = _ngeoFeatureOverlayMgr_;
       ngeoFeatureOverlayMgr.init(map);
       layer = ngeoFeatureOverlayMgr.getLayer();
     });
@@ -22,7 +25,7 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
   it('adds and removes features', () => {
     const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    const feature = new ol.Feature();
+    const feature = new olFeature();
     overlay.addFeature(feature);
     expect(layer.getSource().getFeatures().length).toBe(1);
 
@@ -32,7 +35,7 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
   it('removes all the features', () => {
     const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    const feature = new ol.Feature();
+    const feature = new olFeature();
     overlay.addFeature(feature);
     overlay.clear();
     expect(layer.getSource().getFeatures().length).toBe(0);
@@ -40,11 +43,11 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
   it('doesn\'t remove features from other overlays', () => {
     const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    const feature1 = new ol.Feature();
+    const feature1 = new olFeature();
     overlay1.addFeature(feature1);
 
     const overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    const feature2 = new ol.Feature();
+    const feature2 = new olFeature();
     overlay2.addFeature(feature2);
 
     expect(layer.getSource().getFeatures().length).toBe(2);
@@ -56,17 +59,17 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
   it('correctly sets styles', () => {
     const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    const style1 = new ol.style.Style();
+    const style1 = new olStyleStyle();
     overlay1.setStyle(style1);
 
     const overlay2 = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    const style2 = new ol.style.Style();
+    const style2 = new olStyleStyle();
     overlay2.setStyle(style2);
 
-    const feature1 = new ol.Feature();
+    const feature1 = new olFeature();
     overlay1.addFeature(feature1);
 
-    const feature2 = new ol.Feature();
+    const feature2 = new olFeature();
     overlay2.addFeature(feature2);
 
     const styleFunction = ngeoFeatureOverlayMgr.getLayer().getStyleFunction();
@@ -88,9 +91,9 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
     beforeEach(() => {
       overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-      const feature1 = new ol.Feature();
-      const feature2 = new ol.Feature();
-      features = new ol.Collection([feature1, feature2]);
+      const feature1 = new olFeature();
+      const feature2 = new olFeature();
+      features = new olCollection([feature1, feature2]);
       overlay.setFeatures(features);
     });
 
@@ -100,7 +103,7 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
     describe('add features to the collection', () => {
       it('adds features to the overlay', () => {
-        features.push(new ol.Feature());
+        features.push(new olFeature());
         expect(layer.getSource().getFeatures().length).toBe(3);
       });
     });
@@ -121,12 +124,12 @@ describe('ngeo.FeatureOverlayMgr', () => {
 
     describe('replace the collection by another one', () => {
       it('uses the new collection and ignores the old one', () => {
-        const newFeatures = new ol.Collection();
+        const newFeatures = new olCollection();
         overlay.setFeatures(newFeatures);
         expect(layer.getSource().getFeatures().length).toBe(0);
-        newFeatures.push(new ol.Feature());
+        newFeatures.push(new olFeature());
         expect(layer.getSource().getFeatures().length).toBe(1);
-        features.push(new ol.Feature());
+        features.push(new olFeature());
         expect(layer.getSource().getFeatures().length).toBe(1);
       });
     });

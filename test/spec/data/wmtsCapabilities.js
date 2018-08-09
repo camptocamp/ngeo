@@ -1,24 +1,23 @@
-/*eslint no-unused-vars: ["error", { "varsIgnorePattern": "wmtsCapabilities" }] */
-goog.provide('ngeo.test.data.wmtsCapabilities');
-
-const wmtsCapabilities =
-'<?xml version="1.0" encoding="UTF-8"?>' +
+/**
+ * @module ngeo.test.data.wmtsCapabilities
+ */
+const exports = '<?xml version="1.0" encoding="UTF-8"?>' +
 '<Capabilities xmlns="http://www.opengis.net/wmts/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.0" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd">' +
     '<ows:ServiceIdentification>' +
-        '<ows:Title>Koordinates Labs</ows:Title>' +
+        '<ows:Title>Coordinates Labs</ows:Title>' +
         '<ows:ServiceType>OGC WMTS</ows:ServiceType>' +
         '<ows:ServiceTypeVersion>1.0.0</ows:ServiceTypeVersion>' +
     '</ows:ServiceIdentification>' +
     '<ows:ServiceProvider>' +
-        '<ows:ProviderName>Koordinates</ows:ProviderName>' +
-        '<ows:ProviderSite xlink:href="http://labs.koordinates.com" />' +
+        '<ows:ProviderName>Coordinates</ows:ProviderName>' +
+        '<ows:ProviderSite xlink:href="http://labs.coordinates.com" />' +
         '<ows:ServiceContact />' +
     '</ows:ServiceProvider>' +
     '<ows:OperationsMetadata>' +
         '<ows:Operation name="GetCapabilities">' +
             '<ows:DCP>' +
                 '<ows:HTTP>' +
-                    '<ows:Get xlink:href="https://labs.koordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/WMTSCapabilities.xml?">' +
+                    '<ows:Get xlink:href="https://labs.coordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/WMTSCapabilities.xml?">' +
                         '<ows:Constraint name="GetEncoding">' +
                             '<ows:AllowedValues>' +
                                 '<ows:Value>KVP</ows:Value>' +
@@ -31,7 +30,7 @@ const wmtsCapabilities =
         '<ows:Operation name="GetFeatureInfo">' +
             '<ows:DCP>' +
                 '<ows:HTTP>' +
-                    '<ows:Get xlink:href="https://labs.koordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/?">' +
+                    '<ows:Get xlink:href="https://labs.coordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/?">' +
                         '<ows:Constraint name="GetEncoding">' +
                             '<ows:AllowedValues>' +
                                 '<ows:Value>KVP</ows:Value>' +
@@ -65,9 +64,9 @@ const wmtsCapabilities =
             '<TileMatrixSetLink>' +
                 '<TileMatrixSet>EPSG:3857</TileMatrixSet>' +
             '</TileMatrixSetLink>' +
-            '<ResourceURL format="image/png" resourceType="tile" template="https://koordinates-tiles-a.global.ssl.fastly.net/services;key=d740ea02e0c44cafb70dce31a774ca10/tiles/v4/layer=7328,{style}/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.png" />' +
-            '<ResourceURL format="application/json" resourceType="FeatureInfo" template="https://labs.koordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/featureinfo/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}/{I}/{J}.json" />' +
-            '<ResourceURL format="text/html" resourceType="FeatureInfo" template="https://labs.koordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/featureinfo/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}/{I}/{J}.html" />' +
+            '<ResourceURL format="image/png" resourceType="tile" template="https://coordinates-tiles-a.global.ssl.fastly.net/services;key=d740ea02e0c44cafb70dce31a774ca10/tiles/v4/layer=7328,{style}/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}.png" />' +
+            '<ResourceURL format="application/json" resourceType="FeatureInfo" template="https://labs.coordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/featureinfo/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}/{I}/{J}.json" />' +
+            '<ResourceURL format="text/html" resourceType="FeatureInfo" template="https://labs.coordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/featureinfo/{TileMatrixSet}/{TileMatrix}/{TileCol}/{TileRow}/{I}/{J}.html" />' +
         '</Layer>' +
         '<TileMatrixSet>' +
             '<ows:Title>GoogleMapsCompatible</ows:Title>' +
@@ -279,5 +278,8 @@ const wmtsCapabilities =
             '</TileMatrix>' +
         '</TileMatrixSet>' +
     '</Contents>' +
-    '<ServiceMetadataURL xlink:href="https://labs.koordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/WMTSCapabilities.xml" />' +
+    '<ServiceMetadataURL xlink:href="https://labs.coordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/WMTSCapabilities.xml" />' +
 '</Capabilities>';
+
+
+export default exports;

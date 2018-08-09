@@ -1,8 +1,7 @@
-goog.require('gmf.contextualdataDirective');
-goog.require('gmf.mapDirective');
-goog.require('gmf.Raster');
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
 
-describe('gmf.contextualdataDirective', () => {
+describe('gmf.contextualdata.component', () => {
 
   let $compile;
   let $document;
@@ -11,7 +10,7 @@ describe('gmf.contextualdataDirective', () => {
   let $httpBackend;
   let callbackSpy;
 
-  beforeEach(inject(($injector, _$httpBackend_, _$rootScope_, _$compile_, _$document_) => {
+  beforeEach(angular.mock.inject((_$httpBackend_, _$rootScope_, _$compile_, _$document_) => {
     const $rootScope = _$rootScope_;
     $compile = _$compile_;
     $document = _$document_;
@@ -29,8 +28,8 @@ describe('gmf.contextualdataDirective', () => {
     angular.element($document[0].body).append(element);
     const scope = $rootScope.$new();
 
-    map = new ol.Map({
-      view: new ol.View({
+    map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 0,
         projection: 'EPSG:4326'
@@ -86,7 +85,7 @@ describe('gmf.contextualdataDirective', () => {
       const event = {
         clientX: 100,
         clientY: 200,
-        preventDefault() {}
+        preventDefault: () => {}
       };
       contextualdataController.handleMapContextMenu_(event);
       // make sure the template for contextualdatacontent directive is loaded

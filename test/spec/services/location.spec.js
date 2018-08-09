@@ -1,6 +1,4 @@
-goog.require('ngeo.Location');
-
-describe('ngeo.Location', () => {
+describe('ngeo.statemanager.Location', () => {
   let win;
   let ngeoLocation;
 
@@ -10,11 +8,11 @@ describe('ngeo.Location', () => {
       'history': {'replaceState': function() {}}
     };
     spyOn(win.history, 'replaceState');
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       $provide.value('$window', win);
     });
-    inject(($injector) => {
-      ngeoLocation = $injector.get('ngeoLocation');
+    angular.mock.inject((_ngeoLocation_) => {
+      ngeoLocation = _ngeoLocation_;
     });
   });
 
@@ -59,6 +57,25 @@ describe('ngeo.Location', () => {
 
     it('returns undefined if no integer', () => {
       const value = ngeoLocation.getParamAsInt('wrong-key');
+      expect(value).toBe(undefined);
+    });
+  });
+
+  describe('#getParamAsFloat', () => {
+    it('returns the param value as float', () => {
+      ngeoLocation.updateParams({'key2': '2.45678'});
+      const value = ngeoLocation.getParamAsFloat('key2');
+      expect(value).toBe(2.45678);
+    });
+
+    it('returns undefined if no float', () => {
+      const value = ngeoLocation.getParamAsFloat('key1');
+      expect(value).toBe(undefined);
+    });
+
+    it('returns undefined if no float', () => {
+      ngeoLocation.updateParams({'key2': 'NaN'});
+      const value = ngeoLocation.getParamAsFloat('key2');
       expect(value).toBe(undefined);
     });
   });

@@ -1,31 +1,41 @@
-goog.provide('gmfapp.elevation');
+/**
+ * @module gmfapp.elevation
+ */
+const exports = {};
 
+import './elevation.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.elevationDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfRasterModule from 'gmf/raster/module.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfMapComponent.name,
+  gmfRasterModule.name,
+]);
 
 
-gmfapp.module.value(
+exports.module.value(
   'gmfRasterUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/raster');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
+
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function() {
+exports.MainController = function() {
   /**
    * @type {Array.<string>}
    * @export
@@ -42,14 +52,14 @@ gmfapp.MainController = function() {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
       zoom: 3
@@ -57,4 +67,7 @@ gmfapp.MainController = function() {
   });
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

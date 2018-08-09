@@ -1,13 +1,11 @@
-goog.require('ngeo.filereaderDirective');
-
-describe('ngeo.filereaderDirective', () => {
+describe('ngeo.misc.filereaderComponent', () => {
   let element, rootScope;
 
   beforeEach(() => {
     element = angular.element(
       '<input type="file" ngeo-filereader="fileContent" />');
 
-    module(($provide) => {
+    angular.mock.module(($provide) => {
       const FileReader = function() {};
       FileReader.prototype.readAsText = function(file) {
         const progressEvent = {
@@ -17,10 +15,10 @@ describe('ngeo.filereaderDirective', () => {
         };
         this.onload(progressEvent);
       };
-      $provide.value('$window', {FileReader, angular: window.angular});
+      $provide.value('$window', {FileReader: FileReader, angular: window.angular});
     });
 
-    inject(($rootScope, $compile) => {
+    angular.mock.inject(($rootScope, $compile) => {
       $compile(element)($rootScope);
       rootScope = $rootScope;
     });

@@ -1,44 +1,58 @@
-goog.provide('gmfapp.editfeature');
+/**
+ * @module gmfapp.editfeature
+ */
+const exports = {};
+
+import './editfeature.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+
+import gmfAuthenticationModule from 'gmf/authentication/module.js';
+import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-goog.require('gmf.EditFeature');
-goog.require('ol.Feature');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.extent');
-goog.require('ol.geom.Point');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Image');
-goog.require('ol.source.OSM');
-goog.require('ol.source.ImageWMS');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import olFeature from 'ol/Feature.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import * as olExtent from 'ol/extent.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfAuthenticationModule.name,
+  gmfEditingEditFeature.module.name,
+  gmfMapComponent.name,
+]);
 
 
-gmfapp.module.value(
+exports.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 
-gmfapp.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+exports.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmfx.User} gmfUser User.
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
+exports.MainController = function($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {!angular.Scope}
@@ -47,7 +61,7 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.scope_ = $scope;
 
   /**
-   * @type {gmf.EditFeature}
+   * @type {gmf.editing.EditFeature}
    * @export
    */
   this.editFeature_ = gmfEditFeature;
@@ -62,8 +76,8 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @type {ol.source.ImageWMS}
    * @private
    */
-  this.wmsSource_ = new ol.source.ImageWMS({
-    url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+  this.wmsSource_ = new olSourceImageWMS({
+    url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
     params: {'LAYERS': 'point'}
   });
 
@@ -71,7 +85,7 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @type {ol.layer.Image}
    * @private
    */
-  this.wmsLayer_ = new ol.layer.Image({
+  this.wmsLayer_ = new olLayerImage({
     source: this.wmsSource_
   });
 
@@ -103,22 +117,22 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       }),
       this.wmsLayer_
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2
     })
   });
 
-  this.map.on('singleclick', this.handleMapSingleClick_, this);
+  this.map.on('singleclick', this.handleMapSingleClick_.bind(this));
 
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
@@ -132,7 +146,7 @@ gmfapp.MainController = function($scope, gmfEditFeature, gmfUser) {
  * @param {ol.MapBrowserEvent} evt MapBrowser event
  * @private
  */
-gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
+exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
 
   // (1) Launch query to fetch new features
   const coordinate = evt.coordinate;
@@ -140,7 +154,7 @@ gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
   const view = map.getView();
   const resolution = view.getResolution();
   const buffer = resolution * this.pixelBuffer_;
-  const extent = ol.extent.buffer(
+  const extent = olExtent.buffer(
     [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
     buffer
   );
@@ -162,7 +176,7 @@ gmfapp.MainController.prototype.handleMapSingleClick_ = function(evt) {
  * @param {Array.<ol.Feature>} features Features.
  * @private
  */
-gmfapp.MainController.prototype.handleGetFeatures_ = function(features) {
+exports.MainController.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   if (features.length) {
@@ -175,7 +189,7 @@ gmfapp.MainController.prototype.handleGetFeatures_ = function(features) {
  * Insert a new feature at a random location.
  * @export
  */
-gmfapp.MainController.prototype.insertFeature = function() {
+exports.MainController.prototype.insertFeature = function() {
 
   this.pending = true;
 
@@ -185,12 +199,12 @@ gmfapp.MainController.prototype.insertFeature = function() {
   const resolution = view.getResolution();
   const buffer = resolution * -50; // 50 pixel buffer inside the extent
   const size = /** @type {!Array.<number>} */ (map.getSize());
-  const extent = ol.extent.buffer(
+  const extent = olExtent.buffer(
     view.calculateExtent(size),
     buffer
   );
-  const bottomLeft = ol.extent.getBottomLeft(extent);
-  const topRight = ol.extent.getTopRight(extent);
+  const bottomLeft = olExtent.getBottomLeft(extent);
+  const topRight = olExtent.getTopRight(extent);
   const left = bottomLeft[0];
   const bottom = bottomLeft[1];
   const right = topRight[0];
@@ -199,13 +213,15 @@ gmfapp.MainController.prototype.insertFeature = function() {
   const deltaY = top - bottom;
   const coordinate = [
     left + Math.random() * deltaX,
-    right + Math.random() * deltaY
+    bottom + Math.random() * deltaY
   ];
 
-  const feature = new ol.Feature({
-    'geometry': new ol.geom.Point(coordinate),
+  const feature = new olFeature({
+    'geometry': new olGeomMultiPoint([coordinate]),
     'name': 'New point'
   });
+
+  this.feature = null; // clear selected feature
 
   // (2) Launch request
   this.editFeature_.insertFeatures(
@@ -221,7 +237,7 @@ gmfapp.MainController.prototype.insertFeature = function() {
  * Update the currently selected feature with a new name.
  * @export
  */
-gmfapp.MainController.prototype.updateFeature = function() {
+exports.MainController.prototype.updateFeature = function() {
 
   console.assert(this.feature);
 
@@ -237,9 +253,6 @@ gmfapp.MainController.prototype.updateFeature = function() {
   ).then(
     this.handleEditFeature_.bind(this)
   );
-
-  // (3) Reset selected feature
-  this.feature = null;
 };
 
 
@@ -247,7 +260,7 @@ gmfapp.MainController.prototype.updateFeature = function() {
  * Delete currently selected feature.
  * @export
  */
-gmfapp.MainController.prototype.deleteFeature = function() {
+exports.MainController.prototype.deleteFeature = function() {
 
   console.assert(this.feature);
 
@@ -269,7 +282,7 @@ gmfapp.MainController.prototype.deleteFeature = function() {
  * @param {angular.$http.Response} resp Ajax response.
  * @private
  */
-gmfapp.MainController.prototype.handleEditFeature_ = function(resp) {
+exports.MainController.prototype.handleEditFeature_ = function(resp) {
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -278,11 +291,14 @@ gmfapp.MainController.prototype.handleEditFeature_ = function(resp) {
 /**
  * @private
  */
-gmfapp.MainController.prototype.refreshWMSLayer_ = function() {
+exports.MainController.prototype.refreshWMSLayer_ = function() {
   this.wmsSource_.updateParams({
     'random': Math.random()
   });
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

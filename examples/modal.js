@@ -1,18 +1,25 @@
-goog.provide('app.modal');
+/**
+ * @module app.modal
+ */
+const exports = {};
 
+import './modal.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.modalDirective');
+import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMessageModalComponent.name,
+]);
 
 
 /**
  * @constructor
  * @ngInject
  */
-app.MainController = function() {
+exports.MainController = function() {
 
   /**
    * @type {boolean}
@@ -22,4 +29,7 @@ app.MainController = function() {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,0 +1,104 @@
+<div class="dropdown">
+  <a
+      class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
+      ng-class="{disabled: $ctrl.aRuleIsActive}"
+      type="button"
+      data-toggle="dropdown"
+      ng-disabled="$ctrl.aRuleIsActive">
+    <span class="fa fa-cog"></span>
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li
+        class="ngeo-filter-condition-criteria-header"
+        translate>Criteria taken into account</li>
+    <li ng-repeat="condition in ::$ctrl.conditions">
+      <a
+          href
+          ng-click="$ctrl.setCondition(condition)">
+          <span
+              ng-class="{'ngeo-filter-condition-criteria-active': condition.value == $ctrl.datasource.filterCondition}"
+              class="fa fa-check ngeo-filter-condition-criteria">
+          </span>
+          <span>{{::condition.text | translate}}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<ngeo-rule
+    ng-repeat="rule in $ctrl.directedRules"
+    feature-overlay="::$ctrl.featureOverlay"
+    class="ngeo-filter-rule-directed"
+    map="$ctrl.map"
+    rule="rule"
+    tool-group="$ctrl.toolGroup">
+</ngeo-rule>
+
+<hr class="ngeo-filter-separator-rules" />
+
+<div ng-repeat="rule in $ctrl.customRules">
+  <a
+      class="btn btn-xs btn-link ngeo-filter-rule-custom-rm-btn"
+      ng-click="!$ctrl.aRuleIsActive && $ctrl.removeCustomRule(rule)"
+      ng-disabled="$ctrl.aRuleIsActive"
+      href>
+    <span class="fa fa-remove"></span>
+  </a>
+  <ngeo-rule
+      feature-overlay="::$ctrl.featureOverlay"
+      class="ngeo-filter-rule-custom"
+      map="$ctrl.map"
+      rule="rule"
+      tool-group="$ctrl.toolGroup">
+  </ngeo-rule>
+</div>
+
+<div class="dropdown">
+  <a
+      class="btn btn-link dropdown-toggle"
+      ng-class="{disabled: $ctrl.aRuleIsActive}"
+      type="button"
+      data-toggle="dropdown"
+      ng-disabled="$ctrl.aRuleIsActive">
+    <span translate>+ Add a new criteria</span>
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li ng-repeat="attribute in ::$ctrl.geometryAttributes">
+      <a
+          href
+          ng-click="$ctrl.createAndAddCustomRule(attribute)">
+          <span translate>Spatial filter</span>
+      </a>
+    </li>
+    <li role="presentation" class="divider"></li>
+    <li ng-repeat="attribute in ::$ctrl.otherAttributes">
+      <a
+          href
+          ng-click="$ctrl.createAndAddCustomRule(attribute)">
+          <span>{{::attribute.name | translate}}</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<hr class="ngeo-filter-separator-criteria" />
+
+<a
+    class="btn btn-link"
+    type="button"
+    ng-click="$ctrl.apply()"
+    ng-disabled="$ctrl.hasARule() === false || $ctrl.datasource.visible === false">
+  <span class="fa fa-check"></span>
+  <span translate>Apply filter</span>
+</a>
+
+<a
+    class="btn btn-link"
+    type="button"
+    ng-click="$ctrl.getData()"
+    ng-disabled="$ctrl.hasARule() === false || $ctrl.datasource.visible === false">
+  <span class="fa fa-chevron-right"></span>
+  <span translate>Get data</span>
+</a>

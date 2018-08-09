@@ -1,60 +1,84 @@
-goog.provide('gmfapp.objectediting');
+/**
+ * @module gmfapp.objectediting
+ */
+const exports = {};
 
-goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
+import './objectediting.css';
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
+import gmfMapComponent from 'gmf/map/component.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.objecteditingComponent');
-goog.require('gmf.ObjectEditingManager');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
+import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
+
+import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import * as olProj from 'ol/proj.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfLayertreeComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfMapComponent.name,
+  gmfObjecteditingComponent.name,
+  gmfObjecteditingManager.module.name,
+  gmfThemeThemes.module.name,
+  ngeoMiscToolActivateMgr.module.name,
+]);
+
+exports.module.constant('defaultTheme', 'ObjectEditing');
+exports.module.constant('gmfLayersUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+exports.module.constant('gmfTreeUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
+exports.module.constant('gmfObjectEditingToolsOptions', {
+  regularPolygonRadius: 150
+});
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {gmf.ObjectEditingManager} gmfObjectEditingManager The gmf
+ * @param {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
  *     ObjectEditing manager service.
- * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
+exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   gmfThemes.loadThemes();
 
-  const projection = ol.proj.get('EPSG:21781');
+  const projection = olProj.get(EPSG21781);
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
    * @type {ol.source.Vector}
    * @private
    */
-  this.vectorSource_ = new ol.source.Vector({
+  this.vectorSource_ = new olSourceVector({
     wrapX: false
   });
 
@@ -62,7 +86,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    * @type {ol.layer.Vector}
    * @private
    */
-  this.vectorLayer_ = new ol.layer.Vector({
+  this.vectorLayer_ = new olLayerVector({
     source: this.vectorSource_
   });
 
@@ -70,14 +94,14 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    * @type {ol.Collection.<ol.Feature>}
    * @export
    */
-  this.sketchFeatures = new ol.Collection();
+  this.sketchFeatures = new olCollection();
 
   /**
    * @type {ol.layer.Vector}
    * @private
    */
-  this.sketchLayer_ = new ol.layer.Vector({
-    source: new ol.source.Vector({
+  this.sketchLayer_ = new olLayerVector({
+    source: new olSourceVector({
       features: this.sketchFeatures,
       wrapX: false
     })
@@ -87,14 +111,14 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2
@@ -127,7 +151,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    */
   this.objectEditingActive = true;
 
-  const objectEditingToolActivate = new ngeo.ToolActivate(
+  const objectEditingToolActivate = new ngeoMiscToolActivate(
     this, 'objectEditingActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', objectEditingToolActivate, true);
@@ -138,7 +162,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeoMiscToolActivate(
     this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', dummyToolActivate, false);
@@ -158,4 +182,7 @@ gmfapp.MainController = function(gmfObjectEditingManager, gmfThemes,
 
 };
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

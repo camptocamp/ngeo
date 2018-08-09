@@ -1,0 +1,145 @@
+<div
+  class="gmf-displayquerywindow"
+  ng-class="{'desktop': ctrl.desktop, 'mobile': !ctrl.desktop}"
+  ng-show="ctrl.open"
+  ngeo-swipe-up="ctrl.collapsed = false"
+  ngeo-swipe-down="ctrl.collapsed = true"
+  ngeo-swipe-disable-mouse
+  ng-swipe-disable-mouse
+  ng-swipe-left="ctrl.next()"
+  ng-swipe-right="ctrl.previous()">
+
+  <button
+    class="collapse-button"
+    type="button"
+    ng-show="::!ctrl.desktop"
+    ng-click="ctrl.collapsed = !ctrl.collapsed"
+    ng-class="[ctrl.collapsed ? 'collapse-button-up' : 'collapse-button-down']">
+  </button>
+
+  <div class="windowcontainer">
+
+    <button
+      type="button"
+      class="btn fa-close close"
+      ng-click="ctrl.close()">
+    </button>
+
+    <div
+      class="animation-container"
+      ng-class="[ctrl.collapsed ? '' : 'animation-container-detailed', ctrl.isNext ? 'next' : 'previous']">
+
+      <div
+        ng-animate-swap="ctrl.animate"
+        class="slide-animation gmf-animatable">
+
+        <div class="header">
+          <p
+            class="title"
+            >{{ctrl.source.label | translate}}</p>
+          <p
+            class="subtitle"
+            >{{ctrl.getFeatureValues()[ctrl.source.identifierAttributeField]}}</p>
+        </div>
+
+        <div class="details">
+          <table>
+            <tr
+              ng-repeat="(key, value) in ctrl.getFeatureValues()"
+              ng-if="value !== undefined">
+              <td
+                class="details-key"
+                ng-bind-html="key | translate | ngeoTrustHtml"
+                ></td>
+              <td
+                class="details-value"
+                ng-bind-html="value | ngeoTrustHtml"
+                ></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="navigate">
+
+      <div class="placeholder">
+        <button
+          type="button"
+          class="previous btn"
+          ng-disabled="ctrl.isFirst()"
+          ng-show="ctrl.getResultLength() > 1"
+          ng-click="ctrl.previous()">
+          <span ng-show="::ctrl.desktop">{{'Prev.' | translate}}</span>
+        </button>
+      </div>
+
+      <div class="results">
+        <span ng-show="::!ctrl.desktop">{{'Result' | translate}}</span>
+        <span>{{ctrl.currentResult + 1}}</span>
+        <span>/</span>
+        <span>{{ctrl.getResultLength()}}</span>
+        <div
+          ng-show="::ctrl.desktop"
+          class="dropup">
+
+          <button
+            type="button"
+            class="btn btn-default dropdown-toggle"
+            data-toggle="dropdown"
+            aria-expanded="false">
+            <span class="fa fa-filter"></span>
+            <span class="fa fa-caret-up"></span>
+          </button>
+
+          <ul
+            class="dropdown-menu dropdown-menu-right"
+            role="menu">
+
+            <li>
+              <a
+                href="#"
+                ng-click="ctrl.setSelectedSource(null)">
+                <i
+                  class="fa fa-fw"
+                  ng-class="{'fa-check': ctrl.selectedSource === null}">
+                </i>
+                <span>{{'All layers' | translate}} ({{ctrl.ngeoQueryResult.total}})</span>
+              </a>
+            </li>
+
+            <li
+              role="separator"
+              class="divider">
+            </li>
+
+            <li
+              ng-repeat-start="source in ctrl.ngeoQueryResult.sources | filter: ctrl.sourcesFilter" ng-repeat-end
+              ng-class="{'disabled': source.features.length <= 0}">
+              <a
+                href="#"
+                ng-click="ctrl.setSelectedSource(source)">
+                <i
+                  class="fa fa-fw"
+                  ng-class="{'fa-check': ctrl.selectedSource === source}">
+                </i>
+                <span>{{source.label | translate}} ({{source.features.length}})</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="placeholder">
+        <button
+          type="button"
+          class="next btn"
+          ng-disabled="ctrl.isLast()"
+          ng-show="ctrl.getResultLength() > 1"
+          ng-click="ctrl.next()">
+          <span ng-show="::ctrl.desktop">{{'Next' | translate}}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

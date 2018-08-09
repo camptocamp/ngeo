@@ -1,0 +1,15 @@
+@import '~gmf/sass/vars.scss';
+
+.popover.gmf-contextualdata {
+  width: 25rem;
+  font-size: $font-size-small;
+
+  table {
+    width: 100%;
+    tr {
+      td {
+        white-space: nowrap;
+      }
+    }
+  }
+}

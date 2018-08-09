@@ -50,6 +50,7 @@ gmfx.ComparisonFilter.prototype.value;
  *    positionFeatureStyle: (ol.style.Style|undefined),
  *    accuracyFeatureStyle: (ol.style.Style|undefined),
  *    geolocationZoom: (number|undefined),
+ *    autorotate: (boolean|undefined),
  *    mapViewConfig: (olx.ViewOptions|undefined),
  *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
  *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined),
@@ -60,27 +61,20 @@ gmfx.Config;
 
 
 /**
- * The options to create a `gmf.DataSource` with.
- * @record
- * @struct
- * @extends ngeox.DataSourceOptions
+ * The definition of an external OGC server
+ * @typedef {{
+ *    name: (string),
+ *    type: (string),
+ *    url: (string)
+ * }}
  */
-gmfx.DataSourceOptions;
-
-
-/**
- * A reference to the GMF layer node that was used to create the data source.
- * It may contains additionnal information, such as metadata, about the data
- * source.
- * @type {gmfThemes.GmfLayer}
- */
-gmfx.DataSourceOptions.prototype.gmfLayer;
+gmfx.ExternalOGCServer;
 
 
 /**
  * Configuration for a grid tab.
  * @typedef {{
- *     configuration: ngeo.GridConfig,
+ *     configuration: ngeo.grid.Config,
  *     source: ngeox.QueryResultSource
  * }}
  */
@@ -89,7 +83,7 @@ gmfx.GridSource;
 
 /**
  * Configuration used to initialize a grid.
- * @type {ngeo.GridConfig}
+ * @type {ngeo.grid.Config}
  */
 gmfx.GridSource.prototype.configuration;
 
@@ -102,7 +96,7 @@ gmfx.GridSource.prototype.source;
 
 
 /**
- * Configuration option for {@link gmf.displayquerygridComponent} to merge
+ * Configuration option for {@link gmf.query.gridComponent} to merge
  * grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
@@ -112,6 +106,57 @@ gmfx.GridSource.prototype.source;
  */
 gmfx.GridMergeTabs;
 
+
+/**
+ * The object containing all points in profile
+ * @typedef {{
+ *  autoWidth: (boolean|undefined),
+ *  margin: (Object.<string, number>|undefined),
+ *  pointAttributes: (gmfx.LidarPointAttributeList|undefined),
+ *  pointSum: (number|undefined),
+ *  tolerance: (number|undefined)
+ * }}
+ */
+gmfx.LidarprofileClientConfig;
+
+
+/**
+ * The object containing all points in profile
+ * @typedef {{
+ * distance: (Array.<number>|undefined),
+ * altitude: (Array.<number>|undefined),
+ * color_packed: (Array.<Array<number>>|undefined),
+ * intensity: (Array.<number>|undefined),
+ * classification: (Array.<number>|undefined),
+ * coords: (Array.<Array<number>>|undefined)
+ * }}
+ */
+gmfx.LidarprofilePoints;
+
+
+/**
+ * Profile point after measure or after parsing of the binary array returned by Pytree
+ * @typedef {{
+ * distance: (number|undefined),
+ * altitude: (number|undefined),
+ * color_packed: (Array.<number>|undefined),
+ * coords: (Array.<number>|undefined),
+ * intensity: (number|undefined),
+ * classification: (number|undefined),
+ * set: (boolean|undefined)
+ * }}
+ */
+gmfx.LidarPoint;
+
+
+/**
+ * The lidar point attribute list width default option
+ * @typedef {{
+ *   availableOptions: (Array.<lidarprofileServer.ConfigPointAttributes>|undefined),
+ *   selectedOption: (lidarprofileServer.ConfigPointAttributes|undefined)
+ * }}
+ */
+gmfx.LidarPointAttributeList;
 
 /**
  * Projection object for the MousePositionDirective. Define a label and a filter
@@ -133,7 +178,7 @@ gmfx.MousePositionProjection.prototype.code;
 
 
 /**
- * The label to diplay with this projection.
+ * The label to display with this projection.
  * @type {string}
  */
 gmfx.MousePositionProjection.prototype.label;
@@ -145,6 +190,27 @@ gmfx.MousePositionProjection.prototype.label;
  * @type {string}
  */
 gmfx.MousePositionProjection.prototype.filter;
+
+
+/**
+ * @typedef {{
+ *     ogcServer: (gmfThemes.GmfOgcServer),
+ *     layerNode: (gmfThemes.GmfLayerWMS)
+ * }}
+ */
+gmfx.ObjectEditingQueryableLayerInfo;
+
+
+/**
+ * @type {gmfThemes.GmfOgcServer}
+ */
+gmfx.ObjectEditingQueryableLayerInfo.prototype.ogcServer;
+
+
+/**
+ * @type {gmfThemes.GmfLayerWMS}
+ */
+gmfx.ObjectEditingQueryableLayerInfo.prototype.layerNode;
 
 
 /**
@@ -163,6 +229,16 @@ gmfx.ObjectEditingToolsOptions;
  */
 gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
 
+
+/**
+ * Password validator function with an error message.
+ * Configuration options for the permalink service.
+ * @typedef {{
+ *     isPasswordValid: function(string): string,
+ *     notValidMessage: string
+ * }}
+ */
+gmfx.PasswordValidator;
 
 
 /**
@@ -201,7 +277,7 @@ gmfx.PermalinkOptions.prototype.projectionCodes;
 
 
 /**
- * Store the values in the local storage. Default is `true`.
+ * Store the values in the local storage. Default is `false`.
  * @type {boolean|undefined}
  */
 gmfx.PermalinkOptions.prototype.useLocalStorage;
@@ -405,7 +481,7 @@ gmfx.ProfileHoverPointInformations.prototype.yUnits;
  *    url: string
  * }}
  */
-gmfx.SearchDirectiveDatasource;
+gmfx.SearchComponentDatasource;
 
 
 /**
@@ -413,7 +489,7 @@ gmfx.SearchDirectiveDatasource;
  * See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @type {BloodhoundOptions|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.bloodhoundOptions;
+gmfx.SearchComponentDatasource.prototype.bloodhoundOptions;
 
 
 /**
@@ -421,7 +497,7 @@ gmfx.SearchDirectiveDatasource.prototype.bloodhoundOptions;
  * The bound value of this property key will be used as label.
  * @type {string|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.labelKey;
+gmfx.SearchComponentDatasource.prototype.labelKey;
 
 
 /**
@@ -429,7 +505,7 @@ gmfx.SearchDirectiveDatasource.prototype.labelKey;
  * Used to define groups of dataset.
  * @type {Array.<string>|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.groupValues;
+gmfx.SearchComponentDatasource.prototype.groupValues;
 
 
 /**
@@ -437,14 +513,14 @@ gmfx.SearchDirectiveDatasource.prototype.groupValues;
  * `add_theme`, `add_group` or `add_layer`
  * @type {Array.<string>|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.groupActions;
+gmfx.SearchComponentDatasource.prototype.groupActions;
 
 
 /**
  * The geometry's projection for this set of data.
  * @type {string|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.projection;
+gmfx.SearchComponentDatasource.prototype.projection;
 
 
 /**
@@ -453,7 +529,7 @@ gmfx.SearchDirectiveDatasource.prototype.projection;
  * doc/jquery_typeahead.md#datasets
  * @type {TypeaheadDataset|undefined}
  */
-gmfx.SearchDirectiveDatasource.prototype.typeaheadDatasetOptions;
+gmfx.SearchComponentDatasource.prototype.typeaheadDatasetOptions;
 
 
 /**
@@ -461,22 +537,24 @@ gmfx.SearchDirectiveDatasource.prototype.typeaheadDatasetOptions;
  * replaced by the input string.
  * @type {string}
  */
-gmfx.SearchDirectiveDatasource.prototype.url;
+gmfx.SearchComponentDatasource.prototype.url;
+
+
+/**
+ * @typedef {Object.<string, ol.style.Style|Array.<ol.style.Style>>}
+ */
+gmfx.StylesObject;
 
 
 /**
  * @typedef {{
- *     exportgpxkml: string
+ *     children: (Object.<string, gmfx.TreeManagerFullState>|undefined),
+ *     isChecked: (boolean|undefined),
+ *     isExpanded: (boolean|undefined),
+ *     isLegendExpanded: (boolean|undefined)
  * }}
  */
-gmfx.ServiceUrls;
-
-
-/**
- * URL to the "exportgpxkml" service.
- * @type {string}
- */
-gmfx.ServiceUrls.prototype.exportgpxkml;
+gmfx.TreeManagerFullState;
 
 
 /**
@@ -564,21 +642,6 @@ gmfx.User.prototype.role_name;
  */
 gmfx.User.prototype.username;
 
-/**
- * @typedef {{
- *  columns : Array.<string>,
- *  data : Array.<Array.<string|number|boolean>>
- * }}
- */
-gmfx.DataSourceTableObject;
-
-/**
- * @typedef {{
- *  title : string,
- *  table : gmfx.DataSourceTableObject
- * }}
- */
-gmfx.DataSourcePrintReportObject;
 
 /**
  * @typedef {{
@@ -642,6 +705,7 @@ gmfx.ThemesOptions.prototype.addBlankBackgroundLayer;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 gmfx.openIframePopup;
 
@@ -652,8 +716,94 @@ gmfx.openIframePopup;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 gmfx.openTextPopup;
+
+
+/**
+ * Namespace.
+ * @type {Object}
+ */
+gmfx.datasource;
+
+
+/**
+ * @typedef {ol.Collection.<gmf.datasource.OGC>}
+ */
+gmfx.datasource.DataSources;
+
+
+/**
+ * @typedef {{
+ *  dataSource : (gmf.datasource.OGC|null)
+ * }}
+ */
+gmfx.datasource.DataSourceBeingFiltered;
+
+
+/**
+ * The options required to create a `gmf.datasource.OGC`.
+ * @record
+ * @struct
+ * @extends ngeox.datasource.OGCOptions
+ */
+gmfx.datasource.OGCOptions;
+
+
+/**
+ * A reference to the GMF layer node that was used to create the data source.
+ * It may contains additional information, such as metadata, about the data
+ * source.
+ * @type {gmfThemes.GmfLayer}
+ */
+gmfx.datasource.OGCOptions.prototype.gmfLayer;
+
+
+/**
+ * @typedef {{
+ *  columns : Array.<string>,
+ *  data : Array.<Array.<string|number|boolean>>
+ * }}
+ */
+gmfx.datasource.DataSourceTableObject;
+
+
+/**
+ * @typedef {{
+ *  title : string,
+ *  table : gmfx.datasource.DataSourceTableObject
+ * }}
+ */
+gmfx.datasource.DataSourcePrintReportObject;
+
+
+/**
+ * @typedef {{
+ *     layerObj: (!ol.layer.Tile),
+ *     unregister: Function
+ * }}
+ */
+gmfx.datasource.ExternalDataSourcesManagerWMTSCacheItem;
+
+
+/**
+ * @typedef {Object<(number|string), gmfx.datasource.ManagerTreeCtrlCacheItem>}
+ */
+gmfx.datasource.ManagerTreeCtrlCache;
+
+
+/**
+ * @typedef {{
+ *     filterRulesWatcherUnregister: (Function),
+ *     stateWatcherUnregister: (Function),
+ *     timeLowerValueWatcherUnregister: (Function|undefined),
+ *     timeUpperValueWatcherUnregister: (Function|undefined),
+ *     treeCtrl: (ngeo.layertree.Controller),
+ *     wmsLayer: (ol.layer.Image|undefined)
+ * }}
+ */
+gmfx.datasource.ManagerTreeCtrlCacheItem;
 
 
 /**
@@ -674,22 +824,44 @@ cgxp.tools;
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 cgxp.tools.openInfoWindow;
 
 
 /**
- * @param {ngeo.Popup!} popup a ngeoPopup.
+ * @param {ngeo.message.Popup!} popup a ngeoPopup.
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
-gmfx.openPopup_
+gmfx.openPopup_;
+
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   user: gmfx.User
+ * }>}
+ */
+gmfx.AuthenticationEvent;
+
 
 /**
  * @typedef {{
- *     goog: (Array.<goog.events.Key>),
- *     ol: (Array.<ol.EventsKey>)
+ *     functionalities: (gmfx.AuthenticationFunctionalities|undefined),
+ *     is_password_changed: (boolean|undefined),
+ *     role_id: (number|undefined),
+ *     role_name: (string|undefined),
+ *     username: (string|undefined)
  * }}
  */
-gmfx.PermalinkListenerKeys;
+gmfx.AuthenticationLoginResponse;
+
+
+/**
+ * @typedef {{
+ *     success: boolean
+ * }}
+ */
+gmfx.AuthenticationDefaultResponse;

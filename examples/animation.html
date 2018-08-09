@@ -6,43 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
-    <style>
-      html, body {
-        position: relative;
-        padding: 0;
-        margin: 0;
-      }
-      * {
-        box-sizing: border-box;
-      }
-      #container {
-        position: relative;
-        height: 600px;
-        border: 1px solid red;
-      }
-      app-map > div {
-        width: auto;
-        height: 100%;
-        background-color: #dfdfdf;
-        position: relative;
-        overflow: hidden;
-      }
-      #sidebar {
-        display: block;
-        float: left;
-        width: 300px;
-        height: 100%;
-        background-color: #efffcc;
-        margin-left: -300px;
-        -webkit-transition: all 300ms ease-out 0s;
-        -o-transition: all 300ms ease-out 0s;
-        transition: all 300ms ease-out 0s;
-      }
-      #sidebar.open {
-        margin-left: 0;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="container">
@@ -55,16 +18,6 @@
       Open sidebar!
     </label>
     <p>Use the <em>Open sidebar!</em> to open the sidebar and change the width of the map.</p>
-    <p id="desc">This example shows how to animate the resizing of a map without distortions of the map during the animation. This uses the <code><a href="../apidoc/ngeo.resizemapDirective.html" title="Read our documentation">ngeoResizemap</a></code> directive.</p>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=animation.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
+    <p id="desc">This example shows how to animate the resizing of a map without distortions of the map during the animation. This uses the <code><a href="../apidoc/ngeo.map.resizemap.html" title="Read our documentation">ngeoResizemap</a></code> directive.</p>
   </body>
 </html>

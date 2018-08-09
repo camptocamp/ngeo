@@ -5,7 +5,8 @@
             "src",
             "contribs/gmf/options/gmfx.js",
             "options/ngeox.js",
-            "contribs/gmf/externs/gmf-themes.js"
+            "contribs/gmf/externs/gmf-themes.js",
+            "contribs/gmf/externs/lidarprofile.js"
         ],
         "includePattern": ".+\\.js$"
     },

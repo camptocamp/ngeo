@@ -1,13 +1,11 @@
-goog.require('ngeo.Debounce');
-
-describe('ngeo.Debounce', () => {
+describe('ngeo.misc.debounce', () => {
   let ngeoDebounce;
   let $timeout;
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoDebounce = $injector.get('ngeoDebounce');
-      $timeout = $injector.get('$timeout');
+    angular.mock.inject((_ngeoDebounce_, _$timeout_) => {
+      ngeoDebounce = _ngeoDebounce_;
+      $timeout = _$timeout_;
     });
   });
 

@@ -1,62 +1,81 @@
-goog.provide('gmfapp.editfeatureselector');
+/**
+ * @module gmfapp.editfeatureselector
+ */
+const exports = {};
 
-goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
+import './editfeatureselector.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import gmfAuthenticationModule from 'gmf/authentication/module.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
+import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent.js';
+
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.editfeatureselectorDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureHelper');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfAuthenticationModule.name,
+  gmfEditingEditFeatureSelectorComponent.name,
+  gmfLayertreeComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfMapComponent.name,
+  gmfThemeThemes.module.name,
+  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscToolActivateMgr.module.name,
+]);
 
 
-gmfapp.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+exports.module.value('gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value(
+exports.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 
-gmfapp.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+exports.module.value('gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+exports.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+
+exports.module.constant('defaultTheme', 'Edit');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {gmf.Themes} gmfThemes The gmf themes service.
- * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor
  */
-gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
+exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
@@ -72,7 +91,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   this.gmfUser = gmfUser;
 
   /**
-   * @type {ngeo.FeatureHelper}
+   * @type {ngeo.misc.FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -80,7 +99,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   gmfThemes.loadThemes();
 
   /**
-   * @type {gmf.TreeManager}
+   * @type {gmf.layertree.TreeManager}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;
@@ -90,28 +109,26 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    * @type {ol.layer.Vector}
    * @export
    */
-  this.vectorLayer = new ol.layer.Vector({
-    source: new ol.source.Vector({
+  this.vectorLayer = new olLayerVector({
+    source: new olSourceVector({
       wrapX: false,
-      features: new ol.Collection()
+      features: new olCollection()
     }),
-    style(feature, resolution) {
-      return ngeoFeatureHelper.createEditingStyles(feature);
-    }
+    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
   });
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 2
@@ -139,7 +156,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.editFeatureSelectorActive = true;
 
-  const editFeatureSelectorToolActivate = new ngeo.ToolActivate(
+  const editFeatureSelectorToolActivate = new ngeoMiscToolActivate(
     this, 'editFeatureSelectorActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', editFeatureSelectorToolActivate, true);
@@ -150,7 +167,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeoMiscToolActivate(
     this, 'dummyActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', dummyToolActivate, false);
@@ -164,4 +181,7 @@ gmfapp.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

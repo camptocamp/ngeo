@@ -1,27 +1,30 @@
-goog.require('gmf.displayquerywindowComponent');
+import olStyleStyle from 'ol/style/Style.js';
+import olFeature from 'ol/Feature.js';
 
-describe('gmf.displayquerywindowComponent', () => {
+describe('gmf.query.windowComponent', () => {
 
   let displayQueriesController;
   let ngeoQueryResult;
+  let $element;
   let $scope;
   let $rootScope;
 
-  beforeEach(inject(($injector, _$controller_, _$rootScope_) => {
-    ngeoQueryResult = $injector.get('ngeoQueryResult');
+  beforeEach(angular.mock.inject((_$controller_, _$rootScope_, _ngeoQueryResult_) => {
+    ngeoQueryResult = _ngeoQueryResult_;
     const $controller = _$controller_;
+    $element = angular.element('<div></div>');
     $rootScope = _$rootScope_;
     $scope = $rootScope.$new();
     const data = {
       featuresStyleFn() {
-        return new ol.style.Style();
+        return new olStyleStyle();
       },
       selectedFeatureStyleFn() {
         return undefined;
       }
     };
     displayQueriesController = $controller(
-      'GmfDisplayquerywindowController', {$scope}, data);
+      'GmfDisplayquerywindowController', {$element, $scope}, data);
   }));
 
   describe('#show', () => {
@@ -37,10 +40,10 @@ describe('gmf.displayquerywindowComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature({
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -69,10 +72,10 @@ describe('gmf.displayquerywindowComponent', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature({
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -88,11 +91,11 @@ describe('gmf.displayquerywindowComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature(),
-          new ol.Feature({
+          new olFeature(),
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -134,10 +137,10 @@ describe('gmf.displayquerywindowComponent', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature({
+          new olFeature({
             bar: 'baz'
           })
         ],
@@ -153,11 +156,11 @@ describe('gmf.displayquerywindowComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             foo: 'bar'
           }),
-          new ol.Feature(),
-          new ol.Feature({
+          new olFeature(),
+          new olFeature({
             bar: 'baz'
           })
         ],

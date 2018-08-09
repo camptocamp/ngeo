@@ -1,8 +1,4 @@
-/*global describe beforeEach inject expect it*/
-
-goog.require('ngeo.WMSTime');
-
-describe('ngeoWMSTime service', () => {
+describe('ngeo.misc.WMSTime service', () => {
   let ngeoWMSTime;
 
   const wmsTime = {
@@ -17,12 +13,14 @@ describe('ngeoWMSTime service', () => {
   };
 
   beforeEach(() => {
-    inject(($injector) => {
-      ngeoWMSTime = $injector.get('ngeoWMSTime');
+    angular.mock.inject((_ngeoWMSTime_) => {
+      ngeoWMSTime = _ngeoWMSTime_;
     });
   });
 
   it('should format the time regarding the resolution and with a mode set on value', () => {
+    wmsTime.mode = 'value';
+    wmsTime.resolution = 'year';
     const timeValues = ngeoWMSTime.getOptions(wmsTime)['values'];
     let timeParam = ngeoWMSTime.formatWMSTimeParam(wmsTime, {
       start: timeValues

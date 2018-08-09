@@ -1,42 +1,58 @@
-goog.provide('gmfapp.drawfeature');
+/**
+ * @module gmfapp.drawfeature
+ */
+const exports = {};
 
+import './drawfeature.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
 /** @suppress {extraRequire} */
-goog.require('gmf.drawfeatureDirective');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureHelper');
-/** @suppress {extraRequire} */
-goog.require('ngeo.Features');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfDrawingModule from 'gmf/drawing/module.js';
+import googAsserts from 'goog/asserts.js';
+import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
-
-
-gmfapp.module.value('ngeoExportFeatureFormats', [
-  ngeo.FeatureHelper.FormatType.KML,
-  ngeo.FeatureHelper.FormatType.GPX
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfDrawingModule.name,
+  gmfMapComponent.name,
+  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscToolActivateMgr.module.name,
 ]);
+
+
+exports.module.value('ngeoExportFeatureFormats', [
+  ngeoMiscFeatureHelper.FormatType.KML,
+  ngeoMiscFeatureHelper.FormatType.GPX
+]);
+
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {ngeo.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
+exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
@@ -45,12 +61,12 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.scope_ = $scope;
 
-  const view = new ol.View({
+  const view = new olView({
     center: [0, 0],
     zoom: 3
   });
 
-  ngeoFeatureHelper.setProjection(goog.asserts.assert(view.getProjection()));
+  ngeoFeatureHelper.setProjection(googAsserts.assert(view.getProjection()));
 
   const featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);
@@ -59,13 +75,13 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view
+    view: view
   });
 
   /**
@@ -74,7 +90,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.drawFeatureActive = true;
 
-  const drawFeatureToolActivate = new ngeo.ToolActivate(
+  const drawFeatureToolActivate = new ngeoMiscToolActivate(
     this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', drawFeatureToolActivate, true);
@@ -85,7 +101,7 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.pointerMoveActive = false;
 
-  const pointerMoveToolActivate = new ngeo.ToolActivate(
+  const pointerMoveToolActivate = new ngeoMiscToolActivate(
     this, 'pointerMoveActive');
   ngeoToolActivateMgr.registerTool(
     'mapTools', pointerMoveToolActivate, false);
@@ -114,17 +130,20 @@ gmfapp.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
  * @param {ol.MapBrowserEvent} evt MapBrowser event
  * @private
  */
-gmfapp.MainController.prototype.handleMapPointerMove_ = function(evt) {
+exports.MainController.prototype.handleMapPointerMove_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
 
   $('#pointermove-feature').html(
-    (feature) ? feature.get(ngeo.FeatureProperties.NAME) : 'None'
+    (feature) ? feature.get(ngeoFormatFeatureProperties.NAME) : 'None'
   );
 
   this.scope_.$apply();
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

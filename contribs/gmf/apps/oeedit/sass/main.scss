@@ -1,0 +1,14 @@
+@import '~gmf/controllers/desktop.scss';
+
+.gmf-displayquerywindow {
+  width: 22.50rem;
+  max-width: 22.50rem;
+}
+
+.gmf-displayquerywindow .details {
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+  height: $half-app-margin;
+}

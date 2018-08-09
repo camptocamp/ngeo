@@ -6,53 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../../../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/font-awesome/css/font-awesome.css" type="text/css">
-    <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../../../third-party/jquery-ui/jquery-ui.min.css">
-    <style>
-        #map {
-          width: 800px;
-          height: 400px;
-          max-width:100%;
-        }
-        [ngeo-btn-group] {
-          padding: 5px;
-        }
-        .tooltip {
-          position: relative;
-          background: rgba(0, 0, 0, 0.5);
-          border-radius: 4px;
-          color: white;
-          padding: 4px 8px;
-          opacity: 0.7;
-          white-space: nowrap;
-        }
-        .ngeo-tooltip-measure {
-          opacity: 1;
-          font-weight: bold;
-        }
-        .ngeo-tooltip-static {
-          background-color: #ffcc33;
-          color: black;
-          border: 1px solid white;
-        }
-        .ngeo-tooltip-measure:before,
-        .ngeo-tooltip-static:before {
-          border-top: 6px solid rgba(0, 0, 0, 0.5);
-          border-right: 6px solid transparent;
-          border-left: 6px solid transparent;
-          content: "";
-          position: absolute;
-          bottom: -6px;
-          margin-left: -7px;
-          left: 50%;
-        }
-        .ngeo-tooltip-static:before {
-          border-top-color: #ffcc33;
-        }
-
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map id="map" gmf-map-map="::ctrl.map"></gmf-map>
@@ -66,17 +19,17 @@
         ng-model="ctrl.measurePointActive">Point</a>
       </div>
     <div
-      gmf-mobile-measure-length=""
-      gmf-mobile-measure-length-active="ctrl.measureLengthActive"
-      gmf-mobile-measure-length-precision="2"
-      gmf-mobile-measure-length-map="::ctrl.map">
+      gmf-mobile-measurelength=""
+      gmf-mobile-measurelength-active="ctrl.measureLengthActive"
+      gmf-mobile-measurelength-precision="2"
+      gmf-mobile-measurelength-map="::ctrl.map">
     </div>
     <div
-      gmf-mobile-measure-point=""
-      gmf-mobile-measure-point-active="ctrl.measurePointActive"
-      gmf-mobile-measure-point-coordinateDecimals="2"
-      gmf-mobile-measure-point-layersconfig="::ctrl.measurePointLayersConfig"
-      gmf-mobile-measure-point-map="::ctrl.map">
+      gmf-mobile-measurepoint=""
+      gmf-mobile-measurepoint-active="ctrl.measurePointActive"
+      gmf-mobile-measurepoint-coordinateDecimals="2"
+      gmf-mobile-measurepoint-layersconfig="::ctrl.measurePointLayersConfig"
+      gmf-mobile-measurepoint-map="::ctrl.map">
     </div>
 
     <p id="desc">
@@ -87,26 +40,5 @@
       their devices. The point measure also uses the <code>gmfRaster</code>
       service to also obtain the height of the location as well.
     </p>
-    <script src="../../../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../../../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../../../node_modules/angular/angular.js"></script>
-    <script src="../../../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../../../node_modules/angular-sanitize/angular-sanitize.js"></script>
-    <script src="../../../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../../../node_modules/proj4/dist/proj4.js"></script>
-    <script src="../../../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../../../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../../../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../../../node_modules/angular-ui-slider/src/slider.js"></script>
-    <script src="/@?main=mobilemeasure.js"></script>
-    <script src="default.js"></script>
-    <script src="../../../utils/watchwatchers.js"></script>
-    <script>
-      var gmfModule = angular.module('gmf');
-      gmfModule.constant('defaultTheme', 'Demo');
-      gmfModule.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-    </script>
-    <script src="../../../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../../../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
   </body>
 </html>

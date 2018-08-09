@@ -1,35 +1,42 @@
-goog.provide('app.googlestreetview');
+/**
+ * @module app.googlestreetview
+ */
+const exports = {};
 
-goog.require('ngeo.FeatureOverlayMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.googlestreetviewComponent');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
-goog.require('ol.style.Text');
+import './googlestreetview.css';
+import olMap from 'ol/Map.js';
+
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olStyleText from 'ol/style/Text.js';
+import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoGooglestreetviewModule.name,
+  ngeoMiscToolActivateMgr.module.name
+]);
 
 
 /**
- * @param {!ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {number}
@@ -41,12 +48,12 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    * @type {!ol.style.Style}
    * @export
    */
-  this.style = new ol.style.Style({
-    text: new ol.style.Text({
-      fill: new ol.style.Fill({color: '#279B61'}),
+  this.style = new olStyleStyle({
+    text: new olStyleText({
+      fill: new olStyleFill({color: '#279B61'}),
       font: 'normal 30px FontAwesome',
       offsetY: -15,
-      stroke: new ol.style.Stroke({color: '#ffffff', width: 3}),
+      stroke: new olStyleStroke({color: '#ffffff', width: 3}),
       text: '\uf041'
     })
   });
@@ -55,13 +62,13 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-7910687, 6178318],
       zoom: 17
     })
@@ -75,7 +82,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    */
   this.googleStreetViewActive = true;
 
-  const googleStreetViewToolActivate = new ngeo.ToolActivate(
+  const googleStreetViewToolActivate = new ngeoMiscToolActivate(
     this,
     'googleStreetViewActive'
   );
@@ -91,7 +98,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    */
   this.dummyActive = false;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeoMiscToolActivate(
     this,
     'dummyActive'
   );
@@ -103,4 +110,7 @@ app.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

@@ -1,6 +1,7 @@
-goog.require('gmf.displayquerygridComponent');
-goog.require('ol.Map');
-goog.require('ngeo.GridConfig');
+import olMap from 'ol/Map.js';
+import olStyleStyle from 'ol/style/Style.js';
+import olView from 'ol/View.js';
+import olFeature from 'ol/Feature.js';
 
 /**
  * Compare two list of objects using only the properties of the expected objects.
@@ -16,7 +17,7 @@ const compareGridData = function(data, expectedData) {
 };
 
 
-describe('gmf.displayquerygridComponent', () => {
+describe('gmf.query.gridComponent', () => {
 
   let queryGridController;
   let ngeoQueryResult;
@@ -25,11 +26,11 @@ describe('gmf.displayquerygridComponent', () => {
   let $timeout;
 
   beforeEach(() => {
-    module('ngeo', ($provide) => {
+    angular.mock.module('ngeo', ($provide) => {
       $provide.value('ngeoQueryOptions', {});
     });
 
-    inject(($injector, _$controller_, _$rootScope_) => {
+    angular.mock.inject(($injector, _$controller_, _$rootScope_) => {
       ngeoQueryResult = $injector.get('ngeoQueryResult');
       $timeout = $injector.get('$timeout');
       const $controller = _$controller_;
@@ -37,22 +38,24 @@ describe('gmf.displayquerygridComponent', () => {
       $scope = $rootScope.$new();
       const data = {
         featuresStyleFn() {
-          return new ol.style.Style();
+          return new olStyleStyle();
         },
         selectedFeatureStyleFn() {
           return undefined;
         },
         getMapFn() {
-          return new ol.Map({
-            view: new ol.View({
+          return new olMap({
+            view: new olView({
               center: [0, 0],
               zoom: 0
             })
           });
         }
       };
-      queryGridController = $controller(
-        'GmfDisplayquerygridController', {$scope, $element: $('<div></div>')}, data);
+      queryGridController = $controller('GmfDisplayquerygridController', {
+        $scope: $scope,
+        $element: $('<div></div>')
+      }, data);
       $rootScope.$digest();
     });
   });
@@ -70,12 +73,12 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A',
             'empty_column': undefined
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B',
             'empty_column': undefined
@@ -126,12 +129,12 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A',
             'empty_column': undefined
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B',
             'empty_column': undefined
@@ -175,11 +178,11 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'empty_column': undefined,
             '2n-empty_column': undefined
           }),
-          new ol.Feature({
+          new olFeature({
             'empty_column': undefined,
             '2n-empty_column': undefined
           })
@@ -201,11 +204,11 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 3;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -222,7 +225,7 @@ describe('gmf.displayquerygridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 1234,
             'label': 'C'
           })
@@ -287,11 +290,11 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 2;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -361,11 +364,11 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -376,7 +379,7 @@ describe('gmf.displayquerygridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 123456,
             'name': 'C'
           })
@@ -387,7 +390,7 @@ describe('gmf.displayquerygridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 1234,
             'label': 'D'
           })
@@ -457,11 +460,11 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 4;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           }),
-          new ol.Feature({
+          new olFeature({
             'osm_id': 12345,
             'name': 'B'
           })
@@ -480,7 +483,7 @@ describe('gmf.displayquerygridComponent', () => {
         totalFeatureCount: 351
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 1234,
             'label': 'D'
           })
@@ -520,7 +523,7 @@ describe('gmf.displayquerygridComponent', () => {
       ngeoQueryResult.total = 5;
       ngeoQueryResult.sources = [{
         features: [
-          new ol.Feature({
+          new olFeature({
             'osm_id': 1234,
             'name': 'A'
           })
@@ -531,7 +534,7 @@ describe('gmf.displayquerygridComponent', () => {
         queried: true
       }, {
         features: [
-          new ol.Feature({
+          new olFeature({
             'id': 2345,
             'label': 'C'
           })

@@ -1,11 +1,11 @@
-goog.require('ngeo.SyncArrays');
+import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 
-describe('ngeo.SyncArrays', () => {
+describe('ngeo.misc.syncArrays', () => {
   let $rootScope;
 
   beforeEach(() => {
-    inject(($injector) => {
-      $rootScope = $injector.get('$rootScope');
+    angular.mock.inject((_$rootScope_) => {
+      $rootScope = _$rootScope_;
     });
   });
 
@@ -14,17 +14,15 @@ describe('ngeo.SyncArrays', () => {
     let dereg;
 
     beforeEach(() => {
-      inject(($injector) => {
-        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
-        arr1 = [0, 10, 1, 20, 2, 30, 3];
-        arr2 = [];
-        const filter = function(n) {
-          return n < 10;
-        };
-        dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
-        $rootScope.$digest();
-        expect(arr2).toEqual([0, 1, 2, 3]);
-      });
+      const ngeoSyncArrays = ngeoMiscSyncArrays;
+      arr1 = [0, 10, 1, 20, 2, 30, 3];
+      arr2 = [];
+      const filter = function(n) {
+        return n < 10;
+      };
+      dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
+      $rootScope.$digest();
+      expect(arr2).toEqual([0, 1, 2, 3]);
     });
 
     it('updates arr2 when an element is added to arr1', () => {
@@ -65,8 +63,8 @@ describe('ngeo.SyncArrays', () => {
     let dereg;
 
     beforeEach(() => {
-      inject(($injector) => {
-        const ngeoSyncArrays = $injector.get('ngeoSyncArrays');
+      angular.mock.inject(($injector) => {
+        const ngeoSyncArrays = ngeoMiscSyncArrays;
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
         const filter = function(n) {

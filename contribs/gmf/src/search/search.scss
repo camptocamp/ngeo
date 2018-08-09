@@ -1,0 +1,136 @@
+@import '~gmf/sass/vars.scss';
+@import "~gmf/sass/typeahead.scss";
+
+$search-results-max-height: calc(100vh - 6 * #{$app-margin});
+
+gmf-search {
+  top: $app-margin;
+  z-index: $content-index;
+  border-color: $border-color;
+  border-radius: $border-radius-base;
+
+  & > * {
+    display: block;
+    float: left;
+    vertical-align: top;
+  }
+
+  .gmf-search {
+    margin-right: $half-app-margin;
+    background-color: $map-tools-bg-color;
+    height: $map-tools-size;
+    position: relative;
+  }
+  // hide the native "clear x" in Edge
+  input::-ms-clear {
+    display: none;
+  }
+  .gmf-clear-button {
+    position: absolute;
+    right: $app-margin;
+    height: $map-tools-size;
+    opacity: 0.5;
+    &::after {
+      position: absolute;
+      content: $fa-var-times;
+      color: $map-tools-color;
+      font-family: FontAwesome;
+      font-size: 1.25rem;
+      right: 0;
+    }
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+  .gmf-color-button {
+    width: $map-tools-size;
+    height: $map-tools-size;
+    background-color: $map-tools-bg-color;
+    border: solid 0.06rem $border-color;
+    color: $map-tools-color;
+    &:hover {
+      background-color: $onhover-color;
+    }
+  }
+  .form-control {
+    box-shadow: none;
+    height: 100%;
+    padding: $half-app-margin $map-tools-size;
+    border: 0.06rem solid $border-color;
+    &:focus {
+      border-color: $border-color;
+      box-shadow: none;
+    }
+  }
+
+  .gmf-search-is-active & {
+    z-index: $search-index;
+  }
+
+  .twitter-typeahead {
+    .tt-menu {
+      max-height: $search-results-max-height;
+      .gmf-search-no-results {
+        padding: $app-margin;
+        cursor: default;
+      }
+      border-top: none;
+      .gmf-search-header {
+        display: none;
+      }
+      .gmf-search-datum {
+        p {
+          margin: 0;
+        }
+        .gmf-search-label {
+          color: $color;
+        }
+        .gmf-search-group {
+          color: $color-light;
+          font-size: 80%;
+        }
+      }
+    }
+  }
+  .tt-menu.tt-open.gmf-search-no-results {
+    display: block !important;
+  }
+}
+
+// Overrides for small browser widths only
+@media (max-width: map-get($grid-breakpoints, "sm")) {
+  gmf-search {
+    .gmf-search {
+      width: 100%;
+    }
+    .form-control {
+      padding-left: $half-app-margin;
+    }
+  }
+}
+
+// Overrides for tablet devices and up
+@media (min-width: map-get($grid-breakpoints, "sm")) {
+  gmf-search {
+    .gmf-search {
+      width: $search-width;
+    }
+    .gmf-clear-button {
+      margin-right: $app-margin;
+      right: 0;
+    }
+
+    span.twitter-typeahead {
+      &::before {
+        content: $fa-var-search;
+        font-family: FontAwesome;
+        color: $color;
+        position: absolute;
+        font-size: 0.9rem;
+        top: $half-app-margin;
+        left: $app-margin;
+      }
+    }
+  }
+}

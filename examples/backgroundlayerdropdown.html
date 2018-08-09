@@ -6,33 +6,12 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <style>
-      #map {
-        height: 400px;
-      }
-      .dropdown button {
-        min-width: 100px;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as mainCtrl">
     <div id="map" ngeo-map="mainCtrl.map"></div>
     <app-backgroundlayer app-backgroundlayer-map="::mainCtrl.map"></app-backgroundlayer>
     <div>
-      <p id="desc">This example shows how to write an application-specific directive (<code>app-backgroundlayer</code>) to create a background layer selector. The directive is based on Bootstrap's <code>dropdown</code> jQuery plugin, and on the <code><a href="../apidoc/ngeo.BackgroundLayerMgr.html" title="Read our documentation">ngeoBackgroundLayerMgr</a></code> service.</p>
+      <p id="desc">This example shows how to write an application-specific directive (<code>app-backgroundlayer</code>) to create a background layer selector. The directive is based on Bootstrap's <code>dropdown</code> jQuery plugin, and on the <code><a href="../apidoc/ngeo.map.BackgroundLayerMgr.html" title="Read our documentation">ngeoBackgroundLayerMgr</a></code> service.</p>
     </div>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=backgroundlayerdropdown.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

@@ -1,65 +1,83 @@
+/**
+ * @module gmfapp.filterselector
+ */
+const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
-goog.provide('gmfapp.filterselector');
+import './filterselector.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
 /** @suppress {extraRequire} */
-goog.require('gmf.authenticationDirective');
-goog.require('gmf.Themes');
-goog.require('gmf.TreeManager');
+import gmfDatasourceManager from 'gmf/datasource/Manager.js';
+
+import gmfFiltersModule from 'gmf/filters/module.js';
+import gmfLayertreeComponent from 'gmf/layertree/component.js';
+import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
+
 /** @suppress {extraRequire} */
-goog.require('gmf.DataSourcesManager');
-/** @suppress {extraRequire} */
-goog.require('gmf.filterselectorComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.layertreeComponent');
-/** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.bboxQueryDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapQueryDirective');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfAuthenticationModule.name,
+  gmfDatasourceManager.module.name,
+  gmfLayertreeComponent.name,
+  gmfLayertreeTreeManager.module.name,
+  gmfFiltersModule.name,
+  gmfMapComponent.name,
+  gmfThemeThemes.module.name,
+  ngeoDatasourceDataSources.module.name,
+  ngeoMiscToolActivateMgr.module.name,
+  ngeoQueryBboxQueryComponent.name,
+  ngeoQueryMapQueryComponent.name,
+]);
 
 
-gmfapp.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+exports.module.value('gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value(
+exports.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi');
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi');
 
 
-gmfapp.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+exports.module.value('gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
 
-gmfapp.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/layers/');
+exports.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+
+exports.module.constant('defaultTheme', 'Filters');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-gmfapp.MainController = class {
+exports.MainController = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {gmf.DataSourcesManager} gmfDataSourcesManager The gmf data sources
-   *     manager service.
-   * @param {gmf.Themes} gmfThemes The gmf themes service.
-   * @param {gmf.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
-   *     objects.
-   * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+   * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
+   *     data sources manager service.
+   * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
+   * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
    */
@@ -76,7 +94,7 @@ gmfapp.MainController = class {
     gmfThemes.loadThemes();
 
     /**
-     * @type {gmf.TreeManager}
+     * @type {gmf.layertree.TreeManager}
      * @export
      */
     this.gmfTreeManager = gmfTreeManager;
@@ -85,19 +103,22 @@ gmfapp.MainController = class {
      * @type {ol.Map}
      * @export
      */
-    this.map = new ol.Map({
+    this.map = new olMap({
       layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
+        new olLayerTile({
+          source: new olSourceOSM()
         })
       ],
-      view: new ol.View({
-        projection: 'EPSG:21781',
+      view: new olView({
+        projection: EPSG21781,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [537635, 152640],
         zoom: 2
       })
     });
+
+    // Init the datasources with our map.
+    gmfDataSourcesManager.setDatasourceMap(this.map);
 
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
@@ -123,7 +144,7 @@ gmfapp.MainController = class {
      */
     this.filterSelectorActive = true;
 
-    const filterSelectorToolActivate = new ngeo.ToolActivate(
+    const filterSelectorToolActivate = new ngeoMiscToolActivate(
       this, 'filterSelectorActive');
     ngeoToolActivateMgr.registerTool(
       'dummyTools', filterSelectorToolActivate, true);
@@ -134,7 +155,7 @@ gmfapp.MainController = class {
      */
     this.dummyActive = false;
 
-    const dummyToolActivate = new ngeo.ToolActivate(
+    const dummyToolActivate = new ngeoMiscToolActivate(
       this, 'dummyActive');
     ngeoToolActivateMgr.registerTool(
       'dummyTools', dummyToolActivate, false);
@@ -145,7 +166,7 @@ gmfapp.MainController = class {
      */
     this.queryActive = true;
 
-    const queryToolActivate = new ngeo.ToolActivate(
+    const queryToolActivate = new ngeoMiscToolActivate(
       this, 'queryActive');
     ngeoToolActivateMgr.registerTool(
       this.toolGroup, queryToolActivate, true);
@@ -160,4 +181,7 @@ gmfapp.MainController = class {
 };
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

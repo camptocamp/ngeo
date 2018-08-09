@@ -1,51 +1,56 @@
-goog.provide('app.mapquery');
+/**
+ * @module app.mapquery
+ */
+const exports = {};
+
+import './mapquery.css';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
+import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 /** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-goog.require('ngeo.DataSource');
-goog.require('ngeo.DataSources');
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
-/** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapQueryDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Image');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.ImageWMS');
-goog.require('ol.source.OSM');
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerImage from 'ol/layer/Image.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceImageWMS from 'ol/source/ImageWMS.js';
+import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoDatasourceDataSources.module.name,
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscToolActivateMgr.module.name,
+  ngeoQueryMapQueryComponent.name,
+]);
 
 
-app.module.value('ngeoQueryOptions', {
+exports.module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
 
 /**
- * A sample directive to display the result.
+ * A sample component to display the result.
  *
- * @return {angular.Directive} The directive specs.
- * @ngInject
+ * @type {!angular.Component}
  */
-app.queryresultDirective = function() {
-  return {
-    restrict: 'E',
-    scope: {},
-    controller: 'AppQueryresultController as qrCtrl',
-    bindToController: true,
-    templateUrl: 'partials/queryresult.html'
-  };
+exports.queryresultComponent = {
+  controller: 'AppQueryresultController',
+  template: require('./partials/queryresult.html')
 };
 
-app.module.directive('appQueryresult', app.queryresultDirective);
+exports.module.component('appQueryresult', exports.queryresultComponent);
 
 
 /**
@@ -53,7 +58,7 @@ app.module.directive('appQueryresult', app.queryresultDirective);
  * @constructor
  * @ngInject
  */
-app.QueryresultController = function(ngeoQueryResult) {
+exports.QueryresultController = function(ngeoQueryResult) {
 
   /**
    * @type {ngeox.QueryResult}
@@ -64,19 +69,18 @@ app.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-app.module.controller('AppQueryresultController', app.QueryresultController);
+exports.module.controller('AppQueryresultController', exports.QueryresultController);
 
 
 /**
  * @param {angular.Scope} $scope Scope.
- * @param {ngeo.DataSources} ngeoDataSources Ngeo collection of data sources
- *     objects.
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject
  */
-app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
+exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
@@ -90,36 +94,16 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
    */
   this.queryActive = true;
 
-  ngeoDataSources.push(new ngeo.DataSource({
-    id: 1,
-    name: 'bus_stop',
-    visible: true,
-    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-    ogcLayers: [{
-      name: 'bus_stop',
-      queryable: true
-    }]
-  }));
-  const busStopLayer = new ol.layer.Image({
-    'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+  const busStopLayer = new olLayerImage({
+    'source': new olSourceImageWMS({
+      'url': 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
   });
 
-  ngeoDataSources.push(new ngeo.DataSource({
-    id: 2,
-    name: 'information',
-    visible: true,
-    wmsUrl: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
-    ogcLayers: [{
-      name: 'information',
-      queryable: true
-    }]
-  }));
-  const informationLayer = new ol.layer.Image({
-    'source': new ol.source.ImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
+  const informationLayer = new olLayerImage({
+    'source': new olSourceImageWMS({
+      'url': 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
   });
@@ -128,26 +112,50 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       }),
       informationLayer,
       busStopLayer
     ],
-    view: new ol.View({
-      projection: 'EPSG:21781',
+    view: new olView({
+      projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
       zoom: 0
     })
   });
 
-  const queryToolActivate = new ngeo.ToolActivate(this, 'queryActive');
+  ngeoDataSources.map = this.map;
+
+  ngeoDataSources.collection.push(new ngeoDatasourceOGC({
+    id: 1,
+    name: 'bus_stop',
+    visible: true,
+    wmsUrl: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'bus_stop',
+      queryable: true
+    }]
+  }));
+
+  ngeoDataSources.collection.push(new ngeoDatasourceOGC({
+    id: 2,
+    name: 'information',
+    visible: true,
+    wmsUrl: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+    ogcLayers: [{
+      name: 'information',
+      queryable: true
+    }]
+  }));
+
+  const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, true);
 
-  const dummyToolActivate = new ngeo.ToolActivate(this, 'dummyActive');
+  const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
 
 };
@@ -158,7 +166,7 @@ app.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
  * @return {boolean|undefined} Value.
  * @export
  */
-app.MainController.prototype.getSetDummyActive = function(val) {
+exports.MainController.prototype.getSetDummyActive = function(val) {
   if (val !== undefined) {
     this.dummyActive = val;
   } else {
@@ -167,4 +175,7 @@ app.MainController.prototype.getSetDummyActive = function(val) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

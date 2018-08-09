@@ -6,55 +6,11 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.css" type="text/css">
-    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css" type="text/css">
-    <link rel="stylesheet" href="../third-party/jquery-ui/jquery-ui.min.css">
-    <style>
-      .ngeo-grid-table-container {
-        height: 154px;
-        overflow: auto;
-      }
-
-      .table {
-        background-color: white;
-        width: 100%;
-      }
-
-      .table th {
-        cursor: pointer;
-      }
-
-      .ngeo-grid-table-container > .table-hover > tbody > tr:hover {
-          background-color: #f5f5f5;
-      }
-
-      .table-striped>tbody>tr:nth-of-type(odd) {
-          background-color: #f9f9f9;
-      }
-
-      .table > tbody > tr.ngeo-grid-active > td {
-        background-color: #C9C9C9;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as ctrl">
-    <p id="desc">This example shows how to use the <code>ngeo-grid</code> directive.</p>
+    <p id="desc">This example shows how to use the <code>ngeo-grid</code> component.</p>
 
     <ngeo-grid ngeo-grid-configuration="ctrl.gridConfig"></ngeo-grid>
 
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../third-party/jquery-ui/jquery-ui.min.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-animate/angular-animate.js"></script>
-    <script src="../node_modules/angular-touch/angular-touch.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/angular-dynamic-locale/dist/tmhDynamicLocale.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=grid.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

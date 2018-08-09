@@ -1,0 +1,790 @@
+/**
+ * Entry point for all styles required for the desktop application.
+ */
+
+$map-tools-size: 1.9rem !default;
+$button-size: 2.5rem !default;
+$left-panel-width: 20rem !default;
+$right-panel-width: 17.5rem !default;
+$topbar-height: 2.8rem !default;
+$search-width: 8 * $map-tools-size !default;
+$padding-base-vertical: 0.31rem !default;
+$padding-base-horizontal: 0.62rem !default;
+$form-group-margin-bottom: 0.62rem !default;
+
+@import '~gmf/sass/vars_only.scss';
+
+$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
+$border-color: darken($brand-primary, $standard-variation) !default;
+
+@import "~bootstrap/scss/_functions.scss";
+@import "~bootstrap/scss/_variables.scss";
+@import "~@fortawesome/fontawesome-free/scss/_variables.scss";
+
+@import '~gmf/sass/font.scss';
+@import '~gmf/sass/base.scss';
+@import '~gmf/sass/map.scss';
+@import '~gmf/sass/input-range.scss';
+@import '~gmf/sass/popover.scss';
+@import '~gmf/sass/datepicker.scss';
+@import '~gmf/sass/fullscreenpopup.scss';
+
+@import '~gmf/layertree/desktop.scss';
+
+
+html, body {
+  position: relative;
+  height: 100%;
+  li {
+    list-style: none;
+  }
+}
+
+body {
+  padding-top: $topbar-height;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: $topbar-height;
+  z-index: $zindex-navbar-fixed;
+  .logo {
+    height: 100%;
+    line-height: $topbar-height;
+    margin-left: $app-margin;
+    img {
+      height: 100%;
+      vertical-align: bottom;
+    }
+  }
+}
+
+main {
+  position: relative;
+  height: 100%;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAAAAABzHgM7AAAAAnRSTlMAAHaTzTgAAAARSURBVHgBY3iKBFEAOp/+MgB+UQnYeBZPWAAAAABJRU5ErkJggg==');
+  overflow: hidden;
+}
+
+.dropdown-menu > li > a {
+  color: $color;
+  padding: $input-btn-padding-y $input-btn-padding-x;
+  display: block;
+  &:hover {
+    text-decoration: none;
+    background-color: $onhover-color;
+  }
+}
+
+$footer-height: $input-height-base + 2 * $padding-base-vertical;
+
+.gmf-app-map-container {
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: block;
+  border-top-color: $btn-default-border;
+  border-top-width: 0.06rem;
+  border-top-style: solid;
+  .gmf-map,
+  .gmf-map > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .gmf-app-footer {
+    padding: $padding-small-vertical;
+    position: absolute;
+    z-index: 2;
+    bottom:  -$footer-height;
+    // prevent footer to be displayed on 2 lines when screen width is small
+    max-height: $footer-height;
+    background-color: rgba($main-bg-color, .9);
+    width: 100%;
+    /* cancel default navbar bottom margin */
+    margin-bottom: 0;
+    /* buttons or inputs in bar are supposed to be '-sm' */
+    transition: 0.2s ease-out all;
+    border: solid $border-color;
+    border-width: 0.06rem 0 0;
+    &.gmf-app-active {
+      bottom: 0;
+    }
+    > div {
+      display: inline-block;
+    }
+
+    button.gmf-app-map-info {
+      position: absolute;
+      /* button is supposed to be .btn-sm */
+      bottom: $footer-height;
+      border-top-left-radius: $border-radius-base;
+      border-top-right-radius: $border-radius-base;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      background-color: rgba($main-bg-color, .8);
+      padding: 0;
+      left: 50%;
+      $width: 2.50rem;
+      width: $width;
+      margin-left: -($width / 2);
+      border-bottom: 0;
+      border: solid $border-color;
+      border-width: 0.06rem 0.06rem 0 0.06rem;
+    }
+  }
+
+  [ngeo-scaleselector] .btn > span {
+    min-width: 5rem;
+    display: inline-block;
+  }
+
+  #scaleline {
+    vertical-align: middle;
+    .ol-scale-line, .ol-scale-line-inner {
+      background-color: transparent;
+      bottom: auto;
+      position: relative;
+    }
+  }
+
+  gmf-mouseposition {
+    display: inline-block;
+  }
+  .gmf-mouseposition-control {
+    display: inline-block;
+    min-width: 11.25rem;
+  }
+  gmf-elevationwidget {
+    display: inline-block;
+  }
+  .gmf-elevationwidget-value {
+    display: inline-block;
+    min-width: 5rem;
+  }
+}
+
+gmf-search {
+  position: absolute;
+  left: 2 * $app-margin + $map-tools-size;
+
+  .gmf-clear-button {
+    top: 0;
+  }
+
+  span.twitter-typeahead {
+    &::before {
+      // magnifier
+      font-size: 0.94rem;
+    }
+
+    .tt-menu {
+      border-radius: $border-radius-base;
+
+      .gmf-search-header {
+        padding: $app-margin;
+        display: block;
+        font-size: $font-size-small;
+        background-color: #eee;
+        text-transform: uppercase;
+        color: #666;
+      }
+
+      .gmf-search-group {
+        display: none;
+      }
+    }
+  }
+}
+
+.ol-zoom {
+  left: $app-margin;
+  top: $app-margin;
+}
+
+.ol-rotate {
+  right: $app-margin;
+  top: $app-margin;
+}
+
+.gmf-app-data-panel {
+  display: block;
+  float: left;
+  background-color: $brand-secondary;
+  width: $left-panel-width;
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+
+  .gmf-app-header {
+    flex: 0 1 auto;
+    padding: $app-margin $app-margin 0 $app-margin;
+  }
+
+  .gmf-app-content {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    position: relative;
+    margin-top: $app-margin;
+    margin-bottom: $app-margin;
+  }
+
+}
+
+gmf-themeselector {
+  width: 1.5 * $left-panel-width;
+  max-height: 1.5 * $left-panel-width;
+  overflow: hidden;
+  overflow-y: auto;
+}
+gmf-backgroundlayerselector {
+  width: 15.62rem;
+}
+gmf-themeselector,
+gmf-backgroundlayerselector {
+  padding: $half-app-margin !important;
+}
+
+$theme-selector-columns: 2;
+.gmf-theme-selector li {
+  float: left;
+  width: calc((100% - #{$theme-selector-columns} * 2 * #{$half-app-margin}) / #{$theme-selector-columns});
+}
+.gmf-backgroundlayerselector {
+  margin-bottom: 0;
+}
+
+.gmf-theme-selector,
+.gmf-backgroundlayerselector {
+  li {
+    margin: $half-app-margin;
+  }
+}
+
+.gmf-app-tools {
+  display: block;
+  float: right;
+  background-color: $brand-secondary;
+
+  .gmf-app-tools-content {
+    width: $right-panel-width;
+    margin-right: -$right-panel-width;
+    transition: margin-right 0.2s ease, width 0.001s ease;
+    float: right;
+    height: 100%;
+    overflow: auto;
+
+    & > div {
+      height: 100%;
+      & > div {
+        height: 100%;
+      }
+    }
+
+    &.gmf-app-active {
+      margin-right: 0;
+    }
+
+    .close {
+      padding: 0;
+      line-height: $half-app-margin;
+      margin-bottom: $app-margin;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .gmf-app-tools-content-heading {
+      $color: lighten($text-color, $standard-variation);
+      color: $color;
+      padding-bottom: $app-margin;
+      margin-bottom: $app-margin;
+      margin-top: $grid-gutter-width / 2;
+      border-bottom: 0.06rem solid $color;
+    }
+
+    &.gmf-app-googlestreetview-active {
+      width: 26.88rem;
+    }
+  }
+
+  .gmf-app-bar {
+    background-color: $brand-primary;
+    border-left: 0.06rem solid $border-color;
+
+    float: right;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+
+    > .btn + .btn {
+      margin-top: -0.06rem;
+    }
+
+    .btn {
+      width: 100%;
+      border-width: 0;
+      background-color: $brand-primary;
+      margin-left: 0;
+      border-radius: 0 !important;
+      &:hover {
+        background-color: lighten($brand-primary, $standard-variation);
+      }
+    }
+
+    .btn-group-vertical {
+      width: 100%;
+      .btn {
+        border: 0.06rem solid $border-color;
+        border-right-width: 0;
+        border-left-width: 0;
+
+        &.active,
+        &:active {
+          box-shadow: none;
+        }
+        &.active {
+          background-color: $brand-secondary;
+          border-left: 0.06rem solid $brand-secondary;
+          margin-left: -0.06rem;
+        }
+      }
+    }
+  }
+}
+
+.gmf-app-data-panel,
+.gmf-app-tools {
+  height: 100%;
+  position: relative;
+}
+
+
+::-webkit-scrollbar-track {
+  background: $main-bg-color;
+}
+
+::-webkit-scrollbar {
+  width: $half-app-margin;
+}
+::-webkit-scrollbar-thumb {
+  background: $brand-primary;
+}
+
+
+/**
+ * GMF DrawFeature directive
+ */
+.gmf-app-map-messages h2 {
+  display: none;
+}
+
+.gmf-eol {
+  clear: both;
+}
+
+hr.gmf-drawfeature-separator {
+  border-color: $color;
+  margin: 0.62rem 0;
+}
+
+.gmf-drawfeature-featurelist {
+  margin-top: $app-margin;
+}
+
+
+/**
+ * NGEO DrawFeature directive & map tooltips
+ */
+.ngeo-drawfeature-actionbuttons {
+  float: right;
+  position: relative;
+}
+
+.ol-viewport {
+  .tooltip {
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 0.25rem;
+    color: white;
+    padding: 0.25rem 0.50rem;
+    opacity: 0.7;
+    white-space: nowrap;
+  }
+  .ngeo-tooltip-measure {
+    opacity: 1;
+    font-weight: bold;
+  }
+  .ngeo-tooltip-static {
+    display: none;
+  }
+  .ngeo-tooltip-measure:before,
+  .ngeo-tooltip-static:before {
+    border-top: 0.37rem solid rgba(0, 0, 0, 0.5);
+    border-right: 0.37rem solid transparent;
+    border-left: 0.37rem solid transparent;
+    content: "";
+    position: absolute;
+    bottom: -0.37rem;
+    margin-left: -0.44rem;
+    left: 50%;
+  }
+  .ngeo-tooltip-static:before {
+    border-top-color: #ffcc33;
+  }
+}
+
+
+/**
+ * GMF FeatureStyle directive
+ */
+gmf-featurestyle {
+  display: block;
+  margin-top: $app-margin;
+}
+
+
+/**
+ * Color palette within GMF FeatureStyle directive
+ */
+.ngeo-colorpicker-palette {
+  border-collapse: separate;
+  border-spacing: 0rem;
+
+  tr {
+    cursor: default;
+  }
+
+  td {
+    position: relative;
+    padding: 0rem;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 0.06rem;
+    cursor: pointer;
+
+    & > div {
+      position: relative;
+      height: 0.75rem;
+      width: 0.75rem;
+      border: 0.06rem solid #fff;
+      box-sizing: content-box;
+    }
+
+    &:hover {
+      & > div::after {
+        display: block;
+        content: '';
+        background: inherit;
+        position: absolute;
+        width: 1.75rem;
+        height: 1.75rem;
+        top: -0.62rem;
+        left: -0.62rem;
+        border: 0.12rem solid #fff;
+        box-shadow: rgba(0,0,0,0.3) 0 0.06rem 0.19rem 0;
+        z-index: 11;
+      }
+    }
+
+    &.ngeo-colorpicker-selected > div::after {
+      border: 0.12rem solid #444;
+      margin: 0;
+      content: '';
+      display: block;
+      width: 0.87rem;
+      height: 0.87rem;
+      position: absolute;
+      left: -0.19rem;
+      top: -0.19rem;
+      box-sizing: content-box;
+      z-index: 10;
+    }
+  }
+}
+
+
+/**
+ * Notifications
+ */
+.ngeo-notification {
+  left: 50%;
+  margin: 0 0 0 -6.25rem;
+  position: absolute;
+  top: 0;
+  width: 12.50rem;
+  z-index: 999;
+}
+
+
+/**
+ * Controls at the bottom of the map
+ */
+.gmf-app-map-bottom-controls {
+  .gmf-app-infobar-active & {
+    bottom: $footer-height;
+  }
+  transition: 0.2s ease-out bottom;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+/**
+ * Background layer button (selector)
+ */
+.gmf-backgroundlayerbutton {
+  position: absolute;
+  bottom: $app-margin;
+  left: $app-margin;
+
+  button {
+    background-color: $map-tools-bg-color;
+    padding: $padding-small-vertical;
+    &::after {
+      display: none !important;
+    }
+  }
+
+  button,
+  gmf-backgroundlayerselector {
+    box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.175);
+  }
+
+}
+
+.gmf-displayquerywindow {
+  position: absolute;
+  right: $app-margin;
+}
+
+/** ngeo-displayquery-window */
+main div.ngeo-displaywindow {
+  top: $topbar-height + 2 * $app-margin + 2 * $map-tools-size;
+  left: $nav-width + $app-margin;
+  right: inherit
+}
+
+/** Disclaimer */
+$bgselector-image-size: 3.00rem;
+.gmf-app-map-messages {
+  position: absolute;
+  vertical-align: bottom;
+  left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
+}
+
+
+/**
+ * GMF EditFeature directive
+ */
+gmf-editfeature > div {
+  border-top: 0.06rem solid #333;
+  margin-top: 0.62rem;
+  padding-top: 0.62rem;
+}
+
+
+/**
+ * GMF ObjectEditingTools directive
+ */
+gmf-objecteditingtools {
+  border-bottom: 0.06rem solid #595959;
+  display: block;
+  margin: 0 0 0.62rem 0;
+  padding: 0 0 0.62rem 0;
+}
+
+
+/**
+ * GMF FilterSelector component
+ */
+.gmf-filterselector-separator {
+  margin: 0.94rem 0 0.31rem 0;
+  border-color: $color;
+}
+
+.gmf-filterselector-savefilter-desc {
+  color: #999999;
+}
+
+.gmf-filterselector-savedfilters {
+  z-index: 1;
+
+  a.dropdown-toggle {
+    padding: 0.37rem 0;
+    position: absolute;
+    right: 0;
+  }
+
+  ul.dropdown-menu {
+    right: 0;
+    top: 1.88rem;
+
+    a {
+      overflow: hidden;
+      max-width: 15.62rem;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.gmf-filterselector-managefilter-modal {
+  .modal-body {
+    padding: 0 0.94rem;
+
+    ul {
+      margin: 0;
+
+      li {
+        border-bottom: 0.06rem solid #dddddd;
+        padding: 0.31rem;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        a {
+          float: right;
+        }
+
+        span {
+          float: left;
+          max-width: 30rem;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+
+/**
+ * Ngeo Filter component
+ */
+
+.ngeo-filter-condition-button,
+.ngeo-filter-condition-button:hover,
+.ngeo-filter-condition-button:focus {
+  text-decoration: none;
+}
+
+.ngeo-filter-condition-criteria-header {
+  color: #999999;
+  padding: 0.19rem 1.25rem;
+}
+
+.ngeo-filter-condition-criteria {
+  opacity: 0;
+}
+
+.ngeo-filter-condition-criteria-active {
+  opacity: 1;
+}
+
+.ngeo-filter-rule-custom-rm-btn {
+  float: right;
+  margin: 0.25rem 0;
+}
+
+hr.ngeo-filter-separator-rules {
+  margin: 0.62rem 0;
+}
+
+hr.ngeo-filter-separator-criteria {
+  margin: 0.31rem 0;
+}
+
+hr.ngeo-filter-separator-criteria,
+hr.ngeo-filter-separator-rules {
+  border-color: $color;
+}
+
+/**
+ * Ngeo Rule component
+ */
+ngeo-rule {
+  display: block;
+  margin: 0.62rem 1.56rem 0.62rem 0;
+
+  .form-control {
+    font-size: $font-size-small;
+  }
+
+  .dropdown > a.btn {
+    display: block;
+    text-align: left;
+
+    span.caret {
+      position: absolute;
+      right: 0.62rem;
+      top: 0.87rem;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 0.62rem;
+  }
+
+  .ngeo-rule-operators-list {
+    margin: 0 0 0.62rem 0;
+  }
+
+  .ngeo-rule-btns {
+    float: right;
+  }
+
+  .ngeo-rule-type-select label {
+    width: 8.44rem;
+  }
+
+  .ngeo-rule-value {
+    border: 0.06rem solid #aaa;
+    border-radius: 0 0 0.19rem 0.19rem;
+    border-top: 0;
+    color: #999999;
+    padding: 0.25rem 0.19rem 0.12rem 0.31rem;
+    margin: -0.12rem 0 0 0;
+
+    a.btn {
+      color: #999999;
+      float: right;
+    }
+
+    a.btn:hover,
+    a.btn:focus {
+      color: #666666;
+    }
+
+    ngeo-date-picker {
+      display: block;
+      text-align: right;
+    }
+  }
+
+  .ngeo-rule-type-geometry-instructions {
+    font-size: 9pt;
+    font-style: italic;
+    margin: 0.31rem;
+  }
+}
+
+
+/**
+ * Ngeo Google Street View Component
+ */
+ngeo-googlestreetview {
+  display: block;
+  height: calc(100% - 3.75rem);
+  width: 25rem;
+}

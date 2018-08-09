@@ -1,62 +1,73 @@
-goog.provide('app.createfeature');
+/**
+ * @module app.createfeature
+ */
+const exports = {};
 
-goog.require('ngeo.ToolActivate');
-goog.require('ngeo.ToolActivateMgr');
+import './createfeature.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.btngroupDirective');
+import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
+
+import ngeoGeometryType from 'ngeo/GeometryType.js';
+
 /** @suppress {extraRequire} */
-goog.require('ngeo.btnDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.createfeatureDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Collection');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.layer.Vector');
-goog.require('ol.source.OSM');
-goog.require('ol.source.Vector');
+import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
+
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
+import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
+import olCollection from 'ol/Collection.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olLayerVector from 'ol/layer/Vector.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olSourceVector from 'ol/source/Vector.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscBtnComponent.name,
+  ngeoMiscToolActivateMgr.module.name,
+  ngeoEditingCreatefeatureComponent.name,
+]);
 
 
 /**
- * @param {ngeo.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
  */
-app.MainController = function(ngeoToolActivateMgr) {
+exports.MainController = function(ngeoToolActivateMgr) {
 
   /**
    * @type {ol.Collection}
    * @export
    */
-  this.features = new ol.Collection();
+  this.features = new olCollection();
 
   /**
    * @type {string}
    * @export
    */
-  this.pointGeomType = ngeo.GeometryType.POINT;
+  this.pointGeomType = ngeoGeometryType.POINT;
 
   /**
    * @type {string}
    * @export
    */
-  this.lineStringGeomType = ngeo.GeometryType.LINE_STRING;
+  this.lineStringGeomType = ngeoGeometryType.LINE_STRING;
 
   /**
    * @type {string}
    * @export
    */
-  this.polygonGeomType = ngeo.GeometryType.POLYGON;
+  this.polygonGeomType = ngeoGeometryType.POLYGON;
 
-  const vector = new ol.layer.Vector({
-    source: new ol.source.Vector({
+  const vector = new olLayerVector({
+    source: new olSourceVector({
       wrapX: false,
       features: this.features
     })
@@ -66,14 +77,14 @@ app.MainController = function(ngeoToolActivateMgr) {
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       }),
       vector
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 3
     })
@@ -85,7 +96,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createPointActive = false;
 
-  const createPointToolActivate = new ngeo.ToolActivate(
+  const createPointToolActivate = new ngeoMiscToolActivate(
     this,
     'createPointActive'
   );
@@ -101,7 +112,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createLineStringActive = false;
 
-  const createLineStringToolActivate = new ngeo.ToolActivate(
+  const createLineStringToolActivate = new ngeoMiscToolActivate(
     this,
     'createLineStringActive'
   );
@@ -117,7 +128,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.createPolygonActive = false;
 
-  const createPolygonToolActivate = new ngeo.ToolActivate(
+  const createPolygonToolActivate = new ngeoMiscToolActivate(
     this,
     'createPolygonActive'
   );
@@ -133,7 +144,7 @@ app.MainController = function(ngeoToolActivateMgr) {
    */
   this.dummyActive = true;
 
-  const dummyToolActivate = new ngeo.ToolActivate(
+  const dummyToolActivate = new ngeoMiscToolActivate(
     this,
     'dummyActive'
   );
@@ -145,4 +156,7 @@ app.MainController = function(ngeoToolActivateMgr) {
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

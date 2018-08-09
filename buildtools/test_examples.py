@@ -17,10 +17,8 @@ def main():
         split_current = split_current - 1
     else:
         split_current, split_number = (0, 1)
-    return_code_1, split_current = check("examples", ".html", "", split_current, split_number)
-    return_code_2, split_current = check("contribs/gmf/examples", ".html", "contribs/gmf/", split_current, split_number)
-    return_code_3, split_current = check("contribs/gmf/apps", "", "contribs/gmf/apps/", split_current, split_number)
-    exit(max(return_code_1, return_code_2, return_code_3))
+    return_code, split_current = check("contribs/gmf/apps", "", "contribs/gmf/apps/", split_current, split_number)
+    exit(return_code)
 
 
 def check(folder, file_postfix, make_prefix, split_current, split_number):

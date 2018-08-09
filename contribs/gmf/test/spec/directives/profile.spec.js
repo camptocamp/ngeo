@@ -1,6 +1,3 @@
-goog.require('gmf.profileComponent');
-
-
 describe('gmf.GmfProfileController', () => {
 
   let profileController;
@@ -9,14 +6,14 @@ describe('gmf.GmfProfileController', () => {
   let $rootScope;
 
   beforeEach(() => {
-    module('ngeo', ($provide) => {
-      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/profile.json');
+    angular.mock.module('ngeo', ($provide) => {
+      $provide.value('gmfProfileJsonUrl', 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/profile.json');
       csvDownloadServiceMock = {
         startDownload(data, columnDefs, fileName) {}
       };
     });
 
-    inject(($injector, _$controller_, _$rootScope_) => {
+    angular.mock.inject((_$controller_, _$rootScope_) => {
       const $controller = _$controller_;
       $rootScope = _$rootScope_;
       $scope = $rootScope.$new();
@@ -34,7 +31,7 @@ describe('gmf.GmfProfileController', () => {
       };
       profileController = $controller(
         'GmfProfileController', {
-          $scope,
+          $scope: $scope,
           ngeoCsvDownload: csvDownloadServiceMock,
           $element: $('<div></div>')}, data);
       $rootScope.$digest();

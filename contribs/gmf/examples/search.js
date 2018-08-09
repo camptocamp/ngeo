@@ -1,72 +1,96 @@
-goog.provide('gmfapp.search');
+/**
+ * @module gmfapp.search
+ */
+const exports = {};
 
+import './search.css';
 /** @suppress {extraRequire} */
-goog.require('gmf.mapDirective');
-goog.require('ngeo.FeatureOverlayMgr');
-goog.require('ngeo.Notification');
-/** @suppress {extraRequire} */
-goog.require('ngeo.proj.EPSG21781');
-/** @suppress {extraRequire} */
-goog.require('gmf.searchDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
-goog.require('ol.style.Circle');
-goog.require('ol.style.Fill');
-goog.require('ol.style.Stroke');
-goog.require('ol.style.Style');
+import gmfMapComponent from 'gmf/map/component.js';
+
+import gmfSearchModule from 'gmf/search/module.js';
+import gmfThemeThemes from 'gmf/theme/Themes.js';
+import ngeoMessageNotification from 'ngeo/message/Notification.js';
+import ngeoMessageMessage from 'ngeo/message/Message.js';
+import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import olStyleCircle from 'ol/style/Circle.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.Module} **/
-gmfapp.module = angular.module('gmfapp', ['gmf']);
+exports.module = angular.module('gmfapp', [
+  'gettext',
+  gmfMapComponent.name,
+  gmfSearchModule.name,
+  gmfThemeThemes.module.name,
+  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMessageNotification.module.name,
+]);
 
+exports.module.value('gmfTreeUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
 
-gmfapp.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.net/2.2/wsgi/themes?version=2&background=background');
+exports.module.value('fulltextsearchUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+
+exports.module.value('gmfLayersUrl',
+  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+
+exports.module.constant('defaultTheme', 'Demo');
+exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {gmf.Themes} gmfThemes Themes service.
- * @param {ngeo.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {gmf.theme.Themes} gmfThemes Themes service.
+ * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
  */
-gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
+exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   gmfThemes.loadThemes();
 
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
-   * @type {Array.<gmfx.SearchDirectiveDatasource>}
+   * @type {Array.<gmfx.SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{
     groupValues: ['osm', 'district'],
     groupActions: [],
     labelKey: 'label',
-    projection: 'EPSG:21781',
+    projection: EPSG21781,
     bloodhoundOptions: {
       remote: {
         rateLimitWait: 250
       }
     },
-    url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/fulltextsearch'
+    url: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/fulltextsearch'
   }];
 
-  const fill = new ol.style.Fill({color: [255, 255, 255, 0.6]});
-  const stroke = new ol.style.Stroke({color: [255, 0, 0, 1], width: 2});
+  const fill = new olStyleFill({color: [255, 255, 255, 0.6]});
+  const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
   /**
    * @type {Object.<string, ol.style.Style>} Map of styles for search overlay.
    * @export
    */
   this.searchStyles = {
-    'osm': new ol.style.Style({
-      fill,
-      image: new ol.style.Circle({fill, radius: 5, stroke}),
-      stroke
+    'osm': new olStyleStyle({
+      fill: fill,
+      image: new olStyleCircle({
+        fill: fill,
+        radius: 5,
+        stroke: stroke
+      }),
+      stroke: stroke
     })
   };
 
@@ -82,42 +106,38 @@ gmfapp.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotificat
    * @type {string}
    * @export
    */
-  this.inputValue;
+  this.inputValue = '';
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
   });
 
   /**
-   * @type {ngeo.Notification}
-   * @private
+   * @type {function()}
+   * @export
    */
-  this.notification_ = ngeoNotification;
+  this.searchIsReady = () => {
+    ngeoNotification.notify({
+      msg: 'gmf-search initialized',
+      target: angular.element('#message'),
+      type: ngeoMessageMessage.Type.SUCCESS
+    });
+  };
 };
 
-
-/**
- * @export
- */
-gmfapp.MainController.prototype.searchIsReady = function() {
-  this.notification_.notify({
-    msg: 'gmf-search initialized',
-    target: angular.element('#message'),
-    type: ngeo.MessageType.SUCCESS
-  });
-};
+exports.module.controller('MainController', exports.MainController);
 
 
-gmfapp.module.controller('MainController', gmfapp.MainController);
+export default exports;

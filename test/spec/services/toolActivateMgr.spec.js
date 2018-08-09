@@ -1,21 +1,21 @@
-goog.require('ngeo.ToolActivateMgr');
+import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
-describe('ngeo.ToolActivateMgr', () => {
+describe('ngeo.misc.ToolActivateMgr', () => {
   let interaction1, interaction2, interaction3, tool1, tool2, tool3;
   let ngeoToolActivateMgr;
   let $rootScope;
 
   beforeEach(() => {
     interaction1 = {active: true};
-    tool1 = new ngeo.ToolActivate(interaction1, 'active');
+    tool1 = new ngeoMiscToolActivate(interaction1, 'active');
     interaction2 = {active: false};
-    tool2 = new ngeo.ToolActivate(interaction2, 'active');
+    tool2 = new ngeoMiscToolActivate(interaction2, 'active');
     interaction3 = {active: false};
-    tool3 = new ngeo.ToolActivate(interaction3, 'active');
+    tool3 = new ngeoMiscToolActivate(interaction3, 'active');
 
-    inject(($injector) => {
-      ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-      $rootScope = $injector.get('$rootScope');
+    angular.mock.inject((_ngeoToolActivateMgr_, _$rootScope_) => {
+      ngeoToolActivateMgr = _ngeoToolActivateMgr_;
+      $rootScope = _$rootScope_;
     });
   });
 

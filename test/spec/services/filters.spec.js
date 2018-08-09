@@ -1,10 +1,8 @@
-goog.require('ngeo.filters');
-
-describe('ngeo.Filters', () => {
+describe('ngeo.misc.filters', () => {
 
   let $filter;
 
-  beforeEach(inject((_$filter_) => {
+  beforeEach(angular.mock.inject((_$filter_) => {
     $filter = _$filter_;
   }));
 

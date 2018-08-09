@@ -1,22 +1,25 @@
-goog.provide('app.simple3d');
+/**
+ * @module app.simple3d
+ */
+const exports = {};
 
+import './simple3d.css';
 /** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import olMap from 'ol/Map.js';
 
-goog.require('ngeo.olcs.olcsModule');
-goog.require('ngeo');
-
-goog.require('ngeo.olcs.Manager');
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoOlcsOlcsModule from 'ngeo/olcs/olcsModule.js';
+import ngeoMapModule from 'ngeo/map/module.js';
+import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', [
-  ngeo.module.name,
-  ngeo.olcs.olcsModule.name
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoOlcsOlcsModule.name
 ]);
 
 
@@ -26,19 +29,19 @@ app.module = angular.module('app', [
  * @param {angular.Scope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
  */
-app.MainController = function($rootScope, ngeoOlcsService) {
+exports.MainController = function($rootScope, ngeoOlcsService) {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [0, 0],
       zoom: 4
     })
@@ -51,7 +54,7 @@ app.MainController = function($rootScope, ngeoOlcsService) {
    * @export
    * @type {olcs.contrib.Manager}
    */
-  this.ol3dm = new ngeo.olcs.Manager(cesiumUrl, $rootScope, {
+  this.ol3dm = new ngeoOlcsManager(cesiumUrl, $rootScope, {
     map: this.map
   });
 
@@ -59,4 +62,7 @@ app.MainController = function($rootScope, ngeoOlcsService) {
   ngeoOlcsService.initialize(this.ol3dm);
 };
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

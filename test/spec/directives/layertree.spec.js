@@ -1,14 +1,16 @@
-goog.require('ol.Map');
-goog.require('ngeo.LayertreeController');
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerImage from 'ol/layer/Image.js';
+import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 
-describe('ngeo.layertreeDirective', () => {
+describe('ngeo.layertree.component', () => {
 
   let roottreeCtrl;
 
   beforeEach(() => {
 
-    const map = new ol.Map({
-      view: new ol.View({
+    const map = new olMap({
+      view: new olView({
         center: [0, 0],
         zoom: 0
       })
@@ -36,10 +38,10 @@ describe('ngeo.layertreeDirective', () => {
     };
 
     const getLayer = function(node) {
-      return new ol.layer.Image();
+      return new olLayerImage();
     };
 
-    inject(($rootScope, $compile, $sce) => {
+    angular.mock.inject(($rootScope, $compile, $sce) => {
       $rootScope.tree = tree;
       $rootScope.map = map;
       $rootScope.getLayer = getLayer;
@@ -126,8 +128,8 @@ describe('ngeo.layertreeDirective', () => {
     const treeNode0 = roottreeCtrl.children[0];
     const treeLeaf01 = treeNode0.children[1];
     const treeLeaf1 = roottreeCtrl.children[1];
-    expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
-    expect(ngeo.LayertreeController.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
+    expect(ngeoLayertreeController.getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
+    expect(ngeoLayertreeController.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
   });
 
   it('Traverse tree', () => {
@@ -142,7 +144,7 @@ describe('ngeo.layertreeDirective', () => {
     visited = '';
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
-      return ngeo.LayertreeController.VisitorDecision.STOP;
+      return ngeoLayertreeController.VisitorDecision.STOP;
     });
     expect(visited).toBe(', Root');
 
@@ -151,7 +153,7 @@ describe('ngeo.layertreeDirective', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Leaf 01') {
-        return ngeo.LayertreeController.VisitorDecision.STOP;
+        return ngeoLayertreeController.VisitorDecision.STOP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01');
@@ -161,7 +163,7 @@ describe('ngeo.layertreeDirective', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Node 0') {
-        return ngeo.LayertreeController.VisitorDecision.SKIP;
+        return ngeoLayertreeController.VisitorDecision.SKIP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 1');

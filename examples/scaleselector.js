@@ -1,20 +1,24 @@
-goog.provide('app.scaleselector');
+/**
+ * @module app.scaleselector
+ */
+const exports = {};
 
-goog.require('ngeo.ScaleselectorOptions');
-/** @suppress {extraRequire} */
-goog.require('ngeo.mapDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.scaleselectorDirective');
-/** @suppress {extraRequire} */
-goog.require('ngeo.filters');
-goog.require('ol.Map');
-goog.require('ol.View');
-goog.require('ol.layer.Tile');
-goog.require('ol.source.OSM');
+import './scaleselector.css';
+import ngeoMiscFilters from 'ngeo/misc/filters.js';
+
+import olMap from 'ol/Map.js';
+import olView from 'ol/View.js';
+import olLayerTile from 'ol/layer/Tile.js';
+import olSourceOSM from 'ol/source/OSM.js';
+import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMapModule.name,
+  ngeoMiscFilters.name,
+]);
 
 
 /**
@@ -22,19 +26,19 @@ app.module = angular.module('app', ['ngeo']);
  * @param {angular.Scope} $scope Controller scope.
  * @ngInject
  */
-app.MainController = function($scope) {
+exports.MainController = function($scope) {
 
   /**
    * @type {ol.Map}
    * @export
    */
-  this.map = new ol.Map({
+  this.map = new olMap({
     layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
+      new olLayerTile({
+        source: new olSourceOSM()
       })
     ],
-    view: new ol.View({
+    view: new olView({
       center: [-10635142.37, 4813698.29],
       zoom: 1,
       maxZoom: 4
@@ -51,14 +55,17 @@ app.MainController = function($scope) {
 
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
-   * @type {ngeo.ScaleselectorOptions}
+   * @type {ngeox.ScaleselectorOptions}
    * @export
    */
   this.options = {
-    'dropup': true
+    dropup: true
   };
 
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;

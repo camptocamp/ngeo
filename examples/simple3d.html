@@ -6,20 +6,6 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" href="../node_modules/openlayers/css/ol.css" type="text/css">
-    <link rel="stylesheet" href="simple3d.css" type="text/css">
-
-    <style>
-      #map-container {
-        position: relative;
-        width: 600px;
-        height: 400px;
-      }
-      #map {
-        width: 100%;
-        height: 100%;
-      }
-    </style>
   </head>
   <body ng-controller="MainController as $ctrl">
     <input type="button" value="Enable/disable 3D" ng-click="$ctrl.ol3dm.toggle3d()" />
@@ -31,17 +17,11 @@
     <p id="desc">
       This example shows how to use <code>ngeo.olcs.Manager</code> and the
       <code><a href="../apidoc/ngeo.olcs.ngeoOlcsControls3d.html" title="Read our documentation">ngeo-olcs-controls3d</a></code>
-      component to control an 3D view.
+      component to control an 3D view.<br>
+      It also shows how 3d navigation interacts with permalink.
+      <br><br>
+      Here an example of permalink format: <code>?3d_enabled=true&3d_lon=26.81533&3d_lat=-21.85790&3d_elevation=1274213&3d_heading=360.000&3d_pitch=-63.995</code><br>
+      3d permalink is managed in <code><a href="../apidoc/ngeo.olcs.ngeoOlcsService.html" title="Read our documentation">ngeo-olcs-service</a></code>.
     </p>
-    <script src="../node_modules/jquery/dist/jquery.js"></script>
-    <script src="../node_modules/angular/angular.js"></script>
-    <script src="../node_modules/angular-gettext/dist/angular-gettext.js"></script>
-    <script src="../node_modules/angular-ui-date/dist/date.js"></script>
-    <script src="../node_modules/angular-float-thead/angular-floatThead.js"></script>
-    <script src="../node_modules/floatthead/dist/jquery.floatThead.min.js"></script>
-    <script src="../node_modules/proj4/dist/proj4.js"></script>
-    <script src="/@?main=simple3d.js"></script>
-    <script src="default.js"></script>
-    <script src="../utils/watchwatchers.js"></script>
   </body>
 </html>

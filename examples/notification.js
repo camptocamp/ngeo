@@ -1,21 +1,31 @@
-goog.provide('app.notification');
+/**
+ * @module app.notification
+ */
+const exports = {};
 
-goog.require('ngeo.Notification');
+import './notification.css';
+import 'jquery-ui/ui/widgets/tooltip.js';
+import ngeoMessageMessage from 'ngeo/message/Message.js';
+
+import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 
 /** @type {!angular.Module} **/
-app.module = angular.module('app', ['ngeo']);
+exports.module = angular.module('app', [
+  'gettext',
+  ngeoMessageNotification.module.name,
+]);
 
 
 /**
- * @param {ngeo.Notification} ngeoNotification Ngeo notification service.
+ * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @ngInject
  * @constructor
  */
-app.MainController = function(ngeoNotification) {
+exports.MainController = function(ngeoNotification) {
 
   /**
-   * @type {ngeo.Notification}
+   * @type {ngeo.message.Notification}
    * @export
    */
   this.notification = ngeoNotification;
@@ -40,19 +50,19 @@ app.MainController = function(ngeoNotification) {
  * service.
  * @export
  */
-app.MainController.prototype.notifyMulti = function() {
+exports.MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
-    type: ngeo.MessageType.ERROR
+    type: ngeoMessageMessage.Type.ERROR
   }, {
     msg: ['Warning #', this.i_++].join(''),
-    type: ngeo.MessageType.WARNING
+    type: ngeoMessageMessage.Type.WARNING
   }, {
     msg: ['Information #', this.i_++].join(''),
-    type: ngeo.MessageType.INFORMATION
+    type: ngeoMessageMessage.Type.INFORMATION
   }, {
     msg: ['Success #', this.i_++].join(''),
-    type: ngeo.MessageType.SUCCESS
+    type: ngeoMessageMessage.Type.SUCCESS
   }]);
 };
 
@@ -62,11 +72,11 @@ app.MainController.prototype.notifyMulti = function() {
  * one defined by the notification service.
  * @export
  */
-app.MainController.prototype.notifyTarget = function() {
+exports.MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
-    type: ngeo.MessageType.ERROR
+    type: ngeoMessageMessage.Type.ERROR
   });
 };
 
@@ -74,13 +84,16 @@ app.MainController.prototype.notifyTarget = function() {
  * Demonstrates how to display a message for a specific number of seconds.
  * @export
  */
-app.MainController.prototype.notifyQuick = function() {
+exports.MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',
-    type: ngeo.MessageType.SUCCESS
+    type: ngeoMessageMessage.Type.SUCCESS
   });
 };
 
 
-app.module.controller('MainController', app.MainController);
+exports.module.controller('MainController', exports.MainController);
+
+
+export default exports;
