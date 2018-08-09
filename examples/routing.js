@@ -7,7 +7,7 @@ const exports = {};
  * This example shows the ngeo routing directive.
  */
 import './routing.css';
-import 'openlayers/css/ol.css';
+import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 

@@ -3,7 +3,7 @@ import 'jquery';
 import 'angular';
 import 'angular-gettext';
 
-import 'openlayers/css/ol.css';
+import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 /*

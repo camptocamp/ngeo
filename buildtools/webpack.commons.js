@@ -162,8 +162,6 @@ const config = {
       'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
       'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
       'jsts': 'jsts/org/locationtech/jts',
-      'ol/ol.css': 'openlayers/css/ol.css',
-      'ol': 'openlayers/src/ol',
       'olcs': 'ol-cesium/src/olcs',
       'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
       'proj4': 'proj4/lib',
