@@ -91,7 +91,7 @@
     "loader-utils": "1.1.0",
     "ls": "0.2.1",
     "moment": "2.22.2",
-    "node-sass": "4.9.2",
+    "node-sass": "4.9.3",
     "node-sass-importer": "1.0.0",
     "ol-cesium": "2.0.0",
     "openlayers": "https://api.github.com/repos/openlayers/openlayers/tarball/f284b95cb897b3ce1b49b985b58ebe1ca76be1fe",
