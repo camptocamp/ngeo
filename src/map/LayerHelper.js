@@ -425,9 +425,11 @@ exports.prototype.getWMSLegendURL = function(url,
     if (opt_dpi != undefined) {
       queryString['DPI'] = opt_dpi;
     }
-    if (opt_bbox != undefined && opt_srs != undefined) {
+    if (opt_bbox != undefined && opt_srs != undefined && opt_scale != undefined && opt_dpi != undefined && opt_legendRule == undefined) {
       queryString['BBOX'] = opt_bbox.join(',');
       queryString['SRS'] = opt_srs;
+      queryString['WIDTH'] = Math.round((opt_bbox[2] - opt_bbox[0]) / opt_scale * 39.37 * opt_dpi);
+      queryString['HEIGHT'] = Math.round((opt_bbox[3] - opt_bbox[1]) / opt_scale * 39.37 * opt_dpi);
     }
   }
   return olUri.appendParams(url, queryString);
