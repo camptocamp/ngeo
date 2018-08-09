@@ -257,7 +257,7 @@ function fillDependency(pluginOptions, usedContext, compilation, assetName, asse
   };
 }
 
-function manageContent(pluginOptions, usedContext, compilation, chunk, resolve) {
+function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback) {
   return async (contents) => {
     if (pluginOptions.tempfile) {
       fs.writeFile(pluginOptions.tempfile, contents);
@@ -298,6 +298,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve) 
           promises.push(new Promise(fillDependency(pluginOptions, usedContext, compilation, assetName, assetUrl, queryString, replacements)));
         } catch (e) {
           console.error(e.stack || e);
+          callback(`SCSS plugin error, ${e}`);
         }
         return url;
       };
@@ -336,6 +337,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve) 
       resolve();
     } catch (e) {
       console.error(e.stack || e);
+      callback(`SCSS plugin error, ${e}`);
     }
   };
 }
@@ -417,7 +419,7 @@ class SassPlugin {
             const usedContext = files.length > 0 ? sassLoader.entries[files[0]].ctx : undefined;
             const promise = new Promise(processAsset(files));
 
-            promise.then(manageContent(pluginOptions, usedContext, compilation, chunk, resolve), (error) => {
+            promise.then(manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback), (error) => {
               callback(`SCSS dependencies error, ${error}`);
             });
           });
