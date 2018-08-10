@@ -15,14 +15,14 @@
     <hr class="gmf-filterselector-separator" />
 
     <div class="dropdown gmf-filterselector-savedfilters">
-      <a
+      <button
           class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
           ng-class="{disabled: $ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0}"
           type="button"
           data-toggle="dropdown"
           ng-disabled="$ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0">
         <span translate>Saved</span>
-      </a>
+      </button>
       <ul class="dropdown-menu">
         <li ng-repeat="item in $ctrl.gmfSavedFilters.currentDataSourceItems">
           <a
@@ -53,15 +53,14 @@
     </ngeo-filter>
 
     <div>
-      <a
-          class="btn btn-link gmf-filterselector-savebtn dropdown-toggle"
+      <button
+          class="btn btn-link gmf-filterselector-savebtn"
           type="button"
-          data-toggle="dropdown"
           ng-click="!$ctrl.aRuleIsActive && $ctrl.saveFilterShowModal()"
           ng-disabled="$ctrl.aRuleIsActive">
         <span class="fa fa-save"></span>
         <span translate>Save</span>
-      </a>
+      </button>
     </div>
   </div>
 

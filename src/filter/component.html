@@ -1,12 +1,12 @@
 <div class="dropdown">
-  <a
+  <button
       class="btn btn-link dropdown-toggle ngeo-filter-condition-button"
       ng-class="{disabled: $ctrl.aRuleIsActive}"
       type="button"
       data-toggle="dropdown"
       ng-disabled="$ctrl.aRuleIsActive">
     <span class="fa fa-cog"></span>
-  </a>
+  </button>
   <ul class="dropdown-menu">
     <li
         class="ngeo-filter-condition-criteria-header"
@@ -42,7 +42,7 @@
       ng-click="!$ctrl.aRuleIsActive && $ctrl.removeCustomRule(rule)"
       ng-disabled="$ctrl.aRuleIsActive"
       href>
-    <span class="fa fa-remove"></span>
+    <span class="fa fa-times"></span>
   </a>
   <ngeo-rule
       feature-overlay="::$ctrl.featureOverlay"
@@ -54,14 +54,14 @@
 </div>
 
 <div class="dropdown">
-  <a
+  <button
       class="btn btn-link dropdown-toggle"
       ng-class="{disabled: $ctrl.aRuleIsActive}"
       type="button"
       data-toggle="dropdown"
       ng-disabled="$ctrl.aRuleIsActive">
     <span translate>+ Add a new criteria</span>
-  </a>
+  </button>
   <ul class="dropdown-menu">
     <li ng-repeat="attribute in ::$ctrl.geometryAttributes">
       <a
@@ -83,20 +83,20 @@
 
 <hr class="ngeo-filter-separator-criteria" />
 
-<a
+<button
     class="btn btn-link"
     type="button"
     ng-click="$ctrl.apply()"
     ng-disabled="$ctrl.hasARule() === false || $ctrl.datasource.visible === false">
   <span class="fa fa-check"></span>
   <span translate>Apply filter</span>
-</a>
+</button>
 
-<a
+<button
     class="btn btn-link"
     type="button"
     ng-click="$ctrl.getData()"
     ng-disabled="$ctrl.hasARule() === false || $ctrl.datasource.visible === false">
   <span class="fa fa-chevron-right"></span>
   <span translate>Get data</span>
-</a>
+</button>

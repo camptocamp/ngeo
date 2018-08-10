@@ -1,13 +1,13 @@
 <div
     class="dropdown"
     ng-class="{open: $ctrl.rule.active}">
-  <a
-      class="btn btn-default btn-sm dropdown-toggle"
+  <button
+      class="btn btn-default btn-sm btn-block dropdown-toggle"
       type="button"
+      data-toggle="dropdown"
       ng-click="$ctrl.toggle()">
     <span>{{ ::$ctrl.clone.name | translate }}</span>
-    <span class="caret"></span>
-  </a>
+  </button>
   <div class="dropdown-menu form-group">
 
     <select
@@ -228,7 +228,7 @@
       ng-click="!$ctrl.rule.active && $ctrl.reset()"
       ng-disabled="$ctrl.rule.active"
       href>
-    <span class="fa fa-remove"></span>
+    <span class="fa fa-times"></span>
   </a>
 
   <div ng-switch="::$ctrl.rule.type">
