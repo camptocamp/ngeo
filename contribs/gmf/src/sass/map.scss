@@ -94,7 +94,7 @@ button[ngeo-mobile-geolocation] {
     &.gmf-theme-selector-active {
       &::before {
         font-family: FontAwesome;
-        content: $fa-var-check;
+        content: fa-content($fa-var-check);
       }
     }
 
@@ -107,7 +107,7 @@ button[ngeo-mobile-geolocation] {
       &::after {
         width: (18em / 14);
         font-family: FontAwesome;
-        content: $fa-var-check;
+        content: fa-content($fa-var-check);
         text-align: center;
       }
     }

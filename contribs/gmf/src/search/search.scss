@@ -32,7 +32,7 @@ gmf-search {
     opacity: 0.5;
     &::after {
       position: absolute;
-      content: $fa-var-times;
+      content: fa-content($fa-var-times);
       color: $map-tools-color;
       font-family: FontAwesome;
       font-size: 1.25rem;
@@ -123,7 +123,7 @@ gmf-search {
 
     span.twitter-typeahead {
       &::before {
-        content: $fa-var-search;
+        content: fa-content($fa-var-search);
         font-family: FontAwesome;
         color: $color;
         position: absolute;
