@@ -1,6 +1,6 @@
 <div class="gmf-print">
   <div ng-show="$ctrl.isState('CAPABILITIES_NOT_LOADED') !== true && $ctrl.isState('ERROR_ON_GETCAPABILITIES') !== true">
-    <div class="gmf-print-layout-selector form-horizontal"><ng-transclude /></div>
+    <div class="gmf-print-layout-selector"><ng-transclude /></div>
     <div
       ng-repeat="attribute in $ctrl.layoutInfo.simpleAttributes"
       class="gmf-print-layoutinfo form-group">
@@ -50,7 +50,7 @@
       </label>
     </div>
 
-    <div class="gmf-print-layout-selector form-horizontal">
+    <div class="gmf-print-layout-selector">
       <div
         ng-show="$ctrl.layoutInfo.layouts.length !== 1"
         class="form-group">
