@@ -19,7 +19,7 @@
       <div class="gmf-app-data-panel" ng-cloak>
         <div class="gmf-app-header">
           <div class="dropdown">
-            <a href class="btn btn-block prime"
+            <a href class="btn btn-block prime dropdown-toggle"
               data-toggle="dropdown">
               <span class="fa fa-grid"></span>
               <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
@@ -30,7 +30,6 @@
               <span ng-if="!mainCtrl.gmfThemeManager.modeFlush">
                 <b ng-if="!mainCtrl.gmfThemeManager.themeName" translate>Themes</b>
               </span>
-              <span class="caret"></span>
             </a>
             <gmf-themeselector class="dropdown-menu"
               gmf-themeselector-currenttheme="mainCtrl.theme"
@@ -56,7 +55,7 @@
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.oeEditActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Object Editing'|translate}}">
-              <span class="fa fa-pencil"></span>
+              <span class="fa fa-edit"></span>
             </button>
           </div>
         </div>

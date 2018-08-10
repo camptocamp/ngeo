@@ -19,11 +19,11 @@
       <div class="col-sm-12">
         <span translate>Currently editing: </span>
         <b>{{ efsCtrl.selectedEditableTreeCtrl.node.name | translate }}</b>
-        <span class="fa fa-pencil"></span>
+        <span class="fa fa-edit"></span>
         <br>
         <button
             ng-click="efsCtrl.stopEditing()"
-            class="btn btn-link btn-xs pull-right">
+            class="btn btn-link btn-sm pull-right">
           <span class="fa fa-times"></span>
           {{'Stop editing' | translate}}
         </button>

@@ -6,7 +6,6 @@
       data-toggle="dropdown"
       ng-disabled="$ctrl.aRuleIsActive">
     <span class="fa fa-cog"></span>
-    <span class="caret"></span>
   </a>
   <ul class="dropdown-menu">
     <li
@@ -39,7 +38,7 @@
 
 <div ng-repeat="rule in $ctrl.customRules">
   <a
-      class="btn btn-xs btn-link ngeo-filter-rule-custom-rm-btn"
+      class="btn btn-sm btn-link ngeo-filter-rule-custom-rm-btn"
       ng-click="!$ctrl.aRuleIsActive && $ctrl.removeCustomRule(rule)"
       ng-disabled="$ctrl.aRuleIsActive"
       href>
@@ -62,7 +61,6 @@
       data-toggle="dropdown"
       ng-disabled="$ctrl.aRuleIsActive">
     <span translate>+ Add a new criteria</span>
-    <span class="caret"></span>
   </a>
   <ul class="dropdown-menu">
     <li ng-repeat="attribute in ::$ctrl.geometryAttributes">

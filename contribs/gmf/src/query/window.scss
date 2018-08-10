@@ -40,10 +40,10 @@ div.ngeo-displaywindow {
     width: $map-tools-size + $map-tools-size * 2/3;
   }
   .collapse-button-up::after {
-    content: $fa-var-chevron-up;
+    content: fa-content($fa-var-chevron-up);
   }
   .collapse-button-down::after {
-    content: $fa-var-chevron-down;
+    content: fa-content($fa-var-chevron-down);
   }
   .windowcontainer {
     background-color: $nav-bg;
@@ -150,12 +150,12 @@ div.ngeo-displaywindow {
     }
     .previous {
       &::before {
-        content: $fa-var-chevron-left;
+        content: fa-content($fa-var-chevron-left);
       }
     }
     .next {
       &::after {
-        content: $fa-var-chevron-right;
+        content: fa-content($fa-var-chevron-right);
       }
     }
     button {

@@ -1,6 +1,6 @@
 <div class="dropdown">
-  <button type="button" class="btn btn-primary" data-toggle="dropdown">
-    {{$ctrl.currentBgLayer.name}} <span class="caret"></span>
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+    {{$ctrl.currentBgLayer.name}}
   </button>
   <ul class="dropdown-menu" role="menu">
     <li ng-repeat="layer in ::$ctrl.bgLayers">

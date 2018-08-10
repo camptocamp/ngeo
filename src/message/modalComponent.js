@@ -142,7 +142,6 @@ exports.Controller_ = class {
   $onDestroy() {
     // Force close the modal.
     this.modal_.modal('hide');
-    this.modal_.modal('removeBackdrop');
     // Destroy the children's plugins.
     const dialog = this.modal_.find('.modal-dialog');
     dialog.draggable('destroy');

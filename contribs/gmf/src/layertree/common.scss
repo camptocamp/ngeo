@@ -38,10 +38,10 @@
       color : $color-light;
       display: inline-block;
       &::before {
-        content: $fa-var-chevron-right;
+        content: fa-content($fa-var-chevron-right);
       }
       &[aria-expanded="true"]::before {
-        content: $fa-var-chevron-down;
+        content: fa-content($fa-var-chevron-down);
       }
     }
   }
@@ -122,7 +122,7 @@
     a {
       padding: 0;
       &::after {
-        content: $fa-var-info;
+        content: fa-content($fa-var-info);
         display: inline;
         font-family: FontAwesome;
       }

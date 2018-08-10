@@ -5,7 +5,7 @@
     <div ng-if="attribute.type !== 'geometry'">
       <label
           ng-if="::attribute.type !== 'boolean'"
-          class="control-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span>
+          class="col-form-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span>
       </label>
       <div ng-switch="::attribute.type">
 

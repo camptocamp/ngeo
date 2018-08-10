@@ -7,7 +7,7 @@ gmf-featurestyle {
   margin: 20px;
   width: 260px;
 }
-gmf-featurestyle .form-horizontal .control-label {
+gmf-featurestyle .col-form-label {
   text-align: left;
 }
 .gmf-featurestyle-name {

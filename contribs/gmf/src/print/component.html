@@ -1,6 +1,6 @@
 <div class="gmf-print">
   <div ng-show="$ctrl.isState('CAPABILITIES_NOT_LOADED') !== true && $ctrl.isState('ERROR_ON_GETCAPABILITIES') !== true">
-    <div class="gmf-print-layout-selector form-horizontal"><ng-transclude /></div>
+    <div class="gmf-print-layout-selector"><ng-transclude /></div>
     <div
       ng-repeat="attribute in $ctrl.layoutInfo.simpleAttributes"
       class="gmf-print-layoutinfo form-group">
@@ -50,23 +50,22 @@
       </label>
     </div>
 
-    <div class="gmf-print-layout-selector form-horizontal">
+    <div class="gmf-print-layout-selector">
       <div
         ng-show="$ctrl.layoutInfo.layouts.length !== 1"
-        class="form-group">
+        class="form-group row">
 
         <label
-          class="control-label col-md-5"
+          class="col-form-label col-md-5"
           translate>Layout</label>
 
         <div class="col-md-7">
           <div class="btn-group btn-block">
             <button
               type="button"
-              class="btn btn-default form-control"
+              class="btn btn-default form-control dropdown-toggle"
               data-toggle="dropdown">
               <span>{{$ctrl.layoutInfo.layout | translate}}&nbsp;</span>
-              <i class="fa fa-caret-down"></i>
             </button>
             <ul
               class="dropdown-menu dropdown-menu-right btn-block"
@@ -83,21 +82,20 @@
 
       <div
         ng-show="$ctrl.layoutInfo.scales.length !== 1"
-        class="gmf-print-scale-selector form-group">
+        class="gmf-print-scale-selector form-group row">
 
         <label
-          class="control-label col-md-5"
+          class="col-form-label col-md-5"
           translate>Scale</label>
 
         <div class="col-md-7">
           <div class="btn-group btn-block">
             <button
               type="button"
-              class="btn btn-default form-control"
+              class="btn btn-default form-control dropdown-toggle"
               data-toggle="dropdown"
               aria-expanded="false">
               <span>{{$ctrl.layoutInfo.scale | ngeoScalify}}&nbsp;</span>
-              <i class="fa fa-caret-down"></i>
             </button>
             <ul
               class="dropdown-menu dropdown-menu-right btn-block"
@@ -122,21 +120,20 @@
 
       <div
         ng-show="$ctrl.layoutInfo.dpis.length !== 1"
-        class="gmf-print-dpi-selector form-group">
+        class="gmf-print-dpi-selector form-group row">
 
         <label
-          class="control-label col-md-3"
+          class="col-form-label col-md-3"
           translate>DPI</label>
 
         <div class="col-md-5">
           <div class="btn-group btn-block">
             <button
               type="button"
-              class="btn btn-default form-control"
+              class="btn btn-default form-control dropdown-toggle"
               data-toggle="dropdown"
               aria-expanded="false">
               <span>{{$ctrl.layoutInfo.dpi}}&nbsp;</span>
-              <i class="fa fa-caret-down"></i>
             </button>
             <ul
               class="dropdown-menu dropdown-menu-right btn-block"
@@ -149,9 +146,9 @@
         </div>
       </div>
 
-      <div class="gmf-print-rotation-selector form-group">
+      <div class="gmf-print-rotation-selector form-group row">
         <label
-          class="control-label col-md-3"
+          class="col-form-label col-md-3"
           translate>Rotation</label>
 
         <div class="col-md-5">

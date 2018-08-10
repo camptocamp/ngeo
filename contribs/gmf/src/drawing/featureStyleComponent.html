@@ -17,7 +17,7 @@
         <label
           ng-switch="fsCtrl.type"
           for="gmf-featurestyle-showlabel-{{::fsCtrl.uid}}"
-          class="control-label">
+          class="col-form-label">
           {{'Display label' | translate}}
         </label>
   </div>
@@ -32,7 +32,7 @@
       <label
           ng-switch="fsCtrl.type"
           for="gmf-featurestyle-showmeasure-{{::fsCtrl.uid}}"
-          class="control-label">
+          class="col-form-label">
         <span ng-switch-when="Circle">
           {{'Display azimuth and radius' | translate}}
         </span>
@@ -54,9 +54,7 @@
       </em>
   </div>
 </div>
-<div
-    ng-if="fsCtrl.feature && fsCtrl.type"
-    class="form-horizontal">
+<div ng-if="fsCtrl.feature && fsCtrl.type">
 
   <div class="form-group">
     <div
@@ -69,7 +67,7 @@
   <div
       ng-if="fsCtrl.type === 'Point'"
       class="form-group form-group-nomargin">
-    <label class="control-label col-md-4">{{'Size' | translate}}</label>
+    <label class="col-form-label col-md-4">{{'Size' | translate}}</label>
     <div class="col-md-8">
       <input
           type="range"
@@ -86,7 +84,7 @@
   <div
       ng-if="fsCtrl.type === 'Text'"
       class="form-group form-group-nomargin">
-    <label class="control-label col-md-4">{{'Size' | translate}}</label>
+    <label class="col-form-label col-md-4">{{'Size' | translate}}</label>
     <div class="col-md-8">
       <input
           type="range"
@@ -103,7 +101,7 @@
   <div
       ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'LineString' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
       class="form-group form-group-nomargin">
-    <label class="control-label col-md-4">{{'Stroke' | translate}}</label>
+    <label class="col-form-label col-md-4">{{'Stroke' | translate}}</label>
     <div class="col-md-8">
       <input
           type="range"
@@ -120,7 +118,7 @@
   <div
       ng-if="fsCtrl.type === 'Circle' || fsCtrl.type === 'Polygon' || fsCtrl.type === 'Rectangle'"
       class="form-group form-group-nomargin">
-    <label class="control-label col-md-4">{{'Opacity' | translate}}</label>
+    <label class="col-form-label col-md-4">{{'Opacity' | translate}}</label>
     <div class="col-md-8">
       <input
           type="range"
@@ -137,7 +135,7 @@
   <div
       ng-if="fsCtrl.type === 'Text'"
       class="form-group form-group-nomargin">
-    <label class="control-label col-md-4">{{'Angle' | translate}}</label>
+    <label class="col-form-label col-md-4">{{'Angle' | translate}}</label>
     <div class="col-md-8">
       <input
           type="range"
