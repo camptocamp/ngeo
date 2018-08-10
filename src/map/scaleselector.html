@@ -1,6 +1,6 @@
 <div class="btn-group btn-block" ng-class="::{'dropup': scaleselectorCtrl.options.dropup}">
   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-    <span ng-bind-html="scaleselectorCtrl.currentScale | ngeoScalify | ngeoTrustHtml"></span>&nbsp;<i class="caret"></i>
+    <span ng-bind-html="scaleselectorCtrl.currentScale | ngeoScalify | ngeoTrustHtml"></span>
   </button>
   <ul class="dropdown-menu btn-block" role="menu">
     <li ng-repeat="zoomLevel in ::scaleselectorCtrl.zoomLevels">

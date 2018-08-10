@@ -134,12 +134,6 @@ ngeo-rule .dropdown > a.btn {
   text-align: left;
 }
 
-ngeo-rule .dropdown > a.btn > span.caret {
-  position: absolute;
-  right: 1rem;
-  top: 1.4rem;
-}
-
 ngeo-rule .dropdown-menu {
   padding: 1rem;
 }

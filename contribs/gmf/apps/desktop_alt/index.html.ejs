@@ -20,14 +20,13 @@
       <div class="gmf-app-data-panel">
         <div class="gmf-app-header">
           <div class="dropdown" ng-cloak>
-            <a href class="btn btn-block prime" data-toggle="dropdown">
+            <a href class="btn btn-block prime dropdown-toggle" data-toggle="dropdown">
               <span ng-if="mainCtrl.gmfThemeManager.isLoading()">
                 <span translate>Loading...</span>
               </span>
               <span ng-if="!mainCtrl.gmfThemeManager.isLoading()">
                 <span class="fa fa-grid"></span>
                 <span translate>Themes</span>
-                <span class="caret"></span>
               </span>
             </a>
             <gmf-themeselector class="dropdown-menu"

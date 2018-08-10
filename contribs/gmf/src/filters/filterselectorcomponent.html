@@ -22,7 +22,6 @@
           data-toggle="dropdown"
           ng-disabled="$ctrl.aRuleIsActive || $ctrl.gmfSavedFilters.currentDataSourceItems.length === 0">
         <span translate>Saved</span>
-        <span class="caret"></span>
       </a>
       <ul class="dropdown-menu">
         <li ng-repeat="item in $ctrl.gmfSavedFilters.currentDataSourceItems">
@@ -55,7 +54,7 @@
 
     <div>
       <a
-          class="btn btn-link gmf-filterselector-savebtn"
+          class="btn btn-link gmf-filterselector-savebtn dropdown-toggle"
           type="button"
           data-toggle="dropdown"
           ng-click="!$ctrl.aRuleIsActive && $ctrl.saveFilterShowModal()"
