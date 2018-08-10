@@ -120,7 +120,7 @@ exports.prototype.showMessage = function(message) {
   }
 
   container.append(el);
-  el.html(message.msg).addClass('in');
+  el.html(message.msg).addClass('show');
 
   const delay = message.delay !== undefined ? message.delay :
     exports.DEFAULT_DELAY_;

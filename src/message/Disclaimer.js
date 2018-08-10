@@ -168,7 +168,7 @@ exports.prototype.showMessage = function(message) {
     }
 
     container.append(el);
-    el.addClass('in');
+    el.addClass('show');
 
     // Listen when the message gets closed to cleanup the cache of messages
     el.on('closed.bs.alert', () => {
@@ -213,7 +213,7 @@ exports.prototype.closeMessage_ = function(message) {
   } else {
     // (2.2) Check if the message hasn't been closed using the UI, i.e. by
     //       clicking the close button. If not, then close it.
-    if (obj.hasClass('in')) {
+    if (obj.hasClass('show')) {
       obj.alert('close');
     }
   }
