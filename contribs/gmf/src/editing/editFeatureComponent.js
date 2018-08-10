@@ -653,6 +653,7 @@ exports.Controller_.prototype.save = function() {
       this.dirty = false;
       this.pending = false;
       this.handleEditFeature_(response);
+      this.gmfSnapping_.refresh();
     },
     (response) => {
       this.showServerError = true;
