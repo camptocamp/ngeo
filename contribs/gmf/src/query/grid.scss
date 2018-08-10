@@ -41,19 +41,6 @@ $table-height: $grid-height - $app-margin - 2 * $map-tools-size;
     margin-right: 0rem;
   }
 
-  .navbar {
-    height: $map-tools-size;
-    padding-top: $half-app-margin;
-
-    .navbar-right {
-      margin-right: 0;
-    }
-    .navbar-text {
-      padding: 0.06rem 0.31rem;
-      margin: 0;
-      line-height: 1.5;
-    }
-  }
   table>tbody>tr>td,
   table>tbody>tr>th,
   table>tfoot>tr>td,

@@ -54,11 +54,9 @@
     </div>
   </div>
 
-  <div
-    class="navbar"
-    ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null">
+  <div ng-show="!ctrl.pending && ctrl.getActiveGridSource() && ctrl.getActiveGridSource().configuration !== null">
 
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav justify-content-end">
 
       <li
         class="ng-hide"
@@ -90,7 +88,7 @@
         </button>
       </li>
 
-      <li class="dropdown navbar-link dropup">
+      <li class="navbar-link">
         <button
           type="button"
           class="dropup btn btn-default btn-sm dropdown-toggle"
