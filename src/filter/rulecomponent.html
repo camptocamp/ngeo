@@ -205,11 +205,11 @@
 
       <div class="ngeo-rule-btns">
         <button
-            class="btn btn-xs btn-default"
+            class="btn btn-sm btn-default"
             ng-click="$ctrl.apply()"
             type="button">{{'Apply' | translate}}</button>
         <button
-            class="btn btn-xs btn-default"
+            class="btn btn-sm btn-default"
             ng-click="$ctrl.cancel()"
             type="button">{{'Cancel' | translate}}</button>
       </div>
@@ -224,7 +224,7 @@
     ng-if="$ctrl.rule.value !== null">
 
   <a
-      class="btn btn-xs btn-link"
+      class="btn btn-sm btn-link"
       ng-click="!$ctrl.rule.active && $ctrl.reset()"
       ng-disabled="$ctrl.rule.active"
       href>

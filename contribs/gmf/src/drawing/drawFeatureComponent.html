@@ -92,7 +92,7 @@
         </button>
         <button
             ng-click="efCtrl.clearFeatures()"
-            class="btn btn-link btn-xs">
+            class="btn btn-link btn-sm">
           <span class="fa fa-trash"></span>
           {{'Delete All' | translate}}
         </button>
@@ -117,7 +117,7 @@
 
     <button
         ng-click="efCtrl.selectedFeature = null;"
-        class="btn btn-link btn-xs">
+        class="btn btn-link btn-sm">
       <span class="fa fa-arrow-left"></span>
       {{'List' | translate}}
     </button>
@@ -129,14 +129,14 @@
           aria-expanded="false"
           ngeo-exportfeatures
           ngeo-exportfeatures-features="efCtrl.selectedFeatures"
-          class="btn btn-link btn-xs">
+          class="btn btn-link btn-sm">
         <span class="fa fa-mail-forward"></span>
         {{'Export' | translate}}
         <span class="caret"></span>
       </button>
       <button
           ng-click="efCtrl.removeFeature(efCtrl.selectedFeature);"
-          class="btn btn-link btn-xs">
+          class="btn btn-link btn-sm">
         <span class="fa fa-trash"></span>
         {{'Delete' | translate}}
       </button>
