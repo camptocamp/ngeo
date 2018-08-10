@@ -1111,6 +1111,7 @@ exports.Controller_ = class {
           if (icons) {
             classes.push({
               'name': gettextCatalog.getString(layerName),
+              'dpi': dpi,
               'icons': [icons]
             });
           }
@@ -1131,6 +1132,7 @@ exports.Controller_ = class {
             if (icons && name.length !== 0) {
               classes.push({
                 'name': gettextCatalog.getString(name),
+                'dpi': dpi,
                 'icons': [icons]
               });
             }
