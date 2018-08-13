@@ -461,7 +461,7 @@ gmf-featurestyle {
  */
 .ngeo-colorpicker-palette {
   border-collapse: separate;
-  border-spacing: 0rem;
+  border-spacing: 0;
 
   tr {
     cursor: default;
@@ -469,7 +469,7 @@ gmf-featurestyle {
 
   td {
     position: relative;
-    padding: 0rem;
+    padding: 0;
     text-align: center;
     vertical-align: middle;
     font-size: 0.06rem;
