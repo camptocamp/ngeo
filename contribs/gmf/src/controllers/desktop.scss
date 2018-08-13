@@ -69,6 +69,10 @@ main {
   overflow: hidden;
 }
 
+.btn {
+  padding: $half-app-margin $app-margin
+}
+
 .dropdown-menu > li > a {
   color: $color;
   padding: $input-btn-padding-y $input-btn-padding-x;
