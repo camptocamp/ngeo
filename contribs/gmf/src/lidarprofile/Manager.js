@@ -437,8 +437,8 @@ const exports = class {
     const gettextCatalog = this.gettextCatalog;
     const errorInfoTxt = gettextCatalog.getString('Lidar profile service error');
     const errorOfflineTxt = gettextCatalog.getString('It might be offline');
-    const errorOutsideTxt = gettextCatalog.getString('Or did you attempt to draw a profile outside data extent ?');
-    const errorNoPointError = gettextCatalog.getString('Or did you attempt to draw such a small profile that no point was returned ?');
+    const errorOutsideTxt = gettextCatalog.getString('Or did you attempt to draw a profile outside data extent?');
+    const errorNoPointError = gettextCatalog.getString('Or did you attempt to draw such a small profile that no point was returned?');
     return `
       <div class="lidarprofile-error">
       <p class="bold">${errorInfoTxt}</p>
