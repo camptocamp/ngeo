@@ -725,8 +725,7 @@ ngeo-rule {
     font-size: $font-size-small;
   }
 
-  .dropdown > a.btn {
-    display: block;
+  .dropdown > .dropdown-toggle {
     text-align: left;
   }
 

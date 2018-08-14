@@ -528,7 +528,7 @@ exports.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
     const nodeElement = $(`#gmf-layertree-layer-group-${treeCtrl.uid}`);
     // Set isExpanded only in groups.
     if (nodeElement) {
-      isExpanded = nodeElement.hasClass('in');
+      isExpanded = nodeElement.hasClass('show');
     }
   } else {
     // Set state and isLegendExpanded only in leaves.

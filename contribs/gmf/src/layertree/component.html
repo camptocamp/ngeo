@@ -236,7 +236,7 @@
 <div
   ng-if="::!layertreeCtrl.isRoot && gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend" id="gmf-layertree-node-{{::layertreeCtrl.uid}}-legend"
   class="collapse gmf-layertree-legend"
-  ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'in' : '']">
+  ng-class="::[layertreeCtrl.node.metadata.isLegendExpanded ? 'show' : '']">
 
   <a
     title="{{'Hide legend'|translate}}"
@@ -279,7 +279,7 @@
 <ul
   id="gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
   ng-if="::layertreeCtrl.node.children"
-  ng-class="{collapse: !layertreeCtrl.isRoot, in : layertreeCtrl.node.metadata.isExpanded}"
+  ng-class="{collapse: !layertreeCtrl.isRoot, show: layertreeCtrl.node.metadata.isExpanded}"
   ngeo-sortable="::layertreeCtrl.isRoot && layertreeCtrl.node.children"
   ngeo-sortable-options="{handleClassName: 'ngeo-sortable-handle', draggerClassName: 'gmf-layertree-dragger', placeholderClassName : 'gmf-layertree-curr-drag-item'}"
   ngeo-sortable-callback="::gmfLayertreeCtrl.afterReorder"
