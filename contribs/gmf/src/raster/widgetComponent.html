@@ -21,7 +21,7 @@
     <li ng-repeat="elevationItem in ::ctrl.layers">
       <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
         <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
-        {{::elevationItem | translate}}
+        {{elevationItem | translate}}
       </a>
     </li>
   </ul>
