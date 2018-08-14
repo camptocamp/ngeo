@@ -87,14 +87,16 @@ const htmlRule = {
 
 const svgRule = {
   test: /\.svg$/,
-  use: [{
-    loader: 'svg-inline-loader',
-    options: {
-      removeSVGTagAttrs: false,
+  use: [
+    {
+      loader: 'svg-inline-loader',
+      options: {
+        removeSVGTagAttrs: false,
+      },
     },
-  }, {
-    loader: 'svgo-loader',
-  }]
+    './buildtools/svg-viewbox-loader',
+    'svgo-loader',
+  ]
 };
 
 
