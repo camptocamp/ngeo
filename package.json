@@ -100,6 +100,7 @@
     "popper.js": "1.14.4",
     "proj4": "2.4.4",
     "raven-js": "3.26.4",
+    "simple-html-tokenizer": "0.1.1",
     "svg-inline-loader": "0.8.0",
     "svgo": "1.0.5",
     "svgo-loader": "2.1.0",
