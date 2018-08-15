@@ -35,6 +35,7 @@ page.onAlert = function(msg) {
   console.log('alert: ' + msg);
   exitCode = 2;
 };
+
 page.onResourceError = function(resourceError) {
   if (resourceError.url.includes('tile.openstreetmap.org')) {
     console.warn('Ignoring resource error from OpenStreetMap');
@@ -42,11 +43,15 @@ page.onResourceError = function(resourceError) {
     console.warn('Ignoring resource error from Google');
   } else if (resourceError.url.includes('https://csi.gstatic.com/')) {
     console.warn('Ignoring resource error from Google static');
+  } else if (resourceError.url.includes('cdn.polyfill.io')) {
+    console.warn('Ignoring resource error from polyfill.io');
   } else if (resourceError.errorCode >= 400) {
-    console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.url);
+    console.log('Resource error: ' + resourceError.errorCode + ', ' + resourceError.errorString + ', ' + resourceError.url);
     exitCode = 2;
   }
 };
+page.onResourceTimeout = page.onResourceError;
+page.settings.resourceTimeout = 2000;
 page.onUrlChanged = function(url) {
   console.log('URL changed: ' + url);
 };
