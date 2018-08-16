@@ -1088,7 +1088,6 @@ exports.Controller_ = class {
    */
   getLegend_(scale, dpi, bbox) {
     const legend = {'classes': []};
-    let classes, layerNames, layerName, icons;
     const gettextCatalog = this.gettextCatalog_;
 
     // Get layers from layertree only.
@@ -1098,12 +1097,12 @@ exports.Controller_ = class {
 
     // For each visible layer in reverse order, get the legend url.
     layers.reverse().forEach((layer) => {
-      classes = [];
+      const classes = [];
       if (layer.getVisible() && layer.getSource()) {
         // For WMTS layers.
         if (layer instanceof olLayerTile) {
-          layerName = `${layer.get('layerNodeName')}`;
-          icons = this.getMetadataLegendImage_(layerName);
+          const layerName = `${layer.get('layerNodeName')}`;
+          let icons = this.getMetadataLegendImage_(layerName);
           if (!icons) {
             icons = this.ngeoLayerHelper_.getWMTSLegendURL(layer);
           }
@@ -1117,9 +1116,9 @@ exports.Controller_ = class {
         } else {
           const source = /** @type ol.source.ImageWMS */ (layer.getSource());
           // For each name in a WMS layer.
-          layerNames = source.getParams()['LAYERS'].split(',');
+          const layerNames = source.getParams()['LAYERS'].split(',');
           layerNames.forEach((name) => {
-            icons = this.getMetadataLegendImage_(name);
+            let icons = this.getMetadataLegendImage_(name);
             if (!icons) {
               icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
                 scale, undefined, undefined, undefined, source.serverType_, dpi, bbox,
@@ -1129,10 +1128,12 @@ exports.Controller_ = class {
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icons && name.length !== 0) {
-              classes.push({
+              classes.push(Object.assign({
                 'name': gettextCatalog.getString(name),
                 'icons': [icons]
-              });
+              }, layer.getSource().serverType_ === 'qgis' ? {
+                'dpi': dpi,
+              } : {}));
             }
           });
         }

@@ -268,7 +268,8 @@ exports.prototype.getBgLayers = function() {
         gmfLayerWMTS.url,
         gmfLayerWMTS.layer || '',
         gmfLayerWMTS.matrixSet,
-        gmfLayer.dimensions
+        gmfLayer.dimensions,
+        gmfLayerWMTS.metadata.customOpenLayersOptions
       ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
         let message = `Unable to build layer "${gmfLayerWMTS.layer}" from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
         message += `OpenLayers error is "${response['message']}`;
@@ -290,7 +291,8 @@ exports.prototype.getBgLayers = function() {
         server.type,
         undefined, // time
         gmfLayer.dimensions,
-        server.credential ? 'use-credentials' : 'anonymous'
+        server.credential ? 'use-credentials' : 'anonymous',
+        gmfLayerWMS.metadata.customOpenLayersOptions
       ));
     }
     googAsserts.fail(`Unsupported type: ${gmfLayer.type}`);
