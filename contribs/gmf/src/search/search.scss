@@ -1,8 +1,6 @@
 @import '~gmf/sass/vars.scss';
 @import "~gmf/sass/typeahead.scss";
 
-$search-results-max-height: calc(100vh - 6 * #{$app-margin});
-
 gmf-search {
   top: $app-margin;
   z-index: $content-index;
@@ -70,7 +68,7 @@ gmf-search {
 
   .twitter-typeahead {
     .tt-menu {
-      max-height: $search-results-max-height;
+      max-height: 75vh;
       .gmf-search-no-results {
         padding: $app-margin;
         cursor: default;
