@@ -73,13 +73,16 @@ main {
   padding: $half-app-margin $app-margin
 }
 
-.dropdown-menu > li > a {
-  color: $color;
-  padding: $input-btn-padding-y $input-btn-padding-x;
-  display: block;
-  &:hover {
-    text-decoration: none;
-    background-color: $onhover-color;
+.dropdown-menu {
+  box-shadow: $eavy-box-shadow;
+    li > a {
+    color: $color;
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    display: block;
+    &:hover {
+      text-decoration: none;
+      background-color: $onhover-color;
+    }
   }
 }
 
@@ -494,7 +497,7 @@ gmf-featurestyle {
         top: -0.62rem;
         left: -0.62rem;
         border: 0.12rem solid #fff;
-        box-shadow: rgba(0,0,0,0.3) 0 0.06rem 0.19rem 0;
+        box-shadow: $eavy-box-shadow;
         z-index: 11;
       }
     }
@@ -561,7 +564,7 @@ gmf-featurestyle {
 
   button,
   gmf-backgroundlayerselector {
-    box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.175);
+    box-shadow: $eavy-box-shadow;
   }
 
 }

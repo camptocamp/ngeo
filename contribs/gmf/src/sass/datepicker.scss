@@ -3,7 +3,7 @@ $datepicker-font-size : 0.69rem;
   font-family: $font-family-base;
   font-size: $datepicker-font-size;
   border-radius: inherit;
-  box-shadow: 0 0.62rem 1.25rem rgba(0,0,0,0.19), 0 0.37rem 0.37rem rgba(0,0,0,0.23);
+  box-shadow: $eavy-box-shadow;
 
   .ui-datepicker-header {
     border-radius: inherit;
