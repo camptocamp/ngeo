@@ -2,7 +2,6 @@
 @import "~gmf/less/vars.less";
 @import "~gmf/less/typeahead.less";
 
-@search-results-max-height: calc(~"100vh -" 6 * @app-margin);
 
 gmf-search {
   top: @app-margin;
@@ -70,7 +69,7 @@ gmf-search {
 
   .twitter-typeahead {
     .tt-menu {
-      max-height: @search-results-max-height;
+      max-height: 75vh;
       .gmf-search-no-results {
         padding: @app-margin;
         cursor: default;
