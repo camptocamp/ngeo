@@ -153,6 +153,7 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       border-bottom: 0;
       border: solid $border-color;
       border-width: 0.06rem 0.06rem 0 0.06rem;
+      font-weight: 900;
     }
   }
 
@@ -225,6 +226,7 @@ gmf-search {
 }
 
 .ol-rotate {
+  font-size: 0.6rem;
   right: $app-margin;
   top: $app-margin;
 }

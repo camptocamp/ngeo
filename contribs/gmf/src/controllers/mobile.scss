@@ -100,8 +100,8 @@ gmf-map {
   top: 4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin;
   right: $app-margin;
   left: auto;
+  font-size: 0.6rem;
   .ol-rotate-reset {
-    font-size: 1.25rem;
     border-radius: $border-radius-base;
   }
 }

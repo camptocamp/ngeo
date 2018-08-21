@@ -124,7 +124,8 @@
       &::after {
         content: fa-content($fa-var-info);
         display: inline;
-        font-family: FontAwesome;
+        font-family: 'Font Awesome 5 Free';
+        font-width: 900;
       }
     }
   }
