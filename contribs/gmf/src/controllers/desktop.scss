@@ -75,7 +75,8 @@ main {
 
 .dropdown-menu {
   box-shadow: $eavy-box-shadow;
-    li > a {
+  min-width: 100%;
+  li > a {
     color: $color;
     padding: $input-btn-padding-y $input-btn-padding-x;
     display: block;
@@ -83,6 +84,12 @@ main {
       text-decoration: none;
       background-color: $onhover-color;
     }
+  }
+  .divider {
+    height: 0.06rem;
+    margin: $app-margin 0;
+    overflow: hidden;
+    background-color: $brand-secondary;
   }
 }
 
@@ -625,6 +632,7 @@ gmf-objecteditingtools {
 
 .gmf-filterselector-savedfilters {
   z-index: 1;
+  float: right;
 
   a.dropdown-toggle {
     padding: 0.37rem 0;
@@ -635,6 +643,8 @@ gmf-objecteditingtools {
   ul.dropdown-menu {
     right: 0;
     top: 1.88rem;
+    min-width: 15.62rem;
+    margin-right: 0.58rem;
 
     a {
       overflow: hidden;
@@ -701,6 +711,7 @@ gmf-objecteditingtools {
 
 .ngeo-filter-rule-custom-rm-btn {
   float: right;
+  padding-right: $half-app-margin;
   margin: 0.25rem 0;
 }
 
@@ -730,6 +741,11 @@ ngeo-rule {
 
   .dropdown > .dropdown-toggle {
     text-align: left;
+    &::after {
+      right: $app-margin;
+      top: 50%;
+      position: absolute;
+    }
   }
 
   .dropdown-menu {
@@ -759,6 +775,8 @@ ngeo-rule {
     a.btn {
       color: #999999;
       float: right;
+      margin-right: $half-app-margin;
+      padding: 0;
     }
 
     a.btn:hover,
