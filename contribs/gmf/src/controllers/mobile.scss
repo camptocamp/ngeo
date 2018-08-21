@@ -136,12 +136,13 @@ button[ngeo-mobile-geolocation] {
 }
 
 .ngeo-notification {
+  $notification-width: 12.5rem !default;
   left: 50%;
-  margin: 0 0 0 -6.25rem;
+  margin: 0 0 0 calc(-#{$notification-width} / 2);
   position: absolute;
   top: 0;
-  width: 12.50rem;
-  z-index: 2;
+  width: $notification-width;
+  z-index: $above-all;
 }
 
 // Overrides for tablet devices and up
@@ -165,11 +166,6 @@ button[ngeo-mobile-geolocation] {
 /** Disclaimer, and tablet redirect */
 main .gmf-app-map-messages {
   text-align: left;
-
-  button {
-    height: 0.94rem;
-    width: 0.94rem;
-  }
 }
 
 /** ngeo-displayquery-window */
