@@ -289,6 +289,7 @@ $theme-selector-columns: 2;
 
   .gmf-app-tools-content {
     width: $right-panel-width;
+    padding: 0 $app-margin;
     margin-right: -$right-panel-width;
     transition: margin-right 0.2s ease, width 0.001s ease;
     float: right;
@@ -407,7 +408,7 @@ $theme-selector-columns: 2;
 
 hr.gmf-drawfeature-separator {
   border-color: $color;
-  margin: 0.62rem 0;
+  margin: $app-margin 0;
 }
 
 .gmf-drawfeature-featurelist {
@@ -622,12 +623,12 @@ gmf-objecteditingtools {
  * GMF FilterSelector component
  */
 .gmf-filterselector-separator {
-  margin: 0.94rem 0 0.31rem 0;
+  margin: $app-margin 0 $half-app-margin 0;
   border-color: $color;
 }
 
 .gmf-filterselector-savefilter-desc {
-  color: #999999;
+  color: $gray-dark;
 }
 
 .gmf-filterselector-savedfilters {
@@ -635,20 +636,20 @@ gmf-objecteditingtools {
   float: right;
 
   a.dropdown-toggle {
-    padding: 0.37rem 0;
+    padding: $half-app-margin 0;
     position: absolute;
     right: 0;
   }
 
   ul.dropdown-menu {
     right: 0;
-    top: 1.88rem;
-    min-width: 15.62rem;
-    margin-right: 0.58rem;
+    top: 3 * $app-margin;
+    min-width: $right-panel-width - 2 * $app-margin;
+    margin-right: 2 * $micro-app-margin;
 
     a {
       overflow: hidden;
-      max-width: 15.62rem;
+      max-width: $right-panel-width - 2 * $app-margin;
       text-overflow: ellipsis;
     }
   }
@@ -656,14 +657,14 @@ gmf-objecteditingtools {
 
 .gmf-filterselector-managefilter-modal {
   .modal-body {
-    padding: 0 0.94rem;
+    padding: 0 $app-margin;
 
     ul {
       margin: 0;
 
       li {
         border-bottom: 0.06rem solid #dddddd;
-        padding: 0.31rem;
+        padding: $half-app-margin;
 
         &:last-child {
           border-bottom: none;
@@ -675,7 +676,7 @@ gmf-objecteditingtools {
 
         span {
           float: left;
-          max-width: 30rem;
+          max-width: $right-panel-width;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
@@ -697,8 +698,8 @@ gmf-objecteditingtools {
 }
 
 .ngeo-filter-condition-criteria-header {
-  color: #999999;
-  padding: 0.19rem 1.25rem;
+  color: $color-light;
+  padding: $micro-app-margin calc(2 * #{$app-margin});
 }
 
 .ngeo-filter-condition-criteria {
@@ -711,16 +712,16 @@ gmf-objecteditingtools {
 
 .ngeo-filter-rule-custom-rm-btn {
   float: right;
-  padding-right: $half-app-margin;
-  margin: 0.25rem 0;
+  padding-right: 0;
+  margin: 0;
 }
 
 hr.ngeo-filter-separator-rules {
-  margin: 0.62rem 0;
+  margin: $app-margin 0;
 }
 
 hr.ngeo-filter-separator-criteria {
-  margin: 0.31rem 0;
+  margin: $half-app-margin 0;
 }
 
 hr.ngeo-filter-separator-criteria,
@@ -733,7 +734,7 @@ hr.ngeo-filter-separator-rules {
  */
 ngeo-rule {
   display: block;
-  margin: 0.62rem 1.56rem 0.62rem 0;
+  margin: $app-margin calc(2 * #{$app-margin}) $app-margin 0;
 
   .form-control {
     font-size: $font-size-small;
@@ -749,11 +750,11 @@ ngeo-rule {
   }
 
   .dropdown-menu {
-    padding: 0.62rem;
+    padding: $app-margin;
   }
 
   .ngeo-rule-operators-list {
-    margin: 0 0 0.62rem 0;
+    margin: 0 0 $app-margin 0;
   }
 
   .ngeo-rule-btns {
@@ -768,12 +769,12 @@ ngeo-rule {
     border: 0.06rem solid #aaa;
     border-radius: 0 0 0.19rem 0.19rem;
     border-top: 0;
-    color: #999999;
+    color: $color-light;
     padding: 0.25rem 0.19rem 0.12rem 0.31rem;
     margin: -0.12rem 0 0 0;
 
     a.btn {
-      color: #999999;
+      color: $color-light;
       float: right;
       margin-right: $half-app-margin;
       padding: 0;
@@ -781,7 +782,7 @@ ngeo-rule {
 
     a.btn:hover,
     a.btn:focus {
-      color: #666666;
+      color: $gray-dark;
     }
 
     ngeo-date-picker {
@@ -791,9 +792,9 @@ ngeo-rule {
   }
 
   .ngeo-rule-type-geometry-instructions {
-    font-size: 9pt;
+    font-size: 0.9rem;
     font-style: italic;
-    margin: 0.31rem;
+    margin: $half-app-margin;
   }
 }
 
