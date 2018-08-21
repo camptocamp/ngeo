@@ -94,7 +94,8 @@ button[ngeo-mobile-geolocation] {
     &.gmf-backgroundlayerselector-active,
     &.gmf-theme-selector-active {
       &::before {
-        font-family: FontAwesome;
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
         content: fa-content($fa-var-check);
       }
     }
@@ -107,7 +108,8 @@ button[ngeo-mobile-geolocation] {
     span.gmf-backgroundlayerselector-opacity-check {
       &::after {
         width: (18em / 14);
-        font-family: FontAwesome;
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
         content: fa-content($fa-var-check);
         text-align: center;
       }

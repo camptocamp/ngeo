@@ -51,7 +51,7 @@
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && layertreeCtrl.layer.loading"
-    class="fa fa-fw fa-refresh fa-spin"
+    class="fa fa-fw fa-refresh fa-sync fa-spin"
   ></a>
   <a
     href
@@ -92,7 +92,7 @@
 
       <span
         ngeo-popover-anchor
-        class="fa fa-clock-o"
+        class="far fa-clock"
         ng-click="$event.preventDefault(); $event.stopPropagation()">
       </span>
 

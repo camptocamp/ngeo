@@ -182,7 +182,8 @@ div.ngeo-displaywindow {
       font-size: 0.94rem;
     }
     &::before, &::after {
-      font-family: FontAwesome;
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
     }
   }
   .ui-draggable {

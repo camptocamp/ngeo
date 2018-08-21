@@ -1,5 +1,12 @@
 @import "search.scss";
 
+gmf-search {
+  font-size: 1rem;
+  .tt-menu {
+    font-size: 0.8rem;
+  }
+}
+
 // Overrides for tablet devices and up
 @media (min-width: map-get($grid-breakpoints, "sm")) {
   gmf-search {
