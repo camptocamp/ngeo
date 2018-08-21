@@ -33,14 +33,27 @@ a {
 
 .btn.prime {
   background-color: $brand-primary;
-  border-color: darken($brand-primary, 10%);
-  color: white;
+  border-color: $input-border-focus;
+   &.active {
+    box-shadow: inset $light-box-shadow;
+  } color: white;
+  &:hover, &.active {
+    background-color: $input-border-focus;
+    border-color: darken($input-border-focus, $standard-variation);
+  }
 }
 
 .btn.btn-default {
   background-color: $map-tools-bg-color;
-  border-color: darken($map-tools-bg-color, 20%);
+  border-color: $onhover-color;
   color: $map-tools-color;
+  &.active {
+    box-shadow: inset $light-box-shadow;
+  }
+  &:hover, &.active {
+    background-color: $onhover-color;
+    border-color: darken($onhover-color, $standard-variation);
+  }
 }
 
 /**

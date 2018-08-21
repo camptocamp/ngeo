@@ -1,3 +1,5 @@
+$layertree-group-box-shadow: 0 0 0.25rem 0.06rem $input-border-focus;
+
 gmf-layertree {
   display: block;
   padding: 0 $app-margin;
@@ -30,7 +32,7 @@ gmf-layertree {
   &.gmf-layertree-depth-1 {
     //styling first level node for desktop app
     background-color: $nav-bg;
-    box-shadow: 0 0 0.25rem 0.06rem $input-border-focus;
+    box-shadow: $layertree-group-box-shadow;
 
     > ul {
       // no padding for the first list in first level nodes
@@ -108,5 +110,5 @@ gmf-layertree {
 .gmf-layertree-curr-drag-item {
   border: 0.06rem dashed black;
   margin: 0 $micro-app-margin $app-margin $micro-app-margin;
-  box-shadow: 0 0 0.25rem 0.06rem $input-border-focus;
+  box-shadow: $layertree-group-box-shadow;
 }

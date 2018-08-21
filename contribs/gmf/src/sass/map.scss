@@ -17,6 +17,7 @@
     color: $map-tools-color;
     &:hover {
       background-color: $onhover-color;
+      cursor: pointer;
     }
     &:focus {
       background-color: $map-tools-bg-color;

@@ -6,14 +6,15 @@ $map-tools-size: 1.9rem !default;
 $button-size: 2.5rem !default;
 $left-panel-width: 20rem !default;
 $right-panel-width: 17.5rem !default;
+$streeview-width: 25rem !default;
 $topbar-height: 2.8rem !default;
 $search-width: 8 * $map-tools-size !default;
-$padding-base-vertical: 0.31rem !default;
-$padding-base-horizontal: 0.62rem !default;
-$form-group-margin-bottom: 0.62rem !default;
 
 @import '~gmf/sass/vars_only.scss';
 
+$padding-base-vertical: $half-app-margin !default;
+$padding-base-horizontal: $app-margin !default;
+$form-group-margin-bottom: $app-margin !default;
 $search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
 
@@ -73,13 +74,23 @@ main {
   padding: $half-app-margin $app-margin
 }
 
-.dropdown-menu > li > a {
-  color: $color;
-  padding: $input-btn-padding-y $input-btn-padding-x;
-  display: block;
-  &:hover {
-    text-decoration: none;
-    background-color: $onhover-color;
+.dropdown-menu {
+  box-shadow: $eavy-box-shadow;
+  min-width: 100%;
+  li > a {
+    color: $color;
+    padding: $input-btn-padding-y $input-btn-padding-x;
+    display: block;
+    &:hover {
+      text-decoration: none;
+      background-color: $onhover-color;
+    }
+  }
+  .divider {
+    height: 0.06rem;
+    margin: $app-margin 0;
+    overflow: hidden;
+    background-color: $brand-secondary;
   }
 }
 
@@ -198,7 +209,7 @@ gmf-search {
         font-size: $font-size-small;
         background-color: #eee;
         text-transform: uppercase;
-        color: #666;
+        color: $color-light;
       }
 
       .gmf-search-group {
@@ -279,6 +290,7 @@ $theme-selector-columns: 2;
 
   .gmf-app-tools-content {
     width: $right-panel-width;
+    padding: 0 $app-margin;
     margin-right: -$right-panel-width;
     transition: margin-right 0.2s ease, width 0.001s ease;
     float: right;
@@ -287,6 +299,8 @@ $theme-selector-columns: 2;
 
     & > div {
       height: 100%;
+      margin-right: -$app-margin;
+      margin-left: -$app-margin;
       & > div {
         height: 100%;
       }
@@ -307,16 +321,15 @@ $theme-selector-columns: 2;
     }
 
     .gmf-app-tools-content-heading {
-      $color: lighten($text-color, $standard-variation);
-      color: $color;
+      color: $color-light;
       padding-bottom: $app-margin;
       margin-bottom: $app-margin;
       margin-top: $grid-gutter-width / 2;
-      border-bottom: 0.06rem solid $color;
+      border-bottom: 0.06rem solid $color-light;
     }
 
     &.gmf-app-googlestreetview-active {
-      width: 26.88rem;
+      width: $streeview-width + $app-margin + $app-margin;
     }
   }
 
@@ -397,7 +410,7 @@ $theme-selector-columns: 2;
 
 hr.gmf-drawfeature-separator {
   border-color: $color;
-  margin: 0.62rem 0;
+  margin: $app-margin 0;
 }
 
 .gmf-drawfeature-featurelist {
@@ -417,9 +430,9 @@ hr.gmf-drawfeature-separator {
   .tooltip {
     position: relative;
     background: rgba(0, 0, 0, 0.5);
-    border-radius: 0.25rem;
+    border-radius: $border-radius-sm;
     color: white;
-    padding: 0.25rem 0.50rem;
+    padding: $half-app-margin $app-margin;
     opacity: 0.7;
     white-space: nowrap;
   }
@@ -432,13 +445,13 @@ hr.gmf-drawfeature-separator {
   }
   .ngeo-tooltip-measure:before,
   .ngeo-tooltip-static:before {
-    border-top: 0.37rem solid rgba(0, 0, 0, 0.5);
-    border-right: 0.37rem solid transparent;
-    border-left: 0.37rem solid transparent;
+    border-top: $half-app-margin solid rgba(0, 0, 0, 0.5);
+    border-right: $half-app-margin solid transparent;
+    border-left: $half-app-margin solid transparent;
     content: "";
     position: absolute;
-    bottom: -0.37rem;
-    margin-left: -0.44rem;
+    bottom: -$half-app-margin;
+    margin-left: -$half-app-margin;
     left: 50%;
   }
   .ngeo-tooltip-static:before {
@@ -477,8 +490,8 @@ gmf-featurestyle {
 
     & > div {
       position: relative;
-      height: 0.75rem;
-      width: 0.75rem;
+      height: $app-margin;
+      width: $app-margin;
       border: 0.06rem solid #fff;
       box-sizing: content-box;
     }
@@ -491,11 +504,11 @@ gmf-featurestyle {
         position: absolute;
         width: 1.75rem;
         height: 1.75rem;
-        top: -0.62rem;
-        left: -0.62rem;
+        top: -$app-margin;
+        left: -$app-margin;
         border: 0.12rem solid #fff;
-        box-shadow: rgba(0,0,0,0.3) 0 0.06rem 0.19rem 0;
-        z-index: 11;
+        box-shadow: $eavy-box-shadow;
+        z-index: $above-search-index;
       }
     }
 
@@ -504,11 +517,11 @@ gmf-featurestyle {
       margin: 0;
       content: '';
       display: block;
-      width: 0.87rem;
-      height: 0.87rem;
+      width: $app-margin;
+      height: $app-margin;
       position: absolute;
-      left: -0.19rem;
-      top: -0.19rem;
+      left: -0.12rem; // It matches the square size of the colorpicker
+      top: -0.12rem; // It matches the square size of the colorpicker
       box-sizing: content-box;
       z-index: 10;
     }
@@ -520,12 +533,13 @@ gmf-featurestyle {
  * Notifications
  */
 .ngeo-notification {
+  $notification-width: 12.5rem !default;
   left: 50%;
-  margin: 0 0 0 -6.25rem;
+  margin: 0 0 0 calc(-#{$notification-width} / 2);
   position: absolute;
   top: 0;
-  width: 12.50rem;
-  z-index: 999;
+  width: $notification-width;
+  z-index: $above-all;
 }
 
 
@@ -561,7 +575,7 @@ gmf-featurestyle {
 
   button,
   gmf-backgroundlayerselector {
-    box-shadow: 0 0.37rem 0.75rem rgba(0, 0, 0, 0.175);
+    box-shadow: $eavy-box-shadow;
   }
 
 }
@@ -591,9 +605,9 @@ $bgselector-image-size: 3.00rem;
  * GMF EditFeature directive
  */
 gmf-editfeature > div {
-  border-top: 0.06rem solid #333;
-  margin-top: 0.62rem;
-  padding-top: 0.62rem;
+  border-top: 0.06rem solid $border-color;
+  margin-top: $app-margin;
+  padding-top: $app-margin;
 }
 
 
@@ -601,10 +615,10 @@ gmf-editfeature > div {
  * GMF ObjectEditingTools directive
  */
 gmf-objecteditingtools {
-  border-bottom: 0.06rem solid #595959;
+  border-bottom: 0.06rem solid $border-color;
   display: block;
-  margin: 0 0 0.62rem 0;
-  padding: 0 0 0.62rem 0;
+  margin: 0 0 $app-margin 0;
+  padding: 0 0 $app-margin 0;
 }
 
 
@@ -612,45 +626,53 @@ gmf-objecteditingtools {
  * GMF FilterSelector component
  */
 .gmf-filterselector-separator {
-  margin: 0.94rem 0 0.31rem 0;
+  margin: $app-margin 0 $half-app-margin 0;
   border-color: $color;
 }
 
 .gmf-filterselector-savefilter-desc {
-  color: #999999;
+  color: $gray-dark;
 }
 
 .gmf-filterselector-savedfilters {
   z-index: 1;
+  float: right;
 
   a.dropdown-toggle {
-    padding: 0.37rem 0;
+    padding: $half-app-margin 0;
     position: absolute;
     right: 0;
   }
 
   ul.dropdown-menu {
     right: 0;
-    top: 1.88rem;
+    top: 3 * $app-margin;
+    min-width: $right-panel-width - 2 * $app-margin;
+    margin-right: 2 * $micro-app-margin;
 
     a {
       overflow: hidden;
-      max-width: 15.62rem;
+      max-width: $right-panel-width - 2 * $app-margin;
       text-overflow: ellipsis;
     }
   }
 }
 
 .gmf-filterselector-managefilter-modal {
+  .modal-header .close {
+    padding: 1rem;
+    line-height: inherit;
+    margin: -1rem -1rem -1rem auto;
+  }
   .modal-body {
-    padding: 0 0.94rem;
+    padding: 0 $app-margin;
 
     ul {
       margin: 0;
 
       li {
         border-bottom: 0.06rem solid #dddddd;
-        padding: 0.31rem;
+        padding: $half-app-margin;
 
         &:last-child {
           border-bottom: none;
@@ -662,7 +684,7 @@ gmf-objecteditingtools {
 
         span {
           float: left;
-          max-width: 30rem;
+          max-width: $right-panel-width;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
@@ -684,8 +706,8 @@ gmf-objecteditingtools {
 }
 
 .ngeo-filter-condition-criteria-header {
-  color: #999999;
-  padding: 0.19rem 1.25rem;
+  color: $color-light;
+  padding: $micro-app-margin calc(2 * #{$app-margin});
 }
 
 .ngeo-filter-condition-criteria {
@@ -698,15 +720,16 @@ gmf-objecteditingtools {
 
 .ngeo-filter-rule-custom-rm-btn {
   float: right;
-  margin: 0.25rem 0;
+  padding-right: 0;
+  margin: 0;
 }
 
 hr.ngeo-filter-separator-rules {
-  margin: 0.62rem 0;
+  margin: $app-margin 0;
 }
 
 hr.ngeo-filter-separator-criteria {
-  margin: 0.31rem 0;
+  margin: $half-app-margin 0;
 }
 
 hr.ngeo-filter-separator-criteria,
@@ -719,7 +742,7 @@ hr.ngeo-filter-separator-rules {
  */
 ngeo-rule {
   display: block;
-  margin: 0.62rem 1.56rem 0.62rem 0;
+  margin: $app-margin calc(2 * #{$app-margin}) $app-margin 0;
 
   .form-control {
     font-size: $font-size-small;
@@ -727,14 +750,19 @@ ngeo-rule {
 
   .dropdown > .dropdown-toggle {
     text-align: left;
+    &::after {
+      right: $app-margin;
+      top: 50%;
+      position: absolute;
+    }
   }
 
   .dropdown-menu {
-    padding: 0.62rem;
+    padding: $app-margin;
   }
 
   .ngeo-rule-operators-list {
-    margin: 0 0 0.62rem 0;
+    margin: 0 0 $app-margin 0;
   }
 
   .ngeo-rule-btns {
@@ -742,25 +770,26 @@ ngeo-rule {
   }
 
   .ngeo-rule-type-select label {
-    width: 8.44rem;
+    width: 100%;
   }
 
   .ngeo-rule-value {
-    border: 0.06rem solid #aaa;
-    border-radius: 0 0 0.19rem 0.19rem;
+    border: 0.06rem solid $color-light;
+    border-radius: $border-radius-sm;
     border-top: 0;
-    color: #999999;
-    padding: 0.25rem 0.19rem 0.12rem 0.31rem;
-    margin: -0.12rem 0 0 0;
+    color: $color-light;
+    padding: $micro-app-margin $half-app-margin;
 
     a.btn {
-      color: #999999;
+      color: $color-light;
       float: right;
+      margin-right: $half-app-margin;
+      padding: 0;
     }
 
     a.btn:hover,
     a.btn:focus {
-      color: #666666;
+      color: $gray-dark;
     }
 
     ngeo-date-picker {
@@ -770,9 +799,9 @@ ngeo-rule {
   }
 
   .ngeo-rule-type-geometry-instructions {
-    font-size: 9pt;
+    font-size: 0.9rem;
     font-style: italic;
-    margin: 0.31rem;
+    margin: $half-app-margin;
   }
 }
 
@@ -783,5 +812,5 @@ ngeo-rule {
 ngeo-googlestreetview {
   display: block;
   height: calc(100% - 3.75rem);
-  width: 25rem;
+  width: $streeview-width;
 }
