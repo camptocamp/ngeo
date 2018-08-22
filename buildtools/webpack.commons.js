@@ -69,14 +69,17 @@ const typeaheadRule = {
 
 const cssRule = {
   test: /\.css$/,
-  use: 'file-loader',
+  use: [
+    './buildtools/webpack.scss-loader',
+    'extract-loader',
+    'css-loader',
+  ]
 };
 
 const sassRule = {
   test: /\.scss$/,
   use: [{
     loader: './buildtools/webpack.scss-loader',
-    options: {}
   }]
 };
 

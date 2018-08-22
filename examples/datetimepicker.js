@@ -3,7 +3,7 @@
  */
 const exports = {};
 
-import './datetimepicker.css';
+import './datetimepicker.scss';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 
 

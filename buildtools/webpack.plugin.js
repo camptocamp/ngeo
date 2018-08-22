@@ -367,6 +367,8 @@ function processAsset(files) {
             }, () => {
               reject(`${position}, ${file}`);
             });
+          } else {
+            reject(`Missing entry for ${file}`);
           }
         } else {
           resolve(contents.join('\n'));
@@ -398,7 +400,7 @@ class SassPlugin {
               browse(child);
             }
           } else {
-            if (module.resource && module.resource.endsWith('.scss')) {
+            if (module.resource && (module.resource.endsWith('.scss') || module.resource.endsWith('.css'))) {
               files.push(module.resource);
             }
           }
