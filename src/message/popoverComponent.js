@@ -34,13 +34,6 @@ exports.component_ = function() {
     scope: true,
     controller: 'NgeoPopoverController as popoverCtrl',
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
-      ngeoPopoverCtrl.anchorElm.on('hidden.bs.popover', () => {
-        /**
-         * @type {{inState : Object}}
-         */
-        const popover = ngeoPopoverCtrl.anchorElm.data('bs.popover');
-        popover['inState'].click = false;
-      });
 
       ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', () => {
         ngeoPopoverCtrl.bodyElm.show();
@@ -51,6 +44,7 @@ exports.component_ = function() {
         container: 'body',
         html: true,
         content: ngeoPopoverCtrl.bodyElm,
+        boundary: 'viewport',
         placement: attrs['ngeoPopoverPlacement'] || 'right'
       });
 
