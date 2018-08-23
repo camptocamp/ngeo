@@ -257,6 +257,15 @@ function fillDependency(pluginOptions, usedContext, compilation, assetName, asse
   };
 }
 
+function doReplacement(text, replacements) {
+  if (replacements) {
+    for (const replacement of replacements) {
+      text = text.replace(replacement[0], replacement[1]);
+    }
+  }
+  return text;
+}
+
 function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback) {
   return async (contents) => {
     if (pluginOptions.tempfile) {
@@ -268,7 +277,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
       const promises = [];
       const options = Object.assign(
         {}, pluginOptions.sassConfig, {
-          data: contents,
+          data: doReplacement(contents, pluginOptions.preReplacements),
           functions: {},
         }
       );
@@ -314,7 +323,7 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
         return nodeSass.types.String(`url(${replacements[assetUrl]})`);
       };
       const result = nodeSass.renderSync(parseOptions);
-      const content = result.css;
+      const content = doReplacement(result.css.toString(), pluginOptions.postReplacements);
       const srcmap = result.map;
       const asset = {
         source: () => content,
