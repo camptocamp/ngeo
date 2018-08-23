@@ -56,6 +56,10 @@ a {
   }
 }
 
+html [type="button"] {
+  -webkit-appearance: none;
+}
+
 /**
  * The blur filter is used to avoid the loading icon to shake on firefox.
  * See: https://github.com/FortAwesome/Font-Awesome/issues/671
