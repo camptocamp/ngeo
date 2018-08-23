@@ -9,7 +9,7 @@ $popover-text-color : $color-light;
 .popover {
   border-radius: 0;
   z-index: $above-content-index;
-  .popover-content {
+  .popover-body {
     ul {
       margin-bottom: 0;
       /* fix issue with IE11 not sizing correctly the popover box */
