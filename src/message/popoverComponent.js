@@ -51,6 +51,7 @@ exports.component_ = function() {
         container: 'body',
         html: true,
         content: ngeoPopoverCtrl.bodyElm,
+        boundary: 'viewport',
         placement: attrs['ngeoPopoverPlacement'] || 'right'
       });
 
