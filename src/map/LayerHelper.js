@@ -392,12 +392,13 @@ exports.prototype.getWMTSLegendURL = function(layer) {
  * @param {number=} opt_dpi the DPI.
  * @param {Array.number=} opt_bbox the bbox.
  * @param {string=} opt_srs The projection code.
+ * @param {Object.<string, string>=} opt_additionalQueryString Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
  * @export
  */
 exports.prototype.getWMSLegendURL = function(url,
   layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight,
-  opt_servertype, opt_dpi, opt_bbox, opt_srs) {
+  opt_servertype, opt_dpi, opt_bbox, opt_srs, opt_additionalQueryString) {
   if (!url) {
     return undefined;
   }
@@ -431,6 +432,9 @@ exports.prototype.getWMSLegendURL = function(url,
       queryString['WIDTH'] = Math.round((opt_bbox[2] - opt_bbox[0]) / opt_scale * 39.37 * opt_dpi);
       queryString['HEIGHT'] = Math.round((opt_bbox[3] - opt_bbox[1]) / opt_scale * 39.37 * opt_dpi);
     }
+  }
+  if (opt_additionalQueryString) {
+    Object.assign(queryString, opt_additionalQueryString);
   }
   return olUri.appendParams(url, queryString);
 };
