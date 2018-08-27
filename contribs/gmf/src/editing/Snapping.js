@@ -226,14 +226,13 @@ exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
         this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
       );
 
-      // Todo: some of the properties here are hardcoded, but could come from
-      //       the node metadata at some point.
+      const ogcServer = this.getOGCServer_(treeCtrl);
       this.cache_[uid] = {
         active: false,
-        featureNS: 'http://mapserver.gis.umn.edu/mapserver',
+        featureNS: ogcServer.wfsFeatureNS,
         featurePrefix: 'feature',
         features: new olCollection(),
-        geometryName: 'geom',
+        geometryName: ogcServer.geometryName,
         interaction: null,
         maxFeatures: 50,
         requestDeferred: null,
@@ -269,6 +268,36 @@ exports.prototype.unregisterAllTreeCtrl_ = function() {
 
 
 /**
+ * Get the OGC server.
+ *
+ * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
+ * @return {?gmfThemes.GmfOgcServers} The OGC server.
+ * @private
+ */
+exports.prototype.getOGCServer_ = function(treeCtrl) {
+  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  if (gmfLayer.type !== gmfThemeThemes.NodeType.WMS) {
+    return null;
+  }
+  const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+
+  let ogcServerName;
+  const gmfGroup = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
+  if (gmfGroup.mixed) {
+    ogcServerName = gmfLayerWMS.ogcServer;
+  } else {
+    const firstTreeCtrl = ngeoLayertreeController.getFirstParentTree(treeCtrl);
+    const firstNode = /** @type {gmfThemes.GmfGroup} */ (firstTreeCtrl.node);
+    ogcServerName = firstNode.ogcServer;
+  }
+  if (!ogcServerName) {
+    return null;
+  }
+  return this.ogcServers_[ogcServerName];
+};
+
+
+/**
  * Get the configuration required to do WFS requests (for snapping purpose)
  * from a Layertree controller that has a leaf node.
  *
@@ -279,10 +308,7 @@ exports.prototype.unregisterAllTreeCtrl_ = function() {
  * 2) its node `type` property is equal to `WMS`
  * 3) in its node `childLayers` property, the `queryable` property is set
  *    to `true`
- * 4) if its node `mixed` property is:
- *   a) true: then the node must have an `ogcServer` property set
- *   b) false: then the first parent node must have an `ogcServer` property set
- * 5) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
+ * 4) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
  * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
  * @return {?gmf.editing.Snapping.WFSConfig} The configuration object.
@@ -316,22 +342,8 @@ exports.prototype.getWFSConfig_ = function(treeCtrl) {
   }
 
   // (4)
-  let ogcServerName;
-  const gmfGroup = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
-  if (gmfGroup.mixed) {
-    ogcServerName = gmfLayerWMS.ogcServer;
-  } else {
-    const firstTreeCtrl = ngeoLayertreeController.getFirstParentTree(treeCtrl);
-    const firstNode = /** @type {gmfThemes.GmfGroup} */ (firstTreeCtrl.node);
-    ogcServerName = firstNode.ogcServer;
-  }
-  if (!ogcServerName) {
-    return null;
-  }
-
-  // (5)
-  const ogcServer = this.ogcServers_[ogcServerName];
-  if (!ogcServer.wfsSupport) {
+  const ogcServer = this.getOGCServer_(treeCtrl);
+  if (!ogcServer || !ogcServer.wfsSupport) {
     return null;
   }
 

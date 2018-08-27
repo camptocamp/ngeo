@@ -445,9 +445,9 @@ const exports = class {
 
     // (5) ogcServer
     const ogcServerType = ogcServer ? ogcServer.type : undefined;
+    const wfsFeatureNS = ogcServer ? ogcServer.namespace : undefined;
     const wmsIsSingleTile = ogcServer ? ogcServer.isSingleTile : undefined;
-    const wfsUrl = ogcServer && ogcServer.wfsSupport ?
-      ogcServer.urlWfs : undefined;
+    const wfsUrl = ogcServer && ogcServer.wfsSupport ? ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
 
     let wfsOutputFormat = ngeoDatasourceOGC.WFSOutputFormat.GML3;
@@ -458,12 +458,9 @@ const exports = class {
 
     // (6) Snapping
     const snappable = !!meta.snappingConfig;
-    const snappingTolerance = meta.snappingConfig ?
-      meta.snappingConfig.tolerance : undefined;
-    const snappingToEdges = meta.snappingConfig ?
-      meta.snappingConfig.edge : undefined;
-    const snappingToVertice = meta.snappingConfig ?
-      meta.snappingConfig.vertex : undefined;
+    const snappingTolerance = meta.snappingConfig ? meta.snappingConfig.tolerance : undefined;
+    const snappingToEdges = meta.snappingConfig ? meta.snappingConfig.edge : undefined;
+    const snappingToVertice = meta.snappingConfig ? meta.snappingConfig.vertex : undefined;
 
     // (7) Dimensions
     const dimensions = this.dimensions_;
@@ -503,6 +500,7 @@ const exports = class {
       ogcImageType,
       ogcLayers,
       ogcServerType,
+      wfsFeatureNS,
       ogcType,
       snappable,
       snappingTolerance,

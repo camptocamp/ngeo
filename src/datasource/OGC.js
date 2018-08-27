@@ -91,8 +91,7 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {string}
      * @private
      */
-    this.geometryName_ = options.geometryName ||
-      exports.DEFAULT_GEOMETRY_NAME_;
+    this.geometryName_ = options.geometryName || exports.DEFAULT_GEOMETRY_NAME_;
 
     /**
      * The type of images to fetch by queries by the (WMS) or (WMTS) .
@@ -115,8 +114,7 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {string}
      * @private
      */
-    this.ogcServerType_ = options.ogcServerType ||
-      exports.ServerType.MAPSERVER;
+    this.ogcServerType_ = options.ogcServerType || exports.ServerType.MAPSERVER;
 
     /**
      * The type data source. Can be: 'WMS' or 'WMTS'.
@@ -157,8 +155,7 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {number}
      * @private
      */
-    this.snappingTolerance_ = options.snappingTolerance !== undefined ?
-      options.snappingTolerance : 10;
+    this.snappingTolerance_ = options.snappingTolerance !== undefined ? options.snappingTolerance : 10;
 
     /**
      * The name of the time attribute.
@@ -177,8 +174,7 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {?ngeox.TimeProperty}
      * @private
      */
-    this.timeProperty_ = options.timeProperty !== undefined ?
-      options.timeProperty : null;
+    this.timeProperty_ = options.timeProperty !== undefined ? options.timeProperty : null;
 
     /**
      * @type {number|undefined}
@@ -191,24 +187,21 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {string}
      * @private
      */
-    this.wfsFeatureNS_ = options.wfsFeatureNS ||
-      exports.WFSFeatureNS[this.ogcServerType_];
+    this.wfsFeatureNS_ = options.wfsFeatureNS;
 
     /**
      * The feature prefix to use with WFS requests.
      * @type {string}
      * @private
      */
-    this.wfsFeaturePrefix_ = options.wfsFeaturePrefix ||
-      exports.WFSFeaturePrefix.FEATURE;
+    this.wfsFeaturePrefix_ = options.wfsFeaturePrefix || exports.WFSFeaturePrefix.FEATURE;
 
     /**
      * The OutputFormat to use with WFS requests.
      * @type {string}
      * @private
      */
-    this.wfsOutputFormat_ = options.wfsOutputFormat ||
-      exports.WFSOutputFormat.GML3;
+    this.wfsOutputFormat_ = options.wfsOutputFormat || exports.WFSOutputFormat.GML3;
 
     /**
      * The url to use for (WFS) requests.
@@ -222,8 +215,7 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {string}
      * @private
      */
-    this.wmsInfoFormat_ = options.wmsInfoFormat ||
-      exports.WMSInfoFormat.GML;
+    this.wmsInfoFormat_ = options.wmsInfoFormat || exports.WMSInfoFormat.GML;
 
     /**
      * Whether the (WMS) images returned by this data source
@@ -964,7 +956,7 @@ exports.guessServiceTypeByUrl = function(url) {
  * @type {string}
  * @private
  */
-exports.DEFAULT_GEOMETRY_NAME_ = 'the_geom';
+exports.DEFAULT_GEOMETRY_NAME_ = 'geom';
 
 
 /**
@@ -989,18 +981,7 @@ exports.Type = {
 
 
 /**
- * Available Feature namespace for WFS requests.
- * @const {Object.<string, string>}
- */
-exports.WFSFeatureNS = {
-  'geoserver': 'http://www.opengis.net/gml/3.2',
-  'mapserver': 'http://mapserver.gis.umn.edu/mapserver',
-  'qgisserver': 'http://www.qgis.org/gml'
-};
-
-
-/**
- * Available Feature namespace for WFS requests.
+ * Available Feature prefix for WFS requests.
  * @enum {string}
  */
 exports.WFSFeaturePrefix = {
