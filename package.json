@@ -24,7 +24,7 @@
   "devDependencies": {
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.48.0",
-    "@fortawesome/fontawesome-free": "5.2.0",
+    "@fortawesome/fontawesome-free": "5.3.0",
     "angular": "1.7.3",
     "angular-animate": "1.7.3",
     "angular-dynamic-locale": "0.1.37",
