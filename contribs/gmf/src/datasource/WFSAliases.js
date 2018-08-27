@@ -34,7 +34,10 @@ const exports = class {
    */
   describe(dataSource) {
     // Only QGIS Server supports WFS aliases
-    if (dataSource.ogcServerType === 'qgisserver' && !dataSource.attributes) {
+    if (dataSource.ogcServerType === 'qgisserver' &&
+      dataSource.wfsUrl_ &&
+      dataSource.getOGCLayerNames().length == 1 &&
+      !dataSource.attributes) {
       // Trigger an additional WFS DescribeFeatureType request to get
       // datasource attributes, including aliases.
       this.ngeoDataSourcesHelper_.getDataSourceAttributes(dataSource);

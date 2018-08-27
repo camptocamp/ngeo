@@ -101,20 +101,21 @@ const exports = class {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getOGCLayerNames()[0];
-        googAsserts.assertString(
-          ogcLayerName, 'The data source should have only one ogcLayer.');
-        const element = featureType.element[0];
-        googAsserts.assert(element.name === ogcLayerName);
-        googAsserts.assert(
-          featureType.complexType[0].name === element.type);
+        googAsserts.assertString(ogcLayerName, 'The data source should have only one ogcLayer.');
+        for (const element of featureType.element) {
+          if (element.name === ogcLayerName) {
+            googAsserts.assert(featureType.complexType[0].name === element.type);
 
-        const complexContent = featureType['complexType'][0]['complexContent'];
-        const attributes = new ngeoFormatWFSAttribute().read(complexContent);
+            const complexContent = featureType.complexType[0].complexContent;
+            const attributes = new ngeoFormatWFSAttribute().read(complexContent);
 
-        // Set the attributes in the data source
-        dataSource.setAttributes(attributes);
+            // Set the attributes in the data source
+            dataSource.setAttributes(attributes);
 
-        wfsDescribeFeatureTypeDefer.resolve(attributes);
+            wfsDescribeFeatureTypeDefer.resolve(attributes);
+            break;
+          }
+        }
       });
     }
 
