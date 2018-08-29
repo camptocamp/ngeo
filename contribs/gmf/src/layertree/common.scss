@@ -37,6 +37,8 @@
     &.gmf-layertree-expand-node.fa {
       color : $color-light;
       display: inline-block;
+      margin-top: $micro-app-margin;
+      padding-right: $half-app-margin;
       &::before {
         content: fa-content($fa-var-chevron-right);
       }
@@ -99,14 +101,18 @@
     padding: 0;
     display: flex;
 
-    img {
-      // don't let the legend icons images to break the layout by being too
+    img, svg {
+      // Don't let the legend icons images to break the layout by being too
       // tall or too large
       max-width: 100%;
       max-height: 1.25rem;
       vertical-align: initial;
       margin-left: auto;
       margin-right: auto;
+    }
+    img {
+      // Align default svg and images
+      padding-right: 0.06rem;
     }
   }
 

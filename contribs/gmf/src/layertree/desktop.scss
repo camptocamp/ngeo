@@ -23,6 +23,7 @@ gmf-layertree {
   .gmf-layertree-right-buttons {
     display: none;
     cursor: pointer;
+    margin-right: $half-app-margin;
 
     .gmf-layertree-node-menu-btn {
       display: none;
@@ -85,7 +86,7 @@ gmf-layertree {
     margin-left: $half-app-margin;
   }
 
-  .ngeo-sortable-handle {
+  div.ngeo-sortable-handle {
     cursor: url(~gmf/cursors/grab.cur), default;
     cursor: -webkit-grab;
     cursor: grab;
@@ -94,7 +95,7 @@ gmf-layertree {
     top: 0;
     height: 100%;
     width : $app-margin;
-    margin: 0;
+    margin: 0.12rem 0 0;
   }
 
   .gmf-layertree-sortable-handle-icon {
