@@ -330,8 +330,23 @@ $theme-selector-columns: 2;
       border-bottom: 0.06rem solid $color-light;
     }
 
+    .profile-panel button {
+      width: 100%;
+    }
+
     &.gmf-app-googlestreetview-active {
       width: $streeview-width + $app-margin + $app-margin;
+    }
+
+    .ngeo-routing {
+      ngeo-nominatim-input {
+        width: calc(100% - 1em - (2 * #{$app-margin}));
+      }
+
+      .fill button {
+        width: 100%;
+        margin-bottom: $half-app-margin;
+      }
     }
   }
 
