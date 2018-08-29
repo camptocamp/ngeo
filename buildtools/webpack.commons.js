@@ -15,7 +15,7 @@ const providePlugin = new webpack.ProvidePlugin({
   $: 'jquery',
 });
 
-const babelPresets = [['env', {
+const babelPresets = [['@babel/preset-env', {
   'targets': {
     'browsers': ['last 2 versions', 'Firefox ESR', 'ie 11'],
   },
@@ -43,8 +43,8 @@ const otherRule = {
       babelrc: false,
       presets: babelPresets,
       plugins: [
-        'babel-plugin-transform-object-rest-spread',
-        'babel-plugin-transform-es2015-spread',
+        '@babel/plugin-syntax-object-rest-spread',
+        '@babel/plugin-transform-spread',
       ]
     }
   }
