@@ -176,6 +176,22 @@ exports.component_ = {
 
 exports.component('gmfPrint', exports.component_);
 
+/**
+ * @typedef {{
+ *     useBbox: (boolean|undefined),
+ *     label: (Object.<string, boolean>),
+ *     params: (Object.<string, Object.<string, string>>)
+ * }}
+ */
+exports.optionsLegendType;
+
+/**
+ * @typedef {{
+ *     scaleInput: (boolean|undefined),
+ *     legend: (optionsLegendType|undefined)
+ * }}
+ */
+exports.optionsType;
 
 /**
  * @private
@@ -336,8 +352,27 @@ exports.Controller_ = class {
      */
     this.scaleInput = false;
 
+    /**
+     * @type optionsLegendType
+     * @private
+     */
+    this.gmfLegendOptions_ = {
+      useBbox: true,
+      label: {},
+      params: {},
+    };
+
     if ($injector.has('gmfPrintOptions')) {
-      this.scaleInput = $injector.get('gmfPrintOptions')['scaleInput'];
+      /**
+       * @type optionsType
+       */
+      const options = $injector.get('gmfPrintOptions');
+      if (options.scaleInput) {
+        this.scaleInput = options.scaleInput;
+      }
+      if (options.legend) {
+        Object.assign(this.gmfLegendOptions_, options.legend);
+      }
     }
 
     /**
@@ -1121,15 +1156,18 @@ exports.Controller_ = class {
             let icons = this.getMetadataLegendImage_(name);
             if (!icons) {
               icons = this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-                scale, undefined, undefined, undefined, source.serverType_, dpi, bbox,
-                this.map.getView().getProjection().getCode()
+                scale, undefined, undefined, undefined, source.serverType_, dpi,
+                this.gmfLegendOptions_.useBbox ? bbox : undefined,
+                this.map.getView().getProjection().getCode(),
+                this.gmfLegendOptions_.params[layer.getSource().serverType_]
               );
             }
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icons && name.length !== 0) {
               classes.push(Object.assign({
-                'name': gettextCatalog.getString(name),
+                'name': this.gmfLegendOptions_.label[layer.getSource().serverType_] === false ? '' :
+                  gettextCatalog.getString(name),
                 'icons': [icons]
               }, layer.getSource().serverType_ === 'qgis' ? {
                 'dpi': dpi,

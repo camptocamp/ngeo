@@ -288,6 +288,7 @@
           ngeo-map-query-active="mainCtrl.queryActive"
           ngeo-map-query-autoclear="mainCtrl.queryAutoClear"
           ngeo-bbox-query=""
+          ngeo-bbox-query-limit="50"
           ngeo-bbox-query-map="::mainCtrl.map"
           ngeo-bbox-query-active="mainCtrl.queryActive"
           ngeo-bbox-query-autoclear="mainCtrl.queryAutoClear">
@@ -348,7 +349,7 @@
         ngeo-resizemap-state="queryGridActive">
       </gmf-displayquerygrid>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
