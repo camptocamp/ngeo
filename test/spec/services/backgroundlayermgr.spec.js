@@ -73,7 +73,7 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
 
       // We don't set ZIndex on the group, as OL is
       // just ordering it without regard it is group or layer
-      expect(bgGroup.getZIndex()).toBe(0);
+      expect(bgGroup.getZIndex()).toBe(undefined);
 
       // As we just set the layers ZIndex, this is where it is expected
       expect(bgGroupLayers.item(0).getZIndex()).toBe(-200);
@@ -96,7 +96,7 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
 
       // We don't set ZIndex on the group, as OL is
       // just ordering it without regard it is group or layer
-      expect(bgGroup.getZIndex()).toBe(0);
+      expect(bgGroup.getZIndex()).toBe(undefined);
 
       // As we just set the layers ZIndex, this is where it is expected
       expect(bgGroupLayers.item(0).getZIndex()).toBe(-100);

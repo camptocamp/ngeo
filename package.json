@@ -94,7 +94,7 @@
     "moment": "2.22.2",
     "node-sass": "4.9.3",
     "node-sass-importer": "1.0.0",
-    "ol": "5.1.3",
+    "ol": "5.2.0",
     "ol-cesium": "2.2.2",
     "phantomjs-polyfill-string-includes": "1.0.0",
     "phantomjs-prebuilt": "2.1.16",

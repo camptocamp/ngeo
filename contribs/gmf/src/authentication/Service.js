@@ -2,7 +2,7 @@
  * @module gmf.authentication.Service
  */
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import olEventsEventTarget from 'ol/events/EventTarget.js';
+import olEventsEventTarget from 'ol/events/Target.js';
 
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it

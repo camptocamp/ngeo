@@ -6,7 +6,7 @@ import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import * as olBase from 'ol/index.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
-import olEventsEventTarget from 'ol/events/EventTarget.js';
+import olEventsEventTarget from 'ol/events/Target.js';
 import olLayerTile from 'ol/layer/Tile.js';
 
 /**
