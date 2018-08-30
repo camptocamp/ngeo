@@ -664,7 +664,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
     }
 
     actions = actions.concat([{
-      cls: 'fa fa-trash-o',
+      cls: 'fa fa-trash',
       label: gettextCatalog.getString('Delete'),
       name: 'delete'
     }]);
