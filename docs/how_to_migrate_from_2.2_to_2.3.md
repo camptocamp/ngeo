@@ -146,6 +146,7 @@ To achieve this preparation phase, run this script:
 
 ```
 ./node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_provide_to_goog_module.js --legacy true <path_to_your_js_folder>
+./node_modules/.bin/jscodeshift --transform=node_modules/googshift/transforms/goog_module_to_es6_module.js --legacy true <path_to_your_js_folder>
 ```
 
 In Geompafish, the `<path_to_your_js_folder>` will be `<package>/static-ngeo/apps/ <package>/static-ngeo/components/`.
