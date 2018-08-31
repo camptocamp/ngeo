@@ -104,16 +104,18 @@ const exports = class {
         googAsserts.assertString(ogcLayerName, 'The data source should have only one ogcLayer.');
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
-            googAsserts.assert(featureType.complexType[0].name === element.type);
+            for (const type of featureType.complexType) {
+              if (type.name == element.type) {
+                const complexContent = type.complexContent;
+                const attributes = new ngeoFormatWFSAttribute().read(complexContent);
 
-            const complexContent = featureType.complexType[0].complexContent;
-            const attributes = new ngeoFormatWFSAttribute().read(complexContent);
+                // Set the attributes in the data source
+                dataSource.setAttributes(attributes);
 
-            // Set the attributes in the data source
-            dataSource.setAttributes(attributes);
-
-            wfsDescribeFeatureTypeDefer.resolve(attributes);
-            break;
+                wfsDescribeFeatureTypeDefer.resolve(attributes);
+                break;
+              }
+            }
           }
         }
       });
