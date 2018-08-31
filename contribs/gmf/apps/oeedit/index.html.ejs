@@ -174,6 +174,12 @@
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-    <script src="https://geomapfish-demo.camptocamp.com/2.3/wsgi/dynamic.js?interface=oeedit"></script>
+    <script>
+    document.write(
+      '<script src="https://geomapfish-demo.camptocamp.com/docker/dynamic.js?' +
+      'interface=oeedit&' +
+      'query=' + encodeURIComponent(document.location.search) +
+      '"><' + '/script>');
+    </script>
   </body>
 </html>
