@@ -88,7 +88,7 @@
     "karma-coverage-istanbul-reporter": "2.0.2",
     "karma-jasmine": "1.1.2",
     "karma-sourcemap-loader": "0.3.7",
-    "karma-webpack": "3.0.0",
+    "karma-webpack": "3.0.1",
     "loader-utils": "1.1.0",
     "ls": "0.2.1",
     "moment": "2.22.2",
