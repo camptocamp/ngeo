@@ -32,6 +32,11 @@ exports.module = angular.module('app', [
 ]);
 
 
+exports.module.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
+});
+
+
 exports.module.value('ngeoQueryOptions', {
   'limit': 20
 });
@@ -44,7 +49,7 @@ exports.module.value('ngeoQueryOptions', {
  */
 exports.queryresultComponent = {
   controller: 'AppQueryresultController',
-  template: require('./partials/queryresult.html')
+  templateUrl: 'partials/queryresult'
 };
 
 exports.module.component('appQueryresult', exports.queryresultComponent);
