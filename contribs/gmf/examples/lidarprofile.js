@@ -23,7 +23,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree/pytree_dev/');
+exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 
 /**

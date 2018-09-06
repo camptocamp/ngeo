@@ -286,7 +286,7 @@ const exports = class {
     }
 
     const pointCloudName = this.config.serverConfig.default_point_cloud;
-    const hurl = `${this.config.pytreeLidarprofileJsonUrl}profile/get?minLOD=${minLOD}
+    const hurl = `${this.config.pytreeLidarprofileJsonUrl}/profile/get?minLOD=${minLOD}
       &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes=`;
 
     this.$http.get(hurl, {
