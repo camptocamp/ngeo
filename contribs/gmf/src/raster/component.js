@@ -61,9 +61,21 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  *            gmf-elevation-active="elevationActive"
  *            gmf-elevation-elevation="elevationValue"
  *            gmf-elevation-layer="mainCtrl.elevationLayer"
+ *            gmf-elevation-layersconfig="::mainCtrl.elevationLayersConfig"
  *            gmf-elevation-map="::mainCtrl.map">
- *            {{elevationValue | number:2}}m
+ *            {{elevationValue}}
  *      </span>
+ *
+ *  For value in meter `elevationLayersConfig` can be an empty object, complex example:
+ *
+ *      elevationLayersConfig = {
+ *          '<layer>': {
+ *              'filter': 'ngeoUnitPrefix',
+ *              'args': ['m²', 'square'],
+ *              'postfix': '<notice>',
+ *              'separator': ''
+ *          }
+ *      };
  *
  *
  * @htmlAttribute {boolean} gmf-elevation-active A boolean to set active or
@@ -71,6 +83,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
  *     elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
+ * @htmlAttribute {Object.<string, gmf.raster.component.LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
  * @htmlAttribute {ol.Map} gmf-elevation-map The map.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
@@ -84,6 +97,7 @@ exports.component_ = function() {
     scope: {
       'active': '<gmfElevationActive',
       'elevation': '=gmfElevationElevation',
+      'layersconfig': '=gmfElevationLayersconfig',
       'loading': '=?gmfElevationLoading',
       'layer': '<gmfElevationLayer',
       'map': '=gmfElevationMap'
@@ -110,15 +124,22 @@ exports.directive('gmfElevation', exports.component_);
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {ngeox.miscDebounce} ngeoDebounce Ngeo debounce factory
- * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
+ * @param {!angular.$filter} $filter Angular filter.
+ * @param {!ngeox.miscDebounce} ngeoDebounce Ngeo debounce factory
+ * @param {!gmf.raster.RasterService} gmfRaster Gmf Raster service
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
-exports.Controller_ = function($scope, ngeoDebounce, gmfRaster) {
+exports.Controller_ = function($scope, $filter, ngeoDebounce, gmfRaster) {
+
+  /**
+   * @type {!angular.$filter}
+   * @private
+   */
+  this.filter_ = $filter;
 
   /**
    * @type {ngeox.miscDebounce}
@@ -133,12 +154,18 @@ exports.Controller_ = function($scope, ngeoDebounce, gmfRaster) {
   this.gmfRaster_ = gmfRaster;
 
   /**
+   * @type {!Object.<string, gmf.raster.component.LayerConfig>}
+   * @private
+   */
+  this.layersConfig;
+
+  /**
    * @type {boolean}
    */
   this.active;
 
   /**
-   * @type {!number|undefined}
+   * @type {!string|undefined}
    * @export
    */
   this.elevation;
@@ -245,7 +272,19 @@ exports.Controller_.prototype.pointerStop_ = function(e) {
  */
 exports.Controller_.prototype.getRasterSuccess_ = function(resp) {
   googAsserts.assert(this.layer, 'A layer should be selected');
-  this.elevation = resp[this.layer];
+  const value = resp[this.layer];
+  if (value !== undefined && value !== null) {
+    const options = this.layersconfig[this.layer] || {};
+    const filter = options.filter || 'number';
+    const custom_args = options.args || [];
+    const postfix = options.hasOwnProperty('postfix') ? options.postfix : 'm';
+    const separator = postfix.length > 0 ?
+      (options.hasOwnProperty('separator') ? options.separator : '\u00a0') : '';
+    const args = Array.concat([value], custom_args);
+    this.elevation = this.filter_(filter).apply(args) + separator + postfix;
+  } else {
+    this.elevation = undefined;
+  }
   this.loading = false;
 };
 
@@ -271,6 +310,7 @@ exports.controller('GmfElevationController', exports.Controller_);
  *  <gmf-elevationwidget
  *      gmf-elevationwidget-map="::mainCtrl.map"
  *      gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+ *      gmf-elevationwidget-layersconfig="::mainCtrl.elevationLayersConfig"
  *      gmf-elevationwidget-active="mainCtrl.showInfobar">
  *  </gmf-elevationwidget>
  *
@@ -288,6 +328,7 @@ exports.widgetComponent_ = {
   bindings: {
     'map': '<gmfElevationwidgetMap',
     'layers': '<gmfElevationwidgetLayers',
+    'layersconfig': '=gmfElevationwidgetLayersconfig',
     'active': '<gmfElevationwidgetActive'
   },
   templateUrl: gmfElevationwidgetTemplateUrl
@@ -314,6 +355,12 @@ exports.WidgetController_ = function() {
   this.layers;
 
   /**
+   * @type {!Object.<string, gmf.raster.component.LayerConfig>}
+   * @private
+   */
+  this.layersconfig;
+
+  /**
    * @type {boolean}
    * @export
    */
@@ -332,8 +379,16 @@ exports.WidgetController_.prototype.$onInit = function() {
 };
 
 
-exports.controller('gmfElevationwidgetController',
-  exports.WidgetController_);
+exports.controller('gmfElevationwidgetController', exports.WidgetController_);
 
+/**
+ * @typedef {{
+ *     filter: (string|undefined),
+ *     args: (Array.<string>|undefined),
+ *     postfix: (string|undefined),
+ *     separator: (string|undefined)
+ * }}
+ */
+exports.LayerConfig;
 
 export default exports;

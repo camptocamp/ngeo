@@ -61,6 +61,12 @@ const exports = function($scope, $injector) {
   this.elevationLayers = ['aster', 'srtm'];
 
   /**
+   * @type {Object.<string, gmf.raster.component.LayerConfig>}
+   * @export
+   */
+  this.elevationLayersConfig = {};
+
+  /**
    * @type {string}
    * @export
    */

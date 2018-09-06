@@ -80,6 +80,12 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   this.elevationLayers = ['srtm'];
 
   /**
+   * @type {Object.<string, gmf.raster.component.LayerConfig>}
+   * @export
+   */
+  this.elevationLayersConfig = {};
+
+  /**
    * @type {Object.<string, gmfx.ProfileLineConfiguration>}
    * @export
    */
