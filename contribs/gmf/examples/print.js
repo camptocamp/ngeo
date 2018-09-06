@@ -34,12 +34,12 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value(
   'gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/themes?' +
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?' +
         'version=2&background=background');
 
 
 exports.module.value('gmfPrintUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/printproxy');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/printproxy');
 
 
 exports.module.value(
@@ -49,7 +49,7 @@ exports.module.value(
 
 
 exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/layers/');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

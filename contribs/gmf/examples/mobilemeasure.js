@@ -34,7 +34,7 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value(
   'gmfRasterUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/raster');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/raster');
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
