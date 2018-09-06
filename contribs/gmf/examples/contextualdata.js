@@ -27,7 +27,7 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value(
   'gmfRasterUrl',
-  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/raster');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/raster');
 
 exports.module.value(
   'gmfContextualdatacontentTemplateUrl',

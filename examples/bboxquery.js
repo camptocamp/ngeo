@@ -86,14 +86,14 @@ exports.MainController = function($scope, ngeoDataSources) {
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/mapserv_proxy',
       params: {'LAYERS': 'information'}
     })
   });
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+      'url': 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/mapserv_proxy',
       params: {'LAYERS': 'bus_stop'}
     })
   });
@@ -124,7 +124,7 @@ exports.MainController = function($scope, ngeoDataSources) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wfsUrl: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+    wfsUrl: 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/mapserv_proxy',
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -135,7 +135,7 @@ exports.MainController = function($scope, ngeoDataSources) {
     id: 2,
     name: 'information',
     visible: true,
-    wfsUrl: 'https://geomapfish-demo.camptocamp.com/2.3/wsgi/mapserv_proxy',
+    wfsUrl: 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/mapserv_proxy',
     ogcLayers: [{
       name: 'information',
       queryable: true
