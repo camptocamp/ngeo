@@ -46,14 +46,14 @@ exports.module = angular.module('gmfapp', [
 
 
 exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/themes?version=2&background=background');
 
 exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/themes?version=2&background=background');
 
 
 exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo.camptocamp.com/2.3/wsgi/layers/');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/layers/');
 
 exports.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
