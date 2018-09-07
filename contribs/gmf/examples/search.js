@@ -34,13 +34,13 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/themes?version=2&background=background');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
 
 exports.module.value('fulltextsearchUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/fulltextsearch?limit=30&partitionlimit=5&interface=desktop');
 
 exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/layers/');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -73,7 +73,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
         rateLimitWait: 250
       }
     },
-    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/fulltextsearch'
+    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/fulltextsearch'
   }];
 
   const fill = new olStyleFill({color: [255, 255, 255, 0.6]});

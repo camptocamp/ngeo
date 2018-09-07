@@ -39,7 +39,7 @@ exports.module.value(
 
 
 exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/layers/');
+  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -77,7 +77,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
-    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/mapserv_proxy',
+    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
     params: {'LAYERS': 'point'}
   });
 

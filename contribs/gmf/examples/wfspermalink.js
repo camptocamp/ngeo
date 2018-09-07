@@ -32,7 +32,7 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
-    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi/mapserv_proxy',
+    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}
