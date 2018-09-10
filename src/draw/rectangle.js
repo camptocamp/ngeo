@@ -34,7 +34,7 @@ exports.directive_ = function() {
         type: /** @type {ol.geom.GeometryType} */ ('LineString'),
         geometryFunction: (coordinates, geometry) => {
           if (!geometry) {
-            geometry = new olGeomPolygon(null);
+            geometry = new olGeomPolygon([]);
           }
           const start = coordinates[0];
           const end = coordinates[1];
