@@ -278,6 +278,7 @@
             <gmf-elevationwidget
                 gmf-elevationwidget-map="::mainCtrl.map"
                 gmf-elevationwidget-layers="::mainCtrl.elevationLayers"
+                gmf-elevationwidget-layersconfig="::mainCtrl.elevationLayersConfig"
                 gmf-elevationwidget-active="mainCtrl.showInfobar">
             </gmf-elevationwidget>
             <gmf-mouseposition
@@ -322,6 +323,12 @@
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-    <script src="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.js?interface=desktop"></script>
+    <script>
+    document.write(
+      '<script src="https://geomapfish-demo.camptocamp.com/2.4/dynamic.js?' +
+      'interface=desktop&' +
+      'query=' + encodeURIComponent(document.location.search) +
+      '"><' + '/script>');
+    </script>
   </body>
 </html>

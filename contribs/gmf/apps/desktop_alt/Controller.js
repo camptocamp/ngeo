@@ -16,6 +16,7 @@ import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
+import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import * as olBase from 'ol/index.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
@@ -77,6 +78,12 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
    * @export
    */
   this.elevationLayers = ['srtm'];
+
+  /**
+   * @type {Object.<string, gmf.raster.component.LayerConfig>}
+   * @export
+   */
+  this.elevationLayersConfig = {};
 
   /**
    * @type {Object.<string, gmfx.ProfileLineConfiguration>}
@@ -160,6 +167,7 @@ exports.module = angular.module('Appdesktop_alt', [
   gmfImportModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
+  ngeoStatemanagerWfsPermalink.module.name,
 ]);
 
 exports.module.controller('AlternativeDesktopController', exports);
