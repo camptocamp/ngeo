@@ -284,13 +284,22 @@ exports.prototype.getBgLayers = function() {
       googAsserts.assert(server, 'The OGC server was not found');
       googAsserts.assert(server.url, 'The server URL is required');
       googAsserts.assert(server.imageType, 'The server image type is required');
+
+      // Manage WMS styles
+      const opt_params = {STYLES: gmfLayerWMS.styles};
+      if (gmfLayer.dimensions) {
+        for (const [key, value] of Object.entries(gmfLayer.dimensions)) {
+          opt_params[key] = value;
+        }
+      }
+
       return callback(gmfLayer, layerHelper.createBasicWMSLayer(
         server.url,
         gmfLayerWMS.layers || '',
         server.imageType,
         server.type,
         undefined, // time
-        gmfLayer.dimensions,
+        opt_params,
         server.credential ? 'use-credentials' : 'anonymous',
         gmfLayerWMS.metadata.customOpenLayersOptions
       ));
