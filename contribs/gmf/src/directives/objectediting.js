@@ -956,7 +956,7 @@ gmf.ObjecteditingController.prototype.refreshWMSLayer_ = function() {
  * Called before the window unloads. Show a confirmation message if there are
  * unsaved modifications.
  * @param {Event} e Event.
- * @return {string} Message
+ * @return {string|undefined} Message
  * @private
  */
 gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
@@ -966,7 +966,7 @@ gmf.ObjecteditingController.prototype.handleWindowBeforeUnload_ = function(e) {
     (e || window.event).returnValue = msg;
     return msg;
   }
-  return '';
+  return undefined;
 };
 
 
