@@ -11,6 +11,9 @@
 /contribs/gmf/apps/.tx/ngeo.gmf-*
 /examples/simple.min.js
 /contribs/gmf/build/
+/contribs/gmf/fonts/gmf-icons.eot
+/contribs/gmf/fonts/gmf-icons.ttf
+/contribs/gmf/fonts/gmf-icons.woff
 /contribs/gmf/fonts/FontAwesome*
 /contribs/gmf/fonts/fontawesome*
 /contribs/gmf/examples/https.js
