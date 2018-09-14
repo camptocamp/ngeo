@@ -406,6 +406,9 @@ const exports = function(options) {
 
         // Configure the d3 line.
         line = d3.line()
+          .defined(function(d) {
+              return d.value;
+          })
           .x(d => x(distanceExtractor(d)))
           .y(d => y(linesConfiguration[name].zExtractor(d)));
 
