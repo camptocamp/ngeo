@@ -33,7 +33,7 @@
     ng-if="::!layertreeCtrl.node.children && gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)"
     class="gmf-layertree-layer-icon"
   >
-    <div>
+    <div><!--This div is required for flex issues with IE11-->
       <img
         ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
         ng-src="{{::legendIconUrl}}">
