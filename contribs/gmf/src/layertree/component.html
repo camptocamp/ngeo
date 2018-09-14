@@ -33,10 +33,12 @@
     ng-if="::!layertreeCtrl.node.children && gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)"
     class="gmf-layertree-layer-icon"
   >
-    <img
-      ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
-      ng-src="{{::legendIconUrl}}">
-    </img>
+    <div>
+      <img
+        ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
+        ng-src="{{::legendIconUrl}}">
+      </img>
+    </div>
   </a>
   <a
     href
