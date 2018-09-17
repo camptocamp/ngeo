@@ -1,6 +1,4 @@
-<div
-    class="dropdown"
-    ng-class="{open: $ctrl.rule.active}">
+<div class="dropdown">
   <button
       class="btn btn-default btn-sm btn-block dropdown-toggle"
       type="button"
@@ -8,7 +6,9 @@
       ng-click="$ctrl.toggle()">
     <span>{{ ::$ctrl.clone.name | translate }}</span>
   </button>
-  <div class="dropdown-menu form-group">
+  <div
+    class="dropdown-menu form-group"
+    ng-class="{show: $ctrl.rule.active}">
 
     <select
         class="form-control ngeo-rule-operators-list"
