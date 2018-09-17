@@ -407,7 +407,10 @@ const exports = function(options) {
         // Configure the d3 line.
         line = d3.line()
           .x(d => x(distanceExtractor(d)))
-          .y(d => y(linesConfiguration[name].zExtractor(d)));
+          .y(d => y(linesConfiguration[name].zExtractor(d)))
+          .defined(function(d) {
+              return d.value;
+          });
 
         // Update path for the line.
         g.select(`.line.${name}`)
@@ -517,8 +520,10 @@ const exports = function(options) {
 
     for (lineName in linesConfiguration) {
       elevation = linesConfiguration[lineName].zExtractor(point);
+      elevation = null ? elevation === undefined : elevation;
       elevations.push(elevation);
       elevationsRef[lineName] = elevation;
+
       g.select(`.y.grid-hover.${lineName}`)
         .style('display', 'inline')
         .select('line')
@@ -604,15 +609,16 @@ const exports = function(options) {
 
     poiEnterG.selectAll('text')
       .attr('transform', (d) => {
+
         if (light) {
           return ['translate(',
             x(pe.dist(d)), ',',
-            y(pe.z(d)) - 10, ')'
+            y(pe.z(d)? pe.z(d) === NaN : null) - 10, ')'
           ].join('');
         } else {
           return ['translate(',
             x(pe.dist(d)), ',',
-            y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
+            y(pe.z(d)? pe.z(d) === NaN : null) - 20, ') rotate(', poiLabelAngle, ')'
           ].join('');
         }
       })
@@ -620,10 +626,10 @@ const exports = function(options) {
 
     poiEnterG.selectAll('line')
       .style('stroke', 'grey')
-      .attr('x1', d => x(pe.dist(d)))
+      .attr('x1', d => x(pe.z(d)? pe.z(d) === NaN : null))
       .attr('y1', d => y(y.domain()[0]))
       .attr('x2', d => x(pe.dist(d)))
-      .attr('y2', d => y(pe.z(d)));
+      .attr('y2', d => y(pe.z(d)? pe.z(d) === NaN : null));
 
     // remove unused pois
     poiEnterG.exit().remove();
