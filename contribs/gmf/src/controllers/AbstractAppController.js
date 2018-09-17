@@ -64,6 +64,20 @@ const exports = function(config, $scope, $injector) {
   googAsserts.assertInstanceof(this.map, olMap);
 
   /**
+   * Collection of features for the draw interaction
+   * @type {ol.Collection.<ol.Feature>}
+   */
+  const ngeoFeatures = $injector.get('ngeoFeatures');
+
+  /**
+   * @type {ngeo.map.FeatureOverlay}
+   * @export
+   */
+  this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
+    .getFeatureOverlay();
+  this.drawFeatureLayer.setFeatures(ngeoFeatures);
+
+  /**
    * Ngeo FeatureHelper service
    * @type {ngeo.misc.FeatureHelper}
    */

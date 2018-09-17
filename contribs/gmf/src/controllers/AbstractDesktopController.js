@@ -155,20 +155,6 @@ const exports = function(config, $scope, $injector) {
     body.off('touchstart.detectTouch');
   });
 
-  /**
-   * Collection of features for the draw interaction
-   * @type {ol.Collection.<ol.Feature>}
-   */
-  const ngeoFeatures = $injector.get('ngeoFeatures');
-
-  /**
-   * @type {ngeo.map.FeatureOverlay}
-   * @export
-   */
-  this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
-    .getFeatureOverlay();
-  this.drawFeatureLayer.setFeatures(ngeoFeatures);
-
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
   /**
