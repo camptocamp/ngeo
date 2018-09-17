@@ -129,7 +129,7 @@ exports.prototype.updateLayerState_ = function(layer, treeCtrl) {
     treeCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.children === undefined && treeCtrl.getState() === 'on') {
         names.push(treeCtrl.node.layers);
-        let style = (treeCtrl.node.style !== undefined) ? treeCtrl.node.style : '';
+        const style = (treeCtrl.node.style !== undefined) ? treeCtrl.node.style : '';
         styles.push(style);
       }
     });
@@ -267,7 +267,7 @@ exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
     googAsserts.assert(gmfLayerWMS.layers);
     googAsserts.assert(ogcServer.imageType);
 
-    let opt_params = { STYLES: gmfLayerWMS.style };
+    const opt_params = {STYLES: gmfLayerWMS.style};
 
     layer = this.layerHelper_.createBasicWMSLayer(
       ogcServer.url,

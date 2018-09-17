@@ -286,10 +286,9 @@ exports.prototype.getBgLayers = function() {
       googAsserts.assert(server.imageType, 'The server image type is required');
 
       // Manage WMS styles
-      let opt_params = { STYLES: gmfLayerWMS.styles };
+      const opt_params = {STYLES: gmfLayerWMS.styles};
       if (gmfLayer.dimensions) {
-        for (const [key, value] of Object.entries(gmfLayer.dimensions))
-        {
+        for (const [key, value] of Object.entries(gmfLayer.dimensions)) {
           opt_params[key] = value;
         }
       }
