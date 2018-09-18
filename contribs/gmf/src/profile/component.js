@@ -608,7 +608,7 @@ exports.Controller_.prototype.getZFactory_ = function(layerName) {
     if ('values' in item && layerName in item['values']) {
       return parseFloat(item['values'][layerName]);
     }
-    return 0;
+    return null;
   };
   return getZFn;
 };
