@@ -114,7 +114,7 @@ exports.encodeQueryString = function(queryData) {
  * @return {boolean} The result.
  */
 exports.deleteCondition = function(event) {
-  return olEventsCondition.noModifierKeys(event) && olEventsCondition.singleClick(event);
+  return olEventsCondition.platformModifierKeyOnly(event) && olEventsCondition.singleClick(event);
 };
 
 

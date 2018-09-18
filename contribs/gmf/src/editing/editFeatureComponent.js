@@ -408,6 +408,18 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   });
 
   /**
+   * @type {ngeo.Menu}
+   * @private
+   */
+  this.menuVertex_ = new ngeoMenu({
+    actions: [{
+      cls: 'fa fa-trash',
+      label: gettextCatalog.getString('Delete vertex'),
+      name: 'delete'
+    }]
+  });
+
+  /**
    * @type {ngeo.interaction.Translate}
    * @private
    */
@@ -466,6 +478,12 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
    * @export
    */
   this.serverErrorType = null;
+
+  /**
+   * @type {?Array.<number>}
+   * @private
+   */
+  this.vertexInfo_ = null;
 };
 
 
@@ -532,8 +550,9 @@ exports.Controller_.prototype.$onInit = function() {
   this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
-  // (1.3) Add menu to map
+  // (1.3) Add menus to map
   this.map.addOverlay(this.menu_);
+  this.map.addOverlay(this.menuVertex_);
 
 
   // (2) Watchers and event listeners
@@ -673,6 +692,7 @@ exports.Controller_.prototype.cancel = function() {
   this.feature = null;
   this.features.clear();
   this.menu_.close();
+  this.menuVertex_.close();
   this.unsavedModificationsModalShown = false;
 };
 
@@ -887,6 +907,8 @@ exports.Controller_.prototype.toggle_ = function(active) {
 
     keys.push(olEvents.listen(this.menu_, 'actionclick',
       this.handleMenuActionClick_, this));
+    keys.push(olEvents.listen(this.menuVertex_, 'actionclick',
+      this.handleMenuVertexActionClick_, this));
 
     keys.push(olEvents.listen(this.translate_,
       'translateend',
@@ -1050,13 +1072,30 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
 
   feature = feature ? feature : null;
 
+  this.menu_.close();
+  this.menuVertex_.close();
+  this.vertexInfo_ = null;
+
   // show contextual menu when clicking on certain types of features
   if (feature) {
-    const type = this.ngeoFeatureHelper_.getType(feature);
-    if (type === ngeoGeometryType.POLYGON || type === ngeoGeometryType.MULTI_POLYGON ||
-        type === ngeoGeometryType.LINE_STRING || type === ngeoGeometryType.MULTI_LINE_STRING) {
-      this.menu_.open(coordinate);
+
+    const vertexInfo = this.ngeoFeatureHelper_.getVertexInfoAtCoordinate(
+      feature, coordinate, this.map.getView().getResolution());
+    if (vertexInfo) {
+      this.vertexInfo_ = vertexInfo;
+      this.menuVertex_.open(coordinate);
+    } else {
+      const type = this.ngeoFeatureHelper_.getType(feature);
+      if (
+        type === ngeoGeometryType.POLYGON ||
+        type === ngeoGeometryType.MULTI_POLYGON ||
+        type === ngeoGeometryType.LINE_STRING ||
+        type === ngeoGeometryType.MULTI_LINE_STRING
+      ) {
+        this.menu_.open(coordinate);
+      }
     }
+
     evt.preventDefault();
     evt.stopPropagation();
   }
@@ -1200,6 +1239,26 @@ exports.Controller_.prototype.handleMenuActionClick_ = function(evt) {
       break;
     case 'rotate':
       this.rotate_.setActive(true);
+      this.scope_.$apply();
+      break;
+    default:
+      break;
+  }
+};
+
+
+/**
+ * @param {ngeox.MenuEvent} evt Event.
+ * @private
+ */
+exports.Controller_.prototype.handleMenuVertexActionClick_ = function(evt) {
+  const action = evt.detail.action;
+
+  switch (action) {
+    case 'delete':
+      const feature = googAsserts.assert(this.feature);
+      const vertexInfo = googAsserts.assert(this.vertexInfo_);
+      this.ngeoFeatureHelper_.removeVertex(feature, vertexInfo);
       this.scope_.$apply();
       break;
     default:
