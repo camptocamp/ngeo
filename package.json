@@ -22,10 +22,10 @@
     "compile-catalog": "buildtools/compile-catalog.js"
   },
   "devDependencies": {
-    "@babel/core": "7.0.1",
+    "@babel/core": "7.1.0",
     "@babel/plugin-syntax-object-rest-spread": "7.0.0",
     "@babel/plugin-transform-spread": "7.0.0",
-    "@babel/preset-env": "7.0.0",
+    "@babel/preset-env": "7.1.0",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.48.0",
     "@fortawesome/fontawesome-free": "5.3.1",
