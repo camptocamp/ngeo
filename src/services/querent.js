@@ -407,10 +407,12 @@ ngeo.Querent = class {
           filter = this.ngeoRuleHelper_.createFilter({
             dataSource,
             filter: options.filter,
+            incDimensions: true,
             incTime: true
           });
         } else if ((dataSource.filterRules && dataSource.filterRules.length) ||
-            dataSource.timeRangeValue) {
+            dataSource.timeRangeValue ||
+            (dataSource.dimensionsFiltersConfig && Object.keys(dataSource.dimensionsFiltersConfig).length > 0)) {
 
           goog.asserts.assert(
             dataSources.length === 1,
@@ -420,6 +422,7 @@ ngeo.Querent = class {
 
           filter = this.ngeoRuleHelper_.createFilter({
             dataSource,
+            incDimensions: true,
             incTime: true,
             srsName
           });
