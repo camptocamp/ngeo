@@ -21,6 +21,7 @@ import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import olGeomMultiPolygon from 'ol/geom/MultiPolygon.js';
+import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
 import olFormatGPX from 'ol/format/GPX.js';
 import olFormatKML from 'ol/format/KML.js';
 import olStyleCircle from 'ol/style/Circle.js';
@@ -509,6 +510,139 @@ exports.prototype.createEditingStyles = function(feature) {
 
 
 /**
+ * For a given feature, if its geometry supports vertice that can be
+ * removed on click, then check if there is a vertex a the given
+ * coordinate. The map current map view resolution is used to
+ * calculate a buffer of the size of the vertex (using its style).
+ *
+ * If a vertex hits, then return its information, i.e. its indexes
+ * among the coordinates of the geometry of the feature, as an
+ * array. For example, if the geometry is a LineString, then the
+ * coordinates are an array of ol.Coordinate, so a single index is
+ * required. For a polygon, coordinates are an array of array of
+ * coordinates, so 2 indexes are required.
+ *
+ * If removing a vertex would make the geometry invalid, then the
+ * vertex info is not returned.
+ *
+ * @param {!ol.Feature} feature Feature.
+ * @param {!ol.Coordinate} coordinate Coordinate.
+ * @param {number} resolution Current map view resolution.
+ * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
+ */
+exports.prototype.getVertexInfoAtCoordinate = function(
+  feature, coordinate, resolution
+) {
+  let info = null;
+
+  if (this.supportsVertexRemoval_(feature)) {
+
+    const buffer = resolution * exports.VertexStyleRegularShapeRadius;
+    let coordinates = null;
+    let coordinatess = null;
+    let coordinatesss = null;
+    let minNumCoordinates;
+
+    const geometry = feature.getGeometry();
+    if (geometry instanceof olGeomLineString) {
+      coordinates = geometry.getCoordinates();
+      minNumCoordinates = 2;
+    } else if (geometry instanceof olGeomPolygon) {
+      coordinatess = geometry.getCoordinates();
+      minNumCoordinates = 4;
+    } else if (geometry instanceof olGeomMultiLineString) {
+      coordinatess = geometry.getCoordinates();
+      minNumCoordinates = 2;
+    } else if (geometry instanceof olGeomMultiPolygon) {
+      coordinatesss = geometry.getCoordinates();
+      minNumCoordinates = 4;
+    }
+
+    if (coordinates) {
+      // Array of ol.Coordinate - 1 index
+      const index = this.getCoordinateIndexThatHitsAt_(
+        coordinates, coordinate, minNumCoordinates, buffer);
+      if (index !== -1) {
+        info = [index];
+      }
+    } else if (coordinatess) {
+      // Array of Array of ol.Coordinate - 2 indexes
+      const ii = coordinatess.length;
+      for (let i = 0; i < ii; i++) {
+        const index = this.getCoordinateIndexThatHitsAt_(
+          coordinatess[i], coordinate, minNumCoordinates, buffer);
+        if (index !== -1) {
+          info = [i, index];
+          break;
+        }
+      }
+    } else if (coordinatesss) {
+      // Array of Array of Array of ol.Coordinate - 3 indexes
+      const ii = coordinatesss.length;
+      for (let i = 0; i < ii; i++) {
+        const coordinatess = coordinatesss[i];
+        const jj = coordinatess.length;
+        for (let j = 0; j < jj; j++) {
+          const index = this.getCoordinateIndexThatHitsAt_(
+            coordinatess[j], coordinate, minNumCoordinates, buffer);
+          if (index !== -1) {
+            info = [i, j, index];
+            break;
+          }
+        }
+        if (info) {
+          break;
+        }
+      }
+    }
+  }
+
+  return info;
+};
+
+
+/**
+ * Loop in the given coordinates and look one that hits an other given
+ * coordinate using a buffer. If one does, return its index.
+ *
+ * @param {!Array.<!ol.Coordinate>} coordinates Coordinates in which to
+ *     loop to find the one that hits the other given coordinate.
+ * @param {!ol.Coordinate} coordinate Coordinate that has to hit.
+ * @param {number} min Minimum number of coordinates required to look
+ *     for the one that hits.
+ * @param {number} buffer Buffer, in map view units, to extend the
+ *     extent with.
+ * @return {number} Index of the coordinate that hits. If none did, -1
+ *     is returned.
+ * @private
+ */
+exports.prototype.getCoordinateIndexThatHitsAt_ = function(
+  coordinates, coordinate, min, buffer
+) {
+  let index = -1;
+  const ii = coordinates.length;
+
+  if (ii > min) {
+    for (let i = 0; i < ii; i++) {
+      const hits = olExtent.containsCoordinate(
+        olExtent.buffer(
+          olExtent.createOrUpdateFromCoordinate(coordinates[i]),
+          buffer
+        ),
+        coordinate
+      );
+      if (hits) {
+        index = i;
+        break;
+      }
+    }
+  }
+
+  return index;
+};
+
+
+/**
  * Create and return a style object to be used for vertex.
  * @param {boolean=} opt_incGeomFunc Whether to include the geometry function
  *     or not. One wants to use the geometry function when you want to draw
@@ -524,7 +658,7 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
 
   const options = {
     image: new olStyleRegularShape({
-      radius: 6,
+      radius: exports.VertexStyleRegularShapeRadius,
       points: 4,
       angle: Math.PI / 4,
       fill: new olStyleFill({
@@ -580,6 +714,72 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
 
 
 /**
+ * Remove a vertex from a feature using the given information (indexes).
+ *
+ * @param {!ol.Feature} feature Feature.
+ * @param {!Array.<number>} vertexInfo The indexes of the vertex
+ *     (coordinate) to remove.
+ */
+exports.prototype.removeVertex = function(feature, vertexInfo) {
+  let deleted = false;
+
+  const geometry = feature.getGeometry();
+  googAsserts.assertInstanceof(geometry, olGeomSimpleGeometry);
+  const coordinates = geometry.getCoordinates();
+
+  if (geometry instanceof olGeomLineString) {
+    // LineString
+    const index = vertexInfo[0];
+    if (coordinates.length > 2) {
+      coordinates.splice(index, 1);
+      deleted = true;
+    }
+  } else if (geometry instanceof olGeomPolygon) {
+    // Polygon
+    const indexOne = vertexInfo[0];
+    const indexTwo = vertexInfo[1];
+    const component = coordinates[indexOne];
+    if (component.length > 4) {
+      component.splice(indexTwo, 1);
+      deleted = true;
+      // close the ring again
+      if (indexTwo === 0) {
+        component.pop();
+        component.push(component[0]);
+      }
+    }
+  } else if (geometry instanceof olGeomMultiLineString) {
+    // MultiLineString
+    const indexOne = vertexInfo[0];
+    const indexTwo = vertexInfo[1];
+    if (coordinates[indexOne].length > 2) {
+      coordinates[indexOne].splice(indexTwo, 1);
+      deleted = true;
+    }
+  } else if (geometry instanceof olGeomMultiPolygon) {
+    // MultiPolygon
+    const indexOne = vertexInfo[0];
+    const indexTwo = vertexInfo[1];
+    const indexThree = vertexInfo[2];
+    const component = coordinates[indexOne][indexTwo];
+    if (component.length > 4) {
+      component.splice(indexThree, 1);
+      deleted = true;
+      // close the ring again
+      if (indexThree === 0) {
+        component.pop();
+        component.push(component[0]);
+      }
+    }
+  }
+
+  if (deleted) {
+    geometry.setCoordinates(coordinates);
+  }
+};
+
+
+/**
  * @param {!ol.Feature} feature Feature.
  * @return {boolean} Whether the feature supports vertex or not.
  * @private
@@ -587,8 +787,28 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
 exports.prototype.supportsVertex_ = function(feature) {
   const supported = [
     ngeoGeometryType.LINE_STRING,
+    ngeoGeometryType.MULTI_LINE_STRING,
+    ngeoGeometryType.MULTI_POLYGON,
     ngeoGeometryType.POLYGON,
     ngeoGeometryType.RECTANGLE
+  ];
+  const type = this.getType(feature);
+  return olArray.includes(supported, type);
+};
+
+
+/**
+ * @param {!ol.Feature} feature Feature.
+ * @return {boolean} Whether the feature supports having its vertex
+ *     removed or not. Does not validate the number of coordinates.
+ * @private
+ */
+exports.prototype.supportsVertexRemoval_ = function(feature) {
+  const supported = [
+    ngeoGeometryType.LINE_STRING,
+    ngeoGeometryType.MULTI_LINE_STRING,
+    ngeoGeometryType.MULTI_POLYGON,
+    ngeoGeometryType.POLYGON
   ];
   const type = this.getType(feature);
   return olArray.includes(supported, type);
@@ -1106,6 +1326,14 @@ exports.FormatType = {
    */
   KML: 'KML'
 };
+
+
+/**
+ * The radius, in pixels, of the regular shape rendered as style for
+ * the vertex of a feature while it's being edited.
+ * @private
+ */
+exports.VertexStyleRegularShapeRadius = 6;
 
 
 /**

@@ -220,6 +220,12 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
   this.menu_ = null;
 
   /**
+   * @type {?ol.EventsKey}
+   * @private
+   */
+  this.menuListenerKey_ = null;
+
+  /**
    * @type {!ngeo.misc.ToolActivate}
    * @export
    */
@@ -352,6 +358,7 @@ exports.Controller_.prototype.closeMenu_ = function() {
   if (this.menu_) {
     this.map.removeOverlay(this.menu_);
     this.menu_ = null;
+    olEvents.unlistenByKey(this.menuListenerKey_);
   }
 };
 
@@ -658,25 +665,30 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
 
     let actions = [];
 
-    const type = this.featureHelper_.getType(feature);
-    if (type == ngeoGeometryType.CIRCLE ||
-        type == ngeoGeometryType.LINE_STRING ||
-        type == ngeoGeometryType.POLYGON ||
-        type == ngeoGeometryType.RECTANGLE) {
-      actions = actions.concat([{
-        cls: 'fa fa-arrows',
-        label: gettextCatalog.getString('Move'),
-        name: 'move'
-      }, {
-        cls: 'fa fa-rotate-right',
-        label: gettextCatalog.getString('Rotate'),
-        name: 'rotate'
-      }]);
+    const vertexInfo = this.featureHelper_.getVertexInfoAtCoordinate(
+      feature, coordinate, this.map.getView().getResolution());
+    if (!vertexInfo) {
+      const type = this.featureHelper_.getType(feature);
+      if (type == ngeoGeometryType.CIRCLE ||
+          type == ngeoGeometryType.LINE_STRING ||
+          type == ngeoGeometryType.POLYGON ||
+          type == ngeoGeometryType.RECTANGLE) {
+        actions = actions.concat([{
+          cls: 'fa fa-arrows',
+          label: gettextCatalog.getString('Move'),
+          name: 'move'
+        }, {
+          cls: 'fa fa-rotate-right',
+          label: gettextCatalog.getString('Rotate'),
+          name: 'rotate'
+        }]);
+      }
     }
 
     actions = actions.concat([{
       cls: 'fa fa-trash',
-      label: gettextCatalog.getString('Delete'),
+      label: vertexInfo ? gettextCatalog.getString('Delete vertex') :
+        gettextCatalog.getString('Delete'),
       name: 'delete'
     }]);
 
@@ -684,8 +696,8 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
       actions
     });
 
-    olEvents.listen(this.menu_, 'actionclick',
-      this.handleMenuActionClick_, this);
+    this.menuListenerKey_ = olEvents.listen(this.menu_, 'actionclick',
+      this.handleMenuActionClick_.bind(this, vertexInfo), this);
     this.map.addOverlay(this.menu_);
 
     this.menu_.open(coordinate);
@@ -708,17 +720,25 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
+ * @param {?Array.<number>} vertexInfo Vertex information, in case a
+ *     vertex was clicked using the right button.
  * @param {!ngeox.MenuEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMenuActionClick_ = function(evt) {
+exports.Controller_.prototype.handleMenuActionClick_ = function(
+  vertexInfo, evt
+) {
   const action = evt.detail.action;
 
   switch (action) {
     case 'delete':
       googAsserts.assert(
         this.selectedFeature, 'Selected feature should be truthy');
-      this.removeFeature(this.selectedFeature);
+      if (vertexInfo) {
+        this.featureHelper_.removeVertex(this.selectedFeature, vertexInfo);
+      } else {
+        this.removeFeature(this.selectedFeature);
+      }
       this.scope_.$apply();
       break;
     case 'move':
