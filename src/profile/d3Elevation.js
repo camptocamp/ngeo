@@ -407,7 +407,9 @@ const exports = function(options) {
         // Configure the d3 line.
         line = d3.line()
           .x(d => x(distanceExtractor(d)))
-          .y(d => y(linesConfiguration[name].zExtractor(d)));
+          .y(d => y(linesConfiguration[name].zExtractor(d)))
+          .defined(d => d.value !== null);
+
 
         // Update path for the line.
         g.select(`.line.${name}`)
