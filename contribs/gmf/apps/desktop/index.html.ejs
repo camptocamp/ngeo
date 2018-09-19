@@ -100,7 +100,9 @@
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
-              <gmf-authentication></gmf-authentication>
+              <gmf-authentication
+                gmf-authentication-info-message="mainCtrl.loginInfoMessage"
+              ></gmf-authentication>
             </div>
           </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">
