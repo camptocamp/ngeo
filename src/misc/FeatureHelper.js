@@ -529,7 +529,6 @@ exports.prototype.createEditingStyles = function(feature) {
  * @param {!ol.Coordinate} coordinate Coordinate.
  * @param {number} resolution Current map view resolution.
  * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
- * @export
  */
 exports.prototype.getVertexInfoAtCoordinate = function(
   feature, coordinate, resolution
@@ -720,7 +719,6 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
  * @param {!ol.Feature} feature Feature.
  * @param {!Array.<number>} vertexInfo The indexes of the vertex
  *     (coordinate) to remove.
- * @export
  */
 exports.prototype.removeVertex = function(feature, vertexInfo) {
   let deleted = false;
