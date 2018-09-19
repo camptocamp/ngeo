@@ -320,9 +320,8 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
           this.featureHelper_.panMapToFeature(newFeature, this.map);
           this.listSelectionInProgress_ = false;
         }
-      } else if (this.menu_) {
-        this.map.removeOverlay(this.menu_);
-        this.menu_ = null;
+      } else {
+        this.closeMenu_();
       }
     }
   );
@@ -342,6 +341,18 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
+};
+
+
+/**
+ * Close menu, if it exists.
+ * @private
+ */
+exports.Controller_.prototype.closeMenu_ = function() {
+  if (this.menu_) {
+    this.map.removeOverlay(this.menu_);
+    this.menu_ = null;
+  }
 };
 
 
@@ -435,10 +446,7 @@ exports.Controller_.prototype.handleActiveChange_ = function(active) {
     this.mapSelectActive = false;
     this.selectedFeature = null;
 
-    if (this.menu_) {
-      this.map.removeOverlay(this.menu_);
-      this.menu_ = null;
-    }
+    this.closeMenu_();
   }
 
 };
@@ -645,6 +653,9 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
 
   // show contextual menu when clicking on certain types of features
   if (feature) {
+
+    this.closeMenu_();
+
     let actions = [];
 
     const type = this.featureHelper_.getType(feature);
