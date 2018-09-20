@@ -793,6 +793,30 @@ ngeox.SortableOptions;
 
 
 /**
+ * @typedef {{
+ *     expression: (string),
+ *     template: (string)
+ * }}
+ */
+ngeox.StringToHtmlReplacement;
+
+
+/**
+ * The regex expression that must match to do the replacement.
+ * @type {string}
+ */
+ngeox.StringToHtmlReplacement.prototype.expression;
+
+
+/**
+ * The template to use to create a new value as replacement if the
+ * regex matches.
+ * @type {string}
+ */
+ngeox.StringToHtmlReplacement.prototype.template;
+
+
+/**
  * A WFS type. To be used with {@link ngeox.WfsPermalinkOptions}.
  * @typedef {{
  *     featureType: (string),
