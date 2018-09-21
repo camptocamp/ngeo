@@ -339,7 +339,6 @@ exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
  * @param {angular.$sce} $sce Angular sce service.
  * @param {!Array.<!ngeox.StringToHtmlReplacement>}
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
- *     html.
  * @ngname ngeoTrustHtmlAuto
  */
 exports.trustHtmlAutoFilter = function($sce, ngeoStringToHtmlReplacements) {
