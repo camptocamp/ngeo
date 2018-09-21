@@ -324,6 +324,47 @@ exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
 
 
 /**
+ * A filter to mark a value as trusted HTML, with the addition of
+ * automatically converting any string that matches the
+ * StringToHtmlReplacements list to HTML.
+ *
+ * Usage:
+ *
+ *    <p ng-bind-html="ctrl.someValue | ngeoTrustHtmlAuto"></p>
+ *
+ * If you use it, you don't require the "ngSanitize".
+ * @return {function(?):string} The filter function.
+ * @ngInject
+ * @ngdoc filter
+ * @param {angular.$sce} $sce Angular sce service.
+ * @param {!Array.<!ngeox.StringToHtmlReplacement>}
+ *     ngeoStringToHtmlReplacements List of replacements for string to html.
+ * @ngname ngeoTrustHtmlAuto
+ */
+exports.trustHtmlAutoFilter = function($sce, ngeoStringToHtmlReplacements) {
+  return function(input) {
+    if (input !== undefined && input !== null) {
+      if (typeof input === 'string') {
+        for (const replacement of ngeoStringToHtmlReplacements) {
+          if (input.match(replacement.expression)) {
+            input = replacement.template.replace(/\$1/g, input);
+            break;
+          }
+        }
+        return $sce.trustAsHtml(`${input}`);
+      } else {
+        return $sce.trustAsHtml(`${input}`);
+      }
+    } else {
+      return $sce.trustAsHtml('&nbsp;');
+    }
+  };
+};
+
+exports.filter('ngeoTrustHtmlAuto', exports.trustHtmlAutoFilter);
+
+
+/**
  * A filter used to format a time duration in seconds into a more
  * readable form.
  * Only the two largest units will be shown.
@@ -425,6 +466,29 @@ exports.Duration = function(gettextCatalog) {
 };
 
 exports.filter('ngeoDuration', exports.Duration);
+
+
+/**
+ * @type {!Array.<!ngeox.StringToHtmlReplacement>}
+ * @ngname ngeoStringToHtmlReplacements
+ */
+exports.StringToHtmlReplacements = [
+  // Hyperlink
+  {
+    expression: /^(https?:\/\/.+)$/gm,
+    template: '<a target="_blank" href="$1">$1</a>'
+  },
+  // Mailto
+  {
+    expression: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/gmi,
+    template: '<a href="mailto:$1">$1</a>'
+  }
+];
+
+exports.constant(
+  'ngeoStringToHtmlReplacements',
+  exports.StringToHtmlReplacements
+);
 
 
 export default exports;
