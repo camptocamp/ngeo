@@ -3,7 +3,6 @@
  */
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
-import gmfDrawingModule from 'gmf/drawing/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import gmfPrintComponent from 'gmf/print/component.js';
@@ -215,7 +214,6 @@ olBase.inherits(exports, gmfControllersAbstractAppController);
 exports.module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfControllersAbstractAppController.module.name,
   gmfContextualdataModule.name,
-  gmfDrawingModule.name,
   gmfEditingModule.name,
   gmfPermalinkShareComponent.name,
   gmfPrintComponent.name,

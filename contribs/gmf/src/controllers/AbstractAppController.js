@@ -10,6 +10,7 @@ import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
 import gmfDatasourceModule from 'gmf/datasource/module.js';
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
+import gmfDrawingModule from 'gmf/drawing/module.js';
 import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfLayertreeModule from 'gmf/layertree/module.js';
 import gmfMapModule from 'gmf/map/module.js';
@@ -737,6 +738,7 @@ exports.module = angular.module('GmfAbstractAppControllerModule', [
   gmfBackgroundlayerselectorComponent.name,
   gmfDatasourceModule.name,
   gmfDisclaimerComponent.name,
+  gmfDrawingModule.name,
   gmfFiltersModule.name,
   gmfLayertreeModule.name,
   gmfMapModule.name,
