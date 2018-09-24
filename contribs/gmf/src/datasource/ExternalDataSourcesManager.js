@@ -532,7 +532,7 @@ const exports = class {
         };
 
         if (ngeoFile.isKml(content)) {
-          features = new olFormatKML().readFeatures(content, readOptions);
+          features = new olFormatKML({extractStyles: false}).readFeatures(content, readOptions);
         } else if (ngeoFile.isGpx(content)) {
           features = new olFormatGPX().readFeatures(content, readOptions);
         }

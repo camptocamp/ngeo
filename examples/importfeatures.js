@@ -39,7 +39,9 @@ exports.MainController = function($scope) {
    * @private
    * @type {ol.format.KML}
    */
-  this.kmlFormat_ = new olFormatKML();
+  this.kmlFormat_ = new olFormatKML({
+    extractStyles: false
+  });
 
   /**
    * @private
