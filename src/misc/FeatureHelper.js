@@ -1211,41 +1211,65 @@ exports.prototype.getType = function(feature) {
  * the center of the feature.
  * @param {!ol.Feature} feature Feature.
  * @param {!ol.Map} map Map.
+ * @param {boolean=} opt_zoomOut Whether the map should also be zoomed
+ *     out if the feature would not fit inside the current map view
+ *     extent. Defaults to `true`.
  * @param {number=} opt_panDuration Pan animation duration. Defaults to `250`.
  * @export
  */
-exports.prototype.panMapToFeature = function(feature, map,
+exports.prototype.panMapToFeature = function(feature, map, opt_zoomOut,
   opt_panDuration) {
 
   const panDuration = opt_panDuration !== undefined ? opt_panDuration : 250;
+  const zoomOut = opt_zoomOut !== false;
   const size = map.getSize();
   googAsserts.assertArray(size);
   const view = map.getView();
-  const extent = view.calculateExtent(size);
+  const viewExtent = view.calculateExtent(size);
   const geometry = feature.getGeometry();
 
-  if (!geometry.intersectsExtent(extent)) {
+  if (!geometry.intersectsExtent(viewExtent)) {
     const mapCenter = view.getCenter();
     googAsserts.assertArray(mapCenter);
 
-    let featureCenter;
-    if (geometry instanceof olGeomLineString) {
-      featureCenter = geometry.getCoordinateAt(0.5);
-    } else if (geometry instanceof olGeomPolygon) {
-      featureCenter = geometry.getInteriorPoint().getCoordinates();
-    } else if (geometry instanceof olGeomPoint) {
-      featureCenter = geometry.getCoordinates();
-    } else {
-      featureCenter = olExtent.getCenter(geometry.getExtent());
+    const featureExtent = geometry.getExtent();
+    let shouldPan = true;
+
+    if (zoomOut && !(geometry instanceof olGeomPoint)) {
+      const featureExtentHeight = olExtent.getHeight(featureExtent);
+      const featureExtentWidth = olExtent.getWidth(featureExtent);
+      const viewExtentHeight = olExtent.getHeight(viewExtent);
+      const viewExtentWidth = olExtent.getWidth(viewExtent);
+      shouldPan = viewExtentHeight >= featureExtentHeight &&
+        viewExtentWidth >= featureExtentWidth;
     }
 
-    view.animate({
-      center: mapCenter,
-      duration: panDuration
-    }, {
-      center: featureCenter,
-      duration: panDuration
-    });
+    if (shouldPan) {
+      let featureCenter;
+      if (geometry instanceof olGeomLineString) {
+        featureCenter = geometry.getCoordinateAt(0.5);
+      } else if (geometry instanceof olGeomPolygon) {
+        featureCenter = geometry.getInteriorPoint().getCoordinates();
+      } else if (geometry instanceof olGeomPoint) {
+        featureCenter = geometry.getCoordinates();
+      } else {
+        featureCenter = olExtent.getCenter(geometry.getExtent());
+      }
+
+      view.animate({
+        center: mapCenter,
+        duration: panDuration
+      }, {
+        center: featureCenter,
+        duration: panDuration
+      });
+    } else {
+      // i.e. "should zoom out to the feature" instead
+      view.fit(featureExtent, {
+        duration: panDuration,
+        size: size
+      });
+    }
   }
 };
 
