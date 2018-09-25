@@ -69,7 +69,7 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
     let styleData = null;
     let styleFunction = originalFeature.getStyleFunction();
     if (styleFunction !== undefined) {
-      styleData = styleFunction.call(originalFeature, resolution);
+      styleData = styleFunction.call(layer, originalFeature, resolution);
     } else {
       styleFunction = layer.getStyleFunction();
       if (styleFunction !== undefined) {
