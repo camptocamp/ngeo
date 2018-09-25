@@ -1212,7 +1212,7 @@ exports.prototype.getType = function(feature) {
  * @param {!ol.Feature} feature Feature.
  * @param {!ol.Map} map Map.
  * @param {boolean=} opt_zoomOut Whether the map should also be zoomed
- *     out if the feature would not fit inside the current map view
+ *     out if the feature doesn't fit inside the current map view
  *     extent. Defaults to `true`.
  * @param {number=} opt_panDuration Pan animation duration. Defaults to `250`.
  * @export
