@@ -67,14 +67,9 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
     const originalFeature = features[i];
 
     let styleData = null;
-    let styleFunction = originalFeature.getStyleFunction();
+    const styleFunction = originalFeature.getStyleFunction() || layer.getStyleFunction();
     if (styleFunction !== undefined) {
       styleData = styleFunction.call(layer, originalFeature, resolution);
-    } else {
-      styleFunction = layer.getStyleFunction();
-      if (styleFunction !== undefined) {
-        styleData = styleFunction.call(layer, originalFeature, resolution);
-      }
     }
     const origGeojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     /**
