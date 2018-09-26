@@ -555,10 +555,12 @@ const exports = class {
           filter = this.ngeoRuleHelper_.createFilter({
             dataSource: dataSource,
             filter: options.filter,
+            incDimensions: true,
             incTime: true
           });
         } else if ((dataSource.filterRules && dataSource.filterRules.length) ||
-            dataSource.timeRangeValue) {
+            dataSource.timeRangeValue ||
+            (dataSource.dimensionsFiltersConfig && Object.keys(dataSource.dimensionsFiltersConfig).length > 0)) {
 
           googAsserts.assert(
             dataSources.length === 1,
@@ -568,6 +570,7 @@ const exports = class {
 
           filter = this.ngeoRuleHelper_.createFilter({
             dataSource: dataSource,
+            incDimensions: true,
             incTime: true,
             srsName: srsName
           });
