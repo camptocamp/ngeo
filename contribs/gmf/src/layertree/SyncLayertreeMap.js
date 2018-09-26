@@ -114,7 +114,7 @@ exports.prototype.sync_ = function(map, treeCtrl) {
 
 /**
  * If the first parent ngeo tree controller has the `exclusiveGroup`
- * metadata set and if the tree controller that has its state chaged
+ * metadata set and if the tree controller that has its state changed
  * was changed to "on", then we must toggle all its siblings off.
  *
  * @param {ngeo.layertree.Controller} firstParent The first parent
