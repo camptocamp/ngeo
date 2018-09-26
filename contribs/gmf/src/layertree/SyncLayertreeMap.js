@@ -115,7 +115,10 @@ exports.prototype.sync_ = function(map, treeCtrl) {
 /**
  * If the first parent ngeo tree controller has the `exclusiveGroup`
  * metadata set and if the tree controller that has its state changed
- * was changed to "on", then we must toggle all its siblings off.
+ * was changed to "on", then:
+ *
+ *  - we must toggle all its siblings off.
+ *  - we wust toggle only its first child on
  *
  * @param {ngeo.layertree.Controller} firstParent The first parent
  *     ngeo layertree controller containing the child that had its
@@ -136,6 +139,8 @@ exports.prototype.syncExclusiveGroup_ = function(firstParent, treeCtrl) {
   }
 
   this.turnOffSiblings_(treeCtrl);
+
+  this.turnOnFirstChild_(treeCtrl);
 };
 
 
@@ -164,6 +169,40 @@ exports.prototype.turnOffSiblings_ = function(treeCtrl) {
 
   // Turn off parent' siblings
   this.turnOffSiblings_(treeCtrl.parent);
+};
+
+
+/**
+ * If tree controller has children, then make sure that only the first
+ * one is ON and the other are OFF. The same goes for the children of
+ * that first child.
+ *
+ * @param {ngeo.layertree.Controller} treeCtrl The ngeo layertree
+ *     controller that should have its children turned off, with the
+ *     exception of the first one.
+ * @private
+ */
+exports.prototype.turnOnFirstChild_ = function(treeCtrl) {
+
+  const children = treeCtrl.children;
+
+  if (!children) {
+    return;
+  }
+
+  let firstChild;
+  for (const child of children) {
+    if (!firstChild) {
+      firstChild = child;
+      child.setState('on');
+    } else {
+      child.setState('off');
+    }
+  }
+
+  if (firstChild) {
+    this.turnOnFirstChild_(firstChild);
+  }
 };
 
 
