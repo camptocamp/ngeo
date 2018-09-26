@@ -50,6 +50,7 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
   });
 
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
+    this.syncExclusiveGroup_(firstParent, treeCtrl);
     this.sync_(/** @type ol.Map */ (map), firstParent);
   });
 };
@@ -108,6 +109,61 @@ exports.prototype.sync_ = function(map, treeCtrl) {
       this.updateLayerState_(/** @type ol.layer.Image|ol.layer.Tile */ (treeCtrl.layer), treeCtrl);
     }
   });
+};
+
+
+/**
+ * If the first parent ngeo tree controller has the `exclusiveGroup`
+ * metadata set and if the tree controller that has its state chaged
+ * was changed to "on", then we must toggle all its siblings off.
+ *
+ * @param {ngeo.layertree.Controller} firstParent The first parent
+ *     ngeo layertree controller containing the child that had its
+ *     state changed.
+ * @param {ngeo.layertree.Controller} treeCtrl The ngeo layertree
+ *     controller that had its state changed.
+ * @private
+ */
+exports.prototype.syncExclusiveGroup_ = function(firstParent, treeCtrl) {
+
+  // No need to do anything if:
+  //  - we're not dealing with an exclusive group
+  //  - the treeCtrl that had its state changed was not turned ON
+  if (!firstParent.node.metadata.exclusiveGroup ||
+      treeCtrl.getState() !== 'on'
+  ) {
+    return;
+  }
+
+  this.turnOffSiblings_(treeCtrl);
+};
+
+
+/**
+ * Turn off all the siblings of a given tree controller. Then, turn
+ * off the parent' siblings as well.
+ *
+ * @param {ngeo.layertree.Controller} treeCtrl The ngeo layertree
+ *     controller that should have its siblings turned off.
+ * @private
+ */
+exports.prototype.turnOffSiblings_ = function(treeCtrl) {
+  // If parent is root node, no need to do anything...
+  if (treeCtrl.parent.isRoot) {
+    return;
+  }
+
+  // Turn of siblings
+  const siblings = treeCtrl.parent.children;
+  for (const sibling of siblings) {
+    if (sibling !== treeCtrl) {
+      // Turn off without broadcasting
+      sibling.setState('off', false);
+    }
+  }
+
+  // Turn off parent' siblings
+  this.turnOffSiblings_(treeCtrl.parent);
 };
 
 
