@@ -45,11 +45,23 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
    */
   this.ogcServersObject_;
 
+  /**
+   * Flag turned on while changing the state of siblings and children
+   * of a tree controller to avoid event listener to re-execute the
+   * same logic while working on it.
+   * @type {boolean}
+   * @private
+   */
+  this.working_ = false;
+
   gmfThemes.getOgcServersObject().then((ogcServersObject) => {
     this.ogcServersObject_ = ogcServersObject;
   });
 
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
+    if (this.working_) {
+      return;
+    }
     this.syncExclusiveGroup_(firstParent, treeCtrl);
     this.sync_(/** @type ol.Map */ (map), firstParent);
   });
@@ -138,9 +150,10 @@ exports.prototype.syncExclusiveGroup_ = function(firstParent, treeCtrl) {
     return;
   }
 
+  this.working_ = true;
   this.turnOffSiblings_(treeCtrl);
-
   this.turnOnFirstChild_(treeCtrl);
+  this.working_ = false;
 };
 
 
@@ -162,8 +175,7 @@ exports.prototype.turnOffSiblings_ = function(treeCtrl) {
   const siblings = treeCtrl.parent.children;
   for (const sibling of siblings) {
     if (sibling !== treeCtrl) {
-      // Turn off without broadcasting
-      sibling.setState('off', false);
+      sibling.setState('off');
     }
   }
 
