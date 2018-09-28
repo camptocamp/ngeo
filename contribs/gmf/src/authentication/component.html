@@ -107,6 +107,11 @@
 </div>
 
 <div ng-if="!$ctrl.gmfUser.username">
+
+  <div class="alert alert-warning" ng-show="$ctrl.infoMessage">
+    <span>{{ $ctrl.infoMessage }}</span>
+  </div>
+
   <form
       name="loginForm"
       role="form"
