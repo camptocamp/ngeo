@@ -80,7 +80,7 @@
     "jquery-ui": "1.12.1",
     "jquery-ui-touch-punch": "0.2.3",
     "jsdoc": "3.5.5",
-    "jsdom": "12.0.0",
+    "jsdom": "12.1.0",
     "jsts": "2.0.2",
     "karma": "3.0.0",
     "karma-chrome-launcher": "2.2.0",
