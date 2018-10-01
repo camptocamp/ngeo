@@ -172,7 +172,7 @@ gmfx.ObjectEditingToolsOptions.prototype.regularPolygonRadius;
  *     crosshairEnabledByDefault: (boolean|undefined),
  *     projectionCodes: (Array.<string>|undefined),
  *     useLocalStorage: (boolean|undefined),
- *     pointRecenterZoom: (number|undefined),
+ *     pointRecenterZoom: (number|undefined)
  * }}
  */
 gmfx.PermalinkOptions;

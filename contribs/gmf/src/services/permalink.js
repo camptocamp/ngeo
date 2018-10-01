@@ -705,9 +705,9 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   // (1) Initialize the map view with either:
   //     a) the given ObjectEditing feature
   //     b) the X, Y and Z available within the permalink service, if available
-  if (oeFeature && oeFeature.getGeometry()) {
+  const geom = typeof oeFeature !== 'undefined' && oeFeature !== null ? oeFeature.getGeometry() : undefined;
+  if (geom) {
     const size = map.getSize();
-    const geom = oeFeature.getGeometry();
     goog.asserts.assert(size);
     let maxZoom;
     if (geom instanceof ol.geom.Point || geom instanceof ol.geom.MultiPoint) {
