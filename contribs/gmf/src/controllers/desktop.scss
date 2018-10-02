@@ -253,6 +253,9 @@ gmf-search {
     margin-bottom: $app-margin;
   }
 
+  &.gmf-app-inactive {
+    width: 0 !important;
+  }
 }
 
 gmf-themeselector {

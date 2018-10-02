@@ -17,7 +17,10 @@
       </div>
     </header>
     <main>
-      <div class="gmf-app-data-panel">
+      <div class="gmf-app-data-panel"
+           ngeo-resizemap="mainCtrl.map"
+           ngeo-resizemap-state="mainCtrl.dataPanelActive"
+           ng-class="{'gmf-app-inactive': !mainCtrl.dataPanelActive}">
         <div class="gmf-app-header">
           <div class="dropdown" ng-cloak>
             <a href class="btn btn-block prime dropdown-toggle" data-toggle="dropdown">

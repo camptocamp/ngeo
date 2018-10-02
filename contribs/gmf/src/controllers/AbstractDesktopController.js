@@ -87,6 +87,12 @@ const exports = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
+  this.dataPanelActive = true;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
   this.loginActive = false;
 
   /**
@@ -207,6 +213,23 @@ const exports = function(config, $scope, $injector) {
       this.loginActive = false;
     }
   });
+
+  // Make the data panel (on the left) resizable...
+  $('.gmf-app-data-panel')
+    .resizable({
+      'ghost': true,
+      'handles': 'e',
+      'minWidth': 320,
+      'stop': (event, ui) => {
+        this.map.updateSize();
+      }
+    })
+    // ... and collapsible when the handle is clicked.
+    .find('.ui-resizable-handle')
+    .on('click', function(evt) {
+      this.dataPanelActive = !this.dataPanelActive;
+      this.$scope.$apply();
+    }.bind(this));
 };
 
 olBase.inherits(exports, gmfControllersAbstractAppController);
