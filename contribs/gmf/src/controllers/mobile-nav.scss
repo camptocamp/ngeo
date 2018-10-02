@@ -109,6 +109,14 @@ nav.gmf-mobile-nav-right {
     line-height: $nav-bar-height;
     background-color: $nav-header-bg;
 
+    .gmf-mobile-nav-header-title {
+      font-weight: bold;
+      color: white;
+      padding-right: 1em;
+      float: right;
+      text-shadow: 0 0 1px black;
+    }
+
     .gmf-mobile-nav-go-back {
       position: absolute;
       left: 0;
