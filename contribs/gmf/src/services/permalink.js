@@ -22,6 +22,7 @@ goog.require('ngeo.WfsPermalink');
 goog.require('goog.asserts');
 goog.require('ol.Feature');
 goog.require('ol.geom.Point');
+goog.require('ol.geom.MultiPoint');
 goog.require('ol.proj');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.RegularShape');
@@ -186,6 +187,12 @@ gmf.Permalink = function($timeout, $rootScope, $injector, ngeoDebounce, gettextC
    * @private
    */
   this.crosshairEnabledByDefault_ = !!gmfPermalinkOptions.crosshairEnabledByDefault;
+
+  /**
+   * @type {number|undefined}
+   * @private
+   */
+  this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
 
   /**
    * @type {?gmf.Themes}
@@ -698,10 +705,18 @@ gmf.Permalink.prototype.registerMap_ = function(map, oeFeature) {
   // (1) Initialize the map view with either:
   //     a) the given ObjectEditing feature
   //     b) the X, Y and Z available within the permalink service, if available
-  if (oeFeature && oeFeature.getGeometry()) {
+  const geom = typeof oeFeature !== 'undefined' && oeFeature !== null ? oeFeature.getGeometry() : undefined;
+  if (geom) {
     const size = map.getSize();
     goog.asserts.assert(size);
-    view.fit(oeFeature.getGeometry().getExtent(), size);
+    let maxZoom;
+    if (geom instanceof ol.geom.Point || geom instanceof ol.geom.MultiPoint) {
+      maxZoom = this.pointRecenterZoom_;
+    }
+    view.fit(geom.getExtent(), {
+      size,
+      maxZoom
+    });
   } else {
     center = this.getMapCenter();
     if (center) {

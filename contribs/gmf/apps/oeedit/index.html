@@ -231,6 +231,10 @@
                 {action: 'add_layer', title: 'Add a layer'}
         ]);
         module.constant('gmfContextualdatacontentTemplateUrl', window.location.pathname + 'contextualdata.html');
+        module.value('gmfPermalinkOptions',
+            /** @type {gmfx.PermalinkOptions} */ ({
+              pointRecenterZoom: 10
+            }));
         module.value('ngeoWfsPermalinkOptions',
             /** @type {ngeox.WfsPermalinkOptions} */ ({
               url: 'https://geomapfish-demo.camptocamp.net/2.2/wsgi/mapserv_proxy',
