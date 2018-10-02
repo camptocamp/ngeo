@@ -145,13 +145,13 @@ button[ngeo-mobile-geolocation] {
   z-index: $above-content-index;
 
   .alert {
-    padding: $half-app-margin $app-margin;
-    margin: $half-app-margin 0 0 0;
+    padding: $half-app-margin calc(#{$app-margin} + 1rem) $half-app-margin $app-margin;
+    margin: $half-app-margin 0 0;
   }
 
   .alert-dismissable .close,
   .alert-dismissible .close {
-    right: -0.31rem;
+    right: 0;
     padding: $half-app-margin $app-margin;
     height: inherit;
   }
