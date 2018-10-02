@@ -30,6 +30,7 @@ import * as olBase from 'ol/index.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
@@ -174,6 +175,12 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
    * @private
    */
   this.crosshairEnabledByDefault_ = !!gmfPermalinkOptions.crosshairEnabledByDefault;
+
+  /**
+   * @type {number|undefined}
+   * @private
+   */
+  this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
 
   /**
    * @type {?gmf.datasource.ExternalDataSourcesManager}
@@ -691,10 +698,18 @@ exports.prototype.registerMap_ = function(map, oeFeature) {
   // (1) Initialize the map view with either:
   //     a) the given ObjectEditing feature
   //     b) the X, Y and Z available within the permalink service, if available
-  if (oeFeature && oeFeature.getGeometry()) {
+  const geom = typeof oeFeature !== 'undefined' && oeFeature !== null ? oeFeature.getGeometry() : undefined;
+  if (geom) {
     const size = map.getSize();
     googAsserts.assert(size);
-    view.fit(oeFeature.getGeometry().getExtent(), size);
+    let maxZoom;
+    if (geom instanceof olGeomPoint || geom instanceof olGeomMultiPoint) {
+      maxZoom = this.pointRecenterZoom_;
+    }
+    view.fit(geom.getExtent(), {
+      size,
+      maxZoom
+    });
   } else {
     const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(ngeoOlcsConstants.Permalink3dParam.ENABLED);
     if (!enabled3d) {
