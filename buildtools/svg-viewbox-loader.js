@@ -22,6 +22,7 @@ module.exports = function(source) {
         })
         tag.attributes.push(['viewBox', `0 0 ${width} ${height}`, true]);
         tag.attributes.push(['height', '1em', true]);
+        tag.attributes.push(['width', `${width / height}em`, true]);
       }
     }
     return tag;
