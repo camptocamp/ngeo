@@ -17,6 +17,7 @@ import * as olBase from 'ol/index.js';
 import * as olProj from 'ol/proj.js';
 import * as olObj from 'ol/obj.js';
 import olCollection from 'ol/Collection.js';
+import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -125,6 +126,10 @@ const exports = function(config, $scope, $injector) {
    */
   this.googleStreetViewActive = false;
 
+  $scope.$watch(() => this.googleStreetViewActive, (newVal) => {
+    this.setDataPanelMaxResizableWidth_();
+  });
+
   /**
    * @type {!ol.style.Style}
    * @export
@@ -214,25 +219,81 @@ const exports = function(config, $scope, $injector) {
     }
   });
 
+  /**
+   * @type {number}
+   * @private
+   */
+  this.dataPanelMinResizableWidth_ = 320;
+
   // Make the data panel (on the left) resizable...
-  $('.gmf-app-data-panel')
+  const $dataPanel = $('.gmf-app-data-panel')
     .resizable({
       'ghost': true,
       'handles': 'e',
-      'minWidth': 320,
+      'minWidth': this.dataPanelMinResizableWidth_,
       'stop': (event, ui) => {
         this.map.updateSize();
       }
-    })
-    // ... and collapsible when the handle is clicked.
+    });
+
+  /**
+   * @type {jQuery}
+   * @private
+   */
+  this.$dataPanel_ = $dataPanel;
+
+  // ... and collapsible when the handle is clicked.
+  $dataPanel
     .find('.ui-resizable-handle')
     .on('click', (evt) => {
       this.dataPanelActive = !this.dataPanelActive;
       this.$scope.$apply();
     });
+
+  // Listen to window resize to set the max resizable width
+  // accordingly, and set it also right away.
+  const ngeoDebounce = $injector.get('ngeoDebounce');
+  olEvents.listen(
+    window,
+    'resize',
+    ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
+  );
+  this.setDataPanelMaxResizableWidth_();
 };
 
 olBase.inherits(exports, gmfControllersAbstractAppController);
+
+/**
+ * Set the data panel (on the left) maximum resizable width depending
+ * on the current size of the window, taking into consideration the
+ * width the right panel can have.
+ *
+ * If, after resizing, the size of the data panel would be too big,
+ * resize it as well.
+ * @private
+ */
+exports.prototype.setDataPanelMaxResizableWidth_ = function() {
+
+  let rightPanelWidth = 320;
+  if (this.googleStreetViewActive) {
+    rightPanelWidth += 140;
+  }
+
+  const minimumMapWidth = 120;
+  const windowWidth = window.innerWidth;
+
+  let maxWidth = windowWidth - rightPanelWidth - minimumMapWidth;
+  if (maxWidth < this.dataPanelMinResizableWidth_) {
+    maxWidth = this.dataPanelMinResizableWidth_;
+  }
+
+  this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
+
+  if (this.$dataPanel_.width() > maxWidth) {
+    this.$dataPanel_.width(maxWidth);
+    this.map.updateSize();
+  }
+};
 
 exports.module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfControllersAbstractAppController.module.name,
