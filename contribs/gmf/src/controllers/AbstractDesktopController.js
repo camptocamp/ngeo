@@ -226,10 +226,10 @@ const exports = function(config, $scope, $injector) {
     })
     // ... and collapsible when the handle is clicked.
     .find('.ui-resizable-handle')
-    .on('click', function(evt) {
+    .on('click', (evt) => {
       this.dataPanelActive = !this.dataPanelActive;
       this.$scope.$apply();
-    }.bind(this));
+    });
 };
 
 olBase.inherits(exports, gmfControllersAbstractAppController);
