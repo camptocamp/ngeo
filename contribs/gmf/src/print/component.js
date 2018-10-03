@@ -997,7 +997,7 @@ exports.Controller_ = class {
    * Get datasource object for print report
    * @private
    * @return {Array.<gmfx.datasource.DataSourcePrintReportObject>} the data
-   *     source objet for the print report
+   *     source object for the print report
    */
   getDataSource_() {
     let datasourceObj, data, columns;

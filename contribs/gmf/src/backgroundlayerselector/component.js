@@ -174,7 +174,7 @@ exports.Controller_.prototype.$onInit = function() {
 
 
 /**
- * Called when the themes changes. Set (or reset) the backround layers.
+ * Called when the themes changes. Set (or reset) the background layers.
  * @private
  */
 exports.Controller_.prototype.handleThemesChange_ = function() {

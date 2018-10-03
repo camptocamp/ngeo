@@ -68,7 +68,7 @@ olBase.inherits(exports, ngeoMessageMessage);
 
 
 /**
- * Show disclaimer message string or object or list of disclamer message
+ * Show disclaimer message string or object or list of disclaimer message
  * strings or objects.
  * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
  *     object A message or list of messages as text or configuration objects.
@@ -80,7 +80,7 @@ exports.prototype.alert = function(object) {
 
 
 /**
- * Close disclaimer message string or object or list of disclamer message
+ * Close disclaimer message string or object or list of disclaimer message
  * strings or objects.
  * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
  *     object A message or list of messages as text or configuration objects.
@@ -131,7 +131,7 @@ exports.prototype.showMessage = function(message) {
     this.messages_[uid] = popup;
 
   } else {
-    // display the message using a boostrap dismissible alert
+    // display the message using a bootstrap dismissible alert
     const classNames = ['alert', 'fade', 'alert-dismissible', 'show'];
     switch (type) {
       case ngeoMessageMessage.Type.ERROR:

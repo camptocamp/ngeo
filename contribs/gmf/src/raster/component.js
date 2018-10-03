@@ -79,7 +79,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  *
  *
  * @htmlAttribute {boolean} gmf-elevation-active A boolean to set active or
- *     deactive the component.
+ *     deactivate the component.
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
  *     elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
@@ -206,7 +206,7 @@ exports.Controller_ = function($scope, $filter, ngeoDebounce, gmfRaster) {
 };
 
 /**
- * Active or deactive the request of the raster each 500 ms on pointermove.
+ * Activate or deactivate the request of the raster each 500 ms on pointermove.
  * @param {boolean} active true to make requests.
  * @private
  */

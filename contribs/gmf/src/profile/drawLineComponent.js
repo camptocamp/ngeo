@@ -34,10 +34,10 @@ const exports = angular.module('gmfDrawProfileLine', [
  *
  * @htmlAttribute {ol.Map} gmf-drawprofileline-map The map.
  * @htmlAttribute {ol.geom.LineString} gmf-drawprofileline-line The variable to
- *     connect with the drawed line.
+ *     connect with the drawn line.
  * @htmlAttribute {boolean=} gmf-drawprofileline-active Active the component.
  * @htmlAttribute {ol.style.Style=} gmf-drawprofileline-style Optional style
- *     for the drawed line.
+ *     for the drawn line.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfDrawprofileline
