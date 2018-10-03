@@ -226,7 +226,8 @@ const exports = function(config, $scope, $injector) {
   this.dataPanelMinResizableWidth_ = 320;
 
   // Make the data panel (on the left) resizable...
-  const $dataPanel = $('.gmf-app-data-panel')
+  const dataPanelCls = 'gmf-app-data-panel';
+  const $dataPanel = $(`.${dataPanelCls}`)
     .resizable({
       'ghost': true,
       'handles': 'e',
@@ -243,12 +244,21 @@ const exports = function(config, $scope, $injector) {
   this.$dataPanel_ = $dataPanel;
 
   // ... and collapsible when the handle is clicked.
-  $dataPanel
-    .find('.ui-resizable-handle')
+  const $resizableEastHandle = $dataPanel
+    .find('.ui-resizable-e')
     .on('click', (evt) => {
       this.dataPanelActive = !this.dataPanelActive;
       this.$scope.$apply();
     });
+
+  $('<div>', {
+    'class':
+      `${dataPanelCls}-collapsible-btn btn prime btn-sm fa fa-arrow-left`
+  }).appendTo($resizableEastHandle);
+  $('<div>', {
+    'class':
+      `${dataPanelCls}-expand-btn btn prime btn-sm fa fa-arrow-right`
+  }).appendTo($resizableEastHandle);
 
   // Listen to window resize to set the max resizable width
   // accordingly, and set it also right away.

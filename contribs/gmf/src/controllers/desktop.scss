@@ -255,6 +255,27 @@ gmf-search {
 
   &.gmf-app-inactive {
     width: 0 !important;
+    .gmf-app-data-panel-collapsible-btn {
+      display: none;
+    }
+    .gmf-app-data-panel-expand-btn {
+      display: block;
+    }
+  }
+
+  .gmf-app-data-panel-collapsible-btn {
+    display: block;
+  }
+  .gmf-app-data-panel-expand-btn {
+    display: none;
+  }
+
+  .gmf-app-data-panel-collapsible-btn,
+  .gmf-app-data-panel-expand-btn, {
+    height: 2.5rem;
+    left: -1px;
+    position: relative;
+    top: calc(50% - 1.25rem);
   }
 
   .ui-resizable-e {
