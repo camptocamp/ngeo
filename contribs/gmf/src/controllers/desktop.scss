@@ -256,6 +256,14 @@ gmf-search {
   &.gmf-app-inactive {
     width: 0 !important;
   }
+
+  .ui-resizable-e {
+    background-color: darken($brand-secondary, $standard-variation);
+    border: {
+      left: 0.06rem solid $border-color;
+      right: 0.06rem solid $border-color;
+    }
+  }
 }
 
 gmf-themeselector {
