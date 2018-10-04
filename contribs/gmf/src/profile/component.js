@@ -297,7 +297,7 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   this.isErrored = false;
 
 
-  // Watch the active value to activate/deactive events listening.
+  // Watch the active value to activate/deactivate events listening.
   $scope.$watch(
     () => this.active,
     (newValue, oldValue) => {

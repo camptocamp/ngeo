@@ -310,7 +310,7 @@ exports.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent)
           }
         });
 
-        // Deactive all layers in the group if it's not in the tree.
+        // Deactivate all layers in the group if it's not in the tree.
         if (groupAdded) {
           treeCtrl.setState('off');
         }

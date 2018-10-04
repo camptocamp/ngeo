@@ -197,8 +197,8 @@ describe('ngeo.format.FeatureHash', () => {
       });
     });
 
-    describe('feature decoding with style, witout attributes', () => {
-      it('correctly decodes a feature with style, witout attributes', () => {
+    describe('feature decoding with style, without attributes', () => {
+      it('correctly decodes a feature with style, without attributes', () => {
         const feature = fhFormat.readFeature(
           'p(__~~fillColor*%23ff0101\'' +
             'strokeColor*%2301ff01\'strokeWidth*3\'' +
@@ -231,8 +231,8 @@ describe('ngeo.format.FeatureHash', () => {
       });
     });
 
-    describe('feature decoding with attributes, witout style', () => {
-      it('correctly decodes a feature with attributes, witout style', () => {
+    describe('feature decoding with attributes, without style', () => {
+      it('correctly decodes a feature with attributes, without style', () => {
         const feature = fhFormat.readFeature('p(__~foo*foo\'bar*bar~)');
         expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
