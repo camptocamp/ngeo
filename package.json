@@ -30,7 +30,7 @@
     "@camptocamp/cesium": "1.50.0",
     "@fortawesome/fontawesome-free": "5.3.1",
     "angular": "1.7.5",
-    "angular-animate": "1.7.4",
+    "angular-animate": "1.7.5",
     "angular-dynamic-locale": "0.1.37",
     "angular-float-thead": "0.1.2",
     "angular-gettext": "2.4.1",
