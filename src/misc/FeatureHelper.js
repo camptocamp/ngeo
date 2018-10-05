@@ -1206,45 +1206,71 @@ exports.prototype.getType = function(feature) {
 
 
 /**
- * This method first checks if a feature's extent intersects with the map view
- * extent. If it doesn't, then the view gets recentered with an animation to
- * the center of the feature.
+ * This methods will try to fit a feature into a map view.
+ *
+ * If the feature is already visible, then the map will be zoomed out
+ * if the feature is too big for the current view.
+ *
+ * If the feature is not visible but would fit in the map view, the
+ * map is panned to the center of the feature.
+ *
+ * If the feature is not visible and would not fit in the map view,
+ * the map is fix to the feature's extent.
+ *
  * @param {!ol.Feature} feature Feature.
  * @param {!ol.Map} map Map.
- * @param {boolean=} opt_zoomOut Whether the map should also be zoomed
- *     out if the feature doesn't fit inside the current map view
- *     extent. Defaults to `true`.
- * @param {number=} opt_panDuration Pan animation duration. Defaults to `250`.
+ * @param {number=} opt_duration Aimation duration. Defaults to `250`.
  * @export
  */
-exports.prototype.panMapToFeature = function(feature, map, opt_zoomOut,
-  opt_panDuration) {
+exports.prototype.fitMapToFeature = function(feature, map, opt_duration) {
 
-  const panDuration = opt_panDuration !== undefined ? opt_panDuration : 250;
-  const zoomOut = opt_zoomOut !== false;
+  const duration = opt_duration !== undefined ? opt_duration : 250;
   const size = map.getSize();
   googAsserts.assertArray(size);
   const view = map.getView();
   const viewExtent = view.calculateExtent(size);
   const geometry = feature.getGeometry();
 
-  if (!geometry.intersectsExtent(viewExtent)) {
-    const mapCenter = view.getCenter();
-    googAsserts.assertArray(mapCenter);
+  const geomIsVisible = geometry.intersectsExtent(viewExtent);
 
-    const featureExtent = geometry.getExtent();
-    let shouldPan = true;
+  const mapCenter = view.getCenter();
+  googAsserts.assertArray(mapCenter);
 
-    if (zoomOut && !(geometry instanceof olGeomPoint)) {
-      const featureExtentHeight = olExtent.getHeight(featureExtent);
-      const featureExtentWidth = olExtent.getWidth(featureExtent);
-      const viewExtentHeight = olExtent.getHeight(viewExtent);
-      const viewExtentWidth = olExtent.getWidth(viewExtent);
-      shouldPan = viewExtentHeight >= featureExtentHeight &&
-        viewExtentWidth >= featureExtentWidth;
+  const featureExtent = geometry.getExtent();
+
+  if (geomIsVisible) {
+
+    if (!(geometry instanceof olGeomPoint)) {
+      // == Action: Zoom out ==
+      // if the geometry is visible
+      const featureResolution = view.getResolutionForExtent(featureExtent);
+      const featureZoom = Math.floor(
+        view.getZoomForResolution(featureResolution));
+      const zoom = view.getZoom();
+      if (featureZoom < zoom) {
+        view.animate({
+          center: mapCenter,
+          duration: duration
+        }, {
+          center: mapCenter,
+          duration: duration,
+          zoom: featureZoom
+        });
+      }
     }
 
-    if (shouldPan) {
+  } else {
+
+    const featureExtentHeight = olExtent.getHeight(featureExtent);
+    const featureExtentWidth = olExtent.getWidth(featureExtent);
+    const viewExtentHeight = olExtent.getHeight(viewExtent);
+    const viewExtentWidth = olExtent.getWidth(viewExtent);
+    const geomFitsInExtent = viewExtentHeight >= featureExtentHeight &&
+          viewExtentWidth >= featureExtentWidth;
+
+    if (geomFitsInExtent) {
+      // == Action: Pan ==
+      // if geometry is not visible but fits in current map extent
       let featureCenter;
       if (geometry instanceof olGeomLineString) {
         featureCenter = geometry.getCoordinateAt(0.5);
@@ -1258,16 +1284,17 @@ exports.prototype.panMapToFeature = function(feature, map, opt_zoomOut,
 
       view.animate({
         center: mapCenter,
-        duration: panDuration
+        duration: duration
       }, {
         center: featureCenter,
-        duration: panDuration
+        duration: duration
       });
     } else {
-      // i.e. "should zoom out to the feature" instead
+      // == Action: Fit ==
+      // if geometry is not visible and doesn't fit in current map extent
       view.fit(featureExtent, {
-        duration: panDuration,
-        size: size
+        duration,
+        size
       });
     }
   }
