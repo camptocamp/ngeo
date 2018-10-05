@@ -255,7 +255,7 @@ gmf-search {
 
   &.gmf-app-inactive {
     width: 0 !important;
-    .gmf-app-data-panel-collapsible-btn {
+    .gmf-app-data-panel-collapse-btn {
       display: none;
     }
     .gmf-app-data-panel-expand-btn {
@@ -263,17 +263,17 @@ gmf-search {
     }
   }
 
-  .gmf-app-data-panel-collapsible-btn {
+  .gmf-app-data-panel-collapse-btn {
     display: block;
   }
   .gmf-app-data-panel-expand-btn {
     display: none;
   }
 
-  .gmf-app-data-panel-collapsible-btn,
-  .gmf-app-data-panel-expand-btn, {
+  .gmf-app-data-panel-toggle-btn {
     height: 2.5rem;
     left: -1px;
+    padding: 0.8rem 0.25rem;
     position: relative;
     top: calc(50% - 1.25rem);
   }
