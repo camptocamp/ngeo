@@ -251,14 +251,19 @@ const exports = function(config, $scope, $injector) {
       this.$scope.$apply();
     });
 
-  $('<div>', {
-    'class':
-      `${dataPanelCls}-collapsible-btn btn prime btn-sm fa fa-arrow-left`
+  const collapsibleBtn = $('<div>', {
+    'class': `${dataPanelCls}-collapsible-btn btn prime btn-sm`
   }).appendTo($resizableEastHandle);
-  $('<div>', {
-    'class':
-      `${dataPanelCls}-expand-btn btn prime btn-sm fa fa-arrow-right`
+  $('<span>', {
+    'class': 'fa fa-arrow-left'
+  }).appendTo(collapsibleBtn);
+
+  const expandBtn = $('<div>', {
+    'class': `${dataPanelCls}-expand-btn btn prime btn-sm`
   }).appendTo($resizableEastHandle);
+  $('<span>', {
+    'class': 'fa fa-arrow-right'
+  }).appendTo(expandBtn);
 
   // Listen to window resize to set the max resizable width
   // accordingly, and set it also right away.
