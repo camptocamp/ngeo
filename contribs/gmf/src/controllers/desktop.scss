@@ -253,6 +253,38 @@ gmf-search {
     margin-bottom: $app-margin;
   }
 
+  &.gmf-app-inactive {
+    width: 0 !important;
+    .gmf-app-data-panel-collapse-btn {
+      display: none;
+    }
+    .gmf-app-data-panel-expand-btn {
+      display: block;
+    }
+  }
+
+  .gmf-app-data-panel-collapse-btn {
+    display: block;
+  }
+  .gmf-app-data-panel-expand-btn {
+    display: none;
+  }
+
+  .gmf-app-data-panel-toggle-btn {
+    height: 2.5rem;
+    left: -1px;
+    padding: 0.8rem 0.25rem;
+    position: relative;
+    top: calc(50% - 1.25rem);
+  }
+
+  .ui-resizable-e {
+    background-color: darken($brand-secondary, $standard-variation);
+    border: {
+      left: 0.06rem solid $border-color;
+      right: 0.06rem solid $border-color;
+    }
+  }
 }
 
 gmf-themeselector {

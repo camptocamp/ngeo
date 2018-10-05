@@ -17,6 +17,7 @@ import * as olBase from 'ol/index.js';
 import * as olProj from 'ol/proj.js';
 import * as olObj from 'ol/obj.js';
 import olCollection from 'ol/Collection.js';
+import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -87,6 +88,12 @@ const exports = function(config, $scope, $injector) {
    * @type {boolean}
    * @export
    */
+  this.dataPanelActive = true;
+
+  /**
+   * @type {boolean}
+   * @export
+   */
   this.loginActive = false;
 
   /**
@@ -118,6 +125,10 @@ const exports = function(config, $scope, $injector) {
    * @export
    */
   this.googleStreetViewActive = false;
+
+  $scope.$watch(() => this.googleStreetViewActive, (newVal) => {
+    this.setDataPanelMaxResizableWidth_();
+  });
 
   /**
    * @type {!ol.style.Style}
@@ -207,9 +218,100 @@ const exports = function(config, $scope, $injector) {
       this.loginActive = false;
     }
   });
+
+  /**
+   * @type {number}
+   * @private
+   */
+  this.dataPanelMinResizableWidth_ = 320;
+
+  // Make the data panel (on the left) resizable...
+  const dataPanelCls = 'gmf-app-data-panel';
+  const $dataPanel = $(`.${dataPanelCls}`)
+    .resizable({
+      'ghost': true,
+      'handles': 'e',
+      'minWidth': this.dataPanelMinResizableWidth_,
+      'stop': (event, ui) => {
+        this.map.updateSize();
+      }
+    });
+
+  /**
+   * @type {jQuery}
+   * @private
+   */
+  this.$dataPanel_ = $dataPanel;
+
+  // ... and collapsible when the handle is clicked.
+  const $resizableEastHandle = $dataPanel
+    .find('.ui-resizable-e')
+    .on('click', (evt) => {
+      this.dataPanelActive = !this.dataPanelActive;
+      this.$scope.$apply();
+    });
+
+  // Add an extra element to act as a button to be clicked on for
+  // collapse/expand
+  $('<div>', {
+    'class': `${dataPanelCls}-toggle-btn btn prime btn-sm`
+  })
+    .appendTo($resizableEastHandle)
+    .append(
+      $('<span>', {
+        'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`
+      })
+    )
+    .append(
+      $('<span>', {
+        'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`
+      })
+    );
+
+  // Listen to window resize to set the max resizable width
+  // accordingly, and set it also right away.
+  const ngeoDebounce = $injector.get('ngeoDebounce');
+  olEvents.listen(
+    window,
+    'resize',
+    ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
+  );
+  this.setDataPanelMaxResizableWidth_();
 };
 
 olBase.inherits(exports, gmfControllersAbstractAppController);
+
+/**
+ * Set the data panel (on the left) maximum resizable width depending
+ * on the current size of the window, taking into consideration the
+ * width the right panel can have.
+ *
+ * If, after resizing, the size of the data panel would be too big,
+ * resize it as well.
+ * @private
+ */
+exports.prototype.setDataPanelMaxResizableWidth_ = function() {
+
+  let rightPanelWidth = 320;
+  if (this.googleStreetViewActive) {
+    rightPanelWidth += 140;
+  }
+
+  const minimumMapWidth = 120;
+  const windowWidth = window.innerWidth;
+
+  let maxWidth = windowWidth - rightPanelWidth - minimumMapWidth;
+  if (maxWidth < this.dataPanelMinResizableWidth_) {
+    maxWidth = this.dataPanelMinResizableWidth_;
+  }
+
+  this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
+
+  if (this.$dataPanel_.width() > maxWidth) {
+    this.$dataPanel_.width(maxWidth);
+    this.map.updateSize();
+  }
+};
 
 exports.module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfControllersAbstractAppController.module.name,
