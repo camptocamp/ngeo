@@ -6,6 +6,8 @@
     "build-ngeo-examples": "TARGET=ngeo-examples webpack --progress --debug",
     "build-gmf-examples": "TARGET=gmf-examples webpack --progress --debug",
     "build-gmf-apps": "TARGET=gmf-apps webpack --progress --debug",
+    "build-api": "webpack --config buildtools/webpack.api.js --mode development --library demo",
+    "serve-api": "webpack-dev-server --mode development --content-base api/dist/ --config buildtools/webpack.api.js --port 3000 --progress --watch --bail --debug",
     "serve-ngeo-examples": "DEV_SERVER=1 TARGET=ngeo-examples webpack-dev-server --port 3000 --progress --watch --bail --debug",
     "serve-gmf-examples": "DEV_SERVER=1 TARGET=gmf-examples webpack-dev-server --port 3000 --progress --watch --bail --debug",
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --port 3000 --progress --watch --bail --debug"
@@ -22,6 +24,7 @@
     "compile-catalog": "buildtools/compile-catalog.js"
   },
   "devDependencies": {
+    "@geoblocks/sources": "https://api.github.com/repos/geoblocks/sources/tarball/173ad0171",
     "@babel/core": "7.1.2",
     "@babel/plugin-syntax-object-rest-spread": "7.0.0",
     "@babel/plugin-transform-spread": "7.0.0",
