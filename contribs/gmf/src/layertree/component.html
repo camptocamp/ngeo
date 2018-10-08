@@ -42,8 +42,11 @@
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
-    ng-if="::layertreeCtrl.node.children"
-    ng-class="['fa fa-fw', layertreeCtrl.node.children && !layertreeCtrl.layer.loading ? 'gmf-layertree-state' : 'fa-refresh fa-spin']">
+    ng-if="::layertreeCtrl.node.children">
+      <span ng-switch="layertreeCtrl.node.children && !layertreeCtrl.layer.loading">
+          <i ng-switch-when="true"  class="fa fa-fw gmf-layertree-state"></i>
+          <i ng-switch-when="false" class="fa fa-fw fa-refresh fa-spin"></i>
+      </span>
   </a>
 
   <a
