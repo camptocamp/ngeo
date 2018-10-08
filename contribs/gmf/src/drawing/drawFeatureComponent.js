@@ -323,7 +323,7 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
         this.selectedFeatures.push(newFeature);
         this.registerInteractions_();
         if (this.listSelectionInProgress_) {
-          this.featureHelper_.panMapToFeature(newFeature, this.map);
+          this.featureHelper_.fitMapToFeature(newFeature, this.map);
           this.listSelectionInProgress_ = false;
         }
       } else {
