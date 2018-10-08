@@ -3,7 +3,7 @@ codespell==1.14.0
 glob2==0.6
 htmlmin==0.1.12
 Mako==1.0.7
-pip==18.0
+pip==18.1
 requests==2.19.1
 setuptools==40.4.3
 transifex-client==0.12.5  # rq.filter: <=0.12.5
