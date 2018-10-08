@@ -129,3 +129,9 @@ i, cite, em, var, address, dfn {
     }
   }
 }
+
+// default z-index is 90 but it is not configurable.
+// See https://api.jqueryui.com/resizable/
+.ui-resizable-handle {
+  z-index: 2 !important;
+}
