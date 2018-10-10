@@ -10,12 +10,15 @@
     <% } %>
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive, 'gmf-query-grid-active': !!queryGridActive}" ng-keydown="mainCtrl.onKeydown($event)">
-    <header>
-      <div class="logo">
-        <img src="<%=require("./image/logo.png")%>" />
-        <span>by Camptocamp</span>
-      </div>
-    </header>
+  <div ng-show="mainCtrl.loading" class="loading-mask">
+    <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+  </div>
+  <header>
+    <div class="logo">
+      <img src="<%=require("./image/logo.png")%>" />
+      <span>by Camptocamp</span>
+    </div>
+  </header>
     <main>
       <div class="gmf-app-data-panel"
            ngeo-resizemap="mainCtrl.map"

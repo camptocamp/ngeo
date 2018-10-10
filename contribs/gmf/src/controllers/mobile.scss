@@ -27,6 +27,17 @@ $border-color: black !default;
  * Mobile specific css only !
  * Please, use shared less files to describe desktop-mobile shared css
  */
+.spinner-loading-mask {
+  color: red;
+  font-size: 125px;
+}
+
+.loading-mask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+}
 
 main>* {
   position: absolute;

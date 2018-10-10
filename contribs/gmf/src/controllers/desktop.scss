@@ -32,6 +32,16 @@ $border-color: darken($brand-primary, $standard-variation) !default;
 
 @import '~gmf/layertree/desktop.scss';
 
+.loading-mask {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height:100%;
+}
+.spinner-loading-mask {
+  color: red;
+  font-size: 125px;
+}
 
 html, body {
   position: relative;
