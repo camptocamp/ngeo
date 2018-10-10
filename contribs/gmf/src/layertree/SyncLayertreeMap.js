@@ -45,24 +45,11 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
    */
   this.ogcServersObject_;
 
-  /**
-   * Flag turned on while changing the state of siblings and children
-   * of a tree controller to avoid event listener to re-execute the
-   * same logic while working on it.
-   * @type {boolean}
-   * @private
-   */
-  this.working_ = false;
-
   gmfThemes.getOgcServersObject().then((ogcServersObject) => {
     this.ogcServersObject_ = ogcServersObject;
   });
 
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
-    if (this.working_) {
-      return;
-    }
-    this.syncExclusiveGroup_(firstParent, treeCtrl);
     this.sync_(/** @type ol.Map */ (map), firstParent);
   });
 };
@@ -121,100 +108,6 @@ exports.prototype.sync_ = function(map, treeCtrl) {
       this.updateLayerState_(/** @type ol.layer.Image|ol.layer.Tile */ (treeCtrl.layer), treeCtrl);
     }
   });
-};
-
-
-/**
- * If the first parent ngeo tree controller has the `exclusiveGroup`
- * metadata set and if the tree controller that has its state changed
- * was changed to "on", then:
- *
- *  - we must toggle all its siblings off.
- *  - we wust toggle only its first child on
- *
- * @param {ngeo.layertree.Controller} firstParent The first parent
- *     ngeo layertree controller containing the child that had its
- *     state changed.
- * @param {ngeo.layertree.Controller} treeCtrl The ngeo layertree
- *     controller that had its state changed.
- * @private
- */
-exports.prototype.syncExclusiveGroup_ = function(firstParent, treeCtrl) {
-
-  // No need to do anything if:
-  //  - we're not dealing with an exclusive group
-  //  - the treeCtrl that had its state changed was not turned ON
-  if (!firstParent.node.metadata.exclusiveGroup ||
-      treeCtrl.getState() !== 'on'
-  ) {
-    return;
-  }
-
-  this.working_ = true;
-  this.turnOffSiblings_(treeCtrl);
-  this.turnOnFirstChild_(treeCtrl);
-  this.working_ = false;
-};
-
-
-/**
- * Turn off all the siblings of a given tree controller. Then, turn
- * off the parent' siblings as well.
- *
- * @param {ngeo.layertree.Controller} treeCtrl The ngeo layertree
- *     controller that should have its siblings turned off.
- * @private
- */
-exports.prototype.turnOffSiblings_ = function(treeCtrl) {
-  // If parent is root node, no need to do anything...
-  if (treeCtrl.parent.isRoot) {
-    return;
-  }
-
-  // Turn of siblings
-  const siblings = treeCtrl.parent.children;
-  for (const sibling of siblings) {
-    if (sibling !== treeCtrl) {
-      sibling.setState('off');
-    }
-  }
-
-  // Turn off parent' siblings
-  this.turnOffSiblings_(treeCtrl.parent);
-};
-
-
-/**
- * If tree controller has children, then make sure that only the first
- * one is ON and the other are OFF. The same goes for the children of
- * that first child.
- *
- * @param {ngeo.layertree.Controller} treeCtrl The ngeo layertree
- *     controller that should have its children turned off, with the
- *     exception of the first one.
- * @private
- */
-exports.prototype.turnOnFirstChild_ = function(treeCtrl) {
-
-  const children = treeCtrl.children;
-
-  if (!children) {
-    return;
-  }
-
-  let firstChild;
-  for (const child of children) {
-    if (!firstChild) {
-      firstChild = child;
-      child.setState('on');
-    } else {
-      child.setState('off');
-    }
-  }
-
-  if (firstChild) {
-    this.turnOnFirstChild_(firstChild);
-  }
 };
 
 

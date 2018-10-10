@@ -212,7 +212,7 @@ exports.prototype.setState = function(state, opt_broadcast) {
 
   // Ask to its parent to update it's state.
   if (this.parent) {
-    this.parent.refreshState();
+    this.parent.refreshState(this, opt_broadcast);
   }
 
   const firstParents = this.isRoot ? this.children : [exports.getFirstParentTree(this)];
@@ -231,26 +231,61 @@ exports.prototype.setState = function(state, opt_broadcast) {
 exports.prototype.setStateInternal_ = function(state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
-  // Asks to each child to set its state;
-  this.children.forEach((child) => {
-    child.setStateInternal_(this.state_);
-  });
+
+  if (this.state_ === 'on' &&
+      this.node.metadata &&
+      this.node.metadata.exclusiveGroup
+  ) {
+    let firstChild;
+    for (const child of this.children) {
+      if (!firstChild) {
+        firstChild = child;
+        child.setStateInternal_('on');
+      } else {
+        child.setStateInternal_('off');
+      }
+    }
+  } else {
+    // Asks to each child to set its state;
+    this.children.forEach((child) => {
+      child.setStateInternal_(this.state_);
+    });
+  }
 };
 
 
 /**
  * Refresh the state of this treeCtrl based on it's children value. The call its
  * parent to do the same.
+ *
+ * @param {ngeo.layertree.Controller=} opt_onChild Child tree
+ *     controller that had its state changed to 'on'.
+ * @param {boolean=} opt_broadcast Broadcast.
  * @public
  */
-exports.prototype.refreshState = function() {
+exports.prototype.refreshState = function(opt_onChild, opt_broadcast) {
+
+  if (this.node.children &&
+      opt_onChild &&
+      opt_onChild.getState() !== 'off' &&
+      this.node.metadata &&
+      this.node.metadata.exclusiveGroup
+  ) {
+    const onChild = googAsserts.assert(opt_onChild);
+    this.children.forEach((child) => {
+      if (child !== onChild) {
+        child.setState('off', opt_broadcast);
+      }
+    });
+  }
+
   const newState = this.getCalculateState();
   if (this.state_ === newState) {
     return;
   }
   this.state_ = newState;
   if (this.parent) {
-    this.parent.refreshState();
+    this.parent.refreshState(this, opt_broadcast);
   }
 };
 
