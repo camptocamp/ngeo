@@ -170,6 +170,24 @@ exports.module = angular.module('Appdesktop_alt', [
   ngeoStatemanagerWfsPermalink.module.name,
 ]);
 
+exports.module.constant('ngeoRoutingOptions', {
+  'backendUrl': 'http://routing.osm.ch/',
+  'profiles': [
+    {
+      label: 'Car',
+      profile: 'routed-car'
+    },
+    {
+      label: 'Bike (City)',
+      profile: 'routed-bike'
+    }
+  ]
+});
+
+exports.module.constant('ngeoNominatimSearchDefaultParams', {
+  'countrycodes': 'CH'
+});
+
 exports.module.controller('AlternativeDesktopController', exports);
 
 export default exports;
