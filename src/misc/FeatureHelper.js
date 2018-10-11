@@ -884,6 +884,7 @@ exports.getFilteredFeatureValues = function(feature) {
   delete properties['boundedBy'];
   delete properties[feature.getGeometryName()];
   delete properties['ngeo_feature_type_'];
+  delete properties['ngeo_datasource_id'];
   return properties;
 };
 

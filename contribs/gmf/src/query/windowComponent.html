@@ -45,15 +45,15 @@
         <div class="details">
           <table>
             <tr
-              ng-repeat="(key, value) in ctrl.getFeatureValues()"
-              ng-if="value !== undefined">
+              ng-repeat="key in ctrl.getOrderedColumns()"
+              ng-if="ctrl.feature.get(key) !== undefined">
               <td
                 class="details-key"
                 ng-bind-html="key | translate | ngeoTrustHtml"
                 ></td>
               <td
                 class="details-value"
-                ng-bind-html="value | ngeoTrustHtmlAuto"
+                ng-bind-html="ctrl.feature.get(key) | ngeoTrustHtmlAuto"
                 ></td>
             </tr>
           </table>

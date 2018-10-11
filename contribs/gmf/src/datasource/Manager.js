@@ -488,9 +488,11 @@ const exports = class {
     const name = gmfLayer.name;
     const timeAttributeName = meta.timeAttribute;
     const visible = meta.isChecked === true;
+    const columnsOrder = meta.columnsOrder;
 
     // Create the data source and add it to the cache
     this.dataSourcesCache_[id] = new gmfDatasourceOGC({
+      columnsOrder,
       copyable,
       dimensions,
       dimensionsConfig,

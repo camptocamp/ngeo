@@ -24,6 +24,11 @@ const exports = class extends ngeoDatasourceOGC {
      */
     this.gmfLayer_ = options.gmfLayer;
 
+    /**
+     * @type {?Array.<string>}
+     * @export
+     */
+    this.columnsOrder_ = options.columnsOrder;
   }
 
   // === Static property getters/setters ===
@@ -34,6 +39,14 @@ const exports = class extends ngeoDatasourceOGC {
    */
   get gmfLayer() {
     return this.gmfLayer_;
+  }
+
+  /**
+   * @return {?Array.<string>} Ordered list of column names
+   * @export
+   */
+  get columnsOrder() {
+    return this.columnsOrder_;
   }
 
 };

@@ -2,6 +2,7 @@
  * @module gmf.query.windowComponent
  */
 import googAsserts from 'goog/asserts.js';
+import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
@@ -29,6 +30,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {!angular.Module}
  */
 const exports = angular.module('gmfQueryWindowComponent', [
+  ngeoDatasourceDataSources.module.name,
   ngeoMapFeatureOverlayMgr.module.name,
   ngeoMiscFeatureHelper.module.name,
   ngeoMiscSwipe.name,
@@ -134,6 +136,8 @@ exports.component('gmfDisplayquerywindow', exports.component_);
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
+ * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
+ *     data sources service.
  * @constructor
  * @private
  * @ngInject
@@ -141,7 +145,7 @@ exports.component('gmfDisplayquerywindow', exports.component_);
  * @ngname GmfDisplayquerywindowController
  */
 exports.Controller_ = function($element, $scope, ngeoQueryResult, ngeoMapQuerent,
-  ngeoFeatureOverlayMgr) {
+  ngeoFeatureOverlayMgr, ngeoDataSources) {
 
   /**
    * @type {Element|string}
@@ -209,6 +213,12 @@ exports.Controller_ = function($element, $scope, ngeoQueryResult, ngeoMapQuerent
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
+
+  /**
+   * @type {ngeo.datasource.DataSources}
+   * @private
+   */
+  this.ngeoDataSources_ = ngeoDataSources;
 
   /**
    * @type {!ol.Collection}
@@ -477,16 +487,19 @@ exports.Controller_.prototype.isLast = function() {
 
 
 /**
- * Delete the unwanted ol3 properties from the current feature then return the
- * properties.
+ * Return property names from dataSource.columnsOrder if defined,
+ * else return filtered property names from ol3 feature object.
  * @return {Object?} Filtered properties of the current feature or null.
  * @export
  */
-exports.Controller_.prototype.getFeatureValues = function() {
+exports.Controller_.prototype.getOrderedColumns = function() {
   if (!this.feature) {
     return null;
   }
-  return ngeoMiscFeatureHelper.getFilteredFeatureValues(this.feature);
+  const dataSource = this.ngeoDataSources_.collection.getArray().find(
+    ds => ds.id == this.feature.get('ngeo_datasource_id'));
+  return dataSource && dataSource.columnsOrder ||
+    Object.keys(ngeoMiscFeatureHelper.getFilteredFeatureValues(this.feature));
 };
 
 
