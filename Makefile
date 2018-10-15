@@ -428,7 +428,7 @@ transifex-init: .build/python-venv.timestamp \
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
 .build/locale/%/LC_MESSAGES/demo.po:
 	mkdir -p $(dir $@)
-	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/master/geoportal/demo_geoportal/locale/$*/LC_MESSAGES/demo_geoportal-client.po
+	wget -O $@ https://raw.githubusercontent.com/camptocamp/demo_geomapfish/2.4/geoportal/demo_geoportal/locale/$*/LC_MESSAGES/demo_geoportal-client.po
 
 contribs/gmf/build/gmf-%.json: \
 		.build/locale/%/LC_MESSAGES/ngeo.po \
