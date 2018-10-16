@@ -445,6 +445,15 @@ gmfThemes.GmfMetaData.prototype.enumeratedAttributes;
 
 
 /**
+ * Whether the group contain children that have to be mutually
+ * exclusive, meaning that only one child may be ON at any
+ * time. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.exclusiveGroup;
+
+
+/**
  * Whether geometries must be validated by PostgreSQL on edition.
  * Default to false.
  * For WMS layers.

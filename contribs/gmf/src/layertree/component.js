@@ -409,7 +409,14 @@ exports.Controller_.prototype.listeners = function(scope, treeCtrl) {
  * @export
  */
 exports.Controller_.prototype.toggleActive = function(treeCtrl) {
-  treeCtrl.setState(treeCtrl.getState() === 'on' ? 'off' : 'on');
+  const state = treeCtrl.getState();
+  if (treeCtrl.node.metadata && treeCtrl.node.metadata.exclusiveGroup) {
+    // If the treeCtrl has 'exclusiveGroup' enabled, then
+    // 'intermediate' is considered as 'on'
+    treeCtrl.setState(state === 'off' ? 'on' : 'off');
+  } else {
+    treeCtrl.setState(state === 'on' ? 'off' : 'on');
+  }
 };
 
 
