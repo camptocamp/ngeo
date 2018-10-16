@@ -399,6 +399,11 @@ gmfThemes.GmfFunctionalities.prototype.preset_layer_filter;
  */
 gmfThemes.GmfMetaData = function() {};
 
+/**
+ * Ordered list of attribute names.
+ * @type {Array.<string>|undefined}
+ */
+gmfThemes.GmfMetaData.prototype.attributesOrder
 
 /**
  * Names of layers on which the geometry can be copied to (in the edition mode).

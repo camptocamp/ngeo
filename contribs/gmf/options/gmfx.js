@@ -752,6 +752,12 @@ gmfx.datasource.OGCOptions;
 
 
 /**
+ * Ordered list of attribute names.
+ * @type {Array.<string>|undefined}
+ */
+gmfx.datasource.OGCOptions.prototype.attributesOrder;
+
+/**
  * A reference to the GMF layer node that was used to create the data source.
  * It may contains additional information, such as metadata, about the data
  * source.

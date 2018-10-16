@@ -3,8 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-
 /** @suppress {extraRequire} */
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
@@ -35,7 +33,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {!angular.Module}
  */
 const exports = angular.module('gmfQueryGridComponent', [
-  ngeoDatasourceDataSources.module.name,
   ngeoDownloadCsv.module.name,
   ngeoDownloadService.name,
   ngeoGridComponent.name,
@@ -144,7 +141,6 @@ exports.component('gmfDisplayquerygrid', exports.component_);
  *     overlay manager service.
  * @param {!angular.$timeout} $timeout Angular timeout service.
  * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
- * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
  *     data sources service.
  * @param {!angular.JQLite} $element Element.
  * @constructor
@@ -154,7 +150,7 @@ exports.component('gmfDisplayquerygrid', exports.component_);
  * @ngname GmfDisplayquerygridController
  */
 exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
-  ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, ngeoDataSources, $element) {
+  ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
     $injector.has('ngeoQueryOptions') ?
@@ -189,12 +185,6 @@ exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQueren
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
-
-  /**
-   * @type {ngeo.datasource.DataSources}
-   * @private
-   */
-  this.ngeoDataSources_ = ngeoDataSources;
 
   /**
    * @type {!angular.JQLite}
@@ -692,12 +682,13 @@ exports.Controller_.prototype.getGridConfiguration_ = function(data) {
   Object.assign(clone, data[0]);
   delete clone.ol_uid;
 
-  const dataSource = this.ngeoDataSources_.collection.getArray().find(
-    ds => ds.id == clone.ngeo_datasource_id);
-  delete clone.ngeo_datasource_id;
-
-  const columns = dataSource && dataSource.columnsOrder.filter(key => key in clone)
-    || Object.keys(clone);
+  let columns;
+  const dataSource = clone.ngeo_datasource_;
+  if (dataSource && dataSource.attributesOrder) {
+    columns = dataSource.attributesOrder.filter(key => key in clone);
+  } else {
+    columns = Object.keys(clone);
+  }
 
   /** @type {Array.<ngeox.GridColumnDef>} */
   const columnDefs = [];

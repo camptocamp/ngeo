@@ -25,10 +25,10 @@ const exports = class extends ngeoDatasourceOGC {
     this.gmfLayer_ = options.gmfLayer;
 
     /**
-     * @type {?Array.<string>}
+     * @type {Array.<string>|undefined}
      * @export
      */
-    this.columnsOrder_ = options.columnsOrder;
+    this.attributesOrder_ = options.attributesOrder;
   }
 
   // === Static property getters/setters ===
@@ -42,11 +42,11 @@ const exports = class extends ngeoDatasourceOGC {
   }
 
   /**
-   * @return {?Array.<string>} Ordered list of column names
+   * @return {?Array.<string>|undefined} Ordered list of attribute names.
    * @export
    */
-  get columnsOrder() {
-    return this.columnsOrder_;
+  get attributesOrder() {
+    return this.attributesOrder_;
   }
 
 };

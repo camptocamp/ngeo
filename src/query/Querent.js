@@ -430,7 +430,7 @@ const exports = class {
       if (readFeatures.length > 0) {
         readFeatures.forEach((feature) => {
           feature.set('ngeo_feature_type_', type);
-          feature.set('ngeo_datasource_id', dataSource.id);
+          feature.set('ngeo_datasource_', dataSource);
           features.push(feature);
         });
       }
