@@ -105,7 +105,8 @@ const Service = class {
     }, 1000, true));
 
     this.manager_.on('toggle', (event) => {
-      if (!event.target.is3dEnabled()) {
+      const target = /** @type {ngeo.olcs.Manager} */ (event.target);
+      if (!target.is3dEnabled()) {
         this.remove3dState_();
       }
     });
