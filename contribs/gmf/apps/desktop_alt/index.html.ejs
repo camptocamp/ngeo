@@ -58,7 +58,7 @@
               <span class="fa fa-print"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
@@ -105,6 +105,7 @@
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
               <gmf-authentication
+                  gmf-authentication-info-message="mainCtrl.loginInfoMessage"
                   gmf-authentication-allow-password-reset="::false"
                   gmf-authentication-allow-password-change="::false">
               </gmf-authentication>
@@ -136,7 +137,7 @@
           <div ng-show="mainCtrl.drawFeatureActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
-                {{'Draw & Measure'|translate}}
+                {{'Draw and Measure'|translate}}
                 <a class="btn close" ng-click="mainCtrl.drawFeatureActive = false">&times;</a>
               </div>
               <gmf-drawfeature
@@ -353,7 +354,7 @@
         ngeo-resizemap-state="queryGridActive">
       </gmf-displayquerygrid>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>

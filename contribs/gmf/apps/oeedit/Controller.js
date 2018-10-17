@@ -231,6 +231,10 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
 });
 
+exports.module.value('gmfPermalinkOptions', /** @type {gmfx.PermalinkOptions} */ ({
+  pointRecenterZoom: 10
+}));
+
 exports.module.controller('OEEditController', exports);
 
 export default exports;

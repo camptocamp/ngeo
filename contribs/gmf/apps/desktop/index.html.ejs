@@ -62,7 +62,7 @@
               <span class="fa fa-print"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw & Measure'|translate}}">
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
               <span class="fa fa-paint-brush"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
@@ -77,10 +77,6 @@
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-chart-area"></span>
-            </button>
-            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.googleStreetViewActive"
-              data-toggle="tooltip" data-placement="left" data-original-title="{{'Street View'|translate}}">
-              <span class="fa fa-street-view"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
                     data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
@@ -97,14 +93,16 @@
         </div>
         <div
             class="gmf-app-tools-content container-fluid"
-            ng-class="{'gmf-app-active': mainCtrl.toolsActive,'gmf-app-googlestreetview-active': mainCtrl.googleStreetViewActive }">
+            ng-class="{'gmf-app-active': mainCtrl.toolsActive}">
           <div ng-show="mainCtrl.loginActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
                 {{'Login' | translate}}
                 <a class="btn close" ng-click="mainCtrl.loginActive = false">&times;</a>
               </div>
-              <gmf-authentication></gmf-authentication>
+              <gmf-authentication
+                gmf-authentication-info-message="mainCtrl.loginInfoMessage"
+              ></gmf-authentication>
             </div>
           </div>
           <div ng-show="mainCtrl.printPanelActive" class="row">
@@ -122,7 +120,7 @@
           <div ng-show="mainCtrl.drawFeatureActive" class="row">
             <div class="col-sm-12">
               <div class="gmf-app-tools-content-heading">
-                {{'Draw & Measure'|translate}}
+                {{'Draw and Measure'|translate}}
                 <a class="btn close" ng-click="mainCtrl.drawFeatureActive = false">&times;</a>
               </div>
               <gmf-drawfeature
@@ -187,19 +185,6 @@
                   </em>
                 </p>
               </div>
-            </div>
-          </div>
-          <div ng-show="mainCtrl.googleStreetViewActive" class="row">
-            <div class="col-sm-12">
-              <div class="gmf-app-tools-content-heading">
-                {{'Street View'|translate}}
-                <a class="btn close" ng-click="mainCtrl.googleStreetViewActive = false">&times;</a>
-              </div>
-              <ngeo-googlestreetview
-                  active="mainCtrl.googleStreetViewActive"
-                  feature-style="mainCtrl.googleStreetViewStyle"
-                  map="mainCtrl.map">
-              </ngeo-googlestreetview>
             </div>
           </div>
           <div ng-show="mainCtrl.importDataSourceActive" class="row">
@@ -323,8 +308,7 @@
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyCYnqxEQA5sz13sWSgMr97ejzvUeGP8gz4"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>

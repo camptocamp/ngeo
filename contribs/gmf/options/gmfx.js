@@ -247,7 +247,8 @@ gmfx.PasswordValidator;
  *     crosshairStyle: (Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined),
  *     crosshairEnabledByDefault: (boolean|undefined),
  *     projectionCodes: (Array.<string>|undefined),
- *     useLocalStorage: (boolean|undefined)
+ *     useLocalStorage: (boolean|undefined),
+ *     pointRecenterZoom: (number|undefined)
  * }}
  */
 gmfx.PermalinkOptions;
@@ -281,6 +282,14 @@ gmfx.PermalinkOptions.prototype.projectionCodes;
  * @type {boolean|undefined}
  */
 gmfx.PermalinkOptions.prototype.useLocalStorage;
+
+
+/**
+ * Zoom level to use when result is a single point feature. If not set the map
+ * is not zoomed to a specific zoom level.
+ * @type {number|undefined}
+ */
+gmfx.PermalinkOptions.prototype.pointRecenterZoom
 
 
 /**

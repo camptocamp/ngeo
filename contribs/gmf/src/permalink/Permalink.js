@@ -30,6 +30,7 @@ import * as olBase from 'ol/index.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
+import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
@@ -62,12 +63,13 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {gmfx.User} gmfUser User.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
 const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
-  ngeoStateManager, ngeoLocation) {
+  ngeoStateManager, ngeoLocation, gmfUser) {
 
   /**
    * @type {!angular.$q}
@@ -175,6 +177,12 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.crosshairEnabledByDefault_ = !!gmfPermalinkOptions.crosshairEnabledByDefault;
 
   /**
+   * @type {number|undefined}
+   * @private
+   */
+  this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
+
+  /**
    * @type {?gmf.datasource.ExternalDataSourcesManager}
    * @private
    */
@@ -215,6 +223,12 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
    */
   this.gmfTreeManager_ = $injector.has('gmfTreeManager') ?
     $injector.get('gmfTreeManager') : null;
+
+  /**
+   * @type {gmfx.User}
+   * @private
+   */
+  this.user_ = gmfUser;
 
   // == other properties ==
 
@@ -467,6 +481,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.initLayers_();
 };
 
+
 // === Map X, Y, Z ===
 
 /**
@@ -683,10 +698,18 @@ exports.prototype.registerMap_ = function(map, oeFeature) {
   // (1) Initialize the map view with either:
   //     a) the given ObjectEditing feature
   //     b) the X, Y and Z available within the permalink service, if available
-  if (oeFeature && oeFeature.getGeometry()) {
+  const geom = typeof oeFeature !== 'undefined' && oeFeature !== null ? oeFeature.getGeometry() : undefined;
+  if (geom) {
     const size = map.getSize();
     googAsserts.assert(size);
-    view.fit(oeFeature.getGeometry().getExtent(), size);
+    let maxZoom;
+    if (geom instanceof olGeomPoint || geom instanceof olGeomMultiPoint) {
+      maxZoom = this.pointRecenterZoom_;
+    }
+    view.fit(geom.getExtent(), {
+      size,
+      maxZoom
+    });
   } else {
     const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(ngeoOlcsConstants.Permalink3dParam.ENABLED);
     if (!enabled3d) {
@@ -910,6 +933,9 @@ exports.prototype.defaultThemeNameFromFunctionalities = function() {
  * @private
  */
 exports.prototype.initLayers_ = function() {
+  const initialUri = window.location.href;
+  let authenticationRequired = false;
+
   if (!this.gmfThemes_) {
     return;
   }
@@ -939,6 +965,8 @@ exports.prototype.initLayers_ = function() {
         const group = gmfThemeThemes.findGroupByName(themes, groupName);
         if (group) {
           firstLevelGroups.push(group);
+        } else {
+          authenticationRequired = true;
         }
       });
     }
@@ -984,9 +1012,15 @@ exports.prototype.initLayers_ = function() {
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = olArray.includes(groupLayersArray, treeCtrl.node.name);
+                if (enable) {
+                  groupLayersArray.splice(groupLayersArray.indexOf(treeCtrl.node.name), 1);
+                }
                 treeCtrl.setState(enable ? 'on' : 'off', false);
               }
             });
+            if (groupLayersArray.length > 0) {
+              authenticationRequired = true;
+            }
           }
         }
       });
@@ -999,6 +1033,10 @@ exports.prototype.initLayers_ = function() {
           }
         });
       });
+
+      if (authenticationRequired && this.user_.role_id === null) {
+        this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+      }
     });
   });
 };

@@ -182,27 +182,22 @@ exports.filter('ngeoUnitPrefix', exports.UnitPrefix);
 /**
  * Format a couple of numbers as number coordinates.
  *
- * Example without parameters (en-US localization):
+ * Example without parameters:
  *
  *      <p>{{[7.1234, 46.9876] | ngeoNumberCoordinates}}</p>
  *      <!-- will Become 7 47 -->
  *
  * Example with defined fractionDigits and template (en-US localization):
  *
+ *      <!-- With en-US localization -->
  *      <p>{{[7.1234, 46.9876] | ngeoNumberCoordinates:2:'co {x} E; {y} N'}}</p>
  *      <!-- will Become co 7.12 E; 46.99 N -->
- *
- * Example without fractionDigits but with defined template and localize:
- *
- *      <!-- With en-US localization (opt_localize can be true or undefined) -->
+ *      <br/>
+ *      <!-- With en-US localization -->
  *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
  *      <!-- will Become 2,600,000, 1,600,000 -->
  *      <br/>
- *      <!-- With fr-CH localization (opt_localize can be true or undefined) -->
- *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
- *      <!-- will Become 2'600'000, 1'600'000 -->
- *      <br/>
- *      <!-- With en-US localization but with localization to false -->
+ *      <!-- With fr-CH localization -->
  *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
