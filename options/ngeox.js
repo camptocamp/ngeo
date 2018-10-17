@@ -78,8 +78,16 @@ ngeox.Attribute.prototype.alias;
 
 
 /**
- * Whether the attribute required to have a value set or not. Defaults to
- * `false`.
+ * Whether the attribute's value should be prevented from being edited
+ * or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.Attribute.prototype.readonly;
+
+
+/**
+ * Whether the attribute is required to have a value set or
+ * not. Defaults to `false`.
  * @type {boolean|undefined}
  */
 ngeox.Attribute.prototype.required;
