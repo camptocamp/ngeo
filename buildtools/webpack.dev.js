@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 
+process.traceDeprecation = true;
 
 const resourcesRule = {
   test: /\.(jpeg|png|ico|cur|eot|ttf|woff|woff2)$/,
