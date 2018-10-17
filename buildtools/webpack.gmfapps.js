@@ -17,19 +17,13 @@ for (const filename of ls('contribs/gmf/apps/*/index.html.ejs')) {
       inject: false,
       chunksSortMode: 'manual',
       filename: `${filenamePrefix}${name}.html`,
-      chunks: ['commons', name]
+      chunks: [name]
     })
   );
 }
 
 module.exports = {
   entry: entry,
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-      name: 'commons',
-    }
-  },
   plugins: plugins,
 };
 
