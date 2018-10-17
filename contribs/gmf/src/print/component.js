@@ -487,6 +487,13 @@ exports.Controller_ = class {
         this.setRotation(/** @type {number} */ (rotation));
       }
     });
+    // Workaround for IE11
+    this.rotationInput_.on('change', (event) => {
+      const rotation = $(event.target).val();
+      if (rotation !== '') {
+        this.setRotation(/** @type {number} */ (rotation));
+      }
+    });
 
     /**
      * @type {function(ol.render.Event)}

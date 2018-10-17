@@ -133,9 +133,43 @@ const exports = function(config, $scope, $injector) {
   };
 
   /**
+   * Url to redirect to after login success.
+   * @type {?string}
+   */
+  this.loginRedirectUrl = null;
+
+  /**
+   * Information message for the login form.
+   * @type {?string}
+   */
+  this.loginInfoMessage = null;
+
+  $scope.$on('authenticationrequired', (event, args) => {
+    /** @type {angularGettext.Catalog} */
+    const gettextCatalog = $injector.get('gettextCatalog');
+    this.loginInfoMessage = gettextCatalog.getString(
+      'Some layers in this link are not accessible to unauthenticated users. ' +
+      'Please log in to see whole data.');
+    this.loginRedirectUrl = args.url;
+    this.loginActive = true;
+
+    const unbind = $scope.$watch(() => this.loginActive, () => {
+      if (!this.loginActive) {
+        this.loginInfoMessage = null;
+        this.loginRedirectUrl = null;
+        unbind();
+      }
+    });
+  });
+
+  /**
    * @param {gmfx.AuthenticationEvent} evt Event.
    */
   const userChange = (evt) => {
+    if (this.loginRedirectUrl) {
+      window.location = this.loginRedirectUrl;
+      return;
+    }
     const user = evt.detail.user;
     const roleId = (user.username !== null) ? user.role_id : undefined;
 

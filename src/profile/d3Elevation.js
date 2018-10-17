@@ -408,7 +408,7 @@ const exports = function(options) {
         line = d3.line()
           .x(d => x(distanceExtractor(d)))
           .y(d => y(linesConfiguration[name].zExtractor(d)))
-          .defined(d => d.value !== null);
+          .defined(d => linesConfiguration[name].zExtractor(d) !== null);
 
 
         // Update path for the line.

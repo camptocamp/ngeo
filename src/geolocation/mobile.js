@@ -128,7 +128,7 @@ exports.Controller_ = function($scope, $element,
   }
 
   // handle geolocation error.
-  this.geolocation_.on('error', function(error) {
+  this.geolocation_.on('error', (error) => {
     this.untrack_();
     let msg;
     switch (error.code) {
@@ -147,7 +147,7 @@ exports.Controller_ = function($scope, $element,
     }
     this.notification_.error(msg);
     $scope.$emit(exports.GeolocationEventType.ERROR, error);
-  }, this);
+  });
 
   /**
    * @type {ol.Feature}

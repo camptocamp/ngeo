@@ -64,6 +64,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * Example:
  *
  *      <gmf-authentication
+ *        gmf-authentication-info-message="mainCtrl.loginInfoMessage"
  *        gmf-authentication-allow-password-change="::true">
  *      </gmf-authentication>
  *
@@ -80,6 +81,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  *     should also allow the user to change its password. Don't add this option alone, use
  *     it in a dedicated authentication component, in a ngeo-modal, directly in
  *     your index.html (see example 2.)
+ * @htmlAttribute {string} gmf-authentication-info-message Message to show above the authentication form.
  *
  * Example 2:
  *
@@ -107,7 +109,8 @@ exports.component_ = {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
     'passwordValidator': '<?gmfAuthenticationPasswordValidator',
-    'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange'
+    'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange',
+    'infoMessage': '=?gmfAuthenticationInfoMessage'
   },
   controller: 'GmfAuthenticationController',
   templateUrl: gmfAuthenticationTemplateUrl
@@ -189,6 +192,12 @@ exports.AuthenticationController_ = class {
      * @export
      */
     this.forcePasswordChange;
+
+    /**
+     * @type {?string}
+     * @export
+     */
+    this.infoMessage = null;
 
     /**
      * @type {boolean}
