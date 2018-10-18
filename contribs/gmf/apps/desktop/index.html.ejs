@@ -10,14 +10,16 @@
     <% } %>
   </head>
   <body ng-class="{'gmf-profile-chart-active': !!profileChartActive}">
-    <header>
-      <div class="logo">
-        <img src="<%=require("./image/logo.png")%>" />
-        <span>by Camptocamp</span>
-      </div>
-    </header>
+  <div ng-show="mainCtrl.loading" class="loading-mask">
+    <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+  </div>
+  <header>
+    <div class="logo">
+      <img src="<%=require("./image/logo.png")%>" />
+      <span>by Camptocamp</span>
+    </div>
+  </header>
     <main>
-      <div class="gmf-app-data-panel"
       <div class="gmf-app-data-panel"
            ngeo-resizemap="mainCtrl.map"
            ngeo-resizemap-state="mainCtrl.dataPanelActive"

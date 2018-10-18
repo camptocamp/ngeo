@@ -14,6 +14,11 @@
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+  <div ng-show="mainCtrl.loading" class="loading-mask">
+    <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+    &nbsp;
+    <img src="<%=require("./image/logo.png")%>" />
+  </div>
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map
         gmf-map-map="mainCtrl.map"

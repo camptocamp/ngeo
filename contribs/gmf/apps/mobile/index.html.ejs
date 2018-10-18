@@ -11,9 +11,15 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
     <% } %>
   </head>
+
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+  <div ng-show="mainCtrl.loading" class="loading-mask">
+    <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
+    &nbsp;
+    <img src="<%=require("./image/logo.png")%>" />
+  </div>
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map
         gmf-map-map="mainCtrl.map"
@@ -21,7 +27,8 @@
         gmf-map-resize-transition="mainCtrl.resizeTransition"
         ngeo-map-query=""
         ngeo-map-query-map="::mainCtrl.map"
-        ngeo-map-query-active="mainCtrl.queryActive"></gmf-map>
+        ngeo-map-query-active="mainCtrl.queryActive">
+      </gmf-map>
       <gmf-displayquerywindow
         gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
         gmf-displayquerywindow-defaultcollapsed="false">

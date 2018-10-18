@@ -6,7 +6,6 @@ import 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
-
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
 import gmfDatasourceModule from 'gmf/datasource/module.js';
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
@@ -103,6 +102,16 @@ const exports = function(config, $scope, $injector) {
    * @private
    */
   this.gmfThemes_ = $injector.get('gmfThemes');
+
+  /**
+   * Checks if the themes are loaded
+   * @type {boolean}
+   * @export
+   */
+  this.loading = true;
+  this.gmfThemes_.getThemesObject().finally((themes) => {
+    this.loading = false;
+  });
 
   /**
    * Permalink service
