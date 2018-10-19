@@ -13,10 +13,10 @@ import {get as getProjection} from 'ol/proj.js';
 
 import * as constants from './constants.js';
 
-// FIXME: temporary
-import SwisstopoSource from '@geoblocks/sources/Swisstopo.js';
-import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
+import * as themes from './Themes.js';
 
+import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
+import EPSG2056 from '@geoblocks/sources/EPSG2056.js';
 
 class Map {
 
@@ -33,7 +33,7 @@ class Map {
      * @type {View}
      */
     this.view_ = new View({
-      projection: getProjection(constants.projection || 'EPSG:21781'),
+      projection: getProjection(constants.projection),
       resolutions: constants.resolutions,
       zoom: options.zoom !== undefined ? options.zoom : 10,
       center: options.center
@@ -49,17 +49,13 @@ class Map {
       view: this.view_
     });
 
-    // FIXME: temporary
-    const background = new TileLayer({
-      source: new SwisstopoSource({
-        layer: 'ch.swisstopo.pixelkarte-farbe',
-        format: 'image/jpeg',
-        timestamp: 'current',
-        projection: EPSG21781,
-        crossOrigin: 'anonymous'
-      })
+    themes.getBackgroundLayers().then((layers) => {
+      for (const layer of layers) {
+        if (layer.get('config.layer') === constants.backgroundLayer) {
+          this.map_.addLayer(layer);
+        }
+      }
     });
-    this.map_.addLayer(background);
 
     /**
      * @private
@@ -72,10 +68,12 @@ class Map {
      * @type {VectorLayer}
      */
     this.vectorLayer_ = new VectorLayer({
+      zIndex: 1,
       source: this.vectorSource_
     });
 
     this.map_.addLayer(this.vectorLayer_);
+
   }
 
   /**
