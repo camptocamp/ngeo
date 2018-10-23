@@ -44,6 +44,9 @@ module.exports = {
         cache: true,
         parallel: true,
         sourceMap: true,
+        uglifyOptions: {
+          compress: false
+        }
       })
     ]
   },
