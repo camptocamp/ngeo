@@ -1,4 +1,4 @@
-import Map from './Map.js';
+import Map from './src/Map.js';
 
 const lib = {
   Map

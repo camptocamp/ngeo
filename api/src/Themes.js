@@ -4,15 +4,17 @@ import TileLayer from 'ol/layer/Tile.js';
 
 import * as constants from './constants.js';
 
-const themes = fetch(constants.themesUrl).then((response) => response.json());
-
+/**
+ * @type {Promise}
+ */
+const themesPromise = fetch(constants.themesUrl).then((response) => response.json());
 
 export function getBackgroundLayers() {
-  return themes.then((themes) => {
+  return themesPromise.then((themes) => {
     const promises = [];
     for (const config of themes.background_layers) {
       if (config.type === 'WMTS') {
-        promises.push(capability(config.url).then((capability) => {
+        promises.push(getWMTSCapability(config.url).then((capability) => {
           const options = optionsFromCapabilities(capability, {
             crossOrigin: 'anonymous',
             layer: config.layer,
@@ -28,16 +30,18 @@ export function getBackgroundLayers() {
           layer.set('config.name', config.name);
           return layer;
         }));
+      } else if (config.type === 'WMS') {
+        console.log(config);
+        // FIXME?
       }
     }
     return Promise.all(promises);
   });
 }
 
-
 const capabilities = new Map();
 
-function capability(url) {
+function getWMTSCapability(url) {
   if (!(url in capabilities)) {
     const request = fetch(url)
       .then((response) => response.text())

@@ -9,6 +9,11 @@ import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import TileLayer from 'ol/layer/Tile.js';
 
+import MousePosition from 'ol/control/MousePosition.js';
+import {createStringXY} from 'ol/coordinate.js';
+import ScaleLine from 'ol/control/ScaleLine.js';
+import OverviewMap from 'ol/control/OverviewMap.js';
+
 import {get as getProjection} from 'ol/proj.js';
 
 import * as constants from './constants.js';
@@ -25,6 +30,7 @@ class Map {
    * @property {string} div
    * @property {ol.Coordinate} center
    * @property {number} [zoom=10]
+   * @property {boolean} [showCoords=true]
    * TODO: more options
    */
   constructor(options) {
@@ -44,10 +50,27 @@ class Map {
      * @type {OLMap}
      */
     this.map_ = new OLMap({
-      controls: [],
       target: options.div,
       view: this.view_
     });
+
+
+    this.map_.addControl(new ScaleLine());
+
+    if (options.showCoords) {
+      this.map_.addControl(new MousePosition({
+        coordinateFormat: createStringXY(0)
+      }));
+    }
+    if (options.addMiniMap) {
+      this.map_.addControl(new OverviewMap({
+        collapsed: !options.layerSwitcherExpanded,
+        view: new View({
+          projection: this.view_.getProjection(),
+          resolutions: this.view_.getResolutions()
+        })
+      }));
+    }
 
     themes.getBackgroundLayers().then((layers) => {
       for (const layer of layers) {
