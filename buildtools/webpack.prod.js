@@ -33,9 +33,7 @@ module.exports = {
         parallel: true,
         sourceMap: true,
         uglifyOptions: {
-          compress: {
-            sequences: false, // workaround uglify bug with sequences
-          }
+          compress: false
         }
       })
     ]

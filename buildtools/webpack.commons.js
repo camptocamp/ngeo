@@ -28,6 +28,9 @@ const ngeoRule = {
   use: {
     loader: 'babel-loader',
     options: {
+      babelrc: false,
+      comments: false,
+      cacheDirectory: true,
       presets: babelPresets,
       plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
     }
@@ -41,6 +44,8 @@ const otherRule = {
     loader: 'babel-loader',
     options: {
       babelrc: false,
+      comments: false,
+      cacheDirectory: true,
       presets: babelPresets,
       plugins: [
         '@babel/plugin-syntax-object-rest-spread',
