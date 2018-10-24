@@ -36,6 +36,8 @@ const babelPresets = [['env', {
 const babelAnnotateUse = {
   loader: 'babel-loader',
   options: {
+    comments: false,
+    cacheDirectory: true,
     presets: babelPresets,
     plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
   }
@@ -72,6 +74,8 @@ const olRule = {
     loader: 'babel-loader',
     options: {
       babelrc: false,
+      comments: false,
+      cacheDirectory: true,
       presets: babelPresets,
     }
   }
@@ -83,6 +87,8 @@ const olcsRule = {
     loader: 'babel-loader',
     options: {
       babelrc: false,
+      comments: false,
+      cacheDirectory: true,
       presets: babelPresets,
     }
   }
