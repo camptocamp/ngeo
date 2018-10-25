@@ -127,13 +127,14 @@ exports.directive('gmfElevation', exports.component_);
  * @param {!angular.$filter} $filter Angular filter.
  * @param {!ngeox.miscDebounce} ngeoDebounce Ngeo debounce factory
  * @param {!gmf.raster.RasterService} gmfRaster Gmf Raster service
+ * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
-exports.Controller_ = function($scope, $filter, ngeoDebounce, gmfRaster) {
+exports.Controller_ = function($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 
   /**
    * @type {!angular.$filter}
@@ -152,6 +153,12 @@ exports.Controller_ = function($scope, $filter, ngeoDebounce, gmfRaster) {
    * @private
    */
   this.gmfRaster_ = gmfRaster;
+
+  /**
+   * @type {angularGettext.Catalog}
+   * @private
+   */
+  this.gettextCatalog = gettextCatalog;
 
   /**
    * @type {!Object.<string, gmf.raster.component.LayerConfig>}
@@ -281,9 +288,10 @@ exports.Controller_.prototype.getRasterSuccess_ = function(resp) {
     const separator = postfix.length > 0 ?
       (options.hasOwnProperty('separator') ? options.separator : '\u00a0') : '';
     const args = Array.prototype.concat([value], custom_args);
-    this.elevation = this.filter_(filter).apply(args) + separator + postfix;
+    this.elevation = this.filter_(filter)(...args) + separator + postfix;
   } else {
-    this.elevation = undefined;
+    const gettextCatalog = this.gettextCatalog;
+    this.elevation = gettextCatalog.getString('No value');
   }
   this.loading = false;
 };
