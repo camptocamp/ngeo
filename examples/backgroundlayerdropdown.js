@@ -22,6 +22,11 @@ exports.module = angular.module('app', [
 ]);
 
 
+exports.module.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('partials/backgroundlayerdropdown', require('./partials/backgroundlayerdropdown.html'));
+});
+
+
 /**
  * The application-specific background layer component.
  *
@@ -34,7 +39,7 @@ exports.backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
-  template: require('./partials/backgroundlayerdropdown.html'),
+  templateUrl: 'partials/backgroundlayerdropdown',
   controller: 'AppBackgroundlayerController'
 };
 

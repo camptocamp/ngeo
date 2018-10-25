@@ -3,7 +3,7 @@
     {{$ctrl.currentBgLayer.name}}
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li ng-repeat="layer in ::$ctrl.bgLayers">
+    <li class="dropdown-item" ng-repeat="layer in ::$ctrl.bgLayers">
       <a href ng-click="$ctrl.setLayer(layer)">{{::layer.name}}</a>
     </li>
   </ul>

@@ -37,6 +37,11 @@ exports.module = angular.module('app', [
 ]);
 
 
+exports.module.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
+});
+
+
 /**
  * App-specific component wrapping the measure tools. The component's
  * controller has a property "map" including a reference to the OpenLayers
@@ -50,7 +55,7 @@ exports.measuretoolsComponent = {
     'lang': '=appMeasuretoolsLang'
   },
   controller: 'AppMeasuretoolsController',
-  template: require('./partials/measuretools.html')
+  templateUrl: 'partials/measuretools'
 };
 
 exports.module.component('appMeasuretools', exports.measuretoolsComponent);
