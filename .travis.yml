@@ -37,6 +37,7 @@ before_install:
 - /opt/google/chrome/chrome --version
 - git config --global user.name "Travis"
 - git config --global user.email "travis@travis-ci.org"
+- buildtools/set-version
 
 install:
 - export GIT_BRANCH=${TRAVIS_BRANCH}
