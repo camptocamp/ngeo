@@ -17,7 +17,7 @@ GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
-GMF_APPS += mobile desktop desktop_alt mobile_alt oeedit oeview
+GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit oeview
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(GMF_ALL_SRC_FILES)
@@ -249,6 +249,7 @@ gh-pages: .build/python-venv.timestamp
 		--app 'Desktop application' apps/desktop.html 'The desktop example application for GeoMapFish.' \
 		--app 'Alternate mobile application' apps/mobile_alt.html 'An alternate mobile example application for GeoMapFish.' \
 		--app 'Alternate desktop application' apps/desktop_alt.html 'An alternate desktop example application for GeoMapFish.' \
+		--app 'Iframe api application' apps/iframe_api.html 'A desktop application for GeoMapFish without any tools that can be used within an iframe.' \
 		--app 'Object editing viewer' apps/oeview.html 'An example application for viewing an object.' \
 		--app 'Object editing editor' apps/oeedit.html 'An example application for editing an object.' \
 		$< $(GMF_EXAMPLES_HTML_FILES) > $@

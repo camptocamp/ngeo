@@ -1,0 +1,25 @@
+@import '~gmf/controllers/desktop.scss';
+
+body {
+  padding: 0;
+}
+
+.ol-attribution {
+  display: block;
+}
+
+.ol-scale-line {
+  bottom: $app-margin;
+  left: $app-margin;
+}
+
+.gmf-app-map-container .gmf-displayquerywindow,
+.ngeo-displaywindow {
+  bottom: $app-margin + 2rem;
+  left: auto;
+  right: $app-margin;
+}
+
+.gmf-backgroundlayerbutton {
+  bottom: $app-margin + 2rem;
+}
