@@ -173,7 +173,7 @@ const exports = function(options) {
      * @return {string} Elevation.
      */
     yhover(ele, units) {
-      return `${Math.round(ele)} m`;
+      return ele !== null ? `${Math.round(ele)} m` : '';
     },
     /**
      * @param {number} dist Distance.
@@ -545,20 +545,18 @@ const exports = function(options) {
     g.select('.x.grid-hover text')
       .text(formatter.xhover(dist / xFactor, xUnits))
       .style('text-anchor', right ? 'end' : 'start')
-      .attr('transform', `translate(${xtranslate},${
-        height - 10})`);
+      .attr('transform', `translate(${xtranslate},${height - 10})`);
 
     const yUnits = 'm';
     // Display altitude on guides only if there is one line.
     if (numberOfLines === 1) {
+      const text = elevations[0] === null ? 'no value' : formatter.yhover(elevations[0], 'm');
       g.select('.y.grid-hover text')
-        .text(formatter.yhover(elevations[0], 'm'))
+        .text(text)
         .style('text-anchor', right ? 'end' : 'start')
-        .attr('transform', `translate(${xtranslate},${
-          y(elevations[0]) - 10})`);
+        .attr('transform', `translate(${xtranslate},${y(elevations[0]) - 10})`);
     }
-    hoverCallback.call(null, point, dist / xFactor, xUnits, elevationsRef,
-      yUnits);
+    hoverCallback.call(null, point, dist / xFactor, xUnits, elevationsRef, yUnits);
   };
 
 
@@ -607,15 +605,9 @@ const exports = function(options) {
     poiEnterG.selectAll('text')
       .attr('transform', (d) => {
         if (light) {
-          return ['translate(',
-            x(pe.dist(d)), ',',
-            y(pe.z(d)) - 10, ')'
-          ].join('');
+          return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 10})`];
         } else {
-          return ['translate(',
-            x(pe.dist(d)), ',',
-            y(pe.z(d)) - 20, ') rotate(', poiLabelAngle, ')'
-          ].join('');
+          return [`translate(${x(pe.dist(d))},${y(pe.z(d)) - 20}) rotate(${poiLabelAngle})`];
         }
       })
       .text(d => pe.sort(d) + (light ? '' : (` - ${pe.title(d)}`)));
