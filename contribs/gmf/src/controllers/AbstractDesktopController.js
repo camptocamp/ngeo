@@ -1,7 +1,7 @@
 /**
  * @module gmf.controllers.AbstractDesktopController
  */
-import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
@@ -9,21 +9,11 @@ import gmfPrintComponent from 'gmf/print/component.js';
 import gmfProfileModule from 'gmf/profile/module.js';
 import gmfRasterComponent from 'gmf/raster/component.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
-import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
-import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import gmfImportModule from 'gmf/import/module.js';
 import * as olBase from 'ol/index.js';
-import * as olProj from 'ol/proj.js';
-import * as olObj from 'ol/obj.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
-import olMap from 'ol/Map.js';
-import olView from 'ol/View.js';
-import olControlScaleLine from 'ol/control/ScaleLine.js';
-import olControlZoom from 'ol/control/Zoom.js';
-import olControlRotate from 'ol/control/Rotate.js';
-import * as olInteraction from 'ol/interaction.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -48,41 +38,7 @@ import olStyleText from 'ol/style/Text.js';
  */
 const exports = function(config, $scope, $injector) {
 
-  const viewConfig = {
-    projection: olProj.get(`EPSG:${config.srid || 21781}`)
-  };
-  olObj.assign(viewConfig, config.mapViewConfig || {});
-
-  const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
-
-  /**
-   * @type {ol.Map}
-   * @export
-   */
-  this.map = new olMap({
-    pixelRatio: config.mapPixelRatio,
-    layers: [],
-    view: new olView(viewConfig),
-    controls: config.mapControls || [
-      new olControlScaleLine({
-        target: document.getElementById('scaleline')
-      }),
-      new olControlZoom({
-        zoomInTipLabel: '',
-        zoomOutTipLabel: ''
-      }),
-      new olControlRotate({
-        label: arrow,
-        tipLabel: ''
-      })
-    ],
-    interactions: config.mapInteractions || olInteraction.defaults({
-      pinchRotate: true,
-      altShiftDragRotate: true
-    }),
-    loadTilesWhileAnimating: true,
-    loadTilesWhileInteracting: true
-  });
+  gmfControllersAbstractAPIController.call(this, config, $scope, $injector);
 
   /**
    * @type {boolean}
@@ -210,8 +166,6 @@ const exports = function(config, $scope, $injector) {
    */
   this.profileLine = null;
 
-  gmfControllersAbstractAppController.call(this, config, $scope, $injector);
-
   // Close the login panel on successful login.
   $scope.$watch(() => this.gmfUser.username, (newVal) => {
     if (newVal !== null && this.loginActive) {
@@ -279,7 +233,7 @@ const exports = function(config, $scope, $injector) {
   this.setDataPanelMaxResizableWidth_();
 };
 
-olBase.inherits(exports, gmfControllersAbstractAppController);
+olBase.inherits(exports, gmfControllersAbstractAPIController);
 
 /**
  * Set the data panel (on the left) maximum resizable width depending
@@ -314,7 +268,7 @@ exports.prototype.setDataPanelMaxResizableWidth_ = function() {
 };
 
 exports.module = angular.module('GmfAbstractDesktopControllerModule', [
-  gmfControllersAbstractAppController.module.name,
+  gmfControllersAbstractAPIController.module.name,
   gmfContextualdataModule.name,
   gmfEditingModule.name,
   gmfPermalinkShareComponent.name,
@@ -322,20 +276,12 @@ exports.module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfProfileModule.name,
   gmfRasterComponent.name,
   ngeoDrawFeatures.name,
-  ngeoMapResizemap.name,
-  ngeoQueryBboxQueryComponent.name,
   gmfImportModule.name,
 ]);
 
 exports.module.controller(
   'AbstractDesktopController',
   exports);
-
-exports.module.value('isDesktop', true);
-
-exports.module.value('ngeoQueryOptions', {
-  'limit': 20
-});
 
 exports.module.value('ngeoMeasurePrecision', 3);
 exports.module.value('ngeoMeasureDecimals', 0);

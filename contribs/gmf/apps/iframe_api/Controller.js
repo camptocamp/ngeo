@@ -9,7 +9,7 @@
  */
 
 import './sass/iframe_api.scss';
-import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
@@ -29,12 +29,12 @@ if (!window.requestAnimationFrame) {
  * @param {angular.Scope} $scope Scope.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractDesktopController}
+ * @extends {gmf.controllers.AbstractAPIController}
  * @ngInject
  * @export
  */
 const exports = function($scope, $injector) {
-  gmfControllersAbstractDesktopController.call(this, {
+  gmfControllersAbstractAPIController.call(this, {
     srid: 21781,
     mapViewConfig: {
       center: [632464, 185457],
@@ -61,11 +61,11 @@ const exports = function($scope, $injector) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractDesktopController);
+olBase.inherits(exports, gmfControllersAbstractAPIController);
 
 exports.module = angular.module('Appiframe_api', [
   appBase.module.name,
-  gmfControllersAbstractDesktopController.module.name,
+  gmfControllersAbstractAPIController.module.name,
 ]);
 
 exports.module.controller('IframeAPIController', exports);
