@@ -41,8 +41,7 @@ exports.value('gmfProfileTemplateUrl',
    */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfProfileTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/profile';
+    return templateUrl !== undefined ? templateUrl : 'gmf/profile';
   });
 
 exports.run(/* @ngInject */ ($templateCache) => {
@@ -507,30 +506,25 @@ exports.Controller_.prototype.outCallback_ = function() {
 
 
 /**
- * @return {string} A texte formatted to a tooltip.
+ * @return {string} A text formatted to a tooltip.
  * @private
  */
 exports.Controller_.prototype.getTooltipHTML_ = function() {
-  const separator = ' : ';
+  const gettextCatalog = this.gettextCatalog_;
+  const separator = '&nbsp;: ';
   let elevationName, translatedElevationName;
   const innerHTML = [];
   const number = this.$filter_('number');
   const DistDecimal = this.currentPoint.xUnits === 'm' ? 0 : 2;
-  innerHTML.push(
-    `${this.profileLabels_.xAxis +
-      separator +
-      number(this.currentPoint.distance, DistDecimal)
-    } ${
-      this.currentPoint.xUnits}`
-  );
+  const value = number(this.currentPoint.distance, DistDecimal);
+  innerHTML.push(`${this.profileLabels_.xAxis} ${separator} ${value}&nbsp;${this.currentPoint.xUnits}`);
   for (elevationName in this.currentPoint.elevations) {
-    translatedElevationName = this.gettextCatalog_.getString(elevationName);
-    innerHTML.push(
-      `${translatedElevationName +
-        separator +
-        number(this.currentPoint.elevations[elevationName], 0)
-      } ${this.currentPoint.yUnits}`
-    );
+    translatedElevationName = gettextCatalog.getString(elevationName);
+    const int_value = this.currentPoint.elevations[elevationName];
+    const value = int_value === null ?
+      gettextCatalog.getString('no value') :
+      `${number(int_value, 0)}&nbsp;${this.currentPoint.yUnits}`;
+    innerHTML.push(`${translatedElevationName} ${separator} ${value}`);
   }
   return innerHTML.join('</br>');
 };
@@ -559,8 +553,7 @@ exports.Controller_.prototype.createMeasureTooltip_ = function() {
  */
 exports.Controller_.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
-    this.measureTooltipElement_.parentNode.removeChild(
-      this.measureTooltipElement_);
+    this.measureTooltipElement_.parentNode.removeChild(this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
     this.map_.removeOverlay(this.measureTooltip_);
   }
@@ -568,17 +561,19 @@ exports.Controller_.prototype.removeMeasureTooltip_ = function() {
 
 
 /**
- * Return the color value of a gmfx.ProfileLineConfiguration.
+ * Return the styler value of a gmfx.ProfileLineConfiguration.
  * @param {string} layerName name of the elevation layer.
- * @return {string|undefined} A HEX color or undefined is nothing is found.
+ * @return {object} The object representation of the style.
  * @export
  */
-exports.Controller_.prototype.getColor = function(layerName) {
+exports.Controller_.prototype.getStyle = function(layerName) {
   const lineConfiguration = this.linesConfiguration_[layerName];
   if (!lineConfiguration) {
-    return undefined;
+    return {};
   }
-  return lineConfiguration.color;
+  return {
+    'color': lineConfiguration.color || '#F00'
+  };
 };
 
 
@@ -605,7 +600,7 @@ exports.Controller_.prototype.getZFactory_ = function(layerName) {
    * @private
    */
   const getZFn = function(item) {
-    if ('values' in item && layerName in item['values']) {
+    if ('values' in item && layerName in item['values'] && item['values'][layerName]) {
       return parseFloat(item['values'][layerName]);
     }
     return null;
