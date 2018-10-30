@@ -125,16 +125,20 @@ exports.prototype.updateLayerState_ = function(layer, treeCtrl) {
     // First level non mixed group
     googAsserts.assertInstanceof(layer, olLayerImage);
     const names = [];
+    const styles = [];
     treeCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.children === undefined && treeCtrl.getState() === 'on') {
         names.push(treeCtrl.node.layers);
+        const style = (treeCtrl.node.style !== undefined) ? treeCtrl.node.style : '';
+        styles.push(style);
       }
     });
     if (names.length === 0) {
       layer.setVisible(false);
     }
     /** @type {ol.source.ImageWMS} */ (layer.getSource()).updateParams({
-      'LAYERS': names.reverse().join(',')
+      'LAYERS': names.reverse().join(','),
+      'STYLES': styles.reverse().join(',')
     });
     if (names.length !== 0) {
       layer.setVisible(true);
@@ -262,13 +266,16 @@ exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
     googAsserts.assert(ogcServer.type);
     googAsserts.assert(gmfLayerWMS.layers);
     googAsserts.assert(ogcServer.imageType);
+
+    const opt_params = {STYLES: gmfLayerWMS.style};
+
     layer = this.layerHelper_.createBasicWMSLayer(
       ogcServer.url,
       gmfLayerWMS.layers,
       ogcServer.imageType,
       ogcServer.type,
       timeParam,
-      undefined, // WMS parameters
+      opt_params, // WMS parameters
       ogcServer.credential ? 'use-credentials' : 'anonymous'
     );
   }

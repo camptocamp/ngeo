@@ -27,7 +27,7 @@
     <td translate>
       Elevation (SRTM)
     </td>
-    <td>
+    <td ng-if="srtm">
       {{srtm | number}} [m]
     </td>
   </tr>
@@ -35,7 +35,7 @@
     <td translate>
       Elevation (Aster)
     </td>
-    <td>
+    <td ng-if="aster">
       {{aster | number}} [m]
     </td>
   </tr>

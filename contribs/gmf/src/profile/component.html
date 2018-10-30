@@ -17,8 +17,11 @@
     <li ng-repeat="name in ::ctrl.getLayersNames()">
       <i
         class="fa fa-minus"
-        style="color:{{::ctrl.getColor(name)}};"></i>
-      &nbsp;{{name | translate}}&nbsp;{{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
+        ng-style="ctrl.getStyle(name)"></i>
+      {{name | translate}}
+      <span ng-if="ctrl.currentPoint.elevations[name] != null">
+      {{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
+      </span>
     </li>
   </ul>
 
