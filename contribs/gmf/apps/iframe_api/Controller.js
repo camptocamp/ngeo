@@ -14,7 +14,6 @@ import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
 import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import * as olBase from 'ol/index.js';
-import olAttribution from 'ol/control/Attribution.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -45,12 +44,6 @@ const exports = function($scope, $injector) {
 
   this.ngeoProjEPSG2056 = ngeoProjEPSG2056;
   this.ngeoProjEPSG21781 = ngeoProjEPSG21781;
-
-  this.map.addControl(
-    new olAttribution({
-      collapsible: false
-    })
-  );
 
   if ($injector.has('sentryUrl')) {
     const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
