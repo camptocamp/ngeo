@@ -38,3 +38,6 @@
 .ngeo-tooltip-static:before {
   border-top-color: #ffcc33;
 }
+.custom-select {
+  width: 4rem;
+}

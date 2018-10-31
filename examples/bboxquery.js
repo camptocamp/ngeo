@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './bboxquery.css';
 import EPSG21781 from 'ngeo/proj/EPSG21781.js';
 
@@ -91,14 +92,14 @@ exports.MainController = function($scope, ngeoDataSources) {
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+      'url': appURL.MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+      'url': appURL.MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });
@@ -129,7 +130,8 @@ exports.MainController = function($scope, ngeoDataSources) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wfsUrl: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+    wfsFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
+    wfsUrl: appURL.MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -140,7 +142,8 @@ exports.MainController = function($scope, ngeoDataSources) {
     id: 2,
     name: 'information',
     visible: true,
-    wfsUrl: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+    wfsFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
+    wfsUrl: appURL.MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'information',
       queryable: true

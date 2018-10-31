@@ -9,11 +9,13 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.message.modalComponent.html" title="Read our documentation">ngeo-modal</a></code> directive to open a modal.</p>
-    <button ng-click="ctrl.modalShown = true">Show modal</button>
+    <button
+        class="btn btn-primary"
+        ng-click="ctrl.modalShown = true">Show modal</button>
     <ngeo-modal ng-model="ctrl.modalShown">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         ...

@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './search.css';
 import googAsserts from 'goog/asserts.js';
 
@@ -162,7 +163,7 @@ exports.SearchController.prototype.createVectorLayer_ = function() {
  * @private
  */
 exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
-  const url = 'https://geomapfish-demo-dc.camptocamp.com/2.4/fulltextsearch?query=%QUERY';
+  const url = appURL.SEARCH;
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG21781);
   bloodhound.initialize();
   return bloodhound;

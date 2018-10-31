@@ -3,10 +3,13 @@
 <ul class="nav nav-tabs"
     role="tablist">
   <li ng-repeat="source in $ctrl.result.sources"
-      role="presentation"
-      ng-class="::{active: $index == 0}">
+      role="presentation">
     <a href="#{{ ::source.label }}"
        aria-controls="{{ ::source.label }}"
+       ng-attr-aria-selected="{{ $first }}"
+       class="nav-link"
+       id="{{ ::source.label }}-tab"
+       ng-class="::{active: $first}"
        role="tab"
        data-toggle="tab">
       <span>{{ ::source.label }}</span>
@@ -20,9 +23,10 @@
 
 <div class="tab-content">
   <div ng-repeat="source in $ctrl.result.sources"
+       aria-labelledby="{{ ::source.label }}-tab"
        role="tabpanel"
-       class="tab-pane"
-       ng-class="::{active: $index == 0}"
+       class="tab-pane fade"
+       ng-class="::{active: $first, show: $first}"
        id="{{ ::source.label }}">
     <div ng-switch="source.features.length">
       <div ng-switch-when="0">
