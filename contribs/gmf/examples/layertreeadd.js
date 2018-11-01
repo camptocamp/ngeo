@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './layertreeadd.css';
 import gmfDisclaimerModule from 'gmf/disclaimer/module.js';
 
@@ -36,8 +37,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background&interface=desktop');
+exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('gmfTreeManagerModeFlush', false);

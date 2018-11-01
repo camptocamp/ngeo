@@ -18,7 +18,10 @@ import olView from 'ol/View.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import olGeomPolygon, {
+  fromCircle as olGeomPolygonFromCircle,
+  fromExtent as olGeomPolygonFromExtent
+} from 'ol/geom/Polygon.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
@@ -131,7 +134,7 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
   features.push(new olFeature(poly2Properties));
 
   const rectProperties = {
-    geometry: olGeomPolygon.fromExtent([-7874848, 6496535, -7730535, 6384020])
+    geometry: olGeomPolygonFromExtent([-7874848, 6496535, -7730535, 6384020])
   };
   rectProperties[ngeoFormatFeatureProperties.COLOR] = '#000000';
   rectProperties[ngeoFormatFeatureProperties.IS_RECTANGLE] = true;
@@ -141,7 +144,7 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
   features.push(new olFeature(rectProperties));
 
   const circleProperties = {
-    geometry: olGeomPolygon.fromCircle(
+    geometry: olGeomPolygonFromCircle(
       new olGeomCircle([-7691093, 6166327], 35000), 64)
   };
   circleProperties[ngeoFormatFeatureProperties.COLOR] = '#000000';
@@ -188,7 +191,7 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
    */
   this.selectedFeature = null;
 
-  this.map.on('singleclick', this.handleMapSingleClick_, this);
+  this.map.on('singleclick', this.handleMapSingleClick_.bind(this), this);
 };
 
 

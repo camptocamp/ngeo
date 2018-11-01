@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './authentication.css';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
@@ -16,7 +17,7 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value(
   'authenticationBaseUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi');
+  appURL.GMF_DEMO);
 
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 

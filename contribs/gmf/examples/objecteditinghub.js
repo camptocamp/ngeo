@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './objecteditinghub.css';
 import googAsserts from 'goog/asserts.js';
 
@@ -22,12 +23,8 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
-
-
-exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
+exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

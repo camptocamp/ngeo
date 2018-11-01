@@ -3,6 +3,8 @@
  */
 import gmfBase from 'gmf/index.js';
 
+import gmfAuthenticationService from 'gmf/authentication/Service.js';
+
 /** @suppress {extraRequire} */
 import gmfThemeManager from 'gmf/theme/Manager.js';
 
@@ -1547,6 +1549,7 @@ exports.prototype.cleanParams = function(groups) {
 
 
 exports.module = angular.module('gmfPermalink', [
+  gmfAuthenticationService.module.name,
   gmfThemeManager.module.name,
   gmfThemeThemes.module.name,
   ngeoDrawFeatures.name,

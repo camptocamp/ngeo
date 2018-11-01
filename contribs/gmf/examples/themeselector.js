@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './themeselector.css';
 /** @suppress {extraRequire} */
 import gmfThemeModule from 'gmf/theme/module.js';
@@ -16,8 +17,7 @@ exports.module = angular.module('gmfapp', [
   gmfThemeModule.name,
 ]);
 
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
+exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 

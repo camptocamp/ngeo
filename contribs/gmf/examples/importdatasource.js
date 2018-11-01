@@ -4,6 +4,7 @@
 const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
+import appURL from './url.js';
 import './importdatasource.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 /** @suppress {extraRequire} */
@@ -45,15 +46,9 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
+exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
-
-
-exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
 
 exports.module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',

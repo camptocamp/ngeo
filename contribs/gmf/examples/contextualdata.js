@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './contextualdata.css';
 /** @suppress {extraRequire} */
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
@@ -25,9 +26,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value(
-  'gmfRasterUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/raster');
+exports.module.value('gmfRasterUrl', appURL.RASTER);
 
 exports.module.value(
   'gmfContextualdatacontentTemplateUrl',

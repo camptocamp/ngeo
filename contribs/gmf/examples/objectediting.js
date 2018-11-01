@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './objectediting.css';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
@@ -42,8 +43,8 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 exports.module.constant('defaultTheme', 'ObjectEditing');
-exports.module.constant('gmfLayersUrl', 'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
-exports.module.constant('gmfTreeUrl', 'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
+exports.module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
+exports.module.constant('gmfTreeUrl', appURL.GMF_THEMES);
 exports.module.constant('gmfObjectEditingToolsOptions', {
   regularPolygonRadius: 150
 });

@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './elevation.css';
 /** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
@@ -23,9 +24,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value(
-  'gmfRasterUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/raster');
+exports.module.value('gmfRasterUrl', appURL.RASTER);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
