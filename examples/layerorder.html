@@ -18,7 +18,7 @@
     <ul ngeo-sortable="ctrl.selectedLayers"
         ngeo-sortable-options="{handleClassName: 'sortable-handle', draggerClassName: 'sortable-dragger', currDragItemClassName: 'placeholder'}">
       <li ng-repeat="layer in ctrl.selectedLayers">
-        <span class="sortable-handle fa fa-reorder"></span>{{layer.get('name')}}
+        <span class="sortable-handle fa fa-bars"></span>{{layer.get('name')}}
       </li>
     </ul>
     <label>

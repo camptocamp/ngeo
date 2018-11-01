@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './mapfishprint.css';
 import EPSG21781 from 'ngeo/proj/EPSG21781.js';
 
@@ -25,22 +26,6 @@ const appmodule = angular.module('app', [
   ngeoPrintService.module.name,
   ngeoPrintUtils.module.name,
 ]);
-
-
-/**
- * @const
- * @private
- */
-exports.WMS_URL_ = 'https://geomapfish-demo-dc.camptocamp.com/2.4/' +
-    'mapserv_proxy';
-
-
-/**
- * @const
- * @private
- */
-exports.PRINT_URL_ = 'https://geomapfish-demo-dc.camptocamp.com/2.4/' +
-    'printproxy';
 
 
 /**
@@ -96,7 +81,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     layers: [
       new olLayerImage({
         source: new olSourceImageWMS({
-          url: exports.WMS_URL_,
+          url: appURL.MAPSERVER_PROXY,
           params: {
             'LAYERS': 'osm'
           },
@@ -137,7 +122,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    * @type {ngeo.print.Service}
    * @private
    */
-  this.print_ = ngeoCreatePrint(exports.PRINT_URL_);
+  this.print_ = ngeoCreatePrint(appURL.PRINT_PROXY);
 
   /**
    * @type {ngeo.print.Utils}

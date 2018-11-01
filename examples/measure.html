@@ -12,7 +12,10 @@
     <app-measuretools app-measuretools-map="::ctrl.map" app-measuretools-lang="ctrl.lang"></app-measuretools>
     <p>Use the following selector to change the language used for the measure tooltips.</p>
     <label>Select language:</label>
-    <select ng-options="lang for lang in ['en', 'fr']" ng-model="ctrl.lang"></select>
+    <select
+      class="custom-select"
+      ng-options="lang for lang in ['en', 'fr']"
+      ng-model="ctrl.lang"></select>
     <p id="desc">This example shows how to use the <code><a href="../apidoc/ngeo.interaction.MeasureLength.html" title="Read our documentation">ngeo.interaction.MeasureLength</a></code>, <code><a href="../apidoc/ngeo.interaction.MeasureArea.html" title="Read our documentation">ngeo.interaction.MeasureArea</a></code>, and <code><a href="../apidoc/ngeo.interaction.MeasureAzimut.html" title="Read our documentation">ngeo.interaction.MeasureAzimut</a></code> interactions to create measure tools for an OpenLayers map.</p>
   </body>
 </html>

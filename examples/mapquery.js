@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './mapquery.css';
 import EPSG21781 from 'ngeo/proj/EPSG21781.js';
 
@@ -16,6 +17,8 @@ import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
+import ngeoQueryModule from 'ngeo/query/module.js';
+
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -32,7 +35,13 @@ exports.module = angular.module('app', [
   ngeoMiscBtnComponent.name,
   ngeoMiscToolActivateMgr.module.name,
   ngeoQueryMapQueryComponent.name,
+  ngeoQueryModule.name,
 ]);
+
+
+exports.module.run(/* @ngInject */ ($templateCache) => {
+  $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
+});
 
 
 exports.module.value('ngeoQueryOptions', {
@@ -47,7 +56,7 @@ exports.module.value('ngeoQueryOptions', {
  */
 exports.queryresultComponent = {
   controller: 'AppQueryresultController',
-  template: require('./partials/queryresult.html')
+  templateUrl: 'partials/queryresult'
 };
 
 exports.module.component('appQueryresult', exports.queryresultComponent);
@@ -96,14 +105,14 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+      'url': appURL.MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+      'url': appURL.MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
@@ -134,7 +143,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wmsUrl: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+    wmsUrl: appURL.MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -145,7 +154,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
     id: 2,
     name: 'information',
     visible: true,
-    wmsUrl: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+    wmsUrl: appURL.MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'information',
       queryable: true

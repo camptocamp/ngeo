@@ -9,7 +9,9 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <div id="map" ngeo-map="ctrl.map"></div>
-    <button ng-click="ctrl.print()">Print</button>
+    <button
+        class="btn btn-primary"
+        ng-click="ctrl.print()">Print</button>
     <span ng-bind="ctrl.printState"></span>
     <p id="desc">This example shows how to use <code><a href="../apidoc/ngeo.createPrintServiceFactory.html" title="Read our documentation">ngeo.Print</a></code> to print an OpenLayers map with MapFish Print v3.</p>
     <p>In this example the best print scale is chosen based on the current map resolution.</p>
