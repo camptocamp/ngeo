@@ -11,7 +11,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 
 const SerDes = class {
   /**
-   * @param {Object} options
+   * @param {Object} options The options
    */
   constructor({gutter}) {
     /**
@@ -22,8 +22,8 @@ const SerDes = class {
 
   /**
    * @private
-   * @param {ol.Object} olObject
-   * @return {Object}
+   * @param {ol.Object} olObject An OL object
+   * @return {Object} The serializable properties of the object
    */
   createBaseObject_(olObject) {
     const properties = olObject.getProperties();
@@ -39,8 +39,8 @@ const SerDes = class {
   }
 
   /**
-   * @param {ol.tilegrid.TileGrid} tilegrid
-   * @return {string}
+   * @param {ol.tilegrid.TileGrid} tilegrid .
+   * @return {string} .
    */
   serializeTilegrid(tilegrid) {
     const obj = {};
@@ -53,7 +53,7 @@ const SerDes = class {
   }
 
   /**
-   * @param {string} serialization
+   * @param {string} serialization .
    * @return {ol.tilegrid.TileGrid} tilegrid
    */
   deserializeTilegrid(serialization) {
@@ -62,8 +62,8 @@ const SerDes = class {
   }
 
   /**
-   * @param {ol.tilegrid.WMTS} tilegrid
-   * @return {string|undefined}
+   * @param {ol.tilegrid.WMTS} tilegrid .
+   * @return {string|undefined} .
    */
   serializeTilegridWMTS(tilegrid) {
     if (!tilegrid) {
@@ -84,8 +84,8 @@ const SerDes = class {
   }
 
   /**
-   * @param {string} serialization
-   * @return {ol.tilegrid.WMTS} tilegrid
+   * @param {string} serialization .
+   * @return {ol.tilegrid.WMTS} tilegrid .
    */
   deserializeTilegridWMTS(serialization) {
     const options = /** @type {olx.tilegrid.WMTSOptions} */ (JSON.parse(serialization));
@@ -94,8 +94,8 @@ const SerDes = class {
 
 
   /**
-   * @param {ol.source.TileWMS} source
-   * @return {string}
+   * @param {ol.source.TileWMS} source .
+   * @return {string} .
    */
   serializeSourceTileWMS(source) {
     const obj = this.createBaseObject_(source);
@@ -111,9 +111,9 @@ const SerDes = class {
   }
 
   /**
-   * @param {string} serialization
-   * @param {function(ol.ImageTile, string)=} tileLoadFunction
-   * @return {ol.source.TileWMS} source
+   * @param {string} serialization .
+   * @param {function(ol.ImageTile, string)=} tileLoadFunction .
+   * @return {ol.source.TileWMS} source .
    */
   deserializeSourceTileWMS(serialization, tileLoadFunction) {
     const options = /** @type {olx.source.TileWMSOptions} */ (JSON.parse(serialization));
@@ -126,8 +126,8 @@ const SerDes = class {
   }
 
   /**
-   * @param {ol.source.WMTS} source
-   * @return {string}
+   * @param {ol.source.WMTS} source .
+   * @return {string} .
    */
   serializeSourceWMTS(source) {
     const obj = this.createBaseObject_(source);
@@ -151,9 +151,9 @@ const SerDes = class {
   }
 
   /**
-   * @param {string} serialization
-   * @param {function(ol.ImageTile, string)=} tileLoadFunction
-   * @return {ol.source.WMTS}
+   * @param {string} serialization .
+   * @param {function(ol.ImageTile, string)=} tileLoadFunction .
+   * @return {ol.source.WMTS} .
    */
   deserializeSourceWMTS(serialization, tileLoadFunction) {
     const options = /** @type {olx.source.WMTSOptions} */ (JSON.parse(serialization));
@@ -166,8 +166,8 @@ const SerDes = class {
 
   /**
    * @private
-   * @param {number} number
-   * @return {number}
+   * @param {number} number Some number which may be Infinity
+   * @return {number} The same number or an arbitrary big number instead of Infinity
    */
   makeInfinitySerializable_(number) {
     if (number === Infinity) {
@@ -177,9 +177,9 @@ const SerDes = class {
   }
 
   /**
-   * @param {ol.layer.Tile|ol.layer.Image} layer
-   * @param {ol.source.Source=} source
-   * @return {string}
+   * @param {ol.layer.Tile|ol.layer.Image} layer .
+   * @param {ol.source.Source=} source .
+   * @return {string} .
    */
   serializeTileLayer(layer, source) {
     const obj = this.createBaseObject_(layer);
@@ -200,9 +200,9 @@ const SerDes = class {
   }
 
   /**
-   * @param {string} serialization
-   * @param {function(ol.ImageTile, string)=} tileLoadFunction
-   * @return {ol.layer.Tile}
+   * @param {string} serialization .
+   * @param {function(ol.ImageTile, string)=} tileLoadFunction .
+   * @return {ol.layer.Tile} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
     const options = /** @type {olx.layer.TileOptions} */ (JSON.parse(serialization));

@@ -25,8 +25,8 @@ const exports = class extends olObservable {
   /**
    * @ngInject
    * @param {!angular.Scope} $rootScope The rootScope provider.
-   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
-   * @param {number} ngeoOfflineGutter
+   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr The background layer manager
+   * @param {number} ngeoOfflineGutter A gutter around the tiles to download (to avoid cut symbols)
    */
   constructor($rootScope, ngeoBackgroundLayerMgr, ngeoOfflineGutter) {
     super();
@@ -103,34 +103,34 @@ const exports = class extends olObservable {
 
   /**
    * Hook to allow measuring get/set item performance.
-   * @param {string} msg
-   * @param {string} key
-   * @param {Promise<?>} promise
-   * @return {Promise<?>}
+   * @param {string} msg A message
+   * @param {string} key The key to work on
+   * @param {Promise<?>} promise A promise
+   * @return {Promise<?>} The promise we passed
    */
   traceGetSetItem(msg, key, promise) {
     return promise;
   }
 
   /**
-   * @param {string} key
-   * @return {Promise<?>}
+   * @param {string} key The key
+   * @return {Promise<?>} A promise
    */
   getItem(key) {
     return this.traceGetSetItem('getItem', key, localforage.getItem(key));
   }
 
   /**
-   * @param {string} key
-   * @param {*} value
-   * @return {Promise<?>}
+   * @param {string} key The key
+   * @param {*} value A value
+   * @return {Promise<?>} A promise
    */
   setItem(key, value) {
     return this.traceGetSetItem('setItem', key, localforage.setItem(key, value));
   }
 
   /**
-   * @return {Promise}
+   * @return {Promise} A promise
    */
   clear() {
     this.setHasOfflineData(false);
@@ -138,15 +138,15 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @param {!ol.Map} map
-   * @return {number}
+   * @param {!ol.Map} map A map
+   * @return {number} An "estimation" of the size of the data to download
    */
   estimateLoadDataSize(map) {
     return 50;
   }
 
   /**
-   * @param {ngeox.OfflineLayerMetadata} layerItem
+   * @param {ngeox.OfflineLayerMetadata} layerItem The layer metadata
    * @return {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
@@ -155,9 +155,9 @@ const exports = class extends olObservable {
 
   /**
    * @override
-   * @param {number} progress
-   * @param {ngeox.OfflineTile} tile
-   * @return {Promise}
+   * @param {number} progress The download progress
+   * @param {ngeox.OfflineTile} tile The tile
+   * @return {Promise} A promise
    */
   onTileDownloadSuccess(progress, tile) {
     this.dispatchProgress_(progress);
@@ -170,8 +170,8 @@ const exports = class extends olObservable {
 
   /**
    * @override
-   * @param {number} progress
-   * @return {Promise}
+   * @param {number} progress The progress
+   * @return {Promise} A promise
    */
   onTileDownloadError(progress) {
     this.dispatchProgress_(progress);
@@ -179,11 +179,11 @@ const exports = class extends olObservable {
   }
 
   /**
-    * @param {ol.Map} map
-    * @param {ol.layer.Layer} layer
-    * @param {Array<ol.layer.Group>} ancestors
+    * @param {ol.Map} map A map
+    * @param {ol.layer.Layer} layer A layer
+    * @param {Array<ol.layer.Group>} ancestors The ancestors of that layer
     * @param {ol.Extent} userExtent The extent selected by the user.
-    * @return {Array<ngeox.OfflineExtentByZoom>}
+    * @return {Array<ngeox.OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -201,9 +201,9 @@ const exports = class extends olObservable {
 
   /**
    * @protected
-   * @param {ol.source.Source} source
-   * @param {ol.proj.Projection} projection
-   * @return {ol.source.Source}
+   * @param {ol.source.Source} source An ImageWMS source
+   * @param {ol.proj.Projection} projection The projection
+   * @return {ol.source.Source} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
     if (source instanceof olSourceImageWMS && source.getUrl() && source.getImageLoadFunction() === defaultImageLoadFunction) {
@@ -247,8 +247,9 @@ const exports = class extends olObservable {
           layerType = 'vector';
         }
 
+        const backgroundLayer = this.ngeoBackgroundLayerMgr_.get(map) === layer;
         layersItems.push({
-          backgroundLayer: this.ngeoBackgroundLayerMgr_.get(map) === layer,
+          backgroundLayer,
           map,
           extentByZoom,
           layerType,
@@ -268,15 +269,15 @@ const exports = class extends olObservable {
 
   /**
    * @private
-   * @param {ngeox.OfflinePersistentLayer} offlineLayer
-   * @return {function(ol.ImageTile, string)}
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer The offline layer
+   * @return {function(ol.ImageTile, string)} the tile function
    */
   createTileLoadFunction_(offlineLayer) {
     const that = this;
     /**
      * Load the tile from persistent storage.
-     * @param {ol.ImageTile} imageTile
-     * @param {string} src
+     * @param {ol.ImageTile} imageTile The image tile
+     * @param {string} src The tile URL
      */
     const tileLoadFunction = function(imageTile, src) {
       that.getItem(utils.normalizeURL(src)).then((content) => {
@@ -291,7 +292,7 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @param {ngeox.OfflinePersistentLayer} offlineLayer
+   * @param {ngeox.OfflinePersistentLayer} offlineLayer The layer to recreate
    * @return {ol.layer.Layer} the layer.
    */
   recreateOfflineLayer(offlineLayer) {
@@ -305,7 +306,7 @@ const exports = class extends olObservable {
   }
 
   /**
-   * @return {number}
+   * @return {number} The number
    */
   getMaxNumberOfParallelDownloads() {
     return 11;

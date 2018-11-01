@@ -34,7 +34,7 @@ exports.value('ngeoOfflineTemplateUrl',
 exports.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/offline/component.html', require('./component.html'));
 });
-  
+
 /**
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Attributes} $attrs Attributes.
@@ -535,7 +535,7 @@ exports.Controller = class {
 
   /**
    * A polygon on the whole extent of the projection, with a hole for the offline extent.
-   * @param {ol.Extent} extent
+   * @param {ol.Extent} extent An extent
    * @return {ol.geom.Polygon} Polygon to save, based on the projection extent, the center of the map and
    *     the extentSize property.
    * @private

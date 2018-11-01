@@ -35,7 +35,7 @@ const exports = class {
 
   /**
    * Return if we are in offline mode.
-   * @return {boolean}
+   * @return {boolean} whether offline mode is enabled
    * @export
    */
   isEnabled() {

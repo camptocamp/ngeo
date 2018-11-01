@@ -22,8 +22,8 @@ exports.traverseLayer = function(layer, ancestors, visitor) {
 const extractor = new RegExp('[^/]*//[^/]+/(.*)');
 /**
  * Extract the part after the URL authority.
- * @param {string} url
- * @return {string}
+ * @param {string} url A URL to normalize
+ * @return {string} The normalized string.
  */
 exports.normalizeURL = function(url) {
   const matches = url.match(extractor);

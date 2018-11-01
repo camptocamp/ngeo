@@ -8,6 +8,7 @@ rules:
     no-console: 0
     comma-dangle: 0
 globals:
+    localforage: false,
     angular: false
     Cesium: false
     google: false

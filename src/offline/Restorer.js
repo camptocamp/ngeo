@@ -9,7 +9,7 @@ class Restorer {
   /**
    * @ngInject
    * @param {ngeo.offline.Configuration} ngeoOfflineConfiguration A service for customizing offline behaviour.
-   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr
+   * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr The background layer manager.
    */
   constructor(ngeoOfflineConfiguration, ngeoBackgroundLayerMgr) {
     /**
@@ -26,9 +26,8 @@ class Restorer {
   }
 
   /**
-   * @public
-   * @param {ol.Map} map
-   * @return {Promise<ol.Extent>}
+   * @param {ol.Map} map The map to work on.
+   * @return {Promise<ol.Extent>} A promise to the extent of the restored area.
    */
   restore(map) {
     return this.configuration_.getItem('offline_content').then(offlineContent => this.doRestore(map, offlineContent));
@@ -36,9 +35,9 @@ class Restorer {
 
   /**
    * @protected
-   * @param {ol.Map} map
-   * @param {ngeox.OfflinePersistentContent} offlineContent
-   * @return {ol.Extent}
+   * @param {ol.Map} map A map
+   * @param {ngeox.OfflinePersistentContent} offlineContent The offline content
+   * @return {ol.Extent} The extent of the restored area
    */
   doRestore(map, offlineContent) {
     map.getLayerGroup().getLayers().clear();

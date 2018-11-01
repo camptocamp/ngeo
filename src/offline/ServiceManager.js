@@ -86,7 +86,7 @@ const exports = class {
   /**
    * Ask the provided service to restore the saved data on the map
    * @param {ol.Map} map The map to work on.
-   * @return {Promise<ol.Extent>}
+   * @return {Promise<ol.Extent>} A promise to the extent of the downloaded area
    */
   restore(map) {
     if (!this.restoreService_) {
