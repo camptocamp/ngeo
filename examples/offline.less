@@ -1,0 +1,74 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/less/font-awesome.less";
+
+#map {
+  width: 600px;
+  height: 400px;
+  position: relative;
+}
+
+ngeo-offline {
+  div {
+    z-index: 1;
+  }
+  .main-button {
+    position: absolute;
+    right: 1rem;
+    bottom: 5rem;
+    cursor: pointer;
+    .no-data {
+      color: black;
+    }
+    .with-data {
+      color: red;
+    }
+    .no-data, .with-data {
+      background-color: white;
+      text-align: center;
+      font-size: 2.5rem;
+      line-height: 2rem;
+      border-radius: 2rem;
+      font-family: FontAwesome;
+      &::after {
+        content: @fa-var-arrow-circle-o-down;
+      }
+    }
+  }
+
+  .validate-extent {
+    position: absolute;
+    bottom: 0.5rem;
+    width: 10rem;
+    left: calc(~"50% - 5rem");
+  }
+
+  .in-progress {
+    position: absolute;
+    left: calc(~"50% - 3.3rem");
+    top: calc(~"50% - 3rem");
+    color: white;
+    font-weight: bold;
+    background-color: #337ab7;
+    padding: 2rem 2rem;
+    border-radius: 1rem;
+  }
+
+  .modal-content {
+    width: 30rem;
+  }
+
+  .modal-body {
+    button {
+      display: block;
+      margin: 0.5rem auto;
+      width: 25rem;
+    }
+  }
+}
+
+.offline-msg {
+  display: none;
+}
+.offline .offline-msg {
+  display: block;
+}
