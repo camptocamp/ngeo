@@ -15,6 +15,7 @@ import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
 
+import {getCenter} from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
 import * as constants from './constants.js';
@@ -35,16 +36,23 @@ class Map {
    * TODO: more options
    */
   constructor(options) {
+
     /**
      * @private
      * @type {View}
      */
     this.view_ = new View({
       projection: getProjection(constants.projection),
+      extent: constants.extent,
       resolutions: constants.resolutions,
-      zoom: options.zoom !== undefined ? options.zoom : 10,
-      center: options.center
+      zoom: options.zoom !== undefined ? options.zoom : 10
     });
+
+    if (options.center !== undefined) {
+      this.view_.setCenter(options.center);
+    } else {
+      this.view_.setCenter(getCenter(constants.extent));
+    }
 
     /**
      * @private
