@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './editfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import EPSG21781 from 'ngeo/proj/EPSG21781.js';
@@ -33,13 +34,8 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value(
-  'authenticationBaseUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi');
-
-
-exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
+exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -77,7 +73,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
    * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
-    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+    url: appURL.MAPSERVER_PROXY,
     params: {'LAYERS': 'point'}
   });
 

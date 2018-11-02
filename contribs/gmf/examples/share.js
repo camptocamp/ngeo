@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './share.css';
 /** @suppress {extraRequire} */
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
@@ -19,7 +20,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-exports.module.constant('gmfShortenerCreateUrl', 'https://geomapfish-demo-dc.camptocamp.com/2.4/short/create');
+exports.module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
 
 
 /**

@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './wfspermalink.css';
 /** @suppress {extraRequire} */
 import gmfMapModule from 'gmf/map/module.js';
@@ -32,12 +33,12 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
-    url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
+    url: appURL.MAPSERVER_PROXY,
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}
     ],
-    defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
+    defaultFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
     defaultFeaturePrefix: 'feature'
   }));
 

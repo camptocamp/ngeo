@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './displayquerygrid.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
@@ -53,10 +54,7 @@ exports.module.constant('ngeoQueryOptions', {
 });
 
 
-exports.module.constant(
-  'gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?' +
-        'version=2&background=background');
+exports.module.constant('gmfTreeUrl', appURL.GMF_THEMES);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

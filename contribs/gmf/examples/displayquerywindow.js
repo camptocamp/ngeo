@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './displayquerywindow.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
@@ -50,10 +51,7 @@ exports.module.value('ngeoQueryOptions', {
 });
 
 
-exports.module.value(
-  'gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?' +
-        'version=2&background=background');
+exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -106,6 +104,12 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.desktop = true;
 
   const fill = new olStyleFill({color: [255, 170, 0, 0.6]});
   const stroke = new olStyleStroke({color: [255, 170, 0, 1], width: 2});

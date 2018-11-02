@@ -4,6 +4,7 @@
 const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
+import appURL from './url.js';
 import './filterselector.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
@@ -48,21 +49,9 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
-
-
-exports.module.value(
-  'authenticationBaseUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/wsgi');
-
-
-exports.module.value('gmfTreeUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background');
-
-
-exports.module.value('gmfLayersUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/layers/');
+exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 exports.module.constant('defaultTheme', 'Filters');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
@@ -122,9 +111,9 @@ exports.MainController = class {
 
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
-        // Set 'Filters' theme, i.e. the one with id 175
+        // Set 'Filters' theme, i.e. the one with id 176
         for (let i = 0, ii = themes.length; i < ii; i++) {
-          if (themes[i].id === 175) {
+          if (themes[i].id === 176) {
             this.gmfTreeManager.setFirstLevelGroups(themes[i].children);
             break;
           }

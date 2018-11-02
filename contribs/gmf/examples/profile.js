@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import appURL from './url.js';
 import './profile.css';
 /** @suppress {extraRequire} */
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
@@ -33,9 +34,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value(
-  'gmfProfileJsonUrl',
-  'https://geomapfish-demo-dc.camptocamp.com/2.4/profile.json');
+exports.module.value('gmfProfileJsonUrl', appURL.PROFILE);
 
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
