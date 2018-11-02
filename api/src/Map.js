@@ -2,6 +2,7 @@
 
 import OLMap from 'ol/Map.js';
 import Feature from 'ol/Feature.js';
+import Overlay from 'ol/Overlay.js';
 import Point from 'ol/geom/Point.js';
 import {Icon, Style} from 'ol/style.js';
 import View from 'ol/View.js';
@@ -54,6 +55,15 @@ class Map {
       view: this.view_
     });
 
+    /**
+     * @private
+     * @type {Overlay}
+     */
+    this.overlay_ = new Overlay({
+      element: this.createOverlayDomTree_(),
+      autoPan: true
+    });
+    this.map_.addOverlay(this.overlay_);
 
     this.map_.addControl(new ScaleLine());
 
@@ -97,6 +107,28 @@ class Map {
 
     this.map_.addLayer(this.vectorLayer_);
 
+  }
+
+  /**
+   * @private
+   * @return {HTMLElement}
+   */
+  createOverlayDomTree_() {
+    const overlayContainer = document.createElement('div');
+    overlayContainer.className = 'ol-popup';
+    const overlayCloser = document.createElement('div');
+    overlayCloser.className = 'ol-popup-closer';
+    overlayCloser.addEventListener('click', (event) => {
+      this.overlay_.setPosition(undefined);
+      return false;
+    });
+    const overlayContent = document.createElement('div');
+    overlayContent.className = 'ol-popup-content';
+
+    overlayContainer.appendChild(overlayCloser);
+    overlayContainer.appendChild(overlayContent);
+
+    return overlayContainer;
   }
 
   /**
@@ -187,12 +219,19 @@ class Map {
   }
 
   /**
-  * @param {string} id
-  */
+   * @param {string} id
+   */
   selectObject(id) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
-      // TODO
+      const coordinates = feature.getGeometry().getCoordinates();
+      const properties = feature.getProperties();
+      const content = this.overlay_.getElement().querySelector('.ol-popup-content');
+      content.innerHTML += `<div><b>${properties.title}</b></div>`;
+      content.innerHTML += `<p>${properties.description}</p>`;
+
+      this.view_.setCenter(coordinates);
+      this.overlay_.setPosition(coordinates);
     }
   }
 
