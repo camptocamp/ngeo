@@ -95,7 +95,7 @@
     "loader-utils": "1.1.0",
     "ls": "0.2.1",
     "moment": "2.22.2",
-    "node-sass": "4.9.4",
+    "node-sass": "4.10.0",
     "node-sass-importer": "1.0.0",
     "ol": "5.2.0",
     "ol-cesium": "2.4.0",
