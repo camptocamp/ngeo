@@ -143,3 +143,11 @@ gmf-map > div {
     bottom: 0;
   }
 }
+
+.gmf-displayquerywindow button::before,
+.gmf-displayquerywindow button::after,
+.ngeo-displaywindow button::before,
+.ngeo-displaywindow button::after {
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+}

@@ -60,7 +60,7 @@ exports.prototype.setMap = function(map) {
 
   const currentMap = this.getMap();
   if (currentMap) {
-    $(element).popover('destroy');
+    $(element).popover('dispose');
   }
 
   olOverlay.prototype.setMap.call(this, map);
@@ -77,8 +77,8 @@ exports.prototype.setMap = function(map) {
           'template': [
             '<div class="popover ngeo-popover" role="tooltip">',
             '  <div class="arrow"></div>',
-            '  <h3 class="popover-title"></h3>',
-            '  <div class="popover-content"></div>',
+            '  <h3 class="popover-header"></h3>',
+            '  <div class="popover-body"></div>',
             '</div>'
           ].join('')
         })
