@@ -57,6 +57,16 @@ span.twitter-typeahead {
 .gmf-search > * {
   float: left;
 }
+@media (max-width: 576px) {
+  .container-fluid gmf-search .gmf-search {
+    width: auto;
+  }
+}
+@media (min-width: 576px) {
+  .container-fluid gmf-search .gmf-search {
+    width: auto;
+  }
+}
 .gmf-search > .gmf-clear-button{
   margin-left: -15px;
   padding: 3px 0 2px;
