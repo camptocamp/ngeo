@@ -12,7 +12,7 @@ import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olInteractionPointer, {handleEvent as pointerHandleEvent} from 'ol/interaction/Pointer.js';
+import olInteractionPointer from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
@@ -148,7 +148,7 @@ exports.handleEvent_ = function(mapBrowserEvent) {
   } else if (mapBrowserEvent.type === 'dblclick') {
     pass = false;
   }
-  return pointerHandleEvent.call(this, mapBrowserEvent) && pass;
+  return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && pass;
 };
 
 
