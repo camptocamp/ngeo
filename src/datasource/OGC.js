@@ -974,7 +974,8 @@ class OGC extends ngeoDatasourceDataSource {
       this.supportsWFS && dataSource.supportsWFS &&
       this.queryable && dataSource.queryable &&
       this.wfsUrl === dataSource.wfsUrl &&
-      this.haveTheSameActiveDimensions(dataSource);
+      this.haveTheSameActiveDimensions(dataSource) &&
+      this.haveTheSameActiveDimensionsFilters(dataSource);
   }
 
   /**
@@ -1161,6 +1162,59 @@ class OGC extends ngeoDatasourceDataSource {
     }
 
     return share;
+  }
+
+  /**
+   * Compare active dimensions filters of two data sources. As Openlayers
+   * WFS format does not allow constructing multiple typenames GetFeature
+   * request with different filters we need to combine data sources depending
+   * on active dimensions filters.
+   * @param {!ngeox.dataSource.OGC} dataSource Remote data source to
+   *     compare with this one.
+   * @return {boolean} Whether the two data sources have the same active
+   *     dimensions filters. If both have no dimensions, they are considered
+   *     to be sharing the same dimensions filters.
+   * @export
+   * @override
+   */
+  haveTheSameActiveDimensionsFilters(dataSource) {
+    const myConfig = this.dimensionsFiltersConfig;
+    const itsConfig = dataSource.dimensionsFiltersConfig;
+    if (myConfig === null || itsConfig === null) {
+      return false;
+    }
+
+    const equals = (key) => {
+      const myKeyConfig = myConfig[key];
+      const itsKeyConfig = itsConfig[key];
+      if (myKeyConfig === undefined || itsKeyConfig === undefined) {
+        return false;
+      }
+
+      if (myKeyConfig.field != itsKeyConfig.field) {
+        return false;
+      }
+
+      const myValue = myKeyConfig.value !== null ? myKeyConfig.value : this.dimensions[key];
+      const itsValue = itsKeyConfig.value !== null ? itsKeyConfig.value : dataSource.dimensions[key];
+      if (myValue != itsValue) {
+        return false;
+      }
+
+      return true;
+    };
+
+    for (const key in this.dimensionsFiltersConfig) {
+      if (!equals(key)) {
+        return false;
+      }
+    }
+    for (const key in dataSource.dimensionsFiltersConfig) {
+      if (!equals(key)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   // ===============================
