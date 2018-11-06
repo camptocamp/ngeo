@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
-    <link href="./hidelayertree.inc.css" rel="stylesheet" />
+    <link href="./gmf-hidden.inc.css" rel="stylesheet" />
   </head>
   <body ng-controller="MainController as ctrl">
     <gmf-map gmf-map-map="ctrl.map"></gmf-map>
@@ -22,10 +22,12 @@
 
     <p><strong>Note:</strong> After logging it, you need to refresh the page</p>
 
-    <gmf-layertree
-        class="panel panel-default panel-body"
-        gmf-layertree-map="::ctrl.map">
-    </gmf-layertree>
+    <div class="gmf-hidden">
+      <gmf-layertree
+          class="panel panel-default panel-body"
+          gmf-layertree-map="::ctrl.map">
+      </gmf-layertree>
+    </div>
 
     <gmf-authentication
         class="panel panel-default panel-body">
