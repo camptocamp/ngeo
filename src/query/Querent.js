@@ -624,7 +624,8 @@ export class Querent {
             ).length > 0)) {
 
           console.assert(
-            dataSources.length === 1,
+            dataSources.length === 1 ||
+            !(dataSource.timeRangeValue || (dataSource.filterRules && dataSource.filterRules.length)),
             `A data source having filterRules or timeRangeValue should issue
             a single query, alone.`
           );
