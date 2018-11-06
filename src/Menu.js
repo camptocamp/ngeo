@@ -73,7 +73,7 @@ const exports = function(menuOptions, opt_overlayOptions) {
   menuOptions.actions.forEach((action) => {
     this.actions_.push(
       $('<button>', {
-        'class': 'list-group-item',
+        'class': 'list-group-item btn',
         'data-name': action.name,
         'text': [
           ' ',
