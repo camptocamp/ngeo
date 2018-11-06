@@ -30,7 +30,7 @@
     "@babel/plugin-transform-spread": "7.0.0",
     "@babel/preset-env": "7.1.0",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
-    "@camptocamp/cesium": "1.50.0",
+    "@camptocamp/cesium": "1.51.0",
     "@fortawesome/fontawesome-free": "5.5.0",
     "angular": "1.7.5",
     "angular-animate": "1.7.5",
