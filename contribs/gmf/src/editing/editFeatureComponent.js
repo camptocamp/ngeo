@@ -397,11 +397,11 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
    */
   this.menu_ = new ngeoMenu({
     actions: [{
-      cls: 'fa fa-arrows',
+      cls: 'fas fa-arrows-alt',
       label: gettextCatalog.getString('Move'),
       name: 'move'
     }, {
-      cls: 'fa fa-rotate-right',
+      cls: 'fas fa-undo fa-flip-horizontal',
       label: gettextCatalog.getString('Rotate'),
       name: 'rotate'
     }]

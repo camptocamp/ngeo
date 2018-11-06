@@ -674,11 +674,11 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
           type == ngeoGeometryType.POLYGON ||
           type == ngeoGeometryType.RECTANGLE) {
         actions = actions.concat([{
-          cls: 'fa fa-arrows',
+          cls: 'fas fa-arrows-alt',
           label: gettextCatalog.getString('Move'),
           name: 'move'
         }, {
-          cls: 'fa fa-rotate-right',
+          cls: 'fas fa-undo fa-flip-horizontal',
           label: gettextCatalog.getString('Rotate'),
           name: 'rotate'
         }]);

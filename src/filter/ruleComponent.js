@@ -865,7 +865,7 @@ exports.RuleController_ = class {
           type == ngeoGeometryType.POLYGON ||
           type == ngeoGeometryType.RECTANGLE) {
         actions.push({
-          cls: 'fa fa-arrows',
+          cls: 'fas fa-arrows-alt',
           label: gettextCatalog.getString('Move'),
           name: 'move'
         });
@@ -874,7 +874,7 @@ exports.RuleController_ = class {
           type == ngeoGeometryType.POLYGON ||
           type == ngeoGeometryType.RECTANGLE) {
         actions.push({
-          cls: 'fa fa-rotate-right',
+          cls: 'fas fa-undo fa-flip-horizontal',
           label: gettextCatalog.getString('Rotate'),
           name: 'rotate'
         });
