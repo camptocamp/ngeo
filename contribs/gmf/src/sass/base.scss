@@ -135,3 +135,8 @@ i, cite, em, var, address, dfn {
 .ui-resizable-handle {
   z-index: 2 !important;
 }
+
+.list-group > .list-group-item {
+  text-align: left;
+  padding: 0.25rem 0.5rem;
+}
