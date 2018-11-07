@@ -16,7 +16,7 @@ import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import {fromCircle} from 'ol/geom/Polygon.js';
-import olInteractionPointer, {handleEvent as pointerHandleEvent} from 'ol/interaction/Pointer.js';
+import olInteractionPointer from 'ol/interaction/Pointer.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStructsRBush from 'ol/structs/RBush.js';
@@ -394,8 +394,7 @@ exports.handleEvent = function(mapBrowserEvent) {
     this.handlePointerMove_(mapBrowserEvent);
   }
 
-  return pointerHandleEvent.call(this, mapBrowserEvent) &&
-      !handled;
+  return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && !handled;
 };
 
 
