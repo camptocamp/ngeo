@@ -90,11 +90,22 @@ class Map {
       }));
     }
 
+    // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
       for (const layer of layers) {
         if (layer.get('config.layer') === constants.backgroundLayer) {
           this.map_.addLayer(layer);
         }
+      }
+
+      // ... then get overlay layers (if defined)
+      const overlayLayerNames = options.layers;
+      if (overlayLayerNames && overlayLayerNames.length) {
+        themes.getOverlayLayers(overlayLayerNames).then((layers) => {
+          for (const layer of layers) {
+            this.map_.addLayer(layer);
+          }
+        });
       }
     });
 
