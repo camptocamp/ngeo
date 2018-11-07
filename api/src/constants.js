@@ -1,7 +1,7 @@
 /**
  * @type {string}
  */
-export const themesUrl = 'https://geomapfish-demo-dc.camptocamp.com/sbrunner24/themes?version=2&background=background';
+export const themesUrl = 'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background';
 
 
 /**
