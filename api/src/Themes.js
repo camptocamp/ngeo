@@ -1,4 +1,5 @@
 import WMTSCapabilities from 'ol/format/WMTSCapabilities.js';
+import TileWMS from 'ol/source/TileWMS.js';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
 import TileLayer from 'ol/layer/Tile.js';
 
@@ -31,8 +32,21 @@ export function getBackgroundLayers() {
           return layer;
         }));
       } else if (config.type === 'WMS') {
-        console.log(config);
-        // FIXME?
+        const ogcServer = themes.ogcServers[config.ogcServer];
+        const layerNames = config.layers;
+        const source = new TileWMS({
+          url: ogcServer.url,
+          params: {
+            'LAYERS': layerNames
+          },
+          serverType: ogcServer.type
+        });
+        const layer = new TileLayer({
+          source
+        });
+        layer.set('config.layer', layerNames);
+        layer.set('config.name', config.name);
+        promises.push(Promise.resolve(layer));
       }
     }
     return Promise.all(promises);
