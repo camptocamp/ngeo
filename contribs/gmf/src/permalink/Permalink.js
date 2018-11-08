@@ -978,6 +978,9 @@ exports.prototype.initLayers_ = function() {
     this.$timeout_(() => {
       if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
+        if (authenticationRequired && this.user_.role_id === null) {
+          this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+        }
         return;
       }
       // Enable the layers and set the opacity
