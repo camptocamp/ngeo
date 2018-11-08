@@ -194,6 +194,10 @@ class Map {
    */
   recenterOnObjects(layer, ids, highlight = false) {
     getFeaturesFromLayer(layer, ids).then((features) => {
+      if (!features.length) {
+        console.error('Could not recenter: no objects were found.');
+        return;
+      }
       const extent = olExtentCreateEmpty();
       for (const feature of features) {
         const geom = feature.getGeometry();
