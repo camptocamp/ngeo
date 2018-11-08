@@ -34,68 +34,6 @@ const babelPresets = [['env', {
   'loose': true,
 }]];
 
-const babelAnnotateUse = {
-  loader: 'babel-loader',
-  options: {
-    comments: false,
-    cacheDirectory: true,
-    presets: babelPresets,
-    plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
-  }
-};
-
-const ngeoRule = {
-  test: /ngeo\/src\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const ngeoExamplesRule = {
-  test: /ngeo\/examples\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const gmfAppsRule = {
-  test: /ngeo\/contribs\/gmf\/apps\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const gmfRule = {
-  test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const gmfExamplesRule = {
-  test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
-  use: babelAnnotateUse,
-};
-
-const olRule = {
-  test: /openlayers\/src\/.*\.js$/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      babelrc: false,
-      comments: false,
-      cacheDirectory: true,
-      presets: babelPresets,
-    }
-  }
-};
-
-const olcsRule = {
-  test: /olcs\/.*\.js$/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      babelrc: false,
-      comments: false,
-      cacheDirectory: true,
-      presets: babelPresets,
-    }
-  }
-};
-
-
 const angularRule = {
   test: require.resolve('angular'),
   use: {
@@ -158,7 +96,68 @@ const htmlRule = {
   }]
 };
 
-const config = function(hardSourceConfig) {
+const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
+  const babelAnnotateUse = {
+    loader: 'babel-loader',
+    options: {
+      comments: false,
+      cacheDirectory: babelLoaderCacheDirectory,
+      presets: babelPresets,
+      plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
+    }
+  };
+
+  const ngeoRule = {
+    test: /ngeo\/src\/.*\.js$/,
+    use: babelAnnotateUse,
+  };
+
+  const ngeoExamplesRule = {
+    test: /ngeo\/examples\/.*\.js$/,
+    use: babelAnnotateUse,
+  };
+
+  const gmfAppsRule = {
+    test: /ngeo\/contribs\/gmf\/apps\/.*\.js$/,
+    use: babelAnnotateUse,
+  };
+
+  const gmfRule = {
+    test: /ngeo\/contribs\/gmf\/src\/.*\.js$/,
+    use: babelAnnotateUse,
+  };
+
+  const gmfExamplesRule = {
+    test: /ngeo\/contribs\/gmf\/examples\/.*\.js$/,
+    use: babelAnnotateUse,
+  };
+
+  const olRule = {
+    test: /openlayers\/src\/.*\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        babelrc: false,
+        comments: false,
+        cacheDirectory: babelLoaderCacheDirectory,
+        presets: babelPresets,
+      }
+    }
+  };
+
+  const olcsRule = {
+    test: /olcs\/.*\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        babelrc: false,
+        comments: false,
+        cacheDirectory: babelLoaderCacheDirectory,
+        presets: babelPresets,
+      }
+    }
+  };
+
   return {
     context: path.resolve(__dirname, '../'),
     devtool: 'source-map',
