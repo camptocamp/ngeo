@@ -15,11 +15,17 @@ import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
 
-import {getCenter} from 'ol/extent.js';
+import {
+  createEmpty as olExtentCreateEmpty,
+  extend as olExtentExtend,
+  getCenter,
+  isEmpty as olExtentIsEmpty
+} from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
 import * as constants from './constants.js';
 
+import {getFeaturesFromLayer} from './Querent.js';
 import * as themes from './Themes.js';
 
 import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
@@ -181,12 +187,27 @@ class Map {
   }
 
   /**
-   * @param {string} layer
-   * @param {Array.<string>} ids
-   * @param {boolean} [highlight=false]
+   * @param {string} layer Name of the layer to fetch the features from
+   * @param {Array.<string>} ids List of ids
+   * @param {boolean} [highlight=false] Whether to add the features on
+   *     the map or not.
    */
   recenterOnObjects(layer, ids, highlight = false) {
-
+    getFeaturesFromLayer(layer, ids).then((features) => {
+      const extent = olExtentCreateEmpty();
+      for (const feature of features) {
+        const geom = feature.getGeometry();
+        if (geom) {
+          olExtentExtend(extent, geom.getExtent());
+        }
+      }
+      if (!olExtentIsEmpty(extent)) {
+        this.view_.fit(extent);
+      }
+      if (highlight) {
+        this.vectorSource_.addFeatures(features);
+      }
+    });
   }
 
   /**
