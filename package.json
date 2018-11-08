@@ -7,6 +7,7 @@
     "build-ngeo-examples": "TARGET=ngeo-examples webpack --progress --debug",
     "build-gmf-examples": "TARGET=gmf-examples webpack --progress --debug",
     "build-gmf-apps": "TARGET=gmf-apps webpack --progress --debug",
+    "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "serve-ngeo-examples": "DEV_SERVER=1 TARGET=ngeo-examples webpack-dev-server --port 3000 --progress --watch --bail --debug",
     "serve-gmf-examples": "DEV_SERVER=1 TARGET=gmf-examples webpack-dev-server --port 3000 --progress --watch --bail --debug",
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --port 3000 --progress --watch --bail --debug"
@@ -65,6 +66,7 @@
     "floatthead": "2.1.2",
     "font-awesome": "4.7.0",
     "fs-extra": "6.0.1",
+    "hard-source-webpack-plugin": "0.6.12",
     "html-loader": "0.5.5",
     "html-webpack-plugin": "3.2.0",
     "istanbul-instrumenter-loader": "3.0.1",

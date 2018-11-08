@@ -1,7 +1,7 @@
 const webpackMerge = require('webpack-merge');
 const commons = require('./buildtools/webpack.commons');
 
-let config = commons.config;
+let config = commons.config();
 
 const nodeEnv = process.env['NODE_ENV'] || 'development';
 switch (nodeEnv) {
