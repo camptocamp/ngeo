@@ -2,6 +2,7 @@
 
 import OLMap from 'ol/Map.js';
 import Feature from 'ol/Feature.js';
+import Overlay from 'ol/Overlay.js';
 import Point from 'ol/geom/Point.js';
 import {Icon, Style} from 'ol/style.js';
 import View from 'ol/View.js';
@@ -9,14 +10,20 @@ import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
 import TileLayer from 'ol/layer/Tile.js';
 
+import MousePosition from 'ol/control/MousePosition.js';
+import {createStringXY} from 'ol/coordinate.js';
+import ScaleLine from 'ol/control/ScaleLine.js';
+import OverviewMap from 'ol/control/OverviewMap.js';
+
+import {getCenter} from 'ol/extent.js';
 import {get as getProjection} from 'ol/proj.js';
 
 import * as constants from './constants.js';
 
-// FIXME: temporary
-import SwisstopoSource from '@geoblocks/sources/Swisstopo.js';
-import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
+import * as themes from './Themes.js';
 
+import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
+import EPSG2056 from '@geoblocks/sources/EPSG2056.js';
 
 class Map {
 
@@ -25,41 +32,82 @@ class Map {
    * @property {string} div
    * @property {ol.Coordinate} center
    * @property {number} [zoom=10]
+   * @property {boolean} [showCoords=true]
    * TODO: more options
    */
   constructor(options) {
+
     /**
      * @private
      * @type {View}
      */
     this.view_ = new View({
-      projection: getProjection(constants.projection || 'EPSG:21781'),
+      projection: getProjection(constants.projection),
+      extent: constants.extent,
       resolutions: constants.resolutions,
-      zoom: options.zoom !== undefined ? options.zoom : 10,
-      center: options.center
+      zoom: options.zoom !== undefined ? options.zoom : 10
     });
+
+    if (options.center !== undefined) {
+      this.view_.setCenter(options.center);
+    } else {
+      this.view_.setCenter(getCenter(constants.extent));
+    }
 
     /**
      * @private
      * @type {OLMap}
      */
     this.map_ = new OLMap({
-      controls: [],
       target: options.div,
       view: this.view_
     });
 
-    // FIXME: temporary
-    const background = new TileLayer({
-      source: new SwisstopoSource({
-        layer: 'ch.swisstopo.pixelkarte-farbe',
-        format: 'image/jpeg',
-        timestamp: 'current',
-        projection: EPSG21781,
-        crossOrigin: 'anonymous'
-      })
+    /**
+     * @private
+     * @type {Overlay}
+     */
+    this.overlay_ = new Overlay({
+      element: this.createOverlayDomTree_(),
+      autoPan: true
     });
-    this.map_.addLayer(background);
+    this.map_.addOverlay(this.overlay_);
+
+    this.map_.addControl(new ScaleLine());
+
+    if (options.showCoords) {
+      this.map_.addControl(new MousePosition({
+        coordinateFormat: createStringXY(0)
+      }));
+    }
+    if (options.addMiniMap) {
+      this.map_.addControl(new OverviewMap({
+        collapsed: !options.layerSwitcherExpanded,
+        view: new View({
+          projection: this.view_.getProjection(),
+          resolutions: this.view_.getResolutions()
+        })
+      }));
+    }
+
+    // Get background layer first...
+    themes.getBackgroundLayers().then((layers) => {
+      for (const layer of layers) {
+        if (layer.get('config.layer') === constants.backgroundLayer) {
+          this.map_.addLayer(layer);
+        }
+      }
+
+      // ... then get overlay layers (if defined)
+      const overlayLayerNames = options.layers;
+      if (overlayLayerNames && overlayLayerNames.length) {
+        themes.getOverlayLayers(overlayLayerNames).then((layers) => {
+          for (const layer of layers) {
+            this.map_.addLayer(layer);
+          }
+        });
+      }
+    });
 
     /**
      * @private
@@ -72,10 +120,34 @@ class Map {
      * @type {VectorLayer}
      */
     this.vectorLayer_ = new VectorLayer({
+      zIndex: 1,
       source: this.vectorSource_
     });
 
     this.map_.addLayer(this.vectorLayer_);
+
+  }
+
+  /**
+   * @private
+   * @return {HTMLElement}
+   */
+  createOverlayDomTree_() {
+    const overlayContainer = document.createElement('div');
+    overlayContainer.className = 'ol-popup';
+    const overlayCloser = document.createElement('div');
+    overlayCloser.className = 'ol-popup-closer';
+    overlayCloser.addEventListener('click', (event) => {
+      this.overlay_.setPosition(undefined);
+      return false;
+    });
+    const overlayContent = document.createElement('div');
+    overlayContent.className = 'ol-popup-content';
+
+    overlayContainer.appendChild(overlayCloser);
+    overlayContainer.appendChild(overlayContent);
+
+    return overlayContainer;
   }
 
   /**
@@ -166,12 +238,19 @@ class Map {
   }
 
   /**
-  * @param {string} id
-  */
+   * @param {string} id
+   */
   selectObject(id) {
     const feature = this.vectorSource_.getFeatureById(id);
     if (feature) {
-      // TODO
+      const coordinates = feature.getGeometry().getCoordinates();
+      const properties = feature.getProperties();
+      const content = this.overlay_.getElement().querySelector('.ol-popup-content');
+      content.innerHTML += `<div><b>${properties.title}</b></div>`;
+      content.innerHTML += `<p>${properties.description}</p>`;
+
+      this.view_.setCenter(coordinates);
+      this.overlay_.setPosition(coordinates);
     }
   }
 

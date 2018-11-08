@@ -41,6 +41,7 @@
         <link href="github.css" rel="stylesheet" type="text/css" media="screen">
         <script src="rainbow-custom.min.js"></script>
         <script src="api.js"></script>
+        <link href="api.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <div id="wrapper">
@@ -69,7 +70,7 @@ window.onload = function() {
                     <pre data-language="javascript">
 var map = new demo.Map({
     div: 'map1', // id of the div element to put the map in
-    zoom: 8,
+    zoom: 4,
     center: [544500, 210100]
 });
                     </pre>
@@ -121,9 +122,9 @@ map.addMarker({
                     <pre data-language="javascript">
 var map = new demo.Map({
     div: 'map4',
-    zoom: 8,
-    center: [544500, 210100],
-    layers: ['parcelles', 'batiments_ofs']
+    zoom: 0,
+    center: [590000, 170000],
+    layers: ['ch.astra.ausnahmetransportrouten', 'polygon', 'point']
 });
                     </pre>
                 </div>
