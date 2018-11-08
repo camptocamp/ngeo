@@ -1011,7 +1011,7 @@ exports.prototype.initLayers_ = function() {
             exports.ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           );
           if (groupLayers !== undefined) {
-            const groupLayersArray = groupLayers.split(',');
+            const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = olArray.includes(groupLayersArray, treeCtrl.node.name);
