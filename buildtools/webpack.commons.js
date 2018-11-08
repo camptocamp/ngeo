@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const LessPluginCleanCSS = require('less-plugin-clean-css');
 const LessPluginAutoprefix = require('less-plugin-autoprefix');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production'
 
@@ -157,54 +158,57 @@ const htmlRule = {
   }]
 };
 
-const config = {
-  context: path.resolve(__dirname, '../'),
-  devtool: 'source-map',
-  output: {
-    path: path.resolve(__dirname, '../dist/')
-  },
-  module: {
-    rules: [
-      olRule,
-      olcsRule,
-      angularRule,
-      typeaheadRule,
-      cssRule,
-      lessRule,
-      htmlRule,
-      ngeoRule,
-      ngeoExamplesRule,
-      gmfAppsRule,
-      gmfRule,
-      gmfExamplesRule,
-    ]
-  },
-  plugins: [
-    providePlugin,
-    new ExtractTextPlugin({
-        ignoreOrder: true,
-        filename: devMode ? '[name].css' : '[name].[chunkhash:6].css'
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
-  ],
-  resolve: {
-    modules: [
-      '../node_modules'
+const config = function(hardSourceConfig) {
+  return {
+    context: path.resolve(__dirname, '../'),
+    devtool: 'source-map',
+    output: {
+      path: path.resolve(__dirname, '../dist/')
+    },
+    module: {
+      rules: [
+        olRule,
+        olcsRule,
+        angularRule,
+        typeaheadRule,
+        cssRule,
+        lessRule,
+        htmlRule,
+        ngeoRule,
+        ngeoExamplesRule,
+        gmfAppsRule,
+        gmfRule,
+        gmfExamplesRule,
+      ]
+    },
+    plugins: [
+      providePlugin,
+      new ExtractTextPlugin({
+          ignoreOrder: true,
+          filename: devMode ? '[name].css' : '[name].[chunkhash:6].css'
+      }),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
+      new HardSourceWebpackPlugin(hardSourceConfig || {}),
     ],
-    mainFields: ['jsnext:main', 'main'],
-    alias: {
-      'ngeo/test': path.resolve(__dirname, '../test/spec'),
-      'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
-      'ngeo': path.resolve(__dirname, '../src'),
-      'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
-      'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
-      'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
-      'jsts': 'jsts/org/locationtech/jts',
-      'ol/ol.css': 'openlayers/css/ol.css',
-      'ol': 'openlayers/src/ol',
-      'olcs': 'ol-cesium/src/olcs',
-      'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-      'proj4': 'proj4/lib',
+    resolve: {
+      modules: [
+        '../node_modules'
+      ],
+      mainFields: ['jsnext:main', 'main'],
+      alias: {
+        'ngeo/test': path.resolve(__dirname, '../test/spec'),
+        'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
+        'ngeo': path.resolve(__dirname, '../src'),
+        'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
+        'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
+        'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
+        'jsts': 'jsts/org/locationtech/jts',
+        'ol/ol.css': 'openlayers/css/ol.css',
+        'ol': 'openlayers/src/ol',
+        'olcs': 'ol-cesium/src/olcs',
+        'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
+        'proj4': 'proj4/lib',
+      }
     }
   }
 };
