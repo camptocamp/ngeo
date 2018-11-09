@@ -978,6 +978,9 @@ exports.prototype.initLayers_ = function() {
     this.$timeout_(() => {
       if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
+        if (authenticationRequired && this.user_.role_id === null) {
+          this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+        }
         return;
       }
       // Enable the layers and set the opacity
@@ -1008,7 +1011,7 @@ exports.prototype.initLayers_ = function() {
             exports.ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           );
           if (groupLayers !== undefined) {
-            const groupLayersArray = groupLayers.split(',');
+            const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
                 const enable = olArray.includes(groupLayersArray, treeCtrl.node.name);
