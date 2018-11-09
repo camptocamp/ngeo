@@ -193,25 +193,29 @@ class Map {
    *     the map or not.
    */
   recenterOnObjects(layer, ids, highlight = false) {
-    getFeaturesFromLayer(layer, ids).then((features) => {
-      if (!features.length) {
-        console.error('Could not recenter: no objects were found.');
-        return;
-      }
-      const extent = olExtentCreateEmpty();
-      for (const feature of features) {
-        const geom = feature.getGeometry();
-        if (geom) {
-          olExtentExtend(extent, geom.getExtent());
+    getFeaturesFromLayer(layer, ids)
+      .then((features) => {
+        if (!features.length) {
+          console.error('Could not recenter: no objects were found.');
+          return;
         }
-      }
-      if (!olExtentIsEmpty(extent)) {
-        this.view_.fit(extent);
-      }
-      if (highlight) {
-        this.vectorSource_.addFeatures(features);
-      }
-    });
+        const extent = olExtentCreateEmpty();
+        for (const feature of features) {
+          const geom = feature.getGeometry();
+          if (geom) {
+            olExtentExtend(extent, geom.getExtent());
+          }
+        }
+        if (!olExtentIsEmpty(extent)) {
+          this.view_.fit(extent);
+        }
+        if (highlight) {
+          this.vectorSource_.addFeatures(features);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   /**
