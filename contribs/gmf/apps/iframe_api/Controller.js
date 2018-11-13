@@ -8,7 +8,7 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import './sass/iframe_api.scss';
+import 'gmf/controllers/iframe_api.scss';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import appBase from '../appmodule.js';
 import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
