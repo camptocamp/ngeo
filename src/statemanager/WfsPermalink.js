@@ -42,6 +42,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @constructor
  * @struct
  * @param {angular.$http} $http Angular $http service.
+ * @param {string} ngeoPermalinkOgcserverUrl Url to the WFS server
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
@@ -49,7 +50,9 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @ngname ngeoWfsPermalink
  * @ngInject
  */
-const WfsPermalinkService = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
+const WfsPermalinkService = function(
+  $http, ngeoPermalinkOgcserverUrl, ngeoQueryResult, ngeoWfsPermalinkOptions
+) {
 
   const options = ngeoWfsPermalinkOptions;
 
@@ -57,7 +60,7 @@ const WfsPermalinkService = function($http, ngeoQueryResult, ngeoWfsPermalinkOpt
    * @type {string}
    * @private
    */
-  this.url_ = options.url;
+  this.url_ = ngeoPermalinkOgcserverUrl;
 
   /**
    * @type {number}

@@ -884,7 +884,6 @@ ngeox.WfsType.prototype.featurePrefix;
 /**
  * The options for the WFS query service (permalink).
  * @typedef {{
- *     url: (string),
  *     wfsTypes: (!Array.<ngeox.WfsType>),
  *     pointRecenterZoom: (number|undefined),
  *     defaultFeatureNS: (string),
@@ -893,13 +892,6 @@ ngeox.WfsType.prototype.featurePrefix;
  * }}
  */
 ngeox.WfsPermalinkOptions;
-
-
-/**
- * URL to the WFS server.
- * @type {string}
- */
-ngeox.WfsPermalinkOptions.prototype.url;
 
 
 /**
