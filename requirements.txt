@@ -3,7 +3,7 @@ glob2==0.5
 htmlmin==0.1.10
 Mako==1.0.7
 pip==9.0.1
-requests==2.18.3
+requests==2.20.1
 setuptools==36.2.7
 transifex-client==0.12.4
 urllib3==1.22
