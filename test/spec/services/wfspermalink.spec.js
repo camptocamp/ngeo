@@ -14,8 +14,11 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
   beforeEach(() => {
     angular.mock.module('ngeo', ($provide) => {
+      $provide.value(
+        'ngeoPermalinkOgcserverUrl',
+        'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy'
+      );
       $provide.value('ngeoWfsPermalinkOptions', {
-        url: 'https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv_proxy',
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
         defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
         defaultFeaturePrefix: 'ms'

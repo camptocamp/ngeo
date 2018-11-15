@@ -33,7 +33,6 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
-    url: appURL.MAPSERVER_PROXY,
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}
@@ -42,6 +41,7 @@ exports.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
+exports.module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
