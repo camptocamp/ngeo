@@ -308,6 +308,12 @@ WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
 
 
 /**
+ * Set this value to enable WFS permalink.
+ */
+WfsPermalinkService.module.value('ngeoPermalinkOgcserverUrl', '');
+
+
+/**
  * Value that is supposed to be set in applications to enable the WFS
  * permalink functionality.
  */
