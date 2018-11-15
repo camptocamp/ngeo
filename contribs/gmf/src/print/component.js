@@ -924,6 +924,7 @@ exports.Controller_ = class {
               server.imageType,
               server.type
             );
+            layer.setZIndex(-200);
           } else {
             console.error('Missing ogcServer:', server_name);
           }
