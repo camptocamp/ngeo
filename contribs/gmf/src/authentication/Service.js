@@ -142,7 +142,7 @@ const exports = class extends olEventsEventTarget {
     const url = `${this.baseUrl_}/${exports.RouteSuffix.RESET_PASSWORD}`;
 
     /**
-     * @param {angular.$http.Response} resp Ajax response.
+     * @param {angular.IHttpResponse} resp Ajax response.
      * @return {gmfx.AuthenticationDefaultResponse} Response.
      */
     const successFn = function(resp) {
@@ -172,8 +172,8 @@ const exports = class extends olEventsEventTarget {
 
   /**
    * @param {boolean} checkingLoginStatus Checking the login status?
-   * @param {angular.$http.Response} resp Ajax response.
-   * @return {angular.$http.Response} Response.
+   * @param {angular.IHttpResponse} resp Ajax response.
+   * @return {angular.IHttpResponse} Response.
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {

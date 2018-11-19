@@ -655,7 +655,7 @@ exports.Controller_.prototype.getJsonProfile_ = function() {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
@@ -667,7 +667,7 @@ exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.Controller_.prototype.getProfileDataError_ = function(resp) {

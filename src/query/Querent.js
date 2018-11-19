@@ -368,7 +368,7 @@ const exports = class {
    *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @param {angular.$http.Response|number} response Response.
+   * @param {angular.IHttpResponse|number} response Response.
    * @return {ngeox.QuerentResult} Hash of features by data source ids.
    * @private
    */

@@ -796,7 +796,7 @@ exports.Controller_.prototype.submit = function() {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller_.prototype.handleEditFeature_ = function(resp) {

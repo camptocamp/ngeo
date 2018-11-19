@@ -89,7 +89,7 @@ exports.prototype.getFeaturesWithComparisonFilters = function(
 
 
 /**
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @return {Array.<ol.Feature>} List of features.
  * @private
  */

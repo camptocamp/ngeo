@@ -54,7 +54,7 @@ const exports = class {
   }
 
   /**
-   * @param {angular.$http.Response} resp Ajax response.
+   * @param {angular.IHttpResponse} resp Ajax response.
    * @return {Array.<gmfThemes.GmfLayerAttributeValue>} List of the attribute
    *     values.
    * @export

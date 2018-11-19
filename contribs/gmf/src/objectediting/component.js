@@ -588,7 +588,7 @@ exports.Controller.prototype.isStateInsert = function() {
 
 /**
  * Called after a delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
@@ -602,7 +602,7 @@ exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
 
 /**
  * Called after an 'insert' or 'update' request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller.prototype.handleEditFeature_ = function(resp) {

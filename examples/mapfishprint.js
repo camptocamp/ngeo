@@ -195,7 +195,7 @@ exports.MainController.prototype.print = function() {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
@@ -217,7 +217,7 @@ exports.MainController.prototype.getStatus_ = function(ref) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleCreateReportError_ = function(resp) {
@@ -227,7 +227,7 @@ exports.MainController.prototype.handleCreateReportError_ = function(resp) {
 
 /**
  * @param {string} ref Ref.
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
@@ -248,7 +248,7 @@ exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleGetStatusError_ = function(resp) {

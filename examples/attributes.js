@@ -88,7 +88,7 @@ exports.MainController = function($http, $timeout, $scope) {
 
 
 /**
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @return {Array.<ngeox.Attribute>} List of attributes.
  * @private
  */

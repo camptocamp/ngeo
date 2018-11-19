@@ -650,7 +650,7 @@ exports.Controller_ = class {
   /**
    * Create the list of layouts, get the formats, get the first layout in
    * gmf print v3 capabilities and then update the print panel layout information.
-   * @param {!angular.$http.Response} resp Response.
+   * @param {!angular.IHttpResponse} resp Response.
    * @private
    */
   parseCapabilities_(resp) {
@@ -1060,7 +1060,7 @@ exports.Controller_ = class {
 
 
   /**
-   * @param {!angular.$http.Response} resp Response.
+   * @param {!angular.IHttpResponse} resp Response.
    * @private
    */
   handleCreateReportSuccess_(resp) {
@@ -1089,7 +1089,7 @@ exports.Controller_ = class {
 
   /**
    * @param {string} ref Ref.
-   * @param {!angular.$http.Response} resp Response.
+   * @param {!angular.IHttpResponse} resp Response.
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {
