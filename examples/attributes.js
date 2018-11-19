@@ -21,7 +21,7 @@ exports.module = angular.module('app', [
 
 /**
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.Scope} $scope Scope.
  * @ngInject
  * @constructor
@@ -29,7 +29,7 @@ exports.module = angular.module('app', [
 exports.MainController = function($http, $timeout, $scope) {
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

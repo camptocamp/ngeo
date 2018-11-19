@@ -70,7 +70,7 @@ exports.directive('gmfEditfeatureselector', exports.component_);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
@@ -122,7 +122,7 @@ exports.Controller_ = function($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;

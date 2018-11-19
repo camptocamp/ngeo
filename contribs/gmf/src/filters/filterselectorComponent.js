@@ -78,7 +78,7 @@ exports.Controller_ = class {
 
   /**
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
@@ -131,7 +131,7 @@ exports.Controller_ = class {
     // Injected properties
 
     /**
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;

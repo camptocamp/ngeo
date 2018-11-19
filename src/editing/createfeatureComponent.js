@@ -80,7 +80,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
  * @param {!angular.$compile} $compile Angular compile service.
  * @param {!angular.$filter} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
@@ -141,7 +141,7 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

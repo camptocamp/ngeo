@@ -40,7 +40,7 @@ exports.module.component('appMap', exports.mapComponent);
 
 /**
  * The application's main controller.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  *
  * @constructor
  * @ngInject

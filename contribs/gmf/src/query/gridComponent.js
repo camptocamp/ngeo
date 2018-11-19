@@ -139,7 +139,7 @@ exports.component('gmfDisplayquerygrid', exports.component_);
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
  * @param {!angular.JQLite} $element Element.
  * @constructor
@@ -162,7 +162,7 @@ exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQueren
   this.$scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;

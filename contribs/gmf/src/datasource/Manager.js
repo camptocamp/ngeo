@@ -41,7 +41,7 @@ const exports = class {
    * @struct
    * @param {angular.$q} $q Angular q service
    * @param {!angular.Scope} $rootScope Angular rootScope.
-   * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
@@ -76,7 +76,7 @@ const exports = class {
     this.rootScope_ = $rootScope;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;

@@ -57,7 +57,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @constructor
  * @struct
  * @param {!angular.$q} $q The Angular $q service.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
@@ -86,7 +86,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.rootScope_ = $rootScope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;

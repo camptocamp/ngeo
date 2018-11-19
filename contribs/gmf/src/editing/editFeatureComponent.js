@@ -144,7 +144,7 @@ exports.directive('gmfEditfeature',
  * @param {jQuery} $element Element.
  * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.editing.Snapping} gmfSnapping The gmf snapping service.
@@ -229,7 +229,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   this.scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

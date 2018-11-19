@@ -194,7 +194,7 @@ exports.SearchController_ = class {
    * @param {jQuery} $element Element.
    * @param {angular.Scope} $scope The component's scope.
    * @param {angular.$compile} $compile Angular compile service.
-   * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.$injector} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
@@ -233,7 +233,7 @@ exports.SearchController_ = class {
     this.compile_ = $compile;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;

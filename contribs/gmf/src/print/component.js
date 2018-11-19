@@ -202,7 +202,7 @@ exports.Controller_ = class {
    * @param {angular.JQLite} $element Element.
    * @param {angular.Scope} $rootScope Angular root scope.
    * @param {angular.Scope} $scope Angular scope.
-   * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.$q} $q The Angular $q service.
    * @param {angular.$injector} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -282,7 +282,7 @@ exports.Controller_ = class {
     this.$scope_ = $scope;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.$timeout_ = $timeout;

@@ -15,7 +15,7 @@ import * as olBase from 'ol/index.js';
  * @constructor
  * @struct
  * @extends {ngeo.message.Message}
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoNotification
  * @abstract
@@ -26,7 +26,7 @@ const exports = function($timeout) {
   ngeoMessageMessage.call(this);
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

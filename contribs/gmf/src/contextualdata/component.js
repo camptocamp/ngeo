@@ -80,7 +80,7 @@ exports.directive('gmfContextualdata',
 /**
  *
  * @param {angular.$compile} $compile Angular compile service.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.Scope} $scope Scope.
  * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
  *
@@ -122,7 +122,7 @@ exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
   this.$compile_ = $compile;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

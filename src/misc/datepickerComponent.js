@@ -46,7 +46,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  * ngeoDatePickerTemplateUrl Template for the directive.
- * @param {angular.$timeout} $timeout angular timeout service
+ * @param {angular.ITimeoutService} $timeout angular timeout service
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
