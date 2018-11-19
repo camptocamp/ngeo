@@ -17,7 +17,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,

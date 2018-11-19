@@ -5,7 +5,7 @@ import gmfDrawingDrawFeatureComponent from 'gmf/drawing/drawFeatureComponent.js'
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfDrawingModule', [
   gmfDrawingDrawFeatureComponent.name,

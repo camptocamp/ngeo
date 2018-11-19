@@ -19,7 +19,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

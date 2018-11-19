@@ -21,7 +21,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import * as olBase from 'ol/index.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjecteditingToolsComponent', [
   gmfObjecteditingGetWMSFeatureComponent.name,

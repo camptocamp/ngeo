@@ -237,7 +237,7 @@ exports.RouteSuffix = {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfAuthenticationService', []);
 exports.module.service('gmfAuthenticationService', exports);

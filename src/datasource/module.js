@@ -5,7 +5,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDatasourceModule', [
   ngeoDatasourceDataSources.module.name,

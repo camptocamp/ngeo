@@ -163,7 +163,7 @@ exports.adaptListeners_ = function(object) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoSearchDirective', []);
 

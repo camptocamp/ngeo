@@ -16,7 +16,7 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfBackgroundlayerselectorModule.name,

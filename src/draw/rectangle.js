@@ -7,7 +7,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDrawrectangle', []);
 

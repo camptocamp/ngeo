@@ -6,7 +6,7 @@ import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import * as olEvents from 'ol/events.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfBackgroundlayerselector', [
   gmfThemeThemes.module.name,

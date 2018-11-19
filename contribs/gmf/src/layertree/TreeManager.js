@@ -623,7 +623,7 @@ exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfTreeManager', [
   gmfThemeThemes.module.name,

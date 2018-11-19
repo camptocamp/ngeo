@@ -9,7 +9,7 @@ import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   ngeoMiscDatepickerComponent.name,

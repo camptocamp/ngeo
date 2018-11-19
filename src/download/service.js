@@ -6,7 +6,7 @@ import ngeoUtils from 'ngeo/utils.js';
 import {saveAs} from 'file-saver';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDownload', []);
 

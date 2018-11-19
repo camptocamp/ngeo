@@ -286,7 +286,7 @@ exports.prototype.getUpRightCorner = function(mapCenter) {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoPrintUtils', []);
 exports.module.service('ngeoPrintUtils', exports);

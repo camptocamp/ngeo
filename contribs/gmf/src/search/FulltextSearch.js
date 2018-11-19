@@ -63,7 +63,7 @@ exports.prototype.search = function(query, params) {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfSearchFulltextSearch', []);
 exports.module.service('gmfSearchFulltextSearch', exports);

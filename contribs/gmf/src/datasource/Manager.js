@@ -926,7 +926,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfDataSourcesManager', [
   gmfDatasourceWFSAliases.module.name,

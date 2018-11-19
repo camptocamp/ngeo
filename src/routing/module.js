@@ -6,7 +6,7 @@ import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';
 import './routing.scss';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoRoutingModule', [
   ngeoRoutingRoutingComponent.module.name

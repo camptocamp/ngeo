@@ -495,7 +495,7 @@ exports.createPrintServiceFactory = function($http, gettextCatalog, ngeoLayerHel
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.module.name

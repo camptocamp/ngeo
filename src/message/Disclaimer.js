@@ -224,7 +224,7 @@ exports.prototype.closeMessage_ = function(message) {
 
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 exports.module = angular.module('ngeoDisclaimer', [
   ngeoMessagePopup.module.name,

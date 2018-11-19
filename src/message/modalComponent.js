@@ -6,7 +6,7 @@ import 'bootstrap/js/src/modal.js';
 import googAsserts from 'goog/asserts.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoModal', []);
 

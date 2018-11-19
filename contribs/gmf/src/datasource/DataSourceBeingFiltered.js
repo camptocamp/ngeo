@@ -5,7 +5,7 @@ const exports = {};
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfDataSourceBeingFiltered', []);
 // type gmfx.datasource.DataSourceBeingFiltered

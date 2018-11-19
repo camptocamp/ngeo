@@ -2,7 +2,7 @@
  * @module ngeo.misc.btnComponent
  */
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoBtnComponent', []);
 

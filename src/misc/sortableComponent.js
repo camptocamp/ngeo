@@ -5,7 +5,7 @@ import 'jquery-ui/ui/widgets/sortable.js';
 import googAsserts from 'goog/asserts.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoSortable', []);
 

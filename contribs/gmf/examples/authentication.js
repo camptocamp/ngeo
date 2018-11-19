@@ -8,7 +8,7 @@ import './authentication.css';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name

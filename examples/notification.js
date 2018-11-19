@@ -10,7 +10,7 @@ import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMessageNotification.module.name,

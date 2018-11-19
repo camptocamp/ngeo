@@ -4,7 +4,7 @@
 import ngeoGooglestreetviewComponent from 'ngeo/googlestreetview/component.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoGooglestreetviewModule', [
   ngeoGooglestreetviewComponent.name

@@ -9,7 +9,7 @@ import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMeasurelength', [
   ngeoDrawController.module.name,

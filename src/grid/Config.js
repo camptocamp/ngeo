@@ -131,7 +131,7 @@ exports.prototype.invertSelection = function() {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoGridConfig', []);
 

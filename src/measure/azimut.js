@@ -11,7 +11,7 @@ import {fromCircle} from 'ol/geom/Polygon.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMeasureazimut', [
   ngeoDrawController.module.name,

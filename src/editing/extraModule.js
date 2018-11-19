@@ -4,7 +4,7 @@
 import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoEditingExtraModule', [
   ngeoEditingExportfeaturesComponent.name,

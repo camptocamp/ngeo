@@ -263,7 +263,7 @@ exports.Factory = function($compile, $rootScope, $sce, $timeout) {
 };
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 exports.module = angular.module('ngeoCreatePopup', [
   ngeoMessagePopupComponent.name,

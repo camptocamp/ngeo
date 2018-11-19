@@ -952,7 +952,7 @@ exports.CombinedDataSources;
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoQuerent', [
   ngeoFilterRuleHelper.module.name,

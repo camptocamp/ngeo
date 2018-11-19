@@ -10,7 +10,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfEditingEditFeatureComponent.name,

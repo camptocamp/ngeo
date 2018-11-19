@@ -102,7 +102,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfLidarprofileConfig', []);
 exports.module.service('gmfLidarprofileConfig', exports);

@@ -38,7 +38,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('GmfDrawFeatureComponent', [
   gmfDrawingFeatureStyleComponent.name,

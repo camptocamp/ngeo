@@ -9,7 +9,7 @@ import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfEditingModule', [
   gmfEditingEditFeature.module.name,

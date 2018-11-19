@@ -447,7 +447,7 @@ exports.getLayer = function(treeCtrl) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfSyncLayertreeMap', [
   gmfThemeThemes.module.name,

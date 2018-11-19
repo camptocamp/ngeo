@@ -14,7 +14,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfEditingXSDAttributes.module.name,

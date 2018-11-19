@@ -191,7 +191,7 @@ requires three others modules to work:
 
 ```
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports = angular.module('ngeoGrid', [
   ngeoGridConfig.module.name,
@@ -215,7 +215,7 @@ the class and to attach the module to this class. Example with the file that pro
 exports = class {...};
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.module.name

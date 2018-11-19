@@ -30,7 +30,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfQueryGridComponent', [
   ngeoDownloadCsv.module.name,

@@ -7,7 +7,7 @@ import './displaywindow.css';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   ngeoMessageDisplaywindowComponent.name
 ]);

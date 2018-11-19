@@ -23,7 +23,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleCircle from 'ol/style/Circle.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,

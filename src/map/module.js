@@ -12,7 +12,7 @@ import ngeoMapScaleselector from 'ngeo/map/scaleselector.js';
  * Also related to the map but not included in the module:
  *  - ngeo.map.FeatureOverlay (already required by ngeo.map.FeatureOverlayMgr)
  *
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMapModule', [
   ngeoMapBackgroundLayerMgr.module.name,

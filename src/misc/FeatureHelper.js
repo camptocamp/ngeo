@@ -1388,7 +1388,7 @@ exports.VertexStyleRegularShapeRadius = 6;
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoFeatureHelper', [
   ngeoDownloadService.name,

@@ -197,7 +197,7 @@ exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfObjectEditingQuery', [
   gmfThemeThemes.module.name,

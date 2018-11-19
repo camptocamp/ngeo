@@ -2,7 +2,7 @@
  * @module ngeo.misc.getBrowserLanguage
  */
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoGetBrowserLanguage', []);
 

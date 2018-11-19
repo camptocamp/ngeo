@@ -152,7 +152,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDataSourcesHelper', [
   ngeoDatasourceDataSources.module.name,

@@ -30,7 +30,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import * as olUri from 'ol/uri.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfSearch', [
   gmfLayertreeTreeManager.module.name,

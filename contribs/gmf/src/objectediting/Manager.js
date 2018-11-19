@@ -172,7 +172,7 @@ exports.Param = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.module.name,

@@ -476,7 +476,7 @@ exports.MockProvider = function($locationProvider) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  * FIXME add utils dependencies.
  * FIXME What about Mockup provider ?
  */

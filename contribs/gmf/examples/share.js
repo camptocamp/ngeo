@@ -12,7 +12,7 @@ import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   ngeoMessageModalComponent.name,

@@ -61,7 +61,7 @@ exports.prototype.handleGetAttributes_ = function(resp) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfXSDAttributes', []);
 exports.module.service('gmfXSDAttributes', exports);

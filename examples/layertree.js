@@ -20,7 +20,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoLayertreeModule.name,

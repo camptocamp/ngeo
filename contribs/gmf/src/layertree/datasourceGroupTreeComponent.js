@@ -5,7 +5,7 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import * as olBase from 'ol/index.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
   ngeoDatasourceDataSources.module.name,

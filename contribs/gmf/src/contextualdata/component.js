@@ -9,7 +9,7 @@ import * as olEvents from 'ol/events.js';
 import * as olObj from 'ol/obj.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('gmfContextualdata', [
   gmfRasterRasterService.module.name,

@@ -44,7 +44,7 @@ const jsts = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjectEditingComponent', [
   gmfEditingEditFeature.module.name,

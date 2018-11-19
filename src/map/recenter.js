@@ -2,7 +2,7 @@
  * @module ngeo.map.recenter
  */
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoRecenter', []);
 

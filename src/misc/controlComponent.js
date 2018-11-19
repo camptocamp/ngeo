@@ -6,7 +6,7 @@ import olMap from 'ol/Map.js';
 import olControlControl from 'ol/control/Control.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoControl', []);
 

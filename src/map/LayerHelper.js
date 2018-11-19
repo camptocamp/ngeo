@@ -527,7 +527,7 @@ exports.prototype.getQuerySourceIds = function(layer) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoLayerHelper', [])
   .service('ngeoLayerHelper', exports)

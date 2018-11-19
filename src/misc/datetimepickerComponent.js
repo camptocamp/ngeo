@@ -7,7 +7,7 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDateTimePicker', ['gettext']);
 

@@ -27,7 +27,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

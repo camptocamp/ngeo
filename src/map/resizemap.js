@@ -5,7 +5,7 @@ import googAsserts from 'goog/asserts.js';
 import olMap from 'ol/Map.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoResizemap', []);
 

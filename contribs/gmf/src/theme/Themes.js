@@ -590,7 +590,7 @@ exports.NodeType = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfThemes', [
   ngeoMapLayerHelper.module.name,

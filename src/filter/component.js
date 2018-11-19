@@ -19,7 +19,7 @@ import * as olArray from 'ol/array.js';
 import 'ngeo/sass/font.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoFilter', [
   ngeoFilterRuleHelper.module.name,

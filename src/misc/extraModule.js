@@ -18,7 +18,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMiscExtraModule', [
   ngeoMiscAutoProjection.module.name,
