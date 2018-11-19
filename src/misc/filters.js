@@ -49,7 +49,7 @@ exports.filter('ngeoScalify', exports.Scalify);
  *      {{123.4 | ngeoNumber}} => 123
  *      {{1234 | ngeoNumber}} => 1230
  *
- * @param {angular.$locale} $locale Angular locale
+ * @param {angular.ILocaleService} $locale Angular locale
  * @return {ngeox.number} Function used to format number into a string.
  * @ngInject
  * @ngdoc filter
