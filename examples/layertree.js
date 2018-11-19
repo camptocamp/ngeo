@@ -60,7 +60,7 @@ exports.module.component('appLayertree', exports.layertreeComponent);
 /**
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
@@ -86,7 +86,7 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 

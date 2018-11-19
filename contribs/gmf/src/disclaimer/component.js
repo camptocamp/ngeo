@@ -30,7 +30,7 @@ const exports = angular.module('gmfDisclaimer', [
  * @private
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$sce} $sce Angular sce service.
+ * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
@@ -84,7 +84,7 @@ exports.Controller_ = function($element, $scope, $sce, $timeout,
   this.msgs_ = [];
 
   /**
-   * @type {!angular.$sce}
+   * @type {!angular.ISCEService}
    * @private
    */
   this.sce_ = $sce;

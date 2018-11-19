@@ -51,7 +51,7 @@ exports.Controller_ = class {
 
   /**
    * @param {!jQuery} $element Element.
-   * @param {!angular.$sce} $sce Angular sce service.
+   * @param {!angular.ISCEService} $sce Angular sce service.
    * @param {!angular.Scope} $scope Scope.
    * @param {!angular.ICompileService} $compile The compile provider.
    * @private
@@ -149,7 +149,7 @@ exports.Controller_ = class {
     this.element_ = $element;
 
     /**
-     * @type {!angular.$sce}
+     * @type {!angular.ISCEService}
      * @private
      */
     this.sce_ = $sce;

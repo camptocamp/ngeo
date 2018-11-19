@@ -14,7 +14,7 @@ import 'ngeo/sass/font.scss';
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
  *
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @constructor
@@ -28,7 +28,7 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 

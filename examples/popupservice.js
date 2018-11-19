@@ -16,7 +16,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  * @constructor
@@ -25,7 +25,7 @@ exports.MainController = function($sce, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 

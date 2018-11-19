@@ -302,7 +302,7 @@ exports.filter('ngeoDMSCoordinates', exports.DMSCoordinates);
  * @return {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @ngname ngeoTrustHtml
  */
 exports.trustHtmlFilter = function($sce) {
@@ -331,7 +331,7 @@ exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
  * @return {function(?):string} The filter function.
  * @ngInject
  * @ngdoc filter
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @param {!Array.<!ngeox.StringToHtmlReplacement>}
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
