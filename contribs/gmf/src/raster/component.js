@@ -128,7 +128,7 @@ exports.directive('gmfElevation', component);
 /**
  * @hidden
  * @param {!angular.Scope} $scope Scope.
- * @param {!angular.$filter} $filter Angular filter.
+ * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!ngeox.miscDebounce} ngeoDebounce Ngeo debounce factory
  * @param {!gmf.raster.RasterService} gmfRaster Gmf Raster service
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -141,7 +141,7 @@ exports.directive('gmfElevation', component);
 function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 
   /**
-   * @type {!angular.$filter}
+   * @type {!angular.IFilterService}
    * @private
    */
   this.filter_ = $filter;

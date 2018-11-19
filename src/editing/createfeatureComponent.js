@@ -78,7 +78,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
 /**
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.ICompileService} $compile Angular compile service.
- * @param {!angular.$filter} $filter Angular filter
+ * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.Scope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
@@ -129,7 +129,7 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   this.compile_ = $compile;
 
   /**
-   * @type {!angular.$filter}
+   * @type {!angular.IFilterService}
    * @private
    */
   this.filter_ = $filter;

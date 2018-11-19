@@ -107,7 +107,7 @@ exports.directive('gmfMobileMeasurepoint',
 /**
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$filter} $filter Angular filter service.
+ * @param {angular.IFilterService} $filter Angular filter service.
  * @param {gmf.raster.RasterService} gmfRaster gmf Raster service.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
@@ -138,7 +138,7 @@ exports.Controller_ = function(gettextCatalog, $scope, $filter,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    * @private
    */
   this.$filter_ = $filter;

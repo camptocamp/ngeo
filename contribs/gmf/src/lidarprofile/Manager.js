@@ -25,7 +25,7 @@ const exports = class {
    *
    * @struct
    * @param {angular.IHttpService} $http Angular http service.
-   * @param {angular.$filter} $filter Angular filter.
+   * @param {angular.IFilterService} $filter Angular filter.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.Debounce} ngeoDebounce ngeo debounce service.
    * @ngInject
@@ -40,7 +40,7 @@ const exports = class {
     this.$http = $http;
 
     /**
-     * @type {angular.$filter}
+     * @type {angular.IFilterService}
      */
     this.$filter = $filter;
 

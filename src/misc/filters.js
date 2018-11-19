@@ -16,7 +16,7 @@ const exports = angular.module('ngeoAngularFilters', []);
  *      <p>{{25000 | ngeoScalify}}</p>
  *
  *
- * @param {angular.$filter} $filter Angular filter
+ * @param {angular.IFilterService} $filter Angular filter
  * @return {function(number): string} A function to format number into a 'scale'
  *     string.
  * @ngInject
@@ -133,7 +133,7 @@ exports.filter('ngeoNumber', exports.Number);
  *      {{2048 | ngeoUnitPrefix:'o':'binary'}} => 2 Kio
  *
  *
- * @param {angular.$filter} $filter Angular filter
+ * @param {angular.IFilterService} $filter Angular filter
  * @return {ngeox.unitPrefix} Function used to format number into a string.
  * @ngInject
  * @ngdoc filter
@@ -201,7 +201,7 @@ exports.filter('ngeoUnitPrefix', exports.UnitPrefix);
  *      <p>{{[2600000, 1600000] | ngeoNumberCoordinates:0:'{x}, {y}'}}</p>
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
- * @param {angular.$filter} $filter Angular filter
+ * @param {angular.IFilterService} $filter Angular filter
  * @return {ngeox.numberCoordinates} A function to format numbers into coordinates string.
  * @ngInject
  * @ngdoc filter

@@ -214,7 +214,7 @@ exports.Controller_ = class {
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
-   * @param {angular.$filter} $filter Angular $filter service.
+   * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {gmf.print.component.PrintStateEnum} gmfPrintState GMF print state.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @private

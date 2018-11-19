@@ -40,7 +40,7 @@ import olStyleText from 'ol/style/Text.js';
  * @constructor
  * @struct
  * @param {!angular.IInjectorService} $injector Main injector.
- * @param {!angular.$filter} $filter Angular filter.
+ * @param {!angular.IFilterService} $filter Angular filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
@@ -48,7 +48,7 @@ import olStyleText from 'ol/style/Text.js';
 const exports = function($injector, $filter) {
 
   /**
-   * @type {!angular.$filter}
+   * @type {!angular.IFilterService}
    * @private
    */
   this.$filter_ = $filter;

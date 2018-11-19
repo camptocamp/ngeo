@@ -37,7 +37,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
  * @param {angular.ITimeoutService} $timeout angular timeout service
- * @param {angular.$filter} $filter angular filter service
+ * @param {angular.IFilterService} $filter angular filter service
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive
