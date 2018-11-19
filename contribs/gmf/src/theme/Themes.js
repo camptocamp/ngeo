@@ -18,7 +18,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @struct
  * @extends {ol.events.EventTarget}
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {angular.$q} $q Angular q service
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.

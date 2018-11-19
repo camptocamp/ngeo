@@ -113,7 +113,7 @@ exports.directive('gmfObjecteditingtools',
 
 
 /**
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.

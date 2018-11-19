@@ -5,7 +5,7 @@ import ngeoUtils from 'ngeo/utils.js';
 
 /**
  * Provides the c2c-geoportal full-text search.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {angular.IHttpService} $http Angular http service.
  * @constructor
  * @struct

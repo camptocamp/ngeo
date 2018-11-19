@@ -1304,7 +1304,7 @@ ngeox.datasource.FileGroupOptions = function() {};
 
 /**
  * Angular main injector.
- * @type {!angular.$injector}
+ * @type {!angular.IInjectorService}
  */
 ngeox.datasource.FileGroupOptions.prototype.injector;
 
@@ -1336,7 +1336,7 @@ ngeox.datasource.WMSGroupOptions = function() {};
 
 /**
  * Angular main injector.
- * @type {!angular.$injector}
+ * @type {!angular.IInjectorService}
  */
 ngeox.datasource.WMSGroupOptions.prototype.injector;
 

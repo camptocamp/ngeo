@@ -22,7 +22,7 @@ const exports = class extends olEventsEventTarget {
 
   /**
    * @param {angular.IHttpService} $http Angular http service.
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.IInjectorService} $injector Main injector.
    * @param {angular.Scope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {gmfx.User} gmfUser User.

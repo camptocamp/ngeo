@@ -59,7 +59,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {!angular.$q} $q The Angular $q service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.Scope} $rootScope Angular rootScope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service

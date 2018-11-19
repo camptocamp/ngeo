@@ -59,7 +59,7 @@ exports.Controller_ = class {
   /**
    * @param {!jQuery} $element Element.
    * @param {!angular.$filter} $filter Angular filter.
-   * @param {!angular.$injector} $injector Main injector.
+   * @param {!angular.IInjectorService} $injector Main injector.
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!gmf.datasource.ExternalDataSourcesManager}

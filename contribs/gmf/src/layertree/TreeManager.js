@@ -27,7 +27,7 @@ import * as olObj from 'ol/obj.js';
  * @constructor
  * @struct
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {angular.$injector} $injector Angular injector service.
+ * @param {angular.IInjectorService} $injector Angular injector service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -47,7 +47,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.$timeout_ = $timeout;
 
   /**
-   * @type {angular.$injector}
+   * @type {angular.IInjectorService}
    * @private
    */
   this.$injector_ = $injector;

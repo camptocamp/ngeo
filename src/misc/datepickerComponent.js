@@ -110,7 +110,7 @@ exports.directive('ngeoDatePicker', exports.component_);
 /**
  * DatePickerController - directive conttroller
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$injector} $injector injector.
+ * @param {!angular.IInjectorService} $injector injector.
  * @param {!ngeo.misc.Time} ngeoTime time service.
  * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor

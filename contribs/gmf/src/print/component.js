@@ -204,7 +204,7 @@ exports.Controller_ = class {
    * @param {angular.Scope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.$q} $q The Angular $q service.
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.IInjectorService} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
