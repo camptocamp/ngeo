@@ -13,7 +13,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * loaded only once.
  *
  * @param {angular.IHttpService} $http Angular $http service.
- * @param {angular.$q} $q Angular $q service.
+ * @param {angular.IQService} $q Angular $q service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @constructor
  * @struct
@@ -28,7 +28,7 @@ const exports = function($http, $q, gmfThemes) {
   this.http_ = $http;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;

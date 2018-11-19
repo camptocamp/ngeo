@@ -3,7 +3,7 @@
  */
 /**
  * @constructor
- * @param {angular.$q} $q .
+ * @param {angular.IQService} $q .
  * @param {angular.IHttpService} $http .
  * @param {gettext} gettext .
  * @ngInject

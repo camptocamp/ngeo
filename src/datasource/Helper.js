@@ -13,7 +13,7 @@ const exports = class {
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @struct
-   * @param {angular.$q} $q The Angular $q service.
+   * @param {angular.IQService} $q The Angular $q service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
    *     service.
    * @param {ngeo.query.Querent} ngeoQuerent Ngeo querent service.
@@ -26,7 +26,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;

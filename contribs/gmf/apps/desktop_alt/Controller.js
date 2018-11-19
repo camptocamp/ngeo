@@ -33,7 +33,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.IInjectorService} $injector Main injector.
  * @param {ngeo.misc.File} ngeoFile The file service.
  * @param {gettext} gettext The gettext service
- * @param {angular.$q} $q Angular $q.
+ * @param {angular.IQService} $q Angular $q.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject

@@ -31,7 +31,7 @@ const exports = class {
    *
    * @struct
    * @param {angular.IHttpService} $http Angular $http service.
-   * @param {angular.$q} $q The Angular $q service.
+   * @param {angular.IQService} $q The Angular $q service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
@@ -49,7 +49,7 @@ const exports = class {
     this.http_ = $http;
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;

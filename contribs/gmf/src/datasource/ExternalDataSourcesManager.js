@@ -30,7 +30,7 @@ const exports = class {
    *
    * @param {!angularGettext.Catalog} gettextCatalog service.
    * @param {!angular.IInjectorService} $injector Main injector.
-   * @param {!angular.$q} $q The Angular $q service.
+   * @param {!angular.IQService} $q The Angular $q service.
    * @param {!angular.Scope} $rootScope The rootScope provider.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {!ngeo.misc.File} ngeoFile Ngeo file.
@@ -52,7 +52,7 @@ const exports = class {
     this.injector_ = $injector;
 
     /**
-     * @type {!angular.$q}
+     * @type {!angular.IQService}
      * @private
      */
     this.q_ = $q;

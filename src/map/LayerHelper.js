@@ -15,7 +15,7 @@ import * as olUri from 'ol/uri.js';
 
 /**
  * Provides help functions that helps you to create and manage layers.
- * @param {angular.$q} $q Angular promises/deferred service.
+ * @param {angular.IQService} $q Angular promises/deferred service.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {number} ngeoTilesPreloadingLimit Load tiles up to preload levels. By default preload is Infinity,
  *     which means load all tiles on the top of the visible level. See also preload value
@@ -29,7 +29,7 @@ import * as olUri from 'ol/uri.js';
 const exports = function($q, $http, ngeoTilesPreloadingLimit) {
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.$q_ = $q;

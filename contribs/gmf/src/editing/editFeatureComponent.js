@@ -142,7 +142,7 @@ exports.directive('gmfEditfeature',
 
 /**
  * @param {jQuery} $element Element.
- * @param {angular.$q} $q Angular $q service.
+ * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -217,7 +217,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   this.element_ = $element;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;

@@ -24,7 +24,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  *
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
- * @param {angular.$q} $q The Angular $q service.
+ * @param {angular.IQService} $q The Angular $q service.
  * @param {!angular.Scope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
@@ -45,7 +45,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.http_ = $http;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;

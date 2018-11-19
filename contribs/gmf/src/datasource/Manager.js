@@ -39,7 +39,7 @@ const exports = class {
    * When changing theme, these data sources are cleared then re-created.
    *
    * @struct
-   * @param {angular.$q} $q Angular q service
+   * @param {angular.IQService} $q Angular q service
    * @param {!angular.Scope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
@@ -64,7 +64,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;

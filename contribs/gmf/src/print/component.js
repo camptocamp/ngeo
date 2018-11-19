@@ -203,7 +203,7 @@ exports.Controller_ = class {
    * @param {angular.Scope} $rootScope Angular root scope.
    * @param {angular.Scope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {angular.$q} $q The Angular $q service.
+   * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.IInjectorService} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
@@ -288,7 +288,7 @@ exports.Controller_ = class {
     this.$timeout_ = $timeout;
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.$q_ = $q;

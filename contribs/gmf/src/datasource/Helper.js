@@ -13,7 +13,7 @@ const exports = class {
    * sources.
    *
    * @struct
-   * @param {angular.$q} $q The Angular $q service.
+   * @param {angular.IQService} $q The Angular $q service.
    * @param {gmf.editing.EnumerateAttribute} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
@@ -27,7 +27,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;

@@ -9,7 +9,7 @@ import olFeature from 'ol/Feature.js';
  * A service that looks for certain parameters in the url and use them to fetch
  * a feature using the GMF protocol.
  *
- * @param {angular.$q} $q Angular $q service.
+ * @param {angular.IQService} $q Angular $q service.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @constructor
@@ -19,7 +19,7 @@ import olFeature from 'ol/Feature.js';
 const exports = function($q, gmfEditFeature, ngeoLocation) {
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
