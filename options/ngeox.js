@@ -310,12 +310,6 @@ ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
 ngeox.MapFeatureOverlayGroup;
 
 
-/**
- * Provides a debounce function used to debounce calls to a user-provided
- * function.
- * @typedef {function(function(?), number, boolean):function()}
- */
-ngeox.miscDebounce;
 
 
 /**

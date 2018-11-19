@@ -10,7 +10,9 @@
     "serve-ngeo-examples": "DEV_SERVER=1 TARGET=ngeo-examples webpack-dev-server --https --cert=private.crt --key=private.key --port 3000 --progress --watch --bail --debug",
     "serve-gmf-examples": "DEV_SERVER=1 TARGET=gmf-examples webpack-dev-server --https --cert=private.crt --key=private.key --port 3000 --progress --watch --bail --debug",
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --https --cert=private.crt --key=private.key --port 3000 --progress --watch --bail --debug",
-    "serve-api": "webpack-dev-server --mode development --content-base api/dist/ --config buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port 3000 --progress --watch --bail --debug"
+    "serve-api": "webpack-dev-server --mode development --content-base api/dist/ --config buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port 3000 --progress --watch --bail --debug",
+    "typecheck": "tsc --pretty",
+    "doc": "typedoc --module system --target ES6 --name ngeo --out apidoc src/ contribs/gmf/src/"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,6 @@
     "compile-catalog": "buildtools/compile-catalog.js"
   },
   "devDependencies": {
-    "@geoblocks/sources": "https://api.github.com/repos/geoblocks/sources/tarball/173ad0171",
     "@babel/core": "7.1.6",
     "@babel/plugin-syntax-object-rest-spread": "7.0.0",
     "@babel/plugin-transform-spread": "7.0.0",
@@ -32,6 +33,11 @@
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.51.0",
     "@fortawesome/fontawesome-free": "5.5.0",
+    "@geoblocks/sources": "https://api.github.com/repos/geoblocks/sources/tarball/173ad0171",
+    "@types/angular": "1.6.51",
+    "@types/d3": "5.0.1",
+    "@types/ol": "4.6.2",
+    "@types/proj4": "2.3.4",
     "angular": "1.7.5",
     "angular-animate": "1.7.5",
     "angular-dynamic-locale": "0.1.37",
@@ -108,6 +114,10 @@
     "svg-inline-loader": "0.8.0",
     "svgo": "1.1.0",
     "svgo-loader": "2.2.0",
+    "ts-node": "7.0.1",
+    "tsconfig-paths": "3.6.0",
+    "typedoc": "0.13.0",
+    "typescript": "3.1.6",
     "uglify-js": "3.4.9",
     "uglifyjs-webpack-plugin": "2.0.1",
     "url-loader": "1.1.2",

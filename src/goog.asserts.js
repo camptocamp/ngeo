@@ -71,7 +71,7 @@ exports.doAssertFailure_ = function(
  * Sets a custom error handler that can be used to customize the behavior of
  * assertion failures, for example by turning all assertion failures into log
  * messages.
- * @param {function(!goog.asserts.AssertionError)} errorHandler
+ * @param {function(!object)} errorHandler
  */
 exports.setErrorHandler = function(errorHandler) {
   if (exports.ENABLE_ASSERTS) {
@@ -268,7 +268,7 @@ exports.assertElement = function(value, opt_message, var_args) {
  * The compiler may tighten the type returned by this function.
  *
  * @param {?} value The value to check.
- * @param {function(new: T, ...)} type A user-defined constructor.
+ * @param {function(new: T)} type A user-defined constructor.
  * @param {string=} opt_message Error message in case of failure.
  * @param {...*} var_args The items to substitute into the failure message.
  * @throws {goog.asserts.AssertionError} When the value is not an instance of
