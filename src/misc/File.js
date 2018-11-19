@@ -63,7 +63,7 @@ const exports = function($q, $http, gettext) {
 
   /**
    * @param {string} url .
-   * @param {angular.$q.Deferred=} opt_cancelP .
+   * @param {angular.IDeferred=} opt_cancelP .
    * @return {angular.IPromise<Blob>} .
    */
   this.load = function(url, opt_cancelP) {

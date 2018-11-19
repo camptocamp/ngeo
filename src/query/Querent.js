@@ -71,7 +71,7 @@ const exports = class {
 
     /**
      * Promises that can be resolved to cancel started requests.
-     * @type {!Array.<angular.$q.Deferred>}
+     * @type {!Array.<angular.IDeferred>}
      * @private
      */
     this.requestCancelers_ = [];
@@ -923,7 +923,7 @@ const exports = class {
   }
 
   /**
-   * @return {angular.$q.Deferred} A deferred that can be resolved to cancel a
+   * @return {angular.IDeferred} A deferred that can be resolved to cancel a
    *    HTTP request.
    * @private
    */

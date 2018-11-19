@@ -300,7 +300,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
-   * @type {angular.$q.Deferred|null}
+   * @type {angular.IDeferred|null}
    * @private
    */
   this.confirmDeferred_ = null;

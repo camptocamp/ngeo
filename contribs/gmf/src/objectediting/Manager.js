@@ -37,7 +37,7 @@ const exports = function($q, gmfEditFeature, ngeoLocation) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {angular.$q.Deferred|null}
+   * @type {angular.IDeferred|null}
    * @private
    */
   this.getFeatureDefered_ = null;

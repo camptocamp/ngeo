@@ -376,7 +376,7 @@ exports.Controller_ = class {
     }
 
     /**
-     * @type {?angular.$q.Deferred}
+     * @type {?angular.IDeferred}
      * @private
      */
     this.requestCanceler_ = null;

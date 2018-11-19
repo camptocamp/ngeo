@@ -563,7 +563,7 @@ exports.Cache;
  *     geometryName: (string),
  *     interaction: (?ol.interaction.Snap),
  *     maxFeatures: (number),
- *     requestDeferred: (?angular.$q.Deferred),
+ *     requestDeferred: (?angular.IDeferred),
  *     snappingConfig: (gmfThemes.GmfSnappingConfig),
  *     stateWatcherUnregister: (Function),
  *     treeCtrl: (ngeo.layertree.Controller),

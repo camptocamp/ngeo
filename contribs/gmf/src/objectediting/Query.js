@@ -40,7 +40,7 @@ const exports = function($http, $q, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {?angular.$q.Deferred}
+   * @type {?angular.IDeferred}
    * @private
    */
   this.getQueryableLayerNodesDefered_ = null;

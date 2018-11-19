@@ -88,7 +88,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {angular.$q.Deferred}
+   * @type {angular.IDeferred}
    * @private
    */
   this.deferred_ = $q.defer();
