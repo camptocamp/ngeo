@@ -410,10 +410,10 @@ exports.LocationFactory = function($rootScope, $window) {
  */
 exports.MockProvider = function($locationProvider) {
   /**
-   * @return {angular.$location} Mock object for Angular location service.
+   * @return {angular.ILocationService} Mock object for Angular location service.
    */
   $locationProvider['$get'] = function() {
-    const locationMock = /** @type {angular.$location} */ ({
+    const locationMock = /** @type {angular.ILocationService} */ ({
       /**
        * @return {string} Absolute URL.
        */
