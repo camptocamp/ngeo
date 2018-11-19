@@ -372,7 +372,7 @@ exports.prototype.setPath = function(path) {
  * The factory creating the ngeo Location service.
  *
  * @param {angular.Scope} $rootScope The root scope.
- * @param {angular.$window} $window Angular window service.
+ * @param {angular.IWindowService} $window Angular window service.
  * @return {ngeo.statemanager.Location} The ngeo location service.
  * @ngInject
  */

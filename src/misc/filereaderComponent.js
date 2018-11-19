@@ -22,7 +22,7 @@ const exports = angular.module('ngeoFilereader', []);
  *
  * @htmlAttribute {string} ngeo-filereader The content of the file read.
  * @htmlAttribute {boolean=} ngeo-filereader-supported Whether the FileReader API is supported.
- * @param {angular.$window} $window The Angular $window service.
+ * @param {angular.IWindowService} $window The Angular $window service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

@@ -12,7 +12,7 @@ const exports = angular.module('ngeoGetBrowserLanguage', []);
  * language code depending on the list of available languages and the browser
  * languages settings.
  *
- * @param {angular.$window} $window Angular $window service.
+ * @param {angular.IWindowService} $window Angular $window service.
  * @return {ngeox.miscGetBrowserLanguage} The "GetBrowserLanguage" function.
  *
  * @ngdoc service
