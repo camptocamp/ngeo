@@ -166,7 +166,7 @@ exports.prototype.clearMessageByCacheItem_ = function(item) {
 /**
  * @typedef {{
  *     el: angular.JQLite,
- *     promise: angular.$q.Promise
+ *     promise: angular.IPromise
  * }}
  */
 exports.CacheItem;

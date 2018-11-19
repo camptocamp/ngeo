@@ -382,7 +382,7 @@ exports.Controller_ = class {
     this.requestCanceler_ = null;
 
     /**
-     * @type {?angular.$q.Promise}
+     * @type {?angular.IPromise}
      * @private
      */
     this.statusTimeoutPromise_ = null;
@@ -394,7 +394,7 @@ exports.Controller_ = class {
     this.onDragPreviousMousePosition_ = null;
 
     /**
-     * @type {?angular.$q.Promise|null}
+     * @type {?angular.IPromise|null}
      * @private
      */
     this.rotationTimeoutPromise_ = null;

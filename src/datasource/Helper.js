@@ -85,7 +85,7 @@ const exports = class {
    * only have 1 ogcLayer set and be queryable.
    *
    * @param {ngeo.datasource.OGC} dataSource Filtrable data source.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   getDataSourceAttributes(dataSource) {

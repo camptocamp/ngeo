@@ -56,7 +56,7 @@ const exports = class {
     this.ngeoDebounce_ = ngeoDebounce;
 
     /**
-     * @type {?angular.$q.Promise}
+     * @type {?angular.IPromise}
      * @private
      */
     this.promise = null;

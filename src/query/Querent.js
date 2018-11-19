@@ -79,7 +79,7 @@ const exports = class {
     /**
      * Cache of promises for WMS GetCapabilities requests. They key is the
      * online resource base url that is used to do the query.
-     * @type {!Object.<!angular.$q.Promise>}
+     * @type {!Object.<!angular.IPromise>}
      * @private
      */
     this.wmsGetCapabilitiesPromises_ = {};
@@ -87,7 +87,7 @@ const exports = class {
     /**
      * Cache of promises for WMST GetCapabilities requests. They key is the
      * url that is used to do the query.
-     * @type {!Object.<!angular.$q.Promise>}
+     * @type {!Object.<!angular.IPromise>}
      * @private
      */
     this.wmtsGetCapabilitiesPromises_ = {};
@@ -101,7 +101,7 @@ const exports = class {
    * data sources, map and optional filters.
    *
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   issue(options) {
@@ -186,7 +186,7 @@ const exports = class {
 
   /**
    * @param {ngeo.datasource.OGC} dataSource Data source.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   wfsDescribeFeatureType(dataSource) {
@@ -246,7 +246,7 @@ const exports = class {
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
-   * @return {!angular.$q.Promise} Promise.
+   * @return {!angular.IPromise} Promise.
    * @export
    */
   wmsGetCapabilities(baseUrl, opt_cache) {
@@ -303,7 +303,7 @@ const exports = class {
    * @param {boolean=} opt_cache Whether to use the cached capability, if
    *     available. Enabling this will also store the capability when required
    *     for the first time. Defaults to: `true`.
-   * @return {!angular.$q.Promise} Promise.
+   * @return {!angular.IPromise} Promise.
    * @export
    */
   wmtsGetCapabilities(url, opt_cache) {
@@ -476,7 +476,7 @@ const exports = class {
    * @param {!ngeo.query.Querent.CombinedDataSources} combinedDataSources Combined
    *     data sources.
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @private
    */
   issueCombinedWFS_(combinedDataSources, options) {
@@ -685,7 +685,7 @@ const exports = class {
    * @param {!ngeo.query.Querent.CombinedDataSources} combinedDataSources Combined
    *     data sources.
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @private
    */
   issueCombinedWMS_(combinedDataSources, options) {

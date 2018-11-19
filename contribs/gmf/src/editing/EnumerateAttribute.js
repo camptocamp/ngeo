@@ -31,7 +31,7 @@ const exports = class {
     this.baseUrl_ = gmfLayersUrl;
 
     /**
-     * @type {Object.<string, !angular.$q.Promise>}
+     * @type {Object.<string, !angular.IPromise>}
      * @private
      */
     this.promises_ = {};
@@ -40,7 +40,7 @@ const exports = class {
   /**
    * @param {gmf.datasource.OGC} dataSource Data source.
    * @param {string} attribute Attribute name.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    */
   getAttributeValues(dataSource, attribute) {
     const promiseId = `${dataSource.id}_${attribute}`;

@@ -84,7 +84,7 @@ const exports = class {
 
   /**
    * @param {gmf.datasource.OGC} dataSource Filtrable data source.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   prepareFiltrableDataSource(dataSource) {

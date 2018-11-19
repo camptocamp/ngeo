@@ -308,7 +308,7 @@ exports.MainController.prototype.runViewer_ = function(baseUrl) {
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.$q.Promise} The promise attached to the deferred object.
+ * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
 exports.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
@@ -379,7 +379,7 @@ exports.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) 
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.$q.Promise} The promise attached to the deferred object.
+ * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
 exports.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {

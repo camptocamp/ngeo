@@ -110,7 +110,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.groupsToAddInThisDigestLoop_ = [];
 
   /**
-   * @type {angular.$q.Promise}
+   * @type {angular.IPromise}
    * @private
    */
   this.promiseForGroupsToAddInThisDigestLoop_ = null;

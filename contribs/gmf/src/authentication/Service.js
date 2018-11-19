@@ -86,7 +86,7 @@ const exports = class extends olEventsEventTarget {
    * @param {string} oldPwd Old password.
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   changePassword(oldPwd, newPwd, confPwd) {
@@ -108,7 +108,7 @@ const exports = class extends olEventsEventTarget {
   /**
    * @param {string} login Login name.
    * @param {string} pwd Password.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   login(login, pwd) {
@@ -122,7 +122,7 @@ const exports = class extends olEventsEventTarget {
   }
 
   /**
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   logout() {
@@ -135,7 +135,7 @@ const exports = class extends olEventsEventTarget {
 
   /**
    * @param {string} login Login name.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   resetPassword(login) {

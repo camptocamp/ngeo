@@ -700,7 +700,7 @@ exports.Controller_.prototype.cancel = function() {
 /**
  * Check if there are unsaved modifications. If there aren't, then cancel.
  * Used by the 'cancel' button in the template.
- * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
  * @export
  */
@@ -716,7 +716,7 @@ exports.Controller_.prototype.confirmCancel = function() {
  * (a.k.a. is dirty), then the confirmation modal is shown.
  * @param {boolean=} scopeApply Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
- * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
  * @private
  */

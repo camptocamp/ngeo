@@ -61,7 +61,7 @@ const exports = class {
 
   /**
    * Initialize the service variables from Pytree profile_config_gmf2 route
-   * @return {angular.$q.Promise} configuration values
+   * @return {angular.IPromise} configuration values
    * @export
    */
   initProfileConfig() {

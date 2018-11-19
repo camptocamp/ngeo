@@ -103,7 +103,7 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
   this.infoPopup_ = ngeoCreatePopup();
 
   /**
-   * @type {Object.<string, !angular.$q.Promise>}
+   * @type {Object.<string, !angular.IPromise>}
    * @private
    */
   this.promises_ = {};

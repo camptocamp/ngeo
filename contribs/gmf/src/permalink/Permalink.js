@@ -434,7 +434,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   // External DataSources
 
   /**
-   * @type {?angular.$q.Promise}
+   * @type {?angular.IPromise}
    * @private
    */
   this.setExternalDataSourcesStatePromise_ = null;
@@ -1207,7 +1207,7 @@ exports.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 
 /**
- * @return {!angular.$q.Promise} Promise
+ * @return {!angular.IPromise} Promise
  * @private
  */
 

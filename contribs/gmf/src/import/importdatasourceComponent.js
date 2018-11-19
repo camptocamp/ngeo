@@ -147,7 +147,7 @@ exports.Controller_ = class {
     this.hasError = false;
 
     /**
-     * @type {?angular.$q.Promise}
+     * @type {?angular.IPromise}
      * @private
      */
     this.hasErrorPromise_ = null;

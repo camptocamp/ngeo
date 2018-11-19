@@ -28,7 +28,7 @@ const exports = function($http, gmfLayersUrl) {
   this.baseUrl_ = gmfLayersUrl;
 
   /**
-   * @type {Object.<number, !angular.$q.Promise>}
+   * @type {Object.<number, !angular.IPromise>}
    * @private
    */
   this.promises_ = {};
@@ -38,7 +38,7 @@ const exports = function($http, gmfLayersUrl) {
 
 /**
  * @param {number} id Layer id.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getAttributes = function(id) {

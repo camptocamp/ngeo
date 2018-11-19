@@ -53,7 +53,7 @@ const exports = function($q, gmfEditFeature, ngeoLocation) {
  * is returned, otherwise one is created with empty geometry and with the
  * property set.
  *
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getFeature = function() {

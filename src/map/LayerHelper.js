@@ -159,7 +159,7 @@ exports.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
- * @return {angular.$q.Promise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
+ * @return {angular.IPromise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
  *     no layer else.
  * @export
  */

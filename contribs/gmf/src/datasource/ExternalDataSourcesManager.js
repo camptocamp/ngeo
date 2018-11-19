@@ -514,7 +514,7 @@ const exports = class {
   /**
    * Get file data source from cache, else create, store and return a new one.
    * @param {!File} file File.
-   * @return {!angular.$q.Promise} Promise
+   * @return {!angular.IPromise} Promise
    * @private
    */
   getFileDataSource_(file) {

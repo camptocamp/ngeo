@@ -49,7 +49,7 @@ const exports = function($http, $q, gmfThemes) {
 
 
 /**
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getQueryableLayersInfo = function() {
@@ -156,7 +156,7 @@ exports.getQueryableLayersInfoFromThemes = function(
  *     information.
  * @param {ol.Coordinate} coordinate Coordinate.
  * @param {ol.Map} map Map.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {

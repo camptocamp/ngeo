@@ -101,7 +101,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
    * Reference to the promise taking care of calling all GetFeature requests
    * of the currently active cache items after the map view changed. Used
    * to cancel if the map view changes often within a short period of time.
-   * @type {?angular.$q.Promise}
+   * @type {?angular.IPromise}
    * @private
    */
   this.mapViewChangePromise_ = null;
