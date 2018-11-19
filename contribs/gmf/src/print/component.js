@@ -635,7 +635,7 @@ exports.Controller_ = class {
    */
   getCapabilities_(opt_roleId) {
     this.capabilities_ = this.ngeoPrint_.getCapabilities(
-      /** @type {angular.$http.Config} */ ({
+      /** @type {angular.IRequestShortcutConfig} */ ({
         withCredentials: true,
         params: opt_roleId ? {
           'role': opt_roleId,
@@ -954,7 +954,7 @@ exports.Controller_ = class {
       spec.attributes.map.layers.unshift(layers[0]);
     }
 
-    this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
+    this.ngeoPrint_.createReport(spec, /** @type {angular.IRequestShortcutConfig} */ ({
       timeout: this.requestCanceler_.promise
     })).then(
       this.handleCreateReportSuccess_.bind(this),
@@ -1078,7 +1078,7 @@ exports.Controller_ = class {
    */
   getStatus_(ref) {
     this.requestCanceler_ = this.$q_.defer();
-    this.ngeoPrint_.getStatus(ref, /** @type {angular.$http.Config} */ ({
+    this.ngeoPrint_.getStatus(ref, /** @type {angular.IRequestShortcutConfig} */ ({
       timeout: this.requestCanceler_.promise
     })).then(
       this.handleGetStatusSuccess_.bind(this, ref),
