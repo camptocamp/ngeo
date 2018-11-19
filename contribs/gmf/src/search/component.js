@@ -193,7 +193,7 @@ exports.SearchController_ = class {
    * @private
    * @param {jQuery} $element Element.
    * @param {angular.Scope} $scope The component's scope.
-   * @param {angular.$compile} $compile Angular compile service.
+   * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IInjectorService} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -227,7 +227,7 @@ exports.SearchController_ = class {
     this.scope_ = $scope;
 
     /**
-     * @type {angular.$compile}
+     * @type {angular.ICompileService}
      * @private
      */
     this.compile_ = $compile;

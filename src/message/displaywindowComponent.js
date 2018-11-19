@@ -53,7 +53,7 @@ exports.Controller_ = class {
    * @param {!jQuery} $element Element.
    * @param {!angular.$sce} $sce Angular sce service.
    * @param {!angular.Scope} $scope Scope.
-   * @param {!angular.$compile} $compile The compile provider.
+   * @param {!angular.ICompileService} $compile The compile provider.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -161,7 +161,7 @@ exports.Controller_ = class {
     this.scope_ = $scope;
 
     /**
-     * @type {angular.$compile}
+     * @type {angular.ICompileService}
      * @private
      */
     this.compile_ = $compile;

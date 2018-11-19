@@ -16,7 +16,7 @@ const exports = angular.module('ngeoMeasurearea', [
 
 
 /**
- * @param {!angular.$compile} $compile Angular compile service.
+ * @param {!angular.ICompileService} $compile Angular compile service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {!angular.$filter} $filter Angular filter
  * @param {!angular.IInjectorService} $injector Main injector.
