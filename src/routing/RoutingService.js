@@ -4,7 +4,7 @@
 /**
  * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
  * @constructor
  * @struct
@@ -16,7 +16,7 @@
 const exports = function($http, $injector) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;

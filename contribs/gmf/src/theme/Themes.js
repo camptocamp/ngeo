@@ -17,7 +17,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @constructor
  * @struct
  * @extends {ol.events.EventTarget}
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
  * @param {angular.$q} $q Angular q service
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -47,7 +47,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   this.$q_ = $q;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;

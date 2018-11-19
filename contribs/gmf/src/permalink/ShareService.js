@@ -3,7 +3,7 @@
  */
 /**
  * Service to handle the sharing of the permalink.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param  {string} gmfShortenerCreateUrl URL for the shortener API
  * @constructor
  * @struct
@@ -14,7 +14,7 @@
 const exports = function($http, gmfShortenerCreateUrl) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;

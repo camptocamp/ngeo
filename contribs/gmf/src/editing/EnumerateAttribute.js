@@ -8,7 +8,7 @@ const exports = class {
    * attribute of a given data source (gmf layer).
    *
    * @struct
-   * @param {angular.$http} $http Angular $http service.
+   * @param {angular.IHttpService} $http Angular $http service.
    * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
    * @ngInject
    * @ngdoc service
@@ -19,7 +19,7 @@ const exports = class {
     // === Injected services ===
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      * @private
      */
     this.http_ = $http;

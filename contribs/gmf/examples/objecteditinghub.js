@@ -31,7 +31,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.$q} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
@@ -42,7 +42,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;

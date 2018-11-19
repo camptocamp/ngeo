@@ -6,7 +6,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 /**
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.$injector} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
@@ -20,7 +20,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 const exports = function($http, $injector, ngeoDebounce) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;

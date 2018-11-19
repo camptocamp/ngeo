@@ -119,7 +119,7 @@ exports.component('gmfProfile', exports.component_);
 
 /**
  * @param {angular.Scope} $scope Angular scope.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.JQLite} $element Element.
  * @param {angular.$filter} $filter Angular filter
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
@@ -144,7 +144,7 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   this.$scope_ = $scope;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;

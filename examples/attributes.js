@@ -20,7 +20,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.$timeout} $timeout Angular timeout service.
  * @param {!angular.Scope} $scope Scope.
  * @ngInject

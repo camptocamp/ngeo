@@ -24,7 +24,7 @@ const exports = class {
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree
    *
    * @struct
-   * @param {angular.$http} $http Angular http service.
+   * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.$filter} $filter Angular filter.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.Debounce} ngeoDebounce ngeo debounce service.
@@ -35,7 +35,7 @@ const exports = class {
   constructor($http, $filter, gettextCatalog, ngeoDebounce) {
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      */
     this.$http = $http;
 

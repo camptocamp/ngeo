@@ -21,7 +21,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
 const exports = class extends olEventsEventTarget {
 
   /**
-   * @param {angular.$http} $http Angular http service.
+   * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.$injector} $injector Main injector.
    * @param {angular.Scope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
@@ -33,7 +33,7 @@ const exports = class extends olEventsEventTarget {
     super();
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      * @private
      */
     this.$http_ = $http;

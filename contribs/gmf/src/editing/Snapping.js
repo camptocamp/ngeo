@@ -23,7 +23,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * features are drawn or modified.
  *
  * @constructor
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.$q} $q The Angular $q service.
  * @param {!angular.Scope} $rootScope Angular rootScope.
  * @param {angular.$timeout} $timeout Angular timeout service.
@@ -39,7 +39,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   // === Injected services ===
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;

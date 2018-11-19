@@ -10,7 +10,7 @@ const exports = class {
    * Requires a Pytree service: https://github.com/sitn/pytree
    *
    * @struct
-   * @param {angular.$http} $http Angular http service.
+   * @param {angular.IHttpService} $http Angular http service.
    * @param {string} pytreeLidarprofileJsonUrl pytree Lidar profile URL.
    * @ngInject
    * @ngdoc service
@@ -19,7 +19,7 @@ const exports = class {
   constructor($http, pytreeLidarprofileJsonUrl) {
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      * @private
      */
     this.$http_ = $http;

@@ -30,7 +30,7 @@ const exports = class {
    * - WMTS GetCapabilities
    *
    * @struct
-   * @param {angular.$http} $http Angular $http service.
+   * @param {angular.IHttpService} $http Angular $http service.
    * @param {angular.$q} $q The Angular $q service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
@@ -43,7 +43,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      * @private
      */
     this.http_ = $http;

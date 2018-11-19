@@ -12,7 +12,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * regardless of the associated layer visibility. The layer nodes are also
  * loaded only once.
  *
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.$q} $q Angular $q service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @constructor
@@ -22,7 +22,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 const exports = function($http, $q, gmfThemes) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;

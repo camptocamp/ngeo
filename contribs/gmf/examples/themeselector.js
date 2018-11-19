@@ -24,7 +24,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @constructor
- * @param {angular.$http} $http Angular's $http service.
+ * @param {angular.IHttpService} $http Angular's $http service.
  * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @ngInject

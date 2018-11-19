@@ -4,7 +4,7 @@
 /**
  * @constructor
  * @param {angular.$q} $q .
- * @param {angular.$http} $http .
+ * @param {angular.IHttpService} $http .
  * @param {gettext} gettext .
  * @ngInject
  */

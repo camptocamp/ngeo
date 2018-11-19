@@ -54,7 +54,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 
 /**
  * @constructor
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export

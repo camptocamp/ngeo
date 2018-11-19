@@ -12,14 +12,14 @@ import * as olUri from 'ol/uri.js';
  *
  * @constructor
  * @struct
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
 const exports = function($http, gmfLayersUrl) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;
