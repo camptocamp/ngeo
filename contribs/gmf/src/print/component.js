@@ -501,7 +501,7 @@ exports.Controller_ = class {
     this.postcomposeListener_;
 
     /**
-     * @type {angular.$http.HttpPromise}
+     * @type {angular.IHttpPromise}
      * @private
      */
     this.capabilities_;

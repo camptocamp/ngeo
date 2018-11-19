@@ -103,7 +103,7 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
  * Cancel a report.
  * @param {string} ref Print report reference.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise} HTTP promise.
  * @export
  */
 exports.prototype.cancel = function(ref, opt_httpConfig) {
@@ -416,7 +416,7 @@ exports.prototype.getOpacityOrInherited_ = function(layer) {
  * Send a create report request to the MapFish Print service.
  * @param {MapFishPrintSpec} printSpec Print specification.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise} HTTP promise.
  * @export
  */
 exports.prototype.createReport = function(printSpec, opt_httpConfig) {
@@ -437,7 +437,7 @@ exports.prototype.createReport = function(printSpec, opt_httpConfig) {
  * Get the status of a report.
  * @param {string} ref Print report reference.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise} HTTP promise.
  * @export
  */
 exports.prototype.getStatus = function(ref, opt_httpConfig) {
@@ -462,7 +462,7 @@ exports.prototype.getReportUrl = function(ref) {
 /**
  * Get the print capabilities from MapFish Print.
  * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise} HTTP promise.
  */
 exports.prototype.getCapabilities = function(opt_httpConfig) {
   const httpConfig =

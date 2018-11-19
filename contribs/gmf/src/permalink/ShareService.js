@@ -33,7 +33,7 @@ const exports = function($http, gmfShortenerCreateUrl) {
  * Get a short URL of the permalink by calling the url shortener service.
  * - If no shortener API url have been specified, it returns the permalink itself.
  * @param  {string} url the permalink
- * @return {gmfx.ShortenerAPIResponse|angular.$http.HttpPromise} an object containing the permalink not shortened or
+ * @return {gmfx.ShortenerAPIResponse|angular.IHttpPromise} an object containing the permalink not shortened or
  * the promise attached to the shortener API request
  */
 exports.prototype.getShortUrl = function(url) {
@@ -60,7 +60,7 @@ exports.prototype.getShortUrl = function(url) {
  * @param  {string} shortUrl the short permalink to send
  * @param  {string} email the email to which the short url must be send
  * @param  {string=} opt_message message for the email
- * @return {angular.$http.HttpPromise} the promise attached to the shortener API request
+ * @return {angular.IHttpPromise} the promise attached to the shortener API request
  */
 exports.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
@@ -78,7 +78,7 @@ exports.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
 
 /**
  * @param  {gmfx.ShortenerAPIRequestParams} params parameters for the request
- * @return {angular.$http.HttpPromise} the promise attached to the shortener API request
+ * @return {angular.IHttpPromise} the promise attached to the shortener API request
  * @private
  */
 exports.prototype.postShortUrl_ = function(params) {
