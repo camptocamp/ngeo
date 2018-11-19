@@ -404,7 +404,7 @@ exports.LocationFactory = function($rootScope, $window) {
  *
  * app.module.config(ngeo.statemanager.Location.MockProvider);
  *
- * @param {angular.$locationProvider} $locationProvider Angular location
+ * @param {angular.ILocationProvider} $locationProvider Angular location
  *     provider.
  * @ngInject
  */
