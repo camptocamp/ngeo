@@ -11,6 +11,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 /** @suppress {extraRequire} */
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
+import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
@@ -27,6 +28,7 @@ exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfPermalinkPermalink.module.name,
+  gmfMobileMeasureAreaComponent.name,
   gmfMobileMeasureLengthComponent.name,
   gmfMobileMeasurePointComponent.name,
   ngeoMiscBtnComponent.name,
@@ -68,6 +70,12 @@ exports.MainController = function(gmfPermalink) {
   });
 
   this.map.addControl(new olControlScaleLine());
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.measureAreaActive = false;
 
   /**
    * @type {boolean}
