@@ -661,14 +661,12 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
     prepare(query, settings) {
       const url = settings.url;
       const lang = gettextCatalog.currentLanguage;
-      const interfaceName = 'mobile'; // FIXME dynamic interfaces
       settings.xhrFields = {
         withCredentials: true
       };
       settings.url = ol.uri.appendParams(url, {
         'query': query,
-        'lang': lang,
-        'interface': interfaceName
+        'lang': lang
       });
       return settings;
     }
