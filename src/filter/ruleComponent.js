@@ -37,7 +37,7 @@ import olGeomGeometry from 'ol/geom/Geometry.js';
 import 'ngeo/sass/font.scss';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
@@ -84,7 +84,7 @@ exports.RuleController_ = class {
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!angular.Scope} $scope Angular scope.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
@@ -141,7 +141,7 @@ exports.RuleController_ = class {
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;

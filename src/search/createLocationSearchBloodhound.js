@@ -124,7 +124,7 @@ const exports = function(opt_options) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 

@@ -7,7 +7,7 @@ import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
 import './profile.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfProfileModule', [
   gmfProfileComponent.name,

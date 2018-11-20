@@ -15,7 +15,7 @@ const exports = class {
    * service.
    *
    * @struct
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.IInjectorService} $injector Main injector.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
@@ -211,7 +211,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoMapQuerent', [
   ngeoDatasourceDataSources.module.name,

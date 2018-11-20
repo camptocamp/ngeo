@@ -4,7 +4,7 @@
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMapExtraModule', [
   ngeoMapLayerHelper.module.name,

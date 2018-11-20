@@ -173,7 +173,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDataSources', []);
 // DataSources with the ngeox.datasource.DataSources type.

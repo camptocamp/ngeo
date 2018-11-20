@@ -19,7 +19,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -29,7 +29,7 @@ exports.module = angular.module('app', [
 
 /**
  * @constructor
- * @param {angular.$http} $http The $http angular service.
+ * @param {angular.IHttpService} $http The $http angular service.
  * @param {angular.Scope} $scope The $scope angular service.
  * @ngInject
  */

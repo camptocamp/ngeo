@@ -6,8 +6,8 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 /**
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IHttpService} $http Angular http service.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @struct
@@ -20,7 +20,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 const exports = function($http, $injector, ngeoDebounce) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -80,7 +80,7 @@ const exports = function($http, $injector, ngeoDebounce) {
  * Search by name
  * @param {string} query Search query
  * @param {?Object} params Optional parameters
- * @return {!angular.$http.HttpPromise} promise of the Nominatim API request
+ * @return {!angular.IHttpPromise} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  * @export
  */
@@ -109,7 +109,7 @@ exports.prototype.search = function(query, params) {
  * Reverse Geocoding
  * @param {ol.Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object|undefined)} params Optional parameters
- * @return {!angular.$http.HttpPromise} promise of the Nominatim API request
+ * @return {!angular.IHttpPromise} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  * @export
  */
@@ -167,7 +167,7 @@ exports.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) 
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoNominatimService', [
   ngeoMiscDebounce.name

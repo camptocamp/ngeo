@@ -66,7 +66,7 @@ class ShareComponentController {
    * @param {angular.Scope} $scope Scope.
    * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
    * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
-   * @param {angular.$q} $q Angular q service
+   * @param {angular.IQService} $q Angular q service
    * @param {angular.Attributes} $attrs Attributes.
    * @constructor
    * @ngInject
@@ -94,7 +94,7 @@ class ShareComponentController {
     this.gmfShareService_ = gmfShareService;
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.$q_ = $q;

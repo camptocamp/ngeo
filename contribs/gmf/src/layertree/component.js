@@ -32,7 +32,7 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 import 'bootstrap/js/src/collapse.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeComponent', [
   gmfDatasourceDataSourceBeingFiltered.module.name,

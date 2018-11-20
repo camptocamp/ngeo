@@ -7,7 +7,7 @@ import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoQueryModule', [
   ngeoQueryQuerent.module.name,

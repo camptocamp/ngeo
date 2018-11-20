@@ -8,7 +8,7 @@ import * as olBase from 'ol/index.js';
 /**
  * ngeo - WMS time service
  * @extends {ngeo.misc.Time}
- * @param {angular.$filter} $filter angular filter service.
+ * @param {angular.IFilterService} $filter angular filter service.
  * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @struct
@@ -20,7 +20,7 @@ const exports = function($filter, gettextCatalog) {
 
   /**
    * @private
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    */
   this.$filter_ = $filter;
 
@@ -100,7 +100,7 @@ exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUT
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoWMSTime', [
   ngeoMiscTime.module.name,

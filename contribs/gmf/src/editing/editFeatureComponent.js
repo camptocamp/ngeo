@@ -57,7 +57,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('GmfEditingFeatureComponent', [
   gmfEditingEditFeature.module.name,
@@ -142,9 +142,9 @@ exports.directive('gmfEditfeature',
 
 /**
  * @param {jQuery} $element Element.
- * @param {angular.$q} $q Angular $q service.
+ * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.editing.Snapping} gmfSnapping The gmf snapping service.
@@ -217,7 +217,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   this.element_ = $element;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
@@ -229,7 +229,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   this.scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
@@ -300,7 +300,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
-   * @type {angular.$q.Deferred|null}
+   * @type {angular.IDeferred|null}
    * @private
    */
   this.confirmDeferred_ = null;
@@ -700,7 +700,7 @@ exports.Controller_.prototype.cancel = function() {
 /**
  * Check if there are unsaved modifications. If there aren't, then cancel.
  * Used by the 'cancel' button in the template.
- * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
  * @export
  */
@@ -716,7 +716,7 @@ exports.Controller_.prototype.confirmCancel = function() {
  * (a.k.a. is dirty), then the confirmation modal is shown.
  * @param {boolean=} scopeApply Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
- * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
  * @private
  */
@@ -796,7 +796,7 @@ exports.Controller_.prototype.submit = function() {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller_.prototype.handleEditFeature_ = function(resp) {

@@ -6,7 +6,7 @@ import ngeoSearchCreateGeoJSONBloodhound from 'ngeo/search/createGeoJSONBloodhou
 import ngeoSearchCreateLocationSearchBloodhound from 'ngeo/search/createLocationSearchBloodhound.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoSearchModule', [
   ngeoSearchSearchDirective.module.name,

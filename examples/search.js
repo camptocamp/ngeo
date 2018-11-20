@@ -19,7 +19,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -50,7 +50,7 @@ exports.module.component('appSearch', exports.searchComponent);
  * @constructor
  * @param {angular.JQLite} $element Element.
  * @param {angular.Scope} $rootScope Angular root scope.
- * @param {angular.$compile} $compile Angular compile service.
+ * @param {angular.ICompileService} $compile Angular compile service.
  * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject

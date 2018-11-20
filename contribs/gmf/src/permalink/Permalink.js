@@ -56,10 +56,10 @@ import olLayerGroup from 'ol/layer/Group.js';
  *
  * @constructor
  * @struct
- * @param {!angular.$q} $q The Angular $q service.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.IQService} $q The Angular $q service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.Scope} $rootScope Angular rootScope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
@@ -74,7 +74,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   ngeoStateManager, ngeoLocation, gmfUser) {
 
   /**
-   * @type {!angular.$q}
+   * @type {!angular.IQService}
    * @private
    */
   this.q_ = $q;
@@ -86,7 +86,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.rootScope_ = $rootScope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;
@@ -434,7 +434,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   // External DataSources
 
   /**
-   * @type {?angular.$q.Promise}
+   * @type {?angular.IPromise}
    * @private
    */
   this.setExternalDataSourcesStatePromise_ = null;
@@ -1207,7 +1207,7 @@ exports.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 
 /**
- * @return {!angular.$q.Promise} Promise
+ * @return {!angular.IPromise} Promise
  * @private
  */
 

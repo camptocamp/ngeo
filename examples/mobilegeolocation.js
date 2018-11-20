@@ -17,7 +17,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
   ngeoGeolocationMobile.name,

@@ -24,7 +24,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfProfile', [
   ngeoDownloadCsv.module.name,
@@ -119,9 +119,9 @@ exports.component('gmfProfile', exports.component_);
 
 /**
  * @param {angular.Scope} $scope Angular scope.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.JQLite} $element Element.
- * @param {angular.$filter} $filter Angular filter
+ * @param {angular.IFilterService} $filter Angular filter
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
@@ -144,7 +144,7 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   this.$scope_ = $scope;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -156,7 +156,7 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   this.$element_ = $element;
 
   /**
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    * @export
    */
   this.$filter_ = $filter;
@@ -655,7 +655,7 @@ exports.Controller_.prototype.getJsonProfile_ = function() {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
@@ -667,7 +667,7 @@ exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.Controller_.prototype.getProfileDataError_ = function(resp) {

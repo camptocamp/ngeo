@@ -26,7 +26,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfPrintComponent', [
   gmfAuthenticationService.module.name,
@@ -202,9 +202,9 @@ exports.Controller_ = class {
    * @param {angular.JQLite} $element Element.
    * @param {angular.Scope} $rootScope Angular root scope.
    * @param {angular.Scope} $scope Angular scope.
-   * @param {angular.$timeout} $timeout Angular timeout service.
-   * @param {angular.$q} $q The Angular $q service.
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.IQService} $q The Angular $q service.
+   * @param {angular.IInjectorService} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
@@ -214,7 +214,7 @@ exports.Controller_ = class {
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
    * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
-   * @param {angular.$filter} $filter Angular $filter service.
+   * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {gmf.print.component.PrintStateEnum} gmfPrintState GMF print state.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @private
@@ -282,13 +282,13 @@ exports.Controller_ = class {
     this.$scope_ = $scope;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.$timeout_ = $timeout;
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.$q_ = $q;
@@ -376,13 +376,13 @@ exports.Controller_ = class {
     }
 
     /**
-     * @type {?angular.$q.Deferred}
+     * @type {?angular.IDeferred}
      * @private
      */
     this.requestCanceler_ = null;
 
     /**
-     * @type {?angular.$q.Promise}
+     * @type {?angular.IPromise}
      * @private
      */
     this.statusTimeoutPromise_ = null;
@@ -394,7 +394,7 @@ exports.Controller_ = class {
     this.onDragPreviousMousePosition_ = null;
 
     /**
-     * @type {?angular.$q.Promise|null}
+     * @type {?angular.IPromise|null}
      * @private
      */
     this.rotationTimeoutPromise_ = null;
@@ -501,7 +501,7 @@ exports.Controller_ = class {
     this.postcomposeListener_;
 
     /**
-     * @type {angular.$http.HttpPromise}
+     * @type {angular.IHttpPromise}
      * @private
      */
     this.capabilities_;
@@ -635,7 +635,7 @@ exports.Controller_ = class {
    */
   getCapabilities_(opt_roleId) {
     this.capabilities_ = this.ngeoPrint_.getCapabilities(
-      /** @type {angular.$http.Config} */ ({
+      /** @type {angular.IRequestShortcutConfig} */ ({
         withCredentials: true,
         params: opt_roleId ? {
           'role': opt_roleId,
@@ -650,7 +650,7 @@ exports.Controller_ = class {
   /**
    * Create the list of layouts, get the formats, get the first layout in
    * gmf print v3 capabilities and then update the print panel layout information.
-   * @param {!angular.$http.Response} resp Response.
+   * @param {!angular.IHttpResponse} resp Response.
    * @private
    */
   parseCapabilities_(resp) {
@@ -954,7 +954,7 @@ exports.Controller_ = class {
       spec.attributes.map.layers.unshift(layers[0]);
     }
 
-    this.ngeoPrint_.createReport(spec, /** @type {angular.$http.Config} */ ({
+    this.ngeoPrint_.createReport(spec, /** @type {angular.IRequestShortcutConfig} */ ({
       timeout: this.requestCanceler_.promise
     })).then(
       this.handleCreateReportSuccess_.bind(this),
@@ -1060,7 +1060,7 @@ exports.Controller_ = class {
 
 
   /**
-   * @param {!angular.$http.Response} resp Response.
+   * @param {!angular.IHttpResponse} resp Response.
    * @private
    */
   handleCreateReportSuccess_(resp) {
@@ -1078,7 +1078,7 @@ exports.Controller_ = class {
    */
   getStatus_(ref) {
     this.requestCanceler_ = this.$q_.defer();
-    this.ngeoPrint_.getStatus(ref, /** @type {angular.$http.Config} */ ({
+    this.ngeoPrint_.getStatus(ref, /** @type {angular.IRequestShortcutConfig} */ ({
       timeout: this.requestCanceler_.promise
     })).then(
       this.handleGetStatusSuccess_.bind(this, ref),
@@ -1089,7 +1089,7 @@ exports.Controller_ = class {
 
   /**
    * @param {string} ref Ref.
-   * @param {!angular.$http.Response} resp Response.
+   * @param {!angular.IHttpResponse} resp Response.
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {

@@ -11,7 +11,7 @@ import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDesktopGeolocation', [
   ngeoMapFeatureOverlayMgr.module.name,

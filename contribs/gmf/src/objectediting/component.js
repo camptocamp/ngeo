@@ -44,7 +44,7 @@ const jsts = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjectEditingComponent', [
   gmfEditingEditFeature.module.name,
@@ -133,7 +133,7 @@ exports.component('gmfObjectediting', exports.component_);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {!gmf.objectediting.Query} gmfObjectEditingQuery Gmf ObjectEditing
@@ -202,7 +202,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
@@ -588,7 +588,7 @@ exports.Controller.prototype.isStateInsert = function() {
 
 /**
  * Called after a delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
@@ -602,7 +602,7 @@ exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
 
 /**
  * Called after an 'insert' or 'update' request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller.prototype.handleEditFeature_ = function(resp) {

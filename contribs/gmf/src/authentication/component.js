@@ -9,7 +9,7 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('gmfAuthentication', [
   gmfAuthenticationService.module.name,

@@ -29,7 +29,7 @@ import olStyleText from 'ol/style/Text.js';
  *
  * @param {gmfx.Config} config A part of the application config.
  * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller

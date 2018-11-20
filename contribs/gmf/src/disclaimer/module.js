@@ -4,7 +4,7 @@
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfDisclaimerModule', [
   gmfDisclaimerComponent.name,

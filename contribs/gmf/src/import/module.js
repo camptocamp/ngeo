@@ -8,7 +8,7 @@ import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapability
 import './import.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfImportModule', [
   gmfImportImportdatasourceComponent.name,

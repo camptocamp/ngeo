@@ -14,7 +14,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfEditingXSDAttributes.module.name,
@@ -31,8 +31,8 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {angular.$http} $http Angular $http service.
- * @param {angular.$q} $q Angular $q service.
+ * @param {angular.IHttpService} $http Angular $http service.
+ * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
@@ -42,13 +42,13 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
@@ -308,7 +308,7 @@ exports.MainController.prototype.runViewer_ = function(baseUrl) {
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.$q.Promise} The promise attached to the deferred object.
+ * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
 exports.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
@@ -379,7 +379,7 @@ exports.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) 
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {angular.$q.Promise} The promise attached to the deferred object.
+ * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
 exports.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {

@@ -10,7 +10,7 @@ import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoMessageExtraModule', [
   ngeoMessageNotification.module.name,

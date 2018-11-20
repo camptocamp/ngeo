@@ -30,7 +30,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import * as olUri from 'ol/uri.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfSearch', [
   gmfLayertreeTreeManager.module.name,
@@ -193,9 +193,9 @@ exports.SearchController_ = class {
    * @private
    * @param {jQuery} $element Element.
    * @param {angular.Scope} $scope The component's scope.
-   * @param {angular.$compile} $compile Angular compile service.
-   * @param {angular.$timeout} $timeout Angular timeout service.
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.ICompileService} $compile Angular compile service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.IInjectorService} $injector Main injector.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
    * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
@@ -227,13 +227,13 @@ exports.SearchController_ = class {
     this.scope_ = $scope;
 
     /**
-     * @type {angular.$compile}
+     * @type {angular.ICompileService}
      * @private
      */
     this.compile_ = $compile;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;

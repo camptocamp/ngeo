@@ -10,7 +10,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfMapMouseposition', [
   ngeoMiscFilters.name,
@@ -77,7 +77,7 @@ exports.component('gmfMouseposition',
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.$filter} $filter Angular filter.
+ * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
@@ -124,7 +124,7 @@ exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   this.$element_ = $element;
 
   /**
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    * @private
    */
   this.$filter_ = $filter;

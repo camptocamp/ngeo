@@ -15,7 +15,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
@@ -54,7 +54,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 
 /**
  * @constructor
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export

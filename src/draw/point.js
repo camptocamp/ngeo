@@ -6,7 +6,7 @@ import * as olEvents from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDrawpoint', []);
 

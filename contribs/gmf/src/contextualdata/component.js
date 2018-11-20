@@ -9,7 +9,7 @@ import * as olEvents from 'ol/events.js';
 import * as olObj from 'ol/obj.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('gmfContextualdata', [
   gmfRasterRasterService.module.name,
@@ -79,8 +79,8 @@ exports.directive('gmfContextualdata',
 
 /**
  *
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ICompileService} $compile Angular compile service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.Scope} $scope Scope.
  * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
  *
@@ -116,13 +116,13 @@ exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
   this.overlay_;
 
   /**
-   * @type {angular.$compile}
+   * @type {angular.ICompileService}
    * @private
    */
   this.$compile_ = $compile;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

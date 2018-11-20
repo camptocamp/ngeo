@@ -5,7 +5,7 @@ import 'bootstrap/js/src/tooltip.js';
 import 'bootstrap/js/src/popover.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoPopover', []);
 

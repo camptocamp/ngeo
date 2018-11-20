@@ -5,7 +5,7 @@ import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoGeolocationExtraModule', [
   ngeoGeolocationDesktop.name,

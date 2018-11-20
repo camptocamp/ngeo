@@ -5,7 +5,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfMapModule', [
   gmfMapComponent.name,

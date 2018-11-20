@@ -6,7 +6,7 @@ import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureCompone
 import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoEditingModule', [
   ngeoEditingAttributesComponent.name,

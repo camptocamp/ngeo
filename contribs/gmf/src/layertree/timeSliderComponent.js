@@ -8,7 +8,7 @@ import 'angular-ui-slider';
 import './timeslider.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeTimeSliderComponent', [
   ngeoMiscWMSTime.module.name,
@@ -36,8 +36,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {ngeox.TimeProperty} gmf-time-slider-time parameter for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
- * @param {angular.$timeout} $timeout angular timeout service
- * @param {angular.$filter} $filter angular filter service
+ * @param {angular.ITimeoutService} $timeout angular timeout service
+ * @param {angular.IFilterService} $filter angular filter service
  * @return {angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive

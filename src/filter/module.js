@@ -6,7 +6,7 @@ import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoFilterModule', [
   ngeoFilterComponent.name,

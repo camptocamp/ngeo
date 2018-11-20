@@ -7,7 +7,7 @@ import gmfAuthenticationComponent from 'gmf/authentication/component.js';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfAuthenticationModule', [
   gmfAuthenticationComponent.name,

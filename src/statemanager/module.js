@@ -5,7 +5,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoStatemanagerModule', [
   ngeoStatemanagerLocation.module.name,

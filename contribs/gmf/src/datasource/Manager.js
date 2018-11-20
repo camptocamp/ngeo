@@ -39,9 +39,9 @@ const exports = class {
    * When changing theme, these data sources are cleared then re-created.
    *
    * @struct
-   * @param {angular.$q} $q Angular q service
+   * @param {angular.IQService} $q Angular q service
    * @param {!angular.Scope} $rootScope Angular rootScope.
-   * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
@@ -64,7 +64,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;
@@ -76,7 +76,7 @@ const exports = class {
     this.rootScope_ = $rootScope;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
@@ -926,7 +926,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfDataSourcesManager', [
   gmfDatasourceWFSAliases.module.name,

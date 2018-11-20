@@ -15,7 +15,7 @@ import olFeature from 'ol/Feature.js';
 
 /**
  * @param {!angular.Scope} $scope Scope.
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
@@ -241,7 +241,7 @@ exports.prototype.handleDrawEnd = function(type, event) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,

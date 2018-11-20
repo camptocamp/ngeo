@@ -29,8 +29,8 @@ const exports = class {
    * creating, storing and managing them.
    *
    * @param {!angularGettext.Catalog} gettextCatalog service.
-   * @param {!angular.$injector} $injector Main injector.
-   * @param {!angular.$q} $q The Angular $q service.
+   * @param {!angular.IInjectorService} $injector Main injector.
+   * @param {!angular.IQService} $q The Angular $q service.
    * @param {!angular.Scope} $rootScope The rootScope provider.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {!ngeo.misc.File} ngeoFile Ngeo file.
@@ -46,13 +46,13 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {!angular.$injector}
+     * @type {!angular.IInjectorService}
      * @private
      */
     this.injector_ = $injector;
 
     /**
-     * @type {!angular.$q}
+     * @type {!angular.IQService}
      * @private
      */
     this.q_ = $q;
@@ -514,7 +514,7 @@ const exports = class {
   /**
    * Get file data source from cache, else create, store and return a new one.
    * @param {!File} file File.
-   * @return {!angular.$q.Promise} Promise
+   * @return {!angular.IPromise} Promise
    * @private
    */
   getFileDataSource_(file) {

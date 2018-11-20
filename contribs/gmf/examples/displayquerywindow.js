@@ -31,7 +31,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfDatasourceManager.module.name,

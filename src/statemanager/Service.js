@@ -186,7 +186,7 @@ exports.prototype.deleteParam = function(key) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoStateManager', [
   ngeoStatemanagerLocation.module.name

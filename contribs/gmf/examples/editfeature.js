@@ -25,7 +25,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
@@ -275,7 +275,7 @@ exports.MainController.prototype.deleteFeature = function() {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.MainController.prototype.handleEditFeature_ = function(resp) {

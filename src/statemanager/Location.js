@@ -372,7 +372,7 @@ exports.prototype.setPath = function(path) {
  * The factory creating the ngeo Location service.
  *
  * @param {angular.Scope} $rootScope The root scope.
- * @param {angular.$window} $window Angular window service.
+ * @param {angular.IWindowService} $window Angular window service.
  * @return {ngeo.statemanager.Location} The ngeo location service.
  * @ngInject
  */
@@ -404,16 +404,16 @@ exports.LocationFactory = function($rootScope, $window) {
  *
  * app.module.config(ngeo.statemanager.Location.MockProvider);
  *
- * @param {angular.$locationProvider} $locationProvider Angular location
+ * @param {angular.ILocationProvider} $locationProvider Angular location
  *     provider.
  * @ngInject
  */
 exports.MockProvider = function($locationProvider) {
   /**
-   * @return {angular.$location} Mock object for Angular location service.
+   * @return {angular.ILocationService} Mock object for Angular location service.
    */
   $locationProvider['$get'] = function() {
-    const locationMock = /** @type {angular.$location} */ ({
+    const locationMock = /** @type {angular.ILocationService} */ ({
       /**
        * @return {string} Absolute URL.
        */
@@ -476,7 +476,7 @@ exports.MockProvider = function($locationProvider) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  * FIXME add utils dependencies.
  * FIXME What about Mockup provider ?
  */

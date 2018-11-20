@@ -7,7 +7,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * Service to generate and download a CSV file from tabular data.
  * Column headers are translated using {@link angularGettext.Catalog}.
  *
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @constructor
  * @struct
@@ -135,7 +135,7 @@ exports.prototype.startDownload = function(data, columnDefs, fileName) {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoCsvDownload', [
   ngeoDownloadService.name

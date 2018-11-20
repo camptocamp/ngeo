@@ -70,7 +70,7 @@ exports.prototype.initListenerKey_ = function(uid) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoEventHelper', []);
 exports.module.service('ngeoEventHelper', exports);

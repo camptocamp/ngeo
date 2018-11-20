@@ -20,7 +20,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoLayertreeModule.name,
@@ -59,8 +59,8 @@ exports.module.component('appLayertree', exports.layertreeComponent);
 
 /**
  * @constructor
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$sce} $sce Angular sce service.
+ * @param {angular.IHttpService} $http Angular http service.
+ * @param {angular.ISCEService} $sce Angular sce service.
  * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
@@ -80,13 +80,13 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
 
   /**
    * @private
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    */
   this.http_ = $http;
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 
@@ -103,7 +103,7 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
   this.infoPopup_ = ngeoCreatePopup();
 
   /**
-   * @type {Object.<string, !angular.$q.Promise>}
+   * @type {Object.<string, !angular.IPromise>}
    * @private
    */
   this.promises_ = {};

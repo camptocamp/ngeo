@@ -30,7 +30,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfQueryGridComponent', [
   ngeoDownloadCsv.module.name,
@@ -133,13 +133,13 @@ exports.component('gmfDisplayquerygrid', exports.component_);
 /**
  * Controller for the query grid.
  *
- * @param {!angular.$injector} $injector Main injector.
+ * @param {!angular.IInjectorService} $injector Main injector.
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
  * @param {!angular.JQLite} $element Element.
  * @constructor
@@ -162,7 +162,7 @@ exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQueren
   this.$scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;

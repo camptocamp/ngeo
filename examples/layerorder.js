@@ -18,7 +18,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

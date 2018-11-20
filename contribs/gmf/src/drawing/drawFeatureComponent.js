@@ -38,7 +38,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('GmfDrawFeatureComponent', [
   gmfDrawingFeatureStyleComponent.name,
@@ -93,7 +93,7 @@ exports.directive('gmfDrawfeature',
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
@@ -161,7 +161,7 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

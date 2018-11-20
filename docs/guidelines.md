@@ -98,7 +98,7 @@ const exports = {};
 import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoExampleService', [
   ngeoMyRequiredService.module.name
@@ -117,7 +117,7 @@ the module in the value we export directly like:
 const exports = {};
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 exports = angular.module('ngeoExample', [...]);
 

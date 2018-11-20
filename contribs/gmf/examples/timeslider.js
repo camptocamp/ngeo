@@ -9,7 +9,7 @@ import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.j
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeTimeSliderComponent.name,

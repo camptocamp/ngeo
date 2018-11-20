@@ -27,7 +27,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -63,9 +63,9 @@ exports.module.component('appMeasuretools', exports.measuretoolsComponent);
 
 /**
  * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angular.$sce} $sce Angular sce service.
- * @param {angular.$filter} $filter Angular filter service.
+ * @param {angular.ICompileService} $compile Angular compile service.
+ * @param {angular.ISCEService} $sce Angular sce service.
+ * @param {angular.IFilterService} $filter Angular filter service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject

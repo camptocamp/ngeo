@@ -4,7 +4,7 @@
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoStatemanagerExtraModule', [
   ngeoStatemanagerWfsPermalink.module.name,

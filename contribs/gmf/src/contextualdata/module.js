@@ -6,7 +6,7 @@ import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
 import './contextualdata.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfContextualdataModule', [
   gmfContextualdataComponent.name,

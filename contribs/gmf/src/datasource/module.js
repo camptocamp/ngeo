@@ -8,7 +8,7 @@ import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfDatasourceModule', [
   gmfDatasourceDataSourceBeingFiltered.module.name,

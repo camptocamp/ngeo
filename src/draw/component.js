@@ -22,7 +22,7 @@ import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDrawfeature', [
   ngeoDrawController.module.name,

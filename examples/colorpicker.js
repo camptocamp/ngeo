@@ -7,7 +7,7 @@ import './colorpicker.css';
 /** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMiscColorpickerComponent.name,

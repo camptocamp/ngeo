@@ -26,8 +26,8 @@ import * as olObj from 'ol/obj.js';
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @struct
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {angular.$injector} $injector Angular injector service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.IInjectorService} $injector Angular injector service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -41,13 +41,13 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   ngeoNotification, gmfThemes, ngeoStateManager) {
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;
 
   /**
-   * @type {angular.$injector}
+   * @type {angular.IInjectorService}
    * @private
    */
   this.$injector_ = $injector;
@@ -110,7 +110,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.groupsToAddInThisDigestLoop_ = [];
 
   /**
-   * @type {angular.$q.Promise}
+   * @type {angular.IPromise}
    * @private
    */
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
@@ -623,7 +623,7 @@ exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfTreeManager', [
   gmfThemeThemes.module.name,

@@ -11,7 +11,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLidarprofilePanel', [
   gmfLidarprofileConfig.module.name,

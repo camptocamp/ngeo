@@ -4,8 +4,8 @@
 /**
  * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IHttpService} $http Angular http service.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @constructor
  * @struct
  * @ngdoc service
@@ -16,7 +16,7 @@
 const exports = function($http, $injector) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -54,7 +54,7 @@ const exports = function($http, $injector) {
  * Route request
  * @param {Array.<ol.Coordinate>} coordinates coordinates of the route (at least two!)
  * @param {?Object} config optional configuration
- * @return {!angular.$http.HttpPromise} promise of the OSRM API request
+ * @return {!angular.IHttpPromise} promise of the OSRM API request
  */
 exports.prototype.getRoute = function(coordinates, config) {
 
@@ -110,7 +110,7 @@ exports.prototype.getRoute = function(coordinates, config) {
  * Snaps a coordinate to the street network and returns the nearest match
  * @param {ol.Coordinate} coordinate coordinate to query
  * @param {?Object} config optional configuration
- * @return {!angular.$http.HttpPromise} promise of the OSRM API request
+ * @return {!angular.IHttpPromise} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
 exports.prototype.getNearest = function(coordinate, config) {
@@ -155,7 +155,7 @@ exports.prototype.getNearest = function(coordinate, config) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoRoutingService', [
 ]);

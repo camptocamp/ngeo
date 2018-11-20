@@ -9,7 +9,7 @@ import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMeasurelength', [
   ngeoDrawController.module.name,
@@ -18,10 +18,10 @@ const exports = angular.module('ngeoMeasurelength', [
 
 
 /**
- * @param {!angular.$compile} $compile Angular compile service.
+ * @param {!angular.ICompileService} $compile Angular compile service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {!angular.$filter} $filter Angular filter.
- * @param {!angular.$injector} $injector Main injector.
+ * @param {!angular.IFilterService} $filter Angular filter.
+ * @param {!angular.IInjectorService} $injector Main injector.
  * @return {!angular.Directive} The directive specs.
  * @ngInject
  * @ngdoc directive

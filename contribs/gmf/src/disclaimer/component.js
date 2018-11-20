@@ -15,7 +15,7 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import 'angular-sanitize';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('gmfDisclaimer', [
   'ngSanitize',
@@ -30,8 +30,8 @@ const exports = angular.module('gmfDisclaimer', [
  * @private
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$sce} $sce Angular sce service.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ISCEService} $sce Angular sce service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
@@ -84,13 +84,13 @@ exports.Controller_ = function($element, $scope, $sce, $timeout,
   this.msgs_ = [];
 
   /**
-   * @type {!angular.$sce}
+   * @type {!angular.ISCEService}
    * @private
    */
   this.sce_ = $sce;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;

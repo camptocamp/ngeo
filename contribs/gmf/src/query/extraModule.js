@@ -8,7 +8,7 @@ import './grid.scss';
 import './window.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfQueryExtraModule', [
   gmfQueryGridComponent.name,

@@ -5,7 +5,7 @@ import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfMobileMeasureModule', [
   gmfMobileMeasureLengthComponent.name,

@@ -41,7 +41,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  *
  * @constructor
  * @struct
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
  * @param {string} ngeoPermalinkOgcserverUrl Url to the WFS server
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
@@ -98,7 +98,7 @@ const WfsPermalinkService = function(
   this.pointRecenterZoom_ = options.pointRecenterZoom;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -300,7 +300,7 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies

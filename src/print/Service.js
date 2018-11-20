@@ -56,7 +56,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @constructor
  * @struct
  * @param {string} url URL to MapFish print web service.
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
@@ -68,7 +68,7 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   this.url_ = url;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -102,13 +102,13 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
 /**
  * Cancel a report.
  * @param {string} ref Print report reference.
- * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @return {angular.IHttpPromise} HTTP promise.
  * @export
  */
 exports.prototype.cancel = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-    /** @type {angular.$http.Config} */ ({});
+    /** @type {angular.IRequestShortcutConfig} */ ({});
   const url = `${this.url_}/cancel/${ref}`;
   // "delete" is a reserved word, so use ['delete']
   return this.$http_['delete'](url, httpConfig);
@@ -415,14 +415,14 @@ exports.prototype.getOpacityOrInherited_ = function(layer) {
 /**
  * Send a create report request to the MapFish Print service.
  * @param {MapFishPrintSpec} printSpec Print specification.
- * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @return {angular.IHttpPromise} HTTP promise.
  * @export
  */
 exports.prototype.createReport = function(printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
   const url = `${this.url_}/report.${format}`;
-  const httpConfig = /** @type {!angular.$http.Config} */ ({
+  const httpConfig = /** @type {!angular.IRequestShortcutConfig} */ ({
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     }
@@ -436,13 +436,13 @@ exports.prototype.createReport = function(printSpec, opt_httpConfig) {
 /**
  * Get the status of a report.
  * @param {string} ref Print report reference.
- * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @return {angular.IHttpPromise} HTTP promise.
  * @export
  */
 exports.prototype.getStatus = function(ref, opt_httpConfig) {
   const httpConfig = opt_httpConfig !== undefined ? opt_httpConfig :
-    /** @type {angular.$http.Config} */ ({});
+    /** @type {angular.IRequestShortcutConfig} */ ({});
   const url = `${this.url_}/status/${ref}.json`;
   return this.$http_.get(url, httpConfig);
 };
@@ -461,12 +461,12 @@ exports.prototype.getReportUrl = function(ref) {
 
 /**
  * Get the print capabilities from MapFish Print.
- * @param {angular.$http.Config=} opt_httpConfig $http config object.
- * @return {angular.$http.HttpPromise} HTTP promise.
+ * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
+ * @return {angular.IHttpPromise} HTTP promise.
  */
 exports.prototype.getCapabilities = function(opt_httpConfig) {
   const httpConfig =
-    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.$http.Config} */ ({
+    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.IRequestShortcutConfig} */ ({
       withCredentials: true
     });
   const url = `${this.url_}/capabilities.json`;
@@ -475,7 +475,7 @@ exports.prototype.getCapabilities = function(opt_httpConfig) {
 
 
 /**
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {ngeox.CreatePrint} The function to create a print service.
@@ -495,7 +495,7 @@ exports.createPrintServiceFactory = function($http, gettextCatalog, ngeoLayerHel
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.module.name

@@ -13,7 +13,7 @@ const d3 = {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoProfile', [
   ngeoMiscDebounce.name

@@ -9,7 +9,7 @@ import ngeoGridConfig from 'ngeo/grid/Config.js';
 import ngeoGridModule from 'ngeo/grid/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoGridModule.name

@@ -58,11 +58,11 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
 
 /**
  * The controller for the routing directive.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IInjectorService} $injector Main injector.
  * @param {!angular.Scope} $scope Scope.
  * @param {!ngeo.routing.RoutingService} ngeoRoutingService service for OSRM routing
  * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
- * @param {!angular.$q} $q Angular q service
+ * @param {!angular.IQService} $q Angular q service
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @private
@@ -121,7 +121,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   );
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.$q_ = $q;

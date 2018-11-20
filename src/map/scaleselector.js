@@ -8,7 +8,7 @@ import * as olEvents from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoScaleselector', []);
 

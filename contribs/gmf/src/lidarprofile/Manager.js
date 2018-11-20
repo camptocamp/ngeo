@@ -24,8 +24,8 @@ const exports = class {
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree
    *
    * @struct
-   * @param {angular.$http} $http Angular http service.
-   * @param {angular.$filter} $filter Angular filter.
+   * @param {angular.IHttpService} $http Angular http service.
+   * @param {angular.IFilterService} $filter Angular filter.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.Debounce} ngeoDebounce ngeo debounce service.
    * @ngInject
@@ -35,12 +35,12 @@ const exports = class {
   constructor($http, $filter, gettextCatalog, ngeoDebounce) {
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      */
     this.$http = $http;
 
     /**
-     * @type {angular.$filter}
+     * @type {angular.IFilterService}
      */
     this.$filter = $filter;
 
@@ -56,7 +56,7 @@ const exports = class {
     this.ngeoDebounce_ = ngeoDebounce;
 
     /**
-     * @type {?angular.$q.Promise}
+     * @type {?angular.IPromise}
      * @private
      */
     this.promise = null;
@@ -496,7 +496,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfLidarprofileManager', [
   ngeoMiscDebounce.name,

@@ -6,7 +6,7 @@ import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMap', []);
 
@@ -34,7 +34,7 @@ const exports = angular.module('ngeoMap', []);
  * [../examples/simple.html](../examples/simple.html)
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
- * @param {angular.$window} $window The Angular $window service.
+ * @param {angular.IWindowService} $window The Angular $window service.
  * @return {angular.Directive} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoMap

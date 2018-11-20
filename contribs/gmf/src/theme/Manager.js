@@ -140,7 +140,7 @@ exports.EventType = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfThemeManager', [
   gmfLayertreeTreeManager.module.name,

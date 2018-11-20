@@ -3,8 +3,8 @@
  */
 /**
  * @constructor
- * @param {angular.$q} $q .
- * @param {angular.$http} $http .
+ * @param {angular.IQService} $q .
+ * @param {angular.IHttpService} $http .
  * @param {gettext} gettext .
  * @ngInject
  */
@@ -34,7 +34,7 @@ const exports = function($q, $http, gettext) {
 
   /**
    * @param {!Blob} file .
-   * @return {angular.$q.Promise<string>} .
+   * @return {angular.IPromise<string>} .
    */
   this.read = function(file) {
     const defer = $q.defer();
@@ -63,8 +63,8 @@ const exports = function($q, $http, gettext) {
 
   /**
    * @param {string} url .
-   * @param {angular.$q.Deferred=} opt_cancelP .
-   * @return {angular.$q.Promise<Blob>} .
+   * @param {angular.IDeferred=} opt_cancelP .
+   * @return {angular.IPromise<Blob>} .
    */
   this.load = function(url, opt_cancelP) {
 
