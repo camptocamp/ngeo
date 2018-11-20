@@ -3,12 +3,12 @@
  */
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
-import * as olEvents from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
+import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
 const exports = angular.module('gmfMobileMeasureLength', [
   ngeoMiscFilters.name,
@@ -98,45 +98,12 @@ exports.directive('gmfMobileMeasurelength',
  */
 exports.Controller_ = function($scope, $filter, gettextCatalog) {
 
-  /**
-   * @type {angular.IScope}
-   * @private
-   */
-  this.scope_ = $scope;
-
-  /**
-   * @type {angular.IFilterService}
-   * @private
-   */
-  this.filter_ = $filter;
-
-  /**
-   * @type {!angularGettext.Catalog}
-   * @private
-   */
-  this.gettextCatalog_ = gettextCatalog;
-
-  /**
-   * @type {ol.Map}
-   * @export
-   */
-  this.map;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.active;
-
-  this.scope_.$watch(() => this.active, (newVal) => {
-    this.measure.setActive(newVal);
-  });
-
-  /**
-   * @type {number|undefined}
-   * @export
-   */
-  this.precision;
+  gmfMobileMeasureBaseComponent.Controller.call(
+    this,
+    $scope,
+    $filter,
+    gettextCatalog
+  );
 
   /**
    * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
@@ -168,93 +135,21 @@ exports.Controller_ = function($scope, $filter, gettextCatalog) {
    * @export
    */
   this.measure;
-
-  /**
-   * @type {ngeo.interaction.MobileDraw}
-   * @export
-   */
-  this.drawInteraction;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.dirty = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.drawing = false;
-
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.valid = false;
 };
+
+olUtilInherits(exports, gmfMobileMeasureBaseComponent.Controller);
 
 /**
  * Initialise the controller.
  */
 exports.Controller_.prototype.init = function() {
 
-  this.measure = new ngeoInteractionMeasureLengthMobile(this.filter_('ngeoUnitPrefix'), this.gettextCatalog_, {
+  this.measure = new ngeoInteractionMeasureLengthMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
     precision: this.precision,
     sketchStyle: this.sketchStyle
   });
 
-  this.measure.setActive(this.active);
-  ngeoMiscDecorate.interaction(this.measure);
-
-
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
-    this.measure.getDrawInteraction());
-
-  const drawInteraction = this.drawInteraction;
-  ngeoMiscDecorate.interaction(drawInteraction);
-
-  Object.defineProperty(this, 'hasPoints', {
-    get() {
-      return this.drawInteraction.getFeature() !== null;
-    }
-  });
-
-  olEvents.listen(
-    drawInteraction,
-    'change:dirty',
-    function() {
-      this.dirty = drawInteraction.getDirty();
-
-      // this is where the angular scope is forced to be applied. We
-      // only need to do this when dirty, as going to "no being dirty"
-      // is made by a click on a button where Angular is within scope
-      if (this.dirty) {
-        this.scope_.$apply();
-      }
-    },
-    this
-  );
-
-  olEvents.listen(
-    drawInteraction,
-    'change:drawing',
-    function() {
-      this.drawing = drawInteraction.getDrawing();
-    },
-    this
-  );
-
-  olEvents.listen(
-    drawInteraction,
-    'change:valid',
-    function() {
-      this.valid = drawInteraction.getValid();
-    },
-    this
-  );
-
-  this.map.addInteraction(this.measure);
+  gmfMobileMeasureBaseComponent.Controller.prototype.init.call(this);
 };
 
 /**
