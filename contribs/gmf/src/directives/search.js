@@ -666,7 +666,7 @@ gmf.SearchController.prototype.getBloodhoudRemoteOptions_ = function() {
       };
       settings.url = ol.uri.appendParams(url, {
         'query': query,
-        'lang': lang,
+        'lang': lang
       });
       return settings;
     }
