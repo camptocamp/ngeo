@@ -7,7 +7,17 @@
           ng-if="::attribute.type !== 'boolean'"
           class="col-form-label">{{ ::attribute.name | translate }} <span class="text-muted">{{::attribute.required ? "*" : ""}}</span>
       </label>
-      <div ng-switch="::attribute.type">
+
+      <div
+          class="form-control"
+          ng-if="::attribute.readonly"
+          readonly>
+        {{::attrCtrl.properties[attribute.name]}}
+      </div>
+
+      <div
+          ng-if="::!attribute.readonly"
+          ng-switch="::attribute.type">
 
         <div
             ng-switch-when="boolean"

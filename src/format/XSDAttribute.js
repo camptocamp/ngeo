@@ -94,9 +94,15 @@ exports.prototype.readFromElementNode_ = function(node) {
   const nillable = node.getAttribute('nillable');
   const required = !(nillable === true || nillable === 'true');
 
+  const readonlyEls = node.getElementsByTagName('readonly');
+  const readonly = readonlyEls[0] ?
+    readonlyEls[0].getAttribute('value') === 'true' :
+    false;
+
   const attribute = {
     name,
     alias,
+    readonly,
     required
   };
 
