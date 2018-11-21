@@ -230,7 +230,7 @@ exports.prototype.addToDrawing = function() {
       this.dispatchEvent(event);
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomPolygon);
+      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomSimpleGeometry);
       coordinates = sketchFeatureGeom.getCoordinates();
       coordinates.push(coordinate.slice());
       sketchFeatureGeom.setCoordinates(coordinates);
@@ -253,7 +253,7 @@ exports.prototype.addToDrawing = function() {
       this.dispatchEvent(event);
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomSimpleGeometry);
+      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomPolygon);
       const coordinatess = sketchFeatureGeom.getCoordinates();
       coordinates = coordinatess[0];
       coordinates.push(coordinate.slice());
