@@ -4,6 +4,10 @@
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import * as olEvents from 'ol/events.js';
+import olStyleFill from 'ol/style/Fill.js';
+import olStyleRegularShape from 'ol/style/RegularShape.js';
+import olStyleStroke from 'ol/style/Stroke.js';
+import olStyleStyle from 'ol/style/Style.js';
 
 const exports = angular.module('gmfMobileMeasureBase', [
   ngeoMiscFilters.name,
@@ -63,6 +67,31 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
    * @export
    */
   this.precision;
+
+  /**
+   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
+   * @export
+   */
+  this.sketchStyle = new olStyleStyle({
+    fill: new olStyleFill({
+      color: 'rgba(255, 255, 255, 0.2)'
+    }),
+    stroke: new olStyleStroke({
+      color: 'rgba(0, 0, 0, 0.5)',
+      lineDash: [10, 10],
+      width: 2
+    }),
+    image: new olStyleRegularShape({
+      stroke: new olStyleStroke({
+        color: 'rgba(0, 0, 0, 0.7)',
+        width: 2
+      }),
+      points: 4,
+      radius: 8,
+      radius2: 0,
+      angle: 0
+    })
+  });
 
   /**
    * @type {ngeo.interaction.Measure}

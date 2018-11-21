@@ -3,10 +3,6 @@
  */
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
-import olStyleFill from 'ol/style/Fill.js';
-import olStyleRegularShape from 'ol/style/RegularShape.js';
-import olStyleStroke from 'ol/style/Stroke.js';
-import olStyleStyle from 'ol/style/Style.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
@@ -28,7 +24,10 @@ exports.value('gmfMobileMeasureLengthTemplateUrl',
   });
 
 exports.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put('gmf/measure/lengthComponent', require('./lengthComponent.html'));
+  $templateCache.put(
+    'gmf/measure/lengthComponent',
+    require('./baseComponent.html')
+  );
 });
 
 
@@ -104,31 +103,6 @@ exports.Controller_ = function($scope, $filter, gettextCatalog) {
     $filter,
     gettextCatalog
   );
-
-  /**
-   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
-   * @export
-   */
-  this.sketchStyle = new olStyleStyle({
-    fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)'
-    }),
-    stroke: new olStyleStroke({
-      color: 'rgba(0, 0, 0, 0.5)',
-      lineDash: [10, 10],
-      width: 2
-    }),
-    image: new olStyleRegularShape({
-      stroke: new olStyleStroke({
-        color: 'rgba(0, 0, 0, 0.7)',
-        width: 2
-      }),
-      points: 4,
-      radius: 8,
-      radius2: 0,
-      angle: 0
-    })
-  });
 
   /**
    * @type {ngeo.interaction.MeasureLengthMobile}
