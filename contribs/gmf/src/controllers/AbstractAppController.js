@@ -341,6 +341,13 @@ const exports = function(config, $scope, $injector) {
   });
 
   /**
+   * The active state of the directive responsible of area measurements.
+   * @type {boolean}
+   * @export
+   */
+  this.measureAreaActive = false;
+
+  /**
    * The active state of the directive responsible of point measurements.
    * @type {boolean}
    * @export
@@ -441,6 +448,9 @@ const exports = function(config, $scope, $injector) {
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
+
+  const measureAreaActivate = new ngeoMiscToolActivate(this, 'measureAreaActive');
+  ngeoToolActivateMgr.registerTool(mapTools, measureAreaActivate, false);
 
   const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
