@@ -1,5 +1,5 @@
 module.exports = (env, args) => {
-  const nodeEnv = args.mode || 'development';
+  const nodeEnv = args.mode || 'production';
   process.env['NODE_ENV'] = nodeEnv;
 
   const webpackMerge = require('webpack-merge');
