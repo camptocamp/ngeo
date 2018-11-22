@@ -11,6 +11,7 @@
     "serve-gmf-examples": "DEV_SERVER=1 TARGET=gmf-examples webpack-dev-server --https --cert=private.crt --key=private.key --port 3000 --mode development --progress --watch --bail --debug",
     "serve-gmf-apps": "DEV_SERVER=1 TARGET=gmf-apps webpack-dev-server --https --cert=private.crt --key=private.key --port 3000 --mode development --progress --watch --bail --debug",
     "serve-api": "webpack-dev-server --content-base api/dist/ --config buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port 3000 --mode development --progress --watch --bail --debug",
+    "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc --pretty",
     "doc": "typedoc --module system --target ES6 --name ngeo --out apidoc src/ contribs/gmf/src/"
   },
@@ -79,6 +80,7 @@
     "file-saver": "2.0.0",
     "floatthead": "2.1.2",
     "fs-extra": "7.0.1",
+    "hard-source-webpack-plugin": "0.6.12",
     "html-webpack-include-assets-plugin": "1.0.6",
     "html-webpack-plugin": "3.2.0",
     "istanbul-instrumenter-loader": "3.0.1",
