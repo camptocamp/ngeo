@@ -5,7 +5,7 @@ import * as olObj from 'ol/obj.js';
 import * as olProj from 'ol/proj.js';
 
 /** @suppress {extraRequire} */
-import ngeoProjEPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import olGeomPoint from 'ol/geom/Point.js';
 import olFeature from 'ol/Feature.js';
@@ -20,7 +20,7 @@ import 'corejs-typeahead';
 const exports = function(opt_options) {
   const options = opt_options || {};
 
-  const sourceProjection = olProj.get(ngeoProjEPSG21781);
+  const sourceProjection = olProj.get(EPSG21781);
   const targetProjection = options.targetProjection;
 
   /**
