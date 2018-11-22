@@ -1,6 +1,6 @@
 import gmfTestDataThemes from 'gmf/test/data/themes.js';
 import gmfBase from 'gmf/index.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
+import ngeoProjEPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olCollection from 'ol/Collection.js';

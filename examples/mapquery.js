@@ -5,7 +5,7 @@ const exports = {};
 
 import appURL from './url.js';
 import './mapquery.css';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';

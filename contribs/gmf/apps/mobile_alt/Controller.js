@@ -11,8 +11,8 @@
 import gmfControllersAbstractMobileController from 'gmf/controllers/AbstractMobileController.js';
 import './sass/mobile_alt.scss';
 import appBase from '../appmodule.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
+import ngeoProjEPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import ngeoProjEPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import * as olBase from 'ol/index.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';

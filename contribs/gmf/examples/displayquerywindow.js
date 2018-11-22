@@ -17,7 +17,7 @@ import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import olMap from 'ol/Map.js';
