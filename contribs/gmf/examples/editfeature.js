@@ -6,7 +6,7 @@ const exports = {};
 import appURL from './url.js';
 import './editfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';

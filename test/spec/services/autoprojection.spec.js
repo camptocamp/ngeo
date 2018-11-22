@@ -1,4 +1,4 @@
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import * as olProj from 'ol/proj.js';
 
 describe('ngeo.misc.AutoProjection', () => {
@@ -37,9 +37,9 @@ describe('ngeo.misc.AutoProjection', () => {
   it('Try projections', () => {
     const coordinatesA = [600000, 200000];
     const coordinatesB = [8, 47];
-    const viewProjection = olProj.get(ngeoProjEPSG21781);
+    const viewProjection = olProj.get(EPSG21781);
     const extent = viewProjection.getExtent();
-    const projections = [olProj.get(ngeoProjEPSG21781), olProj.get('EPSG:4326')];
+    const projections = [olProj.get(EPSG21781), olProj.get('EPSG:4326')];
 
     let point = ngeoAutoProjection.tryProjections(coordinatesA, extent,
       viewProjection);
@@ -58,7 +58,7 @@ describe('ngeo.misc.AutoProjection', () => {
 
   it('Try projections with inversion', () => {
     const coordinates = [47, 8];
-    const viewProjection = olProj.get(ngeoProjEPSG21781);
+    const viewProjection = olProj.get(EPSG21781);
     const extent = viewProjection.getExtent();
     const projections = [olProj.get('EPSG:4326')];
     const coordinatesTransformed = olProj.transform(coordinates.reverse(),

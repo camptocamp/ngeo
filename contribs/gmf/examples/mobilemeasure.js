@@ -14,7 +14,7 @@ import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';

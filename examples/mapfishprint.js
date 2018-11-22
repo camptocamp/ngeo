@@ -5,7 +5,7 @@ const exports = {};
 
 import appURL from './url.js';
 import './mapfishprint.css';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';

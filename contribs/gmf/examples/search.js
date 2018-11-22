@@ -12,7 +12,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';

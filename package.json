@@ -34,7 +34,7 @@
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.51.0",
     "@fortawesome/fontawesome-free": "5.5.0",
-    "@geoblocks/sources": "https://api.github.com/repos/geoblocks/sources/tarball/173ad0171",
+    "@geoblocks/proj": "0.3.0",
     "@types/angular": "1.6.51",
     "@types/d3": "5.0.1",
     "@types/ol": "4.6.2",

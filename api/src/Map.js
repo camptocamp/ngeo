@@ -8,7 +8,6 @@ import {Icon, Style} from 'ol/style.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
-import TileLayer from 'ol/layer/Tile.js';
 
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';

@@ -4,7 +4,7 @@
 const exports = {};
 
 import './elevationProfile.css';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
