@@ -113,7 +113,7 @@ export function getOverlayLayers(layerNames) {
 
 /**
  * @param {Object} config Layer config (i.e. gmf layer node)
- * @param {Object} ogsServer OGC server configuration used to create the layer.
+ * @param {Object} ogcServer OGC server configuration used to create the layer.
  * @return {Promise} Promise.
  */
 export function createWMSLayer(config, ogcServer) {
