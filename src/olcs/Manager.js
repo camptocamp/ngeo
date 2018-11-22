@@ -6,13 +6,13 @@ import olcsContribManager from 'olcs/contrib/Manager.js';
 class Manager extends olcsContribManager {
   /**
    * @param {string} url .
-   * @param {angular.Scope} $rootScope .
+   * @param {angular.IScope} $rootScope .
    * @param {olcsx.contrib.ManagerOptions} options .
    */
   constructor(url, $rootScope, options) {
     super(url, options);
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;

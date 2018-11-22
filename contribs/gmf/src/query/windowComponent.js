@@ -129,7 +129,7 @@ exports.component('gmfDisplayquerywindow', exports.component_);
 
 /**
  * @param {!jQuery} $element Element.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature

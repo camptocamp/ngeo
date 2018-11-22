@@ -78,7 +78,7 @@ exports.component('ngeoGrid', exports.component_);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @constructor
  * @private
  * @struct
@@ -89,7 +89,7 @@ exports.component('ngeoGrid', exports.component_);
 exports.Controller_ = function($scope) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

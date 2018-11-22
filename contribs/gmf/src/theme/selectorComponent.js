@@ -106,7 +106,7 @@ exports.component('gmfThemeselector', exports.component_);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {gmf.theme.Manager} gmfThemeManager Tree manager service.
  * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @constructor

@@ -68,7 +68,7 @@ exports.directive('ngeoDesktopGeolocation', exports.directive_);
  * @constructor
  * @private
  * @struct
- * @param {angular.Scope} $scope The directive's scope.
+ * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -95,7 +95,7 @@ exports.Controller_ = function($scope, $element,
   googAsserts.assertObject(options);
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

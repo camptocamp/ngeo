@@ -70,7 +70,7 @@ exports.component('gmfLidarprofile', exports.component_);
 exports.Controller_ = class {
 
   /**
-   * @param {angular.Scope} $scope Angular scope.
+   * @param {angular.IScope} $scope Angular scope.
    * @private
    * @ngInject
    * @ngdo controller

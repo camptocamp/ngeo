@@ -53,7 +53,7 @@ exports.directive_ = function(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */

@@ -89,7 +89,7 @@ exports.layer = function(layer) {
  *      <span ng-if="layer.loading">please wait</span>
  *
  * @param {ol.layer.Base} layer layer.
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  */
 exports.layerLoading = function(layer, $scope) {
 

@@ -69,7 +69,7 @@ exports.component('ngeoModal', exports.component_);
 exports.Controller_ = class {
   /**
    * @ngInject
-   * @param {!angular.Scope} $scope Scope.
+   * @param {!angular.IScope} $scope Scope.
    * @param {!jQuery} $element Element.
    */
   constructor($scope, $element) {
@@ -81,7 +81,7 @@ exports.Controller_ = class {
 
     /**
      * @private
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      */
     this.$scope_ = $scope;
 

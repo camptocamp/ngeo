@@ -137,7 +137,7 @@ exports.module.component('appDraw', exports.drawComponent);
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {!ngeo.statemanager.Location} ngeoLocation ngeo Location service.
  * @constructor
  * @export
@@ -163,7 +163,7 @@ exports.DrawComponentController = function($scope, ngeoLocation) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

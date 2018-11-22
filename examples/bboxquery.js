@@ -76,7 +76,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @constructor

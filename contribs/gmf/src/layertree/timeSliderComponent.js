@@ -98,7 +98,7 @@ exports.directive('gmfTimeSlider', exports.directive_);
 
 /**
  * TimeSliderController - directive controller
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private

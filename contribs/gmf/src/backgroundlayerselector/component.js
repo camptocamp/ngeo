@@ -87,7 +87,7 @@ exports.component('gmfBackgroundlayerselector',
  * @constructor
  * @private
  * @struct
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!gmf.theme.Themes} gmfThemes Themes service.
  * @ngInject

@@ -75,7 +75,7 @@ exports.component('ngeoAttributes', exports.component_);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
@@ -116,7 +116,7 @@ exports.Controller_ = function($scope, ngeoEventHelper) {
   this.properties;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

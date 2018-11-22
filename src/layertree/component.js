@@ -106,7 +106,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {string} ngeo-layertree-listeners Expression that will be parsed
  *      to be a {@link Function} with the argument:
  *      {
- *          'treeScope': !{@link angular.Scope},
+ *          'treeScope': !{@link angular.IScope},
  *          'treeCtrl': {@link ngeo.layertree.Controller}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed

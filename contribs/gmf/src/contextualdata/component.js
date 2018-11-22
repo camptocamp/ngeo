@@ -62,7 +62,7 @@ exports.directive_ = function() {
       'callback': '<gmfContextualdataCallback'
     },
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.contextualdata.component.Controller_} controller Controller.
@@ -81,7 +81,7 @@ exports.directive('gmfContextualdata',
  *
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
  *
  * @constructor
@@ -128,7 +128,7 @@ exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

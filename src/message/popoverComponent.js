@@ -104,7 +104,7 @@ exports.contentComponent = function() {
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoPopoverController
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  */
 exports.PopoverController_ = function($scope) {
   /**

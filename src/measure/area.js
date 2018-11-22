@@ -30,7 +30,7 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.Scope} $scope Scope.
+     * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.

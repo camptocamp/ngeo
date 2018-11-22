@@ -51,7 +51,7 @@ exports.component_ = function() {
     bindToController: true,
     scope: true,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
@@ -285,7 +285,7 @@ exports.backDirective = function() {
     restrict: 'A',
     scope: false,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
@@ -327,7 +327,7 @@ exports.backOnClickDirective = function() {
     restrict: 'A',
     scope: false,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.

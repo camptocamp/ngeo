@@ -132,7 +132,7 @@ exports.component('gmfObjectediting', exports.component_);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
@@ -196,7 +196,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   // == Injected properties ==
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

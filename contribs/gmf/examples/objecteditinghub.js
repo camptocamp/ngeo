@@ -33,7 +33,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 /**
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor

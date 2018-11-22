@@ -14,7 +14,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @ngInject
  * @constructor
  */
@@ -89,7 +89,7 @@ exports.MainController = function($scope) {
   this.window4TextBinding = 'This is an AngularJS binding.';
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @export
    */
   this.windowScope = $scope;

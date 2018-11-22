@@ -49,7 +49,7 @@ exports.module.component('appSearch', exports.searchComponent);
 /**
  * @constructor
  * @param {angular.JQLite} $element Element.
- * @param {angular.Scope} $rootScope Angular root scope.
+ * @param {angular.IScope} $rootScope Angular root scope.
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.

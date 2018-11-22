@@ -26,7 +26,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor

@@ -10,8 +10,8 @@ import olLayerLayer from 'ol/layer/Layer.js';
 
 /**
  * The controller for the "tree node" directive.
- * @param {angular.Scope} $scope Scope.
- * @param {angular.Scope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.Attributes} $attrs Attributes.
  * @constructor
  * @ngInject
@@ -33,7 +33,7 @@ const exports = function($scope, $rootScope, $attrs) {
   const nodeExpr = $attrs['ngeoLayertree'];
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.rootScope_ = $rootScope;

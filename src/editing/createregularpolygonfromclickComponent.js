@@ -76,7 +76,7 @@ exports.directive(
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @constructor
  * @private
  * @struct

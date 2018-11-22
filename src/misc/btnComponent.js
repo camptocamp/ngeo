@@ -45,7 +45,7 @@ exports.btnGroupComponent_ = function($parse) {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
     /**
-     * @param {!angular.Scope} scope Scope.
+     * @param {!angular.IScope} scope Scope.
      * @param {!angular.JQLite=} element Element.
      * @param {!angular.Attributes=} attrs Attributes.
      * @param {!ngeo.misc.btnComponent.BtnGroupController=} controller Controller.
@@ -71,7 +71,7 @@ exports.directive('ngeoBtnGroup', exports.btnGroupComponent_);
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @constructor
  * @struct
  * @ngInject
@@ -86,7 +86,7 @@ exports.BtnGroupController = function($scope) {
   this.buttons_ = [];
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -142,7 +142,7 @@ exports.btnComponent_ = function($parse) {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
     /**
-     * @param {!angular.Scope} scope Scope.
+     * @param {!angular.IScope} scope Scope.
      * @param {!angular.JQLite=} element Element.
      * @param {!angular.Attributes=} attrs Attributes.
      * @param {!Array.<!Object>=} ctrls Controller.

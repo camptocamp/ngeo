@@ -98,7 +98,7 @@ exports.directive('ngeoScaleselector', directive);
  * @constructor
  * @private
  * @struct
- * @param {angular.Scope} $scope Directive scope.
+ * @param {angular.IScope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
  * @ngInject
@@ -148,7 +148,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   this.options = ScaleselectorController.getOptions_(options);
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

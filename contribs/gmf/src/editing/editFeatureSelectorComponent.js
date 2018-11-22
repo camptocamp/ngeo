@@ -69,7 +69,7 @@ exports.directive('gmfEditfeatureselector', exports.component_);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
@@ -116,7 +116,7 @@ exports.Controller_ = function($scope, $timeout, gmfThemes, gmfTreeManager) {
   // === Injected services ===
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

@@ -56,7 +56,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IQService} $q Angular q service
  * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
@@ -69,7 +69,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
 exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

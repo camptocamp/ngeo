@@ -25,7 +25,7 @@ if (!window.requestAnimationFrame) {
 }
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {angular.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractAPIController}

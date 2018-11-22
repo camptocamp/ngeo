@@ -27,7 +27,7 @@ exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @constructor
  * @ngInject
  */

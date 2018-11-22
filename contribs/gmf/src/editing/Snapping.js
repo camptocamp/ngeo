@@ -25,7 +25,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q The Angular $q service.
- * @param {!angular.Scope} $rootScope Angular rootScope.
+ * @param {!angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
@@ -51,7 +51,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.q_ = $q;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.rootScope_ = $rootScope;

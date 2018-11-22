@@ -92,7 +92,7 @@ exports.directive('gmfDrawfeature',
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
@@ -155,7 +155,7 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

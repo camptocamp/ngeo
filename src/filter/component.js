@@ -79,7 +79,7 @@ exports.FilterController_ = class {
 
   /**
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
-   * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
@@ -146,7 +146,7 @@ exports.FilterController_ = class {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;

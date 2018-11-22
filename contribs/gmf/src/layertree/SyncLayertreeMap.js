@@ -16,7 +16,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * and its corresponding layer in the map.
  *
  * @constructor
- * @param {angular.Scope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.misc.WMSTime} ngeoWMSTime wms time service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.

@@ -82,7 +82,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.

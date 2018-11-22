@@ -42,7 +42,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -56,7 +56,7 @@ exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

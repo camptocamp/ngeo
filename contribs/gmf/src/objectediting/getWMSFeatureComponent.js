@@ -55,7 +55,7 @@ exports.directive('gmfObjecteditinggetwmsfeature',
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {gmf.objectediting.Query} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor

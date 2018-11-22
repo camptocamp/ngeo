@@ -57,7 +57,7 @@ exports.directive('gmfFeaturestyle',
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
@@ -80,7 +80,7 @@ exports.Controller_ = function($scope, ngeoFeatureHelper) {
   this.feature;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

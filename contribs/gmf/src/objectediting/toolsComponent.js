@@ -114,7 +114,7 @@ exports.directive('gmfObjecteditingtools',
 
 /**
  * @param {angular.IInjectorService} $injector Main injector.
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -191,7 +191,7 @@ exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
   // == Injected properties ==
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

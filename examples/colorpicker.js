@@ -54,7 +54,7 @@ exports.module.controller('AppColorpickerController',
 
 /**
  * @constructor
- * @param {angular.Scope} $scope Controller scope.
+ * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
 exports.MainController = function($scope) {

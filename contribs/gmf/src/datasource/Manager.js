@@ -40,7 +40,7 @@ const exports = class {
    *
    * @struct
    * @param {angular.IQService} $q Angular q service
-   * @param {!angular.Scope} $rootScope Angular rootScope.
+   * @param {!angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
@@ -70,7 +70,7 @@ const exports = class {
     this.q_ = $q;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;

@@ -78,7 +78,7 @@ exports.component('gmfMouseposition',
 /**
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.IFilterService} $filter Angular filter.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
@@ -106,7 +106,7 @@ exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   this.projection;
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
