@@ -76,7 +76,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     Optional. The configuration options.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoScaleselector

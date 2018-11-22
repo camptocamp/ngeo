@@ -115,7 +115,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
  */

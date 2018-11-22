@@ -35,7 +35,7 @@ const exports = angular.module('ngeoBtnComponent', []);
  * @htmlAttribute {*} ngeo-btn-group-active Any property of the scope.
  * Tells whether at least one button of the group is active.
  * @param {angular.IParseService} $parse Angular parse service.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtnGroup
@@ -132,7 +132,7 @@ exports.controller('ngeoBtnGroupController',
  *
  * @htmlAttribute {*} ng-model Any property on the scope. Ideally a boolean.
  * @param {angular.IParseService} $parse Angular parse service.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtn

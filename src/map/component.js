@@ -35,7 +35,7 @@ const exports = angular.module('ngeoMap', []);
  *
  * @htmlAttribute {ol.Map} ngeo-map The map.
  * @param {angular.IWindowService} $window The Angular $window service.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoMap
  * @ngInject

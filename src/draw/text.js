@@ -12,7 +12,7 @@ const exports = angular.module('ngeoDrawtext', []);
 
 
 /**
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawtext

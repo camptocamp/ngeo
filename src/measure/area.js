@@ -20,7 +20,7 @@ const exports = angular.module('ngeoMeasurearea', [
  * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IInjectorService} $injector Main injector.
- * @return {!angular.Directive} The directive specs.
+ * @return {!angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint

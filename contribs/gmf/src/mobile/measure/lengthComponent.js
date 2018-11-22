@@ -50,7 +50,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasureLength

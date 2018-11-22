@@ -35,7 +35,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     </gmf-featurestyle>
  *
  * @htmlAttribute {ol.Feature} gmf-featurestyle-feature The feature.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfFeaturestyle

@@ -44,7 +44,7 @@ exports.GeolocationEventType = {
  *
  * @htmlAttribute {ol.Map} gmf-geolocation-map The map.
  * @htmlAttribute {ngeox.DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDesktopGeolocation

@@ -29,7 +29,7 @@ const exports = angular.module('ngeoRecenter', []);
  * See our live example: [../examples/recenter.html](../examples/recenter.html)
  *
  * @htmlAttribute {ol.Map} ngeo-recenter-map The map.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoRecenter
  */

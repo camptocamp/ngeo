@@ -24,7 +24,7 @@ const exports = angular.module('ngeoMeasureazimut', [
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IInjectorService} $injector Main injector.
- * @return {!angular.Directive} The directive specs.
+ * @return {!angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint

@@ -41,7 +41,7 @@ const exports = angular.module('gmfMobileNav', []);
  *
  * When an element slides in the directive changes the text in the header.
  *
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 exports.component_ = function() {
@@ -276,7 +276,7 @@ exports.Controller_.ClassName_ = {
  * If `mainCtrl.gmfUser.username` becomes true and the login-slide is currently
  * active, the navigation will go back to the last slide.
  *
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 exports.backDirective = function() {
@@ -318,7 +318,7 @@ exports.directive('gmfMobileNavBack', exports.backDirective);
  *         gmf-themeselector-currenttheme="mainCtrl.theme">
  *      </gmf-themeselector>
  *
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 exports.backOnClickDirective = function() {

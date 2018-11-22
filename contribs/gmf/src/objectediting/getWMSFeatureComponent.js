@@ -32,7 +32,7 @@ const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  *     The collection of features where to add those created by this directive.
  * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
  * @htmlAttribute {ol.Map} gmf-objecteditinggetwmsfeature-map The map.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature

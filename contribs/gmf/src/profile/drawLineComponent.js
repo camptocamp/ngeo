@@ -38,7 +38,7 @@ const exports = angular.module('gmfDrawProfileLine', [
  * @htmlAttribute {boolean=} gmf-drawprofileline-active Active the component.
  * @htmlAttribute {ol.style.Style=} gmf-drawprofileline-style Optional style
  *     for the drawn line.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */

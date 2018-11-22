@@ -43,7 +43,7 @@ exports.GeolocationEventType = {
  *
  * @htmlAttribute {ol.Map} ngeo-mobile-geolocation-map The map.
  * @htmlAttribute {ngeox.MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMobileGeolocation

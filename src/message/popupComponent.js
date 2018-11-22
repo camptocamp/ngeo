@@ -44,7 +44,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @private
  * @param {string} ngeoPopupTemplateUrl URL to popup template.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoPopup

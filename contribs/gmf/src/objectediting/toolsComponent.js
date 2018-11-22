@@ -83,7 +83,7 @@ exports.value('gmfObjectEditingToolsOptions', {});
  *     if the currently active tool requires a queryable layer or not.
  * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditingtools

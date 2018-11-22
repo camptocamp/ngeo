@@ -55,7 +55,7 @@ const exports = angular.module('ngeoCreatefeature', [
  *     of geometry this directive should draw.
  * @htmlAttribute {ol.Map} ngeo-createfeature-map The map.
  *
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */

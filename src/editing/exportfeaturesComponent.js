@@ -29,7 +29,7 @@ const exports = angular.module('ngeoExportfeatures', [
  *
  * @htmlAttribute {ol.Collection.<ol.Feature>} ngeo-exportfeatures-features The
  *     features to export
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoExportfeatures

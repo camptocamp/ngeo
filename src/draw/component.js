@@ -103,7 +103,7 @@ const exports = angular.module('ngeoDrawfeature', [
  * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
  *      checkbox in order to display the feature measurements as a label.
  *      Default to false.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature

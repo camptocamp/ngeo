@@ -88,7 +88,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
  * @htmlAttribute {Object.<string, gmf.raster.component.LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
  * @htmlAttribute {ol.Map} gmf-elevation-map The map.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfElevation
  */

@@ -44,7 +44,7 @@ const exports = angular.module('ngeoProfile', [
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile

@@ -113,7 +113,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *      to be a {@link ngeo-layertree-listeners}.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoLayertree

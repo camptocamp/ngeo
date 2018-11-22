@@ -35,7 +35,7 @@ const exports = angular.module('ngeoMapQuery', [
  *
  * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @param {angular.IInjectorService} $injector Main injector.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMapQuery

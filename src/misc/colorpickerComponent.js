@@ -37,7 +37,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoColorpickerTemplateUrl Template URL for the directive.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoColorpicker

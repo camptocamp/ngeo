@@ -13,7 +13,7 @@ const exports = angular.module('ngeoDrawrectangle', []);
 
 
 /**
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
