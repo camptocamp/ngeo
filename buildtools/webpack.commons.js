@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const SassPlugin = require('./webpack.plugin.js');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -22,38 +23,6 @@ const babelPresets = [['@babel/preset-env', {
   'modules': false,
   'loose': true,
 }]];
-
-const ngeoRule = {
-  test: /\/ngeo\/(?!node_modules\/).*\.js$/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      babelrc: false,
-      comments: false,
-      cacheDirectory: true,
-      presets: babelPresets,
-      plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
-    }
-  }
-};
-
-
-const otherRule = {
-  test: /\/node_modules\/(?!ngeo\/|angular\/).*\.js$/,
-  use: {
-    loader: 'babel-loader',
-    options: {
-      babelrc: false,
-      comments: false,
-      cacheDirectory: true,
-      presets: babelPresets,
-      plugins: [
-        '@babel/plugin-syntax-object-rest-spread',
-        '@babel/plugin-transform-spread',
-      ]
-    }
-  }
-};
 
 const angularRule = {
   test: require.resolve('angular'),
@@ -107,76 +76,109 @@ const svgRule = {
   ]
 };
 
+const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
 
-const config = {
-  context: path.resolve(__dirname, '../'),
-  devtool: 'source-map',
-  output: {
-    path: path.resolve(__dirname, '../dist/')
-  },
-  module: {
-    rules: [
-      angularRule,
-      typeaheadRule,
-      cssRule,
-      sassRule,
-      htmlRule,
-      svgRule,
-      ngeoRule,
-      otherRule,
-    ]
-  },
-  plugins: [
-    providePlugin,
-    new SassPlugin({
-      filename: devMode ? '[name].css' : '[name].[hash:6].css',
-      assetname: '[name].[hash:6].[ext]',
-      //tempfile: '/tmp/t.scss',
-      blacklistedChunks: ['commons'],
-      filesOrder: (chunk, chunksFiles) => {
-        const files = chunksFiles.commons
-          ? chunksFiles[chunk.name].concat(chunksFiles.commons)
-          : chunksFiles[chunk.name];
-        files.sort((f1, f2) => {
-          for (const reg of [
-            '/apps/',
-            '/controllers/',
-            '/vars.scss',
-            '/vars_only.scss',
-            '/common_dependencies.scss',
-          ]) {
-            if (f1.indexOf(reg) >= 0) {
-              return -1;
-            }
-            if (f2.indexOf(reg) >= 0) {
-              return 1;
-            }
-          }
-          return 0;
-        });
-        return files;
+  const ngeoRule = {
+    test: /\/ngeo\/(?!node_modules\/).*\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        babelrc: false,
+        comments: false,
+        cacheDirectory: babelLoaderCacheDirectory,
+        presets: babelPresets,
+        plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
       }
-    }),
-    new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
-  ],
-  resolve: {
-    modules: [
-      '../node_modules'
-    ],
-    mainFields: ['jsnext:main', 'main'],
-    alias: {
-      'ngeo/test': path.resolve(__dirname, '../test/spec'),
-      'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
-      'ngeo': path.resolve(__dirname, '../src'),
-      'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
-      'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
-      'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
-      'jsts': 'jsts/org/locationtech/jts',
-      'olcs': 'ol-cesium/src/olcs',
-      'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-      'proj4': 'proj4/lib',
     }
-  }
+  };
+  const otherRule = {
+    test: /\/node_modules\/(?!ngeo\/|angular\/).*\.js$/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        babelrc: false,
+        comments: false,
+        cacheDirectory: babelLoaderCacheDirectory,
+        presets: babelPresets,
+        plugins: [
+          '@babel/plugin-syntax-object-rest-spread',
+          '@babel/plugin-transform-spread',
+        ]
+      }
+    }
+  };
+
+  return {
+    context: path.resolve(__dirname, '../'),
+    devtool: 'source-map',
+    output: {
+      path: path.resolve(__dirname, '../dist/')
+    },
+    module: {
+      rules: [
+        angularRule,
+        typeaheadRule,
+        cssRule,
+        sassRule,
+        htmlRule,
+        svgRule,
+        ngeoRule,
+        otherRule,
+      ]
+    },
+    plugins: [
+      providePlugin,
+      new SassPlugin({
+        filename: devMode ? '[name].css' : '[name].[hash:6].css',
+        assetname: '[name].[hash:6].[ext]',
+        //tempfile: '/tmp/t.scss',
+        blacklistedChunks: ['commons'],
+        filesOrder: (chunk, chunksFiles) => {
+          const files = chunksFiles.commons
+            ? chunksFiles[chunk.name].concat(chunksFiles.commons)
+            : chunksFiles[chunk.name];
+          files.sort((f1, f2) => {
+            for (const reg of [
+              '/apps/',
+              '/controllers/',
+              '/vars.scss',
+              '/vars_only.scss',
+              '/common_dependencies.scss',
+            ]) {
+              if (f1.indexOf(reg) >= 0) {
+                return -1;
+              }
+              if (f2.indexOf(reg) >= 0) {
+                return 1;
+              }
+            }
+            return 0;
+          });
+          return files;
+        }
+      }),
+      new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
+      new HardSourceWebpackPlugin(hardSourceConfig || {}),
+    ],
+    resolve: {
+      modules: [
+        '../node_modules'
+      ],
+      mainFields: ['jsnext:main', 'main'],
+      alias: {
+        'ngeo/test': path.resolve(__dirname, '../test/spec'),
+        'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
+        'ngeo': path.resolve(__dirname, '../src'),
+        'gmf': path.resolve(__dirname, '../contribs/gmf/src'),
+        'goog/asserts': path.resolve(__dirname, '../src/goog.asserts.js'),
+        'goog/asserts.js': path.resolve(__dirname, '../src/goog.asserts.js'),
+        'jsts': 'jsts/org/locationtech/jts',
+        'olcs': 'ol-cesium/src/olcs',
+        'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
+        'proj4': 'proj4/lib',
+      }
+    }
+  };
 };
 
 module.exports = {
