@@ -2432,45 +2432,6 @@ ngeox.source.AsitVDOptions.prototype.layer;
 
 
 /**
- * @typedef {{
- *    layer: string,
- *    projection: string,
- *    format: (string|undefined),
- *    timestamp: string
- * }}
- */
-ngeox.source.SwisstopoOptions;
-
-
-/**
- * Layer name.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.layer;
-
-
-/**
- * Projection code. Possible values are `EPSG:21781` and `EPSG:2056`.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.projection;
-
-
-/**
- * Image format. Default is `image/png`.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.format;
-
-
-/**
- * The `Time` dimension of the source.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.timestamp;
-
-
-/**
  * Namespace.
  * @const
  */
