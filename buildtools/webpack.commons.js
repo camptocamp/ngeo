@@ -16,7 +16,7 @@ const providePlugin = new webpack.ProvidePlugin({
   $: 'jquery',
 });
 
-const babelPresets = [['@babel/preset-env', {
+const babelPresets = [[require.resolve('@babel/preset-env'), {
   'targets': {
     'browsers': ['last 2 versions', 'Firefox ESR', 'ie 11'],
   },
@@ -87,7 +87,7 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
         comments: false,
         cacheDirectory: babelLoaderCacheDirectory,
         presets: babelPresets,
-        plugins: ['@camptocamp/babel-plugin-angularjs-annotate'],
+        plugins: [require.resolve('@camptocamp/babel-plugin-angularjs-annotate')],
       }
     }
   };
@@ -101,8 +101,8 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
         cacheDirectory: babelLoaderCacheDirectory,
         presets: babelPresets,
         plugins: [
-          '@babel/plugin-syntax-object-rest-spread',
-          '@babel/plugin-transform-spread',
+          require.resolve('@babel/plugin-syntax-object-rest-spread'),
+          require.resolve('@babel/plugin-transform-spread'),
         ]
       }
     }
