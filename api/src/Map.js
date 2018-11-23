@@ -27,8 +27,6 @@ import * as constants from './constants.js';
 import {getFeaturesFromLayer} from './Querent.js';
 import * as themes from './Themes.js';
 
-import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
-import EPSG2056 from '@geoblocks/sources/EPSG2056.js';
 
 class Map {
 

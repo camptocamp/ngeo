@@ -1,3 +1,6 @@
+
+import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
+
 /**
  * @type {string}
  */
@@ -7,7 +10,7 @@ export const themesUrl = 'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?v
 /**
  * @type {string}
  */
-export const projection = 'EPSG:21781';
+export const projection = EPSG21781;
 
 
 /**
