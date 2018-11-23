@@ -77,7 +77,7 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
 exports.Controller_ = class {
 
   /**
-   * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
    * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered

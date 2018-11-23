@@ -26,7 +26,7 @@ const exports = angular.module('ngeoPopover', []);
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopover
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  */
 exports.component_ = function() {
   return {
@@ -67,7 +67,7 @@ exports.component_ = function() {
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopoverAnchor
- * @return {angular.Directive} The Directive Definition Object
+ * @return {angular.IDirective} The Directive Definition Object
  */
 exports.anchorComponent = function() {
   return {
@@ -83,7 +83,7 @@ exports.anchorComponent = function() {
  * @ngdoc directive
  * @ngInject
  * @ngname ngeoPopoverContent
- * @return {angular.Directive} The Directive Definition Object
+ * @return {angular.IDirective} The Directive Definition Object
  */
 exports.contentComponent = function() {
   return {
@@ -104,7 +104,7 @@ exports.contentComponent = function() {
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoPopoverController
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  */
 exports.PopoverController_ = function($scope) {
   /**

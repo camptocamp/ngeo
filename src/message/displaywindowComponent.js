@@ -52,7 +52,7 @@ exports.Controller_ = class {
   /**
    * @param {!jQuery} $element Element.
    * @param {!angular.ISCEService} $sce Angular sce service.
-   * @param {!angular.Scope} $scope Scope.
+   * @param {!angular.IScope} $scope Scope.
    * @param {!angular.ICompileService} $compile The compile provider.
    * @private
    * @ngInject
@@ -81,7 +81,7 @@ exports.Controller_ = class {
     this.contentTemplate = null;
 
     /**
-     * @type {?angular.Scope}
+     * @type {?angular.IScope}
      */
     this.contentScope = null;
 
@@ -155,7 +155,7 @@ exports.Controller_ = class {
     this.sce_ = $sce;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;

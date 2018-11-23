@@ -12,7 +12,7 @@ const exports = angular.module('ngeoDrawpoint', []);
 
 
 /**
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
@@ -22,7 +22,7 @@ exports.directive_ = function() {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.Scope} $scope Scope.
+     * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.

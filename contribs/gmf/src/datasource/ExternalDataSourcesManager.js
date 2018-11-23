@@ -31,7 +31,7 @@ const exports = class {
    * @param {!angularGettext.Catalog} gettextCatalog service.
    * @param {!angular.IInjectorService} $injector Main injector.
    * @param {!angular.IQService} $q The Angular $q service.
-   * @param {!angular.Scope} $rootScope The rootScope provider.
+   * @param {!angular.IScope} $rootScope The rootScope provider.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {!ngeo.misc.File} ngeoFile Ngeo file.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
@@ -58,7 +58,7 @@ const exports = class {
     this.q_ = $q;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;

@@ -47,7 +47,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  * ngeoDatePickerTemplateUrl Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
@@ -109,7 +109,7 @@ exports.directive('ngeoDatePicker', exports.component_);
 
 /**
  * DatePickerController - directive conttroller
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.IInjectorService} $injector injector.
  * @param {!ngeo.misc.Time} ngeoTime time service.
  * @param {!angularGettext.Catalog} gettextCatalog service.

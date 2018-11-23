@@ -24,7 +24,7 @@ import googAsserts from 'goog/asserts.js';
  * [../examples/mapquery.html](../examples/mapquery.html)
  * [../examples/toolActivate.html](../examples/toolActivate.html)
  *
- * @param {angular.Scope} $rootScope The rootScope provider.
+ * @param {angular.IScope} $rootScope The rootScope provider.
  * @constructor
  * @struct
  * @ngdoc service
@@ -41,7 +41,7 @@ const exports = function($rootScope) {
 
   /**
    * The scope.
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $rootScope;

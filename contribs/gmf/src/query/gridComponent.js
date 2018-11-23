@@ -134,7 +134,7 @@ exports.component('gmfDisplayquerygrid', exports.component_);
  * Controller for the query grid.
  *
  * @param {!angular.IInjectorService} $injector Main injector.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -156,7 +156,7 @@ exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQueren
       $injector.get('ngeoQueryOptions') : {});
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

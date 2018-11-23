@@ -63,7 +63,7 @@ exports.component('gmfShare', exports.component_);
 class ShareComponentController {
   /**
    * The controller for the share component
-   * @param {angular.Scope} $scope Scope.
+   * @param {angular.IScope} $scope Scope.
    * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
    * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
    * @param {angular.IQService} $q Angular q service
@@ -82,7 +82,7 @@ class ShareComponentController {
     this.uid = olBase.getUid(this);
 
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.$scope_ = $scope;

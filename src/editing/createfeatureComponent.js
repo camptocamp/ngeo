@@ -55,7 +55,7 @@ const exports = angular.module('ngeoCreatefeature', [
  *     of geometry this directive should draw.
  * @htmlAttribute {ol.Map} ngeo-createfeature-map The map.
  *
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
@@ -79,7 +79,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {!angular.ICompileService} $compile Angular compile service.
  * @param {!angular.IFilterService} $filter Angular filter
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
@@ -135,7 +135,7 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   this.filter_ = $filter;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

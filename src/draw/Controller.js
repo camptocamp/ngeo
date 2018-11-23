@@ -14,7 +14,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.

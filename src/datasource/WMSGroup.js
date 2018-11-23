@@ -42,7 +42,7 @@ const exports = class extends ngeoDatasourceOGCGroup {
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = injector.get('$rootScope');

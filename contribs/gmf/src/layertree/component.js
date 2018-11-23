@@ -146,7 +146,7 @@ exports.component('gmfLayertree', exports.component_);
 
 /**
  * @param {angular.JQLite} $element Element.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
@@ -182,7 +182,7 @@ exports.Controller_ = function($element, $scope, ngeoLayerHelper, gmfDataSourceB
   this.dimensions;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -389,7 +389,7 @@ exports.Controller_.prototype.getLayer = function(treeCtrl) {
 /**
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
- * @param {angular.Scope} scope treeCtrl scope.
+ * @param {angular.IScope} scope treeCtrl scope.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export

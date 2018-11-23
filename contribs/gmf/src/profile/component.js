@@ -118,7 +118,7 @@ exports.component('gmfProfile', exports.component_);
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.JQLite} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
@@ -138,7 +138,7 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   ngeoCsvDownload) {
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

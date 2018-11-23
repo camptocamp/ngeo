@@ -115,7 +115,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
@@ -143,7 +143,7 @@ exports.directive('gmfEditfeature',
 /**
  * @param {jQuery} $element Element.
  * @param {angular.IQService} $q Angular $q service.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
@@ -223,7 +223,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   this.q_ = $q;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

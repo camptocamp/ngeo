@@ -30,13 +30,13 @@ exports.module = angular.module('app', [
 /**
  * @constructor
  * @param {angular.IHttpService} $http The $http angular service.
- * @param {angular.Scope} $scope The $scope angular service.
+ * @param {angular.IScope} $scope The $scope angular service.
  * @ngInject
  */
 exports.MainController = function($http, $scope) {
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

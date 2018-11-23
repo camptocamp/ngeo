@@ -19,7 +19,7 @@ const exports = class {
    * The filters are saved in the browser local storage, if available.
    * Otherwise, they are kept in this service for the duration of the visit.
    *
-   * @param {!angular.Scope} $rootScope Angular rootScope.
+   * @param {!angular.IScope} $rootScope Angular rootScope.
    * @struct
    * @ngInject
    * @ngdoc service
@@ -28,7 +28,7 @@ const exports = class {
   constructor($rootScope) {
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;

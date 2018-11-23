@@ -47,7 +47,7 @@ const exports = angular.module('gmfContextualdata', [
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
  *    Optional.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
@@ -62,7 +62,7 @@ exports.directive_ = function() {
       'callback': '<gmfContextualdataCallback'
     },
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.contextualdata.component.Controller_} controller Controller.
@@ -81,7 +81,7 @@ exports.directive('gmfContextualdata',
  *
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
  *
  * @constructor
@@ -128,7 +128,7 @@ exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
@@ -269,7 +269,7 @@ exports.controller('GmfContextualdataController', exports.Controller_);
  * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html) example for a usage sample.
  *
  * @param {string} gmfContextualdatacontentTemplateUrl Url to template.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfContextualdatacontent

@@ -83,7 +83,7 @@ exports.value('gmfObjectEditingToolsOptions', {});
  *     if the currently active tool requires a queryable layer or not.
  * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
@@ -114,7 +114,7 @@ exports.directive('gmfObjecteditingtools',
 
 /**
  * @param {angular.IInjectorService} $injector Main injector.
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -191,7 +191,7 @@ exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
   // == Injected properties ==
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

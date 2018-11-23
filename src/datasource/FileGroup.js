@@ -25,7 +25,7 @@ const exports = class extends ngeoDatasourceGroup {
     // === PRIVATE properties ===
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = injector.get('$rootScope');

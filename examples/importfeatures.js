@@ -29,7 +29,7 @@ exports.module = angular.module('app', [
 
 /**
  * @constructor
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @export
  * @ngInject
  */

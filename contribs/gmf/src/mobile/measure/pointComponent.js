@@ -67,7 +67,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasurePoint
@@ -88,7 +88,7 @@ exports.component_ =
         bindToController: true,
         templateUrl: gmfMobileMeasurePointTemplateUrl,
         /**
-         * @param {!angular.Scope} scope Scope.
+         * @param {!angular.IScope} scope Scope.
          * @param {!angular.JQLite} element Element.
          * @param {!angular.Attributes} attrs Attributes.
          * @param {!gmf.mobile.measure.pointComponent.Controller_} controller Controller.
@@ -106,7 +106,7 @@ exports.directive('gmfMobileMeasurepoint',
 
 /**
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {gmf.raster.RasterService} gmfRaster gmf Raster service.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.

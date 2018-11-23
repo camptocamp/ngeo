@@ -18,7 +18,7 @@
  * @htmlAttribute {TypeaheadOptions} ngeo-search The options.
  * @htmlAttribute {Array.<TypeaheadDataset>} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {ngeox.SearchDirectiveListeners} ngeo-search-listeners The listeners.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoSearch
@@ -27,7 +27,7 @@ const exports = function() {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */

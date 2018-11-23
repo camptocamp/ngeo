@@ -25,7 +25,7 @@ const exports = angular.module('ngeoResizemap', []);
  * See our live example: [../examples/animation.html](../examples/animation.html)
  *
  * @param {angular.IWindowService} $window Angular window service.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoResizemap
@@ -36,7 +36,7 @@ exports.directive_ = function($window) {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */

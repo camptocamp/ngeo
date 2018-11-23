@@ -20,7 +20,7 @@ const exports = angular.module('ngeoMeasurearea', [
  * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IInjectorService} $injector Main injector.
- * @return {!angular.Directive} The directive specs.
+ * @return {!angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
@@ -30,7 +30,7 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.Scope} $scope Scope.
+     * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.

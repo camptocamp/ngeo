@@ -41,7 +41,7 @@ const exports = angular.module('gmfMobileNav', []);
  *
  * When an element slides in the directive changes the text in the header.
  *
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 exports.component_ = function() {
@@ -51,7 +51,7 @@ exports.component_ = function() {
     bindToController: true,
     scope: true,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
@@ -276,7 +276,7 @@ exports.Controller_.ClassName_ = {
  * If `mainCtrl.gmfUser.username` becomes true and the login-slide is currently
  * active, the navigation will go back to the last slide.
  *
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 exports.backDirective = function() {
@@ -285,7 +285,7 @@ exports.backDirective = function() {
     restrict: 'A',
     scope: false,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
@@ -318,7 +318,7 @@ exports.directive('gmfMobileNavBack', exports.backDirective);
  *         gmf-themeselector-currenttheme="mainCtrl.theme">
  *      </gmf-themeselector>
  *
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
 exports.backOnClickDirective = function() {
@@ -327,7 +327,7 @@ exports.backOnClickDirective = function() {
     restrict: 'A',
     scope: false,
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.

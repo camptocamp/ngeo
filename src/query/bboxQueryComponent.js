@@ -36,7 +36,7 @@ const exports = angular.module('ngeoBboxQuery', [
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
  * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBboxQuery

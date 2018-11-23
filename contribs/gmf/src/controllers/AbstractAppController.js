@@ -42,7 +42,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {angular.IInjectorService} $injector Main injector.
  * @constructor
  * @ngdoc controller
@@ -388,7 +388,7 @@ const exports = function(config, $scope, $injector) {
   this.tmhDynamicLocale = $injector.get('tmhDynamicLocale');
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    */
   this.$scope = $scope;
 

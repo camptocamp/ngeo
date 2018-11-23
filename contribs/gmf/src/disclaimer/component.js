@@ -29,7 +29,7 @@ const exports = angular.module('gmfDisclaimer', [
  * @constructor
  * @private
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.

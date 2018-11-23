@@ -26,7 +26,7 @@ exports.module = angular.module('app', [
 /**
  * @constructor
  * @ngInject
- * @param {angular.Scope} $rootScope Root scope.
+ * @param {angular.IScope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
  */
 exports.MainController = function($rootScope, ngeoOlcsService) {

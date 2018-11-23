@@ -26,7 +26,7 @@ const exports = angular.module('ngeoControl', []);
  * See our live example: [../examples/control.html](../examples/control.html)
  *
  * @htmlAttribute {ol.Map} ngeo-control-map The map.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoControl
@@ -35,7 +35,7 @@ exports.component_ = function() {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */

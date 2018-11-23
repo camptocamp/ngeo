@@ -50,7 +50,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasureLength
@@ -69,7 +69,7 @@ exports.component_ =
         bindToController: true,
         templateUrl: gmfMobileMeasureLengthTemplateUrl,
         /**
-         * @param {angular.Scope} scope Scope.
+         * @param {angular.IScope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Attributes.
          * @param {gmf.mobile.measure.lengthComponent.Controller_} controller Controller.
@@ -86,7 +86,7 @@ exports.directive('gmfMobileMeasurelength',
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
@@ -99,7 +99,7 @@ exports.directive('gmfMobileMeasurelength',
 exports.Controller_ = function($scope, $filter, gettextCatalog) {
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

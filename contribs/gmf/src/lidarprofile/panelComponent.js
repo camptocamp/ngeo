@@ -91,7 +91,7 @@ exports.component('gmfLidarprofilePanel', exports.component_);
 exports.Controller_ = class {
 
   /**
-   * @param {angular.Scope} $scope Angular scope.
+   * @param {angular.IScope} $scope Angular scope.
    * @param {gmf.lidarprofile.Manager} gmfLidarprofileManager gmf gmfLidarprofileManager.
    * @param {gmf.lidarprofile.Config} gmfLidarprofileConfig gmf Lidar profile config.
    * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service

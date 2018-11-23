@@ -200,8 +200,8 @@ exports.Controller_ = class {
 
   /**
    * @param {angular.JQLite} $element Element.
-   * @param {angular.Scope} $rootScope Angular root scope.
-   * @param {angular.Scope} $scope Angular scope.
+   * @param {angular.IScope} $rootScope Angular root scope.
+   * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.IInjectorService} $injector Main injector.
@@ -270,13 +270,13 @@ exports.Controller_ = class {
     this.attributesOut;
 
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.$rootScope_ = $rootScope;
 
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.$scope_ = $scope;

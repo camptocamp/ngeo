@@ -38,7 +38,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * date(s) changed
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @param {angular.IFilterService} $filter angular filter service
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfTimeSlider
@@ -98,7 +98,7 @@ exports.directive('gmfTimeSlider', exports.directive_);
 
 /**
  * TimeSliderController - directive controller
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private

@@ -45,7 +45,7 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 exports.Controller_ = class {
 
   /**
-   * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.IScope} $scope Angular scope.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources
    *     service.
    * @private
@@ -68,7 +68,7 @@ exports.Controller_ = class {
     // Injected properties
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;

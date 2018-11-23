@@ -42,7 +42,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmfx.User} gmfUser User.
  * @constructor
@@ -51,7 +51,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 exports.MainController = function($scope, gmfEditFeature, gmfUser) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

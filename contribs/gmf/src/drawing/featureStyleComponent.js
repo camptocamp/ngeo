@@ -35,7 +35,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     </gmf-featurestyle>
  *
  * @htmlAttribute {ol.Feature} gmf-featurestyle-feature The feature.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfFeaturestyle
@@ -57,7 +57,7 @@ exports.directive('gmfFeaturestyle',
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
@@ -80,7 +80,7 @@ exports.Controller_ = function($scope, ngeoFeatureHelper) {
   this.feature;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

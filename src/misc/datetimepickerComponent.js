@@ -21,7 +21,7 @@ const exports = angular.module('ngeoDateTimePicker', ['gettext']);
  *
  * @htmlAttribute {Object} ngeo-datetimepicker-options The options.
  *
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */

@@ -18,7 +18,7 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
- * @param {angular.Scope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {gmf.layertree.TreeManager} gmfTreeManager the tree manager.
@@ -32,7 +32,7 @@ const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   gmfTreeManager, ngeoStateManager) {
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$rootScope_ = $rootScope;

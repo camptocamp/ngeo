@@ -38,7 +38,7 @@ const exports = angular.module('gmfDrawProfileLine', [
  * @htmlAttribute {boolean=} gmf-drawprofileline-active Active the component.
  * @htmlAttribute {ol.style.Style=} gmf-drawprofileline-style Optional style
  *     for the drawn line.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
@@ -61,7 +61,7 @@ exports.directive('gmfDrawprofileline',
   exports.directive_);
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay

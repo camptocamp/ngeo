@@ -24,7 +24,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * @constructor
  * @struct
  * @param {angular.ICompileService} $compile The compile provider.
- * @param {angular.Scope} $rootScope The rootScope provider.
+ * @param {angular.IScope} $rootScope The rootScope provider.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @ngdoc service
@@ -34,7 +34,7 @@ const exports = function($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The scope the compiled element is link to.
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @export
    */
   this.scope = $rootScope.$new(true);
@@ -245,7 +245,7 @@ exports.prototype.open = function(options) {
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
- * @param {angular.Scope} $rootScope Angular rootScope service.
+ * @param {angular.IScope} $rootScope Angular rootScope service.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @return {ngeox.PopupFactory} The function to create a popup.
