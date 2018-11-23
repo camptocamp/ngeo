@@ -10,9 +10,6 @@
     },
     "include": [
       "src/**/*.js",
-      "contribs/gmf/src/**/*.js",
-      "node_modules/@types/openlayers/*",
-      "types/**/*"
-    ],
-    "exclude": []
-  }
+      "contribs/gmf/src/**/*.js"
+    ]
+}
