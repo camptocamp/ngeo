@@ -1,14 +1,12 @@
 /**
  * @module ngeo.map.extraModule
  */
+import * as angular from 'angular';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMapExtraModule', [
+export default angular.module('ngeoMapExtraModule', [
   ngeoMapLayerHelper.module.name,
 ]);
-
-
-export default exports;

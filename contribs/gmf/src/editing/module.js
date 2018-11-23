@@ -1,6 +1,7 @@
 /**
  * @module gmf.editing.module
  */
+import * as angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
 import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent.js';
@@ -11,7 +12,7 @@ import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfEditingModule', [
+export default angular.module('gmfEditingModule', [
   gmfEditingEditFeature.module.name,
   gmfEditingEditFeatureComponent.name,
   gmfEditingEditFeatureSelectorComponent.name,
@@ -19,6 +20,3 @@ const exports = angular.module('gmfEditingModule', [
   gmfEditingSnapping.module.name,
   gmfEditingXSDAttributes.module.name,
 ]);
-
-
-export default exports;
