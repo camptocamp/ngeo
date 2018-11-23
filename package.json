@@ -13,7 +13,7 @@
     "serve-api": "webpack-dev-server --content-base api/dist/ --config buildtools/webpack.api.js --https --cert=private.crt --key=private.key --port 3000 --mode development --progress --watch --bail --debug",
     "build-gmf-apps-profile": "TARGET=gmf-apps webpack --profile --json > profile.json",
     "typecheck": "tsc --pretty",
-    "doc": "typedoc --module system --target ES6 --name ngeo --out apidoc src/ contribs/gmf/src/"
+    "doc": "typedoc --name ngeo --out apidoc"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,6 @@
     "angular-float-thead": "0.1.2",
     "angular-gettext": "2.4.1",
     "angular-gettext-tools": "2.3.13",
-    "angular-jsdoc": "1.5.1",
     "angular-mocks": "1.7.5",
     "angular-sanitize": "1.7.5",
     "angular-touch": "1.7.5",
@@ -90,7 +89,6 @@
     "jquery-mousewheel": "3.1.13",
     "jquery-ui": "1.12.1",
     "jquery-ui-touch-punch": "0.2.3",
-    "jsdoc": "3.5.5",
     "jsdom": "13.0.0",
     "jsts": "2.0.2",
     "karma": "3.1.1",
