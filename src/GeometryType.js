@@ -1,11 +1,12 @@
 /**
  * @module ngeo.GeometryType
  */
+
 /**
  * @enum {string}
  * @export
  */
-const exports = {
+export default {
   /**
    * @type {string}
    * @export
@@ -52,6 +53,3 @@ const exports = {
    */
   TEXT: 'Text'
 };
-
-
-export default exports;

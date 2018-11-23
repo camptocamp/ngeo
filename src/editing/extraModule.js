@@ -1,14 +1,12 @@
 /**
  * @module ngeo.editing.extraModule
  */
+import * as angular from 'angular';
 import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
 
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoEditingExtraModule', [
+export default angular.module('ngeoEditingExtraModule', [
   ngeoEditingExportfeaturesComponent.name,
 ]);
-
-
-export default exports;

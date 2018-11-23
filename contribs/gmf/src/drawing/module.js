@@ -1,16 +1,14 @@
 /**
  * @module gmf.drawing.module
  */
+import * as angular from 'angular';
 import gmfDrawingDrawFeatureComponent from 'gmf/drawing/drawFeatureComponent.js';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfDrawingModule', [
+export default angular.module('gmfDrawingModule', [
   gmfDrawingDrawFeatureComponent.name,
   gmfDrawingFeatureStyleComponent.name,
 ]);
-
-
-export default exports;

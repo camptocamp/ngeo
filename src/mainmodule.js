@@ -1,6 +1,7 @@
 /**
  * @module ngeo.mainmodule
  */
+import * as angular from 'angular';
 import ngeoDatasourceModule from 'ngeo/datasource/module.js';
 import ngeoDownloadModule from 'ngeo/download/module.js';
 import ngeoDrawModule from 'ngeo/draw/module.js';
@@ -20,7 +21,7 @@ import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
 
-const exports = angular.module('ngeo', [
+export default angular.module('ngeo', [
   ngeoDatasourceModule.name,
   ngeoDownloadModule.name,
   ngeoDrawModule.name,
@@ -40,6 +41,3 @@ const exports = angular.module('ngeo', [
   ngeoStatemanagerWfsPermalink.module.name,
   ngeoMiscExtraModule.name,
 ]);
-
-
-export default exports;

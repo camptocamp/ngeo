@@ -1,6 +1,7 @@
 /**
  * @module gmf.profile.module
  */
+import * as angular from 'angular';
 import gmfProfileComponent from 'gmf/profile/component.js';
 import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';
 
@@ -9,10 +10,7 @@ import './profile.scss';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfProfileModule', [
+export default angular.module('gmfProfileModule', [
   gmfProfileComponent.name,
   gmfProfileDrawLineComponent.name,
 ]);
-
-
-export default exports;

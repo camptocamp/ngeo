@@ -1,6 +1,7 @@
 /**
  * @module ngeo.map.module
  */
+import * as angular from 'angular';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import ngeoMapComponent from 'ngeo/map/component.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
@@ -14,7 +15,7 @@ import ngeoMapScaleselector from 'ngeo/map/scaleselector.js';
  *
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMapModule', [
+export default angular.module('ngeoMapModule', [
   ngeoMapBackgroundLayerMgr.module.name,
   ngeoMapComponent.name,
   ngeoMapFeatureOverlayMgr.module.name,
@@ -22,6 +23,3 @@ const exports = angular.module('ngeoMapModule', [
   ngeoMapResizemap.name,
   ngeoMapScaleselector.name
 ]);
-
-
-export default exports;
