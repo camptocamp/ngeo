@@ -39,9 +39,7 @@ export function getFeaturesFromLayer(layer, ids) {
         return;
       }
 
-      const featureIds = ids.map((id) => {
-        return `${layer}.${id}`;
-      });
+      const featureIds = ids.map(id => `${layer}.${id}`);
 
       const params = {
         'FEATUREID': featureIds.join(','),
@@ -54,15 +52,13 @@ export function getFeaturesFromLayer(layer, ids) {
       const url = olUriAppendParams(overlayDef.ogcServer.urlWfs, params);
 
       fetch(url)
-        .then((response) => {
-          return response.text().then((responseText) => {
-            const wfsFormat = new olFormatWFS({
-              featureNS: overlayDef.ogcServer.namespace,
-              gmlFormat: new olFormatGML2()
-            });
-            features = wfsFormat.readFeatures(responseText);
+        .then(response => response.text().then((responseText) => {
+          const wfsFormat = new olFormatWFS({
+            featureNS: overlayDef.ogcServer.namespace,
+            gmlFormat: new olFormatGML2()
           });
-        })
+          features = wfsFormat.readFeatures(responseText);
+        }))
         .catch((response) => {
           console.error(`WFS GetFeature request failed, response: ${response}`);
         })
@@ -71,4 +67,4 @@ export function getFeaturesFromLayer(layer, ids) {
         });
     });
   });
-};
+}

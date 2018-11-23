@@ -3,6 +3,7 @@ ANGULAR_VERSION := $(shell buildtools/get-version.sh angular)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
+API_JS_FILES = $(shell find api/src/ -type f -name '*.js')
 NGEO_JS_FILES = $(shell find src/ -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
@@ -211,6 +212,7 @@ gh-pages: .build/python-venv.timestamp
 	buildtools/deploy.sh
 
 .build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
+		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
