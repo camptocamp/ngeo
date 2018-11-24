@@ -26,7 +26,7 @@ import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
@@ -406,8 +406,8 @@ exports.Controller_.prototype.unregisterInteractions_ = function() {
 exports.Controller_.prototype.handleActiveChange_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const drawUid = ['draw-', olBase.getUid(this)].join('-');
-  const otherUid = ['other-', olBase.getUid(this)].join('-');
+  const drawUid = ['draw-', olUtilGetUid(this)].join('-');
+  const otherUid = ['other-', olUtilGetUid(this)].join('-');
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {

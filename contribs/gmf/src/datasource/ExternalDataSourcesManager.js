@@ -14,7 +14,7 @@ import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import {isEmpty} from 'ol/extent.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
@@ -678,7 +678,7 @@ const exports = class {
  * @export
  */
 exports.getId = function(layer) {
-  return olBase.getUid(layer) + 1000000;
+  return olUtilGetUid(layer) + 1000000;
 };
 
 

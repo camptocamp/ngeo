@@ -1,7 +1,7 @@
 /**
  * @module gmf.disclaimer.component
  */
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -178,7 +178,7 @@ exports.Controller_.prototype.handleLayersRemove_ = function(evt) {
  */
 exports.Controller_.prototype.registerLayer_ = function(layer) {
 
-  const layerUid = olBase.getUid(layer);
+  const layerUid = olUtilGetUid(layer);
 
   if (layer instanceof olLayerGroup) {
 
@@ -226,7 +226,7 @@ exports.Controller_.prototype.registerLayer_ = function(layer) {
  */
 exports.Controller_.prototype.unregisterLayer_ = function(layer) {
 
-  const layerUid = olBase.getUid(layer);
+  const layerUid = olUtilGetUid(layer);
 
   if (layer instanceof olLayerGroup) {
 

@@ -5,7 +5,10 @@ import 'bootstrap/js/src/alert.js';
 import googAsserts from 'goog/asserts.js';
 
 import ngeoMessageMessage from 'ngeo/message/Message.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 
 /**
  * Provides methods to display any sort of messages, notifications, errors,
@@ -48,7 +51,7 @@ const exports = function($timeout) {
 
 };
 
-olBase.inherits(exports, ngeoMessageMessage);
+olUtilInherits(exports, ngeoMessageMessage);
 
 
 /**
@@ -131,7 +134,7 @@ exports.prototype.showMessage = function(message) {
 
   // Keep a reference to the promise, in case we want to manually cancel it
   // before the delay
-  const uid = olBase.getUid(el);
+  const uid = olUtilGetUid(el);
   item.promise = this.timeout_(() => {
     el.alert('close');
     delete this.cache_[uid];
@@ -149,7 +152,7 @@ exports.prototype.showMessage = function(message) {
 exports.prototype.clearMessageByCacheItem_ = function(item) {
   const el = item.el;
   const promise = item.promise;
-  const uid = olBase.getUid(el);
+  const uid = olUtilGetUid(el);
 
   // Close the message
   el.alert('close');

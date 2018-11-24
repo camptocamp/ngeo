@@ -4,7 +4,10 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
 import * as olEvents from 'ol/events.js';
@@ -118,7 +121,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(exports, olInteractionPointer);
+olUtilInherits(exports, olInteractionPointer);
 
 
 /**
@@ -167,7 +170,7 @@ exports.prototype.addFeature_ = function(feature) {
   feature.set('angle', 0);
 
   // Add the center icon to the overlay
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   const point = new olGeomPoint(this.getCenterCoordinate_(geometry));
   const centerFeature = new olFeature(point);
   this.centerFeatures_[uid] = centerFeature;
@@ -199,7 +202,7 @@ exports.prototype.removeFeature_ = function(feature) {
   //this.overlay_.getSource().removeFeature(feature);
 
   if (feature) {
-    const uid = olBase.getUid(feature);
+    const uid = olUtilGetUid(feature);
 
     if (this.centerFeatures_[uid]) {
       this.overlay_.getSource().removeFeature(this.centerFeatures_[uid]);
@@ -254,7 +257,7 @@ exports.prototype.handleDown_ = function(evt) {
   if (feature) {
     let found = false;
     this.features_.forEach((f) => {
-      if (olBase.getUid(f) == olBase.getUid(feature)) {
+      if (olUtilGetUid(f) == olUtilGetUid(feature)) {
         found = true;
       }
     });

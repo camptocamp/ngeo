@@ -1,7 +1,7 @@
 /**
  * @module ngeo.editing.attributesComponent
  */
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
@@ -148,7 +148,7 @@ exports.Controller_.prototype.$onInit = function() {
   this.properties = this.feature.getProperties();
 
   // Listen to the feature inner properties change and apply them to the form
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     olEvents.listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
@@ -173,7 +173,7 @@ exports.Controller_.prototype.handleInputChange = function(name) {
  * Cleanup event listeners.
  */
 exports.Controller_.prototype.$onDestroy = function() {
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
 

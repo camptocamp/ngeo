@@ -2,7 +2,7 @@
  * @module ngeo.editing.exportfeaturesComponent
  */
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 
@@ -75,7 +75,7 @@ exports.Controller_ = function($element, $injector, $scope,
    */
   this.element_ = $element;
 
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   const id = ['ngeo-exportfeature', uid].join('-');
 
   /**

@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olDom from 'ol/dom.js';
 import * as olProj from 'ol/proj.js';
 import olOverlay from 'ol/Overlay.js';
@@ -184,7 +184,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
   olEvents.listen(this, 'change:active', this.updateState_, this);
 };
 
-olBase.inherits(exports, olInteractionInteraction);
+olUtilInherits(exports, olInteractionInteraction);
 
 
 /**

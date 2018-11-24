@@ -8,7 +8,7 @@ import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -230,7 +230,7 @@ exports.Controller_.prototype.$onInit = function() {
   this.interaction_ = interaction;
   this.map.addInteraction(interaction);
 
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   if (interaction instanceof olInteractionDraw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -293,7 +293,7 @@ exports.Controller_.prototype.handleDrawEnd_ = function(event) {
  */
 exports.Controller_.prototype.$onDestroy = function() {
   this.timeout_(() => {
-    const uid = olBase.getUid(this);
+    const uid = olUtilGetUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);

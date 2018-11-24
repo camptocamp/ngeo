@@ -18,7 +18,7 @@ import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @type {!angular.IModule}
@@ -299,7 +299,7 @@ exports.Controller_.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  const group = `${exports.Controller_.NAMESPACE_}-${olBase.getUid(this)}`;
+  const group = `${exports.Controller_.NAMESPACE_}-${olUtilGetUid(this)}`;
   const toolActivate = new ngeoMiscToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 

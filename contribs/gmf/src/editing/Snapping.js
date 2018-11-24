@@ -5,7 +5,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
@@ -219,7 +219,7 @@ exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
-      const uid = olBase.getUid(treeCtrl);
+      const uid = olUtilGetUid(treeCtrl);
 
       const stateWatcherUnregister = this.rootScope_.$watch(
         () => treeCtrl.getState(),
@@ -366,7 +366,7 @@ exports.prototype.getWFSConfig_ = function(treeCtrl) {
  */
 exports.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
 
-  const uid = olBase.getUid(treeCtrl);
+  const uid = olUtilGetUid(treeCtrl);
   const item = this.cache_[uid];
 
   // Note: a snappable treeCtrl can only be a leaf, therefore the only possible

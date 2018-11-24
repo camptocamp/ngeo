@@ -13,7 +13,7 @@ import './sass/mobile_alt.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -104,7 +104,7 @@ const exports = function($scope, $injector) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractMobileController);
+olUtilInherits(exports, gmfControllersAbstractMobileController);
 
 
 exports.module = angular.module('Appmobile_alt', [

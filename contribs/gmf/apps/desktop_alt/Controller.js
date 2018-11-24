@@ -17,7 +17,7 @@ import ngeoRoutingModule from 'ngeo/routing/module.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -146,7 +146,7 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(exports, gmfControllersAbstractDesktopController);
 
 
 /**

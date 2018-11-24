@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import * as olFunctions from 'ol/functions.js';
@@ -54,7 +54,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(
+olUtilInherits(
   exports, olInteractionInteraction);
 
 

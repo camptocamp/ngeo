@@ -4,7 +4,10 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olEvents from 'ol/events.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -88,7 +91,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(exports, olInteractionPointer);
+olUtilInherits(exports, olInteractionPointer);
 
 
 /**
@@ -111,7 +114,7 @@ exports.prototype.addFeature_ = function(feature) {
   if (featureGeom instanceof olGeomPolygon) {
 
     // If the feature's corners are already set, no need to set them again
-    const uid = olBase.getUid(feature);
+    const uid = olUtilGetUid(feature);
     let item = this.cache_[uid];
     if (item) {
       return;
@@ -268,7 +271,7 @@ exports.prototype.initializeParams_ = function() {
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   const item = this.cache_[uid];
   const corners = item.corners;
   for (let i = 0; i < corners.length; i++) {

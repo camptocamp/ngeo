@@ -28,7 +28,7 @@ import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import googAsserts from 'goog/asserts.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -1079,7 +1079,7 @@ exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
  * @private
  */
 exports.prototype.addNgeoFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     olEvents.listen(feature, 'change',
@@ -1094,7 +1094,7 @@ exports.prototype.addNgeoFeature_ = function(feature) {
  * @private
  */
 exports.prototype.removeNgeoFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.clearListenerKey(uid);
   this.handleNgeoFeaturesChange_();
 };

@@ -4,7 +4,7 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olProjProjection from 'ol/proj/Projection.js';
@@ -54,7 +54,7 @@ const exports = function(unitPrefixFormat, numberFormat, options = /** @type {ng
 
 };
 
-olBase.inherits(exports, ngeoInteractionMeasure);
+olUtilInherits(exports, ngeoInteractionMeasure);
 
 
 /**
