@@ -43,7 +43,6 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import * as olExtent from 'ol/extent.js';
@@ -1006,7 +1005,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
     pixel,
     (feature) => {
       let ret = false;
-      if (olArray.includes(this.features.getArray(), feature)) {
+      if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;
@@ -1060,7 +1059,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
     pixel,
     (feature) => {
       let ret = false;
-      if (olArray.includes(this.features.getArray(), feature)) {
+      if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;

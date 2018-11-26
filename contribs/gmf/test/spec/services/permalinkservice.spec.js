@@ -5,7 +5,6 @@ import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olCollection from 'ol/Collection.js';
 import * as olProj from 'ol/proj.js';
-import * as olObj from 'ol/obj.js';
 
 
 describe('Permalink service', () => {
@@ -21,7 +20,7 @@ describe('Permalink service', () => {
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    const themesClone = olObj.assign({}, gmfTestDataThemes);
+    const themesClone = Object.assign({}, gmfTestDataThemes);
     PermalinkService.themes_ = themesClone['themes'];
 
 

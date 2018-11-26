@@ -4,7 +4,6 @@
 import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import * as olArray from 'ol/array.js';
 
 const exports = class {
 
@@ -104,7 +103,7 @@ const exports = class {
       if (enumAttributes && enumAttributes.length) {
         const promises = [];
         for (const attribute of attributes) {
-          if (olArray.includes(enumAttributes, attribute.name) &&
+          if (enumAttributes.includes(attribute.name) &&
              attribute.type !== ngeoFormatAttributeType.SELECT &&
              (!attribute.choices || !attribute.choices.length)) {
             promises.push(

@@ -1,7 +1,6 @@
 /**
  * @module ngeo.search.createLocationSearchBloodhound
  */
-import * as olObj from 'ol/obj.js';
 import * as olProj from 'ol/proj.js';
 
 /** @suppress {extraRequire} */
@@ -107,17 +106,17 @@ const exports = function(opt_options) {
   });
 
   // the options objects are cloned to avoid updating the passed object
-  const bhOptions = olObj.assign({}, options.options || {});
-  const remoteOptions = olObj.assign({}, options.remoteOptions || {});
+  const bhOptions = Object.assign({}, options.options || {});
+  const remoteOptions = Object.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
     // move the remote options to opt_remoteOptions
-    olObj.assign(remoteOptions, bhOptions.remote);
+    Object.assign(remoteOptions, bhOptions.remote);
     delete bhOptions.remote;
   }
 
-  olObj.assign(bloodhoundOptions, bhOptions);
-  olObj.assign(bloodhoundOptions.remote, remoteOptions);
+  Object.assign(bloodhoundOptions, bhOptions);
+  Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return new Bloodhound(bloodhoundOptions);
 };

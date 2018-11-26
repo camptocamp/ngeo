@@ -14,7 +14,6 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
-import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -580,7 +579,7 @@ exports.Controller_ = class {
     googAsserts.assert(this.layoutInfo.scales);
     googAsserts.assert(this.layoutInfo.scale !== undefined);
     if (!this.scaleManuallySelected_ &&
-        (this.layoutInfo.scale === -1 || olArray.includes(this.layoutInfo.scales, this.layoutInfo.scale))) {
+        (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
       this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);

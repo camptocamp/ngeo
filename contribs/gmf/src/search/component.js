@@ -19,7 +19,6 @@ import ngeoSearchModule from 'ngeo/search/module.js';
 import olFeature from 'ol/Feature.js';
 import * as olColor from 'ol/color.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import * as olObj from 'ol/obj.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
 import olStyleCircle from 'ol/style/Circle.js';
@@ -458,7 +457,7 @@ exports.SearchController_ = class {
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
     if (this.typeaheadOptions) {
-      olObj.assign(this.options, this.typeaheadOptions);
+      Object.assign(this.options, this.typeaheadOptions);
     }
 
     this.initDatasets_();
@@ -643,7 +642,7 @@ exports.SearchController_ = class {
       })
     });
     if (config.typeaheadDatasetOptions) {
-      olObj.assign(typeaheadDataset, config.typeaheadDatasetOptions);
+      Object.assign(typeaheadDataset, config.typeaheadDatasetOptions);
     }
     return typeaheadDataset;
   }
@@ -808,7 +807,7 @@ exports.SearchController_ = class {
       stroke: stroke
     });
     const customStyles = this.featuresStyles || {};
-    olObj.assign(this.styles_, customStyles);
+    Object.assign(this.styles_, customStyles);
   }
 
   /**

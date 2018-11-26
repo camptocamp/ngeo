@@ -9,7 +9,6 @@ import olFormatWFS from 'ol/format/WFS.js';
 import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType.js';
 import olFormatWMSCapabilities from 'ol/format/WMSCapabilities.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import * as olObj from 'ol/obj.js';
 import * as olUri from 'ol/uri.js';
 import * as olExtent from 'ol/extent.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
@@ -541,7 +540,7 @@ const exports = class {
           url = dataSource.wfsUrl;
 
           // All data sources combined share the same active dimensions
-          olObj.assign(params, dataSource.activeDimensions);
+          Object.assign(params, dataSource.activeDimensions);
         }
 
         // (b) Add queryable layer names in featureTypes array
@@ -606,7 +605,7 @@ const exports = class {
       let countPromise;
       if (wfsCount) {
         const getCountOptions = /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
-          olObj.assign(
+          Object.assign(
             {
               resultType: 'hits'
             },
@@ -642,7 +641,7 @@ const exports = class {
         if (numberOfFeatures === undefined || numberOfFeatures < maxFeatures) {
 
           const getFeatureOptions = /** @type {olx.format.WFSWriteGetFeatureOptions} */ (
-            olObj.assign(
+            Object.assign(
               {
                 maxFeatures
               },
@@ -735,7 +734,7 @@ const exports = class {
         //     been combined together, therefore they share the same active
         //     dimensions.
         if (!activeDimensionsSet) {
-          olObj.assign(params, dataSource.activeDimensions);
+          Object.assign(params, dataSource.activeDimensions);
           activeDimensionsSet = true;
         }
 

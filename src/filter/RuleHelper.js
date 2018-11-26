@@ -13,7 +13,6 @@ import ngeoRuleSelect from 'ngeo/rule/Select.js';
 import ngeoRuleText from 'ngeo/rule/Text.js';
 import {writeFilter} from 'ol/format/WFS.js';
 import * as olFormatFilter from 'ol/format/filter.js';
-import * as olArray from 'ol/array.js';
 
 import moment from 'moment';
 
@@ -581,7 +580,7 @@ const exports = class {
         }
         filter = olFormatFilter.or.apply(null, conditions);
       }
-    } else if (olArray.includes(spatialTypes, operator)) {
+    } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
       googAsserts.assertInstanceof(rule, ngeoRuleGeometry);
       const geometry = googAsserts.assert(rule.geometry);
@@ -604,7 +603,7 @@ const exports = class {
           opt_srsName
         );
       }
-    } else if (olArray.includes(numericTypes, operator)) {
+    } else if (numericTypes.includes(operator)) {
       const numericExpression = googAsserts.assertNumber(expression);
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(

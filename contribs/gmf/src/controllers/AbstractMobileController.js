@@ -7,7 +7,6 @@ import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
-import * as olObj from 'ol/obj.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -95,7 +94,7 @@ const exports = function(config, $scope, $injector) {
   const viewConfig = {
     projection: olProj.get(`EPSG:${config.srid || 21781}`)
   };
-  olObj.assign(viewConfig, config.mapViewConfig || {});
+  Object.assign(viewConfig, config.mapViewConfig || {});
 
   const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 

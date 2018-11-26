@@ -3,7 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
-import * as olObj from 'ol/obj.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
 
@@ -68,7 +67,7 @@ exports.directive_ = function(ngeoDebounce) {
       scope.$watchCollection(optionsAttr, (newVal) => {
 
         const options = /** @type {ngeox.profile.ProfileOptions} */
-                (olObj.assign({}, newVal));
+                (Object.assign({}, newVal));
 
         if (options !== undefined) {
 

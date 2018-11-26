@@ -500,7 +500,7 @@ exports.Controller_ = class {
     const msgs = [];
 
     // (1) The name of the DS must be in list of filtrable layer node names
-    if (olArray.includes(names, dataSource.name)) {
+    if (names.includes(dataSource.name)) {
 
       // (2) The DS must support WFS
       if (!dataSource.supportsWFS) {
@@ -594,7 +594,7 @@ exports.Controller_ = class {
               dataSource.gmfLayer.metadata.directedFilterAttributes;
           const attributes = googAsserts.assert(dataSource.attributes);
           for (const attribute of attributes) {
-            if (olArray.includes(directedAttributes, attribute.name)) {
+            if (directedAttributes.includes(attribute.name)) {
               item.directedRules.push(
                 this.ngeoRuleHelper_.createRuleFromAttribute(attribute)
               );

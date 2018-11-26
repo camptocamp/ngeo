@@ -5,7 +5,6 @@ import googAsserts from 'goog/asserts.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
-import * as olObj from 'ol/obj.js';
 
 const exports = class {
 
@@ -111,7 +110,7 @@ const exports = class {
     // (3) Update query options, update the pending property and issue the
     //     request.
     const limit = options.limit !== undefined ? options.limit : this.limit_;
-    olObj.assign(options, {
+    Object.assign(options, {
       queryableDataSources: queryableDataSources,
       limit: limit,
       tolerancePx: this.tolerancePx_,
