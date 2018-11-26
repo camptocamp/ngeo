@@ -4,7 +4,7 @@
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olProj from 'ol/proj.js';
 import * as olObj from 'ol/obj.js';
 import olMap from 'ol/Map.js';
@@ -70,7 +70,7 @@ const exports = function(config, $scope, $injector) {
   gmfControllersAbstractAppController.call(this, config, $scope, $injector);
 };
 
-olBase.inherits(exports, gmfControllersAbstractAppController);
+olUtilInherits(exports, gmfControllersAbstractAppController);
 
 
 exports.module = angular.module('GmfAbstractAPIControllerModule', [

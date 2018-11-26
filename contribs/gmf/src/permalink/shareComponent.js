@@ -3,7 +3,7 @@
  */
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 const exports = angular.module('gmfPermalinkShareComponent', [
   gmfPermalinkShareService.module.name,
@@ -79,7 +79,7 @@ class ShareComponentController {
      * @type {number}
      * @export
      */
-    this.uid = olBase.getUid(this);
+    this.uid = olUtilGetUid(this);
 
     /**
      * @type {angular.IScope}

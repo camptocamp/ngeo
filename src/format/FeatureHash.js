@@ -5,7 +5,7 @@ import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olColor from 'ol/color.js';
 import * as olArray from 'ol/array.js';
@@ -107,7 +107,7 @@ const exports = function(opt_options) {
 
 };
 
-olBase.inherits(exports, olFormatTextFeature);
+olUtilInherits(exports, olFormatTextFeature);
 
 
 /**

@@ -6,7 +6,7 @@ import googAsserts from 'goog/asserts.js';
 
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import 'ngeo/sass/font.scss';
 
 /**
@@ -64,7 +64,7 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
 
 };
 
-olBase.inherits(exports, ngeoMessageMessage);
+olUtilInherits(exports, ngeoMessageMessage);
 
 
 /**

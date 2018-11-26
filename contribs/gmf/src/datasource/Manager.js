@@ -19,7 +19,7 @@ import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import * as olObj from 'ol/obj.js';
@@ -240,7 +240,7 @@ const exports = class {
             if (layer == undefined) {
               return;
             }
-            const id = olBase.getUid(layer);
+            const id = olUtilGetUid(layer);
             if (layerIds.indexOf(id) == -1) {
               layers.push(layer);
               layerIds.push(id);
@@ -416,7 +416,7 @@ const exports = class {
     const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
-    const id = olBase.getUid(gmfLayer);
+    const id = olUtilGetUid(gmfLayer);
     if (this.dataSourcesCache_[id]) {
       return;
     }
@@ -583,7 +583,7 @@ const exports = class {
    */
   addTreeCtrlToCache_(treeCtrl) {
 
-    const id = olBase.getUid(treeCtrl.node);
+    const id = olUtilGetUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
     googAsserts.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
@@ -666,7 +666,7 @@ const exports = class {
     if (item.timeUpperValueWatcherUnregister) {
       item.timeUpperValueWatcherUnregister();
     }
-    delete this.treeCtrlCache_[olBase.getUid(item.treeCtrl.node)];
+    delete this.treeCtrlCache_[olUtilGetUid(item.treeCtrl.node)];
   }
 
   /**
@@ -718,7 +718,7 @@ const exports = class {
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
-    return this.treeCtrlCache_[olBase.getUid(treeCtrl.node)] || null;
+    return this.treeCtrlCache_[olUtilGetUid(treeCtrl.node)] || null;
   }
 
   /**
@@ -729,7 +729,7 @@ const exports = class {
    */
   getDataSourceLayer_(dataSource) {
     dataSource = /** @type {!gmf.DataSource} */ (dataSource);
-    const id = olBase.getUid(dataSource.gmfLayer);
+    const id = olUtilGetUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
     if (item == undefined) {
       return;
@@ -773,10 +773,10 @@ const exports = class {
         if (dsLayer == undefined) {
           continue;
         }
-        if (olBase.getUid(dsLayer) == olBase.getUid(layer) &&
+        if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
             dataSourceName === dataSource.name) {
 
-          const id = olBase.getUid(dataSource.gmfLayer);
+          const id = olUtilGetUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
           googAsserts.assert(item);
           const treeCtrl = item.treeCtrl;
@@ -845,7 +845,7 @@ const exports = class {
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
-    const id = olBase.getUid(dataSource.gmfLayer);
+    const id = olUtilGetUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
     googAsserts.assert(item);
     const wmsLayer = googAsserts.assert(item.wmsLayer);

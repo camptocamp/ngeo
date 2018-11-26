@@ -3,7 +3,10 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
 import olEventsEventTarget from 'ol/events/Target.js';
@@ -111,7 +114,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   this.bgLayerPromise_ = null;
 };
 
-olBase.inherits(exports, olEventsEventTarget);
+olUtilInherits(exports, olEventsEventTarget);
 
 
 /**
@@ -233,7 +236,7 @@ exports.prototype.getBgLayers = function() {
    * @param {Array.<number>} array Array of ids;
    */
   const getIds = function(item, array) {
-    array.push(olBase.getUid(item));
+    array.push(olUtilGetUid(item));
     const children = item.children || [];
     children.forEach((child) => {
       getIds(child, array);

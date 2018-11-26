@@ -4,7 +4,7 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
 
 /**
@@ -19,7 +19,7 @@ const exports = function() {
   olFormatXML.call(this);
 };
 
-olBase.inherits(exports, olFormatXML);
+olUtilInherits(exports, olFormatXML);
 
 
 /**

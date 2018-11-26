@@ -3,7 +3,7 @@
  */
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olObj from 'ol/obj.js';
 
 /**
@@ -27,7 +27,7 @@ const exports = function(format, gettextCatalog, opt_options) {
 
 };
 
-olBase.inherits(
+olUtilInherits(
   exports, ngeoInteractionMeasureLength);
 
 

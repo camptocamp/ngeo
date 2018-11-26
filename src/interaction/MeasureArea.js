@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
@@ -48,7 +48,7 @@ const exports = function(format, gettextCatalog, options = {}) {
 
 };
 
-olBase.inherits(exports, ngeoInteractionMeasure);
+olUtilInherits(exports, ngeoInteractionMeasure);
 
 
 /**

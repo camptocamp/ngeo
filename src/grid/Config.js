@@ -1,7 +1,7 @@
 /**
  * @module ngeo.grid.Config
  */
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
@@ -38,7 +38,7 @@ const exports = function(data, columnDefs) {
  * @export
  */
 exports.getRowUid = function(attributes) {
-  return `${olBase.getUid(attributes)}`;
+  return `${olUtilGetUid(attributes)}`;
 };
 
 

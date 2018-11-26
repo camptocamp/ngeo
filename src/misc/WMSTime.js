@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 
 /**
  * ngeo - WMS time service
@@ -33,7 +33,7 @@ const exports = function($filter, gettextCatalog) {
   ngeoMiscTime.call(this);
 };
 
-olBase.inherits(exports, ngeoMiscTime);
+olUtilInherits(exports, ngeoMiscTime);
 
 
 /**

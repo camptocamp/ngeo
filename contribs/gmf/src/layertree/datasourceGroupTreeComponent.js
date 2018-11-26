@@ -2,7 +2,7 @@
  * @module gmf.layertree.datasourceGroupTreeComponent
  */
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @type {!angular.IModule}
@@ -85,7 +85,7 @@ exports.Controller_ = class {
    * @export
    */
   getGroupUid() {
-    return `datasourcegrouptree-${olBase.getUid(this.group)}`;
+    return `datasourcegrouptree-${olUtilGetUid(this.group)}`;
   }
 
   /**

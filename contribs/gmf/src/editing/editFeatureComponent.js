@@ -42,7 +42,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 /** @suppress {extraRequire} */
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
@@ -567,7 +567,7 @@ exports.Controller_.prototype.$onInit = function() {
 
   this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
 
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     olEvents.listen(
@@ -896,8 +896,8 @@ exports.Controller_.prototype.handleFeatureAdd_ = function(evt) {
 exports.Controller_.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const createUid = ['create-', olBase.getUid(this)].join('-');
-  const otherUid = ['other-', olBase.getUid(this)].join('-');
+  const createUid = ['create-', olUtilGetUid(this)].join('-');
+  const otherUid = ['other-', olUtilGetUid(this)].join('-');
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -1294,7 +1294,7 @@ exports.Controller_.prototype.handleDestroy_ = function() {
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);

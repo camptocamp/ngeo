@@ -25,7 +25,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoRuleSelect from 'ngeo/rule/Select.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
@@ -661,7 +661,7 @@ exports.RuleController_ = class {
     }
 
     const keys = this.listenerKeys_;
-    const uid = ['ngeo-rule-', olBase.getUid(this)].join('-');
+    const uid = ['ngeo-rule-', olUtilGetUid(this)].join('-');
     const toolMgr = this.ngeoToolActivateMgr_;
 
     const ruleFeature = this.rule.feature;

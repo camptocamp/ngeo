@@ -8,7 +8,7 @@ import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalData
 /** @suppress {extraRequire} */
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 import 'bootstrap/js/src/collapse.js';
 
@@ -116,7 +116,7 @@ exports.Controller_ = class {
    * @export
    */
   getUid(layer) {
-    return olBase.getUid(layer);
+    return olUtilGetUid(layer);
   }
 };
 

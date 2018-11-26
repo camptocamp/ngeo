@@ -6,7 +6,10 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olMapBrowserPointerEvent from 'ol/MapBrowserPointerEvent.js';
 import * as olCoordinate from 'ol/coordinate.js';
@@ -123,7 +126,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(exports, olInteractionPointer);
+olUtilInherits(exports, olInteractionPointer);
 
 
 /**
@@ -302,7 +305,7 @@ exports.handleDownEvent_ = function(evt) {
     for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
       const segmentDataMatch = segmentDataMatches[i];
       const segment = segmentDataMatch.segment;
-      let uid = olBase.getUid(segmentDataMatch.feature);
+      let uid = olUtilGetUid(segmentDataMatch.feature);
       const depth = segmentDataMatch.depth;
       if (depth) {
         uid += `-${depth.join('-')}`; // separate feature components
@@ -448,7 +451,7 @@ exports.prototype.handlePointerAtPixel_ = function(pixel, map) {
           closestSegment[1] : closestSegment[0];
         this.createOrUpdateVertexFeature_(vertex);
         const vertexSegments = {};
-        vertexSegments[olBase.getUid(closestSegment)] = true;
+        vertexSegments[olUtilGetUid(closestSegment)] = true;
         let segment;
         for (let i = 1, ii = nodes.length; i < ii; ++i) {
           segment = nodes[i].segment;
@@ -456,7 +459,7 @@ exports.prototype.handlePointerAtPixel_ = function(pixel, map) {
               olCoordinate.equals(closestSegment[1], segment[1]) ||
               (olCoordinate.equals(closestSegment[0], segment[1]) &&
               olCoordinate.equals(closestSegment[1], segment[0])))) {
-            vertexSegments[olBase.getUid(segment)] = true;
+            vertexSegments[olUtilGetUid(segment)] = true;
           } else {
             break;
           }

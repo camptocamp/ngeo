@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
@@ -43,7 +43,7 @@ const exports = function(format, gettextCatalog, options = /** @type {ngeox.inte
 
 };
 
-olBase.inherits(exports, ngeoInteractionMeasure);
+olUtilInherits(exports, ngeoInteractionMeasure);
 
 
 /**

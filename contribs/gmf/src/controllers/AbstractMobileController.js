@@ -6,7 +6,7 @@ import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olObj from 'ol/obj.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
@@ -142,7 +142,7 @@ const exports = function(config, $scope, $injector) {
   this.redirectUrl = $injector.get('redirectUrl');
 };
 
-olBase.inherits(exports, gmfControllersAbstractAppController);
+olUtilInherits(exports, gmfControllersAbstractAppController);
 
 
 /**

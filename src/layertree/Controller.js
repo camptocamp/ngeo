@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerLayer from 'ol/layer/Layer.js';
@@ -97,7 +97,7 @@ const exports = function($scope, $rootScope, $attrs) {
    * @type {number}
    * @export
    */
-  this.uid = olBase.getUid(this);
+  this.uid = olUtilGetUid(this);
 
   /**
    * @type {number}

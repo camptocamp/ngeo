@@ -5,7 +5,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 
@@ -347,7 +347,7 @@ exports.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
  * @private
  */
 exports.prototype.updateLayerReferences_ = function(leafNode, layer) {
-  const id = olBase.getUid(leafNode);
+  const id = olUtilGetUid(leafNode);
   const querySourceIds = layer.get('querySourceIds') || [];
   querySourceIds.push(id);
   layer.set('querySourceIds', querySourceIds);

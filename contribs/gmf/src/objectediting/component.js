@@ -22,7 +22,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -668,7 +668,7 @@ exports.Controller.prototype.unregisterInteractions_ = function() {
 exports.Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = `${exports.Controller.NAMESPACE_}-${olBase.getUid(this)}`;
+  const uid = `${exports.Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {

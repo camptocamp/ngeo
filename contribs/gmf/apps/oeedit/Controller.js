@@ -15,7 +15,7 @@ import gmfObjecteditingModule from 'gmf/objectediting/module.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -218,7 +218,7 @@ const exports = function($scope, $injector, $timeout) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(exports, gmfControllersAbstractDesktopController);
 
 exports.module = angular.module('Appoeedit', [
   appBase.module.name,

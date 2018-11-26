@@ -14,7 +14,7 @@ import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import 'ngeo/sass/font.scss';
 
@@ -390,7 +390,7 @@ exports.FilterController_ = class {
    * @export
    */
   registerRule_(rule) {
-    const uid = olBase.getUid(rule);
+    const uid = olUtilGetUid(rule);
     this.ruleUnlisteners_[uid] = this.scope_.$watch(
       () => rule.active,
       this.handleRuleActiveChange_.bind(this)
@@ -406,7 +406,7 @@ exports.FilterController_ = class {
    * @export
    */
   unregisterRule_(rule) {
-    const uid = olBase.getUid(rule);
+    const uid = olUtilGetUid(rule);
     const unlistener = this.ruleUnlisteners_[uid];
     googAsserts.assert(unlistener);
     unlistener();
