@@ -71,8 +71,7 @@ class Map {
      * @type {Overlay}
      */
     this.overlay_ = new Overlay({
-      element: this.createOverlayDomTree_(),
-      autoPan: true
+      element: this.createOverlayDomTree_()
     });
     this.map_.addOverlay(this.overlay_);
 
@@ -274,9 +273,9 @@ class Map {
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML += `<div><b>${properties.title}</b></div>`;
       content.innerHTML += `<p>${properties.description}</p>`;
+      this.overlay_.setPosition(coordinates);
 
       this.view_.setCenter(coordinates);
-      this.overlay_.setPosition(coordinates);
     }
   }
 
