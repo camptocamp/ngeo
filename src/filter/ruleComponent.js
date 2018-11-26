@@ -29,7 +29,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
-import * as olArray from 'ol/array.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -462,7 +461,7 @@ exports.RuleController_ = class {
                 ngeoGeometryType.POLYGON,
                 ngeoGeometryType.RECTANGLE
               ];
-              if (!olArray.includes(supportedTypes, geomType)) {
+              if (!supportedTypes.includes(geomType)) {
                 this.clone.setExpression(null);
               }
             }
@@ -843,7 +842,7 @@ exports.RuleController_ = class {
       pixel,
       (feature) => {
         let ret = false;
-        if (olArray.includes(this.selectedFeatures.getArray(), feature)) {
+        if (this.selectedFeatures.getArray().includes(feature)) {
           ret = feature;
         }
         return ret;

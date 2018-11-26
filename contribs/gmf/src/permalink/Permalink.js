@@ -29,7 +29,6 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import googAsserts from 'goog/asserts.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -1016,7 +1015,7 @@ exports.prototype.initLayers_ = function() {
             const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
-                const enable = olArray.includes(groupLayersArray, treeCtrl.node.name);
+                const enable = groupLayersArray.includes(treeCtrl.node.name);
                 if (enable) {
                   groupLayersArray.splice(groupLayersArray.indexOf(treeCtrl.node.name), 1);
                 }

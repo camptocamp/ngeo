@@ -11,7 +11,6 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
-import * as olArray from 'ol/array.js';
 import * as olColor from 'ol/color.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
@@ -793,7 +792,7 @@ exports.prototype.supportsVertex_ = function(feature) {
     ngeoGeometryType.RECTANGLE
   ];
   const type = this.getType(feature);
-  return olArray.includes(supported, type);
+  return supported.includes(type);
 };
 
 
@@ -811,7 +810,7 @@ exports.prototype.supportsVertexRemoval_ = function(feature) {
     ngeoGeometryType.POLYGON
   ];
   const type = this.getType(feature);
-  return olArray.includes(supported, type);
+  return supported.includes(type);
 };
 
 

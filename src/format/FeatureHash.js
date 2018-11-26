@@ -8,7 +8,6 @@ import ngeoUtils from 'ngeo/utils.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olColor from 'ol/color.js';
-import * as olArray from 'ol/array.js';
 import * as olFormatFeature from 'ol/format/Feature.js';
 import olFormatTextFeature from 'ol/format/TextFeature.js';
 import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
@@ -694,9 +693,9 @@ exports.castValue_ = function(key, value) {
     'showLabel'
   ];
 
-  if (olArray.includes(numProperties, key)) {
+  if (numProperties.includes(key)) {
     return +value;
-  } else if (olArray.includes(boolProperties, key)) {
+  } else if (boolProperties.includes(key)) {
     return (value === 'true') ? true : false;
   } else {
     return value;
