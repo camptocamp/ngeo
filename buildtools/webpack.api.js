@@ -1,8 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
-const dest = path.resolve(__dirname, 'api/dist/');
+const dest = path.resolve(__dirname, '../api/dist/');
 
 module.exports = (env, argv) => {
   const library = argv.library ? argv.library : 'demo';

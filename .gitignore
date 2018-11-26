@@ -1,6 +1,8 @@
 *.pyc
 .*.swp
 /apidoc/
+/api/dist/api.js
+/api/dist/api.css
 /.transifexrc
 /package-lock.json
 /.build/
