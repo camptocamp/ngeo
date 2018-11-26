@@ -2,7 +2,6 @@
  * @module ngeo.profile.d3Elevation
  */
 import googAsserts from 'goog/asserts.js';
-import * as olObj from 'ol/obj.js';
 
 import 'd3-transition';
 import {bisector, extent} from 'd3-array';
@@ -194,7 +193,7 @@ const exports = function(options) {
   };
 
   if (options.formatter !== undefined) {
-    olObj.assign(formatter, options.formatter);
+    Object.assign(formatter, options.formatter);
   }
 
   /**

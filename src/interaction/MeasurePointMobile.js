@@ -5,7 +5,7 @@ import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
-import * as olObj from 'ol/obj.js';
+
 import olGeomPoint from 'ol/geom/Point.js';
 
 /**
@@ -21,7 +21,7 @@ import olGeomPoint from 'ol/geom/Point.js';
  */
 const exports = function(format, coordFormat, options = /** @type {ngeox.interaction.MeasureOptions} */ ({})) {
 
-  olObj.assign(options, {displayHelpTooltip: false});
+  Object.assign(options, {displayHelpTooltip: false});
 
   ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */(options));
 

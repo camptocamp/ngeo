@@ -4,7 +4,6 @@
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
-import * as olObj from 'ol/obj.js';
 
 /**
  * @classdesc
@@ -21,7 +20,7 @@ const exports = function(format, gettextCatalog, opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
-  olObj.assign(options, {displayHelpTooltip: false});
+  Object.assign(options, {displayHelpTooltip: false});
 
   ngeoInteractionMeasureLength.call(this, format, gettextCatalog, options);
 

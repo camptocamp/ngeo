@@ -5,7 +5,6 @@ import googAsserts from 'goog/asserts.js';
 import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import * as olArray from 'ol/array.js';
-import * as olObj from 'ol/obj.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -139,7 +138,7 @@ exports.prototype.createSpec = function(
   const attributes = /** @type {!MapFishPrintAttributes} */ ({
     map: specMap
   });
-  olObj.assign(attributes, customAttributes);
+  Object.assign(attributes, customAttributes);
 
   const lang = this.gettextCatalog_.currentLanguage;
 
@@ -427,7 +426,7 @@ exports.prototype.createReport = function(printSpec, opt_httpConfig) {
       'Content-Type': 'application/json; charset=UTF-8'
     }
   });
-  olObj.assign(httpConfig,
+  Object.assign(httpConfig,
     opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };

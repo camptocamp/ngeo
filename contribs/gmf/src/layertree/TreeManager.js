@@ -10,7 +10,6 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
-import * as olObj from 'ol/obj.js';
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
@@ -404,7 +403,7 @@ exports.prototype.removeAll = function() {
  * @private
  */
 exports.prototype.cloneGroupNode_ = function(group, names) {
-  const clone = /** @type {gmfThemes.GmfGroup} */ (olObj.assign({}, group));
+  const clone = /** @type {gmfThemes.GmfGroup} */ (Object.assign({}, group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };

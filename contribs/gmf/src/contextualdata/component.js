@@ -6,7 +6,6 @@ import googAsserts from 'goog/asserts.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olProj from 'ol/proj.js';
 import * as olEvents from 'ol/events.js';
-import * as olObj from 'ol/obj.js';
 
 /**
  * @type {angular.IModule}
@@ -188,9 +187,9 @@ exports.Controller_.prototype.setContent_ = function(coordinate) {
   });
 
   const getRasterSuccess = function(resp) {
-    olObj.assign(scope, resp);
+    Object.assign(scope, resp);
     if (this.callback) {
-      olObj.assign(scope, this.callback.call(this, coordinate, resp));
+      Object.assign(scope, this.callback.call(this, coordinate, resp));
     }
   }.bind(this);
   const getRasterError = function(resp) {

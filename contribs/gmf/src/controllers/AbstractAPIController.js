@@ -6,7 +6,6 @@ import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olProj from 'ol/proj.js';
-import * as olObj from 'ol/obj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -34,7 +33,7 @@ const exports = function(config, $scope, $injector) {
   const viewConfig = {
     projection: olProj.get(`EPSG:${config.srid || 21781}`)
   };
-  olObj.assign(viewConfig, config.mapViewConfig || {});
+  Object.assign(viewConfig, config.mapViewConfig || {});
 
   const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 

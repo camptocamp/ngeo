@@ -7,7 +7,6 @@ import olFeature from 'ol/Feature.js';
 import olOverlay from 'ol/Overlay.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import * as olObj from 'ol/obj.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
@@ -367,7 +366,7 @@ exports.Controller_.prototype.$onInit = function() {
   if (optionsFn) {
     const options = optionsFn();
     googAsserts.assertObject(options);
-    olObj.assign(this.profileOptions, options);
+    Object.assign(this.profileOptions, options);
   }
 };
 
