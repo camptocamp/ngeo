@@ -1,11 +1,16 @@
 
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 
 /**
  * @type {string}
  */
 export const themesUrl = 'https://geomapfish-demo-dc.camptocamp.com/2.4/themes?version=2&background=background';
 
+/**
+ * @type {Array<string>}
+ */
+export const supportedProjections = [EPSG21781, EPSG2056];
 
 /**
  * @type {string}
