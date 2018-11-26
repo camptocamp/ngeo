@@ -20,6 +20,7 @@ popd
 mkdir -p ${TMP}/${GIT_BRANCH}/examples
 cp -r .build/examples-hosted/* ${TMP}/${GIT_BRANCH}/examples/
 cp -r apidoc ${TMP}/${GIT_BRANCH}/
+cp -r api/dist ${TMP}/${GIT_BRANCH}/api
 
 # Rewrite root commit and force push
 pushd ${TMP}
