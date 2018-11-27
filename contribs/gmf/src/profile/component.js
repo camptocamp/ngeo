@@ -461,14 +461,11 @@ exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine) {
  *  @param {string} yUnits Y units label.
  * @private
  */
-exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits,
-  elevationsRef, yUnits) {
+exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
   // Update information point.
-  let ref;
   const coordinate = [point.x, point.y];
-  for (ref in elevationsRef) {
-    this.currentPoint.elevations[ref] = elevationsRef[ref];
-  }
+
+  this.currentPoint.elevations = elevationsRef;
   this.currentPoint.distance = dist;
   this.currentPoint.xUnits = xUnits;
   this.currentPoint.yUnits = yUnits;
