@@ -4,7 +4,7 @@
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olObj from 'ol/obj.js';
 
-import 'corejs-typeahead';
+import Bloodhound from 'corejs-typeahead';
 
 
 /**

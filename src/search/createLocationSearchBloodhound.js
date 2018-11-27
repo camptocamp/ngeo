@@ -10,7 +10,7 @@ import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olFeature from 'ol/Feature.js';
 
-import 'corejs-typeahead';
+import Bloodhound from 'corejs-typeahead';
 
 
 /**

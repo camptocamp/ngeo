@@ -16,6 +16,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
 const defaultImageLoadFunction = olSourceImage.defaultImageLoadFunction;
 
+import * as localforage from 'localforage';
 
 /**
  * @implements {ngeox.OfflineOnTileDownload}
