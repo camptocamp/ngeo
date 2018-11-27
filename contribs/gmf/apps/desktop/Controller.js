@@ -58,7 +58,7 @@ const exports = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
-  this.elevationLayers = ['aster', 'srtm', 'srtm-partial'];
+  this.elevationLayers = ['aster', 'srtm'];
 
   /**
    * @type {Object.<string, gmf.raster.component.LayerConfig>}
@@ -79,7 +79,6 @@ const exports = function($scope, $injector) {
   this.profileLinesconfiguration = {
     'aster': {color: '#0000A0'},
     'srtm': {color: '#00A000'},
-    'srtm-partial': {color: '#FF66FF'},
   };
 
   /**
