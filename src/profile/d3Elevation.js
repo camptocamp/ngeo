@@ -530,6 +530,10 @@ const exports = function(options) {
           .attr('y1', y(elevation))
           .attr('x2', width)
           .attr('y2', y(elevation));
+      } else {
+        // no data for this line: hide it
+        g.select(`.y.grid-hover.${lineName}`)
+          .style('display', 'none');
       }
     }
 
