@@ -656,20 +656,6 @@ exports.Controller_.prototype.getJsonProfile_ = function() {
 exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
   const profileData = resp.data['profile'];
   if (profileData instanceof Array) {
-    const nonempty_layers = [];
-    for (const d of profileData) {
-      for (const v in d['values']) {
-        if (nonempty_layers.indexOf(v) < 0 && d['values'][v] !== null) {
-          nonempty_layers.push(v);
-        }
-      }
-    }
-
-    this.profileOptions.linesConfiguration = {};
-    for (const layer of nonempty_layers) {
-      this.profileOptions.linesConfiguration[layer] = this.linesConfiguration_[layer];
-    }
-
     this.profileData = profileData;
   }
 };
