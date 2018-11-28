@@ -5,7 +5,7 @@ import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
-const exports = class extends ngeoDatasourceGroup {
+export default class extends ngeoDatasourceGroup {
 
   /**
    * A FileGroup data source combines multiple `ngeo.datasource.File` objects.
@@ -87,7 +87,4 @@ const exports = class extends ngeoDatasourceGroup {
     this.unregister_[dataSource.id]();
     delete this.unregister_[dataSource.id];
   }
-};
-
-
-export default exports;
+}

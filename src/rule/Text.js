@@ -4,7 +4,7 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
-const exports = class extends ngeoRuleRule {
+export default class extends ngeoRuleRule {
 
   /**
    * A text rule, which always compares the value with the LIKE operator, by
@@ -20,7 +20,4 @@ const exports = class extends ngeoRuleRule {
     super(options);
 
   }
-};
-
-
-export default exports;
+}

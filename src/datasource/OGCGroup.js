@@ -3,7 +3,7 @@
  */
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
-const exports = class extends ngeoDatasourceGroup {
+export default class extends ngeoDatasourceGroup {
 
   /**
    * A OGCGroup data source combines multiple `ngeo.datasource.OGC` objects.
@@ -28,7 +28,4 @@ const exports = class extends ngeoDatasourceGroup {
   get url() {
     return this.url_;
   }
-};
-
-
-export default exports;
+}

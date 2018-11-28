@@ -8,10 +8,7 @@ import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfRasterModule', [
+export default angular.module('gmfRasterModule', [
   gmfRasterComponent.name,
   gmfRasterRasterService['module'].name,
 ]);
-
-
-export default exports;

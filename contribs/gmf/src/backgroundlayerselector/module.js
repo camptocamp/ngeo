@@ -6,9 +6,6 @@ import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/com
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfBackgroundlayerselectorModule', [
+export default angular.module('gmfBackgroundlayerselectorModule', [
   gmfBackgroundlayerselectorComponent.name,
 ]);
-
-
-export default exports;

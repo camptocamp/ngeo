@@ -8,9 +8,6 @@ import './print.scss';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfPrintModule', [
+export default angular.module('gmfPrintModule', [
   gmfPrintComponent.name,
 ]);
-
-
-export default exports;

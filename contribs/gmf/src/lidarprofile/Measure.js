@@ -8,7 +8,7 @@ const d3 = {
 };
 
 
-const exports = class {
+export default class {
 
   /**
    * Measure tool for the d3 chart
@@ -167,7 +167,4 @@ const exports = class {
       this.pStart_.set = false;
     }
   }
-};
-
-
-export default exports;
+}

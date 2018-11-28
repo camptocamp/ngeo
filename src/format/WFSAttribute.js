@@ -6,7 +6,7 @@ import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
-const exports = class {
+export default class {
 
 
   /**
@@ -68,7 +68,4 @@ const exports = class {
     return attribute;
   }
 
-};
-
-
-export default exports;
+}

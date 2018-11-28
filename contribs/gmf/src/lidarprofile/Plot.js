@@ -20,7 +20,7 @@ const d3 = {
 };
 
 
-const exports = class {
+export default class {
 
   /**
    * Provides a service to create an SVG element with defined axis and a LIDAR
@@ -436,7 +436,4 @@ const exports = class {
     this.manager_.config.serverConfig.classification_colors = classification;
     this.changeStyle(material);
   }
-};
-
-
-export default exports;
+}
