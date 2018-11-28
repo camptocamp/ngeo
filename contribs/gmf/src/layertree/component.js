@@ -6,7 +6,6 @@ import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeing
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
-/** @suppress {extraRequire} */
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent.js';
 
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
@@ -15,7 +14,6 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-/** @suppress {extraRequire} */
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';

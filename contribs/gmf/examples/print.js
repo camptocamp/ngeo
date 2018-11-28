@@ -7,10 +7,8 @@ import appURL from './url.js';
 import './print.css';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfPrintComponent from 'gmf/print/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';

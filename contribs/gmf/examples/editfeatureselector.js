@@ -8,13 +8,11 @@ import './editfeatureselector.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
-/** @suppress {extraRequire} */
 import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent.js';
 
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';

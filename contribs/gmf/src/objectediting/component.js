@@ -7,7 +7,6 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfObjecteditingGeom from 'gmf/objectediting/geom.js';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
-/** @suppress {extraRequire} */
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
 import googAsserts from 'goog/asserts.js';
@@ -18,7 +17,6 @@ import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 import ngeoUtils from 'ngeo/utils.js';

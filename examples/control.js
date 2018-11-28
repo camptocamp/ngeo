@@ -6,7 +6,6 @@ const exports = {};
 import './control.css';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';
 
 import olMap from 'ol/Map.js';

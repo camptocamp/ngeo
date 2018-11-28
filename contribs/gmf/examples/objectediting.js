@@ -9,10 +9,8 @@ import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
 
 import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';

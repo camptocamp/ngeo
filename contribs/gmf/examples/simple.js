@@ -4,7 +4,6 @@
 const exports = {};
 
 import './simple.css';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import olMap from 'ol/Map.js';

@@ -2,25 +2,21 @@
  * @module gmf.filters.filterselectorComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 
-/** @suppress {extraRequire} */
 import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
 
 import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFilterComponent from 'ngeo/filter/component.js';

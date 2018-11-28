@@ -2,18 +2,14 @@
  * @module gmf.objectediting.toolsComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';

@@ -11,7 +11,6 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import olFeature from 'ol/Feature.js';

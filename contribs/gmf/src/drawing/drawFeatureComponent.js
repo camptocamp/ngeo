@@ -2,20 +2,16 @@
  * @module gmf.drawing.drawFeatureComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 import googAsserts from 'goog/asserts.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMenu from 'ngeo/Menu.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawComponent from 'ngeo/draw/component.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';

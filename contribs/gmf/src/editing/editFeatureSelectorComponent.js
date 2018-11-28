@@ -3,7 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';

@@ -5,10 +5,8 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscSwipe from 'ngeo/misc/swipe.js';
 
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olCollection from 'ol/Collection.js';

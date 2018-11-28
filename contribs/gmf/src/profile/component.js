@@ -11,12 +11,10 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
-/** @suppress {extraRequire} */
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 import 'bootstrap/js/src/dropdown.js';

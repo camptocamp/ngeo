@@ -4,7 +4,6 @@
 const exports = {};
 
 import './mouseposition.css';
-/** @suppress {extraRequire} */
 import gmfMapModule from 'gmf/map/module.js';
 
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';

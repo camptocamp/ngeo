@@ -3,7 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';

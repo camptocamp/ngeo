@@ -7,20 +7,17 @@ const exports = {};
 import appURL from './url.js';
 import './importdatasource.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
-/** @suppress {extraRequire} */
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent.js';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
-/** @suppress {extraRequire} */
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';

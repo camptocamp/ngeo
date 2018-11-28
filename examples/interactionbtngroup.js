@@ -6,7 +6,6 @@ const exports = {};
 import './interactionbtngroup.css';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';

@@ -5,10 +5,8 @@ const exports = {};
 
 import appURL from './url.js';
 import './wfspermalink.css';
-/** @suppress {extraRequire} */
 import gmfMapModule from 'gmf/map/module.js';
 
-/** @suppress {extraRequire} */
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 

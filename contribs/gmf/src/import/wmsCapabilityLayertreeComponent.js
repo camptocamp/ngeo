@@ -2,10 +2,8 @@
  * @module gmf.import.wmsCapabilityLayertreeComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';

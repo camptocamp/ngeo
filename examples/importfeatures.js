@@ -6,7 +6,6 @@ const exports = {};
 import './importfeatures.css';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
 
 import olMap from 'ol/Map.js';

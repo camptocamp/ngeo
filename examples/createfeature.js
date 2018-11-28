@@ -4,12 +4,10 @@
 const exports = {};
 
 import './createfeature.css';
-/** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';

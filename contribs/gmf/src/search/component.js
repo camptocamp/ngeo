@@ -9,10 +9,8 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 
 import ngeoSearchModule from 'ngeo/search/module.js';

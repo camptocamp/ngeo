@@ -8,12 +8,10 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';

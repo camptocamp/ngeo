@@ -5,7 +5,6 @@ const exports = {};
 
 import './drawfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfDrawingModule from 'gmf/drawing/module.js';

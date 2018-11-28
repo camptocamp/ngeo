@@ -5,7 +5,6 @@ const exports = {};
 
 import appURL from './url.js';
 import './elevation.css';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfRasterModule from 'gmf/raster/module.js';
