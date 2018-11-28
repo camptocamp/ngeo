@@ -298,15 +298,17 @@ ngeo.Print.prototype.encodeImageWmsLayer_ = function(arr, layer) {
  */
 ngeo.Print.prototype.encodeWmsLayer_ = function(arr, opacity, url, params) {
   let url_url = new URL(url);
+
   // work-around to normalize IE11 & Edge ogcserver encoding issue
   if (this.isMs && url_url.search.indexOf('+')) {
     url_url = new URL(url_url.origin + url_url.pathname + url_url.search.replace(/\+/g, '%20'));
   }
+
   const customParams = {'TRANSPARENT': true};
   if (url_url.searchParams) {
-    for (const element of url_url.searchParams) {
-      customParams[element[0]] = element[1];
-    }
+    /** @type {Object} */ (url_url.searchParams).forEach((value, key) => {
+      customParams[key] = value;
+    });
   }
   for (const key in params) {
     const value = params[key];
