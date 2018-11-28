@@ -2,7 +2,7 @@
  * @module gmf.editing.EditFeature
  */
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
  * Service that provides methods to get, insert, update and delete vector
@@ -47,12 +47,9 @@ const exports = function($http, gmfLayersUrl) {
  * @export
  */
 exports.prototype.getFeaturesInExtent = function(layerIds, extent) {
-  const url = olUri.appendParams(
-    `${this.baseUrl_}/${layerIds.join(',')}`,
-    {
-      'bbox': extent.join(',')
-    }
-  );
+  const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
+    'bbox': extent.join(',')
+  });
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
@@ -83,7 +80,7 @@ exports.prototype.getFeaturesWithComparisonFilters = function(
 
   params['queryable'] = properties.join(',');
 
-  const url = olUri.appendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
+  const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 

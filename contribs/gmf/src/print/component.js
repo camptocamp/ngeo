@@ -3,7 +3,6 @@
  */
 import gmfBase from 'gmf/index.js';
 
-/** @suppress {extraRequire} */
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';

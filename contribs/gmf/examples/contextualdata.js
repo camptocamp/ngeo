@@ -5,7 +5,6 @@ const exports = {};
 
 import appURL from './url.js';
 import './contextualdata.css';
-/** @suppress {extraRequire} */
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 
 import gmfMapComponent from 'gmf/map/component.js';

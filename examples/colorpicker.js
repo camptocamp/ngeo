@@ -4,7 +4,6 @@
 const exports = {};
 
 import './colorpicker.css';
-/** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 /** @type {!angular.IModule} **/

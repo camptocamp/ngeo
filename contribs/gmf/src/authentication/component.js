@@ -5,7 +5,6 @@ import gmfAuthenticationService from 'gmf/authentication/Service.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 /**

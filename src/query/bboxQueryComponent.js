@@ -1,7 +1,6 @@
 /**
  * @module ngeo.query.bboxQueryComponent
  */
-/** @suppress {extraRequire} */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olInteractionDragBox from 'ol/interaction/DragBox.js';

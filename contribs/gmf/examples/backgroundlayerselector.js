@@ -7,7 +7,6 @@ import appURL from './url.js';
 import './backgroundlayerselector.css';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';

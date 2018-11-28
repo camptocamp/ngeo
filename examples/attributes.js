@@ -4,7 +4,6 @@
 const exports = {};
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
 
 import olFeature from 'ol/Feature.js';

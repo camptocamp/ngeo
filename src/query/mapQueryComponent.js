@@ -1,7 +1,6 @@
 /**
  * @module ngeo.query.mapQueryComponent
  */
-/** @suppress {extraRequire} */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import * as olEvents from 'ol/events.js';

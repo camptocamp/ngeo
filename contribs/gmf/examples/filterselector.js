@@ -9,14 +9,12 @@ import './filterselector.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
-/** @suppress {extraRequire} */
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
 import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';

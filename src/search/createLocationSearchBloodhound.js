@@ -3,7 +3,6 @@
  */
 import * as olProj from 'ol/proj.js';
 
-/** @suppress {extraRequire} */
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import olGeomPoint from 'ol/geom/Point.js';

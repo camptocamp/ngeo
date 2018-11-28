@@ -5,7 +5,6 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMenu from 'ngeo/Menu.js';
 import ngeoDrawComponent from 'ngeo/draw/component.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
@@ -15,7 +14,6 @@ import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';

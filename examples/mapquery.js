@@ -11,7 +11,6 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';

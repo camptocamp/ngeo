@@ -6,7 +6,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';

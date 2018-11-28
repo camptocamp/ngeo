@@ -3,19 +3,15 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadService from 'ngeo/download/service.js';
 
-/** @suppress {extraRequire} */
 import ngeoGridComponent from 'ngeo/grid/component.js';
 
 import ngeoGridConfig from 'ngeo/grid/Config.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olCollection from 'ol/Collection.js';

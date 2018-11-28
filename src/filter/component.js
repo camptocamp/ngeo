@@ -5,10 +5,8 @@ import googAsserts from 'goog/asserts.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';

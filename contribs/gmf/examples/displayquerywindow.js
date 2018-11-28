@@ -9,10 +9,8 @@ import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';

@@ -4,7 +4,6 @@
 const exports = {};
 
 import './modal.css';
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 

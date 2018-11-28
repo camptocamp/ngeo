@@ -4,7 +4,6 @@
 const exports = {};
 
 import './datepicker.css';
-/** @suppress {extraRequire} */
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
 import ngeoMiscTime from 'ngeo/misc/Time.js';

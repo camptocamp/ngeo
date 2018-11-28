@@ -4,7 +4,6 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadService from 'ngeo/download/service.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';

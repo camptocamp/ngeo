@@ -6,7 +6,6 @@ const exports = {};
 import './layerorder.css';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
 
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';

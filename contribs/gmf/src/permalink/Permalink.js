@@ -5,13 +5,11 @@ import gmfBase from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
-/** @suppress {extraRequire} */
 import gmfThemeManager from 'gmf/theme/Manager.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoPopover from 'ngeo/Popover.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
@@ -20,7 +18,6 @@ import ngeoOlcsConstants from 'ngeo/olcs/constants.js';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';

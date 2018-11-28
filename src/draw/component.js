@@ -3,22 +3,16 @@
  */
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawPoint from 'ngeo/draw/point.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawRectangle from 'ngeo/draw/rectangle.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawText from 'ngeo/draw/text.js';
 
-/** @suppress {extraRequire} */
 import ngeoMeasureArea from 'ngeo/measure/area.js';
 
-/** @suppress {extraRequire} */
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 
-/** @suppress {extraRequire} */
 import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**

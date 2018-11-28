@@ -4,7 +4,6 @@
 const exports = {};
 
 import './simple3d.css';
-/** @suppress {extraRequire} */
 import olMap from 'ol/Map.js';
 
 import olView from 'ol/View.js';

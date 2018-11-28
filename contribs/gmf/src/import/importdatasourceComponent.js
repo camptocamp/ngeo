@@ -2,13 +2,10 @@
  * @module gmf.import.importdatasourceComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
-/** @suppress {extraRequire} */
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';
 
-/** @suppress {extraRequire} */
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
 
 import googAsserts from 'goog/asserts.js';

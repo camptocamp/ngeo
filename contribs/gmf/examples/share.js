@@ -5,10 +5,8 @@ const exports = {};
 
 import appURL from './url.js';
 import './share.css';
-/** @suppress {extraRequire} */
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 

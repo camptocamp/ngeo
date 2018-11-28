@@ -5,10 +5,8 @@ const exports = {};
 
 import appURL from './url.js';
 import './profile.css';
-/** @suppress {extraRequire} */
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfProfileModule from 'gmf/profile/module.js';

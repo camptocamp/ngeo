@@ -5,7 +5,6 @@ import * as angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import * as olEvents from 'ol/events.js';

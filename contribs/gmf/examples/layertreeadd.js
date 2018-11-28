@@ -10,10 +10,8 @@ import gmfDisclaimerModule from 'gmf/disclaimer/module.js';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 import gmfThemeManager from 'gmf/theme/Manager.js';

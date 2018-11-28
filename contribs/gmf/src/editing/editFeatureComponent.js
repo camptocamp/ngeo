@@ -3,7 +3,6 @@
  */
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
-/** @suppress {extraRequire} */
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
@@ -14,10 +13,8 @@ import 'jquery-datetimepicker/jquery.datetimepicker.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
-/** @suppress {extraRequire} */
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
 import ngeoUtils from 'ngeo/utils.js';
@@ -28,10 +25,8 @@ import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMenu from 'ngeo/Menu.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -39,7 +34,6 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';

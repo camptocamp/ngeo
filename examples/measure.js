@@ -10,7 +10,6 @@ import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';

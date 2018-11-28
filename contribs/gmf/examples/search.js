@@ -5,7 +5,6 @@ const exports = {};
 
 import appURL from './url.js';
 import './search.css';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfSearchModule from 'gmf/search/module.js';

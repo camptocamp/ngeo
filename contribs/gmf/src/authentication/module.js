@@ -4,7 +4,6 @@
 import * as angular from 'angular';
 import gmfAuthenticationComponent from 'gmf/authentication/component.js';
 
-/** @suppress {extraRequire} */
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 /**

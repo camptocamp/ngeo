@@ -6,7 +6,6 @@ const exports = {};
 import './featurestyle.css';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import googAsserts from 'goog/asserts.js';

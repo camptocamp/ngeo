@@ -6,7 +6,6 @@ import googAsserts from 'goog/asserts.js';
 /**
  * This goog.require is needed because of 'ngeo-popup' used in
  * the template.
- * @suppress {extraRequire}
  */
 import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 

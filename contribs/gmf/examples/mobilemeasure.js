@@ -5,10 +5,8 @@ const exports = {};
 
 import appURL from './url.js';
 import './mobilemeasure.css';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';

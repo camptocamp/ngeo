@@ -11,7 +11,7 @@ import * as olObj from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
  * Provides help functions that helps you to create and manage layers.
@@ -436,7 +436,7 @@ exports.prototype.getWMSLegendURL = function(url,
   if (opt_additionalQueryString) {
     Object.assign(queryString, opt_additionalQueryString);
   }
-  return olUri.appendParams(url, queryString);
+  return olUriAppendParams(url, queryString);
 };
 
 

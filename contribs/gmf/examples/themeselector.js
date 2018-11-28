@@ -5,7 +5,6 @@ const exports = {};
 
 import appURL from './url.js';
 import './themeselector.css';
-/** @suppress {extraRequire} */
 import gmfThemeModule from 'gmf/theme/module.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
