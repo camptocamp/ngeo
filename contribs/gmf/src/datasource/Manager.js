@@ -731,6 +731,9 @@ const exports = class {
    */
   getDataSourceLayer_(dataSource) {
     dataSource = /** @type {!gmf.DataSource} */ (dataSource);
+    if (dataSource.gmfLayer == undefined) {
+      return;
+    }
     const id = olBase.getUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
     if (item == undefined) {
