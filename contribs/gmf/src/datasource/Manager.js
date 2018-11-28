@@ -727,7 +727,13 @@ const exports = class {
    */
   getDataSourceLayer_(dataSource) {
     dataSource = /** @type {!gmf.DataSource} */ (dataSource);
+    if (dataSource.gmfLayer == undefined) {
+      return;
+    }
     const id = olUtilGetUid(dataSource.gmfLayer);
+    if (id == undefined) {
+      return;
+    }
     const item = this.treeCtrlCache_[id];
     if (item == undefined) {
       return;

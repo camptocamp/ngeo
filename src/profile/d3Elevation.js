@@ -360,11 +360,13 @@ const exports = function(options) {
       // each lines.
       const yDomain = function() {
         let elevationsValues = [];
-        let extent, name;
         // Get min/max values (extent) of each lines.
-        for (name in linesConfiguration) {
-          extent = d3.extent(data, d => linesConfiguration[name].zExtractor(d));
-          elevationsValues = elevationsValues.concat(extent);
+        for (const name in linesConfiguration) {
+          const extent = d3.extent(data, d => linesConfiguration[name].zExtractor(d));
+          // only include defined extent
+          if (extent.every(Number.isFinite)) {
+            elevationsValues = elevationsValues.concat(extent);
+          }
         }
         return [
           Math.min.apply(null, elevationsValues),
@@ -518,24 +520,31 @@ const exports = function(options) {
 
     for (lineName in linesConfiguration) {
       elevation = linesConfiguration[lineName].zExtractor(point);
-      elevations.push(elevation);
-      elevationsRef[lineName] = elevation;
-      g.select(`.y.grid-hover.${lineName}`)
-        .style('display', 'inline')
-        .select('line')
-        .attr('x1', x(0))
-        .attr('y1', y(elevation))
-        .attr('x2', width)
-        .attr('y2', y(elevation));
+      if (Number.isFinite(elevation)) {
+        elevations.push(elevation);
+        elevationsRef[lineName] = elevation;
+        g.select(`.y.grid-hover.${lineName}`)
+          .style('display', 'inline')
+          .select('line')
+          .attr('x1', x(0))
+          .attr('y1', y(elevation))
+          .attr('x2', width)
+          .attr('y2', y(elevation));
+      } else {
+        // no data for this line: hide it
+        g.select(`.y.grid-hover.${lineName}`)
+          .style('display', 'none');
+      }
     }
 
+    const y2 = y(Math.max.apply(null, elevations));
     g.select('.x.grid-hover')
       .style('display', 'inline')
       .select('line')
       .attr('x1', x(dist))
       .attr('y1', height)
       .attr('x2', x(dist))
-      .attr('y2', y(Math.max.apply(null, elevations)));
+      .attr('y2', Number.isFinite(y2) ? y2 : 0);
 
     const right = dist > xDomain[1] / 2;
     let xtranslate = x(dist);
