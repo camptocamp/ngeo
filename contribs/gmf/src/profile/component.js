@@ -461,14 +461,11 @@ exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine) {
  *  @param {string} yUnits Y units label.
  * @private
  */
-exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits,
-  elevationsRef, yUnits) {
+exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
   // Update information point.
-  let ref;
   const coordinate = [point.x, point.y];
-  for (ref in elevationsRef) {
-    this.currentPoint.elevations[ref] = elevationsRef[ref];
-  }
+
+  this.currentPoint.elevations = elevationsRef;
   this.currentPoint.distance = dist;
   this.currentPoint.xUnits = xUnits;
   this.currentPoint.yUnits = yUnits;
@@ -656,20 +653,6 @@ exports.Controller_.prototype.getJsonProfile_ = function() {
 exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
   const profileData = resp.data['profile'];
   if (profileData instanceof Array) {
-    const nonempty_layers = [];
-    for (const d of profileData) {
-      for (const v in d['values']) {
-        if (nonempty_layers.indexOf(v) < 0 && d['values'][v] !== null) {
-          nonempty_layers.push(v);
-        }
-      }
-    }
-
-    this.profileOptions.linesConfiguration = {};
-    for (const layer of nonempty_layers) {
-      this.profileOptions.linesConfiguration[layer] = this.linesConfiguration_[layer];
-    }
-
     this.profileData = profileData;
   }
 };
