@@ -411,7 +411,7 @@ exports.Controller_.prototype.onPointerMove_ = function(e) {
   const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
-    this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
+    this.profileHighlight = this.getDistanceOnALine_(closestPoint);
   } else {
     this.profileHighlight = -1;
   }
@@ -424,12 +424,10 @@ exports.Controller_.prototype.onPointerMove_ = function(e) {
  * The point must be on the line. If not, this function will return the total
  * length of the line.
  * @param {ol.Coordinate} pointOnLine A point on the given line.
- * @param {ol.geom.LineString} line A line.
  * @return {number} A distance.
  * @private
  */
-exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine,
-  line) {
+exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine) {
   let segment;
   let distOnLine = 0;
   const fakeExtent = [
