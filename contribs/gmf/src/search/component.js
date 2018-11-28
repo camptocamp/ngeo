@@ -26,7 +26,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
  * @type {!angular.IModule}
@@ -734,7 +734,7 @@ exports.SearchController_ = class {
         settings.xhrFields = {
           withCredentials: true
         };
-        settings.url = olUri.appendParams(url, {
+        settings.url = olUriAppendParams(url, {
           'query': query,
           'lang': lang,
         });

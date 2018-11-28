@@ -9,7 +9,7 @@ import olFormatWFS from 'ol/format/WFS.js';
 import ngeoWFSDescribeFeatureType from 'ngeo/WFSDescribeFeatureType.js';
 import olFormatWMSCapabilities from 'ol/format/WMSCapabilities.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import * as olExtent from 'ol/extent.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
@@ -198,15 +198,12 @@ const exports = class {
 
     const ogcLayerNames = dataSource.getOGCLayerNames();
 
-    const url = olUri.appendParams(
-      googAsserts.assertString(dataSource.wfsUrl),
-      {
-        'REQUEST': 'DescribeFeatureType',
-        'SERVICE': 'WFS',
-        'VERSION': '2.0.0',
-        'TYPENAME': ogcLayerNames
-      }
-    );
+    const url = olUriAppendParams(googAsserts.assertString(dataSource.wfsUrl), {
+      'REQUEST': 'DescribeFeatureType',
+      'SERVICE': 'WFS',
+      'VERSION': '2.0.0',
+      'TYPENAME': ogcLayerNames
+    });
 
     return this.http_.get(url).then((response) => {
       const format = new ngeoWFSDescribeFeatureType();
@@ -258,7 +255,7 @@ const exports = class {
       'VERSION': '1.3.0'
     };
 
-    const url = olUri.appendParams(baseUrl, params);
+    const url = olUriAppendParams(baseUrl, params);
     let promise;
 
     if (!cache || !this.wmsGetCapabilitiesPromises_[baseUrl]) {
