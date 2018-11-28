@@ -62,7 +62,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  * @ngdoc component
  * @ngname gmfMouseposition
  */
-exports.component_ = {
+const component = {
   controller: 'gmfMousepositionController as ctrl',
   bindings: {
     'map': '<gmfMousepositionMap',
@@ -71,8 +71,7 @@ exports.component_ = {
   templateUrl: gmfMapMousepositionTemplateUrl
 };
 
-exports.component('gmfMouseposition',
-  exports.component_);
+exports.component('gmfMouseposition', component);
 
 
 /**

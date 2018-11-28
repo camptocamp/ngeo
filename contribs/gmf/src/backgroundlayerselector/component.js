@@ -68,7 +68,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
-exports.component_ = {
+const component = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
     'map': '=gmfBackgroundlayerselectorMap',
@@ -79,8 +79,7 @@ exports.component_ = {
 };
 
 
-exports.component('gmfBackgroundlayerselector',
-  exports.component_);
+exports.component('gmfBackgroundlayerselector', component);
 
 
 /**

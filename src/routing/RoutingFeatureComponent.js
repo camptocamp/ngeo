@@ -372,7 +372,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
  * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */
-exports.component_ = {
+const component = {
   controller: exports.Controller,
   bindings: {
     'map': '<ngeoRoutingFeatureMap',
@@ -384,7 +384,7 @@ exports.component_ = {
   templateUrl: ngeoRoutingFeatureTemplateUrl
 };
 
-exports.module.component('ngeoRoutingFeature', exports.component_);
+exports.module.component('ngeoRoutingFeature', component);
 
 
 export default exports;

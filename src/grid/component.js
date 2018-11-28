@@ -66,7 +66,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoGrid
  */
-exports.component_ = {
+const component = {
   controller: 'ngeoGridController as ctrl',
   bindings: {
     'configuration': '=ngeoGridConfiguration'
@@ -74,7 +74,7 @@ exports.component_ = {
   templateUrl: ngeoGridTemplateUrl
 };
 
-exports.component('ngeoGrid', exports.component_);
+exports.component('ngeoGrid', component);
 
 
 /**

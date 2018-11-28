@@ -52,7 +52,7 @@ function gmfLidarprofileTemplateUrl($element, $attrs, gmfLidarprofileTemplateUrl
  * @ngdoc component
  * @ngname gmfLidarprofile
  */
-exports.component_ = {
+const component = {
   controller: 'GmfLidarprofileController',
   bindings: {
     'active': '=gmfLidarprofileActive',
@@ -61,7 +61,7 @@ exports.component_ = {
   templateUrl: gmfLidarprofileTemplateUrl
 };
 
-exports.component('gmfLidarprofile', exports.component_);
+exports.component('gmfLidarprofile', component);
 
 
 /**

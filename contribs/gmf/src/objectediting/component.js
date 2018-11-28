@@ -113,7 +113,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @ngdoc component
  * @ngname gmfObjectediting
  */
-exports.component_ = {
+const component = {
   controller: 'GmfObjecteditingController as oeCtrl',
   bindings: {
     'active': '=gmfObjecteditingActive',
@@ -126,7 +126,7 @@ exports.component_ = {
   templateUrl: gmfObjecteditingTemplateUrl
 };
 
-exports.component('gmfObjectediting', exports.component_);
+exports.component('gmfObjectediting', component);
 
 
 /**
