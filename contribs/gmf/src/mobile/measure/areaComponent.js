@@ -1,77 +1,77 @@
 /**
- * @module gmf.mobile.measure.lengthComponent
+ * @module gmf.mobile.measure.areaComponent
  */
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
+import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
-const exports = angular.module('gmfMobileMeasureLength', [
+const exports = angular.module('gmfMobileMeasureArea', [
   ngeoMiscFilters.name,
 ]);
 
 
-exports.value('gmfMobileMeasureLengthTemplateUrl',
+exports.value('gmfMobileMeasureAreaTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
    * @param {angular.Attributes} attrs Attributes.
    * @return {string} The template url.
    */
   (element, attrs) => {
-    const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
+    const templateUrl = attrs['gmfMobileMeasureAreaTemplateurl'];
     return templateUrl !== undefined ? templateUrl :
-      'gmf/measure/lengthComponent';
+      'gmf/measure/areaComponent';
   });
 
 exports.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put(
-    'gmf/measure/lengthComponent',
+    'gmf/measure/areaComponent',
     require('./baseComponent.html')
   );
 });
 
 
 /**
- * Provide a directive to do a length measure on the mobile devices.
+ * Provide a directive to do a area measure on the mobile devices.
  *
  * Example:
  *
- *      <div gmf-mobile-measurelength
- *        gmf-mobile-measurelength-active="ctrl.measureLengthActive"
- *        gmf-mobile-measurelength-map="::ctrl.map">
+ *      <div gmf-mobile-measurearea
+ *        gmf-mobile-measurearea-active="ctrl.measureAreaActive"
+ *        gmf-mobile-measurearea-map="::ctrl.map">
  *      </div>
  *
- * @htmlAttribute {boolean} gmf-mobile-measurelength-active Used to active
+ * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
- * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display.
- * @htmlAttribute {ol.Map} gmf-mobile-measurelength-map The map.
+ * @htmlAttribute {number=} gmf-mobile-measurearea-precision the number of significant digits to display.
+ * @htmlAttribute {ol.Map} gmf-mobile-measurearea-map The map.
  * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
- *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
+ *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
- *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
- * @return {angular.IDirective} The Directive Definition Object.
+ *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.
+ * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname gmfMobileMeasureLength
+ * @ngname gmfMobileMeasureArea
  */
 exports.component_ =
-    function(gmfMobileMeasureLengthTemplateUrl) {
+    function(gmfMobileMeasureAreaTemplateUrl) {
       return {
         restrict: 'A',
         scope: {
-          'active': '=gmfMobileMeasurelengthActive',
-          'precision': '<?gmfMobileMeasurelengthPrecision',
-          'map': '=gmfMobileMeasurelengthMap',
-          'sketchStyle': '=?gmfMobileMeasurelengthSketchstyle'
+          'active': '=gmfMobileMeasureareaActive',
+          'precision': '<?gmfMobileMeasureareaPrecision',
+          'map': '=gmfMobileMeasureareaMap',
+          'sketchStyle': '=?gmfMobileMeasureareaSketchstyle'
         },
-        controller: 'GmfMobileMeasureLengthController as ctrl',
+        controller: 'GmfMobileMeasureAreaController as ctrl',
         bindToController: true,
-        templateUrl: gmfMobileMeasureLengthTemplateUrl,
+        templateUrl: gmfMobileMeasureAreaTemplateUrl,
         /**
-         * @param {angular.IScope} scope Scope.
+         * @param {angular.Scope} scope Scope.
          * @param {angular.JQLite} element Element.
          * @param {angular.Attributes} attrs Attributes.
-         * @param {gmf.mobile.measure.lengthComponent.Controller_} controller Controller.
+         * @param {gmf.mobile.measure.areaComponent.Controller_} controller Controller.
          */
         link: (scope, element, attrs, controller) => {
           controller.init();
@@ -80,12 +80,12 @@ exports.component_ =
     };
 
 
-exports.directive('gmfMobileMeasurelength',
+exports.directive('gmfMobileMeasurearea',
   exports.component_);
 
 
 /**
- * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
@@ -93,7 +93,7 @@ exports.directive('gmfMobileMeasurelength',
  * @struct
  * @ngInject
  * @ngdoc controller
- * @ngname GmfMobileMeasureLengthController
+ * @ngname GmfMobileMeasureAreaController
  */
 exports.Controller_ = function($scope, $filter, gettextCatalog) {
 
@@ -105,7 +105,7 @@ exports.Controller_ = function($scope, $filter, gettextCatalog) {
   );
 
   /**
-   * @type {ngeo.interaction.MeasureLengthMobile}
+   * @type {ngeo.interaction.MeasureAreaMobile}
    * @export
    */
   this.measure;
@@ -118,7 +118,7 @@ olUtilInherits(exports, gmfMobileMeasureBaseComponent.Controller);
  */
 exports.Controller_.prototype.init = function() {
 
-  this.measure = new ngeoInteractionMeasureLengthMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
+  this.measure = new ngeoInteractionMeasureAreaMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
     precision: this.precision,
     sketchStyle: this.sketchStyle
   });
@@ -162,7 +162,7 @@ exports.Controller_.prototype.deactivate = function() {
 };
 
 
-exports.controller('GmfMobileMeasureLengthController',
+exports.controller('GmfMobileMeasureAreaController',
   exports.Controller_);
 
 
