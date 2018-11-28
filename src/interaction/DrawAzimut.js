@@ -21,7 +21,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction dedicated to measure azimut.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.PointerOptions} options Options.
  */

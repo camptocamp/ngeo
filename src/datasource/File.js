@@ -11,7 +11,6 @@ const exports = class extends ngeoDatasourceDataSource {
   /**
    * A data source that contains vector features that were loaded from a file.
    *
-   * @struct
    * @param {ngeox.datasource.FileOptions} options Options.
    */
   constructor(options) {

@@ -35,7 +35,6 @@ const exports = class {
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {!ngeo.misc.File} ngeoFile Ngeo file.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
-   * @struct
    * @ngInject
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager

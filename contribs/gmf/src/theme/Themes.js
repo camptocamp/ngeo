@@ -18,7 +18,6 @@ import olLayerTile from 'ol/layer/Tile.js';
  * objects in the tree returned by the "themes" web service.
  *
  * @constructor
- * @struct
  * @extends {ol.events.EventTarget}
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.IInjectorService} $injector Main injector.

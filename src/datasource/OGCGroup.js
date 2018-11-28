@@ -8,7 +8,6 @@ const exports = class extends ngeoDatasourceGroup {
   /**
    * A OGCGroup data source combines multiple `ngeo.datasource.OGC` objects.
    *
-   * @struct
    * @param {ngeox.datasource.OGCGroupOptions} options Options.
    */
   constructor(options) {

@@ -7,7 +7,6 @@ import * as olEvents from 'ol/events.js';
  * Provides methods to manage the listening/unlistening of OpenLayers events
  *
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoEventHelper
  * @ngInject

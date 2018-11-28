@@ -13,7 +13,6 @@ import olFeature from 'ol/Feature.js';
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @constructor
- * @struct
  * @ngInject
  */
 const exports = function($q, gmfEditFeature, ngeoLocation) {

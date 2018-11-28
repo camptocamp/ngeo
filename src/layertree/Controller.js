@@ -16,7 +16,6 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @constructor
  * @ngInject
  * @export
- * @struct
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */

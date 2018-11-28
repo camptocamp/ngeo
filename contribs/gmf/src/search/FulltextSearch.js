@@ -8,7 +8,6 @@ import ngeoUtils from 'ngeo/utils.js';
  * @param {angular.IInjectorService} $injector Main injector.
  * @param {angular.IHttpService} $http Angular http service.
  * @constructor
- * @struct
  * @ngInject
  * @export
  * @ngname gmfFulltextSearch

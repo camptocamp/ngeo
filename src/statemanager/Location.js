@@ -27,7 +27,6 @@ import ngeoUtils from 'ngeo/utils.js';
  * @param {Location} location Location.
  * @param {History} history History.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoLocation
  */

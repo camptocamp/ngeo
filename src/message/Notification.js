@@ -16,7 +16,6 @@ import {
  * properly.
  *
  * @constructor
- * @struct
  * @extends {ngeo.message.Message}
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @ngdoc service

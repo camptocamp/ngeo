@@ -14,7 +14,6 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  * See our live example: [../examples/measure.html](../examples/measure.html)
  *
  * @constructor
- * @struct
  * @extends {ngeo.interaction.Measure}
  * @param {!ngeox.unitPrefix} format The format function
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.

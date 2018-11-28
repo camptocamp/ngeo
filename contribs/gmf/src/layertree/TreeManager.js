@@ -23,7 +23,6 @@ import * as olEvents from 'ol/events.js';
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
- * @struct
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IInjectorService} $injector Angular injector service.
  * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.

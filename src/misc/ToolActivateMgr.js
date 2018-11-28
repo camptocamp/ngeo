@@ -26,7 +26,6 @@ import googAsserts from 'goog/asserts.js';
  *
  * @param {angular.IScope} $rootScope The rootScope provider.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
  * @ngInject

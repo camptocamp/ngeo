@@ -64,7 +64,6 @@ exports.Controller_ = class {
    *     external data sources.
    * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfImportdatasourceController

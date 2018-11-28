@@ -5,7 +5,6 @@
  * Abstract class for services that display messages.
  *
  * @constructor
- * @struct
  * @abstract
  */
 const exports = function() {};

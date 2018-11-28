@@ -73,7 +73,6 @@ exports.DEFAULT_COLORS = [
 /**
  * @constructor
  * @private
- * @struct
  * @param {angular.IScope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.

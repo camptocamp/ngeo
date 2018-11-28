@@ -31,7 +31,6 @@ import olFeature from 'ol/Feature.js';
  * never share the same feature, they don't collide with one an other.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Interaction}
  * @param {olx.interaction.ModifyOptions} options Options.
  */

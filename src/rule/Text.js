@@ -10,7 +10,6 @@ const exports = class extends ngeoRuleRule {
    * A text rule, which always compares the value with the LIKE operator, by
    * default.
    *
-   * @struct
    * @param {!ngeox.rule.TextOptions} options Options.
    */
   constructor(options) {

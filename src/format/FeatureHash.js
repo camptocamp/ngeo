@@ -43,7 +43,6 @@ import olStyleText from 'ol/style/Text.js';
  *
  * @see https://github.com/sbrunner/OpenLayers-URLCompressed
  * @constructor
- * @struct
  * @extends {ol.format.TextFeature}
  * @param {ngeox.format.FeatureHashOptions=} opt_options Options.
  */

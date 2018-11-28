@@ -21,7 +21,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  *     which means load all tiles on the top of the visible level. See also preload value
  *     in documentation for ol.Layer.Tile.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject

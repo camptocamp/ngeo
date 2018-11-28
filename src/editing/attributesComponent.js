@@ -79,7 +79,6 @@ exports.component('ngeoAttributes', exports.component_);
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController

@@ -19,7 +19,6 @@ const exports = class {
    *  - know whether the data is visible or not
    *  - apply filter rules on it
    *
-   * @struct
    * @param {ngeox.datasource.DataSourceOptions} options Options.
    */
   constructor(options) {

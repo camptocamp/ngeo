@@ -10,7 +10,6 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * @param {angular.IInjectorService} $injector Main injector.
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoCsvDownload
  * @ngInject

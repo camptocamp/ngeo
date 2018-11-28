@@ -52,7 +52,6 @@ exports.Controller_ = class {
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfWmtscapabilitylayertreeController

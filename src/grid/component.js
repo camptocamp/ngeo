@@ -81,7 +81,6 @@ exports.component('ngeoGrid', exports.component_);
  * @param {!angular.IScope} $scope Angular scope.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGridController

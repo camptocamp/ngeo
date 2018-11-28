@@ -37,7 +37,6 @@ const exports = angular.module('gmfDisclaimer', [
  * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController

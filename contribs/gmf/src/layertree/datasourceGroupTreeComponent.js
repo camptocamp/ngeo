@@ -49,7 +49,6 @@ exports.Controller_ = class {
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources
    *     service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfDatasourcegrouptreeController

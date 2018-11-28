@@ -12,7 +12,6 @@ const exports = class {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
-   * @struct
    * @param {angular.IQService} $q The Angular $q service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
    *     service.

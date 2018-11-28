@@ -12,7 +12,6 @@ const exports = class extends ngeoDatasourceGroup {
    * Its main goal is to synchronize the added data source 'visible' properties
    * with the visibility of their layer 'visible' property.
    *
-   * @struct
    * @param {ngeox.datasource.FileGroupOptions} options Options.
    */
   constructor(options) {

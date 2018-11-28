@@ -10,7 +10,6 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * Interaction dedicated to measure length on mobile devices.
  *
  * @constructor
- * @struct
  * @extends {ngeo.interaction.MeasureLength}
  * @param {!ngeox.unitPrefix} format The format function
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.

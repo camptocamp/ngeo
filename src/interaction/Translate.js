@@ -26,7 +26,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * - pressing the ESC key automatically deactivate the interaction.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Translate}
  * @param {ngeox.interaction.TranslateOptions} options Options.
  */

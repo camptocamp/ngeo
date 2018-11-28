@@ -16,7 +16,6 @@ const exports = class extends ngeoDatasourceOGCGroup {
    *
    * Note: the layer is not added to the map here.
    *
-   * @struct
    * @param {ngeox.datasource.WMSGroupOptions} options Options.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */

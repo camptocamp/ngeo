@@ -11,7 +11,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * The GeoJSON format is used when obtaining or sending features.
  *
  * @constructor
- * @struct
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject

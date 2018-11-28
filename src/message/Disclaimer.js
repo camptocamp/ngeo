@@ -18,7 +18,6 @@ import 'ngeo/sass/font.scss';
  * @param {angularGettext.Catalog} gettextCatalog Gettext service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @constructor
- * @struct
  * @extends {ngeo.message.Message}
  * @ngdoc service
  * @ngname ngeoDisclaimer

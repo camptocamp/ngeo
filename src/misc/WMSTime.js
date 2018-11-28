@@ -11,7 +11,6 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * @param {angular.IFilterService} $filter angular filter service.
  * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
- * @struct
  * @ngInject
  * @ngdoc service
  * @ngname ngeoWMSTime

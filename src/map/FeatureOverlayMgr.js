@@ -29,7 +29,6 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
  *     featureOverlay.addFeature(myFeature);
  *
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */

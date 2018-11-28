@@ -16,7 +16,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @param {angular.IQService} $q Angular $q service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @constructor
- * @struct
  * @ngInject
  */
 const exports = function($http, $q, gmfThemes) {

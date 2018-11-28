@@ -20,7 +20,6 @@ import olFeature from 'ol/Feature.js';
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController

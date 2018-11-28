@@ -21,7 +21,6 @@ const exports = angular.module('gmfMobileMeasureBase', [
  * @param {!angular.$filter} $filter Angular filter
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureBaseController

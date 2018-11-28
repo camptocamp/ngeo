@@ -23,7 +23,6 @@ const exports = class {
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree
    *
-   * @struct
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.

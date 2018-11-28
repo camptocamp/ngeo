@@ -7,7 +7,6 @@ const exports = class {
    * The EnumerateAttribute is responsible of fetching all possible of a given
    * attribute of a given data source (gmf layer).
    *
-   * @struct
    * @param {angular.IHttpService} $http Angular $http service.
    * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
    * @ngInject

@@ -754,7 +754,6 @@ gmfx.datasource.DataSourceBeingFiltered;
 /**
  * The options required to create a `gmf.datasource.OGC`.
  * @record
- * @struct
  * @extends ngeox.datasource.OGCOptions
  */
 gmfx.datasource.OGCOptions;

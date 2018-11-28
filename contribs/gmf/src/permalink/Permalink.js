@@ -51,7 +51,6 @@ import olLayerGroup from 'ol/layer/Group.js';
  * ngeoAutoProjection and ngeoFeatures.
  *
  * @constructor
- * @struct
  * @param {!angular.IQService} $q The Angular $q service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.

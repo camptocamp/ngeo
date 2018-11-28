@@ -115,7 +115,6 @@ exports.directive('ngeoDatePicker', exports.component_);
  * @param {!angularGettext.Catalog} gettextCatalog service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController

@@ -67,7 +67,6 @@ exports.directive('ngeoDesktopGeolocation', exports.directive_);
 /**
  * @constructor
  * @private
- * @struct
  * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature

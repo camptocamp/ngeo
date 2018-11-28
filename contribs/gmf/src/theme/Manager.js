@@ -24,7 +24,6 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  * @param {gmf.layertree.TreeManager} gmfTreeManager the tree manager.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
- * @struct
  * @ngdoc service
  * @ngname gmfTreeManager
  */

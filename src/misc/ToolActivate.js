@@ -12,7 +12,6 @@
  * @param {string} activePropertyName The name of a boolean property on
  *      `toolContext` which represents the active state of the tool.
  * @constructor
- * @struct
  * @ngname ngeoToolActivate
  * @export
  */

@@ -82,7 +82,6 @@ exports.FilterController_ = class {
    * @param {!ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController

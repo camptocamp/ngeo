@@ -79,7 +79,6 @@ exports.directive(
  * @param {!angular.IScope} $scope Scope.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreateregularpolygonfromclickController

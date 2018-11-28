@@ -9,7 +9,6 @@ const exports = class extends ngeoRuleRule {
   /**
    * A date rule.
    *
-   * @struct
    * @param {!ngeox.rule.DateOptions} options Options.
    */
   constructor(options) {

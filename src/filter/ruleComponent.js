@@ -87,7 +87,6 @@ exports.RuleController_ = class {
    * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoRuleController

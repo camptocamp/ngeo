@@ -8,7 +8,6 @@ import * as angular from 'angular';
  * Uses the c2cgeoportal's raster to obtain different kinds of
  * information at a specific coordinate.
  * @constructor
- * @struct
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfRasterUrl URL to a the c2cgeoportal raster service.
  * @ngInject

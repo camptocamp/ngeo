@@ -16,7 +16,6 @@ import olProjProjection from 'ol/proj/Projection.js';
  * See our live example: [../examples/measure.html](../examples/measure.html)
  *
  * @constructor
- * @struct
  * @fires ngeox.MeasureEvent
  * @extends {ngeo.interaction.Measure}
  * @param {!ngeox.unitPrefix} unitPrefixFormat The format function

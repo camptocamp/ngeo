@@ -159,7 +159,6 @@ exports.component('gmfLayertree', exports.component_);
  * @param {!gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController

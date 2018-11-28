@@ -90,7 +90,6 @@ exports.directive('gmfMobileMeasurearea',
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfMobileMeasureAreaController

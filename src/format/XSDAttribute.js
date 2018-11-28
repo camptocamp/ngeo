@@ -12,7 +12,6 @@ import olFormatXML from 'ol/format/XML.js';
  * Reads attributes that are defined in XSD format and return them as a list.
  *
  * @constructor
- * @struct
  * @extends {ol.format.XML}
  */
 const exports = function() {
