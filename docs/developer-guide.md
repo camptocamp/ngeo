@@ -74,7 +74,7 @@ git reset --hard origin/master
 Create a tag named the same as the version.
 ```
 git tag <version>
-git push <version>
+git push origin <version>
 ```
 
 Travis will create a new package on npm.
