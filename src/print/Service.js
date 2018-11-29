@@ -255,9 +255,9 @@ exports.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
   const url_url = new URL(url);
   const customParams = {'TRANSPARENT': true};
   if (url_url.searchParams) {
-    for (const element of url_url.searchParams) {
-      customParams[element[0]] = element[1];
-    }
+    /** @type {Object} */ (url_url.searchParams).forEach((value, key) => {
+      customParams[key] = value;
+    });
   }
   for (const key in params) {
     const value = params[key];
