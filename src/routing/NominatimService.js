@@ -10,7 +10,6 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @param {angular.IInjectorService} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngInject
  * @export

@@ -20,7 +20,6 @@ const exports = class {
    * Otherwise, they are kept in this service for the duration of the visit.
    *
    * @param {!angular.IScope} $rootScope Angular rootScope.
-   * @struct
    * @ngInject
    * @ngdoc service
    * @ngname gmfSavedFilters
@@ -223,7 +222,6 @@ exports.module.service('gmfSavedFilters', exports);
 /**
  * The definition of a saved filter item.
  * @constructor
- * @struct
  * @export
  */
 exports.Item = function() {};

@@ -6,7 +6,6 @@ import * as olExtent from 'ol/extent.js';
 
 /**
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoAutoProjection
  */

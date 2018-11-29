@@ -53,7 +53,6 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  *   as MapFish Print does not support sprite icons.
  *
  * @constructor
- * @struct
  * @param {string} url URL to MapFish print web service.
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angularGettext.Catalog} gettextCatalog Gettext service.

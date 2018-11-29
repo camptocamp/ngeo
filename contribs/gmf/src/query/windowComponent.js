@@ -108,7 +108,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  * @ngdoc component
  * @ngname gmfDisplayquerywindow
  */
-exports.component_ = {
+const component = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
     'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
@@ -122,7 +122,7 @@ exports.component_ = {
 };
 
 
-exports.component('gmfDisplayquerywindow', exports.component_);
+exports.component('gmfDisplayquerywindow', component);
 
 
 /**

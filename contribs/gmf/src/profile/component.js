@@ -97,7 +97,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @ngdoc component
  * @ngname gmfProfile
  */
-exports.component_ = {
+const component = {
   controller: 'GmfProfileController as ctrl',
   bindings: {
     'active': '=gmfProfileActive',
@@ -111,7 +111,7 @@ exports.component_ = {
   templateUrl: gmfProfileTemplateUrl
 };
 
-exports.component('gmfProfile', exports.component_);
+exports.component('gmfProfile', component);
 
 
 /**

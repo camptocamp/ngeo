@@ -36,7 +36,6 @@ const exports = class {
    *
    * When changing theme, these data sources are cleared then re-created.
    *
-   * @struct
    * @param {angular.IQService} $q Angular q service
    * @param {!angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.

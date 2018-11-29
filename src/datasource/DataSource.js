@@ -4,7 +4,7 @@
 /**
  * @implements {ngeox.datasource.DataSource}
  */
-const exports = class {
+export default class {
 
   /**
    * A `ngeo.datasource.DataSource` represents a single source of data, which
@@ -19,7 +19,6 @@ const exports = class {
    *  - know whether the data is visible or not
    *  - apply filter rules on it
    *
-   * @struct
    * @param {ngeox.datasource.DataSourceOptions} options Options.
    */
   constructor(options) {
@@ -219,7 +218,4 @@ const exports = class {
   get supportsDynamicInRange() {
     return this.maxResolution !== null || this.minResolution !== null;
   }
-};
-
-
-export default exports;
+}

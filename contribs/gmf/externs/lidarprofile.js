@@ -18,7 +18,6 @@ lidarprofileServer.ConfigClassifications;
 
 /**
  * @constructor
- * @struct
  */
 lidarprofileServer.ConfigClassification = function() {};
 
@@ -50,7 +49,6 @@ lidarprofileServer.ConfigLevels;
 
 /**
  * @constructor
- * @struct
  */
 lidarprofileServer.ConfigLevel = function() {};
 
@@ -72,7 +70,6 @@ lidarprofileServer.ConfigPointAttributes;
 
 /**
  * @constructor
- * @struct
  */
 lidarprofileServer.ConfigPointAttribute = function() {};
 
@@ -104,7 +101,6 @@ lidarprofileServer.ConfigPointAttribute.prototype.visible;
 
 /**
  * @constructor
- * @struct
  */
 lidarprofileServer.Config = function() {};
 

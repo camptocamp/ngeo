@@ -37,7 +37,6 @@ const exports = angular.module('gmfDisclaimer', [
  * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController
@@ -348,7 +347,7 @@ exports.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-exports.component_ = {
+const component = {
   controller: exports.Controller_,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
@@ -360,7 +359,7 @@ exports.component_ = {
 };
 
 
-exports.component('gmfDisclaimer', exports.component_);
+exports.component('gmfDisclaimer', component);
 
 
 export default exports;

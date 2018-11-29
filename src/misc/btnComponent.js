@@ -73,7 +73,6 @@ exports.directive('ngeoBtnGroup', exports.btnGroupComponent_);
 /**
  * @param {!angular.IScope} $scope Scope.
  * @constructor
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoBtnGroupController

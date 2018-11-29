@@ -11,7 +11,6 @@ const exports = class {
    * A service that provides utility methods to manipulate or get GMF data
    * sources.
    *
-   * @struct
    * @param {angular.IQService} $q The Angular $q service.
    * @param {gmf.editing.EnumerateAttribute} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.

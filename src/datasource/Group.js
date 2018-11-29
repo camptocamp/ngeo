@@ -12,7 +12,6 @@ const exports = class {
    * that can be used to determine if all its data source are all visible, all
    * hidden or some are hidden and other visible.
    *
-   * @struct
    * @param {ngeox.datasource.GroupOptions} options Options.
    */
   constructor(options) {

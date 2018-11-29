@@ -9,7 +9,6 @@ const exports = class {
    * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarprofile instance
    * Requires a Pytree service: https://github.com/sitn/pytree
    *
-   * @struct
    * @param {angular.IHttpService} $http Angular http service.
    * @param {string} pytreeLidarprofileJsonUrl pytree Lidar profile URL.
    * @ngInject

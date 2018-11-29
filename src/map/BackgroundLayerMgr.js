@@ -55,7 +55,6 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  *
  * @extends {ol.Observable}
  * @constructor
- * @struct
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Themes service.
  * @ngInject
  * @ngdoc service

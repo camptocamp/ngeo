@@ -5,14 +5,13 @@ import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
-const exports = class extends ngeoDatasourceGroup {
+export default class extends ngeoDatasourceGroup {
 
   /**
    * A FileGroup data source combines multiple `ngeo.datasource.File` objects.
    * Its main goal is to synchronize the added data source 'visible' properties
    * with the visibility of their layer 'visible' property.
    *
-   * @struct
    * @param {ngeox.datasource.FileGroupOptions} options Options.
    */
   constructor(options) {
@@ -88,7 +87,4 @@ const exports = class extends ngeoDatasourceGroup {
     this.unregister_[dataSource.id]();
     delete this.unregister_[dataSource.id];
   }
-};
-
-
-export default exports;
+}

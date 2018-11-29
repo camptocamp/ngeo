@@ -13,7 +13,6 @@ import olGeomPoint from 'ol/geom/Point.js';
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
  *
  * @constructor
- * @struct
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.numberCoordinates} format the number formatter
  * @param {string} coordFormat the coordinates formatter

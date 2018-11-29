@@ -8,7 +8,6 @@ import * as olMath from 'ol/math.js';
  * Provides a service with print utility functions.
  *
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoPrintUtils
  */

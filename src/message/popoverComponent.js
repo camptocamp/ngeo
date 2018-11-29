@@ -100,7 +100,6 @@ exports.contentComponent = function() {
  * The controller for the 'popover' directive.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoPopoverController

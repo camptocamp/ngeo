@@ -103,7 +103,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * @ngdoc component
  * @ngname gmfAuthentication
  */
-exports.component_ = {
+const component = {
   bindings: {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
@@ -118,7 +118,7 @@ exports.component_ = {
 exports.value('gmfAuthenticationTemplateUrl',
   exports.gmfAuthenticationTemplateUrl_);
 
-exports.component('gmfAuthentication', exports.component_);
+exports.component('gmfAuthentication', component);
 
 
 /**

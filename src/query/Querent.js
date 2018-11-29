@@ -28,7 +28,6 @@ const exports = class {
    * - WMS GetFeatureInfo
    * - WMTS GetCapabilities
    *
-   * @struct
    * @param {angular.IHttpService} $http Angular $http service.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.

@@ -8,7 +8,6 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  * id from a GeoMapFish server.
  *
  * @constructor
- * @struct
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject

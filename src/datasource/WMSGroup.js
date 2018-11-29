@@ -6,7 +6,7 @@ import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import * as olArray from 'ol/array.js';
 
-const exports = class extends ngeoDatasourceOGCGroup {
+export default class extends ngeoDatasourceOGCGroup {
 
   /**
    * A WMSGroup data source combines multiple `ngeo.datasource.OGC` objects
@@ -16,7 +16,6 @@ const exports = class extends ngeoDatasourceOGCGroup {
    *
    * Note: the layer is not added to the map here.
    *
-   * @struct
    * @param {ngeox.datasource.WMSGroupOptions} options Options.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
@@ -199,7 +198,4 @@ const exports = class extends ngeoDatasourceOGCGroup {
       this.updateLayer_();
     }
   }
-};
-
-
-export default exports;
+}

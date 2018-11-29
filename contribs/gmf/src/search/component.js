@@ -153,7 +153,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @ngdoc component
  * @ngname gmfSearch
  */
-exports.component_ = {
+const component = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
     'placeholder': '@?gmfSearchPlaceholder',
@@ -178,7 +178,7 @@ exports.value('gmfSearchTemplateUrl', exports.gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module
-exports.component('gmfSearch', exports.component_);
+exports.component('gmfSearch', component);
 
 
 /**

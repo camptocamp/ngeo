@@ -94,7 +94,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * @type {!angular.Component}
  */
-exports.component_ = {
+const component = {
   bindings: {
     'filter': '<gmfThemeselectorFilter'
   },
@@ -102,7 +102,7 @@ exports.component_ = {
   templateUrl: gmfThemeSelectorTemplateUrl
 };
 
-exports.component('gmfThemeselector', exports.component_);
+exports.component('gmfThemeselector', component);
 
 
 /**

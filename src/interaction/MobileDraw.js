@@ -27,7 +27,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * - polygon
  *
  * @constructor
- * @struct
  * @fires ngeox.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.MobileDrawOptions} options Options

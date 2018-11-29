@@ -157,7 +157,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * @ngdoc component
  * @ngname gmfPrint
  */
-exports.component_ = {
+const component = {
   bindings: {
     'map': '<gmfPrintMap',
     'active': '=gmfPrintActive',
@@ -172,7 +172,7 @@ exports.component_ = {
 };
 
 
-exports.component('gmfPrint', exports.component_);
+exports.component('gmfPrint', component);
 
 /**
  * @typedef {{

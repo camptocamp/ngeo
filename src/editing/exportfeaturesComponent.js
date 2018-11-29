@@ -55,7 +55,6 @@ exports.directive('ngeoExportfeatures', exports.directive_);
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController

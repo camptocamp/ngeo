@@ -88,7 +88,6 @@ exports.Controller_ = class {
    *     manager
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController

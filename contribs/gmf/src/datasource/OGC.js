@@ -3,13 +3,12 @@
  */
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-const exports = class extends ngeoDatasourceOGC {
+export default class extends ngeoDatasourceOGC {
 
   /**
    * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
    * adds some properties that are proper to GMF only.
    *
-   * @struct
    * @param {gmfx.datasource.OGCOptions} options Options.
    */
   constructor(options) {
@@ -36,7 +35,4 @@ const exports = class extends ngeoDatasourceOGC {
     return this.gmfLayer_;
   }
 
-};
-
-
-export default exports;
+}

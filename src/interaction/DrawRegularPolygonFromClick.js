@@ -17,7 +17,6 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
  * of sides and size a a clicked location on the map.
  *
  * @constructor
- * @struct
  * @fires ngeox.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.DrawRegularPolygonFromClickOptions} options Options

@@ -8,11 +8,8 @@ import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoFilterModule', [
+export default angular.module('ngeoFilterModule', [
   ngeoFilterComponent.name,
   ngeoFilterRuleHelper.module.name,
   ngeoFilterRuleComponent.name,
 ]);
-
-
-export default exports;

@@ -4,7 +4,6 @@
 /**
  * ngeo - Time service
  * @constructor
- * @struct
  * @ngInject
  * @ngdoc service
  * @ngname ngeoTime

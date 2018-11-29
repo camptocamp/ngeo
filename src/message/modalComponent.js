@@ -45,7 +45,7 @@ const exports = angular.module('ngeoModal', []);
  * @ngname ngeoModal
  * @type {!angular.Component}
  */
-exports.component_ = {
+const component = {
   template: `<div class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -64,7 +64,7 @@ exports.component_ = {
   }
 };
 
-exports.component('ngeoModal', exports.component_);
+exports.component('ngeoModal', component);
 
 exports.Controller_ = class {
   /**

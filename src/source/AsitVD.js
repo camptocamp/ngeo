@@ -29,7 +29,7 @@ const asitVDTileGrid = new olTilegridWMTS({
  * @see https://www.asitvd.ch/chercher/geoservices/fond-de-plan-asit-vd.html
  *
  */
-const exports = class extends olSourceWMTS {
+export default class extends olSourceWMTS {
 
   /**
    * @param {ngeox.source.AsitVDOptions} options WMTS options.
@@ -48,7 +48,4 @@ const exports = class extends olSourceWMTS {
       tileGrid: asitVDTileGrid
     });
   }
-};
-
-
-export default exports;
+}

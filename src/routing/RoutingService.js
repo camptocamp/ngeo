@@ -7,7 +7,6 @@
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.IInjectorService} $injector Main injector.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngInject
  * @export

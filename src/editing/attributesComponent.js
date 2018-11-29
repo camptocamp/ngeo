@@ -58,7 +58,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoAttributes
  */
-exports.component_ = {
+const component = {
   controller: 'ngeoAttributesController as attrCtrl',
   bindings: {
     'attributes': '=ngeoAttributesAttributes',
@@ -71,7 +71,7 @@ exports.component_ = {
   templateUrl: ngeoAttributesTemplateUrl
 };
 
-exports.component('ngeoAttributes', exports.component_);
+exports.component('ngeoAttributes', component);
 
 
 /**
@@ -79,7 +79,6 @@ exports.component('ngeoAttributes', exports.component_);
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController

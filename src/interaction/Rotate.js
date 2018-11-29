@@ -24,7 +24,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction to rotate features.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent

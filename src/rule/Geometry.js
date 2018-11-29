@@ -9,13 +9,12 @@ import olFeature from 'ol/Feature.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olGeomGeometry from 'ol/geom/Geometry.js';
 
-const exports = class extends ngeoRuleRule {
+export default class extends ngeoRuleRule {
 
   /**
    * A rule bound to the geometry of a `ol.Feature` object. Changes made
    * to the geometry are applied to the `expression` property of the rule.
    *
-   * @struct
    * @param {!ngeox.rule.GeometryOptions} options Options.
    */
   constructor(options) {
@@ -195,7 +194,4 @@ const exports = class extends ngeoRuleRule {
     }
   }
 
-};
-
-
-export default exports;
+}

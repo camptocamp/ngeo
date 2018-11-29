@@ -50,14 +50,14 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
  * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
  * @type {!angular.Component}
  */
-exports.component_ = {
+const component = {
   bindings: {
     'enableEmail': '<gmfShareEmail'
   },
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl
 };
-exports.component('gmfShare', exports.component_);
+exports.component('gmfShare', component);
 
 
 class ShareComponentController {

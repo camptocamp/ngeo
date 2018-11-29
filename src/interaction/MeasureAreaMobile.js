@@ -11,7 +11,6 @@ import * as olObj from 'ol/obj.js';
  * Interaction dedicated to measure Area on mobile devices.
  *
  * @constructor
- * @struct
  * @extends {ngeo.interaction.MeasureArea}
  * @param {!ngeox.unitPrefix} format The format function
  * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.

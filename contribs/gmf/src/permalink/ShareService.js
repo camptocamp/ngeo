@@ -6,7 +6,6 @@
  * @param {angular.IHttpService} $http Angular http service.
  * @param  {string} gmfShortenerCreateUrl URL for the shortener API
  * @constructor
- * @struct
  * @ngInject
  * @export
  * @ngname gmfShareService

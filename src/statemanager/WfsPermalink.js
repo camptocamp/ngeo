@@ -40,7 +40,6 @@ import olFormatWFS from 'ol/format/WFS.js';
  * parcels #78 and 90 of the city of Paris.
  *
  * @constructor
- * @struct
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {string} ngeoPermalinkOgcserverUrl Url to the WFS server
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.

@@ -4,7 +4,7 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
-const exports = class extends ngeoRuleRule {
+export default class extends ngeoRuleRule {
 
   /**
    * A select rule, which allows the selection of multiple values among a list
@@ -13,7 +13,6 @@ const exports = class extends ngeoRuleRule {
    * The expression property holds the list of selected choices, which is
    * comma-separated.
    *
-   * @struct
    * @param {!ngeox.rule.SelectOptions} options Options.
    */
   constructor(options) {
@@ -60,7 +59,4 @@ const exports = class extends ngeoRuleRule {
     return selectedChoices;
   }
 
-};
-
-
-export default exports;
+}

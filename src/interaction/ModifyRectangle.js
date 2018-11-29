@@ -21,7 +21,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction for modifying feature geometries.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent

@@ -7,7 +7,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
  * @param {Array.<ngeox.GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
- * @struct
  * @export
  */
 const exports = function(data, columnDefs) {

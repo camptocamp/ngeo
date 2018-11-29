@@ -107,7 +107,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  * @ngdoc component
  * @ngname gmfDisplayquerygrid
  */
-exports.component_ = {
+const component = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
@@ -123,7 +123,7 @@ exports.component_ = {
 };
 
 
-exports.component('gmfDisplayquerygrid', exports.component_);
+exports.component('gmfDisplayquerygrid', component);
 
 
 /**

@@ -26,7 +26,6 @@ const exports = class {
    * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
-   * @struct
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject

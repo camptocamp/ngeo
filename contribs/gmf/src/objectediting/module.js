@@ -10,13 +10,10 @@ import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js'
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfObjecteditingModule', [
+export default angular.module('gmfObjecteditingModule', [
   gmfObjecteditingComponent.name,
   gmfObjecteditingGetWMSFeatureComponent.name,
   gmfObjecteditingManager.module.name,
   gmfObjecteditingQuery.module.name,
   gmfObjecteditingToolsComponent.name,
 ]);
-
-
-export default exports;

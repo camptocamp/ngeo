@@ -20,7 +20,6 @@ import olStyleStyle from 'ol/style/Style.js';
  * Interaction that allows measuring (length, area, ...).
  *
  * @constructor
- * @struct
  * @abstract
  * @extends {ol.interaction.Interaction}
  * @param {ngeo.interaction.MeasureBaseOptions=} options Options
