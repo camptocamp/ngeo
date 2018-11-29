@@ -170,7 +170,7 @@
         ngeo-resizemap-state="profileChartActive">
       </gmf-profile>
     </footer>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
