@@ -772,7 +772,7 @@ const exports = class {
     const filterParam = 'FILTER';
     const filterParamValues = [];
     let hasFilter = false;
-    for (const dataSourceName of layersList) {
+    for (const wmsLayerName of layersList) {
       let filterParamValue = '()';
 
       const dataSources = this.dataSources_.getArray();
@@ -782,7 +782,8 @@ const exports = class {
           continue;
         }
         if (olBase.getUid(dsLayer) == olBase.getUid(layer) &&
-            dataSourceName === dataSource.name)  {
+            layer.get('querySourceIds').indexOf(dataSource.id) >= 0 &&
+            dataSource.gmfLayer.layers.split(',').indexOf(wmsLayerName) >= 0)  {
 
           const id = olBase.getUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
