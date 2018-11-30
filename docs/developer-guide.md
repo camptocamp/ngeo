@@ -63,11 +63,32 @@ fdescribe('...', function() {
 
 ## Create a package on npm
 
-Set the version in the `package.json` file.
+```
+git checkout master
+git fetch origin
+git reset --hard origin/master
+```
 
 Create a tag named the same as the version.
+```
+git tag <version>
+git push origin <version>
+```
 
 Travis will create a new package on npm.
+
+
+If you create a new release, bump version in the package.json file:
+```
+git checkout -b bump
+vi package.json
+git add package.json
+git commit -m "Bump version to 2.2.x+1"
+git push origin bump
+```
+
+Do the pull request
+
 
 ## Create a new stabilisation branch
 
