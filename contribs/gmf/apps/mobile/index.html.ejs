@@ -15,8 +15,8 @@
   </head>
 
   <body ng-class="{'gmf-mobile-nav-is-visible': mainCtrl.navIsVisible(),
-                   'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavIsVisible(),
-                   'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavIsVisible()}">
+                   'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavVisible,
+                   'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavVisible}">
   <div ng-show="mainCtrl.loading" class="loading-mask">
     <i class="fa fa-spinner fa-spin spinner-loading-mask"></i>
     &nbsp;
