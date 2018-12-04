@@ -40,9 +40,8 @@ const exports = class {
      * Whether the rule is active or not. Used by the `ngeo-rule` component.
      * Defaults to `false`.
      * @type {boolean}
-     * @private
      */
-    this.active_ = options.active === true;
+    this.active = options.active === true;
 
     /**
      * The expression of the rule. The expression and boundaries are mutually
@@ -63,26 +62,21 @@ const exports = class {
      * The lower boundary of the rule. The expression and boundaries are
      * mutually exclusives.
      * @type {?number}
-     * @private
      */
-    this.lowerBoundary_ = options. lowerBoundary !== undefined ?
-      options.lowerBoundary : null;
+    this.lowerBoundary = options.lowerBoundary !== undefined ? options.lowerBoundary : null;
 
     /**
      * The rule operator.
      * @type {?string}
-     * @private
      */
-    this.operator_ = options.operator || null;
+    this.operator = options.operator || null;
 
     /**
      * The upper boundary of the rule. The expression and boundaries are
      * mutually exclusives.
      * @type {?number}
-     * @private
      */
-    this.upperBoundary_ = options. upperBoundary !== undefined ?
-      options.upperBoundary : null;
+    this.upperBoundary = options.upperBoundary !== undefined ? options.upperBoundary : null;
 
 
     // === STATIC properties (i.e. that never change) ===
@@ -133,24 +127,6 @@ const exports = class {
 
   }
 
-  // === Dynamic property getters/setters ===
-
-  /**
-   * @return {boolean} Active
-   * @export
-   */
-  get active() {
-    return this.active_;
-  }
-
-  /**
-   * @param {boolean} active Active
-   * @export
-   */
-  set active(active) {
-    this.active_ = active;
-  }
-
   /**
    * The `expression` property does not have conventionnal getter/setters
    * method because of a limitation of the compiler. It doesn't support
@@ -171,54 +147,6 @@ const exports = class {
    */
   setExpression(expression) {
     this.expression = expression;
-  }
-
-  /**
-   * @return {?number} Lower boundary
-   * @export
-   */
-  get lowerBoundary() {
-    return this.lowerBoundary_;
-  }
-
-  /**
-   * @param {?number} lowerBoundary Lower boundary
-   * @export
-   */
-  set lowerBoundary(lowerBoundary) {
-    this.lowerBoundary_ = lowerBoundary;
-  }
-
-  /**
-   * @return {?string} Operator
-   * @export
-   */
-  get operator() {
-    return this.operator_;
-  }
-
-  /**
-   * @param {?string} operator Operator
-   * @export
-   */
-  set operator(operator) {
-    this.operator_ = operator;
-  }
-
-  /**
-   * @return {?number} Upper boundary
-   * @export
-   */
-  get upperBoundary() {
-    return this.upperBoundary_;
-  }
-
-  /**
-   * @param {?number} upperBoundary Upper boundary
-   * @export
-   */
-  set upperBoundary(upperBoundary) {
-    this.upperBoundary_ = upperBoundary;
   }
 
   // === Static property getters/setters ===
