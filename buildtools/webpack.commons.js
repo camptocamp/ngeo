@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const SassPlugin = require('./webpack.plugin.js');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -158,7 +157,6 @@ const config = function(hardSourceConfig, babelLoaderCacheDirectory) {
         }
       }),
       new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
-      new HardSourceWebpackPlugin(hardSourceConfig || {}),
     ],
     resolve: {
       modules: [
