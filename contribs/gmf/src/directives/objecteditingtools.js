@@ -252,6 +252,24 @@ gmf.ObjecteditingtoolsController = function($injector, $scope,
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 };
 
+/**
+ * Init the controller
+ */
+gmf.ObjecteditingtoolsController.prototype.$onInit = function() {
+  this.scope_.$watch(
+    () => this.active,
+    (newVal, oldVal) => {
+      // if it's not active, deactive tools
+      if (!this.active) {
+        this.requiresLayer = false;
+        for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
+          this[this.toolActiveNames_[i]] = false;
+        }
+      }
+    }
+  );
+};
+
 
 /**
  * Register a tool using its `active` property name and what behavior it should
@@ -310,19 +328,15 @@ gmf.ObjecteditingtoolsController.prototype.handleToolActiveChange_ = function(
     this.requiresLayer = requiresLayer;
   }
 
-  // Update active property
+  // If one tool is active, update active property to true.
   let active = false;
   for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
-    active = active || this[this.toolActiveNames_[i]];
+    active = this[this.toolActiveNames_[i]];
     if (active) {
       break;
     }
   }
   this.active = active;
-
-  if (!this.active) {
-    this.requiresLayer = false;
-  }
 };
 
 
