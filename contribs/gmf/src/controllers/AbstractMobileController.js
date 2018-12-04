@@ -27,7 +27,7 @@ import olStyleStyle from 'ol/style/Style.js';
  *
  * @param {gmfx.Config} config A part of the application config.
  * @param {angular.IScope} $scope Scope.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller

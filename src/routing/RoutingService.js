@@ -5,7 +5,7 @@
  * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @ngdoc service
  * @ngInject

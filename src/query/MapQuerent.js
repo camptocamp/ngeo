@@ -13,7 +13,7 @@ const exports = class {
    * queries using the Querent service. The result is stored inside this
    * service.
    *
-   * @param {angular.IInjectorService} $injector Main injector.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.

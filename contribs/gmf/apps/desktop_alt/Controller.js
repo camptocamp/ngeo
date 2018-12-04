@@ -30,7 +30,7 @@ if (!window.requestAnimationFrame) {
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {ngeo.misc.File} ngeoFile The file service.
  * @param {gettext} gettext The gettext service
  * @param {angular.IQService} $q Angular $q.

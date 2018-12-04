@@ -24,7 +24,7 @@ import * as olEvents from 'ol/events.js';
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {angular.IInjectorService} $injector Angular injector service.
+ * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -44,7 +44,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.$timeout_ = $timeout;
 
   /**
-   * @type {angular.IInjectorService}
+   * @type {angular.auto.IInjectorService}
    * @private
    */
   this.$injector_ = $injector;

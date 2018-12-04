@@ -129,7 +129,7 @@ exports.component('gmfDisplayquerygrid', component);
 /**
  * Controller for the query grid.
  *
- * @param {!angular.IInjectorService} $injector Main injector.
+ * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
