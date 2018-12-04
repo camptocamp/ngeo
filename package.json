@@ -75,7 +75,7 @@
     "eslint-plugin-import": "2.13.0",
     "expose-loader": "0.7.5",
     "extract-loader": "3.1.0",
-    "fast-sass-loader": "1.4.6",
+    "fast-sass-loader": "1.4.7",
     "file-loader": "2.0.0",
     "file-saver": "2.0.0",
     "floatthead": "2.1.2",
