@@ -138,7 +138,6 @@ exports.component('gmfObjectediting', component);
  *     query service.
  * @param {!gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
