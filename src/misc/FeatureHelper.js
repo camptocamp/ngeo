@@ -36,7 +36,7 @@ import olStyleText from 'ol/style/Text.js';
  *  - export
  *
  * @constructor
- * @param {!angular.IInjectorService} $injector Main injector.
+ * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper

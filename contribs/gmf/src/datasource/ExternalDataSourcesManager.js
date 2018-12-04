@@ -29,7 +29,7 @@ const exports = class {
    * creating, storing and managing them.
    *
    * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
-   * @param {!angular.IInjectorService} $injector Main injector.
+   * @param {!angular.auto.IInjectorService} $injector Main injector.
    * @param {!angular.IQService} $q The Angular $q service.
    * @param {!angular.IScope} $rootScope The rootScope provider.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
@@ -45,7 +45,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {!angular.IInjectorService}
+     * @type {!angular.auto.IInjectorService}
      * @private
      */
     this.injector_ = $injector;

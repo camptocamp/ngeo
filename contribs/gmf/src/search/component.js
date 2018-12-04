@@ -192,7 +192,7 @@ exports.SearchController_ = class {
    * @param {angular.IScope} $scope The component's scope.
    * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {angular.IInjectorService} $injector Main injector.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
    * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo

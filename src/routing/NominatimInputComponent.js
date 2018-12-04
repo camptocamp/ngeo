@@ -45,7 +45,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
  * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
  * @constructor

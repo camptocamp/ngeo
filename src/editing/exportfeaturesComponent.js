@@ -50,7 +50,7 @@ exports.directive('ngeoExportfeatures', exports.directive_);
 
 /**
  * @param {angular.JQLite} $element Element.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor

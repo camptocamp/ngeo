@@ -31,7 +31,7 @@ if (!window.requestAnimationFrame) {
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}

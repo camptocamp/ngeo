@@ -30,7 +30,7 @@ if (!window.requestAnimationFrame) {
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {angular.IInjectorService} $injector Main injector.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractMobileController}
  * @ngInject
