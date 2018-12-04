@@ -55,7 +55,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @constructor
  * @param {string} url URL to MapFish print web service.
  * @param {angular.IHttpService} $http Angular $http service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
  */
 const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
@@ -72,7 +72,7 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   this.$http_ = $http;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -474,7 +474,7 @@ exports.prototype.getCapabilities = function(opt_httpConfig) {
 
 /**
  * @param {angular.IHttpService} $http Angular $http service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @return {ngeox.CreatePrint} The function to create a print service.
  * @ngInject

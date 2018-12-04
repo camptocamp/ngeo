@@ -370,7 +370,7 @@ exports.filter('ngeoTrustHtmlAuto', exports.trustHtmlAutoFilter);
  *      {{3910 | ngeoDuration}} => 1 hour 5 minutes
  *        -> Note: the remaining 10 seconds will be dropped
  *
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @return {ngeox.duration} Function used to format a time duration in seconds into a string.
  * @ngInject
  * @ngdoc filter

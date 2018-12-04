@@ -76,7 +76,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
 
 
 /**
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!angular.ICompileService} $compile Angular compile service.
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IScope} $scope Scope.
@@ -116,7 +116,7 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   this.map;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

@@ -68,7 +68,7 @@ exports.directive('ngeoMobileGeolocation', exports.directive_);
  * @private
  * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.

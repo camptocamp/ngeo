@@ -193,7 +193,7 @@ exports.SearchController_ = class {
    * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IInjectorService} $injector Main injector.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
    * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
@@ -236,7 +236,7 @@ exports.SearchController_ = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;

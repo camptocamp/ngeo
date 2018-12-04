@@ -128,7 +128,7 @@ exports.AuthenticationController_ = class {
   /**
    * @private
    * @param {!angular.JQLite} $element Element.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -151,7 +151,7 @@ exports.AuthenticationController_ = class {
     this.gmfUser = gmfUser;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog = gettextCatalog;

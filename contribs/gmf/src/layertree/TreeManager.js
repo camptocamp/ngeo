@@ -25,7 +25,7 @@ import * as olEvents from 'ol/events.js';
  * @constructor
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IInjectorService} $injector Angular injector service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
@@ -50,7 +50,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.$injector_ = $injector;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

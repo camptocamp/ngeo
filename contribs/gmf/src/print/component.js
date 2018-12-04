@@ -203,7 +203,7 @@ exports.Controller_ = class {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.IInjectorService} $injector Main injector.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
@@ -292,7 +292,7 @@ exports.Controller_ = class {
     this.$q_ = $q;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;

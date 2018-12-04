@@ -78,7 +78,7 @@ exports.component('gmfMouseposition', component);
  * @param {!angular.JQLite} $element Element.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @ngInject
@@ -111,7 +111,7 @@ exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   this.$scope_ = $scope;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

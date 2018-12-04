@@ -13,7 +13,7 @@ import * as olObj from 'ol/obj.js';
  * @constructor
  * @extends {ngeo.interaction.MeasureArea}
  * @param {!ngeox.unitPrefix} format The format function
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  */
 const exports = function(format, gettextCatalog, opt_options) {

@@ -122,7 +122,7 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   };
 
   // Allow angular-gettext-tools to collect the strings to translate
-  /** @type {angularGettext.Catalog} */
+  /** @type {angular.gettext.gettextCatalog} */
   const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('OSM_time_merged');
   gettextCatalog.getString('OSM_time (merged)');

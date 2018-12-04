@@ -119,7 +119,7 @@ exports.component('gmfProfile', component);
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.JQLite} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
@@ -159,7 +159,7 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   this.$filter_ = $filter;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

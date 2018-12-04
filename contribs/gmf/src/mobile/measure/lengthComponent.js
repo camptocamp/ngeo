@@ -87,7 +87,7 @@ exports.directive('gmfMobileMeasurelength',
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.IFilterService} $filter Angular filter
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @ngInject

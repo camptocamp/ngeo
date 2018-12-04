@@ -16,7 +16,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  * @constructor
  * @extends {ngeo.interaction.Measure}
  * @param {!ngeox.unitPrefix} format The format function
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeox.interaction.MeasureOptions=} options Options
  */
 const exports = function(format, gettextCatalog, options = {}) {

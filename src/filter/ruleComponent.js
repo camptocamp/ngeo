@@ -79,7 +79,7 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
 exports.RuleController_ = class {
 
   /**
-   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
@@ -125,7 +125,7 @@ exports.RuleController_ = class {
     // Injected properties
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;

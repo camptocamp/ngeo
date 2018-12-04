@@ -23,7 +23,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @param {angular.IInjectorService} $injector Main injector.
  * @param {angular.IQService} $q Angular q service
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
  * @ngdoc service
@@ -84,7 +84,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog = gettextCatalog;

@@ -32,7 +32,7 @@ const exports = angular.module('gmfDisclaimer', [
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
@@ -95,7 +95,7 @@ exports.Controller_ = function($element, $scope, $sce, $timeout,
   this.timeout_ = $timeout;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
