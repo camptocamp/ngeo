@@ -112,7 +112,7 @@ exports.directive('ngeoDatePicker', exports.component_);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.IInjectorService} $injector injector.
  * @param {!ngeo.misc.Time} ngeoTime time service.
- * @param {!angularGettext.Catalog} gettextCatalog service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
  * @ngInject
@@ -136,7 +136,7 @@ exports.Controller_ = function($scope, $injector,
 
   /**
    * The gettext catalog
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

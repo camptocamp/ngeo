@@ -19,7 +19,7 @@ const exports = angular.module('gmfMobileMeasureBase', [
  *
  * @param {!angular.Scope} $scope Angular scope.
  * @param {!angular.$filter} $filter Angular filter
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  * @ngdoc controller
@@ -40,7 +40,7 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   this.filter = $filter;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @protected
    */
   this.gettextCatalog = gettextCatalog;

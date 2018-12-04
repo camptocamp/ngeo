@@ -9,7 +9,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * ngeo - WMS time service
  * @extends {ngeo.misc.Time}
  * @param {angular.IFilterService} $filter angular filter service.
- * @param {!angularGettext.Catalog} gettextCatalog service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @ngInject
  * @ngdoc service
@@ -24,7 +24,7 @@ const exports = function($filter, gettextCatalog) {
   this.$filter_ = $filter;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

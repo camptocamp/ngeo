@@ -76,7 +76,7 @@ exports.component('ngeoFilter', {
 exports.FilterController_ = class {
 
   /**
-   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
@@ -137,7 +137,7 @@ exports.FilterController_ = class {
     // === Injected properties ===
 
     /**
-     * @type {!angularGettext.Catalog}
+     * @type {!angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;

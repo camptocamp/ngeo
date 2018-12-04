@@ -154,7 +154,7 @@ const exports = function(config, $scope, $injector) {
   this.loginInfoMessage = null;
 
   $scope.$on('authenticationrequired', (event, args) => {
-    /** @type {angularGettext.Catalog} */
+    /** @type {angular.gettext.gettextCatalog} */
     const gettextCatalog = $injector.get('gettextCatalog');
     this.loginInfoMessage = gettextCatalog.getString(
       'Some layers in this link are not accessible to unauthenticated users. ' +
@@ -419,7 +419,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * The gettext catalog
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog = $injector.get('gettextCatalog');
 

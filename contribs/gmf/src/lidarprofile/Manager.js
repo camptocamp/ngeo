@@ -25,7 +25,7 @@ const exports = class {
    *
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.Debounce} ngeoDebounce ngeo debounce service.
    * @ngInject
    * @ngdoc service
@@ -44,7 +44,7 @@ const exports = class {
     this.$filter = $filter;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      */
     this.gettextCatalog = gettextCatalog;
 

@@ -130,7 +130,7 @@ exports.directive('gmfElevation', component);
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!ngeox.miscDebounce} ngeoDebounce Ngeo debounce factory
  * @param {!gmf.raster.RasterService} gmfRaster Gmf Raster service
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @ngInject
@@ -158,7 +158,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog = gettextCatalog;

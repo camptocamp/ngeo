@@ -41,7 +41,7 @@ exports.directive('ngeoDatetimepicker', exports.component_);
 
 /**
  * @param {!jQuery} $element Element.
- * @param {!angularGettext.Catalog} gettextCatalog service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
  * @ngInject
@@ -57,7 +57,7 @@ exports.Controller_ = function($element, gettextCatalog) {
 
   /**
    * The gettext catalog
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

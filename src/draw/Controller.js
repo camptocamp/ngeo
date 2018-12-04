@@ -15,7 +15,7 @@ import olFeature from 'ol/Feature.js';
 /**
  * @param {!angular.IScope} $scope Scope.
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
@@ -58,7 +58,7 @@ const exports = function($scope, $sce, gettextCatalog,
   this.showMeasure;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

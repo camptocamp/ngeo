@@ -89,7 +89,7 @@ exports.directive('gmfDrawfeature',
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
  * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager

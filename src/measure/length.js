@@ -19,7 +19,7 @@ const exports = angular.module('ngeoMeasurelength', [
 
 /**
  * @param {!angular.ICompileService} $compile Angular compile service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!angular.IInjectorService} $injector Main injector.
  * @return {!angular.IDirective} The directive specs.

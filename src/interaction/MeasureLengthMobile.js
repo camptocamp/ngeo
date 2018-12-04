@@ -12,7 +12,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * @constructor
  * @extends {ngeo.interaction.MeasureLength}
  * @param {!ngeox.unitPrefix} format The format function
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeox.interaction.MeasureOptions=} opt_options Options
  */
 const exports = function(format, gettextCatalog, opt_options) {

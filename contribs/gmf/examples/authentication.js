@@ -23,7 +23,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  */

@@ -23,7 +23,7 @@ const exports = class {
    * A service that provides utility methods to create `ngeo.rule.Rule`
    * objects.
    *
-   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
@@ -33,7 +33,7 @@ const exports = class {
   constructor(gettextCatalog, ngeoFeatureHelper, ngeoWMSTime) {
 
     /**
-     * @type {!angularGettext.Catalog}
+     * @type {!angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;

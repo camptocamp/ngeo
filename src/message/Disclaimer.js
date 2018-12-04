@@ -15,7 +15,7 @@ import 'ngeo/sass/font.scss';
  * properly.
  *
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @constructor
  * @extends {ngeo.message.Message}
@@ -32,7 +32,7 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
   this.sce_ = $sce;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

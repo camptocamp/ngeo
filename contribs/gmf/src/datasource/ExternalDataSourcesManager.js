@@ -28,7 +28,7 @@ const exports = class {
    * servers, and also files such as KML/GXP. This service is responsible of
    * creating, storing and managing them.
    *
-   * @param {!angularGettext.Catalog} gettextCatalog service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
    * @param {!angular.IInjectorService} $injector Main injector.
    * @param {!angular.IQService} $q The Angular $q service.
    * @param {!angular.IScope} $rootScope The rootScope provider.

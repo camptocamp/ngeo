@@ -101,7 +101,7 @@ const exports = function($scope, $injector) {
   }];
 
   // Allow angular-gettext-tools to collect the strings to translate
-  /** @type {angularGettext.Catalog} */
+  /** @type {angular.gettext.gettextCatalog} */
   const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');

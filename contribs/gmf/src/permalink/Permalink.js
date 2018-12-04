@@ -56,7 +56,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.IInjectorService} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.

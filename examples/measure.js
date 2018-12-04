@@ -65,7 +65,7 @@ exports.module.component('appMeasuretools', exports.measuretoolsComponent);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.IFilterService} $filter Angular filter service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  */
