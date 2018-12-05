@@ -40,7 +40,7 @@ const exports = angular.module('ngeoBboxQuery', [
  * @ngdoc directive
  * @ngname ngeoBboxQuery
  */
-exports.directive_ = function(ngeoMapQuerent) {
+function directive(ngeoMapQuerent) {
   return {
     restrict: 'A',
     scope: false,
@@ -86,9 +86,9 @@ exports.directive_ = function(ngeoMapQuerent) {
       );
     }
   };
-};
+}
 
-exports.directive('ngeoBboxQuery', exports.directive_);
+exports.directive('ngeoBboxQuery', directive);
 
 
 export default exports;

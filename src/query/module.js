@@ -1,7 +1,7 @@
 /**
  * @module ngeo.query.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';

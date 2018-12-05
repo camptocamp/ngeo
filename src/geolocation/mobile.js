@@ -48,7 +48,7 @@ exports.GeolocationEventType = {
  * @ngdoc directive
  * @ngname ngeoMobileGeolocation
  */
-exports.directive_ = function() {
+function directive() {
   return {
     restrict: 'A',
     scope: {
@@ -57,10 +57,10 @@ exports.directive_ = function() {
     },
     controller: 'ngeoGeolocationMobileController'
   };
-};
+}
 
 
-exports.directive('ngeoMobileGeolocation', exports.directive_);
+exports.directive('ngeoMobileGeolocation', directive);
 
 
 /**
@@ -76,8 +76,7 @@ exports.directive('ngeoMobileGeolocation', exports.directive_);
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController
  */
-exports.Controller_ = function($scope, $element,
-  gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
+function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggleTracking.bind(this));
 
@@ -204,13 +203,13 @@ exports.Controller_ = function($scope, $element,
 
   olEvents.listen(view, 'change:resolution', this.handleViewChange_, this);
 
-};
+}
 
 
 /**
  * @export
  */
-exports.Controller_.prototype.toggleTracking = function() {
+Controller.prototype.toggleTracking = function() {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
     const currentPosition = this.geolocation_.getPosition();
@@ -240,7 +239,7 @@ exports.Controller_.prototype.toggleTracking = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.track_ = function() {
+Controller.prototype.track_ = function() {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.follow_ = true;
@@ -251,7 +250,7 @@ exports.Controller_.prototype.track_ = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.untrack_ = function() {
+Controller.prototype.untrack_ = function() {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
@@ -262,7 +261,7 @@ exports.Controller_.prototype.untrack_ = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.setPosition_ = function() {
+Controller.prototype.setPosition_ = function() {
   const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
@@ -287,7 +286,7 @@ exports.Controller_.prototype.setPosition_ = function() {
  * @param {ol.Object.Event} event Event.
  * @private
  */
-exports.Controller_.prototype.handleViewChange_ = function(event) {
+Controller.prototype.handleViewChange_ = function(event) {
   if (this.follow_ && !this.viewChangedByMe_) {
     this.follow_ = false;
   }
@@ -295,7 +294,7 @@ exports.Controller_.prototype.handleViewChange_ = function(event) {
 
 
 // Orientation control events
-exports.Controller_.prototype.autorotateListener = function() {
+Controller.prototype.autorotateListener = function() {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
     window.addEventListener('deviceorientationabsolute', (evt) => {
@@ -321,7 +320,7 @@ exports.Controller_.prototype.autorotateListener = function() {
  * @return {number} .
  * @private
  */
-exports.Controller_.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
+Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
     currentAlpha = eventAlpha;
     const radAlpha = currentAlpha * Math.PI / 180;
@@ -335,8 +334,7 @@ exports.Controller_.prototype.handleRotate_ = function(eventAlpha, currentAlpha)
 };
 
 
-exports.controller('ngeoGeolocationMobileController',
-  exports.Controller_);
+exports.controller('ngeoGeolocationMobileController', Controller);
 
 
 export default exports;

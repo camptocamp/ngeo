@@ -59,7 +59,7 @@ const exports = angular.module('ngeoCreatefeature', [
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
-exports.directive_ = function() {
+function directive() {
   return {
     controller: 'ngeoCreatefeatureController',
     bindToController: true,
@@ -70,9 +70,9 @@ exports.directive_ = function() {
       'map': '=ngeoCreatefeatureMap'
     }
   };
-};
+}
 
-exports.directive('ngeoCreatefeature', exports.directive_);
+exports.directive('ngeoCreatefeature', directive);
 
 
 /**
@@ -88,8 +88,7 @@ exports.directive('ngeoCreatefeature', exports.directive_);
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */
-exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
-  $timeout, ngeoEventHelper) {
+function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEventHelper) {
 
   /**
    * @type {boolean}
@@ -167,13 +166,13 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
       this.interaction_.setActive(newVal);
     }
   );
-};
+}
 
 
 /**
  * Initialize the directive.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.active = this.active === true;
   const gettextCatalog = this.gettextCatalog_;
 
@@ -261,7 +260,7 @@ exports.Controller_.prototype.$onInit = function() {
  * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
  * @export
  */
-exports.Controller_.prototype.handleDrawEnd_ = function(event) {
+Controller.prototype.handleDrawEnd_ = function(event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
@@ -290,7 +289,7 @@ exports.Controller_.prototype.handleDrawEnd_ = function(event) {
 /**
  * Cleanup event listeners and remove the interaction from the map.
  */
-exports.Controller_.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function() {
   this.timeout_(() => {
     const uid = olUtilGetUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
@@ -299,7 +298,7 @@ exports.Controller_.prototype.$onDestroy = function() {
   }, 0);
 };
 
-exports.controller('ngeoCreatefeatureController', exports.Controller_);
+exports.controller('ngeoCreatefeatureController', Controller);
 
 
 export default exports;

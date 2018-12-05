@@ -1,7 +1,7 @@
 /**
  * @module gmf.filters.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent.js';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 

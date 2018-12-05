@@ -59,7 +59,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurepoint-coordinatedecimals number
  *     of decimal to display for the coordinate.
- * @htmlAttribute {Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
+ * @htmlAttribute {Array.<LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
@@ -72,36 +72,34 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMobileMeasurePoint
  */
-exports.component_ =
-    function(gmfMobileMeasurePointTemplateUrl) {
-      return {
-        restrict: 'A',
-        scope: {
-          'active': '=gmfMobileMeasurepointActive',
-          'getCoordinateDecimalsFn': '&?gmfMobileMeasurepointCoordinatedecimals',
-          'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
-          'map': '=gmfMobileMeasurepointMap',
-          'sketchStyle': '=?gmfMobileMeasurepointSketchstyle',
-          'format': '<gmfMobileMeasurepointFormat'
-        },
-        controller: 'GmfMobileMeasurePointController as ctrl',
-        bindToController: true,
-        templateUrl: gmfMobileMeasurePointTemplateUrl,
-        /**
-         * @param {!angular.IScope} scope Scope.
-         * @param {!angular.JQLite} element Element.
-         * @param {!angular.Attributes} attrs Attributes.
-         * @param {!gmf.mobile.measure.pointComponent.Controller_} controller Controller.
-         */
-        link: (scope, element, attrs, controller) => {
-          controller.init();
-        }
-      };
-    };
+function component(gmfMobileMeasurePointTemplateUrl) {
+  return {
+    restrict: 'A',
+    scope: {
+      'active': '=gmfMobileMeasurepointActive',
+      'getCoordinateDecimalsFn': '&?gmfMobileMeasurepointCoordinatedecimals',
+      'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
+      'map': '=gmfMobileMeasurepointMap',
+      'sketchStyle': '=?gmfMobileMeasurepointSketchstyle',
+      'format': '<gmfMobileMeasurepointFormat'
+    },
+    controller: 'GmfMobileMeasurePointController as ctrl',
+    bindToController: true,
+    templateUrl: gmfMobileMeasurePointTemplateUrl,
+    /**
+     * @param {!angular.IScope} scope Scope.
+     * @param {!angular.JQLite} element Element.
+     * @param {!angular.Attributes} attrs Attributes.
+     * @param {!gmf.mobile.measure.pointComponent.Controller_} controller Controller.
+     */
+    link: (scope, element, attrs, controller) => {
+      controller.init();
+    }
+  };
+}
 
 
-exports.directive('gmfMobileMeasurepoint',
-  exports.component_);
+exports.directive('gmfMobileMeasurepoint', component);
 
 
 /**
@@ -116,8 +114,7 @@ exports.directive('gmfMobileMeasurepoint',
  * @ngdoc controller
  * @ngname GmfMobileMeasurePointController
  */
-exports.Controller_ = function(gettextCatalog, $scope, $filter,
-  gmfRaster, ngeoDebounce) {
+function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 
   /**
    * @type {gmf.raster.RasterService}
@@ -169,7 +166,7 @@ exports.Controller_ = function(gettextCatalog, $scope, $filter,
   this.coordinateDecimals = coordinateDecimalsFn ? coordinateDecimalsFn() : 0;
 
   /**
-   * @type {!Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
+   * @type {!Array.<LayerConfig>}
    * @private
    */
   this.layersConfig;
@@ -226,13 +223,13 @@ exports.Controller_ = function(gettextCatalog, $scope, $filter,
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.init = function() {
+Controller.prototype.init = function() {
   this.measure = new ngeoInteractionMeasurePointMobile(
     /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
     this.format || '{x}, {y}',
@@ -258,7 +255,7 @@ exports.Controller_.prototype.init = function() {
  * Deactivate the directive.
  * @export
  */
-exports.Controller_.prototype.deactivate = function() {
+Controller.prototype.deactivate = function() {
   this.active = false;
 };
 
@@ -268,7 +265,7 @@ exports.Controller_.prototype.deactivate = function() {
  * @return {string} The translated text.
  * @export
  */
-exports.Controller_.prototype.translate = function(str) {
+Controller.prototype.translate = function(str) {
   return this.gettextCatalog_.getString(str);
 };
 
@@ -280,7 +277,7 @@ exports.Controller_.prototype.translate = function(str) {
  * - on deactivate, unlisten
  * @private
  */
-exports.Controller_.prototype.handleMeasureActiveChange_ = function() {
+Controller.prototype.handleMeasureActiveChange_ = function() {
   if (this.measure.getActive()) {
     const view = this.map.getView();
     this.mapViewPropertyChangeEventKey_ = olEvents.listen(
@@ -302,7 +299,7 @@ exports.Controller_.prototype.handleMeasureActiveChange_ = function() {
  * the current map center location.
  * @private
  */
-exports.Controller_.prototype.getMeasure_ = function() {
+Controller.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
   googAsserts.assertArray(center);
   const params = {
@@ -338,17 +335,15 @@ exports.Controller_.prototype.getMeasure_ = function() {
 };
 
 
-exports.controller('GmfMobileMeasurePointController',
-  exports.Controller_);
+exports.controller('GmfMobileMeasurePointController', Controller);
 
 /**
  * @typedef {{
  *     name: string,
  *     decimals: (number|undefined),
  *     unit: (string|undefined)
- * }}
+ * }} LayerConfig
  */
-exports.LayerConfig;
 
 
 export default exports;

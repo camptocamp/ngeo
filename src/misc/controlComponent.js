@@ -31,7 +31,7 @@ const exports = angular.module('ngeoControl', []);
  * @ngdoc directive
  * @ngname ngeoControl
  */
-exports.component_ = function() {
+function component() {
   return {
     restrict: 'A',
     /**
@@ -53,10 +53,10 @@ exports.component_ = function() {
       map.addControl(control);
     }
   };
-};
+}
 
 
-exports.directive('ngeoControl', exports.component_);
+exports.directive('ngeoControl', component);
 
 
 export default exports;

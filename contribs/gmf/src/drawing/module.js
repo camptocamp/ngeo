@@ -1,7 +1,7 @@
 /**
  * @module gmf.drawing.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfDrawingDrawFeatureComponent from 'gmf/drawing/drawFeatureComponent.js';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 

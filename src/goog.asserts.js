@@ -280,7 +280,7 @@ exports.assertInstanceof = function(value, type, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && !(value instanceof type)) {
     exports.doAssertFailure_(
       'Expected instanceof %s but got %s.',
-      [exports.getType_(type), exports.getType_(value)],
+      [getType(type), getType(value)],
       opt_message, Array.prototype.slice.call(arguments, 3));
   }
   return value;
@@ -305,7 +305,7 @@ exports.assertObjectPrototypeIsIntact = function() {
  * @return {string} The best display name for the value, or 'unknown type name'.
  * @private
  */
-exports.getType_ = function(value) {
+function getType(value) {
   if (value instanceof Function) {
     return value.displayName || value.name || 'unknown type name';
   } else if (value instanceof Object) {
@@ -314,7 +314,7 @@ exports.getType_ = function(value) {
   } else {
     return value === null ? 'null' : typeof value;
   }
-};
+}
 
 
 export default exports;

@@ -1,4 +1,4 @@
-import * as angular from 'angular';
+import angular from 'angular';
 
 /**
  * @module gmf.raster.RasterService

@@ -1,7 +1,7 @@
 /**
  * @module ngeo.map.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import ngeoMapComponent from 'ngeo/map/component.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';

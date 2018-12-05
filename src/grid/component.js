@@ -85,7 +85,7 @@ exports.component('ngeoGrid', component);
  * @ngdoc controller
  * @ngname ngeoGridController
  */
-exports.Controller_ = function($scope) {
+function Controller($scope) {
 
   /**
    * @type {!angular.IScope}
@@ -128,13 +128,13 @@ exports.Controller_ = function($scope) {
       return $table.closest('.ngeo-grid-table-container');
     }
   };
-};
+}
 
 
 /**
  * Init the controller
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.selectedRows = this.configuration.selectedRows;
 };
 
@@ -147,7 +147,7 @@ exports.Controller_.prototype.$onInit = function() {
  *    sort the data.
  * @export
  */
-exports.Controller_.prototype.sort = function(columnName) {
+Controller.prototype.sort = function(columnName) {
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
 
@@ -170,7 +170,7 @@ exports.Controller_.prototype.sort = function(columnName) {
  * @param {jQuery.Event} event Event.
  * @export
  */
-exports.Controller_.prototype.clickRow = function(attributes, event) {
+Controller.prototype.clickRow = function(attributes, event) {
   const shiftKey = this.isShiftKeyOnly_(event);
   const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
 
@@ -184,7 +184,7 @@ exports.Controller_.prototype.clickRow = function(attributes, event) {
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
  * @private
  */
-exports.Controller_.prototype.clickRow_ = function(
+Controller.prototype.clickRow_ = function(
   attributes, shiftKey, platformModifierKey) {
 
   if (shiftKey && !platformModifierKey) {
@@ -206,7 +206,7 @@ exports.Controller_.prototype.clickRow_ = function(
  * @param {Object} attributes An entry/row.
  * @private
  */
-exports.Controller_.prototype.selectRange_ = function(attributes) {
+Controller.prototype.selectRange_ = function(attributes) {
   const targetUid = ngeoGridConfig.getRowUid(attributes);
   const data = this.configuration.data;
 
@@ -264,7 +264,7 @@ exports.Controller_.prototype.selectRange_ = function(attributes) {
  * @param {jQuery.Event} event Event.
  * @export
  */
-exports.Controller_.prototype.preventTextSelection = function(event) {
+Controller.prototype.preventTextSelection = function(event) {
   const shiftKey = this.isShiftKeyOnly_(event);
   const platformModifierKey = this.isPlatformModifierKeyOnly_(event);
 
@@ -280,7 +280,7 @@ exports.Controller_.prototype.preventTextSelection = function(event) {
  * @return {boolean} True if only the platform modifier key is pressed.
  * @private
  */
-exports.Controller_.prototype.isPlatformModifierKeyOnly_ = function(event) {
+Controller.prototype.isPlatformModifierKeyOnly_ = function(event) {
   return !event.altKey &&
     (olHas.MAC ? event.metaKey : event.ctrlKey) &&
     !event.shiftKey;
@@ -293,7 +293,7 @@ exports.Controller_.prototype.isPlatformModifierKeyOnly_ = function(event) {
  * @return {boolean} True if only the shift key is pressed.
  * @private
  */
-exports.Controller_.prototype.isShiftKeyOnly_ = function(event) {
+Controller.prototype.isShiftKeyOnly_ = function(event) {
   return (
     !event.altKey &&
       !(event.metaKey || event.ctrlKey) &&
@@ -301,7 +301,7 @@ exports.Controller_.prototype.isShiftKeyOnly_ = function(event) {
 };
 
 
-exports.controller('ngeoGridController', exports.Controller_);
+exports.controller('ngeoGridController', Controller);
 
 
 export default exports;

@@ -17,7 +17,7 @@ const exports = angular.module('ngeoDownload', []);
  * @ngdoc service
  * @ngname ngeoDownload
  */
-exports.factory_ = function() {
+function factory() {
   /**
    * @param {string} content The file content.
    * @param {string} fileName The file name.
@@ -38,9 +38,9 @@ exports.factory_ = function() {
   }
 
   return download;
-};
+}
 
-exports.factory('ngeoDownload', exports.factory_);
+exports.factory('ngeoDownload', factory);
 
 
 export default exports;

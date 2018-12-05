@@ -42,7 +42,7 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
@@ -125,14 +125,14 @@ exports.Controller_ = class {
   removeDataSource(dataSource) {
     this.dataSources_.remove(dataSource);
   }
-};
+}
 
 
 exports.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<'
   },
-  controller: exports.Controller_,
+  controller: Controller,
   templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl
 });
 

@@ -1,7 +1,7 @@
 /**
  * @module gmf.authentication.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfAuthenticationComponent from 'gmf/authentication/component.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';

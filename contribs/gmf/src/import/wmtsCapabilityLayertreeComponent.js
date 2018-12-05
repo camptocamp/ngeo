@@ -45,7 +45,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {!gmf.datasource.ExternalDataSourcesManager}
@@ -113,7 +113,7 @@ exports.Controller_ = class {
   getUid(layer) {
     return olUtilGetUid(layer);
   }
-};
+}
 
 
 exports.component('gmfWmtscapabilitylayertree', {
@@ -122,7 +122,7 @@ exports.component('gmfWmtscapabilitylayertree', {
     'layers': '<',
     'url': '<'
   },
-  controller: exports.Controller_,
+  controller: Controller,
   templateUrl: gmfWmtscapabilitylayertreTemplateUrl
 });
 

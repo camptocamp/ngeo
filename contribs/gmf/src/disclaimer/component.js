@@ -29,7 +29,6 @@ const exports = angular.module('gmfDisclaimer', [
  * @constructor
  * @private
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -41,8 +40,7 @@ const exports = angular.module('gmfDisclaimer', [
  * @ngdoc controller
  * @ngname GmfDisclaimerController
  */
-exports.Controller_ = function($element, $scope, $sce, $timeout,
-  gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
+function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
    * @type {?ol.Map}
@@ -135,13 +133,13 @@ exports.Controller_ = function($element, $scope, $sce, $timeout,
    * @private
    */
   this.dataLayerGroup_ = null;
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
     gmfBase.DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
@@ -151,7 +149,7 @@ exports.Controller_.prototype.$onInit = function() {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleLayersAdd_ = function(evt) {
+Controller.prototype.handleLayersAdd_ = function(evt) {
   this.timeout_(() => {
     const layer = evt.element;
     googAsserts.assertInstanceof(layer, olLayerBase);
@@ -164,7 +162,7 @@ exports.Controller_.prototype.handleLayersAdd_ = function(evt) {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleLayersRemove_ = function(evt) {
+Controller.prototype.handleLayersRemove_ = function(evt) {
   const layer = evt.element;
   googAsserts.assertInstanceof(layer, olLayerBase);
   this.unregisterLayer_(layer);
@@ -175,7 +173,7 @@ exports.Controller_.prototype.handleLayersRemove_ = function(evt) {
  * @param {ol.layer.Base} layer Layer.
  * @private
  */
-exports.Controller_.prototype.registerLayer_ = function(layer) {
+Controller.prototype.registerLayer_ = function(layer) {
 
   const layerUid = olUtilGetUid(layer);
 
@@ -223,7 +221,7 @@ exports.Controller_.prototype.registerLayer_ = function(layer) {
  * @param {ol.layer.Base} layer Layer.
  * @private
  */
-exports.Controller_.prototype.unregisterLayer_ = function(layer) {
+Controller.prototype.unregisterLayer_ = function(layer) {
 
   const layerUid = olUtilGetUid(layer);
 
@@ -249,7 +247,7 @@ exports.Controller_.prototype.unregisterLayer_ = function(layer) {
 };
 
 
-exports.Controller_.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function() {
   this.unregisterLayer_(this.dataLayerGroup_);
 };
 
@@ -258,7 +256,7 @@ exports.Controller_.prototype.$onDestroy = function() {
  * @param {string} msg Disclaimer message.
  * @private
  */
-exports.Controller_.prototype.showDisclaimerMessage_ = function(msg) {
+Controller.prototype.showDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     if (this.msgs_.indexOf(msg) < 0) {
@@ -281,7 +279,7 @@ exports.Controller_.prototype.showDisclaimerMessage_ = function(msg) {
  * @param {string} msg Disclaimer message.
  * @private
  */
-exports.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
+Controller.prototype.closeDisclaimerMessage_ = function(msg) {
   msg = this.gettextCatalog_.getString(msg);
   if (this.external) {
     this.visibility = false;
@@ -348,7 +346,7 @@ exports.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngname gmfDisclaimer
  */
 const component = {
-  controller: exports.Controller_,
+  controller: Controller,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
     'map': '=gmfDisclaimerMap',

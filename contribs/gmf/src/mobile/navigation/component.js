@@ -6,6 +6,18 @@ const exports = angular.module('gmfMobileNav', []);
 
 
 /**
+ * CSS class names toggled by the controller.
+ * @enum {string}
+ */
+const CLASS_NAMES = {
+  ACTIVE: 'gmf-mobile-nav-active',
+  BACK: 'gmf-mobile-nav-back',
+  GO_BACK: 'gmf-mobile-nav-go-back',
+  SLIDE: 'gmf-mobile-nav-slide',
+  SLIDE_OUT: 'gmf-mobile-nav-slide-out'
+};
+
+/**
  * An "gmf-mobile-nav" directive defining the behavior of a tree-structured menu.
  *
  * The directive is to be placed on a `nav` element, with the following
@@ -44,7 +56,7 @@ const exports = angular.module('gmfMobileNav', []);
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-exports.component_ = function() {
+function component() {
   return {
     restrict: 'A',
     controller: 'gmfMobileNavController as navCtrl',
@@ -60,9 +72,9 @@ exports.component_ = function() {
       navCtrl.init(element);
     }
   };
-};
+}
 
-exports.directive('gmfMobileNav', exports.component_);
+exports.directive('gmfMobileNav', component);
 
 
 /**
@@ -72,7 +84,7 @@ exports.directive('gmfMobileNav', exports.component_);
 * @ngdoc controller
 * @ngname gmfMobileNavController
 */
-exports.Controller_ = function() {
+function Controller() {
   /**
    * Stack of slid-in items.
    * @private
@@ -108,42 +120,39 @@ exports.Controller_ = function() {
    * @export
    */
   this.back = this.back_.bind(this);
-};
+}
 
-exports.controller('gmfMobileNavController', exports.Controller_);
+exports.controller('gmfMobileNavController', Controller);
 
 
 /**
  * Initialize the directive with the linked element.
  * @param {angular.JQLite} element Element.
  */
-exports.Controller_.prototype.init = function(element) {
-  const cls = exports.Controller_.ClassName_;
-  this.active_ = $(element.find(`.${cls.ACTIVE}.${cls.SLIDE}`));
+Controller.prototype.init = function(element) {
+  this.active_ = $(element.find(`.${CLASS_NAMES.ACTIVE}.${CLASS_NAMES.SLIDE}`));
   this.header_ = $(element.find('> header'));
-  this.backButton_ = $(element.find(`header > .${cls.GO_BACK}`));
+  this.backButton_ = $(element.find(`header > .${CLASS_NAMES.GO_BACK}`));
 
   // watch for clicks on "slide-in" elements
   element.find('[data-toggle=slide-in]').on('click', (evt) => {
 
-    const cls = exports.Controller_.ClassName_;
-
     // the element to slide out is the div.slide parent
-    const slideOut = $(evt.currentTarget).parents(`.${cls.SLIDE}`);
+    const slideOut = $(evt.currentTarget).parents(`.${CLASS_NAMES.SLIDE}`);
     googAsserts.assert(slideOut.length === 1);
 
     // push the item to the selected stack
     this.slid_.push(slideOut);
 
     // slide the "old" element out
-    slideOut.addClass(cls.SLIDE_OUT).removeClass(cls.ACTIVE);
+    slideOut.addClass(CLASS_NAMES.SLIDE_OUT).removeClass(CLASS_NAMES.ACTIVE);
 
     // element to slide in
     const slideIn = $($(evt.currentTarget).attr('data-target'));
     googAsserts.assert(slideIn.length === 1);
 
     // slide the "new" element in
-    slideIn.addClass(cls.ACTIVE);
+    slideIn.addClass(CLASS_NAMES.ACTIVE);
 
     // update the navigation header
     this.updateNavigationHeader_(slideIn, false);
@@ -161,20 +170,18 @@ exports.Controller_.prototype.init = function(element) {
  * @param {boolean} back Whether to move back.
  * @private
  */
-exports.Controller_.prototype.updateNavigationHeader_ = function(
-  active, back) {
-  const cls = exports.Controller_.ClassName_;
-  this.header_.toggleClass(cls.BACK, back);
+Controller.prototype.updateNavigationHeader_ = function(active, back) {
+  this.header_.toggleClass(CLASS_NAMES.BACK, back);
 
   // remove any inactive nav
-  this.header_.find(`nav:not(.${cls.ACTIVE} +)`).remove();
+  this.header_.find(`nav:not(.${CLASS_NAMES.ACTIVE} +)`).remove();
 
   // deactivate the currently active nav
-  this.header_.find(`nav.${cls.ACTIVE}`).removeClass(cls.ACTIVE)
-    .addClass(cls.SLIDE_OUT);
+  this.header_.find(`nav.${CLASS_NAMES.ACTIVE}`).removeClass(CLASS_NAMES.ACTIVE)
+    .addClass(CLASS_NAMES.SLIDE_OUT);
 
   // show the back button when relevant
-  this.backButton_.toggleClass(cls.ACTIVE, this.slid_.length > 0);
+  this.backButton_.toggleClass(CLASS_NAMES.ACTIVE, this.slid_.length > 0);
 
   // create a new nav
   const nav = $('<nav>');
@@ -198,7 +205,7 @@ exports.Controller_.prototype.updateNavigationHeader_ = function(
       // fix: calling `position()` makes sure that the animation
       // is always run
       nav.position();
-      nav.addClass(exports.Controller_.ClassName_.ACTIVE);
+      nav.addClass(CLASS_NAMES.ACTIVE);
     }, 0);
   }, 0);
 };
@@ -208,21 +215,19 @@ exports.Controller_.prototype.updateNavigationHeader_ = function(
  * Return to the previous slide.
  * @private
  */
-exports.Controller_.prototype.back_ = function() {
+Controller.prototype.back_ = function() {
   if (this.slid_.length <= 0) {
     return;
   }
 
-  const cls = exports.Controller_.ClassName_;
-
   // slide active item to the right
-  this.active_.removeClass(cls.ACTIVE);
+  this.active_.removeClass(CLASS_NAMES.ACTIVE);
 
   // get the previously active item
   const slideBack = this.slid_.pop();
 
   // slide previous item to the right
-  slideBack.addClass(cls.ACTIVE).removeClass(cls.SLIDE_OUT);
+  slideBack.addClass(CLASS_NAMES.ACTIVE).removeClass(CLASS_NAMES.SLIDE_OUT);
 
   // update the navigation header
   this.updateNavigationHeader_(slideBack, true);
@@ -236,25 +241,10 @@ exports.Controller_.prototype.back_ = function() {
  *
  * @param {Element} element The element to check.
  */
-exports.Controller_.prototype.backIfActive = function(element) {
+Controller.prototype.backIfActive = function(element) {
   if (this.active_ !== null && this.active_.is(element)) {
     this.back_();
   }
-};
-
-
-/**
- * CSS class names toggled by the controller.
- * @enum {string}
- * @private
- */
-
-exports.Controller_.ClassName_ = {
-  ACTIVE: 'gmf-mobile-nav-active',
-  BACK: 'gmf-mobile-nav-back',
-  GO_BACK: 'gmf-mobile-nav-go-back',
-  SLIDE: 'gmf-mobile-nav-slide',
-  SLIDE_OUT: 'gmf-mobile-nav-slide-out'
 };
 
 

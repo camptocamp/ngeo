@@ -1,7 +1,7 @@
 /**
  * @module ngeo.geolocation.extraModule
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 

@@ -48,7 +48,7 @@ const exports = angular.module('ngeoProfile', [
  * @ngdoc directive
  * @ngname ngeoProfile
  */
-exports.directive_ = function(ngeoDebounce) {
+function directive(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
@@ -135,9 +135,9 @@ exports.directive_ = function(ngeoDebounce) {
       }
     }
   };
-};
+}
 
-exports.directive('ngeoProfile', exports.directive_);
+exports.directive('ngeoProfile', directive);
 
 
 export default exports;

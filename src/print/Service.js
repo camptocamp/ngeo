@@ -8,7 +8,7 @@ import * as olArray from 'ol/array.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
-import * as olMath from 'ol/math.js';
+import {toDegrees} from 'ol/math.js';
 import * as olSize from 'ol/size.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
@@ -163,7 +163,7 @@ exports.prototype.encodeMap_ = function(map, scale, object) {
   const viewCenter = view.getCenter();
   const viewProjection = view.getProjection();
   const viewResolution = view.getResolution();
-  const viewRotation = object.rotation || olMath.toDegrees(view.getRotation());
+  const viewRotation = object.rotation || toDegrees(view.getRotation());
 
   googAsserts.assert(viewCenter !== undefined);
   googAsserts.assert(viewProjection !== undefined);

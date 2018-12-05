@@ -25,7 +25,7 @@ const exports = angular.module('ngeoMeasurearea', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
+function directive($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -66,10 +66,10 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
       );
     }
   };
-};
+}
 
 
-exports.directive('ngeoMeasurearea', exports.directive_);
+exports.directive('ngeoMeasurearea', directive);
 
 
 export default exports;

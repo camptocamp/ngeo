@@ -73,7 +73,7 @@ exports.component('ngeoFilter', {
 /**
  * @private
  */
-exports.FilterController_ = class {
+class FilterController {
 
   /**
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
@@ -449,9 +449,9 @@ exports.FilterController_ = class {
     }
   }
 
-};
+}
 
-exports.controller('ngeoFilterController', exports.FilterController_);
+exports.controller('ngeoFilterController', FilterController);
 
 
 export default exports;

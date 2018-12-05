@@ -50,7 +50,7 @@ const exports = angular.module('gmfContextualdata', [
  * @ngdoc directive
  * @ngname gmfContextualdata
  */
-exports.directive_ = function() {
+function directive() {
   return {
     restrict: 'A',
     scope: false,
@@ -70,10 +70,9 @@ exports.directive_ = function() {
       controller.init();
     }
   };
-};
+}
 
-exports.directive('gmfContextualdata',
-  exports.directive_);
+exports.directive('gmfContextualdata', directive);
 
 
 /**
@@ -88,7 +87,7 @@ exports.directive('gmfContextualdata',
  * @ngdoc controller
  * @ngInject
  */
-exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
+function Controller($compile, $timeout, $scope, gmfRaster) {
 
   /**
    * @type {ol.Map}
@@ -139,12 +138,12 @@ exports.Controller_ = function($compile, $timeout, $scope, gmfRaster) {
   this.gmfRaster_ = gmfRaster;
 
   angular.element('body').on('mousedown', this.hidePopover.bind(this));
-};
+}
 
 /**
  *
  */
-exports.Controller_.prototype.init = function() {
+Controller.prototype.init = function() {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
@@ -158,7 +157,7 @@ exports.Controller_.prototype.init = function() {
  * @param {!Event} event Event.
  * @private
  */
-exports.Controller_.prototype.handleMapContextMenu_ = function(event) {
+Controller.prototype.handleMapContextMenu_ = function(event) {
   this.$scope_.$apply(() => {
     const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -174,7 +173,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(event) {
   });
 };
 
-exports.Controller_.prototype.setContent_ = function(coordinate) {
+Controller.prototype.setContent_ = function(coordinate) {
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
@@ -205,7 +204,7 @@ exports.Controller_.prototype.setContent_ = function(coordinate) {
 /**
  * @private
  */
-exports.Controller_.prototype.preparePopover_ = function() {
+Controller.prototype.preparePopover_ = function() {
 
   const container = document.createElement('DIV');
   container.classList.add('popover');
@@ -232,17 +231,17 @@ exports.Controller_.prototype.preparePopover_ = function() {
   this.map.addOverlay(this.overlay_);
 };
 
-exports.Controller_.prototype.showPopover = function() {
+Controller.prototype.showPopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'block');
 };
 
-exports.Controller_.prototype.hidePopover = function() {
+Controller.prototype.hidePopover = function() {
   const element = /** @type {Object} */ (this.overlay_.getElement());
   angular.element(element).css('display', 'none');
 };
 
-exports.controller('GmfContextualdataController', exports.Controller_);
+exports.controller('GmfContextualdataController', Controller);
 
 
 /**
@@ -273,16 +272,15 @@ exports.controller('GmfContextualdataController', exports.Controller_);
  * @ngdoc directive
  * @ngname gmfContextualdatacontent
  */
-exports.contentDirective_ = function(
-  gmfContextualdatacontentTemplateUrl) {
+function contentDirective(gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
     templateUrl: gmfContextualdatacontentTemplateUrl
   };
-};
+}
 
-exports.directive('gmfContextualdatacontent', exports.contentDirective_);
+exports.directive('gmfContextualdatacontent', contentDirective);
 
 
 export default exports;

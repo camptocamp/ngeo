@@ -83,7 +83,7 @@ exports.component('ngeoAttributes', component);
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */
-exports.Controller_ = function($scope, ngeoEventHelper) {
+function Controller($scope, ngeoEventHelper) {
 
   /**
    * The list of attributes to create the form with.
@@ -137,13 +137,13 @@ exports.Controller_ = function($scope, ngeoEventHelper) {
    * @private
    */
   this.updating_ = false;
-};
+}
 
 
 /**
  * Initialise the component.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.properties = this.feature.getProperties();
 
   // Listen to the feature inner properties change and apply them to the form
@@ -160,7 +160,7 @@ exports.Controller_.prototype.$onInit = function() {
  * @param {string} name Attribute name
  * @export
  */
-exports.Controller_.prototype.handleInputChange = function(name) {
+Controller.prototype.handleInputChange = function(name) {
   this.updating_ = true;
   const value = this.properties[name];
   this.feature.set(name, value);
@@ -171,7 +171,7 @@ exports.Controller_.prototype.handleInputChange = function(name) {
 /**
  * Cleanup event listeners.
  */
-exports.Controller_.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function() {
   const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
@@ -181,7 +181,7 @@ exports.Controller_.prototype.$onDestroy = function() {
  * @param {ol.Object.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleFeaturePropertyChange_ = function(evt) {
+Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
   if (this.updating_) {
     return;
   }
@@ -190,7 +190,7 @@ exports.Controller_.prototype.handleFeaturePropertyChange_ = function(evt) {
 };
 
 
-exports.controller('ngeoAttributesController', exports.Controller_);
+exports.controller('ngeoAttributesController', Controller);
 
 
 export default exports;

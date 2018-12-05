@@ -1,7 +1,7 @@
 /**
  * @module ngeo.grid.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoGridComponent from 'ngeo/grid/component.js';
 
 /**

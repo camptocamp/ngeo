@@ -468,8 +468,7 @@ const exports = class {
    * Issue WFS GetFeature requests using the given combined data sources, map
    * and optional filters.
    *
-   * @param {!ngeo.query.Querent.CombinedDataSources} combinedDataSources Combined
-   *     data sources.
+   * @param {!CombinedDataSources} combinedDataSources Combined data sources.
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
    * @return {angular.IPromise} Promise.
    * @private
@@ -677,8 +676,7 @@ const exports = class {
    * Issue WMS GetFeatureInfo requests using the given combined data sources,
    * map and optional filters.
    *
-   * @param {!ngeo.query.Querent.CombinedDataSources} combinedDataSources Combined
-   *     data sources.
+   * @param {!CombinedDataSources} combinedDataSources Combined data sources.
    * @param {ngeox.IssueGetFeaturesOptions} options Options.
    * @return {angular.IPromise} Promise.
    * @private
@@ -823,7 +821,7 @@ const exports = class {
   /**
    * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
    *     queryable data sources that supports WFS.
-   * @return {ngeo.query.Querent.CombinedDataSources} Combined lists of data sources.
+   * @return {CombinedDataSources} Combined lists of data sources.
    * @private
    */
   getCombinableWFSDataSources_(dataSources) {
@@ -853,7 +851,7 @@ const exports = class {
   /**
    * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
    *     queryable data sources that supports WMS.
-   * @return {ngeo.query.Querent.CombinedDataSources} Combined lists of data sources.
+   * @return {CombinedDataSources} Combined lists of data sources.
    * @private
    */
   getCombinableWMSDataSources_(dataSources) {
@@ -941,9 +939,8 @@ const exports = class {
 
 
 /**
- * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>}
+ * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>} CombinedDataSources
  */
-exports.CombinedDataSources;
 
 
 /**

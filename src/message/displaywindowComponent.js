@@ -47,7 +47,7 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {!jQuery} $element Element.
@@ -251,7 +251,7 @@ exports.Controller_ = class {
     this.title = null;
     this.url = null;
   }
-};
+}
 
 
 /**
@@ -315,7 +315,7 @@ exports.component('ngeoDisplaywindow', {
     'url': '=?',
     'width': '=?'
   },
-  controller: exports.Controller_,
+  controller: Controller,
   templateUrl: ngeoMessageDisplaywindowTemplateUrl
 });
 

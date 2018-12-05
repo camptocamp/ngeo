@@ -17,7 +17,7 @@ const exports = angular.module('ngeoDrawpoint', []);
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-exports.directive_ = function() {
+function directive() {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -51,10 +51,10 @@ exports.directive_ = function() {
       );
     }
   };
-};
+}
 
 
-exports.directive('ngeoDrawpoint', exports.directive_);
+exports.directive('ngeoDrawpoint', directive);
 
 
 export default exports;

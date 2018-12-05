@@ -40,7 +40,7 @@ const exports = angular.module('ngeoMap', []);
  * @ngname ngeoMap
  * @ngInject
  */
-exports.directive_ = function($window) {
+function directive($window) {
   return {
     restrict: 'A',
     /**
@@ -102,10 +102,10 @@ exports.directive_ = function($window) {
       }
     }
   };
-};
+}
 
 // Register the directive in the module
-exports.directive('ngeoMap', exports.directive_);
+exports.directive('ngeoMap', directive);
 
 
 export default exports;

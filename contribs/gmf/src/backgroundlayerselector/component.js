@@ -92,7 +92,7 @@ exports.component('gmfBackgroundlayerselector', component);
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
-exports.Controller_ = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
+function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
    * @type {?ol.Map}
@@ -160,13 +160,13 @@ exports.Controller_ = function($scope, ngeoBackgroundLayerMgr, gmfThemes) {
     }));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.handleThemesChange_();
 };
 
@@ -175,7 +175,7 @@ exports.Controller_.prototype.$onInit = function() {
  * Called when the themes changes. Set (or reset) the background layers.
  * @private
  */
-exports.Controller_.prototype.handleThemesChange_ = function() {
+Controller.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
 
@@ -201,7 +201,7 @@ exports.Controller_.prototype.handleThemesChange_ = function() {
  * @returns {number} The background layer opacity.
  * @export
  */
-exports.Controller_.prototype.getSetBgLayerOpacity = function(val) {
+Controller.prototype.getSetBgLayerOpacity = function(val) {
   if (val) {
     this.opacityLayer.setOpacity(val);
   }
@@ -213,7 +213,7 @@ exports.Controller_.prototype.getSetBgLayerOpacity = function(val) {
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
-exports.Controller_.prototype.setLayer = function(layer, opt_silent) {
+Controller.prototype.setLayer = function(layer, opt_silent) {
   this.bgLayer = layer;
   this.backgroundLayerMgr_.set(this.map, layer);
   if (!opt_silent && this.select) {
@@ -226,21 +226,20 @@ exports.Controller_.prototype.setLayer = function(layer, opt_silent) {
  * @param {ol.layer.Base} layer The opacity background layer.
  * @export
  */
-exports.Controller_.prototype.setOpacityBgLayer = function(layer) {
+Controller.prototype.setOpacityBgLayer = function(layer) {
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
 };
 
 /**
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   this.listenerKeys_.forEach(olEvents.unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 
 
-exports.controller('GmfBackgroundlayerselectorController',
-  exports.Controller_);
+exports.controller('GmfBackgroundlayerselectorController', Controller);
 
 
 export default exports;

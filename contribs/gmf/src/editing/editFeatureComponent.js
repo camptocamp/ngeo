@@ -112,7 +112,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
-exports.component_ = function() {
+function component() {
   return {
     controller: 'GmfEditfeatureController as efCtrl',
     scope: {
@@ -126,11 +126,10 @@ exports.component_ = function() {
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureComponent'
   };
-};
+}
 
 
-exports.directive('gmfEditfeature',
-  exports.component_);
+exports.directive('gmfEditfeature', component);
 
 
 /**
@@ -153,7 +152,7 @@ exports.directive('gmfEditfeature',
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */
-exports.Controller_ = function($element, $q, $scope, $timeout,
+function Controller($element, $q, $scope, $timeout,
   gettextCatalog, gmfEditFeature, gmfSnapping, gmfXSDAttributes,
   ngeoEventHelper, ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
@@ -477,13 +476,13 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
    * @private
    */
   this.vertexInfo_ = null;
-};
+}
 
 
 /**
  * Called on initialization of the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   const lang = this.gettextCatalog_.getCurrentLanguage();
   $.datetimepicker.setLocale(lang);
   $.datetimepicker.setDateFormatter(new DateFormatter());
@@ -618,7 +617,7 @@ exports.Controller_.prototype.$onInit = function() {
  * Save the currently selected feature modifications.
  * @export
  */
-exports.Controller_.prototype.save = function() {
+Controller.prototype.save = function() {
   googAsserts.assert(this.attributes);
 
   const feature = this.feature.clone();
@@ -680,7 +679,7 @@ exports.Controller_.prototype.save = function() {
 /**
  * @export
  */
-exports.Controller_.prototype.cancel = function() {
+Controller.prototype.cancel = function() {
   this.dirty = false;
   this.feature = null;
   this.features.clear();
@@ -697,7 +696,7 @@ exports.Controller_.prototype.cancel = function() {
  *     object.
  * @export
  */
-exports.Controller_.prototype.confirmCancel = function() {
+Controller.prototype.confirmCancel = function() {
   return this.checkForModifications_().then(() => {
     this.cancel();
   });
@@ -713,7 +712,7 @@ exports.Controller_.prototype.confirmCancel = function() {
  *     object.
  * @private
  */
-exports.Controller_.prototype.checkForModifications_ = function(
+Controller.prototype.checkForModifications_ = function(
   scopeApply) {
   this.confirmDeferred_ = this.q_.defer();
   if (this.feature && this.dirty) {
@@ -732,7 +731,7 @@ exports.Controller_.prototype.checkForModifications_ = function(
 /**
  * @export
  */
-exports.Controller_.prototype.continueWithoutSaving = function() {
+Controller.prototype.continueWithoutSaving = function() {
   this.cancel();
   this.confirmDeferred_.resolve();
 };
@@ -741,7 +740,7 @@ exports.Controller_.prototype.continueWithoutSaving = function() {
 /**
  * @export
  */
-exports.Controller_.prototype.delete = function() {
+Controller.prototype.delete = function() {
   const msg = this.gettextCatalog_.getString(
     'Do you really want to delete the selected feature?');
   // Confirm deletion first
@@ -779,7 +778,7 @@ exports.Controller_.prototype.delete = function() {
  * to be validated.
  * @export
  */
-exports.Controller_.prototype.submit = function() {
+Controller.prototype.submit = function() {
   // Use timeout to prevent the digest already in progress
   // due to clicking on the modal button to throw an error.
   this.timeout_(() => {
@@ -792,7 +791,7 @@ exports.Controller_.prototype.submit = function() {
  * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
-exports.Controller_.prototype.handleEditFeature_ = function(resp) {
+Controller.prototype.handleEditFeature_ = function(resp) {
   const features = new olFormatGeoJSON().readFeatures(resp.data);
   if (features.length) {
     this.feature.setId(features[0].getId());
@@ -808,7 +807,7 @@ exports.Controller_.prototype.handleEditFeature_ = function(resp) {
  * @param {!Array.<ngeox.Attribute>} attributes Attributes.
  * @private
  */
-exports.Controller_.prototype.setAttributes_ = function(attributes) {
+Controller.prototype.setAttributes_ = function(attributes) {
   // Set attributes
   this.attributes = attributes;
   for (const attribute of attributes) {
@@ -838,7 +837,7 @@ exports.Controller_.prototype.setAttributes_ = function(attributes) {
  * @param {ol.Collection.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleFeatureAdd_ = function(evt) {
+Controller.prototype.handleFeatureAdd_ = function(evt) {
   this.feature = null;
   this.timeout_(() => {
     googAsserts.assert(this.attributes);
@@ -886,7 +885,7 @@ exports.Controller_.prototype.handleFeatureAdd_ = function(evt) {
  * @param {boolean} active Whether to activate this directive or not.
  * @private
  */
-exports.Controller_.prototype.toggle_ = function(active) {
+Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
   const createUid = ['create-', olUtilGetUid(this)].join('-');
@@ -949,8 +948,7 @@ exports.Controller_.prototype.toggle_ = function(active) {
  * @param {boolean} active Whether the map select is active or not.
  * @private
  */
-exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
-  active) {
+Controller.prototype.handleMapSelectActiveChange_ = function(active) {
 
   const mapDiv = this.map.getViewport();
   googAsserts.assertElement(mapDiv);
@@ -989,7 +987,7 @@ exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapClick_ = function(evt) {
+Controller.prototype.handleMapClick_ = function(evt) {
   const coordinate = evt.coordinate;
   const pixel = evt.pixel;
 
@@ -1045,7 +1043,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
  * @param {Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
+Controller.prototype.handleMapContextMenu_ = function(evt) {
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
 
@@ -1099,7 +1097,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
  * @param {Array.<ol.Feature>} features Features.
  * @private
  */
-exports.Controller_.prototype.handleGetFeatures_ = function(features) {
+Controller.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   this.timeout_(() => {
@@ -1116,7 +1114,7 @@ exports.Controller_.prototype.handleGetFeatures_ = function(features) {
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-exports.Controller_.prototype.initializeInteractions_ = function() {
+Controller.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeoMiscDecorate.interaction(interaction);
@@ -1128,7 +1126,7 @@ exports.Controller_.prototype.initializeInteractions_ = function() {
  * Register interactions by adding them to the map
  * @private
  */
-exports.Controller_.prototype.registerInteractions_ = function() {
+Controller.prototype.registerInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
   });
@@ -1139,7 +1137,7 @@ exports.Controller_.prototype.registerInteractions_ = function() {
  * Unregister interactions, i.e. set them inactive and remove them from the map
  * @private
  */
-exports.Controller_.prototype.unregisterInteractions_ = function() {
+Controller.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
   });
@@ -1151,9 +1149,7 @@ exports.Controller_.prototype.unregisterInteractions_ = function() {
  * @param {?ol.Feature} oldFeature The old feature.
  * @private
  */
-exports.Controller_.prototype.handleFeatureChange_ = function(
-  newFeature, oldFeature
-) {
+Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
 
   let geom;
   if (oldFeature) {
@@ -1204,7 +1200,7 @@ exports.Controller_.prototype.handleFeatureChange_ = function(
 /**
  * @private
  */
-exports.Controller_.prototype.handleFeaturePropertyChange_ = function() {
+Controller.prototype.handleFeaturePropertyChange_ = function() {
   this.dirty = true;
 };
 
@@ -1212,7 +1208,7 @@ exports.Controller_.prototype.handleFeaturePropertyChange_ = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.handleFeatureGeometryChange_ = function() {
+Controller.prototype.handleFeatureGeometryChange_ = function() {
   this.dirty = true;
   this.scope_.$apply();
 };
@@ -1222,7 +1218,7 @@ exports.Controller_.prototype.handleFeatureGeometryChange_ = function() {
  * @param {ngeox.MenuEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMenuActionClick_ = function(evt) {
+Controller.prototype.handleMenuActionClick_ = function(evt) {
   const action = evt.detail.action;
 
   switch (action) {
@@ -1244,7 +1240,7 @@ exports.Controller_.prototype.handleMenuActionClick_ = function(evt) {
  * @param {ngeox.MenuEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMenuVertexActionClick_ = function(evt) {
+Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
   const action = evt.detail.action;
 
   switch (action) {
@@ -1264,7 +1260,7 @@ exports.Controller_.prototype.handleMenuVertexActionClick_ = function(evt) {
  * @param {ol.interaction.Translate.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleTranslateEnd_ = function(evt) {
+Controller.prototype.handleTranslateEnd_ = function(evt) {
   this.translate_.setActive(false);
   this.scope_.$apply();
 };
@@ -1274,7 +1270,7 @@ exports.Controller_.prototype.handleTranslateEnd_ = function(evt) {
  * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleRotateEnd_ = function(evt) {
+Controller.prototype.handleRotateEnd_ = function(evt) {
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
@@ -1283,7 +1279,7 @@ exports.Controller_.prototype.handleRotateEnd_ = function(evt) {
 /**
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
@@ -1295,8 +1291,7 @@ exports.Controller_.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfEditfeatureController',
-  exports.Controller_);
+exports.controller('GmfEditfeatureController', Controller);
 
 
 /**

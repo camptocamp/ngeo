@@ -124,7 +124,7 @@ exports.component('gmfAuthentication', component);
 /**
  * @private
  */
-exports.AuthenticationController_ = class {
+class AuthenticationController {
   /**
    * @private
    * @param {!angular.JQLite} $element Element.
@@ -448,10 +448,9 @@ exports.AuthenticationController_ = class {
     this.notification_.clear();
     this.error = false;
   }
-};
+}
 
-exports.controller('GmfAuthenticationController',
-  exports.AuthenticationController_);
+exports.controller('GmfAuthenticationController', AuthenticationController);
 
 
 export default exports;

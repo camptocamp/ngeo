@@ -33,7 +33,7 @@ const exports = angular.module('ngeoRecenter', []);
  * @ngdoc directive
  * @ngname ngeoRecenter
  */
-exports.directive_ = function() {
+function directive() {
   return {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
@@ -65,10 +65,10 @@ exports.directive_ = function() {
 
     }
   };
-};
+}
 
 // Register the directive in the module
-exports.directive('ngeoRecenter', exports.directive_);
+exports.directive('ngeoRecenter', directive);
 
 
 export default exports;

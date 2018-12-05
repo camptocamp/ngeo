@@ -66,7 +66,7 @@ const component = {
 
 exports.component('ngeoModal', component);
 
-exports.Controller_ = class {
+class Controller {
   /**
    * @ngInject
    * @param {!angular.IScope} $scope Scope.
@@ -149,9 +149,9 @@ exports.Controller_ = class {
       dialog.resizable('destroy');
     }
   }
-};
+}
 
-exports.controller('ngeoModalController', exports.Controller_);
+exports.controller('ngeoModalController', Controller);
 
 
 export default exports;

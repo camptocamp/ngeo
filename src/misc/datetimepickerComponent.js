@@ -25,18 +25,18 @@ const exports = angular.module('ngeoDateTimePicker', ['gettext']);
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */
-exports.component_ = function() {
+function component() {
   return {
     restrict: 'A',
-    controller: exports.Controller_,
+    controller: Controller,
     bindToController: true,
     scope: {
       'options': '<ngeoDatetimepickerOptions'
     }
   };
-};
+}
 
-exports.directive('ngeoDatetimepicker', exports.component_);
+exports.directive('ngeoDatetimepicker', component);
 
 
 /**
@@ -48,7 +48,7 @@ exports.directive('ngeoDatetimepicker', exports.component_);
  * @ngdoc controller
  * @ngname ngeoDatetimepickerController
  */
-exports.Controller_ = function($element, gettextCatalog) {
+function Controller($element, gettextCatalog) {
   /**
    * @const {!jQuery}
    * @private
@@ -68,13 +68,13 @@ exports.Controller_ = function($element, gettextCatalog) {
    * @private
    */
   this.options;
-};
+}
 
 
 /**
  * Initialize the directive.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   const lang = this.gettextCatalog_.getCurrentLanguage();
   $.datetimepicker.setLocale(lang);
   $.datetimepicker.setDateFormatter(new DateFormatter());
@@ -84,8 +84,7 @@ exports.Controller_.prototype.$onInit = function() {
   this.element_.datetimepicker(this.options);
 };
 
-exports.controller('ngeoDateTimePickerController',
-  exports.Controller_);
+exports.controller('ngeoDateTimePickerController', Controller);
 
 
 export default exports;

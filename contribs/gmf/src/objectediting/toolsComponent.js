@@ -84,7 +84,7 @@ exports.value('gmfObjectEditingToolsOptions', {});
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
  */
-exports.directive_ = function() {
+function directive() {
   return {
     controller: 'GmfObjecteditingtoolsController as oetCtrl',
     scope: {
@@ -102,10 +102,16 @@ exports.directive_ = function() {
     bindToController: true,
     templateUrl: 'gmf/objectediting/toolsComponent'
   };
-};
+}
 
-exports.directive('gmfObjecteditingtools',
-  exports.directive_);
+exports.directive('gmfObjecteditingtools', directive);
+
+
+/**
+ * @const
+ * @private
+ */
+const NAMESPACE = 'oet';
 
 
 /**
@@ -119,7 +125,7 @@ exports.directive('gmfObjecteditingtools',
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */
-exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
+function Controller($injector, $scope, ngeoToolActivateMgr) {
 
   // == Scope properties ==
 
@@ -262,7 +268,7 @@ exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
     exports.ProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-};
+}
 
 
 /**
@@ -284,7 +290,7 @@ exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
  *     layer or not. Defaults to `false`.
  * @private
  */
-exports.Controller_.prototype.registerTool_ = function(
+Controller.prototype.registerTool_ = function(
   toolActiveName, process, opt_requiresLayer
 ) {
 
@@ -295,7 +301,7 @@ exports.Controller_.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  const group = `${exports.Controller_.NAMESPACE_}-${olUtilGetUid(this)}`;
+  const group = `${NAMESPACE}-${olUtilGetUid(this)}`;
   const toolActivate = new ngeoMiscToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 
@@ -312,7 +318,7 @@ exports.Controller_.prototype.registerTool_ = function(
  * @param {boolean|undefined} newVal New value.
  * @private
  */
-exports.Controller_.prototype.handleToolActiveChange_ = function(
+Controller.prototype.handleToolActiveChange_ = function(
   process, requiresLayer, newVal
 ) {
 
@@ -341,19 +347,10 @@ exports.Controller_.prototype.handleToolActiveChange_ = function(
 /**
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {};
+Controller.prototype.handleDestroy_ = function() {};
 
 
-exports.controller('GmfObjecteditingtoolsController',
-  exports.Controller_);
-
-
-/**
- * @const
- * @private
- */
-exports.Controller_.NAMESPACE_ = 'oet';
-
+exports.controller('GmfObjecteditingtoolsController', Controller);
 
 /**
  * @enum {string}

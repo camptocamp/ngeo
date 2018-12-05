@@ -1,7 +1,7 @@
 /**
  * @module ngeo.misc.extraModule
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';

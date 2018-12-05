@@ -1,7 +1,7 @@
 /**
  * @module gmf.search.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfSearchComponent from 'gmf/search/component.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 

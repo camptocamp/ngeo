@@ -47,11 +47,19 @@ function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) 
   return gmfImportdatasourceTemplateUrl($attrs);
 }
 
+/**
+ * @enum {string}
+ */
+const Mode = {
+  LOCAL: 'Local',
+  ONLINE: 'Online'
+};
+
 
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {!jQuery} $element Element.
@@ -152,16 +160,13 @@ exports.Controller_ = class {
      * @type {string}
      * @export
      */
-    this.mode = exports.Controller_.Mode.ONLINE;
+    this.mode = Mode.ONLINE;
 
     /**
      * @type {!Array.<string>}
      * @export
      */
-    this.modes = [
-      exports.Controller_.Mode.LOCAL,
-      exports.Controller_.Mode.ONLINE
-    ];
+    this.modes = [Mode.LOCAL, Mode.ONLINE];
 
     /**
      * @type {boolean}
@@ -391,23 +396,14 @@ exports.Controller_ = class {
       }, 3000);
     }
   }
-};
-
-
-/**
- * @enum {string}
- */
-exports.Controller_.Mode = {
-  LOCAL: 'Local',
-  ONLINE: 'Online'
-};
+}
 
 
 exports.component('gmfImportdatasource', {
   bindings: {
     'map': '<'
   },
-  controller: exports.Controller_,
+  controller: Controller,
   templateUrl: gmfImportdatasourceTemplateUrl
 });
 

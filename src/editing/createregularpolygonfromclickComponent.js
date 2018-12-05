@@ -54,7 +54,7 @@ const exports = angular.module('ngeoCreateregularpolygonfromclick', [
  * @ngdoc directive
  * @ngname ngeoCreateregularpolygonfromclick
  */
-exports.directive_ = function() {
+function directive() {
   return {
     controller: 'ngeoCreateregularpolygonfromclickController',
     bindToController: true,
@@ -67,12 +67,9 @@ exports.directive_ = function() {
       'sides': '<?ngeoCreateregularpolygonfromclickSides'
     }
   };
-};
+}
 
-exports.directive(
-  'ngeoCreateregularpolygonfromclick',
-  exports.directive_
-);
+exports.directive('ngeoCreateregularpolygonfromclick', directive);
 
 
 /**
@@ -83,7 +80,7 @@ exports.directive(
  * @ngdoc controller
  * @ngname ngeoCreateregularpolygonfromclickController
  */
-exports.Controller_ = function($scope) {
+function Controller($scope) {
 
   // == Scope properties ==
 
@@ -146,13 +143,13 @@ exports.Controller_ = function($scope) {
   this.interactionListenerKey_;
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-};
+}
 
 
 /**
  * Initialize the directive.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
 
   this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick({
     angle: this.angle,
@@ -178,7 +175,7 @@ exports.Controller_.prototype.$onInit = function() {
  * @param {ol.interaction.Draw.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleDrawEnd_ = function(evt) {
+Controller.prototype.handleDrawEnd_ = function(evt) {
   const feature = new olFeature(evt.feature.getGeometry());
   this.features.push(feature);
 };
@@ -188,17 +185,14 @@ exports.Controller_.prototype.handleDrawEnd_ = function(evt) {
  * Cleanup event listeners and remove the interaction from the map.
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   olEvents.unlistenByKey(this.interactionListenerKey_);
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);
 };
 
 
-exports.controller(
-  'ngeoCreateregularpolygonfromclickController',
-  exports.Controller_
-);
+exports.controller('ngeoCreateregularpolygonfromclickController', Controller);
 
 
 export default exports;

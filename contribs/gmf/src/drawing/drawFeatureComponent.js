@@ -68,7 +68,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfDrawfeature
  */
-exports.component_ = function() {
+function component() {
   return {
     controller: 'GmfDrawfeatureController as efCtrl',
     scope: {
@@ -79,11 +79,10 @@ exports.component_ = function() {
     bindToController: true,
     templateUrl: 'gmf/drawing/drawFeatureComponent'
   };
-};
+}
 
 
-exports.directive('gmfDrawfeature',
-  exports.component_);
+exports.directive('gmfDrawfeature', component);
 
 
 /**
@@ -100,8 +99,7 @@ exports.directive('gmfDrawfeature',
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */
-exports.Controller_ = function($scope, $timeout, gettextCatalog,
-  ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
+function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!ol.Map}
@@ -342,14 +340,14 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
-};
+}
 
 
 /**
  * Close menu, if it exists.
  * @private
  */
-exports.Controller_.prototype.closeMenu_ = function() {
+Controller.prototype.closeMenu_ = function() {
   if (this.menu_) {
     this.map.removeOverlay(this.menu_);
     this.menu_ = null;
@@ -362,7 +360,7 @@ exports.Controller_.prototype.closeMenu_ = function() {
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-exports.Controller_.prototype.initializeInteractions_ = function() {
+Controller.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeoMiscDecorate.interaction(interaction);
@@ -374,7 +372,7 @@ exports.Controller_.prototype.initializeInteractions_ = function() {
  * Register interactions by adding them to the map
  * @private
  */
-exports.Controller_.prototype.registerInteractions_ = function() {
+Controller.prototype.registerInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
   });
@@ -385,7 +383,7 @@ exports.Controller_.prototype.registerInteractions_ = function() {
  * Register interactions by removing them to the map
  * @private
  */
-exports.Controller_.prototype.unregisterInteractions_ = function() {
+Controller.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
   });
@@ -398,7 +396,7 @@ exports.Controller_.prototype.unregisterInteractions_ = function() {
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-exports.Controller_.prototype.handleActiveChange_ = function(active) {
+Controller.prototype.handleActiveChange_ = function(active) {
 
   const keys = this.listenerKeys_;
   const drawUid = ['draw-', olUtilGetUid(this)].join('-');
@@ -461,7 +459,7 @@ exports.Controller_.prototype.handleActiveChange_ = function(active) {
  * @param {!ol.Feature} feature Feature to select.
  * @export
  */
-exports.Controller_.prototype.selectFeatureFromList = function(feature) {
+Controller.prototype.selectFeatureFromList = function(feature) {
   this.listSelectionInProgress_ = true;
   this.selectedFeature = feature;
   this.drawActive = false;
@@ -472,7 +470,7 @@ exports.Controller_.prototype.selectFeatureFromList = function(feature) {
  * @return {!Array.<!ol.Feature>} Array.
  * @export
  */
-exports.Controller_.prototype.getFeaturesArray = function() {
+Controller.prototype.getFeaturesArray = function() {
   return this.features.getArray();
 };
 
@@ -480,7 +478,7 @@ exports.Controller_.prototype.getFeaturesArray = function() {
 /**
  * @export
  */
-exports.Controller_.prototype.clearFeatures = function() {
+Controller.prototype.clearFeatures = function() {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
     'Do you really want to delete all the features?');
@@ -494,7 +492,7 @@ exports.Controller_.prototype.clearFeatures = function() {
  * @param {!ol.Feature} feature The feature to remove from the selection.
  * @export
  */
-exports.Controller_.prototype.removeFeature = function(feature) {
+Controller.prototype.removeFeature = function(feature) {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
     'Do you really want to delete the selected feature?');
@@ -508,7 +506,7 @@ exports.Controller_.prototype.removeFeature = function(feature) {
  * @param {!ol.Collection.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleFeaturesAdd_ = function(evt) {
+Controller.prototype.handleFeaturesAdd_ = function(evt) {
   // timeout to prevent double-click to zoom the map
   this.timeout_(() => {
     this.selectedFeature = /** @type {ol.Feature} */ (evt.element);
@@ -522,7 +520,7 @@ exports.Controller_.prototype.handleFeaturesAdd_ = function(evt) {
  * @param {!ol.Collection.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleFeaturesRemove_ = function(evt) {
+Controller.prototype.handleFeaturesRemove_ = function(evt) {
   this.selectedFeature = null;
 };
 
@@ -532,7 +530,7 @@ exports.Controller_.prototype.handleFeaturesRemove_ = function(evt) {
  * @param {boolean} active Whether the map select is active or not.
  * @private
  */
-exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
+Controller.prototype.handleMapSelectActiveChange_ = function(
   active) {
 
   const mapDiv = this.map.getViewport();
@@ -577,7 +575,7 @@ exports.Controller_.prototype.handleMapSelectActiveChange_ = function(
  * @param {!ol.MapBrowserEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapClick_ = function(evt) {
+Controller.prototype.handleMapClick_ = function(evt) {
 
   const pixel = evt.pixel;
 
@@ -612,7 +610,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
  * @param {!Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapTouchStart_ = function(evt) {
+Controller.prototype.handleMapTouchStart_ = function(evt) {
   this.longPressTimeout_ = setTimeout(() => {
     this.handleMapContextMenu_(evt);
   }, 500);
@@ -623,7 +621,7 @@ exports.Controller_.prototype.handleMapTouchStart_ = function(evt) {
  * @param {!Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapTouchEnd_ = function(evt) {
+Controller.prototype.handleMapTouchEnd_ = function(evt) {
   clearTimeout(this.longPressTimeout_);
 };
 
@@ -632,7 +630,7 @@ exports.Controller_.prototype.handleMapTouchEnd_ = function(evt) {
  * @param {!Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
+Controller.prototype.handleMapContextMenu_ = function(evt) {
   const gettextCatalog = this.gettextCatalog_;
   const pixel = this.map.getEventPixel(evt);
   const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -720,9 +718,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
  * @param {!ngeox.MenuEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMenuActionClick_ = function(
-  vertexInfo, evt
-) {
+Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
   const action = evt.detail.action;
 
   switch (action) {
@@ -756,7 +752,7 @@ exports.Controller_.prototype.handleMenuActionClick_ = function(
  * @param {!ol.interaction.Translate.Event} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleTranslateEnd_ = function(evt) {
+Controller.prototype.handleTranslateEnd_ = function(evt) {
   this.translate_.setActive(false);
   this.scope_.$apply();
 };
@@ -766,14 +762,13 @@ exports.Controller_.prototype.handleTranslateEnd_ = function(evt) {
  * @param {!ngeox.RotateEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleRotateEnd_ = function(evt) {
+Controller.prototype.handleRotateEnd_ = function(evt) {
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
 
 
-exports.controller('GmfDrawfeatureController',
-  exports.Controller_);
+exports.controller('GmfDrawfeatureController', Controller);
 
 
 export default exports;

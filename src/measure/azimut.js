@@ -29,7 +29,7 @@ const exports = angular.module('ngeoMeasureazimut', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
+function directive($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -91,10 +91,10 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
       );
     }
   };
-};
+}
 
 
-exports.directive('ngeoMeasureazimut', exports.directive_);
+exports.directive('ngeoMeasureazimut', directive);
 
 
 export default exports;

@@ -144,7 +144,7 @@ exports.component('gmfDisplayquerygrid', component);
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
+function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
   const queryOptions = /** @type {ngeox.QueryOptions} */ (
@@ -301,12 +301,12 @@ exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQueren
    * @private
    */
   this.unregisterSelectWatcher_ = null;
-};
+}
 
 /**
  * Init the controller
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ? this['removeEmptyColumnsFn']() === true : false;
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
 
@@ -352,7 +352,7 @@ exports.Controller_.prototype.$onInit = function() {
  * @export
  * @return {Array.<gmfx.GridSource>} Grid sources.
  */
-exports.Controller_.prototype.getGridSources = function() {
+Controller.prototype.getGridSources = function() {
   return this.loadedGridSources.map(sourceLabel => this.gridSources[sourceLabel]);
 };
 
@@ -360,7 +360,7 @@ exports.Controller_.prototype.getGridSources = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.updateData_ = function() {
+Controller.prototype.updateData_ = function() {
   // close if there are no results
   if (this.ngeoQueryResult.total === 0 && !this.hasOneWithTooManyResults_()) {
     const oldActive = this.active;
@@ -416,7 +416,7 @@ exports.Controller_.prototype.updateData_ = function() {
  * @private
  * @return {boolean} If one of the source has too many results.
  */
-exports.Controller_.prototype.hasOneWithTooManyResults_ = function() {
+Controller.prototype.hasOneWithTooManyResults_ = function() {
   return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
 };
 
@@ -426,7 +426,7 @@ exports.Controller_.prototype.hasOneWithTooManyResults_ = function() {
  * @returns {string|number} value An escaped value.
  * @export
  */
-exports.Controller_.prototype.escapeValue = function(value) {
+Controller.prototype.escapeValue = function(value) {
   // Work-around for Number.isInteger() when not always getting a number ...
   if (Number.isInteger(/** @type {number} */ (value))) {
     return value;
@@ -447,7 +447,7 @@ exports.Controller_.prototype.escapeValue = function(value) {
  * @param {gmfx.GridSource} gridSource Grid source.
  * @return {boolean} Is selected?
  */
-exports.Controller_.prototype.isSelected = function(gridSource) {
+Controller.prototype.isSelected = function(gridSource) {
   return this.selectedTab === gridSource.source.label;
 };
 
@@ -458,7 +458,7 @@ exports.Controller_.prototype.isSelected = function(gridSource) {
  * @return {Array.<ngeox.QueryResultSource>} The merged sources.
  * @private
  */
-exports.Controller_.prototype.getMergedSources_ = function(sources) {
+Controller.prototype.getMergedSources_ = function(sources) {
   const allSources = [];
   /** @type {Object.<string, ngeox.QueryResultSource>} */
   const mergedSources = {};
@@ -491,7 +491,7 @@ exports.Controller_.prototype.getMergedSources_ = function(sources) {
  *    not be merged.
  * @private
  */
-exports.Controller_.prototype.getMergedSource_ = function(source, mergedSources) {
+Controller.prototype.getMergedSource_ = function(source, mergedSources) {
   let mergeSourceId = null;
 
   for (const currentMergeSourceId in this.mergeTabs) {
@@ -553,7 +553,7 @@ exports.Controller_.prototype.getMergedSource_ = function(source, mergedSources)
  * @param {ngeox.QueryResultSource} source Result source.
  * @private
  */
-exports.Controller_.prototype.collectData_ = function(source) {
+Controller.prototype.collectData_ = function(source) {
   const features = source.features;
   const allProperties = [];
   const featureGeometriesNames = [];
@@ -589,8 +589,7 @@ exports.Controller_.prototype.collectData_ = function(source) {
  * @param {Array.<string>} featureGeometriesNames Geometry names.
  * @private
  */
-exports.Controller_.prototype.cleanProperties_ = function(
-  allProperties, featureGeometriesNames) {
+Controller.prototype.cleanProperties_ = function(allProperties, featureGeometriesNames) {
   allProperties.forEach((properties) => {
     featureGeometriesNames.forEach((featureGeometryName) => {
       delete properties[featureGeometryName];
@@ -610,8 +609,7 @@ exports.Controller_.prototype.cleanProperties_ = function(
  * @param {Array.<Object>} allProperties A row.
  * @private
  */
-exports.Controller_.prototype.removeEmptyColumnsFn_ = function(
-  allProperties) {
+Controller.prototype.removeEmptyColumnsFn_ = function(allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
   const keysToKeep = [];
   let i, key;
@@ -646,7 +644,7 @@ exports.Controller_.prototype.removeEmptyColumnsFn_ = function(
  * @return {boolean} Returns true if a grid was created.
  * @private
  */
-exports.Controller_.prototype.makeGrid_ = function(data, source) {
+Controller.prototype.makeGrid_ = function(data, source) {
   const sourceLabel = `${source.label}`;
   let gridConfig = null;
   if (data !== null) {
@@ -671,8 +669,7 @@ exports.Controller_.prototype.makeGrid_ = function(data, source) {
  * @return {?ngeo.grid.Config} Grid config.
  * @private
  */
-exports.Controller_.prototype.getGridConfiguration_ = function(
-  data) {
+Controller.prototype.getGridConfiguration_ = function(data) {
   googAsserts.assert(data.length > 0);
   const clone = {};
   Object.assign(clone, data[0]);
@@ -701,7 +698,7 @@ exports.Controller_.prototype.getGridConfiguration_ = function(
  * from the map.
  * @export
  */
-exports.Controller_.prototype.clear = function() {
+Controller.prototype.clear = function() {
   this.active = false;
   this.pending = false;
   this.gridSources = {};
@@ -723,7 +720,7 @@ exports.Controller_.prototype.clear = function() {
  * @param {gmfx.GridSource} gridSource Grid source.
  * @export
  */
-exports.Controller_.prototype.selectTab = function(gridSource) {
+Controller.prototype.selectTab = function(gridSource) {
   const source = gridSource.source;
   this.selectedTab = source.label;
 
@@ -750,7 +747,7 @@ exports.Controller_.prototype.selectTab = function(gridSource) {
 /**
  * @private
  */
-exports.Controller_.prototype.reflowGrid_ = function() {
+Controller.prototype.reflowGrid_ = function() {
   // This is a "work-around" to make sure that the grid is rendered correctly.
   // When a pane is activated by setting `this.selectedTab`, the class `active`
   // is not yet set on the pane. That's why the class is set manually, and
@@ -769,7 +766,7 @@ exports.Controller_.prototype.reflowGrid_ = function() {
  * Called when the row selection has changed.
  * @private
  */
-exports.Controller_.prototype.onSelectionChanged_ = function() {
+Controller.prototype.onSelectionChanged_ = function() {
   if (this.selectedTab === null) {
     return;
   }
@@ -783,7 +780,7 @@ exports.Controller_.prototype.onSelectionChanged_ = function() {
  * @param {gmfx.GridSource} gridSource Grid source
  * @private
  */
-exports.Controller_.prototype.updateFeatures_ = function(gridSource) {
+Controller.prototype.updateFeatures_ = function(gridSource) {
   this.features_.clear();
   this.highlightFeatures_.clear();
 
@@ -811,7 +808,7 @@ exports.Controller_.prototype.updateFeatures_ = function(gridSource) {
  * @export
  * @return {gmfx.GridSource|null} Grid source.
  */
-exports.Controller_.prototype.getActiveGridSource = function() {
+Controller.prototype.getActiveGridSource = function() {
   if (this.selectedTab === null) {
     return null;
   } else {
@@ -825,7 +822,7 @@ exports.Controller_.prototype.getActiveGridSource = function() {
  * @export
  * @return {boolean} Is one selected?
  */
-exports.Controller_.prototype.isOneSelected = function() {
+Controller.prototype.isOneSelected = function() {
   const source = this.getActiveGridSource();
   if (source === null || source.configuration === null) {
     return false;
@@ -840,7 +837,7 @@ exports.Controller_.prototype.isOneSelected = function() {
  * @export
  * @return {number} The number of selected rows.
  */
-exports.Controller_.prototype.getSelectedRowCount = function() {
+Controller.prototype.getSelectedRowCount = function() {
   const source = this.getActiveGridSource();
   if (source === null || source.configuration === null) {
     return 0;
@@ -854,7 +851,7 @@ exports.Controller_.prototype.getSelectedRowCount = function() {
  * Select all rows of the currently active grid.
  * @export
  */
-exports.Controller_.prototype.selectAll = function() {
+Controller.prototype.selectAll = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.selectAll();
@@ -866,7 +863,7 @@ exports.Controller_.prototype.selectAll = function() {
  * Deselect all rows of the currently active grid.
  * @export
  */
-exports.Controller_.prototype.unselectAll = function() {
+Controller.prototype.unselectAll = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.unselectAll();
@@ -878,7 +875,7 @@ exports.Controller_.prototype.unselectAll = function() {
  * Invert the selection of the currently active grid.
  * @export
  */
-exports.Controller_.prototype.invertSelection = function() {
+Controller.prototype.invertSelection = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.invertSelection();
@@ -890,7 +887,7 @@ exports.Controller_.prototype.invertSelection = function() {
  * Zoom to the selected features.
  * @export
  */
-exports.Controller_.prototype.zoomToSelection = function() {
+Controller.prototype.zoomToSelection = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const extent = olExtent.createEmpty();
@@ -909,7 +906,7 @@ exports.Controller_.prototype.zoomToSelection = function() {
  * Start a CSV download for the selected features.
  * @export
  */
-exports.Controller_.prototype.downloadCsv = function() {
+Controller.prototype.downloadCsv = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const columnDefs = source.configuration.columnDefs;
@@ -922,8 +919,7 @@ exports.Controller_.prototype.downloadCsv = function() {
 };
 
 
-exports.controller('GmfDisplayquerygridController',
-  exports.Controller_);
+exports.controller('GmfDisplayquerygridController', Controller);
 
 
 export default exports;

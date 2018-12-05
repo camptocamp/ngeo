@@ -1,7 +1,7 @@
 /**
  * @module gmf.raster.component
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import googAsserts from 'goog/asserts.js';
 
@@ -85,7 +85,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  * @htmlAttribute {number} gmf-elevation-elevation The value to set with the
  *     elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
- * @htmlAttribute {Object.<string, gmf.raster.component.LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
+ * @htmlAttribute {Object.<string, LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
  * @htmlAttribute {ol.Map} gmf-elevation-map The map.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -164,7 +164,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {!Object.<string, gmf.raster.component.LayerConfig>}
+   * @type {!Object.<string, LayerConfig>}
    * @private
    */
   this.layersConfig;
@@ -367,7 +367,7 @@ function WidgetController() {
   this.layers;
 
   /**
-   * @type {!Object.<string, gmf.raster.component.LayerConfig>}
+   * @type {!Object.<string, LayerConfig>}
    * @private
    */
   this.layersconfig;

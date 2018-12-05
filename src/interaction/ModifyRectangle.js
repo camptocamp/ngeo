@@ -70,13 +70,13 @@ const exports = function(options) {
   this.feature_ = null;
 
   /**
-   * @type {Object.<number, ngeo.interaction.ModifyRectangle.CacheItem>}
+   * @type {Object.<number, CacheItem>}
    * @private
    */
   this.cache_ = {};
 
   /**
-   * @type {?ngeo.interaction.ModifyRectangle.ModifyParams}
+   * @type {?ModifyParams}
    * @private
    */
   this.params_ = null;
@@ -148,7 +148,7 @@ exports.prototype.addFeature_ = function(feature) {
 
       pointFeatures.push(cornerFeature);
     }, this);
-    item = /** @type {ngeo.interaction.ModifyRectangle.CacheItem} */ ({
+    item = /** @type {CacheItem} */ ({
       corners: pointFeatures
     });
     this.cache_[uid] = item;
@@ -197,7 +197,7 @@ exports.prototype.willModifyFeatures_ = function(evt) {
 
 
 /**
- * @return {ngeo.interaction.ModifyRectangle.ModifyParams} The initialised params
+ * @return {ModifyParams} The initialised params
  * @private
  */
 exports.prototype.initializeParams_ = function() {
@@ -427,9 +427,8 @@ exports.prototype.handleUp_ = function(evt) {
 /**
  * @typedef {{
  *     corners: Array.<ol.Feature>
- * }}
+ * }} CacheItem
  */
-exports.CacheItem;
 
 
 /**
@@ -440,9 +439,8 @@ exports.CacheItem;
  *     siblingYPoint: ol.geom.Point,
  *     vectorX: Array.<number>,
  *     vectorY: Array.<number>
- * }}
+ * }} ModifyParams
  */
-exports.ModifyParams;
 
 
 export default exports;

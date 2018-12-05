@@ -1,7 +1,7 @@
 /**
  * @module gmf.layertree.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';

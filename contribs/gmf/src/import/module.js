@@ -1,7 +1,7 @@
 /**
  * @module gmf.import.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent.js';
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';

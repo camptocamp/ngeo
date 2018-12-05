@@ -19,7 +19,7 @@ const exports = angular.module('ngeoGetBrowserLanguage', []);
  * @ngname ngeoGetBrowserLanguage
  * @ngInject
  */
-exports.factory_ = function($window) {
+function factory($window) {
   return (
     /**
      * @param {Array.<string>} availableLanguages Available languages.
@@ -38,9 +38,9 @@ exports.factory_ = function($window) {
       const supportedLanguages = browserLanguages.filter(item => availableLanguages.indexOf(item) != -1);
       return supportedLanguages[0];
     });
-};
+}
 
-exports.factory('ngeoGetBrowserLanguage', exports.factory_);
+exports.factory('ngeoGetBrowserLanguage', factory);
 
 
 export default exports;

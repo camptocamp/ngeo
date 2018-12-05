@@ -41,7 +41,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfTimeSlider
  */
-exports.directive_ = function() {
+function directive() {
   return {
     scope: {
       onDateSelected: '&gmfTimeSliderOnDateSelected',
@@ -88,10 +88,10 @@ exports.directive_ = function() {
       }
     })
   };
-};
+}
 
 
-exports.directive('gmfTimeSlider', exports.directive_);
+exports.directive('gmfTimeSlider', directive);
 
 
 /**
@@ -103,7 +103,7 @@ exports.directive('gmfTimeSlider', exports.directive_);
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-exports.Controller_ = function(ngeoWMSTime) {
+function Controller(ngeoWMSTime) {
 
   /**
    * @type {ngeo.misc.WMSTime}
@@ -170,13 +170,13 @@ exports.Controller_ = function(ngeoWMSTime) {
    * @export
    */
   this.dates;
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.init = function() {
+Controller.prototype.init = function() {
   this.timeValueList = this.getTimeValueList_();
 
   // Fetch the initial options for the component
@@ -199,7 +199,7 @@ exports.Controller_.prototype.init = function() {
  * @private
  * @return {Array<number>}  - List of timestamp representing possible values
  */
-exports.Controller_.prototype.getTimeValueList_ = function() {
+Controller.prototype.getTimeValueList_ = function() {
   const wmsTime = this.time;
   let timeValueList = null;
   const minDate = new Date(this.minValue);
@@ -246,7 +246,7 @@ exports.Controller_.prototype.getTimeValueList_ = function() {
  * @return {number} the closest available datetime (in ms format) from the timestamp
  * @private
  */
-exports.Controller_.prototype.getClosestValue_ = function(timestamp) {
+Controller.prototype.getClosestValue_ = function(timestamp) {
   if (timestamp <= this.minValue) {
     return this.minValue;
   }
@@ -316,13 +316,12 @@ exports.Controller_.prototype.getClosestValue_ = function(timestamp) {
  * @return {string} Localized date string regarding the resolution.
  * @export
  */
-exports.Controller_.prototype.getLocalizedDate = function(time) {
+Controller.prototype.getLocalizedDate = function(time) {
   return this.ngeoWMSTime_.formatTimeValue(time, this.time.resolution);
 };
 
 
-exports.controller('gmfTimeSliderController',
-  exports.Controller_);
+exports.controller('gmfTimeSliderController', Controller);
 
 
 export default exports;
