@@ -36,14 +36,12 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {ngeox.TimeProperty} gmf-time-slider-time parameter for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
- * @param {angular.ITimeoutService} $timeout angular timeout service
- * @param {angular.IFilterService} $filter angular filter service
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfTimeSlider
  */
-exports.directive_ = function($timeout, $filter) {
+exports.directive_ = function() {
   return {
     scope: {
       onDateSelected: '&gmfTimeSliderOnDateSelected',
@@ -98,7 +96,6 @@ exports.directive('gmfTimeSlider', exports.directive_);
 
 /**
  * TimeSliderController - directive controller
- * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private
@@ -106,7 +103,7 @@ exports.directive('gmfTimeSlider', exports.directive_);
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
-exports.Controller_ = function($scope, ngeoWMSTime) {
+exports.Controller_ = function(ngeoWMSTime) {
 
   /**
    * @type {ngeo.misc.WMSTime}

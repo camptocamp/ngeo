@@ -31,15 +31,13 @@ if (!window.requestAnimationFrame) {
 /**
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {ngeo.misc.File} ngeoFile The file service.
  * @param {gettext} gettext The gettext service
- * @param {angular.IQService} $q Angular $q.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector, ngeoFile, gettext, $q) {
+const exports = function($scope, $injector, gettext) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
