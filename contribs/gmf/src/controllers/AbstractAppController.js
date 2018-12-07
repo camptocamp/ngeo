@@ -5,6 +5,7 @@ import 'jquery';
 import 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
+import bootstrap from 'gmf/controllers/bootstrap.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
 import gmfDatasourceModule from 'gmf/datasource/module.js';
@@ -827,5 +828,6 @@ exports.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   }
 ]);
 
+bootstrap(exports.module);
 
 export default exports;

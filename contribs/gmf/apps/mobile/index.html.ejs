@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{mainCtrl.lang}}" ng-app="Appmobile" ng-controller="MobileController as mainCtrl" ng-strict-di>
+<html lang="{{mainCtrl.lang}}" ng-controller="MobileController as mainCtrl" ng-strict-di>
   <head>
     <title ng-bind-template="{{'Mobile Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.json">
+    <meta name="interface" content="mobile">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
@@ -183,12 +185,5 @@
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-    <script>
-    document.write(
-      '<script src="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.js?' +
-      'interface=mobile&' +
-      'query=' + encodeURIComponent(document.location.search) +
-      '"><' + '/script>');
-    </script>
   </body>
 </html>

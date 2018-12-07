@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="{{mainCtrl.lang}}" ng-app="Appdesktop_alt" ng-controller="AlternativeDesktopController as mainCtrl" ng-strict-di>
+<html lang="{{mainCtrl.lang}}" ng-controller="AlternativeDesktopController as mainCtrl" ng-strict-di>
   <head>
     <title ng-bind-template="{{'Alternative Desktop Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.json">
+    <meta name="interface" content="desktop_alt">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
