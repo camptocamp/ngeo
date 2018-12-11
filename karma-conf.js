@@ -87,29 +87,17 @@ module.exports = function(config) {
     // any of these options are valid: https://github.com/istanbuljs/istanbuljs/blob/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-api/lib/config.js#L33-L39
     coverageIstanbulReporter: {
 
-       // reports can be any that are listed here: https://github.com/istanbuljs/istanbuljs/tree/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib
+      // reports can be any that are listed here: https://github.com/istanbuljs/istanbuljs/tree/aae256fb8b9a3d19414dcf069c592e88712c32c6/packages/istanbul-reports/lib
       reports: isDebug ? ['lcovonly', 'text-summary', 'html'] : ['lcovonly', 'text-summary'],
 
-       // base output directory. If you include %browser% in the path it will be replaced with the karma browser name
+      // base output directory. If you include %browser% in the path it will be replaced with the karma browser name
       dir: path.resolve(__dirname, '.build/coverage'),
 
-       // if using webpack and pre-loaders, work around webpack breaking the source path
+      // if using webpack and pre-loaders, work around webpack breaking the source path
       fixWebpackSourcePaths: true,
 
       // stop istanbul outputting messages like `File [${filename}] ignored, nothing could be mapped`
-      skipFilesWithNoCoverage: true,
-
-       // enforce percentage thresholds
-       // anything under these percentages will cause karma to fail with an exit code of 1 if not running in watch mode
-      thresholds: {
-        emitWarning: false, // set to `true` to not fail the test command when thresholds are not met
-        global: { // thresholds for all files
-          statements: 40,
-          lines: 40,
-          branches: 20,
-          functions: 30,
-        }
-      }
+      skipFilesWithNoCoverage: true
     }
   });
 };
