@@ -7,7 +7,7 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDateTimePicker', ['gettext']);
 
@@ -21,7 +21,7 @@ const exports = angular.module('ngeoDateTimePicker', ['gettext']);
  *
  * @htmlAttribute {Object} ngeo-datetimepicker-options The options.
  *
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoDatetimepicker
  */
@@ -41,10 +41,9 @@ exports.directive('ngeoDatetimepicker', exports.component_);
 
 /**
  * @param {!jQuery} $element Element.
- * @param {!angularGettext.Catalog} gettextCatalog service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatetimepickerController
@@ -58,7 +57,7 @@ exports.Controller_ = function($element, gettextCatalog) {
 
   /**
    * The gettext catalog
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

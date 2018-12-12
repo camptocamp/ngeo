@@ -5,15 +5,13 @@ const exports = {};
 
 import appURL from './url.js';
 import './profile.css';
-/** @suppress {extraRequire} */
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfProfileModule from 'gmf/profile/module.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -24,7 +22,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfPermalinkPermalink.module.name,
@@ -41,7 +39,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @constructor

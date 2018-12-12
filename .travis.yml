@@ -3,7 +3,7 @@ sudo: false
 
 language: node_js
 node_js:
-- "8"
+- "10"
 
 notifications:
   email: false
@@ -62,7 +62,8 @@ script:
 - make examples-hosted
 - buildtools/test_examples.py 1/1
 # Generate API doc
-- make .build/apidoc
+- npm run doc
+- npm run build-api
 
 deploy:
   - provider: script

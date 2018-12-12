@@ -3,6 +3,7 @@ ANGULAR_VERSION := $(shell buildtools/get-version.sh angular)
 ESLINT_CONFIG_FILES := $(shell find * -not -path 'node_modules/*' -type f -name '.eslintrc*')
 WEBPACK_CONFIG_FILES := $(shell find . -not -path './node_modules/*' -name 'webpack.*.js')
 
+API_JS_FILES = $(shell find api/src/ -type f -name '*.js')
 NGEO_JS_FILES = $(shell find src/ -type f -name '*.js')
 NGEO_PARTIALS_FILES := $(shell find src/ -name '*.html')
 NGEO_ALL_SRC_FILES := $(shell find src/ -type f)
@@ -109,13 +110,9 @@ help:
 	@echo
 	@echo "Secondary targets:"
 	@echo
-	@echo "- apidoc                  Build the API documentation using JSDoc"
 	@echo "- lint                    Check the code with the linter"
 	@echo "- gh-pages                Update the GitHub pages"
 	@echo
-
-.PHONY: apidoc
-apidoc: .build/apidoc
 
 .PHONY: check
 check: lint spell check-examples-checker check-examples test examples-hosted-apps
@@ -211,6 +208,7 @@ gh-pages: .build/python-venv.timestamp
 	buildtools/deploy.sh
 
 .build/eslint.timestamp: .build/node_modules.timestamp $(ESLINT_CONFIG_FILES) \
+		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
@@ -297,17 +295,6 @@ contribs/gmf/build/angular-locale_%.js: package.json
 	$(PY_VENV_BIN)/pip install `grep ^pip== requirements.txt --colour=never`
 	$(PY_VENV_BIN)/pip install -r requirements.txt
 	touch $@
-
-.build/jsdocAngularJS.js: jsdoc/get-angularjs-doc-ref.js .build/node_modules.timestamp
-	node $< > $@
-
-.build/jsdocOl3.js: jsdoc/get-ol3-doc-ref.js .build/node_modules.timestamp
-	node $< > $@
-
-.build/apidoc: jsdoc/config.json .build/node_modules.timestamp .build/jsdocAngularJS.js .build/jsdocOl3.js $(NGEO_JS_FILES)
-	rm -rf $@
-	./node_modules/.bin/jsdoc -c $< --destination $@
-
 
 # i18n
 
@@ -411,7 +398,7 @@ clean:
 	rm -f .build/ngeo.json
 	rm -f .build/gmf.json
 	rm -f .build/app-*.json
-	rm -rf .build/apidoc
+	rm -rf apidoc
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
 	rm -f .build/locale/ngeo.pot

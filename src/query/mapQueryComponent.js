@@ -1,10 +1,13 @@
 /**
  * @module ngeo.query.mapQueryComponent
  */
-/** @suppress {extraRequire} */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 
-import * as olEvents from 'ol/events.js';
+import {
+  listen as olEventsListen,
+  unlistenByKey as olEventsUnlistenByKey
+} from 'ol/events.js';
 
 const exports = angular.module('ngeoMapQuery', [
   ngeoQueryMapQuerent.module.name,
@@ -34,8 +37,8 @@ const exports = angular.module('ngeoMapQuery', [
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
  * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
- * @param {angular.$injector} $injector Main injector.
- * @return {angular.Directive} The Directive Definition Object.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMapQuery
@@ -46,8 +49,7 @@ exports.directive_ = function(ngeoMapQuerent, $injector) {
     scope: false,
     link: (scope, elem, attrs) => {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
-      let clickEventKey_ = null;
-      let pointerMoveEventKey_ = null;
+      const listenerKeys_ = [];
 
       /**
        * Called when the map is clicked while this controller is active. Issue
@@ -55,8 +57,10 @@ exports.directive_ = function(ngeoMapQuerent, $injector) {
        * @param {ol.MapBrowserEvent} evt The map browser event being fired.
        */
       const handleMapClick_ = function(evt) {
+        const action = ngeoQueryKeyboard.action;
         const coordinate = evt.coordinate;
         ngeoMapQuerent.issue({
+          action,
           coordinate,
           map
         });
@@ -85,12 +89,16 @@ exports.directive_ = function(ngeoMapQuerent, $injector) {
        * Listen to the map events.
        */
       const activate_ = function() {
-        clickEventKey_ = olEvents.listen(map, 'singleclick', handleMapClick_);
+        listenerKeys_.push(
+          olEventsListen(map, 'singleclick', handleMapClick_)
+        );
         const queryOptions = /** @type {ngeox.QueryOptions} */ (
           $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
         );
         if (queryOptions.cursorHover) {
-          pointerMoveEventKey_ = olEvents.listen(map, 'pointermove', handlePointerMove_);
+          listenerKeys_.push(
+            olEventsListen(map, 'pointermove', handlePointerMove_)
+          );
         }
       };
 
@@ -98,14 +106,8 @@ exports.directive_ = function(ngeoMapQuerent, $injector) {
        * Unlisten the map events.
        */
       const deactivate_ = function() {
-        if (clickEventKey_ !== null) {
-          olEvents.unlistenByKey(clickEventKey_);
-          clickEventKey_ = null;
-        }
-        if (pointerMoveEventKey_ !== null) {
-          olEvents.unlistenByKey(pointerMoveEventKey_);
-          pointerMoveEventKey_ = null;
-        }
+        olEventsUnlistenByKey(listenerKeys_);
+        listenerKeys_.length = 0;
         if (scope.$eval(attrs['ngeoMapQueryAutoclear']) !== false) {
           ngeoMapQuerent.clear();
         }

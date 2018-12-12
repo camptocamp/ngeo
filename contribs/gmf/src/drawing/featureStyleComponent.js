@@ -2,17 +2,16 @@
  * @module gmf.drawing.featureStyleComponent
  */
 import googAsserts from 'goog/asserts.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfDrawingFeatureStyle', [
   ngeoMiscColorpickerComponent.name,
@@ -35,7 +34,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     </gmf-featurestyle>
  *
  * @htmlAttribute {ol.Feature} gmf-featurestyle-feature The feature.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfFeaturestyle
@@ -57,7 +56,7 @@ exports.directive('gmfFeaturestyle',
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
@@ -71,7 +70,7 @@ exports.Controller_ = function($scope, ngeoFeatureHelper) {
    * @type {number}
    * @export
    */
-  this.uid = olBase.getUid(this);
+  this.uid = olUtilGetUid(this);
 
   /**
    * @type {?ol.Feature}
@@ -80,7 +79,7 @@ exports.Controller_ = function($scope, ngeoFeatureHelper) {
   this.feature;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

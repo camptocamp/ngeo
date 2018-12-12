@@ -2,7 +2,7 @@
  * @module ngeo.WFSDescribeFeatureType
  */
 import googAsserts from 'goog/asserts.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
 import * as olXml from 'ol/xml.js';
 
@@ -20,7 +20,7 @@ const exports = function() {
 
 };
 
-olBase.inherits(exports, olFormatXML);
+olUtilInherits(exports, olFormatXML);
 
 
 /**

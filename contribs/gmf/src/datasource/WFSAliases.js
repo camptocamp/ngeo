@@ -9,7 +9,6 @@ const exports = class {
    * Service that provides methods to get additional information and actions
    * when performing WFS requests.
    *
-   * @struct
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service

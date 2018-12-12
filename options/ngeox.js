@@ -78,8 +78,16 @@ ngeox.Attribute.prototype.alias;
 
 
 /**
- * Whether the attribute required to have a value set or not. Defaults to
- * `false`.
+ * Whether the attribute's value should be prevented from being edited
+ * or not. Defaults to `false`.
+ * @type {boolean|undefined}
+ */
+ngeox.Attribute.prototype.readonly;
+
+
+/**
+ * Whether the attribute is required to have a value set or
+ * not. Defaults to `false`.
  * @type {boolean|undefined}
  */
 ngeox.Attribute.prototype.required;
@@ -211,6 +219,7 @@ ngeox.Download;
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  * @typedef {{
+ *     action: (string|undefined),
  *     coordinate: (ol.Coordinate|undefined),
  *     dataSources: (Array.<ngeox.datasource.DataSource>|undefined),
  *     extent: (ol.Extent|undefined),
@@ -223,6 +232,20 @@ ngeox.Download;
  * }}
  */
 ngeox.IssueGetFeaturesOptions;
+
+
+/**
+ * The action the MapQuerent should take regarding the queried
+ * features. Possible values are:
+ *
+ * - `replace`: newly queried features are used as result
+ * - `add`:     newly queried features are added to the existing ones
+ * - `remove`:  newly queried features are removed from the existing ones
+ *
+ * Defaults to `replace`.
+ * @type {string|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.action;
 
 
 /**
@@ -310,12 +333,6 @@ ngeox.IssueGetFeaturesOptions.prototype.wfsCount;
 ngeox.MapFeatureOverlayGroup;
 
 
-/**
- * Provides a debounce function used to debounce calls to a user-provided
- * function.
- * @typedef {function(function(?), number, boolean):function()}
- */
-ngeox.miscDebounce;
 
 
 /**
@@ -884,7 +901,6 @@ ngeox.WfsType.prototype.featurePrefix;
 /**
  * The options for the WFS query service (permalink).
  * @typedef {{
- *     url: (string),
  *     wfsTypes: (!Array.<ngeox.WfsType>),
  *     pointRecenterZoom: (number|undefined),
  *     defaultFeatureNS: (string),
@@ -893,13 +909,6 @@ ngeox.WfsType.prototype.featurePrefix;
  * }}
  */
 ngeox.WfsPermalinkOptions;
-
-
-/**
- * URL to the WFS server.
- * @type {string}
- */
-ngeox.WfsPermalinkOptions.prototype.url;
 
 
 /**
@@ -1318,7 +1327,7 @@ ngeox.datasource.FileGroupOptions = function() {};
 
 /**
  * Angular main injector.
- * @type {!angular.$injector}
+ * @type {!angular.auto.IInjectorService}
  */
 ngeox.datasource.FileGroupOptions.prototype.injector;
 
@@ -1350,7 +1359,7 @@ ngeox.datasource.WMSGroupOptions = function() {};
 
 /**
  * Angular main injector.
- * @type {!angular.$injector}
+ * @type {!angular.auto.IInjectorService}
  */
 ngeox.datasource.WMSGroupOptions.prototype.injector;
 
@@ -2435,45 +2444,6 @@ ngeox.source.AsitVDOptions;
  * @type {string}
  */
 ngeox.source.AsitVDOptions.prototype.layer;
-
-
-/**
- * @typedef {{
- *    layer: string,
- *    projection: string,
- *    format: (string|undefined),
- *    timestamp: string
- * }}
- */
-ngeox.source.SwisstopoOptions;
-
-
-/**
- * Layer name.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.layer;
-
-
-/**
- * Projection code. Possible values are `EPSG:21781` and `EPSG:2056`.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.projection;
-
-
-/**
- * Image format. Default is `image/png`.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.format;
-
-
-/**
- * The `Time` dimension of the source.
- * @type {string}
- */
-ngeox.source.SwisstopoOptions.prototype.timestamp;
 
 
 /**

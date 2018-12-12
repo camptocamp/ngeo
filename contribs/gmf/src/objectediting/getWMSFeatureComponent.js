@@ -5,7 +5,7 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import * as olEvents from 'ol/events.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
   gmfObjecteditingQuery.module.name,
@@ -32,7 +32,7 @@ const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  *     The collection of features where to add those created by this directive.
  * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
  * @htmlAttribute {ol.Map} gmf-objecteditinggetwmsfeature-map The map.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
@@ -55,7 +55,7 @@ exports.directive('gmfObjecteditinggetwmsfeature',
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @param {gmf.objectediting.Query} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor

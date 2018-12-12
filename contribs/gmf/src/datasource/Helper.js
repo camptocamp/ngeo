@@ -4,7 +4,6 @@
 import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import * as olArray from 'ol/array.js';
 
 const exports = class {
 
@@ -12,8 +11,7 @@ const exports = class {
    * A service that provides utility methods to manipulate or get GMF data
    * sources.
    *
-   * @struct
-   * @param {angular.$q} $q The Angular $q service.
+   * @param {angular.IQService} $q The Angular $q service.
    * @param {gmf.editing.EnumerateAttribute} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
@@ -27,7 +25,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;
@@ -84,7 +82,7 @@ const exports = class {
 
   /**
    * @param {gmf.datasource.OGC} dataSource Filtrable data source.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   prepareFiltrableDataSource(dataSource) {
@@ -104,7 +102,7 @@ const exports = class {
       if (enumAttributes && enumAttributes.length) {
         const promises = [];
         for (const attribute of attributes) {
-          if (olArray.includes(enumAttributes, attribute.name) &&
+          if (enumAttributes.includes(attribute.name) &&
              attribute.type !== ngeoFormatAttributeType.SELECT &&
              (!attribute.choices || !attribute.choices.length)) {
             promises.push(
@@ -133,7 +131,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfDataSourcesHelper', [
   ngeoDatasourceHelper.module.name,

@@ -1,8 +1,10 @@
 /**
  * @module ngeo.misc.swipe
  */
+import * as angular from 'angular';
+
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMiscSwipe', []);
 

@@ -3,7 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
-import * as olObj from 'ol/obj.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
 
@@ -13,7 +12,7 @@ const d3 = {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoProfile', [
   ngeoMiscDebounce.name
@@ -44,7 +43,7 @@ const exports = angular.module('ngeoProfile', [
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
@@ -53,7 +52,7 @@ exports.directive_ = function(ngeoDebounce) {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */
@@ -68,7 +67,7 @@ exports.directive_ = function(ngeoDebounce) {
       scope.$watchCollection(optionsAttr, (newVal) => {
 
         const options = /** @type {ngeox.profile.ProfileOptions} */
-                (olObj.assign({}, newVal));
+                (Object.assign({}, newVal));
 
         if (options !== undefined) {
 

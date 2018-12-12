@@ -1,18 +1,15 @@
 /**
  * @module gmf.authentication.module
  */
+import * as angular from 'angular';
 import gmfAuthenticationComponent from 'gmf/authentication/component.js';
 
-/** @suppress {extraRequire} */
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('gmfAuthenticationModule', [
+export default angular.module('gmfAuthenticationModule', [
   gmfAuthenticationComponent.name,
   gmfAuthenticationService.module.name
 ]);
-
-
-export default exports;

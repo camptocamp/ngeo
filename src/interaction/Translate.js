@@ -2,7 +2,10 @@
  * @module ngeo.interaction.Translate
  */
 import googAsserts from 'goog/asserts.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
 import * as olEvents from 'ol/events.js';
@@ -23,7 +26,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * - pressing the ESC key automatically deactivate the interaction.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Translate}
  * @param {ngeox.interaction.TranslateOptions} options Options.
  */
@@ -82,7 +84,7 @@ const exports = function(options) {
     this, /** @type {olx.interaction.TranslateOptions} */ (options));
 };
 
-olBase.inherits(exports, olInteractionTranslate);
+olUtilInherits(exports, olInteractionTranslate);
 
 
 /**
@@ -192,7 +194,7 @@ exports.prototype.handleFeaturesRemove_ = function(evt) {
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   const geometry = feature.getGeometry();
   googAsserts.assertInstanceof(geometry, olGeomGeometry);
 
@@ -215,7 +217,7 @@ exports.prototype.addFeature_ = function(feature) {
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   if (this.featureListenerKeys_[uid]) {
     olEvents.unlistenByKey(this.featureListenerKeys_[uid]);
     delete this.featureListenerKeys_[uid];
@@ -237,7 +239,7 @@ exports.prototype.handleGeometryChange_ = function(feature,
   googAsserts.assertInstanceof(geometry, olGeomGeometry);
 
   const point = this.getGeometryCenterPoint_(geometry);
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   this.centerFeatures_[uid].setGeometry(point);
 };
 

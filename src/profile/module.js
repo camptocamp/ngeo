@@ -1,14 +1,12 @@
 /**
  * @module ngeo.profile.module
  */
+import * as angular from 'angular';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoProfileModule', [
+export default angular.module('ngeoProfileModule', [
   ngeoProfileElevationComponent.name,
 ]);
-
-
-export default exports;

@@ -4,7 +4,7 @@
 const exports = {};
 
 import './elevationProfile.css';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
@@ -19,7 +19,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -29,14 +29,14 @@ exports.module = angular.module('app', [
 
 /**
  * @constructor
- * @param {angular.$http} $http The $http angular service.
- * @param {angular.Scope} $scope The $scope angular service.
+ * @param {angular.IHttpService} $http The $http angular service.
+ * @param {angular.IScope} $scope The $scope angular service.
  * @ngInject
  */
 exports.MainController = function($http, $scope) {
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.scope_ = $scope;

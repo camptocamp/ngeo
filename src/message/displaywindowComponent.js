@@ -10,7 +10,7 @@ import 'angular-sanitize';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMessageDisplaywindowComponent', [
   'ngSanitize',
@@ -51,9 +51,9 @@ exports.Controller_ = class {
 
   /**
    * @param {!jQuery} $element Element.
-   * @param {!angular.$sce} $sce Angular sce service.
-   * @param {!angular.Scope} $scope Scope.
-   * @param {!angular.$compile} $compile The compile provider.
+   * @param {!angular.ISCEService} $sce Angular sce service.
+   * @param {!angular.IScope} $scope Scope.
+   * @param {!angular.ICompileService} $compile The compile provider.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -81,7 +81,7 @@ exports.Controller_ = class {
     this.contentTemplate = null;
 
     /**
-     * @type {?angular.Scope}
+     * @type {?angular.IScope}
      */
     this.contentScope = null;
 
@@ -149,19 +149,19 @@ exports.Controller_ = class {
     this.element_ = $element;
 
     /**
-     * @type {!angular.$sce}
+     * @type {!angular.ISCEService}
      * @private
      */
     this.sce_ = $sce;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {angular.$compile}
+     * @type {angular.ICompileService}
      * @private
      */
     this.compile_ = $compile;

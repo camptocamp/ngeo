@@ -14,10 +14,10 @@ import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -29,17 +29,15 @@ if (!window.requestAnimationFrame) {
 }
 
 /**
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
- * @param {ngeo.misc.File} ngeoFile The file service.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {gettext} gettext The gettext service
- * @param {angular.$q} $q Angular $q.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector, ngeoFile, gettext, $q) {
+const exports = function($scope, $injector, gettext) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -53,7 +51,7 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = [ngeoProjEPSG21781, ngeoProjEPSG2056, 'EPSG:4326'];
+  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
   /**
    * @type {number}
@@ -122,7 +120,7 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   };
 
   // Allow angular-gettext-tools to collect the strings to translate
-  /** @type {angularGettext.Catalog} */
+  /** @type {angular.gettext.gettextCatalog} */
   const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('OSM_time_merged');
   gettextCatalog.getString('OSM_time (merged)');
@@ -146,7 +144,7 @@ const exports = function($scope, $injector, ngeoFile, gettext, $q) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(exports, gmfControllersAbstractDesktopController);
 
 
 /**

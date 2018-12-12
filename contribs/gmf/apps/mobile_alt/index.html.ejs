@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="{{mainCtrl.lang}}" ng-app="Appmobile_alt" ng-controller="AlternativeMobileController as mainCtrl" ng-strict-di>
+<html lang="{{mainCtrl.lang}}" ng-controller="AlternativeMobileController as mainCtrl" ng-strict-di>
   <head>
     <title ng-bind-template="{{'Alternative Mobile Application'|translate}}">GeoMapFish</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="dynamicUrl" content="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.json">
+    <meta name="interface" content="mobile_alt">
     <link rel="shortcut icon" href="<%=require("./image/favicon.ico")%>" />
     <% for (var css in htmlWebpackPlugin.files.css) { %>
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
@@ -31,6 +33,14 @@
         gmf-displayquerywindow-featuresstyle="::mainCtrl.queryFeatureStyle"
         gmf-displayquerywindow-defaultcollapsed="false">
       </gmf-displayquerywindow>
+      <div
+        class="gmf-mobile-measure"
+        gmf-mobile-measurearea
+        gmf-mobile-measurearea-active="mainCtrl.measureAreaActive"
+        gmf-mobile-measurearea-precision="2"
+        gmf-mobile-measurearea-sketchstyle="::mainCtrl.customMeasureStyle"
+        gmf-mobile-measurearea-map="::mainCtrl.map">
+      </div>
       <div
         class="gmf-mobile-measure"
         gmf-mobile-measurelength
@@ -164,6 +174,15 @@
               {{'Length' | translate}}
             </a>
           </li>
+          <li>
+            <a ngeo-btn
+              ng-click="mainCtrl.hideNav()"
+              class="gmf-mobile-nav-button"
+              ng-model="mainCtrl.measureAreaActive">
+              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureAreaActive}"></span>
+              {{'Area' | translate}}
+            </a>
+          </li>
         </ul>
       </div>
       <gmf-authentication id="login" class="gmf-mobile-nav-slide" data-header-title="{{'Login' | translate}}"
@@ -171,16 +190,9 @@
         gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
       </gmf-authentication>
     </nav>
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,default-3.6,Array.prototype.includes,Object.entries"></script>
     <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
     <script src="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>"></script>
     <% } %>
-    <script>
-    document.write(
-      '<script src="https://geomapfish-demo-dc.camptocamp.com/2.4/dynamic.js?' +
-      'interface=mobile_alt&' +
-      'query=' + encodeURIComponent(document.location.search) +
-      '"><' + '/script>');
-    </script>
   </body>
 </html>

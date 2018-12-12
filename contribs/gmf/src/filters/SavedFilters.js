@@ -19,8 +19,7 @@ const exports = class {
    * The filters are saved in the browser local storage, if available.
    * Otherwise, they are kept in this service for the duration of the visit.
    *
-   * @param {!angular.Scope} $rootScope Angular rootScope.
-   * @struct
+   * @param {!angular.IScope} $rootScope Angular rootScope.
    * @ngInject
    * @ngdoc service
    * @ngname gmfSavedFilters
@@ -28,7 +27,7 @@ const exports = class {
   constructor($rootScope) {
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;
@@ -223,7 +222,6 @@ exports.module.service('gmfSavedFilters', exports);
 /**
  * The definition of a saved filter item.
  * @constructor
- * @struct
  * @export
  */
 exports.Item = function() {};

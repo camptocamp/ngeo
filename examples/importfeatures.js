@@ -6,7 +6,6 @@ const exports = {};
 import './importfeatures.css';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';
 
 import olMap from 'ol/Map.js';
@@ -19,7 +18,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -29,7 +28,7 @@ exports.module = angular.module('app', [
 
 /**
  * @constructor
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @export
  * @ngInject
  */

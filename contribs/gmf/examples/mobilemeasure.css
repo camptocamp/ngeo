@@ -6,7 +6,7 @@ gmf-map > div {
 [ngeo-btn-group] {
   padding: 5px;
 }
-.tooltip {
+gmf-map .tooltip {
   position: relative;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
@@ -15,17 +15,17 @@ gmf-map > div {
   opacity: 0.7;
   white-space: nowrap;
 }
-.ngeo-tooltip-measure {
+gmf-map .ngeo-tooltip-measure {
   opacity: 1;
   font-weight: bold;
 }
-.ngeo-tooltip-static {
+gmf-map .ngeo-tooltip-static {
   background-color: #ffcc33;
   color: black;
   border: 1px solid white;
 }
-.ngeo-tooltip-measure:before,
-.ngeo-tooltip-static:before {
+gmf-map .ngeo-tooltip-measure:before,
+gmf-map .ngeo-tooltip-static:before {
   border-top: 6px solid rgba(0, 0, 0, 0.5);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
@@ -35,6 +35,6 @@ gmf-map > div {
   margin-left: -7px;
   left: 50%;
 }
-.ngeo-tooltip-static:before {
+gmf-map .ngeo-tooltip-static:before {
   border-top-color: #ffcc33;
 }

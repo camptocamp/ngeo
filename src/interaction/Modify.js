@@ -6,7 +6,7 @@ import ngeoUtils from 'ngeo/utils.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
 import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import * as olFunctions from 'ol/functions.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
@@ -31,7 +31,6 @@ import olFeature from 'ol/Feature.js';
  * never share the same feature, they don't collide with one an other.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Interaction}
  * @param {olx.interaction.ModifyOptions} options Options.
  */
@@ -104,7 +103,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(exports, olInteractionInteraction);
+olUtilInherits(exports, olInteractionInteraction);
 
 
 /**

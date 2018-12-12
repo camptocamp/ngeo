@@ -3,19 +3,15 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadService from 'ngeo/download/service.js';
 
-/** @suppress {extraRequire} */
 import ngeoGridComponent from 'ngeo/grid/component.js';
 
 import ngeoGridConfig from 'ngeo/grid/Config.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olCollection from 'ol/Collection.js';
@@ -30,7 +26,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfQueryGridComponent', [
   ngeoDownloadCsv.module.name,
@@ -111,7 +107,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  * @ngdoc component
  * @ngname gmfDisplayquerygrid
  */
-exports.component_ = {
+const component = {
   controller: 'GmfDisplayquerygridController as ctrl',
   bindings: {
     'active': '=?gmfDisplayquerygridActive',
@@ -127,19 +123,19 @@ exports.component_ = {
 };
 
 
-exports.component('gmfDisplayquerygrid', exports.component_);
+exports.component('gmfDisplayquerygrid', component);
 
 
 /**
  * Controller for the query grid.
  *
- * @param {!angular.$injector} $injector Main injector.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.auto.IInjectorService} $injector Main injector.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
  * @param {!angular.JQLite} $element Element.
  * @constructor
@@ -156,13 +152,13 @@ exports.Controller_ = function($injector, $scope, ngeoQueryResult, ngeoMapQueren
       $injector.get('ngeoQueryOptions') : {});
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;

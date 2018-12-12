@@ -3,15 +3,14 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 
 /**
  * ngeo - WMS time service
  * @extends {ngeo.misc.Time}
- * @param {angular.$filter} $filter angular filter service.
- * @param {!angularGettext.Catalog} gettextCatalog service.
+ * @param {angular.IFilterService} $filter angular filter service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
- * @struct
  * @ngInject
  * @ngdoc service
  * @ngname ngeoWMSTime
@@ -20,12 +19,12 @@ const exports = function($filter, gettextCatalog) {
 
   /**
    * @private
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    */
   this.$filter_ = $filter;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -33,7 +32,7 @@ const exports = function($filter, gettextCatalog) {
   ngeoMiscTime.call(this);
 };
 
-olBase.inherits(exports, ngeoMiscTime);
+olUtilInherits(exports, ngeoMiscTime);
 
 
 /**
@@ -100,7 +99,7 @@ exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUT
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoWMSTime', [
   ngeoMiscTime.module.name,

@@ -8,7 +8,6 @@ import * as olMath from 'ol/math.js';
  * Provides a service with print utility functions.
  *
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoPrintUtils
  */
@@ -286,7 +285,7 @@ exports.prototype.getUpRightCorner = function(mapCenter) {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoPrintUtils', []);
 exports.module.service('ngeoPrintUtils', exports);

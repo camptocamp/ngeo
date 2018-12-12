@@ -1,7 +1,7 @@
 /**
  * @module ngeo.Popover
  */
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olOverlay from 'ol/Overlay.js';
 
 /**
@@ -48,7 +48,7 @@ const exports = function(opt_options) {
 
 };
 
-olBase.inherits(exports, olOverlay);
+olUtilInherits(exports, olOverlay);
 
 
 /**

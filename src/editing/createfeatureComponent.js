@@ -8,7 +8,7 @@ import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -55,7 +55,7 @@ const exports = angular.module('ngeoCreatefeature', [
  *     of geometry this directive should draw.
  * @htmlAttribute {ol.Map} ngeo-createfeature-map The map.
  *
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoCreatefeature
  */
@@ -76,15 +76,14 @@ exports.directive('ngeoCreatefeature', exports.directive_);
 
 
 /**
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {!angular.$compile} $compile Angular compile service.
- * @param {!angular.$filter} $filter Angular filter
- * @param {!angular.Scope} $scope Scope.
- * @param {!angular.$timeout} $timeout Angular timeout service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {!angular.ICompileService} $compile Angular compile service.
+ * @param {!angular.IFilterService} $filter Angular filter
+ * @param {!angular.IScope} $scope Scope.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
@@ -117,31 +116,31 @@ exports.Controller_ = function(gettextCatalog, $compile, $filter, $scope,
   this.map;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!angular.$compile}
+   * @type {!angular.ICompileService}
    * @private
    */
   this.compile_ = $compile;
 
   /**
-   * @type {!angular.$filter}
+   * @type {!angular.IFilterService}
    * @private
    */
   this.filter_ = $filter;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
@@ -230,7 +229,7 @@ exports.Controller_.prototype.$onInit = function() {
   this.interaction_ = interaction;
   this.map.addInteraction(interaction);
 
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   if (interaction instanceof olInteractionDraw) {
     this.ngeoEventHelper_.addListenerKey(
       uid,
@@ -293,7 +292,7 @@ exports.Controller_.prototype.handleDrawEnd_ = function(event) {
  */
 exports.Controller_.prototype.$onDestroy = function() {
   this.timeout_(() => {
-    const uid = olBase.getUid(this);
+    const uid = olUtilGetUid(this);
     this.ngeoEventHelper_.clearListenerKey(uid);
     this.interaction_.setActive(false);
     this.map.removeInteraction(this.interaction_);

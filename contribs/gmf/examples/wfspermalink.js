@@ -5,14 +5,12 @@ const exports = {};
 
 import appURL from './url.js';
 import './wfspermalink.css';
-/** @suppress {extraRequire} */
 import gmfMapModule from 'gmf/map/module.js';
 
-/** @suppress {extraRequire} */
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -23,7 +21,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleCircle from 'ol/style/Circle.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
@@ -33,7 +31,6 @@ exports.module = angular.module('gmfapp', [
 
 exports.module.value('ngeoWfsPermalinkOptions',
   /** @type {ngeox.WfsPermalinkOptions} */ ({
-    url: appURL.MAPSERVER_PROXY,
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}
@@ -42,6 +39,7 @@ exports.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
+exports.module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
 exports.module.constant('defaultTheme', 'Demo');
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 

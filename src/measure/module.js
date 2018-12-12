@@ -1,18 +1,16 @@
 /**
  * @module ngeo.measure.module
  */
+import * as angular from 'angular';
 import ngeoMeasureArea from 'ngeo/measure/area.js';
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMeasureModule', [
+export default angular.module('ngeoMeasureModule', [
   ngeoMeasureArea.name,
   ngeoMeasureAzimut.name,
   ngeoMeasureLength.name
 ]);
-
-
-export default exports;

@@ -30,7 +30,6 @@ const exports = class {
    * When the operator is `between`, the `lowerBoundary` and `upperBoundary`
    * properties are used instead of `expression`.
    *
-   * @struct
    * @param {!ngeox.rule.RuleOptions} options Options.
    */
   constructor(options) {

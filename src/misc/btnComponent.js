@@ -2,7 +2,7 @@
  * @module ngeo.misc.btnComponent
  */
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoBtnComponent', []);
 
@@ -34,8 +34,8 @@ const exports = angular.module('ngeoBtnComponent', []);
  *
  * @htmlAttribute {*} ngeo-btn-group-active Any property of the scope.
  * Tells whether at least one button of the group is active.
- * @param {angular.$parse} $parse Angular parse service.
- * @return {angular.Directive} The directive specs.
+ * @param {angular.IParseService} $parse Angular parse service.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtnGroup
@@ -45,7 +45,7 @@ exports.btnGroupComponent_ = function($parse) {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
     /**
-     * @param {!angular.Scope} scope Scope.
+     * @param {!angular.IScope} scope Scope.
      * @param {!angular.JQLite=} element Element.
      * @param {!angular.Attributes=} attrs Attributes.
      * @param {!ngeo.misc.btnComponent.BtnGroupController=} controller Controller.
@@ -71,9 +71,8 @@ exports.directive('ngeoBtnGroup', exports.btnGroupComponent_);
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @constructor
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoBtnGroupController
@@ -86,7 +85,7 @@ exports.BtnGroupController = function($scope) {
   this.buttons_ = [];
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -131,8 +130,8 @@ exports.controller('ngeoBtnGroupController',
  * to activate/deactivate an OpenLayers interaction.
  *
  * @htmlAttribute {*} ng-model Any property on the scope. Ideally a boolean.
- * @param {angular.$parse} $parse Angular parse service.
- * @return {angular.Directive} The directive specs.
+ * @param {angular.IParseService} $parse Angular parse service.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtn
@@ -142,7 +141,7 @@ exports.btnComponent_ = function($parse) {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
     /**
-     * @param {!angular.Scope} scope Scope.
+     * @param {!angular.IScope} scope Scope.
      * @param {!angular.JQLite=} element Element.
      * @param {!angular.Attributes=} attrs Attributes.
      * @param {!Array.<!Object>=} ctrls Controller.

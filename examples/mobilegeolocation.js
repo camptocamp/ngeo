@@ -17,7 +17,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
   ngeoGeolocationMobile.name,
@@ -26,7 +26,7 @@ const appmodule = angular.module('app', [
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor

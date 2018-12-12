@@ -1,6 +1,7 @@
 /**
  * @module ngeo.message.extraModule
  */
+import * as angular from 'angular';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
@@ -10,9 +11,9 @@ import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
-const exports = angular.module('ngeoMessageExtraModule', [
+export default angular.module('ngeoMessageExtraModule', [
   ngeoMessageNotification.module.name,
   ngeoMessageDisplaywindowComponent.name,
   ngeoMessageDisclaimer.module.name,
@@ -21,6 +22,3 @@ const exports = angular.module('ngeoMessageExtraModule', [
   ngeoMessagePopoverComponent.name,
   ngeoMessageModalComponent.name,
 ]);
-
-
-export default exports;

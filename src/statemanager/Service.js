@@ -8,7 +8,6 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
  * @constructor
- * @struct
  * @param {!ngeo.statemanager.Location} ngeoLocation ngeo location service.
  * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
@@ -186,7 +185,7 @@ exports.prototype.deleteParam = function(key) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoStateManager', [
   ngeoStatemanagerLocation.module.name

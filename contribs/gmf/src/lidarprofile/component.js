@@ -4,7 +4,7 @@
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLidarprofile', []);
 
@@ -52,7 +52,7 @@ function gmfLidarprofileTemplateUrl($element, $attrs, gmfLidarprofileTemplateUrl
  * @ngdoc component
  * @ngname gmfLidarprofile
  */
-exports.component_ = {
+const component = {
   controller: 'GmfLidarprofileController',
   bindings: {
     'active': '=gmfLidarprofileActive',
@@ -61,7 +61,7 @@ exports.component_ = {
   templateUrl: gmfLidarprofileTemplateUrl
 };
 
-exports.component('gmfLidarprofile', exports.component_);
+exports.component('gmfLidarprofile', component);
 
 
 /**
@@ -70,7 +70,7 @@ exports.component('gmfLidarprofile', exports.component_);
 exports.Controller_ = class {
 
   /**
-   * @param {angular.Scope} $scope Angular scope.
+   * @param {angular.IScope} $scope Angular scope.
    * @private
    * @ngInject
    * @ngdo controller

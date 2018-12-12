@@ -5,13 +5,12 @@ const exports = {};
 
 import appURL from './url.js';
 import './bboxquery.css';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoQueryModule from 'ngeo/query/module.js';
@@ -23,7 +22,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.Module} */
+/** @type {!angular.IModule} */
 exports.module = angular.module('app', [
   'gettext',
   ngeoDatasourceDataSources.module.name,
@@ -76,7 +75,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @constructor

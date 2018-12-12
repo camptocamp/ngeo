@@ -6,7 +6,7 @@ import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import * as olEvents from 'ol/events.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfBackgroundlayerselector', [
   gmfThemeThemes.module.name,
@@ -68,7 +68,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  * @ngdoc component
  * @ngname gmfBackgroundlayerselector
  */
-exports.component_ = {
+const component = {
   controller: 'GmfBackgroundlayerselectorController as ctrl',
   bindings: {
     'map': '=gmfBackgroundlayerselectorMap',
@@ -79,15 +79,13 @@ exports.component_ = {
 };
 
 
-exports.component('gmfBackgroundlayerselector',
-  exports.component_);
+exports.component('gmfBackgroundlayerselector', component);
 
 
 /**
  * @constructor
  * @private
- * @struct
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!gmf.theme.Themes} gmfThemes Themes service.
  * @ngInject

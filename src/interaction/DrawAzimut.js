@@ -4,7 +4,7 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olEvents from 'ol/events.js';
 import * as olFunctions from 'ol/functions.js';
@@ -21,7 +21,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction dedicated to measure azimut.
  *
  * @constructor
- * @struct
  * @extends {ol.interaction.Pointer}
  * @param {olx.interaction.PointerOptions} options Options.
  */
@@ -94,7 +93,7 @@ const exports = function(options) {
   olEvents.listen(this, 'change:active', this.updateState_, this);
 };
 
-olBase.inherits(exports, olInteractionPointer);
+olUtilInherits(exports, olInteractionPointer);
 
 
 /**

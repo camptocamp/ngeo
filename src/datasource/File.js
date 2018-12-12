@@ -6,12 +6,11 @@ import olCollection from 'ol/Collection.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
-const exports = class extends ngeoDatasourceDataSource {
+export default class extends ngeoDatasourceDataSource {
 
   /**
    * A data source that contains vector features that were loaded from a file.
    *
-   * @struct
    * @param {ngeox.datasource.FileOptions} options Options.
    */
   constructor(options) {
@@ -91,7 +90,4 @@ const exports = class extends ngeoDatasourceDataSource {
   get extent() {
     return this.source_.getExtent();
   }
-};
-
-
-export default exports;
+}

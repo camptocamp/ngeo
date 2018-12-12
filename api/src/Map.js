@@ -8,7 +8,6 @@ import {Icon, Style} from 'ol/style.js';
 import View from 'ol/View.js';
 import VectorSource from 'ol/source/Vector.js';
 import VectorLayer from 'ol/layer/Vector.js';
-import TileLayer from 'ol/layer/Tile.js';
 
 import MousePosition from 'ol/control/MousePosition.js';
 import {createStringXY} from 'ol/coordinate.js';
@@ -28,13 +27,11 @@ import * as constants from './constants.js';
 import {getFeaturesFromLayer} from './Querent.js';
 import * as themes from './Themes.js';
 
-import EPSG21781 from '@geoblocks/sources/EPSG21781.js';
-import EPSG2056 from '@geoblocks/sources/EPSG2056.js';
 
 class Map {
 
   /**
-   * @param {Object} options
+   * @param {Object} options API options.
    * @property {string} div
    * @property {ol.Coordinate} center
    * @property {number} [zoom=10]
@@ -74,8 +71,7 @@ class Map {
      * @type {Overlay}
      */
     this.overlay_ = new Overlay({
-      element: this.createOverlayDomTree_(),
-      autoPan: true
+      element: this.createOverlayDomTree_()
     });
     this.map_.addOverlay(this.overlay_);
 
@@ -136,7 +132,7 @@ class Map {
 
   /**
    * @private
-   * @return {HTMLElement}
+   * @return {HTMLElement} overlay container element.
    */
   createOverlayDomTree_() {
     const overlayContainer = document.createElement('div');
@@ -157,8 +153,8 @@ class Map {
   }
 
   /**
-   * @param {ol.Coordinate} center
-   * @param {number} zoom
+   * @param {ol.Coordinate} center Center.
+   * @param {number} zoom Zoom.
    */
   recenter(center, zoom) {
     this.view_.setCenter(center);
@@ -166,7 +162,7 @@ class Map {
   }
 
   /**
-   * @param {Object} options
+   * @param {Object} options Options.
    * @property {ol.Coordinate} position
    * @property {string} [icon]
    * @property {ol.Size} [size]
@@ -220,16 +216,16 @@ class Map {
 
   /**
    * @param {string} type Layer type, only 'text' format is supported.
-   * @param {string} name
-   * @param {string} url
-   * @param {Object} [options]
+   * @param {string} name Name.
+   * @param {string} url URL.
+   * @param {Object} [options] Options
    * @property {Array.<string>} [attr=['title', 'description']]
    * @property {function()} [success]
    * @property {function()} [error]
    */
   addCustomLayer(type, name, url, options = {}) {
     fetch(url)
-      .then((response) => response.text())
+      .then(response => response.text())
       .then((text) => {
         const attr = options.attr || ['title', 'description'];
         const lines = text.split(/\r\n|\r|\n/);
@@ -267,7 +263,7 @@ class Map {
   }
 
   /**
-   * @param {string} id
+   * @param {string} id Identifier.
    */
   selectObject(id) {
     const feature = this.vectorSource_.getFeatureById(id);
@@ -277,9 +273,9 @@ class Map {
       const content = this.overlay_.getElement().querySelector('.ol-popup-content');
       content.innerHTML += `<div><b>${properties.title}</b></div>`;
       content.innerHTML += `<p>${properties.description}</p>`;
+      this.overlay_.setPosition(coordinates);
 
       this.view_.setCenter(coordinates);
-      this.overlay_.setPosition(coordinates);
     }
   }
 
@@ -287,8 +283,9 @@ class Map {
 
 
 /**
- * @param {Array.<string>} keys
- * @param {Array.<*>} values
+ * @param {Array.<string>} keys Keys.
+ * @param {Array.<*>} values Values.
+ * @returns {Object<string, *>} Object.
  */
 function zip(keys, values) {
   const obj = {};
@@ -300,8 +297,9 @@ function zip(keys, values) {
 
 
 /**
- * @param {Object.<string, *>} obj
- * @param {Array.<string>} keys
+ * @param {Object.<string, *>} obj Object.
+ * @param {Array.<string>} keys keys.
+ * @returns {Object<string, *>} Object.
  */
 function filterByKeys(obj, keys) {
   const filtered = {};

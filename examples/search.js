@@ -8,7 +8,7 @@ import './search.css';
 import googAsserts from 'goog/asserts.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -19,7 +19,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -49,8 +49,8 @@ exports.module.component('appSearch', exports.searchComponent);
 /**
  * @constructor
  * @param {angular.JQLite} $element Element.
- * @param {angular.Scope} $rootScope Angular root scope.
- * @param {angular.$compile} $compile Angular compile service.
+ * @param {angular.IScope} $rootScope Angular root scope.
+ * @param {angular.ICompileService} $compile Angular compile service.
  * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject

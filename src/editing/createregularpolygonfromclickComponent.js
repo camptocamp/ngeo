@@ -50,7 +50,7 @@ const exports = angular.module('ngeoCreateregularpolygonfromclick', [
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-sides
  *     The number of sides for the regular polygon. Default value is 3.
  *
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname ngeoCreateregularpolygonfromclick
  */
@@ -76,10 +76,9 @@ exports.directive(
 
 
 /**
- * @param {!angular.Scope} $scope Scope.
+ * @param {!angular.IScope} $scope Scope.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreateregularpolygonfromclickController

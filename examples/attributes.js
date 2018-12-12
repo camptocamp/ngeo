@@ -4,14 +4,13 @@
 const exports = {};
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
 
 import olFeature from 'ol/Feature.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} */
+/** @type {!angular.IModule} */
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -20,16 +19,16 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {!angular.Scope} $scope Scope.
+ * @param {angular.IHttpService} $http Angular http service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {!angular.IScope} $scope Scope.
  * @ngInject
  * @constructor
  */
 exports.MainController = function($http, $timeout, $scope) {
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
@@ -88,7 +87,7 @@ exports.MainController = function($http, $timeout, $scope) {
 
 
 /**
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @return {Array.<ngeox.Attribute>} List of attributes.
  * @private
  */

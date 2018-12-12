@@ -9,14 +9,12 @@ import './filterselector.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
-/** @suppress {extraRequire} */
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';
 
 import gmfFiltersModule from 'gmf/filters/module.js';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -25,14 +23,14 @@ import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
@@ -60,7 +58,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 exports.MainController = class {
 
   /**
-   * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.IScope} $scope Angular scope.
    * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
    *     data sources manager service.
    * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
@@ -75,7 +73,7 @@ exports.MainController = class {
   ) {
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;

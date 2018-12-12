@@ -6,19 +6,18 @@ const exports = {};
 import './layerorder.css';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';
 
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -27,7 +26,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @constructor
  * @export
  * @ngInject

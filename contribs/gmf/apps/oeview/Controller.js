@@ -11,9 +11,9 @@
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
 import './sass/oeview.scss';
 import appBase from '../appmodule.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
-import * as olBase from 'ol/index.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -25,8 +25,8 @@ if (!window.requestAnimationFrame) {
 }
 
 /**
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
@@ -46,7 +46,7 @@ const exports = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = [ngeoProjEPSG21781, ngeoProjEPSG2056, 'EPSG:4326'];
+  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
   /**
    * @type {!Array.<number>}
@@ -80,11 +80,11 @@ const exports = function($scope, $injector) {
    * @export
    */
   this.mousePositionProjections = [{
-    code: ngeoProjEPSG2056,
+    code: EPSG2056,
     label: 'CH1903+ / LV95',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
-    code: ngeoProjEPSG21781,
+    code: EPSG21781,
     label: 'CH1903 / LV03',
     filter: 'ngeoNumberCoordinates::{x}, {y} m'
   }, {
@@ -94,7 +94,7 @@ const exports = function($scope, $injector) {
   }];
 
   // Allow angular-gettext-tools to collect the strings to translate
-  /** @type {angularGettext.Catalog} */
+  /** @type {angular.gettext.gettextCatalog} */
   const gettextCatalog = $injector.get('gettextCatalog');
   gettextCatalog.getString('Add a theme');
   gettextCatalog.getString('Add a sub theme');
@@ -109,7 +109,7 @@ const exports = function($scope, $injector) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(exports, gmfControllersAbstractDesktopController);
 
 exports.module = angular.module('Appoeview', [
   appBase.module.name,

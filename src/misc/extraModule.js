@@ -1,6 +1,7 @@
 /**
  * @module ngeo.misc.extraModule
  */
+import * as angular from 'angular';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';
@@ -18,9 +19,9 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMiscExtraModule', [
+export default angular.module('ngeoMiscExtraModule', [
   ngeoMiscAutoProjection.module.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscControlComponent.name,
@@ -37,6 +38,3 @@ const exports = angular.module('ngeoMiscExtraModule', [
   ngeoMiscToolActivateMgr.module.name,
   ngeoMiscWMSTime.module.name,
 ]);
-
-
-export default exports;

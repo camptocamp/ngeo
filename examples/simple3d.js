@@ -4,7 +4,6 @@
 const exports = {};
 
 import './simple3d.css';
-/** @suppress {extraRequire} */
 import olMap from 'ol/Map.js';
 
 import olView from 'ol/View.js';
@@ -15,7 +14,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -26,7 +25,7 @@ exports.module = angular.module('app', [
 /**
  * @constructor
  * @ngInject
- * @param {angular.Scope} $rootScope Root scope.
+ * @param {angular.IScope} $rootScope Root scope.
  * @param {ngeo.olcs.Service} ngeoOlcsService The service.
  */
 exports.MainController = function($rootScope, ngeoOlcsService) {

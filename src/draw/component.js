@@ -3,26 +3,20 @@
  */
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawPoint from 'ngeo/draw/point.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawRectangle from 'ngeo/draw/rectangle.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawText from 'ngeo/draw/text.js';
 
-/** @suppress {extraRequire} */
 import ngeoMeasureArea from 'ngeo/measure/area.js';
 
-/** @suppress {extraRequire} */
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 
-/** @suppress {extraRequire} */
 import ngeoMeasureLength from 'ngeo/measure/length.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDrawfeature', [
   ngeoDrawController.module.name,
@@ -103,7 +97,7 @@ const exports = angular.module('ngeoDrawfeature', [
  * @htmlAttribute {boolean} ngeo-drawfeature-showmeasure. Checks the
  *      checkbox in order to display the feature measurements as a label.
  *      Default to false.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature

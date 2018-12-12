@@ -4,12 +4,11 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
-const exports = class extends ngeoRuleRule {
+export default class extends ngeoRuleRule {
 
   /**
    * A date rule.
    *
-   * @struct
    * @param {!ngeox.rule.DateOptions} options Options.
    */
   constructor(options) {
@@ -18,7 +17,4 @@ const exports = class extends ngeoRuleRule {
 
     super(options);
   }
-};
-
-
-export default exports;
+}

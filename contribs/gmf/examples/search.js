@@ -5,14 +5,13 @@ const exports = {};
 
 import appURL from './url.js';
 import './search.css';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -24,7 +23,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,

@@ -10,7 +10,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfMapMouseposition', [
   ngeoMiscFilters.name,
@@ -62,7 +62,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  * @ngdoc component
  * @ngname gmfMouseposition
  */
-exports.component_ = {
+const component = {
   controller: 'gmfMousepositionController as ctrl',
   bindings: {
     'map': '<gmfMousepositionMap',
@@ -71,15 +71,14 @@ exports.component_ = {
   templateUrl: gmfMapMousepositionTemplateUrl
 };
 
-exports.component('gmfMouseposition',
-  exports.component_);
+exports.component('gmfMouseposition', component);
 
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.$filter} $filter Angular filter.
- * @param {!angular.Scope} $scope Angular scope.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.IFilterService} $filter Angular filter.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
  * @ngInject
@@ -106,13 +105,13 @@ exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   this.projection;
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -124,7 +123,7 @@ exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
   this.$element_ = $element;
 
   /**
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    * @private
    */
   this.$filter_ = $filter;

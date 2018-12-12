@@ -12,7 +12,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoGrid', [
   ngeoGridConfig.module.name,
@@ -66,7 +66,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  * @ngdoc component
  * @ngname ngeoGrid
  */
-exports.component_ = {
+const component = {
   controller: 'ngeoGridController as ctrl',
   bindings: {
     'configuration': '=ngeoGridConfiguration'
@@ -74,14 +74,13 @@ exports.component_ = {
   templateUrl: ngeoGridTemplateUrl
 };
 
-exports.component('ngeoGrid', exports.component_);
+exports.component('ngeoGrid', component);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGridController
@@ -89,7 +88,7 @@ exports.component('ngeoGrid', exports.component_);
 exports.Controller_ = function($scope) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;

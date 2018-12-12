@@ -5,21 +5,19 @@ import googAsserts from 'goog/asserts.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import 'ngeo/sass/font.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoFilter', [
   ngeoFilterRuleHelper.module.name,
@@ -78,13 +76,12 @@ exports.component('ngeoFilter', {
 exports.FilterController_ = class {
 
   /**
-   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
-   * @param {!angular.Scope} $scope Angular scope.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+   * @param {!angular.IScope} $scope Angular scope.
+   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController
@@ -140,19 +137,19 @@ exports.FilterController_ = class {
     // === Injected properties ===
 
     /**
-     * @type {!angularGettext.Catalog}
+     * @type {!angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
@@ -390,7 +387,7 @@ exports.FilterController_ = class {
    * @export
    */
   registerRule_(rule) {
-    const uid = olBase.getUid(rule);
+    const uid = olUtilGetUid(rule);
     this.ruleUnlisteners_[uid] = this.scope_.$watch(
       () => rule.active,
       this.handleRuleActiveChange_.bind(this)
@@ -406,7 +403,7 @@ exports.FilterController_ = class {
    * @export
    */
   unregisterRule_(rule) {
-    const uid = olBase.getUid(rule);
+    const uid = olUtilGetUid(rule);
     const unlistener = this.ruleUnlisteners_[uid];
     googAsserts.assert(unlistener);
     unlistener();

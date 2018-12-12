@@ -1,6 +1,7 @@
 /**
  * @module gmf.layertree.module
  */
+import * as angular from 'angular';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
@@ -10,15 +11,12 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import './common.scss';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLayertreeModule', [
+export default angular.module('gmfLayertreeModule', [
   gmfLayertreeComponent.name,
   gmfLayertreeDatasourceGroupTreeComponent.name,
   gmfLayertreeSyncLayertreeMap.module.name,
   gmfLayertreeTimeSliderComponent.name,
   gmfLayertreeTreeManager.module.name,
 ]);
-
-
-export default exports;

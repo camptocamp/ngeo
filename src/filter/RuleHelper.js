@@ -13,7 +13,6 @@ import ngeoRuleSelect from 'ngeo/rule/Select.js';
 import ngeoRuleText from 'ngeo/rule/Text.js';
 import {writeFilter} from 'ol/format/WFS.js';
 import * as olFormatFilter from 'ol/format/filter.js';
-import * as olArray from 'ol/array.js';
 
 import moment from 'moment';
 
@@ -24,10 +23,9 @@ const exports = class {
    * A service that provides utility methods to create `ngeo.rule.Rule`
    * objects.
    *
-   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
-   * @struct
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject
@@ -35,7 +33,7 @@ const exports = class {
   constructor(gettextCatalog, ngeoFeatureHelper, ngeoWMSTime) {
 
     /**
-     * @type {!angularGettext.Catalog}
+     * @type {!angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
@@ -581,7 +579,7 @@ const exports = class {
         }
         filter = olFormatFilter.or.apply(null, conditions);
       }
-    } else if (olArray.includes(spatialTypes, operator)) {
+    } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
       googAsserts.assertInstanceof(rule, ngeoRuleGeometry);
       const geometry = googAsserts.assert(rule.geometry);
@@ -604,7 +602,7 @@ const exports = class {
           opt_srsName
         );
       }
-    } else if (olArray.includes(numericTypes, operator)) {
+    } else if (numericTypes.includes(operator)) {
       const numericExpression = googAsserts.assertNumber(expression);
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
@@ -761,7 +759,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoRuleHelper', [
   ngeoMiscFeatureHelper.module.name,

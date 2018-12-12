@@ -11,17 +11,16 @@ import * as olObj from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
  * Provides help functions that helps you to create and manage layers.
- * @param {angular.$q} $q Angular promises/deferred service.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IQService} $q Angular promises/deferred service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {number} ngeoTilesPreloadingLimit Load tiles up to preload levels. By default preload is Infinity,
  *     which means load all tiles on the top of the visible level. See also preload value
  *     in documentation for ol.Layer.Tile.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoLayerHelper
  * @ngInject
@@ -29,13 +28,13 @@ import * as olUri from 'ol/uri.js';
 const exports = function($q, $http, ngeoTilesPreloadingLimit) {
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.$q_ = $q;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -159,7 +158,7 @@ exports.prototype.createBasicWMSLayerFromDataSource = function(
  * @param {string=} opt_matrixSet Optional WMTS matrix set.
  * @param {Object.<string, string>=} opt_dimensions WMTS dimensions.
  * @param {Object=} opt_customOptions Some initial options.
- * @return {angular.$q.Promise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
+ * @return {angular.IPromise.<ol.layer.Tile>} A Promise with a layer (with source) on success,
  *     no layer else.
  * @export
  */
@@ -436,7 +435,7 @@ exports.prototype.getWMSLegendURL = function(url,
   if (opt_additionalQueryString) {
     Object.assign(queryString, opt_additionalQueryString);
   }
-  return olUri.appendParams(url, queryString);
+  return olUriAppendParams(url, queryString);
 };
 
 
@@ -527,7 +526,7 @@ exports.prototype.getQuerySourceIds = function(layer) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoLayerHelper', [])
   .service('ngeoLayerHelper', exports)

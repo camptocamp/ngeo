@@ -5,7 +5,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
@@ -23,10 +23,10 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * features are drawn or modified.
  *
  * @constructor
- * @param {angular.$http} $http Angular $http service.
- * @param {angular.$q} $q The Angular $q service.
- * @param {!angular.Scope} $rootScope Angular rootScope.
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.IHttpService} $http Angular $http service.
+ * @param {angular.IQService} $q The Angular $q service.
+ * @param {!angular.IScope} $rootScope Angular rootScope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @ngInject
@@ -39,25 +39,25 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   // === Injected services ===
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.rootScope_ = $rootScope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
@@ -101,7 +101,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
    * Reference to the promise taking care of calling all GetFeature requests
    * of the currently active cache items after the map view changed. Used
    * to cancel if the map view changes often within a short period of time.
-   * @type {?angular.$q.Promise}
+   * @type {?angular.IPromise}
    * @private
    */
   this.mapViewChangePromise_ = null;
@@ -219,7 +219,7 @@ exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
-      const uid = olBase.getUid(treeCtrl);
+      const uid = olUtilGetUid(treeCtrl);
 
       const stateWatcherUnregister = this.rootScope_.$watch(
         () => treeCtrl.getState(),
@@ -366,7 +366,7 @@ exports.prototype.getWFSConfig_ = function(treeCtrl) {
  */
 exports.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
 
-  const uid = olBase.getUid(treeCtrl);
+  const uid = olUtilGetUid(treeCtrl);
   const item = this.cache_[uid];
 
   // Note: a snappable treeCtrl can only be a leaf, therefore the only possible
@@ -563,7 +563,7 @@ exports.Cache;
  *     geometryName: (string),
  *     interaction: (?ol.interaction.Snap),
  *     maxFeatures: (number),
- *     requestDeferred: (?angular.$q.Deferred),
+ *     requestDeferred: (?angular.IDeferred),
  *     snappingConfig: (gmfThemes.GmfSnappingConfig),
  *     stateWatcherUnregister: (Function),
  *     treeCtrl: (ngeo.layertree.Controller),
@@ -583,7 +583,7 @@ exports.WFSConfig;
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfSnapping', [
   gmfLayertreeTreeManager.module.name,

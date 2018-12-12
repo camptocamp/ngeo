@@ -2,10 +2,10 @@
  * @module gmf.layertree.datasourceGroupTreeComponent
  */
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
   ngeoDatasourceDataSources.module.name,
@@ -45,11 +45,10 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
 exports.Controller_ = class {
 
   /**
-   * @param {!angular.Scope} $scope Angular scope.
+   * @param {!angular.IScope} $scope Angular scope.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources
    *     service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfDatasourcegrouptreeController
@@ -68,7 +67,7 @@ exports.Controller_ = class {
     // Injected properties
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;
@@ -85,7 +84,7 @@ exports.Controller_ = class {
    * @export
    */
   getGroupUid() {
-    return `datasourcegrouptree-${olBase.getUid(this.group)}`;
+    return `datasourcegrouptree-${olUtilGetUid(this.group)}`;
   }
 
   /**

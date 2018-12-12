@@ -5,7 +5,7 @@ const exports = {};
 
 import './asitvd.css';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -13,7 +13,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} */
+/** @type {!angular.IModule} */
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name

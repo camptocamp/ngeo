@@ -3,7 +3,6 @@
  */
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
-/** @suppress {extraRequire} */
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
@@ -14,10 +13,8 @@ import 'jquery-datetimepicker/jquery.datetimepicker.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
-/** @suppress {extraRequire} */
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
 import ngeoUtils from 'ngeo/utils.js';
@@ -28,10 +25,8 @@ import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMenu from 'ngeo/Menu.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -39,11 +34,9 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
-import * as olBase from 'ol/index.js';
-import * as olArray from 'ol/array.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import * as olExtent from 'ol/extent.js';
@@ -57,7 +50,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('GmfEditingFeatureComponent', [
   gmfEditingEditFeature.module.name,
@@ -115,7 +108,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
  * @ngname gmfEditfeature
  */
@@ -142,10 +135,10 @@ exports.directive('gmfEditfeature',
 
 /**
  * @param {jQuery} $element Element.
- * @param {angular.$q} $q Angular $q service.
- * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.IQService} $q Angular $q service.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmf.editing.Snapping} gmfSnapping The gmf snapping service.
  * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
@@ -217,25 +210,25 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   this.element_ = $element;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -300,7 +293,7 @@ exports.Controller_ = function($element, $q, $scope, $timeout,
   /**
    * A deferred object resolved after the confirm modal "continue w/o saving" or
    * "save" buttons are clicked.
-   * @type {angular.$q.Deferred|null}
+   * @type {angular.IDeferred|null}
    * @private
    */
   this.confirmDeferred_ = null;
@@ -567,7 +560,7 @@ exports.Controller_.prototype.$onInit = function() {
 
   this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
 
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     olEvents.listen(
@@ -700,7 +693,7 @@ exports.Controller_.prototype.cancel = function() {
 /**
  * Check if there are unsaved modifications. If there aren't, then cancel.
  * Used by the 'cancel' button in the template.
- * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
  * @export
  */
@@ -716,7 +709,7 @@ exports.Controller_.prototype.confirmCancel = function() {
  * (a.k.a. is dirty), then the confirmation modal is shown.
  * @param {boolean=} scopeApply Whether to force scope to refresh or not.
  *     when the confirm modal is not dismissed.
- * @return {angular.$q.Promise} The promise attached to the confirm deferred
+ * @return {angular.IPromise} The promise attached to the confirm deferred
  *     object.
  * @private
  */
@@ -796,7 +789,7 @@ exports.Controller_.prototype.submit = function() {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller_.prototype.handleEditFeature_ = function(resp) {
@@ -896,8 +889,8 @@ exports.Controller_.prototype.handleFeatureAdd_ = function(evt) {
 exports.Controller_.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const createUid = ['create-', olBase.getUid(this)].join('-');
-  const otherUid = ['other-', olBase.getUid(this)].join('-');
+  const createUid = ['create-', olUtilGetUid(this)].join('-');
+  const otherUid = ['other-', olUtilGetUid(this)].join('-');
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -1006,7 +999,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
     pixel,
     (feature) => {
       let ret = false;
-      if (olArray.includes(this.features.getArray(), feature)) {
+      if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;
@@ -1060,7 +1053,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
     pixel,
     (feature) => {
       let ret = false;
-      if (olArray.includes(this.features.getArray(), feature)) {
+      if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;
@@ -1294,7 +1287,7 @@ exports.Controller_.prototype.handleDestroy_ = function() {
   this.features.clear();
   this.handleFeatureChange_(null, this.feature);
   this.feature = null;
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
   this.toggle_(false);
   this.handleMapSelectActiveChange_(false);

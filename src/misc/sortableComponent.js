@@ -2,10 +2,11 @@
  * @module ngeo.misc.sortableComponent
  */
 import 'jquery-ui/ui/widgets/sortable.js';
+import 'jquery-ui-touch-punch';
 import googAsserts from 'goog/asserts.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoSortable', []);
 
@@ -46,8 +47,8 @@ const exports = angular.module('ngeoSortable', []);
  *     with the element and the sort array as arguments.
  * @htmlAttribute {Object?} ngeo-sortable-callback-ctx Context to apply at
  *     the call of the callback function.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @return {angular.Directive} The directive specs.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoSortable
@@ -56,7 +57,7 @@ exports.component_ = function($timeout) {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */

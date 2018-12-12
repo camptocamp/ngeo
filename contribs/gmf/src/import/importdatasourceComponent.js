@@ -2,13 +2,10 @@
  * @module gmf.import.importdatasourceComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
-/** @suppress {extraRequire} */
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';
 
-/** @suppress {extraRequire} */
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
 
 import googAsserts from 'goog/asserts.js';
@@ -58,16 +55,15 @@ exports.Controller_ = class {
 
   /**
    * @param {!jQuery} $element Element.
-   * @param {!angular.$filter} $filter Angular filter.
-   * @param {!angular.$injector} $injector Main injector.
-   * @param {!angular.Scope} $scope Angular scope.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!angular.IFilterService} $filter Angular filter.
+   * @param {!angular.auto.IInjectorService} $injector Main injector.
+   * @param {!angular.IScope} $scope Angular scope.
+   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!gmf.datasource.ExternalDataSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfImportdatasourceController
@@ -93,13 +89,13 @@ exports.Controller_ = class {
     this.element_ = $element;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
@@ -147,7 +143,7 @@ exports.Controller_ = class {
     this.hasError = false;
 
     /**
-     * @type {?angular.$q.Promise}
+     * @type {?angular.IPromise}
      * @private
      */
     this.hasErrorPromise_ = null;

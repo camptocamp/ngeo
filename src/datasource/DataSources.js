@@ -20,7 +20,6 @@ const exports = class {
    * - inRange: The map view 'change:resolution' event is listened and the
    *   property is updated depending on the current resolution.
    *
-   * @struct
    * @ngdoc service
    * @ngname ngeoDataSources
    * @ngInject
@@ -173,7 +172,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDataSources', []);
 // DataSources with the ngeox.datasource.DataSources type.

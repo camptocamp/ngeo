@@ -1,13 +1,12 @@
 /**
  * @module ngeo.grid.Config
  */
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @param {Array.<Object>|undefined} data Entries/objects to be shown in a grid.
  * @param {Array.<ngeox.GridColumnDef>|undefined} columnDefs Column definition of a grid.
  * @constructor
- * @struct
  * @export
  */
 const exports = function(data, columnDefs) {
@@ -38,7 +37,7 @@ const exports = function(data, columnDefs) {
  * @export
  */
 exports.getRowUid = function(attributes) {
-  return `${olBase.getUid(attributes)}`;
+  return `${olUtilGetUid(attributes)}`;
 };
 
 
@@ -131,7 +130,7 @@ exports.prototype.invertSelection = function() {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoGridConfig', []);
 

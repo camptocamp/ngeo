@@ -15,7 +15,7 @@ const d3 = {
 };
 
 
-const exports = class {
+export default class {
 
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
@@ -367,7 +367,4 @@ const exports = class {
     }
     return closestPoint;
   }
-};
-
-
-export default exports;
+}

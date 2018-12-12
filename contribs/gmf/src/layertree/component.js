@@ -6,7 +6,6 @@ import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeing
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
-/** @suppress {extraRequire} */
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent.js';
 
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
@@ -15,7 +14,6 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-/** @suppress {extraRequire} */
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
@@ -32,7 +30,7 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 import 'bootstrap/js/src/collapse.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeComponent', [
   gmfDatasourceDataSourceBeingFiltered.module.name,
@@ -131,7 +129,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  * @ngdoc component
  * @ngname gmfLayertreeComponent
  */
-exports.component_ = {
+const component = {
   controller: 'GmfLayertreeController as gmfLayertreeCtrl',
   bindings: {
     'map': '=gmfLayertreeMap',
@@ -141,12 +139,12 @@ exports.component_ = {
   template: gmfLayertreeTemplate
 };
 
-exports.component('gmfLayertree', exports.component_);
+exports.component('gmfLayertree', component);
 
 
 /**
  * @param {angular.JQLite} $element Element.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
@@ -161,7 +159,6 @@ exports.component('gmfLayertree', exports.component_);
  * @param {!gmf.theme.Themes} gmfThemes The gmf Themes service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
@@ -182,7 +179,7 @@ exports.Controller_ = function($element, $scope, ngeoLayerHelper, gmfDataSourceB
   this.dimensions;
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -389,7 +386,7 @@ exports.Controller_.prototype.getLayer = function(treeCtrl) {
 /**
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
- * @param {angular.Scope} scope treeCtrl scope.
+ * @param {angular.IScope} scope treeCtrl scope.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export

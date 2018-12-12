@@ -8,9 +8,7 @@ import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
-import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
-import * as olObj from 'ol/obj.js';
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
@@ -25,10 +23,9 @@ import * as olObj from 'ol/obj.js';
  * This service's theme is a GmfTheme with only children and a name.
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
- * @struct
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {angular.$injector} $injector Angular injector service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.auto.IInjectorService} $injector Angular injector service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
  * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
@@ -41,19 +38,19 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   ngeoNotification, gmfThemes, ngeoStateManager) {
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;
 
   /**
-   * @type {angular.$injector}
+   * @type {angular.auto.IInjectorService}
    * @private
    */
   this.$injector_ = $injector;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -110,7 +107,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.groupsToAddInThisDigestLoop_ = [];
 
   /**
-   * @type {angular.$q.Promise}
+   * @type {angular.IPromise}
    * @private
    */
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
@@ -404,7 +401,7 @@ exports.prototype.removeAll = function() {
  * @private
  */
 exports.prototype.cloneGroupNode_ = function(group, names) {
-  const clone = /** @type {gmfThemes.GmfGroup} */ (olObj.assign({}, group));
+  const clone = /** @type {gmfThemes.GmfGroup} */ (Object.assign({}, group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -426,7 +423,7 @@ exports.prototype.toggleNodeCheck_ = function(node, names) {
     if (childNode.children) {
       this.toggleNodeCheck_(childNode, names);
     } else if (childNode.metadata) {
-      childNode.metadata.isChecked = olArray.includes(names, childNode.name);
+      childNode.metadata.isChecked = names.includes(childNode.name);
     }
   });
 };
@@ -623,7 +620,7 @@ exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfTreeManager', [
   gmfThemeThemes.module.name,

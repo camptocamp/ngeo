@@ -4,8 +4,8 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
-import * as olBase from 'ol/index.js';
-import * as olObj from 'ol/obj.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
+
 import olGeomPoint from 'ol/geom/Point.js';
 
 /**
@@ -13,7 +13,6 @@ import olGeomPoint from 'ol/geom/Point.js';
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
  *
  * @constructor
- * @struct
  * @extends {ngeo.interaction.Measure}
  * @param {ngeox.numberCoordinates} format the number formatter
  * @param {string} coordFormat the coordinates formatter
@@ -21,7 +20,7 @@ import olGeomPoint from 'ol/geom/Point.js';
  */
 const exports = function(format, coordFormat, options = /** @type {ngeox.interaction.MeasureOptions} */ ({})) {
 
-  olObj.assign(options, {displayHelpTooltip: false});
+  Object.assign(options, {displayHelpTooltip: false});
 
   ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */(options));
 
@@ -38,7 +37,7 @@ const exports = function(format, coordFormat, options = /** @type {ngeox.interac
   this.coordFormat_ = coordFormat;
 };
 
-olBase.inherits(exports, ngeoInteractionMeasure);
+olUtilInherits(exports, ngeoInteractionMeasure);
 
 
 /**

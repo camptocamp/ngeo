@@ -22,7 +22,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeModule from 'gmf/theme/module.js';
 import ngeoMainmodule from 'ngeo/mainmodule.js';
 
-const exports = angular.module('gmf', [
+export default angular.module('gmf', [
   gmfAuthenticationModule.name,
   gmfBackgroundlayerselectorModule.name,
   gmfContextualdataModule.name,
@@ -44,6 +44,3 @@ const exports = angular.module('gmf', [
   gmfThemeModule.name,
   ngeoMainmodule.name,
 ]);
-
-
-export default exports;

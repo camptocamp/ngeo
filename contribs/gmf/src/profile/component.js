@@ -7,24 +7,21 @@ import olFeature from 'ol/Feature.js';
 import olOverlay from 'ol/Overlay.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import * as olObj from 'ol/obj.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
-/** @suppress {extraRequire} */
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfProfile', [
   ngeoDownloadCsv.module.name,
@@ -100,7 +97,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @ngdoc component
  * @ngname gmfProfile
  */
-exports.component_ = {
+const component = {
   controller: 'GmfProfileController as ctrl',
   bindings: {
     'active': '=gmfProfileActive',
@@ -114,15 +111,15 @@ exports.component_ = {
   templateUrl: gmfProfileTemplateUrl
 };
 
-exports.component('gmfProfile', exports.component_);
+exports.component('gmfProfile', component);
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IScope} $scope Angular scope.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.JQLite} $element Element.
- * @param {angular.$filter} $filter Angular filter
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.IFilterService} $filter Angular filter
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
@@ -138,13 +135,13 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   ngeoCsvDownload) {
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -156,13 +153,13 @@ exports.Controller_ = function($scope, $http, $element, $filter,
   this.$element_ = $element;
 
   /**
-   * @type {angular.$filter}
+   * @type {angular.IFilterService}
    * @export
    */
   this.$filter_ = $filter;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -367,7 +364,7 @@ exports.Controller_.prototype.$onInit = function() {
   if (optionsFn) {
     const options = optionsFn();
     googAsserts.assertObject(options);
-    olObj.assign(this.profileOptions, options);
+    Object.assign(this.profileOptions, options);
   }
 };
 
@@ -414,7 +411,7 @@ exports.Controller_.prototype.onPointerMove_ = function(e) {
   const pixelDist = eventToLine.getLength() / this.map_.getView().getResolution();
 
   if (pixelDist < 16) {
-    this.profileHighlight = this.getDistanceOnALine_(closestPoint, this.line);
+    this.profileHighlight = this.getDistanceOnALine_(closestPoint);
   } else {
     this.profileHighlight = -1;
   }
@@ -427,12 +424,10 @@ exports.Controller_.prototype.onPointerMove_ = function(e) {
  * The point must be on the line. If not, this function will return the total
  * length of the line.
  * @param {ol.Coordinate} pointOnLine A point on the given line.
- * @param {ol.geom.LineString} line A line.
  * @return {number} A distance.
  * @private
  */
-exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine,
-  line) {
+exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine) {
   let segment;
   let distOnLine = 0;
   const fakeExtent = [
@@ -466,14 +461,11 @@ exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine,
  *  @param {string} yUnits Y units label.
  * @private
  */
-exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits,
-  elevationsRef, yUnits) {
+exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
   // Update information point.
-  let ref;
   const coordinate = [point.x, point.y];
-  for (ref in elevationsRef) {
-    this.currentPoint.elevations[ref] = elevationsRef[ref];
-  }
+
+  this.currentPoint.elevations = elevationsRef;
   this.currentPoint.distance = dist;
   this.currentPoint.xUnits = xUnits;
   this.currentPoint.yUnits = yUnits;
@@ -655,7 +647,7 @@ exports.Controller_.prototype.getJsonProfile_ = function() {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
@@ -667,7 +659,7 @@ exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.Controller_.prototype.getProfileDataError_ = function(resp) {

@@ -12,7 +12,6 @@ let gmfThemes;
 
 /**
  * @constructor
- * @struct
  */
 gmfThemes.GmfThemesResponse = function() {};
 
@@ -39,7 +38,6 @@ gmfThemes.GmfThemesResponse.prototype.themes;
 
 /**
  * @constructor
- * @struct
  */
 gmfThemes.GmfRootNode = function() {};
 
@@ -52,7 +50,6 @@ gmfThemes.GmfRootNode.prototype.children;
 /**
  * Contains the common element of all the elements of the GeoMapFish layer tree.
  * @constructor
- * @struct
  */
 gmfThemes.GmfBaseNode = function() {};
 
@@ -79,7 +76,6 @@ gmfThemes.GmfBaseNode.prototype.name;
 /**
  * The element we can select in the theme selector.
  * @constructor
- * @struct
  * @extends gmfThemes.GmfBaseNode
  */
 gmfThemes.GmfTheme = function() {};
@@ -106,7 +102,6 @@ gmfThemes.GmfTheme.prototype.functionalities;
  * This represent « first level group » (Block in the layer tree),
  * or all sub nodes that's not al leaf.
  * @constructor
- * @struct
  * @extends gmfThemes.GmfBaseNode
  */
 gmfThemes.GmfGroup = function() {};
@@ -158,7 +153,6 @@ gmfThemes.GmfGroup.prototype.time;
  * neither a WMS layer.
  * This is also the leaf of the tree.
  * @constructor
- * @struct
  * @extends gmfThemes.GmfBaseNode
  */
 gmfThemes.GmfLayer = function() {};
@@ -201,7 +195,6 @@ gmfThemes.GmfLayer.prototype.type;
 
 /**
  * @constructor
- * @struct
  * @extends gmfThemes.GmfLayer
  */
 gmfThemes.GmfLayerWMS = function() {};
@@ -249,7 +242,6 @@ gmfThemes.GmfLayerWMS.prototype.time;
 
 /**
  * @constructor
- * @struct
  * @extends gmfThemes.GmfLayer
  */
 gmfThemes.GmfLayerWMTS = function() {};
@@ -283,7 +275,6 @@ gmfThemes.GmfLayerWMTS.prototype.url;
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
  * @constructor
- * @struct
  */
 gmfThemes.GmfLayerChildLayer = function() {};
 
@@ -322,7 +313,6 @@ gmfThemes.GmfOgcServers;
 
 /**
  * @constructor
- * @struct
  */
 gmfThemes.GmfOgcServer = function() {};
 
@@ -372,7 +362,6 @@ gmfThemes.GmfOgcServer.prototype.wfsSupport;
 
 /**
  * @constructor
- * @struct
  */
 gmfThemes.GmfFunctionalities = function() {};
 
@@ -403,7 +392,6 @@ gmfThemes.GmfFunctionalities.prototype.preset_layer_filter;
 
 /**
  * @constructor
- * @struct
  */
 gmfThemes.GmfMetaData = function() {};
 
@@ -667,7 +655,6 @@ gmfThemes.GmfMetaData.prototype.wmsLayers;
 
 /**
  * @constructor
- * @struct
  */
 gmfThemes.GmfSnappingConfig = function() {};
 
@@ -698,7 +685,6 @@ gmfThemes.GmfSnappingConfig.prototype.vertex;
 
 /**
  * @record
- * @struct
  */
 gmfThemes.GmfLayerAttributeValuesResponse = function() {};
 
@@ -711,7 +697,6 @@ gmfThemes.GmfLayerAttributeValuesResponse.prototype.items;
 
 /**
  * @record
- * @struct
  */
 gmfThemes.GmfLayerAttributeValue = function() {};
 

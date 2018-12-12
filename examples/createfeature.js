@@ -4,12 +4,10 @@
 const exports = {};
 
 import './createfeature.css';
-/** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
@@ -24,7 +22,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,

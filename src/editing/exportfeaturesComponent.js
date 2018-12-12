@@ -2,7 +2,7 @@
  * @module ngeo.editing.exportfeaturesComponent
  */
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 
@@ -29,7 +29,7 @@ const exports = angular.module('ngeoExportfeatures', [
  *
  * @htmlAttribute {ol.Collection.<ol.Feature>} ngeo-exportfeatures-features The
  *     features to export
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoExportfeatures
@@ -50,12 +50,11 @@ exports.directive('ngeoExportfeatures', exports.directive_);
 
 /**
  * @param {angular.JQLite} $element Element.
- * @param {angular.$injector} $injector Main injector.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController
@@ -75,7 +74,7 @@ exports.Controller_ = function($element, $injector, $scope,
    */
   this.element_ = $element;
 
-  const uid = olBase.getUid(this);
+  const uid = olUtilGetUid(this);
   const id = ['ngeo-exportfeature', uid].join('-');
 
   /**

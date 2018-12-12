@@ -7,7 +7,6 @@ import * as olEvents from 'ol/events.js';
  * Provides methods to manage the listening/unlistening of OpenLayers events
  *
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoEventHelper
  * @ngInject
@@ -70,7 +69,7 @@ exports.prototype.initListenerKey_ = function(uid) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoEventHelper', []);
 exports.module.service('ngeoEventHelper', exports);

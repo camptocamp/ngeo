@@ -6,7 +6,7 @@ const exports = {};
 import './backgroundlayer.css';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
 
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -15,7 +15,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
@@ -54,7 +54,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 
 /**
  * @constructor
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export
@@ -131,7 +131,7 @@ exports.module.controller('AppBackgroundlayerController',
 
 /**
  * @constructor
- * @param {angular.Scope} $scope Controller scope.
+ * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
 exports.MainController = function($scope) {

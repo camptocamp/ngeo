@@ -3,7 +3,10 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import olObservable from 'ol/Observable.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerLayer from 'ol/layer/Layer.js';
@@ -52,7 +55,6 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  *
  * @extends {ol.Observable}
  * @constructor
- * @struct
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Themes service.
  * @ngInject
  * @ngdoc service
@@ -77,7 +79,7 @@ const exports = function(ngeoLayerHelper) {
 
 };
 
-olBase.inherits(exports, olObservable);
+olUtilInherits(exports, olObservable);
 
 
 /**
@@ -88,7 +90,7 @@ olBase.inherits(exports, olObservable);
  * @export
  */
 exports.prototype.get = function(map) {
-  const mapUid = olBase.getUid(map).toString();
+  const mapUid = olUtilGetUid(map).toString();
   return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
     exports.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
 };
@@ -104,7 +106,7 @@ exports.prototype.get = function(map) {
  */
 exports.prototype.set = function(map, layer) {
   const ZIndex = -200;
-  const mapUid = olBase.getUid(map).toString();
+  const mapUid = olUtilGetUid(map).toString();
   const previous = this.get(map);
   if (layer !== null) {
     layer.setZIndex(ZIndex);
@@ -143,7 +145,7 @@ exports.prototype.set = function(map, layer) {
  * @export
  */
 exports.prototype.getOpacityBgLayer = function(map) {
-  const mapUid = olBase.getUid(map).toString();
+  const mapUid = olUtilGetUid(map).toString();
   return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
     exports.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
 };
@@ -210,7 +212,7 @@ exports.prototype.updateDimensions = function(map, dimensions) {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoBackgroundLayerMgr', [
   ngeoLayerHelper.module.name

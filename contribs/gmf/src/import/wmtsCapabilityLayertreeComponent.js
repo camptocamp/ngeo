@@ -2,13 +2,11 @@
  * @module gmf.import.wmtsCapabilityLayertreeComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 const exports = angular.module('gmfWmtscapabilitylayertree', [
   gmfDatasourceExternalDataSourcesManager.module.name,
@@ -54,7 +52,6 @@ exports.Controller_ = class {
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfWmtscapabilitylayertreeController
@@ -114,7 +111,7 @@ exports.Controller_ = class {
    * @export
    */
   getUid(layer) {
-    return olBase.getUid(layer);
+    return olUtilGetUid(layer);
   }
 };
 

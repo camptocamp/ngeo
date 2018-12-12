@@ -21,8 +21,8 @@ import olEventsEventTarget from 'ol/events/Target.js';
 const exports = class extends olEventsEventTarget {
 
   /**
-   * @param {angular.$http} $http Angular http service.
-   * @param {angular.$injector} $injector Main injector.
+   * @param {angular.IHttpService} $http Angular http service.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.Scope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
    * @param {gmfx.User} gmfUser User.
@@ -33,7 +33,7 @@ const exports = class extends olEventsEventTarget {
     super();
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      * @private
      */
     this.$http_ = $http;
@@ -86,7 +86,7 @@ const exports = class extends olEventsEventTarget {
    * @param {string} oldPwd Old password.
    * @param {string} newPwd New password.
    * @param {string} confPwd New password confirmation.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   changePassword(oldPwd, newPwd, confPwd) {
@@ -108,7 +108,7 @@ const exports = class extends olEventsEventTarget {
   /**
    * @param {string} login Login name.
    * @param {string} pwd Password.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   login(login, pwd) {
@@ -122,7 +122,7 @@ const exports = class extends olEventsEventTarget {
   }
 
   /**
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   logout() {
@@ -135,14 +135,14 @@ const exports = class extends olEventsEventTarget {
 
   /**
    * @param {string} login Login name.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   resetPassword(login) {
     const url = `${this.baseUrl_}/${exports.RouteSuffix.RESET_PASSWORD}`;
 
     /**
-     * @param {angular.$http.Response} resp Ajax response.
+     * @param {angular.IHttpResponse} resp Ajax response.
      * @return {gmfx.AuthenticationDefaultResponse} Response.
      */
     const successFn = function(resp) {
@@ -172,8 +172,8 @@ const exports = class extends olEventsEventTarget {
 
   /**
    * @param {boolean} checkingLoginStatus Checking the login status?
-   * @param {angular.$http.Response} resp Ajax response.
-   * @return {angular.$http.Response} Response.
+   * @param {angular.IHttpResponse} resp Ajax response.
+   * @return {angular.IHttpResponse} Response.
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
@@ -237,7 +237,7 @@ exports.RouteSuffix = {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfAuthenticationService', []);
 exports.module.service('gmfAuthenticationService', exports);

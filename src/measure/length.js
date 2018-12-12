@@ -9,7 +9,7 @@ import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMeasurelength', [
   ngeoDrawController.module.name,
@@ -18,11 +18,11 @@ const exports = angular.module('ngeoMeasurelength', [
 
 
 /**
- * @param {!angular.$compile} $compile Angular compile service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
- * @param {!angular.$filter} $filter Angular filter.
- * @param {!angular.$injector} $injector Main injector.
- * @return {!angular.Directive} The directive specs.
+ * @param {!angular.ICompileService} $compile Angular compile service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+ * @param {!angular.IFilterService} $filter Angular filter.
+ * @param {!angular.auto.IInjectorService} $injector Main injector.
+ * @return {!angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
@@ -32,7 +32,7 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.Scope} $scope Scope.
+     * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.

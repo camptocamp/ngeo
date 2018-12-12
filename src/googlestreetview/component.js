@@ -10,7 +10,7 @@ import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoGooglestreetview', [
   ngeoMapFeatureOverlayMgr.module.name
@@ -51,7 +51,7 @@ exports.Controller_ = class {
 
   /**
    * @param {angular.JQLite} $element Element.
-   * @param {!angular.Scope} $scope Scope.
+   * @param {!angular.IScope} $scope Scope.
    * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager.
    * @private
@@ -98,7 +98,7 @@ exports.Controller_ = class {
     // Injected properties
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;

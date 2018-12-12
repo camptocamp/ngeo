@@ -10,7 +10,6 @@ import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -27,7 +26,7 @@ import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -62,11 +61,11 @@ exports.module.component('appMeasuretools', exports.measuretoolsComponent);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$compile} $compile Angular compile service.
- * @param {angular.$sce} $sce Angular sce service.
- * @param {angular.$filter} $filter Angular filter service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.ICompileService} $compile Angular compile service.
+ * @param {angular.ISCEService} $sce Angular sce service.
+ * @param {angular.IFilterService} $filter Angular filter service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @ngInject
  */

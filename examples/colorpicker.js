@@ -4,10 +4,9 @@
 const exports = {};
 
 import './colorpicker.css';
-/** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMiscColorpickerComponent.name,
@@ -54,7 +53,7 @@ exports.module.controller('AppColorpickerController',
 
 /**
  * @constructor
- * @param {angular.Scope} $scope Controller scope.
+ * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
 exports.MainController = function($scope) {

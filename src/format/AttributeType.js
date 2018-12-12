@@ -1,11 +1,12 @@
 /**
  * @module ngeo.format.AttributeType
  */
+
 /**
  * @enum {string}
  * @export
  */
-const exports = {
+export default {
   /**
    * @type {string}
    */
@@ -39,6 +40,3 @@ const exports = {
    */
   TEXT: 'text'
 };
-
-
-export default exports;

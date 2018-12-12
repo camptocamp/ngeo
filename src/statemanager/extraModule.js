@@ -1,14 +1,12 @@
 /**
  * @module ngeo.statemanager.extraModule
  */
+import * as angular from 'angular';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoStatemanagerExtraModule', [
+export default angular.module('ngeoStatemanagerExtraModule', [
   ngeoStatemanagerWfsPermalink.module.name,
 ]);
-
-
-export default exports;

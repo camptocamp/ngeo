@@ -5,13 +5,11 @@ import gmfBase from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
-/** @suppress {extraRequire} */
 import gmfThemeManager from 'gmf/theme/Manager.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoPopover from 'ngeo/Popover.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
@@ -20,7 +18,6 @@ import ngeoOlcsConstants from 'ngeo/olcs/constants.js';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
@@ -28,8 +25,7 @@ import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import googAsserts from 'goog/asserts.js';
-import * as olBase from 'ol/index.js';
-import * as olArray from 'ol/array.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -55,13 +51,12 @@ import olLayerGroup from 'ol/layer/Group.js';
  * ngeoAutoProjection and ngeoFeatures.
  *
  * @constructor
- * @struct
- * @param {!angular.$q} $q The Angular $q service.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {angular.Scope} $rootScope Angular rootScope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {!angular.IQService} $q The Angular $q service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.IScope} $rootScope Angular rootScope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
@@ -74,19 +69,19 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   ngeoStateManager, ngeoLocation, gmfUser) {
 
   /**
-   * @type {!angular.$q}
+   * @type {!angular.IQService}
    * @private
    */
   this.q_ = $q;
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.rootScope_ = $rootScope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;
@@ -434,7 +429,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   // External DataSources
 
   /**
-   * @type {?angular.$q.Promise}
+   * @type {?angular.IPromise}
    * @private
    */
   this.setExternalDataSourcesStatePromise_ = null;
@@ -980,6 +975,9 @@ exports.prototype.initLayers_ = function() {
     this.$timeout_(() => {
       if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
+        if (authenticationRequired && this.user_.role_id === null) {
+          this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+        }
         return;
       }
       // Enable the layers and set the opacity
@@ -1010,10 +1008,10 @@ exports.prototype.initLayers_ = function() {
             exports.ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           );
           if (groupLayers !== undefined) {
-            const groupLayersArray = groupLayers.split(',');
+            const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
             treeCtrl.traverseDepthFirst((treeCtrl) => {
               if (treeCtrl.node.children === undefined) {
-                const enable = olArray.includes(groupLayersArray, treeCtrl.node.name);
+                const enable = groupLayersArray.includes(treeCtrl.node.name);
                 if (enable) {
                   groupLayersArray.splice(groupLayersArray.indexOf(treeCtrl.node.name), 1);
                 }
@@ -1076,7 +1074,7 @@ exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
  * @private
  */
 exports.prototype.addNgeoFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
     olEvents.listen(feature, 'change',
@@ -1091,7 +1089,7 @@ exports.prototype.addNgeoFeature_ = function(feature) {
  * @private
  */
 exports.prototype.removeNgeoFeature_ = function(feature) {
-  const uid = olBase.getUid(feature);
+  const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.clearListenerKey(uid);
   this.handleNgeoFeaturesChange_();
 };
@@ -1207,7 +1205,7 @@ exports.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 
 /**
- * @return {!angular.$q.Promise} Promise
+ * @return {!angular.IPromise} Promise
  * @private
  */
 

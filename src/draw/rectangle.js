@@ -7,13 +7,13 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDrawrectangle', []);
 
 
 /**
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
@@ -23,7 +23,7 @@ exports.directive_ = function() {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
     /**
-     * @param {!angular.Scope} $scope Scope.
+     * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.

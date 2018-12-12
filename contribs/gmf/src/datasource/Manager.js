@@ -8,18 +8,16 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import * as olObj from 'ol/obj.js';
@@ -38,10 +36,9 @@ const exports = class {
    *
    * When changing theme, these data sources are cleared then re-created.
    *
-   * @struct
-   * @param {angular.$q} $q Angular q service
-   * @param {!angular.Scope} $rootScope Angular rootScope.
-   * @param {angular.$timeout} $timeout Angular timeout service.
+   * @param {angular.IQService} $q Angular q service
+   * @param {!angular.IScope} $rootScope Angular rootScope.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
    * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
@@ -64,19 +61,19 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
@@ -240,7 +237,7 @@ const exports = class {
             if (layer == undefined) {
               return;
             }
-            const id = olBase.getUid(layer);
+            const id = olUtilGetUid(layer);
             if (layerIds.indexOf(id) == -1) {
               layers.push(layer);
               layerIds.push(id);
@@ -416,7 +413,7 @@ const exports = class {
     const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
-    const id = olBase.getUid(gmfLayer);
+    const id = olUtilGetUid(gmfLayer);
     if (this.dataSourcesCache_[id]) {
       return;
     }
@@ -583,7 +580,7 @@ const exports = class {
    */
   addTreeCtrlToCache_(treeCtrl) {
 
-    const id = olBase.getUid(treeCtrl.node);
+    const id = olUtilGetUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
     googAsserts.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
@@ -666,7 +663,7 @@ const exports = class {
     if (item.timeUpperValueWatcherUnregister) {
       item.timeUpperValueWatcherUnregister();
     }
-    delete this.treeCtrlCache_[olBase.getUid(item.treeCtrl.node)];
+    delete this.treeCtrlCache_[olUtilGetUid(item.treeCtrl.node)];
   }
 
   /**
@@ -718,7 +715,7 @@ const exports = class {
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {
-    return this.treeCtrlCache_[olBase.getUid(treeCtrl.node)] || null;
+    return this.treeCtrlCache_[olUtilGetUid(treeCtrl.node)] || null;
   }
 
   /**
@@ -729,7 +726,13 @@ const exports = class {
    */
   getDataSourceLayer_(dataSource) {
     dataSource = /** @type {!gmf.DataSource} */ (dataSource);
-    const id = olBase.getUid(dataSource.gmfLayer);
+    if (dataSource.gmfLayer == undefined) {
+      return;
+    }
+    const id = olUtilGetUid(dataSource.gmfLayer);
+    if (id == undefined) {
+      return;
+    }
     const item = this.treeCtrlCache_[id];
     if (item == undefined) {
       return;
@@ -764,7 +767,7 @@ const exports = class {
     const filterParam = 'FILTER';
     const filterParamValues = [];
     let hasFilter = false;
-    for (const dataSourceName of layersList) {
+    for (const wmsLayerName of layersList) {
       let filterParamValue = '()';
 
       const dataSources = this.dataSources_.getArray();
@@ -773,10 +776,11 @@ const exports = class {
         if (dsLayer == undefined) {
           continue;
         }
-        if (olBase.getUid(dsLayer) == olBase.getUid(layer) &&
-            dataSourceName === dataSource.name) {
+        if (olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
+            layer.get('querySourceIds').indexOf(dataSource.id) >= 0 &&
+            dataSource.gmfLayer.layers.split(',').indexOf(wmsLayerName) >= 0) {
 
-          const id = olBase.getUid(dataSource.gmfLayer);
+          const id = olUtilGetUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
           googAsserts.assert(item);
           const treeCtrl = item.treeCtrl;
@@ -845,7 +849,7 @@ const exports = class {
    */
   handleDataSourceTimeValueChange_(dataSource) {
 
-    const id = olBase.getUid(dataSource.gmfLayer);
+    const id = olUtilGetUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
     googAsserts.assert(item);
     const wmsLayer = googAsserts.assert(item.wmsLayer);
@@ -926,7 +930,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfDataSourcesManager', [
   gmfDatasourceWFSAliases.module.name,

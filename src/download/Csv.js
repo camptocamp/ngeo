@@ -5,12 +5,11 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 
 /**
  * Service to generate and download a CSV file from tabular data.
- * Column headers are translated using {@link angularGettext.Catalog}.
+ * Column headers are translated using {@link angular.gettext.gettextCatalog}.
  *
- * @param {angular.$injector} $injector Main injector.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoCsvDownload
  * @ngInject
@@ -18,7 +17,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 const exports = function($injector, gettextCatalog) {
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -135,7 +134,7 @@ exports.prototype.startDownload = function(data, columnDefs, fileName) {
 };
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoCsvDownload', [
   ngeoDownloadService.name

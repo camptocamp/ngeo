@@ -15,7 +15,7 @@ import 'jquery-ui/ui/i18n/datepicker-it.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDatePicker', [
   ngeoMiscTime.module.name,
@@ -46,8 +46,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  * ngeoDatePickerTemplateUrl Template for the directive.
- * @param {angular.$timeout} $timeout angular timeout service
- * @return {angular.Directive} The directive specs.
+ * @param {angular.ITimeoutService} $timeout angular timeout service
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
@@ -109,13 +109,12 @@ exports.directive('ngeoDatePicker', exports.component_);
 
 /**
  * DatePickerController - directive conttroller
- * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$injector} $injector injector.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.auto.IInjectorService} $injector injector.
  * @param {!ngeo.misc.Time} ngeoTime time service.
- * @param {!angularGettext.Catalog} gettextCatalog service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController
@@ -137,7 +136,7 @@ exports.Controller_ = function($scope, $injector,
 
   /**
    * The gettext catalog
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;

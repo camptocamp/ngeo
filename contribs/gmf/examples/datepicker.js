@@ -9,7 +9,7 @@ import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   ngeoMiscDatepickerComponent.name,
@@ -21,7 +21,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @constructor
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */

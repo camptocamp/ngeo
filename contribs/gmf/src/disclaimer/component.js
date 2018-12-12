@@ -1,7 +1,7 @@
 /**
  * @module gmf.disclaimer.component
  */
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -15,7 +15,7 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import 'angular-sanitize';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('gmfDisclaimer', [
   'ngSanitize',
@@ -29,15 +29,14 @@ const exports = angular.module('gmfDisclaimer', [
  * @constructor
  * @private
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$sce} $sce Angular sce service.
- * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.ISCEService} $sce Angular sce service.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
  * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController
@@ -84,19 +83,19 @@ exports.Controller_ = function($element, $scope, $sce, $timeout,
   this.msgs_ = [];
 
   /**
-   * @type {!angular.$sce}
+   * @type {!angular.ISCEService}
    * @private
    */
   this.sce_ = $sce;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -178,7 +177,7 @@ exports.Controller_.prototype.handleLayersRemove_ = function(evt) {
  */
 exports.Controller_.prototype.registerLayer_ = function(layer) {
 
-  const layerUid = olBase.getUid(layer);
+  const layerUid = olUtilGetUid(layer);
 
   if (layer instanceof olLayerGroup) {
 
@@ -226,7 +225,7 @@ exports.Controller_.prototype.registerLayer_ = function(layer) {
  */
 exports.Controller_.prototype.unregisterLayer_ = function(layer) {
 
-  const layerUid = olBase.getUid(layer);
+  const layerUid = olUtilGetUid(layer);
 
   if (layer instanceof olLayerGroup) {
 
@@ -348,7 +347,7 @@ exports.Controller_.prototype.closeDisclaimerMessage_ = function(msg) {
  * @ngdoc component
  * @ngname gmfDisclaimer
  */
-exports.component_ = {
+const component = {
   controller: exports.Controller_,
   bindings: {
     'popup': '<?gmfDisclaimerPopup',
@@ -360,7 +359,7 @@ exports.component_ = {
 };
 
 
-exports.component('gmfDisclaimer', exports.component_);
+exports.component('gmfDisclaimer', component);
 
 
 export default exports;

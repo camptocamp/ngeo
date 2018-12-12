@@ -1,11 +1,10 @@
 import gmfTestDataThemes from 'gmf/test/data/themes.js';
 import gmfBase from 'gmf/index.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olCollection from 'ol/Collection.js';
 import * as olProj from 'ol/proj.js';
-import * as olObj from 'ol/obj.js';
 
 
 describe('Permalink service', () => {
@@ -17,11 +16,11 @@ describe('Permalink service', () => {
     StateManagerService = _ngeoStateManager_;
     PermalinkService = _gmfPermalink_;
     ngeoLocation = _ngeoLocation_;
-    const map = new olMap({layers: [], view: new olView({projection: olProj.get(ngeoProjEPSG2056)})});
+    const map = new olMap({layers: [], view: new olView({projection: olProj.get(EPSG2056)})});
     PermalinkService.setMap(map);
     // need to work on a clone of themes, because the permalink service
     // seems to change the original object?!
-    const themesClone = olObj.assign({}, gmfTestDataThemes);
+    const themesClone = Object.assign({}, gmfTestDataThemes);
     PermalinkService.themes_ = themesClone['themes'];
 
 
@@ -184,7 +183,7 @@ describe('Permalink service', () => {
     });
 
     it('accepts flipped coordinates (x/y switched)', () => {
-      PermalinkService.sourceProjections_ = [olProj.get(ngeoProjEPSG2056), olProj.get('EPSG:4326')];
+      PermalinkService.sourceProjections_ = [olProj.get(EPSG2056), olProj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 46.7685575;
       StateManagerService.initialState['map_y'] = 6.6144562;
       const center = PermalinkService.getMapCenter();
@@ -193,7 +192,7 @@ describe('Permalink service', () => {
     });
 
     it('reprojects the center', () => {
-      PermalinkService.sourceProjections_ = [olProj.get(ngeoProjEPSG2056), olProj.get('EPSG:4326')];
+      PermalinkService.sourceProjections_ = [olProj.get(EPSG2056), olProj.get('EPSG:4326')];
       StateManagerService.initialState['map_x'] = 6.6144562;
       StateManagerService.initialState['map_y'] = 46.7685575;
       const center = PermalinkService.getMapCenter();

@@ -5,10 +5,8 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscSwipe from 'ngeo/misc/swipe.js';
 
-/** @suppress {extraRequire} - required for `ngeoQueryResult` */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 
 import olCollection from 'ol/Collection.js';
@@ -26,7 +24,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfQueryWindowComponent', [
   ngeoMapFeatureOverlayMgr.module.name,
@@ -110,7 +108,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  * @ngdoc component
  * @ngname gmfDisplayquerywindow
  */
-exports.component_ = {
+const component = {
   controller: 'GmfDisplayquerywindowController as ctrl',
   bindings: {
     'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
@@ -124,12 +122,12 @@ exports.component_ = {
 };
 
 
-exports.component('gmfDisplayquerywindow', exports.component_);
+exports.component('gmfDisplayquerywindow', component);
 
 
 /**
  * @param {!jQuery} $element Element.
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature

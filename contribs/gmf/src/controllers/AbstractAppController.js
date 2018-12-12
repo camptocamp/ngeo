@@ -5,6 +5,7 @@ import 'jquery';
 import 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
+import bootstrap from 'gmf/controllers/bootstrap.js';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';
 import gmfDatasourceModule from 'gmf/datasource/module.js';
@@ -42,8 +43,8 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @ngdoc controller
  * @ngInject
@@ -154,7 +155,7 @@ const exports = function(config, $scope, $injector) {
   this.loginInfoMessage = null;
 
   $scope.$on('authenticationrequired', (event, args) => {
-    /** @type {angularGettext.Catalog} */
+    /** @type {angular.gettext.gettextCatalog} */
     const gettextCatalog = $injector.get('gettextCatalog');
     this.loginInfoMessage = gettextCatalog.getString(
       'Some layers in this link are not accessible to unauthenticated users. ' +
@@ -341,6 +342,13 @@ const exports = function(config, $scope, $injector) {
   });
 
   /**
+   * The active state of the directive responsible of area measurements.
+   * @type {boolean}
+   * @export
+   */
+  this.measureAreaActive = false;
+
+  /**
    * The active state of the directive responsible of point measurements.
    * @type {boolean}
    * @export
@@ -388,7 +396,7 @@ const exports = function(config, $scope, $injector) {
   this.tmhDynamicLocale = $injector.get('tmhDynamicLocale');
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    */
   this.$scope = $scope;
 
@@ -412,7 +420,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * The gettext catalog
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog = $injector.get('gettextCatalog');
 
@@ -441,6 +449,9 @@ const exports = function(config, $scope, $injector) {
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool(mapTools, queryToolActivate, true);
+
+  const measureAreaActivate = new ngeoMiscToolActivate(this, 'measureAreaActive');
+  ngeoToolActivateMgr.registerTool(mapTools, measureAreaActivate, false);
 
   const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
   ngeoToolActivateMgr.registerTool(mapTools, measurePointActivate, false);
@@ -817,5 +828,6 @@ exports.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   }
 ]);
 
+bootstrap(exports.module);
 
 export default exports;

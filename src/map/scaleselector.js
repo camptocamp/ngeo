@@ -8,7 +8,7 @@ import * as olEvents from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoScaleselector', []);
 
@@ -76,7 +76,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     Optional. The configuration options.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
- * @return {angular.Directive} Directive Definition Object.
+ * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoScaleselector
@@ -97,8 +97,7 @@ exports.directive('ngeoScaleselector', directive);
 /**
  * @constructor
  * @private
- * @struct
- * @param {angular.Scope} $scope Directive scope.
+ * @param {angular.IScope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.Attributes} $attrs Attributes.
  * @ngInject
@@ -148,7 +147,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   this.options = ScaleselectorController.getOptions_(options);
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

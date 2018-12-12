@@ -4,7 +4,7 @@
 import olCollection from 'ol/Collection.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoFeatures', []);
 

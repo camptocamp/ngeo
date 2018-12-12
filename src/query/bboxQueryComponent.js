@@ -1,8 +1,8 @@
 /**
  * @module ngeo.query.bboxQueryComponent
  */
-/** @suppress {extraRequire} */
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
+import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 
 import olInteractionDragBox from 'ol/interaction/DragBox.js';
 import * as olEventsCondition from 'ol/events/condition.js';
@@ -36,7 +36,7 @@ const exports = angular.module('ngeoBboxQuery', [
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
  * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoBboxQuery
@@ -61,11 +61,14 @@ exports.directive_ = function(ngeoMapQuerent) {
        * @param {ol.interaction.DragBox.Event} evt Event.
        */
       const handleBoxEnd = function(evt) {
+        const action = ngeoQueryKeyboard.action;
         const extent = interaction.getGeometry().getExtent();
+        const limit = scope.$eval(attrs['ngeoBboxQueryLimit']);
         ngeoMapQuerent.issue({
-          limit: scope.$eval(attrs['ngeoBboxQueryLimit']),
-          extent: extent,
-          map: map
+          action,
+          extent,
+          limit,
+          map
         });
       };
       interaction.on('boxend', handleBoxEnd);

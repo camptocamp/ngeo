@@ -6,7 +6,7 @@ const exports = {};
 import './lidarprofile.css';
 import gmfMapComponent from 'gmf/map/component.js';
 import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
-import EPSG2056 from 'ngeo/proj/EPSG2056.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -14,7 +14,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
@@ -27,7 +27,7 @@ exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 
 /**
- * @param {angular.Scope} $scope Angular scope.
+ * @param {angular.IScope} $scope Angular scope.
  * @constructor
  * @ngInject
  */

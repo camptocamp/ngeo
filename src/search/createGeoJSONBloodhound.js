@@ -2,7 +2,6 @@
  * @module ngeo.search.createGeoJSONBloodhound
  */
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import * as olObj from 'ol/obj.js';
 
 import 'corejs-typeahead';
 
@@ -53,24 +52,24 @@ const exports = function(url, opt_filter, opt_featureProjection,
   });
 
   // the options objects are cloned to avoid updating the passed object
-  const options = olObj.assign({}, opt_options || {});
-  const remoteOptions = olObj.assign({}, opt_remoteOptions || {});
+  const options = Object.assign({}, opt_options || {});
+  const remoteOptions = Object.assign({}, opt_remoteOptions || {});
 
   if (options.remote) {
     // move the remote options to opt_remoteOptions
-    olObj.assign(remoteOptions, options.remote);
+    Object.assign(remoteOptions, options.remote);
     delete options.remote;
   }
 
-  olObj.assign(bloodhoundOptions, options);
-  olObj.assign(bloodhoundOptions.remote, remoteOptions);
+  Object.assign(bloodhoundOptions, options);
+  Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return new Bloodhound(bloodhoundOptions);
 };
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
 

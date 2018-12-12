@@ -4,14 +4,12 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 
-/** @suppress {extraRequire} */
 import ngeoDownloadService from 'ngeo/download/service.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
-import * as olArray from 'ol/array.js';
 import * as olColor from 'ol/color.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
@@ -38,9 +36,8 @@ import olStyleText from 'ol/style/Text.js';
  *  - export
  *
  * @constructor
- * @struct
- * @param {!angular.$injector} $injector Main injector.
- * @param {!angular.$filter} $filter Angular filter.
+ * @param {!angular.auto.IInjectorService} $injector Main injector.
+ * @param {!angular.IFilterService} $filter Angular filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
@@ -48,7 +45,7 @@ import olStyleText from 'ol/style/Text.js';
 const exports = function($injector, $filter) {
 
   /**
-   * @type {!angular.$filter}
+   * @type {!angular.IFilterService}
    * @private
    */
   this.$filter_ = $filter;
@@ -793,7 +790,7 @@ exports.prototype.supportsVertex_ = function(feature) {
     ngeoGeometryType.RECTANGLE
   ];
   const type = this.getType(feature);
-  return olArray.includes(supported, type);
+  return supported.includes(type);
 };
 
 
@@ -811,7 +808,7 @@ exports.prototype.supportsVertexRemoval_ = function(feature) {
     ngeoGeometryType.POLYGON
   ];
   const type = this.getType(feature);
-  return olArray.includes(supported, type);
+  return supported.includes(type);
 };
 
 
@@ -1358,6 +1355,24 @@ exports.prototype.clearNonSpatialProperties = function(feature) {
 };
 
 
+/**
+ * @param {!Array.<!ol.Feature>} features Features.
+ * @param {string} fid Feature id
+ * @return {number} Index of found feature
+ * @export
+ */
+exports.prototype.findFeatureIndexByFid = function(features, fid) {
+  let index = -1;
+  for (let i = 0, ii = features.length; i < ii; i++) {
+    if (features[i].getId() == fid) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+};
+
+
 // === FORMAT TYPES ===
 
 
@@ -1388,7 +1403,7 @@ exports.VertexStyleRegularShapeRadius = 6;
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoFeatureHelper', [
   ngeoDownloadService.name,

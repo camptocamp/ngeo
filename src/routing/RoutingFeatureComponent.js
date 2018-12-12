@@ -20,7 +20,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimService.module.name,
@@ -56,9 +56,9 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
- * @param {angular.$timeout} $timeout Angular timeout service.
- * @param {!angular.$q} $q Angular q service
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {!angular.IQService} $q Angular q service
  * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
@@ -69,19 +69,19 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
 exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.$q_ = $q;
@@ -372,7 +372,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
  * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */
-exports.component_ = {
+const component = {
   controller: exports.Controller,
   bindings: {
     'map': '<ngeoRoutingFeatureMap',
@@ -384,7 +384,7 @@ exports.component_ = {
   templateUrl: ngeoRoutingFeatureTemplateUrl
 };
 
-exports.module.component('ngeoRoutingFeature', exports.component_);
+exports.module.component('ngeoRoutingFeature', component);
 
 
 export default exports;

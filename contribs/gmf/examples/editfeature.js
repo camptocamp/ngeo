@@ -6,12 +6,11 @@ const exports = {};
 import appURL from './url.js';
 import './editfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
 import olFeature from 'ol/Feature.js';
@@ -25,7 +24,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
@@ -42,7 +41,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {gmfx.User} gmfUser User.
  * @constructor
@@ -51,7 +50,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 exports.MainController = function($scope, gmfEditFeature, gmfUser) {
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -275,7 +274,7 @@ exports.MainController.prototype.deleteFeature = function() {
 
 /**
  * Called after an insert, update or delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.MainController.prototype.handleEditFeature_ = function(resp) {

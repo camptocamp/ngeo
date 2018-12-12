@@ -2,25 +2,21 @@
  * @module gmf.filters.filterselectorComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 
-/** @suppress {extraRequire} */
 import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
 
 import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFilterComponent from 'ngeo/filter/component.js';
@@ -77,9 +73,9 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
 exports.Controller_ = class {
 
   /**
-   * @param {!angular.Scope} $scope Angular scope.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {!angular.IScope} $scope Angular scope.
+   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
@@ -92,7 +88,6 @@ exports.Controller_ = class {
    *     manager
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
@@ -131,13 +126,13 @@ exports.Controller_ = class {
     // Injected properties
 
     /**
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
@@ -500,7 +495,7 @@ exports.Controller_ = class {
     const msgs = [];
 
     // (1) The name of the DS must be in list of filtrable layer node names
-    if (olArray.includes(names, dataSource.name)) {
+    if (names.includes(dataSource.name)) {
 
       // (2) The DS must support WFS
       if (!dataSource.supportsWFS) {
@@ -594,7 +589,7 @@ exports.Controller_ = class {
               dataSource.gmfLayer.metadata.directedFilterAttributes;
           const attributes = googAsserts.assert(dataSource.attributes);
           for (const attribute of attributes) {
-            if (olArray.includes(directedAttributes, attribute.name)) {
+            if (directedAttributes.includes(attribute.name)) {
               item.directedRules.push(
                 this.ngeoRuleHelper_.createRuleFromAttribute(attribute)
               );

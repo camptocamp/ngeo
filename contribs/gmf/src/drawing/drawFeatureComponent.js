@@ -2,20 +2,16 @@
  * @module gmf.drawing.drawFeatureComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 import googAsserts from 'goog/asserts.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMenu from 'ngeo/Menu.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawComponent from 'ngeo/draw/component.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
@@ -26,8 +22,7 @@ import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import * as olBase from 'ol/index.js';
-import * as olArray from 'ol/array.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -38,7 +33,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('GmfDrawFeatureComponent', [
   gmfDrawingFeatureStyleComponent.name,
@@ -68,7 +63,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
  * @htmlAttribute {ol.Map} gmf-drawfeature-map The map.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfDrawfeature
@@ -92,9 +87,9 @@ exports.directive('gmfDrawfeature',
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
  * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -155,13 +150,13 @@ exports.Controller_ = function($scope, $timeout, gettextCatalog,
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
@@ -406,8 +401,8 @@ exports.Controller_.prototype.unregisterInteractions_ = function() {
 exports.Controller_.prototype.handleActiveChange_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const drawUid = ['draw-', olBase.getUid(this)].join('-');
-  const otherUid = ['other-', olBase.getUid(this)].join('-');
+  const drawUid = ['draw-', olUtilGetUid(this)].join('-');
+  const otherUid = ['other-', olUtilGetUid(this)].join('-');
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -590,7 +585,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
     pixel,
     (feature) => {
       let ret = false;
-      if (olArray.includes(this.features.getArray(), feature)) {
+      if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;
@@ -646,7 +641,7 @@ exports.Controller_.prototype.handleMapContextMenu_ = function(evt) {
     pixel,
     (feature) => {
       let ret = false;
-      if (olArray.includes(this.features.getArray(), feature)) {
+      if (this.features.getArray().includes(feature)) {
         ret = feature;
       }
       return ret;

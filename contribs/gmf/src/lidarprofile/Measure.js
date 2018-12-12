@@ -8,11 +8,10 @@ const d3 = {
 };
 
 
-const exports = class {
+export default class {
 
   /**
    * Measure tool for the d3 chart
-   * @struct
    * @param {gmf.lidarprofile.Manager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
@@ -168,7 +167,4 @@ const exports = class {
       this.pStart_.set = false;
     }
   }
-};
-
-
-export default exports;
+}

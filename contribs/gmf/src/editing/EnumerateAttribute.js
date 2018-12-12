@@ -7,8 +7,7 @@ const exports = class {
    * The EnumerateAttribute is responsible of fetching all possible of a given
    * attribute of a given data source (gmf layer).
    *
-   * @struct
-   * @param {angular.$http} $http Angular $http service.
+   * @param {angular.IHttpService} $http Angular $http service.
    * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
    * @ngInject
    * @ngdoc service
@@ -19,7 +18,7 @@ const exports = class {
     // === Injected services ===
 
     /**
-     * @type {angular.$http}
+     * @type {angular.IHttpService}
      * @private
      */
     this.http_ = $http;
@@ -31,7 +30,7 @@ const exports = class {
     this.baseUrl_ = gmfLayersUrl;
 
     /**
-     * @type {Object.<string, !angular.$q.Promise>}
+     * @type {Object.<string, !angular.IPromise>}
      * @private
      */
     this.promises_ = {};
@@ -40,7 +39,7 @@ const exports = class {
   /**
    * @param {gmf.datasource.OGC} dataSource Data source.
    * @param {string} attribute Attribute name.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    */
   getAttributeValues(dataSource, attribute) {
     const promiseId = `${dataSource.id}_${attribute}`;
@@ -54,7 +53,7 @@ const exports = class {
   }
 
   /**
-   * @param {angular.$http.Response} resp Ajax response.
+   * @param {angular.IHttpResponse} resp Ajax response.
    * @return {Array.<gmfThemes.GmfLayerAttributeValue>} List of the attribute
    *     values.
    * @export
@@ -69,7 +68,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfEnumerateAttribute', []);
 exports.module.service('gmfEnumerateAttribute', exports);

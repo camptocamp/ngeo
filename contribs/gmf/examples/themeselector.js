@@ -5,12 +5,11 @@ const exports = {};
 
 import appURL from './url.js';
 import './themeselector.css';
-/** @suppress {extraRequire} */
 import gmfThemeModule from 'gmf/theme/module.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeTreeManager.module.name,
@@ -24,7 +23,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @constructor
- * @param {angular.$http} $http Angular's $http service.
+ * @param {angular.IHttpService} $http Angular's $http service.
  * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
  * @ngInject

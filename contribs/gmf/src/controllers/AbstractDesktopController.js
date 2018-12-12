@@ -11,7 +11,7 @@ import gmfRasterComponent from 'gmf/raster/component.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import gmfImportModule from 'gmf/import/module.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -28,8 +28,8 @@ import olStyleText from 'ol/style/Text.js';
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller
@@ -233,7 +233,7 @@ const exports = function(config, $scope, $injector) {
   this.setDataPanelMaxResizableWidth_();
 };
 
-olBase.inherits(exports, gmfControllersAbstractAPIController);
+olUtilInherits(exports, gmfControllersAbstractAPIController);
 
 /**
  * Set the data panel (on the left) maximum resizable width depending

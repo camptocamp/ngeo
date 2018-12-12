@@ -11,9 +11,9 @@
 import gmfControllersAbstractMobileController from 'gmf/controllers/AbstractMobileController.js';
 import 'gmf/controllers/mobile.scss';
 import appBase from '../appmodule.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
-import * as olBase from 'ol/index.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -25,8 +25,8 @@ if (!window.requestAnimationFrame) {
 }
 
 /**
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractMobileController}
  * @ngInject
@@ -56,7 +56,7 @@ const exports = function($scope, $injector) {
    * @type {Array.<string>}
    * @export
    */
-  this.searchCoordinatesProjections = [ngeoProjEPSG21781, ngeoProjEPSG2056, 'EPSG:4326'];
+  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
   if ($injector.has('sentryUrl')) {
     const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
@@ -67,7 +67,7 @@ const exports = function($scope, $injector) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractMobileController);
+olUtilInherits(exports, gmfControllersAbstractMobileController);
 
 exports.module = angular.module('Appmobile', [
   appBase.module.name,

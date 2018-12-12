@@ -5,10 +5,9 @@ import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olColor from 'ol/color.js';
-import * as olArray from 'ol/array.js';
 import * as olFormatFeature from 'ol/format/Feature.js';
 import olFormatTextFeature from 'ol/format/TextFeature.js';
 import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
@@ -44,7 +43,6 @@ import olStyleText from 'ol/style/Text.js';
  *
  * @see https://github.com/sbrunner/OpenLayers-URLCompressed
  * @constructor
- * @struct
  * @extends {ol.format.TextFeature}
  * @param {ngeox.format.FeatureHashOptions=} opt_options Options.
  */
@@ -107,7 +105,7 @@ const exports = function(opt_options) {
 
 };
 
-olBase.inherits(exports, olFormatTextFeature);
+olUtilInherits(exports, olFormatTextFeature);
 
 
 /**
@@ -694,9 +692,9 @@ exports.castValue_ = function(key, value) {
     'showLabel'
   ];
 
-  if (olArray.includes(numProperties, key)) {
+  if (numProperties.includes(key)) {
     return +value;
-  } else if (olArray.includes(boolProperties, key)) {
+  } else if (boolProperties.includes(key)) {
     return (value === 'true') ? true : false;
   } else {
     return value;

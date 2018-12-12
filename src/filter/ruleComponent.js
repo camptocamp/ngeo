@@ -5,7 +5,6 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMenu from 'ngeo/Menu.js';
 import ngeoDrawComponent from 'ngeo/draw/component.js';
 
-/** @suppress {extraRequire} */
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
@@ -15,7 +14,6 @@ import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -25,11 +23,10 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import ngeoRuleSelect from 'ngeo/rule/Select.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
-import * as olArray from 'ol/array.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -37,7 +34,7 @@ import olGeomGeometry from 'ol/geom/Geometry.js';
 import 'ngeo/sass/font.scss';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
@@ -82,15 +79,14 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
 exports.RuleController_ = class {
 
   /**
-   * @param {!angularGettext.Catalog} gettextCatalog Gettext service.
-   * @param {!angular.Scope} $scope Angular scope.
-   * @param {!angular.$timeout} $timeout Angular timeout service.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+   * @param {!angular.IScope} $scope Angular scope.
+   * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
-   * @struct
    * @ngInject
    * @ngdoc controller
    * @ngname NgeoRuleController
@@ -129,19 +125,19 @@ exports.RuleController_ = class {
     // Injected properties
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {!angular.$timeout}
+     * @type {!angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
@@ -424,21 +420,21 @@ exports.RuleController_ = class {
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.getExpression(),
         (newVal) => {
-          this.timeValueMode.minValue = newVal;
+          this.timeValueMode.minDefValue = newVal || this.createDate_();
         }
       ));
       // Watch 'lowerBoundary'
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.lowerBoundary,
         (newVal) => {
-          this.timeRangeMode.minValue = newVal;
+          this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
         }
       ));
       // Watch 'upperBoundary'
       this.unlisteners_.push(this.scope_.$watch(
         () => this.clone.upperBoundary,
         (newVal) => {
-          this.timeRangeMode.maxValue = newVal;
+          this.timeRangeMode.maxDefValue = newVal || this.createDate_();
         }
       ));
     } else if (this.clone.type === ngeoFormatAttributeType.GEOMETRY) {
@@ -462,7 +458,7 @@ exports.RuleController_ = class {
                 ngeoGeometryType.POLYGON,
                 ngeoGeometryType.RECTANGLE
               ];
-              if (!olArray.includes(supportedTypes, geomType)) {
+              if (!supportedTypes.includes(geomType)) {
                 this.clone.setExpression(null);
               }
             }
@@ -661,7 +657,7 @@ exports.RuleController_ = class {
     }
 
     const keys = this.listenerKeys_;
-    const uid = ['ngeo-rule-', olBase.getUid(this)].join('-');
+    const uid = ['ngeo-rule-', olUtilGetUid(this)].join('-');
     const toolMgr = this.ngeoToolActivateMgr_;
 
     const ruleFeature = this.rule.feature;
@@ -843,7 +839,7 @@ exports.RuleController_ = class {
       pixel,
       (feature) => {
         let ret = false;
-        if (olArray.includes(this.selectedFeatures.getArray(), feature)) {
+        if (this.selectedFeatures.getArray().includes(feature)) {
           ret = feature;
         }
         return ret;

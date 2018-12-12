@@ -5,16 +5,15 @@ const exports = {};
 
 import appURL from './url.js';
 import './mobilemeasure.css';
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
 
+import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent.js';
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olControlScaleLine from 'ol/control/ScaleLine.js';
@@ -22,11 +21,12 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfPermalinkPermalink.module.name,
+  gmfMobileMeasureAreaComponent.name,
   gmfMobileMeasureLengthComponent.name,
   gmfMobileMeasurePointComponent.name,
   ngeoMiscBtnComponent.name,
@@ -68,6 +68,12 @@ exports.MainController = function(gmfPermalink) {
   });
 
   this.map.addControl(new olControlScaleLine());
+
+  /**
+   * @type {boolean}
+   * @export
+   */
+  this.measureAreaActive = false;
 
   /**
    * @type {boolean}

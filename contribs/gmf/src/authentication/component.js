@@ -5,11 +5,10 @@ import gmfAuthenticationService from 'gmf/authentication/Service.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('gmfAuthentication', [
   gmfAuthenticationService.module.name,
@@ -104,7 +103,7 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * @ngdoc component
  * @ngname gmfAuthentication
  */
-exports.component_ = {
+const component = {
   bindings: {
     'allowPasswordReset': '<?gmfAuthenticationAllowPasswordReset',
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
@@ -119,7 +118,7 @@ exports.component_ = {
 exports.value('gmfAuthenticationTemplateUrl',
   exports.gmfAuthenticationTemplateUrl_);
 
-exports.component('gmfAuthentication', exports.component_);
+exports.component('gmfAuthentication', component);
 
 
 /**
@@ -129,7 +128,7 @@ exports.AuthenticationController_ = class {
   /**
    * @private
    * @param {!angular.JQLite} $element Element.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -152,7 +151,7 @@ exports.AuthenticationController_ = class {
     this.gmfUser = gmfUser;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog = gettextCatalog;

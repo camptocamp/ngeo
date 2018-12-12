@@ -13,7 +13,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -23,7 +23,7 @@ exports.module = angular.module('app', [
 
 /**
  * @constructor
- * @param {angular.Scope} $scope Controller scope.
+ * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
 exports.MainController = function($scope) {

@@ -9,7 +9,7 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfThemeSelectorComponent', [
   gmfThemeManager.module.name,
@@ -94,7 +94,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * @type {!angular.Component}
  */
-exports.component_ = {
+const component = {
   bindings: {
     'filter': '<gmfThemeselectorFilter'
   },
@@ -102,11 +102,11 @@ exports.component_ = {
   templateUrl: gmfThemeSelectorTemplateUrl
 };
 
-exports.component('gmfThemeselector', exports.component_);
+exports.component('gmfThemeselector', component);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
+ * @param {!angular.IScope} $scope Angular scope.
  * @param {gmf.theme.Manager} gmfThemeManager Tree manager service.
  * @param {gmf.theme.Themes} gmfThemes Themes service.
  * @constructor

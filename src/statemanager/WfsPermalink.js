@@ -40,8 +40,8 @@ import olFormatWFS from 'ol/format/WFS.js';
  * parcels #78 and 90 of the city of Paris.
  *
  * @constructor
- * @struct
- * @param {angular.$http} $http Angular $http service.
+ * @param {angular.IHttpService} $http Angular $http service.
+ * @param {string} ngeoPermalinkOgcserverUrl Url to the WFS server
  * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
@@ -49,7 +49,9 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @ngname ngeoWfsPermalink
  * @ngInject
  */
-const WfsPermalinkService = function($http, ngeoQueryResult, ngeoWfsPermalinkOptions) {
+const WfsPermalinkService = function(
+  $http, ngeoPermalinkOgcserverUrl, ngeoQueryResult, ngeoWfsPermalinkOptions
+) {
 
   const options = ngeoWfsPermalinkOptions;
 
@@ -57,7 +59,7 @@ const WfsPermalinkService = function($http, ngeoQueryResult, ngeoWfsPermalinkOpt
    * @type {string}
    * @private
    */
-  this.url_ = options.url;
+  this.url_ = ngeoPermalinkOgcserverUrl;
 
   /**
    * @type {number}
@@ -95,7 +97,7 @@ const WfsPermalinkService = function($http, ngeoQueryResult, ngeoWfsPermalinkOpt
   this.pointRecenterZoom_ = options.pointRecenterZoom;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -297,11 +299,17 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
+
+
+/**
+ * Set this value to enable WFS permalink.
+ */
+WfsPermalinkService.module.value('ngeoPermalinkOgcserverUrl', '');
 
 
 /**

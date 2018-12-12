@@ -5,7 +5,7 @@ import googAsserts from 'goog/asserts.js';
 import olMap from 'ol/Map.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoResizemap', []);
 
@@ -24,8 +24,8 @@ const exports = angular.module('ngeoResizemap', []);
  *
  * See our live example: [../examples/animation.html](../examples/animation.html)
  *
- * @param {angular.$window} $window Angular window service.
- * @return {angular.Directive} The directive specs.
+ * @param {angular.IWindowService} $window Angular window service.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoResizemap
@@ -36,7 +36,7 @@ exports.directive_ = function($window) {
   return {
     restrict: 'A',
     /**
-     * @param {angular.Scope} scope Scope.
+     * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
      */

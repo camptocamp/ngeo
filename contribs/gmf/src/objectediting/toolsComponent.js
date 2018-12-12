@@ -2,26 +2,22 @@
  * @module gmf.objectediting.toolsComponent
  */
 
-/** @suppress {extraRequire} */
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjecteditingToolsComponent', [
   gmfObjecteditingGetWMSFeatureComponent.name,
@@ -83,7 +79,7 @@ exports.value('gmfObjectEditingToolsOptions', {});
  *     if the currently active tool requires a queryable layer or not.
  * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
- * @return {angular.Directive} The directive specs.
+ * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
@@ -113,8 +109,8 @@ exports.directive('gmfObjecteditingtools',
 
 
 /**
- * @param {angular.$injector} $injector Main injector.
- * @param {!angular.Scope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {!angular.IScope} $scope Scope.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -191,7 +187,7 @@ exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
   // == Injected properties ==
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
@@ -299,7 +295,7 @@ exports.Controller_.prototype.registerTool_ = function(
     this.handleToolActiveChange_.bind(this, process, requiresLayer)
   );
 
-  const group = `${exports.Controller_.NAMESPACE_}-${olBase.getUid(this)}`;
+  const group = `${exports.Controller_.NAMESPACE_}-${olUtilGetUid(this)}`;
   const toolActivate = new ngeoMiscToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
 

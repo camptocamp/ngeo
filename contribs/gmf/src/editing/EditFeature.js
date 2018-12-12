@@ -2,7 +2,7 @@
  * @module gmf.editing.EditFeature
  */
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
  * Service that provides methods to get, insert, update and delete vector
@@ -11,15 +11,14 @@ import * as olUri from 'ol/uri.js';
  * The GeoJSON format is used when obtaining or sending features.
  *
  * @constructor
- * @struct
- * @param {angular.$http} $http Angular http service.
+ * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
 const exports = function($http, gmfLayersUrl) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;
@@ -43,16 +42,13 @@ const exports = function($http, gmfLayersUrl) {
  *
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
  * @param {ol.Extent} extent The extent where to get the features from.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getFeaturesInExtent = function(layerIds, extent) {
-  const url = olUri.appendParams(
-    `${this.baseUrl_}/${layerIds.join(',')}`,
-    {
-      'bbox': extent.join(',')
-    }
-  );
+  const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
+    'bbox': extent.join(',')
+  });
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
@@ -68,7 +64,7 @@ exports.prototype.getFeaturesInExtent = function(layerIds, extent) {
  *
  * @param {!Array.<number>} layerIds List of layer ids to get the features from.
  * @param {!Array.<!gmfx.ComparisonFilter>} filters List of comparison filters
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  */
 exports.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
@@ -83,13 +79,13 @@ exports.prototype.getFeaturesWithComparisonFilters = function(
 
   params['queryable'] = properties.join(',');
 
-  const url = olUri.appendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
+  const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
 
 /**
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @return {Array.<ol.Feature>} List of features.
  * @private
  */
@@ -101,7 +97,7 @@ exports.prototype.handleGetFeatures_ = function(resp) {
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {Array.<ol.Feature>} features List of features to insert.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.insertFeatures = function(layerId, features) {
@@ -117,7 +113,7 @@ exports.prototype.insertFeatures = function(layerId, features) {
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {ol.Feature} feature The feature to update.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.updateFeature = function(layerId, feature) {
@@ -133,7 +129,7 @@ exports.prototype.updateFeature = function(layerId, feature) {
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {ol.Feature} feature The feature to delete.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.deleteFeature = function(layerId, feature) {
@@ -146,7 +142,7 @@ exports.prototype.deleteFeature = function(layerId, feature) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfEditFeature', []);
 exports.module.service('gmfEditFeature', exports);

@@ -6,8 +6,7 @@ import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
-import * as olBase from 'ol/index.js';
-import * as olObj from 'ol/obj.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -27,8 +26,8 @@ import olStyleStyle from 'ol/style/Style.js';
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {gmfx.Config} config A part of the application config.
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractAppController}
  * @ngdoc controller
@@ -95,7 +94,7 @@ const exports = function(config, $scope, $injector) {
   const viewConfig = {
     projection: olProj.get(`EPSG:${config.srid || 21781}`)
   };
-  olObj.assign(viewConfig, config.mapViewConfig || {});
+  Object.assign(viewConfig, config.mapViewConfig || {});
 
   const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 
@@ -142,7 +141,7 @@ const exports = function(config, $scope, $injector) {
   this.redirectUrl = $injector.get('redirectUrl');
 };
 
-olBase.inherits(exports, gmfControllersAbstractAppController);
+olUtilInherits(exports, gmfControllersAbstractAppController);
 
 
 /**

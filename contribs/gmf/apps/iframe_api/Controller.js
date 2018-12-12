@@ -8,12 +8,12 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import './sass/iframe_api.scss';
+import 'gmf/controllers/iframe_api.scss';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import appBase from '../appmodule.js';
-import ngeoProjEPSG2056 from 'ngeo/proj/EPSG2056.js';
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
-import * as olBase from 'ol/index.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -25,8 +25,8 @@ if (!window.requestAnimationFrame) {
 }
 
 /**
- * @param {angular.Scope} $scope Scope.
- * @param {angular.$injector} $injector Main injector.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
  * @extends {gmf.controllers.AbstractAPIController}
  * @ngInject
@@ -42,8 +42,8 @@ const exports = function($scope, $injector) {
     }
   }, $scope, $injector);
 
-  this.ngeoProjEPSG2056 = ngeoProjEPSG2056;
-  this.ngeoProjEPSG21781 = ngeoProjEPSG21781;
+  this.EPSG2056 = EPSG2056;
+  this.EPSG21781 = EPSG21781;
 
   if ($injector.has('sentryUrl')) {
     const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
@@ -54,7 +54,7 @@ const exports = function($scope, $injector) {
   }
 };
 
-olBase.inherits(exports, gmfControllersAbstractAPIController);
+olUtilInherits(exports, gmfControllersAbstractAPIController);
 
 exports.module = angular.module('Appiframe_api', [
   appBase.module.name,

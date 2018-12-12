@@ -3,20 +3,19 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerLayer from 'ol/layer/Layer.js';
 
 /**
  * The controller for the "tree node" directive.
- * @param {angular.Scope} $scope Scope.
- * @param {angular.Scope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $scope Scope.
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.Attributes} $attrs Attributes.
  * @constructor
  * @ngInject
  * @export
- * @struct
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
@@ -33,7 +32,7 @@ const exports = function($scope, $rootScope, $attrs) {
   const nodeExpr = $attrs['ngeoLayertree'];
 
   /**
-   * @type {angular.Scope}
+   * @type {angular.IScope}
    * @private
    */
   this.rootScope_ = $rootScope;
@@ -97,7 +96,7 @@ const exports = function($scope, $rootScope, $attrs) {
    * @type {number}
    * @export
    */
-  this.uid = olBase.getUid(this);
+  this.uid = olUtilGetUid(this);
 
   /**
    * @type {number}
@@ -421,7 +420,7 @@ exports.prototype.traverseDepthFirst = function(visitor) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoLayertreeController', []);
 exports.module.controller('ngeoLayertreeController', exports);

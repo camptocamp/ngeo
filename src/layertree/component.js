@@ -7,7 +7,7 @@ import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoLayertree', [
   ngeoLayertreeController.module.name
@@ -106,14 +106,14 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {string} ngeo-layertree-listeners Expression that will be parsed
  *      to be a {@link Function} with the argument:
  *      {
- *          'treeScope': !{@link angular.Scope},
+ *          'treeScope': !{@link angular.IScope},
  *          'treeCtrl': {@link ngeo.layertree.Controller}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoLayertree

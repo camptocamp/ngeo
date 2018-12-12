@@ -3,7 +3,7 @@
  */
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 
 const exports = angular.module('gmfPermalinkShareComponent', [
   gmfPermalinkShareService.module.name,
@@ -50,23 +50,23 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
  * @htmlAttribute {boolean} gmf-share-email Enable emailing capability.
  * @type {!angular.Component}
  */
-exports.component_ = {
+const component = {
   bindings: {
     'enableEmail': '<gmfShareEmail'
   },
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl
 };
-exports.component('gmfShare', exports.component_);
+exports.component('gmfShare', component);
 
 
 class ShareComponentController {
   /**
    * The controller for the share component
-   * @param {angular.Scope} $scope Scope.
+   * @param {angular.IScope} $scope Scope.
    * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
    * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
-   * @param {angular.$q} $q Angular q service
+   * @param {angular.IQService} $q Angular q service
    * @param {angular.Attributes} $attrs Attributes.
    * @constructor
    * @ngInject
@@ -79,10 +79,10 @@ class ShareComponentController {
      * @type {number}
      * @export
      */
-    this.uid = olBase.getUid(this);
+    this.uid = olUtilGetUid(this);
 
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.$scope_ = $scope;
@@ -94,7 +94,7 @@ class ShareComponentController {
     this.gmfShareService_ = gmfShareService;
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.$q_ = $q;

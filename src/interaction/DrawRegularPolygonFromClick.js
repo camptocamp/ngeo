@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import * as olFunctions from 'ol/functions.js';
@@ -17,7 +17,6 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
  * of sides and size a a clicked location on the map.
  *
  * @constructor
- * @struct
  * @fires ngeox.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.DrawRegularPolygonFromClickOptions} options Options
@@ -54,7 +53,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(
+olUtilInherits(
   exports, olInteractionInteraction);
 
 

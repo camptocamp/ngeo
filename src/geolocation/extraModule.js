@@ -1,16 +1,14 @@
 /**
  * @module ngeo.geolocation.extraModule
  */
+import * as angular from 'angular';
 import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoGeolocationExtraModule', [
+export default angular.module('ngeoGeolocationExtraModule', [
   ngeoGeolocationDesktop.name,
   ngeoGeolocationMobile.name
 ]);
-
-
-export default exports;

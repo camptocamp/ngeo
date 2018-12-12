@@ -3,7 +3,6 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-/** @suppress {extraRequire} */
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
@@ -14,14 +13,13 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
 
 /**
- * @param {!angular.Scope} $scope Scope.
- * @param {angular.$sce} $sce Angular sce service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {!angular.IScope} $scope Scope.
+ * @param {angular.ISCEService} $sce Angular sce service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
  * @constructor
  * @private
- * @struct
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
@@ -60,7 +58,7 @@ const exports = function($scope, $sce, gettextCatalog,
   this.showMeasure;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -241,7 +239,7 @@ exports.prototype.handleDrawEnd = function(type, event) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,

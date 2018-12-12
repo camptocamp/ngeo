@@ -9,17 +9,14 @@ import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
-/** @suppress {extraRequire} */
 import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 
 import ngeoSearchModule from 'ngeo/search/module.js';
 import olFeature from 'ol/Feature.js';
 import * as olColor from 'ol/color.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import * as olObj from 'ol/obj.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import * as olProj from 'ol/proj.js';
 import olStyleCircle from 'ol/style/Circle.js';
@@ -27,10 +24,10 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
-import * as olUri from 'ol/uri.js';
+import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfSearch', [
   gmfLayertreeTreeManager.module.name,
@@ -156,7 +153,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @ngdoc component
  * @ngname gmfSearch
  */
-exports.component_ = {
+const component = {
   bindings: {
     'inputValue': '=?gmfSearchInputValue',
     'placeholder': '@?gmfSearchPlaceholder',
@@ -181,7 +178,7 @@ exports.value('gmfSearchTemplateUrl', exports.gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module
-exports.component('gmfSearch', exports.component_);
+exports.component('gmfSearch', component);
 
 
 /**
@@ -192,11 +189,11 @@ exports.SearchController_ = class {
   /**
    * @private
    * @param {jQuery} $element Element.
-   * @param {angular.Scope} $scope The component's scope.
-   * @param {angular.$compile} $compile Angular compile service.
-   * @param {angular.$timeout} $timeout Angular timeout service.
-   * @param {angular.$injector} $injector Main injector.
-   * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+   * @param {angular.IScope} $scope The component's scope.
+   * @param {angular.ICompileService} $compile Angular compile service.
+   * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
    * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
@@ -221,25 +218,25 @@ exports.SearchController_ = class {
     this.element_ = $element;
 
     /**
-     * @type {angular.Scope}
+     * @type {angular.IScope}
      * @private
      */
     this.scope_ = $scope;
 
     /**
-     * @type {angular.$compile}
+     * @type {angular.ICompileService}
      * @private
      */
     this.compile_ = $compile;
 
     /**
-     * @type {angular.$timeout}
+     * @type {angular.ITimeoutService}
      * @private
      */
     this.timeout_ = $timeout;
 
     /**
-     * @type {angularGettext.Catalog}
+     * @type {angular.gettext.gettextCatalog}
      * @private
      */
     this.gettextCatalog_ = gettextCatalog;
@@ -458,7 +455,7 @@ exports.SearchController_ = class {
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
 
     if (this.typeaheadOptions) {
-      olObj.assign(this.options, this.typeaheadOptions);
+      Object.assign(this.options, this.typeaheadOptions);
     }
 
     this.initDatasets_();
@@ -643,7 +640,7 @@ exports.SearchController_ = class {
       })
     });
     if (config.typeaheadDatasetOptions) {
-      olObj.assign(typeaheadDataset, config.typeaheadDatasetOptions);
+      Object.assign(typeaheadDataset, config.typeaheadDatasetOptions);
     }
     return typeaheadDataset;
   }
@@ -735,7 +732,7 @@ exports.SearchController_ = class {
         settings.xhrFields = {
           withCredentials: true
         };
-        settings.url = olUri.appendParams(url, {
+        settings.url = olUriAppendParams(url, {
           'query': query,
           'lang': lang,
         });
@@ -808,7 +805,7 @@ exports.SearchController_ = class {
       stroke: stroke
     });
     const customStyles = this.featuresStyles || {};
-    olObj.assign(this.styles_, customStyles);
+    Object.assign(this.styles_, customStyles);
   }
 
   /**

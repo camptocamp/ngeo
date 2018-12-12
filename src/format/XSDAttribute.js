@@ -4,7 +4,7 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
 
 /**
@@ -12,14 +12,13 @@ import olFormatXML from 'ol/format/XML.js';
  * Reads attributes that are defined in XSD format and return them as a list.
  *
  * @constructor
- * @struct
  * @extends {ol.format.XML}
  */
 const exports = function() {
   olFormatXML.call(this);
 };
 
-olBase.inherits(exports, olFormatXML);
+olUtilInherits(exports, olFormatXML);
 
 
 /**
@@ -94,9 +93,15 @@ exports.prototype.readFromElementNode_ = function(node) {
   const nillable = node.getAttribute('nillable');
   const required = !(nillable === true || nillable === 'true');
 
+  const readonlyEls = node.getElementsByTagName('readonly');
+  const readonly = readonlyEls[0] ?
+    readonlyEls[0].getAttribute('value') === 'true' :
+    false;
+
   const attribute = {
     name,
     alias,
+    readonly,
     required
   };
 

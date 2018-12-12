@@ -27,7 +27,6 @@ const exports = class extends ngeoDatasourceDataSource {
    * - create `ol.layer.Layer` objects using the WMS, WMTS or event WFS
    *   information
    *
-   * @struct
    * @param {ngeox.datasource.OGCOptions} options Options.
    */
   constructor(options) {

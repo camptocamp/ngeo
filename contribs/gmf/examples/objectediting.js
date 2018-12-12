@@ -9,17 +9,15 @@ import gmfLayertreeComponent from 'gmf/layertree/component.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
-/** @suppress {extraRequire} */
 import gmfMapComponent from 'gmf/map/component.js';
 
-/** @suppress {extraRequire} */
 import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
 
 import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import * as olProj from 'ol/proj.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
@@ -30,7 +28,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,

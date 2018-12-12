@@ -4,12 +4,13 @@
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import * as olFunctions from 'ol/functions.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
+import olGeomPolygon from 'ol/geom/Polygon.js';
 import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -23,9 +24,9 @@ import olSourceVector from 'ol/source/Vector.js';
  * Supports:
  * - point
  * - line string
+ * - polygon
  *
  * @constructor
- * @struct
  * @fires ngeox.DrawEvent
  * @extends {ol.interaction.Interaction}
  * @param {ngeox.interaction.MobileDrawOptions} options Options
@@ -105,7 +106,7 @@ const exports = function(options) {
 
 };
 
-olBase.inherits(exports, olInteractionInteraction);
+olUtilInherits(exports, olInteractionInteraction);
 
 
 /**
@@ -235,6 +236,30 @@ exports.prototype.addToDrawing = function() {
     }
   }
 
+  // == polygon ==
+  if (this.type_ === 'Polygon') {
+    this.sketchPoints_.push(this.sketchPoint_);
+    if (!this.sketchFeature_) {
+      coordinates = [coordinate.slice(), coordinate.slice(), coordinate.slice()];
+      this.sketchFeature_ = new olFeature(new olGeomPolygon([coordinates]));
+      /** @type {ngeox.DrawEvent} */
+      const event = new ngeoCustomEvent(
+        'drawstart',
+        {
+          feature: this.sketchFeature_
+        }
+      );
+      this.dispatchEvent(event);
+    } else {
+      sketchFeatureGeom = this.sketchFeature_.getGeometry();
+      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomPolygon);
+      const coordinatess = sketchFeatureGeom.getCoordinates();
+      coordinates = coordinatess[0];
+      coordinates.push(coordinate.slice());
+      sketchFeatureGeom.setCoordinates(coordinatess);
+    }
+  }
+
   const dirty = this.getDirty();
   if (dirty) {
     this.set('dirty', false);
@@ -242,7 +267,7 @@ exports.prototype.addToDrawing = function() {
 
   // minPoints validation
   const valid = this.getValid();
-  if (this.type_ === 'LineString') {
+  if (this.type_ === 'LineString' || this.type_ === 'Polygon') {
     if (coordinates.length >= this.minPoints_) {
       if (!valid) {
         this.set('valid', true);
@@ -333,6 +358,14 @@ exports.prototype.modifyDrawing_ = function() {
     coordinates.pop();
     coordinates.push(center);
     sketchFeatureGeom.setCoordinates(coordinates);
+  } else if (this.type_ === 'Polygon') {
+    const sketchFeatureGeom = this.sketchFeature_.getGeometry();
+    googAsserts.assertInstanceof(sketchFeatureGeom, olGeomPolygon);
+    const coordinatess = sketchFeatureGeom.getCoordinates();
+    const coordinates = coordinatess[0];
+    coordinates.pop();
+    coordinates.push(center);
+    sketchFeatureGeom.setCoordinates([coordinates]);
   }
 
   const dirty = this.getDirty();

@@ -7,7 +7,6 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfObjecteditingGeom from 'gmf/objectediting/geom.js';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
-/** @suppress {extraRequire} */
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
 import googAsserts from 'goog/asserts.js';
@@ -18,11 +17,10 @@ import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
-/** @suppress {extraRequire} */
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -44,7 +42,7 @@ const jsts = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjectEditingComponent', [
   gmfEditingEditFeature.module.name,
@@ -115,7 +113,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @ngdoc component
  * @ngname gmfObjectediting
  */
-exports.component_ = {
+const component = {
   controller: 'GmfObjecteditingController as oeCtrl',
   bindings: {
     'active': '=gmfObjecteditingActive',
@@ -128,19 +126,18 @@ exports.component_ = {
   templateUrl: gmfObjecteditingTemplateUrl
 };
 
-exports.component('gmfObjectediting', exports.component_);
+exports.component('gmfObjectediting', component);
 
 
 /**
- * @param {!angular.Scope} $scope Angular scope.
- * @param {!angular.$timeout} $timeout Angular timeout service.
- * @param {!angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {!angular.IScope} $scope Angular scope.
+ * @param {!angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
  * @param {!gmf.objectediting.Query} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
  * @param {!gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-goog.require('ngeo.map.LayerHelper');
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
@@ -196,19 +193,19 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   // == Injected properties ==
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.scope_ = $scope;
 
   /**
-   * @type {!angular.$timeout}
+   * @type {!angular.ITimeoutService}
    * @private
    */
   this.timeout_ = $timeout;
 
   /**
-   * @type {!angularGettext.Catalog}
+   * @type {!angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -588,7 +585,7 @@ exports.Controller.prototype.isStateInsert = function() {
 
 /**
  * Called after a delete request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
@@ -602,7 +599,7 @@ exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
 
 /**
  * Called after an 'insert' or 'update' request.
- * @param {angular.$http.Response} resp Ajax response.
+ * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
 exports.Controller.prototype.handleEditFeature_ = function(resp) {
@@ -668,7 +665,7 @@ exports.Controller.prototype.unregisterInteractions_ = function() {
 exports.Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = `${exports.Controller.NAMESPACE_}-${olBase.getUid(this)}`;
+  const uid = `${exports.Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {

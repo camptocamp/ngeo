@@ -12,7 +12,7 @@ const exports = {};
 import ngeoUtils from 'ngeo/utils.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('app', []);
 

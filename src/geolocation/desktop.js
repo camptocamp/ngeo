@@ -11,7 +11,7 @@ import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDesktopGeolocation', [
   ngeoMapFeatureOverlayMgr.module.name,
@@ -44,7 +44,7 @@ exports.GeolocationEventType = {
  *
  * @htmlAttribute {ol.Map} gmf-geolocation-map The map.
  * @htmlAttribute {ngeox.DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoDesktopGeolocation
@@ -67,8 +67,7 @@ exports.directive('ngeoDesktopGeolocation', exports.directive_);
 /**
  * @constructor
  * @private
- * @struct
- * @param {angular.Scope} $scope The directive's scope.
+ * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -95,7 +94,7 @@ exports.Controller_ = function($scope, $element,
   googAsserts.assertObject(options);
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

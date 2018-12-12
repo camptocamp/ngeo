@@ -5,7 +5,7 @@ const exports = {};
 
 import appURL from './url.js';
 import './mapfishprint.css';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';
@@ -19,7 +19,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 const appmodule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
@@ -66,7 +66,7 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
 
 /**
  * @constructor
- * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
@@ -113,7 +113,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.printState = '';
 
   /**
-   * @type {angular.$timeout}
+   * @type {angular.ITimeoutService}
    * @private
    */
   this.$timeout_ = $timeout;
@@ -195,7 +195,7 @@ exports.MainController.prototype.print = function() {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
@@ -217,7 +217,7 @@ exports.MainController.prototype.getStatus_ = function(ref) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleCreateReportError_ = function(resp) {
@@ -227,7 +227,7 @@ exports.MainController.prototype.handleCreateReportError_ = function(resp) {
 
 /**
  * @param {string} ref Ref.
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
@@ -248,7 +248,7 @@ exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
 
 
 /**
- * @param {!angular.$http.Response} resp Response.
+ * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
 exports.MainController.prototype.handleGetStatusError_ = function(resp) {

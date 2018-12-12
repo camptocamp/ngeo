@@ -4,18 +4,17 @@
 const exports = {};
 
 import './mouseposition.css';
-/** @suppress {extraRequire} */
 import gmfMapModule from 'gmf/map/module.js';
 
-import EPSG2056 from 'ngeo/proj/EPSG2056.js';
-import EPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,

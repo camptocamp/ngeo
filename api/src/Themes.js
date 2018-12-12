@@ -8,7 +8,7 @@ import * as constants from './constants.js';
 /**
  * @type {Promise}
  */
-const themesPromise = fetch(constants.themesUrl).then((response) => response.json());
+const themesPromise = fetch(constants.themesUrl).then(response => response.json());
 
 /**
  * @type {Promise|undefined}
@@ -40,7 +40,7 @@ export function getBackgroundLayers() {
     }
     return Promise.all(promises);
   });
-};
+}
 
 const overlayDefs = new Map();
 
@@ -53,14 +53,14 @@ export function getOverlayDefs() {
         }
         resolve(overlayDefs);
       });
-    })
+    });
   }
   return overlayDefPromise;
-};
+}
 
 export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
   const ogcServer = opt_ogcServer ?
-    opt_ogcServer:
+    opt_ogcServer :
     config.ogcServer ? ogcServers[config.ogcServer] : undefined;
   if (config.children) {
     for (const childConfig of config.children) {
@@ -75,7 +75,7 @@ export function writeOverlayDefs(config, ogcServers, opt_ogcServer) {
       }
     );
   }
-};
+}
 
 /**
  * Returns a list of OpenLayers layer objects from the given layer names.
@@ -91,7 +91,7 @@ export function getOverlayLayers(layerNames) {
       const overlayDef = overlayDefs.get(layerName);
 
       if (!overlayDef) {
-        console.error(`Layer not found in themes: ${layerName}`)
+        console.error(`Layer not found in themes: ${layerName}`);
         continue;
       }
 
@@ -109,11 +109,11 @@ export function getOverlayLayers(layerNames) {
     }
     return Promise.all(promises);
   });
-};
+}
 
 /**
  * @param {Object} config Layer config (i.e. gmf layer node)
- * @param {Object} ogsServer OGC server configuration used to create the layer.
+ * @param {Object} ogcServer OGC server configuration used to create the layer.
  * @return {Promise} Promise.
  */
 export function createWMSLayer(config, ogcServer) {
@@ -128,7 +128,7 @@ export function createWMSLayer(config, ogcServer) {
       })
     })
   );
-};
+}
 
 /**
  * @param {Object} config Layer config (i.e. gmf layer node)
@@ -148,15 +148,15 @@ export function createWMTSLayer(config) {
       source: source
     });
     return layer;
-  })
-};
+  });
+}
 
 const capabilities = new Map();
 
 function getWMTSCapability(url) {
   if (!(url in capabilities)) {
     const request = fetch(url)
-      .then((response) => response.text())
+      .then(response => response.text())
       .then((capability) => {
         const parser = new WMTSCapabilities();
         return parser.read(capability);

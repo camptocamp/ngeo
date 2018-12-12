@@ -17,7 +17,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 
 
-/** @type {!angular.Module} **/
+/** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
   ngeoGeolocationDesktop.name,
@@ -26,7 +26,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {angular.Scope} $scope Scope.
+ * @param {angular.IScope} $scope Scope.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor

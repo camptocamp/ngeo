@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoUtils from 'ngeo/utils.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
@@ -110,7 +110,7 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
         }
 
         const featureStyleProp = `_ngeo_style_${j}`;
-        const styleId = `${olBase.getUid(style).toString()}-${geometryType}`;
+        const styleId = `${olUtilGetUid(style).toString()}-${geometryType}`;
         this.encodeVectorStyle(mapfishStyleObject, geometryType, style, styleId, featureStyleProp);
         geojsonFeature.properties[featureStyleProp] = styleId;
       }

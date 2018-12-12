@@ -3,7 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import * as olObj from 'ol/obj.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -29,7 +29,6 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
  *     featureOverlay.addFeature(myFeature);
  *
  * @constructor
- * @struct
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */
@@ -77,7 +76,7 @@ const exports = function() {
 exports.prototype.addFeature = function(feature, groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
-  const featureUid = olBase.getUid(feature).toString();
+  const featureUid = olUtilGetUid(feature).toString();
   this.featureUidToGroupIndex_[featureUid] = groupIndex;
   this.groups_[groupIndex].features[featureUid] = feature;
   this.source_.addFeature(feature);
@@ -92,7 +91,7 @@ exports.prototype.addFeature = function(feature, groupIndex) {
 exports.prototype.removeFeature = function(feature, groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
-  const featureUid = olBase.getUid(feature).toString();
+  const featureUid = olUtilGetUid(feature).toString();
   delete this.featureUidToGroupIndex_[featureUid];
   delete this.groups_[groupIndex].features[featureUid];
   this.source_.removeFeature(feature);
@@ -167,7 +166,7 @@ exports.prototype.setStyle = function(style, groupIndex) {
  * @private
  */
 exports.prototype.styleFunction_ = function(feature, resolution) {
-  const featureUid = olBase.getUid(feature).toString();
+  const featureUid = olUtilGetUid(feature).toString();
   googAsserts.assert(featureUid in this.featureUidToGroupIndex_);
   const groupIndex = this.featureUidToGroupIndex_[featureUid];
   const group = this.groups_[groupIndex];
@@ -176,7 +175,7 @@ exports.prototype.styleFunction_ = function(feature, resolution) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoFeatureOverlayMgr', [
   ngeoMapFeatureOverlay.module.name

@@ -127,7 +127,7 @@
   </ngeo-modal>
   <ngeo-modal ng-model="efCtrl.showServerError">
     <div class="modal-header">{{'Server error.' | translate}}</div>
-    <div class="modal-body">{{$parent.efCtrl.serverErrorType}}<br>
-    {{$parent.efCtrl.serverErrorMessage || ('Unexpected server error.' | translate)}}</div>
+    <div class="modal-body">{{efCtrl.serverErrorType}}<br>
+    {{efCtrl.serverErrorMessage || ('Unexpected server error.' | translate)}}</div>
   </ngeo-modal>
 </div>

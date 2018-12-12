@@ -1,16 +1,14 @@
 /**
  * @module ngeo.routing.module
  */
+import * as angular from 'angular';
 import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';
 
 import './routing.scss';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
-const exports = angular.module('ngeoRoutingModule', [
+export default angular.module('ngeoRoutingModule', [
   ngeoRoutingRoutingComponent.module.name
 ]);
-
-
-export default exports;

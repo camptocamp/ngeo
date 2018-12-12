@@ -1,20 +1,18 @@
 /**
  * @module ngeo.query.module
  */
+import * as angular from 'angular';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
-const exports = angular.module('ngeoQueryModule', [
+export default angular.module('ngeoQueryModule', [
   ngeoQueryQuerent.module.name,
   ngeoQueryMapQuerent.module.name,
   ngeoQueryMapQueryComponent.name,
   ngeoQueryBboxQueryComponent.name,
 ]);
-
-
-export default exports;

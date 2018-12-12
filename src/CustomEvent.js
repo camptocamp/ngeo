@@ -1,7 +1,7 @@
 /**
  * @module ngeo.CustomEvent
  */
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import olEventsEvent from 'ol/events/Event.js';
 
 /**
@@ -22,7 +22,7 @@ const exports = function(type, detail = {}) {
 
 };
 
-olBase.inherits(exports, olEventsEvent);
+olUtilInherits(exports, olEventsEvent);
 
 
 export default exports;

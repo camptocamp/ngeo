@@ -1,14 +1,12 @@
 /**
  * @module gmf.mobile.navigation.module
  */
+import * as angular from 'angular';
 import gmfMobileNavigationComponent from 'gmf/mobile/navigation/component.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('gmfMobileNavigationModule', [
+export default angular.module('gmfMobileNavigationModule', [
   gmfMobileNavigationComponent.name,
 ]);
-
-
-export default exports;

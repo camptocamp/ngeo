@@ -6,7 +6,7 @@ import 'bootstrap/js/src/modal.js';
 import googAsserts from 'goog/asserts.js';
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 const exports = angular.module('ngeoModal', []);
 
@@ -45,7 +45,7 @@ const exports = angular.module('ngeoModal', []);
  * @ngname ngeoModal
  * @type {!angular.Component}
  */
-exports.component_ = {
+const component = {
   template: `<div class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -64,12 +64,12 @@ exports.component_ = {
   }
 };
 
-exports.component('ngeoModal', exports.component_);
+exports.component('ngeoModal', component);
 
 exports.Controller_ = class {
   /**
    * @ngInject
-   * @param {!angular.Scope} $scope Scope.
+   * @param {!angular.IScope} $scope Scope.
    * @param {!jQuery} $element Element.
    */
   constructor($scope, $element) {
@@ -81,7 +81,7 @@ exports.Controller_ = class {
 
     /**
      * @private
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      */
     this.$scope_ = $scope;
 

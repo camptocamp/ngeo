@@ -12,7 +12,7 @@ import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMobileGeolocation', [
   ngeoMapFeatureOverlayMgr.module.name,
@@ -43,7 +43,7 @@ exports.GeolocationEventType = {
  *
  * @htmlAttribute {ol.Map} ngeo-mobile-geolocation-map The map.
  * @htmlAttribute {ngeox.MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
- * @return {angular.Directive} The Directive Definition Object.
+ * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoMobileGeolocation
@@ -66,10 +66,9 @@ exports.directive('ngeoMobileGeolocation', exports.directive_);
 /**
  * @constructor
  * @private
- * @struct
- * @param {angular.Scope} $scope The directive's scope.
+ * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
@@ -86,7 +85,7 @@ exports.Controller_ = function($scope, $element,
   googAsserts.assertInstanceof(map, olMap);
 
   /**
-   * @type {!angular.Scope}
+   * @type {!angular.IScope}
    * @private
    */
   this.$scope_ = $scope;

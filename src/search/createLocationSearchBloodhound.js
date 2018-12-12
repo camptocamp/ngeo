@@ -1,11 +1,9 @@
 /**
  * @module ngeo.search.createLocationSearchBloodhound
  */
-import * as olObj from 'ol/obj.js';
 import * as olProj from 'ol/proj.js';
 
-/** @suppress {extraRequire} */
-import ngeoProjEPSG21781 from 'ngeo/proj/EPSG21781.js';
+import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
 import olGeomPoint from 'ol/geom/Point.js';
 import olFeature from 'ol/Feature.js';
@@ -20,7 +18,7 @@ import 'corejs-typeahead';
 const exports = function(opt_options) {
   const options = opt_options || {};
 
-  const sourceProjection = olProj.get(ngeoProjEPSG21781);
+  const sourceProjection = olProj.get(EPSG21781);
   const targetProjection = options.targetProjection;
 
   /**
@@ -107,24 +105,24 @@ const exports = function(opt_options) {
   });
 
   // the options objects are cloned to avoid updating the passed object
-  const bhOptions = olObj.assign({}, options.options || {});
-  const remoteOptions = olObj.assign({}, options.remoteOptions || {});
+  const bhOptions = Object.assign({}, options.options || {});
+  const remoteOptions = Object.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
     // move the remote options to opt_remoteOptions
-    olObj.assign(remoteOptions, bhOptions.remote);
+    Object.assign(remoteOptions, bhOptions.remote);
     delete bhOptions.remote;
   }
 
-  olObj.assign(bloodhoundOptions, bhOptions);
-  olObj.assign(bloodhoundOptions.remote, remoteOptions);
+  Object.assign(bloodhoundOptions, bhOptions);
+  Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return new Bloodhound(bloodhoundOptions);
 };
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 

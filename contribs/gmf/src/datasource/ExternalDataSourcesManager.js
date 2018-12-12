@@ -14,7 +14,7 @@ import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
-import * as olBase from 'ol/index.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import {isEmpty} from 'ol/extent.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
@@ -28,14 +28,13 @@ const exports = class {
    * servers, and also files such as KML/GXP. This service is responsible of
    * creating, storing and managing them.
    *
-   * @param {!angularGettext.Catalog} gettextCatalog service.
-   * @param {!angular.$injector} $injector Main injector.
-   * @param {!angular.$q} $q The Angular $q service.
-   * @param {!angular.Scope} $rootScope The rootScope provider.
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
+   * @param {!angular.auto.IInjectorService} $injector Main injector.
+   * @param {!angular.IQService} $q The Angular $q service.
+   * @param {!angular.IScope} $rootScope The rootScope provider.
    * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {!ngeo.misc.File} ngeoFile Ngeo file.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo layer helper service
-   * @struct
    * @ngInject
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager
@@ -46,19 +45,19 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {!angular.$injector}
+     * @type {!angular.auto.IInjectorService}
      * @private
      */
     this.injector_ = $injector;
 
     /**
-     * @type {!angular.$q}
+     * @type {!angular.IQService}
      * @private
      */
     this.q_ = $q;
 
     /**
-     * @type {!angular.Scope}
+     * @type {!angular.IScope}
      * @private
      */
     this.rootScope_ = $rootScope;
@@ -514,7 +513,7 @@ const exports = class {
   /**
    * Get file data source from cache, else create, store and return a new one.
    * @param {!File} file File.
-   * @return {!angular.$q.Promise} Promise
+   * @return {!angular.IPromise} Promise
    * @private
    */
   getFileDataSource_(file) {
@@ -678,7 +677,7 @@ const exports = class {
  * @export
  */
 exports.getId = function(layer) {
-  return olBase.getUid(layer) + 1000000;
+  return olUtilGetUid(layer) + 1000000;
 };
 
 

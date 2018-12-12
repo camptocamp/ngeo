@@ -12,8 +12,7 @@ const exports = class {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
-   * @struct
-   * @param {angular.$q} $q The Angular $q service.
+   * @param {angular.IQService} $q The Angular $q service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
    *     service.
    * @param {ngeo.query.Querent} ngeoQuerent Ngeo querent service.
@@ -26,7 +25,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {angular.$q}
+     * @type {angular.IQService}
      * @private
      */
     this.q_ = $q;
@@ -85,7 +84,7 @@ const exports = class {
    * only have 1 ogcLayer set and be queryable.
    *
    * @param {ngeo.datasource.OGC} dataSource Filtrable data source.
-   * @return {angular.$q.Promise} Promise.
+   * @return {angular.IPromise} Promise.
    * @export
    */
   getDataSourceAttributes(dataSource) {
@@ -152,7 +151,7 @@ const exports = class {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDataSourcesHelper', [
   ngeoDatasourceDataSources.module.name,

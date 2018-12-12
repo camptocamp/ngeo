@@ -1,14 +1,12 @@
 /**
  * @module ngeo.googlestreetview.module
  */
+import * as angular from 'angular';
 import ngeoGooglestreetviewComponent from 'ngeo/googlestreetview/component.js';
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoGooglestreetviewModule', [
+export default angular.module('ngeoGooglestreetviewModule', [
   ngeoGooglestreetviewComponent.name
 ]);
-
-
-export default exports;

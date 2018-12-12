@@ -3,7 +3,10 @@
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import * as olBase from 'ol/index.js';
+import {
+  getUid as olUtilGetUid,
+  inherits as olUtilInherits
+} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
 import olEventsEventTarget from 'ol/events/Target.js';
@@ -15,13 +18,12 @@ import olLayerTile from 'ol/layer/Tile.js';
  * objects in the tree returned by the "themes" web service.
  *
  * @constructor
- * @struct
  * @extends {ol.events.EventTarget}
- * @param {angular.$http} $http Angular http service.
- * @param {angular.$injector} $injector Main injector.
- * @param {angular.$q} $q Angular q service
+ * @param {angular.IHttpService} $http Angular http service.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @param {angular.IQService} $q Angular q service
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {angularGettext.Catalog} gettextCatalog Gettext catalog.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
  * @ngdoc service
@@ -41,13 +43,13 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   }
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.$q_ = $q;
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.$http_ = $http;
@@ -82,19 +84,19 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {angular.$q.Deferred}
+   * @type {angular.IDeferred}
    * @private
    */
   this.deferred_ = $q.defer();
 
   /**
-   * @type {angular.$q.Promise}
+   * @type {angular.IPromise}
    * @private
    */
   this.promise_ = this.deferred_.promise;
@@ -105,13 +107,13 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   this.loaded = false;
 
   /**
-   * @type {angular.$q.Promise}
+   * @type {angular.IPromise}
    * @private
    */
   this.bgLayerPromise_ = null;
 };
 
-olBase.inherits(exports, olEventsEventTarget);
+olUtilInherits(exports, olEventsEventTarget);
 
 
 /**
@@ -218,7 +220,7 @@ exports.getFlatNodes = function(node, nodes) {
 
 /**
  * Get background layers.
- * @return {!angular.$q.Promise.<!Array.<!ol.layer.Base>>} Promise.
+ * @return {!angular.IPromise.<!Array.<!ol.layer.Base>>} Promise.
  */
 exports.prototype.getBgLayers = function() {
   const gettextCatalog = this.gettextCatalog;
@@ -233,7 +235,7 @@ exports.prototype.getBgLayers = function() {
    * @param {Array.<number>} array Array of ids;
    */
   const getIds = function(item, array) {
-    array.push(olBase.getUid(item));
+    array.push(olUtilGetUid(item));
     const children = item.children || [];
     children.forEach((child) => {
       getIds(child, array);
@@ -258,7 +260,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfOgcServers} ogcServers The ogc servers.
    * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} gmfLayer The item.
-   * @return {angular.$q.Promise.<ol.layer.Base>|ol.layer.Base} the created layer.
+   * @return {angular.IPromise.<ol.layer.Base>|ol.layer.Base} the created layer.
    */
   const layerLayerCreationFn = function(ogcServers, gmfLayer) {
     if (gmfLayer.type === 'WMTS') {
@@ -310,7 +312,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfOgcServers} ogcServers The ogc servers.
    * @param {gmfThemes.GmfGroup} item The item.
-   * @return {angular.$q.Promise.<ol.layer.Group>} the created layer.
+   * @return {angular.IPromise.<ol.layer.Group>} the created layer.
    */
   const layerGroupCreationFn = function(ogcServers, item) {
     // We assume no child is a layer group.
@@ -331,7 +333,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
    *     response.
-   * @return {angular.$q.Promise.<Array.<ol.layer.Base>>} Promise.
+   * @return {angular.IPromise.<Array.<ol.layer.Base>>} Promise.
    */
   const promiseSuccessFn = function(data) {
     const promises = data.background_layers.map((item) => {
@@ -377,7 +379,7 @@ exports.prototype.getBgLayers = function() {
 /**
  * Get a theme object by its name.
  * @param {string} themeName Theme name.
- * @return {angular.$q.Promise.<gmfThemes.GmfTheme>} Promise.
+ * @return {angular.IPromise.<gmfThemes.GmfTheme>} Promise.
  * @export
  */
 exports.prototype.getThemeObject = function(themeName) {
@@ -394,7 +396,7 @@ exports.prototype.getThemeObject = function(themeName) {
 
 /**
  * Get an array of theme objects.
- * @return {angular.$q.Promise.<!Array.<!gmfThemes.GmfTheme>>} Promise.
+ * @return {angular.IPromise.<!Array.<!gmfThemes.GmfTheme>>} Promise.
  * @export
  */
 exports.prototype.getThemesObject = function() {
@@ -410,7 +412,7 @@ exports.prototype.getThemesObject = function() {
 
 /**
  * Get an array of background layer objects.
- * @return {angular.$q.Promise.<!Array.<!gmfThemes.GmfLayer>>} Promise.
+ * @return {angular.IPromise.<!Array.<!gmfThemes.GmfLayer>>} Promise.
  */
 exports.prototype.getBackgroundLayersObject = function() {
   googAsserts.assert(this.promise_ !== null);
@@ -427,7 +429,7 @@ exports.prototype.getBackgroundLayersObject = function() {
 
 /**
  * Get the `ogcServers` object.
- * @return {angular.$q.Promise.<!gmfThemes.GmfOgcServers>} Promise.
+ * @return {angular.IPromise.<!gmfThemes.GmfOgcServers>} Promise.
  * @export
  */
 exports.prototype.getOgcServersObject = function() {
@@ -444,7 +446,7 @@ exports.prototype.getOgcServersObject = function() {
 
 /**
  * Returns a promise to check if one of the layers in the themes is editable.
- * @return {angular.$q.Promise.<boolean>} Promise.
+ * @return {angular.IPromise.<boolean>} Promise.
  */
 exports.prototype.hasEditableLayers = function() {
   googAsserts.assert(this.promise_ !== null);
@@ -590,7 +592,7 @@ exports.NodeType = {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfThemes', [
   ngeoMapLayerHelper.module.name,

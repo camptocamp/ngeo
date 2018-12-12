@@ -12,23 +12,22 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * regardless of the associated layer visibility. The layer nodes are also
  * loaded only once.
  *
- * @param {angular.$http} $http Angular $http service.
- * @param {angular.$q} $q Angular $q service.
+ * @param {angular.IHttpService} $http Angular $http service.
+ * @param {angular.IQService} $q Angular $q service.
  * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
  * @constructor
- * @struct
  * @ngInject
  */
 const exports = function($http, $q, gmfThemes) {
 
   /**
-   * @type {angular.$http}
+   * @type {angular.IHttpService}
    * @private
    */
   this.http_ = $http;
 
   /**
-   * @type {angular.$q}
+   * @type {angular.IQService}
    * @private
    */
   this.q_ = $q;
@@ -40,7 +39,7 @@ const exports = function($http, $q, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {?angular.$q.Deferred}
+   * @type {?angular.IDeferred}
    * @private
    */
   this.getQueryableLayerNodesDefered_ = null;
@@ -49,7 +48,7 @@ const exports = function($http, $q, gmfThemes) {
 
 
 /**
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getQueryableLayersInfo = function() {
@@ -156,7 +155,7 @@ exports.getQueryableLayersInfoFromThemes = function(
  *     information.
  * @param {ol.Coordinate} coordinate Coordinate.
  * @param {ol.Map} map Map.
- * @return {angular.$q.Promise} Promise.
+ * @return {angular.IPromise} Promise.
  * @export
  */
 exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
@@ -197,7 +196,7 @@ exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
 
 
 /**
- * @type {!angular.Module}
+ * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfObjectEditingQuery', [
   gmfThemeThemes.module.name,

@@ -26,7 +26,7 @@ import googAsserts from 'goog/asserts.js';
  * @param {Array.<T>} arr2 Array 2.
  * @param {boolean} reverse `true` if arr2 is in reverse order, `false`
  *     otherwise.
- * @param {angular.Scope} scope Angular scope. Used to watch arr1 and arr2
+ * @param {angular.IScope} scope Angular scope. Used to watch arr1 and arr2
  *     using $watchCollection.
  * @param {function(T):boolean} filter Filter function.
  * @return {function()} Function to call to stop synchronization

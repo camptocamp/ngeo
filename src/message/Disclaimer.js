@@ -6,7 +6,7 @@ import googAsserts from 'goog/asserts.js';
 
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
-import * as olBase from 'ol/index.js';
+import {inherits as olUtilInherits} from 'ol/util.js';
 import 'ngeo/sass/font.scss';
 
 /**
@@ -14,11 +14,10 @@ import 'ngeo/sass/font.scss';
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
  *
- * @param {angular.$sce} $sce Angular sce service.
- * @param {angularGettext.Catalog} gettextCatalog Gettext service.
+ * @param {angular.ISCEService} $sce Angular sce service.
+ * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
  * @constructor
- * @struct
  * @extends {ngeo.message.Message}
  * @ngdoc service
  * @ngname ngeoDisclaimer
@@ -28,12 +27,12 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {angular.$sce}
+   * @type {angular.ISCEService}
    */
   this.sce_ = $sce;
 
   /**
-   * @type {angularGettext.Catalog}
+   * @type {angular.gettext.gettextCatalog}
    * @private
    */
   this.gettextCatalog_ = gettextCatalog;
@@ -64,7 +63,7 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
 
 };
 
-olBase.inherits(exports, ngeoMessageMessage);
+olUtilInherits(exports, ngeoMessageMessage);
 
 
 /**
@@ -224,7 +223,7 @@ exports.prototype.closeMessage_ = function(message) {
 
 
 /**
- * @type {angular.Module}
+ * @type {angular.IModule}
  */
 exports.module = angular.module('ngeoDisclaimer', [
   ngeoMessagePopup.module.name,
