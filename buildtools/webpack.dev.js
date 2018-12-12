@@ -15,15 +15,17 @@ const loaderOptionsPlugin = new webpack.LoaderOptionsPlugin({
   debug: false
 });
 
-
-module.exports = {
-  mode: 'development',
-  output: {
-    filename: '[name].js'
-  },
-  module: {
-    rules: [
-      resourcesRule,
-    ]
-  },
-};
+// Same signature as for webpack.prod.js
+module.exports = function(_) {
+  return {
+    mode: 'development',
+    output: {
+      filename: '[name].js'
+    },
+    module: {
+      rules: [
+        resourcesRule,
+      ]
+    },
+  };
+}

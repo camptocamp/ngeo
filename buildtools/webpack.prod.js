@@ -24,6 +24,7 @@ const fontRule = {
   }
 };
 
+// Same signature as for webpack.dev.js
 module.exports = function(UglifyJsPluginCache) {
   return {
     mode: 'production',
