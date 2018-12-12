@@ -2,9 +2,11 @@
  * @module ngeo.query.MapQuerent
  */
 import googAsserts from 'goog/asserts.js';
+import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
+import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
 const exports = class {
 
@@ -17,14 +19,16 @@ const exports = class {
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
+   * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature
+   *     helper service.
    * @param {ngeo.query.Querent} ngeoQuerent The ngeo querent service.
    * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
    */
-  constructor($injector, ngeoDataSources, ngeoDataSourcesHelper, ngeoQuerent,
-    ngeoQueryResult) {
+  constructor($injector, ngeoDataSources, ngeoDataSourcesHelper,
+    ngeoFeatureHelper, ngeoQuerent, ngeoQueryResult) {
 
     const options = /** @type {ngeox.QueryOptions} */ (
       $injector.has('ngeoQueryOptions') ?
@@ -35,6 +39,12 @@ const exports = class {
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
+
+    /**
+     * @type {ngeo.misc.FeatureHelper}
+     * @private
+     */
+    this.featureHelper_ = ngeoFeatureHelper;
 
     /**
      * @type {ngeo.datasource.Helper}
@@ -85,6 +95,13 @@ const exports = class {
      * @private
      */
     this.dataSourceNames_ = {};
+
+    /**
+     * Flag turned on after clearing to make sure that we clear only once.
+     * @type {boolean}
+     * @private
+     */
+    this.cleared_ = false;
   }
 
   /**
@@ -92,8 +109,10 @@ const exports = class {
    * @export
    */
   issue(options) {
+    const action = options.action ? options.action : ngeoQueryAction.REPLACE;
+
     // (1) Clear previous result
-    this.clear();
+    this.clear(action !== ngeoQueryAction.REPLACE);
 
     // (2) Get queryable data sources, unless they are already set
     let queryableDataSources;
@@ -116,35 +135,48 @@ const exports = class {
       wfsCount: this.queryCountFirst_
     });
     this.result_.pending = true;
-    this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this));
+    this.ngeoQuerent_.issue(options).then(
+      this.handleResult_.bind(this, action));
   }
 
   /**
    * Clear result, i.e. clear all 'result source' from their features and other
    * information.
+   * @param {boolean} keep Whether to keep the existing features and sources
    * @export
    */
-  clear() {
+  clear(keep = false) {
+
+    if (this.cleared_) {
+      return;
+    }
+
     this.result_.total = 0;
     for (const source of this.result_.sources) {
-      source.features.length = 0;
+      if (!keep) {
+        source.features.length = 0;
+        source.totalFeatureCount = undefined;
+      }
       source.pending = false;
       source.queried = false;
       source.tooManyResults = false;
-      source.totalFeatureCount = undefined;
     }
-    this.result_.sources.length = 0; // Clear previous result sources
+    if (!keep) {
+      this.result_.sources.length = 0; // Clear previous result sources
+    }
     this.result_.pending = false;
+    this.cleared_ = true;
   }
 
   /**
    * Called after a request to the querent service. Update the result.
    *
+   * @param {string} action Query action
    * @param {ngeox.QuerentResult} response Response
    * @private
    */
-  handleResult_(response) {
-    let total = 0;
+  handleResult_(action, response) {
+    let total = action === ngeoQueryAction.REPLACE ? 0 : this.result_.total;
 
     // (1) Update result sources, i.e. add them
     for (const idStr in response) {
@@ -186,23 +218,64 @@ const exports = class {
       for (const type in typeSeparatedFeatures) {
         label = type ? type : label;
         const featuresByType = typeSeparatedFeatures[type];
-        this.result_.sources.push({
-          features: featuresByType,
-          id: id,
-          label: label,
-          limit: limit,
-          pending: false,
-          queried: true,
-          tooManyResults: tooManyResults,
-          totalFeatureCount: totalFeatureCount
-        });
-        total += features.length;
+        let shouldPush = false;
+
+        if (action === ngeoQueryAction.REPLACE) {
+          shouldPush = true;
+        } else {
+          let existingSource;
+          for (const source of this.result_.sources) {
+            if (source.id === id && source.label === label) {
+              existingSource = source;
+              break;
+            }
+          }
+
+          if (existingSource) {
+            for (const newFeature of featuresByType) {
+              const existingFeatureIndex =
+                this.featureHelper_.findFeatureIndexByFid(
+                  existingSource.features, newFeature.getId()
+                );
+              if (existingFeatureIndex === -1) {
+                if (action === ngeoQueryAction.ADD) {
+                  existingSource.features.push(newFeature);
+                  total += 1;
+                }
+              } else {
+                if (action === ngeoQueryAction.REMOVE) {
+                  existingSource.features.splice(existingFeatureIndex, 1);
+                  total -= 1;
+                }
+              }
+            }
+          } else {
+            if (action === ngeoQueryAction.ADD) {
+              shouldPush = true;
+            }
+          }
+        }
+
+        if (shouldPush) {
+          this.result_.sources.push({
+            features: featuresByType,
+            id: id,
+            label: label,
+            limit: limit,
+            pending: false,
+            queried: true,
+            tooManyResults: tooManyResults,
+            totalFeatureCount: totalFeatureCount
+          });
+          total += features.length;
+        }
       }
     }
 
     // (2) Update total & pending
     this.result_.total = total;
     this.result_.pending = false;
+    this.cleared_ = false;
   }
 
 };
@@ -215,6 +288,7 @@ exports.module = angular.module('ngeoMapQuerent', [
   ngeoDatasourceDataSources.module.name,
   ngeoDatasourceHelper.module.name,
   ngeoQueryQuerent.module.name,
+  ngeoMiscFeatureHelper.module.name,
 ]);
 exports.module.service('ngeoMapQuerent', exports);
 

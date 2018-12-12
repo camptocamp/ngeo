@@ -1355,6 +1355,24 @@ exports.prototype.clearNonSpatialProperties = function(feature) {
 };
 
 
+/**
+ * @param {!Array.<!ol.Feature>} features Features.
+ * @param {string} fid Feature id
+ * @return {number} Index of found feature
+ * @export
+ */
+exports.prototype.findFeatureIndexByFid = function(features, fid) {
+  let index = -1;
+  for (let i = 0, ii = features.length; i < ii; i++) {
+    if (features[i].getId() == fid) {
+      index = i;
+      break;
+    }
+  }
+  return index;
+};
+
+
 // === FORMAT TYPES ===
 
 

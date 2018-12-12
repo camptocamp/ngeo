@@ -219,6 +219,7 @@ ngeox.Download;
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  * @typedef {{
+ *     action: (string|undefined),
  *     coordinate: (ol.Coordinate|undefined),
  *     dataSources: (Array.<ngeox.datasource.DataSource>|undefined),
  *     extent: (ol.Extent|undefined),
@@ -231,6 +232,20 @@ ngeox.Download;
  * }}
  */
 ngeox.IssueGetFeaturesOptions;
+
+
+/**
+ * The action the MapQuerent should take regarding the queried
+ * features. Possible values are:
+ *
+ * - `replace`: newly queried features are used as result
+ * - `add`:     newly queried features are added to the existing ones
+ * - `remove`:  newly queried features are removed from the existing ones
+ *
+ * Defaults to `replace`.
+ * @type {string|undefined}
+ */
+ngeox.IssueGetFeaturesOptions.prototype.action;
 
 
 /**
