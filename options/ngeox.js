@@ -243,7 +243,7 @@ ngeox.IssueGetFeaturesOptions;
  * - `remove`:  newly queried features are removed from the existing ones
  *
  * Defaults to `replace`.
- * @type {action|undefined}
+ * @type {string|undefined}
  */
 ngeox.IssueGetFeaturesOptions.prototype.action;
 
