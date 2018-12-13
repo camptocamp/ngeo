@@ -102,7 +102,7 @@ const exports = class extends olEventsEventTarget {
     }).then(((response) => {
       this.user_.is_password_changed = true;
       this.$rootScope_.$digest();
-    }).bind(this));
+    }));
   }
 
   /**
