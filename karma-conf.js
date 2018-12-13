@@ -6,8 +6,7 @@ var isDebug = process.argv.some(function(argument) {
 
 const webpackMerge = require('webpack-merge');
 const commons = require('./buildtools/webpack.commons');
-let webpackConfig = commons.config({}, false);
-
+let webpackConfig = commons.config();
 webpackConfig = webpackMerge(webpackConfig, require('./buildtools/webpack.dev'));
 webpackConfig = webpackMerge(webpackConfig, {
   devtool: 'inline-source-map',
