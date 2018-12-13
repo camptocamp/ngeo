@@ -317,13 +317,14 @@ exports.AuthenticationController_ = class {
         this.setError_(errors);
       } else {
         // Send request with current credentials, which may fail if the old password given is incorrect.
-        const error = gettextCatalog.getString('Incorrect old password.');
-        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd).then(
-          () => {
+        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd)
+          .then(() => {
             this.changePasswordModalShown = true;
             this.changePasswordReset();
-          },
-          this.setError_.bind(this, error));
+          })
+          .catch((err) => {
+            this.setError_(gettextCatalog.getString('Incorrect old password.'));
+          });
       }
     }
   }
