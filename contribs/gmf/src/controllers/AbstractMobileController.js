@@ -180,15 +180,6 @@ exports.prototype.navIsVisible = function() {
 
 
 /**
- * Hide search overlay.
- * @export
- */
-exports.prototype.hideSearchOverlay = function() {
-  this.searchOverlayVisible = false;
-};
-
-
-/**
  * Open the menu with corresponding to the data-target attribute value.
  * @param {string} target the data-target value.
  * @export
