@@ -1,29 +1,26 @@
 "use strict";
-let async = require('async');
-let fs = require('fs');
-let path = require('path');
-let options = require('commander');
-let Extractor = require('angular-gettext-tools').Extractor;
+const fs = require('fs');
+const options = require('commander');
+const Extractor = require('angular-gettext-tools').Extractor;
 
 function main(inputs) {
-  let extractor = new Extractor();
+  const extractor = new Extractor();
 
-  async.eachSeries(inputs,
-    function(input, cb) {
-      fs.readFile(input, {encoding: 'utf-8'}, function(err, data) {
-        if (!err) {
-          extractor.parse(input, data);
-        }
-        cb(err);
+  const promises = [];
+  inputs.forEach((input) => {
+    promises.push(new Promise((resolve) => {
+      fs.readFile(input, 'utf-8', (error, content) => {
+        resolve(error ? undefined : {input, content});
       });
-    },
-    function(err) {
-      if (err) {
-        throw new Error(err);
-      }
-      process.stdout.write(extractor.toString());
-    }
-  );
+    }));
+  });
+
+  Promise.all(promises).then((contents) => {
+    contents = contents.filter(content => content !== undefined);
+    contents.forEach(({input, content}) => extractor.parse(input, content));
+
+    process.stdout.write(extractor.toString());
+  });
 }
 
 // If running this module directly then call the main function.
