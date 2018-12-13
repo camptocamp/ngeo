@@ -38,7 +38,6 @@
     "angular-touch": "1.7.0",
     "angular-ui-date": "1.1.1",
     "angular-ui-slider": "0.4.0",
-    "async": "2.6.1",
     "babel-core": "6.26.0",
     "babel-loader": "7.1.4",
     "babel-preset-env": "1.6.1",
