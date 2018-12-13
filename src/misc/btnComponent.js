@@ -40,7 +40,7 @@ const exports = angular.module('ngeoBtnComponent', []);
  * @ngdoc directive
  * @ngname ngeoBtnGroup
  */
-exports.btnGroupComponent_ = function($parse) {
+function btnGroupComponent($parse) {
   return {
     restrict: 'A',
     controller: 'ngeoBtnGroupController',
@@ -64,10 +64,10 @@ exports.btnGroupComponent_ = function($parse) {
       }
     }
   };
-};
+}
 
 
-exports.directive('ngeoBtnGroup', exports.btnGroupComponent_);
+exports.directive('ngeoBtnGroup', btnGroupComponent);
 
 
 /**
@@ -136,7 +136,7 @@ exports.controller('ngeoBtnGroupController',
  * @ngdoc directive
  * @ngname ngeoBtn
  */
-exports.btnComponent_ = function($parse) {
+function btnComponent($parse) {
   return {
     require: ['?^ngeoBtnGroup', 'ngModel'],
     restrict: 'A',
@@ -179,10 +179,10 @@ exports.btnComponent_ = function($parse) {
       };
     }
   };
-};
+}
 
 
-exports.directive('ngeoBtn', exports.btnComponent_);
+exports.directive('ngeoBtn', btnComponent);
 
 
 export default exports;

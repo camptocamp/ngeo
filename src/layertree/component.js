@@ -118,17 +118,17 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-exports.directive_ = function(ngeoLayertreeTemplateUrl) {
+function directive(ngeoLayertreeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
     controller: ngeoLayertreeController
   };
-};
+}
 
 
-exports.directive('ngeoLayertree', exports.directive_);
+exports.directive('ngeoLayertree', directive);
 
 
 export default exports;

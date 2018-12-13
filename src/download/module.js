@@ -1,7 +1,7 @@
 /**
  * @module ngeo.download.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 import ngeoDownloadService from 'ngeo/download/service.js';
 

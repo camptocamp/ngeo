@@ -28,7 +28,7 @@ const exports = angular.module('ngeoFilereader', []);
  * @ngdoc directive
  * @ngname ngeoFilereader
  */
-exports.component_ = function($window) {
+function component($window) {
   return {
     restrict: 'A',
     scope: {
@@ -62,11 +62,10 @@ exports.component_ = function($window) {
       });
     }
   };
-};
+}
 
 
-exports.directive('ngeoFilereader',
-  exports.component_);
+exports.directive('ngeoFilereader', component);
 
 
 export default exports;

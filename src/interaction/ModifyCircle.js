@@ -276,11 +276,10 @@ exports.prototype.createOrUpdateVertexFeature_ = function(coordinates) {
  * @param {ol.ModifySegmentDataType} a The first segment data.
  * @param {ol.ModifySegmentDataType} b The second segment data.
  * @return {number} The difference in indexes.
- * @private
  */
-exports.compareIndexes_ = function(a, b) {
+function compareIndexes(a, b) {
   return a.index - b.index;
-};
+}
 
 
 /**
@@ -300,7 +299,7 @@ exports.handleDownEvent_ = function(evt) {
     const vertexExtent = olExtent.boundingExtent([vertex]);
     const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
     const componentSegments = {};
-    segmentDataMatches.sort(exports.compareIndexes_);
+    segmentDataMatches.sort(compareIndexes);
     for (let i = 0, ii = segmentDataMatches.length; i < ii; ++i) {
       const segmentDataMatch = segmentDataMatches[i];
       const segment = segmentDataMatch.segment;

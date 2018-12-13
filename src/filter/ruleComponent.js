@@ -76,7 +76,7 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
 /**
  * @private
  */
-exports.RuleController_ = class {
+class RuleController {
 
   /**
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
@@ -957,7 +957,7 @@ exports.RuleController_ = class {
     this.scope_.$apply();
   }
 
-};
+}
 
 
 /**
@@ -975,7 +975,7 @@ exports.component('ngeoRule', {
     'rule': '<',
     'toolGroup': '<'
   },
-  controller: exports.RuleController_,
+  controller: RuleController,
   templateUrl: ngeoRuleTemplateUrl
 });
 

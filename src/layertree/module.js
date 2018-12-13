@@ -1,7 +1,7 @@
 /**
  * @module ngeo.layertree.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
 /**

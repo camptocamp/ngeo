@@ -88,7 +88,7 @@ exports.component('gmfLidarprofilePanel', component);
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {angular.IScope} $scope Angular scope.
@@ -355,10 +355,10 @@ exports.Controller_ = class {
       this.profile.utils.downloadProfileAsImageFile(this.profileConfig_.clientConfig);
     }
   }
-};
+}
 
 
-exports.controller('gmfLidarprofilePanelController', exports.Controller_);
+exports.controller('gmfLidarprofilePanelController', Controller);
 
 
 export default exports;

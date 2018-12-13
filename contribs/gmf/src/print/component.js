@@ -194,7 +194,7 @@ exports.optionsType;
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {angular.JQLite} $element Element.
@@ -1275,9 +1275,9 @@ exports.Controller_ = class {
   isState(stateEnumKey) {
     return this.gmfPrintState_.state === exports.PrintStateEnum[stateEnumKey];
   }
-};
+}
 
-exports.controller('GmfPrintController', exports.Controller_);
+exports.controller('GmfPrintController', Controller);
 
 
 export default exports;

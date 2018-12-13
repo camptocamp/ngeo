@@ -27,7 +27,7 @@ const exports = angular.module('ngeoMeasurelength', [
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
-exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
+function directive($compile, gettextCatalog, $filter, $injector) {
   return {
     restrict: 'A',
     require: '^^ngeoDrawfeature',
@@ -68,10 +68,10 @@ exports.directive_ = function($compile, gettextCatalog, $filter, $injector) {
       );
     }
   };
-};
+}
 
 
-exports.directive('ngeoMeasurelength', exports.directive_);
+exports.directive('ngeoMeasurelength', directive);
 
 
 export default exports;

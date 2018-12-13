@@ -54,34 +54,32 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMobileMeasureArea
  */
-exports.component_ =
-    function(gmfMobileMeasureAreaTemplateUrl) {
-      return {
-        restrict: 'A',
-        scope: {
-          'active': '=gmfMobileMeasureareaActive',
-          'precision': '<?gmfMobileMeasureareaPrecision',
-          'map': '=gmfMobileMeasureareaMap',
-          'sketchStyle': '=?gmfMobileMeasureareaSketchstyle'
-        },
-        controller: 'GmfMobileMeasureAreaController as ctrl',
-        bindToController: true,
-        templateUrl: gmfMobileMeasureAreaTemplateUrl,
-        /**
-         * @param {angular.Scope} scope Scope.
-         * @param {angular.JQLite} element Element.
-         * @param {angular.Attributes} attrs Attributes.
-         * @param {gmf.mobile.measure.areaComponent.Controller_} controller Controller.
-         */
-        link: (scope, element, attrs, controller) => {
-          controller.init();
-        }
-      };
-    };
+function component(gmfMobileMeasureAreaTemplateUrl) {
+  return {
+    restrict: 'A',
+    scope: {
+      'active': '=gmfMobileMeasureareaActive',
+      'precision': '<?gmfMobileMeasureareaPrecision',
+      'map': '=gmfMobileMeasureareaMap',
+      'sketchStyle': '=?gmfMobileMeasureareaSketchstyle'
+    },
+    controller: 'GmfMobileMeasureAreaController as ctrl',
+    bindToController: true,
+    templateUrl: gmfMobileMeasureAreaTemplateUrl,
+    /**
+     * @param {angular.Scope} scope Scope.
+     * @param {angular.JQLite} element Element.
+     * @param {angular.Attributes} attrs Attributes.
+     * @param {gmf.mobile.measure.areaComponent.Controller_} controller Controller.
+     */
+    link: (scope, element, attrs, controller) => {
+      controller.init();
+    }
+  };
+}
 
 
-exports.directive('gmfMobileMeasurearea',
-  exports.component_);
+exports.directive('gmfMobileMeasurearea', component);
 
 
 /**
@@ -94,7 +92,7 @@ exports.directive('gmfMobileMeasurearea',
  * @ngdoc controller
  * @ngname GmfMobileMeasureAreaController
  */
-exports.Controller_ = function($scope, $filter, gettextCatalog) {
+function Controller($scope, $filter, gettextCatalog) {
 
   gmfMobileMeasureBaseComponent.Controller.call(
     this,
@@ -108,14 +106,14 @@ exports.Controller_ = function($scope, $filter, gettextCatalog) {
    * @export
    */
   this.measure;
-};
+}
 
 olUtilInherits(exports, gmfMobileMeasureBaseComponent.Controller);
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.init = function() {
+Controller.prototype.init = function() {
 
   this.measure = new ngeoInteractionMeasureAreaMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
     precision: this.precision,
@@ -129,7 +127,7 @@ exports.Controller_.prototype.init = function() {
  * Add current sketch point to line measure
  * @export
  */
-exports.Controller_.prototype.addPoint = function() {
+Controller.prototype.addPoint = function() {
   this.drawInteraction.addToDrawing();
 };
 
@@ -138,7 +136,7 @@ exports.Controller_.prototype.addPoint = function() {
  * Clear the sketch feature
  * @export
  */
-exports.Controller_.prototype.clear = function() {
+Controller.prototype.clear = function() {
   this.drawInteraction.clearDrawing();
 };
 
@@ -147,7 +145,7 @@ exports.Controller_.prototype.clear = function() {
  * Finish line measure
  * @export
  */
-exports.Controller_.prototype.finish = function() {
+Controller.prototype.finish = function() {
   this.drawInteraction.finishDrawing();
 };
 
@@ -156,13 +154,12 @@ exports.Controller_.prototype.finish = function() {
  * Deactivate the directive.
  * @export
  */
-exports.Controller_.prototype.deactivate = function() {
+Controller.prototype.deactivate = function() {
   this.active = false;
 };
 
 
-exports.controller('GmfMobileMeasureAreaController',
-  exports.Controller_);
+exports.controller('GmfMobileMeasureAreaController', Controller);
 
 
 export default exports;

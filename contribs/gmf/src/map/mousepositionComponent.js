@@ -85,7 +85,7 @@ exports.component('gmfMouseposition', component);
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */
-exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
+function Controller($element, $filter, $scope, gettextCatalog) {
   /**
    * @type {!ol.Map}
    * @export
@@ -133,13 +133,13 @@ exports.Controller_ = function($element, $filter, $scope, gettextCatalog) {
    * @private
    */
   this.control_ = null;
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.$scope_.$on('gettextLanguageChanged', () => {
     this.initOlControl_();
   });
@@ -153,7 +153,7 @@ exports.Controller_.prototype.$onInit = function() {
  * Init the ol.control.MousePosition
  * @private
  */
-exports.Controller_.prototype.initOlControl_ = function() {
+Controller.prototype.initOlControl_ = function() {
   if (this.control_ !== null) {
     this.map.removeControl(this.control_);
   }
@@ -186,13 +186,12 @@ exports.Controller_.prototype.initOlControl_ = function() {
  * @param {gmfx.MousePositionProjection} projection The new projection to use.
  * @export
  */
-exports.Controller_.prototype.setProjection = function(projection) {
+Controller.prototype.setProjection = function(projection) {
   this.control_.setProjection(olProj.get(projection.code));
   this.projection = projection;
 };
 
-exports.controller('gmfMousepositionController',
-  exports.Controller_);
+exports.controller('gmfMousepositionController', Controller);
 
 
 export default exports;

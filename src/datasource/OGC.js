@@ -10,6 +10,14 @@ import olFormatGML3 from 'ol/format/GML3.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 
+
+/**
+ * Default name of the geometry attribute.
+ * @type {string}
+ */
+const DEFAULT_GEOMETRY_NAME = 'geom';
+
+
 /**
  * @implements {ngeox.datasource.OGC}
  */
@@ -97,7 +105,7 @@ const exports = class extends ngeoDatasourceDataSource {
      * @type {string}
      * @private
      */
-    this.geometryName_ = options.geometryName || exports.DEFAULT_GEOMETRY_NAME_;
+    this.geometryName_ = options.geometryName || DEFAULT_GEOMETRY_NAME;
 
     /**
      * The type of images to fetch by queries by the (WMS) or (WMTS) .
@@ -913,7 +921,7 @@ const exports = class extends ngeoDatasourceDataSource {
    * @private
    */
   updateGeometryNameFromAttributes_() {
-    let geometryName = exports.DEFAULT_GEOMETRY_NAME_;
+    let geometryName = DEFAULT_GEOMETRY_NAME;
 
     if (this.attributes) {
       for (const attribute of this.attributes) {
@@ -980,14 +988,6 @@ exports.guessServiceTypeByUrl = function(url) {
 
   return type;
 };
-
-
-/**
- * Default name of the geometry attribute.
- * @type {string}
- * @private
- */
-exports.DEFAULT_GEOMETRY_NAME_ = 'geom';
 
 
 /**

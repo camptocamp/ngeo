@@ -1,7 +1,7 @@
 /**
  * @module ngeo.googlestreetview.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoGooglestreetviewComponent from 'ngeo/googlestreetview/component.js';
 
 /**

@@ -1,7 +1,7 @@
 /**
  * @module gmf.filters.filterselectorComponent
  */
-
+import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
@@ -70,7 +70,7 @@ function gmfFilterselectorTemplateUrl($attrs, gmfFilterselectorTemplateUrl) {
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
@@ -259,7 +259,7 @@ exports.Controller_ = class {
     this.readyDataSource = null;
 
     /**
-     * @type {!gmf.filters.filterselectorComponent.Controller_.RuleCache}
+     * @type {!RuleCache}
      * @private
      */
     this.ruleCache_ = {};
@@ -608,7 +608,7 @@ exports.Controller_ = class {
 
   /**
    * @param {ngeo.datasource.DataSource} dataSource Data source.
-   * @return {?gmf.filters.filterselectorComponent.Controller_.RuleCacheItem} Rule cache item.
+   * @return {?RuleCacheItem} Rule cache item.
    * @private
    */
   getRuleCacheItem_(dataSource) {
@@ -617,7 +617,7 @@ exports.Controller_ = class {
 
   /**
    * @param {ngeo.datasource.DataSource} dataSource Data source.
-   * @param {gmf.filters.filterselectorComponent.Controller_.RuleCacheItem} item Rule cache item.
+   * @param {RuleCacheItem} item Rule cache item.
    * @private
    */
   setRuleCacheItem_(dataSource, item) {
@@ -720,22 +720,20 @@ exports.Controller_ = class {
     this.gmfSavedFilters.remove(item);
   }
 
-};
+}
 
 
 /**
- * @typedef {Object.<number, !gmf.filters.filterselectorComponent.Controller_.RuleCacheItem>}
+ * @typedef {Object.<number, !RuleCacheItem>} RuleCache
  */
-exports.Controller_.RuleCache;
 
 
 /**
  * @typedef {{
  *     customRules: (Array.<ngeo.rule.Rule>),
  *     directedRules: (Array.<ngeo.rule.Rule>)
- * }}
+ * }} RuleCacheItem
  */
-exports.Controller_.RuleCacheItem;
 
 
 exports.component('gmfFilterselector', {
@@ -744,7 +742,7 @@ exports.component('gmfFilterselector', {
     map: '<',
     toolGroup: '<'
   },
-  controller: exports.Controller_,
+  controller: Controller,
   templateUrl: gmfFilterselectorTemplateUrl
 });
 

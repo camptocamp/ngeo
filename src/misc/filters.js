@@ -1,8 +1,8 @@
 /**
  * @module ngeo.misc.filters
  */
-import * as olMath from 'ol/math.js';
-import * as olString from 'ol/string.js';
+import {modulo} from 'ol/math.js';
+import {padNumber} from 'ol/string.js';
 const exports = angular.module('ngeoAngularFilters', []);
 
 /**
@@ -253,14 +253,14 @@ exports.filter('ngeoNumberCoordinates', exports.NumberCoordinates);
  */
 exports.DMSCoordinates = function() {
   const degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
-    const normalizedDegrees = olMath.modulo(degrees + 180, 360) - 180;
+    const normalizedDegrees = modulo(degrees + 180, 360) - 180;
     const dms = Math.abs(3600 * normalizedDegrees);
     const d = Math.floor(dms / 3600);
     const m = Math.floor((dms / 60) % 60);
     const s = (dms % 60);
     return `${d}\u00b0 ${
-      olString.padNumber(m, 2)}\u2032 ${
-      olString.padNumber(s, 2, fractionDigits)}\u2033 ${
+      padNumber(m, 2)}\u2032 ${
+      padNumber(s, 2, fractionDigits)}\u2033 ${
       hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
   };
 

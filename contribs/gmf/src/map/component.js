@@ -41,7 +41,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfMap
  */
-exports.directive_ = function() {
+function directive() {
   return {
     scope: {
       'map': '<gmfMapMap',
@@ -52,9 +52,9 @@ exports.directive_ = function() {
     bindToController: true,
     templateUrl: 'gmf/map'
   };
-};
+}
 
-exports.directive('gmfMap', exports.directive_);
+exports.directive('gmfMap', directive);
 
 
 /**
@@ -67,7 +67,7 @@ exports.directive('gmfMap', exports.directive_);
  * @ngdoc controller
  * @ngname GmfMapController
  */
-exports.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
+function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
 
   // Scope properties
 
@@ -109,20 +109,20 @@ exports.Controller_ = function(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping)
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;
-};
+}
 
 
 /**
  * Called on initialization of the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
 };
 
 
-exports.controller('GmfMapController', exports.Controller_);
+exports.controller('GmfMapController', Controller);
 
 
 export default exports;

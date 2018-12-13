@@ -184,7 +184,7 @@ exports.component('gmfSearch', component);
 /**
  * @private
  */
-exports.SearchController_ = class {
+class SearchController {
 
   /**
    * @private
@@ -1075,11 +1075,11 @@ exports.SearchController_ = class {
         }
       });
   }
-};
+}
 
 
 // Register the controller in the module
-exports.controller('gmfSearchController', exports.SearchController_);
+exports.controller('gmfSearchController', SearchController);
 
 
 export default exports;

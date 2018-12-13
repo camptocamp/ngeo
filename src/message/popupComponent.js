@@ -49,7 +49,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoPopup
  */
-exports.directive_ = function(ngeoPopupTemplateUrl) {
+function directive(ngeoPopupTemplateUrl) {
   return {
     restrict: 'A',
     templateUrl: ngeoPopupTemplateUrl,
@@ -78,9 +78,9 @@ exports.directive_ = function(ngeoPopupTemplateUrl) {
       });
     }
   };
-};
+}
 
-exports.directive('ngeoPopup', exports.directive_);
+exports.directive('ngeoPopup', directive);
 
 
 export default exports;

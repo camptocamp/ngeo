@@ -49,7 +49,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname gmfEditfeatureselector
  */
-exports.component_ = function() {
+function component() {
   return {
     controller: 'GmfEditfeatureselectorController as efsCtrl',
     scope: {
@@ -61,10 +61,10 @@ exports.component_ = function() {
     bindToController: true,
     templateUrl: 'gmf/editing/editFeatureSelectorComponent'
   };
-};
+}
 
 
-exports.directive('gmfEditfeatureselector', exports.component_);
+exports.directive('gmfEditfeatureselector', component);
 
 
 /**
@@ -78,7 +78,7 @@ exports.directive('gmfEditfeatureselector', exports.component_);
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-exports.Controller_ = function($scope, $timeout, gmfThemes, gmfTreeManager) {
+function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   // === Directive options ===
 
@@ -228,7 +228,7 @@ exports.Controller_ = function($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
-};
+}
 
 
 /**
@@ -237,7 +237,7 @@ exports.Controller_ = function($scope, $timeout, gmfThemes, gmfTreeManager) {
  * stop or if it requires confirmation due to unsaved modifications.
  * @export
  */
-exports.Controller_.prototype.stopEditing = function() {
+Controller.prototype.stopEditing = function() {
   this.state = gmfEditingEditFeatureComponent.State.STOP_EDITING_PENDING;
 };
 
@@ -248,7 +248,7 @@ exports.Controller_.prototype.stopEditing = function() {
  * @param {boolean} active Whether the directive is active or not.
  * @private
  */
-exports.Controller_.prototype.handleActiveChange_ = function(active) {
+Controller.prototype.handleActiveChange_ = function(active) {
   if (!active) {
     if (!this.dirty) {
       this.stopEditing();
@@ -270,12 +270,12 @@ exports.Controller_.prototype.handleActiveChange_ = function(active) {
 /**
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   this.treeCtrlsWatcherUnregister_();
 };
 
 
-exports.controller('GmfEditfeatureselectorController', exports.Controller_);
+exports.controller('GmfEditfeatureselectorController', Controller);
 
 
 export default exports;

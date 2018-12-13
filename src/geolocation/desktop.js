@@ -49,7 +49,7 @@ exports.GeolocationEventType = {
  * @ngdoc directive
  * @ngname ngeoDesktopGeolocation
  */
-exports.directive_ = function() {
+function directive() {
   return {
     restrict: 'A',
     scope: {
@@ -58,10 +58,10 @@ exports.directive_ = function() {
     },
     controller: 'ngeoGeolocationDesktopController'
   };
-};
+}
 
 
-exports.directive('ngeoDesktopGeolocation', exports.directive_);
+exports.directive('ngeoDesktopGeolocation', directive);
 
 
 /**
@@ -76,8 +76,7 @@ exports.directive('ngeoDesktopGeolocation', exports.directive_);
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
  */
-exports.Controller_ = function($scope, $element,
-  ngeoFeatureOverlayMgr, ngeoNotification) {
+function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   $element.on('click', this.toggle.bind(this));
 
@@ -166,13 +165,13 @@ exports.Controller_ = function($scope, $element,
     this.setPosition_(event);
   });
 
-};
+}
 
 
 /**
  * @export
  */
-exports.Controller_.prototype.toggle = function() {
+Controller.prototype.toggle = function() {
   if (this.active_) {
     this.deactivate_();
   } else {
@@ -184,7 +183,7 @@ exports.Controller_.prototype.toggle = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.activate_ = function() {
+Controller.prototype.activate_ = function() {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.geolocation_.setTracking(true);
@@ -195,7 +194,7 @@ exports.Controller_.prototype.activate_ = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.deactivate_ = function() {
+Controller.prototype.deactivate_ = function() {
   this.featureOverlay_.clear();
   this.active_ = false;
   this.notification_.clear();
@@ -206,7 +205,7 @@ exports.Controller_.prototype.deactivate_ = function() {
  * @param {ol.Object.Event} event Event.
  * @private
  */
-exports.Controller_.prototype.setPosition_ = function(event) {
+Controller.prototype.setPosition_ = function(event) {
   const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
@@ -220,8 +219,7 @@ exports.Controller_.prototype.setPosition_ = function(event) {
   this.geolocation_.setTracking(false);
 };
 
-exports.controller('ngeoGeolocationDesktopController',
-  exports.Controller_);
+exports.controller('ngeoGeolocationDesktopController', Controller);
 
 
 export default exports;

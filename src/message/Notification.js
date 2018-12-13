@@ -43,7 +43,7 @@ const exports = function($timeout) {
   this.container_ = container;
 
   /**
-   * @type {Object.<number, ngeo.message.Notification.CacheItem>}
+   * @type {Object.<number, CacheItem>}
    * @private
    */
   this.cache_ = {};
@@ -56,9 +56,8 @@ olUtilInherits(exports, ngeoMessageMessage);
 /**
  * Default delay (in milliseconds) a message should be displayed.
  * @type {number}
- * @private
  */
-exports.DEFAULT_DELAY_ = 7000;
+const DEFAULT_DELAY = 7000;
 
 
 // MAIN API METHODS
@@ -124,10 +123,9 @@ exports.prototype.showMessage = function(message) {
   container.append(el);
   el.html(message.msg).addClass('show');
 
-  const delay = message.delay !== undefined ? message.delay :
-    exports.DEFAULT_DELAY_;
+  const delay = message.delay !== undefined ? message.delay : DEFAULT_DELAY;
 
-  const item = /** @type {ngeo.message.Notification.CacheItem} */ ({
+  const item = /** @type {CacheItem} */ ({
     el
   });
 
@@ -145,7 +143,7 @@ exports.prototype.showMessage = function(message) {
 
 /**
  * Clear a message using its cache item.
- * @param {ngeo.message.Notification.CacheItem} item Cache item.
+ * @param {CacheItem} item Cache item.
  * @private
  */
 exports.prototype.clearMessageByCacheItem_ = function(item) {
@@ -169,9 +167,8 @@ exports.prototype.clearMessageByCacheItem_ = function(item) {
  * @typedef {{
  *     el: angular.JQLite,
  *     promise: angular.IPromise
- * }}
+ * }} CacheItem
  */
-exports.CacheItem;
 
 
 /**

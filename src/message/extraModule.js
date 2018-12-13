@@ -1,7 +1,7 @@
 /**
  * @module ngeo.message.extraModule
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';

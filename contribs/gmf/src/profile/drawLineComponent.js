@@ -42,7 +42,7 @@ const exports = angular.module('gmfDrawProfileLine', [
  * @ngdoc directive
  * @ngname gmfDrawprofileline
  */
-exports.directive_ = function() {
+function directive() {
   return {
     scope: true,
     controller: 'GmfDrawprofilelineController as ctrl',
@@ -54,26 +54,22 @@ exports.directive_ = function() {
       'getStyleFn': '&?gmfDrawprofilelineStyle'
     }
   };
-};
+}
 
 
-exports.directive('gmfDrawprofileline',
-  exports.directive_);
+exports.directive('gmfDrawprofileline', directive);
 
 /**
  * @param {!angular.IScope} $scope Scope.
- * @param {!angular.JQLite} $element Element.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *     manager.
+ * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay manager.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-exports.Controller_ = function($scope, $element, $timeout,
-  ngeoFeatureOverlayMgr) {
+function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {?ol.geom.LineString}
@@ -86,7 +82,6 @@ exports.Controller_ = function($scope, $element, $timeout,
    * @private
    */
   this.map_ = null;
-
 
   /**
    * @type {boolean}
@@ -165,13 +160,13 @@ exports.Controller_ = function($scope, $element, $timeout,
       this.interaction.setActive(this.active);
     }
   );
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   const map = this['getMapFn']();
   googAsserts.assertInstanceof(map, olMap);
   this.map_ = map;
@@ -183,14 +178,13 @@ exports.Controller_.prototype.$onInit = function() {
  * Clear the overlay and profile line.
  * @private
  */
-exports.Controller_.prototype.clear_ = function() {
+Controller.prototype.clear_ = function() {
   this.features_.clear();
   this.line = null;
 };
 
 
-exports.controller('GmfDrawprofilelineController',
-  exports.Controller_);
+exports.controller('GmfDrawprofilelineController', Controller);
 
 
 export default exports;

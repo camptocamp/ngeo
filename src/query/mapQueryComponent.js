@@ -43,7 +43,7 @@ const exports = angular.module('ngeoMapQuery', [
  * @ngdoc directive
  * @ngname ngeoMapQuery
  */
-exports.directive_ = function(ngeoMapQuerent, $injector) {
+function directive(ngeoMapQuerent, $injector) {
   return {
     restrict: 'A',
     scope: false,
@@ -125,9 +125,9 @@ exports.directive_ = function(ngeoMapQuerent, $injector) {
       );
     }
   };
-};
+}
 
-exports.directive('ngeoMapQuery', exports.directive_);
+exports.directive('ngeoMapQuery', directive);
 
 
 export default exports;

@@ -102,7 +102,7 @@ const exports = angular.module('ngeoDrawfeature', [
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */
-exports.directive_ = function() {
+function directive() {
   return {
     controller: 'ngeoDrawfeatureController as dfCtrl',
     scope: true,
@@ -113,9 +113,9 @@ exports.directive_ = function() {
       'showMeasure': '=?ngeoDrawfeatureShowmeasure'
     }
   };
-};
+}
 
-exports.directive('ngeoDrawfeature', exports.directive_);
+exports.directive('ngeoDrawfeature', directive);
 
 
 export default exports;

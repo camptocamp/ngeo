@@ -130,7 +130,7 @@ exports.component('gmfProfile', component);
  * @ngdoc controller
  * @ngname GmfProfileController
  */
-exports.Controller_ = function($scope, $http, $element, $filter,
+function Controller($scope, $http, $element, $filter,
   gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
   ngeoCsvDownload) {
 
@@ -312,13 +312,13 @@ exports.Controller_ = function($scope, $http, $element, $filter,
     });
 
   this.updateEventsListening_();
-};
+}
 
 
 /**
  * Init the controller
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.map_ = this['getMapFn'] ? this['getMapFn']() : null;
   this.nbPoints_ = this['getNbPointsFn'] ? this['getNbPointsFn']() : 100;
 
@@ -372,7 +372,7 @@ exports.Controller_.prototype.$onInit = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.update_ = function() {
+Controller.prototype.update_ = function() {
   this.isErrored = false;
   if (this.line) {
     this.getJsonProfile_();
@@ -386,7 +386,7 @@ exports.Controller_.prototype.update_ = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.updateEventsListening_ = function() {
+Controller.prototype.updateEventsListening_ = function() {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = olEvents.listen(this.map_, 'pointermove',
       this.onPointerMove_.bind(this));
@@ -400,7 +400,7 @@ exports.Controller_.prototype.updateEventsListening_ = function() {
  * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
  * @private
  */
-exports.Controller_.prototype.onPointerMove_ = function(e) {
+Controller.prototype.onPointerMove_ = function(e) {
   if (e.dragging || !this.line) {
     return;
   }
@@ -427,7 +427,7 @@ exports.Controller_.prototype.onPointerMove_ = function(e) {
  * @return {number} A distance.
  * @private
  */
-exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine) {
+Controller.prototype.getDistanceOnALine_ = function(pointOnLine) {
   let segment;
   let distOnLine = 0;
   const fakeExtent = [
@@ -461,7 +461,7 @@ exports.Controller_.prototype.getDistanceOnALine_ = function(pointOnLine) {
  *  @param {string} yUnits Y units label.
  * @private
  */
-exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
+Controller.prototype.hoverCallback_ = function(point, dist, xUnits, elevationsRef, yUnits) {
   // Update information point.
   const coordinate = [point.x, point.y];
 
@@ -483,7 +483,7 @@ exports.Controller_.prototype.hoverCallback_ = function(point, dist, xUnits, ele
 /**
  * @private
  */
-exports.Controller_.prototype.outCallback_ = function() {
+Controller.prototype.outCallback_ = function() {
   // Reset information point.
   this.currentPoint.coordinate = undefined;
   this.currentPoint.distance = undefined;
@@ -501,7 +501,7 @@ exports.Controller_.prototype.outCallback_ = function() {
  * @return {string} A text formatted to a tooltip.
  * @private
  */
-exports.Controller_.prototype.getTooltipHTML_ = function() {
+Controller.prototype.getTooltipHTML_ = function() {
   const gettextCatalog = this.gettextCatalog_;
   const separator = '&nbsp;: ';
   let elevationName, translatedElevationName;
@@ -526,7 +526,7 @@ exports.Controller_.prototype.getTooltipHTML_ = function() {
  * Creates a new 'hover' tooltip
  * @private
  */
-exports.Controller_.prototype.createMeasureTooltip_ = function() {
+Controller.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
   this.measureTooltipElement_ = document.createElement('div');
   this.measureTooltipElement_.className += 'tooltip ngeo-tooltip-measure';
@@ -543,7 +543,7 @@ exports.Controller_.prototype.createMeasureTooltip_ = function() {
  * Destroy the 'hover' tooltip
  * @private
  */
-exports.Controller_.prototype.removeMeasureTooltip_ = function() {
+Controller.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
     this.measureTooltipElement_.parentNode.removeChild(this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
@@ -558,7 +558,7 @@ exports.Controller_.prototype.removeMeasureTooltip_ = function() {
  * @return {object} The object representation of the style.
  * @export
  */
-exports.Controller_.prototype.getStyle = function(layerName) {
+Controller.prototype.getStyle = function(layerName) {
   const lineConfiguration = this.linesConfiguration_[layerName];
   if (!lineConfiguration) {
     return {};
@@ -574,7 +574,7 @@ exports.Controller_.prototype.getStyle = function(layerName) {
  * @return {Array.<string>} The names of layers.
  * @export
  */
-exports.Controller_.prototype.getLayersNames = function() {
+Controller.prototype.getLayersNames = function() {
   return this.layersNames_.slice(0);
 };
 
@@ -584,7 +584,7 @@ exports.Controller_.prototype.getLayersNames = function() {
  * @return {function(Object):number} Z extractor function.
  * @private
  */
-exports.Controller_.prototype.getZFactory_ = function(layerName) {
+Controller.prototype.getZFactory_ = function(layerName) {
   /**
    * Generic GMF extractor for the 'given' value in 'values' in profileData.
    * @param {Object} item The item.
@@ -607,7 +607,7 @@ exports.Controller_.prototype.getZFactory_ = function(layerName) {
  * @return {number} The distance.
  * @private
  */
-exports.Controller_.prototype.getDist_ = function(item) {
+Controller.prototype.getDist_ = function(item) {
   if ('dist' in item) {
     return item['dist'];
   }
@@ -619,7 +619,7 @@ exports.Controller_.prototype.getDist_ = function(item) {
  * Request the profile.
  * @private
  */
-exports.Controller_.prototype.getJsonProfile_ = function() {
+Controller.prototype.getJsonProfile_ = function() {
   const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates()
@@ -650,7 +650,7 @@ exports.Controller_.prototype.getJsonProfile_ = function() {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
+Controller.prototype.getProfileDataSuccess_ = function(resp) {
   const profileData = resp.data['profile'];
   if (profileData instanceof Array) {
     this.profileData = profileData;
@@ -662,7 +662,7 @@ exports.Controller_.prototype.getProfileDataSuccess_ = function(resp) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.Controller_.prototype.getProfileDataError_ = function(resp) {
+Controller.prototype.getProfileDataError_ = function(resp) {
   this.isErrored = true;
   console.error('Can not get JSON profile.');
 };
@@ -672,7 +672,7 @@ exports.Controller_.prototype.getProfileDataError_ = function(resp) {
  * Request the csv profile with the current profile data.
  * @export
  */
-exports.Controller_.prototype.downloadCsv = function() {
+Controller.prototype.downloadCsv = function() {
   if (this.profileData.length === 0) {
     return;
   }
@@ -713,7 +713,7 @@ exports.Controller_.prototype.downloadCsv = function() {
 };
 
 
-exports.controller('GmfProfileController', exports.Controller_);
+exports.controller('GmfProfileController', Controller);
 
 
 export default exports;

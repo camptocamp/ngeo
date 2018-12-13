@@ -80,7 +80,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   /**
    * A cache containing all available snappable items, in which the listening
    * of the state of the `treeCtrl` is registered and unregistered.
-   * @type {gmf.editing.Snapping.Cache}
+   * @type {Cache}
    * @private
    */
   this.cache_ = {};
@@ -311,7 +311,7 @@ exports.prototype.getOGCServer_ = function(treeCtrl) {
  * 4) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
  * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
- * @return {?gmf.editing.Snapping.WFSConfig} The configuration object.
+ * @return {?WFSConfig} The configuration object.
  * @private
  */
 exports.prototype.getWFSConfig_ = function(treeCtrl) {
@@ -383,7 +383,7 @@ exports.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
  * Activate a cache item by adding a Snap interaction to the map and launch
  * the initial request to get the features.
  *
- * @param {gmf.editing.Snapping.CacheItem} item Cache item.
+ * @param {CacheItem} item Cache item.
  * @private
  */
 exports.prototype.activateItem_ = function(item) {
@@ -417,7 +417,7 @@ exports.prototype.activateItem_ = function(item) {
  * Deactivate a cache item by removing the snap interaction and clearing any
  * existing features.
  *
- * @param {gmf.editing.Snapping.CacheItem} item Cache item.
+ * @param {CacheItem} item Cache item.
  * @private
  */
 exports.prototype.deactivateItem_ = function(item) {
@@ -474,7 +474,7 @@ exports.prototype.refresh = function() {
  * features set in the item collection of features (they replace any existing
  * ones first).
  *
- * @param {gmf.editing.Snapping.CacheItem} item Cache item.
+ * @param {CacheItem} item Cache item.
  * @private
  */
 exports.prototype.loadItemFeatures_ = function(item) {
@@ -549,9 +549,8 @@ exports.prototype.handleMapMoveEnd_ = function() {
 
 
 /**
- * @typedef {Object<number, gmf.editing.Snapping.CacheItem>}
+ * @typedef {Object<number, CacheItem>} Cache
  */
-exports.Cache;
 
 
 /**
@@ -567,19 +566,17 @@ exports.Cache;
  *     snappingConfig: (gmfThemes.GmfSnappingConfig),
  *     stateWatcherUnregister: (Function),
  *     treeCtrl: (ngeo.layertree.Controller),
- *     wfsConfig: (gmf.editing.Snapping.WFSConfig)
- * }}
+ *     wfsConfig: (WFSConfig)
+ * }} CacheItem
  */
-exports.CacheItem;
 
 
 /**
  * @typedef {{
  *     featureTypes: (string),
  *     url: (string)
- * }}
+ * }} WFSConfig
  */
-exports.WFSConfig;
 
 
 /**

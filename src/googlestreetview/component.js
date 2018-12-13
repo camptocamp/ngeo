@@ -47,7 +47,7 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
 /**
  * @private
  */
-exports.Controller_ = class {
+class Controller {
 
   /**
    * @param {angular.JQLite} $element Element.
@@ -388,7 +388,7 @@ exports.Controller_ = class {
       this.map.getView().getProjection()
     );
   }
-};
+}
 
 
 exports.component('ngeoGooglestreetview', {
@@ -398,7 +398,7 @@ exports.component('ngeoGooglestreetview', {
     'map': '<',
     'radius': '<?'
   },
-  controller: exports.Controller_,
+  controller: Controller,
   templateUrl: ngeoGooglestreetviewTemplateUrl
 });
 

@@ -1,7 +1,7 @@
 /**
  * @module ngeo.misc.swipe
  */
-import * as angular from 'angular';
+import angular from 'angular';
 
 /**
  * @type {!angular.IModule}

@@ -52,7 +52,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
-exports.component_ = function(ngeoDatePickerTemplateUrl, $timeout) {
+function component(ngeoDatePickerTemplateUrl, $timeout) {
   return {
     scope: {
       onDateSelected: '&',
@@ -102,9 +102,9 @@ exports.component_ = function(ngeoDatePickerTemplateUrl, $timeout) {
       });
     }
   };
-};
+}
 
-exports.directive('ngeoDatePicker', exports.component_);
+exports.directive('ngeoDatePicker', component);
 
 
 /**
@@ -119,7 +119,7 @@ exports.directive('ngeoDatePicker', exports.component_);
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
-exports.Controller_ = function($scope, $injector,
+function Controller($scope, $injector,
   ngeoTime, gettextCatalog) {
 
   /**
@@ -217,12 +217,12 @@ exports.Controller_ = function($scope, $injector,
       });
     }
   });
-};
+}
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.init = function() {
+Controller.prototype.init = function() {
   //fetch the initial options for the component
   const initialOptions_ = this.ngeoTime_.getOptions(this.time);
   this.initialMinDate = this.ngeoTime_.createDate(initialOptions_.minDate);
@@ -239,8 +239,7 @@ exports.Controller_.prototype.init = function() {
   }
 };
 
-exports.controller('ngeoDatePickerController',
-  exports.Controller_);
+exports.controller('ngeoDatePickerController', Controller);
 
 
 export default exports;

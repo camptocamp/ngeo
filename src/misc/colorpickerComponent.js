@@ -42,7 +42,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @ngdoc directive
  * @ngname ngeoColorpicker
  */
-exports.component_ = function(ngeoColorpickerTemplateUrl) {
+function component(ngeoColorpickerTemplateUrl) {
   return {
     restrict: 'A',
     scope: {
@@ -53,10 +53,9 @@ exports.component_ = function(ngeoColorpickerTemplateUrl) {
     bindToController: true,
     templateUrl: ngeoColorpickerTemplateUrl
   };
-};
+}
 
-exports.directive('ngeoColorpicker',
-  exports.component_);
+exports.directive('ngeoColorpicker', component);
 
 /**
  * Fefault colors for the colorpicker
@@ -80,7 +79,7 @@ exports.DEFAULT_COLORS = [
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
  */
-exports.Controller_ = function($scope, $element, $attrs) {
+function Controller($scope, $element, $attrs) {
 
   /**
    * The set of color
@@ -95,18 +94,17 @@ exports.Controller_ = function($scope, $element, $attrs) {
    * @export
    */
   this.color;
-};
+}
 
 /**
  * @param {string} color The color to select.
  * @export
  */
-exports.Controller_.prototype.setColor = function(color) {
+Controller.prototype.setColor = function(color) {
   this.color = color;
 };
 
-exports.controller('NgeoColorpickerController',
-  exports.Controller_);
+exports.controller('NgeoColorpickerController', Controller);
 
 
 export default exports;

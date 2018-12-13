@@ -1,7 +1,7 @@
 /**
  * @module gmf.datasource.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfDatasourceHelper from 'gmf/datasource/Helper.js';

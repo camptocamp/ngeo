@@ -1,7 +1,7 @@
 /**
  * @module gmf.editing.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
 import gmfEditingEditFeatureSelectorComponent from 'gmf/editing/editFeatureSelectorComponent.js';

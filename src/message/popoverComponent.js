@@ -28,7 +28,7 @@ const exports = angular.module('ngeoPopover', []);
  * @ngname ngeoPopover
  * @return {angular.IDirective} The Directive Definition Object.
  */
-exports.component_ = function() {
+function component() {
   return {
     restrict: 'A',
     scope: true,
@@ -61,7 +61,7 @@ exports.component_ = function() {
       });
     }
   };
-};
+}
 
 /**
  * @ngdoc directive
@@ -69,7 +69,7 @@ exports.component_ = function() {
  * @ngname ngeoPopoverAnchor
  * @return {angular.IDirective} The Directive Definition Object
  */
-exports.anchorComponent = function() {
+function anchorComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -77,7 +77,7 @@ exports.anchorComponent = function() {
       ngeoPopoverCtrl.anchorElm = elem;
     }
   };
-};
+}
 
 /**
  * @ngdoc directive
@@ -85,7 +85,7 @@ exports.anchorComponent = function() {
  * @ngname ngeoPopoverContent
  * @return {angular.IDirective} The Directive Definition Object
  */
-exports.contentComponent = function() {
+function contentComponent() {
   return {
     restrict: 'A',
     require: '^^ngeoPopover',
@@ -94,7 +94,7 @@ exports.contentComponent = function() {
       elem.hide();
     }
   };
-};
+}
 
 /**
  * The controller for the 'popover' directive.
@@ -105,7 +105,7 @@ exports.contentComponent = function() {
  * @ngname NgeoPopoverController
  * @param {angular.IScope} $scope Scope.
  */
-exports.PopoverController_ = function($scope) {
+function PopoverController($scope) {
   /**
    * The state of the popover (displayed or not)
    * @type {boolean}
@@ -138,23 +138,23 @@ exports.PopoverController_ = function($scope) {
   $scope.$on('$destroy', () => {
     angular.element('body').off('mousedown', onMouseDown);
   });
-};
+}
 
 
 /**
  * Dissmiss popover function
  * @export
  */
-exports.PopoverController_.prototype.dismissPopover = function() {
+PopoverController.prototype.dismissPopover = function() {
   this.shown = false;
   this.anchorElm.popover('hide');
 };
 
 
-exports.controller('NgeoPopoverController', exports.PopoverController_);
-exports.directive('ngeoPopover', exports.component_);
-exports.directive('ngeoPopoverAnchor', exports.anchorComponent);
-exports.directive('ngeoPopoverContent', exports.contentComponent);
+exports.controller('NgeoPopoverController', PopoverController);
+exports.directive('ngeoPopover', component);
+exports.directive('ngeoPopoverAnchor', anchorComponent);
+exports.directive('ngeoPopoverContent', contentComponent);
 
 
 export default exports;

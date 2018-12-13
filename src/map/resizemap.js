@@ -30,7 +30,7 @@ const exports = angular.module('ngeoResizemap', []);
  * @ngdoc directive
  * @ngname ngeoResizemap
  */
-exports.directive_ = function($window) {
+function directive($window) {
   const /** @type {number} */ duration = 1000;
 
   return {
@@ -77,10 +77,10 @@ exports.directive_ = function($window) {
       });
     }
   };
-};
+}
 
 
-exports.directive('ngeoResizemap', exports.directive_);
+exports.directive('ngeoResizemap', directive);
 
 
 export default exports;

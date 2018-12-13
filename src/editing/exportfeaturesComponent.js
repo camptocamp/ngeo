@@ -34,7 +34,7 @@ const exports = angular.module('ngeoExportfeatures', [
  * @ngdoc directive
  * @ngname ngeoExportfeatures
  */
-exports.directive_ = function() {
+function directive() {
   return {
     controller: 'ngeoExportfeaturesController as efCtrl',
     scope: true,
@@ -42,10 +42,10 @@ exports.directive_ = function() {
       'features': '=ngeoExportfeaturesFeatures'
     }
   };
-};
+}
 
 
-exports.directive('ngeoExportfeatures', exports.directive_);
+exports.directive('ngeoExportfeatures', directive);
 
 
 /**
@@ -59,8 +59,7 @@ exports.directive('ngeoExportfeatures', exports.directive_);
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController
  */
-exports.Controller_ = function($element, $injector, $scope,
-  ngeoFeatureHelper) {
+function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
    * @type {ol.Collection.<ol.Feature>}
@@ -144,7 +143,7 @@ exports.Controller_ = function($element, $injector, $scope,
   $element.on(['click', id].join('.'), this.handleElementClick_.bind(this));
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
-};
+}
 
 
 /**
@@ -158,7 +157,7 @@ exports.Controller_ = function($element, $injector, $scope,
  * that doesn't support the type of geometry.
  * @private
  */
-exports.Controller_.prototype.handleElementClick_ = function() {
+Controller.prototype.handleElementClick_ = function() {
 
   const features = this.features.getArray();
 
@@ -190,7 +189,7 @@ exports.Controller_.prototype.handleElementClick_ = function() {
  * @param {jQuery.Event} event Event.
  * @private
  */
-exports.Controller_.prototype.handleMenuItemClick_ = function(format, event) {
+Controller.prototype.handleMenuItemClick_ = function(format, event) {
   if (!$(event.target.parentElement).hasClass('disabled')) {
     const features = this.features.getArray();
     this.featureHelper_.export(features, format);
@@ -202,7 +201,7 @@ exports.Controller_.prototype.handleMenuItemClick_ = function(format, event) {
  * Cleanup event listeners and remove the menu from DOM, if any.
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   const id = this.id_;
 
   this.element_.off(['click', id].join('.'));
@@ -218,8 +217,7 @@ exports.Controller_.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller(
-  'ngeoExportfeaturesController', exports.Controller_);
+exports.controller('ngeoExportfeaturesController', Controller);
 
 
 export default exports;

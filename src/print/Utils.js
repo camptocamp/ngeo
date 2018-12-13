@@ -2,7 +2,7 @@
  * @module ngeo.print.Utils
  */
 import * as olHas from 'ol/has.js';
-import * as olMath from 'ol/math.js';
+import {toRadians} from 'ol/math.js';
 
 /**
  * Provides a service with print utility functions.
@@ -106,7 +106,7 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
         self.drawPrintZone_(context, center, extentHalfWidth,
           extentHalfHeight);
       } else {
-        const rotation = olMath.toRadians(opt_rotation());
+        const rotation = toRadians(opt_rotation());
         self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
           extentHalfHeight, rotation);
       }

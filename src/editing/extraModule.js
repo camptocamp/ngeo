@@ -1,7 +1,7 @@
 /**
  * @module ngeo.editing.extraModule
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesComponent.js';
 
 /**

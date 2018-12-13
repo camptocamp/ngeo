@@ -138,8 +138,7 @@ exports.component('gmfDisplayquerywindow', component);
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */
-exports.Controller_ = function($element, $scope, ngeoQueryResult, ngeoMapQuerent,
-  ngeoFeatureOverlayMgr) {
+function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatureOverlayMgr) {
 
   /**
    * @type {Element|string}
@@ -266,12 +265,12 @@ exports.Controller_ = function($element, $scope, ngeoQueryResult, ngeoMapQuerent
         this.close();
       }
     });
-};
+}
 
 /**
  * Initialise the controller.
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
   this.collapsed = this['defaultCollapsedFn'] ?
@@ -329,7 +328,7 @@ exports.Controller_.prototype.$onInit = function() {
  * highlight the first feature.
  * @export
  */
-exports.Controller_.prototype.show = function() {
+Controller.prototype.show = function() {
   this.clear();
   this.updateFeatures_();
 };
@@ -338,7 +337,7 @@ exports.Controller_.prototype.show = function() {
 /**
  * @private
  */
-exports.Controller_.prototype.updateFeatures_ = function() {
+Controller.prototype.updateFeatures_ = function() {
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
     this.collectFeatures_();
@@ -355,7 +354,7 @@ exports.Controller_.prototype.updateFeatures_ = function() {
  * @return {boolean} True if result has changed. False else.
  * @private
  */
-exports.Controller_.prototype.setCurrentResult_ = function(
+Controller.prototype.setCurrentResult_ = function(
   position, setHighlight) {
   let hasChanged = false;
   if (position !== this.currentResult) {
@@ -392,7 +391,7 @@ exports.Controller_.prototype.setCurrentResult_ = function(
  * the map.
  * @export
  */
-exports.Controller_.prototype.previous = function() {
+Controller.prototype.previous = function() {
   let position = this.currentResult - 1;
   if (position < 0) {
     position = this.getResultLength() - 1;
@@ -409,7 +408,7 @@ exports.Controller_.prototype.previous = function() {
  * the map.
  * @export
  */
-exports.Controller_.prototype.next = function() {
+Controller.prototype.next = function() {
   let position = this.currentResult + 1;
   const positionMax = this.getResultLength() - 1;
   if (position > positionMax) {
@@ -427,7 +426,7 @@ exports.Controller_.prototype.next = function() {
  * @param {ngeox.QueryResult} queryResult ngeo query result.
  * @private
  */
-exports.Controller_.prototype.updateQueryResult_ = function(queryResult) {
+Controller.prototype.updateQueryResult_ = function(queryResult) {
   this.ngeoQueryResult.total = 0;
   this.ngeoQueryResult.sources.length = 0;
   for (let i = 0; i < queryResult.sources.length; i++) {
@@ -447,7 +446,7 @@ exports.Controller_.prototype.updateQueryResult_ = function(queryResult) {
  * @return {number} Total number of features.
  * @export
  */
-exports.Controller_.prototype.getResultLength = function() {
+Controller.prototype.getResultLength = function() {
   if (this.selectedSource === null) {
     return this.ngeoQueryResult.total;
   } else {
@@ -460,7 +459,7 @@ exports.Controller_.prototype.getResultLength = function() {
  * @return {boolean} If the first result is active.
  * @export
  */
-exports.Controller_.prototype.isFirst = function() {
+Controller.prototype.isFirst = function() {
   return this.currentResult == 0;
 };
 
@@ -469,7 +468,7 @@ exports.Controller_.prototype.isFirst = function() {
  * @return {boolean} If the last result is active.
  * @export
  */
-exports.Controller_.prototype.isLast = function() {
+Controller.prototype.isLast = function() {
   return this.currentResult == this.getResultLength() - 1;
 };
 
@@ -480,7 +479,7 @@ exports.Controller_.prototype.isLast = function() {
  * @return {Object?} Filtered properties of the current feature or null.
  * @export
  */
-exports.Controller_.prototype.getFeatureValues = function() {
+Controller.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
@@ -497,7 +496,7 @@ exports.Controller_.prototype.getFeatureValues = function() {
  * or the previous result.
  * @private
  */
-exports.Controller_.prototype.animate_ = function(isNext) {
+Controller.prototype.animate_ = function(isNext) {
   this.isNext = isNext;
   this.animate++;
 };
@@ -507,7 +506,7 @@ exports.Controller_.prototype.animate_ = function(isNext) {
  * Collect all features in the queryResult object.
  * @private
  */
-exports.Controller_.prototype.collectFeatures_ = function() {
+Controller.prototype.collectFeatures_ = function() {
   const sources = this.ngeoQueryResult.sources;
   this.features_.clear();
   for (let i = 0; i < sources.length; i++) {
@@ -530,8 +529,7 @@ exports.Controller_.prototype.collectFeatures_ = function() {
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */
-exports.Controller_.prototype.highlightCurrentFeature_ =
-function(opt_lastFeature) {
+Controller.prototype.highlightCurrentFeature_ = function(opt_lastFeature) {
   this.highlightFeatures_.clear();
   this.features_.remove(this.feature);
   this.highlightFeatures_.push(this.feature);
@@ -546,7 +544,7 @@ function(opt_lastFeature) {
  * from the map.
  * @export
  */
-exports.Controller_.prototype.close = function() {
+Controller.prototype.close = function() {
   this.open = false;
   this.clear();
   this.ngeoMapQuerent_.clear();
@@ -558,7 +556,7 @@ exports.Controller_.prototype.close = function() {
  * from the map.
  * @export
  */
-exports.Controller_.prototype.clear = function() {
+Controller.prototype.clear = function() {
   this.feature = null;
   this.source = null;
   this.currentResult = -1;
@@ -572,7 +570,7 @@ exports.Controller_.prototype.clear = function() {
  * @param {ngeox.QueryResultSource} source The source to select.
  * @export
  */
-exports.Controller_.prototype.setSelectedSource = function(source) {
+Controller.prototype.setSelectedSource = function(source) {
   if (source !== null && source.features.length <= 0) {
     // sources with no results can not be selected
     return;
@@ -583,8 +581,7 @@ exports.Controller_.prototype.setSelectedSource = function(source) {
 };
 
 
-exports.controller('GmfDisplayquerywindowController',
-  exports.Controller_);
+exports.controller('GmfDisplayquerywindowController', Controller);
 
 
 export default exports;

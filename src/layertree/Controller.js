@@ -382,16 +382,13 @@ exports.VisitorDecision = {
 
 
 /**
- * @typedef {
- *   function(ngeo.layertree.Controller): (!ngeo.layertree.Controller.VisitorDecision|undefined)
- * }
+ * @typedef {function(ngeo.layertree.Controller): (!ngeo.layertree.Controller.VisitorDecision|undefined)} Visitor
  */
-exports.Visitor;
 
 
 /**
  * Recursive method to traverse the layertree controller graph.
- * @param {ngeo.layertree.Controller.Visitor} visitor A visitor called for each node.
+ * @param {Visitor} visitor A visitor called for each node.
  * @return {boolean} whether to stop traversing.
  * @export
  */

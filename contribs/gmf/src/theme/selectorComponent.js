@@ -115,7 +115,7 @@ exports.component('gmfThemeselector', component);
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */
-exports.Controller_ = function($scope, gmfThemeManager, gmfThemes) {
+function Controller($scope, gmfThemeManager, gmfThemes) {
 
   /**
    * @type {gmf.theme.Manager}
@@ -151,14 +151,14 @@ exports.Controller_ = function($scope, gmfThemeManager, gmfThemes) {
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 
-};
+}
 
 /**
  * Store the loaded themes locally applying a filter (if any), then set the
  * current theme.
  * @private
  */
-exports.Controller_.prototype.setThemes_ = function() {
+Controller.prototype.setThemes_ = function() {
   this.gmfThemes_.getThemesObject().then((themes) => {
     // Keep only the themes dedicated to the theme switcher
     this.themes = this.filter ? themes.filter(this.filter) : themes;
@@ -172,7 +172,7 @@ exports.Controller_.prototype.setThemes_ = function() {
  *     the theme should be added but it's already added.
  * @export
  */
-exports.Controller_.prototype.setTheme = function(theme, opt_silent) {
+Controller.prototype.setTheme = function(theme, opt_silent) {
   if (theme) {
     this.gmfThemeManager.addTheme(theme, opt_silent);
   }
@@ -182,14 +182,13 @@ exports.Controller_.prototype.setTheme = function(theme, opt_silent) {
 /**
  * @private
  */
-exports.Controller_.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   this.listenerKeys_.forEach(olEvents.unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 
 
-exports.controller('gmfThemeselectorController',
-  exports.Controller_);
+exports.controller('gmfThemeselectorController', Controller);
 
 
 export default exports;

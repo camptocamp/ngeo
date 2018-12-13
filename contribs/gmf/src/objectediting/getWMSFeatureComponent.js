@@ -37,7 +37,7 @@ const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
  */
-exports.directive_ = function() {
+function directive() {
   return {
     controller: 'gmfObjecteditinggetwmsfeatureController',
     scope: {
@@ -48,10 +48,9 @@ exports.directive_ = function() {
     },
     bindToController: true
   };
-};
+}
 
-exports.directive('gmfObjecteditinggetwmsfeature',
-  exports.directive_);
+exports.directive('gmfObjecteditinggetwmsfeature', directive);
 
 
 /**
@@ -64,8 +63,7 @@ exports.directive('gmfObjecteditinggetwmsfeature',
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
-exports.Controller_ = function($scope,
-  gmfObjectEditingQuery) {
+function Controller($scope, gmfObjectEditingQuery) {
 
   // Scope properties
 
@@ -107,14 +105,14 @@ exports.Controller_ = function($scope,
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
-};
+}
 
 
 /**
  * @param {boolean} active Active.
  * @private
  */
-exports.Controller_.prototype.handleActiveChange_ = function(active) {
+Controller.prototype.handleActiveChange_ = function(active) {
   if (active) {
     olEvents.listen(
       this.map,
@@ -137,7 +135,7 @@ exports.Controller_.prototype.handleActiveChange_ = function(active) {
  * @param {ol.MapBrowserEvent} evt Event.
  * @private
  */
-exports.Controller_.prototype.handleMapClick_ = function(evt) {
+Controller.prototype.handleMapClick_ = function(evt) {
   this.gmfObjectEditingQuery_.getFeatureInfo(
     this.layerInfo,
     evt.coordinate,
@@ -149,8 +147,7 @@ exports.Controller_.prototype.handleMapClick_ = function(evt) {
   });
 };
 
-exports.controller('gmfObjecteditinggetwmsfeatureController',
-  exports.Controller_);
+exports.controller('gmfObjecteditinggetwmsfeatureController', Controller);
 
 
 export default exports;

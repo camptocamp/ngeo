@@ -7,7 +7,7 @@
  * This file includes `goog.require`'s for all the components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-
+import angular from 'angular';
 import './sass/desktop_alt.scss';
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
@@ -31,13 +31,12 @@ if (!window.requestAnimationFrame) {
 /**
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {gettext} gettext The gettext service
  * @constructor
  * @extends {gmf.controllers.AbstractDesktopController}
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector, gettext) {
+const exports = function($scope, $injector) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {

@@ -7,7 +7,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
-import * as olMath from 'ol/math.js';
+import {toDegrees} from 'ol/math.js';
 import olStyleIcon from 'ol/style/Icon.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import * as olColor from 'ol/color.js';
@@ -35,9 +35,8 @@ exports.PrintStyleType = {
 
 /**
  * @type {Object.<ol.geom.GeometryType, ngeo.print.VectorEncoder.PrintStyleType>}
- * @private
  */
-exports.PrintStyleTypes_ = {
+const PRINT_STYLE_TYPES = {
   'LineString': exports.PrintStyleType.LINE_STRING,
   'Point': exports.PrintStyleType.POINT,
   'Polygon': exports.PrintStyleType.POLYGON,
@@ -146,11 +145,11 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
  * @param {string} featureStyleProp Feature style property name.
  */
 exports.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
-  if (!(geometryType in exports.PrintStyleTypes_)) {
+  if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
     return;
   }
-  const styleType = exports.PrintStyleTypes_[geometryType];
+  const styleType = PRINT_STYLE_TYPES[geometryType];
   const key = `[${featureStyleProp} = '${styleId}']`;
   if (key in object) {
     // do nothing if we already have a style object for this CQL rule
@@ -261,7 +260,7 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
       if (isNaN(rotation)) {
         rotation = 0;
       }
-      symbolizer.rotation = olMath.toDegrees(rotation);
+      symbolizer.rotation = toDegrees(rotation);
     }
   } else if (imageStyle instanceof olStyleRegularShape) {
     /**
@@ -289,7 +288,7 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
       }
       const rotationShape = imageStyle.getRotation();
       if (!isNaN(rotationShape) && rotationShape !== 0) {
-        symbolizer.rotation = olMath.toDegrees(rotationShape);
+        symbolizer.rotation = toDegrees(rotationShape);
       }
       const opacityShape = imageStyle.getOpacity();
       if (opacityShape !== null) {

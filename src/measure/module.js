@@ -1,7 +1,7 @@
 /**
  * @module ngeo.measure.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoMeasureArea from 'ngeo/measure/area.js';
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 import ngeoMeasureLength from 'ngeo/measure/length.js';
