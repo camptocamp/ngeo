@@ -378,7 +378,7 @@ class Controller {
       );
 
       // Manage the data sources that are already in the collection
-      this.gmfDataSources_.forEach(this.registerDataSource_, this);
+      this.gmfDataSources_.forEach(this.registerDataSource_.bind(this));
 
     } else {
       keys.forEach(olEvents.unlistenByKey);
