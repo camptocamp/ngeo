@@ -46,31 +46,27 @@ const exports = class extends ngeoDatasourceDataSource {
     /**
      * The dimensions configuration for the data source.
      * @type {?ngeox.Dimensions}
-     * @private
      */
-    this.dimensionsConfig_ = options.dimensionsConfig || null;
+    this.dimensionsConfig = options.dimensionsConfig || null;
 
     /**
      * The dimensions applied by filters configuration for the data source.
      * @type {?ngeox.DimensionsFiltersConfig}
-     * @private
      */
-    this.dimensionsFiltersConfig_ = options.dimensionsFiltersConfig || null;
+    this.dimensionsFiltersConfig = options.dimensionsFiltersConfig || null;
 
     /**
      * The filter condition to apply to the filter rules (if any).
      * @type {string}
-     * @private
      */
-    this.filterCondition_ = options.filterCondition || ngeoFilterCondition.AND;
+    this.filterCondition = options.filterCondition || ngeoFilterCondition.AND;
 
     /**
      * A list of filter rules to apply to this data source using the filter
      * condition.
      * @type {?Array.<!ngeo.rule.Rule>}
-     * @private
      */
-    this.filterRules_ = options.filterRules || null;
+    this.filterRules = options.filterRules || null;
 
     /**
      * Whether the data source is filtrable or not. When `null`, that means
@@ -78,9 +74,8 @@ const exports = class extends ngeoDatasourceDataSource {
      * that case, the value of the property needs to be determined from an
      * external way.
      * @type {?boolean}
-     * @private
      */
-    this.filtrable_ = options.filtrable || null;
+    this.filtrable = options.filtrable || null;
 
 
     // === STATIC properties (i.e. that never change) ===
@@ -179,10 +174,10 @@ const exports = class extends ngeoDatasourceDataSource {
     this.timeAttributeName_ = options.timeAttributeName;
 
     /**
+     * Time lower value.
      * @type {number|undefined}
-     * @private
      */
-    this.timeLowerValue_ = options.timeLowerValue;
+    this.timeLowerValue = options.timeLowerValue;
 
     /**
      * @type {?ngeox.TimeProperty}
@@ -191,10 +186,11 @@ const exports = class extends ngeoDatasourceDataSource {
     this.timeProperty_ = options.timeProperty !== undefined ? options.timeProperty : null;
 
     /**
+     * Time upper value.
      * @type {number|undefined}
      * @private
      */
-    this.timeUpperValue_ = options.timeUpperValue;
+    this.timeUpperValue = options.timeUpperValue;
 
     /**
      * The feature namespace to use with WFS requests.
@@ -324,88 +320,6 @@ const exports = class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?ngeox.Dimensions} Dimensions configuration for this data source
-   * @export
-   */
-  get dimensionsConfig() {
-    return this.dimensionsConfig_;
-  }
-
-  /**
-   * @param {?ngeox.Dimensions} dimensionsConfig Dimensions configuration
-   * @export
-   */
-  set dimensionsConfig(dimensionsConfig) {
-    this.dimensionsConfig_ = dimensionsConfig;
-  }
-
-  /**
-  * @return {?ngeox.DimensionsFiltersConfig} dimensionsFiltersConfig Dimensions
-  * filters configuration for this data source
-  * @export
-  */
-  get dimensionsFiltersConfig() {
-    return this.dimensionsFiltersConfig_;
-  }
-
-  /**
-   * @param {?ngeox.DimensionsFiltersConfig}dimensionsFiltersConfig Dimensions
-  * filters configuration for this data source
-   * @export
-   */
-  set dimensionsFiltersConfig(dimensionsFiltersConfig) {
-    this.dimensionsFiltersConfig_ = dimensionsFiltersConfig;
-  }
-
-  /**
-   * @return {string} Filter condition
-   * @export
-   */
-  get filterCondition() {
-    return this.filterCondition_;
-  }
-
-  /**
-   * @param {string} filterCondition Filter condition
-   * @export
-   */
-  set filterCondition(filterCondition) {
-    this.filterCondition_ = filterCondition;
-  }
-
-  /**
-   * @return {?Array.<!ngeo.rule.Rule>} Filter rules
-   * @export
-   */
-  get filterRules() {
-    return this.filterRules_;
-  }
-
-  /**
-   * @param {?Array.<!ngeo.rule.Rule>} filterRules Filter rules
-   * @export
-   */
-  set filterRules(filterRules) {
-    this.filterRules_ = filterRules;
-  }
-
-  /**
-   * @return {number|undefined} Time lower value
-   * @export
-   */
-  get timeLowerValue() {
-    return this.timeLowerValue_;
-  }
-
-  /**
-   * @param {number|undefined} time Time lower value
-   * @export
-   */
-  set timeLowerValue(time) {
-    this.timeLowerValue_ = time;
-  }
-
-  /**
    * @return {?ngeox.TimeRange} Time range value
    * @export
    */
@@ -436,22 +350,6 @@ const exports = class extends ngeoDatasourceDataSource {
     }
   }
 
-  /**
-   * @return {number|undefined} Time upper value
-   * @export
-   */
-  get timeUpperValue() {
-    return this.timeUpperValue_;
-  }
-
-  /**
-   * @param {number|undefined} time Time upper value
-   * @export
-   */
-  set timeUpperValue(time) {
-    this.timeUpperValue_ = time;
-  }
-
   // =======================================
   // === Static property getters/setters ===
   // =======================================
@@ -477,22 +375,6 @@ const exports = class extends ngeoDatasourceDataSource {
    */
   get copyable() {
     return this.copyable_;
-  }
-
-  /**
-   * @return {?boolean} Filtrable.
-   * @export
-   */
-  get filtrable() {
-    return this.filtrable_;
-  }
-
-  /**
-   * @param {?boolean} filtrable Filtrable.
-   * @export
-   */
-  set filtrable(filtrable) {
-    this.filtrable_ = filtrable;
   }
 
   /**
@@ -696,8 +578,7 @@ const exports = class extends ngeoDatasourceDataSource {
    * @override
    */
   get combinableForWFS() {
-    return this.filterRules_ === null &&
-      this.timeRangeValue === null;
+    return this.filterRules === null && this.timeRangeValue === null;
   }
 
   /**
@@ -713,8 +594,7 @@ const exports = class extends ngeoDatasourceDataSource {
    * @override
    */
   get combinableForWMS() {
-    return this.filterRules_ === null &&
-      this.timeRangeValue === null;
+    return this.filterRules === null && this.timeRangeValue === null;
   }
 
   /**

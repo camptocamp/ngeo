@@ -36,17 +36,15 @@ export default class {
      * service.
      *
      * @type {boolean}
-     * @private
      */
-    this.inRange_ = options.inRange !== false;
+    this.inRange = options.inRange !== false;
 
     /**
      * Whether the data source is visible or not, i.e. whether its is ON or OFF.
      * Defaults to `false`.
      * @type {boolean}
-     * @private
      */
-    this.visible_ = options.visible === true;
+    this.visible = options.visible === true;
 
 
     // === STATIC properties (i.e. that never change) ===
@@ -98,42 +96,6 @@ export default class {
      * @private
      */
     this.name_ = options.name;
-  }
-
-  // ========================================
-  // === Dynamic property getters/setters ===
-  // ========================================
-
-  /**
-   * @return {boolean} In range
-   * @export
-   */
-  get inRange() {
-    return this.inRange_;
-  }
-
-  /**
-   * @param {boolean} inRange In range
-   * @export
-   */
-  set inRange(inRange) {
-    this.inRange_ = inRange;
-  }
-
-  /**
-   * @return {boolean} Visible
-   * @export
-   */
-  get visible() {
-    return this.visible_;
-  }
-
-  /**
-   * @param {boolean} visible Visible
-   * @export
-   */
-  set visible(visible) {
-    this.visible_ = visible;
   }
 
   // =======================================

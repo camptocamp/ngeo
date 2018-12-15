@@ -180,35 +180,6 @@ exports.prototype.navIsVisible = function() {
 
 
 /**
- * Hide search overlay.
- * @export
- */
-exports.prototype.hideSearchOverlay = function() {
-  this.searchOverlayVisible = false;
-};
-
-
-/**
- * @return {boolean} Return true if the left navigation menus is visible,
- * otherwise false.
- * @export
- */
-exports.prototype.leftNavIsVisible = function() {
-  return this.leftNavVisible;
-};
-
-
-/**
- * @return {boolean} Return true if the right navigation menus is visible,
- * otherwise false.
- * @export
- */
-exports.prototype.rightNavIsVisible = function() {
-  return this.rightNavVisible;
-};
-
-
-/**
  * Open the menu with corresponding to the data-target attribute value.
  * @param {string} target the data-target value.
  * @export
