@@ -156,6 +156,8 @@ const exports = class {
       if (!keep) {
         source.features.length = 0;
         source.totalFeatureCount = undefined;
+      } else {
+        this.result_.total += source.features.length;
       }
       source.pending = false;
       source.queried = false;
