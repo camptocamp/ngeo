@@ -1,31 +1,23 @@
 "use strict";
-let fs = require('fs');
-let options = require('commander');
-let Compiler = require('angular-gettext-tools').Compiler;
+const fs = require('fs');
+const options = require('commander');
+const Compiler = require('angular-gettext-tools').Compiler;
 
 function main(inputs) {
-  let compiler = new Compiler({format: 'json'});
+  const compiler = new Compiler({format: 'json'});
 
-  let contents = [];
-  inputs.forEach(function(input) {
-    // ignore un existing files
-    fs.exists(input, function(exists) {
-      if (exists) {
-        fs.readFile(input, {encoding: 'utf-8'}, function(err, content) {
-          if (!err) {
-            contents.push(content);
-            if (contents.length === inputs.length) {
-              process.stdout.write(compiler.convertPo(contents.filter(function (content) {
-                return content.length !== 0;
-              })));
-            }
-          }
-        });
-      }
-      else {
-        contents.push("")
-      }
-    });
+  const promises = [];
+  inputs.forEach((input) => {
+    promises.push(new Promise((resolve) => {
+      fs.readFile(input, 'utf-8', (error, content) => {
+        resolve(error ? undefined : content);
+      });
+    }));
+  });
+
+  Promise.all(promises).then((contents) => {
+    contents = contents.filter(content => content !== undefined);
+    process.stdout.write(compiler.convertPo(contents));
   });
 }
 
