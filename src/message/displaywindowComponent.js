@@ -205,26 +205,25 @@ exports.Controller_ = class {
     }
 
     if (this.contentTemplate) {
-      this.updateContentTemplate();
+      this.updateContentTemplate_();
     }
 
     this.scope_.$watch(
-      () => {
-          return this.contentTemplate;
-        },
-      () => {
-          this.updateContentTemplate();
-      }
+      () => this.contentTemplate,
+      () => this.updateContentTemplate_
     );
   }
 
-  updateContentTemplate() {
-      const scope = googAsserts.assert(this.contentScope || this.scope_);
-      const compiled = this.compile_(this.contentTemplate)(scope);
-      const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container .contentTemplateContainer');
-      displayWindow.empty();
-      displayWindow.append(/** @type {?} */ (compiled));
-    }
+  /**
+   *  @private
+   */
+  updateContentTemplate_() {
+    const scope = googAsserts.assert(this.contentScope || this.scope_);
+    const compiled = this.compile_(this.contentTemplate)(scope);
+    const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container .content-template-container');
+    displayWindow.empty();
+    displayWindow.append(/** @type {?} */ (compiled));
+  }
 
   /**
    * @export
