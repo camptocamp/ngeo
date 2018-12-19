@@ -422,4 +422,23 @@ exports.Duration = function(gettextCatalog) {
 exports.filter('ngeoDuration', exports.Duration);
 
 
+/**
+ * A filter used to remove the CDATA prefix and postfix.
+ *
+ * @return {function(string): string} Retult string
+ * @ngInject
+ * @ngdoc filter
+ * @ngname ngeoDuration
+ */
+const removeCDATA = function() {
+  return function(input) {
+    if (input) {
+      return input.replace(/<!\[CDATA\[(.*)\]\]/, '$1');
+    }
+  };
+};
+
+exports.filter('removeCDATA', removeCDATA);
+
+
 export default exports;
