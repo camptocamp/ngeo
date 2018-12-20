@@ -433,7 +433,7 @@ exports.filter('ngeoDuration', exports.Duration);
 const removeCDATA = function() {
   return function(input) {
     if (input) {
-      return input.replace(/<!\[CDATA\[(.*)\]\]/, '$1');
+      return input.replace(/<!\[CDATA\[(.*)\]\]>/, '$1');
     }
   };
 };
