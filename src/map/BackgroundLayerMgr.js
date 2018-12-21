@@ -157,12 +157,13 @@ exports.prototype.getOpacityBgLayer = function(map) {
  * @export
  */
 exports.prototype.setOpacityBgLayer = function(map, layer) {
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, exports.BACKGROUNDLAYERGROUP_NAME);
+  const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
   const ZIndex = -100;
-  layer.setOpacity(0);
-  layer.setVisible(true);
+  layer.setOpacity(previous ? previous.getOpacity() : 0);
+  layer.setVisible(previous ? previous.getVisible() : true);
   layer.setZIndex(ZIndex);
   this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, exports.BACKGROUNDLAYERGROUP_NAME);
 
   const index = bgGroup.getLayers().getArray().indexOf(layer);
   if (index === -1) {
