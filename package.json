@@ -33,7 +33,7 @@
     "@babel/preset-env": "7.2.3",
     "@camptocamp/babel-plugin-angularjs-annotate": "0.8.2",
     "@camptocamp/cesium": "1.52.0",
-    "@fortawesome/fontawesome-free": "5.6.1",
+    "@fortawesome/fontawesome-free": "5.6.2",
     "@geoblocks/proj": "0.3.0",
     "@types/angular": "1.6.52",
     "@types/angular-gettext": "^2.1.34",
