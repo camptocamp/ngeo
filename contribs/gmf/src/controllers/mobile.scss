@@ -185,3 +185,11 @@ main div.ngeo-displaywindow {
   left: $app-margin;
   right: initial;
 }
+
+gmf-search {
+  span.twitter-typeahead {
+    &::before {
+      font-size: 2rem;
+    }
+  }
+}

@@ -53,7 +53,7 @@
                 ></td>
               <td
                 class="details-value"
-                ng-bind-html="value | ngeoTrustHtmlAuto"
+                ng-bind-html="value | removeCDATA | ngeoTrustHtmlAuto"
                 ></td>
             </tr>
           </table>
