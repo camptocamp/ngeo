@@ -33,33 +33,44 @@ const exports = class {
   }
 
   /**
-   * Set the service to call on 'save'.
-   * @param {string|null} saveServiceName A service name that can be injected and that have a 'save' method.
+   * @param {string|Object} serviceLike A service like.
+   * @param {string} method A method.
+   * @return {Object} A returned object.
    */
-  setSaveService(saveServiceName) {
-    if (saveServiceName && this.$injector_.has(saveServiceName)) {
-      const saveService = this.$injector_.get(saveServiceName);
-      if (!saveService.save) {
-        console.warn('Your offline save service must have a "save" function');
+  getOfflineService_(serviceLike, method) {
+    if (typeof serviceLike === 'string') {
+      if (!this.$injector_.has(serviceLike)) {
+        console.error(`The offline ${method} service could not be found`);
         return;
       }
-      this.saveService_ = saveService;
+      const service = this.$injector_.get(serviceLike);
+      if (!service[method]) {
+        console.error(`The offline service ${serviceLike} does not have a ${method} method`);
+        return;
+      }
+      return service;
     }
+    if (!serviceLike[method]) {
+      console.error(`The provided offline service does not have a ${method} method`);
+      return;
+    }
+    return serviceLike;
+  }
+
+  /**
+   * Set the service to call on 'save'.
+   * @param {string|{save: Function}} saveLikeService A service name that can be injected or an object that have a 'save' method.
+   */
+  setSaveService(saveLikeService) {
+    this.saveService_ = this.getOfflineService_(saveLikeService, 'save');
   }
 
   /**
    * Set the service to call on 'restore'
-   * @param {string|null} restoreServiceName A service name that can be injected and that have a 'restore' method.
+   * @param {string|{restore: Function}} restoreLikeService A service name that can be injected or an object that have a 'restore' method.
    */
-  setRestoreService(restoreServiceName) {
-    if (restoreServiceName && this.$injector_.has(restoreServiceName)) {
-      const restoreService = this.$injector_.get(restoreServiceName);
-      if (!restoreService.restore) {
-        console.warn('Your offline restore service must have a "restore" function');
-        return;
-      }
-      this.restoreService_ = restoreService;
-    }
+  setRestoreService(restoreLikeService) {
+    this.restoreService_ = this.getOfflineService_(restoreLikeService, 'restore');
   }
 
   cancel() {
