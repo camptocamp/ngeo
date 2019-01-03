@@ -1,4 +1,4 @@
-beautifulsoup4==4.6.3
+beautifulsoup4==4.7.0
 codespell==1.14.0
 glob2==0.6
 htmlmin==0.1.12
