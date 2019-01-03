@@ -118,7 +118,7 @@
     "typedoc": "0.14.0",
     "typescript": "3.1.6",
     "uglify-js": "3.4.9",
-    "uglifyjs-webpack-plugin": "2.0.1",
+    "uglifyjs-webpack-plugin": "2.1.1",
     "url-loader": "1.1.2",
     "webpack": "4.28.1",
     "webpack-cli": "3.2.0",
