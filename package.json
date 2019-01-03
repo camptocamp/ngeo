@@ -115,7 +115,7 @@
     "svgo-loader": "2.2.0",
     "ts-node": "7.0.1",
     "tsconfig-paths": "3.6.0",
-    "typedoc": "0.13.0",
+    "typedoc": "0.14.0",
     "typescript": "3.1.6",
     "uglify-js": "3.4.9",
     "uglifyjs-webpack-plugin": "2.0.1",
