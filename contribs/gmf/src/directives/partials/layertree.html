@@ -32,11 +32,12 @@
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="::!layertreeCtrl.node.children" ng-class="::{'gmf-layertree-no-layer-icon' : !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)}"
     class="gmf-layertree-layer-icon">
-
-    <img
-      ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
-      ng-src="{{::legendIconUrl}}">
-    </img>
+    <div><!--This div is required for flex issues with IE11-->
+      <img
+        ng-if="::(legendIconUrl=gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl))"
+        ng-src="{{::legendIconUrl}}">
+      </img>
+    </div>
   </a>
 
   <a
