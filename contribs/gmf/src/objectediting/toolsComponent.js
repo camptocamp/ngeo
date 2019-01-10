@@ -271,7 +271,7 @@ exports.Controller_ = function($injector, $scope, ngeoToolActivateMgr) {
 /**
  * Init the controller
  */
-gmf.ObjecteditingtoolsController.prototype.$onInit = function() {
+exports.Controller_.prototype.$onInit = function() {
   this.scope_.$watch(
     () => this.active,
     (newVal, oldVal) => {
