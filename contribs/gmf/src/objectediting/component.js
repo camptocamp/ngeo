@@ -422,6 +422,15 @@ exports.Controller.prototype.$onInit = function() {
     this.handleGetQueryableLayersInfo_.bind(this)
   );
 
+  this.scope_.$watch(
+    () => this.active,
+    (newVal, oldVal) => {
+      if (newVal != oldVal) {
+        this.toggle_(newVal);
+      }
+    }
+  );
+
   this.scope_.$watchCollection(
     () => {
       if (this.gmfTreeManager_.rootCtrl) {
@@ -477,7 +486,6 @@ exports.Controller.prototype.$onInit = function() {
 
   // Toggle on
   this.initializeInteractions_();
-  this.registerInteractions_();
   this.toggle_(true);
   this.resetGeometryChanges_();
 
@@ -574,7 +582,6 @@ exports.Controller.prototype.undo = function() {
 
 
 /**
- * Undo the latest modifications.
  * @return {boolean} Whether the state is INSERT or not.
  * @export
  */
@@ -721,9 +728,11 @@ exports.Controller.prototype.toggle_ = function(active) {
     toolMgr.registerTool(uid, this.modifyToolActivate_, true);
     toolMgr.registerTool(uid, this.toolsToolActivate_, false);
 
+    this.registerInteractions_();
+
   } else {
 
-    this.undoAllChanges_();
+    this.unregisterInteractions_();
 
     keys.forEach(olEvents.unlistenByKey);
     keys.length = 0;
@@ -733,6 +742,7 @@ exports.Controller.prototype.toggle_ = function(active) {
 
   }
 
+  this.toolsActive = active;
   this.modify_.setActive(active);
 };
 
@@ -1096,7 +1106,7 @@ exports.Controller.prototype.handleGetQueryableLayersInfo_ = function(layersInfo
 exports.Controller.prototype.handleDestroy_ = function() {
   this.features_.clear();
   this.toggle_(false);
-  this.unregisterInteractions_();
+  this.undoAllChanges_();
 };
 
 
