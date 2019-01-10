@@ -11,10 +11,7 @@ import olSourceVector from 'ol/source/Vector.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleCircle from 'ol/style/Circle.js';
 import olStyleStyle from 'ol/style/Style.js';
-import {select} from 'd3-selection';
-const d3 = {
-  select,
-};
+import {select as d3select} from 'd3';
 
 
 const exports = class {
@@ -216,7 +213,7 @@ const exports = class {
       this.isPlotSetup_ = false;
     }
 
-    d3.select('#gmf-lidarprofile-container .lidar-error').style('visibility', 'hidden');
+    d3select('#gmf-lidarprofile-container .lidar-error').style('visibility', 'hidden');
     let pytreeLinestring = this.utils.getPytreeLinestring(this.line_);
 
     let maxLODWith;
@@ -236,7 +233,7 @@ const exports = class {
     }
 
     let lastLOD = false;
-    d3.select('#gmf-lidarprofile-container .lod-info').html('');
+    d3select('#gmf-lidarprofile-container .lod-info').html('');
     this.config.clientConfig.pointSum = 0;
     let profileWidth = 0;
     if (this.config.clientConfig.autoWidth) {
@@ -246,7 +243,7 @@ const exports = class {
     }
 
     const profileWidthTxt = gettextCatalog.getString('Profile width: ');
-    d3.select('#gmf-lidarprofile-container .width-info').html(`${profileWidthTxt} ${profileWidth}m`);
+    d3select('#gmf-lidarprofile-container .width-info').html(`${profileWidthTxt} ${profileWidth}m`);
 
     for (let i = 0; i < maxLODWith.maxLOD; i++) {
       if (i == 0) {
@@ -276,7 +273,7 @@ const exports = class {
    */
   queryPytree_(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot) {
     const gettextCatalog = this.gettextCatalog;
-    const lodInfo = d3.select('#gmf-lidarprofile-container .lod-info');
+    const lodInfo = d3select('#gmf-lidarprofile-container .lod-info');
     if (this.config.serverConfig.debug) {
       let html = lodInfo.html();
       const loadingLodTxt = gettextCatalog.getString('Loading LOD: ');
@@ -317,7 +314,7 @@ const exports = class {
    * @private
    */
   processBuffer_(profile, iter, distanceOffset, lastLOD, resetPlot) {
-    const lidarError = d3.select('#gmf-lidarprofile-container .lidar-error');
+    const lidarError = d3select('#gmf-lidarprofile-container .lidar-error');
 
     const typedArrayInt32 = new Int32Array(profile, 0, 4);
     const headerSize = typedArrayInt32[0];
@@ -334,7 +331,7 @@ const exports = class {
 
     } catch (e) {
       if (!this.isPlotSetup_) {
-        const canvas = d3.select('#gmf-lidarprofile-container .lidar-canvas');
+        const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
         const canvasEl = canvas.node();
         const ctx = canvasEl.getContext('2d');
         ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);

@@ -6,10 +6,7 @@ import * as olEvents from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
 
-import {select} from 'd3-selection';
-const d3 = {
-  select,
-};
+import {select as d3select} from 'd3';
 
 /**
  * @type {!angular.IModule}
@@ -61,7 +58,7 @@ function directive(ngeoDebounce) {
       const optionsAttr = attrs['ngeoProfileOptions'];
       googAsserts.assert(optionsAttr !== undefined);
 
-      const selection = d3.select(element[0]);
+      const selection = d3select(element[0]);
       let profile, elevationData, poiData;
 
       scope.$watchCollection(optionsAttr, (newVal) => {
