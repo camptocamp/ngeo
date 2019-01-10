@@ -210,7 +210,7 @@ class Controller {
 
     this.scope_.$watch(
       () => this.contentTemplate,
-      () => this.updateContentTemplate_
+      () => this.updateContentTemplate_()
     );
   }
 
