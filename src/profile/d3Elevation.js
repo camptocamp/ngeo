@@ -3,31 +3,24 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-import 'd3-transition';
-import {bisector, extent} from 'd3-array';
-import {axisBottom, axisLeft} from 'd3-axis';
-import {scaleLinear} from 'd3-scale';
-import {mouse, select, selectAll} from 'd3-selection';
-import {area, line} from 'd3-shape';
-const d3 = {
-  bisector,
-  extent,
-  axisBottom,
-  axisLeft,
-  scaleLinear,
-  mouse,
-  select,
-  selectAll,
-  area,
-  line,
-};
+import {
+  area as d3area,
+  bisector as d3bisector,
+  extent as d3extent,
+  select as d3select,
+  scaleLinear as d3scaleLinear,
+  axisBottom as d3axisBottom,
+  axisLeft as d3axisLeft,
+  line as d3line,
+  mouse as d3mouse
+} from 'd3';
 
 
 /**
  * Provides a D3js component to be used to draw an elevation
  * profile chart.
  *
- *     let selection = d3.select('#element_id');
+ *     let selection = d3select('#element_id');
  *     let profile = ngeo.profile.d3Elevation({
  *       distanceExtractor: function (item) {return item['dist'];},
  *       linesConfiguration: {
@@ -121,7 +114,7 @@ const exports = function(options) {
   /**
    * Method to get the coordinate in pixels from a distance.
    */
-  const bisectDistance = d3.bisector(d => distanceExtractor(d)).left;
+  const bisectDistance = d3bisector(d => distanceExtractor(d)).left;
 
   /**
    * POI data extractor.
@@ -252,23 +245,23 @@ const exports = function(options) {
 
   const profile = function(selection) {
     selection.each(function(data) {
-      d3.select(this).selectAll('svg').remove();
+      d3select(this).selectAll('svg').remove();
       if (data === undefined) {
         return;
       }
 
       width = Math.max(this.clientWidth - margin.right - margin.left, 0);
-      x = d3.scaleLinear().range([0, width]);
+      x = d3scaleLinear().range([0, width]);
 
       height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
-      y = d3.scaleLinear().range([height, 0]);
+      y = d3scaleLinear().range([height, 0]);
 
-      const xAxis = d3.axisBottom(x);
-      const yAxis = d3.axisLeft(y);
+      const xAxis = d3axisBottom(x);
+      const yAxis = d3axisLeft(y);
 
       let area;
       if (numberOfLines === 1) {
-        area = d3.area()
+        area = d3area()
           .x(d => x(distanceExtractor(d)))
           .y0(height)
           .y1((d) => {
@@ -278,11 +271,11 @@ const exports = function(options) {
       }
 
       // Select the svg element, if it exists.
-      svg = d3.select(this).selectAll('svg').data([data]);
+      svg = d3select(this).selectAll('svg').data([data]);
       // Otherwise, create the skeletal chart.
       const svgEnter = svg.enter().append('svg');
       // Then select it again to get the complete object.
-      svg = d3.select(this).selectAll('svg').data([data]);
+      svg = d3select(this).selectAll('svg').data([data]);
 
       if (styleDefs !== undefined) {
         svgEnter.append('defs').append('style')
@@ -353,7 +346,7 @@ const exports = function(options) {
         .attr('transform', `translate(${margin.left},${
           margin.top})`);
 
-      xDomain = d3.extent(data, d => distanceExtractor(d));
+      xDomain = d3extent(data, d => distanceExtractor(d));
       x.domain(xDomain);
 
       // Return an array with the min and max value of the min/max values of
@@ -362,7 +355,7 @@ const exports = function(options) {
         let elevationsValues = [];
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
-          const extent = d3.extent(data, d => linesConfiguration[name].zExtractor(d));
+          const extent = d3extent(data, d => linesConfiguration[name].zExtractor(d));
           // only include defined extent
           if (extent.every(Number.isFinite)) {
             elevationsValues = elevationsValues.concat(extent);
@@ -406,7 +399,7 @@ const exports = function(options) {
         yHover.append('text');
 
         // Configure the d3 line.
-        line = d3.line()
+        line = d3line()
           .x(d => x(distanceExtractor(d)))
           .y(d => y(linesConfiguration[name].zExtractor(d)))
           .defined(d => linesConfiguration[name].zExtractor(d) !== null);
@@ -477,7 +470,7 @@ const exports = function(options) {
         .on('mousemove', mousemove);
 
       function mousemove() {
-        const mouseX = d3.mouse(this)[0];
+        const mouseX = d3mouse(this)[0];
         const x0 = x.invert(mouseX);
 
         profile.highlight(x0);
