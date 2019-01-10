@@ -3,24 +3,7 @@
  */
 import googAsserts from 'goog/asserts.js';
 
-import 'd3-transition';
-import {bisector, extent} from 'd3-array';
-import {axisBottom, axisLeft} from 'd3-axis';
-import {scaleLinear} from 'd3-scale';
-import {mouse, select, selectAll} from 'd3-selection';
-import {area, line} from 'd3-shape';
-const d3 = {
-  bisector,
-  extent,
-  axisBottom,
-  axisLeft,
-  scaleLinear,
-  mouse,
-  select,
-  selectAll,
-  area,
-  line,
-};
+import * as d3 from 'd3';
 
 
 /**
