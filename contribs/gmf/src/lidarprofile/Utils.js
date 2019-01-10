@@ -9,10 +9,7 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {saveAs} from 'file-saver';
-import {select} from 'd3-selection';
-const d3 = {
-  select,
-};
+import {select as d3select} from 'd3';
 
 
 export default class {
@@ -183,7 +180,7 @@ export default class {
    * @export
    */
   downloadProfileAsImageFile(profileClientConfig) {
-    const profileSVG = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
+    const profileSVG = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     const w = parseInt(profileSVG.attr('width'), 10);
     const h = parseInt(profileSVG.attr('height'), 10);
     const margin = profileClientConfig.margin;
@@ -198,7 +195,7 @@ export default class {
     ctx.fillRect(0, 0, w, h);
 
     // Draw the profile canvas (the points) into the new canvas.
-    const profileCanvas = d3.select('#gmf-lidarprofile-container .lidar-canvas').node();
+    const profileCanvas = d3select('#gmf-lidarprofile-container .lidar-canvas').node();
     ctx.drawImage(profileCanvas, margin.left, margin.top,
       w - (margin.left + margin.right), h - (margin.top + margin.bottom));
 
