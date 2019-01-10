@@ -273,11 +273,11 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
 /**
  * Init the controller
  */
-exports.Controller_.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.scope_.$watch(
     () => this.active,
     (newVal, oldVal) => {
-      // if it's not active, deactive tools
+      // if it's not active, deactivate tools
       if (!this.active) {
         this.requiresLayer = false;
         for (let i = 0, ii = this.toolActiveNames_.length; i < ii; i++) {
