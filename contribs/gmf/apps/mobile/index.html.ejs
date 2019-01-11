@@ -73,7 +73,7 @@
       ></ngeo-displaywindow>
       <div class="gmf-app-map-messages">
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
-        <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert">
+        <div class="alert alert-info alert-dismissible fade in hidden-xs" role="alert" ng-if="::mainCtrl.redirectUrl !== ''">
           <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
           <span translate
             translate-params-url="::mainCtrl.redirectUrl">
