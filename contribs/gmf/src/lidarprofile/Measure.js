@@ -1,11 +1,7 @@
 /**
  * @module ngeo.lidarprofile.Measure
  */
-import {mouse, select} from 'd3-selection';
-const d3 = {
-  mouse,
-  select,
-};
+import {mouse as d3mouse, select as d3select} from 'd3';
 
 
 export default class {
@@ -44,7 +40,7 @@ export default class {
     this.pStart_ = {};
     this.pEnd_ = {};
 
-    const svg = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     svg.selectAll('#text_m').remove();
     svg.selectAll('#start_m').remove();
     svg.selectAll('#end_m').remove();
@@ -61,7 +57,7 @@ export default class {
    * @export
    */
   setMeasureActive() {
-    const svg = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
     svg.style('cursor', 'pointer');
     svg.on('click', this.measureHeigt.bind(this));
   }
@@ -71,9 +67,9 @@ export default class {
    * Measure and display height after two click on the profile.
    */
   measureHeigt() {
-    const svg = d3.select('#gmf-lidarprofile-container svg.lidar-svg');
-    const svgCoordinates = d3.mouse(svg.node());
-    const canvasCoordinates = d3.mouse(d3.select('#gmf-lidarprofile-container .lidar-canvas').node());
+    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svgCoordinates = d3mouse(svg.node());
+    const canvasCoordinates = d3mouse(d3select('#gmf-lidarprofile-container .lidar-canvas').node());
     const margin = this.manager_.config.clientConfig.margin;
     const xs = svgCoordinates[0];
     const ys = svgCoordinates[1];
