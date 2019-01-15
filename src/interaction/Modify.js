@@ -8,7 +8,7 @@ import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
 import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
-import * as olFunctions from 'ol/functions.js';
+import {TRUE} from 'ol/functions.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olCollection from 'ol/Collection.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
@@ -98,7 +98,7 @@ const exports = function(options) {
 
 
   olInteractionInteraction.call(this, {
-    handleEvent: olFunctions.TRUE
+    handleEvent: TRUE
   });
 
 };
