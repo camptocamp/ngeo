@@ -322,6 +322,8 @@ const exports = class {
     const id = exports.getId(layer);
     const service = capabilities['Service'];
 
+    url = url !== undefined ? url : service['OnlineResource'];
+
     let dataSource;
 
     // (1) Get data source from cache if it exists, otherwise create it
