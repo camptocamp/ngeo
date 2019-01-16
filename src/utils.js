@@ -2,7 +2,7 @@
  * @module ngeo.utils
  */
 const exports = {};
-import * as olEventsCondition from 'ol/events/condition.js';
+import {platformModifierKeyOnly, singleClick} from 'ol/events/condition.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
@@ -114,7 +114,7 @@ exports.encodeQueryString = function(queryData) {
  * @return {boolean} The result.
  */
 exports.deleteCondition = function(event) {
-  return olEventsCondition.platformModifierKeyOnly(event) && olEventsCondition.singleClick(event);
+  return platformModifierKeyOnly(event) && singleClick(event);
 };
 
 

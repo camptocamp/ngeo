@@ -7,7 +7,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
-import * as olFunctions from 'ol/functions.js';
+import {TRUE} from 'ol/functions.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
@@ -34,7 +34,7 @@ import olSourceVector from 'ol/source/Vector.js';
 const exports = function(options) {
 
   olInteractionInteraction.call(this, {
-    handleEvent: olFunctions.TRUE
+    handleEvent: TRUE
   });
 
   /**

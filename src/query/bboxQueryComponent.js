@@ -6,7 +6,7 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 
 import olInteractionDragBox from 'ol/interaction/DragBox.js';
-import * as olEventsCondition from 'ol/events/condition.js';
+import {platformModifierKeyOnly} from 'ol/events/condition.js';
 
 const exports = angular.module('ngeoBboxQuery', [
   ngeoQueryMapQuerent.module.name,
@@ -53,7 +53,7 @@ function directive(ngeoMapQuerent) {
       const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 
       const interaction = new olInteractionDragBox({
-        condition: olEventsCondition.platformModifierKeyOnly
+        condition: platformModifierKeyOnly
       });
 
       /**

@@ -7,7 +7,7 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olEvents from 'ol/events.js';
-import * as olFunctions from 'ol/functions.js';
+import {FALSE} from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -270,7 +270,7 @@ exports.prototype.abortDrawing_ = function() {
 /**
  * @inheritDoc
  */
-exports.prototype.shouldStopEvent = olFunctions.FALSE;
+exports.prototype.shouldStopEvent = FALSE;
 
 
 /**
