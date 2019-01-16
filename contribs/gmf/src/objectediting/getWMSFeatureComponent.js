@@ -1,6 +1,7 @@
 /**
  * @module gmf.objectediting.getWMSFeatureComponent
  */
+import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import * as olEvents from 'ol/events.js';
 

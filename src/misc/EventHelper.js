@@ -1,6 +1,7 @@
 /**
  * @module ngeo.misc.EventHelper
  */
+import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
 /**

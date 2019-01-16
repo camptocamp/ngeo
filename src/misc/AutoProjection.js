@@ -1,6 +1,7 @@
 /**
  * @module ngeo.misc.AutoProjection
  */
+import angular from 'angular';
 import * as olProj from 'ol/proj.js';
 import * as olExtent from 'ol/extent.js';
 

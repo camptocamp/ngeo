@@ -1,6 +1,8 @@
 /**
  * @module ngeo.misc.filereaderComponent
  */
+import angular from 'angular';
+
 /**
  * @type {!angular.IModule}
  */

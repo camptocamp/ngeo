@@ -4,6 +4,7 @@
 const exports = {};
 
 import './backgroundlayerdropdown.css';
+import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
 
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';

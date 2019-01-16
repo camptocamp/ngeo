@@ -1,6 +1,7 @@
 /**
  * @module gmf.map.component
  */
+import angular from 'angular';
 import gmfPermalinkModule from 'gmf/permalink/module.js';
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import ngeoMapModule from 'ngeo/map/module.js';

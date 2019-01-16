@@ -4,6 +4,7 @@
 const exports = {};
 
 import './popover.css';
+import angular from 'angular';
 import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent.js';
 
 

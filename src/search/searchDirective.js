@@ -1,6 +1,7 @@
 /**
  * @module ngeo.search.searchDirective
  */
+import angular from 'angular';
 
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's

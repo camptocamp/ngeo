@@ -1,6 +1,7 @@
 /**
  * @module gmf.search.FulltextSearch
  */
+import angular from 'angular';
 import ngeoUtils from 'ngeo/utils.js';
 
 /**

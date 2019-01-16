@@ -1,6 +1,7 @@
 /**
  * @module gmf.permalink.shareComponent
  */
+import angular from 'angular';
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';

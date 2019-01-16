@@ -2,6 +2,7 @@
  * @module app.attributes
  */
 const exports = {};
+import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';

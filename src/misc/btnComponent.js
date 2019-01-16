@@ -1,6 +1,8 @@
 /**
  * @module ngeo.misc.btnComponent
  */
+import angular from 'angular';
+
 /**
  * @type {!angular.IModule}
  */

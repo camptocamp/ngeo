@@ -1,6 +1,8 @@
 /**
  * @module gmf.print.module
  */
+import angular from 'angular';
+
 import gmfPrintComponent from 'gmf/print/component.js';
 
 import './print.scss';

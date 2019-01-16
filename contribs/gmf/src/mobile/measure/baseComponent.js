@@ -1,6 +1,7 @@
 /**
  * @module gmf.mobile.measure.baseComponent
  */
+import angular from 'angular';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import * as olEvents from 'ol/events.js';

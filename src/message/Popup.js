@@ -1,6 +1,7 @@
 /**
  * @module ngeo.message.Popup
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
 /**

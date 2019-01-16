@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import './drawfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import gmfMapComponent from 'gmf/map/component.js';

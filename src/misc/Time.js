@@ -1,6 +1,8 @@
 /**
  * @module ngeo.misc.Time
  */
+import angular from 'angular';
+
 /**
  * ngeo - Time service
  * @constructor

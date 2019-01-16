@@ -1,6 +1,7 @@
 /**
  * @module ngeo.message.displaywindowComponent
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
 import 'ngeo/sass/font.scss';

@@ -2,6 +2,7 @@
  * @module ngeo.routing.RoutingFeatureComponent
  */
 const exports = {};
+import angular from 'angular';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 import ngeoRoutingNominatimInputComponent from 'ngeo/routing/NominatimInputComponent.js';
 import * as olProj from 'ol/proj.js';

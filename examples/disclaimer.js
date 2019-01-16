@@ -5,6 +5,7 @@ const exports = {};
 
 import './disclaimer.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
+import angular from 'angular';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 
 import ngeoMessageMessage from 'ngeo/message/Message.js';

@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './print.css';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';

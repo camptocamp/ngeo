@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './share.css';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';

@@ -1,6 +1,7 @@
 /**
  * @module gmf.datasource.Manager
  */
+import angular from 'angular';
 import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';

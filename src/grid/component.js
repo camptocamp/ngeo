@@ -1,6 +1,7 @@
 /**
  * @module ngeo.grid.component
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGridConfig from 'ngeo/grid/Config.js';

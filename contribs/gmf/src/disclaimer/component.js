@@ -1,6 +1,7 @@
 /**
  * @module gmf.disclaimer.component
  */
+import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerBase from 'ol/layer/Base.js';

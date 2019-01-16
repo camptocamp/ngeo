@@ -1,6 +1,7 @@
 /**
  * @module ngeo.datasource.Helper
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';

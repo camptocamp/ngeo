@@ -1,7 +1,7 @@
 /**
  * @module ngeo.print.module
  */
-import * as angular from 'angular';
+import angular from 'angular';
 import ngeoPrintService from 'ngeo/print/Service.js';
 import ngeoPrintUtils from 'ngeo/print/Utils.js';
 

@@ -1,6 +1,7 @@
 /**
  * @module ngeo.profile.elevationComponent
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';

@@ -2,6 +2,7 @@
  * @module gmf.lidarprofile.component
  */
 
+import angular from 'angular';
 
 /**
  * @type {!angular.IModule}

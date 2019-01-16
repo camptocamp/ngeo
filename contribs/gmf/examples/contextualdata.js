@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './contextualdata.css';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';

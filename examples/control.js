@@ -4,6 +4,7 @@
 const exports = {};
 
 import './control.css';
+import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscControlComponent from 'ngeo/misc/controlComponent.js';

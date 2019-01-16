@@ -1,6 +1,7 @@
 /**
  * @module gmf.theme.module
  */
+import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeSelectorComponent from 'gmf/theme/selectorComponent.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';

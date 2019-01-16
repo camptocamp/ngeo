@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './elevation.css';
 import gmfMapComponent from 'gmf/map/component.js';

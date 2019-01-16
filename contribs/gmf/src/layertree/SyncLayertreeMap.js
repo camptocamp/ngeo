@@ -1,6 +1,7 @@
 /**
  * @module gmf.layertree.SyncLayertreeMap
  */
+import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';

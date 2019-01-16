@@ -1,6 +1,7 @@
 /**
  * @module gmf.map.module
  */
+import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component.js';
 import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent.js';
 

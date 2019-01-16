@@ -1,6 +1,7 @@
 /**
  * @module ngeo.statemanager.WfsPermalink
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olExtent from 'ol/extent.js';
 import * as olFormatFilter from 'ol/format/filter.js';

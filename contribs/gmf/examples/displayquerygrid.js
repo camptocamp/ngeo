@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './displayquerygrid.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager.js';

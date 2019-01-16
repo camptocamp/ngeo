@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 
 /**
  * @type {!angular.IModule}

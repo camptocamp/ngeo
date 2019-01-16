@@ -1,6 +1,7 @@
 /**
  * @module gmf.controllers.AbstractDesktopController
  */
+import angular from 'angular';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';

@@ -1,6 +1,7 @@
 /**
  * @module ngeo.filter.component
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';

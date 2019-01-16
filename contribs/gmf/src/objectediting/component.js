@@ -1,6 +1,7 @@
 /**
  * @module gmf.objectediting.component
  */
+import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';

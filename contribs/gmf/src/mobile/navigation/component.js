@@ -1,6 +1,7 @@
 /**
  * @module gmf.mobile.navigation.component
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 const exports = angular.module('gmfMobileNav', []);
 

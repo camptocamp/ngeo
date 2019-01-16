@@ -1,6 +1,7 @@
 /**
  * @module gmf.objectediting.Query
  */
+import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';

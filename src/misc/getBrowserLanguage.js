@@ -1,6 +1,8 @@
 /**
  * @module ngeo.misc.getBrowserLanguage
  */
+import angular from 'angular';
+
 /**
  * @type {!angular.IModule}
  */

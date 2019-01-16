@@ -5,6 +5,7 @@ const exports = {};
 
 import './notification.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
+import angular from 'angular';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 
 import ngeoMessageNotification from 'ngeo/message/Notification.js';

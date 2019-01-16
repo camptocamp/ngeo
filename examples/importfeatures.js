@@ -4,6 +4,7 @@
 const exports = {};
 
 import './importfeatures.css';
+import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent.js';

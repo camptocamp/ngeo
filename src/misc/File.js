@@ -1,6 +1,8 @@
 /**
  * @module ngeo.misc.File
  */
+import angular from 'angular';
+
 /**
  * @constructor
  * @param {angular.IQService} $q .

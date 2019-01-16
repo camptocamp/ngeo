@@ -1,6 +1,7 @@
 /**
  * @module ngeo.statemanager.Service
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 

@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './themeselector.css';
 import gmfThemeModule from 'gmf/theme/module.js';

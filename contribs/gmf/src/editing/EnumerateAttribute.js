@@ -1,6 +1,8 @@
 /**
  * @module gmf.editing.EnumerateAttribute
  */
+import angular from 'angular';
+
 const exports = class {
 
   /**

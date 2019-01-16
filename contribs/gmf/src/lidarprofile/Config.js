@@ -2,6 +2,7 @@
  * @module gmf.lidarprofile.Config
  */
 
+import angular from 'angular';
 
 const exports = class {
 

@@ -1,6 +1,7 @@
 /**
  * @module ngeo.olcs.controls3d
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olEasing from 'ol/easing.js';
 import olcsCore from 'olcs/core.js';

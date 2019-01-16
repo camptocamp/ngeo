@@ -1,7 +1,7 @@
 /**
  * @module ngeo.message.popupComponent
  */
-
+import angular from 'angular';
 import 'angular-sanitize';
 
 

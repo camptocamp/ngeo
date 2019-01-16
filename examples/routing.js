@@ -11,6 +11,7 @@ import 'ol/ol.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/fontawesome.min.css';
 
+import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoRoutingModule from 'ngeo/routing/module.js';
 import olMap from 'ol/Map.js';

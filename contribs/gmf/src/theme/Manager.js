@@ -1,6 +1,7 @@
 /**
  * @module gmf.theme.Manager
  */
+import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';

@@ -2,6 +2,8 @@
  * @module gmf.import.wmtsCapabilityLayertreeComponent
  */
 
+import angular from 'angular';
+
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
 import ngeoMessagePopup from 'ngeo/message/Popup.js';

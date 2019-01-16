@@ -1,6 +1,7 @@
 /**
  * @module gmf.contextualdata.component
  */
+import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import googAsserts from 'goog/asserts.js';
 import olOverlay from 'ol/Overlay.js';

@@ -1,6 +1,8 @@
 /**
  * @module ngeo.map.recenter
  */
+import angular from 'angular';
+
 /**
  * @type {!angular.IModule}
  */

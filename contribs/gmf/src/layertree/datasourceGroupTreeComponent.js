@@ -1,6 +1,7 @@
 /**
  * @module gmf.layertree.datasourceGroupTreeComponent
  */
+import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 

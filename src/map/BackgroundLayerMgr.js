@@ -1,6 +1,7 @@
 /**
  * @module ngeo.map.BackgroundLayerMgr
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {

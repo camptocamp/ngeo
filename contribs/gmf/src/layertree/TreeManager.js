@@ -1,6 +1,7 @@
 /**
  * @module gmf.layertree.TreeManager
  */
+import angular from 'angular';
 import gmfBase from 'gmf/index.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';

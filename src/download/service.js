@@ -1,6 +1,7 @@
 /**
  * @module ngeo.download.service
  */
+import angular from 'angular';
 import ngeoUtils from 'ngeo/utils.js';
 
 import {saveAs} from 'file-saver';

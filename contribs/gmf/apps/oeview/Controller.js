@@ -8,6 +8,7 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
+import angular from 'angular';
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
 import './sass/oeview.scss';
 import appBase from '../appmodule.js';

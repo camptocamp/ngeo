@@ -4,6 +4,7 @@
 const exports = {};
 
 import './drawfeature.css';
+import angular from 'angular';
 import ngeoDrawModule from 'ngeo/draw/module.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';

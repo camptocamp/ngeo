@@ -1,6 +1,7 @@
 /**
  * @module ngeo.filter.RuleHelper
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
