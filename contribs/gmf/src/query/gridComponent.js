@@ -132,7 +132,7 @@ exports.component('gmfDisplayquerygrid', component);
  *
  * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -148,7 +148,7 @@ exports.component('gmfDisplayquerygrid', component);
 function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
-  const queryOptions = /** @type {ngeox.QueryOptions} */ (
+  const queryOptions = /** @type {QueryOptions} */ (
     $injector.has('ngeoQueryOptions') ?
       $injector.get('ngeoQueryOptions') : {});
 
@@ -165,7 +165,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.$timeout_ = $timeout;
 
   /**
-   * @type {!ngeox.QueryResult}
+   * @type {!QueryResult}
    * @export
    */
   this.ngeoQueryResult = ngeoQueryResult;
@@ -455,13 +455,13 @@ Controller.prototype.isSelected = function(gridSource) {
 
 /**
  * Try to merge the mergable sources.
- * @param {Array.<ngeox.QueryResultSource>} sources Sources.
- * @return {Array.<ngeox.QueryResultSource>} The merged sources.
+ * @param {Array.<QueryResultSource>} sources Sources.
+ * @return {Array.<QueryResultSource>} The merged sources.
  * @private
  */
 Controller.prototype.getMergedSources_ = function(sources) {
   const allSources = [];
-  /** @type {Object.<string, ngeox.QueryResultSource>} */
+  /** @type {Object.<string, QueryResultSource>} */
   const mergedSources = {};
 
   sources.forEach((source) => {
@@ -486,9 +486,9 @@ Controller.prototype.getMergedSources_ = function(sources) {
  * Check if the given source should be merged. If so, an artificial source
  * that will contain the features of all mergable sources is returned. If not,
  * `null` is returned.
- * @param {ngeox.QueryResultSource} source Source.
- * @param {Object.<string, ngeox.QueryResultSource>} mergedSources Merged sources.
- * @return {?ngeox.QueryResultSource} A merged source of null if the source should
+ * @param {QueryResultSource} source Source.
+ * @param {Object.<string, QueryResultSource>} mergedSources Merged sources.
+ * @return {?QueryResultSource} A merged source of null if the source should
  *    not be merged.
  * @private
  */
@@ -509,7 +509,7 @@ Controller.prototype.getMergedSource_ = function(source, mergedSources) {
     return null;
   }
 
-  /** @type {ngeox.QueryResultSource} */
+  /** @type {QueryResultSource} */
   let mergeSource;
   if (mergeSourceId in mergedSources) {
     mergeSource = mergedSources[mergeSourceId];
@@ -551,7 +551,7 @@ Controller.prototype.getMergedSource_ = function(source, mergedSources) {
 
 /**
  * Collect all features in the queryResult object.
- * @param {ngeox.QueryResultSource} source Result source.
+ * @param {QueryResultSource} source Result source.
  * @private
  */
 Controller.prototype.collectData_ = function(source) {
@@ -641,7 +641,7 @@ Controller.prototype.removeEmptyColumnsFn_ = function(allProperties) {
 
 /**
  * @param {?Array.<Object>} data Grid rows.
- * @param {ngeox.QueryResultSource} source Query source.
+ * @param {QueryResultSource} source Query source.
  * @return {boolean} Returns true if a grid was created.
  * @private
  */
@@ -677,10 +677,10 @@ Controller.prototype.getGridConfiguration_ = function(data) {
   delete clone.ol_uid;
   const columns = Object.keys(clone);
 
-  /** @type {Array.<ngeox.GridColumnDef>} */
+  /** @type {Array.<GridColumnDef>} */
   const columnDefs = [];
   columns.forEach((column) => {
-    columnDefs.push(/** @type {ngeox.GridColumnDef} */ ({
+    columnDefs.push(/** @type {GridColumnDef} */ ({
       name: column
     }));
   });

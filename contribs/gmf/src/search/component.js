@@ -143,7 +143,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *      of supported projections for coordinates search (projections must be
  *      defined in ol3). If not provided, only the map's view projection
  *      format will be supported.
- * @htmlAttribute {ngeox.SearchComponentListeners} gmf-search-listeners
+ * @htmlAttribute {SearchComponentListeners} gmf-search-listeners
  *      The listeners.
  * @htmlAttribute {boolean=} gmf-search-clearbutton Optional clear button in the input search. Default to true.
  * @htmlAttribute {number=} gmf-search-delay Optional bloodhound request delay in ms. Default to 50 ms.
@@ -403,13 +403,13 @@ class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {ngeox.SearchDirectiveListeners}
+     * @type {SearchDirectiveListeners}
      * @export
      */
     this.listeners;
 
     /**
-     * @type {ngeox.SearchDirectiveListeners}
+     * @type {SearchDirectiveListeners}
      * @export
      */
     this.additionalListeners;
@@ -468,7 +468,7 @@ class SearchController {
 
     this.listeners = this.mergeListeners_(
       this.additionalListeners,
-      /** @type {ngeox.SearchDirectiveListeners} */ ({
+      /** @type {SearchDirectiveListeners} */ ({
         select: this.select_.bind(this),
         close: this.close_.bind(this),
         datasetsempty: this.datasetsempty_.bind(this)
@@ -497,10 +497,10 @@ class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {ngeox.SearchDirectiveListeners} additionalListeners Custom provided
+   * @param {SearchDirectiveListeners} additionalListeners Custom provided
    *    listeners.
-   * @param {ngeox.SearchDirectiveListeners} listeners Default listeners.
-   * @return {ngeox.SearchDirectiveListeners} Merged listeners.
+   * @param {SearchDirectiveListeners} listeners Default listeners.
+   * @return {SearchDirectiveListeners} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {

@@ -49,7 +49,7 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {ngeox.MobileGeolocationDirectiveOptions}
+   * @type {MobileGeolocationDirectiveOptions}
    * @export
    */
   this.mobileGeolocationOptions = {

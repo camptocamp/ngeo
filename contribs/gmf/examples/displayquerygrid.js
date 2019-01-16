@@ -75,14 +75,14 @@ exports.module.component('gmfappQueryresult', exports.queryresultComponent);
 
 /**
  * Demo, NOT USED.
- * @param {ngeox.QueryResult} ngeoQueryResult Query service.
+ * @param {QueryResult} ngeoQueryResult Query service.
  * @constructor
  * @ngInject
  */
 exports.QueryresultController = function(ngeoQueryResult) {
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {QueryResult}
    * @export
    */
   this.result = ngeoQueryResult;

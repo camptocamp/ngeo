@@ -16,6 +16,15 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
 import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   current: ol.layer.Base,
+ *   previous: ol.layer.Base
+ * }>} BackgroundEvent
+ */
+
+
 /**
  * Provides a service for setting/unsetting background layers
  * in maps.
@@ -128,7 +137,7 @@ exports.prototype.set = function(map, layer) {
     bgGroup.getLayers().insertAt(0, layer);
     this.mapUids_[mapUid] = true;
   }
-  /** @type {ngeox.BackgroundEvent} */
+  /** @type {BackgroundEvent} */
   const event = new ngeoCustomEvent('change', {
     current: layer,
     previous: previous

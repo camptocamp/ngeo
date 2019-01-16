@@ -10,6 +10,42 @@ import googAsserts from 'goog/asserts.js';
  */
 import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 
+
+/**
+ * @typedef {function():!ngeo.message.Popup} PopupFactory
+ */
+
+
+/**
+ * The options for a popup created by the popup factory.
+ *
+ * autoDestroy: Whether the popup should be automatically destroyed when hidden or not.
+ * Defaults to `false`.
+ *
+ * cls: Extra class name to add to the popup.
+ *
+ * content: The content of the popup. Either the content or URL must be set.
+ *
+ * height: The height of the popup.
+ *
+ * title: The title of the popup.
+ *
+ * utl: The URL to use for the iframe to include as content for the popup.
+ *
+ * width: The width of the popup.
+ *
+ * @typedef {{
+ *     autoDestroy: (boolean|undefined),
+ *     cls: (string|undefined),
+ *     content: (*|undefined),
+ *     height: (string|undefined),
+ *     title: (string|undefined),
+ *     url: (string|undefined),
+ *     width: (string|undefined)
+ * }} PopupOptions
+ */
+
+
 /**
  * Provides a factory to create a popup in the page.
  * The factory returns a ngeo.message.Popup object.
@@ -205,7 +241,7 @@ exports.prototype.addClass = function(cls) {
 
 /**
  * Open a popup with the given properties.
- * @param {ngeox.PopupOptions} options Options.
+ * @param {PopupOptions} options Options.
  * @export
  */
 exports.prototype.open = function(options) {
@@ -247,7 +283,7 @@ exports.prototype.open = function(options) {
  * @param {angular.IScope} $rootScope Angular rootScope service.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {ngeox.PopupFactory} The function to create a popup.
+ * @return {PopupFactory} The function to create a popup.
  * @ngInject
  */
 exports.Factory = function($compile, $rootScope, $sce, $timeout) {

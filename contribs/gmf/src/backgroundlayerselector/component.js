@@ -154,7 +154,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   this.listenerKeys_.push(olEvents.listen(this.backgroundLayerMgr_, 'change',
     /**
-     * @param {!ngeox.BackgroundEvent} event Event.
+     * @param {!BackgroundEvent} event Event.
      */
     (event) => {
       this.bgLayer = event.detail.current;

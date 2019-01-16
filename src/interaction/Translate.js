@@ -17,6 +17,21 @@ import olInteractionTranslate from 'ol/interaction/Translate.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
+
+/**
+ * features: Only features contained in this collection will be able to be translated. If
+ * not specified, all features on the map will be able to be translated.
+ *
+ * style: Style for the center features added by the translate interaction to
+ * to show that features can be moved.
+ *
+ * @typedef {{
+ *     features: (ol.Collection.<ol.Feature>|undefined),
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
+ * }} TranslateOptions
+ */
+
+
 /**
  * An extension of the OpenLayers Translate interaction that adds the following
  * features to it:
@@ -27,7 +42,7 @@ import olSourceVector from 'ol/source/Vector.js';
  *
  * @constructor
  * @extends {ol.interaction.Translate}
- * @param {ngeox.interaction.TranslateOptions} options Options.
+ * @param {TranslateOptions} options Options.
  */
 const exports = function(options) {
 

@@ -34,7 +34,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *          gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)">
  *      </gmf-time-slider>
  *
- * @htmlAttribute {ngeox.TimeProperty} gmf-time-slider-time parameter for initialization.
+ * @htmlAttribute {TimeProperty} gmf-time-slider-time parameter for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
  * @return {angular.IDirective} The directive specs.
@@ -122,7 +122,7 @@ function Controller(ngeoWMSTime) {
 
   /**
    * A time object for directive initialization
-   * @type {ngeox.TimeProperty}
+   * @type {TimeProperty}
    * @export
    */
   this.time;

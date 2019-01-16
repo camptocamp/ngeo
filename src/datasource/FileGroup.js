@@ -5,6 +5,19 @@ import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
+
+/**
+ * The options required to create a `FileGroup`.
+ *
+ * injector: Angular main injector.
+ *
+ * @typedef {{
+ *   injector: (!angular.auto.IInjectorService)
+ * }} FileGroupOptions
+ * @extends GroupOptions
+ */
+
+
 export default class extends ngeoDatasourceGroup {
 
   /**
@@ -12,7 +25,7 @@ export default class extends ngeoDatasourceGroup {
    * Its main goal is to synchronize the added data source 'visible' properties
    * with the visibility of their layer 'visible' property.
    *
-   * @param {ngeox.datasource.FileGroupOptions} options Options.
+   * @param {FileGroupOptions} options Options.
    */
   constructor(options) {
 

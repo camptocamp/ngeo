@@ -56,10 +56,10 @@ const exports = function(config, $scope, $injector) {
   this.searchOverlayVisible = false;
 
   /**
-   * @type {ngeox.SearchDirectiveListeners}
+   * @type {SearchDirectiveListeners}
    * @export
    */
-  this.searchListeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
+  this.searchListeners = /** @type {SearchDirectiveListeners} */ ({
     open: function() {
       this.searchOverlayVisible = true;
     }.bind(this),
@@ -82,7 +82,7 @@ const exports = function(config, $scope, $injector) {
   });
 
   /**
-   * @type {ngeox.MobileGeolocationDirectiveOptions}
+   * @type {MobileGeolocationDirectiveOptions}
    * @export
    */
   this.mobileGeolocationOptions = {

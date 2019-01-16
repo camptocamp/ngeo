@@ -4,6 +4,75 @@
 import angular from 'angular';
 import {modulo} from 'ol/math.js';
 import {padNumber} from 'ol/string.js';
+
+
+/**
+ * expression: The regex expression that must match to do the replacement.
+ *
+ * template: The template to use to create a new value as replacement if the regex matches.
+ *
+ * @typedef {{
+ *     expression: (string),
+ *     template: (string)
+ * }} StringToHtmlReplacement
+ */
+
+
+/**
+ * Format a number with a precision.
+ *
+ * Arguments:
+ * - opt_precision: The used precision, default is 3.
+ *
+ * @typedef {function(number, number=): string} formatNumber
+ */
+
+
+/**
+ * Format a number with the prefix and unit.
+ *
+ * Arguments:
+ * - opt_unit: The unit to used, default is ''.
+ * - opt_type: (unit|square|binary) the type of units, default is 'unit'.
+ * - opt_precision: The used precision, default is 3.
+ *
+ * @typedef {function(number, string=, string=, number=): string} unitPrefix
+ */
+
+
+/**
+ * Format a couple of numbers as number coordinates.
+ *
+ * Arguments:
+ * - coordinates Array of two numbers.
+ * - opt_fractionDigits Optional number of digit. Default to 0.
+ * - opt_template Optional template. Default to '{x} {y}'.
+ *     Where "{x}" will be replaced by the easting coordinate and "{y}" by the northing one. Note:
+ *     Use a html entity to use the semicolon symbol into a template.
+ * @typedef {function(ol.Coordinate, (number|string)=, string=, (boolean|string)=): string} numberCoordinates
+ */
+
+
+/**
+ * Format a coordinates as DMS coordinates.
+ * Arguments:
+ * - coordinates Array of two numbers.
+ * - opt_fractionDigits Optional number of digit. Default to 0.
+ * - opt_template Optional template. Default to '{x} {y}'.
+ *     Where "{x}" will be replaced by the easting coordinate, {y} by the northing one. Note: Use a html
+ *     entity to use the semicolon symbol into a template.
+ * @typedef {function(ol.Coordinate, (number|string)=, string=): string} dmsCoordinates
+ */
+
+
+/**
+ * Format a duration in seconds to a more readable form.
+ * Arguments:
+ * - duration The duration in seconds.
+ * @typedef {function(number): string} duration
+ */
+
+
 const exports = angular.module('ngeoAngularFilters', []);
 
 /**
@@ -51,7 +120,7 @@ exports.filter('ngeoScalify', exports.Scalify);
  *      {{1234 | ngeoNumber}} => 1230
  *
  * @param {angular.ILocaleService} $locale Angular locale
- * @return {ngeox.number} Function used to format number into a string.
+ * @return {formatNumber} Function used to format number into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumber
@@ -135,7 +204,7 @@ exports.filter('ngeoNumber', exports.Number);
  *
  *
  * @param {angular.IFilterService} $filter Angular filter
- * @return {ngeox.unitPrefix} Function used to format number into a string.
+ * @return {unitPrefix} Function used to format number into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
@@ -203,7 +272,7 @@ exports.filter('ngeoUnitPrefix', exports.UnitPrefix);
  *      <!-- will Become 2'600'000, 1'600'000 -->
  *
  * @param {angular.IFilterService} $filter Angular filter
- * @return {ngeox.numberCoordinates} A function to format numbers into coordinates string.
+ * @return {numberCoordinates} A function to format numbers into coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
@@ -247,7 +316,7 @@ exports.filter('ngeoNumberCoordinates', exports.NumberCoordinates);
  *      <p>{{[7.1234, 46.9876] | ngeoDMSCoordinates:2:'[{y}; {x]'}}</p>
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
- * @return {ngeox.dmsCoordinates} A function to format numbers into a DMS coordinates string.
+ * @return {dmsCoordinates} A function to format numbers into a DMS coordinates string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
@@ -333,7 +402,7 @@ exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
  * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
- * @param {!Array.<!ngeox.StringToHtmlReplacement>}
+ * @param {!Array.<!StringToHtmlReplacement>}
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */
@@ -372,7 +441,7 @@ exports.filter('ngeoTrustHtmlAuto', exports.trustHtmlAutoFilter);
  *        -> Note: the remaining 10 seconds will be dropped
  *
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @return {ngeox.duration} Function used to format a time duration in seconds into a string.
+ * @return {duration} Function used to format a time duration in seconds into a string.
  * @ngInject
  * @ngdoc filter
  * @ngname ngeoDuration
@@ -465,7 +534,7 @@ exports.filter('ngeoDuration', exports.Duration);
 
 
 /**
- * @type {!Array.<!ngeox.StringToHtmlReplacement>}
+ * @type {!Array.<!StringToHtmlReplacement>}
  * @ngname ngeoStringToHtmlReplacements
  */
 exports.StringToHtmlReplacements = [

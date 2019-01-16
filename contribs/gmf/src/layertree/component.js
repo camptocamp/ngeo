@@ -13,7 +13,7 @@ import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
@@ -538,7 +538,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     const scale = this.getScale_();
     // QGIS can handle multiple layers natively. Use Multiple URLs for other map
     // servers
-    if (gmfOgcServer.type === ngeoDatasourceOGC.ServerType.QGISSERVER) {
+    if (gmfOgcServer.type === ServerType.QGISSERVER) {
       layersNames = [layersNames];
     } else {
       layersNames = layersNames.split(',');

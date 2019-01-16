@@ -56,7 +56,7 @@ exports.MainController = function($scope) {
 
   /**
    * Use the "dropup" variation of the Bootstrap dropdown.
-   * @type {ngeox.ScaleselectorOptions}
+   * @type {ScaleselectorOptions}
    * @export
    */
   this.options = {

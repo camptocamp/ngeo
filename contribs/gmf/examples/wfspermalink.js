@@ -31,7 +31,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 exports.module.value('ngeoWfsPermalinkOptions',
-  /** @type {ngeox.WfsPermalinkOptions} */ ({
+  /** @type {WfsPermalinkOptions} */ ({
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
       {featureType: 'osm_scale', label: 'display_name'}

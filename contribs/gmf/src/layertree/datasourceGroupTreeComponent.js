@@ -74,7 +74,7 @@ class Controller {
     this.scope_ = $scope;
 
     /**
-     * @type {!ngeox.datasource.DataSources}
+     * @type {!DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;

@@ -39,7 +39,7 @@ olUtilInherits(exports, ngeoMiscTime);
 /**
  * Format time regarding a resolution
  * @param  {number} time (in ms format) timestamp to format
- * @param  {(ngeox.TimePropertyResolutionEnum|undefined)} resolution resolution to use
+ * @param  {(TimePropertyResolutionEnum|undefined)} resolution resolution to use
  * @param  {boolean=} opt_useISOFormat True to a ISO-8601 date string that can be used
  *     as a WMS-T Parameter. Otherwise, use a localized date format.
  * @param  {boolean=} opt_toUTC to get the UTC date
@@ -78,7 +78,7 @@ exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
 
 /**
  * Format time to be used as a WMS Time query parameter
- * @param  {ngeox.TimeProperty} wmsTimeProperty a wmstime property from a node
+ * @param  {TimeProperty} wmsTimeProperty a wmstime property from a node
  * @param  {{start : number, end : (number|undefined)}} times start & end time selected (in ms format)
  * @param  {boolean=} opt_toUTC to get the UTC date
  * @return {string} ISO-8601 date string ready to be used as a query parameter for a

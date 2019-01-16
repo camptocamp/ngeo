@@ -14,18 +14,18 @@ import olGeomPoint from 'ol/geom/Point.js';
  *
  * @constructor
  * @extends {ngeo.interaction.Measure}
- * @param {ngeox.numberCoordinates} format the number formatter
+ * @param {numberCoordinates} format the number formatter
  * @param {string} coordFormat the coordinates formatter
- * @param {ngeox.interaction.MeasureOptions=} options Options
+ * @param {MeasureOptions=} options Options
  */
-const exports = function(format, coordFormat, options = /** @type {ngeox.interaction.MeasureOptions} */ ({})) {
+const exports = function(format, coordFormat, options = /** @type {MeasureOptions} */ ({})) {
 
   Object.assign(options, {displayHelpTooltip: false});
 
   ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */(options));
 
   /**
-   * @type {ngeox.numberCoordinates}
+   * @type {numberCoordinates}
    * @private
    */
   this.format_ = format;

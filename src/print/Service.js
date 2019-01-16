@@ -16,6 +16,12 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
 import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
+
+/**
+ * @typedef {function(string):!ngeo.print.Service} CreatePrint
+ */
+
+
 /**
  * Provides a function to create ngeo.print.Service objects used to
  * interact with MapFish Print v3 services.
@@ -477,7 +483,7 @@ exports.prototype.getCapabilities = function(opt_httpConfig) {
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @return {ngeox.CreatePrint} The function to create a print service.
+ * @return {CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint

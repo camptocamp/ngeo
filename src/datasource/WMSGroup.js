@@ -6,6 +6,19 @@ import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import * as olArray from 'ol/array.js';
 
+
+/**
+ * The options required to create a `WMSGroup`.
+ *
+ * injector: Angular main injector.
+ *
+ * @typedef {{
+ *   injector: (!angular.auto.IInjectorService)
+ * }} WMSGroupOptions
+ * @extends OGCGroupOptions
+ */
+
+
 export default class extends ngeoDatasourceOGCGroup {
 
   /**
@@ -16,7 +29,7 @@ export default class extends ngeoDatasourceOGCGroup {
    *
    * Note: the layer is not added to the map here.
    *
-   * @param {ngeox.datasource.WMSGroupOptions} options Options.
+   * @param {WMSGroupOptions} options Options.
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
   constructor(options, ngeoLayerHelper) {

@@ -4,6 +4,23 @@
 import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
 
+
+/**
+ * The options required to create a `Group`.
+ *
+ * dataSources: List of data source combined in the group. At least one must be defined
+ * upon the cration of the group.
+ *
+ * title: A human-readable title for the group. Usually, the WMS Server title is
+ * used for this property.
+ *
+ * @typedef {{
+ *   dataSources: (!Array.<!ngeo.datasource.DataSource>),
+ *   title: (string)
+ * }} GroupOptions
+ */
+
+
 const exports = class {
 
   /**
@@ -12,7 +29,7 @@ const exports = class {
    * that can be used to determine if all its data source are all visible, all
    * hidden or some are hidden and other visible.
    *
-   * @param {ngeox.datasource.GroupOptions} options Options.
+   * @param {GroupOptions} options Options.
    */
   constructor(options) {
 

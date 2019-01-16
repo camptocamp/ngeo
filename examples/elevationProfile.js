@@ -175,7 +175,7 @@ exports.MainController = function($http, $scope) {
 
 
   /**
-   * @type {ngeox.profile.PoiExtractor}
+   * @type {PoiExtractor}
    */
   const poiExtractor = {
     sort: typedFunctionsFactory(types.number, 'sort'),

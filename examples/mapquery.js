@@ -63,14 +63,14 @@ exports.module.component('appQueryresult', exports.queryresultComponent);
 
 
 /**
- * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query service.
+ * @param {QueryResult} ngeoQueryResult The ngeo query service.
  * @constructor
  * @ngInject
  */
 exports.QueryresultController = function(ngeoQueryResult) {
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {QueryResult}
    * @export
    */
   this.result = ngeoQueryResult;

@@ -75,7 +75,7 @@ gmfx.ExternalOGCServer;
  * Configuration for a grid tab.
  * @typedef {{
  *     configuration: ngeo.grid.Config,
- *     source: ngeox.QueryResultSource
+ *     source: QueryResultSource
  * }}
  */
 gmfx.GridSource;
@@ -90,7 +90,7 @@ gmfx.GridSource.prototype.configuration;
 
 /**
  * Results of the query source.
- * @type {ngeox.QueryResultSource}
+ * @type {QueryResultSource}
  */
 gmfx.GridSource.prototype.source;
 
@@ -754,7 +754,7 @@ gmfx.datasource.DataSourceBeingFiltered;
 /**
  * The options required to create a `gmf.datasource.OGC`.
  * @record
- * @extends ngeox.datasource.OGCOptions
+ * @extends OGCOptions
  */
 gmfx.datasource.OGCOptions;
 

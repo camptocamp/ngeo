@@ -1,6 +1,33 @@
 /**
  * @module ngeo.message.Message
  */
+
+
+/**
+ * A message to display by the ngeo notification service.
+ *
+ * delay: The delay in milliseconds the message is shown. Defaults to `7000`.
+ *
+ * popup: Whether the message should be displayed inside a popup window or not.
+ * Defaults to `false`.
+ *
+ * msg: The message text to display.
+ *
+ * target: The target element (or selector to get the element) in which to display the
+ * message. If not defined, then the default target of the notification service is used.
+ *
+ * type: The type of message. Defaults to `info`.
+ *
+ * @typedef {{
+ *     delay: (number|undefined),
+ *     popup: (boolean|undefined),
+ *     msg: (string),
+ *     target: (angular.JQLite|Element|string|undefined),
+ *     type: (string|undefined)
+ * }} Message
+ */
+
+
 /**
  * Abstract class for services that display messages.
  *
@@ -14,7 +41,7 @@ const exports = function() {};
  * Show the message.
  *
  * @abstract
- * @param {ngeox.Message} message Message.
+ * @param {Message} message Message.
  * @protected
  */
 exports.prototype.showMessage = function(message) {};
@@ -24,7 +51,7 @@ exports.prototype.showMessage = function(message) {};
  * Show disclaimer message string or object or list of disclame message
  * strings or objects.
  *
- * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
+ * @param {string|Array.<string>|Message|Array.<Message>}
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
@@ -80,10 +107,10 @@ exports.prototype.warn = function(message) {
  * message strings, message object or list message objects. The type can be
  * overridden here as well OR defined (if the message(s) is/are string(s),
  * defaults to 'information').
- * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
+ * @param {string|Array.<string>|Message|Array.<Message>}
  *     object A message or list of messages as text or configuration objects.
  * @param {string=} opt_type The type of message to override the messages with.
- * @return {Array.<ngeox.Message>} List of message objects.
+ * @return {Array.<Message>} List of message objects.
  * @protected
  */
 exports.prototype.getMessageObjects = function(object, opt_type) {

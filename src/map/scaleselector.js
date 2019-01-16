@@ -8,6 +8,18 @@ import olMap from 'ol/Map.js';
 import * as olEvents from 'ol/events.js';
 import 'bootstrap/js/src/dropdown.js';
 
+
+/**
+ * Options to configure the scale selector.
+ *
+ * dropup: True to get a drop menu that opens imself to the top, instead of the bottom.
+ *
+ * @typedef {{
+ *     dropup: (boolean|undefined)
+ * }} ScaleselectorOptions
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -50,7 +62,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * Bootstrap's "dropdown" jQuery plugin.
  *
  * You can pass options to configure the behaviors of this element. Options is
- * a {@link ngeox.ScaleselectorOptions} object.
+ * a {@link ScaleselectorOptions} object.
  *
  * Example:
  *
@@ -73,7 +85,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
  * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
- * @htmlAttribute {ngeox.ScaleselectorOptions} ngeo-scaleselector-options
+ * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *     Optional. The configuration options.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
@@ -142,7 +154,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   const options = $scope.$eval(optionsExpr);
 
   /**
-   * @type {!ngeox.ScaleselectorOptions}
+   * @type {!ScaleselectorOptions}
    * @export
    */
   this.options = ScaleselectorController.getOptions_(options);
@@ -184,7 +196,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
 
 /**
  * @param {?} options Options after expression evaluation.
- * @return {!ngeox.ScaleselectorOptions} Options object.
+ * @return {!ScaleselectorOptions} Options object.
  * @private
  */
 ScaleselectorController.getOptions_ = function(options) {
@@ -192,7 +204,7 @@ ScaleselectorController.getOptions_ = function(options) {
   if (options !== undefined) {
     dropup = options['dropup'] == true;
   }
-  return /** @type {ngeox.ScaleselectorOptions} */ ({
+  return /** @type {ScaleselectorOptions} */ ({
     dropup: dropup
   });
 };

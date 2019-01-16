@@ -17,6 +17,15 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import 'ngeo/sass/font.scss';
 
+
+/**
+ * @typedef {{
+ *     text: (string),
+ *     value: (string)
+ * }} FilterCondition
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -171,7 +180,7 @@ class FilterController {
     // === Inner properties ===
 
     /**
-     * @type {Array.<!ngeox.FilterCondition>}
+     * @type {Array.<!FilterCondition>}
      * @export
      */
     this.conditions = [
@@ -191,14 +200,14 @@ class FilterController {
 
     /**
      * List of geometry attributes.
-     * @type {Array.<!ngeox.Attribute>}
+     * @type {Array.<!Attribute>}
      * @export
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
-     * @type {Array.<!ngeox.Attribute>}
+     * @type {Array.<!Attribute>}
      * @export
      */
     this.otherAttributes = [];
@@ -342,7 +351,7 @@ class FilterController {
   /**
    * Create and add a new custom rule using an attribute. The rule is activated
    * after being created.
-   * @param {!ngeox.Attribute} attribute Attribute to use to create the custom
+   * @param {!Attribute} attribute Attribute to use to create the custom
    * rule.
    * @export
    */
@@ -359,7 +368,7 @@ class FilterController {
 
 
   /**
-   * @param {!ngeox.FilterCondition} condition Condition to set.
+   * @param {!FilterCondition} condition Condition to set.
    * @export
    */
   setCondition(condition) {

@@ -105,10 +105,10 @@ exports.Controller = function($element, $injector, $scope, ngeoNominatimService)
   })];
 
   /**
-   * @type {ngeox.SearchDirectiveListeners}
+   * @type {SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {ngeox.SearchDirectiveListeners} */({
+  this.listeners = /** @type {SearchDirectiveListeners} */({
     select: this.select_.bind(this)
   });
 
@@ -122,7 +122,7 @@ exports.Controller = function($element, $injector, $scope, ngeoNominatimService)
 
 /**
  * @param {jQuery.Event} event Event.
- * @param {ngeox.NominatimSearchResult} suggestion Suggestion.
+ * @param {NominatimSearchResult} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {ngeo.routing.NominatimInputComponent.Controller}
  * @private
@@ -147,7 +147,7 @@ exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *
- * @htmlAttribute {function(ngeox.NominatimSearchResult)} ngeo-nominatim-input-on-select
+ * @htmlAttribute {function(NominatimSearchResult)} ngeo-nominatim-input-on-select
  *  Event fired when user selects a new suggestion.
  * @htmlAttribute {string} ngeo-nominatim-input-value
  *  Value of input field, will be set to the label of the search result.

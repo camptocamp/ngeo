@@ -90,7 +90,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
  * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
- *     object like {@link ngeox.profile.ProfileOptions} but without any
+ *     object like {@link ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
@@ -260,7 +260,7 @@ function Controller($scope, $http, $element, $filter,
   this.pointHoverOverlay_.addFeature(this.snappedPoint_);
 
   /**
-   * @type {ngeox.profile.I18n}
+   * @type {I18n}
    * @private
    */
   this.profileLabels_ = {
@@ -270,7 +270,7 @@ function Controller($scope, $http, $element, $filter,
 
 
   /**
-   * @type {?ngeox.profile.ProfileOptions}
+   * @type {?ProfileOptions}
    * @export
    */
   this.profileOptions = null;
@@ -353,7 +353,7 @@ Controller.prototype.$onInit = function() {
     }
   }
 
-  this.profileOptions = /** @type {ngeox.profile.ProfileOptions} */ ({
+  this.profileOptions = /** @type {ProfileOptions} */ ({
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),
@@ -678,7 +678,7 @@ Controller.prototype.downloadCsv = function() {
     return;
   }
 
-  /** @type {Array.<ngeox.GridColumnDef>} */
+  /** @type {Array.<GridColumnDef>} */
   const headers = [];
   let hasDistance = false;
   const firstPoint = this.profileData[0];

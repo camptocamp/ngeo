@@ -17,7 +17,7 @@ import 'ngeo/sass/font.scss';
  *
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
+ * @param {PopupFactory} ngeoCreatePopup Popup service.
  * @constructor
  * @extends {ngeo.message.Message}
  * @ngdoc service
@@ -40,7 +40,7 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * @private
-   * @type {ngeox.PopupFactory}
+   * @type {PopupFactory}
    */
   this.createPopup_ = ngeoCreatePopup;
 
@@ -70,7 +70,7 @@ olUtilInherits(exports, ngeoMessageMessage);
 /**
  * Show disclaimer message string or object or list of disclaimer message
  * strings or objects.
- * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
+ * @param {string|Array.<string>|Message|Array.<Message>}
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
@@ -82,7 +82,7 @@ exports.prototype.alert = function(object) {
 /**
  * Close disclaimer message string or object or list of disclaimer message
  * strings or objects.
- * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
+ * @param {string|Array.<string>|Message|Array.<Message>}
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
@@ -94,7 +94,7 @@ exports.prototype.close = function(object) {
 
 /**
  * Show the message.
- * @param {ngeox.Message} message Message.
+ * @param {Message} message Message.
  * @protected
  * @override
  */
@@ -181,7 +181,7 @@ exports.prototype.showMessage = function(message) {
 
 
 /**
- * @param {ngeox.Message} message Message.
+ * @param {Message} message Message.
  * @return {string} The uid.
  * @private
  */
@@ -192,7 +192,7 @@ exports.prototype.getMessageUid_ = function(message) {
 
 /**
  * Close the message.
- * @param {ngeox.Message} message Message.
+ * @param {Message} message Message.
  * @protected
  */
 exports.prototype.closeMessage_ = function(message) {

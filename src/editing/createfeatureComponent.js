@@ -258,7 +258,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {ol.interaction.Draw.Event|ngeox.MeasureEvent} event Event.
+ * @param {ol.interaction.Draw.Event|MeasureEvent} event Event.
  * @export
  */
 Controller.prototype.handleDrawEnd_ = function(event) {
@@ -267,7 +267,7 @@ Controller.prototype.handleDrawEnd_ = function(event) {
     // ol.interaction.Draw.Event
     sketch = event.feature;
   } else {
-    // ngeox.MeasureEvent
+    // MeasureEvent
     sketch = event.detail.feature;
   }
   googAsserts.assert(sketch);

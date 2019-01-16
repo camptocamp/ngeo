@@ -53,7 +53,7 @@ exports.module.component('appMap', exports.mapComponent);
 
 /**
  * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
  */
@@ -71,7 +71,7 @@ exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {ngeox.miscDebounce}
+   * @type {miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;

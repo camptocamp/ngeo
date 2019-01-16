@@ -3,12 +3,25 @@
  */
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
+
+/**
+ * The options required to create a `OGCGroup`.
+ *
+ * url: The OGC service url. Used as a unique identifier for the group object itself.
+ *
+ * @typedef {{
+ *   url: (string)
+ * }} OGCGroupOptions
+ * @extends GroupOptions
+ */
+
+
 export default class extends ngeoDatasourceGroup {
 
   /**
    * A OGCGroup data source combines multiple `ngeo.datasource.OGC` objects.
    *
-   * @param {ngeox.datasource.OGCGroupOptions} options Options.
+   * @param {OGCGroupOptions} options Options.
    */
   constructor(options) {
 

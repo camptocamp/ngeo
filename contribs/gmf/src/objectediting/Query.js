@@ -3,7 +3,7 @@
  */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import {WMSInfoFormat} from 'ngeo/datasource/OGC.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
@@ -163,7 +163,7 @@ exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
   const resolution = /** @type {number} */(view.getResolution());
-  const infoFormat = ngeoDatasourceOGC.WMSInfoFormat.GML;
+  const infoFormat = WMSInfoFormat.GML;
   const layerNode = layerInfo.layerNode;
   const layersParam = layerNode.layers.split(',');
   const ogcServer = layerInfo.ogcServer;

@@ -16,6 +16,40 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
+
+/**
+ * Interactions for measure tools.
+ *
+ * startMsg: Element including the message to display in the help tooltip when the user
+ * just activated the interaction.
+ *
+ * continueMsg: Element including the message to display in the help tooltip when the user
+ * already added the first point.
+ *
+ * precision: Defines the number of decimals to keep in the measurement. If not defined,
+ * then the default behaviour occurs depending on the measure type.
+ *
+ * style: The style to be used when drawing is finished.
+ *
+ * sketchStyle: The style to be used while drawing.
+ *
+ * @typedef {{
+ *    startMsg: (Element|undefined),
+ *    continueMsg: (Element|undefined),
+ *    precision: (number|undefined),
+ *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
+ * }} MeasureOptions
+ */
+
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>} MeasureEvent
+ */
+
+
 /**
  * Interaction that allows measuring (length, area, ...).
  *
@@ -198,7 +232,7 @@ olUtilInherits(exports, olInteractionInteraction);
  * @param {!ol.geom.Polygon} polygon Polygon.
  * @param {!ol.proj.Projection} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
- * @param {!ngeox.unitPrefix} format The format function.
+ * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  * @this {ngeo.interaction.Measure}
  */
@@ -214,7 +248,7 @@ exports.getFormattedArea = function(polygon, projection, precision, format) {
  * of the area.
  * @param {!ol.geom.Circle} circle Circle
  * @param {number|undefined} precision Precision.
- * @param {!ngeox.unitPrefix} format The format function.
+ * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  */
 exports.getFormattedCircleArea = function(circle, precision, format) {
@@ -229,7 +263,7 @@ exports.getFormattedCircleArea = function(circle, precision, format) {
  * @param {!ol.geom.LineString} lineString Line string.
  * @param {!ol.proj.Projection} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
- * @param {!ngeox.unitPrefix} format The format function.
+ * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  */
 exports.getFormattedLength = function(lineString, projection, precision, format) {
@@ -248,7 +282,7 @@ exports.getFormattedLength = function(lineString, projection, precision, format)
  * Return a formatted string of the point.
  * @param {!ol.geom.Point} point Point.
  * @param {number|undefined} decimals Decimals.
- * @param {!ngeox.numberCoordinates} format A function to format coordinate into text
+ * @param {!numberCoordinates} format A function to format coordinate into text
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */
@@ -324,7 +358,7 @@ exports.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.Draw.Event|ngeox.DrawEvent} evt Event.
+ * @param {ol.interaction.Draw.Event|DrawEvent} evt Event.
  * @private
  */
 exports.prototype.onDrawStart_ = function(evt) {
@@ -352,13 +386,13 @@ exports.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.Draw.Event|ngeox.DrawEvent} evt Event.
+ * @param {ol.interaction.Draw.Event|DrawEvent} evt Event.
  * @private
  */
 exports.prototype.onDrawEnd_ = function(evt) {
   this.measureTooltipElement_.classList.add('ngeo-tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
-  /** @type {ngeox.MeasureEvent} */
+  /** @type {MeasureEvent} */
   const event = new ngeoCustomEvent('measureend', {feature: this.sketchFeature});
   this.dispatchEvent(event);
   this.sketchFeature = null;

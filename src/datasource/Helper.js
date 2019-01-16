@@ -32,7 +32,7 @@ const exports = class {
     this.q_ = $q;
 
     /**
-     * @type {ngeox.datasource.DataSources}
+     * @type {DataSources}
      * @private
      */
     this.collection_ = ngeoDataSources.collection;
@@ -59,7 +59,7 @@ const exports = class {
   }
 
   /**
-   * @return {ngeox.datasource.DataSources} Data sources collection.
+   * @return {DataSources} Data sources collection.
    * @export
    */
   get collection() {

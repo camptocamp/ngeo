@@ -52,7 +52,7 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
   this.xsdAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {?Array.<ngeox.Attribute>}
+   * @type {?Array.<Attribute>}
    * @export
    */
   this.attributes = null;
@@ -111,7 +111,7 @@ exports.MainController.prototype.getSetLayers = function(value) {
 
 
 /**
- * @param {Array.<ngeox.Attribute>} attributes Attributes.
+ * @param {Array.<Attribute>} attributes Attributes.
  * @export
  */
 exports.MainController.prototype.setAttributes_ = function(attributes) {

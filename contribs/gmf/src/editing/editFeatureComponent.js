@@ -443,7 +443,7 @@ function Controller($element, $q, $scope, $timeout,
   this.listenerKeys_ = [];
 
   /**
-   * @type {?Array.<!ngeox.Attribute>}
+   * @type {?Array.<!Attribute>}
    * @export
    */
   this.attributes = null;
@@ -805,7 +805,7 @@ Controller.prototype.handleEditFeature_ = function(resp) {
 
 
 /**
- * @param {!Array.<ngeox.Attribute>} attributes Attributes.
+ * @param {!Array.<Attribute>} attributes Attributes.
  * @private
  */
 Controller.prototype.setAttributes_ = function(attributes) {
@@ -1216,7 +1216,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {ngeox.MenuEvent} evt Event.
+ * @param {MenuEvent} evt Event.
  * @private
  */
 Controller.prototype.handleMenuActionClick_ = function(evt) {
@@ -1238,7 +1238,7 @@ Controller.prototype.handleMenuActionClick_ = function(evt) {
 
 
 /**
- * @param {ngeox.MenuEvent} evt Event.
+ * @param {MenuEvent} evt Event.
  * @private
  */
 Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
@@ -1268,7 +1268,7 @@ Controller.prototype.handleTranslateEnd_ = function(evt) {
 
 
 /**
- * @param {!ngeox.RotateEvent} evt Event.
+ * @param {!RotateEvent} evt Event.
  * @private
  */
 Controller.prototype.handleRotateEnd_ = function(evt) {

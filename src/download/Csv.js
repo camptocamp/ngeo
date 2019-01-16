@@ -4,6 +4,16 @@
 import angular from 'angular';
 import ngeoDownloadService from 'ngeo/download/service.js';
 
+
+/**
+ * Definition for grid columns.
+ *
+ * name: Name of a column.
+ *
+ * @typedef {{name: (string)}} GridColumnDef
+ */
+
+
 /**
  * Service to generate and download a CSV file from tabular data.
  * Column headers are translated using {@link angular.gettext.gettextCatalog}.
@@ -65,7 +75,7 @@ const exports = function($injector, gettextCatalog) {
 
   /**
    * Download service.
-   * @type {ngeox.Download}
+   * @type {Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
@@ -76,7 +86,7 @@ const exports = function($injector, gettextCatalog) {
  * Generate a CSV.
  *
  * @param {Array.<Object>} data Entries/objects to include in the CSV.
- * @param {Array.<ngeox.GridColumnDef>} columnDefs Column definitions.
+ * @param {Array.<GridColumnDef>} columnDefs Column definitions.
  * @return {string} The CSV file as string.
  * @export
  */
@@ -124,7 +134,7 @@ exports.prototype.getRow_ = function(values) {
  * Generate a CSV and start a download with the generated file.
  *
  * @param {Array.<Object>} data Entries/objects to include in the CSV.
- * @param {Array.<ngeox.GridColumnDef>} columnDefs Column definitions.
+ * @param {Array.<GridColumnDef>} columnDefs Column definitions.
  * @param {string} fileName The CSV file name, without the extension.
  * @export
  */

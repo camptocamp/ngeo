@@ -1,15 +1,70 @@
 /**
  * @module ngeo.format.Attribute
  */
-const exports = {};
+
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
+
+
+/**
+ * geomType: Set only if the attribute is a geometry type. Determines the type of geometry.
+ *
+ * numType: Set only if the attribute is a number type. Determines the type of number.
+ *
+ * type: The attribute type, which determines how to render it.
+ *
+ * @typedef {{
+ *   geomType: (string|undefined),
+ *   numType: (string|undefined),
+ *   type: (string|undefined),
+ * }} AttributeBase
+ */
+
+
+/**
+ * A feature attribute definition.
+ *
+ * choices: The list of possible values for the attribute.
+ *
+ * maxLength: Specifies the maximum number of character for the attribute value.
+ *
+ * name: The attribute name.
+ *
+ * alias: The attribute alias.
+ *
+ * readonly: Whether the attribute's value should be prevented from being edited
+ * or not. Defaults to `false`.
+ *
+ * required: Whether the attribute is required to have a value set or not. Defaults to `false`.
+ *
+ * type: The attribute type, which determines how to render it.
+ *
+ * format: The format used in the date, time and datetime type.
+ *
+ * mask: The mask used in the date, time and datetime type.
+ *
+ * @typedef {{
+ *   choices: (Array.<string>|undefined),
+ *   maxLength: (number|undefined),
+ *   name: (string|null),
+ *   alias: (string|null),
+ *   readonly: (boolean|undefined),
+ *   required: (boolean|undefined),
+ *   type: (string),
+ *   format: (string|undefined),
+ *   mask: (string|undefined)
+ * }} Attribute
+ * @extends AttributeBase
+ */
+
+
+const exports = {};
 
 
 /**
  * Set the `type` and `geomType` properties of an attribute if the given
  * type is a geometry one.
  *
- * @param {ngeox.AttributeBase} attribute Attribute.
+ * @param {AttributeBase} attribute Attribute.
  * @param {string} type Type.
  * @return {boolean} Whether both attribute type and geomType were set.
  */

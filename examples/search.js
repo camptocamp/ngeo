@@ -121,10 +121,10 @@ exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCr
   }];
 
   /**
-   * @type {ngeox.SearchDirectiveListeners}
+   * @type {SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {ngeox.SearchDirectiveListeners} */ ({
+  this.listeners = /** @type {SearchDirectiveListeners} */ ({
     select: exports.SearchController.select_.bind(this)
   });
 };

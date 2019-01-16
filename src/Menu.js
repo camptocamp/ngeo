@@ -8,6 +8,42 @@ import * as olEvents from 'ol/events.js';
 import olOverlay from 'ol/Overlay.js';
 import olOverlayPositioning from 'ol/OverlayPositioning.js';
 
+
+/**
+ * The options for an action item for the contextual menu overlay.
+ *
+ * cls: CSS class name(s) to use for the icon of the action item.
+ *
+ * label: The label to display for the action item. If not defined, the name is used.
+ *
+ * name:  unique name for the menu action, which is used in the event fired when
+ * the action is clicked.
+ *
+ * @typedef {{
+ *     cls: (string|undefined),
+ *     label: (string|undefined),
+ *     name: (string)
+ * }} MenuActionOptions
+ */
+
+/**
+ * The options for the contextual menu overlay.
+ *
+ * actions: A list of menu actions.
+ *
+ * autoClose: Whether to automatically close the contextual menu when an action is
+ * clicked or not. Defaults to `true`.
+ *
+ * title: A title to display as header of the contextual menu.
+ *
+ * @typedef {{
+ *     actions: (Array.<MenuActionOptions>),
+ *     autoClose: (boolean|undefined),
+ *     title: (string|undefined)
+ * }} MenuOptions
+ */
+
+
 /**
  * @classdesc
  * An OpenLayers overlay that shows a contextual menu with configurable actions
@@ -16,7 +52,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  *
  * @constructor
  * @extends {ol.Overlay}
- * @param {ngeox.MenuOptions=} menuOptions Menu options.
+ * @param {MenuOptions=} menuOptions Menu options.
  * @param {olx.OverlayOptions=} opt_overlayOptions Overlay options.
  */
 const exports = function(menuOptions, opt_overlayOptions) {

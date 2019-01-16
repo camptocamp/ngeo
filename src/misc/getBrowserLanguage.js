@@ -13,9 +13,17 @@ const exports = angular.module('ngeoGetBrowserLanguage', []);
  * Provides a function that returns the most appropriate 2-letter
  * language code depending on the list of available languages and the browser
  * languages settings.
+ * @typedef {function(Array.<string>):string} miscGetBrowserLanguage
+ */
+
+
+/**
+ * Provides a function that returns the most appropriate 2-letter
+ * language code depending on the list of available languages and the browser
+ * languages settings.
  *
  * @param {angular.IWindowService} $window Angular $window service.
- * @return {ngeox.miscGetBrowserLanguage} The "GetBrowserLanguage" function.
+ * @return {miscGetBrowserLanguage} The "GetBrowserLanguage" function.
  *
  * @ngdoc service
  * @ngname ngeoGetBrowserLanguage

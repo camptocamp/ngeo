@@ -8,6 +8,12 @@ import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
 
+
+/**
+ * @typedef {!ol.Collection.<!ngeo.datasource.DataSource>} DataSources
+ */
+
+
 const exports = class {
 
   /**
@@ -28,7 +34,7 @@ const exports = class {
   constructor() {
 
     /**
-     * @type {ngeox.datasource.DataSources}
+     * @type {DataSources}
      * @private
      */
     this.collection_ = new olCollection();
@@ -176,7 +182,7 @@ const exports = class {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoDataSources', []);
-// DataSources with the ngeox.datasource.DataSources type.
+// DataSources with the DataSources type.
 exports.module.service('ngeoDataSources', exports);
 
 

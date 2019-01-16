@@ -12,7 +12,7 @@ import ngeoMiscFile from 'ngeo/misc/File.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceWMSGroup from 'ngeo/datasource/WMSGroup.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -66,7 +66,7 @@ const exports = class {
     /**
      * The collection of DataSources from ngeo. When this service creates
      * a data source, its gets added to that collection.
-     * @type {!ngeox.datasource.DataSources}
+     * @type {!DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
@@ -341,8 +341,8 @@ const exports = class {
       // wmsInfoFormat
       const infoFormats = req['GetFeatureInfo']['Format'];
       const wmsInfoFormat = infoFormats.includes(
-        ngeoDatasourceOGC.WMSInfoFormat.GML
-      ) ? ngeoDatasourceOGC.WMSInfoFormat.GML : undefined;
+        WMSInfoFormat.GML
+      ) ? WMSInfoFormat.GML : undefined;
 
       // queryable
       const queryable = layer['queryable'] === true &&
@@ -358,7 +358,7 @@ const exports = class {
           name: layer['Name'],
           queryable: queryable
         }],
-        ogcType: ngeoDatasourceOGC.Type.WMS,
+        ogcType: Type.WMS,
         visible: true,
         wmsInfoFormat: wmsInfoFormat,
         wmsUrl: url
@@ -421,7 +421,7 @@ const exports = class {
       dataSource = new ngeoDatasourceOGC({
         id: id,
         name: name,
-        ogcType: ngeoDatasourceOGC.Type.WMTS,
+        ogcType: Type.WMTS,
         visible: true,
         wmtsLayer: wmtsLayer,
         wmtsUrl: wmtsUrl
@@ -619,7 +619,7 @@ const exports = class {
    * @private
    */
   removeOGCDataSource_(dataSource) {
-    if (dataSource.ogcType === ngeoDatasourceOGC.Type.WMS) {
+    if (dataSource.ogcType === Type.WMS) {
       // WMS data source
       const url = dataSource.wmsUrl;
       googAsserts.assert(url);
@@ -637,7 +637,7 @@ const exports = class {
           this.removeWMSGroup_(wmsGroup);
         }
       }
-    } else if (dataSource.ogcType === ngeoDatasourceOGC.Type.WMTS) {
+    } else if (dataSource.ogcType === Type.WMTS) {
       // WMTS data source
       const url = dataSource.wmtsUrl;
       googAsserts.assert(url);

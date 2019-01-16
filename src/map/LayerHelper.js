@@ -13,6 +13,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
+import {ServerType} from 'ngeo/datasource/OGC.js';
 
 /**
  * Provides help functions that helps you to create and manage layers.
@@ -91,7 +92,7 @@ exports.prototype.createBasicWMSLayer = function(sourceURL,
   if (opt_serverType) {
     params['SERVERTYPE'] = opt_serverType;
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
-    olServerType = opt_serverType.replace('qgisserver', 'qgis');
+    olServerType = opt_serverType.replace(ServerType.QGISSERVER, 'qgis');
   }
   const options = Object.assign({}, opt_customOptions, {
     url: sourceURL,

@@ -23,19 +23,19 @@ olUtilInherits(exports, olFormatXML);
 
 /**
  * @param {Document|Node|string} source Source.
- * @return {Array.<ngeox.Attribute>} The parsed result.
+ * @return {Array.<Attribute>} The parsed result.
  * @override
  */
 exports.prototype.read = function(source) {
   return (
-    /** @type {Array.<ngeox.Attribute>} */ olFormatXML.prototype.read.call(this, source)
+    /** @type {Array.<Attribute>} */ olFormatXML.prototype.read.call(this, source)
   );
 };
 
 
 /**
  * @param {Document} doc Document.
- * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @return {Array.<Attribute>} List of attributes.
  * @override
  */
 exports.prototype.readFromDocument = function(doc) {
@@ -52,7 +52,7 @@ exports.prototype.readFromDocument = function(doc) {
 
 /**
  * @param {Node} node Node.
- * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @return {Array.<Attribute>} List of attributes.
  * @override
  */
 exports.prototype.readFromNode = function(node) {
@@ -81,7 +81,7 @@ exports.prototype.readFromNode = function(node) {
 
 /**
  * @param {Node} node Node.
- * @return {?ngeox.Attribute} An attribute object.
+ * @return {?Attribute} An attribute object.
  * @private
  */
 exports.prototype.readFromElementNode_ = function(node) {
@@ -164,7 +164,7 @@ exports.prototype.readFromElementNode_ = function(node) {
  * Set the `type` and `numType` properties of an attribute depending on the
  * given xsdType.
  *
- * @param {ngeox.AttributeBase} attribute Attribute.
+ * @param {AttributeBase} attribute Attribute.
  * @param {string} type The xsd type.
  * @private
  */
@@ -193,8 +193,8 @@ exports.prototype.setAttributeByXsdType_ = function(
 
 /**
  * Returns the first geometry attribute among a given list of attributes.
- * @param {Array.<ngeox.Attribute>} attributes The list of attributes.
- * @return {?ngeox.Attribute} A geometry attribute object.
+ * @param {Array.<Attribute>} attributes The list of attributes.
+ * @return {?Attribute} A geometry attribute object.
  */
 exports.getGeometryAttribute = function(attributes) {
   let geomAttribute = null;

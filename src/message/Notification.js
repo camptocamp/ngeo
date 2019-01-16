@@ -67,7 +67,7 @@ const DEFAULT_DELAY = 7000;
 /**
  * Display the given message string or object or list of message strings or
  * objects.
- * @param {string|Array.<string>|ngeox.Message|Array.<ngeox.Message>}
+ * @param {string|Array.<string>|Message|Array.<Message>}
  *     object A message or list of messages as text or configuration objects.
  * @export
  */

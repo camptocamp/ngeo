@@ -17,6 +17,99 @@ import {
 
 
 /**
+ * xAxis: Text for the x axis. Will be completed by ` km` or ' m' (for kilometers or meters).
+ *
+ * yAxis: Text for the y axis. Will be completed by ' m' (for meters).
+ *
+ * @typedef {{
+ *   xAxis: (string|undefined),
+ *   yAxis: (string|undefined)
+ * }} I18n
+ */
+
+
+/**
+ * Configuration object for one profile's line.
+ *
+ * color: Color of the line (hex color string).
+ *
+ * zExtractor: Extract the elevation of a point (an item of the elevation data array).
+ *
+ * @typedef {{
+ *   color: (string|undefined),
+ *   zExtractor: !function(Object): number
+ * }} LineConfiguration
+ */
+
+
+/**
+ * Options for the profile.
+ *
+ * styleDefs: Inline CSS style definition to inject in the SVG.
+ *
+ * poiLabelAngle: Inline CSS style definition to inject in the SVG.
+ *
+ * formatter: Formatter giving full control on how numbers are formatted.
+ *
+ * distanceExtractor: Extract the distance from origin of a point (an item of the elevation data array).
+ *
+ * linesConfiguration: Configuration object for the profile's lines. The key string of each object
+ * is used as class for its respective svg line.
+ *
+ * poiExtractor: Extractor for parsing POI data.
+ *
+ * light: Show a simplified profile when true.
+ *
+ * lightXAxis: Show a simplified x axis with only both end ticks.
+ *
+ * scaleModifier: Allows to modify the raw x and y scales.
+ * Notably, it is possible to modify the y domain according to XY ratio rules,
+ * add padding or enforce y lower bound.
+ *
+ * hoverCallback: A callback called from the profile when the mouse moves over a point.
+ * The point, an item of the elevation data array, is passed as the first
+ * argument of the function.
+ *
+ * outCallback: A callback called from the profile when the mouse leaves the profile.
+ *
+ * i18n: I18n.
+ *
+ * @typedef {{
+ *   styleDefs: (string|undefined),
+ *   poiLabelAngle: (number|undefined),
+ *   formatter: (ProfileFormatter|undefined),
+ *   distanceExtractor: function(Object): number,
+ *   linesConfiguration: !Object.<string, LineConfiguration>,
+ *   poiExtractor: (PoiExtractor|undefined),
+ *   light: (boolean|undefined),
+ *   lightXAxis: (boolean|undefined),
+ *   scaleModifier: (function(function(), function(), number, number)|undefined),
+ *   hoverCallback: (function(Object)|undefined),
+ *   outCallback: (function()|undefined),
+ *   i18n: (I18n|undefined)
+ * }} ProfileOptions
+ */
+
+
+/**
+ * xhover: Format the xhover distance.
+ *
+ * yhover: Format the yhover elevation.
+ *
+ * xtick: Format the xtick, for graduating the x axis.
+ *
+ * ytick: Format the ytick, for graduating the y axis.
+ *
+ * @typedef {{
+ *   xhover: function(number, string): string,
+ *   yhover: function(number, string): string,
+ *   xtick: function(number, string): (string|number),
+ *   ytick: function(number, string): (string|number)
+ * }} ProfileFormatter
+ */
+
+
+/**
  * Provides a D3js component to be used to draw an elevation
  * profile chart.
  *
@@ -65,7 +158,7 @@ import {
  *     ]
  *
  * @return {Object} D3js component.
- * @param {ngeox.profile.ProfileOptions} options Profile options.
+ * @param {ProfileOptions} options Profile options.
  * @export
  */
 const exports = function(options) {
@@ -148,7 +241,7 @@ const exports = function(options) {
   const yAxisLabel = (i18n.yAxis || 'Elevation');
 
   /**
-   * @type {ngeox.profile.ProfileFormatter}
+   * @type {ProfileFormatter}
    */
   const formatter = {
     /**

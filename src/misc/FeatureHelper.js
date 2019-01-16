@@ -71,19 +71,19 @@ const exports = function($injector, $filter) {
   }
 
   /**
-   * @type {!ngeox.number}
+   * @type {!formatNumber}
    */
-  this.numberFormat_ = /** @type {ngeox.number} */ ($filter('number'));
+  this.numberFormat_ = /** @type {formatNumber} */ ($filter('number'));
 
   /**
-   * @type {!ngeox.unitPrefix}
+   * @type {!unitPrefix}
    */
-  this.unitPrefixFormat_ = /** @type {ngeox.unitPrefix} */ ($filter('ngeoUnitPrefix'));
+  this.unitPrefixFormat_ = /** @type {unitPrefix} */ ($filter('ngeoUnitPrefix'));
 
   /**
-   * @type {!ngeox.numberCoordinates}
+   * @type {!numberCoordinates}
    */
-  this.ngeoNumberCoordinates_ = /** @type {ngeox.numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
+  this.ngeoNumberCoordinates_ = /** @type {numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
@@ -118,7 +118,7 @@ const exports = function($injector, $filter) {
 
   /**
    * Download service.
-   * @type {ngeox.Download}
+   * @type {Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
@@ -1085,7 +1085,7 @@ exports.prototype.export_ = function(features, format, fileName, opt_mimeType) {
 
 
 /**
- * @param {!ngeox.style.TextOptions} options Options.
+ * @param {!TextOptions} options Options.
  * @return {!ol.style.Text} Style.
  * @private
  */

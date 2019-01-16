@@ -153,7 +153,7 @@ exports.prototype.addFeature_ = function(feature) {
 exports.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
-    /** @type {ngeox.ModifyEvent} */
+    /** @type {ModifyEvent} */
     const event = new ngeoCustomEvent('modifystart', {features: this.features_});
     this.dispatchEvent(event);
   }
@@ -367,7 +367,7 @@ exports.handleUpEvent_ = function(evt) {
     this.dragSegments_[0][0].geometry);
 
   if (this.modified_) {
-    /** @type {ngeox.ModifyEvent} */
+    /** @type {ModifyEvent} */
     const event = new ngeoCustomEvent('modifyend', {features: this.features_});
     this.dispatchEvent(event);
     this.modified_ = false;

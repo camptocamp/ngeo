@@ -3,6 +3,22 @@
  */
 import angular from 'angular';
 
+
+/**
+ * @typedef {{
+ *   open: (function()|undefined),
+ *   close: (function()|undefined),
+ *   cursorchange: (function(jQuery.Event, Object,
+ *       TypeaheadDataset)|undefined),
+ *   select: (function(jQuery.Event, Object,
+ *       TypeaheadDataset)|undefined),
+ *   autocomplete: (function(jQuery.Event, Object,
+ *       TypeaheadDataset)|undefined),
+ *   datasetsempty: (function(jQuery.Event, string, boolean)|undefined)
+ * }} SearchDirectiveListeners
+ */
+
+
 /**
  * Provides the "ngeoSearch" directive, which uses Twitter's
  * typeahead component to change an input text into a search field.
@@ -18,7 +34,7 @@ import angular from 'angular';
  *
  * @htmlAttribute {TypeaheadOptions} ngeo-search The options.
  * @htmlAttribute {Array.<TypeaheadDataset>} ngeo-search-datasets The sources datasets.
- * @htmlAttribute {ngeox.SearchDirectiveListeners} ngeo-search-listeners The listeners.
+ * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -49,11 +65,11 @@ const exports = function() {
 
       const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
       const typeaheadListeners_ =
-              /** @type {ngeox.SearchDirectiveListeners} */
+              /** @type {SearchDirectiveListeners} */
               (scope.$eval(typeaheadListenersExpr));
 
       /**
-       * @type {ngeox.SearchDirectiveListeners}
+       * @type {SearchDirectiveListeners}
        */
       const typeaheadListeners = exports.adaptListeners_(
         typeaheadListeners_);
@@ -125,14 +141,14 @@ const exports = function() {
 
 
 /**
- * Create a real ngeox.SearchDirectiveListeners object out of the object
+ * Create a real SearchDirectiveListeners object out of the object
  * returned by $eval.
- * @param {ngeox.SearchDirectiveListeners} object Object.
- * @return {ngeox.SearchDirectiveListeners} The listeners object.
+ * @param {SearchDirectiveListeners} object Object.
+ * @return {SearchDirectiveListeners} The listeners object.
  * @private
  */
 exports.adaptListeners_ = function(object) {
-  /** @type {ngeox.SearchDirectiveListeners} */
+  /** @type {SearchDirectiveListeners} */
   let typeaheadListeners;
   if (object === undefined) {
     typeaheadListeners = {

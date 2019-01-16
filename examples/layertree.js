@@ -63,7 +63,7 @@ exports.module.component('appLayertree', exports.layertreeComponent);
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {function(Object):ol.layer.Layer} appGetLayer Get layer service.
- * @param {ngeox.PopupFactory} ngeoCreatePopup Popup service.
+ * @param {PopupFactory} ngeoCreatePopup Popup service.
  * @ngInject
  * @export
  */

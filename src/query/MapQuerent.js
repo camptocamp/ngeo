@@ -9,6 +9,63 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
+
+/**
+ * Results of the query source.
+ *
+ * sources: Results for each query source.
+ *
+ * total: The number of results for all sources.
+ *
+ * pending: If at least one source is pending.
+ *
+ * @typedef {{
+ *     sources: (!Array.<QueryResultSource>),
+ *     total: (number),
+ *     pending: (boolean)
+ * }} QueryResult
+ */
+
+
+/**
+ * The options for the query service.
+ *
+ * limit: The maximum number of records per request the query service should ask.
+ * Defaults to `50`. Note that sources sharing the same URL are combined
+ * together in a single request. This limit will still apply to those.
+ *
+ * queryCountFirst: For WFS sources, should the number of features first be requested with
+ * `resultType=hits` before requesting the actual features in an seconds request?
+ * Defaults to `false`.
+ *
+ * sourceIdsProperty: Defines the name of the layer property that holds the ids of the sources.
+ * Use this if you have more than one source bound to a layer.  Defaults to
+ * `querySourceIds`.
+ *
+ * tolerance: When issuing an identify feature request at a click position, either a WMS GetFeatureInfo
+ * or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
+ * around the position. This `tolerance` in pixel determines the size of the bbox.
+ * The default is `3` pixel.
+ *
+ * featureNS: The feature namespace for WFS GetFeature requests. The default is
+ * `http://mapserver.gis.umn.edu/mapserver`.
+ *
+ * featurePrefix: The feature prefix for WFS GetFeature requests. The default is `feature`.
+ *
+ * geometryName: The name of the geometry property for WFS GetFeature requests. The default is `geom`.
+ *
+ * @typedef {{
+ *     limit: (number|undefined),
+ *     queryCountFirst: (boolean|undefined),
+ *     sourceIdsProperty: (string|undefined),
+ *     tolerance: (number|undefined),
+ *     featureNS: (string|undefined),
+ *     featurePrefix: (string|undefined),
+ *     geometryName: (string|undefined)
+ * }} QueryOptions
+ */
+
+
 const exports = class {
 
   /**
@@ -23,7 +80,7 @@ const exports = class {
    * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature
    *     helper service.
    * @param {ngeo.query.Querent} ngeoQuerent The ngeo querent service.
-   * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
+   * @param {QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
@@ -31,12 +88,12 @@ const exports = class {
   constructor($injector, ngeoDataSources, ngeoDataSourcesHelper,
     ngeoFeatureHelper, ngeoQuerent, ngeoQueryResult) {
 
-    const options = /** @type {ngeox.QueryOptions} */ (
+    const options = /** @type {QueryOptions} */ (
       $injector.has('ngeoQueryOptions') ?
         $injector.get('ngeoQueryOptions') : {});
 
     /**
-     * @type {ngeox.datasource.DataSources}
+     * @type {DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
@@ -60,7 +117,7 @@ const exports = class {
     this.ngeoQuerent_ = ngeoQuerent;
 
     /**
-     * @type {ngeox.QueryResult}
+     * @type {QueryResult}
      * @private
      */
     this.result_ = ngeoQueryResult;
@@ -106,7 +163,7 @@ const exports = class {
   }
 
   /**
-   * @param {ngeox.IssueGetFeaturesOptions} options Options.
+   * @param {IssueGetFeaturesOptions} options Options.
    * @export
    */
   issue(options) {
@@ -175,7 +232,7 @@ const exports = class {
    * Called after a request to the querent service. Update the result.
    *
    * @param {string} action Query action
-   * @param {ngeox.QuerentResult} response Response
+   * @param {QuerentResult} response Response
    * @private
    */
   handleResult_(action, response) {
@@ -300,7 +357,7 @@ exports.module.service('ngeoMapQuerent', exports);
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-exports.module.value('ngeoQueryResult', /** @type {ngeox.QueryResult} */ ({
+exports.module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
   sources: [],
   total: 0,
   pending: false

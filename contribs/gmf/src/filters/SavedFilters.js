@@ -238,7 +238,7 @@ exports.Item.prototype.condition;
 
 /**
  * The list of custom rules of the saved filter item.
- * @type {!Array.<!ngeox.rule.AnyOptions>}
+ * @type {!Array.<!AnyOptions>}
  * @export
  */
 exports.Item.prototype.customRules;
@@ -254,7 +254,7 @@ exports.Item.prototype.dataSourceId;
 
 /**
  * The list of directed rules of the saved filter item.
- * @type {!Array.<!ngeox.rule.AnyOptions>}
+ * @type {!Array.<!AnyOptions>}
  * @export
  */
 exports.Item.prototype.directedRules;

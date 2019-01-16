@@ -183,7 +183,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   this.draw_ = null;
 
   /**
-   * @param {ngeox.NominatimSearchResult} selected Selected result.
+   * @param {NominatimSearchResult} selected Selected result.
    * @export
    */
   this.onSelect = this.onSelect_.bind(this);
@@ -295,7 +295,7 @@ exports.Controller.prototype.onFeatureChange_ = function() {
 };
 
 /**
- * @param {ngeox.NominatimSearchResult} selected Selected result.
+ * @param {NominatimSearchResult} selected Selected result.
  * @private
  */
 exports.Controller.prototype.onSelect_ = function(selected) {

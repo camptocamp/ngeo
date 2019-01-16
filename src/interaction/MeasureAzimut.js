@@ -16,13 +16,13 @@ import olProjProjection from 'ol/proj/Projection.js';
  * See our live example: [../examples/measure.html](../examples/measure.html)
  *
  * @constructor
- * @fires ngeox.MeasureEvent
+ * @fires MeasureEvent
  * @extends {ngeo.interaction.Measure}
- * @param {!ngeox.unitPrefix} unitPrefixFormat The format function
- * @param {!ngeox.number} numberFormat The format function
- * @param {!ngeox.interaction.MeasureOptions=} options Options
+ * @param {!unitPrefix} unitPrefixFormat The format function
+ * @param {!formatNumber} numberFormat The format function
+ * @param {!MeasureOptions=} options Options
  */
-const exports = function(unitPrefixFormat, numberFormat, options = /** @type {ngeox.interaction.MeasureOptions} */({})) {
+const exports = function(unitPrefixFormat, numberFormat, options = /** @type {MeasureOptions} */({})) {
 
   ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
@@ -41,13 +41,13 @@ const exports = function(unitPrefixFormat, numberFormat, options = /** @type {ng
 
   /**
    * The format function
-   * @type {ngeox.number}
+   * @type {formatNumber}
    */
   this.numberFormat = googAsserts.assert(numberFormat);
 
   /**
    * The format function
-   * @type {ngeox.unitPrefix}
+   * @type {unitPrefix}
    */
   this.unitPrefixFormat = googAsserts.assert(unitPrefixFormat);
 
@@ -90,8 +90,8 @@ exports.prototype.handleMeasure = function(callback) {
  * @param {!ol.proj.Projection} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
  * @param {number|undefined} precision Precision.
- * @param {!ngeox.unitPrefix} formatLength The format function.
- * @param {!ngeox.number} formatAzimut The format function.
+ * @param {!unitPrefix} formatLength The format function.
+ * @param {!formatNumber} formatAzimut The format function.
  * @return {string} Formatted measure.
  */
 exports.getFormattedAzimutRadius = function(
@@ -110,7 +110,7 @@ exports.getFormattedAzimutRadius = function(
  * Format measure output of azimut.
  * @param {!ol.geom.LineString} line LineString.
  * @param {number|undefined} decimals Decimals.
- * @param {!ngeox.number} format The format function.
+ * @param {!formatNumber} format The format function.
  * @return {string} Formatted measure.
  */
 exports.getFormattedAzimut = function(line, decimals, format) {

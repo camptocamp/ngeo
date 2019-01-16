@@ -15,11 +15,11 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  *
  * @constructor
  * @extends {ngeo.interaction.Measure}
- * @param {!ngeox.unitPrefix} format The format function
+ * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {ngeox.interaction.MeasureOptions=} options Options
+ * @param {MeasureOptions=} options Options
  */
-const exports = function(format, gettextCatalog, options = /** @type {ngeox.interaction.MeasureOptions} */({})) {
+const exports = function(format, gettextCatalog, options = /** @type {MeasureOptions} */({})) {
 
   ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
 
@@ -36,7 +36,7 @@ const exports = function(format, gettextCatalog, options = /** @type {ngeox.inte
 
   /**
    * The format function
-   * @type {ngeox.unitPrefix}
+   * @type {unitPrefix}
    */
   this.format = format;
 

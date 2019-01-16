@@ -33,7 +33,7 @@ exports.prototype.getTime = function(date, defaultValue = null) {
 /**
  * Get options regarding the time property of a node;
  *
- * @param {ngeox.TimeProperty} time the time property of a node
+ * @param {TimeProperty} time the time property of a node
  * @return {{
  *  minDate : number,
  *  maxDate : number,

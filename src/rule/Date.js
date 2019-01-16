@@ -4,12 +4,20 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
+
+/**
+ * @typedef {{
+ * }} DateOptions
+ * @extends RuleOptions
+ */
+
+
 export default class extends ngeoRuleRule {
 
   /**
    * A date rule.
    *
-   * @param {!ngeox.rule.DateOptions} options Options.
+   * @param {!DateOptions} options Options.
    */
   constructor(options) {
 

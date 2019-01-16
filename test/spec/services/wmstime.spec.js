@@ -1,14 +1,16 @@
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
+
 describe('ngeo.misc.WMSTime service', () => {
   let ngeoWMSTime;
 
   const wmsTime = {
-    widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
+    widget: TimePropertyWidgetEnum.SLIDER,
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('year'),
-    mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
+    resolution: TimePropertyResolutionEnum.YEAR,
+    mode: TimePropertyModeEnum.VALUE,
     interval: [0, 0, 1, 0]
   };
 

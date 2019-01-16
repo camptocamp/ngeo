@@ -210,10 +210,10 @@ class Controller {
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
    * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
-   * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+   * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
-   * @param {ngeox.QueryResult} ngeoQueryResult ngeo query result.
+   * @param {QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
    * @param {gmf.print.component.PrintStateEnum} gmfPrintState GMF print state.
    * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
@@ -324,7 +324,7 @@ class Controller {
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
 
     /**
-     * @type {ngeox.QueryResult}
+     * @type {QueryResult}
      * @private
      */
     this.ngeoQueryResult_ = ngeoQueryResult;
