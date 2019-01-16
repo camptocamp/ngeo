@@ -1,6 +1,7 @@
 /**
  * @module ngeo.print.Utils
  */
+import angular from 'angular';
 import * as olHas from 'ol/has.js';
 import {toRadians} from 'ol/math.js';
 

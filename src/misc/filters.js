@@ -1,6 +1,7 @@
 /**
  * @module ngeo.misc.filters
  */
+import angular from 'angular';
 import {modulo} from 'ol/math.js';
 import {padNumber} from 'ol/string.js';
 const exports = angular.module('ngeoAngularFilters', []);

@@ -1,6 +1,7 @@
 /**
  * @module gmf.search.component
  */
+import angular from 'angular';
 import gmfBase from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';

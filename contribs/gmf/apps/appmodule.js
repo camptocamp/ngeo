@@ -9,6 +9,7 @@ const exports = {};
  * module.
  */
 
+import angular from 'angular';
 import ngeoUtils from 'ngeo/utils.js';
 
 /**

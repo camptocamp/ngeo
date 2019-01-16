@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './layertree.css';
 import gmfDisclaimerModule from 'gmf/disclaimer/module.js';

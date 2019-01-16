@@ -4,6 +4,7 @@
 const exports = {};
 
 import './permalink.css';
+import angular from 'angular';
 import gmfMapModule from 'gmf/map/module.js';
 
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';

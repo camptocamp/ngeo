@@ -1,6 +1,7 @@
 /**
  * @module gmf.mobile.measure.pointComponent
  */
+import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';

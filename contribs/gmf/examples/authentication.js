@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './authentication.css';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';

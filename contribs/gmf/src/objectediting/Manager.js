@@ -1,6 +1,7 @@
 /**
  * @module gmf.objectediting.Manager
  */
+import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import olFeature from 'ol/Feature.js';

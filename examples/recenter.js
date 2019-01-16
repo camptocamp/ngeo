@@ -4,6 +4,7 @@
 const exports = {};
 
 import './recenter.css';
+import angular from 'angular';
 import olMap from 'ol/Map.js';
 
 import olView from 'ol/View.js';

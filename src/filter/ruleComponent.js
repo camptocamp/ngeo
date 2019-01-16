@@ -1,6 +1,7 @@
 /**
  * @module ngeo.filter.ruleComponent
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMenu from 'ngeo/Menu.js';
 import ngeoDrawComponent from 'ngeo/draw/component.js';

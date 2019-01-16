@@ -4,6 +4,7 @@
 const exports = {};
 
 import './toolActivate.css';
+import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';

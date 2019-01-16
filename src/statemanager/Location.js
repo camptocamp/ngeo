@@ -1,6 +1,7 @@
 /**
  * @module ngeo.statemanager.Location
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoUtils from 'ngeo/utils.js';
 

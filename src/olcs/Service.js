@@ -1,6 +1,7 @@
 /**
  * @module ngeo.olcs.Service
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';

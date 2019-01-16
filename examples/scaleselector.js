@@ -4,6 +4,7 @@
 const exports = {};
 
 import './scaleselector.css';
+import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 
 import olMap from 'ol/Map.js';

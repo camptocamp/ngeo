@@ -5,6 +5,7 @@ const exports = {};
 
 import './popupservice.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
+import angular from 'angular';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 

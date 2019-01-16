@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './mapquery.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';

@@ -1,6 +1,7 @@
 /**
  * @module gmf.filters.SavedFilters
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 

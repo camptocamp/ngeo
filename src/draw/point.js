@@ -1,6 +1,7 @@
 /**
  * @module ngeo.draw.point
  */
+import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import * as olEvents from 'ol/events.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';

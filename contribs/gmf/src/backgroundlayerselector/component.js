@@ -1,6 +1,7 @@
 /**
  * @module gmf.backgroundlayerselector.component
  */
+import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import * as olEvents from 'ol/events.js';

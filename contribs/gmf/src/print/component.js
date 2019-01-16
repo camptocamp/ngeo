@@ -1,6 +1,8 @@
 /**
  * @module gmf.print.component
  */
+import angular from 'angular';
+
 import gmfBase from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';

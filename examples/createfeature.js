@@ -4,6 +4,7 @@
 const exports = {};
 
 import './createfeature.css';
+import angular from 'angular';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
 import ngeoGeometryType from 'ngeo/GeometryType.js';

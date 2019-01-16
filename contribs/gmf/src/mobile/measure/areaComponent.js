@@ -1,6 +1,7 @@
 /**
  * @module gmf.mobile.measure.areaComponent
  */
+import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
 import {inherits as olUtilInherits} from 'ol/util.js';

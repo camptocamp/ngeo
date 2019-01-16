@@ -1,6 +1,7 @@
 /**
  * @module ngeo.measure.area
  */
+import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';

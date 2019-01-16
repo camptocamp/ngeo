@@ -1,6 +1,7 @@
 /**
  * @module gmf.profile.drawLineComponent
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';

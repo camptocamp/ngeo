@@ -4,6 +4,7 @@
 const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
+import angular from 'angular';
 import appURL from './url.js';
 import './importdatasource.css';
 import 'jquery-ui/ui/widgets/tooltip.js';

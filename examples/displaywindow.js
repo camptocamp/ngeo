@@ -4,6 +4,7 @@
 const exports = {};
 
 import './displaywindow.css';
+import angular from 'angular';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 
 

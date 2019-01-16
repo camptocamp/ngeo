@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './wfspermalink.css';
 import gmfMapModule from 'gmf/map/module.js';

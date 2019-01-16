@@ -2,6 +2,7 @@
  * @module ngeo.routing.RoutingComponent
  */
 const exports = {};
+import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';

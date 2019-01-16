@@ -4,6 +4,7 @@
 const exports = {};
 
 import './layerorder.css';
+import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent.js';

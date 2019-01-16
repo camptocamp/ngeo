@@ -1,6 +1,8 @@
 /**
  * @module ngeo.routing.RoutingService
  */
+import angular from 'angular';
+
 /**
  * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.

@@ -2,6 +2,8 @@
  * @module gmf.objectediting.toolsComponent
  */
 
+import angular from 'angular';
+
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
 
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';

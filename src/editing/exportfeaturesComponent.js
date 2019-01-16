@@ -1,6 +1,7 @@
 /**
  * @module ngeo.editing.exportfeaturesComponent
  */
+import angular from 'angular';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olGeomPoint from 'ol/geom/Point.js';

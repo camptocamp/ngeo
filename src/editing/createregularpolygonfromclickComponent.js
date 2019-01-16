@@ -1,6 +1,7 @@
 /**
  * @module ngeo.editing.createregularpolygonfromclickComponent
  */
+import angular from 'angular';
 import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';

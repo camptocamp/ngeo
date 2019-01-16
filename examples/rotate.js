@@ -4,6 +4,7 @@
 const exports = {};
 
 import './rotate.css';
+import angular from 'angular';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 
 import olCollection from 'ol/Collection.js';

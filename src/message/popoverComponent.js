@@ -1,6 +1,7 @@
 /**
  * @module ngeo.message.popoverComponent
  */
+import angular from 'angular';
 import 'bootstrap/js/src/tooltip.js';
 import 'bootstrap/js/src/popover.js';
 

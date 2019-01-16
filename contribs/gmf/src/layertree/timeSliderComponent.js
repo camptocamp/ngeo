@@ -1,6 +1,7 @@
 /**
  * @module gmf.layertree.timeSliderComponent
  */
+import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
 import 'jquery-ui/ui/widgets/slider.js';

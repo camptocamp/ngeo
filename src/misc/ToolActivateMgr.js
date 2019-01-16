@@ -1,6 +1,7 @@
 /**
  * @module ngeo.misc.ToolActivateMgr
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
 /**

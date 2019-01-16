@@ -1,6 +1,7 @@
 /**
  * @module gmf.lidarprofile.panelComponent
  */
+import angular from 'angular';
 import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
 import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
 import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent.js';

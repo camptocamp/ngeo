@@ -1,6 +1,7 @@
 /**
  * @module ngeo.map.resizemap
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import olMap from 'ol/Map.js';
 

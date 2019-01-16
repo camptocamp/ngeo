@@ -2,7 +2,7 @@
  * @module gmf.controllers.AbstractAppController
  */
 import 'jquery';
-import 'angular';
+import angular from 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
 import bootstrap from 'gmf/controllers/bootstrap.js';

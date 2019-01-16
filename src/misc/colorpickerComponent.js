@@ -1,6 +1,7 @@
 /**
  * @module ngeo.misc.colorpickerComponent
  */
+import angular from 'angular';
 
 /**
  * @type {!angular.IModule}

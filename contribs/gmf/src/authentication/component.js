@@ -1,6 +1,7 @@
 /**
  * @module gmf.authentication.component
  */
+import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';

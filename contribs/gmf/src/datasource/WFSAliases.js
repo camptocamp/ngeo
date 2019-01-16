@@ -1,6 +1,7 @@
 /**
  * @module gmf.datasource.WFSAliases
  */
+import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 
 const exports = class {

@@ -3,6 +3,7 @@
  */
 const exports = {};
 
+import angular from 'angular';
 import appURL from './url.js';
 import './editfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';

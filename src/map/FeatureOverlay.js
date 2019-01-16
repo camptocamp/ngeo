@@ -1,6 +1,7 @@
 /**
  * @module ngeo.map.FeatureOverlay
  */
+import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
 /**

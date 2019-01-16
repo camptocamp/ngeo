@@ -4,6 +4,7 @@
 const exports = {};
 
 import './permalink.css';
+import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';

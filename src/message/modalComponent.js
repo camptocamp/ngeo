@@ -1,6 +1,7 @@
 /**
  * @module ngeo.message.modalComponent
  */
+import angular from 'angular';
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'bootstrap/js/src/modal.js';
 import googAsserts from 'goog/asserts.js';

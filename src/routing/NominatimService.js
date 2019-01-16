@@ -1,6 +1,7 @@
 /**
  * @module ngeo.routing.NominatimService
  */
+import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 /**

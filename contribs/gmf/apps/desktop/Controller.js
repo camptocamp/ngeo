@@ -9,6 +9,7 @@
  */
 
 import 'gmf/controllers/desktop.scss';
+import angular from 'angular';
 import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';

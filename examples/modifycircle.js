@@ -4,6 +4,7 @@
 const exports = {};
 
 import './modifycircle.css';
+import angular from 'angular';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
 import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';

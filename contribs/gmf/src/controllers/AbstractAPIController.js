@@ -1,6 +1,7 @@
 /**
  * @module gmf.controllers.AbstractAPIController
  */
+import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';

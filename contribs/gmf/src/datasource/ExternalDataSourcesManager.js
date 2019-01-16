@@ -4,6 +4,7 @@
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator
 
+import angular from 'angular';
 import gmfBase from 'gmf/index.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';

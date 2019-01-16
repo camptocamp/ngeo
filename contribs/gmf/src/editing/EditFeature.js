@@ -1,6 +1,7 @@
 /**
  * @module gmf.editing.EditFeature
  */
+import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 

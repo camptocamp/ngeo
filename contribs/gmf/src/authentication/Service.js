@@ -1,6 +1,7 @@
 /**
  * @module gmf.authentication.Service
  */
+import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
 

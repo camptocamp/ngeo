@@ -1,6 +1,7 @@
 /**
  * @module gmf.profile.component
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';

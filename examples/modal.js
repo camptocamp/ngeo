@@ -4,6 +4,7 @@
 const exports = {};
 
 import './modal.css';
+import angular from 'angular';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 

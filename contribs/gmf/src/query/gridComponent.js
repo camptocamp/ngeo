@@ -1,6 +1,7 @@
 /**
  * @module gmf.query.gridComponent
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';

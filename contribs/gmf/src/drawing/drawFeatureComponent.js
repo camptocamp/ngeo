@@ -2,6 +2,7 @@
  * @module gmf.drawing.drawFeatureComponent
  */
 
+import angular from 'angular';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
 import googAsserts from 'goog/asserts.js';

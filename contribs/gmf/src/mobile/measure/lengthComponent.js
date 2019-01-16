@@ -1,6 +1,7 @@
 /**
  * @module gmf.mobile.measure.lengthComponent
  */
+import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
 import {inherits as olUtilInherits} from 'ol/util.js';

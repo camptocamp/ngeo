@@ -1,6 +1,8 @@
 /**
  * @module ngeo.draw.component
  */
+import angular from 'angular';
+
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 
 import ngeoDrawPoint from 'ngeo/draw/point.js';

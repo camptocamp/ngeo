@@ -1,3 +1,4 @@
+import angular from 'angular';
 import 'angular-dynamic-locale';
 import gmfContextualdataComponent from 'gmf/contextualdata/component.js';
 

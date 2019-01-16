@@ -1,6 +1,7 @@
 /**
  * @module ngeo.search.createLocationSearchBloodhound
  */
+import angular from 'angular';
 import * as olProj from 'ol/proj.js';
 
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';

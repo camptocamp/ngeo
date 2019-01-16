@@ -4,6 +4,7 @@
 const exports = {};
 
 import './lidarprofile.css';
+import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component.js';
 import gmfLidarprofileModule from 'gmf/lidarprofile/module.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';

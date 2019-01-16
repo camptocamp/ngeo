@@ -2,6 +2,8 @@
  * @module gmf.import.importdatasourceComponent
  */
 
+import angular from 'angular';
+
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent.js';

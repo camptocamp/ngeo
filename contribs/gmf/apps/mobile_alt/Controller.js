@@ -8,6 +8,7 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
+import angular from 'angular';
 import gmfControllersAbstractMobileController from 'gmf/controllers/AbstractMobileController.js';
 import './sass/mobile_alt.scss';
 import appBase from '../appmodule.js';

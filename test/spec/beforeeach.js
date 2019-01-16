@@ -3,6 +3,7 @@
  */
 const exports = {};
 /*eslint valid-jsdoc: 0 */
+import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule.js';
 
 exports.module = angular.module('app', []);

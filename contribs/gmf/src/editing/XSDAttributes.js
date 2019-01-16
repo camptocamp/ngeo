@@ -1,6 +1,7 @@
 /**
  * @module gmf.editing.XSDAttributes
  */
+import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 /**

@@ -1,6 +1,7 @@
 /**
  * @module gmf.layertree.component
  */
+import angular from 'angular';
 import gmfBase from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';

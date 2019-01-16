@@ -1,6 +1,7 @@
 /**
  * @module ngeo.layertree.Controller
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';

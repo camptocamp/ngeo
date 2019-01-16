@@ -1,6 +1,7 @@
 /**
  * @module ngeo.query.MapQuerent
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';

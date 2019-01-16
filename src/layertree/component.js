@@ -1,6 +1,7 @@
 /**
  * @module ngeo.layertree.component
  */
+import angular from 'angular';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 
 import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree

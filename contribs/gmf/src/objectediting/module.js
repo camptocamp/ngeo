@@ -1,6 +1,7 @@
 /**
  * @module gmf.objectediting.module
  */
+import angular from 'angular';
 import gmfObjecteditingComponent from 'gmf/objectediting/component.js';
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
 import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';

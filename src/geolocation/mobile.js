@@ -1,6 +1,7 @@
 /**
  * @module ngeo.geolocation.mobile
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';

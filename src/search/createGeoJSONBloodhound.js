@@ -1,6 +1,7 @@
 /**
  * @module ngeo.search.createGeoJSONBloodhound
  */
+import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
 import 'corejs-typeahead';

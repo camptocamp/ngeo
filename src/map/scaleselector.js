@@ -1,6 +1,7 @@
 /**
  * @module ngeo.map.scaleselector
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import olMap from 'ol/Map.js';

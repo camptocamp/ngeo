@@ -1,6 +1,7 @@
 /**
  * @module gmf.theme.selectorComponent
  */
+import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import * as olEvents from 'ol/events.js';

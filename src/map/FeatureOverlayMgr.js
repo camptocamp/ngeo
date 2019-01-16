@@ -1,6 +1,7 @@
 /**
  * @module ngeo.map.FeatureOverlayMgr
  */
+import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
