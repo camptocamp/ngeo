@@ -8,6 +8,11 @@
       "checkJs": false,
       "noEmit": true
     },
+    "baseUrl": "./",
+    "paths": {
+      "ngeo/*": ["src/*"],
+      "gmf/*": ["contribs/gmf/src/*"]
+    },
     "include": [
       "src/**/*.js",
       "contribs/gmf/src/**/*.js"
