@@ -139,7 +139,7 @@ const exports = class {
   }
 
   /**
-   * @param {gmf.lidarprofile.Config} config Instance of import("gmf/lidarprofile/Config.js").default
+   * @param {import("gmf/lidarprofile.js").default.Config} config Instance of import("gmf/lidarprofile/Config.js").default
    * @param {import("ol/Map.js").default} map The map.
    */
   init(config, map) {

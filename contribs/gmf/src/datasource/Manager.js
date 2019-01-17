@@ -724,7 +724,7 @@ const exports = class {
    * @private
    */
   getDataSourceLayer_(dataSource) {
-    dataSource = /** @type {!gmf.DataSource} */ (dataSource);
+    dataSource = /** @type {!import("gmf/DataSource.js").default} */ (dataSource);
     if (dataSource.gmfLayer == undefined) {
       return;
     }

@@ -32,7 +32,7 @@ const exports = angular.module('gmfContextualdata', [
  *
  * The content of the popover is managed in a partial that must be defined
  * using the `gmfContextualdatacontentTemplateUrl` value. See
- * {@link gmf.contextualdatacontentDirective} for more details.
+ * {@link import("gmf/contextualdatacontentDirective.js").default} for more details.
  *
  * One can also provide a `gmf-contextualdata-callback` attribute in order to
  * do some additional computing on the coordinate or the values received for
