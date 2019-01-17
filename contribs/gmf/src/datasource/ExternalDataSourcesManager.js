@@ -94,7 +94,7 @@ const exports = class {
      * If a data source with an id already exists in this cache, it is used
      * instead of being re-created.
      *
-     * @type {Object.<number, !ngeo.datasource.OGC|!import("ngeo/datasource/File.js").default>}
+     * @type {Object.<number, !import("ngeo/datasource/OGC.js").default|!import("ngeo/datasource/File.js").default>}
      * @private
      */
     this.extDataSources_ = {};

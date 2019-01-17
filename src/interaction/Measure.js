@@ -198,7 +198,7 @@ const exports = function(options = /** @type {import("ngeo/interaction/MeasureBa
 
   /**
    * The draw interaction to be used.
-   * @type {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|import("ngeo/interaction/MobileDraw.js").default}
+   * @type {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
    * @private
    */
   this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
@@ -316,7 +316,7 @@ exports.handleEvent_ = function(evt) {
 
 
 /**
- * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|import("ngeo/interaction/MobileDraw.js").default} The draw interaction.
+ * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The draw interaction.
  */
 exports.prototype.getDrawInteraction = function() {
   return this.drawInteraction_;
@@ -330,7 +330,7 @@ exports.prototype.getDrawInteraction = function() {
  * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {import("ol/source/Vector.js").default} source Vector source.
- * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|import("ngeo/interaction/MobileDraw.js").default} The interaction
+ * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The interaction
  * @protected
  */
 exports.prototype.createDrawInteraction = function(style, source) {};

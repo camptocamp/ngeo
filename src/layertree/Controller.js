@@ -383,7 +383,7 @@ exports.VisitorDecision = {
 
 
 /**
- * @typedef {function(ngeo.layertree.Controller): (!import("ngeo/layertree/Controller.js").default.VisitorDecision|undefined)} Visitor
+ * @typedef {function(import("ngeo/layertree/Controller.js").default): (!import("ngeo/layertree/Controller.js").default.VisitorDecision|undefined)} Visitor
  */
 
 
