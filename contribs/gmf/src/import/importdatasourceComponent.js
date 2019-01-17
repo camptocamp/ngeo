@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/import/importdatasourceComponent.js").default
  */
 
 import angular from 'angular';

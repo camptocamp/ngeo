@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/draw/component.js").default
  */
 import angular from 'angular';
 

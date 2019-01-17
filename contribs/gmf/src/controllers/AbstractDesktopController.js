@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/controllers/AbstractDesktopController.js").default
  */
 import angular from 'angular';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';

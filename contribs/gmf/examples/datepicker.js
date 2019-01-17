@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.datepicker
  */
 const exports = {};
 

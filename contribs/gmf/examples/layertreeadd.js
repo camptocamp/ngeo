@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.layertreeadd
  */
 const exports = {};
 

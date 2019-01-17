@@ -1,5 +1,4 @@
 /**
- * @module app.mobile.Controller
  */
 /**
  * Application entry point.

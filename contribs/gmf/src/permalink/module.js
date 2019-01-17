@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/permalink/module.js").default
  */
 import angular from 'angular';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';

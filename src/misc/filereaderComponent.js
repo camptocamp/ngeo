@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/filereaderComponent.js").default
  */
 import angular from 'angular';
 

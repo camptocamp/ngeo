@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/draw/rectangle.js").default
  */
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';

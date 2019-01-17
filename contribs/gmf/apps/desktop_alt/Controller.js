@@ -1,5 +1,4 @@
 /**
- * @module app.desktop_alt.Controller
  */
 /**
  * Application entry point.

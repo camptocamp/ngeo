@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/swipe.js").default
  */
 import angular from 'angular';
 

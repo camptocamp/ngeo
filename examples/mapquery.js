@@ -1,5 +1,4 @@
 /**
- * @module app.mapquery
  */
 const exports = {};
 

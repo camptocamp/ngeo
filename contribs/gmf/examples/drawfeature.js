@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.drawfeature
  */
 const exports = {};
 

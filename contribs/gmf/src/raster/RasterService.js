@@ -1,7 +1,6 @@
 import angular from 'angular';
 
 /**
- * @module import("gmf/raster/RasterService.js").default
  */
 /**
  * The Raster service.

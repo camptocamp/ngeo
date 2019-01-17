@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/datasource/WFSAliases.js").default
  */
 import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';

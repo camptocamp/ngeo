@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/FeatureHelper.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

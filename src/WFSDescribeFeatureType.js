@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/WFSDescribeFeatureType.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import {inherits as olUtilInherits} from 'ol/util.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/editing/EnumerateAttribute.js").default
  */
 import angular from 'angular';
 

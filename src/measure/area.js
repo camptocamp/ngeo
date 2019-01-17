@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/measure/area.js").default
  */
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';

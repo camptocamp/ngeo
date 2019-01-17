@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/interaction/MeasureBaseOptions.js").default
  */
 const exports = {};
 

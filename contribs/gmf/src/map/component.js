@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/map/component.js").default
  */
 import angular from 'angular';
 import gmfPermalinkModule from 'gmf/permalink/module.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/layertree/SyncLayertreeMap.js").default
  */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';

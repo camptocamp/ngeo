@@ -1,5 +1,4 @@
 /**
- * @module app.locationsearch
  */
 const exports = {};
 

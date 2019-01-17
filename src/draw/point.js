@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/draw/point.js").default
  */
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';

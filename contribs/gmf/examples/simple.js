@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.simple
  */
 const exports = {};
 

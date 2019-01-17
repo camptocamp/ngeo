@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/query/windowComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

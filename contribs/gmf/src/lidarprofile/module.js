@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/lidarprofile/module.js").default
  */
 import angular from 'angular';
 import gmfLidarprofileComponent from 'gmf/lidarprofile/component.js';

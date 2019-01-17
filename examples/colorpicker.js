@@ -1,5 +1,4 @@
 /**
- * @module app.colorpicker
  */
 const exports = {};
 

@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/objectediting/getWMSFeatureComponent.js").default
  */
 import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';

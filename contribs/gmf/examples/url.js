@@ -1,5 +1,4 @@
 /**
- * @module app.url
  */
 const exports = {};
 

@@ -1,5 +1,4 @@
 /**
- * @module app.createfeature
  */
 const exports = {};
 

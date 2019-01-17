@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.search
  */
 const exports = {};
 

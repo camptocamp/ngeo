@@ -1,5 +1,4 @@
 /**
- * @module app.control
  */
 const exports = {};
 

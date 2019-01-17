@@ -1,5 +1,4 @@
 /**
- * @module app.layertree
  */
 const exports = {};
 

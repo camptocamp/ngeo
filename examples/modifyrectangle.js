@@ -1,5 +1,4 @@
 /**
- * @module app.modifyrectangle
  */
 const exports = {};
 

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/interaction/DrawAzimut.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';

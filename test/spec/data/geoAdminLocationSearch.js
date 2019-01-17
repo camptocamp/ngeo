@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/test/data.js").default.geoAdminLocationSearch
  */
 const exports = {
   'results': [{

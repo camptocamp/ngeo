@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/disclaimer/module.js").default
  */
 import angular from 'angular';
 import gmfDisclaimerComponent from 'gmf/disclaimer/component.js';

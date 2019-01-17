@@ -1,5 +1,4 @@
 /**
- * @module app.iframe_api.Controller
  */
 /**
  * Application entry point.

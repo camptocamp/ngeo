@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/controllers/AbstractAppController.js").default
  */
 import 'jquery';
 import angular from 'angular';

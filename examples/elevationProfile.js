@@ -1,5 +1,4 @@
 /**
- * @module app.elevationProfile
  */
 const exports = {};
 

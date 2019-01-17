@@ -1,5 +1,4 @@
 /**
- * @module app.rotate
  */
 const exports = {};
 

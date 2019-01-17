@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.profile
  */
 const exports = {};
 

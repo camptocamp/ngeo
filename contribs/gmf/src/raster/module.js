@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/raster/module.js").default
  */
 import angular from 'angular';
 import gmfRasterComponent from 'gmf/raster/component.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/statemanager/extraModule.js").default
  */
 import angular from 'angular';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/test/data.js").default.msGMLOutputBusStop
  */
 const exports = '<?xml version="1.0" encoding="UTF-8"?>' +
 '<msGMLOutput ' +

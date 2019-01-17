@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/btnComponent.js").default
  */
 import angular from 'angular';
 

@@ -1,5 +1,4 @@
 /**
- * @module app.simple3d
  */
 const exports = {};
 

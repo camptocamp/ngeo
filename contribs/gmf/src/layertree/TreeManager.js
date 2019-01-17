@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/layertree/TreeManager.js").default
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';

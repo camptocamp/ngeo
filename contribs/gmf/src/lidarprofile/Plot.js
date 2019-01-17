@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/lidarprofile/Plot.js").default
  */
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';

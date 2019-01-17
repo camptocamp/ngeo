@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/mobile/measure.js").default.module
  */
 import angular from 'angular';
 import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent.js';

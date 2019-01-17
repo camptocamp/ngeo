@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.displayquerywindow
  */
 const exports = {};
 

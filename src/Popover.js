@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/Popover.js").default
  */
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olOverlay from 'ol/Overlay.js';

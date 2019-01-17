@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/map/recenter.js").default
  */
 import angular from 'angular';
 

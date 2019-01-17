@@ -1,5 +1,4 @@
 /**
- * @module app.mobile_alt.Controller
  */
 /**
  * Application entry point.

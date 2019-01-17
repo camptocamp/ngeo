@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.contextualdata
  */
 const exports = {};
 

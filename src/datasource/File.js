@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/datasource/File.js").default
  */
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';

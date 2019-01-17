@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/search/component.js").default
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';

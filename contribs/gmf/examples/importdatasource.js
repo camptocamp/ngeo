@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.importdatasource
  */
 const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme

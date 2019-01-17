@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/message/Notification.js").default
  */
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';

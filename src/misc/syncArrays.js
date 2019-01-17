@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/syncArrays.js").default
  */
 import googAsserts from 'goog/asserts.js';
 

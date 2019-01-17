@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/lidarprofile/Measure.js").default
  */
 import {mouse as d3mouse, select as d3select} from 'd3';
 

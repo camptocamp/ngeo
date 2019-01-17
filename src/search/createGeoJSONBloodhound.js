@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/search/createGeoJSONBloodhound.js").default
  */
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';

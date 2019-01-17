@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/filters.js").default
  */
 import angular from 'angular';
 import {modulo} from 'ol/math.js';

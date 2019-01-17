@@ -1,5 +1,4 @@
 /**
- * @module app.backgroundlayer
  */
 const exports = {};
 

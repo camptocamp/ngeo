@@ -1,5 +1,4 @@
 /**
- * @module app.mapfishprint
  */
 const exports = {};
 

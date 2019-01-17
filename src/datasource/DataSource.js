@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/datasource/DataSource.js").default
  */
 
 

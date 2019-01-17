@@ -1,5 +1,4 @@
 /**
- * @module app.layerorder
  */
 const exports = {};
 

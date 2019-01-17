@@ -1,5 +1,4 @@
 /**
- * @module app.toolActivate
  */
 const exports = {};
 

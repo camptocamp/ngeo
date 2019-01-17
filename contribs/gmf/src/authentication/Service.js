@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/authentication/Service.js").default
  */
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';

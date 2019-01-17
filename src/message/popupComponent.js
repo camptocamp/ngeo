@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/message/popupComponent.js").default
  */
 import angular from 'angular';
 import 'angular-sanitize';

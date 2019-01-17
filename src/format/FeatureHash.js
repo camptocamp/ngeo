@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/format/FeatureHash.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';

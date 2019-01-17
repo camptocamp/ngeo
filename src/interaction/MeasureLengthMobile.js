@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/interaction/MeasureLengthMobile.js").default
  */
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';

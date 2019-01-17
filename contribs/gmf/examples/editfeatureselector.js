@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.editfeatureselector
  */
 const exports = {};
 

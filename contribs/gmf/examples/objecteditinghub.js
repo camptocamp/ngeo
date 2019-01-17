@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.objecteditinghub
  */
 const exports = {};
 

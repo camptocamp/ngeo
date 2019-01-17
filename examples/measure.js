@@ -1,5 +1,4 @@
 /**
- * @module app.measure
  */
 const exports = {};
 

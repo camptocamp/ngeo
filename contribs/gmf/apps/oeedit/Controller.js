@@ -1,5 +1,4 @@
 /**
- * @module app.oeedit.Controller
  */
 /**
  * Application entry point.

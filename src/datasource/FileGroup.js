@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/datasource/FileGroup.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';

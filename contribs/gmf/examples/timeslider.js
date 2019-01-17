@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.timeslider
  */
 const exports = {};
 

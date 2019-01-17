@@ -1,5 +1,4 @@
 /**
- * @module app.scaleselector
  */
 const exports = {};
 

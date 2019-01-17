@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/interaction/Translate.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import {

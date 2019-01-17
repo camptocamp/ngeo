@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/search/FulltextSearch.js").default
  */
 import angular from 'angular';
 import ngeoUtils from 'ngeo/utils.js';

@@ -1,5 +1,4 @@
 /**
- * @module app.recenter
  */
 const exports = {};
 

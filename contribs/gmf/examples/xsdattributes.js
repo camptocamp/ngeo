@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.xsdattributes
  */
 const exports = {};
 

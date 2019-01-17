@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/editing/createregularpolygonfromclickComponent.js").default
  */
 import angular from 'angular';
 import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick.js';

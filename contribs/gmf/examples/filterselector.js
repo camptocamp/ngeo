@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.filterselector
  */
 const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme

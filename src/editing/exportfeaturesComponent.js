@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/editing/exportfeaturesComponent.js").default
  */
 import angular from 'angular';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/datasource/Helper.js").default
  */
 import angular from 'angular';
 import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';

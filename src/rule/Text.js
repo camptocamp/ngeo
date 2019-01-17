@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/rule/Text.js").default
  */
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';

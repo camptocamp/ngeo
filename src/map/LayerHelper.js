@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/map/LayerHelper.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

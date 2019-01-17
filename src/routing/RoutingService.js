@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/routing/RoutingService.js").default
  */
 import angular from 'angular';
 

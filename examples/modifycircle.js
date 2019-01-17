@@ -1,5 +1,4 @@
 /**
- * @module app.modifycircle
  */
 const exports = {};
 

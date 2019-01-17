@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/format/AttributeType.js").default
  */
 
 /**

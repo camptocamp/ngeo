@@ -1,5 +1,4 @@
 /**
- * @module app.grid
  */
 const exports = {};
 

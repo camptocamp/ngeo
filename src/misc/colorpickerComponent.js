@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/colorpickerComponent.js").default
  */
 import angular from 'angular';
 

@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/mobile/measure.js").default.baseComponent
  */
 import angular from 'angular';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';

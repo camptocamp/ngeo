@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.backgroundlayerselector
  */
 const exports = {};
 

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/extraModule.js").default
  */
 import angular from 'angular';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';

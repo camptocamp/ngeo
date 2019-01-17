@@ -1,5 +1,4 @@
 /**
- * @module app.attributes
  */
 const exports = {};
 import angular from 'angular';

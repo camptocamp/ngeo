@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/interaction/DrawRegularPolygonFromClick.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';

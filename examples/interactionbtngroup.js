@@ -1,5 +1,4 @@
 /**
- * @module app.interactionbtngroup
  */
 const exports = {};
 

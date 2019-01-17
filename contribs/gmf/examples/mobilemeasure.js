@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.mobilemeasure
  */
 const exports = {};
 

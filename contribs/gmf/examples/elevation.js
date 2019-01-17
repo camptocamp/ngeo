@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.elevation
  */
 const exports = {};
 

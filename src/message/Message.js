@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/message/Message.js").default
  */
 
 

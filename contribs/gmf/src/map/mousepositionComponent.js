@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/map/mousepositionComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

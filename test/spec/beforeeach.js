@@ -1,5 +1,4 @@
 /**
- * @module app
  */
 const exports = {};
 /*eslint valid-jsdoc: 0 */

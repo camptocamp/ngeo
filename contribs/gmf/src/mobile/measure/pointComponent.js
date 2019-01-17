@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/mobile/measure.js").default.pointComponent
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';

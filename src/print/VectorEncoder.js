@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/print/VectorEncoder.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoUtils from 'ngeo/utils.js';

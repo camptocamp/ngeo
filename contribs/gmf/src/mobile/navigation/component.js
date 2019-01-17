@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/mobile/navigation.js").default.component
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/query/bboxQueryComponent.js").default
  */
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/GeometryType.js").default
  */
 
 /**

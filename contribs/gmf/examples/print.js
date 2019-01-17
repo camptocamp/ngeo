@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.print
  */
 const exports = {};
 

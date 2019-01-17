@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/theme/Manager.js").default
  */
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';

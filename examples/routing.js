@@ -1,5 +1,4 @@
 /**
- * @module app.routing
  */
 const exports = {};
 

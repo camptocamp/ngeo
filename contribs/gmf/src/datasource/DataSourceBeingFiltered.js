@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/datasource/DataSourceBeingFiltered.js").default
  */
 const exports = {};
 

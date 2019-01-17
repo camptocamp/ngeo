@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/routing/NominatimInputComponent.js").default
  */
 const exports = {};
 import angular from 'angular';

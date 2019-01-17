@@ -1,5 +1,4 @@
 /**
- * @module app.bboxquery
  */
 const exports = {};
 

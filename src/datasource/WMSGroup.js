@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/datasource/WMSGroup.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';

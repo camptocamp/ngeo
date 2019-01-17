@@ -1,5 +1,4 @@
 /**
- * @module app.drawfeature
  */
 const exports = {};
 

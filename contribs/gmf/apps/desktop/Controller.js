@@ -1,5 +1,4 @@
 /**
- * @module app.desktop.Controller
  */
 /**
  * Application entry point.

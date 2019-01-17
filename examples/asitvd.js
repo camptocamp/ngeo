@@ -1,5 +1,4 @@
 /**
- * @module app.asitvd
  */
 const exports = {};
 

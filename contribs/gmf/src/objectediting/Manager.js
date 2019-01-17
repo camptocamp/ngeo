@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/objectediting/Manager.js").default
  */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';

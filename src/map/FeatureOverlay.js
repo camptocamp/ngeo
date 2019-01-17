@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/map/FeatureOverlay.js").default
  */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';

@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/olcs/controls.js").default3d
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

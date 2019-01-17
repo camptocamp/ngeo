@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/contextualdata/component.js").default
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';

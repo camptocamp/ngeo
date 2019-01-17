@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/import/wmsCapabilityLayertreeComponent.js").default
  */
 
 import angular from 'angular';

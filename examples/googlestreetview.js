@@ -1,5 +1,4 @@
 /**
- * @module app.googlestreetview
  */
 const exports = {};
 

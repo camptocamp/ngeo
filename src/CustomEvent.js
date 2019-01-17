@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/CustomEvent.js").default
  */
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olEventsEvent from 'ol/events/Event.js';

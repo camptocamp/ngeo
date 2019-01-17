@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/interaction/MeasureLength.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';

@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.lidarprofile
  */
 const exports = {};
 

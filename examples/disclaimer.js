@@ -1,5 +1,4 @@
 /**
- * @module app.disclaimer
  */
 const exports = {};
 

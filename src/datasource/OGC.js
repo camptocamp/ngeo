@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/datasource/OGC.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';

@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.permalink
  */
 const exports = {};
 

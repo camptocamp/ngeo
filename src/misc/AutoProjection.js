@@ -1,5 +1,4 @@
 /**
- * @module import("ngeo/misc/AutoProjection.js").default
  */
 import angular from 'angular';
 import * as olProj from 'ol/proj.js';

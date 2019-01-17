@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.authentication
  */
 const exports = {};
 

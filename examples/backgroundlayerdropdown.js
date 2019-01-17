@@ -1,5 +1,4 @@
 /**
- * @module app.backgroundlayerdropdown
  */
 const exports = {};
 

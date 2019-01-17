@@ -1,5 +1,4 @@
 /**
- * @module import("gmf/mobile/measure.js").default.areaComponent
  */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
