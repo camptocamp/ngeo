@@ -173,7 +173,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {ol.interaction.Draw.Event} evt Event.
+ * @param {import("ol/interaction/Draw/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleDrawEnd_ = function(evt) {

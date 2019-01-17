@@ -418,7 +418,7 @@ const exports = class {
    * See the `CreateFilterOptions` to learn more.
    *
    * @param {CreateFilterOptions} options Options.
-   * @return {?ol.format.filter.Filter} Filter.
+   * @return {?import("ol/format/filter/Filter.js").default} Filter.
    * @export
    */
   createFilter(options) {
@@ -514,7 +514,7 @@ const exports = class {
    * @param {ngeo.datasource.OGC} dataSource Data source.
    * @param {string=} opt_srsName SRS name. No srsName attribute will be
    *     set on geometries when this is not provided.
-   * @return {?ol.format.filter.Filter} filter Filter;
+   * @return {?import("ol/format/filter/Filter.js").default} filter Filter;
    * @private
    */
   createFilterFromRule_(rule, dataSource, opt_srsName) {
@@ -705,7 +705,7 @@ const exports = class {
    * dimensions filters configuration within the data source.
    * @param {ngeo.DataSource} dataSource Data source from which to create the
    *     filter.
-   * @return {?ol.format.filter.Filter} Filter
+   * @return {?import("ol/format/filter/Filter.js").default} Filter
    * @private
    */
   createDimensionsFilterFromDataSource_(dataSource) {
@@ -737,7 +737,7 @@ const exports = class {
    * time properties within the data source.
    * @param {ngeo.datasource.OGC} dataSource Data source from which to
    *     create the filter.
-   * @return {?ol.format.filter.Filter} Filter
+   * @return {?import("ol/format/filter/Filter.js").default} Filter
    * @private
    */
   createTimeFilterFromDataSource_(dataSource) {

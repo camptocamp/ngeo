@@ -785,7 +785,7 @@ exports.Controller.prototype.resetGeometryChanges_ = function() {
  * geometries intersects with one an other first. Those that does are merged
  * before being pushed to the changes.
  *
- * @param {ol.interaction.Modify.Event} evt Event.
+ * @param {import("ol/interaction/Modify/Event.js").default} evt Event.
  * @private
  */
 exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(

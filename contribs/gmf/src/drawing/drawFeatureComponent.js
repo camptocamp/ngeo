@@ -750,7 +750,7 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
 
 /**
- * @param {!ol.interaction.Translate.Event} evt Event.
+ * @param {!import("ol/interaction/Translate/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {

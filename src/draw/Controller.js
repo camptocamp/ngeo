@@ -173,7 +173,7 @@ exports.prototype.handleActiveChange = function(event) {
  * Called when a feature is finished being drawn. Set the default properties
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
- * @param {ol.interaction.Draw.Event|MeasureEvent} event Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|MeasureEvent} event Event.
  * @export
  */
 exports.prototype.handleDrawEnd = function(type, event) {

@@ -358,7 +358,7 @@ exports.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.Draw.Event|DrawEvent} evt Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
  * @private
  */
 exports.prototype.onDrawStart_ = function(evt) {
@@ -386,7 +386,7 @@ exports.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.Draw.Event|DrawEvent} evt Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
  * @private
  */
 exports.prototype.onDrawEnd_ = function(evt) {

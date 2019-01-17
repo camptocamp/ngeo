@@ -958,7 +958,7 @@ class RuleController {
   }
 
   /**
-   * @param {ol.interaction.Translate.Event} evt Event.
+   * @param {import("ol/interaction/Translate/Event.js").default} evt Event.
    * @private
    */
   handleTranslateEnd_(evt) {

@@ -59,7 +59,7 @@ function directive(ngeoMapQuerent) {
       /**
        * Called when a bbox is drawn while this controller is active. Issue
        * a request to the query service using the extent that was drawn.
-       * @param {ol.interaction.DragBox.Event} evt Event.
+       * @param {import("ol/interaction/DragBox/Event.js").default} evt Event.
        */
       const handleBoxEnd = function(evt) {
         const action = ngeoQueryKeyboard.action;
