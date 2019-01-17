@@ -1,5 +1,5 @@
 /**
- * @module ngeo.datasource.DataSources
+ * @module import("ngeo/datasource/DataSources.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -10,7 +10,7 @@ import olView from 'ol/View.js';
 
 
 /**
- * @typedef {!import("ol/Collection.js").default.<!ngeo.datasource.DataSource>} DataSources
+ * @typedef {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} DataSources
  */
 
 
@@ -134,7 +134,7 @@ const exports = class {
 
   /**
    * Synchronize a data source `inRange` property with a given resolution.
-   * @param {ngeo.datasource.DataSource} dataSource Data source
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source
    * @param {number} resolution Resolution
    * @private
    */

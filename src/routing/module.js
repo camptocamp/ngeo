@@ -1,5 +1,5 @@
 /**
- * @module ngeo.routing.module
+ * @module import("ngeo/routing/module.js").default
  */
 import angular from 'angular';
 import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';

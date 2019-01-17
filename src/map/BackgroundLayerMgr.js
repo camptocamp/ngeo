@@ -1,5 +1,5 @@
 /**
- * @module ngeo.map.BackgroundLayerMgr
+ * @module import("ngeo/map/BackgroundLayerMgr.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -65,7 +65,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  *
  * @extends {import("ol/Observable.js").default}
  * @constructor
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Themes service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Themes service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
@@ -82,7 +82,7 @@ const exports = function(ngeoLayerHelper) {
   this.mapUids_ = {};
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;

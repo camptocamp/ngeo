@@ -1,5 +1,5 @@
 /**
- * @module ngeo.routing.NominatimService
+ * @module import("ngeo/routing/NominatimService.js").default
  */
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';

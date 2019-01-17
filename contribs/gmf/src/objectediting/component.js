@@ -138,9 +138,9 @@ exports.component('gmfObjectediting', component);
  * @param {!import("gmf/objectediting/Query.js").default} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
  * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
- * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -263,7 +263,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.featureHasGeom;
 
   /**
-   * @type {!ngeo.map.LayerHelper}
+   * @type {!import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -275,13 +275,13 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {!ngeo.misc.FeatureHelper}
+   * @type {!import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ngeo.misc.ToolActivateMgr}
+   * @type {!import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -394,7 +394,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @private
    */
   this.modifyToolActivate_ = new ngeoMiscToolActivate(this.modify_, 'active');
@@ -406,7 +406,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.toolsActive = false;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @private
    */
   this.toolsToolActivate_ = new ngeoMiscToolActivate(this, 'toolsActive');
@@ -943,7 +943,7 @@ exports.Controller.prototype.setFeatureStyle_ = function() {
  * with this component, then find the WMS layer associated with it for
  * for refresh purpose.
  *
- * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
  * @private
  */
 exports.Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {

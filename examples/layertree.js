@@ -99,7 +99,7 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
 
   /**
    * @private
-   * @type {ngeo.message.Popup}
+   * @type {import("ngeo/message/Popup.js").default}
    */
   this.infoPopup_ = ngeoCreatePopup();
 

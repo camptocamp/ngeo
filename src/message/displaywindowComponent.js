@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.displaywindowComponent
+ * @module import("ngeo/message/displaywindowComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

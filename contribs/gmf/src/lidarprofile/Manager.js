@@ -24,7 +24,7 @@ const exports = class {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.misc.Debounce} ngeoDebounce ngeo debounce service.
+   * @param {import("ngeo/misc/Debounce.js").default} ngeoDebounce ngeo debounce service.
    * @ngInject
    * @ngdoc service
    * @ngname gmflidarprofileManager
@@ -47,7 +47,7 @@ const exports = class {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {ngeo.misc.Debounce}
+     * @type {import("ngeo/misc/Debounce.js").default}
      * @private
      */
     this.ngeoDebounce_ = ngeoDebounce;

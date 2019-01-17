@@ -83,7 +83,7 @@ gmfx.GridSource;
 
 /**
  * Configuration used to initialize a grid.
- * @type {ngeo.grid.Config}
+ * @type {import("ngeo/grid/Config.js").default}
  */
 gmfx.GridSource.prototype.configuration;
 
@@ -838,7 +838,7 @@ cgxp.tools.openInfoWindow;
 
 
 /**
- * @param {ngeo.message.Popup!} popup a ngeoPopup.
+ * @param {import("ngeo/message/Popup.js").default!} popup a ngeoPopup.
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.MeasureAreaMobile
+ * @module import("ngeo/interaction/MeasureAreaMobile.js").default
  */
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
@@ -10,7 +10,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * Interaction dedicated to measure Area on mobile devices.
  *
  * @constructor
- * @extends {ngeo.interaction.MeasureArea}
+ * @extends {import("ngeo/interaction/MeasureArea.js").default}
  * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} opt_options Options

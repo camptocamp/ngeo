@@ -59,9 +59,9 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
+ * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @param {gmfx.User} gmfUser User.
  * @ngInject
  * @ngdoc service
@@ -106,13 +106,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {ngeo.misc.EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.statemanager.Service}
+   * @type {import("ngeo/statemanager/Service.js").default}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -125,34 +125,34 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     $injector.get('ngeoFeatures') : null;
 
   /**
-   * @type {?ngeo.map.BackgroundLayerMgr}
+   * @type {?import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr') ?
     $injector.get('ngeoBackgroundLayerMgr') : null;
 
   /**
-   * @type {?ngeo.map.FeatureOverlayMgr}
+   * @type {?import("ngeo/map/FeatureOverlayMgr.js").default}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr') ?
     $injector.get('ngeoFeatureOverlayMgr') : null;
 
   /**
-   * @type {?ngeo.map.FeatureOverlay}
+   * @type {?import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr ?
     ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
-   * @type {?ngeo.misc.FeatureHelper}
+   * @type {?import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = $injector.has('ngeoFeatureHelper') ?
     $injector.get('ngeoFeatureHelper') : null;
 
   /**
-   * @type {?ngeo.query.Querent}
+   * @type {?import("ngeo/query/Querent.js").default}
    * @private
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ?
@@ -232,13 +232,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   // == other properties ==
 
   /**
-   * @type {ngeo.statemanager.Location}
+   * @type {import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?ngeo.statemanager.WfsPermalink}
+   * @type {?import("ngeo/statemanager/WfsPermalink.js").default}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?
@@ -258,7 +258,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.map_ = null;
 
   /**
-   * @type {?ngeo.misc.AutoProjection}
+   * @type {?import("ngeo/misc/AutoProjection.js").default}
    * @private
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ?
@@ -324,7 +324,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.mapTooltip_ = null;
 
   /**
-   * @type {ngeo.format.FeatureHash}
+   * @type {import("ngeo/format/FeatureHash.js").default}
    * @private
    */
   this.featureHashFormat_ = new ngeoFormatFeatureHash({
@@ -1361,7 +1361,7 @@ exports.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
 
 
 /**
- * @param {!ngeo.datasource.Group} group Data source group.
+ * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
 exports.prototype.registerExternalDSGroup_ = function(group) {
@@ -1414,7 +1414,7 @@ exports.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
 
 
 /**
- * @param {!ngeo.datasource.Group} group Data source group.
+ * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
 exports.prototype.unregisterExternalDSGroup_ = function(group) {

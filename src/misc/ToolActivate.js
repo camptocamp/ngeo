@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.ToolActivate
+ * @module import("ngeo/misc/ToolActivate.js").default
  */
 /**
  * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.

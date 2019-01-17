@@ -176,7 +176,7 @@ exports.MeasuretoolsController = function($scope, $compile, $sce,
   });
 
   /**
-   * @type {ngeo.interaction.MeasureLength}
+   * @type {import("ngeo/interaction/MeasureLength.js").default}
    * @export
    */
   this.measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
@@ -189,7 +189,7 @@ exports.MeasuretoolsController = function($scope, $compile, $sce,
   ngeoMiscDecorate.interaction(this.measureLength);
 
   /**
-   * @type {ngeo.interaction.MeasureArea}
+   * @type {import("ngeo/interaction/MeasureArea.js").default}
    * @export
    */
   this.measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
@@ -202,7 +202,7 @@ exports.MeasuretoolsController = function($scope, $compile, $sce,
   ngeoMiscDecorate.interaction(this.measureArea);
 
   /**
-   * @type {ngeo.interaction.MeasureAzimut}
+   * @type {import("ngeo/interaction/MeasureAzimut.js").default}
    * @export
    */
   this.measureAzimut = new ngeoInteractionMeasureAzimut(

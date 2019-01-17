@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.debounce
+ * @module import("ngeo/misc/debounce.js").default
  */
 
 import angular from 'angular';

@@ -25,14 +25,14 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.message.Disclaimer} ngeoDisclaimer Ngeo disclaimer service.
+ * @param {import("ngeo/message/Disclaimer.js").default} ngeoDisclaimer Ngeo disclaimer service.
  * @ngInject
  * @constructor
  */
 exports.MainController = function(ngeoDisclaimer) {
 
   /**
-   * @type {ngeo.message.Disclaimer}
+   * @type {import("ngeo/message/Disclaimer.js").default}
    * @export
    */
   this.disclaimer = ngeoDisclaimer;

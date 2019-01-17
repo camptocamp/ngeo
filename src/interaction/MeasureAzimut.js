@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.MeasureAzimut
+ * @module import("ngeo/interaction/MeasureAzimut.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
@@ -17,14 +17,14 @@ import olProjProjection from 'ol/proj/Projection.js';
  *
  * @constructor
  * @fires MeasureEvent
- * @extends {ngeo.interaction.Measure}
+ * @extends {import("ngeo/interaction/Measure.js").default}
  * @param {!unitPrefix} unitPrefixFormat The format function
  * @param {!formatNumber} numberFormat The format function
  * @param {!MeasureOptions=} options Options
  */
 const exports = function(unitPrefixFormat, numberFormat, options = /** @type {MeasureOptions} */({})) {
 
-  ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
+  ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ (options));
 
 
   /**

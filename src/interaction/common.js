@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.common
+ * @module import("ngeo/interaction/common.js").default
  */
 const exports = {};
 import {createEditingStyle} from 'ol/style/Style.js';

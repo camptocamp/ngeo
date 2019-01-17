@@ -1,5 +1,5 @@
 /**
- * @module ngeo.googlestreetview.component
+ * @module import("ngeo/googlestreetview/component.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -53,7 +53,7 @@ class Controller {
   /**
    * @param {angular.JQLite} $element Element.
    * @param {!angular.IScope} $scope Scope.
-   * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager.
    * @private
    * @ngInject
@@ -114,7 +114,7 @@ class Controller {
     this.feature_ = new olFeature();
 
     /**
-     * @type {!ngeo.map.FeatureOverlay}
+     * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @private
      */
     this.featureOverlay_ = googAsserts.assert(

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.print.Utils
+ * @module import("ngeo/print/Utils.js").default
  */
 import angular from 'angular';
 import * as olHas from 'ol/has.js';

@@ -12,7 +12,7 @@ import olFeature from 'ol/Feature.js';
  *
  * @param {angular.IQService} $q Angular $q service.
  * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @constructor
  * @ngInject
  */
@@ -31,7 +31,7 @@ const exports = function($q, gmfEditFeature, ngeoLocation) {
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {ngeo.statemanager.Location}
+   * @type {import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

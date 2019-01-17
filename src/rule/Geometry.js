@@ -1,5 +1,5 @@
 /**
- * @module ngeo.rule.Geometry
+ * @module import("ngeo/rule/Geometry.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';

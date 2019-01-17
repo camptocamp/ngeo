@@ -95,8 +95,8 @@ class Controller {
    * @param {angular.IScope} $scope Angular scope.
    * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManager gmf gmfLidarprofileManager.
    * @param {import("gmf/lidarprofile/Config.js").default} gmfLidarprofileConfig gmf Lidar profile config.
-   * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service
-   * @param {ngeo.download.Csv} ngeoCsvDownload CSV Download service.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager service
+   * @param {import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV Download service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -149,13 +149,13 @@ class Controller {
     this.measureActive = false;
 
     /**
-     * @type {ngeo.download.Csv}
+     * @type {import("ngeo/download/Csv.js").default}
      * @private
      */
     this.ngeoCsvDownload_ = ngeoCsvDownload;
 
     /**
-     * @type {ngeo.misc.ToolActivateMgr}
+     * @type {import("ngeo/misc/ToolActivateMgr.js").default}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

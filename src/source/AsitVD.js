@@ -1,5 +1,5 @@
 /**
- * @module ngeo.source.AsitVD
+ * @module import("ngeo/source/AsitVD.js").default
  */
 import olSourceWMTS from 'ol/source/WMTS.js';
 import olTilegridWMTS from 'ol/tilegrid/WMTS.js';

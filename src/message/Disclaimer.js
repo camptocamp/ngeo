@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.Disclaimer
+ * @module import("ngeo/message/Disclaimer.js").default
  */
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
@@ -19,7 +19,7 @@ import 'ngeo/sass/font.scss';
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {PopupFactory} ngeoCreatePopup Popup service.
  * @constructor
- * @extends {ngeo.message.Message}
+ * @extends {import("ngeo/message/Message.js").default}
  * @ngdoc service
  * @ngname ngeoDisclaimer
  * @ngInject
@@ -57,7 +57,7 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * Cache of messages.
-   * @type {Object.<string, angular.JQLite|ngeo.message.Popup>}
+   * @type {Object.<string, angular.JQLite|import("ngeo/message/Popup.js").default>}
    * @private
    */
   this.messages_ = {};

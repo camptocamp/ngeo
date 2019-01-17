@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.Notification
+ * @module import("ngeo/message/Notification.js").default
  */
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
@@ -17,7 +17,7 @@ import {
  * properly.
  *
  * @constructor
- * @extends {ngeo.message.Message}
+ * @extends {import("ngeo/message/Message.js").default}
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoNotification

@@ -103,7 +103,7 @@ function Controller($scope, $filter, gettextCatalog) {
   );
 
   /**
-   * @type {ngeo.interaction.MeasureLengthMobile}
+   * @type {import("ngeo/interaction/MeasureLengthMobile.js").default}
    * @export
    */
   this.measure;

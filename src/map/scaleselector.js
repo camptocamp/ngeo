@@ -1,5 +1,5 @@
 /**
- * @module ngeo.map.scaleselector
+ * @module import("ngeo/map/scaleselector.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

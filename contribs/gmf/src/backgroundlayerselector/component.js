@@ -87,7 +87,7 @@ exports.component('gmfBackgroundlayerselector', component);
  * @constructor
  * @private
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
+ * @param {!import("ngeo/map/BackgroundLayerMgr.js").default} ngeoBackgroundLayerMgr Background layer manager.
  * @param {!import("gmf/theme/Themes.js").default} gmfThemes Themes service.
  * @ngInject
  * @ngdoc controller
@@ -147,7 +147,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.listenerKeys_.push(olEvents.listen(gmfThemes, 'change', this.handleThemesChange_, this));
 
   /**
-   * @type {!ngeo.map.BackgroundLayerMgr}
+   * @type {!import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;

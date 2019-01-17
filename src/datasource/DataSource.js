@@ -1,5 +1,5 @@
 /**
- * @module ngeo.datasource.DataSource
+ * @module import("ngeo/datasource/DataSource.js").default
  */
 
 

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.datasource.Group
+ * @module import("ngeo/datasource/Group.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
@@ -36,7 +36,7 @@ const exports = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * @type {!import("ol/Collection.js").default.<!ngeo.datasource.DataSource>}
+     * @type {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>}
      * @protected
      */
     this.dataSourcesCollection_ = new olCollection(options.dataSources);
@@ -63,7 +63,7 @@ const exports = class {
   // ========================================
 
   /**
-   * @return {!Array.<!ngeo.datasource.DataSource>} Data sources
+   * @return {!Array.<!import("ngeo/datasource/DataSource.js").default>} Data sources
    * @export
    */
   get dataSources() {
@@ -72,7 +72,7 @@ const exports = class {
 
 
   /**
-   * @return {!import("ol/Collection.js").default.<!ngeo.datasource.DataSource>} Data sources
+   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} Data sources
    * @export
    */
   get dataSourcesCollection() {
@@ -129,7 +129,7 @@ const exports = class {
   // =======================
 
   /**
-   * @param {!ngeo.datasource.DataSource} dataSource Data source.
+   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @return {string} Visible state of a data source
    * @export
    */
@@ -140,7 +140,7 @@ const exports = class {
   }
 
   /**
-   * @param {!ngeo.datasource.DataSource} dataSource Data source to add.
+   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to add.
    * @export
    */
   addDataSource(dataSource) {
@@ -148,7 +148,7 @@ const exports = class {
   }
 
   /**
-   * @param {!ngeo.datasource.DataSource} dataSource Data source to remove.
+   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove.
    * @export
    */
   removeDataSource(dataSource) {

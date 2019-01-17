@@ -1,5 +1,5 @@
 /**
- * @module ngeo.draw.rectangle
+ * @module import("ngeo/draw/rectangle.js").default
  */
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -27,7 +27,7 @@ function directive() {
      * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
+     * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

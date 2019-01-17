@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.Modify
+ * @module import("ngeo/interaction/Modify.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoUtils from 'ngeo/utils.js';

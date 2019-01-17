@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.sortableComponent
+ * @module import("ngeo/misc/sortableComponent.js").default
  */
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/sortable.js';

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.draw.features
+ * @module import("ngeo/draw/features.js").default
  */
 import angular from 'angular';
 import olCollection from 'ol/Collection.js';

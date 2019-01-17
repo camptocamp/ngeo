@@ -125,7 +125,7 @@ exports.MainController = function() {
   })();
 
   /**
-   * @type {ngeo.interaction.Rotate}
+   * @type {import("ngeo/interaction/Rotate.js").default}
    * @export
    */
   this.interaction = new ngeoInteractionRotate(

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.search.searchDirective
+ * @module import("ngeo/search/searchDirective.js").default
  */
 import angular from 'angular';
 

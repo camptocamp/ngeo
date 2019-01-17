@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.DrawAzimut
+ * @module import("ngeo/interaction/DrawAzimut.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
@@ -99,7 +99,7 @@ olUtilInherits(exports, olInteractionPointer);
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
  * @return {boolean} Start drag sequence?
- * @this {ngeo.interaction.DrawAzimut}
+ * @this {import("ngeo/interaction/DrawAzimut.js").default}
  * @private
  */
 exports.handleDownEvent_ = function(event) {
@@ -111,7 +111,7 @@ exports.handleDownEvent_ = function(event) {
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
  * @return {boolean} Stop drag sequence?
- * @this {ngeo.interaction.DrawAzimut}
+ * @this {import("ngeo/interaction/DrawAzimut.js").default}
  * @private
  */
 exports.handleUpEvent_ = function(event) {
@@ -137,7 +137,7 @@ exports.handleUpEvent_ = function(event) {
 /**
  * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
  * @return {boolean} `false` to stop event propagation.
- * @this {ngeo.interaction.DrawAzimut}
+ * @this {import("ngeo/interaction/DrawAzimut.js").default}
  * @private
  */
 exports.handleEvent_ = function(mapBrowserEvent) {

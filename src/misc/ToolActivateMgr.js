@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.ToolActivateMgr
+ * @module import("ngeo/misc/ToolActivateMgr.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -62,7 +62,7 @@ const exports = function($rootScope) {
 /**
  * Register a tool.
  * @param {string} groupName Name of the group of this tool.
- * @param {ngeo.misc.ToolActivate} tool Tool to register.
+ * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to register.
  * @param {boolean=} opt_defaultActivate If true, this tool will be activated
  *     when all other tools in the group are deactivated.
  * @export
@@ -110,7 +110,7 @@ exports.prototype.registerTool = function(groupName, tool,
 /**
  * Unregister a tool from a group.
  * @param {string} groupName Name of the group of this tool.
- * @param {ngeo.misc.ToolActivate} tool Tool to unregister.
+ * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to unregister.
  * @export
  */
 exports.prototype.unregisterTool = function(groupName, tool) {
@@ -145,7 +145,7 @@ exports.prototype.unregisterGroup = function(groupName) {
 
 /**
  * Activate a tool.
- * @param {ngeo.misc.ToolActivate} tool Tool to activate.
+ * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to activate.
  * @export
  */
 exports.prototype.activateTool = function(tool) {
@@ -155,7 +155,7 @@ exports.prototype.activateTool = function(tool) {
 
 /**
  * Deactivate a tool.
- * @param {ngeo.misc.ToolActivate} tool Tool to deactivate.
+ * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to deactivate.
  * @export
  */
 exports.prototype.deactivateTool = function(tool) {
@@ -167,7 +167,7 @@ exports.prototype.deactivateTool = function(tool) {
  * Deactivate all tools except the given one.
  *
  * @param {string} groupName Name of the group.
- * @param {ngeo.misc.ToolActivate} tool Tool to activate.
+ * @param {import("ngeo/misc/ToolActivate.js").default} tool Tool to activate.
  * @private
  */
 exports.prototype.deactivateTools_ = function(groupName, tool) {

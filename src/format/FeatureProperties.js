@@ -1,5 +1,5 @@
 /**
- * @module ngeo.format.FeatureProperties
+ * @module import("ngeo/format/FeatureProperties.js").default
  */
 /**
  * @enum {string}

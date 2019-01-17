@@ -1,5 +1,5 @@
 /**
- * @module ngeo.rule.Rule
+ * @module import("ngeo/rule/Rule.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';

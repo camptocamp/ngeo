@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.ModifyCircle
+ * @module import("ngeo/interaction/ModifyCircle.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -31,7 +31,7 @@ import olStructsRBush from 'ol/structs/RBush.js';
  * @constructor
  * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
- * @fires ngeo.interaction.ModifyCircleEvent
+ * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
 const exports = function(options) {
@@ -285,7 +285,7 @@ function compareIndexes(a, b) {
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Start drag sequence?
- * @this {ngeo.interaction.ModifyCircle}
+ * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @private
  */
 exports.handleDownEvent_ = function(evt) {
@@ -328,7 +328,7 @@ exports.handleDownEvent_ = function(evt) {
 
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
- * @this {ngeo.interaction.ModifyCircle}
+ * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @private
  */
 exports.handleDragEvent_ = function(evt) {
@@ -358,7 +358,7 @@ exports.handleDragEvent_ = function(evt) {
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Stop drag sequence?
- * @this {ngeo.interaction.ModifyCircle}
+ * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @private
  */
 exports.handleUpEvent_ = function(evt) {
@@ -381,7 +381,7 @@ exports.handleUpEvent_ = function(evt) {
  * geometry.
  * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
  * @return {boolean} `false` to stop event propagation.
- * @this {ngeo.interaction.ModifyCircle}
+ * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @api
  */
 exports.handleEvent = function(mapBrowserEvent) {

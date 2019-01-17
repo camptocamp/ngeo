@@ -1,5 +1,5 @@
 /**
- * @module ngeo.test.data.msGMLOutputBusStopWfs
+ * @module import("ngeo/test/data.js").default.msGMLOutputBusStopWfs
  */
 const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +

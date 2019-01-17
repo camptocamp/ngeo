@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.extraModule
+ * @module import("ngeo/message/extraModule.js").default
  */
 import angular from 'angular';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';

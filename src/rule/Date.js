@@ -1,5 +1,5 @@
 /**
- * @module ngeo.rule.Date
+ * @module import("ngeo/rule/Date.js").default
  */
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';

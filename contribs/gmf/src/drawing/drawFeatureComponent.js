@@ -90,9 +90,9 @@ exports.directive('gmfDrawfeature', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
- * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -125,7 +125,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.drawActive = false;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
@@ -143,7 +143,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.longPressTimeout_ = null;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
@@ -161,7 +161,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.timeout_ = $timeout;
 
   /**
-   * @type {!ngeo.misc.FeatureHelper}
+   * @type {!import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -173,7 +173,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.features = ngeoFeatures;
 
   /**
-   * @type {!ngeo.misc.ToolActivateMgr}
+   * @type {!import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -198,7 +198,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.interactions_ = new olCollection();
 
   /**
-   * @type {!ngeo.interaction.Modify}
+   * @type {!import("ngeo/interaction/Modify.js").default}
    * @private
    */
   this.modify_ = new ngeoInteractionModify({
@@ -220,13 +220,13 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.menuListenerKey_ = null;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
 
   /**
-   * @type {!ngeo.interaction.Translate}
+   * @type {!import("ngeo/interaction/Translate.js").default}
    * @private
    */
   this.translate_ = new ngeoInteractionTranslate({
@@ -244,7 +244,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.interactions_.push(this.translate_);
 
   /**
-   * @type {!ngeo.interaction.Rotate}
+   * @type {!import("ngeo/interaction/Rotate.js").default}
    * @private
    */
   this.rotate_ = new ngeoInteractionRotate({
@@ -264,13 +264,13 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.initializeInteractions_();
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');

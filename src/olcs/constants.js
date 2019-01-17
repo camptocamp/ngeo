@@ -1,5 +1,5 @@
 /**
- * @module ngeo.olcs.constants
+ * @module import("ngeo/olcs/constants.js").default
  */
 const exports = {};
 

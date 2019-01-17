@@ -119,7 +119,7 @@ const NAMESPACE = 'oet';
 /**
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -201,7 +201,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

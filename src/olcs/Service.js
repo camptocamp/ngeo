@@ -1,5 +1,5 @@
 /**
- * @module ngeo.olcs.Service
+ * @module import("ngeo/olcs/Service.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -13,8 +13,8 @@ const Service = class {
   /**
    * @ngInject
    * @param {!miscDebounce} ngeoDebounce ngeo debounce service.
-   * @param {!ngeo.statemanager.Location} ngeoLocation ngeo location service.
-   * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo StateManager service.
+   * @param {!import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
+   * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo StateManager service.
    */
   constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**
@@ -31,13 +31,13 @@ const Service = class {
 
     /**
      * @private
-     * @type {!ngeo.statemanager.Location}
+     * @type {!import("ngeo/statemanager/Location.js").default}
      */
     this.ngeoLocation_ = ngeoLocation;
 
     /**
      * @private
-     * @type {ngeo.statemanager.Service}
+     * @type {import("ngeo/statemanager/Service.js").default}
      */
     this.ngeoStateManager_ = ngeoStateManager;
 

@@ -94,13 +94,13 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   });
 
   /**
-   * @type {ngeo.interaction.Measure}
+   * @type {import("ngeo/interaction/Measure.js").default}
    * @export
    */
   this.measure;
 
   /**
-   * @type {ngeo.interaction.MobileDraw}
+   * @type {import("ngeo/interaction/MobileDraw.js").default}
    * @export
    */
   this.drawInteraction;
@@ -133,7 +133,7 @@ exports.Controller.prototype.init = function() {
   this.measure.setActive(this.active);
   ngeoMiscDecorate.interaction(this.measure);
 
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
+  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
     this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;

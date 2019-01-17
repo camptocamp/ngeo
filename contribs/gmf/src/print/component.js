@@ -206,10 +206,10 @@ class Controller {
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
+   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
-   * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
+   * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
    * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService The authentication service.
@@ -300,7 +300,7 @@ class Controller {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {ngeo.map.LayerHelper}
+     * @type {import("ngeo/map/LayerHelper.js").default}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -312,13 +312,13 @@ class Controller {
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
 
     /**
-     * @type {ngeo.print.Utils}
+     * @type {import("ngeo/print/Utils.js").default}
      * @private
      */
     this.ngeoPrintUtils_ = ngeoPrintUtils;
 
     /**
-     * @type {ngeo.print.Service}
+     * @type {import("ngeo/print/Service.js").default}
      * @private
      */
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);

@@ -121,10 +121,10 @@ exports.component('gmfProfile', component);
  * @param {angular.JQLite} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {ngeo.download.Csv} ngeoCsvDownload CSV Download service.
+ * @param {import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
  * @ngInject
@@ -166,7 +166,7 @@ function Controller($scope, $http, $element, $filter,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -178,7 +178,7 @@ function Controller($scope, $http, $element, $filter,
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
-   * @type {ngeo.download.Csv}
+   * @type {import("ngeo/download/Csv.js").default}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.print.VectorEncoder
+ * @module import("ngeo/print/VectorEncoder.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoUtils from 'ngeo/utils.js';
@@ -34,7 +34,7 @@ exports.PrintStyleType = {
 
 
 /**
- * @type {Object.<import("ol/geom/GeometryType.js").default, ngeo.print.VectorEncoder.PrintStyleType>}
+ * @type {Object.<import("ol/geom/GeometryType.js").default, import("ngeo/print/VectorEncoder.js").default.PrintStyleType>}
  */
 const PRINT_STYLE_TYPES = {
   'LineString': exports.PrintStyleType.LINE_STRING,

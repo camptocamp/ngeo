@@ -69,7 +69,7 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
  * @constructor
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
- * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
+ * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @export
  */
@@ -120,13 +120,13 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {ngeo.print.Service}
+   * @type {import("ngeo/print/Service.js").default}
    * @private
    */
   this.print_ = ngeoCreatePrint(appURL.PRINT_PROXY);
 
   /**
-   * @type {ngeo.print.Utils}
+   * @type {import("ngeo/print/Utils.js").default}
    * @private
    */
   this.printUtils_ = ngeoPrintUtils;

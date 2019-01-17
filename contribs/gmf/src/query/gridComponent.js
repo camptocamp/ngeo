@@ -72,7 +72,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 /**
  * Provides a component to display results of the {@link ngeo.queryResult} in a
  * grid and shows related features on the map using
- * the {@link ngeo.map.FeatureOverlayMgr}.
+ * the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
@@ -133,11 +133,11 @@ exports.component('gmfDisplayquerygrid', component);
  * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
- * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
+ * @param {!import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV download service.
  * @param {!angular.JQLite} $element Element.
  * @constructor
  * @private
@@ -171,13 +171,13 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {!ngeo.query.MapQuerent}
+   * @type {!import("ngeo/query/MapQuerent.js").default}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {!ngeo.download.Csv}
+   * @type {!import("ngeo/download/Csv.js").default}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
@@ -261,7 +261,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.features_ = new olCollection();
 
   /**
-   * @type {!ngeo.map.FeatureOverlayMgr}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
@@ -667,7 +667,7 @@ Controller.prototype.makeGrid_ = function(data, source) {
 
 /**
  * @param {Array.<!Object>} data Grid rows.
- * @return {?ngeo.grid.Config} Grid config.
+ * @return {?import("ngeo/grid/Config.js").default} Grid config.
  * @private
  */
 Controller.prototype.getGridConfiguration_ = function(data) {

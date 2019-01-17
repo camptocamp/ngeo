@@ -1,5 +1,5 @@
 /**
- * @module ngeo.format.FeatureHash
+ * @module import("ngeo/format/FeatureHash.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
@@ -140,7 +140,7 @@ olUtilInherits(exports, olFormatTextFeature);
 
 
 /**
- * @type {Object.<import("ol/geom/GeometryType.js").default, ngeo.format.FeatureHashStyleType>}
+ * @type {Object.<import("ol/geom/GeometryType.js").default, import("ngeo/format/FeatureHashStyleType.js").default>}
  * @private
  */
 exports.StyleTypes_ = {
@@ -439,7 +439,7 @@ exports.encodeStyleText_ = function(textStyle, encodedStyles) {
  * {@link import("ol/geom/LineString.js").default}.
  * @param {string} text Text.
  * @return {import("ol/geom/LineString.js").default} Line string.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.readLineStringGeometry_ = function(text) {
@@ -456,7 +456,7 @@ exports.readLineStringGeometry_ = function(text) {
  * {@link import("ol/geom/MultiLineString.js").default}.
  * @param {string} text Text.
  * @return {import("ol/geom/MultiLineString.js").default} Line string.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.readMultiLineStringGeometry_ = function(text) {
@@ -479,7 +479,7 @@ exports.readMultiLineStringGeometry_ = function(text) {
  * {@link import("ol/geom/Point.js").default}.
  * @param {string} text Text.
  * @return {import("ol/geom/Point.js").default} Point.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.readPointGeometry_ = function(text) {
@@ -497,7 +497,7 @@ exports.readPointGeometry_ = function(text) {
  * {@link import("ol/geom/MultiPoint.js").default}.
  * @param {string} text Text.
  * @return {import("ol/geom/MultiPoint.js").default} MultiPoint.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.readMultiPointGeometry_ = function(text) {
@@ -514,7 +514,7 @@ exports.readMultiPointGeometry_ = function(text) {
  * {@link import("ol/geom/Polygon.js").default}.
  * @param {string} text Text.
  * @return {import("ol/geom/Polygon.js").default} Polygon.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.readPolygonGeometry_ = function(text) {
@@ -545,7 +545,7 @@ exports.readPolygonGeometry_ = function(text) {
  * {@link import("ol/geom/MultiPolygon.js").default}.
  * @param {string} text Text.
  * @return {import("ol/geom/MultiPolygon.js").default} MultiPolygon.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.readMultiPolygonGeometry_ = function(text) {
@@ -767,7 +767,7 @@ exports.getStyleProperties_ = function(text, feature) {
  * characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.writeLineStringGeometry_ = function(geometry) {
@@ -784,7 +784,7 @@ exports.writeLineStringGeometry_ = function(geometry) {
  * of characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.writeMultiLineStringGeometry_ = function(geometry) {
@@ -814,7 +814,7 @@ exports.writeMultiLineStringGeometry_ = function(geometry) {
  * characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.writePointGeometry_ = function(geometry) {
@@ -831,7 +831,7 @@ exports.writePointGeometry_ = function(geometry) {
  * of characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.writeMultiPointGeometry_ = function(geometry) {
@@ -851,7 +851,7 @@ exports.writeMultiPointGeometry_ = function(geometry) {
  * @param {Array.<number>} ends Ends.
  * @param {Array.<string>} textArray Text array.
  * @return {number} The new offset.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.encodeRings_ = function(flatCoordinates, stride, offset, ends, textArray) {
@@ -875,7 +875,7 @@ exports.encodeRings_ = function(flatCoordinates, stride, offset, ends, textArray
  * of characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.writePolygonGeometry_ = function(geometry) {
@@ -897,7 +897,7 @@ exports.writePolygonGeometry_ = function(geometry) {
  * characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {ngeo.format.FeatureHash}
+ * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 exports.writeMultiPolygonGeometry_ = function(geometry) {

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.Rotate
+ * @module import("ngeo/interaction/Rotate.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
@@ -34,7 +34,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @constructor
  * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
- * @fires ngeo.interaction.ModifyCircleEvent
+ * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
 const exports = function(options) {

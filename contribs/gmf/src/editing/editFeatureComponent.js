@@ -98,7 +98,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeature-editabletreectrl
+ * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
  * @htmlAttribute {import("ol/Map.js").default} gmf-editfeature-map The map.
@@ -142,10 +142,10 @@ exports.directive('gmfEditfeature', component);
  * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
  * @param {import("gmf/editing/Snapping.js").default} gmfSnapping The gmf snapping service.
  * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
- * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo Event Helper.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -169,7 +169,7 @@ function Controller($element, $q, $scope, $timeout,
   this.dirty;
 
   /**
-   * @type {ngeo.layertree.Controller}
+   * @type {import("ngeo/layertree/Controller.js").default}
    * @export
    */
   this.editableTreeCtrl;
@@ -252,25 +252,25 @@ function Controller($element, $q, $scope, $timeout,
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {ngeo.misc.EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -326,7 +326,7 @@ function Controller($element, $q, $scope, $timeout,
   this.createActive = false;
 
   /**
-   * @type {ngeo.misc.ToolActivate}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.createToolActivate = new ngeoMiscToolActivate(this, 'createActive');
@@ -338,7 +338,7 @@ function Controller($element, $q, $scope, $timeout,
   this.mapSelectActive = true;
 
   /**
-   * @type {ngeo.misc.ToolActivate}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
@@ -379,7 +379,7 @@ function Controller($element, $q, $scope, $timeout,
   this.modify_;
 
   /**
-   * @type {ngeo.misc.ToolActivate}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.modifyToolActivate;
@@ -413,25 +413,25 @@ function Controller($element, $q, $scope, $timeout,
   });
 
   /**
-   * @type {ngeo.interaction.Translate}
+   * @type {import("ngeo/interaction/Translate.js").default}
    * @private
    */
   this.translate_;
 
   /**
-   * @type {ngeo.interaction.Rotate}
+   * @type {import("ngeo/interaction/Rotate.js").default}
    * @private
    */
   this.rotate_;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.rotateToolActivate;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.translateToolActivate;

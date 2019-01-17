@@ -1,5 +1,5 @@
 /**
- * @module ngeo.editing.createregularpolygonfromclickComponent
+ * @module import("ngeo/editing/createregularpolygonfromclickComponent.js").default
  */
 import angular from 'angular';
 import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick.js';
@@ -132,7 +132,7 @@ function Controller($scope) {
   // == Other properties ==
 
   /**
-   * @type {ngeo.interaction.DrawRegularPolygonFromClick}
+   * @type {import("ngeo/interaction/DrawRegularPolygonFromClick.js").default}
    * @private
    */
   this.interaction_;

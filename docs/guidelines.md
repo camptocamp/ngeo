@@ -92,7 +92,7 @@ AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
 /**
- * @module ngeo.example.Service
+ * @module import("ngeo/example/Service.js").default
  */
 const exports = {};
 import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
@@ -112,7 +112,7 @@ the module in the value we export directly like:
 
 ```js
 /**
- * @module ngeo.example.component
+ * @module import("ngeo/example/component.js").default
  */
 const exports = {};
 

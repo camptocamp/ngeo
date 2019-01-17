@@ -1,5 +1,5 @@
 /**
- * @module ngeo.routing.RoutingComponent
+ * @module import("ngeo/routing/RoutingComponent.js").default
  */
 const exports = {};
 import angular from 'angular';
@@ -70,8 +70,8 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * The controller for the routing directive.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!ngeo.routing.RoutingService} ngeoRoutingService service for OSRM routing
- * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/RoutingService.js").default} ngeoRoutingService service for OSRM routing
+ * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
  * @param {!angular.IQService} $q Angular q service
  * @param {miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
@@ -89,13 +89,13 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.$scope_ = $scope;
 
   /**
-   * @type {ngeo.routing.RoutingService}
+   * @type {import("ngeo/routing/RoutingService.js").default}
    * @private
    */
   this.ngeoRoutingService_ = ngeoRoutingService;
 
   /**
-   * @type {ngeo.routing.NominatimService}
+   * @type {import("ngeo/routing/NominatimService.js").default}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;

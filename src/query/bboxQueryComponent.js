@@ -1,5 +1,5 @@
 /**
- * @module ngeo.query.bboxQueryComponent
+ * @module import("ngeo/query/bboxQueryComponent.js").default
  */
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
@@ -36,7 +36,7 @@ const exports = angular.module('ngeoBboxQuery', [
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
- * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive

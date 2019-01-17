@@ -1,5 +1,5 @@
 /**
- * @module ngeo.draw.Controller
+ * @module import("ngeo/draw/Controller.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -17,7 +17,7 @@ import olFeature from 'ol/Feature.js';
  * @param {!angular.IScope} $scope Scope.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
  * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @constructor
  * @private
@@ -72,7 +72,7 @@ const exports = function($scope, $sce, gettextCatalog,
   gettextCatalog.getString('Text');
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -96,19 +96,19 @@ const exports = function($scope, $sce, gettextCatalog,
   this.drawPoint;
 
   /**
-   * @type {ngeo.interaction.MeasureLength}
+   * @type {import("ngeo/interaction/MeasureLength.js").default}
    * @export
    */
   this.measureLength;
 
   /**
-   * @type {ngeo.interaction.MeasureArea}
+   * @type {import("ngeo/interaction/MeasureArea.js").default}
    * @export
    */
   this.measureArea;
 
   /**
-   * @type {ngeo.interaction.MeasureAzimut}
+   * @type {import("ngeo/interaction/MeasureAzimut.js").default}
    * @export
    */
   this.measureAzimut;

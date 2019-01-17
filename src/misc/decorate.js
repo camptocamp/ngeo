@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.decorate
+ * @module import("ngeo/misc/decorate.js").default
  */
 const exports = {};
 import googAsserts from 'goog/asserts.js';

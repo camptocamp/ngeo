@@ -1,5 +1,5 @@
 /**
- * @module ngeo.editing.createfeatureComponent
+ * @module import("ngeo/editing/createfeatureComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -82,7 +82,7 @@ exports.directive('ngeoCreatefeature', directive);
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @ngInject
@@ -146,7 +146,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.timeout_ = $timeout;
 
   /**
-   * @type {!ngeo.misc.EventHelper}
+   * @type {!import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

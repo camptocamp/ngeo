@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.File
+ * @module import("ngeo/misc/File.js").default
  */
 import angular from 'angular';
 

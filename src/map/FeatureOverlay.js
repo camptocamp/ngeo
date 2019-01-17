@@ -1,18 +1,18 @@
 /**
- * @module ngeo.map.FeatureOverlay
+ * @module import("ngeo/map/FeatureOverlay.js").default
  */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
 /**
  * @constructor
- * @param {ngeo.map.FeatureOverlayMgr} manager The feature overlay manager.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  */
 const exports = function(manager, index) {
 
   /**
-   * @type {ngeo.map.FeatureOverlayMgr}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
    * @private
    */
   this.manager_ = manager;

@@ -51,7 +51,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 /**
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+ * @param {import("ngeo/map/BackgroundLayerMgr.js").default} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export
  * @ngInject
@@ -65,7 +65,7 @@ exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
     });
 
   /**
-   * @type {ngeo.map.BackgroundLayerMgr}
+   * @type {import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;

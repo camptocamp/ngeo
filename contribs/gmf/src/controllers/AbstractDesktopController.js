@@ -140,7 +140,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

@@ -63,7 +63,7 @@ exports.directive('gmfDrawprofileline', directive);
 /**
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay manager.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay manager.
  * @constructor
  * @private
  * @ngInject

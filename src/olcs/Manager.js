@@ -1,5 +1,5 @@
 /**
- * @module ngeo.olcs.Manager
+ * @module import("ngeo/olcs/Manager.js").default
  */
 import olcsContribManager from 'olcs/contrib/Manager.js';
 

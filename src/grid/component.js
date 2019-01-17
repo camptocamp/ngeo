@@ -1,5 +1,5 @@
 /**
- * @module ngeo.grid.component
+ * @module import("ngeo/grid/component.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -61,7 +61,7 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
  *       ngeo-grid-configuration="::ctrl.gridConfiguration"
  *     </ngeo-grid>
  *
- * @htmlAttribute {ngeo.grid.Config} ngeo-grid-configuration The
+ * @htmlAttribute {import("ngeo/grid/Config.js").default} ngeo-grid-configuration The
  * configuration to use.
  *
  * @ngdoc component
@@ -95,7 +95,7 @@ function Controller($scope) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.grid.Config}
+   * @type {import("ngeo/grid/Config.js").default}
    * @export
    */
   this.configuration;

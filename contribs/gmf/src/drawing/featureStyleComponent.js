@@ -57,7 +57,7 @@ exports.directive('gmfFeaturestyle', directive);
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
  * @ngInject
@@ -85,7 +85,7 @@ function Controller($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

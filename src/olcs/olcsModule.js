@@ -1,5 +1,5 @@
 /**
- * @module ngeo.olcs.olcsModule
+ * @module import("ngeo/olcs/olcsModule.js").default
  */
 import angular from 'angular';
 import Service from 'ngeo/olcs/Service.js';

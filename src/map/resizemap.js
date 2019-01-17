@@ -1,5 +1,5 @@
 /**
- * @module ngeo.map.resizemap
+ * @module import("ngeo/map/resizemap.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

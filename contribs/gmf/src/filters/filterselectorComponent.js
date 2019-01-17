@@ -83,10 +83,10 @@ class Controller {
    *     sources helper service.
    * @param {import("gmf/filters/SavedFilters.js").default} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
-   * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
-   * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager
-   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -186,13 +186,13 @@ class Controller {
     );
 
     /**
-     * @type {ngeo.message.Notification}
+     * @type {import("ngeo/message/Notification.js").default}
      * @private
      */
     this.ngeoNotification_ = ngeoNotification;
 
     /**
-     * @type {!ngeo.map.FeatureOverlay}
+     * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @export
      */
     this.featureOverlay = googAsserts.assert(
@@ -200,7 +200,7 @@ class Controller {
     );
 
     /**
-     * @type {!ngeo.filter.RuleHelper}
+     * @type {!import("ngeo/filter/RuleHelper.js").default}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -215,13 +215,13 @@ class Controller {
     this.aRuleIsActive = false;
 
     /**
-     * @type {?Array.<!ngeo.rule.Rule>}
+     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
      * @export
      */
     this.customRules = null;
 
     /**
-     * @type {?Array.<!ngeo.rule.Rule>}
+     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
      * @export
      */
     this.directedRules = null;
@@ -607,7 +607,7 @@ class Controller {
   }
 
   /**
-   * @param {ngeo.datasource.DataSource} dataSource Data source.
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @return {?RuleCacheItem} Rule cache item.
    * @private
    */
@@ -616,7 +616,7 @@ class Controller {
   }
 
   /**
-   * @param {ngeo.datasource.DataSource} dataSource Data source.
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source.
    * @param {RuleCacheItem} item Rule cache item.
    * @private
    */

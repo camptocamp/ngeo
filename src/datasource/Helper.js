@@ -1,5 +1,5 @@
 /**
- * @module ngeo.datasource.Helper
+ * @module import("ngeo/datasource/Helper.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -14,9 +14,9 @@ const exports = class {
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data source
+   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data source
    *     service.
-   * @param {ngeo.query.Querent} ngeoQuerent Ngeo querent service.
+   * @param {import("ngeo/query/Querent.js").default} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
    * @ngInject
@@ -38,7 +38,7 @@ const exports = class {
     this.collection_ = ngeoDataSources.collection;
 
     /**
-     * @type {ngeo.query.Querent}
+     * @type {import("ngeo/query/Querent.js").default}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -47,7 +47,7 @@ const exports = class {
     // === Other properties ===
 
     /**
-     * @type {Object.<number, ngeo.datasource.DataSource>}
+     * @type {Object.<number, import("ngeo/datasource/DataSource.js").default>}
      * @private
      */
     this.cache_ = {};
@@ -69,7 +69,7 @@ const exports = class {
   /**
    * Return a data source using its id.
    * @param {number} id Data source id.
-   * @return {?ngeo.datasource.DataSource} Data source.
+   * @return {?import("ngeo/datasource/DataSource.js").default} Data source.
    * @export
    */
   getDataSource(id) {
@@ -84,7 +84,7 @@ const exports = class {
    * Please, note that in order to be dynamically set, the data source must
    * only have 1 ogcLayer set and be queryable.
    *
-   * @param {ngeo.datasource.OGC} dataSource Filtrable data source.
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource Filtrable data source.
    * @return {angular.IPromise} Promise.
    * @export
    */

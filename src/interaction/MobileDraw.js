@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.MobileDraw
+ * @module import("ngeo/interaction/MobileDraw.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';

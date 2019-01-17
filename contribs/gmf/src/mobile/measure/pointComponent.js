@@ -207,13 +207,13 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.format;
 
   /**
-   * @type {ngeo.interaction.MeasurePointMobile}
+   * @type {import("ngeo/interaction/MeasurePointMobile.js").default}
    * @export
    */
   this.measure;
 
   /**
-   * @type {ngeo.interaction.MobileDraw}
+   * @type {import("ngeo/interaction/MobileDraw.js").default}
    * @export
    */
   this.drawInteraction;
@@ -241,7 +241,7 @@ Controller.prototype.init = function() {
   );
   this.measure.setActive(this.active);
   ngeoMiscDecorate.interaction(this.measure);
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (this.measure.getDrawInteraction());
+  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (this.measure.getDrawInteraction());
   ngeoMiscDecorate.interaction(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();

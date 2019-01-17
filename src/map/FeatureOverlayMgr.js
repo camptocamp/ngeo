@@ -1,5 +1,5 @@
 /**
- * @module ngeo.map.FeatureOverlayMgr
+ * @module import("ngeo/map/FeatureOverlayMgr.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -132,7 +132,7 @@ exports.prototype.getLayer = function() {
 
 
 /**
- * @return {ngeo.map.FeatureOverlay} Feature overlay.
+ * @return {import("ngeo/map/FeatureOverlay.js").default} Feature overlay.
  * @export
  */
 exports.prototype.getFeatureOverlay = function() {

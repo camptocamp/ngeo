@@ -125,7 +125,7 @@ exports.MainController = function() {
   vectorLayer.setMap(map);
 
   /**
-   * @type {ngeo.interaction.ModifyRectangle}
+   * @type {import("ngeo/interaction/ModifyRectangle.js").default}
    * @export
    */
   this.interaction = new ngeoInteractionModifyRectangle(

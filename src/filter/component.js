@@ -1,5 +1,5 @@
 /**
- * @module ngeo.filter.component
+ * @module import("ngeo/filter/component.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -89,8 +89,8 @@ class FilterController {
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
-   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
+   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -108,25 +108,25 @@ class FilterController {
     this.aRuleIsActive;
 
     /**
-     * @type {Array.<!ngeo.rule.Rule>}
+     * @type {Array.<!import("ngeo/rule/Rule.js").default>}
      * @export
      */
     this.customRules;
 
     /**
-     * @type {!ngeo.datasource.OGC}
+     * @type {!import("ngeo/datasource/OGC.js").default}
      * @export
      */
     this.datasource;
 
     /**
-     * @type {Array.<!ngeo.rule.Rule>}
+     * @type {Array.<!import("ngeo/rule/Rule.js").default>}
      * @export
      */
     this.directedRules;
 
     /**
-     * @type {!ngeo.map.FeatureOverlay}
+     * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @export
      */
     this.featureOverlay;
@@ -165,13 +165,13 @@ class FilterController {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!ngeo.query.MapQuerent}
+     * @type {!import("ngeo/query/MapQuerent.js").default}
      * @private
      */
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {!ngeo.filter.RuleHelper}
+     * @type {!import("ngeo/filter/RuleHelper.js").default}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -333,7 +333,7 @@ class FilterController {
 
   /**
    * Loop in all directed and custom rules and collect those with a value.
-   * @return {Array.<!ngeo.rule.Rule>} Rules with value.
+   * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules with value.
    * @private
    */
   getRulesWithValue_() {
@@ -380,7 +380,7 @@ class FilterController {
   /**
    * Remove a custom rule. Deactivate it first, then give time to the
    * `ngeo-rule` directive to manage the deactivation of the rule.
-   * @param {!ngeo.rule.Rule} rule Custom rule to remove.
+   * @param {!import("ngeo/rule/Rule.js").default} rule Custom rule to remove.
    * @export
    */
   removeCustomRule(rule) {
@@ -393,7 +393,7 @@ class FilterController {
   }
 
   /**
-   * @param {!ngeo.rule.Rule} rule Rule.
+   * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
    * @export
    */
   registerRule_(rule) {
@@ -409,7 +409,7 @@ class FilterController {
   }
 
   /**
-   * @param {!ngeo.rule.Rule} rule Rule.
+   * @param {!import("ngeo/rule/Rule.js").default} rule Rule.
    * @export
    */
   unregisterRule_(rule) {

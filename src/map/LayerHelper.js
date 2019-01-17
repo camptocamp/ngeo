@@ -1,5 +1,5 @@
 /**
- * @module ngeo.map.LayerHelper
+ * @module import("ngeo/map/LayerHelper.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -112,7 +112,7 @@ exports.prototype.createBasicWMSLayer = function(sourceURL,
 /**
  * Create and return a basic WMS layer using an OGC data source.
  *
- * @param {ngeo.datasource.OGC} dataSource OGC data source.
+ * @param {import("ngeo/datasource/OGC.js").default} dataSource OGC data source.
  * @param {string=} opt_crossOrigin crossOrigin.
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  * @export

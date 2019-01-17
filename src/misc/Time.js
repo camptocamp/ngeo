@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.Time
+ * @module import("ngeo/misc/Time.js").default
  */
 import angular from 'angular';
 

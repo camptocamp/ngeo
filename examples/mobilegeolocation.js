@@ -28,7 +28,7 @@ const appmodule = angular.module('app', [
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @ngInject

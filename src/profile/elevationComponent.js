@@ -1,5 +1,5 @@
 /**
- * @module ngeo.profile.elevationComponent
+ * @module import("ngeo/profile/elevationComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

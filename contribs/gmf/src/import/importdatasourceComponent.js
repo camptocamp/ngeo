@@ -72,7 +72,7 @@ class Controller {
    * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
-   * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
+   * @param {!import("ngeo/query/Querent.js").default} ngeoQuerent Ngeo querent service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -117,7 +117,7 @@ class Controller {
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {!ngeo.query.Querent}
+     * @type {!import("ngeo/query/Querent.js").default}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

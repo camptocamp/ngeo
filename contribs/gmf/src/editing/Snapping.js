@@ -202,7 +202,7 @@ exports.prototype.handleThemesChange_ = function() {
  * create and add a cache item with every configuration required to do the
  * snapping. It becomes active when its state is set to 'on'.
  *
- * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
  * @private
  */
 exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
@@ -271,7 +271,7 @@ exports.prototype.unregisterAllTreeCtrl_ = function() {
 /**
  * Get the OGC server.
  *
- * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
  * @return {?gmfThemes.GmfOgcServers} The OGC server.
  * @private
  */
@@ -311,7 +311,7 @@ exports.prototype.getOGCServer_ = function(treeCtrl) {
  *    to `true`
  * 4) the ogcServer defined in 3) has the `wfsSupport` property set to `true`.
  *
- * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
  * @return {?WFSConfig} The configuration object.
  * @private
  */
@@ -361,7 +361,7 @@ exports.prototype.getWFSConfig_ = function(treeCtrl) {
 
 
 /**
- * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
  * @param {string|undefined} newVal New state value
  * @private
  */

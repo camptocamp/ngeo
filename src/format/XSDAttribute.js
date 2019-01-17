@@ -1,5 +1,5 @@
 /**
- * @module ngeo.format.XSDAttribute
+ * @module import("ngeo/format/XSDAttribute.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttribute from 'ngeo/format/Attribute.js';

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.olcs.controls3d
+ * @module import("ngeo/olcs/controls.js").default3d
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -18,7 +18,7 @@ const Controller = class {
   /**
    * @ngInject
    * @param {!jQuery} $element The element
-   * @param {ngeo.olcs.Service} ngeoOlcsService The ol-cesium service.
+   * @param {import("ngeo/olcs/Service.js").default} ngeoOlcsService The ol-cesium service.
    */
   constructor($element, ngeoOlcsService) {
 
@@ -89,7 +89,7 @@ const Controller = class {
     this.animationFrameRequestId_;
 
     /**
-     * @type {ngeo.olcs.Service}
+     * @type {import("ngeo/olcs/Service.js").default}
      * @private
      */
     this.olcsService_ = ngeoOlcsService;

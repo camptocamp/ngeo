@@ -1,5 +1,5 @@
 /**
- * @module ngeo.layertree.component
+ * @module import("ngeo/layertree/component.js").default
  */
 import angular from 'angular';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
@@ -108,7 +108,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *      to be a {@link Function} with the argument:
  *      {
  *          'treeScope': !{@link angular.IScope},
- *          'treeCtrl': {@link ngeo.layertree.Controller}
+ *          'treeCtrl': {@link import("ngeo/layertree/Controller.js").default}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.

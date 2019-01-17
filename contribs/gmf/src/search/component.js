@@ -76,9 +76,9 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This component uses the {@link ngeo.map.FeatureOverlayMgr} to create a
+ * This component uses the {@link import("ngeo/map/FeatureOverlayMgr.js").default} to create a
  * feature overlay for drawing features on the map. The application
- * is responsible to initialize the {@link ngeo.map.FeatureOverlayMgr}
+ * is responsible to initialize the {@link import("ngeo/map/FeatureOverlayMgr.js").default}
  * with the map.
  *
  * Example flat results:
@@ -195,10 +195,10 @@ class SearchController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
-   * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
+   * @param {import("ngeo/misc/AutoProjection.js").default} ngeoAutoProjection The ngeo coordinates service.
+   * @param {import("ngeo/search/createGeoJSONBloodhound.js").default.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
-   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
    * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
    * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
@@ -261,19 +261,19 @@ class SearchController {
     this.fullTextSearch_ = gmfSearchFulltextSearch;
 
     /**
-     * @type {ngeo.search.createGeoJSONBloodhound.Function}
+     * @type {import("ngeo/search/createGeoJSONBloodhound.js").default.Function}
      * @private
      */
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
     /**
-     * @type {ngeo.map.FeatureOverlayMgr}
+     * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
      * @private
      */
     this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
 
     /**
-     * @type {ngeo.statemanager.Location|undefined}
+     * @type {import("ngeo/statemanager/Location.js").default|undefined}
      * @private
      */
     this.ngeoLocation_;
@@ -283,7 +283,7 @@ class SearchController {
     }
 
     /**
-     * @type {ngeo.misc.AutoProjection}
+     * @type {import("ngeo/misc/AutoProjection.js").default}
      * @private
      */
     this.ngeoAutoProjection_ = ngeoAutoProjection;
@@ -347,7 +347,7 @@ class SearchController {
     this.coordinatesProjections;
 
     /**
-     * @type {ngeo.map.FeatureOverlay}
+     * @type {import("ngeo/map/FeatureOverlay.js").default}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.filter.Condition
+ * @module import("ngeo/filter/Condition.js").default
  */
 /**
  * @enum {string}

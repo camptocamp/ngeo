@@ -1,5 +1,5 @@
 /**
- * @module ngeo.rule.Select
+ * @module import("ngeo/rule/Select.js").default
  */
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';

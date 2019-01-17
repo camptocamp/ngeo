@@ -15,7 +15,7 @@ const exports = class {
    * @param {angular.IQService} $q The Angular $q service.
    * @param {import("gmf/editing/EnumerateAttribute.js").default} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
-   * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfDataSourcesHelper
@@ -38,7 +38,7 @@ const exports = class {
     this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     /**
-     * @type {ngeo.datasource.Helper}
+     * @type {import("ngeo/datasource/Helper.js").default}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;

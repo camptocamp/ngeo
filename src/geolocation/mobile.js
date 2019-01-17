@@ -1,5 +1,5 @@
 /**
- * @module ngeo.geolocation.mobile
+ * @module import("ngeo/geolocation/mobile.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -92,9 +92,9 @@ exports.directive('ngeoMobileGeolocation', directive);
  * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController
@@ -122,13 +122,13 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   googAsserts.assertObject(options);
 
   /**
-   * @type {ngeo.message.Notification}
+   * @type {import("ngeo/message/Notification.js").default}
    * @private
    */
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

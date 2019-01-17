@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.MeasureArea
+ * @module import("ngeo/interaction/MeasureArea.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
@@ -14,14 +14,14 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  * See our live example: [../examples/measure.html](../examples/measure.html)
  *
  * @constructor
- * @extends {ngeo.interaction.Measure}
+ * @extends {import("ngeo/interaction/Measure.js").default}
  * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} options Options
  */
 const exports = function(format, gettextCatalog, options = {}) {
 
-  ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
+  ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ (options));
 
 
   /**

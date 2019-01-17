@@ -1,5 +1,5 @@
 /**
- * @module ngeo.test.data.msGMLOutputInformationWfs
+ * @module import("ngeo/test/data.js").default.msGMLOutputInformationWfs
  */
 const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +

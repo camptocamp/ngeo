@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.Message
+ * @module import("ngeo/message/Message.js").default
  */
 
 

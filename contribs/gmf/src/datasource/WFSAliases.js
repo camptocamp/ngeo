@@ -11,7 +11,7 @@ const exports = class {
    * Service that provides methods to get additional information and actions
    * when performing WFS requests.
    *
-   * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
@@ -22,7 +22,7 @@ const exports = class {
     // === Injected properties ===
 
     /**
-     * @type {ngeo.datasource.Helper}
+     * @type {import("ngeo/datasource/Helper.js").default}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -30,7 +30,7 @@ const exports = class {
 
 
   /**
-   * @param {ngeo.datasource.OGC} dataSource Data source.
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source.
    * @export
    */
   describe(dataSource) {

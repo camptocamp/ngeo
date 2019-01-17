@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.datepickerComponent
+ * @module import("ngeo/misc/datepickerComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -112,7 +112,7 @@ exports.directive('ngeoDatePicker', component);
  * DatePickerController - directive conttroller
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.auto.IInjectorService} $injector injector.
- * @param {!ngeo.misc.Time} ngeoTime time service.
+ * @param {!import("ngeo/misc/Time.js").default} ngeoTime time service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
@@ -124,7 +124,7 @@ function Controller($scope, $injector,
   ngeoTime, gettextCatalog) {
 
   /**
-   * @type {!ngeo.misc.Time}
+   * @type {!import("ngeo/misc/Time.js").default}
    * @private
    */
   this.ngeoTime_ = ngeoTime;

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.format.AttributeType
+ * @module import("ngeo/format/AttributeType.js").default
  */
 
 /**

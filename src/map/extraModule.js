@@ -1,5 +1,5 @@
 /**
- * @module ngeo.map.extraModule
+ * @module import("ngeo/map/extraModule.js").default
  */
 import angular from 'angular';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';

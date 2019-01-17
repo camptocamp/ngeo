@@ -83,7 +83,7 @@ exports.MainController = function() {
   vectorLayer.setMap(map);
 
   /**
-   * @type {ngeo.interaction.ModifyCircle}
+   * @type {import("ngeo/interaction/ModifyCircle.js").default}
    * @export
    */
   this.interaction = new ngeoInteractionModifyCircle(

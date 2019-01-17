@@ -40,13 +40,13 @@ const exports = class {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
    * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
-   * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+   * @param {!import("ngeo/map/BackgroundLayerMgr.js").default} ngeoBackgroundLayerMgr Background layer
    *     manager.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
    *     data sources service.
-   * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
-   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
+   * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
    * @param {!import("gmf/datasource/WFSAliases.js").default} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
@@ -90,13 +90,13 @@ const exports = class {
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {!ngeo.map.BackgroundLayerMgr}
+     * @type {!import("ngeo/map/BackgroundLayerMgr.js").default}
      * @private
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
     /**
-     * @type {ngeo.datasource.DataSources}
+     * @type {import("ngeo/datasource/DataSources.js").default}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -111,19 +111,19 @@ const exports = class {
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {!ngeo.map.LayerHelper}
+     * @type {!import("ngeo/map/LayerHelper.js").default}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {!ngeo.filter.RuleHelper}
+     * @type {!import("ngeo/filter/RuleHelper.js").default}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.misc.WMSTime}
+     * @type {!import("ngeo/misc/WMSTime.js").default}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
@@ -310,7 +310,7 @@ const exports = class {
    * are added or removed, pushing it to the cache or removing it from the
    * cache.
    *
-   * @param {Array.<ngeo.layertree.Controller>|undefined} value List of tree
+   * @param {Array.<import("ngeo/layertree/Controller.js").default>|undefined} value List of tree
    *     controllers.
    * @private
    */
@@ -574,7 +574,7 @@ const exports = class {
    * Also, set its according data source. Finally, add the data source to
    * the ngeo collection.
    *
-   * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to add
+   * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to add
    * @private
    */
   addTreeCtrlToCache_(treeCtrl) {
@@ -686,7 +686,7 @@ const exports = class {
    * Note: The possible states can only be 'on' or 'off', because the
    * layertree controller being a 'leaf'.
    *
-   * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
+   * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
    * @param {string|undefined} newVal New state value
    * @private
    */
@@ -709,7 +709,7 @@ const exports = class {
   /**
    * Returns a layertree controller cache item, if it exists.
    *
-   * @param {ngeo.layertree.Controller} treeCtrl The layer tree controller
+   * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
    * @return {gmfx.datasource.ManagerTreeCtrlCacheItem} Cache item
    * @private
    */

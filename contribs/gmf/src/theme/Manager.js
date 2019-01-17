@@ -23,7 +23,7 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
  * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager the tree manager.
- * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
@@ -56,7 +56,7 @@ const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {ngeo.statemanager.Service}
+   * @type {import("ngeo/statemanager/Service.js").default}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;

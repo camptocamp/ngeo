@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.MeasurePointMobile
+ * @module import("ngeo/interaction/MeasurePointMobile.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
@@ -13,7 +13,7 @@ import olGeomPoint from 'ol/geom/Point.js';
  * Interaction dedicated to measure by coordinate (point) on mobile devices.
  *
  * @constructor
- * @extends {ngeo.interaction.Measure}
+ * @extends {import("ngeo/interaction/Measure.js").default}
  * @param {numberCoordinates} format the number formatter
  * @param {string} coordFormat the coordinates formatter
  * @param {MeasureOptions=} options Options
@@ -22,7 +22,7 @@ const exports = function(format, coordFormat, options = /** @type {MeasureOption
 
   Object.assign(options, {displayHelpTooltip: false});
 
-  ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */(options));
+  ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */(options));
 
   /**
    * @type {numberCoordinates}

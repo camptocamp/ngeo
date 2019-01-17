@@ -1,5 +1,5 @@
 /**
- * @module ngeo.filter.ruleComponent
+ * @module import("ngeo/filter/ruleComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -91,9 +91,9 @@ class RuleController {
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
-   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
+   * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
    * @private
    * @ngInject
@@ -106,7 +106,7 @@ class RuleController {
     // Binding properties
 
     /**
-     * @type {!ngeo.map.FeatureOverlay}
+     * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @export
      */
     this.featureOverlay;
@@ -119,7 +119,7 @@ class RuleController {
 
     /**
      * The original rule.
-     * @type {!ngeo.rule.Rule}
+     * @type {!import("ngeo/rule/Rule.js").default}
      * @export
      */
     this.rule;
@@ -152,19 +152,19 @@ class RuleController {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!ngeo.misc.FeatureHelper}
+     * @type {!import("ngeo/misc/FeatureHelper.js").default}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!ngeo.filter.RuleHelper}
+     * @type {!import("ngeo/filter/RuleHelper.js").default}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.misc.ToolActivateMgr}
+     * @type {!import("ngeo/misc/ToolActivateMgr.js").default}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -176,7 +176,7 @@ class RuleController {
      * The cloned rule. Changes in the UI are applied to the clone 'on-the-fly'.
      * Changes in the clone are applied back in the original rule when the
      * apply button is clicked.
-     * @type {!ngeo.rule.Rule}
+     * @type {!import("ngeo/rule/Rule.js").default}
      * @export
      */
     this.clone;
@@ -258,7 +258,7 @@ class RuleController {
     };
 
     /**
-     * @type {!ngeo.misc.ToolActivate}
+     * @type {!import("ngeo/misc/ToolActivate.js").default}
      * @private
      */
     this.toolActivate_;// = new ngeo.misc.ToolActivate(this.rule, 'active');
@@ -279,7 +279,7 @@ class RuleController {
     this.drawActive = false;
 
     /**
-     * @type {!ngeo.misc.ToolActivate}
+     * @type {!import("ngeo/misc/ToolActivate.js").default}
      * @export
      */
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
@@ -309,7 +309,7 @@ class RuleController {
     this.interactions_ = new olCollection();
 
     /**
-     * @type {!ngeo.interaction.Modify}
+     * @type {!import("ngeo/interaction/Modify.js").default}
      * @private
      */
     this.modify_ = new ngeoInteractionModify({
@@ -319,7 +319,7 @@ class RuleController {
     this.interactions_.push(this.modify_);
 
     /**
-     * @type {ngeo.interaction.Rotate}
+     * @type {import("ngeo/interaction/Rotate.js").default}
      * @private
      */
     this.rotate_ = new ngeoInteractionRotate({
@@ -337,7 +337,7 @@ class RuleController {
     this.interactions_.push(this.rotate_);
 
     /**
-     * @type {ngeo.interaction.Translate}
+     * @type {import("ngeo/interaction/Translate.js").default}
      * @private
      */
     this.translate_ = new ngeoInteractionTranslate({
@@ -363,7 +363,7 @@ class RuleController {
     this.initializeInteractions_();
 
     /**
-     * @type {!ngeo.misc.ToolActivate}
+     * @type {!import("ngeo/misc/ToolActivate.js").default}
      * @export
      */
     this.modifyToolActivate = new ngeoMiscToolActivate(
@@ -372,7 +372,7 @@ class RuleController {
     );
 
     /**
-     * @type {ngeo.misc.ToolActivate}
+     * @type {import("ngeo/misc/ToolActivate.js").default}
      * @export
      */
     this.rotateToolActivate = new ngeoMiscToolActivate(
@@ -381,7 +381,7 @@ class RuleController {
     );
 
     /**
-     * @type {ngeo.misc.ToolActivate}
+     * @type {import("ngeo/misc/ToolActivate.js").default}
      * @export
      */
     this.translateToolActivate = new ngeoMiscToolActivate(

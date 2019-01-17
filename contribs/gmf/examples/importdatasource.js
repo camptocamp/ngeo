@@ -74,7 +74,7 @@ exports.MainController = class {
    *     data sources manager service.
    * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
    * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
    * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,

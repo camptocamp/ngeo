@@ -1,5 +1,5 @@
 /**
- * @module ngeo.geolocation.desktop
+ * @module import("ngeo/geolocation/desktop.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -89,9 +89,9 @@ exports.directive('ngeoDesktopGeolocation', directive);
  * @private
  * @param {angular.IScope} $scope The directive's scope.
  * @param {angular.JQLite} $element Element.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
@@ -119,13 +119,13 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.$scope_ = $scope;
 
   /**
-   * @type {ngeo.message.Notification}
+   * @type {import("ngeo/message/Notification.js").default}
    * @private
    */
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

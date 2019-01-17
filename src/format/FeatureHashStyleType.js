@@ -1,5 +1,5 @@
 /**
- * @module ngeo.format.FeatureHashStyleType
+ * @module import("ngeo/format/FeatureHashStyleType.js").default
  */
 /**
  * @enum {string}

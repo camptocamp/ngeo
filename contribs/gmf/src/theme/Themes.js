@@ -23,7 +23,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IQService} $q Angular q service
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
@@ -70,7 +70,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   }
 
   /**
-   * @type {?ngeo.statemanager.Location}
+   * @type {?import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = null;
@@ -79,7 +79,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   }
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.controlComponent
+ * @module import("ngeo/misc/controlComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

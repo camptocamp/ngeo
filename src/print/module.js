@@ -1,5 +1,5 @@
 /**
- * @module ngeo.print.module
+ * @module import("ngeo/print/module.js").default
  */
 import angular from 'angular';
 import ngeoPrintService from 'ngeo/print/Service.js';

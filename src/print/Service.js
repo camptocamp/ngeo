@@ -1,5 +1,5 @@
 /**
- * @module ngeo.print.Service
+ * @module import("ngeo/print/Service.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -18,7 +18,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 
 /**
- * @typedef {function(string):!ngeo.print.Service} CreatePrint
+ * @typedef {function(string):!import("ngeo/print/Service.js").default} CreatePrint
  */
 
 
@@ -63,7 +63,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @param {string} url URL to MapFish print web service.
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper service.
  */
 const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   /**
@@ -85,13 +85,13 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.print.VectorEncoder}
+   * @type {import("ngeo/print/VectorEncoder.js").default}
    * @private
    */
   this.vectorEncoder_ = new ngeoPrintVectorEncoder();
@@ -482,7 +482,7 @@ exports.prototype.getCapabilities = function(opt_httpConfig) {
 /**
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @return {CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service

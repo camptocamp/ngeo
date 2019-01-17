@@ -1,5 +1,5 @@
 /**
- * @module ngeo.routing.RoutingFeatureComponent
+ * @module import("ngeo/routing/RoutingFeatureComponent.js").default
  */
 const exports = {};
 import angular from 'angular';
@@ -60,7 +60,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IQService} $q Angular q service
- * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -88,7 +88,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   this.$q_ = $q;
 
   /**
-   * @type {ngeo.routing.NominatimService}
+   * @type {import("ngeo/routing/NominatimService.js").default}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;

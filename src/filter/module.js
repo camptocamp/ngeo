@@ -1,5 +1,5 @@
 /**
- * @module ngeo.filter.module
+ * @module import("ngeo/filter/module.js").default
  */
 import angular from 'angular';
 import ngeoFilterComponent from 'ngeo/filter/component.js';

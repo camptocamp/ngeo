@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.Popup
+ * @module import("ngeo/message/Popup.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -12,7 +12,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 
 
 /**
- * @typedef {function():!ngeo.message.Popup} PopupFactory
+ * @typedef {function():!import("ngeo/message/Popup.js").default} PopupFactory
  */
 
 
@@ -289,7 +289,7 @@ exports.prototype.open = function(options) {
 exports.Factory = function($compile, $rootScope, $sce, $timeout) {
   return (
     /**
-     * @return {!ngeo.message.Popup} The popup instance.
+     * @return {!import("ngeo/message/Popup.js").default} The popup instance.
      */
     function() {
       return new exports($compile, $rootScope, $sce, $timeout);

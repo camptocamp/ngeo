@@ -27,10 +27,10 @@ import * as olEvents from 'ol/events.js';
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
- * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
@@ -57,13 +57,13 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.message.Notification}
+   * @type {import("ngeo/message/Notification.js").default}
    * @private
    */
   this.ngeoNotification_ = ngeoNotification;
@@ -88,7 +88,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
    * The controller of the (unique) root layer tree.
    * The array of top level layer trees is available through `rootCtrl.children`.
    * The order doesn't match with the ordre of the displayed layertree.
-   * @type {ngeo.layertree.Controller}
+   * @type {import("ngeo/layertree/Controller.js").default}
    * @export
    */
   this.rootCtrl = null;
@@ -114,7 +114,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.promiseForGroupsToAddInThisDigestLoop_ = null;
 
   /**
-   * @type {ngeo.statemanager.Service}
+   * @type {import("ngeo/statemanager/Service.js").default}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -456,7 +456,7 @@ exports.prototype.notifyCantAddGroups_ = function(groups) {
 /**
  * Get a treeCtrl based on it's node id.
  * @param {number} id the id of a GMFThemesGroup or a GMFThemesLeaf.
- * @return {ngeo.layertree.Controller?} treeCtrl The associated controller or null.
+ * @return {import("ngeo/layertree/Controller.js").default?} treeCtrl The associated controller or null.
  * @public
  */
 exports.prototype.getTreeCtrlByNodeId = function(id) {
@@ -475,7 +475,7 @@ exports.prototype.getTreeCtrlByNodeId = function(id) {
 
 /**
  * Get the OGC server.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {gmfThemes.GmfOgcServer} The OGC server.
  */
@@ -545,7 +545,7 @@ exports.prototype.refreshFirstLevelGroups_ = function(themes) {
 /**
  * Return a gmfx.TreeManagerFullState that keeps the state of the given
  * treeCtrl including the state of its children.
- * @param {ngeo.layertree.Controller} treeCtrl the ngeo layertree controller to
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl the ngeo layertree controller to
  *     save.
  * @return {gmfx.TreeManagerFullState!} the fullState object.
  * @private

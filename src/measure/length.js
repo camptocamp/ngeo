@@ -1,5 +1,5 @@
 /**
- * @module ngeo.measure.length
+ * @module import("ngeo/measure/length.js").default
  */
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
@@ -36,7 +36,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
      * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
+     * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

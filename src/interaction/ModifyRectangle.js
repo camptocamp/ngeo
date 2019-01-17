@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.ModifyRectangle
+ * @module import("ngeo/interaction/ModifyRectangle.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
@@ -23,7 +23,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @constructor
  * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
- * @fires ngeo.interaction.ModifyCircleEvent
+ * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
 const exports = function(options) {
@@ -316,7 +316,7 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Start drag sequence?
- * @this {ngeo.interaction.ModifyRectangle}
+ * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
 exports.prototype.handleDown_ = function(evt) {
@@ -338,7 +338,7 @@ exports.prototype.handleDown_ = function(evt) {
 
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
- * @this {ngeo.interaction.ModifyRectangle}
+ * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
 exports.prototype.handleDrag_ = function(evt) {
@@ -409,7 +409,7 @@ exports.prototype.calculateNewPixel_ = function(
 /**
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Stop drag sequence?
- * @this {ngeo.interaction.ModifyRectangle}
+ * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
 exports.prototype.handleUp_ = function(evt) {

@@ -49,7 +49,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
  * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
  * @param {import("gmf/theme/Manager.js").default} gmfThemeManager gmf Theme Manager service.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @ngInject
  */
 exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {

@@ -1,5 +1,5 @@
 /**
- * @module ngeo.datasource.OGC
+ * @module import("ngeo/datasource/OGC.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
@@ -307,7 +307,7 @@ export default class extends ngeoDatasourceDataSource {
     /**
      * A list of filter rules to apply to this data source using the filter
      * condition.
-     * @type {?Array.<!ngeo.rule.Rule>}
+     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
      */
     this.filterRules = options.filterRules || null;
 

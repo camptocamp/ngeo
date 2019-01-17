@@ -34,9 +34,9 @@ const exports = angular.module('gmfDisclaimer', [
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!PopupFactory} ngeoCreatePopup Popup service.
- * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
- * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/message/Disclaimer.js").default} ngeoDisclaimer Ngeo Disclaimer service.
+ * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo Event Helper.
+ * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController
@@ -112,19 +112,19 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
   this.createPopup_ = ngeoCreatePopup;
 
   /**
-   * @type {!ngeo.message.Disclaimer}
+   * @type {!import("ngeo/message/Disclaimer.js").default}
    * @private
    */
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
-   * @type {!ngeo.misc.EventHelper}
+   * @type {!import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {!ngeo.map.LayerHelper}
+   * @type {!import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;

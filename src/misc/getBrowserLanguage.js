@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.getBrowserLanguage
+ * @module import("ngeo/misc/getBrowserLanguage.js").default
  */
 import angular from 'angular';
 

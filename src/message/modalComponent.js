@@ -1,5 +1,5 @@
 /**
- * @module ngeo.message.modalComponent
+ * @module import("ngeo/message/modalComponent.js").default
  */
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/draggable.js';

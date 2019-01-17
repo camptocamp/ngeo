@@ -1,5 +1,5 @@
 /**
- * @module ngeo.statemanager.WfsPermalink
+ * @module import("ngeo/statemanager/WfsPermalink.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

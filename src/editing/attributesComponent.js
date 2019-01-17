@@ -1,5 +1,5 @@
 /**
- * @module ngeo.editing.attributesComponent
+ * @module import("ngeo/editing/attributesComponent.js").default
  */
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -77,7 +77,7 @@ exports.component('ngeoAttributes', component);
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @ngInject
@@ -122,7 +122,7 @@ function Controller($scope, ngeoEventHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {!ngeo.misc.EventHelper}
+   * @type {!import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

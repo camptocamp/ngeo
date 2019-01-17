@@ -1,5 +1,5 @@
 /**
- * @module ngeo.interaction.Measure
+ * @module import("ngeo/interaction/Measure.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -56,9 +56,9 @@ import olStyleStyle from 'ol/style/Style.js';
  * @constructor
  * @abstract
  * @extends {import("ol/interaction/Interaction.js").default}
- * @param {ngeo.interaction.MeasureBaseOptions=} options Options
+ * @param {import("ngeo/interaction/MeasureBaseOptions.js").default=} options Options
  */
-const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOptions} */ ({})) {
+const exports = function(options = /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ ({})) {
 
   olInteractionInteraction.call(this, {
     handleEvent: exports.handleEvent_
@@ -198,7 +198,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The draw interaction to be used.
-   * @type {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}
+   * @type {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|import("ngeo/interaction/MobileDraw.js").default}
    * @private
    */
   this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
@@ -234,7 +234,7 @@ olUtilInherits(exports, olInteractionInteraction);
  * @param {number|undefined} precision Precision.
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @this {ngeo.interaction.Measure}
+ * @this {import("ngeo/interaction/Measure.js").default}
  */
 exports.getFormattedArea = function(polygon, projection, precision, format) {
   const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
@@ -295,7 +295,7 @@ exports.getFormattedPoint = function(point, decimals, format, opt_template) {
  * Handle map browser event.
  * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
- * @this {ngeo.interaction.Measure}
+ * @this {import("ngeo/interaction/Measure.js").default}
  * @private
  */
 exports.handleEvent_ = function(evt) {
@@ -316,7 +316,7 @@ exports.handleEvent_ = function(evt) {
 
 
 /**
- * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The draw interaction.
+ * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|import("ngeo/interaction/MobileDraw.js").default} The draw interaction.
  */
 exports.prototype.getDrawInteraction = function() {
   return this.drawInteraction_;
@@ -330,7 +330,7 @@ exports.prototype.getDrawInteraction = function() {
  * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {import("ol/source/Vector.js").default} source Vector source.
- * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The interaction
+ * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|import("ngeo/interaction/MobileDraw.js").default} The interaction
  * @protected
  */
 exports.prototype.createDrawInteraction = function(style, source) {};

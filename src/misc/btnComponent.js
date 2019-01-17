@@ -1,5 +1,5 @@
 /**
- * @module ngeo.misc.btnComponent
+ * @module import("ngeo/misc/btnComponent.js").default
  */
 import angular from 'angular';
 
@@ -50,7 +50,7 @@ function btnGroupComponent($parse) {
      * @param {!angular.IScope} scope Scope.
      * @param {!angular.JQLite=} element Element.
      * @param {!angular.Attributes=} attrs Attributes.
-     * @param {!ngeo.misc.btnComponent.BtnGroupController=} controller Controller.
+     * @param {!import("ngeo/misc/btnComponent.js").default.BtnGroupController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;

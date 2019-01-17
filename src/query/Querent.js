@@ -1,5 +1,5 @@
 /**
- * @module ngeo.query.Querent
+ * @module import("ngeo/query/Querent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -114,8 +114,8 @@ const exports = class {
    *
    * @param {angular.IHttpService} $http Angular $http service.
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
+   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoQuerent
    * @ngInject
@@ -137,13 +137,13 @@ const exports = class {
     this.q_ = $q;
 
     /**
-     * @type {!ngeo.filter.RuleHelper}
+     * @type {!import("ngeo/filter/RuleHelper.js").default}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!ngeo.misc.WMSTime}
+     * @type {!import("ngeo/misc/WMSTime.js").default}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
@@ -233,7 +233,7 @@ const exports = class {
    *
    * The map view resolution determines if the inner ogc layers are in range.
    *
-   * @param {!Array.<!ngeo.datasource.DataSource>} dataSources Data sources
+   * @param {!Array.<!import("ngeo/datasource/DataSource.js").default>} dataSources Data sources
    * @param {import("ol/Map.js").default} map Map.
    * @return {!QueryableDataSources} Queryable data sources.
    * @export
@@ -267,7 +267,7 @@ const exports = class {
   }
 
   /**
-   * @param {ngeo.datasource.OGC} dataSource Data source.
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource Data source.
    * @return {angular.IPromise} Promise.
    * @export
    */
@@ -443,7 +443,7 @@ const exports = class {
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {!Array.<!ngeo.datasource.OGC>} dataSources List of
+   * @param {!Array.<!import("ngeo/datasource/OGC.js").default>} dataSources List of
    *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
@@ -487,7 +487,7 @@ const exports = class {
    * Read and assign the type of the feature to each feature in the data.
    * The type will be stocked in the properties of the features as
    * "ngeo_feature_type_".
-   * @param {ngeo.datasource.OGC} dataSource used to read the features.
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource used to read the features.
    * @param {Document | Node | Object | string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @return {Array.<import("ol/Feature.js").default>} returned features with a type in each features.
@@ -522,7 +522,7 @@ const exports = class {
   /**
    * Return the types defined in the format of the datasource. Can set the
    * types if one is given.
-   * @param {ngeo.datasource.OGC} dataSource that contains the format object.
+   * @param {import("ngeo/datasource/OGC.js").default} dataSource that contains the format object.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {Array.<string>=} opt_types An array of type if you want to set the
    *     type of the format object.
@@ -969,7 +969,7 @@ const exports = class {
    * - queryable (using the native getter)
    * - have at least one OGC layer in range of current map view resolution.
    *
-   * @param {ngeo.datasource.DataSource} ds Data source
+   * @param {import("ngeo/datasource/DataSource.js").default} ds Data source
    * @param {number} res Resolution.
    * @return {boolean} Whether the data source is queryable
    * @private
@@ -977,7 +977,7 @@ const exports = class {
   isDataSourceQueryable_(ds, res) {
     let queryable = ds.visible && ds.inRange && ds.queryable;
     if (queryable && ds instanceof ngeoDatasourceOGC) {
-      const ogcDS = /** @type {!ngeo.datasource.OGC} */ (ds);
+      const ogcDS = /** @type {!import("ngeo/datasource/OGC.js").default} */ (ds);
       queryable = ogcDS.isAnyOGCLayerInRange(res, true);
     }
     return queryable;
@@ -1023,7 +1023,7 @@ const exports = class {
 
 
 /**
- * @typedef {!Array.<!Array.<!ngeo.datasource.OGC>>} CombinedDataSources
+ * @typedef {!Array.<!Array.<!import("ngeo/datasource/OGC.js").default>>} CombinedDataSources
  */
 
 

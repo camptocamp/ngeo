@@ -1,5 +1,5 @@
 /**
- * @module ngeo.layertree.module
+ * @module import("ngeo/layertree/module.js").default
  */
 import angular from 'angular';
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';

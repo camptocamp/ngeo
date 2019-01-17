@@ -1,5 +1,5 @@
 /**
- * @module ngeo.datasource.FileGroup
+ * @module import("ngeo/datasource/FileGroup.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
@@ -61,7 +61,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {!ngeo.datasource.File} dataSource File data source to register.
+   * @param {!import("ngeo/datasource/File.js").default} dataSource File data source to register.
    * @private
    */
   registerDataSource_(dataSource) {
@@ -72,7 +72,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {!ngeo.datasource.File} dataSource File data source.
+   * @param {!import("ngeo/datasource/File.js").default} dataSource File data source.
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private
@@ -93,7 +93,7 @@ export default class extends ngeoDatasourceGroup {
   }
 
   /**
-   * @param {!ngeo.datasource.File} dataSource File data source to unregister.
+   * @param {!import("ngeo/datasource/File.js").default} dataSource File data source to unregister.
    * @private
    */
   unregisterDataSource_(dataSource) {
