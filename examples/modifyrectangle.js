@@ -59,7 +59,7 @@ exports.MainController = function() {
   ]]);
 
   /**
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.features = new olCollection();

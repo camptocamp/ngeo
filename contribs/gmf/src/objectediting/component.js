@@ -109,7 +109,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @htmlAttribute {string} gmf-objectediting-geomtype The geometry type.
  * @htmlAttribute {number} gmf-objectediting-layernodeid The GMF layer node id.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objectediting-map The map.
- * @htmlAttribute {ol.Collection.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @ngdoc component
  * @ngname gmfObjectediting
@@ -185,7 +185,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.map;
 
   /**
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures;

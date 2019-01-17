@@ -118,7 +118,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?ol.Collection.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?

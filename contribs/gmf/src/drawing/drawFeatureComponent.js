@@ -91,7 +91,7 @@ exports.directive('gmfDrawfeature', component);
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!ol.Collection.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -167,7 +167,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ol.Collection.<!import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.features = ngeoFeatures;
@@ -185,7 +185,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.selectedFeature = null;
 
   /**
-   * @type {!ol.Collection.<!import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.selectedFeatures = new olCollection();

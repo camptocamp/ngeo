@@ -44,7 +44,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @param {ol.Collection.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay

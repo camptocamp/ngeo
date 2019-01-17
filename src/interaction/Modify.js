@@ -47,7 +47,7 @@ const exports = function(options) {
   googAsserts.assert(options.features);
 
   /**
-   * @type {!ol.Collection.<import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
@@ -65,7 +65,7 @@ const exports = function(options) {
   this.interactions_ = [];
 
   /**
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.otherFeatures_ = new olCollection();
@@ -79,7 +79,7 @@ const exports = function(options) {
   }));
 
   /**
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.circleFeatures_ = new olCollection();
@@ -92,7 +92,7 @@ const exports = function(options) {
   }));
 
   /**
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.rectangleFeatures_ = new olCollection();
@@ -227,7 +227,7 @@ exports.prototype.removeFeature_ = function(feature) {
 
 /**
  * @param {import("ol/Feature.js").default} feature Feature.
- * @return {ol.Collection.<import("ol/Feature.js").default>} Collection of features for this feature.
+ * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for this feature.
  * @private
  */
 exports.prototype.getFeatureCollection_ = function(feature) {

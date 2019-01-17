@@ -8,9 +8,9 @@ const exports = {};
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
- * @param {Array.<ol.Coordinate>|import("ol/Coordinate.js").default} coordinates Coordinates
+ * @param {Array.<import("ol/Coordinate.js").default>|import("ol/Coordinate.js").default} coordinates Coordinates
  * @param {number} nesting Nesting level.
- * @return {Array.<ol.Coordinate>|import("ol/Coordinate.js").default} Converted coordinates.
+ * @return {Array.<import("ol/Coordinate.js").default>|import("ol/Coordinate.js").default} Converted coordinates.
  */
 exports.toXY = function(coordinates, nesting) {
   if (nesting === 0) {

@@ -65,7 +65,7 @@ const exports = function(options) {
   this.keyPressListenerKey_ = null;
 
   /**
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.myFeatures_ = options.features !== undefined ? options.features : null;

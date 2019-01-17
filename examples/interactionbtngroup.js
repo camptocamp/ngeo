@@ -41,7 +41,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr) {
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
-   * @type {ol.Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 
