@@ -385,7 +385,7 @@ function Controller($element, $q, $scope, $timeout,
   this.modifyToolActivate;
 
   /**
-   * @type {ngeo.Menu}
+   * @type {import("ngeo/Menu.js").default}
    * @private
    */
   this.menu_ = new ngeoMenu({
@@ -401,7 +401,7 @@ function Controller($element, $q, $scope, $timeout,
   });
 
   /**
-   * @type {ngeo.Menu}
+   * @type {import("ngeo/Menu.js").default}
    * @private
    */
   this.menuVertex_ = new ngeoMenu({

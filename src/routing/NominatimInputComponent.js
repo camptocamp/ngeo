@@ -143,7 +143,7 @@ exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
  *         ngeo-nominatim-input-placeholder="type to search"
  *         ngeo-nominatim-input-on-select="ctrl.onSelect">
  *
- * Is used in in the partial of {@link ngeo.routingFeatureComponent}.
+ * Is used in in the partial of {@link import("ngeo/routingFeatureComponent.js").default}.
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *

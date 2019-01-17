@@ -16,7 +16,7 @@ import olFeature from 'ol/Feature.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   features: ol.Feature
  * }>} ModifyEvent
  */

@@ -18,7 +18,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   current: ol.layer.Base,
  *   previous: ol.layer.Base
  * }>} BackgroundEvent

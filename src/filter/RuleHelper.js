@@ -703,7 +703,7 @@ const exports = class {
   /**
    * Create and return an OpenLayers filter object using the available
    * dimensions filters configuration within the data source.
-   * @param {ngeo.DataSource} dataSource Data source from which to create the
+   * @param {import("ngeo/DataSource.js").default} dataSource Data source from which to create the
    *     filter.
    * @return {?import("ol/format/filter/Filter.js").default} Filter
    * @private

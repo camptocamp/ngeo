@@ -848,7 +848,7 @@ gmfx.openPopup_;
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   user: gmfx.User
  * }>}
  */

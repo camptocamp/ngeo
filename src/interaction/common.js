@@ -6,7 +6,7 @@ import {createEditingStyle} from 'ol/style/Style.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   feature: ol.Feature
  * }>} DrawEvent
  */

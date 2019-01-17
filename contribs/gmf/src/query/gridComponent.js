@@ -70,7 +70,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 
 
 /**
- * Provides a component to display results of the {@link ngeo.queryResult} in a
+ * Provides a component to display results of the {@link import("ngeo/queryResult.js").default} in a
  * grid and shows related features on the map using
  * the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
  *

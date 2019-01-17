@@ -719,7 +719,7 @@ const exports = class {
 
   /**
    * Return the layer corresponding to the data source.
-   * @param {!ngeo.DataSource} dataSource The data source.
+   * @param {!import("ngeo/DataSource.js").default} dataSource The data source.
    * @return {import("ol/layer/Base.js").default|undefined} The layer.
    * @private
    */

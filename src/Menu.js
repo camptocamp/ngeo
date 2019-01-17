@@ -1,5 +1,5 @@
 /**
- * @module ngeo.Menu
+ * @module import("ngeo/Menu.js").default
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';

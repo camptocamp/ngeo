@@ -1,5 +1,5 @@
 /**
- * @module ngeo.utils
+ * @module import("ngeo/utils.js").default
  */
 const exports = {};
 import {platformModifierKeyOnly, singleClick} from 'ol/events/condition.js';

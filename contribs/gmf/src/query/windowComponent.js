@@ -79,7 +79,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 
 
 /**
- * Provide a component to display results of the {@link ngeo.queryResult}
+ * Provide a component to display results of the {@link import("ngeo/queryResult.js").default}
  * and shows related features on the map using the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
  *
  * You can override the default component's template by setting the

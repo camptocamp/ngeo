@@ -36,7 +36,7 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   action: string
  * }>} MenuEvent
  */
@@ -291,7 +291,7 @@ class RuleController {
     this.drawnFeatures = new olCollection();
 
     /**
-     * @type {?ngeo.Menu}
+     * @type {?import("ngeo/Menu.js").default}
      * @private
      */
     this.menu_ = null;

@@ -318,7 +318,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   }
 
   /**
-   * @type {?ngeo.Popover}
+   * @type {?import("ngeo/Popover.js").default}
    * @private
    */
   this.mapTooltip_ = null;

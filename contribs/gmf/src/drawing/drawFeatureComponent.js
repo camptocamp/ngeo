@@ -208,7 +208,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {?ngeo.Menu}
+   * @type {?import("ngeo/Menu.js").default}
    * @private
    */
   this.menu_ = null;

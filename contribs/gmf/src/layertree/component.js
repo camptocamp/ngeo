@@ -95,7 +95,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
 
 /**
  * This component creates a layertree based on the c2cgeoportal JSON themes
- * source and a {@link ngeo.layertreeComponent}. The controller used by this
+ * source and a {@link import("ngeo/layertreeComponent.js").default}. The controller used by this
  * component defines some functions for each node that are created by a default
  * template. This default template can be overridden by setting the value
  * 'gmf.layertreeTemplateUrl' but you will have to adapt the

@@ -350,7 +350,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
 /**
  * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature (point geometry).
  *
- * The text input is provided by {@link ngeo.nominatimInputComponent} and includes Nominatim search.
+ * The text input is provided by {@link import("ngeo/nominatimInputComponent.js").default} and includes Nominatim search.
  *
  * Example:
  *
@@ -361,7 +361,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
  *         ngeo-routing-feature-stroke-color="#4CB01E"
  *         ngeo-routing-feature-on-change="ctrl.handleChange">
  *
- * Is used in in the partial of {@link ngeo.routingComponent}.
+ * Is used in in the partial of {@link import("ngeo/routingComponent.js").default}.
  *
  * See the [../examples/routing.html](../examples/routing.html) example for a usage sample.
  *
