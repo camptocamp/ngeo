@@ -6,12 +6,12 @@
       "lib": ["es2017", "dom"],
       "allowJs": true,
       "checkJs": false,
-      "noEmit": true
-    },
-    "baseUrl": "./",
-    "paths": {
-      "ngeo/*": ["src/*"],
-      "gmf/*": ["contribs/gmf/src/*"]
+      "noEmit": true,
+      "baseUrl": "./",
+      "paths": {
+        "ngeo/*": ["src/*"],
+        "gmf/*": ["contribs/gmf/src/*"]
+      }
     },
     "include": [
       "src/**/*.js",
