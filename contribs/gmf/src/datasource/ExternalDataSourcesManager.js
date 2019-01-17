@@ -322,7 +322,7 @@ const exports = class {
     const id = exports.getId(layer);
     const service = capabilities['Service'];
 
-    url = url !== undefined ? url : service['OnlineResource'];
+    url = service['OnlineResource'] || url;
 
     let dataSource;
 
