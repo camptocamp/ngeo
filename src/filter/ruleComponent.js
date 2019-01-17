@@ -303,7 +303,7 @@ class RuleController {
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {!ol.Collection.<!ol.interaction.Interaction>}
+     * @type {!ol.Collection.<!import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = new olCollection();
@@ -785,7 +785,7 @@ class RuleController {
   }
 
   /**
-   * @param {ol.Collection.Event} evt Event.
+   * @param {import("ol/Collection/Event.js").default} evt Event.
    * @private
    */
   handleFeaturesAdd_(evt) {

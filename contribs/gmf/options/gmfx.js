@@ -256,7 +256,7 @@ gmfx.PermalinkOptions;
 
 /**
  * An alternate style for the crosshair feature added by the permalink service.
- * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined}
+ * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|import("ol/style/Style.js").default|undefined}
  */
 gmfx.PermalinkOptions.prototype.crosshairStyle;
 
@@ -550,7 +550,7 @@ gmfx.SearchComponentDatasource.prototype.url;
 
 
 /**
- * @typedef {Object.<string, ol.style.Style|Array.<ol.style.Style>>}
+ * @typedef {Object.<string, ol.style.Style|Array.<import("ol/style/Style.js").default>>}
  */
 gmfx.StylesObject;
 

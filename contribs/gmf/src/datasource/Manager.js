@@ -720,7 +720,7 @@ const exports = class {
   /**
    * Return the layer corresponding to the data source.
    * @param {!ngeo.DataSource} dataSource The data source.
-   * @return {ol.layer.Base|undefined} The layer.
+   * @return {import("ol/layer/Base.js").default|undefined} The layer.
    * @private
    */
   getDataSourceLayer_(dataSource) {
@@ -743,7 +743,7 @@ const exports = class {
   /**
    * Update layer filter parameter according to data sources filter rules
    * and dimensions filters.
-   * @param {ol.layer.Base} layer The layer to update.
+   * @param {import("ol/layer/Base.js").default} layer The layer to update.
    * @private
    */
   updateLayerFilter_(layer) {

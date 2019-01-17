@@ -37,7 +37,7 @@ exports.MainController = function($scope) {
 
   /**
    * @private
-   * @type {ol.format.KML}
+   * @type {import("ol/format/KML.js").default}
    */
   this.kmlFormat_ = new olFormatKML({
     extractStyles: false
@@ -45,7 +45,7 @@ exports.MainController = function($scope) {
 
   /**
    * @private
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    */
   this.vectorSource_ = new olSourceVector();
 

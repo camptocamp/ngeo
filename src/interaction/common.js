@@ -29,7 +29,7 @@ exports.getDefaultDrawStyleFunction = function() {
 exports.getDefaultModifyStyleFunction = function() {
   const style = createEditingStyle();
   return function(feature, resolution) {
-    return style[/**@type {ol.geom.GeometryType} */ ('Point')];
+    return style[/**@type {import("ol/geom/GeometryType.js").default} */ ('Point')];
   };
 };
 

@@ -127,7 +127,7 @@ const exports = class {
   /**
    * Called when a new data source is added to the ngeo collection. Add it
    * to the cache.
-   * @param {ol.Collection.Event} evt Event
+   * @param {import("ol/Collection/Event.js").default} evt Event
    * @private
    */
   handleDataSourcesAdd_(evt) {
@@ -139,7 +139,7 @@ const exports = class {
   /**
    * Called when a data source is removed from the ngeo collection. Remove it
    * from the cache.
-   * @param {ol.Collection.Event} evt Event
+   * @param {import("ol/Collection/Event.js").default} evt Event
    * @private
    */
   handleDataSourcesRemove_(evt) {

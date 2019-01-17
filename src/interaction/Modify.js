@@ -39,7 +39,7 @@ import olFeature from 'ol/Feature.js';
  * never share the same feature, they don't collide with one an other.
  *
  * @constructor
- * @extends {ol.interaction.Interaction}
+ * @extends {import("ol/interaction/Interaction.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
  */
 const exports = function(options) {
@@ -59,7 +59,7 @@ const exports = function(options) {
   this.listenerKeys_ = [];
 
   /**
-   * @type {Array.<ol.interaction.Interaction>}
+   * @type {Array.<import("ol/interaction/Interaction.js").default>}
    * @private
    */
   this.interactions_ = [];
@@ -184,7 +184,7 @@ exports.prototype.setState_ = function() {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesAdd_ = function(evt) {
@@ -196,7 +196,7 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesRemove_ = function(evt) {

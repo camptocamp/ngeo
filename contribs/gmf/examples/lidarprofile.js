@@ -34,7 +34,7 @@ exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
  */
 exports.MainController = function($scope) {
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.profileLine = null;

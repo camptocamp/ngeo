@@ -162,7 +162,7 @@ const exports = class {
   /**
    * Called when a new data source is added to the ngeo collection. If there's
    * map bound, update its `inRange` right away.
-   * @param {!ol.Collection.Event} event Event
+   * @param {!import("ol/Collection/Event.js").default} event Event
    * @private
    */
   handleDataSourcesAdd_(event) {

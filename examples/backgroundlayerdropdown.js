@@ -87,7 +87,7 @@ exports.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
 
 /**
  * @param {string} layerName Layer name.
- * @return {ol.layer.Tile} The layer.
+ * @return {import("ol/layer/Tile.js").default} The layer.
  * @private
  */
 exports.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
@@ -128,7 +128,7 @@ exports.MainController = function($scope) {
 
   /**
    * An overlay layer.
-   * @type {ol.layer.Image}
+   * @type {import("ol/layer/Image.js").default}
    */
   const overlay = new olLayerImage({
     source: new olSourceImageWMS({

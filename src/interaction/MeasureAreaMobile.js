@@ -34,7 +34,7 @@ olUtilInherits(
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('Polygon'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Polygon'),
     style: style,
     source: source
   });

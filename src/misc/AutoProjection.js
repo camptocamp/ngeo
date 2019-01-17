@@ -38,7 +38,7 @@ exports.prototype.stringToCoordinates = function(str) {
  *     for each code that are not defined in ol projections.
  * @param {Array.<string>} projectionsCodes EPSG codes (e.g. 'EPSG:3857',
  *     'epsg:3857' or '3857').
- * @return {Array.<ol.proj.Projection>} An array of projections.
+ * @return {Array.<import("ol/proj/Projection.js").default>} An array of projections.
  * @export
  */
 exports.prototype.getProjectionList = function(projectionsCodes) {
@@ -65,8 +65,8 @@ exports.prototype.getProjectionList = function(projectionsCodes) {
  * which it falls inside of the viewProjection extent.
  * @param {ol.Coordinate} coordinates The point to test.
  * @param {ol.Extent} extent Limits in which coordinates can be valid.
- * @param {ol.proj.Projection} viewProjection Target projection the point.
- * @param {Array.<ol.proj.Projection>=} opt_projections optional array of
+ * @param {import("ol/proj/Projection.js").default} viewProjection Target projection the point.
+ * @param {Array.<import("ol/proj/Projection.js").default>=} opt_projections optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
  * @return {?ol.Coordinate} A coordinates in the view's projection if it matches
@@ -99,8 +99,8 @@ exports.prototype.tryProjections = function(coordinates,
  * re-call it with coordinates in reverse order.
  * @param {ol.Coordinate} coordinates The point to test.
  * @param {ol.Extent} extent Limits in which coordinates can be valid.
- * @param {ol.proj.Projection} viewProjection Target projection the point.
- * @param {Array.<ol.proj.Projection>=} opt_projections optional array of
+ * @param {import("ol/proj/Projection.js").default} viewProjection Target projection the point.
+ * @param {Array.<import("ol/proj/Projection.js").default>=} opt_projections optional array of
  *     projections. The point is tested in each projection, in the order of
  *     the array.
  * @return {?ol.Coordinate} A coordinates in the view's projection if it matches

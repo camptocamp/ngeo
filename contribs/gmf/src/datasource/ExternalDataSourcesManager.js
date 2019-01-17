@@ -276,7 +276,7 @@ const exports = class {
   }
 
   /**
-   * @return {ol.layer.Group} Layer group where to push layers created by
+   * @return {import("ol/layer/Group.js").default} Layer group where to push layers created by
    *     this service.
    */
   get layerGroup() {
@@ -296,7 +296,7 @@ const exports = class {
   }
 
   /**
-   * @param {ol.layer.Layer} layer Layer.
+   * @param {import("ol/layer/Layer.js").default} layer Layer.
    * @private
    */
   addLayer_(layer) {
@@ -304,7 +304,7 @@ const exports = class {
   }
 
   /**
-   * @param {ol.layer.Layer} layer Layer.
+   * @param {import("ol/layer/Layer.js").default} layer Layer.
    * @private
    */
   removeLayer_(layer) {
@@ -564,7 +564,7 @@ const exports = class {
   }
 
   /**
-   * @param {!ol.layer.Tile} layer WMTS layer
+   * @param {!import("ol/layer/Tile.js").default} layer WMTS layer
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private
@@ -579,7 +579,7 @@ const exports = class {
    * Called when a data source is removed from the collection of ngeo data
    * sources. If it's an external data source, remove it from its WMS Group
    *
-   * @param {ol.Collection.Event} evt Collection event.
+   * @param {import("ol/Collection/Event.js").default} evt Collection event.
    * @private
    */
   handleDataSourcesRemove_(evt) {

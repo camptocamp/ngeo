@@ -98,7 +98,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.active;
 
   /**
-   * @type {ol.Collection.<!ol.Feature>|!ol.source.Vector}
+   * @type {ol.Collection.<!ol.Feature>|!import("ol/source/Vector.js").default}
    * @export
    */
   this.features;
@@ -154,7 +154,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
-   * @type {ol.interaction.Interaction}
+   * @type {import("ol/interaction/Interaction.js").default}
    * @private
    */
   this.interaction_;
@@ -183,7 +183,7 @@ Controller.prototype.$onInit = function() {
       this.geomType === ngeoGeometryType.MULTI_POINT
   ) {
     interaction = new olInteractionDraw({
-      type: /** @type {ol.geom.GeometryType} */ ('Point')
+      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
     });
   } else if (this.geomType === ngeoGeometryType.LINE_STRING ||
       this.geomType === ngeoGeometryType.MULTI_LINE_STRING

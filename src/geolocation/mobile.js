@@ -298,7 +298,7 @@ Controller.prototype.setPosition_ = function() {
       this.map_.getView().setZoom(this.zoom_);
     } else if (accuracy) {
       const size = /** @type {!ol.Size} */ (this.map_.getSize());
-      this.map_.getView().fit(/** @type {!ol.geom.Polygon} */ (accuracy), size);
+      this.map_.getView().fit(/** @type {!import("ol/geom/Polygon.js").default} */ (accuracy), size);
     }
     this.viewChangedByMe_ = false;
   }
@@ -306,7 +306,7 @@ Controller.prototype.setPosition_ = function() {
 
 
 /**
- * @param {ol.Object.Event} event Event.
+ * @param {import("ol/Object/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.handleViewChange_ = function(event) {

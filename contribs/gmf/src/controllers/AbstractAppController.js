@@ -279,7 +279,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * FeatureStyle used by the gmf.query.windowComponent
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.queryFeatureStyle = new olStyleStyle({
@@ -667,9 +667,9 @@ exports.prototype.userMustChangeItsPassword = function() {
 
 
 /**
- * @param {Array.<ol.layer.Base>} layers Layers list.
+ * @param {Array.<import("ol/layer/Base.js").default>} layers Layers list.
  * @param {Array.<string>} labels default_basemap list.
- * @return {ol.layer.Base} layer or null
+ * @return {import("ol/layer/Base.js").default} layer or null
  */
 exports.getLayerByLabels = function(layers, labels) {
   if (labels && labels.length > 0) {

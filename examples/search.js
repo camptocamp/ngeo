@@ -71,7 +71,7 @@ exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCr
   this.map;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = this.createVectorLayer_();
@@ -143,7 +143,7 @@ exports.SearchController.prototype.$onInit = function() {
 
 
 /**
- * @return {ol.layer.Vector} The vector layer.
+ * @return {import("ol/layer/Vector.js").default} The vector layer.
  * @private
  */
 exports.SearchController.prototype.createVectorLayer_ = function() {
@@ -180,7 +180,7 @@ exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearc
  */
 exports.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {ol.Feature} */ (suggestion);
-  const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+  const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (feature.getGeometry());
   const size = this.map.getSize();
   googAsserts.assert(size !== undefined);

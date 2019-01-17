@@ -94,7 +94,7 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer = new olLayerVector({

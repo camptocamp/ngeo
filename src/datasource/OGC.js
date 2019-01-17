@@ -529,7 +529,7 @@ export default class extends ngeoDatasourceDataSource {
     }
 
     /**
-     * @type {?ol.format.WFS}
+     * @type {?import("ol/format/WFS.js").default}
      * @private
      */
     this.wfsFormat_ = wfsFormat;
@@ -545,7 +545,7 @@ export default class extends ngeoDatasourceDataSource {
     }
 
     /**
-     * @type {?ol.format.WMSGetFeatureInfo}
+     * @type {?import("ol/format/WMSGetFeatureInfo.js").default}
      * @private
      */
     this.wmsFormat_ = wmsFormat;
@@ -911,7 +911,7 @@ export default class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?ol.format.WFS} WFS format.
+   * @return {?import("ol/format/WFS.js").default} WFS format.
    * @export
    */
   get wfsFormat() {
@@ -919,7 +919,7 @@ export default class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?ol.format.WMSGetFeatureInfo} WMS format.
+   * @return {?import("ol/format/WMSGetFeatureInfo.js").default} WMS format.
    * @export
    */
   get wmsFormat() {

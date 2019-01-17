@@ -38,7 +38,7 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
  *
  * @constructor
  * @fires DrawEvent
- * @extends {ol.interaction.Interaction}
+ * @extends {import("ol/interaction/Interaction.js").default}
  * @param {DrawRegularPolygonFromClickOptions} options Options
  */
 const exports = function(options) {

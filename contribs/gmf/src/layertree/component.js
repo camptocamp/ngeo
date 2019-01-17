@@ -249,13 +249,13 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.openLinksInNewWindow;
 
   /**
-   * @type {?ol.layer.Group}
+   * @type {?import("ol/layer/Group.js").default}
    * @private
    */
   this.dataLayerGroup_ = null;
 
   /**
-   * @type {!Array.<!ol.layer.Base>}
+   * @type {!Array.<!import("ol/layer/Base.js").default>}
    * @export
    */
   this.layers = [];
@@ -318,7 +318,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
 
 
 /**
- * @param {ol.layer.Layer} layer Layer to update.
+ * @param {import("ol/layer/Layer.js").default} layer Layer to update.
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layer tree node.
  * @private
  */
@@ -359,7 +359,7 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
  * @param {ngeo.layertree.Controller} treeCtrl tree controller of the node
- * @return {ol.layer.Base|ol.layer.Group|null} The OpenLayers layer or group
+ * @return {ol.layer.Base|import("ol/layer/Group.js").default|null} The OpenLayers layer or group
  *     for the node.
  * @export
  */

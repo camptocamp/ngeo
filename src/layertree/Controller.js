@@ -133,7 +133,7 @@ const exports = function($scope, $rootScope, $attrs) {
   this.nodelayerExpr = nodelayerExpr;
 
   /**
-   * @type {?ol.layer.Layer|ol.layer.Group}
+   * @type {?ol.layer.Layer|import("ol/layer/Group.js").default}
    * @export
    */
   this.layer = null;

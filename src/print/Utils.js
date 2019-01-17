@@ -53,7 +53,7 @@ exports.DOTS_PER_INCH_ = 72;
  * @param {function():number=} opt_rotation User defined function returning the
  *     inclination of the canvas in degree (-180 to 180).
  * returning the scale of the map to print.
- * @return {function(ol.render.Event)} Function to use as a map postcompose
+ * @return {function(import("ol/render/Event.js").default)} Function to use as a map postcompose
  * listener.
  * @export
  */
@@ -62,7 +62,7 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
 
   return (
   /**
-        * @param {ol.render.Event} evt Postcompose event.
+        * @param {import("ol/render/Event.js").default} evt Postcompose event.
         */
     function(evt) {
       const context = evt.context;

@@ -34,7 +34,7 @@ olUtilInherits(
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     style: style,
     source: source
   });

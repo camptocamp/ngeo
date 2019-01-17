@@ -96,7 +96,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
  * @htmlAttribute {ol.Map} ngeo-layertree-map The map.
  * @htmlAttribute {string} ngeo-layertree-nodelayer Expression that will be parsed
- *      to be a {@link Function} that return a {@link ol.layer.Layer}
+ *      to be a {@link Function} that return a {@link import("ol/layer/Layer.js").default}
  *      with the argument:
  *      {
  *          'node': {@link Object}|undefined,

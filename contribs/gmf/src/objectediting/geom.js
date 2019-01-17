@@ -18,7 +18,7 @@ import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * return a geometry or not, for example:
  * `gmf.objectediting.geom.isEmpty(feature.getGeometry())`.
  *
- * @param {?ol.geom.Geometry|undefined} geom Geometry.
+ * @param {?import("ol/geom/Geometry.js").default|undefined} geom Geometry.
  * @return {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
  */
@@ -35,7 +35,7 @@ exports.isEmpty = function(geom) {
  * Convert all coordinates within a geometry object to XY, i.e. remove any
  * extra dimension other than X and Y to the coordinates of a geometry.
  *
- * @param {ol.geom.Geometry} geom Geometry
+ * @param {import("ol/geom/Geometry.js").default} geom Geometry
  */
 exports.toXY = function(geom) {
   if (geom instanceof olGeomPoint) {

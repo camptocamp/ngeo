@@ -266,7 +266,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
-   * @type {?Array.<ol.proj.Projection>}
+   * @type {?Array.<import("ol/proj/Projection.js").default>}
    * @private
    */
   this.sourceProjections_ = null;
@@ -284,7 +284,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.crosshairFeature_ = null;
 
   /**
-   * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style}
+   * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|import("ol/style/Style.js").default}
    * @private
    */
   this.crosshairStyle_;
@@ -777,8 +777,8 @@ exports.prototype.unregisterMap_ = function() {
 /**
  * Get the background layer object to use to initialize the map from the
  * state manager.
- * @param {!Array.<!ol.layer.Base>} layers Array of background layer objects.
- * @return {?ol.layer.Base} Background layer.
+ * @param {!Array.<!import("ol/layer/Base.js").default>} layers Array of background layer objects.
+ * @return {?import("ol/layer/Base.js").default} Background layer.
  * @export
  */
 exports.prototype.getBackgroundLayer = function(layers) {
@@ -1048,7 +1048,7 @@ exports.prototype.initLayers_ = function() {
 
 
 /**
- * @param {ol.Collection.Event} event Collection event.
+ * @param {import("ol/Collection/Event.js").default} event Collection event.
  * @private
  */
 exports.prototype.handleNgeoFeaturesAdd_ = function(event) {
@@ -1059,7 +1059,7 @@ exports.prototype.handleNgeoFeaturesAdd_ = function(event) {
 
 
 /**
- * @param {ol.Collection.Event} event Collection event.
+ * @param {import("ol/Collection/Event.js").default} event Collection event.
  * @private
  */
 exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
@@ -1349,7 +1349,7 @@ exports.prototype.initExternalDataSources_ = function() {
 
 
 /**
- * @param {!ol.Collection.Event} evt Collection event.
+ * @param {!import("ol/Collection/Event.js").default} evt Collection event.
  * @private
  */
 exports.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
@@ -1382,7 +1382,7 @@ exports.prototype.registerExternalDSGroup_ = function(group) {
 
 /**
  * Contains the layer name
- * @param {!ol.layer.Base} layer The layer to inspect
+ * @param {!import("ol/layer/Base.js").default} layer The layer to inspect
  * @param {string} name The layer name to find
  * @return {boolean} The containing status
  */
@@ -1402,7 +1402,7 @@ exports.prototype.containsLayerName = function(layer, name) {
 
 
 /**
- * @param {!ol.Collection.Event} evt Collection event.
+ * @param {!import("ol/Collection/Event.js").default} evt Collection event.
  * @private
  */
 exports.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {

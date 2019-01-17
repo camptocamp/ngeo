@@ -79,13 +79,13 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  *
  *
  * @htmlAttribute {boolean} gmf-profile-active Active the component.
- * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
+ * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
  * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
- * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
+ * @htmlAttribute {import("ol/style/Style.js").default?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
@@ -208,7 +208,7 @@ function Controller($scope, $http, $element, $filter,
   this.nbPoints_ = 100;
 
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.line;

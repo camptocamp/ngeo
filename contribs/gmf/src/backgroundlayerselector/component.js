@@ -115,19 +115,19 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.select;
 
   /**
-   * @type {?ol.layer.Base}
+   * @type {?import("ol/layer/Base.js").default}
    * @export
    */
   this.bgLayer;
 
   /**
-   * @type {?Array.<!ol.layer.Base>}
+   * @type {?Array.<!import("ol/layer/Base.js").default>}
    * @export
    */
   this.bgLayers;
 
   /**
-   * @type {ol.layer.Base}
+   * @type {import("ol/layer/Base.js").default}
    * @export
    */
   this.opacityLayer;
@@ -210,7 +210,7 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
 };
 
 /**
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {boolean=} opt_silent Do not notify listeners.
  * @export
  */
@@ -224,7 +224,7 @@ Controller.prototype.setLayer = function(layer, opt_silent) {
 
 /**
  * Set a background layer overlay, used by the opacity slider.
- * @param {ol.layer.Base} layer The opacity background layer.
+ * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
 Controller.prototype.setOpacityBgLayer = function(layer) {

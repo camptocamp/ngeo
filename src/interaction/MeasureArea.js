@@ -55,7 +55,7 @@ olUtilInherits(exports, ngeoInteractionMeasure);
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('Polygon'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Polygon'),
     source: source,
     style: style
   });

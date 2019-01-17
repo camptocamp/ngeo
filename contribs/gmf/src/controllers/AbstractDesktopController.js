@@ -88,7 +88,7 @@ const exports = function(config, $scope, $injector) {
   });
 
   /**
-   * @type {!ol.style.Style}
+   * @type {!import("ol/style/Style.js").default}
    * @export
    */
   this.googleStreetViewStyle = new olStyleStyle({
@@ -125,7 +125,7 @@ const exports = function(config, $scope, $injector) {
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.editFeatureVectorLayer = new olLayerVector({
@@ -162,7 +162,7 @@ const exports = function(config, $scope, $injector) {
   };
 
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.profileLine = null;

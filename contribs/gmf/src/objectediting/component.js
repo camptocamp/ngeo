@@ -302,7 +302,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.process = gmfObjecteditingToolsComponent.ProcessType.ADD;
 
   /**
-   * @type {?ol.layer.Image|ol.layer.Tile}
+   * @type {?ol.layer.Image|import("ol/layer/Tile.js").default}
    * @private
    */
   this.editableWMSLayer_ = null;
@@ -322,7 +322,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.state_;
 
   /**
-   * @type {!Array.<?ol.geom.Geometry>}
+   * @type {!Array.<?import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.geometryChanges_ = [];
@@ -383,7 +383,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.interactions_ = new olCollection();
 
   /**
-   * @type {!ol.interaction.Modify}
+   * @type {!import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modify_ = new olInteractionModify({
@@ -1013,12 +1013,12 @@ exports.Controller.prototype.handleWindowBeforeUnload_ = function(e) {
  * Depending on the current behaviour, use the added sketch feature to process
  * the existing geometry.
  *
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
   const sketchFeature = /** @type {ol.Feature} */ (evt.element);
-  const sketchGeom = /** @type {ol.geom.Geometry} */ (
+  const sketchGeom = /** @type {import("ol/geom/Geometry.js").default} */ (
     sketchFeature.getGeometry());
 
   const geom = this.feature.getGeometry();
@@ -1115,9 +1115,9 @@ exports.Controller.prototype.handleDestroy_ = function() {
  * Utility method that gets the clone of a geometry, which can be null or
  * undefined. In the latter case, a null value is returned instead of a
  * geometry.
- * @param {?ol.geom.Geometry|undefined} geometry A geometry, undefined or
+ * @param {?import("ol/geom/Geometry.js").default|undefined} geometry A geometry, undefined or
  *     null value.
- * @return {?ol.geom.Geometry} A geometry clone or null value.
+ * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
  */
 exports.Controller.cloneGeometry_ = function(geometry) {

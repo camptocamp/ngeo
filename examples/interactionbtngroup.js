@@ -85,7 +85,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(map);
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPolygon = new olInteractionDraw(
@@ -101,7 +101,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr) {
   map.addInteraction(drawPolygon);
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPoint = new olInteractionDraw(
@@ -116,7 +116,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr) {
   map.addInteraction(drawPoint);
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawLine = new olInteractionDraw(

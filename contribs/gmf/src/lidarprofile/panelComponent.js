@@ -136,7 +136,7 @@ class Controller {
 
     /**
      * The Openlayers LineString geometry of the profle
-     * @type {ol.geom.LineString}
+     * @type {import("ol/geom/LineString.js").default}
      * @export
      */
     this.line;

@@ -76,7 +76,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -84,7 +84,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -98,7 +98,7 @@ const exports = function($scope, $injector, $timeout) {
   this.sketchFeatures = new olCollection();
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.sketchLayer_ = new olLayerVector({

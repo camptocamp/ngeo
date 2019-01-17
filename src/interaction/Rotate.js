@@ -32,7 +32,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction to rotate features.
  *
  * @constructor
- * @extends {ol.interaction.Pointer}
+ * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent
  * @api
@@ -101,7 +101,7 @@ const exports = function(options) {
 
   /**
    * Draw overlay where sketch features are drawn.
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.overlay_ = new olLayerVector({
@@ -229,7 +229,7 @@ exports.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureAdd_ = function(evt) {
@@ -241,7 +241,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
@@ -289,7 +289,7 @@ exports.prototype.handleDown_ = function(evt) {
 
 
 /**
- * @param {ol.geom.Geometry} geometry Geometry.
+ * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {ol.Coordinate} The center coordinate of the geometry.
  * @private
  */
@@ -318,7 +318,7 @@ exports.prototype.getCenterCoordinate_ = function(
 exports.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
 
-  const geometry = /** @type {ol.geom.SimpleGeometry} */
+  const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (this.feature_.getGeometry());
 
   const oldX = this.coordinate_[0];

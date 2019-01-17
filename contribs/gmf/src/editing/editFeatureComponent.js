@@ -107,7 +107,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     that directive.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
- * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
+ * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -195,7 +195,7 @@ function Controller($element, $q, $scope, $timeout,
   this.tolerance;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer;
@@ -285,7 +285,7 @@ function Controller($element, $q, $scope, $timeout,
   this.editableNode_;
 
   /**
-   * @type {ol.layer.Image|ol.layer.Tile}
+   * @type {ol.layer.Image|import("ol/layer/Tile.js").default}
    * @private
    */
   this.editableWMSLayer_;
@@ -373,7 +373,7 @@ function Controller($element, $q, $scope, $timeout,
   this.interactions_ = new olCollection();
 
   /**
-   * @type {ol.interaction.Modify}
+   * @type {import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modify_;
@@ -835,7 +835,7 @@ Controller.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleFeatureAdd_ = function(evt) {

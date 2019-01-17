@@ -41,7 +41,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * - pressing the ESC key automatically deactivate the interaction.
  *
  * @constructor
- * @extends {ol.interaction.Translate}
+ * @extends {import("ol/interaction/Translate.js").default}
  * @param {TranslateOptions} options Options.
  */
 const exports = function(options) {
@@ -71,7 +71,7 @@ const exports = function(options) {
   this.myFeatures_ = options.features !== undefined ? options.features : null;
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -79,7 +79,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -183,7 +183,7 @@ exports.prototype.setState_ = function() {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesAdd_ = function(evt) {
@@ -195,7 +195,7 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesRemove_ = function(evt) {
@@ -245,7 +245,7 @@ exports.prototype.removeFeature_ = function(feature) {
 
 /**
  * @param {ol.Feature} feature Feature being moved.
- * @param {ol.events.Event} evt Event.
+ * @param {import("ol/events/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleGeometryChange_ = function(feature,
@@ -260,8 +260,8 @@ exports.prototype.handleGeometryChange_ = function(feature,
 
 
 /**
- * @param {ol.geom.Geometry} geometry Geometry.
- * @return {ol.geom.Point} The center point of the geometry.
+ * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
+ * @return {import("ol/geom/Point.js").default} The center point of the geometry.
  * @private
  */
 exports.prototype.getGeometryCenterPoint_ = function(

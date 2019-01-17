@@ -29,7 +29,7 @@ import olStructsRBush from 'ol/structs/RBush.js';
  * Interaction for modifying feature geometries.
  *
  * @constructor
- * @extends {ol.interaction.Pointer}
+ * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent
  * @api
@@ -66,7 +66,7 @@ const exports = function(options) {
 
   /**
    * Segment RTree for each layer
-   * @type {ol.structs.RBush.<ol.ModifySegmentDataType>}
+   * @type {import("ol/structs/RBush.js").default.<ol.ModifySegmentDataType>}
    * @private
    */
   this.rBush_ = new olStructsRBush();
@@ -100,7 +100,7 @@ const exports = function(options) {
 
   /**
    * Draw overlay where sketch features are drawn.
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.overlay_ = new olLayerVector({
@@ -135,7 +135,7 @@ olUtilInherits(exports, olInteractionPointer);
 exports.prototype.addFeature_ = function(feature) {
   if (feature.getGeometry().getType() === 'Polygon' &&
       !!feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)) {
-    const geometry = /** @type {ol.geom.Polygon}*/ (feature.getGeometry());
+    const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (feature.getGeometry());
     this.writeCircleGeometry_(feature, geometry);
 
     const map = this.getMap();
@@ -207,7 +207,7 @@ exports.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureAdd_ = function(evt) {
@@ -219,7 +219,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
@@ -230,7 +230,7 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
 
 /**
  * @param {ol.Feature} feature Feature
- * @param {ol.geom.Polygon} geometry Geometry.
+ * @param {import("ol/geom/Polygon.js").default} geometry Geometry.
  * @private
  */
 exports.prototype.writeCircleGeometry_ = function(feature, geometry) {
@@ -265,7 +265,7 @@ exports.prototype.createOrUpdateVertexFeature_ = function(coordinates) {
     this.vertexFeature_ = vertexFeature;
     this.overlay_.getSource().addFeature(vertexFeature);
   } else {
-    const geometry = /** @type {ol.geom.Point} */ (vertexFeature.getGeometry());
+    const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
     geometry.setCoordinates(coordinates);
   }
   return vertexFeature;
@@ -294,7 +294,7 @@ exports.handleDownEvent_ = function(evt) {
   this.modified_ = false;
   const vertexFeature = this.vertexFeature_;
   if (vertexFeature) {
-    const geometry = /** @type {ol.geom.Point} */ (vertexFeature.getGeometry());
+    const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
     const vertex = geometry.getCoordinates();
     const vertexExtent = olExtent.boundingExtent([vertex]);
     const segmentDataMatches = this.rBush_.getInExtent(vertexExtent);
@@ -334,14 +334,14 @@ exports.handleDownEvent_ = function(evt) {
 exports.handleDragEvent_ = function(evt) {
   this.willModifyFeatures_(evt);
   const vertex = evt.coordinate;
-  const geometry = /** @type {ol.geom.Polygon}*/ (this.dragSegments_[0][0].geometry);
+  const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (this.dragSegments_[0][0].geometry);
   const center = olExtent.getCenter(geometry.getExtent());
 
   const line = new olGeomLineString([center, vertex]);
 
 
   /**
-   * @type {ol.geom.Circle}
+   * @type {import("ol/geom/Circle.js").default}
    */
   const circle = new olGeomCircle(center, line.getLength());
   const coordinates = fromCircle(circle, 64).getCoordinates();
@@ -474,7 +474,7 @@ exports.prototype.handlePointerAtPixel_ = function(pixel, map) {
 
 
 /**
- * @param {ol.geom.SimpleGeometry} geometry Geometry.
+ * @param {import("ol/geom/SimpleGeometry.js").default} geometry Geometry.
  * @param {Array} coordinates Coordinates.
  * @private
  */

@@ -88,7 +88,7 @@ exports.prototype.setFeatures = function(features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
+ * @param {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
  * Style.
  * @export
  */
@@ -98,7 +98,7 @@ exports.prototype.setStyle = function(style) {
 
 
 /**
- * @param {ol.Collection.Event} evt Feature collection event.
+ * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
  * @private
  */
 exports.prototype.handleFeatureAdd_ = function(evt) {
@@ -108,7 +108,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Feature collection event.
+ * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {

@@ -17,7 +17,7 @@ import * as olColor from 'ol/color.js';
  */
 const exports = function() {
   /**
-   * @type {ol.format.GeoJSON}
+   * @type {import("ol/format/GeoJSON.js").default}
    */
   this.geojsonFormat = new olFormatGeoJSON();
 };
@@ -34,7 +34,7 @@ exports.PrintStyleType = {
 
 
 /**
- * @type {Object.<ol.geom.GeometryType, ngeo.print.VectorEncoder.PrintStyleType>}
+ * @type {Object.<import("ol/geom/GeometryType.js").default, ngeo.print.VectorEncoder.PrintStyleType>}
  */
 const PRINT_STYLE_TYPES = {
   'LineString': exports.PrintStyleType.LINE_STRING,
@@ -48,7 +48,7 @@ const PRINT_STYLE_TYPES = {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Vector} layer Layer.
+ * @param {import("ol/layer/Vector.js").default} layer Layer.
  * @param {number} resolution Resolution.
  */
 exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
@@ -72,7 +72,7 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
     }
     const origGeojsonFeature = this.geojsonFormat.writeFeatureObject(originalFeature);
     /**
-     * @type {Array<ol.style.Style>}
+     * @type {Array<import("ol/style/Style.js").default>}
      */
     const styles = (styleData !== null && !Array.isArray(styleData)) ? [styleData] : styleData;
     googAsserts.assert(Array.isArray(styles));
@@ -139,8 +139,8 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
 
 /**
  * @param {MapFishPrintVectorStyle} object MapFish style object.
- * @param {ol.geom.GeometryType} geometryType Type of the GeoJSON geometry
- * @param {ol.style.Style} style Style.
+ * @param {import("ol/geom/GeometryType.js").default} geometryType Type of the GeoJSON geometry
+ * @param {import("ol/style/Style.js").default} style Style.
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
  */
@@ -185,7 +185,7 @@ exports.prototype.encodeVectorStyle = function(object, geometryType, style, styl
 
 /**
  * @param {MapFishPrintSymbolizerPoint|MapFishPrintSymbolizerPolygon} symbolizer MapFish Print symbolizer.
- * @param {!ol.style.Fill} fillStyle Fill style.
+ * @param {!import("ol/style/Fill.js").default} fillStyle Fill style.
  * @protected
  */
 exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
@@ -203,7 +203,7 @@ exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
 /**
  * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
  *     symbolizers.
- * @param {!ol.style.Stroke} strokeStyle Stroke style.
+ * @param {!import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
 exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
@@ -218,7 +218,7 @@ exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
 /**
  * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
  *     symbolizers.
- * @param {!ol.style.Image} imageStyle Image style.
+ * @param {!import("ol/style/Image.js").default} imageStyle Image style.
  * @protected
  */
 exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
@@ -267,7 +267,7 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
      * Mapfish Print does not support image defined with ol.style.RegularShape.
      * As a workaround, I try to map the image on a well-known image name.
      */
-    const points = /** @type {ol.style.RegularShape} */ (imageStyle).getPoints();
+    const points = /** @type {import("ol/style/RegularShape.js").default} */ (imageStyle).getPoints();
     if (points !== null) {
       symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
         type: 'point'
@@ -313,8 +313,8 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
 /**
  * @param {Array.<MapFishPrintSymbolizer>} symbolizers Array of MapFish Print
  *     symbolizers.
- * @param {!ol.style.Fill} fillStyle Fill style.
- * @param {ol.style.Stroke} strokeStyle Stroke style.
+ * @param {!import("ol/style/Fill.js").default} fillStyle Fill style.
+ * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
 exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
@@ -332,7 +332,7 @@ exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, st
 /**
  * @param {MapFishPrintSymbolizerPoint|MapFishPrintSymbolizerLine|MapFishPrintSymbolizerPolygon}
  *      symbolizer MapFish Print symbolizer.
- * @param {!ol.style.Stroke} strokeStyle Stroke style.
+ * @param {!import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
 exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
@@ -362,7 +362,7 @@ exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
 /**
  * @param {Array.<MapFishPrintSymbolizerText>} symbolizers Array of MapFish Print
  *     symbolizers.
- * @param {!ol.style.Text} textStyle Text style.
+ * @param {!import("ol/style/Text.js").default} textStyle Text style.
  * @protected
  */
 exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {

@@ -102,7 +102,7 @@ exports.MapComponentController.prototype.$onInit = function() {
   view.on('propertychange',
     this.ngeoDebounce_(
       /**
-       * @param {ol.Object.Event} e Object event.
+       * @param {import("ol/Object/Event.js").default} e Object event.
        */
       (e) => {
         const center = view.getCenter();
@@ -153,7 +153,7 @@ exports.DrawComponentController = function($scope, ngeoLocation) {
   this.map;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    */
   this.layer;
 
@@ -176,7 +176,7 @@ exports.DrawComponentController = function($scope, ngeoLocation) {
   this.featureSeq_ = 0;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.interaction;
@@ -186,7 +186,7 @@ exports.DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
   this.interaction = new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     source: vectorSource
   });
 
@@ -260,7 +260,7 @@ exports.MainController = function() {
   const vectorSource = new olSourceVector();
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer = new olLayerVector({

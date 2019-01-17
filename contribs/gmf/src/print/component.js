@@ -306,7 +306,7 @@ class Controller {
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {ol.layer.Vector}
+     * @type {import("ol/layer/Vector.js").default}
      * @private
      */
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
@@ -496,7 +496,7 @@ class Controller {
     });
 
     /**
-     * @type {function(ol.render.Event)}
+     * @type {function(import("ol/render/Event.js").default)}
      */
     this.postcomposeListener_;
 
@@ -1157,7 +1157,7 @@ class Controller {
             });
           }
         } else {
-          const source = /** @type ol.source.ImageWMS */ (layer.getSource());
+          const source = /** @type import("ol/source/ImageWMS.js").default */ (layer.getSource());
           // For each name in a WMS layer.
           const layerNames = source.getParams()['LAYERS'].split(',');
           layerNames.forEach((name) => {

@@ -133,7 +133,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
  * @htmlAttribute {gmfx.SearchComponentDatasource} gmf-search-datasource
  *      The datasources.
- * @htmlAttribute {Object.<string, ol.style.Style>}
+ * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
  *      gmf-search-styles A map of styles to apply on searched features. Keys
  *      must be the 'layer_name' property of features except for coordinates
  *      where the key ifor its style is the value of the constant
@@ -341,7 +341,7 @@ class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array.<ol.proj.Projection>}
+     * @type {Array.<import("ol/proj/Projection.js").default>}
      * @export
      */
     this.coordinatesProjections;
@@ -373,7 +373,7 @@ class SearchController {
     });
 
     /**
-     * @type {Object.<string, ol.style.Style>}
+     * @type {Object.<string, import("ol/style/Style.js").default>}
      * @export
      */
     this.featuresStyles;
@@ -811,9 +811,9 @@ class SearchController {
 
   /**
    * Style for search results.
-   * @param {null|ol.Feature|ol.render.Feature} feature The searched feature.
+   * @param {null|ol.Feature|import("ol/render/Feature.js").default} feature The searched feature.
    * @param {number} resolution The current resolution of the map.
-   * @return {ol.style.Style} A style for this kind of features.
+   * @return {import("ol/style/Style.js").default} A style for this kind of features.
    * @private
    */
   getSearchStyle_(feature, resolution) {
@@ -949,7 +949,7 @@ class SearchController {
    */
   selectFromGMF_(event, feature, dataset) {
     const actions = feature.get('actions');
-    const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+    const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
         (feature.getGeometry());
     if (actions) {
       for (let i = 0, ii = actions.length; i < ii; i++) {

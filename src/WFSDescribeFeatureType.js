@@ -11,7 +11,7 @@ import * as olXml from 'ol/xml.js';
  * Format for reading WFS DescribeFeatureType data.
  *
  * @constructor
- * @extends {ol.format.XML}
+ * @extends {import("ol/format/XML.js").default}
  * @api
  */
 const exports = function() {

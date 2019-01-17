@@ -64,7 +64,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
  * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
- * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
+ * @htmlAttribute {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
@@ -173,7 +173,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.layersConfig;
 
   /**
-   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
+   * @type {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction}
    * @export
    */
   this.sketchStyle;

@@ -201,7 +201,7 @@ exports.prototype.encodeMap_ = function(map, scale, object) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {number} resolution Resolution.
  */
 exports.prototype.encodeLayer = function(arr, layer, resolution) {
@@ -217,7 +217,7 @@ exports.prototype.encodeLayer = function(arr, layer, resolution) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer Layer.
+ * @param {import("ol/layer/Image.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeImageLayer_ = function(arr, layer) {
@@ -231,7 +231,7 @@ exports.prototype.encodeImageLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer Layer.
+ * @param {import("ol/layer/Image.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
@@ -250,7 +250,7 @@ exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer The layer.
+ * @param {import("ol/layer/Image.js").default} layer The layer.
  * @param {string} url Url of the WMS server.
  * @param {Object} params Url parameters
  * @private
@@ -307,7 +307,7 @@ exports.getAbsoluteUrl_ = function(url) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile} layer Layer.
+ * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeTileLayer_ = function(arr, layer) {
@@ -323,7 +323,7 @@ exports.prototype.encodeTileLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile} layer Layer.
+ * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
@@ -378,7 +378,7 @@ exports.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile} layer Layer.
+ * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
@@ -394,7 +394,7 @@ exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
 
 /**
  * Return the WMTS URL to use in the print spec.
- * @param {ol.source.WMTS} source The WMTS source.
+ * @param {import("ol/source/WMTS.js").default} source The WMTS source.
  * @return {string} URL.
  * @private
  */
@@ -406,7 +406,7 @@ exports.prototype.getWmtsUrl_ = function(source) {
 
 /**
  * Return an opacity value for the specified layer.
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @returns {number} opacity Opacity value.
  * @private
  */

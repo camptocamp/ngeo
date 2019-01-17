@@ -105,7 +105,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   // draw point interaction
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPoint = new olInteractionDraw(
@@ -122,7 +122,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   // draw line interaction
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawLine = new olInteractionDraw(
@@ -139,7 +139,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   // draw polygon interaction
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPolygon = new olInteractionDraw(

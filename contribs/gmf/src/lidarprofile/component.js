@@ -81,7 +81,7 @@ class Controller {
 
     /**
      * The Openlayer LineStringt that defines the profile
-     * @type {ol.geom.LineString}
+     * @type {import("ol/geom/LineString.js").default}
      * @export
      */
     this.line;

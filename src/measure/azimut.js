@@ -68,14 +68,14 @@ function directive($compile, gettextCatalog, $filter, $injector) {
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets
           // transformed into a polygon with 64 sides.
-          const geometry = /** @type {ol.geom.GeometryCollection} */
+          const geometry = /** @type {import("ol/geom/GeometryCollection.js").default} */
                 (event.detail.feature.getGeometry());
-          const circle = /** @type {ol.geom.Circle} */ (
+          const circle = /** @type {import("ol/geom/Circle.js").default} */ (
             geometry.getGeometries()[1]);
           const polygon = fromCircle(circle, 64);
           event.detail.feature = new olFeature(polygon);
           const azimut = ngeoInteractionMeasureAzimut.getAzimut(
-            /** @type {ol.geom.LineString} */ (geometry.getGeometries()[0])
+            /** @type {import("ol/geom/LineString.js").default} */ (geometry.getGeometries()[0])
           );
           event.detail.feature.set('azimut', azimut);
 

@@ -56,7 +56,7 @@ const exports = function() {
   this.groups_ = [];
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.source_ = new olSourceVector({
@@ -64,7 +64,7 @@ const exports = function() {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.layer_ = new olLayerVector({
@@ -123,7 +123,7 @@ exports.prototype.clear = function(groupIndex) {
 
 
 /**
- * @return {ol.layer.Vector} The vector layer used internally.
+ * @return {import("ol/layer/Vector.js").default} The vector layer used internally.
  * @export
  */
 exports.prototype.getLayer = function() {
@@ -155,7 +155,7 @@ exports.prototype.init = function(map) {
 
 
 /**
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
+ * @param {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
  * Style.
  * @param {number} groupIndex Group index.
  * @export
@@ -169,9 +169,9 @@ exports.prototype.setStyle = function(style, groupIndex) {
 
 
 /**
- * @param {ol.Feature|ol.render.Feature} feature Feature.
+ * @param {ol.Feature|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {Array.<ol.style.Style>|ol.style.Style} Styles.
+ * @return {Array.<ol.style.Style>|import("ol/style/Style.js").default} Styles.
  * @private
  */
 exports.prototype.styleFunction_ = function(feature, resolution) {

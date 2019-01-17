@@ -21,7 +21,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction for modifying feature geometries.
  *
  * @constructor
- * @extends {ol.interaction.Pointer}
+ * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
  * @fires ngeo.interaction.ModifyCircleEvent
  * @api
@@ -43,7 +43,7 @@ const exports = function(options) {
   this.modified_ = false;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorPoints_ = new olLayerVector({
@@ -292,7 +292,7 @@ exports.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureAdd_ = function(evt) {
@@ -304,7 +304,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
@@ -345,7 +345,7 @@ exports.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
   const feature = this.feature_;
 
-  const geometry = /** @type {ol.geom.SimpleGeometry} */
+  const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (feature.getGeometry());
 
   if (geometry instanceof olGeomPoint) {

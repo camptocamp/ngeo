@@ -86,8 +86,8 @@ exports.prototype.handleMeasure = function(callback) {
 
 /**
  * Format measure output of azimut and radius.
- * @param {!ol.geom.LineString} line LineString.
- * @param {!ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {!import("ol/geom/LineString.js").default} line LineString.
+ * @param {!import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} decimals Decimals.
  * @param {number|undefined} precision Precision.
  * @param {!unitPrefix} formatLength The format function.
@@ -108,7 +108,7 @@ exports.getFormattedAzimutRadius = function(
 
 /**
  * Format measure output of azimut.
- * @param {!ol.geom.LineString} line LineString.
+ * @param {!import("ol/geom/LineString.js").default} line LineString.
  * @param {number|undefined} decimals Decimals.
  * @param {!formatNumber} format The format function.
  * @return {string} Formatted measure.
@@ -121,7 +121,7 @@ exports.getFormattedAzimut = function(line, decimals, format) {
 
 /**
  * Compute azimut from a 2 points line.
- * @param {ol.geom.LineString} line LineString.
+ * @param {import("ol/geom/LineString.js").default} line LineString.
  * @return {number} Azimut value.
  */
 exports.getAzimut = function(line) {

@@ -111,7 +111,7 @@ const exports = function($injector, $filter) {
   }
 
   /**
-   * @type {!ol.proj.Projection}
+   * @type {!import("ol/proj/Projection.js").default}
    * @private
    */
   this.projection_;
@@ -127,7 +127,7 @@ const exports = function($injector, $filter) {
 
 
 /**
- * @param {!ol.proj.Projection} projection Projection.
+ * @param {!import("ol/proj/Projection.js").default} projection Projection.
  * @export
  */
 exports.prototype.setProjection = function(projection) {
@@ -162,7 +162,7 @@ exports.prototype.setStyle = function(feature, opt_select) {
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
  * @param {!ol.Feature} feature Feature.
- * @return {!Array.<!ol.style.Style>} The style object.
+ * @return {!Array.<!import("ol/style/Style.js").default>} The style object.
  * @export
  */
 exports.prototype.getStyle = function(feature) {
@@ -192,7 +192,7 @@ exports.prototype.getStyle = function(feature) {
 
   let styles;
   if (style.constructor === Array) {
-    styles = /** @type {!Array.<!ol.style.Style>}*/ (style);
+    styles = /** @type {!Array.<!import("ol/style/Style.js").default>}*/ (style);
   } else {
     styles = [style];
   }
@@ -203,7 +203,7 @@ exports.prototype.getStyle = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature with linestring geometry.
- * @return {!Array.<!ol.style.Style>} Style.
+ * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
 exports.prototype.getLineStringStyle_ = function(feature) {
@@ -241,7 +241,7 @@ exports.prototype.getLineStringStyle_ = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature with point geometry.
- * @return {!Array.<!ol.style.Style>} Style.
+ * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
 exports.prototype.getPointStyle_ = function(feature) {
@@ -323,7 +323,7 @@ exports.prototype.getNumber = function(feature, attrib) {
 
 /**
  * @param {!ol.Feature} feature Feature with polygon geometry.
- * @return {!Array.<!ol.style.Style>} Style.
+ * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
 exports.prototype.getPolygonStyle_ = function(feature) {
@@ -418,7 +418,7 @@ exports.prototype.getPolygonStyle_ = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature with point geometry, rendered as text.
- * @return {!ol.style.Style} Style.
+ * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
 exports.prototype.getTextStyle_ = function(feature) {
@@ -437,7 +437,7 @@ exports.prototype.getTextStyle_ = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature to create the editing styles with.
- * @return {!Array.<!ol.style.Style>} List of style.
+ * @return {!Array.<!import("ol/style/Style.js").default>} List of style.
  * @export
  */
 exports.prototype.createEditingStyles = function(feature) {
@@ -648,7 +648,7 @@ exports.prototype.getCoordinateIndexThatHitsAt_ = function(
  *     want to include the geometry function if you just want to have the
  *     style object itself to be used to draw features that have point
  *     geometries. Defaults to `true`.
- * @return {!ol.style.Style} Style.
+ * @return {!import("ol/style/Style.js").default} Style.
  * @export
  */
 exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
@@ -815,7 +815,7 @@ exports.prototype.supportsVertexRemoval_ = function(feature) {
 
 /**
  * @param {!ol.Feature} feature Feature.
- * @return {!ol.style.Style} Style.
+ * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
 exports.prototype.getHaloStyle_ = function(feature) {
@@ -1052,7 +1052,7 @@ exports.prototype.exportKML = function(features) {
  * the result to the browser. The projection of the exported features is:
  * `EPSG:4326`.
  * @param {!Array.<!ol.Feature>} features Array of vector features.
- * @param {!ol.format.Feature} format Format
+ * @param {!import("ol/format/Feature.js").default} format Format
  * @param {string} fileName Name of the file.
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
@@ -1086,7 +1086,7 @@ exports.prototype.export_ = function(features, format, fileName, opt_mimeType) {
 
 /**
  * @param {!TextOptions} options Options.
- * @return {!ol.style.Text} Style.
+ * @return {!import("ol/style/Text.js").default} Style.
  * @private
  */
 exports.prototype.createTextStyle_ = function(options) {
@@ -1304,7 +1304,7 @@ exports.prototype.fitMapToFeature = function(feature, map, opt_duration) {
  * a given azimut. It expects the input geometry to be a circle.
  * @param {!ol.Feature} feature Feature.
  * @param {number} azimut Azimut in degrees.
- * @return {!ol.geom.LineString} The line geometry.
+ * @return {!import("ol/geom/LineString.js").default} The line geometry.
  */
 exports.prototype.getRadiusLine = function(feature, azimut) {
   const geometry = feature.getGeometry();

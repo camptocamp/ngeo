@@ -222,7 +222,7 @@ Controller.prototype.deactivate_ = function() {
 
 
 /**
- * @param {ol.Object.Event} event Event.
+ * @param {import("ol/Object/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.setPosition_ = function(event) {

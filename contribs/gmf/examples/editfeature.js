@@ -69,7 +69,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.gmfUser = gmfUser;
 
   /**
-   * @type {ol.source.ImageWMS}
+   * @type {import("ol/source/ImageWMS.js").default}
    * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
@@ -78,7 +78,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   });
 
   /**
-   * @type {ol.layer.Image}
+   * @type {import("ol/layer/Image.js").default}
    * @private
    */
   this.wmsLayer_ = new olLayerImage({

@@ -77,7 +77,7 @@ class Controller {
 
     /**
      * Style for the feature.
-     * @type {ol.style.Style|Array.<ol.style.Style>|
+     * @type {ol.style.Style|Array.<import("ol/style/Style.js").default>|
      *     ol.FeatureStyleFunction|ol.StyleFunction|undefined}
      * @export
      */
@@ -164,7 +164,7 @@ class Controller {
     this.panoramaListener_ = null;
 
     /**
-     * @type {ol.geom.Point}
+     * @type {import("ol/geom/Point.js").default}
      * @private
      */
     this.point_ = new olGeomPoint([0, 0]);

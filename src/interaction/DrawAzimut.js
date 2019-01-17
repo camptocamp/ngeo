@@ -21,7 +21,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction dedicated to measure azimut.
  *
  * @constructor
- * @extends {ol.interaction.Pointer}
+ * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.PointerOptions} options Options.
  */
 const exports = function(options) {
@@ -40,7 +40,7 @@ const exports = function(options) {
 
   /**
    * Target source for drawn features.
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.source_ = options.source !== undefined ? options.source : null;
@@ -79,7 +79,7 @@ const exports = function(options) {
 
   /**
    * Vector layer where our sketch features are drawn.
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.sketchLayer_ = new olLayerVector({

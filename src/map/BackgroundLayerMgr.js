@@ -96,7 +96,7 @@ olUtilInherits(exports, olObservable);
  * Return the current background layer of a given map. `null` is returned if
  * the map does not have a background layer.
  * @param {ol.Map} map Map.
- * @return {ol.layer.Base} layer The background layer.
+ * @return {import("ol/layer/Base.js").default} layer The background layer.
  * @export
  */
 exports.prototype.get = function(map) {
@@ -110,8 +110,8 @@ exports.prototype.get = function(map) {
  * Set the background layer of a map. If `layer` is `null` the background layer
  * is removed.
  * @param {ol.Map} map The map.
- * @param {ol.layer.Base} layer The new background layer.
- * @return {ol.layer.Base} The previous background layer.
+ * @param {import("ol/layer/Base.js").default} layer The new background layer.
+ * @return {import("ol/layer/Base.js").default} The previous background layer.
  * @export
  */
 exports.prototype.set = function(map, layer) {
@@ -151,7 +151,7 @@ exports.prototype.set = function(map, layer) {
  * Return the current background layer overlay of a given map, used by the opacity slider.
  * `null` is returned if the map does not have an opacity background layer.
  * @param {ol.Map} map Map.
- * @return {ol.layer.Base} layer The opacity background layer.
+ * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
 exports.prototype.getOpacityBgLayer = function(map) {
@@ -163,7 +163,7 @@ exports.prototype.getOpacityBgLayer = function(map) {
 /**
  * Set an background layer overlay, used by the opacity slider.
  * @param {ol.Map} map The map.
- * @param {ol.layer.Base} layer The opacity background layer.
+ * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
 exports.prototype.setOpacityBgLayer = function(map, layer) {

@@ -44,7 +44,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {ol.Map} gmf-editfeatureselector-map The map.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
- * @htmlAttribute {ol.layer.Vector} gmf-editfeatureselector-vector The vector
+ * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -107,7 +107,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.tolerance;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer;

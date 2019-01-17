@@ -31,7 +31,7 @@ function directive() {
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const drawText = new olInteractionDraw({
-        type: /** @type {ol.geom.GeometryType} */ ('Point')
+        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
       });
 
       drawFeatureCtrl.registerInteraction(drawText);

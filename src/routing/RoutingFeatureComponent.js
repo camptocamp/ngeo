@@ -136,7 +136,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   this.vectorFeatures_ = new olCollection();
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -144,7 +144,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -169,7 +169,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * Interaction for moving start and end.
-   * @type {ol.interaction.Modify}
+   * @type {import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modifyFeature_ = new olInteractionModify({
@@ -177,7 +177,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   });
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @private
    */
   this.draw_ = null;
@@ -241,7 +241,7 @@ exports.Controller.prototype.set = function() {
 
   this.draw_ = new olInteractionDraw({
     features: this.vectorFeatures_,
-    type: /** @type {ol.geom.GeometryType} */ ('Point')
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
   });
 
   this.draw_.on('drawstart', () => {
@@ -302,7 +302,7 @@ exports.Controller.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
-  const newCoordinates = /** @type{ol.geom.Point} */(this.feature.getGeometry()).getCoordinates();
+  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry()).getCoordinates();
   this.map.getView().setCenter(newCoordinates);
 };
 
@@ -340,7 +340,7 @@ exports.Controller.prototype.snapFeature_ = function(feature) {
  * @private
  */
 exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
-  const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
+  const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
   return olProj.toLonLat(coords, projection);

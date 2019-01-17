@@ -84,13 +84,13 @@ const exports = function($scope, $sce, gettextCatalog,
   this.ngeoFeatures_ = ngeoFeatures;
 
   /**
-   * @type {Array.<ol.interaction.Interaction>}
+   * @type {Array.<import("ol/interaction/Interaction.js").default>}
    * @private
    */
   this.interactions_ = [];
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPoint;
@@ -114,13 +114,13 @@ const exports = function($scope, $sce, gettextCatalog,
   this.measureAzimut;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawRectangle;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawText;
@@ -145,7 +145,7 @@ const exports = function($scope, $sce, gettextCatalog,
 /**
  * Register a draw|measure interaction by setting it inactive, decorating it
  * and adding it to the map
- * @param {ol.interaction.Interaction} interaction Interaction to register.
+ * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
  * @export
  */
 exports.prototype.registerInteraction = function(
@@ -161,7 +161,7 @@ exports.prototype.registerInteraction = function(
  * Called when any of the draw or measure interaction active property changes.
  * Set the active property of this directive accordingly, i.e. if at least
  * one of the draw or measure is active then the active property is set to true.
- * @param {ol.Object.Event} event Event.
+ * @param {import("ol/Object/Event.js").default} event Event.
  * @export
  */
 exports.prototype.handleActiveChange = function(event) {

@@ -112,7 +112,7 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
 
   /**
    * FeatureStyle used by the displayquerygrid directive
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.featureStyle = new olStyleStyle({

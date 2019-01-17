@@ -48,7 +48,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  */
 exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.profileLine = null;
@@ -110,11 +110,11 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * Draw line interaction.
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawLine = new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     features: features
   });
 

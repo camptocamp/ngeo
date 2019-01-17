@@ -75,7 +75,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -83,7 +83,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -97,7 +97,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   this.sketchFeatures = new olCollection();
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.sketchLayer_ = new olLayerVector({

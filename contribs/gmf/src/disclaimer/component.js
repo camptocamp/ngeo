@@ -130,7 +130,7 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {?ol.layer.Group}
+   * @type {?import("ol/layer/Group.js").default}
    * @private
    */
   this.dataLayerGroup_ = null;
@@ -147,7 +147,7 @@ Controller.prototype.$onInit = function() {
 };
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleLayersAdd_ = function(evt) {
@@ -160,7 +160,7 @@ Controller.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleLayersRemove_ = function(evt) {
@@ -171,7 +171,7 @@ Controller.prototype.handleLayersRemove_ = function(evt) {
 
 
 /**
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
 Controller.prototype.registerLayer_ = function(layer) {
@@ -219,7 +219,7 @@ Controller.prototype.registerLayer_ = function(layer) {
 
 
 /**
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
 Controller.prototype.unregisterLayer_ = function(layer) {

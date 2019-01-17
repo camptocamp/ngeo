@@ -50,7 +50,7 @@ import olSourceVector from 'ol/source/Vector.js';
  *
  * @constructor
  * @fires DrawEvent
- * @extends {ol.interaction.Interaction}
+ * @extends {import("ol/interaction/Interaction.js").default}
  * @param {MobileDrawOptions} options Options
  */
 const exports = function(options) {
@@ -68,7 +68,7 @@ const exports = function(options) {
 
   /**
    * Geometry type.
-   * @type {ol.geom.GeometryType}
+   * @type {import("ol/geom/GeometryType.js").default}
    * @private
    */
   this.type_ = options.type;
@@ -107,7 +107,7 @@ const exports = function(options) {
 
   /**
    * Draw overlay where our sketch features are drawn.
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.overlay_ = new olLayerVector({
@@ -434,7 +434,7 @@ exports.prototype.updateState_ = function() {
 
 
 /**
- * @param {ol.Object.Event} evt Event.
+ * @param {import("ol/Object/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleViewCenterChange_ = function(evt) {
@@ -494,7 +494,7 @@ exports.prototype.updateSketchFeatures_ = function() {
 
 /**
  * Returns the geometry of the sketch point feature.
- * @return {ol.geom.Point} Point.
+ * @return {import("ol/geom/Point.js").default} Point.
  * @private
  */
 exports.prototype.getSketchPointGeometry_ = function() {

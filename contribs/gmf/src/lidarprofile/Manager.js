@@ -90,7 +90,7 @@ const exports = class {
 
     /**
      * The hovered point geometry (point) in D3 profile highlighted on the 2D map
-     * @type {ol.layer.Vector}
+     * @type {import("ol/layer/Vector.js").default}
      */
     this.lidarPointHighlight = new olLayerVector({
       source: new olSourceVector({}),
@@ -107,7 +107,7 @@ const exports = class {
     /**
      * The profile footpring represented as a LineString represented
      * with real mapunites stroke width
-     * @type {ol.layer.Vector}
+     * @type {import("ol/layer/Vector.js").default}
      */
     this.lidarBuffer = new olLayerVector({
       source: new olSourceVector({})
@@ -127,7 +127,7 @@ const exports = class {
     this.isPlotSetup_ = false;
 
     /**
-     * @type {ol.geom.LineString}
+     * @type {import("ol/geom/LineString.js").default}
      * @private
      */
     this.line_;
@@ -162,7 +162,7 @@ const exports = class {
 
   /**
    * Set the line for the profile
-   * @param {ol.geom.LineString} line that defines the profile
+   * @param {import("ol/geom/LineString.js").default} line that defines the profile
    * @export
    */
   setLine(line) {

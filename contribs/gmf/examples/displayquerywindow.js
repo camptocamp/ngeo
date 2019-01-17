@@ -115,7 +115,7 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
 
   /**
    * FeatureStyle used by the gmf.query.windowComponent
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.featureStyle = new olStyleStyle({

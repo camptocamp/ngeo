@@ -93,9 +93,9 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *      </gmf-displayquerygrid>
  *
  * @htmlAttribute {boolean} gmf-displayquerygrid-active The active state of the component.
- * @htmlAttribute {ol.style.Style} gmf-displayquerygrid-featuresstyle A style
+ * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-featuresstyle A style
  *     object for all features from the result of the query.
- * @htmlAttribute {ol.style.Style} gmf-displayquerygrid-selectedfeaturestyle A style
+ * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-selectedfeaturestyle A style
  *     object for the currently selected features.
  * @htmlAttribute {ol.Map} gmf-displayquerygrid-map The map.
  * @htmlAttribute {boolean?} gmf-displayquerygrid-removeemptycolumns Optional. Should

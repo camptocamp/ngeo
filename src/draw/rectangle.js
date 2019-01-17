@@ -32,7 +32,7 @@ function directive() {
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const drawRectangle = new olInteractionDraw({
-        type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
         geometryFunction: (coordinates, geometry) => {
           if (!geometry) {
             geometry = new olGeomPolygon([]);

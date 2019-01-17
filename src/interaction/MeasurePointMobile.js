@@ -45,7 +45,7 @@ olUtilInherits(exports, ngeoInteractionMeasure);
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('Point'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
     style: style,
     source: source
   });

@@ -46,7 +46,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.radius = 500;
 
   /**
-   * @type {!ol.style.Style}
+   * @type {!import("ol/style/Style.js").default}
    * @export
    */
   this.style = new olStyleStyle({

@@ -72,7 +72,7 @@ const exports = function($scope, $injector) {
 
 
   /**
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.customMeasureStyle = new olStyleStyle({

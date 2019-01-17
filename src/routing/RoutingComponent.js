@@ -180,7 +180,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   };
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.routeSource_ = new olSourceVector({
@@ -188,7 +188,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.routeLayer_ = new olLayerVector({
@@ -225,7 +225,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.regexIsFormattedCoord = /\d+\.\d+\/\d+\.\d+/;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @private
    */
   this.draw_ = null;
@@ -273,7 +273,7 @@ exports.Controller.prototype.clearRoute = function() {
  * @private
  */
 exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
-  const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
+  const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
   return olProj.toLonLat(coords, projection);
@@ -347,12 +347,12 @@ exports.Controller.prototype.calculateRoute = function() {
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type{ol.geom.LineString} */(features[0].getGeometry()).getCoordinateAt(0);
-      const endRoute = /** @type{ol.geom.LineString} */(features[features.length - 1].getGeometry()).getCoordinateAt(1);
+      const startRoute = /** @type{import("ol/geom/LineString.js").default} */(features[0].getGeometry()).getCoordinateAt(0);
+      const endRoute = /** @type{import("ol/geom/LineString.js").default} */(features[features.length - 1].getGeometry()).getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
-      const startToRoute = [/** @type {ol.geom.Point} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
-      const routeToEnd = [endRoute, /** @type {ol.geom.Point} */(this.targetFeature_.getGeometry()).getCoordinates()];
+      const startToRoute = [/** @type {import("ol/geom/Point.js").default} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
+      const routeToEnd = [endRoute, /** @type {import("ol/geom/Point.js").default} */(this.targetFeature_.getGeometry()).getCoordinates()];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),
         new olFeature(new olGeomLineString(routeToEnd))
