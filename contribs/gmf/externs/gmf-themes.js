@@ -6,6 +6,19 @@
 
 
 /**
+ * @typedef {{
+ *     field: (string),
+ *     value: (string|undefined)
+ * }} DimensionFilterConfig
+ */
+
+
+/**
+ * Dimensions applied by filters configuration.
+ * @typedef {Object.<string, DimensionFilterConfig>} DimensionsFiltersConfig
+ */
+
+/**
  * @type {Object}
  */
 let gmfThemes;
@@ -116,7 +129,7 @@ gmfThemes.GmfGroup.prototype.children;
 /**
  * The dimensions managed by the OpenLayers layer, if the value is null we will take the dimension from the application.
  * This is present only on non mixed first level group.
- * @type {!ngeox.Dimensions}
+ * @type {!Dimensions}
  */
 gmfThemes.GmfGroup.prototype.dimensions;
 
@@ -142,7 +155,7 @@ gmfThemes.GmfGroup.prototype.ogcServer;
 
 /**
  * On non mixed first level group with more then one time layer, it is the time information.
- * @type {ngeox.TimeProperty|undefined}
+ * @type {TimeProperty|undefined}
  */
 gmfThemes.GmfGroup.prototype.time;
 
@@ -161,7 +174,7 @@ gmfThemes.GmfLayer = function() {};
 /**
  * The dimensions managed by the layer, if the value is null we will take the dimension from the application.
  * Present only on layer in a mixed group.
- * @type {!ngeox.Dimensions}
+ * @type {!Dimensions}
  */
 gmfThemes.GmfLayer.prototype.dimensions;
 
@@ -169,7 +182,7 @@ gmfThemes.GmfLayer.prototype.dimensions;
 /**
  * The dimensions applied by filters on the layer configuration, if the value
  * is null we will take the dimension from the application.
- * @type {!ngeox.DimensionsFiltersConfig}
+ * @type {!DimensionsFiltersConfig}
  */
 gmfThemes.GmfLayer.prototype.dimensionsFilters;
 
@@ -235,7 +248,7 @@ gmfThemes.GmfLayerWMS.prototype.ogcServer;
 /**
  * The time information if the layer directly manage it, see
  * also {gmfThemes.GmfGroup.time}.
- * @type {ngeox.TimeProperty|undefined}
+ * @type {TimeProperty|undefined}
  */
 gmfThemes.GmfLayerWMS.prototype.time;
 

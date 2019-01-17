@@ -2,7 +2,7 @@
  * @module gmf.datasource.Manager
  */
 import angular from 'angular';
-import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
+import gmfDatasourceOGC, {ServerType, WFSOutputFormat, Type} from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
@@ -10,8 +10,6 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
-
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
@@ -32,7 +30,7 @@ const exports = class {
    * The GeoMapFish DataSources Manager is responsible of listenening to the
    * c2cgeoportal's themes to create instances of `ngeo.datasource.DataSource`
    * objects with the layer definitions found and push them in the
-   * `ngeox.datasource.DataSources` collection. The Manager must be initialized
+   * `DataSources` collection. The Manager must be initialized
    * with the app's map using the setDatasourcseMap() method.
    *
    * When changing theme, these data sources are cleared then re-created.
@@ -107,7 +105,7 @@ const exports = class {
      * The collection of DataSources from ngeo, which gets updated by this
      * service. When the theme changes, first we remove all data sources, then
      * the 'active' data source are added here.
-     * @type {ngeox.datasource.DataSources}
+     * @type {DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
@@ -149,7 +147,7 @@ const exports = class {
 
     /**
      * A reference to the dimensions object.
-     * @type {ngeox.Dimensions|undefined}
+     * @type {Dimensions|undefined}
      * @private
      */
     this.dimensions_;
@@ -201,7 +199,7 @@ const exports = class {
   }
 
   /**
-   * @param {!ngeox.Dimensions} dimensions A reference to the dimensions
+   * @param {!Dimensions} dimensions A reference to the dimensions
    *     object to keep a reference of in this service.
    */
   setDimensions(dimensions) {
@@ -499,10 +497,10 @@ const exports = class {
     const wfsUrl = ogcServer && ogcServer.wfsSupport ? ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
 
-    let wfsOutputFormat = ngeoDatasourceOGC.WFSOutputFormat.GML3;
+    let wfsOutputFormat = WFSOutputFormat.GML3;
     // qgis server only supports GML2 output
-    if (ogcServerType === ngeoDatasourceOGC.ServerType.QGISSERVER) {
-      wfsOutputFormat = ngeoDatasourceOGC.WFSOutputFormat.GML2;
+    if (ogcServerType === ServerType.QGISSERVER) {
+      wfsOutputFormat = WFSOutputFormat.GML2;
     }
 
     // (6) Snapping
@@ -605,7 +603,7 @@ const exports = class {
     let timeUpperValueWatcherUnregister;
     let wmsLayer;
     if (dataSource.timeProperty &&
-        dataSource.ogcType === ngeoDatasourceOGC.Type.WMS
+        dataSource.ogcType === Type.WMS
     ) {
       timeLowerValueWatcherUnregister = this.rootScope_.$watch(
         () => dataSource.timeLowerValue,
@@ -826,7 +824,7 @@ const exports = class {
     // the WMS ogcType, i.e. those that do not have an OpenLayers layer
     // to update
     if (dataSource.filtrable !== true ||
-        dataSource.ogcType !== ngeoDatasourceOGC.Type.WMS
+        dataSource.ogcType !== Type.WMS
     ) {
       return;
     }
@@ -890,7 +888,7 @@ const exports = class {
    * The `querySourceIds` property in the layer is used to determine the
    * data sources that are bound to the layer.
    *
-   * @param {!ngeox.BackgroundEvent} evt Event.
+   * @param {!BackgroundEvent} evt Event.
    * @private
    */
   handleNgeoBackgroundLayerChange_(evt) {

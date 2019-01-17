@@ -52,7 +52,7 @@ exports.prototype.getAttributes = function(id) {
 
 /**
  * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @return {Array.<Attribute>} List of attributes.
  * @export
  */
 exports.prototype.handleGetAttributes_ = function(resp) {

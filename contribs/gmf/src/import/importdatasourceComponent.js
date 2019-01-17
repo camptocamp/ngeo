@@ -12,7 +12,7 @@ import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapability
 
 import googAsserts from 'goog/asserts.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
 const exports = angular.module('gmfImportdatasource', [
   gmfDatasourceExternalDataSourcesManager.module.name,
@@ -177,10 +177,10 @@ class Controller {
     this.pending = false;
 
     /**
-     * @type {!ngeox.unitPrefix}
+     * @type {!unitPrefix}
      * @private
      */
-    this.unitPrefixFormat_ = /** @type {ngeox.unitPrefix} */ (
+    this.unitPrefixFormat_ = /** @type {unitPrefix} */ (
       $filter('ngeoUnitPrefix'));
 
     /**
@@ -303,10 +303,10 @@ class Controller {
    */
   connect() {
     const url = googAsserts.assertString(this.url);
-    const serviceType = ngeoDatasourceOGC.guessServiceTypeByUrl(url);
+    const serviceType = guessServiceTypeByUrl(url);
 
     this.startWorking_();
-    if (serviceType === ngeoDatasourceOGC.Type.WMS) {
+    if (serviceType === Type.WMS) {
       this.ngeoQuerent_.wmsGetCapabilities(url).then(
         (wmsCapabilities) => {
           this.wmsCapabilities = wmsCapabilities;
@@ -317,7 +317,7 @@ class Controller {
           this.stopWorking_(true);
         }
       );
-    } else if (serviceType === ngeoDatasourceOGC.Type.WMTS) {
+    } else if (serviceType === Type.WMTS) {
       this.ngeoQuerent_.wmtsGetCapabilities(url).then(
         (wmtsCapabilities) => {
           this.wmtsCapabilities = wmtsCapabilities;

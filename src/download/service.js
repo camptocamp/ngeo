@@ -7,6 +7,10 @@ import ngeoUtils from 'ngeo/utils.js';
 import {saveAs} from 'file-saver';
 
 /**
+ * @typedef {function(string, string, string=)} Download
+ */
+
+/**
  * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoDownload', []);
@@ -14,7 +18,7 @@ const exports = angular.module('ngeoDownload', []);
 /**
  * A service to start a download for a file.
  *
- * @return {ngeox.Download} The download function.
+ * @return {Download} The download function.
  * @ngdoc service
  * @ngname ngeoDownload
  */

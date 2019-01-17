@@ -7,6 +7,111 @@ import * as olExtent from 'ol/extent.js';
 import * as olFormatFilter from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';
 
+
+/**
+ * Results for a query source.
+ *
+ * features: The matching features for this source.
+ *
+ * id: Identifier (can be not unique).
+ *
+ * label: Label.
+ *
+ * limit: The maximum number of features that can be returned for a query with this source.
+ *
+ * pending: Is the request for this source still ongoing?
+ *
+ * queried: Has this source been queried for the last query request?
+ *
+ * tooManyResults: If the last query for this source would return more features than the configured limit.
+ *
+ * totalFeatureCount: If `tooManyResults` is `true`, this contains the total number of features.
+ *
+ * @typedef {{
+ *     features: (Array.<ol.Feature>),
+ *     id: (number|string),
+ *     label: (string),
+ *     limit: (number),
+ *     pending: (boolean),
+ *     queried: (boolean),
+ *     tooManyResults: (boolean),
+ *     totalFeatureCount: (number|undefined)
+ * }} QueryResultSource
+ */
+
+
+/**
+ * A WFS type. To be used with {@link WfsPermalinkOptions}.
+ *
+ * featureType: The feature type name. Required.
+ *
+ * label: The field of a feature used as label.
+ *
+ * featureNS: The namespace URI used for features. If not given, the default namespace set
+ * in {@link WfsPermalinkOptions} will be used.
+ *
+ * featurePrefix: The prefix for the feature namespace. If not given, the default prefix set
+ * in {@link WfsPermalinkOptions} will be used.
+ *
+ * defaultFeatureNS: The default namespace URI used for features. This will be used if no custom
+ * namespace is given for a WFS type.
+ *
+ * defaultFeaturePrefix: The default prefix for the feature namespace. This will be used if no custom
+ * prefix is given for a WFS type.
+ *
+ * @typedef {{
+ *     featureType: (string),
+ *     label: (string|undefined),
+ *     featureNS: (string|undefined),
+ *     featurePrefix: (string|undefined),
+ *     defaultFeatureNS: (string|undefined),
+ *     defaultFeaturePrefix: (string|undefined)
+ * }} WfsType
+ */
+
+
+/**
+ * The options for the WFS query service (permalink).
+ *
+ * wfsTypes: The queryable WFS types.
+ *
+ * pointRecenterZoom: Zoom level to use when result is a single point feature. If not set the map
+ * is not zoomed to a specific zoom level.
+ *
+ * maxFeatures: The maximum number of records per request the query service should ask.
+ * Defaults to `50`.
+ *
+ * @typedef {{
+ *     wfsTypes: (!Array.<WfsType>),
+ *     pointRecenterZoom: (number|undefined),
+ *     maxFeatures: (number|undefined)
+ *     defaultFeatureNS: (string),
+ *     defaultFeaturePrefix: (string),
+ * }} WfsPermalinkOptions
+ */
+
+
+/**
+ * @typedef {{
+ *     wfsType: (string),
+ *     filterGroups: (Array.<WfsPermalinkFilterGroup>),
+ *     showFeatures: (boolean)
+ * }} WfsPermalinkData
+ */
+
+/**
+ * @typedef {{
+ *     property: (string),
+ *     condition: (string|Array.<string>)
+ * }} WfsPermalinkFilter
+ */
+
+/**
+ * @typedef {{
+ *     filters: (Array.<WfsPermalinkFilter>)
+ * }} WfsPermalinkFilterGroup
+ */
+
 /**
  * WFS permalink service that can be used to load features with a WFS
  * GetFeature request given query parameters.
@@ -43,8 +148,8 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @constructor
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {string} ngeoPermalinkOgcserverUrl Url to the WFS server
- * @param {ngeox.QueryResult} ngeoQueryResult The ngeo query result service.
- * @param {ngeox.WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
+ * @param {QueryResult} ngeoQueryResult The ngeo query result service.
+ * @param {WfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
@@ -69,7 +174,7 @@ const WfsPermalinkService = function(
   this.maxFeatures_ = options.maxFeatures !== undefined ? options.maxFeatures : 50;
 
   /**
-   * @type {Object<string, ngeox.WfsType>}
+   * @type {Object<string, WfsType>}
    * @private
    */
   this.wfsTypes_ = {};
@@ -104,7 +209,7 @@ const WfsPermalinkService = function(
   this.$http_ = $http;
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {QueryResult}
    * @private
    */
   this.result_ = ngeoQueryResult;
@@ -122,9 +227,9 @@ WfsPermalinkService.prototype.clear = function() {
 
 /**
  * Build a WFS GetFeature request for the given query parameter data, send the
- * request and add the received features to {@link ngeox.QueryResult}.
+ * request and add the received features to {@link QueryResult}.
  *
- * @param {ngeox.WfsPermalinkData} queryData Query data for the WFS request.
+ * @param {WfsPermalinkData} queryData Query data for the WFS request.
  * @param {ol.Map} map The ol3 map object to get the current projection from.
  * @export
  */
@@ -150,7 +255,7 @@ WfsPermalinkService.prototype.issue = function(queryData, map) {
 
 
 /**
- * @param {ngeox.WfsType} wfsType Type.
+ * @param {WfsType} wfsType Type.
  * @param {ol.format.filter.Filter} filter Filter.
  * @param {ol.Map} map The ol3 map object to get the current projection from.
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
@@ -190,7 +295,7 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
     // then show if requested
     if (showFeatures) {
-      const resultSource = /** @type {ngeox.QueryResultSource} */ ({
+      const resultSource = /** @type {QueryResultSource} */ ({
         'features': features,
         'id': wfsType.featureType,
         'identifierAttributeField': wfsType.label,
@@ -217,7 +322,7 @@ WfsPermalinkService.prototype.getExtent_ = function(features) {
 /**
  * Create OGC filters for the filter groups extracted from the query params.
  *
- * @param {Array.<ngeox.WfsPermalinkFilterGroup>} filterGroups Filter groups.
+ * @param {Array.<WfsPermalinkFilterGroup>} filterGroups Filter groups.
  * @return {ol.format.filter.Filter} OGC filters.
  * @private
  */
@@ -318,7 +423,7 @@ WfsPermalinkService.module.value('ngeoPermalinkOgcserverUrl', '');
  * permalink functionality.
  */
 WfsPermalinkService.module.value('ngeoWfsPermalinkOptions',
-  /** @type {ngeox.WfsPermalinkOptions} */ ({
+  /** @type {WfsPermalinkOptions} */ ({
     url: '',
     wfsTypes: [],
     defaultFeatureNS: '',

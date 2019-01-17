@@ -1,8 +1,63 @@
 /**
  * @module ngeo.datasource.DataSource
  */
+
+
 /**
- * @implements {ngeox.datasource.DataSource}
+ * The options required to create a `DataSource`.
+ *
+ * attributes: The attributes of the data source.
+ *
+ * dimensionsFiltersConfig: The dimensions filters configuration, which determines dimensions supported
+ * by this data source using filters and give the corresponding field and
+ * whether they should use a static value or the one defined in the dimensions.
+ *
+ * id:(Required) The data source id.
+ *
+ * identifierAttribute: The name of an attribute among the attributes of the data source.
+ * The value of that attribute, in records, can be used to identify each record individually.
+ *
+ * inRange: A data source is considered 'in range' when it is synchronized to
+ * a map view and the resolution of that view is within the range of
+ * the `maxResolution` and `minResolution`. These 2 properties are
+ * required for the `inRange` property to be dynamic, otherwise its
+ * value is always `true` by default.
+ *
+ * The synchronization is made in the `ngeo.datasource.syncDataSourcesMap`
+ * service.
+ *
+ * minResolution: Minimum resolution where the data source can be displayed or queried.
+ *
+ * maxResolution: Maximum resolution where the data source can be displayed or queried.
+ *
+ * name: (Required) A human-readable name for the data source.
+ *
+ * visible: Whether the data source is visible or not, i.e. whether its is ON or OFF.
+ * Defaults to `false`.
+ *
+ * @typedef {{
+ *   attributes: (Array.<Attribute>|undefined),
+ *   dimensionsFiltersConfig: (DimensionsFiltersConfig|undefined),
+ *   id: (number),
+ *   identifierAttribute: (string|undefined),
+ *   inRange: (boolean|undefined),
+ *   minResolution: (number|undefined),
+ *   maxResolution: (number|undefined),
+ *   name: (string),
+ *   visible: (boolean|undefined)
+ * }} DataSourceOptions
+ */
+
+
+/**
+ * @typedef {{
+ *   queryable: (boolean)
+ * }} DataSource
+ */
+
+
+/**
+ * @implements {DataSource}
  */
 export default class {
 
@@ -19,7 +74,7 @@ export default class {
    *  - know whether the data is visible or not
    *  - apply filter rules on it
    *
-   * @param {ngeox.datasource.DataSourceOptions} options Options.
+   * @param {DataSourceOptions} options Options.
    */
   constructor(options) {
 
@@ -55,7 +110,7 @@ export default class {
      * Note: `attributes` is not using the conventionnal getter/setter due
      * to:  See: https://github.com/google/closure-compiler/issues/1089
      *
-     * @type {?Array.<ngeox.Attribute>}
+     * @type {?Array.<Attribute>}
      * @export
      */
     this.attributes = options.attributes || null;
@@ -103,7 +158,7 @@ export default class {
   // =======================================
 
   /**
-   * @return {?Array.<ngeox.Attribute>} Attributes
+   * @return {?Array.<Attribute>} Attributes
    * @export
    */
   getAttributes() {
@@ -111,7 +166,7 @@ export default class {
   }
 
   /**
-   * @param {?Array.<ngeox.Attribute>} attributes Attributes
+   * @param {?Array.<Attribute>} attributes Attributes
    * @export
    */
   setAttributes(attributes) {

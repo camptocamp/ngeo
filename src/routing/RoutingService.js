@@ -3,6 +3,23 @@
  */
 import angular from 'angular';
 
+
+/**
+ * @typedef {{
+ *     label: (string),
+ *     profile: (string)
+ * }} RoutingProfile
+ */
+
+
+/**
+ * @typedef {{
+ *     backendUrl: (string|undefined),
+ *     profiles: (Array.<RoutingProfile>|undefined)
+ * }} RoutingOptions
+ */
+
+
 /**
  * Service to provide access to a [Open Source Routing Machine (OSRM) backend](https://github.com/Project-OSRM/osrm-backend)
  * of version 5.8 and higher and its features.
@@ -23,7 +40,7 @@ const exports = function($http, $injector) {
   this.$http_ = $http;
 
   /**
-   * @type {ngeox.RoutingOptions}
+   * @type {RoutingOptions}
    * @private
    */
   this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};

@@ -6,6 +6,16 @@ import 'jquery-ui/ui/widgets/sortable.js';
 import 'jquery-ui-touch-punch';
 import googAsserts from 'goog/asserts.js';
 
+
+/**
+ * @typedef {{
+ *     handleClassName: (string|undefined),
+ *     draggerClassName: (string|undefined),
+ *     placeholderClassName: (string|undefined)
+ * }} miscSortableOptions
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -42,7 +52,7 @@ const exports = angular.module('ngeoSortable', []);
  * See our live example: [../examples/layerorder.html](../examples/layerorder.html)
  *
  * @htmlAttribute {Array.<ol.layer.Base>} ngeo-sortable The layers to sort.
- * @htmlAttribute {!ngeox.miscSortableOptions} ngeo-sortable-options The options.
+ * @htmlAttribute {!miscSortableOptions} ngeo-sortable-options The options.
  * @htmlAttribute {Function(angular.JQLite, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called
  *     with the element and the sort array as arguments.
@@ -141,7 +151,7 @@ function component($timeout) {
 
       /**
        * @param {?} options Options after expression evaluation.
-       * @return {!ngeox.miscSortableOptions} Options object.
+       * @return {!miscSortableOptions} Options object.
        * @private
        */
       function getOptions(options) {
@@ -153,7 +163,7 @@ function component($timeout) {
           if (options['handleClassName'] === undefined) {
             options['handleClassName'] = defaultHandleClassName;
           }
-          ret = /** @type {ngeox.miscSortableOptions} */ (options);
+          ret = /** @type {miscSortableOptions} */ (options);
         }
         return ret;
       }

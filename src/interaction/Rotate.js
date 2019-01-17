@@ -19,6 +19,14 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   feature: ol.Feature
+ * }>} RotateEvent
+ */
+
+
 /**
  * @classdesc
  * Interaction to rotate features.
@@ -185,7 +193,7 @@ exports.prototype.addFeature_ = function(feature) {
 exports.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
-    /** @type {ngeox.ModifyEvent} */
+    /** @type {ModifyEvent} */
     const event = new ngeoCustomEvent('modifystart', {features: this.features_});
     this.dispatchEvent(event);
   }
@@ -342,7 +350,7 @@ exports.prototype.handleDrag_ = function(evt) {
  */
 exports.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
-    /** @type {ngeox.RotateEvent} */
+    /** @type {RotateEvent} */
     const event = new ngeoCustomEvent('rotateend', {feature: this.feature_});
     this.dispatchEvent(event);
     this.modified_ = false;

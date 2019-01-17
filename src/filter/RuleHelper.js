@@ -18,6 +18,46 @@ import * as olFormatFilter from 'ol/format/filter.js';
 import moment from 'moment';
 
 
+/**
+ * @typedef {!RuleOptions|!GeometryOptions|!SelectOptions|!TextOptions} AnyOptions
+ */
+
+
+/**
+ * The options to use when creating a filter using the `ngeo.RuleHelper`
+ * service.
+ *
+ * dataSource: The data source from which to get the filterRules that will be used to
+ * create the OL filter object.
+ *
+ * incDimensions: Whether to include the dimensions related filters. Default to `true`.
+ *
+ * incTime: Whether to include the data source's time values in the filter created. The
+ * property that contains those values is `timeRangeValue`. Defaults to `false`.
+ * When building a filter for WMS, it should not be included as it is given as
+ * the TIME parameter of the query instead. When used for a WFS request, it
+ * should be included in the filter.
+ *
+ * filter: A filter that is directly given the the method instead of creating one.
+ * Useful to automatically combine the time values.
+ *
+ * filterRules: An alternative list of filter rules to use instead of those that are defined
+ * within the data source. Useful when one wants to get the data of a given
+ * filter without applying it to the data source.
+ *
+ * srsName: The SRS name used with the spatial filters created by the method.
+ *
+ * @typedef {{
+ *     dataSource: (DataSource),
+ *     incDimensions: (boolean|undefined),
+ *     incTime: (boolean|undefined),
+ *     filter: (ol.format.filter.Filter|undefined),
+ *     filterRules: (!Array.<Rule>|undefined),
+ *     srsName: (string|undefined)
+ * }} CreateFilterOptions
+ */
+
+
 const exports = class {
 
   /**
@@ -53,7 +93,7 @@ const exports = class {
   }
 
   /**
-   * @param {!Array.<!ngeox.Attribute>} attributes Attributes.
+   * @param {!Array.<!Attribute>} attributes Attributes.
    * @param {boolean=} opt_isCustom Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
    * @return {Array.<!ngeo.rule.Rule>} Rules.
@@ -68,7 +108,7 @@ const exports = class {
   }
 
   /**
-   * @param {!ngeox.Attribute} attribute Attribute.
+   * @param {!Attribute} attribute Attribute.
    * @param {boolean=} opt_isCustom Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
    * @return {!ngeo.rule.Rule} Rule.
@@ -181,7 +221,7 @@ const exports = class {
   }
 
   /**
-   * @param {!Array.<!ngeox.rule.RuleOptions|!ngeox.rule.SelectOptions>} optionsList List of options
+   * @param {!Array.<!RuleOptions|!SelectOptions>} optionsList List of options
    * @return {Array.<!ngeo.rule.Rule>} Rules.
    * @export
    */
@@ -194,7 +234,7 @@ const exports = class {
   }
 
   /**
-   * @param {!ngeox.rule.RuleOptions|!ngeox.rule.SelectOptions} options Options
+   * @param {!RuleOptions|!SelectOptions} options Options
    * @return {!ngeo.rule.Rule} Rule.
    * @export
    */
@@ -209,7 +249,7 @@ const exports = class {
         rule = new ngeoRuleGeometry(options);
         break;
       case ngeoFormatAttributeType.SELECT:
-        const selectOptions = /** @type {!ngeox.rule.SelectOptions} */ (
+        const selectOptions = /** @type {!SelectOptions} */ (
           options);
         googAsserts.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
@@ -318,7 +358,7 @@ const exports = class {
 
   /**
    * @param {!Array.<!ngeo.rule.Rule>} rules Rules
-   * @return {!Array.<!ngeox.rule.AnyOptions>} List of serialized rule options.
+   * @return {!Array.<!AnyOptions>} List of serialized rule options.
    * @export
    */
   serializeRules(rules) {
@@ -331,7 +371,7 @@ const exports = class {
   /**
    * Selialize a rule into options to re-create it later.
    * @param {!ngeo.rule.Rule} rule Rule to serialize.
-   * @return {!ngeox.rule.AnyOptions} Serialized rule options.
+   * @return {!AnyOptions} Serialized rule options.
    * @export
    */
   serializeRule(rule) {
@@ -375,9 +415,9 @@ const exports = class {
 
   /**
    * Create a `ol.format.filter.Filter` object for a given data source.
-   * See the `ngeox.CreateFilterOptions` to learn more.
+   * See the `CreateFilterOptions` to learn more.
    *
-   * @param {ngeox.CreateFilterOptions} options Options.
+   * @param {CreateFilterOptions} options Options.
    * @return {?ol.format.filter.Filter} Filter.
    * @export
    */
@@ -454,7 +494,7 @@ const exports = class {
   }
 
   /**
-   * @param {ngeox.CreateFilterOptions} options Options.
+   * @param {CreateFilterOptions} options Options.
    * @return {?string} Filter string.
    * @export
    */

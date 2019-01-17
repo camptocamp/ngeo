@@ -8,6 +8,7 @@ import angular from 'angular';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
 
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
+import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
 
 
 /** @type {!angular.IModule} **/
@@ -35,32 +36,32 @@ exports.MainController = function($scope, ngeoWMSTime) {
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {ngeox.TimeProperty}
+   * @type {TimeProperty}
    * @export
    */
   this.wmsTimeRangeMode = {
-    widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
+    widget: TimePropertyWidgetEnum.SLIDER,
     maxValue: '2013-12-31T00:00:00Z',
     minValue: '2006-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('day'),
-    mode: /** @type {ngeox.TimePropertyModeEnum} */('range'),
+    resolution: TimePropertyResolutionEnum.DAY,
+    mode: TimePropertyModeEnum.RANGE,
     interval: [0, 1, 0, 0]
   };
 
   /**
-   * @type {ngeox.TimeProperty}
+   * @type {TimeProperty}
    * @export
    */
   this.wmsTimeValueMode = {
-    widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('slider'),
+    widget: TimePropertyWidgetEnum.SLIDER,
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    resolution: /** @type {ngeox.TimePropertyResolutionEnum}*/ ('year'),
-    mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
+    resolution: TimePropertyResolutionEnum.YEAR,
+    mode: TimePropertyModeEnum.VALUE,
     interval: [0, 0, 1, 0]
   };
 

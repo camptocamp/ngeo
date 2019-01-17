@@ -3,6 +3,7 @@
  */
 import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
+import {ServerType} from 'ngeo/datasource/OGC.js';
 
 const exports = class {
 
@@ -34,7 +35,7 @@ const exports = class {
    */
   describe(dataSource) {
     // Only QGIS Server supports WFS aliases
-    if (dataSource.ogcServerType === 'qgisserver' &&
+    if (dataSource.ogcServerType === ServerType.QGISSERVER &&
       dataSource.wfsUrl_ &&
       dataSource.getOGCLayerNames().length == 1 &&
       !dataSource.attributes) {

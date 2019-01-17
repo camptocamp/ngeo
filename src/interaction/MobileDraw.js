@@ -16,6 +16,28 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
+
+/**
+ * MobileDraw Interaction.
+ *
+ * minPoints: The number of points that must be drawn before a polygon ring or line string
+ * can be finished. Default is `3` for polygon rings and `2` for line strings.
+ *
+ * style: Style for sketch features.
+ *
+ * type: Drawing type ('Point' or 'LineString'.
+ *
+ * wrapX: Wrap the world horizontally on the sketch overlay. Default is `false`.
+ *
+ * @typedef {{
+ *     minPoints: (number|undefined),
+ *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *     type: ol.geom.GeometryType,
+ *     wrapX: (boolean|undefined)
+ * }} MobileDrawOptions
+ */
+
+
 /**
  * @classdesc
  * Interaction for drawing feature geometries from a mobile device using the
@@ -27,9 +49,9 @@ import olSourceVector from 'ol/source/Vector.js';
  * - polygon
  *
  * @constructor
- * @fires ngeox.DrawEvent
+ * @fires DrawEvent
  * @extends {ol.interaction.Interaction}
- * @param {ngeox.interaction.MobileDrawOptions} options Options
+ * @param {MobileDrawOptions} options Options
  */
 const exports = function(options) {
 
@@ -208,7 +230,7 @@ exports.prototype.addToDrawing = function() {
   if (this.type_ === 'Point') {
     if (!this.sketchFeature_) {
       this.sketchFeature_ = new olFeature(new olGeomPoint(coordinate));
-      /** @type {ngeox.DrawEvent} */
+      /** @type {DrawEvent} */
       const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
       this.dispatchEvent(event);
     }
@@ -224,7 +246,7 @@ exports.prototype.addToDrawing = function() {
     if (!this.sketchFeature_) {
       coordinates = [coordinate.slice(), coordinate.slice()];
       this.sketchFeature_ = new olFeature(new olGeomLineString(coordinates));
-      /** @type {ngeox.DrawEvent} */
+      /** @type {DrawEvent} */
       const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
       this.dispatchEvent(event);
     } else {
@@ -242,7 +264,7 @@ exports.prototype.addToDrawing = function() {
     if (!this.sketchFeature_) {
       coordinates = [coordinate.slice(), coordinate.slice(), coordinate.slice()];
       this.sketchFeature_ = new olFeature(new olGeomPolygon([coordinates]));
-      /** @type {ngeox.DrawEvent} */
+      /** @type {DrawEvent} */
       const event = new ngeoCustomEvent(
         'drawstart',
         {
@@ -315,7 +337,7 @@ exports.prototype.finishDrawing = function() {
 
   this.set('drawing', false);
 
-  /** @type {ngeox.DrawEvent} */
+  /** @type {DrawEvent} */
   const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
   this.dispatchEvent(event);
 };

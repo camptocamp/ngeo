@@ -108,7 +108,7 @@ exports.directive('gmfMobileMeasurepoint', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {gmf.raster.RasterService} gmfRaster gmf Raster service.
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
  * @ngInject
@@ -124,7 +124,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {ngeox.miscDebounce}
+   * @type {miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -232,7 +232,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
  */
 Controller.prototype.init = function() {
   this.measure = new ngeoInteractionMeasurePointMobile(
-    /** @type {ngeox.numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
+    /** @type {numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
     this.format || '{x}, {y}',
     {
       decimals: this.coordinateDecimals,

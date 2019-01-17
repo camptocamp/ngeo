@@ -14,6 +14,14 @@ import olCollection from 'ol/Collection.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
 import olFeature from 'ol/Feature.js';
 
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   features: ol.Feature
+ * }>} ModifyEvent
+ */
+
+
 /**
  * This interaction combines multiple kind of feature modification interactions
  * in order to be able to modify vector features depending on their geometry

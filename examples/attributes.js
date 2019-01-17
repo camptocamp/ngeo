@@ -35,7 +35,7 @@ exports.MainController = function($http, $timeout, $scope) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {?Array.<ngeox.Attribute>}
+   * @type {?Array.<Attribute>}
    * @export
    */
   this.attributes = null;
@@ -89,7 +89,7 @@ exports.MainController = function($http, $timeout, $scope) {
 
 /**
  * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Array.<ngeox.Attribute>} List of attributes.
+ * @return {Array.<Attribute>} List of attributes.
  * @private
  */
 exports.MainController.prototype.handleXSDAttributeGet_ = function(resp) {

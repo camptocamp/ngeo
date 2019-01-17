@@ -15,7 +15,7 @@ import ngeoPopover from 'ngeo/Popover.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+import ngeoDatasourceOGC, {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 import ngeoOlcsConstants from 'ngeo/olcs/constants.js';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
@@ -57,7 +57,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
@@ -100,7 +100,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   // == properties from params ==
 
   /**
-   * @type {ngeox.miscDebounce}
+   * @type {miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -1118,7 +1118,7 @@ exports.prototype.handleNgeoFeaturesChange_ = function() {
 
 /**
  * Get the query data for a WFS permalink.
- * @return {?ngeox.WfsPermalinkData} The query data.
+ * @return {?WfsPermalinkData} The query data.
  * @private
  */
 exports.prototype.getWfsPermalinkData_ = function() {
@@ -1168,12 +1168,12 @@ exports.prototype.getWfsPermalinkData_ = function() {
  * Create a filter group for a given prefix from the query params.
  * @param {string} prefix E.g. `wfs_` or `wfs_0_`.
  * @param {Array.<string>} paramKeys All param keys starting with `wfs_`.
- * @return {ngeox.WfsPermalinkFilterGroup|null} A filter group.
+ * @return {WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
 exports.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
-   * @type {Array.<ngeox.WfsPermalinkFilter>}
+   * @type {Array.<WfsPermalinkFilter>}
    */
   const filters = [];
 
@@ -1242,12 +1242,12 @@ exports.prototype.initExternalDataSources_ = function() {
         exports.ExtDSSeparator.NAMES);
       const url = urls[i];
 
-      const serviceType = ngeoDatasourceOGC.guessServiceTypeByUrl(url);
+      const serviceType = guessServiceTypeByUrl(url);
 
       const getCapabilitiesDefer = this.q_.defer();
       promises.push(getCapabilitiesDefer.promise);
 
-      if (serviceType === ngeoDatasourceOGC.Type.WMS) {
+      if (serviceType === Type.WMS) {
         ngeoQuerent.wmsGetCapabilities(url).then(
           (capabilities) => {
             getCapabilitiesDefer.resolve({
@@ -1266,7 +1266,7 @@ exports.prototype.initExternalDataSources_ = function() {
             });
           }
         );
-      } else if (serviceType === ngeoDatasourceOGC.Type.WMTS) {
+      } else if (serviceType === Type.WMTS) {
         ngeoQuerent.wmtsGetCapabilities(url).then(
           (capabilities) => {
             getCapabilitiesDefer.resolve({
@@ -1302,7 +1302,7 @@ exports.prototype.initExternalDataSources_ = function() {
 
         // WMS - For each layer name, find its layer capability object, then
         //       create the data source
-        if (response.serviceType === ngeoDatasourceOGC.Type.WMS) {
+        if (response.serviceType === Type.WMS) {
           for (const layerName of response.groupLayerNames) {
             const layerCap = ngeoQuerent.wmsFindLayerCapability(
               response.capabilities['Capability']['Layer']['Layer'],
@@ -1319,7 +1319,7 @@ exports.prototype.initExternalDataSources_ = function() {
             }
           }
 
-        } else if (response.serviceType === ngeoDatasourceOGC.Type.WMTS) {
+        } else if (response.serviceType === Type.WMTS) {
 
           // WMTS - For each layer name, find its layer capability object, then
           //        create the data source

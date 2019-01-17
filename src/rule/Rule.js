@@ -4,8 +4,79 @@
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 
+
 /**
- * @implements {ngeox.rule.Rule}
+ * active: Whether the rule is active or not. Used by the `ngeo-rule` component.
+ * Defaults to `false`.
+ *
+ * expression: The expression of the rule. The expression and boundaries are mutually exclusives
+ *
+ * isCustom: Whether the rule is a custom one or not. Defaults to `true`.
+ *
+ * lowerBoundary: The lower boundary of the rule. The expression and boundaries are mutually exclusives.
+ *
+ * name: The human-readable name of the rule.
+ *
+ * operator: he rule operator.
+ *
+ * operators: The rule operators.
+ *
+ * propertyName: The property name (a.k.a. the attribute name).
+ *
+ * type: The type of rule.
+ *
+ * upperBoundary: The upper boundary of the rule. The expression and boundaries are mutually exclusives.
+ *
+ * @typedef {{
+ *   active: (boolean|undefined),
+ *   expression: (number|string|undefined),
+ *   isCustom: (boolean|undefined),
+ *   lowerBoundary: (number|undefined),
+ *   name: (string),
+ *   operator: (string|undefined),
+ *   operators: (Array.<string>|undefined),
+ *   propertyName: (string),
+ *   type: (string|undefined),
+ *   upperBoundary: (number|undefined)
+ * }} RuleOptions
+ */
+
+
+/**
+ * operator: The operator of the rule value.
+ *
+ * propertyName: The property name of the rule value
+ *
+ * @typedef {{
+ *   operator: (string),
+ *   propertyName: (string)
+ * }} RuleBaseValue
+ */
+
+/**
+ * expression: The expression of the rule value.
+ *
+ * @typedef {{
+ *   expression: (number|string)
+ * }} RuleSimpleValue
+ * @extends RuleBaseValue
+ */
+
+/**
+ * lowerBoundary: The lower boundary of the rule value.
+ *
+ * upperBoundary: The upper boundary of the rule value.
+ *
+ * @typedef {{
+ *   lowerBoundary: (number),
+ *   upperBoundary: (number)
+ * }} RuleRangeValue
+ * @extends RuleBaseValue
+ */
+
+
+/**
+ * @implements {Rule}
  */
 const exports = class {
 
@@ -30,7 +101,7 @@ const exports = class {
    * When the operator is `between`, the `lowerBoundary` and `upperBoundary`
    * properties are used instead of `expression`.
    *
-   * @param {!ngeox.rule.RuleOptions} options Options.
+   * @param {!RuleOptions} options Options.
    */
   constructor(options) {
 
@@ -194,7 +265,7 @@ const exports = class {
   // === Calculated property getters ===
 
   /**
-   * @return {?ngeox.rule.RuleSimpleValue|ngeox.rule.RuleRangeValue} Value.
+   * @return {?RuleSimpleValue|RuleRangeValue} Value.
    * @export
    */
   get value() {

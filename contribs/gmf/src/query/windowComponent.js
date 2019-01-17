@@ -129,7 +129,7 @@ exports.component('gmfDisplayquerywindow', component);
 /**
  * @param {!jQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeox.QueryResult} ngeoQueryResult ngeo query result.
+ * @param {!QueryResult} ngeoQueryResult ngeo query result.
  * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
  * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
@@ -175,7 +175,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.sourcesFilter = {'queried': true};
 
   /**
-   * @type {ngeox.QueryResult}
+   * @type {QueryResult}
    * @export
    */
   this.ngeoQueryResult = {
@@ -191,7 +191,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {?ngeox.QueryResultSource}
+   * @type {?QueryResultSource}
    * @export
    */
   this.selectedSource = null;
@@ -215,7 +215,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.highlightFeatures_ = new olCollection();
 
   /**
-   * @type {?ngeox.QueryResultSource}
+   * @type {?QueryResultSource}
    * @export
    */
   this.source = null;
@@ -424,7 +424,7 @@ Controller.prototype.next = function() {
 
 /**
  * Remove features without properties from the query result.
- * @param {ngeox.QueryResult} queryResult ngeo query result.
+ * @param {QueryResult} queryResult ngeo query result.
  * @private
  */
 Controller.prototype.updateQueryResult_ = function(queryResult) {
@@ -568,7 +568,7 @@ Controller.prototype.clear = function() {
 
 
 /**
- * @param {ngeox.QueryResultSource} source The source to select.
+ * @param {QueryResultSource} source The source to select.
  * @export
  */
 Controller.prototype.setSelectedSource = function(source) {

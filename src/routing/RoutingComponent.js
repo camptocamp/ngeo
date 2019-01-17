@@ -19,6 +19,15 @@ import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
 
+
+/**
+ * @typedef {{
+ *     feature: (?ol.Feature),
+ *     onSelect: (function(NominatimSearchResult))
+ * }} RoutingVia
+ */
+
+
 exports.module = angular.module('ngeoRoutingComponent', [
   ngeoMiscDebounce.name,
   ngeoMiscFilters.name,
@@ -64,7 +73,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @param {!ngeo.routing.RoutingService} ngeoRoutingService service for OSRM routing
  * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
  * @param {!angular.IQService} $q Angular q service
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce service.
+ * @param {miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @private
  * @ngInject
@@ -92,7 +101,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.ngeoNominatimService_ = ngeoNominatimService;
 
   /**
-   * @type {ngeox.RoutingOptions}
+   * @type {RoutingOptions}
    * @private
    */
   this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
@@ -105,13 +114,13 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
    *              profile: 'routed-car' // used as part of the query
    *            }
    *          ]
-   * @type {Array<ngeox.RoutingProfile>}
+   * @type {Array<RoutingProfile>}
    * @export
    */
   this.routingProfiles = this.routingOptions_.profiles || [];
 
   /**
-   * @type {?ngeox.RoutingProfile}
+   * @type {?RoutingProfile}
    * @export
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
@@ -152,7 +161,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.targetFeature_ = null;
 
   /**
-   * @type {Array.<ngeox.RoutingVia>}
+   * @type {Array.<RoutingVia>}
    * @export
    */
   this.viaArray = [];
@@ -379,7 +388,7 @@ exports.Controller.prototype.calculateRoute = function() {
  * @export
  */
 exports.Controller.prototype.addVia = function() {
-  this.viaArray.push(/** @type{ngeox.RoutingVia} */({
+  this.viaArray.push(/** @type{RoutingVia} */({
     feature: null,
     onSelect: null
   }));

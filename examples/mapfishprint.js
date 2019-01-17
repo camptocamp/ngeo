@@ -68,7 +68,7 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
 /**
  * @constructor
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {ngeox.CreatePrint} ngeoCreatePrint The ngeo Create Print function.
+ * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @export

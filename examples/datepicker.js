@@ -8,6 +8,7 @@ import angular from 'angular';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
 import ngeoMiscTime from 'ngeo/misc/Time.js';
+import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
 
 
 /** @type {!angular.IModule} **/
@@ -32,30 +33,30 @@ exports.MainController = function(ngeoTime) {
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {ngeox.TimeProperty}
+   * @type {TimeProperty}
    * @export
    */
   this.timeRangeMode = {
-    widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('datepicker'),
+    widget: TimePropertyWidgetEnum.DATEPICKER,
     maxValue: '2013-12-31T00:00:00Z',
     minValue: '2006-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    mode: /** @type {ngeox.TimePropertyModeEnum} */ ('range'),
+    mode: TimePropertyModeEnum.RANGE,
     interval: [0, 1, 0, 0]
   };
 
   /**
-   * @type {ngeox.TimeProperty}
+   * @type {TimeProperty}
    * @export
    */
   this.timeValueMode = {
-    widget: /** @type {ngeox.TimePropertyWidgetEnum} */ ('datepicker'),
+    widget: TimePropertyWidgetEnum.DATEPICKER,
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
     maxDefValue: null,
     minDefValue: null,
-    mode: /** @type {ngeox.TimePropertyModeEnum} */ ('value'),
+    mode: TimePropertyModeEnum.VALUE,
     interval: [0, 1, 0, 0]
   };
 
@@ -78,7 +79,6 @@ exports.MainController = function(ngeoTime) {
   this.onDateRangeSelected = function(date) {
     this.rangeValue = date;
   };
-
 };
 
 

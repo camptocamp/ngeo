@@ -11,6 +11,25 @@ import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
+
+/**
+ * Options for the mobile geolocations directive.
+ *
+ * accuracyFeatureStyle: The style to use to sketch the accuracy feature, which is a regular polygon.
+ *
+ * positionFeatureStyle: The style to use to sketch the position feature, which is a point.
+ *
+ * zoom: If set, in addition to recentering the map view at the location, determines
+ * the zoom level to set when obtaining a new position.
+ *
+ * @typedef {{
+ *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
+ *    zoom: (number|undefined)
+ * }} DesktopGeolocationDirectiveOptions
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -44,7 +63,7 @@ exports.GeolocationEventType = {
  * See our live example: [../examples/desktopgeolocation.html](../examples/desktopgeolocation.html)
  *
  * @htmlAttribute {ol.Map} gmf-geolocation-map The map.
- * @htmlAttribute {ngeox.DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
+ * @htmlAttribute {DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive

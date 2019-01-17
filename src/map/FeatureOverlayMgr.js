@@ -12,6 +12,14 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
 
 
 /**
+ * @typedef {{
+ *  styleFunction: ol.StyleFunction,
+ *  features: Object.<string, ol.Feature>
+ * }} MapFeatureOverlayGroup
+ */
+
+
+/**
  * Provides a service that wraps an "unmanaged" vector layer,
  * used as a shared vector layer across the application.
  *
@@ -42,7 +50,7 @@ const exports = function() {
   this.featureUidToGroupIndex_ = {};
 
   /**
-   * @type {Array.<ngeox.MapFeatureOverlayGroup>}
+   * @type {Array.<MapFeatureOverlayGroup>}
    * @private
    */
   this.groups_ = [];

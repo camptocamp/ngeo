@@ -408,7 +408,7 @@ The way to do that is to add the right tag on each variable, function and class.
 ### Object typing
 
 For each custom object we define in ngeo we must provide a type for the compiler.
-You can define your owns in the `src/options/ngeox.js` or (equivalent in the contribs section).
+You can define your owns in the `src/options/js` or (equivalent in the contribs section).
 
 It's the same thing for objects that come from an external library, or from a server's response. In this case,
 That's an `extern` and it can be defined in the `externs/<source>.js`.

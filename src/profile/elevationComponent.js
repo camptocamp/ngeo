@@ -9,6 +9,31 @@ import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
 
 import {select as d3select} from 'd3';
 
+
+/**
+ * The POI data extractor is used to extract data from a POI.
+ * The POI is an item of the POI data array.
+ *
+ * id: Extract the id of a POI.
+ *
+ * dist: Extract the distance from origin of a POI.
+ *
+ * z: Extract the elevation of a POI.
+ *
+ * sort: Extract the sequence number of a POI.
+ *
+ * title: Extract the title of a POI.
+ *
+ * @typedef {{
+ *   id: function(Object): string,
+ *   dist: function(Object): number,
+ *   z: function(Object, number=): number,
+ *   sort: function(Object): number,
+ *   title: function(Object): string
+ * }} PoiExtractor
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -28,19 +53,19 @@ const exports = angular.module('ngeoProfile', [
  *        ngeo-profile-pois="ctrl.profilePois">
  *      </div>
  *
- * Where "ctrl.profileOptions" is of type {@link ngeox.profile.ProfileOptions};
+ * Where "ctrl.profileOptions" is of type {@link ProfileOptions};
  * "ctrl.profileData" and "ctrl.profilePois" are arrays which will be
- * processed by {@link ngeox.profile.ElevationExtractor} and
- * {@link ngeox.profile.PoiExtractor}.
+ * processed by {@link ElevationExtractor} and
+ * {@link PoiExtractor}.
  *
  * See our live example: [../examples/profile.html](../examples/profile.html)
  *
  * @htmlAttribute {?Object} ngeo-profile The profile data.
- * @htmlAttribute {ngeox.profile.ProfileOptions} ngeo-profile-options The options.
+ * @htmlAttribute {ProfileOptions} ngeo-profile-options The options.
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -64,7 +89,7 @@ function directive(ngeoDebounce) {
 
       scope.$watchCollection(optionsAttr, (newVal) => {
 
-        const options = /** @type {ngeox.profile.ProfileOptions} */
+        const options = /** @type {ProfileOptions} */
                 (Object.assign({}, newVal));
 
         if (options !== undefined) {

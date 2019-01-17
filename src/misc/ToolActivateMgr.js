@@ -4,6 +4,17 @@
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
+
+/**
+ * An entry for a tool in a `ngeo.misc.ToolActivateMgr` group.
+ * @typedef {{
+ *    tool: (ngeo.misc.ToolActivate),
+ *    defaultTool: boolean,
+ *    unlisten: (function(): void)
+ * }} miscToolActivateMgrEntry
+ */
+
+
 /**
  * Provides a service to manage the activation of `ngeo.misc.ToolActivate` objects.
  *
@@ -34,7 +45,7 @@ import googAsserts from 'goog/asserts.js';
 const exports = function($rootScope) {
 
   /**
-   * @type {!Object.<string, Array.<ngeox.miscToolActivateMgrEntry>>}
+   * @type {!Object.<string, Array.<miscToolActivateMgrEntry>>}
    * @private
    */
   this.groups_ = {};

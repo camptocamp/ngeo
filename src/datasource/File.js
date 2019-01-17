@@ -6,12 +6,24 @@ import olCollection from 'ol/Collection.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
+
+/**
+ * The options required to create a `File`.
+ *
+ * features: Collection of `ol.Feature` objects.
+ *
+ * @typedef {{
+ *   features: (ol.Collection.<!ol.Feature>|undefined)
+ * }} FileOptions
+ * @extends DataSourceOptions
+ */
+
 export default class extends ngeoDatasourceDataSource {
 
   /**
    * A data source that contains vector features that were loaded from a file.
    *
-   * @param {ngeox.datasource.FileOptions} options Options.
+   * @param {FileOptions} options Options.
    */
   constructor(options) {
 

@@ -130,7 +130,7 @@ function Controller($scope, $injector,
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {!ngeox.TimeProperty}
+   * @type {!TimeProperty}
    * @export
    */
   this.time;

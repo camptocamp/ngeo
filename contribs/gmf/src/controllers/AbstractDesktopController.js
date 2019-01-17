@@ -154,7 +154,7 @@ const exports = function(config, $scope, $injector) {
   ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
   /**
-   * @type {ngeox.ScaleselectorOptions}
+   * @type {ScaleselectorOptions}
    * @export
    */
   this.scaleSelectorOptions = {

@@ -12,7 +12,7 @@ const Service = class {
 
   /**
    * @ngInject
-   * @param {!ngeox.miscDebounce} ngeoDebounce ngeo debounce service.
+   * @param {!miscDebounce} ngeoDebounce ngeo debounce service.
    * @param {!ngeo.statemanager.Location} ngeoLocation ngeo location service.
    * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo StateManager service.
    */
@@ -25,7 +25,7 @@ const Service = class {
 
     /**
      * @private
-     * @type {!ngeox.miscDebounce}
+     * @type {!miscDebounce}
      */
     this.ngeoDebounce_ = ngeoDebounce;
 

@@ -34,6 +34,14 @@ import olStyleFill from 'ol/style/Fill.js';
 import olGeomGeometry from 'ol/geom/Geometry.js';
 import 'ngeo/sass/font.scss';
 
+
+/**
+ * @typedef {ngeo.CustomEvent.<{
+ *   action: string
+ * }>} MenuEvent
+ */
+
+
 /**
  * @type {angular.IModule}
  */
@@ -220,7 +228,7 @@ class RuleController {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a range of date.
-     * @type {!ngeox.TimeProperty}
+     * @type {!TimeProperty}
      * @export
      */
     this.timeRangeMode = {
@@ -236,7 +244,7 @@ class RuleController {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a single date.
-     * @type {!ngeox.TimeProperty}
+     * @type {!TimeProperty}
      * @export
      */
     this.timeValueMode = {
@@ -919,7 +927,7 @@ class RuleController {
   }
 
   /**
-   * @param {ngeox.MenuEvent} evt Event.
+   * @param {MenuEvent} evt Event.
    * @private
    */
   handleMenuActionClick_(evt) {
@@ -941,7 +949,7 @@ class RuleController {
   }
 
   /**
-   * @param {ngeox.RotateEvent} evt Event.
+   * @param {RotateEvent} evt Event.
    * @private
    */
   handleRotateEnd_(evt) {

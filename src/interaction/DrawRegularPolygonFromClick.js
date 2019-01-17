@@ -11,15 +11,35 @@ import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomPolygon from 'ol/geom/Polygon.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 
+
+/**
+ * DrawRegularPolygonFromClick Interaction.
+ *
+ * angle: Angle in radians. A value of 0 will have one of the shape's point facing up.
+ * Default value is 0.
+ *
+ * radius: Radius size in map units.
+ *
+ * sides: The number of sides for the regular polygon.
+ * Default value is 3.
+ *
+ * @typedef {{
+ *     angle: (number|undefined),
+ *     radius: (number),
+ *     sides: (number|undefined)
+ * }} DrawRegularPolygonFromClickOptions
+ */
+
+
 /**
  * @classdesc
  * This interactions allows drawing regular polygons of a pre-determined number
  * of sides and size a a clicked location on the map.
  *
  * @constructor
- * @fires ngeox.DrawEvent
+ * @fires DrawEvent
  * @extends {ol.interaction.Interaction}
- * @param {ngeox.interaction.DrawRegularPolygonFromClickOptions} options Options
+ * @param {DrawRegularPolygonFromClickOptions} options Options
  */
 const exports = function(options) {
 
@@ -135,7 +155,7 @@ exports.prototype.handleMapClick_ = function(evt) {
 
   olGeomPolygon.makeRegular(geometry, center, this.radius_, this.angle_);
 
-  /** @type {ngeox.DrawEvent} */
+  /** @type {DrawEvent} */
   const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
   this.dispatchEvent(event);
 };

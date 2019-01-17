@@ -93,7 +93,7 @@ function directive(ngeoMapQuerent, $injector) {
         listenerKeys_.push(
           olEventsListen(map, 'singleclick', handleMapClick_)
         );
-        const queryOptions = /** @type {ngeox.QueryOptions} */ (
+        const queryOptions = /** @type {QueryOptions} */ (
           $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
         );
         if (queryOptions.cursorHover) {

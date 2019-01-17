@@ -6,6 +6,14 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 
 /**
+ * layer: Layer name. Possible values are `asitvd.fond_couleur`, `asitvd.fond_gris`
+ * and `asitvd.fond_pourortho`.
+ *
+ * @typedef {{layer: string}} AsitVDOptions
+ */
+
+
+/**
  * @const {!Array.<number>}
  */
 const asitVDResolutions = [
@@ -32,7 +40,7 @@ const asitVDTileGrid = new olTilegridWMTS({
 export default class extends olSourceWMTS {
 
   /**
-   * @param {ngeox.source.AsitVDOptions} options WMTS options.
+   * @param {AsitVDOptions} options WMTS options.
    */
   constructor(options) {
     super({

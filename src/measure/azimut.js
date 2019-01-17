@@ -61,7 +61,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
         measureAzimut,
         'measureend',
         /**
-         * @param {ngeox.MeasureEvent} event Event.
+         * @param {MeasureEvent} event Event.
          */
         (event) => {
           // In the case of azimut measure interaction, the feature's

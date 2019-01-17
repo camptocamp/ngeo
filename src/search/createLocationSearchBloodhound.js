@@ -13,7 +13,33 @@ import 'corejs-typeahead';
 
 
 /**
- * @param {ngeox.search.LocationSearchOptions=} opt_options Options.
+ * limit: The maximum number of results to retrieve per request (max. and default limit=50)
+ *
+ * origins: A comma separated list of origins.
+ * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
+ * Per default all origins are used.
+ *
+ * targetProjection: Target projection.
+ *
+ * options: Optional Bloodhound options. If `undefined`, the default Bloodhound config will be used.
+ *
+ * remoteOptions: Optional Bloodhound remote options. Only used if `remote` is not defined in `options`.
+ *
+ * prepare: Optional function to prepare the request.
+ *
+ * @typedef {{
+ *    limit: (number|undefined),
+ *    origins: (string|undefined),
+ *    targetProjection: (!ol.proj.Projection|undefined),
+ *    options: (!BloodhoundOptions|undefined),
+ *    remoteOptions: (!BloodhoundRemoteOptions|undefined),
+ *    prepare: (undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings)
+ * }} LocationSearchOptions
+ */
+
+
+/**
+ * @param {LocationSearchOptions=} opt_options Options.
  * @return {Bloodhound} The Bloodhound object.
  */
 const exports = function(opt_options) {
@@ -147,7 +173,7 @@ exports.module.value(
  *     });
  *     bloodhound.initialize();
  *
- * @typedef {function(ngeox.search.LocationSearchOptions=):Bloodhound}
+ * @typedef {function(LocationSearchOptions=):Bloodhound}
  * @ngdoc service
  * @ngname search.createLocationSearchBloodhound
  */

@@ -381,7 +381,7 @@ const exports = function(config, $scope, $injector) {
   this.gmfUser = $injector.get('gmfUser');
 
   /**
-   * @type {ngeox.miscGetBrowserLanguage}
+   * @type {miscGetBrowserLanguage}
    */
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 

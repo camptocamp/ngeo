@@ -12,13 +12,13 @@ export default class {
   /**
    * A format that reads the complexType from a WFS DescribeFeatureType
    * response for a single set of attributes and return an array of
-   * `ngeox.Attribute`.
+   * `Attribute`.
    */
 
 
   /**
    * @param {Array.<Object>} complexTypeElements Complex type element
-   * @return {Array.<ngeox.Attribute>} Attributes
+   * @return {Array.<Attribute>} Attributes
    */
   read(complexTypeElements) {
     return complexTypeElements.map(this.readFromComplexTypeElement_);
@@ -27,7 +27,7 @@ export default class {
 
   /**
    * @param {Object} object Complex type element
-   * @return {ngeox.Attribute} Attribute
+   * @return {Attribute} Attribute
    * @private
    */
   readFromComplexTypeElement_(object) {

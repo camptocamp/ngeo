@@ -14,6 +14,89 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 import * as olExtent from 'ol/extent.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
+
+/**
+ * A hash that contains 2 lists of queryable data sources: `wfs` and `wms`.
+ * The same data source can only be in one of the two lists. The `wfs` list
+ * has priority, i.e. if the data source supports WFS, it's put in the
+ * `wfs` list.
+ *
+ * wms: List of queryable data sources that support WMS.
+ *
+ * wfs: List of queryable data sources that support WFS.
+ *
+ * @typedef {{
+ *     wms: (!Array.<!OGC>),
+ *     wfs: (!Array.<!OGC>)
+ * }} QueryableDataSources
+ */
+
+
+/**
+ * Hash of features by data source ids.
+ * @typedef {!Object.<number, !Array.<!ol.Feature>>} QuerentResult
+ */
+
+
+/**
+ * The options to use when sending GetFeature/GetFeatureInfo requests using
+ * the querent or map query service.
+ *
+ * action: The action the MapQuerent should take regarding the queried
+ * features. Possible values are:
+ *
+ * - `replace`: newly queried features are used as result
+ * - `add`:     newly queried features are added to the existing ones
+ * - `remove`:  newly queried features are removed from the existing ones
+ *
+ * Defaults to `replace`.
+ *
+ * coordinate: The coordinate to issue the requests with, which can end up with either
+ * WMS or WFS requests.
+ *
+ * dataSources:List of data sources to query. Only those that meet the requirements will
+ * actually be queried. The querent service requires either the `dataSources`
+ * or `queryableDataSources` property to be set.
+ *
+ * extent: The extent to issue the requests with, which can end up with WFS requests
+ * only.
+ *
+ * filter: A filter to additionally use with the query. Only used by WFS requests.
+ * If a filter is defined, then it is used instead of the data source's
+ * filter rules.
+ *
+ * limit: The maximum number of features to get per request.
+ *
+ * map: The ol3 map object. Used to fill some parameters of the queries, such as
+ * 'srs' and filter the queryable layers within the data sources.
+ *
+ * queryableDataSources: A hash of queryable data sources, which must meet all requirements. The
+ * querent service requires either the `dataSources` or `queryableDataSources`
+ * property to be set.
+ *
+ * tolerancePx: A tolerance value in pixels used to create an extent from a coordinate
+ * to issue WFS requests.
+ *
+ * wfsCount: When set, before making WFS GetFeature requests to fetch features,
+ * WFS GetFeature requests with `resultType = 'hits'` are made first. If
+ * the number of records for the request would exceed the limit, then
+ * no features are returned.
+ *
+ * @typedef {{
+ *     action: (string|undefined),
+ *     coordinate: (ol.Coordinate|undefined),
+ *     dataSources: (Array.<DataSource>|undefined),
+ *     extent: (ol.Extent|undefined),
+ *     filter: (ol.format.filter.Filter|undefined),
+ *     limit: (number|undefined),
+ *     map: (ol.Map),
+ *     queryableDataSources: (QueryableDataSources|undefined),
+ *     tolerancePx: (number|undefined),
+ *     wfsCount: (boolean|undefined)
+ * }} IssueGetFeaturesOptions
+ */
+
+
 const exports = class {
 
   /**
@@ -99,7 +182,7 @@ const exports = class {
    * Issue WMS GetFeatureInfo and/or WFS GetFeature requests using the given
    * data sources, map and optional filters.
    *
-   * @param {ngeox.IssueGetFeaturesOptions} options Options.
+   * @param {IssueGetFeaturesOptions} options Options.
    * @return {angular.IPromise} Promise.
    * @export
    */
@@ -152,7 +235,7 @@ const exports = class {
    *
    * @param {!Array.<!ngeo.datasource.DataSource>} dataSources Data sources
    * @param {ol.Map} map Map.
-   * @return {!ngeox.QueryableDataSources} Queryable data sources.
+   * @return {!QueryableDataSources} Queryable data sources.
    * @export
    */
   getQueryableDataSources(dataSources, map) {
@@ -340,8 +423,8 @@ const exports = class {
    * The keys are always unique, i.e. there can be multiple result objects for
    * the same data source id.
    *
-   * @param {!Array.<ngeox.QuerentResult>} response Response.
-   * @return {ngeox.QuerentResult} Hash of features by data source ids.
+   * @param {!Array.<QuerentResult>} response Response.
+   * @return {QuerentResult} Hash of features by data source ids.
    * @private
    */
   handleCombinedQueryResult_(response) {
@@ -365,7 +448,7 @@ const exports = class {
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {angular.IHttpResponse|number} response Response.
-   * @return {ngeox.QuerentResult} Hash of features by data source ids.
+   * @return {QuerentResult} Hash of features by data source ids.
    * @private
    */
   handleQueryResult_(dataSources, limit, wfs, response) {
@@ -470,7 +553,7 @@ const exports = class {
    * and optional filters.
    *
    * @param {!CombinedDataSources} combinedDataSources Combined data sources.
-   * @param {ngeox.IssueGetFeaturesOptions} options Options.
+   * @param {IssueGetFeaturesOptions} options Options.
    * @return {angular.IPromise} Promise.
    * @private
    */
@@ -678,7 +761,7 @@ const exports = class {
    * map and optional filters.
    *
    * @param {!CombinedDataSources} combinedDataSources Combined data sources.
-   * @param {ngeox.IssueGetFeaturesOptions} options Options.
+   * @param {IssueGetFeaturesOptions} options Options.
    * @return {angular.IPromise} Promise.
    * @private
    */
@@ -820,7 +903,7 @@ const exports = class {
   }
 
   /**
-   * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
+   * @param {!Array.<OGC>} dataSources List of
    *     queryable data sources that supports WFS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -850,7 +933,7 @@ const exports = class {
   }
 
   /**
-   * @param {!Array.<ngeox.datasource.OGC>} dataSources List of
+   * @param {!Array.<OGC>} dataSources List of
    *     queryable data sources that supports WMS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private

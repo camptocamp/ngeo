@@ -217,7 +217,7 @@ exports.prototype.startDrawing_ = function(event) {
   this.sketchFeature_ = new olFeature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
-  /** @type {ngeox.DrawEvent} */
+  /** @type {DrawEvent} */
   const evt = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
   this.dispatchEvent(evt);
 };
@@ -298,7 +298,7 @@ exports.prototype.finishDrawing_ = function() {
     this.source_.addFeature(sketchFeature);
   }
 
-  /** @type {ngeox.DrawEvent} */
+  /** @type {DrawEvent} */
   const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
   this.dispatchEvent(event);
 };

@@ -4,12 +4,30 @@
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
+
+/**
+ * @typedef {{
+ *     name: (string),
+ *     coordinate: (ol.Coordinate)
+ * }} NominatimSearchResult
+ */
+
+
+/**
+ * @typedef {{
+ *     display_name: (string),
+ *     lon: (number),
+ *     lat: (number)
+ * }} NominatimSearchResponseResult
+ */
+
+
 /**
  * Service to provide access to Nominatim, which allows to search for
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {ngeox.miscDebounce} ngeoDebounce ngeo Debounce service.
+ * @param {miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngdoc service
  * @ngInject
@@ -26,7 +44,7 @@ const exports = function($http, $injector, ngeoDebounce) {
   this.$http_ = $http;
 
   /**
-   * @type {ngeox.miscDebounce}
+   * @type {miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -140,18 +158,18 @@ exports.prototype.reverse = function(coordinate, params) {
 /**
  * @param {string} query Search query
  * @param {function(Array.<BloodhoundDatum>)} syncResults Callback for synchronous execution, unused
- * @param {function(Array.<ngeox.NominatimSearchResult>)} asyncResults Callback for asynchronous execution
+ * @param {function(Array.<NominatimSearchResult>)} asyncResults Callback for asynchronous execution
  * @private
  */
 exports.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   const onSuccess_ = function(resp) {
     /**
      * Parses result response.
-     * @param {ngeox.NominatimSearchResponseResult} result Result
-     * @return {ngeox.NominatimSearchResult} Parsed result
+     * @param {NominatimSearchResponseResult} result Result
+     * @return {NominatimSearchResult} Parsed result
      */
     const parse = function(result) {
-      return /** @type{ngeox.NominatimSearchResult} */({
+      return /** @type{NominatimSearchResult} */({
         coordinate: [result.lon, result.lat],
         name: result.display_name
       });
