@@ -17,6 +17,6 @@
     },
     "include": [
       "src/**/*.js",
-      "contribs/gmf/src/**/*.js"
+//      "contribs/gmf/src/**/*.js"
     ]
 }

@@ -32,7 +32,7 @@ if (!window.requestAnimationFrame) {
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector) {
+function Controller($scope, $injector) {
   gmfControllersAbstractAPIController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -52,15 +52,15 @@ const exports = function($scope, $injector) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractAPIController);
+olUtilInherits(Controller, gmfControllersAbstractAPIController);
 
-exports.module = angular.module('Appiframe_api', [
-  appBase.module.name,
-  gmfControllersAbstractAPIController.module.name,
+const module = angular.module('Appiframe_api', [
+  appBase.name,
+  gmfControllersAbstractAPIController.name,
 ]);
 
-exports.module.controller('IframeAPIController', exports);
+module.controller('IframeAPIController', Controller);
 
-export default exports;
+export default Controller;

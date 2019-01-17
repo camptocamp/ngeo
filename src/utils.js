@@ -17,16 +17,20 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
  * @return {import("ol/geom/Geometry.js").default} A multi geometry
  */
 exports.toMulti = function(geometry) {
+  /** @type {import("ol/geom/Geometry.js").default} */
   let multiGeom;
   if (geometry instanceof olGeomPoint) {
-    multiGeom = new olGeomMultiPoint([]);
-    multiGeom.appendPoint(geometry);
+    const multiGeomPoint = new olGeomMultiPoint([]);
+    multiGeomPoint.appendPoint(geometry);
+    multiGeom = multiGeomPoint;
   } else if (geometry instanceof olGeomLineString) {
-    multiGeom = new olGeomMultiLineString([]);
-    multiGeom.appendLineString(geometry);
+    const multiGeomLine = new olGeomMultiLineString([]);
+    multiGeomLine.appendLineString(geometry);
+    multiGeom = multiGeomLine;
   } else if (geometry instanceof olGeomPolygon) {
-    multiGeom = new olGeomMultiPolygon([]);
-    multiGeom.appendPolygon(geometry);
+    const multiGeomPolygon = new olGeomMultiPolygon([]);
+    multiGeomPolygon.appendPolygon(geometry);
+    multiGeom = multiGeomPolygon;
   } else {
     multiGeom = geometry;
   }
@@ -75,6 +79,7 @@ exports.rgbArrayToHex = function(rgb) {
  * @return {!Object.<string, string>} The result.
  */
 exports.decodeQueryString = function(queryString) {
+  /** @type {Object.<string, string>} */
   const queryData = {};
   if (queryString) {
     const pairs = queryString.substring(1).split('&');

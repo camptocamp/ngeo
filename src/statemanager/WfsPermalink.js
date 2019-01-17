@@ -3,7 +3,7 @@
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olExtent from 'ol/extent.js';
-import * as olFormatFilter from 'ol/format/filter.js';
+import {equalTo, and, or} from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';
 
 
@@ -329,14 +329,13 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
   if (filterGroups.length == 0) {
     return null;
   }
-  const f = olFormatFilter;
   const createFiltersForGroup = function(filterGroup) {
     const filters = filterGroup.filters.map((filterDef) => {
       const condition = filterDef.condition;
       if (Array.isArray(condition)) {
-        return WfsPermalinkService.or_(condition.map(cond => f.equalTo(filterDef.property, cond)));
+        return WfsPermalinkService.or_(condition.map(cond => equalTo(filterDef.property, cond)));
       } else {
-        return f.equalTo(filterDef.property, filterDef.condition);
+        return equalTo(filterDef.property, filterDef.condition);
       }
     });
     return WfsPermalinkService.and_(filters);
@@ -353,7 +352,7 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
  * @private
  */
 WfsPermalinkService.and_ = function(filters) {
-  return WfsPermalinkService.joinFilters_(filters, olFormatFilter.and);
+  return WfsPermalinkService.joinFilters_(filters, and);
 };
 
 
@@ -365,7 +364,7 @@ WfsPermalinkService.and_ = function(filters) {
  * @private
  */
 WfsPermalinkService.or_ = function(filters) {
-  return WfsPermalinkService.joinFilters_(filters, olFormatFilter.or);
+  return WfsPermalinkService.joinFilters_(filters, or);
 };
 
 

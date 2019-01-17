@@ -32,7 +32,7 @@ if (!window.requestAnimationFrame) {
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector) {
+function Controller($scope, $injector) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -107,20 +107,20 @@ const exports = function($scope, $injector) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(Controller, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('Appoeview', [
-  appBase.module.name,
-  gmfControllersAbstractDesktopController.module.name,
+const module = angular.module('Appoeview', [
+  appBase.name,
+  gmfControllersAbstractDesktopController.name,
 ]);
 
-exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
 });
 
-exports.module.controller('DesktopController', exports);
+module.controller('DesktopController', Controller);
 
-export default exports;
+export default module;

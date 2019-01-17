@@ -32,7 +32,7 @@ if (!window.requestAnimationFrame) {
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector) {
+function Controller($scope, $injector) {
   gmfControllersAbstractMobileController.call(this, {
     autorotate: false,
     srid: 21781,
@@ -65,15 +65,15 @@ const exports = function($scope, $injector) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractMobileController);
+olUtilInherits(Controller, gmfControllersAbstractMobileController);
 
-exports.module = angular.module('Appmobile', [
-  appBase.module.name,
-  gmfControllersAbstractMobileController.module.name,
+const module = angular.module('Appmobile', [
+  appBase.name,
+  gmfControllersAbstractMobileController.name,
 ]);
 
-exports.module.controller('MobileController', exports);
+module.controller('MobileController', Controller);
 
-export default exports;
+export default module;
