@@ -10,7 +10,8 @@
       "baseUrl": "./",
       "paths": {
         "ngeo/*": ["src/*"],
-        "gmf/*": ["contribs/gmf/src/*"]
+        "gmf/*": ["contribs/gmf/src/*"],
+        "ol/*": ["node_modules/ol/*"]
       }
     },
     "include": [
