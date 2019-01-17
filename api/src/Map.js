@@ -95,7 +95,7 @@ class Map {
     // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
       for (const layer of layers) {
-        if (layer.get('config.layer') === constants.backgroundLayer) {
+        if (layer.get('config.name') === constants.backgroundLayer) {
           this.map_.addLayer(layer);
         }
       }

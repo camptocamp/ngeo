@@ -36,4 +36,4 @@ export const extent = [420000, 30000, 660000, 350000];
  * @type {string}
  */
 //export const backgroundLayer = 'default'; // WMS
-export const backgroundLayer = 'asitvd.fond_gris_sans_labels'; // WMTS
+export const backgroundLayer = 'Test aus Olten'; // WMTS
