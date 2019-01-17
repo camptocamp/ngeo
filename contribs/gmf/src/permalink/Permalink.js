@@ -1,5 +1,5 @@
 /**
- * @module gmf.permalink.Permalink
+ * @module import("gmf/permalink/Permalink.js").default
  */
 import angular from 'angular';
 
@@ -182,7 +182,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
 
   /**
-   * @type {?gmf.datasource.ExternalDataSourcesManager}
+   * @type {?import("gmf/datasource/ExternalDataSourcesManager.js").default}
    * @private
    */
   this.gmfExternalDataSourcesManager_ =
@@ -190,20 +190,20 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
       $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
-   * @type {?gmf.theme.Themes}
+   * @type {?import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = $injector.has('gmfThemes') ? $injector.get('gmfThemes') : null;
 
   /**
-   * @type {?gmf.objectediting.Manager}
+   * @type {?import("gmf/objectediting/Manager.js").default}
    * @private
    */
   this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
     $injector.get('gmfObjectEditingManager') : null;
 
   /**
-   * @type {?gmf.theme.Manager}
+   * @type {?import("gmf/theme/Manager.js").default}
    * @private
    */
   this.gmfThemeManager_ = $injector.has('gmfThemeManager') ?
@@ -217,7 +217,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     $injector.get('defaultTheme') : undefined;
 
   /**
-   * @type {?gmf.layertree.TreeManager}
+   * @type {?import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = $injector.has('gmfTreeManager') ?

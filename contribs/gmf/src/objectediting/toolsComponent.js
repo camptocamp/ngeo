@@ -1,5 +1,5 @@
 /**
- * @module gmf.objectediting.toolsComponent
+ * @module import("gmf/objectediting/toolsComponent.js").default
  */
 
 import angular from 'angular';

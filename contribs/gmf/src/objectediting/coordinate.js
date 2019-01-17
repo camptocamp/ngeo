@@ -1,5 +1,5 @@
 /**
- * @module gmf.objectediting.coordinate
+ * @module import("gmf/objectediting/coordinate.js").default
  */
 const exports = {};
 

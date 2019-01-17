@@ -29,7 +29,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractAPIController}
+ * @extends {import("gmf/controllers/AbstractAPIController.js").default}
  * @ngInject
  * @export
  */

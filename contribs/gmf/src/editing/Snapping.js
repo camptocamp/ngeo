@@ -1,5 +1,5 @@
 /**
- * @module gmf.editing.Snapping
+ * @module import("gmf/editing/Snapping.js").default
  */
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
@@ -28,8 +28,8 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @param {angular.IQService} $q The Angular $q service.
  * @param {!angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
@@ -64,13 +64,13 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.timeout_ = $timeout;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

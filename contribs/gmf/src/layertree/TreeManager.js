@@ -1,5 +1,5 @@
 /**
- * @module gmf.layertree.TreeManager
+ * @module import("gmf/layertree/TreeManager.js").default
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
@@ -29,7 +29,7 @@ import * as olEvents from 'ol/events.js';
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
- * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
@@ -69,7 +69,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.ngeoNotification_ = ngeoNotification;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -200,7 +200,7 @@ exports.prototype.updateTreeGroupsState_ = function(groups) {
   treeGroupsParam[gmfBase.PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
-    /** @type {gmf.permalink.Permalink} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
+    /** @type {import("gmf/permalink/Permalink.js").default} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
   }
 };
 

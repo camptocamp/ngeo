@@ -1,5 +1,5 @@
 /**
- * @module gmf.layertree.timeSliderComponent
+ * @module import("gmf/layertree/timeSliderComponent.js").default
  */
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';

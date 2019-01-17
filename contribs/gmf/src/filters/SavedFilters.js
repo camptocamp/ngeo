@@ -1,5 +1,5 @@
 /**
- * @module gmf.filters.SavedFilters
+ * @module import("gmf/filters/SavedFilters.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -42,7 +42,7 @@ const exports = class {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {!Array.<!gmf.filters.SavedFilters.Item>}
+     * @type {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -73,7 +73,7 @@ const exports = class {
     }
 
     /**
-     * @type {!Array.<!gmf.filters.SavedFilters.Item>}
+     * @type {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>}
      * @private
      */
     this.items_ = [];
@@ -92,7 +92,7 @@ const exports = class {
   }
 
   /**
-   * @return {!Array.<!gmf.filters.SavedFilters.Item>} Items
+   * @return {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>} Items
    * @export
    */
   get currentDataSourceItems() {
@@ -109,7 +109,7 @@ const exports = class {
   }
 
   /**
-   * @return {!Array.<!gmf.filters.SavedFilters.Item>} Items
+   * @return {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>} Items
    * @export
    */
   get items() {
@@ -153,7 +153,7 @@ const exports = class {
   }
 
   /**
-   * @param {!gmf.filters.SavedFilters.Item} item Item.
+   * @param {!import("gmf/filters/SavedFilters.js").default.Item} item Item.
    * @export
    */
   save(item) {
@@ -173,7 +173,7 @@ const exports = class {
   }
 
   /**
-   * @param {!gmf.filters.SavedFilters.Item} item Item.
+   * @param {!import("gmf/filters/SavedFilters.js").default.Item} item Item.
    * @export
    */
   remove(item) {

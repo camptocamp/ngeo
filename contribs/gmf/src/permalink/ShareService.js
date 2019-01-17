@@ -1,5 +1,5 @@
 /**
- * @module gmf.permalink.ShareService
+ * @module import("gmf/permalink/ShareService.js").default
  */
 
 import angular from 'angular';

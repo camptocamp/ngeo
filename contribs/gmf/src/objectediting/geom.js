@@ -1,5 +1,5 @@
 /**
- * @module gmf.objectediting.geom
+ * @module import("gmf/objectediting/geom.js").default
  */
 const exports = {};
 import gmfObjecteditingCoordinate from 'gmf/objectediting/coordinate.js';

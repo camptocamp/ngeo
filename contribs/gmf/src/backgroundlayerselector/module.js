@@ -1,5 +1,5 @@
 /**
- * @module gmf.backgroundlayerselector.module
+ * @module import("gmf/backgroundlayerselector/module.js").default
  */
 import angular from 'angular';
 import gmfBackgroundlayerselectorComponent from 'gmf/backgroundlayerselector/component.js';

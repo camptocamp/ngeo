@@ -1,5 +1,5 @@
 /**
- * @module gmf.filters.filterselectorComponent
+ * @module import("gmf/filters/filterselectorComponent.js").default
  */
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
@@ -79,9 +79,9 @@ class Controller {
    * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
-   * @param {gmf.datasource.Helper} gmfDataSourcesHelper Gmf data
+   * @param {import("gmf/datasource/Helper.js").default} gmfDataSourcesHelper Gmf data
    *     sources helper service.
-   * @param {gmf.filters.SavedFilters} gmfSavedFilters Gmf saved filters service.
+   * @param {import("gmf/filters/SavedFilters.js").default} gmfSavedFilters Gmf saved filters service.
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
    * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
@@ -152,13 +152,13 @@ class Controller {
     );
 
     /**
-     * @type {gmf.datasource.Helper}
+     * @type {import("gmf/datasource/Helper.js").default}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
 
     /**
-     * @type {gmf.filters.SavedFilters}
+     * @type {import("gmf/filters/SavedFilters.js").default}
      * @export
      */
     this.gmfSavedFilters = gmfSavedFilters;
@@ -227,7 +227,7 @@ class Controller {
     this.directedRules = null;
 
     /**
-     * @type {Array.<gmf.datasource.OGC>}
+     * @type {Array.<import("gmf/datasource/OGC.js").default>}
      * @export
      */
     this.filtrableDataSources = [];
@@ -253,7 +253,7 @@ class Controller {
     /**
      * The data source ready to be filtered, after it has been selected and
      * prepared.
-     * @type {?gmf.datasource.OGC}
+     * @type {?import("gmf/datasource/OGC.js").default}
      * @export
      */
     this.readyDataSource = null;
@@ -427,7 +427,7 @@ class Controller {
    * data source is about to be registered, then the `filtrable` property
    * is set. Otherwise, it's used.
    *
-   * @param {gmf.datasource.OGC} dataSource Data source
+   * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
    * @private
    */
   registerDataSource_(dataSource) {
@@ -450,7 +450,7 @@ class Controller {
   /**
    * Unregister a data source if it's filtrable. Also, if it's the one
    * that was currently selected, deselect it.
-   * @param {gmf.datasource.OGC} dataSource Data source
+   * @param {import("gmf/datasource/OGC.js").default} dataSource Data source
    * @private
    */
   unregisterDataSource_(dataSource) {
@@ -478,7 +478,7 @@ class Controller {
    * If 1) is true but not any of the others, then the server has not been
    * configured properly. In this case, a warning notification can be shown.
    *
-   * @param {gmf.datasource.OGC} dataSource GMF data source object
+   * @param {import("gmf/datasource/OGC.js").default} dataSource GMF data source object
    * @param {boolean=} opt_notify Whether to show a warning notification or not
    *     in case of a data source that has its name is in the list of
    *     filtrable layer node names but it doesn't match the other requirements.
@@ -546,7 +546,7 @@ class Controller {
   }
 
   /**
-   * @param {?gmf.datasource.OGC} dataSource Newly selected data source
+   * @param {?import("gmf/datasource/OGC.js").default} dataSource Newly selected data source
    *     object.
    * @private
    */
@@ -655,7 +655,7 @@ class Controller {
         this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
-      const item = /** @type {!gmf.filters.SavedFilters.Item} */ ({
+      const item = /** @type {!import("gmf/filters/SavedFilters.js").default.Item} */ ({
         condition,
         customRules,
         dataSourceId,
@@ -671,7 +671,7 @@ class Controller {
 
   /**
    * Load a saved filter item, replacing the current rules.
-   * @param {!gmf.filters.SavedFilters.Item} filterItem Filter item.
+   * @param {!import("gmf/filters/SavedFilters.js").default.Item} filterItem Filter item.
    * @export
    */
   saveFilterLoadItem(filterItem) {
@@ -713,7 +713,7 @@ class Controller {
 
   /**
    * Remove a saved filter item.
-   * @param {!gmf.filters.SavedFilters.Item} item Filter item.
+   * @param {!import("gmf/filters/SavedFilters.js").default.Item} item Filter item.
    * @export
    */
   saveFilterRemoveItem(item) {

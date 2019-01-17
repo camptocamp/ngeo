@@ -41,7 +41,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
+ * @param {import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
  * @constructor
  * @ngInject
  */
@@ -83,7 +83,7 @@ exports.MainController = function(gmfPermalink) {
   this.measureLengthActive = false;
 
   /**
-   * @type {Object.<string, gmf.mobile.measure.pointComponent.LayerConfig>}
+   * @type {Object.<string, import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
    * @export
    */
   this.measurePointLayersConfig = [

@@ -1,5 +1,5 @@
 /**
- * @module gmf.profile.drawLineComponent
+ * @module import("gmf/profile/drawLineComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

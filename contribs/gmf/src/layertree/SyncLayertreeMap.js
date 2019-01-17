@@ -1,5 +1,5 @@
 /**
- * @module gmf.layertree.SyncLayertreeMap
+ * @module import("gmf/layertree/SyncLayertreeMap.js").default
  */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -20,7 +20,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {ngeo.misc.WMSTime} ngeoWMSTime wms time service.
- * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap

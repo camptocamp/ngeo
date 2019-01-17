@@ -1,5 +1,5 @@
 /**
- * @module gmf.theme.selectorComponent
+ * @module import("gmf/theme/selectorComponent.js").default
  */
 import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
@@ -47,9 +47,9 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
 
 
 /**
- * Note that this component works with the {@link gmf.layertree.TreeManager}.
+ * Note that this component works with the {@link import("gmf/layertree/TreeManager.js").default}.
  * Setting the theme will update the "tree" object of
- * this {@link gmf.layertree.TreeManager}.
+ * this {@link import("gmf/layertree/TreeManager.js").default}.
  *
  * Example:
  *
@@ -71,7 +71,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *      </gmf-themeselector>
  *
  * The theme selector can operate in a 'flush' (as above) or 'add' mode. For more information
- * about these modes, refer to the documentation of {@link gmf.layertree.TreeManager}.
+ * about these modes, refer to the documentation of {@link import("gmf/layertree/TreeManager.js").default}.
  *
  * Example in 'add' mode:
  *
@@ -108,8 +108,8 @@ exports.component('gmfThemeselector', component);
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {gmf.theme.Manager} gmfThemeManager Tree manager service.
- * @param {gmf.theme.Themes} gmfThemes Themes service.
+ * @param {import("gmf/theme/Manager.js").default} gmfThemeManager Tree manager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
  * @constructor
  * @private
  * @ngInject
@@ -119,13 +119,13 @@ exports.component('gmfThemeselector', component);
 function Controller($scope, gmfThemeManager, gmfThemes) {
 
   /**
-   * @type {gmf.theme.Manager}
+   * @type {import("gmf/theme/Manager.js").default}
    * @export
    */
   this.gmfThemeManager = gmfThemeManager;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;

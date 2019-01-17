@@ -1,5 +1,5 @@
 /**
- * @module gmf.datasource.Manager
+ * @module import("gmf/datasource/Manager.js").default
  */
 import angular from 'angular';
 import gmfDatasourceOGC, {ServerType, WFSOutputFormat, Type} from 'gmf/datasource/OGC.js';
@@ -38,8 +38,8 @@ const exports = class {
    * @param {angular.IQService} $q Angular q service
    * @param {!angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
-   * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
    * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
    *     manager.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
@@ -47,7 +47,7 @@ const exports = class {
    * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {!ngeo.filter.RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
-   * @param {!gmf.datasource.WFSAliases} gmfWFSAliases Gmf WFS aliases service.
+   * @param {!import("gmf/datasource/WFSAliases.js").default} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
@@ -78,13 +78,13 @@ const exports = class {
     this.timeout_ = $timeout;
 
     /**
-     * @type {gmf.theme.Themes}
+     * @type {import("gmf/theme/Themes.js").default}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {gmf.layertree.TreeManager}
+     * @type {import("gmf/layertree/TreeManager.js").default}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
@@ -129,7 +129,7 @@ const exports = class {
     this.ngeoWMSTime_ = ngeoWMSTime;
 
     /**
-     * @type {!gmf.datasource.WFSAliases}
+     * @type {!import("gmf/datasource/WFSAliases.js").default}
      * @private
      */
     this.gmfWFSAliases_ = gmfWFSAliases;
@@ -140,7 +140,7 @@ const exports = class {
     /**
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
-     * @type {Object.<number, gmf.datasource.OGC>}
+     * @type {Object.<number, import("gmf/datasource/OGC.js").default>}
      * @private
      */
     this.dataSourcesCache_ = {};
@@ -815,7 +815,7 @@ const exports = class {
    * set to apply them as OGC filters to the OpenLayers layer, more precisely
    * as a `FILTER` parameter in the layer's source parameters.
    *
-   * @param {!gmf.datasource.OGC} dataSource Data source.
+   * @param {!import("gmf/datasource/OGC.js").default} dataSource Data source.
    * @private
    */
   handleDataSourceFilterRulesChange_(dataSource) {
@@ -843,7 +843,7 @@ const exports = class {
    * Get the range value from the data source, then update the WMS layer
    * thereafter.
    *
-   * @param {!gmf.datasource.OGC} dataSource Data source.
+   * @param {!import("gmf/datasource/OGC.js").default} dataSource Data source.
    * @private
    */
   handleDataSourceTimeValueChange_(dataSource) {

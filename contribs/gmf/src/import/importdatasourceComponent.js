@@ -1,5 +1,5 @@
 /**
- * @module gmf.import.importdatasourceComponent
+ * @module import("gmf/import/importdatasourceComponent.js").default
  */
 
 import angular from 'angular';
@@ -69,7 +69,7 @@ class Controller {
    * @param {!angular.auto.IInjectorService} $injector Main injector.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!gmf.datasource.ExternalDataSourcesManager}
+   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
@@ -111,7 +111,7 @@ class Controller {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!gmf.datasource.ExternalDataSourcesManager}
+     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;

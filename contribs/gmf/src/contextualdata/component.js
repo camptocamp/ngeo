@@ -1,5 +1,5 @@
 /**
- * @module gmf.contextualdata.component
+ * @module import("gmf/contextualdata/component.js").default
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -65,7 +65,7 @@ function directive() {
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.contextualdata.component.Controller_} controller Controller.
+     * @param {import("gmf/contextualdata/component.js").default.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -81,7 +81,7 @@ exports.directive('gmfContextualdata', directive);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IScope} $scope Scope.
- * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
+ * @param {import("gmf/raster/RasterService.js").default} gmfRaster Gmf Raster service
  *
  * @constructor
  * @private
@@ -133,7 +133,7 @@ function Controller($compile, $timeout, $scope, gmfRaster) {
   this.$scope_ = $scope;
 
   /**
-   * @type {gmf.raster.RasterService}
+   * @type {import("gmf/raster/RasterService.js").default}
    * @private
    */
   this.gmfRaster_ = gmfRaster;

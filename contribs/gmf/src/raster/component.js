@@ -1,5 +1,5 @@
 /**
- * @module gmf.raster.component
+ * @module import("gmf/raster/component.js").default
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -129,7 +129,7 @@ exports.directive('gmfElevation', component);
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!miscDebounce} ngeoDebounce Ngeo debounce factory
- * @param {!gmf.raster.RasterService} gmfRaster Gmf Raster service
+ * @param {!import("gmf/raster/RasterService.js").default} gmfRaster Gmf Raster service
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @constructor
  * @private
@@ -152,7 +152,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {gmf.raster.RasterService}
+   * @type {import("gmf/raster/RasterService.js").default}
    * @private
    */
   this.gmfRaster_ = gmfRaster;

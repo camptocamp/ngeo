@@ -1,5 +1,5 @@
 /**
- * @module gmf.print.component
+ * @module import("gmf/print/component.js").default
  */
 import angular from 'angular';
 
@@ -212,11 +212,11 @@ class Controller {
    * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
-   * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
+   * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService The authentication service.
    * @param {QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
-   * @param {gmf.print.component.PrintStateEnum} gmfPrintState GMF print state.
-   * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
+   * @param {import("gmf/print/component.js").default.PrintStateEnum} gmfPrintState GMF print state.
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -228,7 +228,7 @@ class Controller {
     $filter, gmfPrintState, gmfThemes) {
 
     /**
-     * @type {gmf.print.component.PrintStateEnum}
+     * @type {import("gmf/print/component.js").default.PrintStateEnum}
      * @private
      */
     this.gmfPrintState_ = gmfPrintState;
@@ -330,13 +330,13 @@ class Controller {
     this.ngeoQueryResult_ = ngeoQueryResult;
 
     /**
-     * @type {gmf.authentication.Service}
+     * @type {import("gmf/authentication/Service.js").default}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {gmf.theme.Themes}
+     * @type {import("gmf/theme/Themes.js").default}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
@@ -992,7 +992,7 @@ class Controller {
 
 
   /**
-   * @param {gmf.print.component.PrintStateEnum=} opt_printState the print state.
+   * @param {import("gmf/print/component.js").default.PrintStateEnum=} opt_printState the print state.
    * @private
    */
   resetPrintStates_(opt_printState) {
@@ -1269,7 +1269,7 @@ class Controller {
 
   /**
    * Check the current state of the print.
-   * @param {string} stateEnumKey An enum key from gmf.print.component.PrintStateEnum.
+   * @param {string} stateEnumKey An enum key from import("gmf/print/component.js").default.PrintStateEnum.
    * @return {boolean} True if the given state matches with the current print
    *     state. False otherwise.
    * @export

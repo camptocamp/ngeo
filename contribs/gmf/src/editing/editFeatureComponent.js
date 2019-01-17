@@ -1,5 +1,5 @@
 /**
- * @module gmf.editing.editFeatureComponent
+ * @module import("gmf/editing/editFeatureComponent.js").default
  */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -139,9 +139,9 @@ exports.directive('gmfEditfeature', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {gmf.editing.Snapping} gmfSnapping The gmf snapping service.
- * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
+ * @param {import("gmf/editing/Snapping.js").default} gmfSnapping The gmf snapping service.
+ * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
  * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
@@ -234,19 +234,19 @@ function Controller($element, $q, $scope, $timeout,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.editing.EditFeature}
+   * @type {import("gmf/editing/EditFeature.js").default}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {gmf.editing.Snapping}
+   * @type {import("gmf/editing/Snapping.js").default}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {gmf.editing.XSDAttributes}
+   * @type {import("gmf/editing/XSDAttributes.js").default}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;

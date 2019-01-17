@@ -33,7 +33,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractMobileController}
+ * @extends {import("gmf/controllers/AbstractMobileController.js").default}
  * @ngInject
  * @export
  */
@@ -50,7 +50,7 @@ const exports = function($scope, $injector) {
   }, $scope, $injector);
 
   /**
-   * @type {Array.<gmf.mobile.measure.pointComponent.LayerConfig>}
+   * @type {Array.<import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
    * @export
    */
   this.elevationLayersConfig = [

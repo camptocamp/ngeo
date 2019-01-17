@@ -1,5 +1,5 @@
 /**
- * @module gmf.layertree.datasourceGroupTreeComponent
+ * @module import("gmf/layertree/datasourceGroupTreeComponent.js").default
  */
 import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';

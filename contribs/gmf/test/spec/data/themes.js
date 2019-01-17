@@ -1,5 +1,5 @@
 /**
- * @module gmf.test.data.themes
+ * @module import("gmf/test/data.js").default.themes
  */
 const exports = {
   'themes': [

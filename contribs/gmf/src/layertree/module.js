@@ -1,5 +1,5 @@
 /**
- * @module gmf.layertree.module
+ * @module import("gmf/layertree/module.js").default
  */
 import angular from 'angular';
 import gmfLayertreeComponent from 'gmf/layertree/component.js';

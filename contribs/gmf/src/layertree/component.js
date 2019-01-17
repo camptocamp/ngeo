@@ -1,5 +1,5 @@
 /**
- * @module gmf.layertree.component
+ * @module import("gmf/layertree/component.js").default
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
@@ -150,14 +150,14 @@ exports.component('gmfLayertree', component);
  * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
- * @param {!gmf.datasource.ExternalDataSourcesManager}
+ * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
  *     gmfExternalDataSourcesManager The Gmf external data sources manager
  *     service. Used here to fetch the external WMS groups.
- * @param {!gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
- * @param {!gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {!gmf.layertree.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
+ * @param {!import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
+ * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+ * @param {!import("gmf/layertree/SyncLayertreeMap.js").default} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
  * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
- * @param {!gmf.theme.Themes} gmfThemes The gmf Themes service.
+ * @param {!import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
  * @constructor
  * @private
  * @ngInject
@@ -198,19 +198,19 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
   /**
-   * @type {!gmf.datasource.ExternalDataSourcesManager}
+   * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    * @export
    */
   this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
-   * @type {!gmf.permalink.Permalink}
+   * @type {!import("gmf/permalink/Permalink.js").default}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!gmf.layertree.TreeManager}
+   * @type {!import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -225,7 +225,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.root = root;
 
   /**
-   * @type {!gmf.layertree.SyncLayertreeMap}
+   * @type {!import("gmf/layertree/SyncLayertreeMap.js").default}
    * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
@@ -261,7 +261,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.layers = [];
 
   /**
-   * @type {!gmf.theme.Themes}
+   * @type {!import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -715,7 +715,7 @@ Controller.prototype.toggleNodeLegend = function(legendNodeId) {
 
 
 /**
- * @param {gmf.datasource.OGC} ds Data source to filter.
+ * @param {import("gmf/datasource/OGC.js").default} ds Data source to filter.
  * @export
  */
 Controller.prototype.toggleFiltrableDataSource = function(ds) {

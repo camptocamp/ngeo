@@ -1,5 +1,5 @@
 /**
- * @module gmf.search.module
+ * @module import("gmf/search/module.js").default
  */
 import angular from 'angular';
 import gmfSearchComponent from 'gmf/search/component.js';

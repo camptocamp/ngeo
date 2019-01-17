@@ -1,5 +1,5 @@
 /**
- * @module gmf.objectediting.Query
+ * @module import("gmf/objectediting/Query.js").default
  */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -15,7 +15,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
  * @constructor
  * @ngInject
  */
@@ -34,7 +34,7 @@ const exports = function($http, $q, gmfThemes) {
   this.q_ = $q;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;

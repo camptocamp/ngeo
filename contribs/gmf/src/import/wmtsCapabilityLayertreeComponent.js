@@ -1,5 +1,5 @@
 /**
- * @module gmf.import.wmtsCapabilityLayertreeComponent
+ * @module import("gmf/import/wmtsCapabilityLayertreeComponent.js").default
  */
 
 import angular from 'angular';
@@ -50,7 +50,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 class Controller {
 
   /**
-   * @param {!gmf.datasource.ExternalDataSourcesManager}
+   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
@@ -88,7 +88,7 @@ class Controller {
     // Injected properties
 
     /**
-     * @type {!gmf.datasource.ExternalDataSourcesManager}
+     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;

@@ -1,5 +1,5 @@
 /**
- * @module gmf.disclaimer.component
+ * @module import("gmf/disclaimer/component.js").default
  */
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';

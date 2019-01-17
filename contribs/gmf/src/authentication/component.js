@@ -1,5 +1,5 @@
 /**
- * @module gmf.authentication.component
+ * @module import("gmf/authentication/component.js").default
  */
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
@@ -130,7 +130,7 @@ class AuthenticationController {
    * @private
    * @param {!angular.JQLite} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
+   * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
    * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
    * @ngInject
@@ -158,7 +158,7 @@ class AuthenticationController {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {gmf.authentication.Service}
+     * @type {import("gmf/authentication/Service.js").default}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;

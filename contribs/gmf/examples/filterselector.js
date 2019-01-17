@@ -60,10 +60,10 @@ exports.MainController = class {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
-   * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
+   * @param {import("gmf/datasource/Manager.js").default} gmfDataSourcesManager The gmf
    *     data sources manager service.
-   * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
-   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
    * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
    * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
@@ -82,7 +82,7 @@ exports.MainController = class {
     gmfThemes.loadThemes();
 
     /**
-     * @type {gmf.layertree.TreeManager}
+     * @type {import("gmf/layertree/TreeManager.js").default}
      * @export
      */
     this.gmfTreeManager = gmfTreeManager;

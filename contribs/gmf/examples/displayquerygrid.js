@@ -95,8 +95,8 @@ exports.module.controller('gmfappQueryresultController', exports.QueryresultCont
 
 /**
  * @constructor
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/datasource/Manager.js").default} gmfDataSourcesManager The gmf
  *     data sources manager service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.

@@ -1,5 +1,5 @@
 /**
- * @module gmf.lidarprofile.Utils
+ * @module import("gmf/lidarprofile/Utils.js").default
  */
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -16,7 +16,7 @@ export default class {
 
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
-   * @param {gmf.lidarprofile.Config} config the LIDAR profile config instance
+   * @param {import("gmf/lidarprofile/Config.js").default} config the LIDAR profile config instance
    * @param {number} map_resolution the current resolution of the map
    * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum

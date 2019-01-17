@@ -1,5 +1,5 @@
 /**
- * @module gmf.profile.component
+ * @module import("gmf/profile/component.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';

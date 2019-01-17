@@ -1,5 +1,5 @@
 /**
- * @module gmf.controllers.AbstractAPIController
+ * @module import("gmf/controllers/AbstractAPIController.js").default
  */
 import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
@@ -24,7 +24,7 @@ import * as olInteraction from 'ol/interaction.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractAppController}
+ * @extends {import("gmf/controllers/AbstractAppController.js").default}
  * @ngdoc controller
  * @ngInject
  * @export

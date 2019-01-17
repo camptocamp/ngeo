@@ -1,5 +1,5 @@
 /**
- * @module gmf.mobile.navigation.component
+ * @module import("gmf/mobile/navigation.js").default.component
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -67,7 +67,7 @@ function component() {
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
+     * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       navCtrl.init(element);
@@ -250,8 +250,8 @@ Controller.prototype.backIfActive = function(element) {
 
 
 /**
- * A directive to be used in conjunction with {@link gmf.mobile.navigation.component}.
- * The directive can be set on a slide element of {@link gmf.mobile.navigation.component}
+ * A directive to be used in conjunction with {@link import("gmf/mobile/navigation.js").default.component}.
+ * The directive can be set on a slide element of {@link import("gmf/mobile/navigation.js").default.component}
  * with an expression. When the value of the expression changes and becomes
  * true, the navigation returns to the previous slide, if the slide is
  * currently active.
@@ -279,7 +279,7 @@ exports.backDirective = function() {
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
+     * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       scope.$watch(attrs['gmfMobileNavBack'], (newVal, oldVal) => {
@@ -295,8 +295,8 @@ exports.directive('gmfMobileNavBack', exports.backDirective);
 
 
 /**
- * A directive to be used in conjunction with {@link gmf.mobile.navigation.component}.
- * The directive can be set on a slide element of {@link gmf.mobile.navigation.component}.
+ * A directive to be used in conjunction with {@link import("gmf/mobile/navigation.js").default.component}.
+ * The directive can be set on a slide element of {@link import("gmf/mobile/navigation.js").default.component}.
  * When the element is clicked, the navigation returns to the previous slide if
  * the slide is currently active.
  *
@@ -321,7 +321,7 @@ exports.backOnClickDirective = function() {
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.mobile.navigation.component.Controller_} navCtrl Controller.
+     * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
     link: (scope, element, attrs, navCtrl) => {
       element.on('click', () => {

@@ -1,5 +1,5 @@
 /**
- * @module gmf.search.component
+ * @module import("gmf/search/component.js").default
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
@@ -200,9 +200,9 @@ class SearchController {
    *     create GeoJSON Bloodhound service.
    * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
-   * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
-   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {gmf.search.FulltextSearch} gmfSearchFulltextSearch gmf Full text search service.
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
+   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+   * @param {import("gmf/search/FulltextSearch.js").default} gmfSearchFulltextSearch gmf Full text search service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -243,19 +243,19 @@ class SearchController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {gmf.theme.Themes}
+     * @type {import("gmf/theme/Themes.js").default}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {gmf.layertree.TreeManager}
+     * @type {import("gmf/layertree/TreeManager.js").default}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {gmf.search.FulltextSearch}
+     * @type {import("gmf/search/FulltextSearch.js").default}
      * @private
      */
     this.fullTextSearch_ = gmfSearchFulltextSearch;

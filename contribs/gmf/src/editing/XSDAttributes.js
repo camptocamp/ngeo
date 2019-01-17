@@ -1,5 +1,5 @@
 /**
- * @module gmf.editing.XSDAttributes
+ * @module import("gmf/editing/XSDAttributes.js").default
  */
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';

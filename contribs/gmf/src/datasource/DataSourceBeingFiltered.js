@@ -1,5 +1,5 @@
 /**
- * @module gmf.datasource.DataSourceBeingFiltered
+ * @module import("gmf/datasource/DataSourceBeingFiltered.js").default
  */
 const exports = {};
 

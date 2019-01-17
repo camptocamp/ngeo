@@ -1,5 +1,5 @@
 /**
- * @module gmf.test.data.printcapabilities
+ * @module import("gmf/test/data.js").default.printcapabilities
  */
 const exports = {
   'app': 'demo',

@@ -1,5 +1,5 @@
 /**
- * @module gmf.editing.EditFeature
+ * @module import("gmf/editing/EditFeature.js").default
  */
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';

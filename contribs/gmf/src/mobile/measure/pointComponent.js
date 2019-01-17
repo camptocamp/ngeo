@@ -1,5 +1,5 @@
 /**
- * @module gmf.mobile.measure.pointComponent
+ * @module import("gmf/mobile/measure.js").default.pointComponent
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -91,7 +91,7 @@ function component(gmfMobileMeasurePointTemplateUrl) {
      * @param {!angular.IScope} scope Scope.
      * @param {!angular.JQLite} element Element.
      * @param {!angular.Attributes} attrs Attributes.
-     * @param {!gmf.mobile.measure.pointComponent.Controller_} controller Controller.
+     * @param {!import("gmf/mobile/measure.js").default.pointComponent.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -107,7 +107,7 @@ exports.directive('gmfMobileMeasurepoint', component);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
- * @param {gmf.raster.RasterService} gmfRaster gmf Raster service.
+ * @param {import("gmf/raster/RasterService.js").default} gmfRaster gmf Raster service.
  * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
@@ -118,7 +118,7 @@ exports.directive('gmfMobileMeasurepoint', component);
 function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 
   /**
-   * @type {gmf.raster.RasterService}
+   * @type {import("gmf/raster/RasterService.js").default}
    * @private
    */
   this.gmfRaster_ = gmfRaster;

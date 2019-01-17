@@ -43,7 +43,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @constructor
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
  * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject

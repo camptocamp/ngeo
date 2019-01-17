@@ -1,5 +1,5 @@
 /**
- * @module gmf.map.module
+ * @module import("gmf/map/module.js").default
  */
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component.js';

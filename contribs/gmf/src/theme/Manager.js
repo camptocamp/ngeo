@@ -1,5 +1,5 @@
 /**
- * @module gmf.theme.Manager
+ * @module import("gmf/theme/Manager.js").default
  */
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
@@ -20,9 +20,9 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {angular.IScope} $rootScope Angular rootScope.
- * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
- * @param {gmf.layertree.TreeManager} gmfTreeManager the tree manager.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager the tree manager.
  * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
@@ -38,7 +38,7 @@ const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.$rootScope_ = $rootScope;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -50,7 +50,7 @@ const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.modeFlush = gmfTreeManagerModeFlush;
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

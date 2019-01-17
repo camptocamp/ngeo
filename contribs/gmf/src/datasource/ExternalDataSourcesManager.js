@@ -1,5 +1,5 @@
 /**
- * @module gmf.datasource.ExternalDataSourcesManager
+ * @module import("gmf/datasource/ExternalDataSourcesManager.js").default
  */
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator

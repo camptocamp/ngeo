@@ -1,5 +1,5 @@
 /**
- * @module gmf.mobile.measure.lengthComponent
+ * @module import("gmf/mobile/measure.js").default.lengthComponent
  */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -71,7 +71,7 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.mobile.measure.lengthComponent.Controller_} controller Controller.
+     * @param {import("gmf/mobile/measure.js").default.lengthComponent.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();

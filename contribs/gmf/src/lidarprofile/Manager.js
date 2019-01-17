@@ -1,5 +1,5 @@
 /**
- * @module gmf.lidarprofile.Manager
+ * @module import("gmf/lidarprofile/Manager.js").default
  */
 import angular from 'angular';
 import gmfLidarprofileMeasure from 'gmf/lidarprofile/Measure.js';
@@ -59,17 +59,17 @@ const exports = class {
     this.promise = null;
 
     /**
-     * @type {gmf.lidarprofile.Plot}
+     * @type {import("gmf/lidarprofile/Plot.js").default}
      */
     this.plot = null;
 
     /**
-     * @type {gmf.lidarprofile.Measure}
+     * @type {import("gmf/lidarprofile/Measure.js").default}
      */
     this.measure = null;
 
     /**
-     * @type {gmf.lidarprofile.Config}
+     * @type {import("gmf/lidarprofile/Config.js").default}
      */
     this.config = null;
 
@@ -133,13 +133,13 @@ const exports = class {
     this.line_;
 
     /**
-     * @type {gmf.lidarprofile.Utils}
+     * @type {import("gmf/lidarprofile/Utils.js").default}
      */
     this.utils = new gmfLidarprofileUtils();
   }
 
   /**
-   * @param {gmf.lidarprofile.Config} config Instance of gmf.lidarprofile.Config
+   * @param {gmf.lidarprofile.Config} config Instance of import("gmf/lidarprofile/Config.js").default
    * @param {import("ol/Map.js").default} map The map.
    */
   init(config, map) {

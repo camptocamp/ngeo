@@ -1,5 +1,5 @@
 /**
- * @module gmf.filters.module
+ * @module import("gmf/filters/module.js").default
  */
 import angular from 'angular';
 import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent.js';

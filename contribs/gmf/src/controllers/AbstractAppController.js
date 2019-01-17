@@ -1,5 +1,5 @@
 /**
- * @module gmf.controllers.AbstractAppController
+ * @module import("gmf/controllers/AbstractAppController.js").default
  */
 import 'jquery';
 import angular from 'angular';
@@ -86,20 +86,20 @@ const exports = function(config, $scope, $injector) {
   ngeoFeatureHelper.setProjection(googAsserts.assert(this.map.getView().getProjection()));
 
   /**
-   * @type {gmf.theme.Manager}
+   * @type {import("gmf/theme/Manager.js").default}
    * @export
    */
   this.gmfThemeManager = $injector.get('gmfThemeManager');
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * Themes service
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = $injector.get('gmfThemes');
@@ -116,14 +116,14 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * Permalink service
-   * @type {gmf.permalink.Permalink}
+   * @type {import("gmf/permalink/Permalink.js").default}
    * @private
    */
   this.permalink_ = $injector.get('gmfPermalink');
 
   /**
    * Authentication service
-   * @type {gmf.authentication.Service}
+   * @type {import("gmf/authentication/Service.js").default}
    */
   const gmfAuthentication = $injector.get('gmfAuthenticationService');
 

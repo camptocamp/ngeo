@@ -1,5 +1,5 @@
 /**
- * @module gmf.authentication.module
+ * @module import("gmf/authentication/module.js").default
  */
 import angular from 'angular';
 import gmfAuthenticationComponent from 'gmf/authentication/component.js';

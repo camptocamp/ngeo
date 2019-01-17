@@ -96,7 +96,7 @@ gmfx.GridSource.prototype.source;
 
 
 /**
- * Configuration option for {@link gmf.query.gridComponent} to merge
+ * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
  * grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
@@ -738,7 +738,7 @@ gmfx.datasource;
 
 
 /**
- * @typedef {import("ol/Collection.js").default.<gmf.datasource.OGC>}
+ * @typedef {import("ol/Collection.js").default.<import("gmf/datasource/OGC.js").default>}
  */
 gmfx.datasource.DataSources;
 

@@ -1,5 +1,5 @@
 /**
- * @module gmf.objectediting.getWMSFeatureComponent
+ * @module import("gmf/objectediting/getWMSFeatureComponent.js").default
  */
 import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
@@ -56,7 +56,7 @@ exports.directive('gmfObjecteditinggetwmsfeature', directive);
 
 /**
  * @param {!angular.IScope} $scope Scope.
- * @param {gmf.objectediting.Query} gmfObjectEditingQuery GMF ObjectEditing
+ * @param {import("gmf/objectediting/Query.js").default} gmfObjectEditingQuery GMF ObjectEditing
  *     query service.
  * @constructor
  * @private
@@ -101,7 +101,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   // Injected properties
 
   /**
-   * @type {gmf.objectediting.Query}
+   * @type {import("gmf/objectediting/Query.js").default}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;

@@ -31,7 +31,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {gmf.theme.Themes} gmfThemes Themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
  * @constructor
  * @ngInject
  */

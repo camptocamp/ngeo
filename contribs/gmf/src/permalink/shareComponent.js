@@ -1,5 +1,5 @@
 /**
- * @module gmf.permalink.shareComponent
+ * @module import("gmf/permalink/shareComponent.js").default
  */
 import angular from 'angular';
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
@@ -66,7 +66,7 @@ class ShareComponentController {
    * The controller for the share component
    * @param {angular.IScope} $scope Scope.
    * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
-   * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
+   * @param {import("gmf/permalink/ShareService.js").default} gmfShareService service for sharing map.
    * @param {angular.IQService} $q Angular q service
    * @param {angular.Attributes} $attrs Attributes.
    * @constructor
@@ -89,7 +89,7 @@ class ShareComponentController {
     this.$scope_ = $scope;
 
     /**
-     * @type {gmf.permalink.ShareService}
+     * @type {import("gmf/permalink/ShareService.js").default}
      * @private
      */
     this.gmfShareService_ = gmfShareService;

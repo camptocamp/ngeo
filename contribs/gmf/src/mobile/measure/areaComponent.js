@@ -1,5 +1,5 @@
 /**
- * @module gmf.mobile.measure.areaComponent
+ * @module import("gmf/mobile/measure.js").default.areaComponent
  */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -71,7 +71,7 @@ function component(gmfMobileMeasureAreaTemplateUrl) {
      * @param {angular.Scope} scope Scope.
      * @param {angular.JQLite} element Element.
      * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.mobile.measure.areaComponent.Controller_} controller Controller.
+     * @param {import("gmf/mobile/measure.js").default.areaComponent.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();

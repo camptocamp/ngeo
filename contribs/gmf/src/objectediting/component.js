@@ -1,5 +1,5 @@
 /**
- * @module gmf.objectediting.component
+ * @module import("gmf/objectediting/component.js").default
  */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -134,10 +134,10 @@ exports.component('gmfObjectediting', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {!gmf.objectediting.Query} gmfObjectEditingQuery Gmf ObjectEditing
+ * @param {!import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
+ * @param {!import("gmf/objectediting/Query.js").default} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {!gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
  * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -212,13 +212,13 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!gmf.editing.EditFeature}
+   * @type {!import("gmf/editing/EditFeature.js").default}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {!gmf.objectediting.Query}
+   * @type {!import("gmf/objectediting/Query.js").default}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
@@ -269,7 +269,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {!gmf.layertree.TreeManager}
+   * @type {!import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

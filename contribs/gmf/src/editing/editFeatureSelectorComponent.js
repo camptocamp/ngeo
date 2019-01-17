@@ -1,5 +1,5 @@
 /**
- * @module gmf.editing.editFeatureSelectorComponent
+ * @module import("gmf/editing/editFeatureSelectorComponent.js").default
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -71,8 +71,8 @@ exports.directive('gmfEditfeatureselector', component);
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @private
  * @ngInject
@@ -128,13 +128,13 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

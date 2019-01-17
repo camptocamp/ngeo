@@ -54,8 +54,8 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
  * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
@@ -87,7 +87,7 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   gmfThemes.loadThemes();
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;

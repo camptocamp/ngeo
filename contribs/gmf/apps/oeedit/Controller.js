@@ -35,7 +35,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @constructor
- * @extends {gmf.controllers.AbstractDesktopController}
+ * @extends {import("gmf/controllers/AbstractDesktopController.js").default}
  * @ngInject
  * @export
  */
@@ -109,7 +109,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {gmf.theme.Themes} gmfObjectEditingManager The gmf theme service
+   * @type {import("gmf/theme/Themes.js").default} gmfObjectEditingManager The gmf theme service
    */
   const gmfThemes = $injector.get('gmfThemes');
 
@@ -122,7 +122,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
+   * @type {import("gmf/objectediting/Manager.js").default} gmfObjectEditingManager The gmf
    *     ObjectEditing manager service.
    */
   const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');

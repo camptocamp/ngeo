@@ -51,10 +51,10 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
+ * @param {import("gmf/objectediting/Manager.js").default} gmfObjectEditingManager The gmf
  *     ObjectEditing manager service.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -64,7 +64,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;

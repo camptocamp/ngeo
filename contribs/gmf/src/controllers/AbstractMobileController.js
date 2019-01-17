@@ -1,5 +1,5 @@
 /**
- * @module gmf.controllers.AbstractMobileController
+ * @module import("gmf/controllers/AbstractMobileController.js").default
  */
 import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
@@ -30,7 +30,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractAppController}
+ * @extends {import("gmf/controllers/AbstractAppController.js").default}
  * @ngdoc controller
  * @ngInject
  * @export

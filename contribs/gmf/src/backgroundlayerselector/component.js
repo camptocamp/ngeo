@@ -1,5 +1,5 @@
 /**
- * @module gmf.backgroundlayerselector.component
+ * @module import("gmf/backgroundlayerselector/component.js").default
  */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -88,7 +88,7 @@ exports.component('gmfBackgroundlayerselector', component);
  * @private
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer manager.
- * @param {!gmf.theme.Themes} gmfThemes Themes service.
+ * @param {!import("gmf/theme/Themes.js").default} gmfThemes Themes service.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
@@ -133,7 +133,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.opacityLayer;
 
   /**
-   * @type {!gmf.theme.Themes}
+   * @type {!import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
