@@ -64,7 +64,7 @@ exports.GeolocationEventType = {
  *
  * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
  *
- * @htmlAttribute {ol.Map} ngeo-mobile-geolocation-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-mobile-geolocation-map The map.
  * @htmlAttribute {MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -113,7 +113,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.$scope_ = $scope;
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @private
    */
   this.map_ = map;
@@ -134,7 +134,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
-   * @type {ol.Geolocation}
+   * @type {import("ol/Geolocation.js").default}
    * @private
    */
   this.geolocation_ = new olGeolocation({
@@ -171,7 +171,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   });
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.positionFeature_ = new olFeature();
@@ -181,7 +181,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   }
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.accuracyFeature_ = new olFeature();
@@ -285,7 +285,7 @@ Controller.prototype.untrack_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function() {
-  const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
+  const position = /** @type {import("ol/Coordinate.js").default} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
@@ -297,7 +297,7 @@ Controller.prototype.setPosition_ = function() {
       this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
     } else if (accuracy) {
-      const size = /** @type {!ol.Size} */ (this.map_.getSize());
+      const size = /** @type {!import("ol/Size.js").default} */ (this.map_.getSize());
       this.map_.getView().fit(/** @type {!import("ol/geom/Polygon.js").default} */ (accuracy), size);
     }
     this.viewChangedByMe_ = false;

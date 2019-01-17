@@ -42,7 +42,7 @@ const exports = function(options) {
   googAsserts.assert(options.features);
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -54,7 +54,7 @@ const exports = function(options) {
   this.modified_ = false;
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.keyPressListenerKey_ = null;
@@ -75,26 +75,26 @@ const exports = function(options) {
     options.pixelTolerance : 10;
 
   /**
-   * @type {!ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
 
   /**
    * The feature currently modified.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.feature_ = null;
 
   /**
-   * @type {ol.Pixel}
+   * @type {import("ol/Pixel.js").default}
    * @private
    */
   this.coordinate_ = null;
 
   /**
-   * @type {ol.Coordinate}
+   * @type {import("ol/Coordinate.js").default}
    * @private
    */
   this.centerCoordinate_ = null;
@@ -115,7 +115,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {!Object.<number, ol.Feature>}
+   * @type {!Object.<number, import("ol/Feature.js").default>}
    * @private
    */
   this.centerFeatures_ = {};
@@ -167,7 +167,7 @@ exports.prototype.setActive = function(active) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
@@ -187,7 +187,7 @@ exports.prototype.addFeature_ = function(feature) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Map browser event
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
  * @private
  */
 exports.prototype.willModifyFeatures_ = function(evt) {
@@ -201,7 +201,7 @@ exports.prototype.willModifyFeatures_ = function(evt) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
@@ -245,13 +245,13 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Start drag sequence?
  * @private
  */
@@ -290,7 +290,7 @@ exports.prototype.handleDown_ = function(evt) {
 
 /**
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
- * @return {ol.Coordinate} The center coordinate of the geometry.
+ * @return {import("ol/Coordinate.js").default} The center coordinate of the geometry.
  * @private
  */
 exports.prototype.getCenterCoordinate_ = function(
@@ -312,7 +312,7 @@ exports.prototype.getCenterCoordinate_ = function(
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @private
  */
 exports.prototype.handleDrag_ = function(evt) {
@@ -344,7 +344,7 @@ exports.prototype.handleDrag_ = function(evt) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Stop drag sequence?
  * @private
  */

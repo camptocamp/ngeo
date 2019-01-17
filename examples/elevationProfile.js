@@ -45,7 +45,7 @@ exports.MainController = function($http, $scope) {
   const source = new olSourceVector();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -118,7 +118,7 @@ exports.MainController = function($http, $scope) {
     }
     source.addFeature(new olFeature(lineString));
 
-    const size = /** @type {ol.Size} */ (this.map.getSize());
+    const size = /** @type {import("ol/Size.js").default} */ (this.map.getSize());
     map.getView().fit(source.getExtent(), {size});
   });
 
@@ -237,7 +237,7 @@ exports.MainController = function($http, $scope) {
 
 
 /**
- * @param {ol.Coordinate} coordinate The current pointer coordinate.
+ * @param {import("ol/Coordinate.js").default} coordinate The current pointer coordinate.
  * @param {import("ol/geom/Geometry.js").default|undefined} geometry The geometry to snap to.
  */
 exports.MainController.prototype.snapToGeometry = function(coordinate, geometry) {

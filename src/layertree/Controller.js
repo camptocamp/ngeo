@@ -66,7 +66,7 @@ const exports = function($scope, $rootScope, $attrs) {
   }
 
   const mapExpr = $attrs['ngeoLayertreeMap'];
-  const map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+  const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
   googAsserts.assert(map !== undefined);
 
   /**
@@ -112,7 +112,7 @@ const exports = function($scope, $rootScope, $attrs) {
   $scope['depth'] = this.depth;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = map;

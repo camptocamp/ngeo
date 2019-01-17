@@ -39,7 +39,7 @@ export default class extends ngeoRuleRule {
     const properties = options.featureProperties || {};
 
     /**
-     * @type {!ol.Feature}
+     * @type {!import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = new olFeature(properties);
@@ -63,7 +63,7 @@ export default class extends ngeoRuleRule {
     this.updatingGeometry_ = false;
 
     /**
-     * @type {?ol.EventsKey}
+     * @type {?import("ol/EventsKey.js").default}
      * @private
      */
     this.geometryChangeListenerKey_ = null;
@@ -84,7 +84,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {!ol.Feature} Feature.
+   * @return {!import("ol/Feature.js").default} Feature.
    * @export
    */
   get feature() {

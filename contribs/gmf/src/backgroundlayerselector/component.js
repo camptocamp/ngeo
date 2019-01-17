@@ -61,7 +61,7 @@ function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundla
  *
  *  * thumbnail: The URL used for the icon.
  *
- * @htmlAttribute {ol.Map=} gmf-backgroundlayerselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default=} gmf-backgroundlayerselector-map The map.
  * @htmlAttribute {string} gmf-backgroundlayer-opacity-options The opacity slider options.
  * @htmlAttribute {Function} gmf-backgroundlayerselector-select Function called
  *     when a layer was selected by the user.
@@ -96,7 +96,7 @@ exports.component('gmfBackgroundlayerselector', component);
 function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -139,7 +139,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {!Array.<!ol.EventsKey>}
+   * @type {!Array.<!import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];

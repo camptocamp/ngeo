@@ -70,7 +70,7 @@ const exports = function($http, $injector) {
 
 /**
  * Route request
- * @param {Array.<ol.Coordinate>} coordinates coordinates of the route (at least two!)
+ * @param {Array.<import("ol/Coordinate.js").default>} coordinates coordinates of the route (at least two!)
  * @param {?Object} config optional configuration
  * @return {!angular.IHttpPromise} promise of the OSRM API request
  */
@@ -126,7 +126,7 @@ exports.prototype.getRoute = function(coordinates, config) {
 
 /**
  * Snaps a coordinate to the street network and returns the nearest match
- * @param {ol.Coordinate} coordinate coordinate to query
+ * @param {import("ol/Coordinate.js").default} coordinate coordinate to query
  * @param {?Object} config optional configuration
  * @return {!angular.IHttpPromise} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service

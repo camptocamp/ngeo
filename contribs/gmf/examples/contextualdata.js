@@ -42,7 +42,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  */
 exports.MainController = function() {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -62,7 +62,7 @@ exports.MainController = function() {
 
 
 /**
- * @param {ol.Coordinate} coordinate The coordinate for the right-clicked
+ * @param {import("ol/Coordinate.js").default} coordinate The coordinate for the right-clicked
  *     point.
  * @param {Object} data The data received from the raster service.
  * @return {Object} The additional data to add to the scope for the

@@ -78,7 +78,7 @@ const exports = function() {
 
 
 /**
- * @param {ol.Feature} feature The feature to add.
+ * @param {import("ol/Feature.js").default} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
@@ -93,7 +93,7 @@ exports.prototype.addFeature = function(feature, groupIndex) {
 
 
 /**
- * @param {ol.Feature} feature The feature to add.
+ * @param {import("ol/Feature.js").default} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
@@ -146,7 +146,7 @@ exports.prototype.getFeatureOverlay = function() {
 
 
 /**
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @export
  */
 exports.prototype.init = function(map) {
@@ -155,7 +155,7 @@ exports.prototype.init = function(map) {
 
 
 /**
- * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} style
  * Style.
  * @param {number} groupIndex Group index.
  * @export
@@ -169,7 +169,7 @@ exports.prototype.setStyle = function(style, groupIndex) {
 
 
 /**
- * @param {ol.Feature|import("ol/render/Feature.js").default} feature Feature.
+ * @param {import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
  * @return {Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
  * @private

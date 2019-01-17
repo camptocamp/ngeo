@@ -129,7 +129,7 @@ class Controller {
     this.active = false;
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @export
      */
     this.map = null;

@@ -256,7 +256,7 @@ gmfx.PermalinkOptions;
 
 /**
  * An alternate style for the crosshair feature added by the permalink service.
- * @type {Array<(null|import("ol/style/Style.js").default)>|null|ol.FeatureStyleFunction|import("ol/style/Style.js").default|undefined}
+ * @type {Array<(null|import("ol/style/Style.js").default)>|null|import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default|undefined}
  */
 gmfx.PermalinkOptions.prototype.crosshairStyle;
 
@@ -445,7 +445,7 @@ gmfx.ProfileHoverPointInformations;
 
 /**
  * Coordinate of the point.
- * @type {ol.Coordinate|undefined}
+ * @type {import("ol/Coordinate.js").default|undefined}
  */
 gmfx.ProfileHoverPointInformations.prototype.coordinate;
 
@@ -738,7 +738,7 @@ gmfx.datasource;
 
 
 /**
- * @typedef {ol.Collection.<gmf.datasource.OGC>}
+ * @typedef {import("ol/Collection.js").default.<gmf.datasource.OGC>}
  */
 gmfx.datasource.DataSources;
 

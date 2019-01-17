@@ -92,7 +92,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures = new olCollection();
@@ -140,7 +140,7 @@ const exports = function($scope, $injector, $timeout) {
   this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.oeFeature = null;

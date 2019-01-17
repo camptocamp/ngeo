@@ -167,7 +167,7 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -186,7 +186,7 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
   });
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.selectedFeature = null;
@@ -196,7 +196,7 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
 
 
 /**
- * @param {ol.MapBrowserEvent} evt MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
 exports.MainController.prototype.handleMapSingleClick_ = function(evt) {

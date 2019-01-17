@@ -105,7 +105,7 @@ exports.MainController = function($scope, ngeoDataSources) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

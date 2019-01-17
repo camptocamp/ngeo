@@ -87,13 +87,13 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
   this.cache_ = {};
 
   /**
-   * @type {!Array.<ol.EventsKey>}
+   * @type {!Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
@@ -144,7 +144,7 @@ exports.prototype.ensureSnapInteractionsOnTop = function() {
 
 /**
  * Bind the snapping service to a map
- * @param {?ol.Map} map Map
+ * @param {?import("ol/Map.js").default} map Map
  * @export
  */
 exports.prototype.setMap = function(map) {

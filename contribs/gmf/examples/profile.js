@@ -71,7 +71,7 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   };
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -96,7 +96,7 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 

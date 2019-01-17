@@ -144,7 +144,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * Note: The 'print' and 'cancel' functions can also be called via globals
  * events 'gmfStartPrint' and 'gmfCancelPrint'.
  *
- * @htmlAttribute {ol.Map} gmf-print-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
  * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
@@ -240,7 +240,7 @@ class Controller {
     this.translate_ = $filter('translate');
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -400,19 +400,19 @@ class Controller {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {import("ol/EventsKey.js").default}
      * @private
      */
     this.postComposeListenerKey_;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {import("ol/EventsKey.js").default}
      * @private
      */
     this.pointerDragListenerKey_;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {import("ol/EventsKey.js").default}
      * @private
      */
     this.mapViewResolutionChangeKey_;
@@ -553,7 +553,7 @@ class Controller {
     });
 
     /**
-     * @return {ol.Size} Size in dots of the map to print.
+     * @return {import("ol/Size.js").default} Size in dots of the map to print.
      */
     const getSizeFn = () => this.paperSize_;
 
@@ -813,7 +813,7 @@ class Controller {
    * Calculate the angle and the sense of rotation between two lines. One from the
    * center of the map and the point of the last call to this function and one
    * from the same center and the point of the current call.
-   * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+   * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
    * @private
    */
   onPointerDrag_(e) {
@@ -1043,7 +1043,7 @@ class Controller {
   /**
    * Get the optimal scale to display the print mask. Return the first scale if
    * no scale matches.
-   * @param {ol.Size|undefined} mapSize Size of the map on the screen (px).
+   * @param {import("ol/Size.js").default|undefined} mapSize Size of the map on the screen (px).
    * @param {number|undefined} viewResolution Resolution of the map on the screen.
    * @return {number} The best scale. -1 is returned if there is no optimal
    *     scale, that is the optimal scale is lower than or equal to the first

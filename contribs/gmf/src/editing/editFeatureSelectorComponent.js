@@ -41,7 +41,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
  *     directive is active or not.
- * @htmlAttribute {ol.Map} gmf-editfeatureselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-editfeatureselector-map The map.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
  * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
@@ -95,7 +95,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   );
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;

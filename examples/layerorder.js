@@ -73,7 +73,7 @@ exports.MainController = function($scope) {
   cities.set('name', 'Cities');
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

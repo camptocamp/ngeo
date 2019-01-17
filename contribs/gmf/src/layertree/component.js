@@ -122,7 +122,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *  * metadataUrl: Display a popup with the content of the given URL if
  *    possible also open a new window.
  *
- * @htmlAttribute {ol.Map} gmf-layertree-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-layertree-map The map.
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
  *     metadataURLs in a new window. Otherwise open them in a popup.
@@ -168,7 +168,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @export
    */
   this.map;

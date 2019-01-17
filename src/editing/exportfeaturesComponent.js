@@ -28,7 +28,7 @@ const exports = angular.module('ngeoExportfeatures', [
  *       ngeo-exportfeatures-features="ctrl.features"
  *       class="btn btn-link">Export</button>
  *
- * @htmlAttribute {ol.Collection.<ol.Feature>} ngeo-exportfeatures-features The
+ * @htmlAttribute {ol.Collection.<import("ol/Feature.js").default>} ngeo-exportfeatures-features The
  *     features to export
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -63,7 +63,7 @@ exports.directive('ngeoExportfeatures', directive);
 function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.features;

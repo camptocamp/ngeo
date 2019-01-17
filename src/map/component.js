@@ -34,7 +34,7 @@ const exports = angular.module('ngeoMap', []);
  * [../examples/permalink.html](../examples/permalink.html)
  * [../examples/simple.html](../examples/simple.html)
  *
- * @htmlAttribute {ol.Map} ngeo-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-map The map.
  * @param {angular.IWindowService} $window The Angular $window service.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive

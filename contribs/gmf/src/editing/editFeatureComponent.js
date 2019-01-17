@@ -101,7 +101,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
- * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-editfeature-map The map.
  * @htmlAttribute {string} gmf-editfeature-state The state property shared
  *     with the `gmf-editfeatureselector` directive. For more info, see in
  *     that directive.
@@ -175,7 +175,7 @@ function Controller($element, $q, $scope, $timeout,
   this.editableTreeCtrl;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -344,7 +344,7 @@ function Controller($element, $q, $scope, $timeout,
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;
@@ -361,13 +361,13 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features;
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
@@ -437,7 +437,7 @@ function Controller($element, $q, $scope, $timeout,
   this.translateToolActivate;
 
   /**
-   * @type {!Array.<!ol.EventsKey>}
+   * @type {!Array.<!import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -985,7 +985,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
  *     modifications or with modifications that were canceled, launch a query
  *     to fetch the features at the clicked location.
  *
- * @param {ol.MapBrowserEvent} evt Event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {
@@ -1095,7 +1095,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {Array.<ol.Feature>} features Features.
+ * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @private
  */
 Controller.prototype.handleGetFeatures_ = function(features) {
@@ -1146,8 +1146,8 @@ Controller.prototype.unregisterInteractions_ = function() {
 
 
 /**
- * @param {?ol.Feature} newFeature The new feature.
- * @param {?ol.Feature} oldFeature The old feature.
+ * @param {?import("ol/Feature.js").default} newFeature The new feature.
+ * @param {?import("ol/Feature.js").default} oldFeature The old feature.
  * @private
  */
 Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {

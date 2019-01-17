@@ -53,7 +53,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   gmfThemes.loadThemes();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

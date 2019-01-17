@@ -197,7 +197,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.selectedSource = null;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
@@ -209,7 +209,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -221,7 +221,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.source = null;
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;
@@ -526,7 +526,7 @@ Controller.prototype.collectFeatures_ = function() {
 
 /**
  * Highlight the current displayed feature.
- * @param {ol.Feature=} opt_lastFeature last highlighted feature. Require if
+ * @param {import("ol/Feature.js").default=} opt_lastFeature last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */

@@ -65,7 +65,7 @@ exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCr
 
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -97,13 +97,13 @@ exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCr
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
     display: (suggestion) => {
-      const feature = /** @type {ol.Feature} */ (suggestion);
+      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
       return feature.get('label');
     },
     templates: {
       header: () => '<div class="ngeo-header">Addresses</div>',
       suggestion: (suggestion) => {
-        const feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
 
         // A scope for the ng-click on the suggestion's « i » button.
         const scope = $rootScope.$new(true);
@@ -179,7 +179,7 @@ exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearc
  * @private
  */
 exports.SearchController.select_ = function(event, suggestion, dataset) {
-  const feature = /** @type {ol.Feature} */ (suggestion);
+  const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
   const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (feature.getGeometry());
   const size = this.map.getSize();
@@ -203,7 +203,7 @@ exports.module.controller('AppSearchController', exports.SearchController);
  */
 exports.MainController = function() {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

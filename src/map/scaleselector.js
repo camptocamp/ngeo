@@ -84,7 +84,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
  * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
- * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *     Optional. The configuration options.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
@@ -144,10 +144,10 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   const mapExpr = $attrs['ngeoScaleselectorMap'];
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
-  this.map_ = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+  this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
   googAsserts.assertInstanceof(this.map_, olMap);
 
   const optionsExpr = $attrs['ngeoScaleselectorOptions'];
@@ -166,7 +166,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   this.$scope_ = $scope;
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.resolutionChangeKey_ = null;

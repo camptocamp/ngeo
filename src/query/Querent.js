@@ -34,7 +34,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 /**
  * Hash of features by data source ids.
- * @typedef {!Object.<number, !Array.<!ol.Feature>>} QuerentResult
+ * @typedef {!Object.<number, !Array.<!import("ol/Feature.js").default>>} QuerentResult
  */
 
 
@@ -234,7 +234,7 @@ const exports = class {
    * The map view resolution determines if the inner ogc layers are in range.
    *
    * @param {!Array.<!ngeo.datasource.DataSource>} dataSources Data sources
-   * @param {ol.Map} map Map.
+   * @param {import("ol/Map.js").default} map Map.
    * @return {!QueryableDataSources} Queryable data sources.
    * @export
    */
@@ -490,7 +490,7 @@ const exports = class {
    * @param {ngeo.datasource.OGC} dataSource used to read the features.
    * @param {Document | Node | Object | string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
-   * @return {Array.<ol.Feature>} returned features with a type in each features.
+   * @return {Array.<import("ol/Feature.js").default>} returned features with a type in each features.
    * @private
    */
   readAndTypeFeatures_(dataSource, data, wfs) {
@@ -986,7 +986,7 @@ const exports = class {
   /**
    * Make sure that feature ids are unique, because the same features might
    * be returned for different layers.
-   * @param {Array.<ol.Feature>} features Features
+   * @param {Array.<import("ol/Feature.js").default>} features Features
    * @param {number} dataSourceId Data source id.
    * @private
    */

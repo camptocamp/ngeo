@@ -59,7 +59,7 @@ exports.module.component('appMap', exports.mapComponent);
  */
 exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -147,7 +147,7 @@ exports.module.component('appDraw', exports.drawComponent);
 exports.DrawComponentController = function($scope, ngeoLocation) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -245,7 +245,7 @@ exports.module.controller('AppDrawController', exports.DrawComponentController);
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

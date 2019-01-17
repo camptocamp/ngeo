@@ -32,7 +32,7 @@ exports.module = angular.module('app', [
 exports.MainController = function($rootScope, ngeoOlcsService) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

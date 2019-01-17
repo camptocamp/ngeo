@@ -40,7 +40,7 @@ exports.MainController = function(gmfThemes) {
   gmfThemes.loadThemes();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

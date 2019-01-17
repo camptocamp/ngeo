@@ -66,7 +66,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * Collection of features for the draw interaction
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
 

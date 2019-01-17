@@ -60,7 +60,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

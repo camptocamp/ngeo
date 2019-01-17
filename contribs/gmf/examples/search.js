@@ -105,7 +105,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
   this.inputValue = '';
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

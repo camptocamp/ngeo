@@ -74,7 +74,7 @@ exports.MeasuretoolsController = function($scope, $compile, $sce,
   $filter, gettextCatalog) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -246,7 +246,7 @@ exports.MainController = function() {
   this.lang = 'en';
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

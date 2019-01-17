@@ -55,7 +55,7 @@ function directive(ngeoMapQuerent, $injector) {
       /**
        * Called when the map is clicked while this controller is active. Issue
        * a request to the query service using the coordinate that was clicked.
-       * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+       * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
        */
       const handleMapClick_ = function(evt) {
         const action = ngeoQueryKeyboard.action;
@@ -71,7 +71,7 @@ function directive(ngeoMapQuerent, $injector) {
        * Called when the pointer is moved while this controller is active.
        * Change the mouse pointer when hovering a non-transparent pixel on the
        * map.
-       * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+       * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
        */
       const handlePointerMove_ = function(evt) {
         if (!evt.dragging) {

@@ -86,7 +86,7 @@ function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
  *     elevation value.
  * @htmlAttribute {string} gmf-elevation-layer Elevation layer to use.
  * @htmlAttribute {Object.<string, LayerConfig>} gmf-elevation-layersconfig Elevation layer configurations.
- * @htmlAttribute {ol.Map} gmf-elevation-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-elevation-map The map.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname gmfElevation
@@ -186,12 +186,12 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
   this.layer;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    */
   this.map;
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -259,7 +259,7 @@ Controller.prototype.toggleActive_ = function(active) {
 /**
  * Request data from a raster from a MapBrowserPointerEvent's coordinates.
  * Called when the user stopped moving the mouse for 500ms.
- * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
  * @private
  */
 Controller.prototype.pointerStop_ = function(e) {
@@ -325,7 +325,7 @@ exports.controller('GmfElevationController', Controller);
  *      gmf-elevationwidget-active="mainCtrl.showInfobar">
  *  </gmf-elevationwidget>
  *
- * @htmlAttribute {ol.Map} gmf-elevationwidget-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-elevationwidget-map The map.
  * @htmlAttribute {Array.<string>} gmf-elevationwidget-layers The list of
  *     layers.
  * @htmlAttribute {boolean} gmf-elevationwidget-active Whether to activate the
@@ -355,7 +355,7 @@ exports.component('gmfElevationwidget', widgetComponent);
  */
 function WidgetController() {
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;

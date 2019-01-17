@@ -445,7 +445,7 @@ For example:
  *       ngeo-misc-map="ctrl.map">
  *      </example>
  *
- * @htmlAttribute {ol.Map} ngeo-misc-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-misc-map The map.
  * @ngInject
  * @ngdoc component
  * @ngname ngeoControl

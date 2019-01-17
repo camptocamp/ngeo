@@ -33,7 +33,7 @@ class Map {
   /**
    * @param {Object} options API options.
    * @property {string} div
-   * @property {ol.Coordinate} center
+   * @property {import("ol/Coordinate.js").default} center
    * @property {number} [zoom=10]
    * @property {boolean} [showCoords=true]
    * TODO: more options
@@ -153,7 +153,7 @@ class Map {
   }
 
   /**
-   * @param {ol.Coordinate} center Center.
+   * @param {import("ol/Coordinate.js").default} center Center.
    * @param {number} zoom Zoom.
    */
   recenter(center, zoom) {
@@ -163,9 +163,9 @@ class Map {
 
   /**
    * @param {Object} options Options.
-   * @property {ol.Coordinate} position
+   * @property {import("ol/Coordinate.js").default} position
    * @property {string} [icon]
-   * @property {ol.Size} [size]
+   * @property {import("ol/Size.js").default} [size]
    */
   addMarker(options = {}) {
     const marker = new Feature({

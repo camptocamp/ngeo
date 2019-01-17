@@ -46,7 +46,7 @@ exports.MainController = function($scope) {
   this.panelActivated = false;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

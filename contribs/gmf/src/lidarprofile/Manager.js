@@ -74,14 +74,14 @@ const exports = class {
     this.config = null;
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @private
      */
     this.map_ = null;
 
     /**
      * The hovered point attributes in D3 profile highlighted on the 2D map
-     * @type {ol.Overlay}
+     * @type {import("ol/Overlay.js").default}
      */
     this.cartoHighlight = new olOverlay({
       offset: [0, -15],
@@ -140,7 +140,7 @@ const exports = class {
 
   /**
    * @param {gmf.lidarprofile.Config} config Instance of gmf.lidarprofile.Config
-   * @param {ol.Map} map The map.
+   * @param {import("ol/Map.js").default} map The map.
    */
   init(config, map) {
     this.config = config;
@@ -171,7 +171,7 @@ const exports = class {
 
   /**
    * Set the map used by the profile
-   * @param {ol.Map} map The map.
+   * @param {import("ol/Map.js").default} map The map.
    * @export
    */
   setMap(map) {

@@ -30,7 +30,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
- * @htmlAttribute {ol.Map} gmf-map-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-map-map The map.
  * @htmlAttribute {boolean|undefined} gmf-map-manage-resize Whether to update
  *     the size of the map on browser window resize.
  * @htmlAttribute {boolean|undefined} gmf-map-resize-transition The duration
@@ -73,7 +73,7 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Scope properties
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;

@@ -50,7 +50,7 @@ const exports = function(opt_options) {
 
   /**
    * @param {string} bbox Bbox string.
-   * @return {?ol.Extent} Parsed extent.
+   * @return {?import("ol/Extent.js").default} Parsed extent.
    */
   const parseBbox = (bbox) => {
     const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;

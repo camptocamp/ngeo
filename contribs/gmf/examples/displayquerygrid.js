@@ -126,7 +126,7 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

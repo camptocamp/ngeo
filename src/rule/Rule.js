@@ -191,7 +191,7 @@ const exports = class {
     // === Other properties ===
 
     /**
-     * @type {Array.<!ol.EventsKey>}
+     * @type {Array.<!import("ol/EventsKey.js").default>}
      * @protected
      */
     this.listenerKeys = [];

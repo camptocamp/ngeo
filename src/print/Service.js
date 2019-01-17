@@ -122,7 +122,7 @@ exports.prototype.cancel = function(ref, opt_httpConfig) {
 
 /**
  * Create a report specification.
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @param {number} scale Scale.
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
@@ -160,7 +160,7 @@ exports.prototype.createSpec = function(
 
 
 /**
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @param {number} scale Scale.
  * @param {MapFishPrintMap} object Object.
  * @private

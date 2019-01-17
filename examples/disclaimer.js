@@ -38,7 +38,7 @@ exports.MainController = function(ngeoDisclaimer) {
   this.disclaimer = ngeoDisclaimer;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

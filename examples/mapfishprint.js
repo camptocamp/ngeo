@@ -75,7 +75,7 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
  */
 exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -136,7 +136,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    */
   const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
     /**
-       * @return {ol.Size} Size in dots of the map to print.
+       * @return {import("ol/Size.js").default} Size in dots of the map to print.
        */
     () => exports.PRINT_PAPER_SIZE_,
     /**

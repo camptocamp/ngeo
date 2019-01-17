@@ -33,7 +33,7 @@ export default class extends ngeoDatasourceDataSource {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {!ol.Collection.<!ol.Feature>}
+     * @type {!ol.Collection.<!import("ol/Feature.js").default>}
      * @private
      */
     this.featuresCollection_ = options.features || new olCollection();
@@ -62,7 +62,7 @@ export default class extends ngeoDatasourceDataSource {
   // ========================================
 
   /**
-   * @return {!Array.<!ol.Feature>} Features
+   * @return {!Array.<!import("ol/Feature.js").default>} Features
    * @export
    */
   get features() {
@@ -75,7 +75,7 @@ export default class extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @return {!ol.Collection.<!ol.Feature>} Features collection
+   * @return {!ol.Collection.<!import("ol/Feature.js").default>} Features collection
    * @export
    */
   get featuresCollection() {
@@ -96,7 +96,7 @@ export default class extends ngeoDatasourceDataSource {
   // ===================================
 
   /**
-   * @return {ol.Extent} Extent.
+   * @return {import("ol/Extent.js").default} Extent.
    * @export
    */
   get extent() {

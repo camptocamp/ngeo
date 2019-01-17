@@ -58,7 +58,7 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
   this.attributes = null;
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;

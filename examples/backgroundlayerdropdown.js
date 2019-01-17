@@ -114,7 +114,7 @@ exports.module.controller('AppBackgroundlayerController',
 exports.MainController = function($scope) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    */
   const map = new olMap({
     view: new olView({

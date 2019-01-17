@@ -51,7 +51,7 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
   });
 
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
-    this.sync_(/** @type ol.Map */ (map), firstParent);
+    this.sync_(/** @type import("ol/Map.js").default */ (map), firstParent);
   });
 };
 
@@ -60,7 +60,7 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
  * Create, insert (or update) and return a layer from the GmfGroup or the
  * GmfLayer of the given treeCtrl.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
- * @param {ol.Map} map A map that contains the group to insert the not first
+ * @param {import("ol/Map.js").default} map A map that contains the group to insert the not first
  *     level group layer.
  * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
  *     level group layer.
@@ -99,7 +99,7 @@ exports.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_posi
 /**
  * Synchronise the state of each layers corresponding to the given tree and
  * all its children.
- * @param {ol.Map} map A map that contains the layers.
+ * @param {import("ol/Map.js").default} map A map that contains the layers.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @private
  */
@@ -157,7 +157,7 @@ exports.prototype.updateLayerState_ = function(layer, treeCtrl) {
  * mixed case). Take care about the insertion order in the map in case of first
  * level group.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
- * @param {ol.Map} map A map that contains the group to insert the not first
+ * @param {import("ol/Map.js").default} map A map that contains the group to insert the not first
  *     level group layer.
  * @param {import("ol/layer/Group.js").default} dataLayerGroup the layer group to insert the first
  *     level group layer.
@@ -248,7 +248,7 @@ exports.prototype.createLayerFromGroup_ = function(treeCtrl,
 /**
  * Create and insert a layer from a leaf in a mixed group.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
- * @param {ol.Map} map A map that contains the group to insert the layer.
+ * @param {import("ol/Map.js").default} map A map that contains the group to insert the layer.
  * @return {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} a new layer.
  * @private
  */
@@ -301,7 +301,7 @@ exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
  * the first parent with ogcServer information is linked to the layer to update
  * and that this treeCtrl node is a leafNode.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
- * @param {ol.Map} map A map that contains the layer to update.
+ * @param {import("ol/Map.js").default} map A map that contains the layer to update.
  * @private
  */
 exports.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {

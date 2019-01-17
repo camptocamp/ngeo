@@ -63,7 +63,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
  * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
  *
- * @extends {ol.Observable}
+ * @extends {import("ol/Observable.js").default}
  * @constructor
  * @param {ngeo.map.LayerHelper} ngeoLayerHelper Themes service.
  * @ngInject
@@ -95,7 +95,7 @@ olUtilInherits(exports, olObservable);
 /**
  * Return the current background layer of a given map. `null` is returned if
  * the map does not have a background layer.
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @return {import("ol/layer/Base.js").default} layer The background layer.
  * @export
  */
@@ -109,7 +109,7 @@ exports.prototype.get = function(map) {
 /**
  * Set the background layer of a map. If `layer` is `null` the background layer
  * is removed.
- * @param {ol.Map} map The map.
+ * @param {import("ol/Map.js").default} map The map.
  * @param {import("ol/layer/Base.js").default} layer The new background layer.
  * @return {import("ol/layer/Base.js").default} The previous background layer.
  * @export
@@ -150,7 +150,7 @@ exports.prototype.set = function(map, layer) {
 /**
  * Return the current background layer overlay of a given map, used by the opacity slider.
  * `null` is returned if the map does not have an opacity background layer.
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
@@ -162,7 +162,7 @@ exports.prototype.getOpacityBgLayer = function(map) {
 
 /**
  * Set an background layer overlay, used by the opacity slider.
- * @param {ol.Map} map The map.
+ * @param {import("ol/Map.js").default} map The map.
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
@@ -182,7 +182,7 @@ exports.prototype.setOpacityBgLayer = function(map, layer) {
 };
 
 /**
- * @param {ol.Map} map The map.
+ * @param {import("ol/Map.js").default} map The map.
  * @param {Object.<string, string>} dimensions The global dimensions object.
  * @export
  */

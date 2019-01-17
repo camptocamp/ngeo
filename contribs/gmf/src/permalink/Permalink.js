@@ -92,7 +92,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -118,7 +118,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?ol.Collection.<ol.Feature>}
+   * @type {?ol.Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?
@@ -252,7 +252,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     $injector.get('gmfUser') : null;
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
@@ -278,13 +278,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   }
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @private
    */
   this.crosshairFeature_ = null;
 
   /**
-   * @type {Array<(null|import("ol/style/Style.js").default)>|null|ol.FeatureStyleFunction|import("ol/style/Style.js").default}
+   * @type {Array<(null|import("ol/style/Style.js").default)>|null|import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default}
    * @private
    */
   this.crosshairStyle_;
@@ -485,7 +485,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
- * @return {?ol.Coordinate} The coordinate for the map view center.
+ * @return {?import("ol/Coordinate.js").default} The coordinate for the map view center.
  * @export
  */
 exports.prototype.getMapCenter = function() {
@@ -537,7 +537,7 @@ exports.prototype.getMapCrosshair = function() {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?ol.Coordinate=} opt_center Optional center coordinate.
+ * @param {?import("ol/Coordinate.js").default=} opt_center Optional center coordinate.
  */
 exports.prototype.setMapCrosshair = function(opt_center) {
   let crosshairCoordinate;
@@ -578,7 +578,7 @@ exports.prototype.getMapTooltip = function() {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {?ol.Coordinate=} opt_center Optional center coordinate.
+ * @param {?import("ol/Coordinate.js").default=} opt_center Optional center coordinate.
  */
 exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
   let tooltipPosition;
@@ -612,7 +612,7 @@ exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {!Array.<!ol.Feature>} The features read from the state manager.
+ * @return {!Array.<!import("ol/Feature.js").default>} The features read from the state manager.
  * @export
  */
 exports.prototype.getFeatures = function() {
@@ -655,7 +655,7 @@ exports.prototype.setDimensions = function(dimensions) {
  *
  * If the service is already bound to a map, those events are unlistened first.
  *
- * @param {?ol.Map} map The ol3 map object.
+ * @param {?import("ol/Map.js").default} map The ol3 map object.
  * @export
  */
 exports.prototype.setMap = function(map) {
@@ -685,8 +685,8 @@ exports.prototype.setMap = function(map) {
 
 /**
  * Listen to the map view property change and update the state accordingly.
- * @param {ol.Map} map The ol3 map object.
- * @param {?ol.Feature} oeFeature ObjectEditing feature
+ * @param {import("ol/Map.js").default} map The ol3 map object.
+ * @param {?import("ol/Feature.js").default} oeFeature ObjectEditing feature
  * @private
  */
 exports.prototype.registerMap_ = function(map, oeFeature) {
@@ -1072,7 +1072,7 @@ exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
 /**
  * Listen to any changes that may occur within the feature in order to
  * update the state of the permalink accordingly.
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addNgeoFeature_ = function(feature) {
@@ -1087,7 +1087,7 @@ exports.prototype.addNgeoFeature_ = function(feature) {
 
 /**
  * Unregister any event listener from the feature.
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeNgeoFeature_ = function(feature) {

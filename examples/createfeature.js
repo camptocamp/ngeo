@@ -42,7 +42,7 @@ exports.module = angular.module('app', [
 exports.MainController = function(ngeoToolActivateMgr) {
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features = new olCollection();
@@ -73,7 +73,7 @@ exports.MainController = function(ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

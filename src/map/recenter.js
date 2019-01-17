@@ -30,7 +30,7 @@ const exports = angular.module('ngeoRecenter', []);
  *
  * See our live example: [../examples/recenter.html](../examples/recenter.html)
  *
- * @htmlAttribute {ol.Map} ngeo-recenter-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-recenter-map The map.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
  * @ngname ngeoRecenter
@@ -40,12 +40,12 @@ function directive() {
     restrict: 'A',
     link: ($scope, $element, $attrs) => {
       const mapExpr = $attrs['ngeoRecenterMap'];
-      const map = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+      const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
 
       function recenter(element) {
         const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {
-          const size = /** @type {ol.Size} */ (map.getSize());
+          const size = /** @type {import("ol/Size.js").default} */ (map.getSize());
           map.getView().fit($scope.$eval(extent), {size});
         }
         const zoom = element.attr('ngeo-zoom');

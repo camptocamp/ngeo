@@ -48,7 +48,7 @@ exports.MainController = function() {
   this.selectedElevationLayer = this.elevationLayers[0];
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

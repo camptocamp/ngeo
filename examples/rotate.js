@@ -42,7 +42,7 @@ const appmodule = angular.module('app', ['ngeo']);
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -64,7 +64,7 @@ exports.MainController = function() {
   ]]);
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    * @export
    */
   this.features = new olCollection();

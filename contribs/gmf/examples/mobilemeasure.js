@@ -51,7 +51,7 @@ exports.MainController = function(gmfPermalink) {
   const zoom = gmfPermalink.getMapZoom() || 3;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

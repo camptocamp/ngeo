@@ -29,7 +29,7 @@ exports.module = angular.module('app', [
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
+ * @param {ol.Collection.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
@@ -51,7 +51,7 @@ exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

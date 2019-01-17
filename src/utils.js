@@ -110,7 +110,7 @@ exports.encodeQueryString = function(queryData) {
 
 /**
  * Delete condition passed to the modify interaction
- * @param {ol.MapBrowserEvent} event Browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} event Browser event.
  * @return {boolean} The result.
  */
 exports.deleteCondition = function(event) {

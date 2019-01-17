@@ -74,7 +74,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * Overlay to show the help messages.
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.helpTooltipOverlay_ = null;
@@ -90,7 +90,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * Overlay to show the measurement.
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.measureTooltipOverlay_ = null;
@@ -98,7 +98,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The measurement overlay coordinate.
-   * @type {ol.Coordinate}
+   * @type {import("ol/Coordinate.js").default}
    * @private
    */
   this.measureTooltipOverlayCoord_ = null;
@@ -106,7 +106,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The sketch feature.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @protected
    */
   this.sketchFeature = null;
@@ -154,14 +154,14 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The key for geometry change event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.changeEventKey_ = null;
 
   /**
    * The key for map postcompose event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.postcomposeEventKey_ = null;
@@ -222,7 +222,7 @@ olUtilInherits(exports, olInteractionInteraction);
 
 /**
  * @const
- * @type {ol.Sphere}
+ * @type {import("ol/Sphere.js").default}
  */
 
 
@@ -293,7 +293,7 @@ exports.getFormattedPoint = function(point, decimals, format, opt_template) {
 
 /**
  * Handle map browser event.
- * @param {ol.MapBrowserEvent} evt Map browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
  * @this {ngeo.interaction.Measure}
  * @private
@@ -327,7 +327,7 @@ exports.prototype.getDrawInteraction = function() {
  * Creates the draw interaction.
  *
  * @abstract
- * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction|undefined}
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {import("ol/source/Vector.js").default} source Vector source.
  * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The interaction
@@ -511,7 +511,7 @@ exports.prototype.updateState_ = function() {
  * where to place the tooltip and determine which help message to display.
  *
  * @abstract
- * @param {function(string, ?ol.Coordinate)} callback The function
+ * @param {function(string, ?import("ol/Coordinate.js").default)} callback The function
  *     to be called.
  * @protected
  */

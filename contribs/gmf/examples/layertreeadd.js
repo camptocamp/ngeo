@@ -56,7 +56,7 @@ exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ng
   gmfThemes.loadThemes();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

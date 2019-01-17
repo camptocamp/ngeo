@@ -87,10 +87,10 @@ const exports = function($http, $injector, ngeoDebounce) {
 
   /**
    * @export
-   * @type {function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined))}
+   * @type {function(string,function(Array.<BloodhoundDatum>),(function(Array.<import("ol/Feature.js").default>)|undefined))}
    */
   this.typeaheadSourceDebounced =
-    /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<ol.Feature>)|undefined))} */
+    /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<import("ol/Feature.js").default>)|undefined))} */
     (this.ngeoDebounce_(/** @type {function(?)} */ (this.typeaheadSource_.bind(this)), this.typeaheadDebounceDelay_, true));
 };
 
@@ -125,7 +125,7 @@ exports.prototype.search = function(query, params) {
 
 /**
  * Reverse Geocoding
- * @param {ol.Coordinate} coordinate Search coordinate in LonLat projection
+ * @param {import("ol/Coordinate.js").default} coordinate Search coordinate in LonLat projection
  * @param {(Object|undefined)} params Optional parameters
  * @return {!angular.IHttpPromise} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding

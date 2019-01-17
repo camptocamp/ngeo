@@ -97,7 +97,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *     object for all features from the result of the query.
  * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-selectedfeaturestyle A style
  *     object for the currently selected features.
- * @htmlAttribute {ol.Map} gmf-displayquerygrid-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-displayquerygrid-map The map.
  * @htmlAttribute {boolean?} gmf-displayquerygrid-removeemptycolumns Optional. Should
  *     empty columns be hidden? Default: `false`.
  * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
@@ -247,7 +247,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   /**
    * A mapping between row uid and the corresponding feature for each
    * source.
-   * @type {!Object.<string, Object.<string, ol.Feature>>}
+   * @type {!Object.<string, Object.<string, import("ol/Feature.js").default>>}
    * @private
    */
   this.featuresForSources_ = {};
@@ -255,7 +255,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
@@ -267,7 +267,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -281,7 +281,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
     $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;

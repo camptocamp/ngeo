@@ -47,13 +47,13 @@ const exports = function(options) {
 
   /**
    * Editing vertex.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.vertexFeature_ = null;
 
   /**
-   * @type {ol.Pixel}
+   * @type {import("ol/Pixel.js").default}
    * @private
    */
   this.lastPixel_ = [0, 0];
@@ -66,7 +66,7 @@ const exports = function(options) {
 
   /**
    * Segment RTree for each layer
-   * @type {import("ol/structs/RBush.js").default.<ol.ModifySegmentDataType>}
+   * @type {import("ol/structs/RBush.js").default.<import("ol/ModifySegmentDataType.js").default>}
    * @private
    */
   this.rBush_ = new olStructsRBush();
@@ -114,7 +114,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {!ol.Collection.<ol.Feature>}
+   * @type {!ol.Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
@@ -129,7 +129,7 @@ olUtilInherits(exports, olInteractionPointer);
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
@@ -147,7 +147,7 @@ exports.prototype.addFeature_ = function(feature) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Map browser event
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
  * @private
  */
 exports.prototype.willModifyFeatures_ = function(evt) {
@@ -161,7 +161,7 @@ exports.prototype.willModifyFeatures_ = function(evt) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
@@ -176,15 +176,15 @@ exports.prototype.removeFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeatureSegmentData_ = function(feature) {
   const rBush = this.rBush_;
-  const /** @type {Array.<ol.ModifySegmentDataType>} */ nodesToRemove = [];
+  const /** @type {Array.<import("ol/ModifySegmentDataType.js").default>} */ nodesToRemove = [];
   rBush.forEach(
     /**
-       * @param {ol.ModifySegmentDataType} node RTree node.
+       * @param {import("ol/ModifySegmentDataType.js").default} node RTree node.
        */
     (node) => {
       if (feature === node.feature) {
@@ -223,13 +223,13 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature
+ * @param {import("ol/Feature.js").default} feature Feature
  * @param {import("ol/geom/Polygon.js").default} geometry Geometry.
  * @private
  */
@@ -240,7 +240,7 @@ exports.prototype.writeCircleGeometry_ = function(feature, geometry) {
     coordinates = rings[j];
     for (i = 0, ii = coordinates.length - 1; i < ii; ++i) {
       segment = coordinates.slice(i, i + 2);
-      segmentData = /** @type {ol.ModifySegmentDataType} */ ({
+      segmentData = /** @type {import("ol/ModifySegmentDataType.js").default} */ ({
         feature: feature,
         geometry: geometry,
         depth: [j],
@@ -254,8 +254,8 @@ exports.prototype.writeCircleGeometry_ = function(feature, geometry) {
 
 
 /**
- * @param {ol.Coordinate} coordinates Coordinates.
- * @return {ol.Feature} Vertex feature.
+ * @param {import("ol/Coordinate.js").default} coordinates Coordinates.
+ * @return {import("ol/Feature.js").default} Vertex feature.
  * @private
  */
 exports.prototype.createOrUpdateVertexFeature_ = function(coordinates) {
@@ -273,8 +273,8 @@ exports.prototype.createOrUpdateVertexFeature_ = function(coordinates) {
 
 
 /**
- * @param {ol.ModifySegmentDataType} a The first segment data.
- * @param {ol.ModifySegmentDataType} b The second segment data.
+ * @param {import("ol/ModifySegmentDataType.js").default} a The first segment data.
+ * @param {import("ol/ModifySegmentDataType.js").default} b The second segment data.
  * @return {number} The difference in indexes.
  */
 function compareIndexes(a, b) {
@@ -283,7 +283,7 @@ function compareIndexes(a, b) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Start drag sequence?
  * @this {ngeo.interaction.ModifyCircle}
  * @private
@@ -327,7 +327,7 @@ exports.handleDownEvent_ = function(evt) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @this {ngeo.interaction.ModifyCircle}
  * @private
  */
@@ -356,7 +356,7 @@ exports.handleDragEvent_ = function(evt) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Stop drag sequence?
  * @this {ngeo.interaction.ModifyCircle}
  * @private
@@ -377,9 +377,9 @@ exports.handleUpEvent_ = function(evt) {
 
 
 /**
- * Handles the {@link ol.MapBrowserEvent map browser event} and may modify the
+ * Handles the {@link import("ol/MapBrowserEvent.js").default map browser event} and may modify the
  * geometry.
- * @param {ol.MapBrowserEvent} mapBrowserEvent Map browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
  * @return {boolean} `false` to stop event propagation.
  * @this {ngeo.interaction.ModifyCircle}
  * @api
@@ -400,7 +400,7 @@ exports.handleEvent = function(mapBrowserEvent) {
 
 
 /**
- * @param {ol.MapBrowserEvent} evt Event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
 exports.prototype.handlePointerMove_ = function(evt) {
@@ -410,8 +410,8 @@ exports.prototype.handlePointerMove_ = function(evt) {
 
 
 /**
- * @param {ol.Pixel} pixel Pixel
- * @param {ol.PluggableMap} map Map.
+ * @param {import("ol/Pixel.js").default} pixel Pixel
+ * @param {import("ol/PluggableMap.js").default} map Map.
  * @private
  */
 exports.prototype.handlePointerAtPixel_ = function(pixel, map) {

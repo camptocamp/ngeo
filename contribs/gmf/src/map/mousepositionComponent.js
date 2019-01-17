@@ -56,7 +56,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  *     gmf-mouseposition-projections="ctrl.projections">
  *  </gmf-mouseposition>
  *
- * @htmlAttribute {ol.Map} gmf-mouseposition-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-mouseposition-map The map.
  * @htmlAttribute {Array.<gmfx.MousePositionProjection>}
  *    gmf-mouseposition-projection The list of the projections.
  *
@@ -88,7 +88,7 @@ exports.component('gmfMouseposition', component);
  */
 function Controller($element, $filter, $scope, gettextCatalog) {
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;

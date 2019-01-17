@@ -88,7 +88,7 @@ exports.MainController = class {
     this.gmfTreeManager = gmfTreeManager;
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @export
      */
     this.map = new olMap({

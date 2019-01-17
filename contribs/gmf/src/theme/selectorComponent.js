@@ -143,7 +143,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.filter;
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];

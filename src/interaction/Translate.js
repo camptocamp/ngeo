@@ -47,25 +47,25 @@ import olSourceVector from 'ol/source/Vector.js';
 const exports = function(options) {
 
   /**
-   * @type {!Array.<ol.EventsKey>}
+   * @type {!Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!Object.<number, ol.EventsKey>}
+   * @type {!Object.<number, import("ol/EventsKey.js").default>}
    * @private
    */
   this.featureListenerKeys_ = {};
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.keyPressListenerKey_ = null;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.myFeatures_ = options.features !== undefined ? options.features : null;
@@ -90,7 +90,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {!Object.<number, ol.Feature>}
+   * @type {!Object.<number, import("ol/Feature.js").default>}
    * @private
    */
   this.centerFeatures_ = {};
@@ -133,7 +133,7 @@ exports.prototype.setActive = function(active) {
  * Remove the interaction from its current map and attach it to the new map.
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
- * @param {ol.PluggableMap} map Map.
+ * @param {import("ol/PluggableMap.js").default} map Map.
  * @override
  */
 exports.prototype.setMap = function(map) {
@@ -199,13 +199,13 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
  * @private
  */
 exports.prototype.handleFeaturesRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
@@ -228,7 +228,7 @@ exports.prototype.addFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
@@ -244,7 +244,7 @@ exports.prototype.removeFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature being moved.
+ * @param {import("ol/Feature.js").default} feature Feature being moved.
  * @param {import("ol/events/Event.js").default} evt Event.
  * @private
  */

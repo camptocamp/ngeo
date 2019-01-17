@@ -238,7 +238,7 @@ exports.prototype.createWMTSLayerFromCapabilititesObj = function(
 /**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
  * directly add them in the returned group.
- * @param {ol.Collection.<import("ol/layer/Base.js").default>=} opt_layers The layer to add to the
+ * @param {import("ol/Collection.js").default.<import("ol/layer/Base.js").default>=} opt_layers The layer to add to the
  * returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
  * @export
@@ -257,7 +257,7 @@ exports.prototype.createBasicGroup = function(opt_layers) {
  * the base array of layers of a map. The given name is used as unique
  * identifier. If the group is created, it will be automatically added to
  * the map.
- * @param {ol.Map} map A map.
+ * @param {import("ol/Map.js").default} map A map.
  * @param {string} groupName The name of the group.
  * @return {import("ol/layer/Group.js").default} The group corresponding to the given name.
  * @export
@@ -444,7 +444,7 @@ exports.prototype.getWMSLegendURL = function(url,
 /**
  * Returns if this layer is visible at the current resolution.
  * @param {import("ol/layer/Base.js").default} layer Layer.
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @return {boolean} Is the layer currently visible?
  */
 exports.prototype.isLayerVisible = function(layer, map) {

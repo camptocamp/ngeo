@@ -191,7 +191,7 @@ const exports = class {
 
   /**
    * Set the map to use with your datasources.
-   * @param {!ol.Map} map The map to use.
+   * @param {!import("ol/Map.js").default} map The map to use.
    * @export
    */
   setDatasourceMap(map) {

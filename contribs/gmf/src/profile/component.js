@@ -81,7 +81,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @htmlAttribute {boolean} gmf-profile-active Active the component.
  * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
- * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
+ * @htmlAttribute {import("ol/Map.js").default?} gmf-profile-map An optional map.
  * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
@@ -184,7 +184,7 @@ function Controller($scope, $http, $element, $filter,
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
@@ -240,7 +240,7 @@ function Controller($scope, $http, $element, $filter,
 
   /**
    * Overlay to show the measurement.
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.measureTooltip_ = null;
@@ -253,7 +253,7 @@ function Controller($scope, $http, $element, $filter,
   this.measureTooltipElement_ = null;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.snappedPoint_ = new olFeature();
@@ -282,7 +282,7 @@ function Controller($scope, $http, $element, $filter,
   this.active = false;
 
   /**
-   * @type {ol.EventsKey}
+   * @type {import("ol/EventsKey.js").default}
    * @private
    */
   this.pointerMoveKey_;
@@ -398,7 +398,7 @@ Controller.prototype.updateEventsListening_ = function() {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
  * @private
  */
 Controller.prototype.onPointerMove_ = function(e) {
@@ -424,7 +424,7 @@ Controller.prototype.onPointerMove_ = function(e) {
  * Return the distance between the beginning of the line and the given point.
  * The point must be on the line. If not, this function will return the total
  * length of the line.
- * @param {ol.Coordinate} pointOnLine A point on the given line.
+ * @param {import("ol/Coordinate.js").default} pointOnLine A point on the given line.
  * @return {number} A distance.
  * @private
  */

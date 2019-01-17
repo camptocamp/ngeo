@@ -107,7 +107,7 @@ const exports = class {
     this.files_ = {};
 
     /**
-     * @type {?ol.Map}
+     * @type {?import("ol/Map.js").default}
      * @private
      */
     this.map_ = null;
@@ -125,14 +125,14 @@ const exports = class {
 
     /**
      * Collection of WMS groups.
-     * @type {!ol.Collection.<!ngeo.datasource.WMSGroup>}
+     * @type {!import("ol/Collection.js").default.<!ngeo.datasource.WMSGroup>}
      * @private
      */
     this.wmsGroupsCollection_ = new olCollection();
 
     /**
      * Collection of groups for WMTS data sources.
-     * @type {!ol.Collection.<!ngeo.datasource.OGCGroup>}
+     * @type {!import("ol/Collection.js").default.<!ngeo.datasource.OGCGroup>}
      * @private
      */
     this.wmtsGroupsCollection_ = new olCollection();
@@ -202,7 +202,7 @@ const exports = class {
   }
 
   /**
-   * @return {!ol.Collection.<!ngeo.datasource.WMSGroup>} Collection of WMS
+   * @return {!import("ol/Collection.js").default.<!ngeo.datasource.WMSGroup>} Collection of WMS
    *     groups.
    * @export
    */
@@ -254,7 +254,7 @@ const exports = class {
   }
 
   /**
-   * @return {!ol.Collection.<!ngeo.datasource.OGCGroup>} Collection of groups
+   * @return {!import("ol/Collection.js").default.<!ngeo.datasource.OGCGroup>} Collection of groups
    *     for WMTS data sources.
    * @export
    */
@@ -289,7 +289,7 @@ const exports = class {
   }
 
   /**
-   * @param {?ol.Map} map Map
+   * @param {?import("ol/Map.js").default} map Map
    */
   set map(map) {
     this.map_ = map;

@@ -48,7 +48,7 @@ exports.module.component('appMap', exports.mapComponent);
  */
 exports.MainController = function($timeout) {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

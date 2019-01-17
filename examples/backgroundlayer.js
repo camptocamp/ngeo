@@ -64,7 +64,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -138,7 +138,7 @@ exports.module.controller('AppBackgroundlayerController',
 exports.MainController = function($scope) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

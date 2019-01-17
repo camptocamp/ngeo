@@ -31,7 +31,7 @@ exports.module = angular.module('app', [
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -47,7 +47,7 @@ exports.MainController = function() {
   });
 
   /**
-   * @type {import("ol/control/Control.js").default}
+   * @type {import("ol/control/Contrimport("ol/js.js").default").default}
    * @export
    */
   this.control = new olControlMousePosition({

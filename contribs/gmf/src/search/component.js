@@ -129,7 +129,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
- * @htmlAttribute {ol.Map} gmf-search-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
  * @htmlAttribute {gmfx.SearchComponentDatasource} gmf-search-datasource
  *      The datasources.
@@ -289,7 +289,7 @@ class SearchController {
     this.ngeoAutoProjection_ = ngeoAutoProjection;
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -613,7 +613,7 @@ class SearchController {
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        const feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
         return feature.get(config.labelKey);
       },
       templates: /* TypeaheadTemplates */ ({
@@ -626,7 +626,7 @@ class SearchController {
           }
         },
         suggestion: (suggestion) => {
-          const feature = /** @type {ol.Feature} */ (suggestion);
+          const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
 
           const scope = componentScope.$new(true);
           scope['feature'] = feature;
@@ -744,7 +744,7 @@ class SearchController {
 
 
   /**
-   * @param {ol.View} view View.
+   * @param {import("ol/View.js").default} view View.
    * @return {function(string, function(Object))} function defining parameters for the search suggestions.
    * @private
    */
@@ -811,7 +811,7 @@ class SearchController {
 
   /**
    * Style for search results.
-   * @param {null|ol.Feature|import("ol/render/Feature.js").default} feature The searched feature.
+   * @param {null|import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature The searched feature.
    * @param {number} resolution The current resolution of the map.
    * @return {import("ol/style/Style.js").default} A style for this kind of features.
    * @private
@@ -919,7 +919,7 @@ class SearchController {
 
   /**
    * @param {jQuery.Event} event Event.
-   * @param {Object|ol.Feature} suggestion Suggestion.
+   * @param {Object|import("ol/Feature.js").default} suggestion Suggestion.
    * @param {TypeaheadDataset} dataset Dataset.
    * @private
    */
@@ -943,7 +943,7 @@ class SearchController {
 
   /**
    * @param {jQuery.Event} event Event.
-   * @param {ol.Feature} feature Feature.
+   * @param {import("ol/Feature.js").default} feature Feature.
    * @param {TypeaheadDataset} dataset Dataset.
    * @private
    */

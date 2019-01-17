@@ -33,7 +33,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {ol.Pixel}
+   * @type {import("ol/Pixel.js").default}
    * @private
    */
   this.downPx_ = null;
@@ -54,14 +54,14 @@ const exports = function(options) {
 
   /**
    * Sketch feature.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.sketchFeature_ = null;
 
   /**
    * Sketch point.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.sketchPoint_ = null;
@@ -97,7 +97,7 @@ olUtilInherits(exports, olInteractionPointer);
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} event Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
  * @return {boolean} Start drag sequence?
  * @this {ngeo.interaction.DrawAzimut}
  * @private
@@ -109,7 +109,7 @@ exports.handleDownEvent_ = function(event) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} event Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
  * @return {boolean} Stop drag sequence?
  * @this {ngeo.interaction.DrawAzimut}
  * @private
@@ -135,7 +135,7 @@ exports.handleUpEvent_ = function(event) {
 
 
 /**
- * @param {ol.MapBrowserEvent} mapBrowserEvent Map browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
  * @return {boolean} `false` to stop event propagation.
  * @this {ngeo.interaction.DrawAzimut}
  * @private
@@ -153,7 +153,7 @@ exports.handleEvent_ = function(mapBrowserEvent) {
 
 /**
  * Handle move events.
- * @param {ol.MapBrowserEvent} event A move event.
+ * @param {import("ol/MapBrowserEvent.js").default} event A move event.
  * @return {boolean} Pass the event to other interactions.
  * @private
  */
@@ -168,7 +168,7 @@ exports.prototype.handlePointerMove_ = function(event) {
 
 
 /**
- * @param {ol.MapBrowserEvent} event Event.
+ * @param {import("ol/MapBrowserEvent.js").default} event Event.
  * @private
  */
 exports.prototype.createOrUpdateSketchPoint_ = function(event) {
@@ -204,7 +204,7 @@ exports.prototype.updateSketchFeatures_ = function() {
 
 /**
  * Start the drawing.
- * @param {ol.MapBrowserEvent} event Event.
+ * @param {import("ol/MapBrowserEvent.js").default} event Event.
  * @private
  */
 exports.prototype.startDrawing_ = function(event) {
@@ -225,7 +225,7 @@ exports.prototype.startDrawing_ = function(event) {
 
 /**
  * Modify the drawing.
- * @param {ol.MapBrowserEvent} event Event.
+ * @param {import("ol/MapBrowserEvent.js").default} event Event.
  * @private
  */
 exports.prototype.modifyDrawing_ = function(event) {
@@ -252,7 +252,7 @@ exports.prototype.modifyDrawing_ = function(event) {
 
 /**
  * Stop drawing without adding the sketch feature to the target layer.
- * @return {ol.Feature} The sketch feature (or null if none).
+ * @return {import("ol/Feature.js").default} The sketch feature (or null if none).
  * @private
  */
 exports.prototype.abortDrawing_ = function() {

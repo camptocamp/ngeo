@@ -47,7 +47,7 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -69,7 +69,7 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   this.precision;
 
   /**
-   * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction}
+   * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default}
    * @export
    */
   this.sketchStyle = new olStyleStyle({

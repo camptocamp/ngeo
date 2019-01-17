@@ -112,7 +112,7 @@ class RuleController {
     this.featureOverlay;
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -285,7 +285,7 @@ class RuleController {
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {!ol.Collection.<!ol.Feature>}
+     * @type {!ol.Collection.<!import("ol/Feature.js").default>}
      * @export
      */
     this.drawnFeatures = new olCollection();
@@ -297,13 +297,13 @@ class RuleController {
     this.menu_ = null;
 
     /**
-     * @type {!ol.Collection.<!ol.Feature>}
+     * @type {!ol.Collection.<!import("ol/Feature.js").default>}
      * @export
      */
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {!ol.Collection.<!import("ol/interaction/Interaction.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = new olCollection();
@@ -355,7 +355,7 @@ class RuleController {
     this.interactions_.push(this.translate_);
 
     /**
-     * @type {!Array.<!ol.EventsKey>}
+     * @type {!Array.<!import("ol/EventsKey.js").default>}
      * @private
      */
     this.listenerKeys_ = [];

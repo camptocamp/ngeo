@@ -165,7 +165,7 @@ exports.NAMESPACE_URIS_ = [
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
 exports.PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
@@ -181,7 +181,7 @@ exports.PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
 exports.COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
@@ -194,7 +194,7 @@ exports.COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
 exports.COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
@@ -207,7 +207,7 @@ exports.COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
 exports.EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
@@ -220,7 +220,7 @@ exports.EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
 
 /**
  * @const
- * @type {!Object.<string, !Object.<string, !ol.XmlParser>>}
+ * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
 exports.SEQUENCE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(

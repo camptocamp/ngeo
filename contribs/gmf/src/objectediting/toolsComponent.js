@@ -69,17 +69,17 @@ exports.value('gmfObjectEditingToolsOptions', {});
  *     'Copy from' tool is active or not.
  * @htmlAttribute {boolean} gmf-objecteditingtools-deletefromactive Whether the
  *     'Delete from' tool is active or not.
- * @htmlAttribute {ol.Feature} gmf-objecteditingtools-feature The feature to
+ * @htmlAttribute {import("ol/Feature.js").default} gmf-objecteditingtools-feature The feature to
  *     edit.
  * @htmlAttribute {string} gmf-objecteditingtools-geomtype The geometry type.
- * @htmlAttribute {ol.Map} gmf-objecteditingtools-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditingtools-map The map.
  * @htmlAttribute {string} gmf-objectediting-process Determines the
  *     behavior to adopt when sketch features are added.
  * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objectediting-queryablelayerinfo
  *     Queryable layer information.
  * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
  *     if the currently active tool requires a queryable layer or not.
- * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {ol.Collection.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -150,7 +150,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.deleteFromActive;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature;
@@ -162,7 +162,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.geomType;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -186,7 +186,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.requiresLayer;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures;

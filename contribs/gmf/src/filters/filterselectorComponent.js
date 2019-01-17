@@ -111,7 +111,7 @@ class Controller {
     );
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -245,7 +245,7 @@ class Controller {
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;
 
     /**
-     * @type {Array.<ol.EventsKey>}
+     * @type {Array.<import("ol/EventsKey.js").default>}
      * @private
      */
     this.listenerKeys_ = [];

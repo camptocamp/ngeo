@@ -230,7 +230,7 @@ WfsPermalinkService.prototype.clear = function() {
  * request and add the received features to {@link QueryResult}.
  *
  * @param {WfsPermalinkData} queryData Query data for the WFS request.
- * @param {ol.Map} map The ol3 map object to get the current projection from.
+ * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
  * @export
  */
 WfsPermalinkService.prototype.issue = function(queryData, map) {
@@ -257,7 +257,7 @@ WfsPermalinkService.prototype.issue = function(queryData, map) {
 /**
  * @param {WfsType} wfsType Type.
  * @param {import("ol/format/filter/Filter.js").default} filter Filter.
- * @param {ol.Map} map The ol3 map object to get the current projection from.
+ * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
  * @param {boolean} showFeatures Show features or only zoom to feature extent?
  * @private
  */
@@ -311,8 +311,8 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
 
 /**
- * @param {Array.<ol.Feature>} features Features.
- * @return {ol.Extent} The extent of all features.
+ * @param {Array.<import("ol/Feature.js").default>} features Features.
+ * @return {import("ol/Extent.js").default} The extent of all features.
  * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function(features) {

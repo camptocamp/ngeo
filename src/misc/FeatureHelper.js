@@ -141,7 +141,7 @@ exports.prototype.setProjection = function(projection) {
 /**
  * Set the style of a feature using its inner properties and depending on
  * its geometry type.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @param {boolean=} opt_select Whether the feature should be rendered as
  *     selected, which includes additional vertex and halo styles.
  * @export
@@ -161,7 +161,7 @@ exports.prototype.setStyle = function(feature, opt_select) {
 /**
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!Array.<!import("ol/style/Style.js").default>} The style object.
  * @export
  */
@@ -202,7 +202,7 @@ exports.prototype.getStyle = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature with linestring geometry.
+ * @param {!import("ol/Feature.js").default} feature Feature with linestring geometry.
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
@@ -240,7 +240,7 @@ exports.prototype.getLineStringStyle_ = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature with point geometry.
+ * @param {!import("ol/Feature.js").default} feature Feature with point geometry.
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
@@ -286,7 +286,7 @@ exports.prototype.getPointStyle_ = function(feature) {
 /**
  * Get an optional number feature attribute.
  *
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @param {string} attrib The attribute name.
  * @return {number|undefined}, The attribute value
  */
@@ -307,7 +307,7 @@ exports.prototype.optNumber = function(feature, attrib) {
 /**
  * Get a number feature attribute.
  *
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @param {string} attrib The attribute name.
  * @return {number}, The attribute value
  */
@@ -322,7 +322,7 @@ exports.prototype.getNumber = function(feature, attrib) {
 
 
 /**
- * @param {!ol.Feature} feature Feature with polygon geometry.
+ * @param {!import("ol/Feature.js").default} feature Feature with polygon geometry.
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
@@ -417,7 +417,7 @@ exports.prototype.getPolygonStyle_ = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature with point geometry, rendered as text.
+ * @param {!import("ol/Feature.js").default} feature Feature with point geometry, rendered as text.
  * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
@@ -436,7 +436,7 @@ exports.prototype.getTextStyle_ = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature to create the editing styles with.
+ * @param {!import("ol/Feature.js").default} feature Feature to create the editing styles with.
  * @return {!Array.<!import("ol/style/Style.js").default>} List of style.
  * @export
  */
@@ -523,8 +523,8 @@ exports.prototype.createEditingStyles = function(feature) {
  * If removing a vertex would make the geometry invalid, then the
  * vertex info is not returned.
  *
- * @param {!ol.Feature} feature Feature.
- * @param {!ol.Coordinate} coordinate Coordinate.
+ * @param {!import("ol/Feature.js").default} feature Feature.
+ * @param {!import("ol/Coordinate.js").default} coordinate Coordinate.
  * @param {number} resolution Current map view resolution.
  * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
  */
@@ -603,9 +603,9 @@ exports.prototype.getVertexInfoAtCoordinate = function(
  * Loop in the given coordinates and look one that hits an other given
  * coordinate using a buffer. If one does, return its index.
  *
- * @param {!Array.<!ol.Coordinate>} coordinates Coordinates in which to
+ * @param {!Array.<!import("ol/Coordinate.js").default>} coordinates Coordinates in which to
  *     loop to find the one that hits the other given coordinate.
- * @param {!ol.Coordinate} coordinate Coordinate that has to hit.
+ * @param {!import("ol/Coordinate.js").default} coordinate Coordinate that has to hit.
  * @param {number} min Minimum number of coordinates required to look
  *     for the one that hits.
  * @param {number} buffer Buffer, in map view units, to extend the
@@ -714,7 +714,7 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
 /**
  * Remove a vertex from a feature using the given information (indexes).
  *
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @param {!Array.<number>} vertexInfo The indexes of the vertex
  *     (coordinate) to remove.
  */
@@ -778,7 +778,7 @@ exports.prototype.removeVertex = function(feature, vertexInfo) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Whether the feature supports vertex or not.
  * @private
  */
@@ -796,7 +796,7 @@ exports.prototype.supportsVertex_ = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Whether the feature supports having its vertex
  *     removed or not. Does not validate the number of coordinates.
  * @private
@@ -814,7 +814,7 @@ exports.prototype.supportsVertexRemoval_ = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
@@ -873,7 +873,7 @@ exports.prototype.getHaloStyle_ = function(feature) {
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
  * Also delete the 'ngeo_feature_type_' from the ngeo query system.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!Object.<string, *>} Filtered properties of the current feature.
  * @export
  */
@@ -886,7 +886,7 @@ exports.getFilteredFeatureValues = function(feature) {
 };
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @return {number} Angle.
  * @export
  */
@@ -899,7 +899,7 @@ exports.prototype.getAngleProperty = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} Color.
  * @export
  */
@@ -914,8 +914,8 @@ exports.prototype.getColorProperty = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
- * @return {ol.Color} Color.
+ * @param {!import("ol/Feature.js").default} feature Feature.
+ * @return {import("ol/Color.js").default} Color.
  * @export
  */
 exports.prototype.getRGBAColorProperty = function(feature) {
@@ -924,7 +924,7 @@ exports.prototype.getRGBAColorProperty = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} Name.
  * @export
  */
@@ -936,7 +936,7 @@ exports.prototype.getNameProperty = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {number} Opacity.
  * @export
  */
@@ -946,7 +946,7 @@ exports.prototype.getOpacityProperty = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Show measure.
  * @export
  */
@@ -961,7 +961,7 @@ exports.prototype.getShowMeasureProperty = function(feature) {
 };
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Show feature label.
  * @export
  */
@@ -976,7 +976,7 @@ exports.prototype.getShowLabelProperty = function(feature) {
 };
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {number} Size.
  * @export
  */
@@ -986,7 +986,7 @@ exports.prototype.getSizeProperty = function(feature) {
 
 
 /**
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {number} Stroke.
  * @export
  */
@@ -1001,7 +1001,7 @@ exports.prototype.getStrokeProperty = function(feature) {
 /**
  * Export features in the given format. The projection of the exported features
  * is: `EPSG:4326`.
- * @param {!Array.<!ol.Feature>} features Array of vector features.
+ * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @param {string} formatType Format type to export the features.
  * @export
  */
@@ -1022,7 +1022,7 @@ exports.prototype.export = function(features, formatType) {
 /**
  * Export features in GPX and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {!Array.<!ol.Feature>} features Array of vector features.
+ * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @export
  */
 exports.prototype.exportGPX = function(features) {
@@ -1036,7 +1036,7 @@ exports.prototype.exportGPX = function(features) {
 /**
  * Export features in KML and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
- * @param {!Array.<!ol.Feature>} features Array of vector features.
+ * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @export
  */
 exports.prototype.exportKML = function(features) {
@@ -1051,7 +1051,7 @@ exports.prototype.exportKML = function(features) {
  * Export features using a given format to a specific filename and download
  * the result to the browser. The projection of the exported features is:
  * `EPSG:4326`.
- * @param {!Array.<!ol.Feature>} features Array of vector features.
+ * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @param {!import("ol/format/Feature.js").default} format Format
  * @param {string} fileName Name of the file.
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
@@ -1118,7 +1118,7 @@ exports.prototype.createTextStyle_ = function(options) {
  * Get the measure of the given feature as a string. For points, you can format
  * the result by setting a filter to apply on the coordinate with the function
  * {@link ngeo.misc.FeatureHelper.prototype.setPointFilterFn}.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} Measure.
  * @export
  */
@@ -1163,7 +1163,7 @@ exports.prototype.getMeasure = function(feature) {
 /**
  * Return the type of geometry of a feature using its geometry property and
  * some inner properties.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} The type of geometry.
  * @export
  */
@@ -1215,8 +1215,8 @@ exports.prototype.getType = function(feature) {
  * If the feature is not visible and would not fit in the map view,
  * the map is fix to the feature's extent.
  *
- * @param {!ol.Feature} feature Feature.
- * @param {!ol.Map} map Map.
+ * @param {!import("ol/Feature.js").default} feature Feature.
+ * @param {!import("ol/Map.js").default} map Map.
  * @param {number=} opt_duration Aimation duration. Defaults to `250`.
  * @export
  */
@@ -1302,7 +1302,7 @@ exports.prototype.fitMapToFeature = function(feature, map, opt_duration) {
 /**
  * This method generates a line string geometry that represents the radius for
  * a given azimut. It expects the input geometry to be a circle.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @param {number} azimut Azimut in degrees.
  * @return {!import("ol/geom/LineString.js").default} The line geometry.
  */
@@ -1323,7 +1323,7 @@ exports.prototype.getRadiusLine = function(feature, azimut) {
 
 /**
  * Return the properties of a feature, with the exception of the geometry.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!Object.<string, *>} Object.
  * @export
  */
@@ -1342,7 +1342,7 @@ exports.prototype.getNonSpatialProperties = function(feature) {
 
 /**
  * Clear all properties of a feature, with the exception of the geometry.
- * @param {!ol.Feature} feature Feature.
+ * @param {!import("ol/Feature.js").default} feature Feature.
  * @export
  */
 exports.prototype.clearNonSpatialProperties = function(feature) {
@@ -1357,7 +1357,7 @@ exports.prototype.clearNonSpatialProperties = function(feature) {
 
 
 /**
- * @param {!Array.<!ol.Feature>} features Features.
+ * @param {!Array.<!import("ol/Feature.js").default>} features Features.
  * @param {string} fid Feature id
  * @return {number} Index of found feature
  * @export

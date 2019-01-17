@@ -36,7 +36,7 @@ const exports = class {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * @type {!ol.Collection.<!ngeo.datasource.DataSource>}
+     * @type {!import("ol/Collection.js").default.<!ngeo.datasource.DataSource>}
      * @protected
      */
     this.dataSourcesCollection_ = new olCollection(options.dataSources);
@@ -72,7 +72,7 @@ const exports = class {
 
 
   /**
-   * @return {!ol.Collection.<!ngeo.datasource.DataSource>} Data sources
+   * @return {!import("ol/Collection.js").default.<!ngeo.datasource.DataSource>} Data sources
    * @export
    */
   get dataSourcesCollection() {

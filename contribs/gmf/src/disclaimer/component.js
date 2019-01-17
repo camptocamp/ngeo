@@ -44,7 +44,7 @@ const exports = angular.module('gmfDisclaimer', [
 function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -341,7 +341,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
  *     contains the disclaimer messages. To uses it, you must set the
  *     gmf-disclaimer-external to true.
- * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
+ * @htmlAttribute {import("ol/Map.js").default=} gmf-disclaimer-map The map.
  *
  * @ngdoc component
  * @ngname gmfDisclaimer

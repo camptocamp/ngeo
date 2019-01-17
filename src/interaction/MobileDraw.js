@@ -61,7 +61,7 @@ const exports = function(options) {
 
   /**
    * The key for view center change event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.changeEventKey_ = null;
@@ -86,21 +86,21 @@ const exports = function(options) {
 
   /**
    * Sketch feature.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.sketchFeature_ = null;
 
   /**
    * Previous sketch points, saved to be able to display them on the layer.
-   * @type {Array.<ol.Feature>}
+   * @type {Array.<import("ol/Feature.js").default>}
    * @private
    */
   this.sketchPoints_ = [];
 
   /**
    * Current sketch point.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.sketchPoint_ = null;
@@ -197,7 +197,7 @@ exports.prototype.getValid = function() {
 
 /**
  * Returns the current sketch feature.
- * @return {?ol.Feature} The sketch feature, or null if none.
+ * @return {?import("ol/Feature.js").default} The sketch feature, or null if none.
  */
 exports.prototype.getFeature = function() {
   return this.sketchFeature_;
@@ -400,7 +400,7 @@ exports.prototype.modifyDrawing_ = function() {
 
 /**
  * Stop drawing without adding the sketch feature to the target layer.
- * @return {?ol.Feature} The sketch feature (or null if none).
+ * @return {?import("ol/Feature.js").default} The sketch feature (or null if none).
  * @private
  */
 exports.prototype.abortDrawing_ = function() {
@@ -507,7 +507,7 @@ exports.prototype.getSketchPointGeometry_ = function() {
 
 /**
  * Returns the center of the map view
- * @return {ol.Coordinate} Coordinate.
+ * @return {import("ol/Coordinate.js").default} Coordinate.
  * @private
  */
 exports.prototype.getCenter_ = function() {

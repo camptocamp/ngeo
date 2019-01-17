@@ -50,7 +50,7 @@ exports.MainController = function($scope) {
   this.vectorSource_ = new olSourceVector();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

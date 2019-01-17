@@ -29,10 +29,10 @@ const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
  *
  * @htmlAttribute {boolean} gmf-objecteditinggetwmsfeature-active Whether the
  *     directive is active or not.
- * @htmlAttribute {ol.Collection} gmf-objecteditinggetwmsfeature-features
+ * @htmlAttribute {import("ol/Collection.js").default} gmf-objecteditinggetwmsfeature-features
  *     The collection of features where to add those created by this directive.
  * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
- * @htmlAttribute {ol.Map} gmf-objecteditinggetwmsfeature-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditinggetwmsfeature-map The map.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -80,7 +80,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   );
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features;
@@ -92,7 +92,7 @@ function Controller($scope, gmfObjectEditingQuery) {
   this.layerInfo;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -133,7 +133,7 @@ Controller.prototype.handleActiveChange_ = function(active) {
 
 
 /**
- * @param {ol.MapBrowserEvent} evt Event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {

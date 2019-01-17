@@ -54,7 +54,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  *     list of attributes to use.
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
- * @htmlAttribute {ol.Feature} ngeo-attributes-feature The feature.
+ * @htmlAttribute {import("ol/Feature.js").default} ngeo-attributes-feature The feature.
  *
  * @ngdoc component
  * @ngname ngeoAttributes
@@ -102,7 +102,7 @@ function Controller($scope, ngeoEventHelper) {
 
   /**
    * The feature containing the values.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature;

@@ -100,7 +100,7 @@ const exports = function(config, $scope, $injector) {
   const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

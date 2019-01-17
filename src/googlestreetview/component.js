@@ -84,7 +84,7 @@ class Controller {
     this.featureStyle;
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -108,7 +108,7 @@ class Controller {
     // Inner properties
 
     /**
-     * @type {!ol.Feature}
+     * @type {!import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = new olFeature();
@@ -122,14 +122,14 @@ class Controller {
     );
 
     /**
-     * @type {Array.<!ol.EventsKey>}
+     * @type {Array.<!import("ol/EventsKey.js").default>}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
      * The current location in the OpenLayers' map view projection.
-     * @type {?ol.Coordinate}
+     * @type {?import("ol/Coordinate.js").default}
      * @private
      */
     this.location = null;
@@ -265,8 +265,8 @@ class Controller {
 
   /**
    * Called when the 'location' property of this component changes.
-   * @param {?ol.Coordinate} location Location, in OL map view projection.
-   * @param {?ol.Coordinate} oldLocation The previous location.
+   * @param {?import("ol/Coordinate.js").default} location Location, in OL map view projection.
+   * @param {?import("ol/Coordinate.js").default} oldLocation The previous location.
    * @private
    */
   handleLocationChange_(location, oldLocation) {
@@ -298,7 +298,7 @@ class Controller {
   /**
    * Called when the map is clicked while this component is active. Update the
    * location accordingly.
-   * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+   * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
    * @private
    */
   handleMapClick_(evt) {
@@ -369,8 +369,8 @@ class Controller {
   // Utility methods
 
   /**
-   * @param {!ol.Coordinate} lonLat LonLat coordinate.
-   * @return {ol.Coordinate} Map view projection coordinate.
+   * @param {!import("ol/Coordinate.js").default} lonLat LonLat coordinate.
+   * @return {import("ol/Coordinate.js").default} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
     return olProj.fromLonLat(
@@ -380,8 +380,8 @@ class Controller {
   }
 
   /**
-   * @param {!ol.Coordinate} coordinate Map view projection coordinate.
-   * @return {ol.Coordinate} LonLat coordinate.
+   * @param {!import("ol/Coordinate.js").default} coordinate Map view projection coordinate.
+   * @return {import("ol/Coordinate.js").default} LonLat coordinate.
    */
   toLonLat_(coordinate) {
     return olProj.toLonLat(

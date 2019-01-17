@@ -48,7 +48,7 @@ function directive(ngeoMapQuerent) {
     scope: false,
     link: (scope, elem, attrs) => {
       /**
-       * @type {ol.Map}
+       * @type {import("ol/Map.js").default}
        */
       const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 

@@ -45,8 +45,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurearea-precision the number of significant digits to display.
- * @htmlAttribute {ol.Map} gmf-mobile-measurearea-map The map.
- * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction=}
+ * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
+ * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default=}
  *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.

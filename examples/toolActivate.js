@@ -43,7 +43,7 @@ exports.module = angular.module('app', [
 exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -66,7 +66,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {ol.Collection.<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 
