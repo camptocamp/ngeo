@@ -77,7 +77,7 @@ class Controller {
 
     /**
      * Style for the feature.
-     * @type {ol.style.Style|Array.<import("ol/style/Style.js").default>|
+     * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|
      *     ol.FeatureStyleFunction|ol.StyleFunction|undefined}
      * @export
      */

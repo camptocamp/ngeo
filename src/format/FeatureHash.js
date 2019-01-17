@@ -336,7 +336,7 @@ exports.encodeStylePoint_ = function(imageStyle, encodedStyles) {
 
 
 /**
- * Transform an {@link ol.style.Fill} and an {@link import("ol/style/Stroke.js").default} into
+ * Transform an {@link import("ol/style/Fill.js").default} and an {@link import("ol/style/Stroke.js").default} into
  * a logical sequence of characters and put the result into the given
  * encoded styles's array.
  * @param {import("ol/style/Fill.js").default} fillStyle Fill style.

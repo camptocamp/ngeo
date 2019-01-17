@@ -46,7 +46,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurelength-precision the number of significant digits to display.
  * @htmlAttribute {ol.Map} gmf-mobile-measurelength-map The map.
- * @htmlAttribute {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction=}
+ * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
  * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.

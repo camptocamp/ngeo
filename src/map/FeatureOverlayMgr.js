@@ -155,7 +155,7 @@ exports.prototype.init = function(map) {
 
 
 /**
- * @param {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
  * Style.
  * @param {number} groupIndex Group index.
  * @export
@@ -171,7 +171,7 @@ exports.prototype.setStyle = function(style, groupIndex) {
 /**
  * @param {ol.Feature|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {Array.<ol.style.Style>|import("ol/style/Style.js").default} Styles.
+ * @return {Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
  * @private
  */
 exports.prototype.styleFunction_ = function(feature, resolution) {

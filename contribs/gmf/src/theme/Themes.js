@@ -261,7 +261,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfOgcServers} ogcServers The ogc servers.
    * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} gmfLayer The item.
-   * @return {angular.IPromise.<ol.layer.Base>|import("ol/layer/Base.js").default} the created layer.
+   * @return {angular.IPromise.<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default} the created layer.
    */
   const layerLayerCreationFn = function(ogcServers, gmfLayer) {
     if (gmfLayer.type === 'WMTS') {

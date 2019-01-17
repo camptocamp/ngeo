@@ -327,7 +327,7 @@ exports.prototype.getDrawInteraction = function() {
  * Creates the draw interaction.
  *
  * @abstract
- * @param {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction|undefined}
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction|undefined}
  *     style The sketchStyle used for the drawing interaction.
  * @param {import("ol/source/Vector.js").default} source Vector source.
  * @return {import("ol/interaction/Draw.js").default|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The interaction

@@ -66,12 +66,12 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
  *     level group layer.
  * @param {number=} opt_position for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
- * @return {ol.layer.Base|import("ol/layer/Group.js").default} a new layer.
+ * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default} a new layer.
  * @public
  */
 exports.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_position) {
   /**
-   * @type {ol.layer.Base|import("ol/layer/Group.js").default}
+   * @type {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default}
    */
   let layer = null;
   if (treeCtrl.node.children !== undefined && treeCtrl.node.mixed) {
@@ -106,7 +106,7 @@ exports.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_posi
 exports.prototype.sync_ = function(map, treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
     if (treeCtrl.layer && !treeCtrl.node.mixed) {
-      this.updateLayerState_(/** @type ol.layer.Image|import("ol/layer/Tile.js").default */ (treeCtrl.layer), treeCtrl);
+      this.updateLayerState_(/** @type import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default */ (treeCtrl.layer), treeCtrl);
     }
   });
 };
@@ -114,7 +114,7 @@ exports.prototype.sync_ = function(map, treeCtrl) {
 
 /**
  * Set the active state of a layer based on its treeCtrl state.
- * @param {ol.layer.Tile|import("ol/layer/Image.js").default} layer A layer.
+ * @param {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} layer A layer.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @private
  */
@@ -163,7 +163,7 @@ exports.prototype.updateLayerState_ = function(layer, treeCtrl) {
  *     level group layer.
  * @param {number=} opt_position for first level Group, you can precise the
  *     position to add the group in the array of layers of the dataLayerGroup.
- * @return {ol.layer.Image|import("ol/layer/Group.js").default} a new layer.
+ * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  * @private
  */
 exports.prototype.createGroup_ = function(treeCtrl, map,
@@ -203,7 +203,7 @@ exports.prototype.createGroup_ = function(treeCtrl, map,
  * for mixed case).
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {boolean} mixed True for a group layer, false for a WMS layer.
- * @return {ol.layer.Image|import("ol/layer/Group.js").default} a new layer.
+ * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  * @private
  */
 exports.prototype.createLayerFromGroup_ = function(treeCtrl,
@@ -249,7 +249,7 @@ exports.prototype.createLayerFromGroup_ = function(treeCtrl,
  * Create and insert a layer from a leaf in a mixed group.
  * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller.
  * @param {ol.Map} map A map that contains the group to insert the layer.
- * @return {ol.layer.Tile|import("ol/layer/Image.js").default} a new layer.
+ * @return {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} a new layer.
  * @private
  */
 exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {

@@ -460,7 +460,7 @@ exports.prototype.isLayerVisible = function(layer, map) {
 
 /**
  * Force a WMS layer to refresh using a random value.
- * @param {ol.layer.Image|import("ol/layer/Tile.js").default} layer Layer to refresh.
+ * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer Layer to refresh.
  */
 exports.prototype.refreshWMSLayer = function(layer) {
   const source_ = layer.getSource();
@@ -468,7 +468,7 @@ exports.prototype.refreshWMSLayer = function(layer) {
     source_ instanceof olSourceImageWMS ||
     source_ instanceof olSourceTileWMS
   );
-  const source = /** @type {ol.source.ImageWMS|import("ol/source/TileWMS.js").default} */ (source_);
+  const source = /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
   const params = source.getParams();
   params[exports.REFRESH_PARAM] = Math.random();
   source.updateParams(params);
@@ -477,7 +477,7 @@ exports.prototype.refreshWMSLayer = function(layer) {
 
 /**
  * Set ZIndex property to first level children elements
- * @param {ol.layer.Group|import("ol/layer/Base.js").default} element The group of layer with first level children layers.
+ * @param {import("ol/layer/Group.js").default|import("ol/layer/Base.js").default} element The group of layer with first level children layers.
  * @param {number} ZIndex The ZIndex for children element.
  */
 exports.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {

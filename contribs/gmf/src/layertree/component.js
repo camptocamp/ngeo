@@ -359,7 +359,7 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
  * @param {ngeo.layertree.Controller} treeCtrl tree controller of the node
- * @return {ol.layer.Base|import("ol/layer/Group.js").default|null} The OpenLayers layer or group
+ * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default|null} The OpenLayers layer or group
  *     for the node.
  * @export
  */

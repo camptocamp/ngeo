@@ -285,7 +285,7 @@ function Controller($element, $q, $scope, $timeout,
   this.editableNode_;
 
   /**
-   * @type {ol.layer.Image|import("ol/layer/Tile.js").default}
+   * @type {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
    * @private
    */
   this.editableWMSLayer_;

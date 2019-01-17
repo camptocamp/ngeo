@@ -284,7 +284,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.crosshairFeature_ = null;
 
   /**
-   * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|import("ol/style/Style.js").default}
+   * @type {Array<(null|import("ol/style/Style.js").default)>|null|ol.FeatureStyleFunction|import("ol/style/Style.js").default}
    * @private
    */
   this.crosshairStyle_;

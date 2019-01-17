@@ -88,7 +88,7 @@ exports.prototype.setFeatures = function(features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} style
  * Style.
  * @export
  */
