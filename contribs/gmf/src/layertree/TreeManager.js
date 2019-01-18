@@ -628,7 +628,7 @@ const module = angular.module('gmfTreeManager', [
   ngeoMessageNotification.name,
   ngeoStatemanagerService.name,
 ]);
-exports.module.service('gmfTreeManager', exports);
+module.service('gmfTreeManager', exports);
 
 
 export default exports;

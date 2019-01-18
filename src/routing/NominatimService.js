@@ -190,7 +190,7 @@ const module = angular.module('ngeoNominatimService', [
   ngeoMiscDebounce.name
 ]);
 
-exports.module.service('ngeoNominatimService', exports);
+module.service('ngeoNominatimService', exports);
 
 
 export default exports;

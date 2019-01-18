@@ -49,7 +49,7 @@ const exports = class {
 const module = angular.module('gmfDatasourceWFSAliases', [
   ngeoDatasourceHelper.name,
 ]);
-exports.module.service('gmfWFSAliases', exports);
+module.service('gmfWFSAliases', exports);
 
 
 export default exports;

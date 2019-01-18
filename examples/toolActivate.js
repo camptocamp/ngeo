@@ -154,7 +154,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

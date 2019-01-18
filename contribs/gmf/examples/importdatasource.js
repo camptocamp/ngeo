@@ -42,11 +42,11 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 
-exports.module.value('gmfExternalOGCServers', [{
+module.value('gmfExternalOGCServers', [{
   'name': 'Swiss Topo WMS',
   'type': 'WMS',
   'url': 'https://wms.geo.admin.ch/?lang=fr'
@@ -60,8 +60,8 @@ exports.module.value('gmfExternalOGCServers', [{
   'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
 }]);
 
-exports.module.constant('defaultTheme', 'Filters');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Filters');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 exports.MainController = class {
@@ -142,7 +142,7 @@ exports.MainController = class {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

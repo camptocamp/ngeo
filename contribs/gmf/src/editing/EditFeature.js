@@ -145,7 +145,7 @@ exports.prototype.deleteFeature = function(layerId, feature) {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfEditFeature', []);
-exports.module.service('gmfEditFeature', exports);
+module.service('gmfEditFeature', exports);
 
 
 export default exports;

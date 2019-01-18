@@ -221,8 +221,8 @@ const module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.name
 ]);
 
-exports.module.service('ngeoPrintService', exports);
-exports.module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
+module.service('ngeoPrintService', exports);
+module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
 ```
 
 You can see that to require a module inside another module, we add the name of the module into the array of
@@ -263,7 +263,7 @@ const module = angular.module('AppMain', [
 Finally, export your module with an unique controller name (here it's `AppMainController`):
 
 ```
-exports.module.controller('AppMainController', exports);
+module.controller('AppMainController', exports);
 ```
 
 #### In each of your application controller (`<package>/templates/<interface>.html`)

@@ -1033,7 +1033,7 @@ const module = angular.module('ngeoQuerent', [
   ngeoFilterRuleHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-exports.module.service('ngeoQuerent', exports);
+module.service('ngeoQuerent', exports);
 
 
 export default exports;

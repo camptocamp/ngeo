@@ -229,7 +229,7 @@ const module = angular.module('ngeoDisclaimer', [
   ngeoMessagePopup.name,
 ]);
 
-exports.module.service('ngeoDisclaimer', exports);
+module.service('ngeoDisclaimer', exports);
 
 
 export default exports;

@@ -688,7 +688,7 @@ const module = angular.module('gmfExternalDataSourcesManager', [
   ngeoMiscFile.name,
   ngeoDatasourceDataSources.name,
 ]);
-exports.module.service('gmfExternalDataSourcesManager',
+module.service('gmfExternalDataSourcesManager',
   exports);
 
 

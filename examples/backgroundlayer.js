@@ -21,7 +21,7 @@ const module = angular.module('app', [
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/backgroundlayer', require('./partials/backgroundlayer.html'));
 });
 
@@ -48,7 +48,7 @@ exports.backgroundlayerComponent = {
 };
 
 
-exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent);
+module.component('appBackgroundlayer', exports.backgroundlayerComponent);
 
 
 /**
@@ -124,7 +124,7 @@ exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
 };
 
 
-exports.module.controller('AppBackgroundlayerController',
+module.controller('AppBackgroundlayerController',
   exports.BackgroundlayerController);
 
 
@@ -165,7 +165,7 @@ exports.MainController = function($scope) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

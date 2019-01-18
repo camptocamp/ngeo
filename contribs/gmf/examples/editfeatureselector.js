@@ -42,12 +42,12 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Edit');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Edit');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -167,7 +167,7 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -15,9 +15,9 @@ const module = angular.module('gmfapp', [
   gmfThemeModule.name,
 ]);
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -48,7 +48,7 @@ exports.MainController = function($http, gmfThemes, gmfThemeManager) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

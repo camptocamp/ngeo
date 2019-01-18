@@ -85,7 +85,7 @@ exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

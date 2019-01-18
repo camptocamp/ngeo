@@ -35,7 +35,7 @@ const module = angular.module('app', [
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
 });
 
@@ -56,7 +56,7 @@ exports.measuretoolsComponent = {
   templateUrl: 'partials/measuretools'
 };
 
-exports.module.component('appMeasuretools', exports.measuretoolsComponent);
+module.component('appMeasuretools', exports.measuretoolsComponent);
 
 
 /**
@@ -223,7 +223,7 @@ exports.MeasuretoolsController = function($scope, $compile, $sce,
   });
 };
 
-exports.module.controller('AppMeasuretoolsController', exports.MeasuretoolsController);
+module.controller('AppMeasuretoolsController', exports.MeasuretoolsController);
 
 exports.MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
@@ -263,7 +263,7 @@ exports.MainController = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

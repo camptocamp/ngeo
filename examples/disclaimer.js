@@ -178,7 +178,7 @@ exports.MainController.prototype.closeAll = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

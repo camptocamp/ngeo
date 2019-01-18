@@ -43,15 +43,15 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -65,7 +65,7 @@ exports.queryresultComponent = {
   template: require('./partials/queryresult.html')
 };
 
-exports.module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', exports.queryresultComponent);
 
 
 /**
@@ -85,7 +85,7 @@ exports.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-exports.module.controller('AppQueryresultController', exports.QueryresultController);
+module.controller('AppQueryresultController', exports.QueryresultController);
 
 
 /**
@@ -175,7 +175,7 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -587,7 +587,7 @@ const module = angular.module('gmfSnapping', [
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
 ]);
-exports.module.service('gmfSnapping', exports);
+module.service('gmfSnapping', exports);
 
 
 export default exports;

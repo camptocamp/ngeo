@@ -177,7 +177,7 @@ const module = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.name,
   ngeoStatemanagerLocation.name,
 ]);
-exports.module.service('gmfObjectEditingManager', exports);
+module.service('gmfObjectEditingManager', exports);
 
 
 export default exports;

@@ -39,13 +39,13 @@ const module = angular.module('gmfapp', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-exports.module.constant('defaultTheme', 'ObjectEditing');
-exports.module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
-exports.module.constant('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.constant('gmfObjectEditingToolsOptions', {
+module.constant('defaultTheme', 'ObjectEditing');
+module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
+module.constant('gmfTreeUrl', appURL.GMF_THEMES);
+module.constant('gmfObjectEditingToolsOptions', {
   regularPolygonRadius: 150
 });
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -180,7 +180,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
 
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -135,7 +135,7 @@ exports.MainController.prototype.openPopupWithUrl = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

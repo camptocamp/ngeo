@@ -182,7 +182,7 @@ const exports = class {
  */
 const module = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
-exports.module.service('ngeoDataSources', exports);
+module.service('ngeoDataSources', exports);
 
 
 export default exports;

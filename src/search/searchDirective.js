@@ -185,7 +185,7 @@ const module = angular.module('ngeoSearchDirective', []);
 
 
 // Register the directive in the module
-exports.module.directive('ngeoSearch', exports);
+module.directive('ngeoSearch', exports);
 
 
 export default exports;

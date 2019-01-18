@@ -302,7 +302,7 @@ exports.Factory = function($compile, $rootScope, $sce, $timeout) {
 const module = angular.module('ngeoCreatePopup', [
   ngeoMessagePopupComponent.name,
 ]);
-exports.module.factory('ngeoCreatePopup', exports.Factory);
+module.factory('ngeoCreatePopup', exports.Factory);
 
 
 export default exports;

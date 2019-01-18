@@ -22,10 +22,10 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfRasterUrl', appURL.RASTER);
+module.value('gmfRasterUrl', appURL.RASTER);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -64,7 +64,7 @@ exports.MainController = function() {
   });
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -26,12 +26,12 @@ const module = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimInputComponent.name
 ]);
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
 });
 
 
-exports.module.value('ngeoRoutingFeatureTemplateUrl',
+module.value('ngeoRoutingFeatureTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -383,7 +383,7 @@ const component = {
   templateUrl: ngeoRoutingFeatureTemplateUrl
 };
 
-exports.module.component('ngeoRoutingFeature', component);
+module.component('ngeoRoutingFeature', component);
 
 
 export default exports;

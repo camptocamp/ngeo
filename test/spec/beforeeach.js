@@ -7,7 +7,7 @@ import ngeoMainmodule from 'ngeo/mainmodule.js';
 const module = angular.module('app', []);
 
 beforeEach(() => {
-  exports.module.requires.push(ngeoMainmodule.name);
+  module.requires.push(ngeoMainmodule.name);
 });
 
 beforeEach(angular.mock.module('app'));

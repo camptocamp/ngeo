@@ -28,7 +28,7 @@ const module = angular.module('gmfapp', [
   ngeoStatemanagerWfsPermalink.name,
 ]);
 
-exports.module.value('ngeoWfsPermalinkOptions',
+module.value('ngeoWfsPermalinkOptions',
   /** @type {WfsPermalinkOptions} */ ({
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
@@ -38,9 +38,9 @@ exports.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
-exports.module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -85,7 +85,7 @@ exports.MainController = function() {
   });
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

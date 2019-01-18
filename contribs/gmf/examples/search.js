@@ -32,12 +32,12 @@ const module = angular.module('gmfapp', [
   ngeoMessageNotification.name,
 ]);
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('fulltextsearchUrl', `${appURL.SEARCH}?limit=30&partitionlimit=5&interface=desktop`);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('fulltextsearchUrl', `${appURL.SEARCH}?limit=30&partitionlimit=5&interface=desktop`);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -131,7 +131,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
   };
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -246,7 +246,7 @@ const module = angular.module('ngeoDrawfeatureController', [
   ngeoMiscBtnComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-exports.module.controller('ngeoDrawfeatureController', exports);
+module.controller('ngeoDrawfeatureController', exports);
 
 
 export default exports;

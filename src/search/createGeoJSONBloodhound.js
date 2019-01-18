@@ -73,7 +73,7 @@ const exports = function(url, opt_filter, opt_featureProjection,
  */
 const module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
 
-exports.module.value(
+module.value(
   'ngeoSearchCreateGeoJSONBloodhound',
   exports);
 

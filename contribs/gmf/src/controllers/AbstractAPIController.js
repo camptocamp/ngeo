@@ -78,13 +78,13 @@ const module = angular.module('GmfAbstractAPIControllerModule', [
   ngeoQueryBboxQueryComponent.name
 ]);
 
-exports.module.controller(
+module.controller(
   'AbstractAPIController',
   exports);
 
-exports.module.value('isDesktop', true);
+module.value('isDesktop', true);
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 

@@ -157,7 +157,7 @@ const module = angular.module('ngeoDataSourcesHelper', [
   ngeoDatasourceDataSources.name,
   ngeoQueryQuerent.name,
 ]);
-exports.module.service('ngeoDataSourcesHelper', exports);
+module.service('ngeoDataSourcesHelper', exports);
 
 
 export default exports;

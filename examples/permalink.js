@@ -46,7 +46,7 @@ exports.mapComponent = {
 };
 
 
-exports.module.component('appMap', exports.mapComponent);
+module.component('appMap', exports.mapComponent);
 
 
 /**
@@ -75,7 +75,7 @@ exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   this.ngeoDebounce_ = ngeoDebounce;
 };
 
-exports.module.controller('AppMapController', exports.MapComponentController);
+module.controller('AppMapController', exports.MapComponentController);
 
 exports.MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
@@ -132,7 +132,7 @@ exports.drawComponent = {
 };
 
 
-exports.module.component('appDraw', exports.drawComponent);
+module.component('appDraw', exports.drawComponent);
 
 
 /**
@@ -234,7 +234,7 @@ exports.DrawComponentController.prototype.clearLayer = function() {
   this.ngeoLocation_.deleteParam('features');
 };
 
-exports.module.controller('AppDrawController', exports.DrawComponentController);
+module.controller('AppDrawController', exports.DrawComponentController);
 
 
 /**
@@ -272,7 +272,7 @@ exports.MainController = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

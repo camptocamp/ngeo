@@ -16,8 +16,8 @@ const module = angular.module('gmfapp', [
   gmfPermalinkShareComponent.name,
 ]);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-exports.module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
 
 
 /**
@@ -43,7 +43,7 @@ exports.MainController = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -1558,7 +1558,7 @@ const module = angular.module('gmfPermalink', [
   ngeoStatemanagerModule.name,
 ]);
 
-exports.module.service('gmfPermalink', exports);
+module.service('gmfPermalink', exports);
 
 
 /**
@@ -1591,7 +1591,7 @@ exports.ExtDSSeparator = {
 };
 
 
-exports.module.value('gmfPermalinkOptions',
+module.value('gmfPermalinkOptions',
   /** @type {gmfx.PermalinkOptions} */ ({}));
 
 

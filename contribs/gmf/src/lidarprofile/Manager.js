@@ -497,6 +497,6 @@ const exports = class {
 const module = angular.module('gmfLidarprofileManager', [
   ngeoMiscDebounce.name,
 ]);
-exports.module.service('gmfLidarprofileManager', exports);
+module.service('gmfLidarprofileManager', exports);
 
 export default exports;

@@ -37,12 +37,12 @@ const module = angular.module('app', [
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
 });
 
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -57,7 +57,7 @@ exports.queryresultComponent = {
   templateUrl: 'partials/queryresult'
 };
 
-exports.module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', exports.queryresultComponent);
 
 
 /**
@@ -76,7 +76,7 @@ exports.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-exports.module.controller('AppQueryresultController', exports.QueryresultController);
+module.controller('AppQueryresultController', exports.QueryresultController);
 
 
 /**
@@ -182,7 +182,7 @@ exports.MainController.prototype.getSetDummyActive = function(val) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

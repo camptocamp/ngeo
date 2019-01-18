@@ -60,7 +60,7 @@ exports.MainController = function($rootScope, ngeoOlcsService) {
   ngeoOlcsService.initialize(this.ol3dm);
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -42,7 +42,7 @@ exports.searchComponent = {
 };
 
 
-exports.module.component('appSearch', exports.searchComponent);
+module.component('appSearch', exports.searchComponent);
 
 
 /**
@@ -192,7 +192,7 @@ exports.SearchController.select_ = function(event, suggestion, dataset) {
 };
 
 
-exports.module.controller('AppSearchController', exports.SearchController);
+module.controller('AppSearchController', exports.SearchController);
 
 
 /**
@@ -219,7 +219,7 @@ exports.MainController = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

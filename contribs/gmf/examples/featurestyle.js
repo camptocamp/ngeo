@@ -35,10 +35,10 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('ngeoMeasureDecimals', 2);
+module.value('ngeoMeasureDecimals', 2);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -220,7 +220,7 @@ exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

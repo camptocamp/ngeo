@@ -152,7 +152,7 @@ const exports = function(opt_options) {
  */
 const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
-exports.module.value(
+module.value(
   'ngeoCreateLocationSearchBloodhound',
   exports);
 

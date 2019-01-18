@@ -279,12 +279,12 @@ const module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfImportModule.name,
 ]);
 
-exports.module.controller(
+module.controller(
   'AbstractDesktopController',
   exports);
 
-exports.module.value('ngeoMeasurePrecision', 3);
-exports.module.value('ngeoMeasureDecimals', 0);
+module.value('ngeoMeasurePrecision', 3);
+module.value('ngeoMeasureDecimals', 0);
 
 
 export default exports;

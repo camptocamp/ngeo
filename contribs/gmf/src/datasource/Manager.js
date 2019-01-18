@@ -941,7 +941,7 @@ const module = angular.module('gmfDataSourcesManager', [
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-exports.module.service('gmfDataSourcesManager', exports);
+module.service('gmfDataSourcesManager', exports);
 
 
 export default exports;

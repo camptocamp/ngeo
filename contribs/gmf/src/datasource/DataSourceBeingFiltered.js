@@ -8,7 +8,7 @@ import angular from 'angular';
  */
 const module = angular.module('gmfDataSourceBeingFiltered', []);
 // type gmfx.datasource.DataSourceBeingFiltered
-exports.module.value('gmfDataSourceBeingFiltered', {
+module.value('gmfDataSourceBeingFiltered', {
   dataSource: null
 });
 

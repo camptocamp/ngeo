@@ -205,7 +205,7 @@ exports.prototype.activateDefault_ = function(groupName) {
 
 
 const module = angular.module('ngeoToolActivateMgr', []);
-exports.module.service('ngeoToolActivateMgr', exports);
+module.service('ngeoToolActivateMgr', exports);
 
 
 export default exports;

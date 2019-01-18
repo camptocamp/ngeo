@@ -203,11 +203,11 @@ const module = angular.module('GmfAbstractMobileControllerModule', [
   ngeoGeolocationMobile.name,
 ]);
 
-exports.module.controller('AbstractMobileController', exports);
+module.controller('AbstractMobileController', exports);
 
-exports.module.value('isMobile', true);
+module.value('isMobile', true);
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'tolerance': 10
 });
 

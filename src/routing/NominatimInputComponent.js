@@ -13,12 +13,12 @@ const module = angular.module('ngeoRoutingNominatimInputComponent', [
   ngeoRoutingNominatimService.name
 ]);
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
 });
 
 
-exports.module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
+module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -164,7 +164,7 @@ const component = {
   templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl
 };
 
-exports.module.component('ngeoNominatimInput', component);
+module.component('ngeoNominatimInput', component);
 
 
 export default exports;

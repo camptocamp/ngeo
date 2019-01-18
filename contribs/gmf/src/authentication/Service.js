@@ -239,9 +239,9 @@ exports.RouteSuffix = {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfAuthenticationService', []);
-exports.module.service('gmfAuthenticationService', exports);
+module.service('gmfAuthenticationService', exports);
 
-exports.module.value('gmfUser', {
+module.value('gmfUser', {
   'functionalities': null,
   'is_password_changed': null,
   'role_id': null,

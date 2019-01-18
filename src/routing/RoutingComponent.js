@@ -35,12 +35,12 @@ const module = angular.module('ngeoRoutingComponent', [
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/routing/routing', require('./routing.html'));
 });
 
 
-exports.module.value('ngeoRoutingTemplateUrl',
+module.value('ngeoRoutingTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -404,7 +404,7 @@ exports.Controller.prototype.deleteVia = function(index) {
 };
 
 
-exports.module.component('ngeoRouting', {
+module.component('ngeoRouting', {
   controller: exports.Controller,
   bindings: {
     'map': '<ngeoRoutingMap'

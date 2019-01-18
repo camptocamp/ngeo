@@ -55,7 +55,7 @@ exports.MainController = function() {
   this.routingfeatureActive = true;
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

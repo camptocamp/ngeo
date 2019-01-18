@@ -22,11 +22,11 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -468,7 +468,7 @@ exports.MainController.appendParams = function(uri, params) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

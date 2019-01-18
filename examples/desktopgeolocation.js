@@ -76,7 +76,7 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

@@ -504,8 +504,8 @@ exports.createPrintServiceFactory = function($http, gettextCatalog, ngeoLayerHel
 const module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.name
 ]);
-exports.module.service('ngeoPrintService', exports);
-exports.module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
+module.service('ngeoPrintService', exports);
+module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
 
 
 export default exports;

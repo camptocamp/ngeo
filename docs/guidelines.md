@@ -99,7 +99,7 @@ import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 const module = angular.module('ngeoExampleService', [
   ngeoMyRequiredService.name
 ]);
-exports.module.service('ngeoExampleService', exports);
+module.service('ngeoExampleService', exports);
 export default exports;
 ```
 

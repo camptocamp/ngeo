@@ -104,7 +104,7 @@ exports.MainController.prototype.importKml_ = function(kml) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

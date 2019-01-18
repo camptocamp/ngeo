@@ -805,7 +805,7 @@ const module = angular.module('ngeoRuleHelper', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-exports.module.service('ngeoRuleHelper', exports);
+module.service('ngeoRuleHelper', exports);
 
 
 export default exports;

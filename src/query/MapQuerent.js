@@ -349,14 +349,14 @@ const module = angular.module('ngeoMapQuerent', [
   ngeoQueryQuerent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-exports.module.service('ngeoMapQuerent', exports);
+module.service('ngeoMapQuerent', exports);
 
 
 /**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-exports.module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
+module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
   sources: [],
   total: 0,
   pending: false

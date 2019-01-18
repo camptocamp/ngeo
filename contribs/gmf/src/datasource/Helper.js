@@ -137,7 +137,7 @@ const module = angular.module('gmfDataSourcesHelper', [
   ngeoDatasourceHelper.name,
   gmfEditingEnumerateAttribute.name,
 ]);
-exports.module.service('gmfDataSourcesHelper', exports);
+module.service('gmfDataSourcesHelper', exports);
 
 
 export default exports;

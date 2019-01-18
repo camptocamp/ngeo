@@ -22,7 +22,7 @@ const module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
+module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 
 /**
@@ -63,7 +63,7 @@ exports.MainController = function($scope) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', exports.MainController);
 
 
 export default exports;

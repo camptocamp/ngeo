@@ -808,15 +808,15 @@ const module = angular.module('GmfAbstractAppControllerModule', [
 ]);
 
 
-exports.module.controller('AbstractController', exports);
+module.controller('AbstractController', exports);
 
 
-exports.module.value('ngeoExportFeatureFormats', [
+module.value('ngeoExportFeatureFormats', [
   ngeoMiscFeatureHelper.FormatType.KML,
   ngeoMiscFeatureHelper.FormatType.GPX
 ]);
 
-exports.module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   /**
    * @param {tmhDynamicLocaleProvider} tmhDynamicLocaleProvider angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.

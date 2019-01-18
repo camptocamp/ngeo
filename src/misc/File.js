@@ -93,7 +93,7 @@ const exports = function($q, $http, gettext) {
 
 const module = angular.module('ngeoFile', []);
 
-exports.module.service('ngeoFile', exports);
+module.service('ngeoFile', exports);
 
 
 export default exports;

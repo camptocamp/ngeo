@@ -150,9 +150,9 @@ const module = angular.module('gmfThemeManager', [
 /**
  * The default value for `modeFlush` that `gmf.layertree.TreeManager` is initialized with.
  */
-exports.module.value('gmfTreeManagerModeFlush', true);
+module.value('gmfTreeManagerModeFlush', true);
 
-exports.module.service('gmfThemeManager', exports);
+module.service('gmfThemeManager', exports);
 
 
 export default exports;
