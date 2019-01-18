@@ -113,7 +113,7 @@ Manager.prototype.isLoading = function() {
 Manager.prototype.setThemeName = function(name, opt_silent) {
   this.themeName_ = name;
   if (!opt_silent) {
-    this.$rootScope_.$emit(exports.EventType.THEME_NAME_SET, name);
+    this.$rootScope_.$emit(EventType.THEME_NAME_SET, name);
   }
 };
 
@@ -130,7 +130,7 @@ Manager.prototype.removeAll = function() {
 /**
  * @enum {string}
  */
-exports.EventType = {
+const EventType = {
   /**
    * Triggered when the theme name change.
    */

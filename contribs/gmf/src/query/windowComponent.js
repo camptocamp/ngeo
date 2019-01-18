@@ -36,7 +36,7 @@ const module = angular.module('gmfQueryWindowComponent', [
 ]);
 
 
-exports.config(['$animateProvider',
+module.config(['$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.

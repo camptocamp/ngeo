@@ -31,7 +31,7 @@ const appmodule = angular.module('app', [
  * @const
  * @private
  */
-exports.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
+const PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
   100000, 500000];
 
 
@@ -39,28 +39,28 @@ exports.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
  * @const
  * @private
  */
-exports.PRINT_FORMAT_ = 'pdf';
+const PRINT_FORMAT_ = 'pdf';
 
 
 /**
  * @const
  * @private
  */
-exports.PRINT_LAYOUT_ = '1 A4 portrait';
+const PRINT_LAYOUT_ = '1 A4 portrait';
 
 
 /**
  * @const
  * @private
  */
-exports.PRINT_DPI_ = 72;
+const PRINT_DPI_ = 72;
 
 
 /**
  * @const
  * @private
  */
-exports.PRINT_PAPER_SIZE_ = [555, 675];
+const PRINT_PAPER_SIZE_ = [555, 675];
 
 
 /**

@@ -60,7 +60,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @enum {string}
  * @export
  */
-exports.PrintStateEnum = {
+const PrintStateEnum = {
 
   /**
    * @type {string}
@@ -180,17 +180,15 @@ module.component('gmfPrint', component);
  *     useBbox: (boolean|undefined),
  *     label: (Object.<string, boolean>),
  *     params: (Object.<string, Object.<string, string>>)
- * }}
+ * }} optionsLegendType
  */
-exports.optionsLegendType;
 
 /**
  * @typedef {{
  *     scaleInput: (boolean|undefined),
  *     legend: (optionsLegendType|undefined)
- * }}
+ * }} optionsType
  */
-exports.optionsType;
 
 /**
  * @private
@@ -1117,7 +1115,7 @@ class Controller {
    * @private
    */
   handleCreateReportError_() {
-    this.resetPrintStates_(exports.PrintStateEnum.ERROR_ON_REPORT);
+    this.resetPrintStates_(PrintStateEnum.ERROR_ON_REPORT);
   }
 
 

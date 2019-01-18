@@ -18,7 +18,7 @@ const module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.colorpickerComponent = {
+const colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
   controller: 'AppColorpickerController'
 };

@@ -37,7 +37,7 @@ const module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.mapComponent = {
+const mapComponent = {
   controller: 'AppMapController as ctrl',
   bindings: {
     'map': '=appMap'
@@ -118,7 +118,7 @@ MapComponentController.prototype.$onInit = function() {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.drawComponent = {
+const drawComponent = {
   controller: 'AppDrawController as ctrl',
   bindings: {
     'map': '=appDrawMap',

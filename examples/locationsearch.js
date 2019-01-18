@@ -25,7 +25,7 @@ const appmodule = angular.module('app', [
 /**
  * @type {!angular.IComponentOptions}
  */
-exports.locationSearchComponent = {
+const locationSearchComponent = {
   bindings: {
     'map': '=appSearchMap'
   },
@@ -133,7 +133,7 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
  * @this {app.locationsearch.SearchController}
  * @private
  */
-exports.SearchController.select_ = function(event, suggestion, dataset) {
+function select_(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
   const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();

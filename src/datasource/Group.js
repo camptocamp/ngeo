@@ -20,7 +20,17 @@ import olCollection from 'ol/Collection.js';
  */
 
 
-const exports = class {
+/**
+ * @enum {string}
+ */
+const VisibilityState = {
+  INDETERMINATE: 'indeterminate',
+  OFF: 'off',
+  ON: 'on'
+};
+
+
+class Group {
 
   /**
    * A Group data source combines multiple `ngeo.datasource.DataSource` objects.
@@ -173,17 +183,7 @@ const exports = class {
       }
     }
   }
-};
+}
 
 
-/**
- * @enum {string}
- */
-exports.VisibilityState = {
-  INDETERMINATE: 'indeterminate',
-  OFF: 'off',
-  ON: 'on'
-};
-
-
-export default exports;
+export default Group;

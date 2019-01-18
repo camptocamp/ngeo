@@ -141,7 +141,7 @@ Manager.prototype.handleGetFeatures_ = function(key, value, features) {
  * @enum {string}
  * @export
  */
-exports.Param = {
+const Param = {
   /**
    * @type {string}
    * @export

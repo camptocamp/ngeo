@@ -382,7 +382,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
           gmfLayerNames.push(ctrl.node.name);
         }
       });
-      newState[exports.ParamPrefix.TREE_GROUP_LAYERS + firstParent.node.name] = gmfLayerNames.join(',');
+      newState[ParamPrefix.TREE_GROUP_LAYERS + firstParent.node.name] = gmfLayerNames.join(',');
     }
     this.ngeoStateManager_.updateState(newState);
   });
@@ -629,18 +629,18 @@ Permalink.prototype.getFeatures = function() {
  */
 Permalink.prototype.setDimensions = function(dimensions) {
   // apply initial state
-  const keys = this.ngeoLocation_.getParamKeysWithPrefix(exports.ParamPrefix.DIMENSIONS);
+  const keys = this.ngeoLocation_.getParamKeysWithPrefix(ParamPrefix.DIMENSIONS);
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     const value = this.ngeoLocation_.getParam(key);
     googAsserts.assert(value);
-    dimensions[key.slice(exports.ParamPrefix.DIMENSIONS.length)] = value;
+    dimensions[key.slice(ParamPrefix.DIMENSIONS.length)] = value;
   }
 
   this.rootScope_.$watchCollection(() => dimensions, (dimensions) => {
     const params = {};
     for (const key in dimensions) {
-      params[exports.ParamPrefix.DIMENSIONS + key] = dimensions[key];
+      params[ParamPrefix.DIMENSIONS + key] = dimensions[key];
     }
     this.ngeoLocation_.updateParams(params);
   });
@@ -1127,13 +1127,13 @@ Permalink.prototype.getWfsPermalinkData_ = function() {
   }
 
   const numGroups = this.ngeoLocation_.getParamAsInt(gmfBase.PermalinkParam.WFS_NGROUPS);
-  const paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(exports.ParamPrefix.WFS);
+  const paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(ParamPrefix.WFS);
 
   const filterGroups = [];
   let filterGroup;
   if (numGroups === undefined) {
     // no groups are used, e.g. '?wfs_layer=fuel&wfs_osm_id=123
-    filterGroup = this.createFilterGroup_(exports.ParamPrefix.WFS, paramKeys);
+    filterGroup = this.createFilterGroup_(ParamPrefix.WFS, paramKeys);
     if (filterGroup !== null) {
       filterGroups.push(filterGroup);
     }
@@ -1141,7 +1141,7 @@ Permalink.prototype.getWfsPermalinkData_ = function() {
     // filter groups are used, e.g. '?wfs_layer=osm_scale&wfs_ngroups=2&wfs_0_ele=380&
     // wfs_0_highway=bus_stop&&wfs_1_name=Grand-Pont'
     for (let i = 0; i < numGroups; i++) {
-      filterGroup = this.createFilterGroup_(`${exports.ParamPrefix.WFS + i}_`, paramKeys);
+      filterGroup = this.createFilterGroup_(`${ParamPrefix.WFS + i}_`, paramKeys);
       if (filterGroup !== null) {
         filterGroups.push(filterGroup);
       }
@@ -1225,8 +1225,8 @@ Permalink.prototype.initExternalDataSources_ = function() {
 
   if (layerNamesString && urlsString) {
 
-    const layerNames = layerNamesString.split(exports.ExtDSSeparator.LIST);
-    const urls = urlsString.split(exports.ExtDSSeparator.LIST);
+    const layerNames = layerNamesString.split(ExtDSSeparator.LIST);
+    const urls = urlsString.split(ExtDSSeparator.LIST);
 
     for (let i = 0, ii = urls.length; i < ii; i++) {
       // Stop iterating if we do not have the same number of urls and layer
@@ -1463,7 +1463,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
         const layerName = wmsDataSource.getOGCLayerNames()[0];
         wmsGroupLayerNames.push(layerName);
       }
-      names.push(wmsGroupLayerNames.join(exports.ExtDSSeparator.NAMES));
+      names.push(wmsGroupLayerNames.join(ExtDSSeparator.NAMES));
     }
 
     // (2) Collect WMTS Groups and their layer names
@@ -1478,7 +1478,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
         googAsserts.assert(wmtsDataSource.wmtsLayer);
         wmtsGroupLayerNames.push(wmtsDataSource.wmtsLayer);
       }
-      names.push(wmtsGroupLayerNames.join(exports.ExtDSSeparator.NAMES));
+      names.push(wmtsGroupLayerNames.join(ExtDSSeparator.NAMES));
     }
 
     // (3) Update state
@@ -1504,8 +1504,8 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
 Permalink.prototype.cleanParams = function(groups) {
   const keys = googAsserts.assert(this.ngeoLocation_.getParamKeys());
   for (const key of keys) {
-    if (key.startsWith(exports.ParamPrefix.TREE_GROUP_LAYERS)) {
-      const value = key.substring(exports.ParamPrefix.TREE_GROUP_LAYERS.length);
+    if (key.startsWith(ParamPrefix.TREE_GROUP_LAYERS)) {
+      const value = key.substring(ParamPrefix.TREE_GROUP_LAYERS.length);
       for (const group of groups) {
         if (group.name == value) {
           this.ngeoStateManager_.deleteParam(key);
@@ -1513,8 +1513,8 @@ Permalink.prototype.cleanParams = function(groups) {
         }
       }
     }
-    if (key.startsWith(exports.ParamPrefix.TREE_GROUP_OPACITY)) {
-      const value = key.substring(exports.ParamPrefix.TREE_GROUP_OPACITY.length);
+    if (key.startsWith(ParamPrefix.TREE_GROUP_OPACITY)) {
+      const value = key.substring(ParamPrefix.TREE_GROUP_OPACITY.length);
       for (const group of groups) {
         if (group.name == value) {
           this.ngeoStateManager_.deleteParam(key);
@@ -1530,14 +1530,14 @@ Permalink.prototype.cleanParams = function(groups) {
     const layer = this.map_.getLayerGroup();
     googAsserts.assert(layer);
     for (const key of keys) {
-      if (key.startsWith(exports.ParamPrefix.TREE_ENABLE)) {
-        const value = key.substring(exports.ParamPrefix.TREE_ENABLE.length);
+      if (key.startsWith(ParamPrefix.TREE_ENABLE)) {
+        const value = key.substring(ParamPrefix.TREE_ENABLE.length);
         if (!this.containsLayerName(layer, value)) {
           this.ngeoStateManager_.deleteParam(key);
         }
       }
-      if (key.startsWith(exports.ParamPrefix.TREE_OPACITY)) {
-        const value = key.substring(exports.ParamPrefix.TREE_OPACITY.length);
+      if (key.startsWith(ParamPrefix.TREE_OPACITY)) {
+        const value = key.substring(ParamPrefix.TREE_OPACITY.length);
         if (!this.containsLayerName(layer, value)) {
           this.ngeoStateManager_.deleteParam(key);
         }
@@ -1564,14 +1564,14 @@ module.service('gmfPermalink', exports);
 /**
  * @enum {string}
  */
-exports.OpenLayersLayerProperties = {
+const OpenLayersLayerProperties = {
   OPACITY: 'opacity'
 };
 
 /**
  * @enum {string}
  */
-exports.ParamPrefix = {
+const ParamPrefix = {
   DIMENSIONS: 'dim_',
   TREE_ENABLE: 'tree_enable_',
   TREE_GROUP_LAYERS: 'tree_group_layers_',
@@ -1585,7 +1585,7 @@ exports.ParamPrefix = {
  * External data source separators
  * @enum {string}
  */
-exports.ExtDSSeparator = {
+const ExtDSSeparator = {
   LIST: ',',
   NAMES: ';'
 };
@@ -1599,10 +1599,10 @@ module.value('gmfPermalinkOptions',
 (function() {
   const regexp = [];
   for (const key1 in ParamPrefix) {
-    regexp.push(new RegExp(`${exports.ParamPrefix[key1]}.*`));
+    regexp.push(new RegExp(`${ParamPrefix[key1]}.*`));
   }
   for (const key2 in gmfBase.PermalinkParam) {
-    regexp.push(new RegExp(exports.ParamPrefix[key2]));
+    regexp.push(new RegExp(ParamPrefix[key2]));
   }
   ngeoStatemanagerService.module.value('ngeoUsedKeyRegexp', regexp);
 })();

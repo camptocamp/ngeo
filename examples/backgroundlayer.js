@@ -39,7 +39,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.backgroundlayerComponent = {
+const backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },

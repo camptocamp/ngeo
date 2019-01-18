@@ -672,7 +672,7 @@ Controller.prototype.unregisterInteractions_ = function() {
 Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = `${exports.Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
+  const uid = `${Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -1119,26 +1119,26 @@ Controller.prototype.handleDestroy_ = function() {
  * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
  */
-exports.Controller.cloneGeometry_ = function(geometry) {
+function cloneGeometry(geometry) {
   let clone = null;
   if (geometry) {
     clone = geometry.clone();
   }
   return clone;
-};
+}
 
 
 /**
  * @const
  * @private
  */
-exports.Controller.NAMESPACE_ = 'oe';
+const NAMESPACE = 'oe';
 
 
 /**
  * @enum {string}
  */
-exports.Controller.State = {
+const State = {
   INSERT: 'insert',
   UPDATE: 'update'
 };

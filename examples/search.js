@@ -29,7 +29,7 @@ const module = angular.module('app', [
 /**
  * @type {!angular.IComponentOptions}
  */
-exports.searchComponent = {
+const searchComponent = {
   bindings: {
     'map': '=appSearchMap'
   },
@@ -176,7 +176,7 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateG
  * @this {app.search.SearchController}
  * @private
  */
-exports.SearchController.select_ = function(event, suggestion, dataset) {
+function select_(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
   const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (feature.getGeometry());

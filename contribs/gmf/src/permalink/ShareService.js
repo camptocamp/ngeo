@@ -96,7 +96,7 @@ ShareService.prototype.postShortUrl_ = function(params) {
  * @constant
  * @type {number}
  */
-exports.URL_MAX_LEN = 2083;
+const URL_MAX_LEN = 2083;
 
 /**
  * Max length defined for the url parth section.
@@ -104,7 +104,7 @@ exports.URL_MAX_LEN = 2083;
  * @constant
  * @type {number}
  */
-exports.URL_PATH_MAX_LEN = 2048;
+const URL_PATH_MAX_LEN = 2048;
 
 const module = angular.module('gmfShareService', []);
 

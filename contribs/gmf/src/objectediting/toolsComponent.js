@@ -370,7 +370,7 @@ module.controller('GmfObjecteditingtoolsController', Controller);
 /**
  * @enum {string}
  */
-exports.ProcessType = {
+const ProcessType = {
   ADD: 'add',
   DELETE: 'delete'
 };

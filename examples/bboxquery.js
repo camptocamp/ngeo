@@ -46,7 +46,7 @@ module.value('ngeoQueryOptions', {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.queryresultComponent = {
+const queryresultComponent = {
   controller: 'AppQueryresultController',
   templateUrl: 'partials/queryresult'
 };

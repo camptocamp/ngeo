@@ -47,7 +47,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.measuretoolsComponent = {
+const measuretoolsComponent = {
   bindings: {
     'map': '=appMeasuretoolsMap',
     'lang': '=appMeasuretoolsLang'

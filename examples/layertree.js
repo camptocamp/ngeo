@@ -34,7 +34,7 @@ const module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.layertreeComponent = {
+const layertreeComponent = {
   bindings: {
     'map': '=appLayertreeMap'
   },
@@ -158,7 +158,7 @@ module.controller('AppLayertreeController', LayertreeController);
  * @param {Object} node Layer tree node.
  * @return {import("ol/layer/Layer.js").default} Layer.
  */
-exports.getLayer = (function() {
+const getLayer = (function() {
   /**
    * @type {Object.<string, import("ol/layer/Layer.js").default>}
    */

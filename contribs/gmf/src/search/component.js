@@ -46,11 +46,11 @@ const module = angular.module('gmfSearch', [
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
-exports.gmfSearchTemplateUrl_ = (element, attrs) => {
+function gmfSearchTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfSearchTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
     'gmf/search';
-};
+}
 
 module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/search', require('./component.html'));

@@ -25,7 +25,7 @@ const module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.mapComponent = {
+const mapComponent = {
   bindings: {
     'map': '=appMap',
     'class': '=appMapClass'

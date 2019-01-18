@@ -128,7 +128,7 @@ function findGroupByLayerNodeName(themes, name) {
       const group = theme.children[j];
       const childNodes = [];
       getFlatNodes(group, childNodes);
-      if (exports.findObjectByName(childNodes, name)) {
+      if (findObjectByName(childNodes, name)) {
         return group;
       }
     }
@@ -149,7 +149,7 @@ function findGroupByName(themes, name) {
       const group = theme.children[j];
       const internalNodes = [];
       getFlatInternalNodes(group, internalNodes);
-      if (exports.findObjectByName(internalNodes, name)) {
+      if (findObjectByName(internalNodes, name)) {
         return group;
       }
     }
@@ -583,7 +583,7 @@ Theme.prototype.loadThemes = function(opt_roleId) {
 /**
  * @enum {string}
  */
-exports.NodeType = {
+const NodeType = {
   MIXED_GROUP: 'MixedGroup',
   NOT_MIXED_GROUP: 'NotMixedGroup',
   WMTS: 'WMTS',
