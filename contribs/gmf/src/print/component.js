@@ -178,15 +178,15 @@ module.component('gmfPrint', component);
  *     useBbox: (boolean|undefined),
  *     label: (Object.<string, boolean>),
  *     params: (Object.<string, Object.<string, string>>)
- * }} optionsLegendType
+ * }} OptionsLegendType
  */
 
 /**
  * @typedef {{
  *     scaleInput: (boolean|undefined),
- *     legend: (optionsLegendType|undefined)
- * }} optionsType
- */
+ *     legend: (OptionsLegendType|undefined)
+ * }} OptionsType
+
 
 /**
  * @private
@@ -348,7 +348,7 @@ class Controller {
     this.scaleInput = false;
 
     /**
-     * @type optionsLegendType
+     * @type {OptionsLegendType}
      * @private
      */
     this.gmfLegendOptions_ = {
@@ -359,7 +359,7 @@ class Controller {
 
     if ($injector.has('gmfPrintOptions')) {
       /**
-       * @type optionsType
+       * @type {OptionsType}
        */
       const options = $injector.get('gmfPrintOptions');
       if (options.scaleInput) {
