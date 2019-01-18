@@ -12,14 +12,6 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * ng-view directives (which are based on the $anchorScroll and $route
  * services). See <https://github.com/angular/angular.js/issues/1417>.
  *
- * This file also provides an ngeo.statemanager.Location.MockProvider function that you can
- * use to mock Angular's $location provider and make it possible to use both
- * ngeoLocation and ng-include.
- *
- *     app.module.config(ngeo.statemanager.Location.MockProvider);
- *
- * The ngeo Location type.
- *
  * See our live example: [../examples/permalink.html](../examples/permalink.html)
  *
  * @param {Location} location Location.
@@ -394,88 +386,10 @@ function LocationFactory($rootScope, $window) {
   return service;
 }
 
-/**
- * A function that changes Angular's $location provider to avoid problem
- * when both ngeoLocation and $location are used in an application. This
- * is how you can use that function in an application:
- *
- * app.module.config(ngeo.statemanager.Location.MockProvider);
- *
- * @param {angular.ILocationProvider} $locationProvider Angular location
- *     provider.
- * @ngInject
- */
-export function MockProvider($locationProvider) {
-  /**
-   * @return {angular.ILocationService} Mock object for Angular location service.
-   */
-  $locationProvider['$get'] = function() {
-    const locationMock = /** @type {angular.ILocationService} */ ({
-      /**
-       * @return {string} Absolute URL.
-       */
-      absUrl() {
-        return '';
-      },
-      /**
-       * @param {string=} opt_path Path.
-       * @return {string} Hash.
-       */
-      hash(opt_path) {
-        return opt_path !== undefined ? this : '';
-      },
-      /**
-       * @return {string} Host.
-       */
-      host() {
-        return '';
-      },
-      /**
-       * @param {string=} opt_path Path.
-       * @return {string} Path.
-       */
-      path(opt_path) {
-        return opt_path !== undefined ? this : '';
-      },
-      /**
-       * @return {number} Port.
-       */
-      port() {
-        return 0;
-      },
-      /**
-       * @return {string} Protocol.
-       */
-      protocol() {
-        return '';
-      },
-      replace() {
-      },
-      /**
-       * @param {string=} opt_search Search.
-       * @param {Object=} opt_paramValue Parameters.
-       * @return {Object} Search.
-       */
-      search(opt_search, opt_paramValue) {
-        return opt_search !== undefined ? this : {};
-      },
-      /**
-       * @param {string=} opt_url URL.
-       * @return {string} URL.
-       */
-      url(opt_url) {
-        return '';
-      }
-    });
-    return locationMock;
-  };
-}
-
 
 /**
  * @type {!angular.IModule}
  * FIXME add utils dependencies.
- * FIXME What about Mockup provider ?
  */
 const module = angular.module('ngeoLocation', []);
 module.factory('ngeoLocation', LocationFactory);
