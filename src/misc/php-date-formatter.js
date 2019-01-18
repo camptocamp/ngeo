@@ -11,12 +11,13 @@
  * For more Yii related demos visit http://demos.krajee.com
  */
 
-/*eslint valid-jsdoc: 0 */
-/*eslint quotes: 0 */
-/*eslint indent: 0 */
-/*eslint default-case: 0 */
-/*eslint prefer-rest-params: 0 */
-/*eslint prefer-template: 0 */
+/* eslint @openlayers/valid-tsdoc: 0 */
+/* eslint valid-jsdoc: 0 */
+/* eslint quotes: 0 */
+/* eslint indent: 0 */
+/* eslint default-case: 0 */
+/* eslint prefer-rest-params: 0 */
+/* eslint prefer-template: 0 */
 
 "use strict";
 

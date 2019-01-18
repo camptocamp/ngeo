@@ -34,6 +34,7 @@
  *
  * @author agrieve@google.com (Andrew Grieve)
  */
+/* eslint @openlayers/valid-tsdoc: 0 */
 
 const exports = {};
 
