@@ -32,12 +32,12 @@ import olSourceVector from 'ol/source/Vector.js';
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfMapComponent.name,
   gmfObjecteditingComponent.name,
-  gmfObjecteditingManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  gmfObjecteditingManager.name,
+  gmfThemeThemes.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 exports.module.constant('defaultTheme', 'ObjectEditing');

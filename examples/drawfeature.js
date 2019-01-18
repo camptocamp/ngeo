@@ -22,7 +22,7 @@ exports.module = angular.module('app', [
   'gettext',
   ngeoDrawModule.name,
   ngeoMapModule.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

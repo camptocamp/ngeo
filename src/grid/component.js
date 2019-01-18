@@ -15,7 +15,7 @@ import 'ngeo/sass/font.scss';
  * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoGrid', [
-  ngeoGridConfig.module.name,
+  ngeoGridConfig.name,
   ngeoMiscFilters.name,
   'floatThead',
 ]);

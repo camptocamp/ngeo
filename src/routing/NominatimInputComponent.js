@@ -10,8 +10,8 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoRoutingNominatimInputComponent', [
-  ngeoSearchSearchDirective.module.name,
-  ngeoRoutingNominatimService.module.name
+  ngeoSearchSearchDirective.name,
+  ngeoRoutingNominatimService.name
 ]);
 
 exports.module.run(/* @ngInject */ ($templateCache) => {

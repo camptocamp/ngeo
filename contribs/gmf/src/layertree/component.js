@@ -33,17 +33,17 @@ import 'bootstrap/js/src/collapse.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeComponent', [
-  gmfDatasourceDataSourceBeingFiltered.module.name,
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  gmfPermalinkPermalink.module.name,
+  gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDatasourceExternalDataSourcesManager.name,
+  gmfPermalinkPermalink.name,
   gmfLayertreeDatasourceGroupTreeComponent.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
   ngeoLayertreeComponent.name,
-  ngeoLayertreeController.module.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscWMSTime.module.name,
+  ngeoLayertreeController.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscWMSTime.name,
 ]);
 
 

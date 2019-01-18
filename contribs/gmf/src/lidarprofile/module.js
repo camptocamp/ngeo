@@ -14,6 +14,6 @@ import './lidarprofile.scss';
 export default angular.module('gmfLidarprofileModule', [
   gmfLidarprofileComponent.name,
   gmfLidarprofilePanelComponent.name,
-  gmfLidarprofileConfig.module.name,
-  gmfLidarprofileManager.module.name,
+  gmfLidarprofileConfig.name,
+  gmfLidarprofileManager.name,
 ]);

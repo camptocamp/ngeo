@@ -28,14 +28,14 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfPrintComponent', [
-  gmfAuthenticationService.module.name,
-  gmfThemeThemes.module.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoPrintService.module.name,
-  ngeoPrintUtils.module.name,
-  ngeoQueryMapQuerent.module.name,
+  gmfAuthenticationService.name,
+  gmfThemeThemes.name,
+  ngeoMapLayerHelper.name,
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoPrintService.name,
+  ngeoPrintUtils.name,
+  ngeoQueryMapQuerent.name,
 ]);
 
 

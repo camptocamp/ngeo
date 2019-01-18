@@ -8,7 +8,7 @@ import * as olEvents from 'ol/events.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
-  gmfObjecteditingQuery.module.name,
+  gmfObjecteditingQuery.name,
 ]);
 
 

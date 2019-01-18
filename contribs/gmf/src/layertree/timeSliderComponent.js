@@ -11,7 +11,7 @@ import './timeslider.scss';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfLayertreeTimeSliderComponent', [
-  ngeoMiscWMSTime.module.name,
+  ngeoMiscWMSTime.name,
   'ui.slider',
 ]);
 

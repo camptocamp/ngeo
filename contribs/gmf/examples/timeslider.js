@@ -14,7 +14,7 @@ import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeTimeSliderComponent.name,
-  ngeoMiscWMSTime.module.name,
+  ngeoMiscWMSTime.name,
 ]);
 
 exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');

@@ -163,7 +163,7 @@ const module = angular.module('Appdesktop_alt', [
   gmfImportModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
-  ngeoStatemanagerWfsPermalink.module.name,
+  ngeoStatemanagerWfsPermalink.name,
 ]);
 
 module.controller('AlternativeDesktopController', Controller);

@@ -1548,13 +1548,13 @@ exports.prototype.cleanParams = function(groups) {
 
 
 exports.module = angular.module('gmfPermalink', [
-  gmfAuthenticationService.module.name,
-  gmfThemeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfAuthenticationService.name,
+  gmfThemeManager.name,
+  gmfThemeThemes.name,
   ngeoDrawFeatures.name,
-  ngeoLayertreeController.module.name,
+  ngeoLayertreeController.name,
   ngeoMiscDebounce.name,
-  ngeoMiscEventHelper.module.name,
+  ngeoMiscEventHelper.name,
   ngeoStatemanagerModule.name,
 ]);
 

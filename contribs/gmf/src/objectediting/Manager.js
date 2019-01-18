@@ -174,8 +174,8 @@ exports.Param = {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfObjectEditingManager', [
-  gmfEditingEditFeature.module.name,
-  ngeoStatemanagerLocation.module.name,
+  gmfEditingEditFeature.name,
+  ngeoStatemanagerLocation.name,
 ]);
 exports.module.service('gmfObjectEditingManager', exports);
 

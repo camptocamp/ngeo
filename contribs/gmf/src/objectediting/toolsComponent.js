@@ -25,7 +25,7 @@ const exports = angular.module('gmfObjecteditingToolsComponent', [
   ngeoEditingCreatefeatureComponent.name,
   ngeoEditingCreateregularpolygonfromclickComponent.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

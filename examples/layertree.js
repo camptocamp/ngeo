@@ -25,7 +25,7 @@ exports.module = angular.module('app', [
   'gettext',
   ngeoLayertreeModule.name,
   ngeoMapModule.name,
-  ngeoMessagePopup.module.name,
+  ngeoMessagePopup.name,
 ]);
 
 

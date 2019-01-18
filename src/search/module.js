@@ -9,7 +9,7 @@ import ngeoSearchCreateLocationSearchBloodhound from 'ngeo/search/createLocation
  * @type {!angular.IModule}
  */
 export default angular.module('ngeoSearchModule', [
-  ngeoSearchSearchDirective.module.name,
-  ngeoSearchCreateGeoJSONBloodhound.module.name,
-  ngeoSearchCreateLocationSearchBloodhound.module.name
+  ngeoSearchSearchDirective.name,
+  ngeoSearchCreateGeoJSONBloodhound.name,
+  ngeoSearchCreateLocationSearchBloodhound.name
 ]);

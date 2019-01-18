@@ -268,7 +268,7 @@ exports.prototype.setDataPanelMaxResizableWidth_ = function() {
 };
 
 exports.module = angular.module('GmfAbstractDesktopControllerModule', [
-  gmfControllersAbstractAPIController.module.name,
+  gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
   gmfEditingModule.name,
   gmfPermalinkShareComponent.name,

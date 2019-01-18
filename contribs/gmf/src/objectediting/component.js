@@ -45,14 +45,14 @@ const jsts = {
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfObjectEditingComponent', [
-  gmfEditingEditFeature.module.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfObjecteditingQuery.module.name,
+  gmfEditingEditFeature.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTreeManager.name,
+  gmfObjecteditingQuery.name,
   gmfObjecteditingToolsComponent.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

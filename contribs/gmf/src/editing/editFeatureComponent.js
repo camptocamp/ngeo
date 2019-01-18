@@ -53,17 +53,17 @@ import olStyleText from 'ol/style/Text.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('GmfEditingFeatureComponent', [
-  gmfEditingEditFeature.module.name,
-  gmfEditingSnapping.module.name,
-  gmfEditingXSDAttributes.module.name,
+  gmfEditingEditFeature.name,
+  gmfEditingSnapping.name,
+  gmfEditingXSDAttributes.name,
   ngeoEditingAttributesComponent.name,
   ngeoEditingCreatefeatureComponent.name,
-  ngeoMapLayerHelper.module.name,
+  ngeoMapLayerHelper.name,
   ngeoMessageModalComponent.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscEventHelper.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscEventHelper.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

@@ -29,10 +29,10 @@ import olSourceOSM from 'ol/source/OSM.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
-  ngeoDatasourceDataSources.module.name,
+  ngeoDatasourceDataSources.name,
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
   ngeoQueryMapQueryComponent.name,
   ngeoQueryModule.name,
 ]);

@@ -33,11 +33,11 @@ import olStyleStyle from 'ol/style/Style.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfDatasourceManager.module.name,
+  gmfDatasourceManager.name,
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
   gmfQueryGridComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoGridModule.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,

@@ -6,8 +6,8 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 const exports = angular.module('gmfPermalinkShareComponent', [
-  gmfPermalinkShareService.module.name,
-  ngeoStatemanagerLocation.module.name,
+  gmfPermalinkShareService.name,
+  ngeoStatemanagerLocation.name,
 ]);
 
 

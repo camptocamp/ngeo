@@ -931,15 +931,15 @@ const exports = class {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfDataSourcesManager', [
-  gmfDatasourceWFSAliases.module.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoFilterRuleHelper.module.name,
-  ngeoDatasourceDataSources.module.name,
-  ngeoMapBackgroundLayerMgr.module.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscWMSTime.module.name,
+  gmfDatasourceWFSAliases.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
+  ngeoFilterRuleHelper.name,
+  ngeoDatasourceDataSources.name,
+  ngeoMapBackgroundLayerMgr.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscWMSTime.name,
 ]);
 exports.module.service('gmfDataSourcesManager', exports);
 

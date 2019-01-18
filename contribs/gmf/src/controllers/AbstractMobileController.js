@@ -196,7 +196,7 @@ exports.prototype.openNavMenu = function(target) {
 
 
 exports.module = angular.module('GmfAbstractMobileControllerModule', [
-  gmfControllersAbstractAppController.module.name,
+  gmfControllersAbstractAppController.name,
   gmfMobileMeasureModule.name,
   gmfMobileNavigationModule.name,
   gmfQueryWindowComponent.name,

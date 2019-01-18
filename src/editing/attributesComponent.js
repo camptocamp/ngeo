@@ -8,7 +8,7 @@ import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.j
 
 const exports = angular.module('ngeoAttributes', [
   ngeoMiscDatetimepickerComponent.name,
-  ngeoMiscEventHelper.module.name,
+  ngeoMiscEventHelper.name,
 ]);
 
 

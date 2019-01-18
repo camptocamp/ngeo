@@ -27,15 +27,15 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 const exports = angular.module('gmfFilterselector', [
-  gmfAuthenticationService.module.name,
-  gmfDatasourceDataSourceBeingFiltered.module.name,
-  gmfDatasourceHelper.module.name,
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMessageNotification.module.name,
+  gmfAuthenticationService.name,
+  gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDatasourceHelper.name,
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
-  ngeoFilterRuleHelper.module.name,
+  ngeoFilterRuleHelper.name,
   ngeoFilterComponent.name,
-  gmfFiltersSavedFilters.module.name,
+  gmfFiltersSavedFilters.name,
 ]);
 
 

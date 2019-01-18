@@ -12,8 +12,8 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfThemeSelectorComponent', [
-  gmfThemeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfThemeManager.name,
+  gmfThemeThemes.name,
 ]);
 
 

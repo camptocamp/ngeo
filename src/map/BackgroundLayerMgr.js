@@ -225,7 +225,7 @@ exports.prototype.updateDimensions = function(map, dimensions) {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoBackgroundLayerMgr', [
-  ngeoLayerHelper.module.name
+  ngeoLayerHelper.name
 ]);
 exports.module.service('ngeoBackgroundLayerMgr', exports);
 

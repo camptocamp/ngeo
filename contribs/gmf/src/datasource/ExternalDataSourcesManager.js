@@ -684,9 +684,9 @@ exports.getId = function(layer) {
 
 
 exports.module = angular.module('gmfExternalDataSourcesManager', [
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscFile.module.name,
-  ngeoDatasourceDataSources.module.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscFile.name,
+  ngeoDatasourceDataSources.name,
 ]);
 exports.module.service('gmfExternalDataSourcesManager',
   exports);

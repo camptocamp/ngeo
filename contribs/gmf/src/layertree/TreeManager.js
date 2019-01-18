@@ -623,10 +623,10 @@ exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfTreeManager', [
-  gmfThemeThemes.module.name,
-  ngeoLayertreeController.module.name,
-  ngeoMessageNotification.module.name,
-  ngeoStatemanagerService.module.name,
+  gmfThemeThemes.name,
+  ngeoLayertreeController.name,
+  ngeoMessageNotification.name,
+  ngeoStatemanagerService.name,
 ]);
 exports.module.service('gmfTreeManager', exports);
 

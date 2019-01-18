@@ -13,8 +13,8 @@ import 'bootstrap/js/src/collapse.js';
 
 
 const exports = angular.module('gmfWmscapabilitylayertreenode', [
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  ngeoMessagePopup.module.name,
+  gmfDatasourceExternalDataSourcesManager.name,
+  ngeoMessagePopup.name,
 ]);
 
 

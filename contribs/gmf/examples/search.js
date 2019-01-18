@@ -28,9 +28,9 @@ exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfSearchModule.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeoMessageNotification.module.name,
+  ngeoMessageNotification.name,
 ]);
 
 exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);

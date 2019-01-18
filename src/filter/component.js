@@ -29,10 +29,10 @@ import 'ngeo/sass/font.scss';
  * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoFilter', [
-  ngeoFilterRuleHelper.module.name,
+  ngeoFilterRuleHelper.name,
   ngeoFilterRuleComponent.name,
-  ngeoMapFeatureOverlay.module.name,
-  ngeoQueryMapQuerent.module.name,
+  ngeoMapFeatureOverlay.name,
+  ngeoQueryMapQuerent.name,
 ]);
 
 

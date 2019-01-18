@@ -24,7 +24,7 @@ exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoGooglestreetviewModule.name,
-  ngeoMiscToolActivateMgr.module.name
+  ngeoMiscToolActivateMgr.name
 ]);
 
 

@@ -450,9 +450,9 @@ exports.getLayer = function(treeCtrl) {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfSyncLayertreeMap', [
-  gmfThemeThemes.module.name,
-  ngeoLayertreeController.module.name,
-  ngeoMiscWMSTime.module.name,
+  gmfThemeThemes.name,
+  ngeoLayertreeController.name,
+  ngeoMiscWMSTime.name,
 ]);
 exports.module.service('gmfSyncLayertreeMap', exports);
 

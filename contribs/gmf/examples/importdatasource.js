@@ -31,13 +31,13 @@ import olSourceOSM from 'ol/source/OSM.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfDatasourceManager.module.name,
+  gmfDatasourceManager.name,
   gmfImportImportdatasourceComponent.name,
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfMapComponent.name,
-  gmfThemeThemes.module.name,
-  ngeoDatasourceDataSources.module.name,
+  gmfThemeThemes.name,
+  ngeoDatasourceDataSources.name,
   ngeoQueryBboxQueryComponent.name,
   ngeoQueryMapQueryComponent.name,
 ]);

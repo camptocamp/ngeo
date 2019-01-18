@@ -40,8 +40,8 @@ const exports = angular.module('GmfDrawFeatureComponent', [
   ngeoEditingExportfeaturesComponent.name,
   ngeoMiscBtnComponent.name,
   ngeoDrawComponent.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

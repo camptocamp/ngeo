@@ -13,7 +13,7 @@ import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js'
 export default angular.module('gmfObjecteditingModule', [
   gmfObjecteditingComponent.name,
   gmfObjecteditingGetWMSFeatureComponent.name,
-  gmfObjecteditingManager.module.name,
-  gmfObjecteditingQuery.module.name,
+  gmfObjecteditingManager.name,
+  gmfObjecteditingQuery.name,
   gmfObjecteditingToolsComponent.name,
 ]);

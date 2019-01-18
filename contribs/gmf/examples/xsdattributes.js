@@ -17,8 +17,8 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfEditingXSDAttributes.module.name,
-  gmfThemeThemes.module.name,
+  gmfEditingXSDAttributes.name,
+  gmfThemeThemes.name,
   ngeoEditingAttributesComponent.name,
 ]);
 

@@ -10,7 +10,7 @@ import control from 'ngeo/olcs/controls3d.js';
  */
 const m = angular.module('ngeoOlcsModule', [
   control.name,
-  Service.module.name
+  Service.name
 ]);
 
 const exports = m;

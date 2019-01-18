@@ -11,7 +11,7 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
-  ngeoMessagePopup.module.name,
+  ngeoMessagePopup.name,
 ]);
 
 

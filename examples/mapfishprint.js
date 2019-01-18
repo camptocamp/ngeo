@@ -23,8 +23,8 @@ import ngeoMapModule from 'ngeo/map/module.js';
 const appmodule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
-  ngeoPrintService.module.name,
-  ngeoPrintUtils.module.name,
+  ngeoPrintService.name,
+  ngeoPrintUtils.name,
 ]);
 
 

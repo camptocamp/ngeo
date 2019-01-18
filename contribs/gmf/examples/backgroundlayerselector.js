@@ -16,7 +16,7 @@ const module = angular.module('gmfapp', [
   'gettext',
   gmfBackgroundlayerselectorModule.name,
   gmfMapComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
 ]);
 
 

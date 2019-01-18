@@ -27,10 +27,10 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfQueryWindowComponent', [
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMiscFeatureHelper.module.name,
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,
-  ngeoQueryMapQuerent.module.name,
+  ngeoQueryMapQuerent.name,
   'ngAnimate',
   'ngTouch',
 ]);

@@ -35,11 +35,11 @@ exports.module = angular.module('gmfapp', [
   gmfAuthenticationModule.name,
   gmfEditingEditFeatureSelectorComponent.name,
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfMapComponent.name,
-  gmfThemeThemes.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  gmfThemeThemes.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

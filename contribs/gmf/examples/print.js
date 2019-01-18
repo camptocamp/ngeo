@@ -26,7 +26,7 @@ exports.module = angular.module('gmfapp', [
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
   gmfPrintComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoMapModule.name //for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 

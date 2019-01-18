@@ -7,7 +7,7 @@ import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 
 const exports = angular.module('ngeoExportfeatures', [
-  ngeoMiscFeatureHelper.module.name
+  ngeoMiscFeatureHelper.name
 ]);
 
 /**

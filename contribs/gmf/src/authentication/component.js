@@ -11,8 +11,8 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
  * @type {angular.IModule}
  */
 const exports = angular.module('gmfAuthentication', [
-  gmfAuthenticationService.module.name,
-  ngeoMessageNotification.module.name,
+  gmfAuthenticationService.name,
+  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
 ]);
 

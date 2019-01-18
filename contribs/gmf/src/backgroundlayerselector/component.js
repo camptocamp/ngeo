@@ -9,8 +9,8 @@ import * as olEvents from 'ol/events.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfBackgroundlayerselector', [
-  gmfThemeThemes.module.name,
-  ngeoMapBackgroundLayerMgr.module.name,
+  gmfThemeThemes.name,
+  ngeoMapBackgroundLayerMgr.name,
 ]);
 
 

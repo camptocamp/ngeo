@@ -12,7 +12,7 @@ import ngeoDrawText from 'ngeo/draw/text.js';
  * @type {!angular.IModule}
  */
 export default angular.module('ngeoDrawModule', [
-  ngeoDrawController.module.name,
+  ngeoDrawController.name,
   ngeoDrawComponent.name,
   ngeoDrawFeatures.name,
   ngeoDrawPoint.name,

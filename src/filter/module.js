@@ -10,6 +10,6 @@ import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent.js';
  */
 export default angular.module('ngeoFilterModule', [
   ngeoFilterComponent.name,
-  ngeoFilterRuleHelper.module.name,
+  ngeoFilterRuleHelper.name,
   ngeoFilterRuleComponent.name,
 ]);

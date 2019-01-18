@@ -46,11 +46,11 @@ import 'ngeo/sass/font.scss';
  */
 const exports = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
-  ngeoFilterRuleHelper.module.name,
-  ngeoMapFeatureOverlay.module.name,
+  ngeoFilterRuleHelper.name,
+  ngeoMapFeatureOverlay.name,
   ngeoMiscDatepickerComponent.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

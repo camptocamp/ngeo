@@ -19,9 +19,9 @@ import 'angular-sanitize';
  */
 const exports = angular.module('gmfDisclaimer', [
   'ngSanitize',
-  ngeoMapLayerHelper.module.name,
-  ngeoMessageDisclaimer.module.name,
-  ngeoMiscEventHelper.module.name,
+  ngeoMapLayerHelper.name,
+  ngeoMessageDisclaimer.name,
+  ngeoMiscEventHelper.name,
 ]);
 
 

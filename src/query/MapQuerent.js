@@ -344,10 +344,10 @@ const exports = class {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoMapQuerent', [
-  ngeoDatasourceDataSources.module.name,
-  ngeoDatasourceHelper.module.name,
-  ngeoQueryQuerent.module.name,
-  ngeoMiscFeatureHelper.module.name,
+  ngeoDatasourceDataSources.name,
+  ngeoDatasourceHelper.name,
+  ngeoQueryQuerent.name,
+  ngeoMiscFeatureHelper.name,
 ]);
 exports.module.service('ngeoMapQuerent', exports);
 

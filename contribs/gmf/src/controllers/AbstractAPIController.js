@@ -73,7 +73,7 @@ olUtilInherits(exports, gmfControllersAbstractAppController);
 
 
 exports.module = angular.module('GmfAbstractAPIControllerModule', [
-  gmfControllersAbstractAppController.module.name,
+  gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
   ngeoQueryBboxQueryComponent.name
 ]);

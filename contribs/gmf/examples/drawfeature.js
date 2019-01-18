@@ -26,8 +26,8 @@ exports.module = angular.module('gmfapp', [
   gmfDrawingModule.name,
   gmfMapComponent.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 

@@ -30,13 +30,13 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('gmfSearch', [
-  gmfLayertreeTreeManager.module.name,
-  gmfSearchFulltextSearch.module.name,
-  gmfThemeThemes.module.name,
-  ngeoMiscAutoProjection.module.name,
+  gmfLayertreeTreeManager.name,
+  gmfSearchFulltextSearch.name,
+  gmfThemeThemes.name,
+  ngeoMiscAutoProjection.name,
   ngeoMiscColorpickerComponent.name,
   ngeoSearchModule.name,
-  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMapFeatureOverlayMgr.name,
   ngeoMessagePopoverComponent.name,
 ]);
 

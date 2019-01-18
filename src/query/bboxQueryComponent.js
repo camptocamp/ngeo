@@ -8,7 +8,7 @@ import olInteractionDragBox from 'ol/interaction/DragBox.js';
 import {platformModifierKeyOnly} from 'ol/events/condition.js';
 
 const exports = angular.module('ngeoBboxQuery', [
-  ngeoQueryMapQuerent.module.name,
+  ngeoQueryMapQuerent.name,
 ]);
 
 

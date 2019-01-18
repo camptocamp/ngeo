@@ -14,10 +14,10 @@ import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
 const exports = angular.module('gmfImportdatasource', [
-  gmfDatasourceExternalDataSourcesManager.module.name,
+  gmfDatasourceExternalDataSourcesManager.name,
   gmfImportWmsCapabilityLayertreeComponent.name,
   gmfImportWmtsCapabilityLayertreeComponent.name,
-  ngeoQueryQuerent.module.name,
+  ngeoQueryQuerent.name,
 ]);
 
 

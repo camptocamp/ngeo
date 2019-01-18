@@ -28,7 +28,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
-  gmfEditingEditFeature.module.name,
+  gmfEditingEditFeature.name,
   gmfMapComponent.name,
 ]);
 

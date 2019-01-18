@@ -25,7 +25,7 @@ import olStyleStyle from 'ol/style/Style.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfPermalinkPermalink.module.name,
+  gmfPermalinkPermalink.name,
   gmfMapComponent.name,
   gmfProfileModule.name,
   ngeoMapModule.name // for ngeo.map.FeatureOverlay, perhaps remove me

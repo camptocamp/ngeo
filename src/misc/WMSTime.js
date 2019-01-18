@@ -102,7 +102,7 @@ exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUT
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoWMSTime', [
-  ngeoMiscTime.module.name,
+  ngeoMiscTime.name,
 ]);
 exports.module.service('ngeoWMSTime', exports);
 

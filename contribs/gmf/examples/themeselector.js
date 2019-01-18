@@ -12,7 +12,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfThemeModule.name,
 ]);
 

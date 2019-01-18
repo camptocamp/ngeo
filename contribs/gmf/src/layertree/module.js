@@ -15,7 +15,7 @@ import './common.scss';
 export default angular.module('gmfLayertreeModule', [
   gmfLayertreeComponent.name,
   gmfLayertreeDatasourceGroupTreeComponent.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
+  gmfLayertreeSyncLayertreeMap.name,
   gmfLayertreeTimeSliderComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
 ]);

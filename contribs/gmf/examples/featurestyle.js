@@ -32,7 +32,7 @@ exports.module = angular.module('gmfapp', [
   'gettext',
   gmfDrawingFeatureStyleComponent.name,
   gmfMapComponent.name,
-  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscFeatureHelper.name,
 ]);
 
 

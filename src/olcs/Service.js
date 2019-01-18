@@ -126,8 +126,8 @@ const Service = class {
 const name = 'ngeoOlcsService';
 Service.module = angular.module(name, [
   ngeoMiscDebounce.name,
-  ngeoStatemanagerLocation.module.name,
-  ngeoStatemanagerService.module.name,
+  ngeoStatemanagerLocation.name,
+  ngeoStatemanagerService.name,
 ]).service(name, Service);
 
 const exports = Service;

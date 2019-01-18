@@ -16,7 +16,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 const exports = angular.module('ngeoCreatefeature', [
-  ngeoMiscEventHelper.module.name,
+  ngeoMiscEventHelper.name,
   ngeoMiscFilters.name,
 ]);
 

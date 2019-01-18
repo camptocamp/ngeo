@@ -10,7 +10,7 @@ import {
 } from 'ol/events.js';
 
 const exports = angular.module('ngeoMapQuery', [
-  ngeoQueryMapQuerent.module.name,
+  ngeoQueryMapQuerent.name,
 ]);
 
 

@@ -8,6 +8,6 @@ import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
  * @type {!angular.IModule}
  */
 export default angular.module('ngeoDatasourceModule', [
-  ngeoDatasourceDataSources.module.name,
-  ngeoDatasourceHelper.module.name,
+  ngeoDatasourceDataSources.name,
+  ngeoDatasourceHelper.name,
 ]);

@@ -13,8 +13,8 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  */
 const exports = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfEditingEditFeatureComponent.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
 ]);
 
 

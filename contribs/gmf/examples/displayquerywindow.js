@@ -32,11 +32,11 @@ import ngeoMapModule from 'ngeo/map/module.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfDatasourceManager.module.name,
+  gmfDatasourceManager.name,
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
   gmfQueryWindowComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,
   ngeoQueryBboxQueryComponent.name,

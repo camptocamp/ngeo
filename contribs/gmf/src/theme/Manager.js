@@ -142,9 +142,9 @@ exports.EventType = {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('gmfThemeManager', [
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoStatemanagerService.module.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
+  ngeoStatemanagerService.name,
 ]);
 
 /**

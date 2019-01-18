@@ -19,7 +19,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
-  ngeoMessageDisclaimer.module.name,
+  ngeoMessageDisclaimer.name,
 ]);
 
 

@@ -21,19 +21,19 @@ import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
  * @type {!angular.IModule}
  */
 export default angular.module('ngeoMiscExtraModule', [
-  ngeoMiscAutoProjection.module.name,
+  ngeoMiscAutoProjection.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscControlComponent.name,
   ngeoMiscDatepickerComponent.name,
   ngeoMiscDebounce.name,
-  ngeoMiscEventHelper.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscFile.module.name,
+  ngeoMiscEventHelper.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscFile.name,
   ngeoMiscFilereaderComponent.name,
   ngeoMiscFilters.name,
   ngeoMiscGetBrowserLanguage.name,
   ngeoMiscSortableComponent.name,
-  ngeoMiscTime.module.name,
-  ngeoMiscToolActivateMgr.module.name,
-  ngeoMiscWMSTime.module.name,
+  ngeoMiscTime.name,
+  ngeoMiscToolActivateMgr.name,
+  ngeoMiscWMSTime.name,
 ]);

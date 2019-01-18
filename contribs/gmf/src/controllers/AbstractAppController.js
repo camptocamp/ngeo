@@ -800,11 +800,11 @@ exports.module = angular.module('GmfAbstractAppControllerModule', [
   gmfThemeModule.name,
   ngeoMessageDisplaywindowComponent.name,
   ngeoMiscExtraModule.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoQueryMapQuerent.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoQueryMapQuerent.name,
   ngeoQueryMapQueryComponent.name,
   ngeoStatemanagerModule.name,
-  ngeoStatemanagerWfsPermalink.module.name,
+  ngeoStatemanagerWfsPermalink.name,
 ]);
 
 

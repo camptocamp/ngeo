@@ -27,7 +27,7 @@ exports.module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
   ngeoEditingCreatefeatureComponent.name,
 ]);
 

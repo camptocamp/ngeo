@@ -17,9 +17,9 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 /** @type {!angular.IModule} **/
 exports.module = angular.module('gmfapp', [
   'gettext',
-  gmfEditingXSDAttributes.module.name,
-  gmfObjecteditingManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfEditingXSDAttributes.name,
+  gmfObjecteditingManager.name,
+  gmfThemeThemes.name,
 ]);
 
 

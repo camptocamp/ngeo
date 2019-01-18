@@ -12,7 +12,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @type {!angular.IModule}
  */
 const exports = angular.module('ngeoMeasurelength', [
-  ngeoDrawController.module.name,
+  ngeoDrawController.name,
   ngeoMiscFilters.name,
 ]);
 

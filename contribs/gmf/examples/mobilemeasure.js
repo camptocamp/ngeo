@@ -25,7 +25,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
-  gmfPermalinkPermalink.module.name,
+  gmfPermalinkPermalink.name,
   gmfMobileMeasureAreaComponent.name,
   gmfMobileMeasureLengthComponent.name,
   gmfMobileMeasurePointComponent.name,

@@ -13,7 +13,7 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 const exports = angular.module('gmfMobileMeasurePoint', [
-  gmfRasterRasterService.module.name,
+  gmfRasterRasterService.name,
   ngeoMiscDebounce.name,
 ]);
 

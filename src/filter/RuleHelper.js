@@ -802,8 +802,8 @@ const exports = class {
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoRuleHelper', [
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscWMSTime.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscWMSTime.name,
 ]);
 exports.module.service('ngeoRuleHelper', exports);
 

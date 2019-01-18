@@ -194,7 +194,7 @@ requires three others modules to work:
  * @type {!angular.IModule}
  */
 exports = angular.module('ngeoGrid', [
-  ngeoGridConfig.module.name,
+  ngeoGridConfig.name,
   ngeoMiscFilters.name,
   'floatThead',
 ]);
@@ -218,7 +218,7 @@ exports = class {...};
  * @type {!angular.IModule}
  */
 exports.module = angular.module('ngeoPrint', [
-  ngeoMapLayerHelper.module.name
+  ngeoMapLayerHelper.name
 ]);
 
 exports.module.service('ngeoPrintService', exports);
@@ -226,8 +226,8 @@ exports.module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
 ```
 
 You can see that to require a module inside another module, we add the name of the module into the array of
-dependencies of the module. In the last two examples, that are the `ngeoGridConfig.module.name`,
-`ngeoMiscFilters.name` and `ngeoMapLayerHelper.module.name`. In the case of the component
+dependencies of the module. In the last two examples, that are the `ngeoGridConfig.name`,
+`ngeoMiscFilters.name` and `ngeoMapLayerHelper.name`. In the case of the component
 `ngeoMiscFilters.name`, the module is assigned to the `ngeoMiscFilters` component, that's why we can use its
 name directly.
 `floatThead` is an external dependency that is not using webpack. So we provide directly the name because
@@ -253,9 +253,9 @@ an AngularJS controller as another). You must use a unique module name (here it'
 
 ```
 exports.module = angular.module('AppMain', [
-  gmfAbstractMobileController.module.name,
+  gmfAbstractMobileController.name,
   myOtherComponentDependency.name,
-  myOtherServiceDependency.module.name,
+  myOtherServiceDependency.name,
   'etc'
 ]);
 ```

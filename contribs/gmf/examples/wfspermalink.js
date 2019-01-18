@@ -26,7 +26,7 @@ exports.module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
   gmfQueryWindowComponent.name,
-  ngeoStatemanagerWfsPermalink.module.name,
+  ngeoStatemanagerWfsPermalink.name,
 ]);
 
 exports.module.value('ngeoWfsPermalinkOptions',

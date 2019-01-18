@@ -10,8 +10,8 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 const exports = angular.module('gmfWmtscapabilitylayertree', [
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  ngeoMessagePopup.module.name,
+  gmfDatasourceExternalDataSourcesManager.name,
+  ngeoMessagePopup.name,
 ]);
 
 
