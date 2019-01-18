@@ -23,8 +23,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * wfs: List of queryable data sources that support WFS.
  *
  * @typedef {{
- *     wms: (!Array.<!OGC>),
- *     wfs: (!Array.<!OGC>)
+ *     wms: (!Array.<!ngeoDatasourceOGC>),
+ *     wfs: (!Array.<!ngeoDatasourceOGC>)
  * }} QueryableDataSources
  */
 
@@ -900,7 +900,7 @@ class Querent {
   }
 
   /**
-   * @param {!Array.<OGC>} dataSources List of
+   * @param {!Array.<ngeoDatasourceOGC>} dataSources List of
    *     queryable data sources that supports WFS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -930,7 +930,7 @@ class Querent {
   }
 
   /**
-   * @param {!Array.<OGC>} dataSources List of
+   * @param {!Array.<ngeoDatasourceOGC>} dataSources List of
    *     queryable data sources that supports WMS.
    * @return {CombinedDataSources} Combined lists of data sources.
    * @private
