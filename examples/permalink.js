@@ -1,5 +1,4 @@
 /**
- * @module app.permalink
  */
 const exports = {};
 
@@ -37,7 +36,7 @@ exports.module = angular.module('app', [
  * This component gets a reference to the map instance through the "app-map"
  * attribute.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.mapComponent = {
   controller: 'AppMapController as ctrl',
@@ -52,20 +51,20 @@ exports.module.component('appMap', exports.mapComponent);
 
 
 /**
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
  * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
  */
 exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
 
   /**
-   * @type {ngeo.statemanager.Location}
+   * @type {import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -102,7 +101,7 @@ exports.MapComponentController.prototype.$onInit = function() {
   view.on('propertychange',
     this.ngeoDebounce_(
       /**
-       * @param {ol.Object.Event} e Object event.
+       * @param {import("ol/Object/Event.js").default} e Object event.
        */
       (e) => {
         const center = view.getCenter();
@@ -118,7 +117,7 @@ exports.MapComponentController.prototype.$onInit = function() {
 /**
  * A draw component that adds a simple draw tool.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.drawComponent = {
   controller: 'AppDrawController as ctrl',
@@ -139,7 +138,7 @@ exports.module.component('appDraw', exports.drawComponent);
 
 /**
  * @param {!angular.IScope} $scope Scope.
- * @param {!ngeo.statemanager.Location} ngeoLocation ngeo Location service.
+ * @param {!import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
@@ -147,18 +146,18 @@ exports.module.component('appDraw', exports.drawComponent);
 exports.DrawComponentController = function($scope, ngeoLocation) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    */
   this.layer;
 
   /**
-   * @type {!ngeo.statemanager.Location}
+   * @type {!import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -176,7 +175,7 @@ exports.DrawComponentController = function($scope, ngeoLocation) {
   this.featureSeq_ = 0;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.interaction;
@@ -186,7 +185,7 @@ exports.DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
   this.interaction = new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     source: vectorSource
   });
 
@@ -245,7 +244,7 @@ exports.module.controller('AppDrawController', exports.DrawComponentController);
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -260,7 +259,7 @@ exports.MainController = function() {
   const vectorSource = new olSourceVector();
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer = new olLayerVector({

@@ -1,5 +1,4 @@
 /**
- * @module gmf.mobile.navigation.module
  */
 import angular from 'angular';
 import gmfMobileNavigationComponent from 'gmf/mobile/navigation/component.js';

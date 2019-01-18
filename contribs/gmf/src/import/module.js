@@ -1,5 +1,4 @@
 /**
- * @module gmf.import.module
  */
 import angular from 'angular';
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent.js';

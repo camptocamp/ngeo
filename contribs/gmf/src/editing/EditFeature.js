@@ -1,5 +1,4 @@
 /**
- * @module gmf.editing.EditFeature
  */
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -42,7 +41,7 @@ const exports = function($http, gmfLayersUrl) {
  * of layer ids inside a specified extent.
  *
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
- * @param {ol.Extent} extent The extent where to get the features from.
+ * @param {import("ol/Extent.js").default} extent The extent where to get the features from.
  * @return {angular.IPromise} Promise.
  * @export
  */
@@ -87,7 +86,7 @@ exports.prototype.getFeaturesWithComparisonFilters = function(
 
 /**
  * @param {angular.IHttpResponse} resp Ajax response.
- * @return {Array.<ol.Feature>} List of features.
+ * @return {Array.<import("ol/Feature.js").default>} List of features.
  * @private
  */
 exports.prototype.handleGetFeatures_ = function(resp) {
@@ -97,7 +96,7 @@ exports.prototype.handleGetFeatures_ = function(resp) {
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {Array.<ol.Feature>} features List of features to insert.
+ * @param {Array.<import("ol/Feature.js").default>} features List of features to insert.
  * @return {angular.IPromise} Promise.
  * @export
  */
@@ -113,7 +112,7 @@ exports.prototype.insertFeatures = function(layerId, features) {
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {ol.Feature} feature The feature to update.
+ * @param {import("ol/Feature.js").default} feature The feature to update.
  * @return {angular.IPromise} Promise.
  * @export
  */
@@ -129,7 +128,7 @@ exports.prototype.updateFeature = function(layerId, feature) {
 
 /**
  * @param {number} layerId The layer id that contains the feature.
- * @param {ol.Feature} feature The feature to delete.
+ * @param {import("ol/Feature.js").default} feature The feature to delete.
  * @return {angular.IPromise} Promise.
  * @export
  */

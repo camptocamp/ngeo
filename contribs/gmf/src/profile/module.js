@@ -1,5 +1,4 @@
 /**
- * @module gmf.profile.module
  */
 import angular from 'angular';
 import gmfProfileComponent from 'gmf/profile/component.js';

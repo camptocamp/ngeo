@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.profile
  */
 const exports = {};
 
@@ -41,14 +40,14 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @constructor
  * @ngInject
  */
 exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.profileLine = null;
@@ -71,7 +70,7 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   };
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -96,7 +95,7 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 
@@ -110,11 +109,11 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
 
   /**
    * Draw line interaction.
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawLine = new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     features: features
   });
 

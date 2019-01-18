@@ -1,19 +1,18 @@
 /**
- * @module ngeo.interaction.common
  */
 const exports = {};
 import {createEditingStyle} from 'ol/style/Style.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   feature: ol.Feature
  * }>} DrawEvent
  */
 
 
 /**
- * @return {ol.StyleFunction} Styles.
+ * @return {import("ol/StyleFunction.js").default} Styles.
  */
 exports.getDefaultDrawStyleFunction = function() {
   const style = createEditingStyle();
@@ -24,12 +23,12 @@ exports.getDefaultDrawStyleFunction = function() {
 
 
 /**
- * @return {ol.StyleFunction} Styles.
+ * @return {import("ol/StyleFunction.js").default} Styles.
  */
 exports.getDefaultModifyStyleFunction = function() {
   const style = createEditingStyle();
   return function(feature, resolution) {
-    return style[/**@type {ol.geom.GeometryType} */ ('Point')];
+    return style[/**@type {import("ol/geom/GeometryType.js").default} */ ('Point')];
   };
 };
 

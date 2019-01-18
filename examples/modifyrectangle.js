@@ -1,5 +1,4 @@
 /**
- * @module app.modifyrectangle
  */
 const exports = {};
 
@@ -37,7 +36,7 @@ const appmodule = angular.module('app', [
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -59,7 +58,7 @@ exports.MainController = function() {
   ]]);
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.features = new olCollection();
@@ -125,7 +124,7 @@ exports.MainController = function() {
   vectorLayer.setMap(map);
 
   /**
-   * @type {ngeo.interaction.ModifyRectangle}
+   * @type {import("ngeo/interaction/ModifyRectangle.js").default}
    * @export
    */
   this.interaction = new ngeoInteractionModifyRectangle(

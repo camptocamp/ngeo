@@ -1,5 +1,4 @@
 /**
- * @module ngeo.download.module
  */
 import angular from 'angular';
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';

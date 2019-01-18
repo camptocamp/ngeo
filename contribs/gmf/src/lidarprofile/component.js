@@ -1,5 +1,4 @@
 /**
- * @module gmf.lidarprofile.component
  */
 
 import angular from 'angular';
@@ -12,8 +11,8 @@ const exports = angular.module('gmfLidarprofile', []);
 
 exports.value('gmfLidarprofileTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
+     * @param {!JQLite} $element Element.
+     * @param {!angular.IAttributes} $attrs Attributes.
      * @return {string} Template.
      */
   ($element, $attrs) => {
@@ -28,9 +27,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLidarprofileTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfLidarprofileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -81,7 +80,7 @@ class Controller {
 
     /**
      * The Openlayer LineStringt that defines the profile
-     * @type {ol.geom.LineString}
+     * @type {import("ol/geom/LineString.js").default}
      * @export
      */
     this.line;

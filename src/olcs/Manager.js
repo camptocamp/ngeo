@@ -1,5 +1,4 @@
 /**
- * @module ngeo.olcs.Manager
  */
 import olcsContribManager from 'olcs/contrib/Manager.js';
 

@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.editfeatureselector
  */
 const exports = {};
 
@@ -54,11 +53,11 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
  * @param {gmfx.User} gmfUser User.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor
@@ -79,7 +78,7 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   this.gmfUser = gmfUser;
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -87,14 +86,14 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   gmfThemes.loadThemes();
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;
 
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer = new olLayerVector({
@@ -106,7 +105,7 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

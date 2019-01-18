@@ -1,5 +1,4 @@
 /**
- * @module gmf.theme.Themes
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -19,11 +18,11 @@ import olLayerTile from 'ol/layer/Tile.js';
  * objects in the tree returned by the "themes" web service.
  *
  * @constructor
- * @extends {ol.events.EventTarget}
+ * @extends {import("ol/events/EventTarget.js").default}
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.IQService} $q Angular q service
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
@@ -70,7 +69,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   }
 
   /**
-   * @type {?ngeo.statemanager.Location}
+   * @type {?import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = null;
@@ -79,7 +78,7 @@ const exports = function($http, $injector, $q, ngeoLayerHelper, gettextCatalog, 
   }
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
@@ -221,7 +220,7 @@ exports.getFlatNodes = function(node, nodes) {
 
 /**
  * Get background layers.
- * @return {!angular.IPromise.<!Array.<!ol.layer.Base>>} Promise.
+ * @return {!angular.IPromise.<!Array.<!import("ol/layer/Base.js").default>>} Promise.
  */
 exports.prototype.getBgLayers = function() {
   const gettextCatalog = this.gettextCatalog;
@@ -245,8 +244,8 @@ exports.prototype.getBgLayers = function() {
 
   /**
    * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} item The item.
-   * @param {ol.layer.Base} layer The layer.
-   * @return {ol.layer.Base} the provided layer.
+   * @param {import("ol/layer/Base.js").default} layer The layer.
+   * @return {import("ol/layer/Base.js").default} the provided layer.
    */
   const callback = function(item, layer) {
     layer.set('label', item.name);
@@ -261,7 +260,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfOgcServers} ogcServers The ogc servers.
    * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} gmfLayer The item.
-   * @return {angular.IPromise.<ol.layer.Base>|ol.layer.Base} the created layer.
+   * @return {angular.IPromise.<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default} the created layer.
    */
   const layerLayerCreationFn = function(ogcServers, gmfLayer) {
     if (gmfLayer.type === 'WMTS') {
@@ -313,7 +312,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfOgcServers} ogcServers The ogc servers.
    * @param {gmfThemes.GmfGroup} item The item.
-   * @return {angular.IPromise.<ol.layer.Group>} the created layer.
+   * @return {angular.IPromise.<import("ol/layer/Group.js").default>} the created layer.
    */
   const layerGroupCreationFn = function(ogcServers, item) {
     // We assume no child is a layer group.
@@ -334,7 +333,7 @@ exports.prototype.getBgLayers = function() {
   /**
    * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
    *     response.
-   * @return {angular.IPromise.<Array.<ol.layer.Base>>} Promise.
+   * @return {angular.IPromise.<Array.<import("ol/layer/Base.js").default>>} Promise.
    */
   const promiseSuccessFn = function(data) {
     const promises = data.background_layers.map((item) => {

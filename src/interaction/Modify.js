@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.Modify
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoUtils from 'ngeo/utils.js';
@@ -16,7 +15,7 @@ import olFeature from 'ol/Feature.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   features: ol.Feature
  * }>} ModifyEvent
  */
@@ -39,7 +38,7 @@ import olFeature from 'ol/Feature.js';
  * never share the same feature, they don't collide with one an other.
  *
  * @constructor
- * @extends {ol.interaction.Interaction}
+ * @extends {import("ol/interaction/Interaction.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
  */
 const exports = function(options) {
@@ -47,25 +46,25 @@ const exports = function(options) {
   googAsserts.assert(options.features);
 
   /**
-   * @type {!ol.Collection.<ol.Feature>}
+   * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
 
   /**
-   * @type {!Array.<ol.EventsKey>}
+   * @type {!Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {Array.<ol.interaction.Interaction>}
+   * @type {Array.<import("ol/interaction/Interaction.js").default>}
    * @private
    */
   this.interactions_ = [];
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.otherFeatures_ = new olCollection();
@@ -79,7 +78,7 @@ const exports = function(options) {
   }));
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.circleFeatures_ = new olCollection();
@@ -92,7 +91,7 @@ const exports = function(options) {
   }));
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.rectangleFeatures_ = new olCollection();
@@ -129,7 +128,7 @@ exports.prototype.setActive = function(active) {
  * Remove the interaction from its current map and attach it to the new map.
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
- * @param {ol.PluggableMap} map Map.
+ * @param {import("ol/PluggableMap.js").default} map Map.
  * @override
  */
 exports.prototype.setMap = function(map) {
@@ -184,7 +183,7 @@ exports.prototype.setState_ = function() {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesAdd_ = function(evt) {
@@ -196,17 +195,17 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
@@ -216,7 +215,7 @@ exports.prototype.addFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
@@ -226,8 +225,8 @@ exports.prototype.removeFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
- * @return {ol.Collection.<ol.Feature>} Collection of features for this feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
+ * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for this feature.
  * @private
  */
 exports.prototype.getFeatureCollection_ = function(feature) {

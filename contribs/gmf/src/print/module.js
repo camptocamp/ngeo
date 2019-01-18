@@ -1,5 +1,4 @@
 /**
- * @module gmf.print.module
  */
 import angular from 'angular';
 

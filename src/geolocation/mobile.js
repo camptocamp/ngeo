@@ -1,5 +1,4 @@
 /**
- * @module ngeo.geolocation.mobile
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -64,7 +63,7 @@ exports.GeolocationEventType = {
  *
  * See our live example: [../examples/mobilegeolocation.html](../examples/mobilegeolocation.html)
  *
- * @htmlAttribute {ol.Map} ngeo-mobile-geolocation-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-mobile-geolocation-map The map.
  * @htmlAttribute {MobileGeolocationDirectiveOptions} ngeo-mobile-geolocation-options The options.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -90,11 +89,11 @@ exports.directive('ngeoMobileGeolocation', directive);
  * @constructor
  * @private
  * @param {angular.IScope} $scope The directive's scope.
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoMobileGeolocationController
@@ -113,7 +112,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.$scope_ = $scope;
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @private
    */
   this.map_ = map;
@@ -122,19 +121,19 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   googAsserts.assertObject(options);
 
   /**
-   * @type {ngeo.message.Notification}
+   * @type {import("ngeo/message/Notification.js").default}
    * @private
    */
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
-   * @type {ol.Geolocation}
+   * @type {import("ol/Geolocation.js").default}
    * @private
    */
   this.geolocation_ = new olGeolocation({
@@ -171,7 +170,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   });
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.positionFeature_ = new olFeature();
@@ -181,7 +180,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   }
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.accuracyFeature_ = new olFeature();
@@ -285,7 +284,7 @@ Controller.prototype.untrack_ = function() {
  * @private
  */
 Controller.prototype.setPosition_ = function() {
-  const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
+  const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);
@@ -297,8 +296,8 @@ Controller.prototype.setPosition_ = function() {
       this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
     } else if (accuracy) {
-      const size = /** @type {!ol.Size} */ (this.map_.getSize());
-      this.map_.getView().fit(/** @type {!ol.geom.Polygon} */ (accuracy), size);
+      const size = /** @type {!import("ol/size.js").Size} */ (this.map_.getSize());
+      this.map_.getView().fit(/** @type {!import("ol/geom/Polygon.js").default} */ (accuracy), size);
     }
     this.viewChangedByMe_ = false;
   }
@@ -306,7 +305,7 @@ Controller.prototype.setPosition_ = function() {
 
 
 /**
- * @param {ol.Object.Event} event Event.
+ * @param {import("ol/Object/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.handleViewChange_ = function(event) {

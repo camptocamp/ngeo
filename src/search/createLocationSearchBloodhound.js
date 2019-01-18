@@ -1,5 +1,4 @@
 /**
- * @module ngeo.search.createLocationSearchBloodhound
  */
 import angular from 'angular';
 import * as olProj from 'ol/proj.js';
@@ -50,7 +49,7 @@ const exports = function(opt_options) {
 
   /**
    * @param {string} bbox Bbox string.
-   * @return {?ol.Extent} Parsed extent.
+   * @return {?import("ol/extent.js").Extent} Parsed extent.
    */
   const parseBbox = (bbox) => {
     const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;

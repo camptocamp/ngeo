@@ -1,5 +1,4 @@
 /**
- * @module app.mapquery
  */
 const exports = {};
 
@@ -52,7 +51,7 @@ exports.module.value('ngeoQueryOptions', {
 /**
  * A sample component to display the result.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.queryresultComponent = {
   controller: 'AppQueryresultController',
@@ -83,8 +82,8 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject
@@ -118,7 +117,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

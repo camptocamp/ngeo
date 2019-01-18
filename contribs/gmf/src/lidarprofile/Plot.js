@@ -1,5 +1,4 @@
 /**
- * @module gmf.lidarprofile.Plot
  */
 import olFeature from 'ol/Feature.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -23,12 +22,12 @@ export default class {
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mechanism.
    *
-   * @param {gmf.lidarprofile.Manager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
+   * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManagerInstance gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
 
     /**
-     * @type {gmf.lidarprofile.Manager}
+     * @type {import("gmf/lidarprofile/Manager.js").default}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;

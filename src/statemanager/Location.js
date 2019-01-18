@@ -1,5 +1,4 @@
 /**
- * @module ngeo.statemanager.Location
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -373,7 +372,7 @@ exports.prototype.setPath = function(path) {
  *
  * @param {angular.IScope} $rootScope The root scope.
  * @param {angular.IWindowService} $window Angular window service.
- * @return {ngeo.statemanager.Location} The ngeo location service.
+ * @return {import("ngeo/statemanager/Location.js").default} The ngeo location service.
  * @ngInject
  */
 exports.LocationFactory = function($rootScope, $window) {

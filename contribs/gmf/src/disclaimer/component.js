@@ -1,5 +1,4 @@
 /**
- * @module gmf.disclaimer.component
  */
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -29,14 +28,14 @@ const exports = angular.module('gmfDisclaimer', [
 /**
  * @constructor
  * @private
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!PopupFactory} ngeoCreatePopup Popup service.
- * @param {!ngeo.message.Disclaimer} ngeoDisclaimer Ngeo Disclaimer service.
- * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/message/Disclaimer.js").default} ngeoDisclaimer Ngeo Disclaimer service.
+ * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo Event Helper.
+ * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @ngInject
  * @ngdoc controller
  * @ngname GmfDisclaimerController
@@ -44,7 +43,7 @@ const exports = angular.module('gmfDisclaimer', [
 function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, ngeoDisclaimer, ngeoEventHelper, ngeoLayerHelper) {
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -100,7 +99,7 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!angular.JQLite}
+   * @type {!JQLite}
    * @private
    */
   this.element_ = $element;
@@ -112,25 +111,25 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
   this.createPopup_ = ngeoCreatePopup;
 
   /**
-   * @type {!ngeo.message.Disclaimer}
+   * @type {!import("ngeo/message/Disclaimer.js").default}
    * @private
    */
   this.disclaimer_ = ngeoDisclaimer;
 
   /**
-   * @type {!ngeo.misc.EventHelper}
+   * @type {!import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.eventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {!ngeo.map.LayerHelper}
+   * @type {!import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {?ol.layer.Group}
+   * @type {?import("ol/layer/Group.js").default}
    * @private
    */
   this.dataLayerGroup_ = null;
@@ -147,7 +146,7 @@ Controller.prototype.$onInit = function() {
 };
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleLayersAdd_ = function(evt) {
@@ -160,7 +159,7 @@ Controller.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleLayersRemove_ = function(evt) {
@@ -171,7 +170,7 @@ Controller.prototype.handleLayersRemove_ = function(evt) {
 
 
 /**
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
 Controller.prototype.registerLayer_ = function(layer) {
@@ -219,7 +218,7 @@ Controller.prototype.registerLayer_ = function(layer) {
 
 
 /**
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @private
  */
 Controller.prototype.unregisterLayer_ = function(layer) {
@@ -341,7 +340,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
  * @htmlAttribute {string?} gmf-disclaimer-external-msg variable that will
  *     contains the disclaimer messages. To uses it, you must set the
  *     gmf-disclaimer-external to true.
- * @htmlAttribute {ol.Map=} gmf-disclaimer-map The map.
+ * @htmlAttribute {import("ol/Map.js").default=} gmf-disclaimer-map The map.
  *
  * @ngdoc component
  * @ngname gmfDisclaimer

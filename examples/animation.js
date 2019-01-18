@@ -1,5 +1,4 @@
 /**
- * @module app.animation
  */
 const exports = {};
 
@@ -25,7 +24,7 @@ exports.module = angular.module('app', [
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.mapComponent = {
   bindings: {
@@ -48,7 +47,7 @@ exports.module.component('appMap', exports.mapComponent);
  */
 exports.MainController = function($timeout) {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

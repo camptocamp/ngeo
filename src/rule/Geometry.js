@@ -1,5 +1,4 @@
 /**
- * @module ngeo.rule.Geometry
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
@@ -39,13 +38,13 @@ export default class extends ngeoRuleRule {
     const properties = options.featureProperties || {};
 
     /**
-     * @type {!ol.Feature}
+     * @type {!import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = new olFeature(properties);
 
     /**
-     * @type {!ol.format.GeoJSON}
+     * @type {!import("ol/format/GeoJSON.js").default}
      * @private
      */
     this.format_ = new olFormatGeoJSON();
@@ -63,7 +62,7 @@ export default class extends ngeoRuleRule {
     this.updatingGeometry_ = false;
 
     /**
-     * @type {?ol.EventsKey}
+     * @type {?import("ol/EventsKey.js").default}
      * @private
      */
     this.geometryChangeListenerKey_ = null;
@@ -84,7 +83,7 @@ export default class extends ngeoRuleRule {
   // === Static property getters/setters ===
 
   /**
-   * @return {!ol.Feature} Feature.
+   * @return {!import("ol/Feature.js").default} Feature.
    * @export
    */
   get feature() {
@@ -110,7 +109,7 @@ export default class extends ngeoRuleRule {
   // === Calculated property getters/setters ===
 
   /**
-   * @return {?ol.geom.Geometry} Geometry
+   * @return {?import("ol/geom/Geometry.js").default} Geometry
    * @export
    */
   get geometry() {
@@ -118,7 +117,7 @@ export default class extends ngeoRuleRule {
   }
 
   /**
-   * @param {?ol.geom.Geometry} geometry Geometry
+   * @param {?import("ol/geom/Geometry.js").default} geometry Geometry
    * @export
    */
   set geometry(geometry) {
@@ -154,7 +153,7 @@ export default class extends ngeoRuleRule {
   /**
    * Called when the geometry of the features changes. Update the expression
    * accordingly.
-   * @param {ol.Object.Event} evt Event
+   * @param {import("ol/Object/Event.js").default} evt Event
    * @private
    */
   handleGeometryChange_(evt) {

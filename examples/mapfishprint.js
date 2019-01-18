@@ -1,5 +1,4 @@
 /**
- * @module app.mapfishprint
  */
 const exports = {};
 
@@ -69,13 +68,13 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
  * @constructor
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
- * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
+ * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
  * @ngInject
  * @export
  */
 exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -86,7 +85,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
           params: {
             'LAYERS': 'osm'
           },
-          serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
+          serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
         })
       }),
       new olLayerVector({
@@ -120,23 +119,23 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {ngeo.print.Service}
+   * @type {import("ngeo/print/Service.js").default}
    * @private
    */
   this.print_ = ngeoCreatePrint(appURL.PRINT_PROXY);
 
   /**
-   * @type {ngeo.print.Utils}
+   * @type {import("ngeo/print/Utils.js").default}
    * @private
    */
   this.printUtils_ = ngeoPrintUtils;
 
   /**
-   * @type {function(ol.render.Event)}
+   * @type {function(import("ol/render/Event.js").default)}
    */
   const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
     /**
-       * @return {ol.Size} Size in dots of the map to print.
+       * @return {import("ol/size.js").Size} Size in dots of the map to print.
        */
     () => exports.PRINT_PAPER_SIZE_,
     /**

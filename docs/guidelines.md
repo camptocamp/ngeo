@@ -91,9 +91,6 @@ AngularJS module, and this module must require all modules it needs to work. And
 AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
-/**
- * @module ngeo.example.Service
- */
 const exports = {};
 import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 
@@ -111,9 +108,6 @@ You can see that we stock the module in a `module` variable on the class. For Co
 the module in the value we export directly like:
 
 ```js
-/**
- * @module ngeo.example.component
- */
 const exports = {};
 
 /**
@@ -178,7 +172,7 @@ avoid to have a specific template. it can be preferable to add the action on the
 ```js
   /**
    * Function in a controller, that injects its own element.
-   * @param {angular.JQLite} element Element.
+   * @param {JQLite} element Element.
    */
   function(element) {
     element.on('click', function() {console.log('Action');});
@@ -206,8 +200,8 @@ For that we should use this kind of code:
 ```js
 exports.value('ngeoModuleComponentTemplateUrl',
     /**
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
      * @return {string} Template URL.
      */
     function($element, $attrs) {
@@ -221,9 +215,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 });
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -445,7 +439,7 @@ For example:
  *       ngeo-misc-map="ctrl.map">
  *      </example>
  *
- * @htmlAttribute {ol.Map} ngeo-misc-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-misc-map The map.
  * @ngInject
  * @ngdoc component
  * @ngname ngeoControl

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.Menu
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -51,7 +50,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  * any of the action is clicked.
  *
  * @constructor
- * @extends {ol.Overlay}
+ * @extends {import("ol/Overlay.js").default}
  * @param {MenuOptions=} menuOptions Menu options.
  * @param {olx.OverlayOptions=} opt_overlayOptions Overlay options.
  */
@@ -62,13 +61,13 @@ const exports = function(menuOptions, opt_overlayOptions) {
   options.positioning = olOverlayPositioning.TOP_LEFT;
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.clickOutListenerKey_ = null;
@@ -133,7 +132,7 @@ olUtilInherits(exports, olOverlay);
 
 
 /**
- * @param {ol.PluggableMap|undefined} map Map.
+ * @param {import("ol/PluggableMap.js").default|undefined} map Map.
  * @export
  * @override
  */
@@ -176,7 +175,7 @@ exports.prototype.setMap = function(map) {
 /**
  * Opens the menu at the desited coordinate. Also starts listening for the
  * clickout if autoClose is enabled.
- * @param {ol.Coordinate} coordinate Where to open the menu.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate Where to open the menu.
  * @export
  */
 exports.prototype.open = function(coordinate) {
@@ -243,7 +242,7 @@ exports.prototype.handleClickOut_ = function(evt) {
  * map. This prevents behaviours such as vertex still appearing while mouse
  * hovering edges of features bound to an active modify control while the
  * cursor is on top of the menu.
- * @param {ol.MapBrowserEvent} evt Event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
 exports.prototype.handleMapPointerMove_ = function(evt) {

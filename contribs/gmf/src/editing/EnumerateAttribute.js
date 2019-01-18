@@ -1,5 +1,4 @@
 /**
- * @module gmf.editing.EnumerateAttribute
  */
 import angular from 'angular';
 
@@ -39,7 +38,7 @@ const exports = class {
   }
 
   /**
-   * @param {gmf.datasource.OGC} dataSource Data source.
+   * @param {import("gmf/datasource/OGC.js").default} dataSource Data source.
    * @param {string} attribute Attribute name.
    * @return {angular.IPromise} Promise.
    */

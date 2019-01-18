@@ -1,5 +1,4 @@
 /**
- * @module app.rotate
  */
 const exports = {};
 
@@ -42,7 +41,7 @@ const appmodule = angular.module('app', ['ngeo']);
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -64,7 +63,7 @@ exports.MainController = function() {
   ]]);
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.features = new olCollection();
@@ -125,7 +124,7 @@ exports.MainController = function() {
   })();
 
   /**
-   * @type {ngeo.interaction.Rotate}
+   * @type {import("ngeo/interaction/Rotate.js").default}
    * @export
    */
   this.interaction = new ngeoInteractionRotate(

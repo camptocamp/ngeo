@@ -1,5 +1,4 @@
 /**
- * @module ngeo.Popover
  */
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olOverlay from 'ol/Overlay.js';
@@ -10,7 +9,7 @@ import olOverlay from 'ol/Overlay.js';
  * for maps.
  *
  * @constructor
- * @extends {ol.Overlay}
+ * @extends {import("ol/Overlay.js").default}
  * @param {olx.OverlayOptions=} opt_options Overlay options.
  */
 const exports = function(opt_options) {

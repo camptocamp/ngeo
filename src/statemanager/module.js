@@ -1,5 +1,4 @@
 /**
- * @module ngeo.statemanager.module
  */
 import angular from 'angular';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';

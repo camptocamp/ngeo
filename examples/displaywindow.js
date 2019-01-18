@@ -1,5 +1,4 @@
 /**
- * @module app.displaywindow
  */
 const exports = {};
 

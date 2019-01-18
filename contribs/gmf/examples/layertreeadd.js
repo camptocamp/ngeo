@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.layertreeadd
  */
 const exports = {};
 
@@ -45,10 +44,10 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @constructor
- * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.theme.Manager} gmfThemeManager gmf Tree Manager service.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/theme/Manager.js").default} gmfThemeManager gmf Tree Manager service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @ngInject
  */
 exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
@@ -56,7 +55,7 @@ exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ng
   gmfThemes.loadThemes();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -83,13 +82,13 @@ exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ng
   this.modal = modal === 'true';
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;
 
   /**
-   * @type {gmf.theme.Manager}
+   * @type {import("gmf/theme/Manager.js").default}
    * @export
    */
   this.gmfThemeManager = gmfThemeManager;

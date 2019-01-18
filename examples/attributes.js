@@ -1,5 +1,4 @@
 /**
- * @module app.attributes
  */
 const exports = {};
 import angular from 'angular';
@@ -47,7 +46,7 @@ exports.MainController = function($http, $timeout, $scope) {
   this.disabled = false;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature = new olFeature({

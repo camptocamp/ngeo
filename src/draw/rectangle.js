@@ -1,5 +1,4 @@
 /**
- * @module ngeo.draw.rectangle
  */
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -25,14 +24,14 @@ function directive() {
     require: '^^ngeoDrawfeature',
     /**
      * @param {!angular.IScope} $scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const drawRectangle = new olInteractionDraw({
-        type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
         geometryFunction: (coordinates, geometry) => {
           if (!geometry) {
             geometry = new olGeomPolygon([]);

@@ -1,5 +1,4 @@
 /**
- * @module app.oeedit.Controller
  */
 /**
  * Application entry point.
@@ -35,7 +34,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @constructor
- * @extends {gmf.controllers.AbstractDesktopController}
+ * @extends {import("gmf/controllers/AbstractDesktopController.js").default}
  * @ngInject
  * @export
  */
@@ -58,7 +57,7 @@ const exports = function($scope, $injector, $timeout) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -76,7 +75,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -84,7 +83,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -92,13 +91,13 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures = new olCollection();
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.sketchLayer_ = new olLayerVector({
@@ -109,7 +108,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {gmf.theme.Themes} gmfObjectEditingManager The gmf theme service
+   * @type {import("gmf/theme/Themes.js").default} gmfObjectEditingManager The gmf theme service
    */
   const gmfThemes = $injector.get('gmfThemes');
 
@@ -122,7 +121,7 @@ const exports = function($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
+   * @type {import("gmf/objectediting/Manager.js").default} gmfObjectEditingManager The gmf
    *     ObjectEditing manager service.
    */
   const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');
@@ -140,7 +139,7 @@ const exports = function($scope, $injector, $timeout) {
   this.oeLayerNodeId = gmfObjectEditingManager.getLayerNodeId();
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.oeFeature = null;

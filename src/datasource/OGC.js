@@ -1,5 +1,4 @@
 /**
- * @module ngeo.datasource.OGC
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
@@ -307,7 +306,7 @@ export default class extends ngeoDatasourceDataSource {
     /**
      * A list of filter rules to apply to this data source using the filter
      * condition.
-     * @type {?Array.<!ngeo.rule.Rule>}
+     * @type {?Array.<!import("ngeo/rule/Rule.js").default>}
      */
     this.filterRules = options.filterRules || null;
 
@@ -529,7 +528,7 @@ export default class extends ngeoDatasourceDataSource {
     }
 
     /**
-     * @type {?ol.format.WFS}
+     * @type {?import("ol/format/WFS.js").default}
      * @private
      */
     this.wfsFormat_ = wfsFormat;
@@ -545,7 +544,7 @@ export default class extends ngeoDatasourceDataSource {
     }
 
     /**
-     * @type {?ol.format.WMSGetFeatureInfo}
+     * @type {?import("ol/format/WMSGetFeatureInfo.js").default}
      * @private
      */
     this.wmsFormat_ = wmsFormat;
@@ -911,7 +910,7 @@ export default class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?ol.format.WFS} WFS format.
+   * @return {?import("ol/format/WFS.js").default} WFS format.
    * @export
    */
   get wfsFormat() {
@@ -919,7 +918,7 @@ export default class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {?ol.format.WMSGetFeatureInfo} WMS format.
+   * @return {?import("ol/format/WMSGetFeatureInfo.js").default} WMS format.
    * @export
    */
   get wmsFormat() {

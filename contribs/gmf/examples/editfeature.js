@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.editfeature
  */
 const exports = {};
 
@@ -43,7 +42,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
  * @param {gmfx.User} gmfUser User.
  * @constructor
  * @ngInject
@@ -57,7 +56,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.scope_ = $scope;
 
   /**
-   * @type {gmf.editing.EditFeature}
+   * @type {import("gmf/editing/EditFeature.js").default}
    * @export
    */
   this.editFeature_ = gmfEditFeature;
@@ -69,7 +68,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.gmfUser = gmfUser;
 
   /**
-   * @type {ol.source.ImageWMS}
+   * @type {import("ol/source/ImageWMS.js").default}
    * @private
    */
   this.wmsSource_ = new olSourceImageWMS({
@@ -78,7 +77,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   });
 
   /**
-   * @type {ol.layer.Image}
+   * @type {import("ol/layer/Image.js").default}
    * @private
    */
   this.wmsLayer_ = new olLayerImage({
@@ -98,7 +97,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.layerId_ = 113;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;
@@ -110,7 +109,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
   this.pending = false;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -139,7 +138,7 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
 
 
 /**
- * @param {ol.MapBrowserEvent} evt MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
 exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
@@ -169,7 +168,7 @@ exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
 
 
 /**
- * @param {Array.<ol.Feature>} features Features.
+ * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @private
  */
 exports.MainController.prototype.handleGetFeatures_ = function(features) {

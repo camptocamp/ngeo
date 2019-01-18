@@ -1,5 +1,4 @@
 /**
- * @module app.bboxquery
  */
 const exports = {};
 
@@ -46,7 +45,7 @@ exports.module.value('ngeoQueryOptions', {
 /**
  * A sample component to display the result.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.queryresultComponent = {
   controller: 'AppQueryresultController',
@@ -77,7 +76,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo collection of
+ * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @constructor
  * @ngInject
@@ -105,7 +104,7 @@ exports.MainController = function($scope, ngeoDataSources) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

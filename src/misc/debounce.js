@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.debounce
  */
 
 import angular from 'angular';

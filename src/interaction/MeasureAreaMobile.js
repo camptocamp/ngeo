@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.MeasureAreaMobile
  */
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
@@ -10,7 +9,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * Interaction dedicated to measure Area on mobile devices.
  *
  * @constructor
- * @extends {ngeo.interaction.MeasureArea}
+ * @extends {import("ngeo/interaction/MeasureArea.js").default}
  * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} opt_options Options
@@ -34,7 +33,7 @@ olUtilInherits(
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('Polygon'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Polygon'),
     style: style,
     source: source
   });

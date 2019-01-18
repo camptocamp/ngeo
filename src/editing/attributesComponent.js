@@ -1,5 +1,4 @@
 /**
- * @module ngeo.editing.attributesComponent
  */
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -20,7 +19,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('ngeoAttributesTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -30,8 +29,8 @@ exports.value('ngeoAttributesTemplateUrl',
   });
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoAttributesTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -54,7 +53,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  *     list of attributes to use.
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
- * @htmlAttribute {ol.Feature} ngeo-attributes-feature The feature.
+ * @htmlAttribute {import("ol/Feature.js").default} ngeo-attributes-feature The feature.
  *
  * @ngdoc component
  * @ngname ngeoAttributes
@@ -77,7 +76,7 @@ exports.component('ngeoAttributes', component);
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @ngInject
@@ -102,7 +101,7 @@ function Controller($scope, ngeoEventHelper) {
 
   /**
    * The feature containing the values.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature;
@@ -122,7 +121,7 @@ function Controller($scope, ngeoEventHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {!ngeo.misc.EventHelper}
+   * @type {!import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
@@ -179,7 +178,7 @@ Controller.prototype.$onDestroy = function() {
 
 
 /**
- * @param {ol.Object.Event} evt Event.
+ * @param {import("ol/Object/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturePropertyChange_ = function(evt) {

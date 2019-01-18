@@ -1,5 +1,4 @@
 /**
- * @module ngeo.query.module
  */
 import angular from 'angular';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.map.module
  */
 import angular from 'angular';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';

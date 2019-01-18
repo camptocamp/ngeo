@@ -1,5 +1,4 @@
 /**
- * @module ngeo.format.AttributeType
  */
 
 /**

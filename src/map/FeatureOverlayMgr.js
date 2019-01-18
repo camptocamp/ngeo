@@ -1,5 +1,4 @@
 /**
- * @module ngeo.map.FeatureOverlayMgr
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -56,7 +55,7 @@ const exports = function() {
   this.groups_ = [];
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.source_ = new olSourceVector({
@@ -64,7 +63,7 @@ const exports = function() {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.layer_ = new olLayerVector({
@@ -78,7 +77,7 @@ const exports = function() {
 
 
 /**
- * @param {ol.Feature} feature The feature to add.
+ * @param {import("ol/Feature.js").default} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
@@ -93,7 +92,7 @@ exports.prototype.addFeature = function(feature, groupIndex) {
 
 
 /**
- * @param {ol.Feature} feature The feature to add.
+ * @param {import("ol/Feature.js").default} feature The feature to add.
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
@@ -123,7 +122,7 @@ exports.prototype.clear = function(groupIndex) {
 
 
 /**
- * @return {ol.layer.Vector} The vector layer used internally.
+ * @return {import("ol/layer/Vector.js").default} The vector layer used internally.
  * @export
  */
 exports.prototype.getLayer = function() {
@@ -132,7 +131,7 @@ exports.prototype.getLayer = function() {
 
 
 /**
- * @return {ngeo.map.FeatureOverlay} Feature overlay.
+ * @return {import("ngeo/map/FeatureOverlay.js").default} Feature overlay.
  * @export
  */
 exports.prototype.getFeatureOverlay = function() {
@@ -146,7 +145,7 @@ exports.prototype.getFeatureOverlay = function() {
 
 
 /**
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @export
  */
 exports.prototype.init = function(map) {
@@ -155,7 +154,7 @@ exports.prototype.init = function(map) {
 
 
 /**
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} style
  * Style.
  * @param {number} groupIndex Group index.
  * @export
@@ -169,9 +168,9 @@ exports.prototype.setStyle = function(style, groupIndex) {
 
 
 /**
- * @param {ol.Feature|ol.render.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature Feature.
  * @param {number} resolution Resolution.
- * @return {Array.<ol.style.Style>|ol.style.Style} Styles.
+ * @return {Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
  * @private
  */
 exports.prototype.styleFunction_ = function(feature, resolution) {

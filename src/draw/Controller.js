@@ -1,5 +1,4 @@
 /**
- * @module ngeo.draw.Controller
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -17,8 +16,8 @@ import olFeature from 'ol/Feature.js';
  * @param {!angular.IScope} $scope Scope.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @constructor
  * @private
  * @ngInject
@@ -41,13 +40,13 @@ const exports = function($scope, $sce, gettextCatalog,
   /**
    * Alternate collection of features in which to push the drawn features.
    * If not defined, then `ngeoFeatures` is used instead.
-   * @type {!ol.Collection.<!ol.Feature>|undefined}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>|undefined}
    * @export
    */
   this.features;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -72,55 +71,55 @@ const exports = function($scope, $sce, gettextCatalog,
   gettextCatalog.getString('Text');
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = ngeoFeatures;
 
   /**
-   * @type {Array.<ol.interaction.Interaction>}
+   * @type {Array.<import("ol/interaction/Interaction.js").default>}
    * @private
    */
   this.interactions_ = [];
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPoint;
 
   /**
-   * @type {ngeo.interaction.MeasureLength}
+   * @type {import("ngeo/interaction/MeasureLength.js").default}
    * @export
    */
   this.measureLength;
 
   /**
-   * @type {ngeo.interaction.MeasureArea}
+   * @type {import("ngeo/interaction/MeasureArea.js").default}
    * @export
    */
   this.measureArea;
 
   /**
-   * @type {ngeo.interaction.MeasureAzimut}
+   * @type {import("ngeo/interaction/MeasureAzimut.js").default}
    * @export
    */
   this.measureAzimut;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawRectangle;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawText;
@@ -145,7 +144,7 @@ const exports = function($scope, $sce, gettextCatalog,
 /**
  * Register a draw|measure interaction by setting it inactive, decorating it
  * and adding it to the map
- * @param {ol.interaction.Interaction} interaction Interaction to register.
+ * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
  * @export
  */
 exports.prototype.registerInteraction = function(
@@ -161,7 +160,7 @@ exports.prototype.registerInteraction = function(
  * Called when any of the draw or measure interaction active property changes.
  * Set the active property of this directive accordingly, i.e. if at least
  * one of the draw or measure is active then the active property is set to true.
- * @param {ol.Object.Event} event Event.
+ * @param {import("ol/Object/Event.js").default} event Event.
  * @export
  */
 exports.prototype.handleActiveChange = function(event) {
@@ -173,7 +172,7 @@ exports.prototype.handleActiveChange = function(event) {
  * Called when a feature is finished being drawn. Set the default properties
  * for its style, then set its style and add it to the features collection.
  * @param {string} type Type of geometry being drawn.
- * @param {ol.interaction.Draw.Event|MeasureEvent} event Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|MeasureEvent} event Event.
  * @export
  */
 exports.prototype.handleDrawEnd = function(type, event) {

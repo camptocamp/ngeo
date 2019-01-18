@@ -1,5 +1,4 @@
 /**
- * @module ngeo.test.data.geoAdminLocationSearch
  */
 const exports = {
   'results': [{

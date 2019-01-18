@@ -1,5 +1,4 @@
 /**
- * @module gmf.import.importdatasourceComponent
  */
 
 import angular from 'angular';
@@ -29,7 +28,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfImportdatasourceTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -40,8 +39,8 @@ exports.value('gmfImportdatasourceTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfImportdatasourceTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -69,10 +68,10 @@ class Controller {
    * @param {!angular.auto.IInjectorService} $injector Main injector.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!gmf.datasource.ExternalDataSourcesManager}
+   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
-   * @param {!ngeo.query.Querent} ngeoQuerent Ngeo querent service.
+   * @param {!import("ngeo/query/Querent.js").default} ngeoQuerent Ngeo querent service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -84,7 +83,7 @@ class Controller {
     // Binding properties
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -111,13 +110,13 @@ class Controller {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!gmf.datasource.ExternalDataSourcesManager}
+     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {!ngeo.query.Querent}
+     * @type {!import("ngeo/query/Querent.js").default}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

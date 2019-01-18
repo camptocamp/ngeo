@@ -1,5 +1,4 @@
 /**
- * @module app.grid
  */
 const exports = {};
 
@@ -70,7 +69,7 @@ exports.MainController = function() {
   ];
 
   /**
-   * @type {ngeo.grid.Config}
+   * @type {import("ngeo/grid/Config.js").default}
    * @export
    */
   this.gridConfig = new ngeoGridConfig(data, columnDefs);

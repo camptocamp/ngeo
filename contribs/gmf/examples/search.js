@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.search
  */
 const exports = {};
 
@@ -43,9 +42,9 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {gmf.theme.Themes} gmfThemes Themes service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
  */
@@ -75,7 +74,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
   const fill = new olStyleFill({color: [255, 255, 255, 0.6]});
   const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
   /**
-   * @type {Object.<string, ol.style.Style>} Map of styles for search overlay.
+   * @type {Object.<string, import("ol/style/Style.js").default>} Map of styles for search overlay.
    * @export
    */
   this.searchStyles = {
@@ -105,7 +104,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
   this.inputValue = '';
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

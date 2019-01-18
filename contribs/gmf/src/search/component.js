@@ -1,5 +1,4 @@
 /**
- * @module gmf.search.component
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
@@ -43,8 +42,8 @@ const exports = angular.module('gmfSearch', [
 
 
 /**
- * @param {angular.JQLite} element Element.
- * @param {angular.Attributes} attrs Attributes.
+ * @param {JQLite} element Element.
+ * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
 exports.gmfSearchTemplateUrl_ = (element, attrs) => {
@@ -59,9 +58,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfSearchTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfSearchTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -76,9 +75,9 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This component uses the {@link ngeo.map.FeatureOverlayMgr} to create a
+ * This component uses the {@link import("ngeo/map/FeatureOverlayMgr.js").default} to create a
  * feature overlay for drawing features on the map. The application
- * is responsible to initialize the {@link ngeo.map.FeatureOverlayMgr}
+ * is responsible to initialize the {@link import("ngeo/map/FeatureOverlayMgr.js").default}
  * with the map.
  *
  * Example flat results:
@@ -129,11 +128,11 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
- * @htmlAttribute {ol.Map} gmf-search-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
  * @htmlAttribute {gmfx.SearchComponentDatasource} gmf-search-datasource
  *      The datasources.
- * @htmlAttribute {Object.<string, ol.style.Style>}
+ * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
  *      gmf-search-styles A map of styles to apply on searched features. Keys
  *      must be the 'layer_name' property of features except for coordinates
  *      where the key ifor its style is the value of the constant
@@ -195,14 +194,14 @@ class SearchController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.misc.AutoProjection} ngeoAutoProjection The ngeo coordinates service.
-   * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
+   * @param {import("ngeo/misc/AutoProjection.js").default} ngeoAutoProjection The ngeo coordinates service.
+   * @param {import("ngeo/search/createGeoJSONBloodhound.js").default.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
-   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
-   * @param {gmf.theme.Themes} gmfThemes gmf Themes service.
-   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {gmf.search.FulltextSearch} gmfSearchFulltextSearch gmf Full text search service.
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
+   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+   * @param {import("gmf/search/FulltextSearch.js").default} gmfSearchFulltextSearch gmf Full text search service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -243,37 +242,37 @@ class SearchController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {gmf.theme.Themes}
+     * @type {import("gmf/theme/Themes.js").default}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {gmf.layertree.TreeManager}
+     * @type {import("gmf/layertree/TreeManager.js").default}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {gmf.search.FulltextSearch}
+     * @type {import("gmf/search/FulltextSearch.js").default}
      * @private
      */
     this.fullTextSearch_ = gmfSearchFulltextSearch;
 
     /**
-     * @type {ngeo.search.createGeoJSONBloodhound.Function}
+     * @type {import("ngeo/search/createGeoJSONBloodhound.js").default.Function}
      * @private
      */
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
     /**
-     * @type {ngeo.map.FeatureOverlayMgr}
+     * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
      * @private
      */
     this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
 
     /**
-     * @type {ngeo.statemanager.Location|undefined}
+     * @type {import("ngeo/statemanager/Location.js").default|undefined}
      * @private
      */
     this.ngeoLocation_;
@@ -283,13 +282,13 @@ class SearchController {
     }
 
     /**
-     * @type {ngeo.misc.AutoProjection}
+     * @type {import("ngeo/misc/AutoProjection.js").default}
      * @private
      */
     this.ngeoAutoProjection_ = ngeoAutoProjection;
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -341,13 +340,13 @@ class SearchController {
 
     /**
      * Supported projections for coordinates search.
-     * @type {Array.<ol.proj.Projection>}
+     * @type {Array.<import("ol/proj/Projection.js").default>}
      * @export
      */
     this.coordinatesProjections;
 
     /**
-     * @type {ngeo.map.FeatureOverlay}
+     * @type {import("ngeo/map/FeatureOverlay.js").default}
      * @private
      */
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -373,7 +372,7 @@ class SearchController {
     });
 
     /**
-     * @type {Object.<string, ol.style.Style>}
+     * @type {Object.<string, import("ol/style/Style.js").default>}
      * @export
      */
     this.featuresStyles;
@@ -613,7 +612,7 @@ class SearchController {
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        const feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
         return feature.get(config.labelKey);
       },
       templates: /* TypeaheadTemplates */ ({
@@ -626,7 +625,7 @@ class SearchController {
           }
         },
         suggestion: (suggestion) => {
-          const feature = /** @type {ol.Feature} */ (suggestion);
+          const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
 
           const scope = componentScope.$new(true);
           scope['feature'] = feature;
@@ -744,7 +743,7 @@ class SearchController {
 
 
   /**
-   * @param {ol.View} view View.
+   * @param {import("ol/View.js").default} view View.
    * @return {function(string, function(Object))} function defining parameters for the search suggestions.
    * @private
    */
@@ -811,9 +810,9 @@ class SearchController {
 
   /**
    * Style for search results.
-   * @param {null|ol.Feature|ol.render.Feature} feature The searched feature.
+   * @param {null|import("ol/Feature.js").default|import("ol/render/Feature.js").default} feature The searched feature.
    * @param {number} resolution The current resolution of the map.
-   * @return {ol.style.Style} A style for this kind of features.
+   * @return {import("ol/style/Style.js").default} A style for this kind of features.
    * @private
    */
   getSearchStyle_(feature, resolution) {
@@ -919,7 +918,7 @@ class SearchController {
 
   /**
    * @param {jQuery.Event} event Event.
-   * @param {Object|ol.Feature} suggestion Suggestion.
+   * @param {Object|import("ol/Feature.js").default} suggestion Suggestion.
    * @param {TypeaheadDataset} dataset Dataset.
    * @private
    */
@@ -943,13 +942,13 @@ class SearchController {
 
   /**
    * @param {jQuery.Event} event Event.
-   * @param {ol.Feature} feature Feature.
+   * @param {import("ol/Feature.js").default} feature Feature.
    * @param {TypeaheadDataset} dataset Dataset.
    * @private
    */
   selectFromGMF_(event, feature, dataset) {
     const actions = feature.get('actions');
-    const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+    const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
         (feature.getGeometry());
     if (actions) {
       for (let i = 0, ii = actions.length; i < ii; i++) {

@@ -1,5 +1,4 @@
 /**
- * @module app.backgroundlayerdropdown
  */
 const exports = {};
 
@@ -34,7 +33,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
  * The component is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.backgroundlayerComponent = {
   bindings: {
@@ -51,7 +50,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 /**
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+ * @param {import("ngeo/map/BackgroundLayerMgr.js").default} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export
  * @ngInject
@@ -65,7 +64,7 @@ exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
     });
 
   /**
-   * @type {ngeo.map.BackgroundLayerMgr}
+   * @type {import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
@@ -87,7 +86,7 @@ exports.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
 
 /**
  * @param {string} layerName Layer name.
- * @return {ol.layer.Tile} The layer.
+ * @return {import("ol/layer/Tile.js").default} The layer.
  * @private
  */
 exports.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
@@ -114,7 +113,7 @@ exports.module.controller('AppBackgroundlayerController',
 exports.MainController = function($scope) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    */
   const map = new olMap({
     view: new olView({
@@ -128,7 +127,7 @@ exports.MainController = function($scope) {
 
   /**
    * An overlay layer.
-   * @type {ol.layer.Image}
+   * @type {import("ol/layer/Image.js").default}
    */
   const overlay = new olLayerImage({
     source: new olSourceImageWMS({

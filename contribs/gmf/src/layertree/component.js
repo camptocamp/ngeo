@@ -1,5 +1,4 @@
 /**
- * @module gmf.layertree.component
  */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
@@ -52,8 +51,8 @@ const exports = angular.module('gmfLayertreeComponent', [
 // the root node that path is defined by the gmfLayertreeTemplate value.
 exports.value('ngeoLayertreeTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => 'gmf/layertree');
@@ -65,8 +64,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfLayertreeTemplate',
   /**
-   * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!JQLite} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -82,9 +81,9 @@ exports.value('gmfLayertreeTemplate',
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLayertreeTemplate Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfLayertreeTemplate Template function.
  * @return {string} Template.
  * @ngInject
  */
@@ -95,7 +94,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
 
 /**
  * This component creates a layertree based on the c2cgeoportal JSON themes
- * source and a {@link ngeo.layertreeComponent}. The controller used by this
+ * source and a {@link import("ngeo/layertreeComponent.js").default}. The controller used by this
  * component defines some functions for each node that are created by a default
  * template. This default template can be overridden by setting the value
  * 'gmf.layertreeTemplateUrl' but you will have to adapt the
@@ -122,7 +121,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *  * metadataUrl: Display a popup with the content of the given URL if
  *    possible also open a new window.
  *
- * @htmlAttribute {ol.Map} gmf-layertree-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-layertree-map The map.
  * @htmlAttribute {Object<string, string>|undefined} gmf-layertree-dimensions Global dimensions object.
  * @htmlAttribute {boolean|undefined} gmf-layertree-openlinksinnewwindow if true, open
  *     metadataURLs in a new window. Otherwise open them in a popup.
@@ -144,20 +143,20 @@ exports.component('gmfLayertree', component);
 
 
 /**
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
- * @param {!gmf.datasource.ExternalDataSourcesManager}
+ * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
  *     gmfExternalDataSourcesManager The Gmf external data sources manager
  *     service. Used here to fetch the external WMS groups.
- * @param {!gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
- * @param {!gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {!gmf.layertree.SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
- * @param {!ngeo.misc.WMSTime} ngeoWMSTime wms time service.
- * @param {!gmf.theme.Themes} gmfThemes The gmf Themes service.
+ * @param {!import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
+ * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+ * @param {!import("gmf/layertree/SyncLayertreeMap.js").default} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
+ * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
+ * @param {!import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
  * @constructor
  * @private
  * @ngInject
@@ -168,7 +167,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   gmfExternalDataSourcesManager, gmfPermalink, gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes) {
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -186,7 +185,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.scope_ = $scope;
 
   /**
-   * @type {!ngeo.map.LayerHelper}
+   * @type {!import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
@@ -198,19 +197,19 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
   /**
-   * @type {!gmf.datasource.ExternalDataSourcesManager}
+   * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    * @export
    */
   this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
-   * @type {!gmf.permalink.Permalink}
+   * @type {!import("gmf/permalink/Permalink.js").default}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!gmf.layertree.TreeManager}
+   * @type {!import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -225,13 +224,13 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.root = root;
 
   /**
-   * @type {!gmf.layertree.SyncLayertreeMap}
+   * @type {!import("gmf/layertree/SyncLayertreeMap.js").default}
    * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {!ngeo.misc.WMSTime}
+   * @type {!import("ngeo/misc/WMSTime.js").default}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
@@ -249,19 +248,19 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.openLinksInNewWindow;
 
   /**
-   * @type {?ol.layer.Group}
+   * @type {?import("ol/layer/Group.js").default}
    * @private
    */
   this.dataLayerGroup_ = null;
 
   /**
-   * @type {!Array.<!ol.layer.Base>}
+   * @type {!Array.<!import("ol/layer/Base.js").default>}
    * @export
    */
   this.layers = [];
 
   /**
-   * @type {!gmf.theme.Themes}
+   * @type {!import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -303,7 +302,7 @@ Controller.prototype.$onInit = function() {
 
 
 /**
- * @param {ngeo.layertree.Controller} treeCtrl Layer tree controller.
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layer tree controller.
  * @private
  */
 Controller.prototype.updateDimensions_ = function(treeCtrl) {
@@ -318,7 +317,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
 
 
 /**
- * @param {ol.layer.Layer} layer Layer to update.
+ * @param {import("ol/layer/Layer.js").default} layer Layer to update.
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layer tree node.
  * @private
  */
@@ -358,8 +357,8 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  * treeCtrl. The layer will be inserted into the map. The layer can be null
  * if the treeCtrl is based on a node inside a mixed node. It this case, the
  * layer will be in the first parent declared as a mixed node.
- * @param {ngeo.layertree.Controller} treeCtrl tree controller of the node
- * @return {ol.layer.Base|ol.layer.Group|null} The OpenLayers layer or group
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl tree controller of the node
+ * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default|null} The OpenLayers layer or group
  *     for the node.
  * @export
  */
@@ -388,7 +387,7 @@ Controller.prototype.getLayer = function(treeCtrl) {
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
  * @param {angular.IScope} scope treeCtrl scope.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -402,7 +401,7 @@ Controller.prototype.listeners = function(scope, treeCtrl) {
 
 /**
  * Toggle the state of treeCtrl's node.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -421,7 +420,7 @@ Controller.prototype.toggleActive = function(treeCtrl) {
 /**
  * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {string} 'on' or 'off' or 'indeterminate'.
  * @export
@@ -441,7 +440,7 @@ Controller.prototype.getNodeState = function(treeCtrl) {
  * `gmf.datasource.Manager` service
  *
  * LayertreeController.prototype.updateWMSTimeLayerState - description
- * @param {ngeo.layertree.Controller} layertreeCtrl ngeo layertree controller
+ * @param {import("ngeo/layertree/Controller.js").default} layertreeCtrl ngeo layertree controller
  * @param {{start : number, end : number}} time The start
  * and optionally the end datetime (for time range selection) selected by user
  * @export
@@ -465,7 +464,7 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {string|undefined} The icon legend URL or undefined.
  * @export
@@ -506,7 +505,7 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
 
 /**
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {Object.<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
@@ -553,7 +552,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
 
 /**
  * Get the number of legends object for this layertree controller.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @return {number} The number of Legends object.
  * @export
@@ -580,7 +579,7 @@ Controller.prototype.getScale_ = function() {
 
 /**
  * Opens a gmfx.openIframePopup with the content of the metadata url of a node.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -682,7 +681,7 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
 
 /**
  * Set the resolution of the map with the max or min resolution of the node.
- * @param {ngeo.layertree.Controller} treeCtrl ngeo layertree controller, from
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export
  */
@@ -715,7 +714,7 @@ Controller.prototype.toggleNodeLegend = function(legendNodeId) {
 
 
 /**
- * @param {gmf.datasource.OGC} ds Data source to filter.
+ * @param {import("gmf/datasource/OGC.js").default} ds Data source to filter.
  * @export
  */
 Controller.prototype.toggleFiltrableDataSource = function(ds) {
@@ -746,7 +745,7 @@ Controller.prototype.isNodeLegendVisible = function(legendNodeId) {
  *   - it supports legend
  *   - it supports having the layer opacity being changed
  *
- * @param {!ngeo.layertree.Controller} treeCtrl Ngeo tree controller.
+ * @param {!import("ngeo/layertree/Controller.js").default} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports being
  *     "customized" or not.
  * @export
@@ -761,7 +760,7 @@ Controller.prototype.supportsCustomization = function(treeCtrl) {
 
 
 /**
- * @param {!ngeo.layertree.Controller} treeCtrl Ngeo tree controller.
+ * @param {!import("ngeo/layertree/Controller.js").default} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having a
  *     legend being shown.
  * @export
@@ -775,7 +774,7 @@ Controller.prototype.supportsLegend = function(treeCtrl) {
 
 
 /**
- * @param {!ngeo.layertree.Controller} treeCtrl Ngeo tree controller.
+ * @param {!import("ngeo/layertree/Controller.js").default} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having its
  *     layer opacity being changed or not.
  * @export

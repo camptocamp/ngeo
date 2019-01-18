@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.MobileDraw
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
@@ -50,7 +49,7 @@ import olSourceVector from 'ol/source/Vector.js';
  *
  * @constructor
  * @fires DrawEvent
- * @extends {ol.interaction.Interaction}
+ * @extends {import("ol/interaction/Interaction.js").default}
  * @param {MobileDrawOptions} options Options
  */
 const exports = function(options) {
@@ -61,14 +60,14 @@ const exports = function(options) {
 
   /**
    * The key for view center change event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.changeEventKey_ = null;
 
   /**
    * Geometry type.
-   * @type {ol.geom.GeometryType}
+   * @type {import("ol/geom/GeometryType.js").default}
    * @private
    */
   this.type_ = options.type;
@@ -86,28 +85,28 @@ const exports = function(options) {
 
   /**
    * Sketch feature.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.sketchFeature_ = null;
 
   /**
    * Previous sketch points, saved to be able to display them on the layer.
-   * @type {Array.<ol.Feature>}
+   * @type {Array.<import("ol/Feature.js").default>}
    * @private
    */
   this.sketchPoints_ = [];
 
   /**
    * Current sketch point.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.sketchPoint_ = null;
 
   /**
    * Draw overlay where our sketch features are drawn.
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.overlay_ = new olLayerVector({
@@ -197,7 +196,7 @@ exports.prototype.getValid = function() {
 
 /**
  * Returns the current sketch feature.
- * @return {?ol.Feature} The sketch feature, or null if none.
+ * @return {?import("ol/Feature.js").default} The sketch feature, or null if none.
  */
 exports.prototype.getFeature = function() {
   return this.sketchFeature_;
@@ -400,7 +399,7 @@ exports.prototype.modifyDrawing_ = function() {
 
 /**
  * Stop drawing without adding the sketch feature to the target layer.
- * @return {?ol.Feature} The sketch feature (or null if none).
+ * @return {?import("ol/Feature.js").default} The sketch feature (or null if none).
  * @private
  */
 exports.prototype.abortDrawing_ = function() {
@@ -434,7 +433,7 @@ exports.prototype.updateState_ = function() {
 
 
 /**
- * @param {ol.Object.Event} evt Event.
+ * @param {import("ol/Object/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleViewCenterChange_ = function(evt) {
@@ -494,7 +493,7 @@ exports.prototype.updateSketchFeatures_ = function() {
 
 /**
  * Returns the geometry of the sketch point feature.
- * @return {ol.geom.Point} Point.
+ * @return {import("ol/geom/Point.js").default} Point.
  * @private
  */
 exports.prototype.getSketchPointGeometry_ = function() {
@@ -507,7 +506,7 @@ exports.prototype.getSketchPointGeometry_ = function() {
 
 /**
  * Returns the center of the map view
- * @return {ol.Coordinate} Coordinate.
+ * @return {import("ol/coordinate.js").Coordinate} Coordinate.
  * @private
  */
 exports.prototype.getCenter_ = function() {

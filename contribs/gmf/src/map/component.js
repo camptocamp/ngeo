@@ -1,5 +1,4 @@
 /**
- * @module gmf.map.component
  */
 import angular from 'angular';
 import gmfPermalinkModule from 'gmf/permalink/module.js';
@@ -30,7 +29,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
- * @htmlAttribute {ol.Map} gmf-map-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-map-map The map.
  * @htmlAttribute {boolean|undefined} gmf-map-manage-resize Whether to update
  *     the size of the map on browser window resize.
  * @htmlAttribute {boolean|undefined} gmf-map-resize-transition The duration
@@ -59,9 +58,9 @@ exports.directive('gmfMap', directive);
 
 
 /**
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- * @param {!gmf.permalink.Permalink} gmfPermalink The gmf permalink service.
- * @param {!gmf.editing.Snapping} gmfSnapping The gmf snapping service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
+ * @param {!import("gmf/editing/Snapping.js").default} gmfSnapping The gmf snapping service.
  * @constructor
  * @private
  * @ngInject
@@ -73,7 +72,7 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Scope properties
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -94,19 +93,19 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Injected properties
 
   /**
-   * @type {!ngeo.map.FeatureOverlayMgr}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!gmf.permalink.Permalink}
+   * @type {!import("gmf/permalink/Permalink.js").default}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!gmf.editing.Snapping}
+   * @type {!import("gmf/editing/Snapping.js").default}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;

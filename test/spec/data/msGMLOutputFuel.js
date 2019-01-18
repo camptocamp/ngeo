@@ -1,5 +1,4 @@
 /**
- * @module ngeo.test.data.msGMLOutputFuel
  */
 const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +

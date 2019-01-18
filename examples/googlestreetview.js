@@ -1,5 +1,4 @@
 /**
- * @module app.googlestreetview
  */
 const exports = {};
 
@@ -30,9 +29,9 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
@@ -46,7 +45,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   this.radius = 500;
 
   /**
-   * @type {!ol.style.Style}
+   * @type {!import("ol/style/Style.js").default}
    * @export
    */
   this.style = new olStyleStyle({
@@ -60,7 +59,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

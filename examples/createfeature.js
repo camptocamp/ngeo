@@ -1,5 +1,4 @@
 /**
- * @module app.createfeature
  */
 const exports = {};
 
@@ -34,7 +33,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
@@ -42,7 +41,7 @@ exports.module = angular.module('app', [
 exports.MainController = function(ngeoToolActivateMgr) {
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features = new olCollection();
@@ -73,7 +72,7 @@ exports.MainController = function(ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

@@ -1,5 +1,4 @@
 /**
- * @module gmf.permalink.shareComponent
  */
 import angular from 'angular';
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
@@ -19,7 +18,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfPermalinkShareTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -30,8 +29,8 @@ exports.value('gmfPermalinkShareTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfPermalinkShareTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfPermalinkShareTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -65,10 +64,10 @@ class ShareComponentController {
   /**
    * The controller for the share component
    * @param {angular.IScope} $scope Scope.
-   * @param {ngeo.statemanager.Location} ngeoLocation ngeo Location service.
-   * @param {gmf.permalink.ShareService} gmfShareService service for sharing map.
+   * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
+   * @param {import("gmf/permalink/ShareService.js").default} gmfShareService service for sharing map.
    * @param {angular.IQService} $q Angular q service
-   * @param {angular.Attributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @constructor
    * @ngInject
    * @ngdoc controller
@@ -89,7 +88,7 @@ class ShareComponentController {
     this.$scope_ = $scope;
 
     /**
-     * @type {gmf.permalink.ShareService}
+     * @type {import("gmf/permalink/ShareService.js").default}
      * @private
      */
     this.gmfShareService_ = gmfShareService;
@@ -101,7 +100,7 @@ class ShareComponentController {
     this.$q_ = $q;
 
     /**
-     * @type {ngeo.statemanager.Location}
+     * @type {import("ngeo/statemanager/Location.js").default}
      * @private
      */
     this.ngeoLocation_ = ngeoLocation;

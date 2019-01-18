@@ -1,5 +1,4 @@
 /**
- * @module ngeo.layertree.component
  */
 import angular from 'angular';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
@@ -17,8 +16,8 @@ const exports = angular.module('ngeoLayertree', [
 
 exports.value('ngeoLayertreeTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => {
@@ -94,9 +93,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @htmlAttribute {Object} ngeo-layertree One theme (JSON).
  * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
- * @htmlAttribute {ol.Map} ngeo-layertree-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-layertree-map The map.
  * @htmlAttribute {string} ngeo-layertree-nodelayer Expression that will be parsed
- *      to be a {@link Function} that return a {@link ol.layer.Layer}
+ *      to be a {@link Function} that return a {@link import("ol/layer/Layer.js").default}
  *      with the argument:
  *      {
  *          'node': {@link Object}|undefined,
@@ -108,11 +107,11 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *      to be a {@link Function} with the argument:
  *      {
  *          'treeScope': !{@link angular.IScope},
- *          'treeCtrl': {@link ngeo.layertree.Controller}
+ *          'treeCtrl': {@link import("ngeo/layertree/Controller.js").default}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject

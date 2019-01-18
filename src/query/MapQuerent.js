@@ -1,5 +1,4 @@
 /**
- * @module ngeo.query.MapQuerent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -74,12 +73,12 @@ const exports = class {
    * service.
    *
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
-   * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
-   * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature
+   * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature
    *     helper service.
-   * @param {ngeo.query.Querent} ngeoQuerent The ngeo querent service.
+   * @param {import("ngeo/query/Querent.js").default} ngeoQuerent The ngeo querent service.
    * @param {QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
    * @ngname ngeoQuerent
@@ -99,19 +98,19 @@ const exports = class {
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {ngeo.misc.FeatureHelper}
+     * @type {import("ngeo/misc/FeatureHelper.js").default}
      * @private
      */
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {ngeo.datasource.Helper}
+     * @type {import("ngeo/datasource/Helper.js").default}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
 
     /**
-     * @type {ngeo.query.Querent}
+     * @type {import("ngeo/query/Querent.js").default}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

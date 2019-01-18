@@ -1,5 +1,4 @@
 /**
- * @module ngeo.print.Service
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -18,7 +17,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 
 /**
- * @typedef {function(string):!ngeo.print.Service} CreatePrint
+ * @typedef {function(string):!import("ngeo/print/Service.js").default} CreatePrint
  */
 
 
@@ -63,7 +62,7 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
  * @param {string} url URL to MapFish print web service.
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper service.
  */
 const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   /**
@@ -85,13 +84,13 @@ const exports = function(url, $http, gettextCatalog, ngeoLayerHelper) {
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.print.VectorEncoder}
+   * @type {import("ngeo/print/VectorEncoder.js").default}
    * @private
    */
   this.vectorEncoder_ = new ngeoPrintVectorEncoder();
@@ -122,7 +121,7 @@ exports.prototype.cancel = function(ref, opt_httpConfig) {
 
 /**
  * Create a report specification.
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @param {number} scale Scale.
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
@@ -160,7 +159,7 @@ exports.prototype.createSpec = function(
 
 
 /**
- * @param {ol.Map} map Map.
+ * @param {import("ol/Map.js").default} map Map.
  * @param {number} scale Scale.
  * @param {MapFishPrintMap} object Object.
  * @private
@@ -201,7 +200,7 @@ exports.prototype.encodeMap_ = function(map, scale, object) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {number} resolution Resolution.
  */
 exports.prototype.encodeLayer = function(arr, layer, resolution) {
@@ -217,7 +216,7 @@ exports.prototype.encodeLayer = function(arr, layer, resolution) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer Layer.
+ * @param {import("ol/layer/Image.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeImageLayer_ = function(arr, layer) {
@@ -231,7 +230,7 @@ exports.prototype.encodeImageLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer Layer.
+ * @param {import("ol/layer/Image.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
@@ -250,7 +249,7 @@ exports.prototype.encodeImageWmsLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Image} layer The layer.
+ * @param {import("ol/layer/Image.js").default} layer The layer.
  * @param {string} url Url of the WMS server.
  * @param {Object} params Url parameters
  * @private
@@ -307,7 +306,7 @@ exports.getAbsoluteUrl_ = function(url) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile} layer Layer.
+ * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeTileLayer_ = function(arr, layer) {
@@ -323,7 +322,7 @@ exports.prototype.encodeTileLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile} layer Layer.
+ * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
@@ -378,7 +377,7 @@ exports.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
 
 /**
  * @param {Array.<MapFishPrintLayer>} arr Array.
- * @param {ol.layer.Tile} layer Layer.
+ * @param {import("ol/layer/Tile.js").default} layer Layer.
  * @private
  */
 exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
@@ -394,7 +393,7 @@ exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
 
 /**
  * Return the WMTS URL to use in the print spec.
- * @param {ol.source.WMTS} source The WMTS source.
+ * @param {import("ol/source/WMTS.js").default} source The WMTS source.
  * @return {string} URL.
  * @private
  */
@@ -406,7 +405,7 @@ exports.prototype.getWmtsUrl_ = function(source) {
 
 /**
  * Return an opacity value for the specified layer.
- * @param {ol.layer.Base} layer Layer.
+ * @param {import("ol/layer/Base.js").default} layer Layer.
  * @returns {number} opacity Opacity value.
  * @private
  */
@@ -482,7 +481,7 @@ exports.prototype.getCapabilities = function(opt_httpConfig) {
 /**
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @return {CreatePrint} The function to create a print service.
  * @ngInject
  * @ngdoc service

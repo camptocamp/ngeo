@@ -1,5 +1,4 @@
 /**
- * @module gmf.print.component
  */
 import angular from 'angular';
 
@@ -42,8 +41,8 @@ const exports = angular.module('gmfPrintComponent', [
 
 exports.value('gmfPrintTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template.
    */
   (element, attrs) => {
@@ -101,9 +100,9 @@ exports.value('gmfPrintState', {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfPrintTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -144,7 +143,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * Note: The 'print' and 'cancel' functions can also be called via globals
  * events 'gmfStartPrint' and 'gmfCancelPrint'.
  *
- * @htmlAttribute {ol.Map} gmf-print-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-print-map The map.
  * @htmlAttribute {boolean} gmf-print-active A boolean that informs if the
  *     panel is open or not.
  * @htmlAttribute {boolean} gmf-print-rotatemask Optional. True to apply
@@ -199,24 +198,24 @@ exports.optionsType;
 class Controller {
 
   /**
-   * @param {angular.JQLite} $element Element.
+   * @param {JQLite} $element Element.
    * @param {angular.IScope} $rootScope Angular root scope.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.map.LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
+   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
-   * @param {ngeo.print.Utils} ngeoPrintUtils The ngeo PrintUtils service.
+   * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
-   * @param {gmf.authentication.Service} gmfAuthenticationService The authentication service.
+   * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService The authentication service.
    * @param {QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
-   * @param {gmf.print.component.PrintStateEnum} gmfPrintState GMF print state.
-   * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
+   * @param {import("gmf/print/component.js").default.PrintStateEnum} gmfPrintState GMF print state.
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -228,7 +227,7 @@ class Controller {
     $filter, gmfPrintState, gmfThemes) {
 
     /**
-     * @type {gmf.print.component.PrintStateEnum}
+     * @type {import("gmf/print/component.js").default.PrintStateEnum}
      * @private
      */
     this.gmfPrintState_ = gmfPrintState;
@@ -240,7 +239,7 @@ class Controller {
     this.translate_ = $filter('translate');
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -300,25 +299,25 @@ class Controller {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {ngeo.map.LayerHelper}
+     * @type {import("ngeo/map/LayerHelper.js").default}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {ol.layer.Vector}
+     * @type {import("ol/layer/Vector.js").default}
      * @private
      */
     this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
 
     /**
-     * @type {ngeo.print.Utils}
+     * @type {import("ngeo/print/Utils.js").default}
      * @private
      */
     this.ngeoPrintUtils_ = ngeoPrintUtils;
 
     /**
-     * @type {ngeo.print.Service}
+     * @type {import("ngeo/print/Service.js").default}
      * @private
      */
     this.ngeoPrint_ = ngeoCreatePrint(gmfPrintUrl);
@@ -330,13 +329,13 @@ class Controller {
     this.ngeoQueryResult_ = ngeoQueryResult;
 
     /**
-     * @type {gmf.authentication.Service}
+     * @type {import("gmf/authentication/Service.js").default}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {gmf.theme.Themes}
+     * @type {import("gmf/theme/Themes.js").default}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
@@ -400,19 +399,19 @@ class Controller {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {import("ol/EventsKey.js").default}
      * @private
      */
     this.postComposeListenerKey_;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {import("ol/EventsKey.js").default}
      * @private
      */
     this.pointerDragListenerKey_;
 
     /**
-     * @type {ol.EventsKey}
+     * @type {import("ol/EventsKey.js").default}
      * @private
      */
     this.mapViewResolutionChangeKey_;
@@ -476,7 +475,7 @@ class Controller {
     this.scaleManuallySelected_ = false;
 
     /**
-     * @type {angular.JQLite}
+     * @type {JQLite}
      * @export
      */
     this.rotationInput_ = $element.find('.gmf-print-rotation-input');
@@ -496,7 +495,7 @@ class Controller {
     });
 
     /**
-     * @type {function(ol.render.Event)}
+     * @type {function(import("ol/render/Event.js").default)}
      */
     this.postcomposeListener_;
 
@@ -553,7 +552,7 @@ class Controller {
     });
 
     /**
-     * @return {ol.Size} Size in dots of the map to print.
+     * @return {import("ol/size.js").Size} Size in dots of the map to print.
      */
     const getSizeFn = () => this.paperSize_;
 
@@ -813,7 +812,7 @@ class Controller {
    * Calculate the angle and the sense of rotation between two lines. One from the
    * center of the map and the point of the last call to this function and one
    * from the same center and the point of the current call.
-   * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+   * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
    * @private
    */
   onPointerDrag_(e) {
@@ -992,7 +991,7 @@ class Controller {
 
 
   /**
-   * @param {gmf.print.component.PrintStateEnum=} opt_printState the print state.
+   * @param {import("gmf/print/component.js").default.PrintStateEnum=} opt_printState the print state.
    * @private
    */
   resetPrintStates_(opt_printState) {
@@ -1043,7 +1042,7 @@ class Controller {
   /**
    * Get the optimal scale to display the print mask. Return the first scale if
    * no scale matches.
-   * @param {ol.Size|undefined} mapSize Size of the map on the screen (px).
+   * @param {import("ol/size.js").Size|undefined} mapSize Size of the map on the screen (px).
    * @param {number|undefined} viewResolution Resolution of the map on the screen.
    * @return {number} The best scale. -1 is returned if there is no optimal
    *     scale, that is the optimal scale is lower than or equal to the first
@@ -1157,7 +1156,7 @@ class Controller {
             });
           }
         } else {
-          const source = /** @type ol.source.ImageWMS */ (layer.getSource());
+          const source = /** @type import("ol/source/ImageWMS.js").default */ (layer.getSource());
           // For each name in a WMS layer.
           const layerNames = source.getParams()['LAYERS'].split(',');
           layerNames.forEach((name) => {
@@ -1269,7 +1268,7 @@ class Controller {
 
   /**
    * Check the current state of the print.
-   * @param {string} stateEnumKey An enum key from gmf.print.component.PrintStateEnum.
+   * @param {string} stateEnumKey An enum key from import("gmf/print/component.js").default.PrintStateEnum.
    * @return {boolean} True if the given state matches with the current print
    *     state. False otherwise.
    * @export

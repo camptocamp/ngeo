@@ -1,5 +1,4 @@
 /**
- * @module ngeo.query.bboxQueryComponent
  */
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
@@ -36,7 +35,7 @@ const exports = angular.module('ngeoBboxQuery', [
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
- * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -48,7 +47,7 @@ function directive(ngeoMapQuerent) {
     scope: false,
     link: (scope, elem, attrs) => {
       /**
-       * @type {ol.Map}
+       * @type {import("ol/Map.js").default}
        */
       const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 
@@ -59,7 +58,7 @@ function directive(ngeoMapQuerent) {
       /**
        * Called when a bbox is drawn while this controller is active. Issue
        * a request to the query service using the extent that was drawn.
-       * @param {ol.interaction.DragBox.Event} evt Event.
+       * @param {import("ol/interaction/DragBox/Event.js").default} evt Event.
        */
       const handleBoxEnd = function(evt) {
         const action = ngeoQueryKeyboard.action;

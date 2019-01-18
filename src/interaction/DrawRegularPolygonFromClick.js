@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.DrawRegularPolygonFromClick
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -38,7 +37,7 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
  *
  * @constructor
  * @fires DrawEvent
- * @extends {ol.interaction.Interaction}
+ * @extends {import("ol/interaction/Interaction.js").default}
  * @param {DrawRegularPolygonFromClickOptions} options Options
  */
 const exports = function(options) {
@@ -62,7 +61,7 @@ const exports = function(options) {
   this.sides_ = options.sides !== undefined ? options.sides : 3;
 
   /**
-   * @type {!Array.<ol.EventsKey>}
+   * @type {!Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -144,7 +143,7 @@ exports.prototype.disable_ = function() {
 /**
  * Called the the map is clicked. Create a regular polygon at the clicked
  * location using the configuration
- * @param {ol.MapBrowserEvent} evt Map browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @private
  */
 exports.prototype.handleMapClick_ = function(evt) {

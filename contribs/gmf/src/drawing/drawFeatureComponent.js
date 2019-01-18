@@ -1,5 +1,4 @@
 /**
- * @module gmf.drawing.drawFeatureComponent
  */
 
 import angular from 'angular';
@@ -63,7 +62,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @htmlAttribute {boolean} gmf-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {ol.Map} gmf-drawfeature-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-drawfeature-map The map.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -90,9 +89,9 @@ exports.directive('gmfDrawfeature', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!ol.Collection.<!ol.Feature>} ngeoFeatures Collection of features.
- * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -103,7 +102,7 @@ exports.directive('gmfDrawfeature', component);
 function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -125,7 +124,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.drawActive = false;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
@@ -143,7 +142,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.longPressTimeout_ = null;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
@@ -161,44 +160,44 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.timeout_ = $timeout;
 
   /**
-   * @type {!ngeo.misc.FeatureHelper}
+   * @type {!import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ol.Collection.<!ol.Feature>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.features = ngeoFeatures;
 
   /**
-   * @type {!ngeo.misc.ToolActivateMgr}
+   * @type {!import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.selectedFeature = null;
 
   /**
-   * @type {!ol.Collection.<!ol.Feature>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.selectedFeatures = new olCollection();
 
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
 
   /**
-   * @type {!ngeo.interaction.Modify}
+   * @type {!import("ngeo/interaction/Modify.js").default}
    * @private
    */
   this.modify_ = new ngeoInteractionModify({
@@ -208,25 +207,25 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {?ngeo.Menu}
+   * @type {?import("ngeo/Menu.js").default}
    * @private
    */
   this.menu_ = null;
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.menuListenerKey_ = null;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
 
   /**
-   * @type {!ngeo.interaction.Translate}
+   * @type {!import("ngeo/interaction/Translate.js").default}
    * @private
    */
   this.translate_ = new ngeoInteractionTranslate({
@@ -244,7 +243,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.interactions_.push(this.translate_);
 
   /**
-   * @type {!ngeo.interaction.Rotate}
+   * @type {!import("ngeo/interaction/Rotate.js").default}
    * @private
    */
   this.rotate_ = new ngeoInteractionRotate({
@@ -264,19 +263,19 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.initializeInteractions_();
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
   /**
-   * @type {!Array.<!ol.EventsKey>}
+   * @type {!Array.<!import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -457,7 +456,7 @@ Controller.prototype.handleActiveChange_ = function(active) {
  * Method called when a selection occurs from the list, i.e. when an item in
  * the list of features is clicked. Called from the template, so no need to
  * update Angular's scope.
- * @param {!ol.Feature} feature Feature to select.
+ * @param {!import("ol/Feature.js").default} feature Feature to select.
  * @export
  */
 Controller.prototype.selectFeatureFromList = function(feature) {
@@ -468,7 +467,7 @@ Controller.prototype.selectFeatureFromList = function(feature) {
 
 
 /**
- * @return {!Array.<!ol.Feature>} Array.
+ * @return {!Array.<!import("ol/Feature.js").default>} Array.
  * @export
  */
 Controller.prototype.getFeaturesArray = function() {
@@ -490,7 +489,7 @@ Controller.prototype.clearFeatures = function() {
 
 
 /**
- * @param {!ol.Feature} feature The feature to remove from the selection.
+ * @param {!import("ol/Feature.js").default} feature The feature to remove from the selection.
  * @export
  */
 Controller.prototype.removeFeature = function(feature) {
@@ -504,13 +503,13 @@ Controller.prototype.removeFeature = function(feature) {
 
 
 /**
- * @param {!ol.Collection.Event} evt Event.
+ * @param {!import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturesAdd_ = function(evt) {
   // timeout to prevent double-click to zoom the map
   this.timeout_(() => {
-    this.selectedFeature = /** @type {ol.Feature} */ (evt.element);
+    this.selectedFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
     this.drawActive = false;
     this.scope_.$apply();
   });
@@ -518,7 +517,7 @@ Controller.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {!ol.Collection.Event} evt Event.
+ * @param {!import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturesRemove_ = function(evt) {
@@ -573,7 +572,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function(
 
 
 /**
- * @param {!ol.MapBrowserEvent} evt Event.
+ * @param {!import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {
@@ -750,7 +749,7 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
 
 /**
- * @param {!ol.interaction.Translate.Event} evt Event.
+ * @param {!import("ol/interaction/Translate/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {

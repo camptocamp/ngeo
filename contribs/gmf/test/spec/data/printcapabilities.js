@@ -1,5 +1,4 @@
 /**
- * @module gmf.test.data.printcapabilities
  */
 const exports = {
   'app': 'demo',

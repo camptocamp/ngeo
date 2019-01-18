@@ -1,5 +1,4 @@
 /**
- * @module ngeo.rule.Rule
  */
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
@@ -191,7 +190,7 @@ const exports = class {
     // === Other properties ===
 
     /**
-     * @type {Array.<!ol.EventsKey>}
+     * @type {Array.<!import("ol/EventsKey.js").default>}
      * @protected
      */
     this.listenerKeys = [];

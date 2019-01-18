@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.File
  */
 import angular from 'angular';
 

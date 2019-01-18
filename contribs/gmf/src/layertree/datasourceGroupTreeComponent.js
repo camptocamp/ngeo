@@ -1,5 +1,4 @@
 /**
- * @module gmf.layertree.datasourceGroupTreeComponent
  */
 import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -20,7 +19,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -31,8 +30,8 @@ exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -47,7 +46,7 @@ class Controller {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
-   * @param {!ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources
+   * @param {!import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources
    *     service.
    * @private
    * @ngInject
@@ -59,7 +58,7 @@ class Controller {
     // Binding properties
 
     /**
-     * @type {!ngeo.datasource.Group}
+     * @type {!import("ngeo/datasource/Group.js").default}
      * @export
      */
     this.group;
@@ -98,7 +97,7 @@ class Controller {
 
   /**
    * Toggle visible property of a data source.
-   * @param {ngeo.datasource.DataSource} dataSource Data source to toggle the
+   * @param {import("ngeo/datasource/DataSource.js").default} dataSource Data source to toggle the
    * visibility
    * @export
    */
@@ -119,7 +118,7 @@ class Controller {
   }
 
   /**
-   * @param {!ngeo.datasource.DataSource} dataSource Data source to remove from
+   * @param {!import("ngeo/datasource/DataSource.js").default} dataSource Data source to remove from
    *     the `ngeo.DataSources` collection.
    * @export
    */

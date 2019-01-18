@@ -1,5 +1,4 @@
 /**
- * @module gmf.controllers.AbstractDesktopController
  */
 import angular from 'angular';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
@@ -32,7 +31,7 @@ import olStyleText from 'ol/style/Text.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractAppController}
+ * @extends {import("gmf/controllers/AbstractAppController.js").default}
  * @ngdoc controller
  * @ngInject
  * @export
@@ -88,7 +87,7 @@ const exports = function(config, $scope, $injector) {
   });
 
   /**
-   * @type {!ol.style.Style}
+   * @type {!import("ol/style/Style.js").default}
    * @export
    */
   this.googleStreetViewStyle = new olStyleStyle({
@@ -125,7 +124,7 @@ const exports = function(config, $scope, $injector) {
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.editFeatureVectorLayer = new olLayerVector({
@@ -140,7 +139,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -162,7 +161,7 @@ const exports = function(config, $scope, $injector) {
   };
 
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.profileLine = null;

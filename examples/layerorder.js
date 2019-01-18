@@ -1,5 +1,4 @@
 /**
- * @module app.layerorder
  */
 const exports = {};
 
@@ -34,7 +33,7 @@ exports.module = angular.module('app', [
  */
 exports.MainController = function($scope) {
 
-  /** @type {ol.layer.Tile} */
+  /** @type {import("ol/layer/Tile.js").default} */
   const asitvd = new olLayerTile({
     source: new ngeoSourceAsitVD({
       layer: 'asitvd.fond_couleur'
@@ -42,7 +41,7 @@ exports.MainController = function($scope) {
   });
   asitvd.set('name', 'asitvd');
 
-  /** @type {ol.layer.Tile} */
+  /** @type {import("ol/layer/Tile.js").default} */
   const boundaries = new olLayerTile({
     source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
@@ -52,7 +51,7 @@ exports.MainController = function($scope) {
   });
   boundaries.set('name', 'Boundaries');
 
-  /** @type {ol.layer.Tile} */
+  /** @type {import("ol/layer/Tile.js").default} */
   const waterBodies = new olLayerTile({
     source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
@@ -62,7 +61,7 @@ exports.MainController = function($scope) {
   });
   waterBodies.set('name', 'Water bodies');
 
-  /** @type {ol.layer.Tile} */
+  /** @type {import("ol/layer/Tile.js").default} */
   const cities = new olLayerTile({
     source: new olSourceTileWMS({
       url: 'https://wms.geo.admin.ch',
@@ -73,7 +72,7 @@ exports.MainController = function($scope) {
   cities.set('name', 'Cities');
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -94,7 +93,7 @@ exports.MainController = function($scope) {
   const map = this.map;
 
   /**
-   * @type {ol.layer.Tile}
+   * @type {import("ol/layer/Tile.js").default}
    * @private
    */
   this.roads_ = new olLayerTile({
@@ -107,7 +106,7 @@ exports.MainController = function($scope) {
   this.roads_.set('name', 'Roads');
 
   /**
-   * @type {Array.<ol.layer.Base>}
+   * @type {Array.<import("ol/layer/Base.js").default>}
    * @const
    * @export
    */
@@ -124,7 +123,7 @@ exports.MainController = function($scope) {
   });
 
   /**
-   * @param {ol.layer.Base} layer Layer.
+   * @param {import("ol/layer/Base.js").default} layer Layer.
    * @return {boolean} `false` if the layer shouldn't be part of the selected
    *     layers.
    */

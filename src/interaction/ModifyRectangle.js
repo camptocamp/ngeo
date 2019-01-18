@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.ModifyRectangle
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
@@ -21,9 +20,9 @@ import olSourceVector from 'ol/source/Vector.js';
  * Interaction for modifying feature geometries.
  *
  * @constructor
- * @extends {ol.interaction.Pointer}
+ * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
- * @fires ngeo.interaction.ModifyCircleEvent
+ * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
 const exports = function(options) {
@@ -43,7 +42,7 @@ const exports = function(options) {
   this.modified_ = false;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorPoints_ = new olLayerVector({
@@ -57,14 +56,14 @@ const exports = function(options) {
   });
 
   /**
-   * @type {!ol.Collection.<ol.Feature>}
+   * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
 
   /**
    * The feature currently modified.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.feature_ = null;
@@ -105,7 +104,7 @@ exports.prototype.setActive = function(active) {
 };
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
@@ -182,7 +181,7 @@ exports.prototype.addFeature_ = function(feature) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Map browser event
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
  * @private
  */
 exports.prototype.willModifyFeatures_ = function(evt) {
@@ -266,7 +265,7 @@ exports.prototype.initializeParams_ = function() {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
@@ -292,7 +291,7 @@ exports.prototype.setMap = function(map) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureAdd_ = function(evt) {
@@ -304,19 +303,19 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Start drag sequence?
- * @this {ngeo.interaction.ModifyRectangle}
+ * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
 exports.prototype.handleDown_ = function(evt) {
@@ -337,15 +336,15 @@ exports.prototype.handleDown_ = function(evt) {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
- * @this {ngeo.interaction.ModifyRectangle}
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
+ * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
 exports.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
   const feature = this.feature_;
 
-  const geometry = /** @type {ol.geom.SimpleGeometry} */
+  const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (feature.getGeometry());
 
   if (geometry instanceof olGeomPoint) {
@@ -384,10 +383,10 @@ exports.prototype.handleDrag_ = function(evt) {
 /**
  * Calculate the new position of a point as projected on a vector from origin to
  * destination.
- * @param {ol.Pixel} origin Pixel of origin (opposite of the drag handle)
- * @param {ol.Pixel} destination Pixel of destination (the handle we dragged)
- * @param {ol.Pixel} vector The normalized vector to the point
- * @return {ol.Pixel} The new pixel of the point
+ * @param {import("ol/Pixel.js").default} origin Pixel of origin (opposite of the drag handle)
+ * @param {import("ol/Pixel.js").default} destination Pixel of destination (the handle we dragged)
+ * @param {import("ol/Pixel.js").default} vector The normalized vector to the point
+ * @return {import("ol/Pixel.js").default} The new pixel of the point
  * @private
  */
 exports.prototype.calculateNewPixel_ = function(
@@ -407,9 +406,9 @@ exports.prototype.calculateNewPixel_ = function(
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} evt Event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @return {boolean} Stop drag sequence?
- * @this {ngeo.interaction.ModifyRectangle}
+ * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
 exports.prototype.handleUp_ = function(evt) {

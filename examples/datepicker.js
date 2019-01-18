@@ -1,5 +1,4 @@
 /**
- * @module app.datepicker
  */
 const exports = {};
 
@@ -21,13 +20,13 @@ exports.module = angular.module('app', [
 
 /**
  * @constructor
- * @param {!ngeo.misc.Time} ngeoTime time service.
+ * @param {!import("ngeo/misc/Time.js").default} ngeoTime time service.
  * @ngInject
  */
 exports.MainController = function(ngeoTime) {
 
   /**
-   * @type {ngeo.misc.Time}
+   * @type {import("ngeo/misc/Time.js").default}
    * @private
    */
   this.ngeoTime_ = ngeoTime;

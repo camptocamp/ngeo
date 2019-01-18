@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.ToolActivate
  */
 /**
  * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.

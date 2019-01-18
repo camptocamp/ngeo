@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.wfspermalink
  */
 const exports = {};
 
@@ -51,7 +50,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  */
 exports.MainController = function() {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -73,7 +72,7 @@ exports.MainController = function() {
 
   /**
    * FeatureStyle used by the gmf.query.windowComponent
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.featureStyle = new olStyleStyle({

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.message.popupComponent
  */
 import angular from 'angular';
 import 'angular-sanitize';
@@ -12,8 +11,8 @@ const exports = angular.module('ngeoPopup', [
 
 exports.value('ngeoPopupTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => {
@@ -55,8 +54,8 @@ function directive(ngeoPopupTemplateUrl) {
     templateUrl: ngeoPopupTemplateUrl,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       element.addClass('popover');

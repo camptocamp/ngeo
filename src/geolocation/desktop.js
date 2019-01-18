@@ -1,5 +1,4 @@
 /**
- * @module ngeo.geolocation.desktop
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -62,7 +61,7 @@ exports.GeolocationEventType = {
  *
  * See our live example: [../examples/desktopgeolocation.html](../examples/desktopgeolocation.html)
  *
- * @htmlAttribute {ol.Map} gmf-geolocation-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-geolocation-map The map.
  * @htmlAttribute {DesktopGeolocationDirectiveOptions} gmf-geolocation-options The options.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -88,10 +87,10 @@ exports.directive('ngeoDesktopGeolocation', directive);
  * @constructor
  * @private
  * @param {angular.IScope} $scope The directive's scope.
- * @param {angular.JQLite} $element Element.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {JQLite} $element Element.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoDesktopGeolocationController
@@ -104,7 +103,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   googAsserts.assertInstanceof(map, olMap);
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @private
    */
   this.map_ = map;
@@ -119,19 +118,19 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.$scope_ = $scope;
 
   /**
-   * @type {ngeo.message.Notification}
+   * @type {import("ngeo/message/Notification.js").default}
    * @private
    */
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
   /**
-   * @type {ol.Geolocation}
+   * @type {import("ol/Geolocation.js").default}
    * @private
    */
   this.geolocation_ = new olGeolocation({
@@ -146,7 +145,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   }, this);
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.positionFeature_ = new olFeature();
@@ -156,7 +155,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   }
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.accuracyFeature_ = new olFeature();
@@ -222,11 +221,11 @@ Controller.prototype.deactivate_ = function() {
 
 
 /**
- * @param {ol.Object.Event} event Event.
+ * @param {import("ol/Object/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.setPosition_ = function(event) {
-  const position = /** @type {ol.Coordinate} */ (this.geolocation_.getPosition());
+  const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
   this.positionFeature_.setGeometry(point);

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.editing.module
  */
 import angular from 'angular';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js';

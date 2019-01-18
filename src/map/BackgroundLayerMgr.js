@@ -1,5 +1,4 @@
 /**
- * @module ngeo.map.BackgroundLayerMgr
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -18,7 +17,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   current: ol.layer.Base,
  *   previous: ol.layer.Base
  * }>} BackgroundEvent
@@ -63,9 +62,9 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
  * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
  *
- * @extends {ol.Observable}
+ * @extends {import("ol/Observable.js").default}
  * @constructor
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Themes service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Themes service.
  * @ngInject
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
@@ -82,7 +81,7 @@ const exports = function(ngeoLayerHelper) {
   this.mapUids_ = {};
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -95,8 +94,8 @@ olUtilInherits(exports, olObservable);
 /**
  * Return the current background layer of a given map. `null` is returned if
  * the map does not have a background layer.
- * @param {ol.Map} map Map.
- * @return {ol.layer.Base} layer The background layer.
+ * @param {import("ol/Map.js").default} map Map.
+ * @return {import("ol/layer/Base.js").default} layer The background layer.
  * @export
  */
 exports.prototype.get = function(map) {
@@ -109,9 +108,9 @@ exports.prototype.get = function(map) {
 /**
  * Set the background layer of a map. If `layer` is `null` the background layer
  * is removed.
- * @param {ol.Map} map The map.
- * @param {ol.layer.Base} layer The new background layer.
- * @return {ol.layer.Base} The previous background layer.
+ * @param {import("ol/Map.js").default} map The map.
+ * @param {import("ol/layer/Base.js").default} layer The new background layer.
+ * @return {import("ol/layer/Base.js").default} The previous background layer.
  * @export
  */
 exports.prototype.set = function(map, layer) {
@@ -150,8 +149,8 @@ exports.prototype.set = function(map, layer) {
 /**
  * Return the current background layer overlay of a given map, used by the opacity slider.
  * `null` is returned if the map does not have an opacity background layer.
- * @param {ol.Map} map Map.
- * @return {ol.layer.Base} layer The opacity background layer.
+ * @param {import("ol/Map.js").default} map Map.
+ * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
 exports.prototype.getOpacityBgLayer = function(map) {
@@ -162,8 +161,8 @@ exports.prototype.getOpacityBgLayer = function(map) {
 
 /**
  * Set an background layer overlay, used by the opacity slider.
- * @param {ol.Map} map The map.
- * @param {ol.layer.Base} layer The opacity background layer.
+ * @param {import("ol/Map.js").default} map The map.
+ * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
 exports.prototype.setOpacityBgLayer = function(map, layer) {
@@ -182,7 +181,7 @@ exports.prototype.setOpacityBgLayer = function(map, layer) {
 };
 
 /**
- * @param {ol.Map} map The map.
+ * @param {import("ol/Map.js").default} map The map.
  * @param {Object.<string, string>} dimensions The global dimensions object.
  * @export
  */

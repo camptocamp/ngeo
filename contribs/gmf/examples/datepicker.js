@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.datepicker
  */
 const exports = {};
 
@@ -24,13 +23,13 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 /**
  * @constructor
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!ngeo.misc.WMSTime} ngeoWMSTime wmstime service.
+ * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wmstime service.
  * @ngInject
  */
 exports.MainController = function($scope, ngeoWMSTime) {
 
   /**
-   * @type {ngeo.misc.WMSTime}
+   * @type {import("ngeo/misc/WMSTime.js").default}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

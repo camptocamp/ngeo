@@ -1,5 +1,4 @@
 /**
- * @module app.search
  */
 const exports = {};
 
@@ -29,7 +28,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.searchComponent = {
   bindings: {
@@ -49,29 +48,29 @@ exports.module.component('appSearch', exports.searchComponent);
 
 /**
  * @constructor
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.IScope} $rootScope Angular root scope.
  * @param {angular.ICompileService} $compile Angular compile service.
- * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {import("ngeo/search/createGeoJSONBloodhound.js").default.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
 exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
    * @private
-   * @type {angular.JQLite}
+   * @type {JQLite}
    */
   this.$element = $element;
 
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = this.createVectorLayer_();
@@ -97,13 +96,13 @@ exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCr
   this.datasets = [{
     source: bloodhoundEngine.ttAdapter(),
     display: (suggestion) => {
-      const feature = /** @type {ol.Feature} */ (suggestion);
+      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
       return feature.get('label');
     },
     templates: {
       header: () => '<div class="ngeo-header">Addresses</div>',
       suggestion: (suggestion) => {
-        const feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
 
         // A scope for the ng-click on the suggestion's « i » button.
         const scope = $rootScope.$new(true);
@@ -143,7 +142,7 @@ exports.SearchController.prototype.$onInit = function() {
 
 
 /**
- * @return {ol.layer.Vector} The vector layer.
+ * @return {import("ol/layer/Vector.js").default} The vector layer.
  * @private
  */
 exports.SearchController.prototype.createVectorLayer_ = function() {
@@ -158,7 +157,7 @@ exports.SearchController.prototype.createVectorLayer_ = function() {
 
 
 /**
- * @param {ngeo.search.createGeoJSONBloodhound.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
+ * @param {import("ngeo/search/createGeoJSONBloodhound.js").default.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
  *     create GeoJSON Bloodhound service.
  * @return {Bloodhound} The bloodhound engine.
  * @private
@@ -179,8 +178,8 @@ exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearc
  * @private
  */
 exports.SearchController.select_ = function(event, suggestion, dataset) {
-  const feature = /** @type {ol.Feature} */ (suggestion);
-  const featureGeometry = /** @type {ol.geom.SimpleGeometry} */
+  const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+  const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
       (feature.getGeometry());
   const size = this.map.getSize();
   googAsserts.assert(size !== undefined);
@@ -203,7 +202,7 @@ exports.module.controller('AppSearchController', exports.SearchController);
  */
 exports.MainController = function() {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

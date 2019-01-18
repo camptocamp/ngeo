@@ -1,5 +1,4 @@
 /**
- * @module app.modifycircle
  */
 const exports = {};
 
@@ -35,7 +34,7 @@ const appmodule = angular.module('app', [
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -55,7 +54,7 @@ exports.MainController = function() {
   const circle = new olGeomCircle([-10691093, 4966327], 465000);
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.features = new olCollection();
@@ -83,7 +82,7 @@ exports.MainController = function() {
   vectorLayer.setMap(map);
 
   /**
-   * @type {ngeo.interaction.ModifyCircle}
+   * @type {import("ngeo/interaction/ModifyCircle.js").default}
    * @export
    */
   this.interaction = new ngeoInteractionModifyCircle(

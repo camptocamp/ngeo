@@ -1,5 +1,4 @@
 /**
- * @module gmf.authentication.component
  */
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
@@ -19,8 +18,8 @@ const exports = angular.module('gmfAuthentication', [
 
 
 /**
- * @param {angular.JQLite} element Element.
- * @param {angular.Attributes} attrs Attributes.
+ * @param {JQLite} element Element.
+ * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
 exports.gmfAuthenticationTemplateUrl_ = (element, attrs) => {
@@ -36,9 +35,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfAuthenticationTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -128,11 +127,11 @@ exports.component('gmfAuthentication', component);
 class AuthenticationController {
   /**
    * @private
-   * @param {!angular.JQLite} $element Element.
+   * @param {!JQLite} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {gmf.authentication.Service} gmfAuthenticationService GMF Authentication service
+   * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
-   * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+   * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
@@ -140,7 +139,7 @@ class AuthenticationController {
   constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
 
     /**
-     * @type {!angular.JQLite}
+     * @type {!JQLite}
      * @private
      */
     this.$element_ = $element;
@@ -158,13 +157,13 @@ class AuthenticationController {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {gmf.authentication.Service}
+     * @type {import("gmf/authentication/Service.js").default}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {ngeo.message.Notification}
+     * @type {import("ngeo/message/Notification.js").default}
      * @private
      */
     this.notification_ = ngeoNotification;

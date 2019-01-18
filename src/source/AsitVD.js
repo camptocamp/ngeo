@@ -1,5 +1,4 @@
 /**
- * @module ngeo.source.AsitVD
  */
 import olSourceWMTS from 'ol/source/WMTS.js';
 import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
@@ -23,7 +22,7 @@ const asitVDResolutions = [
 
 
 /**
- * @const {ol.tilegrid.WMTS}
+ * @const {import("ol/tilegrid/WMTS.js").default}
  */
 const asitVDTileGrid = new olTilegridWMTS({
   extent: [420000, 30000, 900000, 350000],

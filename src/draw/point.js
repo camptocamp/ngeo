@@ -1,5 +1,4 @@
 /**
- * @module ngeo.draw.point
  */
 import angular from 'angular';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
@@ -24,14 +23,14 @@ function directive() {
     require: '^^ngeoDrawfeature',
     /**
      * @param {!angular.IScope} $scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {ngeo.draw.Controller} drawFeatureCtrl Controller.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
       const drawPoint = new olInteractionDraw({
-        type: /** @type {ol.geom.GeometryType} */ ('Point')
+        type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
       });
 
       drawFeatureCtrl.registerInteraction(drawPoint);

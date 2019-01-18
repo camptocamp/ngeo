@@ -1,5 +1,4 @@
 /**
- * @module gmf.mobile.measure.pointComponent
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -21,8 +20,8 @@ const exports = angular.module('gmfMobileMeasurePoint', [
 
 exports.value('gmfMobileMeasurePointTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} The template url.
    */
   (element, attrs) => {
@@ -63,10 +62,10 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {Array.<LayerConfig>}
  *     gmf-mobile-measurepoint-layersconfig Raster elevation layers to get
  *     information under the point and its configuaration.
- * @htmlAttribute {ol.Map} gmf-mobile-measurepoint-map The map.
- * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
+ * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
+ * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -89,9 +88,9 @@ function component(gmfMobileMeasurePointTemplateUrl) {
     templateUrl: gmfMobileMeasurePointTemplateUrl,
     /**
      * @param {!angular.IScope} scope Scope.
-     * @param {!angular.JQLite} element Element.
-     * @param {!angular.Attributes} attrs Attributes.
-     * @param {!gmf.mobile.measure.pointComponent.Controller_} controller Controller.
+     * @param {!JQLite} element Element.
+     * @param {!angular.IAttributes} attrs Attributes.
+     * @param {!import("gmf/mobile/measure.js").default.pointComponent.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -107,7 +106,7 @@ exports.directive('gmfMobileMeasurepoint', component);
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
- * @param {gmf.raster.RasterService} gmfRaster gmf Raster service.
+ * @param {import("gmf/raster/RasterService.js").default} gmfRaster gmf Raster service.
  * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
@@ -118,7 +117,7 @@ exports.directive('gmfMobileMeasurepoint', component);
 function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 
   /**
-   * @type {gmf.raster.RasterService}
+   * @type {import("gmf/raster/RasterService.js").default}
    * @private
    */
   this.gmfRaster_ = gmfRaster;
@@ -142,7 +141,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.$filter_ = $filter;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -173,7 +172,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.layersConfig;
 
   /**
-   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
+   * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default}
    * @export
    */
   this.sketchStyle;
@@ -207,20 +206,20 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.format;
 
   /**
-   * @type {ngeo.interaction.MeasurePointMobile}
+   * @type {import("ngeo/interaction/MeasurePointMobile.js").default}
    * @export
    */
   this.measure;
 
   /**
-   * @type {ngeo.interaction.MobileDraw}
+   * @type {import("ngeo/interaction/MobileDraw.js").default}
    * @export
    */
   this.drawInteraction;
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -241,7 +240,7 @@ Controller.prototype.init = function() {
   );
   this.measure.setActive(this.active);
   ngeoMiscDecorate.interaction(this.measure);
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (this.measure.getDrawInteraction());
+  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (this.measure.getDrawInteraction());
   ngeoMiscDecorate.interaction(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();

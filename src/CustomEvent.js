@@ -1,12 +1,11 @@
 /**
- * @module ngeo.CustomEvent
  */
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olEventsEvent from 'ol/events/Event.js';
 
 /**
  * @constructor
- * @extends {ol.events.Event}
+ * @extends {import("ol/events/Event.js").default}
  * @param {string} type Event type.
  * @param {T} detail Event Detail.
  * @template T

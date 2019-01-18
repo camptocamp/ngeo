@@ -1,5 +1,4 @@
 /**
- * @module gmf.lidarprofile.Utils
  */
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -16,12 +15,12 @@ export default class {
 
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
-   * @param {gmf.lidarprofile.Config} config the LIDAR profile config instance
+   * @param {import("gmf/lidarprofile/Config.js").default} config the LIDAR profile config instance
    * @param {number} map_resolution the current resolution of the map
-   * @param {ol.geom.LineString} linestring an OpenLayer Linestring
+   * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
-   * @return {{clippedLine: Array.<ol.Coordinate>, distanceOffset: number}} Object with clipped lined coordinates and left domain value
+   * @return {{clippedLine: Array.<import("ol/coordinate.js").Coordinate>, distanceOffset: number}} Object with clipped lined coordinates and left domain value
    */
   clipLineByMeasure(config, map_resolution, linestring, dLeft, dRight) {
 
@@ -298,7 +297,7 @@ export default class {
 
   /**
    * Transform Openlayers linestring into a cPotree compatible definition
-   * @param {ol.geom.LineString} line the profile 2D line
+   * @param {import("ol/geom/LineString.js").default} line the profile 2D line
    * @return {string} linestring in a cPotree/pytree compatible string definition
    */
   getPytreeLinestring(line) {

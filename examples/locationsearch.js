@@ -1,5 +1,4 @@
 /**
- * @module app.locationsearch
  */
 const exports = {};
 
@@ -25,7 +24,7 @@ const appmodule = angular.module('app', [
 
 
 /**
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.locationSearchComponent = {
   bindings: {
@@ -45,13 +44,13 @@ appmodule.component('appLocationSearch', exports.locationSearchComponent);
 
 /**
  * @constructor
- * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").default.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
 exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -79,13 +78,13 @@ exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
     source: bloodhoundEngine.ttAdapter(),
     limit: limit,
     display: (suggestion) => {
-      const feature = /** @type {ol.Feature} */ (suggestion);
+      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
       return feature.get('label_no_html');
     },
     templates: {
       header: () => '<div class="ngeo-header">Locations</div>',
       suggestion: (suggestion) => {
-        const feature = /** @type {ol.Feature} */ (suggestion);
+        const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
         return `<p>${feature.get('label')}</p>`;
       }
     }
@@ -103,7 +102,7 @@ exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
 
 
 /**
- * @param {ngeo.search.createLocationSearchBloodhound.Function} ngeoCreateLocationSearchBloodhound
+ * @param {import("ngeo/search/createLocationSearchBloodhound.js").default.Function} ngeoCreateLocationSearchBloodhound
  *     Bloodhound service.
  * @param {number} limit Limit.
  * @return {Bloodhound} The bloodhound engine.
@@ -136,8 +135,8 @@ exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreat
  * @private
  */
 exports.SearchController.select_ = function(event, suggestion, dataset) {
-  const feature = /** @type {ol.Feature} */ (suggestion);
-  const bbox = /** @type {ol.Extent} */ (feature.get('bbox'));
+  const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+  const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
   googAsserts.assert(size !== undefined);
   const maxZoom = 16;
@@ -154,7 +153,7 @@ appmodule.controller('AppSearchController', exports.SearchController);
  */
 exports.MainController = function() {
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

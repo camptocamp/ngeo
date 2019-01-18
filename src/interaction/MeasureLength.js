@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.MeasureLength
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
@@ -14,14 +13,14 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  * See our live example: [../examples/measure.html](../examples/measure.html)
  *
  * @constructor
- * @extends {ngeo.interaction.Measure}
+ * @extends {import("ngeo/interaction/Measure.js").default}
  * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} options Options
  */
 const exports = function(format, gettextCatalog, options = /** @type {MeasureOptions} */({})) {
 
-  ngeoInteractionMeasure.call(this, /** @type {ngeo.interaction.MeasureBaseOptions} */ (options));
+  ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ (options));
 
 
   if (options.continueMsg !== undefined) {
@@ -50,7 +49,7 @@ olUtilInherits(exports, ngeoInteractionMeasure);
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     source: source,
     style: style
   });

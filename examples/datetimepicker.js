@@ -1,5 +1,4 @@
 /**
- * @module app.datetimepicker
  */
 const exports = {};
 

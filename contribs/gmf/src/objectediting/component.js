@@ -1,5 +1,4 @@
 /**
- * @module gmf.objectediting.component
  */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -64,8 +63,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfObjecteditingTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!JQLite} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
@@ -77,9 +76,9 @@ exports.value('gmfObjecteditingTemplateUrl',
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfObjecteditingTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -105,11 +104,11 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  *
  * @htmlAttribute {boolean} gmf-objectediting-active Whether the component is
  *     active or not.
- * @htmlAttribute {ol.Feature} gmf-objectediting-feature The feature to edit.
+ * @htmlAttribute {import("ol/Feature.js").default} gmf-objectediting-feature The feature to edit.
  * @htmlAttribute {string} gmf-objectediting-geomtype The geometry type.
  * @htmlAttribute {number} gmf-objectediting-layernodeid The GMF layer node id.
- * @htmlAttribute {ol.Map} gmf-objectediting-map The map.
- * @htmlAttribute {ol.Collection.<ol.Feature>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Map.js").default} gmf-objectediting-map The map.
+ * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @ngdoc component
  * @ngname gmfObjectediting
@@ -134,13 +133,13 @@ exports.component('gmfObjectediting', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {!gmf.objectediting.Query} gmfObjectEditingQuery Gmf ObjectEditing
+ * @param {!import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
+ * @param {!import("gmf/objectediting/Query.js").default} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {!gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
- * @param {!ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
+ * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -161,7 +160,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.active;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature;
@@ -179,13 +178,13 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.layerNodeId;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures;
@@ -212,13 +211,13 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!gmf.editing.EditFeature}
+   * @type {!import("gmf/editing/EditFeature.js").default}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {!gmf.objectediting.Query}
+   * @type {!import("gmf/objectediting/Query.js").default}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
@@ -263,25 +262,25 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.featureHasGeom;
 
   /**
-   * @type {!ngeo.map.LayerHelper}
+   * @type {!import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {!gmf.layertree.TreeManager}
+   * @type {!import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {!ngeo.misc.FeatureHelper}
+   * @type {!import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!ngeo.misc.ToolActivateMgr}
+   * @type {!import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -302,7 +301,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.process = gmfObjecteditingToolsComponent.ProcessType.ADD;
 
   /**
-   * @type {?ol.layer.Image|ol.layer.Tile}
+   * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
    * @private
    */
   this.editableWMSLayer_ = null;
@@ -322,7 +321,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.state_;
 
   /**
-   * @type {!Array.<?ol.geom.Geometry>}
+   * @type {!Array.<?import("ol/geom/Geometry.js").default>}
    * @private
    */
   this.geometryChanges_ = [];
@@ -365,25 +364,25 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.dirty = false;
 
   /**
-   * @type {!Array.<!ol.EventsKey>}
+   * @type {!Array.<!import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
 
   /**
-   * @type {!ol.interaction.Modify}
+   * @type {!import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modify_ = new olInteractionModify({
@@ -394,7 +393,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.interactions_.push(this.modify_);
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @private
    */
   this.modifyToolActivate_ = new ngeoMiscToolActivate(this.modify_, 'active');
@@ -406,7 +405,7 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
   this.toolsActive = false;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @private
    */
   this.toolsToolActivate_ = new ngeoMiscToolActivate(this, 'toolsActive');
@@ -785,7 +784,7 @@ exports.Controller.prototype.resetGeometryChanges_ = function() {
  * geometries intersects with one an other first. Those that does are merged
  * before being pushed to the changes.
  *
- * @param {ol.interaction.Modify.Event} evt Event.
+ * @param {import("ol/interaction/Modify/Event.js").default} evt Event.
  * @private
  */
 exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
@@ -811,7 +810,7 @@ exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
 
 /**
  * @param {gmfx.StylesObject} styles Hash of style.
- * @param {ol.Color} color Color.
+ * @param {import("ol/Color.js").default} color Color.
  * @param {boolean=} opt_incVertice Whether to include vertice or not. Defaults
  *     to `true`.
  * @private
@@ -943,7 +942,7 @@ exports.Controller.prototype.setFeatureStyle_ = function() {
  * with this component, then find the WMS layer associated with it for
  * for refresh purpose.
  *
- * @param {ngeo.layertree.Controller} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
  * @private
  */
 exports.Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
@@ -1013,12 +1012,12 @@ exports.Controller.prototype.handleWindowBeforeUnload_ = function(e) {
  * Depending on the current behaviour, use the added sketch feature to process
  * the existing geometry.
  *
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
-  const sketchFeature = /** @type {ol.Feature} */ (evt.element);
-  const sketchGeom = /** @type {ol.geom.Geometry} */ (
+  const sketchFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
+  const sketchGeom = /** @type {import("ol/geom/Geometry.js").default} */ (
     sketchFeature.getGeometry());
 
   const geom = this.feature.getGeometry();
@@ -1115,9 +1114,9 @@ exports.Controller.prototype.handleDestroy_ = function() {
  * Utility method that gets the clone of a geometry, which can be null or
  * undefined. In the latter case, a null value is returned instead of a
  * geometry.
- * @param {?ol.geom.Geometry|undefined} geometry A geometry, undefined or
+ * @param {?import("ol/geom/Geometry.js").default|undefined} geometry A geometry, undefined or
  *     null value.
- * @return {?ol.geom.Geometry} A geometry clone or null value.
+ * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
  */
 exports.Controller.cloneGeometry_ = function(geometry) {

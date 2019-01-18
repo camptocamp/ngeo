@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.backgroundlayerselector
  */
 const exports = {};
 
@@ -31,7 +30,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {gmf.theme.Themes} gmfThemes Themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
  * @constructor
  * @ngInject
  */
@@ -40,7 +39,7 @@ exports.MainController = function(gmfThemes) {
   gmfThemes.loadThemes();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

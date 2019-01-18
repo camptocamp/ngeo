@@ -1,5 +1,4 @@
 /**
- * @module ngeo.routing.NominatimInputComponent
  */
 const exports = {};
 import angular from 'angular';
@@ -22,7 +21,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
 
 exports.module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -34,8 +33,8 @@ exports.module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoRoutingNominatimInputComponentTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -45,10 +44,10 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
 
 
 /**
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -58,7 +57,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
 exports.Controller = function($element, $injector, $scope, ngeoNominatimService) {
 
   /**
-   * @type {!angular.JQLite}
+   * @type {!JQLite}
    * @private
    */
   this.element_ = $element;
@@ -70,7 +69,7 @@ exports.Controller = function($element, $injector, $scope, ngeoNominatimService)
   this.$scope_ = $scope;
 
   /**
-   * @type {ngeo.routing.NominatimService}
+   * @type {import("ngeo/routing/NominatimService.js").default}
    * @export
    */
   this.ngeoNominatimService = ngeoNominatimService;
@@ -124,7 +123,7 @@ exports.Controller = function($element, $injector, $scope, ngeoNominatimService)
  * @param {jQuery.Event} event Event.
  * @param {NominatimSearchResult} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
- * @this {ngeo.routing.NominatimInputComponent.Controller}
+ * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
  */
 exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
@@ -134,7 +133,7 @@ exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
 };
 
 /**
- * Input form field which provides Nominatim typeahead lookup using {@link ngeo.routing.NominatimService}.
+ * Input form field which provides Nominatim typeahead lookup using {@link import("ngeo/routing/NominatimService.js").default}.
  *
  * Example:
  *
@@ -143,7 +142,7 @@ exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
  *         ngeo-nominatim-input-placeholder="type to search"
  *         ngeo-nominatim-input-on-select="ctrl.onSelect">
  *
- * Is used in in the partial of {@link ngeo.routingFeatureComponent}.
+ * Is used in in the partial of {@link import("ngeo/routingFeatureComponent.js").default}.
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *

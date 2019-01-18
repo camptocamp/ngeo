@@ -1,5 +1,4 @@
 /**
- * @module gmf.filters.module
  */
 import angular from 'angular';
 import gmfFiltersFilterselectorComponent from 'gmf/filters/filterselectorComponent.js';

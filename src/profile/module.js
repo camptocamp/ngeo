@@ -1,5 +1,4 @@
 /**
- * @module ngeo.profile.module
  */
 import angular from 'angular';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';

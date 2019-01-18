@@ -1,5 +1,4 @@
 /**
- * @module gmf.query.windowComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -51,8 +50,8 @@ exports.config(['$animateProvider',
 
 exports.value('gmfDisplayquerywindowTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!JQLite} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -67,9 +66,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -79,8 +78,8 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 
 
 /**
- * Provide a component to display results of the {@link ngeo.queryResult}
- * and shows related features on the map using the {@link ngeo.map.FeatureOverlayMgr}.
+ * Provide a component to display results of the {@link import("ngeo/queryResult.js").default}
+ * and shows related features on the map using the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.
@@ -95,9 +94,9 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
  *        gmf-displayquerywindow-selectedfeaturestyle="ctrl.styleForTheCurrentFeature">
  *      </gmf-displayquerywindow>
  *
- * @htmlAttribute {ol.style.Style} gmf-displayquerywindow-featuresstyle A style
+ * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerywindow-featuresstyle A style
  *     object for all features from the result of the query.
- * @htmlAttribute {ol.style.Style} selectedfeaturestyle A style
+ * @htmlAttribute {import("ol/style/Style.js").default} selectedfeaturestyle A style
  *     object for the current displayed feature.
  * @htmlAttribute {boolean=} defaultcollapsed If the query result window is
  *     collapsed.
@@ -130,8 +129,8 @@ exports.component('gmfDisplayquerywindow', component);
  * @param {!jQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
- * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @private
@@ -185,7 +184,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   };
 
   /**
-   * @type {!ngeo.query.MapQuerent}
+   * @type {!import("ngeo/query/MapQuerent.js").default}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
@@ -197,19 +196,19 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.selectedSource = null;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!ngeo.map.FeatureOverlayMgr}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -221,7 +220,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.source = null;
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;
@@ -526,7 +525,7 @@ Controller.prototype.collectFeatures_ = function() {
 
 /**
  * Highlight the current displayed feature.
- * @param {ol.Feature=} opt_lastFeature last highlighted feature. Require if
+ * @param {import("ol/Feature.js").default=} opt_lastFeature last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */

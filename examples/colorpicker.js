@@ -1,5 +1,4 @@
 /**
- * @module app.colorpicker
  */
 const exports = {};
 
@@ -18,7 +17,7 @@ exports.module = angular.module('app', [
  * The application-specific color picker component, based on the
  * ngeo-colorpicker component.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',

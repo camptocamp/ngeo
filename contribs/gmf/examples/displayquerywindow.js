@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.displayquerywindow
  */
 const exports = {};
 
@@ -60,7 +59,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * Demo, NOT USED.
  * A sample component to display the result.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.queryresultComponent = {
   controller: 'AppQueryresultController',
@@ -92,10 +91,10 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
 
 /**
  * @constructor
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/datasource/Manager.js").default} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
@@ -115,7 +114,7 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
 
   /**
    * FeatureStyle used by the gmf.query.windowComponent
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.featureStyle = new olStyleStyle({
@@ -129,7 +128,7 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

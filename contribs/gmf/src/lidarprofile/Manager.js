@@ -1,5 +1,4 @@
 /**
- * @module gmf.lidarprofile.Manager
  */
 import angular from 'angular';
 import gmfLidarprofileMeasure from 'gmf/lidarprofile/Measure.js';
@@ -24,7 +23,7 @@ const exports = class {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {ngeo.misc.Debounce} ngeoDebounce ngeo debounce service.
+   * @param {import("ngeo/misc/Debounce.js").default} ngeoDebounce ngeo debounce service.
    * @ngInject
    * @ngdoc service
    * @ngname gmflidarprofileManager
@@ -47,7 +46,7 @@ const exports = class {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {ngeo.misc.Debounce}
+     * @type {import("ngeo/misc/Debounce.js").default}
      * @private
      */
     this.ngeoDebounce_ = ngeoDebounce;
@@ -59,29 +58,29 @@ const exports = class {
     this.promise = null;
 
     /**
-     * @type {gmf.lidarprofile.Plot}
+     * @type {import("gmf/lidarprofile/Plot.js").default}
      */
     this.plot = null;
 
     /**
-     * @type {gmf.lidarprofile.Measure}
+     * @type {import("gmf/lidarprofile/Measure.js").default}
      */
     this.measure = null;
 
     /**
-     * @type {gmf.lidarprofile.Config}
+     * @type {import("gmf/lidarprofile/Config.js").default}
      */
     this.config = null;
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @private
      */
     this.map_ = null;
 
     /**
      * The hovered point attributes in D3 profile highlighted on the 2D map
-     * @type {ol.Overlay}
+     * @type {import("ol/Overlay.js").default}
      */
     this.cartoHighlight = new olOverlay({
       offset: [0, -15],
@@ -90,7 +89,7 @@ const exports = class {
 
     /**
      * The hovered point geometry (point) in D3 profile highlighted on the 2D map
-     * @type {ol.layer.Vector}
+     * @type {import("ol/layer/Vector.js").default}
      */
     this.lidarPointHighlight = new olLayerVector({
       source: new olSourceVector({}),
@@ -107,7 +106,7 @@ const exports = class {
     /**
      * The profile footpring represented as a LineString represented
      * with real mapunites stroke width
-     * @type {ol.layer.Vector}
+     * @type {import("ol/layer/Vector.js").default}
      */
     this.lidarBuffer = new olLayerVector({
       source: new olSourceVector({})
@@ -127,20 +126,20 @@ const exports = class {
     this.isPlotSetup_ = false;
 
     /**
-     * @type {ol.geom.LineString}
+     * @type {import("ol/geom/LineString.js").default}
      * @private
      */
     this.line_;
 
     /**
-     * @type {gmf.lidarprofile.Utils}
+     * @type {import("gmf/lidarprofile/Utils.js").default}
      */
     this.utils = new gmfLidarprofileUtils();
   }
 
   /**
-   * @param {gmf.lidarprofile.Config} config Instance of gmf.lidarprofile.Config
-   * @param {ol.Map} map The map.
+   * @param {import("gmf/lidarprofile.js").default.Config} config Instance of import("gmf/lidarprofile/Config.js").default
+   * @param {import("ol/Map.js").default} map The map.
    */
   init(config, map) {
     this.config = config;
@@ -162,7 +161,7 @@ const exports = class {
 
   /**
    * Set the line for the profile
-   * @param {ol.geom.LineString} line that defines the profile
+   * @param {import("ol/geom/LineString.js").default} line that defines the profile
    * @export
    */
   setLine(line) {
@@ -171,7 +170,7 @@ const exports = class {
 
   /**
    * Set the map used by the profile
-   * @param {ol.Map} map The map.
+   * @param {import("ol/Map.js").default} map The map.
    * @export
    */
   setMap(map) {

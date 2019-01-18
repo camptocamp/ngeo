@@ -1,5 +1,4 @@
 /**
- * @module app.desktop_alt.Controller
  */
 /**
  * Application entry point.
@@ -32,7 +31,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractDesktopController}
+ * @extends {import("gmf/controllers/AbstractDesktopController.js").default}
  * @ngInject
  * @export
  */
@@ -77,7 +76,7 @@ const exports = function($scope, $injector) {
   this.elevationLayers = ['srtm'];
 
   /**
-   * @type {Object.<string, gmf.raster.component.LayerConfig>}
+   * @type {Object.<string, import("gmf/raster/component.js").default.LayerConfig>}
    * @export
    */
   this.elevationLayersConfig = {};

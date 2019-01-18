@@ -1,5 +1,4 @@
 /**
- * @module gmf.profile.component
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -33,8 +32,8 @@ const exports = angular.module('gmfProfile', [
 
 exports.value('gmfProfileTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!JQLite} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -48,9 +47,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfProfileTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -79,13 +78,13 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  *
  *
  * @htmlAttribute {boolean} gmf-profile-active Active the component.
- * @htmlAttribute {ol.geom.LineString} gmf-profile-line The linestring geometry
+ * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
- * @htmlAttribute {ol.Map?} gmf-profile-map An optional map.
+ * @htmlAttribute {import("ol/Map.js").default?} gmf-profile-map An optional map.
  * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
- * @htmlAttribute {ol.style.Style?} gmf-profile-hoverpointstyle Optional style
+ * @htmlAttribute {import("ol/style/Style.js").default?} gmf-profile-hoverpointstyle Optional style
  *     for the 'on Hover' point on the line.
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
@@ -118,13 +117,13 @@ exports.component('gmfProfile', component);
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {ngeo.download.Csv} ngeoCsvDownload CSV Download service.
+ * @param {import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
  * @ngInject
@@ -148,7 +147,7 @@ function Controller($scope, $http, $element, $filter,
   this.$http_ = $http;
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.$element_ = $element;
@@ -166,7 +165,7 @@ function Controller($scope, $http, $element, $filter,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
@@ -178,13 +177,13 @@ function Controller($scope, $http, $element, $filter,
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
-   * @type {ngeo.download.Csv}
+   * @type {import("ngeo/download/Csv.js").default}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
@@ -208,7 +207,7 @@ function Controller($scope, $http, $element, $filter,
   this.nbPoints_ = 100;
 
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.line;
@@ -240,7 +239,7 @@ function Controller($scope, $http, $element, $filter,
 
   /**
    * Overlay to show the measurement.
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.measureTooltip_ = null;
@@ -253,7 +252,7 @@ function Controller($scope, $http, $element, $filter,
   this.measureTooltipElement_ = null;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @private
    */
   this.snappedPoint_ = new olFeature();
@@ -282,7 +281,7 @@ function Controller($scope, $http, $element, $filter,
   this.active = false;
 
   /**
-   * @type {ol.EventsKey}
+   * @type {import("ol/EventsKey.js").default}
    * @private
    */
   this.pointerMoveKey_;
@@ -398,7 +397,7 @@ Controller.prototype.updateEventsListening_ = function() {
 
 
 /**
- * @param {ol.MapBrowserPointerEvent} e An ol map browser pointer event.
+ * @param {import("ol/MapBrowserPointerEvent.js").default} e An ol map browser pointer event.
  * @private
  */
 Controller.prototype.onPointerMove_ = function(e) {
@@ -424,7 +423,7 @@ Controller.prototype.onPointerMove_ = function(e) {
  * Return the distance between the beginning of the line and the given point.
  * The point must be on the line. If not, this function will return the total
  * length of the line.
- * @param {ol.Coordinate} pointOnLine A point on the given line.
+ * @param {import("ol/coordinate.js").Coordinate} pointOnLine A point on the given line.
  * @return {number} A distance.
  * @private
  */

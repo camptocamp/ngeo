@@ -1,5 +1,4 @@
 /**
- * @module app.drawfeature
  */
 const exports = {};
 
@@ -29,8 +28,8 @@ exports.module = angular.module('app', [
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor
@@ -51,7 +50,7 @@ exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

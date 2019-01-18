@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.drawfeature
  */
 const exports = {};
 
@@ -43,11 +42,11 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @param {ol.Collection.<ol.Feature>} ngeoFeatures Collection of features.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
  *     manager
  * @constructor
  * @ngInject
@@ -72,7 +71,7 @@ exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
   featureOverlay.setFeatures(ngeoFeatures);
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -127,7 +126,7 @@ exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
 
 
 /**
- * @param {ol.MapBrowserEvent} evt MapBrowser event
+ * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
 exports.MainController.prototype.handleMapPointerMove_ = function(evt) {

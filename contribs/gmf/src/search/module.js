@@ -1,5 +1,4 @@
 /**
- * @module gmf.search.module
  */
 import angular from 'angular';
 import gmfSearchComponent from 'gmf/search/component.js';

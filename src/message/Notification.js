@@ -1,5 +1,4 @@
 /**
- * @module ngeo.message.Notification
  */
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
@@ -17,7 +16,7 @@ import {
  * properly.
  *
  * @constructor
- * @extends {ngeo.message.Message}
+ * @extends {import("ngeo/message/Message.js").default}
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @ngdoc service
  * @ngname ngeoNotification
@@ -38,7 +37,7 @@ const exports = function($timeout) {
   angular.element(document.body).append(container);
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.container_ = container;
@@ -166,7 +165,7 @@ exports.prototype.clearMessageByCacheItem_ = function(item) {
 
 /**
  * @typedef {{
- *     el: angular.JQLite,
+ *     el: JQLite,
  *     promise: angular.IPromise
  * }} CacheItem
  */

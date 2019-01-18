@@ -1,5 +1,4 @@
 /**
- * @module gmf.controllers.AbstractMobileController
  */
 import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
@@ -30,7 +29,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractAppController}
+ * @extends {import("gmf/controllers/AbstractAppController.js").default}
  * @ngdoc controller
  * @ngInject
  * @export
@@ -100,7 +99,7 @@ const exports = function(config, $scope, $injector) {
   const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

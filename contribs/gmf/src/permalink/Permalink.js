@@ -1,5 +1,4 @@
 /**
- * @module gmf.permalink.Permalink
  */
 import angular from 'angular';
 
@@ -59,9 +58,9 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
- * @param {ngeo.statemanager.Service} ngeoStateManager The ngeo statemanager service.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
+ * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @param {gmfx.User} gmfUser User.
  * @ngInject
  * @ngdoc service
@@ -92,7 +91,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -106,53 +105,53 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {ngeo.misc.EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.statemanager.Service}
+   * @type {import("ngeo/statemanager/Service.js").default}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?ol.Collection.<ol.Feature>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?
     $injector.get('ngeoFeatures') : null;
 
   /**
-   * @type {?ngeo.map.BackgroundLayerMgr}
+   * @type {?import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr') ?
     $injector.get('ngeoBackgroundLayerMgr') : null;
 
   /**
-   * @type {?ngeo.map.FeatureOverlayMgr}
+   * @type {?import("ngeo/map/FeatureOverlayMgr.js").default}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr') ?
     $injector.get('ngeoFeatureOverlayMgr') : null;
 
   /**
-   * @type {?ngeo.map.FeatureOverlay}
+   * @type {?import("ngeo/map/FeatureOverlay.js").default}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr ?
     ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
-   * @type {?ngeo.misc.FeatureHelper}
+   * @type {?import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = $injector.has('ngeoFeatureHelper') ?
     $injector.get('ngeoFeatureHelper') : null;
 
   /**
-   * @type {?ngeo.query.Querent}
+   * @type {?import("ngeo/query/Querent.js").default}
    * @private
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ?
@@ -182,7 +181,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
 
   /**
-   * @type {?gmf.datasource.ExternalDataSourcesManager}
+   * @type {?import("gmf/datasource/ExternalDataSourcesManager.js").default}
    * @private
    */
   this.gmfExternalDataSourcesManager_ =
@@ -190,20 +189,20 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
       $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
-   * @type {?gmf.theme.Themes}
+   * @type {?import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = $injector.has('gmfThemes') ? $injector.get('gmfThemes') : null;
 
   /**
-   * @type {?gmf.objectediting.Manager}
+   * @type {?import("gmf/objectediting/Manager.js").default}
    * @private
    */
   this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
     $injector.get('gmfObjectEditingManager') : null;
 
   /**
-   * @type {?gmf.theme.Manager}
+   * @type {?import("gmf/theme/Manager.js").default}
    * @private
    */
   this.gmfThemeManager_ = $injector.has('gmfThemeManager') ?
@@ -217,7 +216,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     $injector.get('defaultTheme') : undefined;
 
   /**
-   * @type {?gmf.layertree.TreeManager}
+   * @type {?import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = $injector.has('gmfTreeManager') ?
@@ -232,13 +231,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   // == other properties ==
 
   /**
-   * @type {ngeo.statemanager.Location}
+   * @type {import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {?ngeo.statemanager.WfsPermalink}
+   * @type {?import("ngeo/statemanager/WfsPermalink.js").default}
    * @private
    */
   this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?
@@ -252,13 +251,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     $injector.get('gmfUser') : null;
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
 
   /**
-   * @type {?ngeo.misc.AutoProjection}
+   * @type {?import("ngeo/misc/AutoProjection.js").default}
    * @private
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ?
@@ -266,7 +265,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
   /**
    * A list of projections that the coordinates in the permalink can be in.
-   * @type {?Array.<ol.proj.Projection>}
+   * @type {?Array.<import("ol/proj/Projection.js").default>}
    * @private
    */
   this.sourceProjections_ = null;
@@ -278,13 +277,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   }
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @private
    */
   this.crosshairFeature_ = null;
 
   /**
-   * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style}
+   * @type {Array<(null|import("ol/style/Style.js").default)>|null|import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default}
    * @private
    */
   this.crosshairStyle_;
@@ -318,13 +317,13 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
   }
 
   /**
-   * @type {?ngeo.Popover}
+   * @type {?import("ngeo/Popover.js").default}
    * @private
    */
   this.mapTooltip_ = null;
 
   /**
-   * @type {ngeo.format.FeatureHash}
+   * @type {import("ngeo/format/FeatureHash.js").default}
    * @private
    */
   this.featureHashFormat_ = new ngeoFormatFeatureHash({
@@ -485,7 +484,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
- * @return {?ol.Coordinate} The coordinate for the map view center.
+ * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
  * @export
  */
 exports.prototype.getMapCenter = function() {
@@ -537,7 +536,7 @@ exports.prototype.getMapCrosshair = function() {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?ol.Coordinate=} opt_center Optional center coordinate.
+ * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
 exports.prototype.setMapCrosshair = function(opt_center) {
   let crosshairCoordinate;
@@ -578,7 +577,7 @@ exports.prototype.getMapTooltip = function() {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {?ol.Coordinate=} opt_center Optional center coordinate.
+ * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
 exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
   let tooltipPosition;
@@ -612,7 +611,7 @@ exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
 
 /**
  * Get the ngeo features from the state manager for initialization purpose
- * @return {!Array.<!ol.Feature>} The features read from the state manager.
+ * @return {!Array.<!import("ol/Feature.js").default>} The features read from the state manager.
  * @export
  */
 exports.prototype.getFeatures = function() {
@@ -655,7 +654,7 @@ exports.prototype.setDimensions = function(dimensions) {
  *
  * If the service is already bound to a map, those events are unlistened first.
  *
- * @param {?ol.Map} map The ol3 map object.
+ * @param {?import("ol/Map.js").default} map The ol3 map object.
  * @export
  */
 exports.prototype.setMap = function(map) {
@@ -685,8 +684,8 @@ exports.prototype.setMap = function(map) {
 
 /**
  * Listen to the map view property change and update the state accordingly.
- * @param {ol.Map} map The ol3 map object.
- * @param {?ol.Feature} oeFeature ObjectEditing feature
+ * @param {import("ol/Map.js").default} map The ol3 map object.
+ * @param {?import("ol/Feature.js").default} oeFeature ObjectEditing feature
  * @private
  */
 exports.prototype.registerMap_ = function(map, oeFeature) {
@@ -777,8 +776,8 @@ exports.prototype.unregisterMap_ = function() {
 /**
  * Get the background layer object to use to initialize the map from the
  * state manager.
- * @param {!Array.<!ol.layer.Base>} layers Array of background layer objects.
- * @return {?ol.layer.Base} Background layer.
+ * @param {!Array.<!import("ol/layer/Base.js").default>} layers Array of background layer objects.
+ * @return {?import("ol/layer/Base.js").default} Background layer.
  * @export
  */
 exports.prototype.getBackgroundLayer = function(layers) {
@@ -1048,7 +1047,7 @@ exports.prototype.initLayers_ = function() {
 
 
 /**
- * @param {ol.Collection.Event} event Collection event.
+ * @param {import("ol/Collection/Event.js").default} event Collection event.
  * @private
  */
 exports.prototype.handleNgeoFeaturesAdd_ = function(event) {
@@ -1059,7 +1058,7 @@ exports.prototype.handleNgeoFeaturesAdd_ = function(event) {
 
 
 /**
- * @param {ol.Collection.Event} event Collection event.
+ * @param {import("ol/Collection/Event.js").default} event Collection event.
  * @private
  */
 exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
@@ -1072,7 +1071,7 @@ exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
 /**
  * Listen to any changes that may occur within the feature in order to
  * update the state of the permalink accordingly.
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addNgeoFeature_ = function(feature) {
@@ -1087,7 +1086,7 @@ exports.prototype.addNgeoFeature_ = function(feature) {
 
 /**
  * Unregister any event listener from the feature.
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeNgeoFeature_ = function(feature) {
@@ -1349,7 +1348,7 @@ exports.prototype.initExternalDataSources_ = function() {
 
 
 /**
- * @param {!ol.Collection.Event} evt Collection event.
+ * @param {!import("ol/Collection/Event.js").default} evt Collection event.
  * @private
  */
 exports.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
@@ -1361,7 +1360,7 @@ exports.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
 
 
 /**
- * @param {!ngeo.datasource.Group} group Data source group.
+ * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
 exports.prototype.registerExternalDSGroup_ = function(group) {
@@ -1382,7 +1381,7 @@ exports.prototype.registerExternalDSGroup_ = function(group) {
 
 /**
  * Contains the layer name
- * @param {!ol.layer.Base} layer The layer to inspect
+ * @param {!import("ol/layer/Base.js").default} layer The layer to inspect
  * @param {string} name The layer name to find
  * @return {boolean} The containing status
  */
@@ -1402,7 +1401,7 @@ exports.prototype.containsLayerName = function(layer, name) {
 
 
 /**
- * @param {!ol.Collection.Event} evt Collection event.
+ * @param {!import("ol/Collection/Event.js").default} evt Collection event.
  * @private
  */
 exports.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
@@ -1414,7 +1413,7 @@ exports.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
 
 
 /**
- * @param {!ngeo.datasource.Group} group Data source group.
+ * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
 exports.prototype.unregisterExternalDSGroup_ = function(group) {

@@ -1,5 +1,4 @@
 /**
- * @module gmf.editing.editFeatureSelectorComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -41,10 +40,10 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *
  * @htmlAttribute {boolean} gmf-editfeatureselector-active Whether the
  *     directive is active or not.
- * @htmlAttribute {ol.Map} gmf-editfeatureselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-editfeatureselector-map The map.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
- * @htmlAttribute {ol.layer.Vector} gmf-editfeatureselector-vector The vector
+ * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeatureselector-vector The vector
  *     layer where the selected or created features are drawn.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -71,8 +70,8 @@ exports.directive('gmfEditfeatureselector', component);
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {gmf.theme.Themes} gmfThemes The gmf Themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @private
  * @ngInject
@@ -95,7 +94,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   );
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -107,7 +106,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.tolerance;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer;
@@ -128,19 +127,19 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
   this.$timeout_ = $timeout;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @param {Array.<ngeo.layertree.Controller>} value First level controllers.
+   * @param {Array.<import("ngeo/layertree/Controller.js").default>} value First level controllers.
    */
   const updateEditableTreeCtrls = function(value) {
     // Timeout required, because the collection event is fired before the
@@ -183,14 +182,14 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
 
   /**
    * List of editable Layertree controllers.
-   * @type {Array.<ngeo.layertree.Controller>}
+   * @type {Array.<import("ngeo/layertree/Controller.js").default>}
    * @export
    */
   this.editableTreeCtrls = [];
 
   /**
    * The currently selected Layertree controller.
-   * @type {?ngeo.layertree.Controller}
+   * @type {?import("ngeo/layertree/Controller.js").default}
    * @export
    */
   this.selectedEditableTreeCtrl = null;

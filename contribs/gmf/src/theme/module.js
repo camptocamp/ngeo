@@ -1,5 +1,4 @@
 /**
- * @module gmf.theme.module
  */
 import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';

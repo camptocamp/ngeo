@@ -1,5 +1,4 @@
 /**
- * @module app.toolActivate
  */
 const exports = {};
 
@@ -34,16 +33,16 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr ToolActivate manager.
  * @constructor
  * @ngInject
  */
 exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -66,7 +65,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 
@@ -105,7 +104,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   // draw point interaction
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPoint = new olInteractionDraw(
@@ -122,7 +121,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   // draw line interaction
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawLine = new olInteractionDraw(
@@ -139,7 +138,7 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   // draw polygon interaction
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @export
    */
   this.drawPolygon = new olInteractionDraw(

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.googlestreetview.component
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -20,7 +19,7 @@ const exports = angular.module('ngeoGooglestreetview', [
 
 exports.value('ngeoGooglestreetviewTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -35,8 +34,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoGooglestreetviewTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoGooglestreetviewTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -51,9 +50,9 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
 class Controller {
 
   /**
-   * @param {angular.JQLite} $element Element.
+   * @param {JQLite} $element Element.
    * @param {!angular.IScope} $scope Scope.
-   * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager.
    * @private
    * @ngInject
@@ -77,14 +76,14 @@ class Controller {
 
     /**
      * Style for the feature.
-     * @type {ol.style.Style|Array.<ol.style.Style>|
+     * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|
      *     ol.FeatureStyleFunction|ol.StyleFunction|undefined}
      * @export
      */
     this.featureStyle;
 
     /**
-     * @type {!ol.Map}
+     * @type {!import("ol/Map.js").default}
      * @export
      */
     this.map;
@@ -108,13 +107,13 @@ class Controller {
     // Inner properties
 
     /**
-     * @type {!ol.Feature}
+     * @type {!import("ol/Feature.js").default}
      * @private
      */
     this.feature_ = new olFeature();
 
     /**
-     * @type {!ngeo.map.FeatureOverlay}
+     * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @private
      */
     this.featureOverlay_ = googAsserts.assert(
@@ -122,14 +121,14 @@ class Controller {
     );
 
     /**
-     * @type {Array.<!ol.EventsKey>}
+     * @type {Array.<!import("ol/EventsKey.js").default>}
      * @private
      */
     this.listenerKeys_ = [];
 
     /**
      * The current location in the OpenLayers' map view projection.
-     * @type {?ol.Coordinate}
+     * @type {?import("ol/coordinate.js").Coordinate}
      * @private
      */
     this.location = null;
@@ -164,7 +163,7 @@ class Controller {
     this.panoramaListener_ = null;
 
     /**
-     * @type {ol.geom.Point}
+     * @type {import("ol/geom/Point.js").default}
      * @private
      */
     this.point_ = new olGeomPoint([0, 0]);
@@ -265,8 +264,8 @@ class Controller {
 
   /**
    * Called when the 'location' property of this component changes.
-   * @param {?ol.Coordinate} location Location, in OL map view projection.
-   * @param {?ol.Coordinate} oldLocation The previous location.
+   * @param {?import("ol/coordinate.js").Coordinate} location Location, in OL map view projection.
+   * @param {?import("ol/coordinate.js").Coordinate} oldLocation The previous location.
    * @private
    */
   handleLocationChange_(location, oldLocation) {
@@ -298,7 +297,7 @@ class Controller {
   /**
    * Called when the map is clicked while this component is active. Update the
    * location accordingly.
-   * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+   * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
    * @private
    */
   handleMapClick_(evt) {
@@ -369,8 +368,8 @@ class Controller {
   // Utility methods
 
   /**
-   * @param {!ol.Coordinate} lonLat LonLat coordinate.
-   * @return {ol.Coordinate} Map view projection coordinate.
+   * @param {!import("ol/coordinate.js").Coordinate} lonLat LonLat coordinate.
+   * @return {import("ol/coordinate.js").Coordinate} Map view projection coordinate.
    */
   fromLonLat_(lonLat) {
     return olProj.fromLonLat(
@@ -380,8 +379,8 @@ class Controller {
   }
 
   /**
-   * @param {!ol.Coordinate} coordinate Map view projection coordinate.
-   * @return {ol.Coordinate} LonLat coordinate.
+   * @param {!import("ol/coordinate.js").Coordinate} coordinate Map view projection coordinate.
+   * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate.
    */
   toLonLat_(coordinate) {
     return olProj.toLonLat(

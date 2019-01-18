@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.Translate
  */
 import googAsserts from 'goog/asserts.js';
 import {
@@ -41,37 +40,37 @@ import olSourceVector from 'ol/source/Vector.js';
  * - pressing the ESC key automatically deactivate the interaction.
  *
  * @constructor
- * @extends {ol.interaction.Translate}
+ * @extends {import("ol/interaction/Translate.js").default}
  * @param {TranslateOptions} options Options.
  */
 const exports = function(options) {
 
   /**
-   * @type {!Array.<ol.EventsKey>}
+   * @type {!Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!Object.<number, ol.EventsKey>}
+   * @type {!Object.<number, import("ol/EventsKey.js").default>}
    * @private
    */
   this.featureListenerKeys_ = {};
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.keyPressListenerKey_ = null;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.myFeatures_ = options.features !== undefined ? options.features : null;
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -79,7 +78,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -90,7 +89,7 @@ const exports = function(options) {
   });
 
   /**
-   * @type {!Object.<number, ol.Feature>}
+   * @type {!Object.<number, import("ol/Feature.js").default>}
    * @private
    */
   this.centerFeatures_ = {};
@@ -133,7 +132,7 @@ exports.prototype.setActive = function(active) {
  * Remove the interaction from its current map and attach it to the new map.
  * Subclasses may set up event handlers to get notified about changes to
  * the map here.
- * @param {ol.PluggableMap} map Map.
+ * @param {import("ol/PluggableMap.js").default} map Map.
  * @override
  */
 exports.prototype.setMap = function(map) {
@@ -183,7 +182,7 @@ exports.prototype.setState_ = function() {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesAdd_ = function(evt) {
@@ -195,17 +194,17 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleFeaturesRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.addFeature_ = function(feature) {
@@ -228,7 +227,7 @@ exports.prototype.addFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature.
+ * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
 exports.prototype.removeFeature_ = function(feature) {
@@ -244,8 +243,8 @@ exports.prototype.removeFeature_ = function(feature) {
 
 
 /**
- * @param {ol.Feature} feature Feature being moved.
- * @param {ol.events.Event} evt Event.
+ * @param {import("ol/Feature.js").default} feature Feature being moved.
+ * @param {import("ol/events/Event.js").default} evt Event.
  * @private
  */
 exports.prototype.handleGeometryChange_ = function(feature,
@@ -260,8 +259,8 @@ exports.prototype.handleGeometryChange_ = function(feature,
 
 
 /**
- * @param {ol.geom.Geometry} geometry Geometry.
- * @return {ol.geom.Point} The center point of the geometry.
+ * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
+ * @return {import("ol/geom/Point.js").default} The center point of the geometry.
  * @private
  */
 exports.prototype.getGeometryCenterPoint_ = function(

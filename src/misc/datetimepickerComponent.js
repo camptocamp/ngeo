@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.datetimepickerComponent
  */
 import angular from 'angular';
 import DateFormatter from 'ngeo/misc/php-date-formatter.js';

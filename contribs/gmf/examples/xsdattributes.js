@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.xsdattributes
  */
 const exports = {};
 
@@ -32,8 +31,8 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */
@@ -46,7 +45,7 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
   this.timeout_ = $timeout;
 
   /**
-   * @type {gmf.editing.XSDAttributes}
+   * @type {import("gmf/editing/XSDAttributes.js").default}
    * @private
    */
   this.xsdAttributes_ = gmfXSDAttributes;
@@ -58,7 +57,7 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
   this.attributes = null;
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;

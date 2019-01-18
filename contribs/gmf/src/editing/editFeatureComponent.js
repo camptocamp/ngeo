@@ -1,5 +1,4 @@
 /**
- * @module gmf.editing.editFeatureComponent
  */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -98,16 +97,16 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {boolean} gmf-editfeature-dirty Flag that is toggled as soon
  *     as the feature changes, i.e. if any of its properties change, which
  *     includes the geometry.
- * @htmlAttribute {ngeo.layertree.Controller} gmf-editfeature-editabletreectrl
+ * @htmlAttribute {import("ngeo/layertree/Controller.js").default} gmf-editfeature-editabletreectrl
  *     A reference to the editable Layertree controller, which contains a
  *     a reference to the node and WMS layer.
- * @htmlAttribute {ol.Map} gmf-editfeature-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-editfeature-map The map.
  * @htmlAttribute {string} gmf-editfeature-state The state property shared
  *     with the `gmf-editfeatureselector` directive. For more info, see in
  *     that directive.
  * @htmlAttribute {number|undefined} gmf-editfeatureselector-tolerance The
  *     buffer in pixels to use when making queries to get the features.
- * @htmlAttribute {ol.layer.Vector} gmf-editfeature-vector The vector layer in
+ * @htmlAttribute {import("ol/layer/Vector.js").default} gmf-editfeature-vector The vector layer in
  *     which to draw the vector features.
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -139,13 +138,13 @@ exports.directive('gmfEditfeature', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {gmf.editing.Snapping} gmfSnapping The gmf snapping service.
- * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
- * @param {ngeo.misc.EventHelper} ngeoEventHelper Ngeo Event Helper.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
- * @param {ngeo.map.LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
+ * @param {import("gmf/editing/Snapping.js").default} gmfSnapping The gmf snapping service.
+ * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo Event Helper.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -169,13 +168,13 @@ function Controller($element, $q, $scope, $timeout,
   this.dirty;
 
   /**
-   * @type {ngeo.layertree.Controller}
+   * @type {import("ngeo/layertree/Controller.js").default}
    * @export
    */
   this.editableTreeCtrl;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -195,7 +194,7 @@ function Controller($element, $q, $scope, $timeout,
   this.tolerance;
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @export
    */
   this.vectorLayer;
@@ -234,43 +233,43 @@ function Controller($element, $q, $scope, $timeout,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {gmf.editing.EditFeature}
+   * @type {import("gmf/editing/EditFeature.js").default}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {gmf.editing.Snapping}
+   * @type {import("gmf/editing/Snapping.js").default}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {gmf.editing.XSDAttributes}
+   * @type {import("gmf/editing/XSDAttributes.js").default}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {ngeo.misc.EventHelper}
+   * @type {import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {ngeo.map.LayerHelper}
+   * @type {import("ngeo/map/LayerHelper.js").default}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
@@ -285,7 +284,7 @@ function Controller($element, $q, $scope, $timeout,
   this.editableNode_;
 
   /**
-   * @type {ol.layer.Image|ol.layer.Tile}
+   * @type {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
    * @private
    */
   this.editableWMSLayer_;
@@ -326,7 +325,7 @@ function Controller($element, $q, $scope, $timeout,
   this.createActive = false;
 
   /**
-   * @type {ngeo.misc.ToolActivate}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.createToolActivate = new ngeoMiscToolActivate(this, 'createActive');
@@ -338,13 +337,13 @@ function Controller($element, $q, $scope, $timeout,
   this.mapSelectActive = true;
 
   /**
-   * @type {ngeo.misc.ToolActivate}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.mapSelectToolActivate = new ngeoMiscToolActivate(this, 'mapSelectActive');
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature = null;
@@ -361,31 +360,31 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features;
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
 
   /**
-   * @type {ol.interaction.Modify}
+   * @type {import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modify_;
 
   /**
-   * @type {ngeo.misc.ToolActivate}
+   * @type {import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.modifyToolActivate;
 
   /**
-   * @type {ngeo.Menu}
+   * @type {import("ngeo/Menu.js").default}
    * @private
    */
   this.menu_ = new ngeoMenu({
@@ -401,7 +400,7 @@ function Controller($element, $q, $scope, $timeout,
   });
 
   /**
-   * @type {ngeo.Menu}
+   * @type {import("ngeo/Menu.js").default}
    * @private
    */
   this.menuVertex_ = new ngeoMenu({
@@ -413,31 +412,31 @@ function Controller($element, $q, $scope, $timeout,
   });
 
   /**
-   * @type {ngeo.interaction.Translate}
+   * @type {import("ngeo/interaction/Translate.js").default}
    * @private
    */
   this.translate_;
 
   /**
-   * @type {ngeo.interaction.Rotate}
+   * @type {import("ngeo/interaction/Rotate.js").default}
    * @private
    */
   this.rotate_;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.rotateToolActivate;
 
   /**
-   * @type {!ngeo.misc.ToolActivate}
+   * @type {!import("ngeo/misc/ToolActivate.js").default}
    * @export
    */
   this.translateToolActivate;
 
   /**
-   * @type {!Array.<!ol.EventsKey>}
+   * @type {!Array.<!import("ol/EventsKey.js").default>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -835,7 +834,7 @@ Controller.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {ol.Collection.Event} evt Event.
+ * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleFeatureAdd_ = function(evt) {
@@ -985,7 +984,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function(active) {
  *     modifications or with modifications that were canceled, launch a query
  *     to fetch the features at the clicked location.
  *
- * @param {ol.MapBrowserEvent} evt Event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleMapClick_ = function(evt) {
@@ -1095,7 +1094,7 @@ Controller.prototype.handleMapContextMenu_ = function(evt) {
 
 
 /**
- * @param {Array.<ol.Feature>} features Features.
+ * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @private
  */
 Controller.prototype.handleGetFeatures_ = function(features) {
@@ -1146,8 +1145,8 @@ Controller.prototype.unregisterInteractions_ = function() {
 
 
 /**
- * @param {?ol.Feature} newFeature The new feature.
- * @param {?ol.Feature} oldFeature The old feature.
+ * @param {?import("ol/Feature.js").default} newFeature The new feature.
+ * @param {?import("ol/Feature.js").default} oldFeature The old feature.
  * @private
  */
 Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
@@ -1258,7 +1257,7 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
 
 /**
- * @param {ol.interaction.Translate.Event} evt Event.
+ * @param {import("ol/interaction/Translate/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleTranslateEnd_ = function(evt) {

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.editing.exportfeaturesComponent
  */
 import angular from 'angular';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
@@ -28,7 +27,7 @@ const exports = angular.module('ngeoExportfeatures', [
  *       ngeo-exportfeatures-features="ctrl.features"
  *       class="btn btn-link">Export</button>
  *
- * @htmlAttribute {ol.Collection.<ol.Feature>} ngeo-exportfeatures-features The
+ * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeo-exportfeatures-features The
  *     features to export
  * @return {angular.IDirective} The directive specs.
  * @ngInject
@@ -50,10 +49,10 @@ exports.directive('ngeoExportfeatures', directive);
 
 
 /**
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
  * @constructor
  * @private
  * @ngInject
@@ -63,13 +62,13 @@ exports.directive('ngeoExportfeatures', directive);
 function Controller($element, $injector, $scope, ngeoFeatureHelper) {
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features;
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.element_ = $element;
@@ -84,7 +83,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   this.id_ = id;
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

@@ -1,5 +1,4 @@
 /**
- * @module gmf.permalink.ShareService
  */
 
 import angular from 'angular';

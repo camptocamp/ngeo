@@ -1,5 +1,4 @@
 /**
- * @module ngeo.search.searchDirective
  */
 import angular from 'angular';
 
@@ -45,8 +44,8 @@ const exports = function() {
     restrict: 'A',
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
 

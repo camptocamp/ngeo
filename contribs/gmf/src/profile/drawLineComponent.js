@@ -1,5 +1,4 @@
 /**
- * @module gmf.profile.drawLineComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -33,11 +32,11 @@ const exports = angular.module('gmfDrawProfileLine', [
  *      </gmf-drawprofileline>
  *
  *
- * @htmlAttribute {ol.Map} gmf-drawprofileline-map The map.
- * @htmlAttribute {ol.geom.LineString} gmf-drawprofileline-line The variable to
+ * @htmlAttribute {import("ol/Map.js").default} gmf-drawprofileline-map The map.
+ * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-drawprofileline-line The variable to
  *     connect with the drawn line.
  * @htmlAttribute {boolean=} gmf-drawprofileline-active Active the component.
- * @htmlAttribute {ol.style.Style=} gmf-drawprofileline-style Optional style
+ * @htmlAttribute {import("ol/style/Style.js").default=} gmf-drawprofileline-style Optional style
  *     for the drawn line.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -63,7 +62,7 @@ exports.directive('gmfDrawprofileline', directive);
 /**
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay manager.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay manager.
  * @constructor
  * @private
  * @ngInject
@@ -73,13 +72,13 @@ exports.directive('gmfDrawprofileline', directive);
 function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
 
   /**
-   * @type {?ol.geom.LineString}
+   * @type {?import("ol/geom/LineString.js").default}
    * @export
    */
   this.line;
 
   /**
-   * @type {?ol.Map}
+   * @type {?import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
@@ -91,7 +90,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   this.active;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
@@ -115,11 +114,11 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   overlay.setStyle(style);
 
   /**
-   * @type {!ol.interaction.Draw}
+   * @type {!import("ol/interaction/Draw.js").default}
    * @export
    */
   this.interaction = new olInteractionDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     features: this.features_
   });
 

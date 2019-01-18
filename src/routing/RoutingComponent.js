@@ -1,5 +1,4 @@
 /**
- * @module ngeo.routing.RoutingComponent
  */
 const exports = {};
 import angular from 'angular';
@@ -44,7 +43,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
 
 exports.module.value('ngeoRoutingTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -56,8 +55,8 @@ exports.module.value('ngeoRoutingTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoRoutingTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -70,8 +69,8 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * The controller for the routing directive.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!ngeo.routing.RoutingService} ngeoRoutingService service for OSRM routing
- * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/RoutingService.js").default} ngeoRoutingService service for OSRM routing
+ * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
  * @param {!angular.IQService} $q Angular q service
  * @param {miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
@@ -89,13 +88,13 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.$scope_ = $scope;
 
   /**
-   * @type {ngeo.routing.RoutingService}
+   * @type {import("ngeo/routing/RoutingService.js").default}
    * @private
    */
   this.ngeoRoutingService_ = ngeoRoutingService;
 
   /**
-   * @type {ngeo.routing.NominatimService}
+   * @type {import("ngeo/routing/NominatimService.js").default}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;
@@ -137,7 +136,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.$q_ = $q;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -149,13 +148,13 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.errorMessage = '';
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.startFeature_ = null;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.targetFeature_ = null;
@@ -180,7 +179,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   };
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.routeSource_ = new olSourceVector({
@@ -188,7 +187,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.routeLayer_ = new olLayerVector({
@@ -225,7 +224,7 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
   this.regexIsFormattedCoord = /\d+\.\d+\/\d+\.\d+/;
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @private
    */
   this.draw_ = null;
@@ -268,12 +267,12 @@ exports.Controller.prototype.clearRoute = function() {
 
 /**
  * Converts feature point into LonLat coordinate.
- * @param {ol.Feature} point Feature point to convert
- * @return {ol.Coordinate} LonLat coordinate
+ * @param {import("ol/Feature.js").default} point Feature point to convert
+ * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
 exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
-  const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
+  const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
   return olProj.toLonLat(coords, projection);
@@ -297,7 +296,7 @@ exports.Controller.prototype.reverseRoute = function() {
 
 /**
  * @param {Object} route Routes of OSRM response
- * @returns {Array<ol.Feature>} parsed route features
+ * @returns {Array<import("ol/Feature.js").default>} parsed route features
  * @private
  */
 exports.Controller.prototype.parseRoute_ = function(route) {
@@ -347,12 +346,12 @@ exports.Controller.prototype.calculateRoute = function() {
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type{ol.geom.LineString} */(features[0].getGeometry()).getCoordinateAt(0);
-      const endRoute = /** @type{ol.geom.LineString} */(features[features.length - 1].getGeometry()).getCoordinateAt(1);
+      const startRoute = /** @type{import("ol/geom/LineString.js").default} */(features[0].getGeometry()).getCoordinateAt(0);
+      const endRoute = /** @type{import("ol/geom/LineString.js").default} */(features[features.length - 1].getGeometry()).getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
-      const startToRoute = [/** @type {ol.geom.Point} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
-      const routeToEnd = [endRoute, /** @type {ol.geom.Point} */(this.targetFeature_.getGeometry()).getCoordinates()];
+      const startToRoute = [/** @type {import("ol/geom/Point.js").default} */(this.startFeature_.getGeometry()).getCoordinates(), startRoute];
+      const routeToEnd = [endRoute, /** @type {import("ol/geom/Point.js").default} */(this.targetFeature_.getGeometry()).getCoordinates()];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),
         new olFeature(new olGeomLineString(routeToEnd))

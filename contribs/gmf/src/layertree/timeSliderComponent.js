@@ -1,5 +1,4 @@
 /**
- * @module gmf.layertree.timeSliderComponent
  */
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
@@ -97,7 +96,7 @@ exports.directive('gmfTimeSlider', directive);
 
 /**
  * TimeSliderController - directive controller
- * @param {ngeo.misc.WMSTime} ngeoWMSTime WMSTime service.
+ * @param {import("ngeo/misc/WMSTime.js").default} ngeoWMSTime WMSTime service.
  * @constructor
  * @private
  * @ngInject
@@ -107,7 +106,7 @@ exports.directive('gmfTimeSlider', directive);
 function Controller(ngeoWMSTime) {
 
   /**
-   * @type {ngeo.misc.WMSTime}
+   * @type {import("ngeo/misc/WMSTime.js").default}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

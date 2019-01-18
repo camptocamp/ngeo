@@ -1,5 +1,4 @@
 /**
- * @module app.oeview.Controller
  */
 /**
  * Application entry point.
@@ -29,7 +28,7 @@ if (!window.requestAnimationFrame) {
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
- * @extends {gmf.controllers.AbstractDesktopController}
+ * @extends {import("gmf/controllers/AbstractDesktopController.js").default}
  * @ngInject
  * @export
  */

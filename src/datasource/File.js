@@ -1,5 +1,4 @@
 /**
- * @module ngeo.datasource.File
  */
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';
@@ -33,13 +32,13 @@ export default class extends ngeoDatasourceDataSource {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {!ol.Collection.<!ol.Feature>}
+     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
      * @private
      */
     this.featuresCollection_ = options.features || new olCollection();
 
     /**
-     * @type {!ol.source.Vector}
+     * @type {!import("ol/source/Vector.js").default}
      * @private
      */
     this.source_ = new olSourceVector({
@@ -48,7 +47,7 @@ export default class extends ngeoDatasourceDataSource {
     });
 
     /**
-     * @type {!ol.layer.Vector}
+     * @type {!import("ol/layer/Vector.js").default}
      * @private
      */
     this.layer_ = new olLayerVector({
@@ -62,7 +61,7 @@ export default class extends ngeoDatasourceDataSource {
   // ========================================
 
   /**
-   * @return {!Array.<!ol.Feature>} Features
+   * @return {!Array.<!import("ol/Feature.js").default>} Features
    * @export
    */
   get features() {
@@ -75,7 +74,7 @@ export default class extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @return {!ol.Collection.<!ol.Feature>} Features collection
+   * @return {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} Features collection
    * @export
    */
   get featuresCollection() {
@@ -83,7 +82,7 @@ export default class extends ngeoDatasourceDataSource {
   }
 
   /**
-   * @return {!ol.layer.Vector} Vector layer.
+   * @return {!import("ol/layer/Vector.js").default} Vector layer.
    * @export
    */
   get layer() {
@@ -96,7 +95,7 @@ export default class extends ngeoDatasourceDataSource {
   // ===================================
 
   /**
-   * @return {ol.Extent} Extent.
+   * @return {import("ol/extent.js").Extent} Extent.
    * @export
    */
   get extent() {

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.utils
  */
 const exports = {};
 import {platformModifierKeyOnly, singleClick} from 'ol/events/condition.js';
@@ -14,8 +13,8 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 /**
  * Utility method that converts a simple geometry to its multi equivalent. If
  * the geometry itself is already multi, it is returned as-is.
- * @param {ol.geom.Geometry} geometry A geometry
- * @return {ol.geom.Geometry} A multi geometry
+ * @param {import("ol/geom/Geometry.js").default} geometry A geometry
+ * @return {import("ol/geom/Geometry.js").default} A multi geometry
  */
 exports.toMulti = function(geometry) {
   let multiGeom;
@@ -110,7 +109,7 @@ exports.encodeQueryString = function(queryData) {
 
 /**
  * Delete condition passed to the modify interaction
- * @param {ol.MapBrowserEvent} event Browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} event Browser event.
  * @return {boolean} The result.
  */
 exports.deleteCondition = function(event) {

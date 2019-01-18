@@ -1,5 +1,4 @@
 /**
- * @module ngeo.measure.module
  */
 import angular from 'angular';
 import ngeoMeasureArea from 'ngeo/measure/area.js';

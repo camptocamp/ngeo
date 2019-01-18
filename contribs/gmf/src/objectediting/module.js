@@ -1,5 +1,4 @@
 /**
- * @module gmf.objectediting.module
  */
 import angular from 'angular';
 import gmfObjecteditingComponent from 'gmf/objectediting/component.js';

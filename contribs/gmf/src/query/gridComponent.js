@@ -1,5 +1,4 @@
 /**
- * @module gmf.query.gridComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -41,8 +40,8 @@ const exports = angular.module('gmfQueryGridComponent', [
 
 exports.value('gmfDisplayquerygridTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!JQLite} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
@@ -58,9 +57,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfDisplayquerygridTemplateUrl Template function.
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -70,9 +69,9 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 
 
 /**
- * Provides a component to display results of the {@link ngeo.queryResult} in a
+ * Provides a component to display results of the {@link import("ngeo/queryResult.js").default} in a
  * grid and shows related features on the map using
- * the {@link ngeo.map.FeatureOverlayMgr}.
+ * the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
@@ -93,11 +92,11 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *      </gmf-displayquerygrid>
  *
  * @htmlAttribute {boolean} gmf-displayquerygrid-active The active state of the component.
- * @htmlAttribute {ol.style.Style} gmf-displayquerygrid-featuresstyle A style
+ * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-featuresstyle A style
  *     object for all features from the result of the query.
- * @htmlAttribute {ol.style.Style} gmf-displayquerygrid-selectedfeaturestyle A style
+ * @htmlAttribute {import("ol/style/Style.js").default} gmf-displayquerygrid-selectedfeaturestyle A style
  *     object for the currently selected features.
- * @htmlAttribute {ol.Map} gmf-displayquerygrid-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-displayquerygrid-map The map.
  * @htmlAttribute {boolean?} gmf-displayquerygrid-removeemptycolumns Optional. Should
  *     empty columns be hidden? Default: `false`.
  * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
@@ -133,12 +132,12 @@ exports.component('gmfDisplayquerygrid', component);
  * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
- * @param {!ngeo.query.MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {!ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.download.Csv} ngeoCsvDownload CSV download service.
- * @param {!angular.JQLite} $element Element.
+ * @param {!import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV download service.
+ * @param {!JQLite} $element Element.
  * @constructor
  * @private
  * @ngInject
@@ -171,19 +170,19 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {!ngeo.query.MapQuerent}
+   * @type {!import("ngeo/query/MapQuerent.js").default}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {!ngeo.download.Csv}
+   * @type {!import("ngeo/download/Csv.js").default}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {!angular.JQLite}
+   * @type {!JQLite}
    * @private
    */
   this.$element_ = $element;
@@ -247,7 +246,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   /**
    * A mapping between row uid and the corresponding feature for each
    * source.
-   * @type {!Object.<string, Object.<string, ol.Feature>>}
+   * @type {!Object.<string, Object.<string, import("ol/Feature.js").default>>}
    * @private
    */
   this.featuresForSources_ = {};
@@ -255,19 +254,19 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!ngeo.map.FeatureOverlayMgr}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!ol.Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
@@ -281,7 +280,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
     $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map_ = null;
@@ -667,7 +666,7 @@ Controller.prototype.makeGrid_ = function(data, source) {
 
 /**
  * @param {Array.<!Object>} data Grid rows.
- * @return {?ngeo.grid.Config} Grid config.
+ * @return {?import("ngeo/grid/Config.js").default} Grid config.
  * @private
  */
 Controller.prototype.getGridConfiguration_ = function(data) {

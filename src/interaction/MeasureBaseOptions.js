@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.MeasureBaseOptions
  */
 const exports = {};
 

@@ -3,7 +3,6 @@ import ngeoQueryAction from 'ngeo/query/Action.js';
 import {listen as olEventsListen} from 'ol/events.js';
 
 /**
- * @module ngeo.query.Keyboard
  */
 class Keyboard {
 

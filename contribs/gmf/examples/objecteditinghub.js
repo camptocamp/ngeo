@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.objecteditinghub
  */
 const exports = {};
 
@@ -35,8 +34,8 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.editing.XSDAttributes} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */
@@ -55,13 +54,13 @@ exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes
   this.q_ = $q;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {gmf.editing.XSDAttributes}
+   * @type {import("gmf/editing/XSDAttributes.js").default}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
@@ -129,19 +128,19 @@ exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes
   this.selectedGmfLayerNode = null;
 
   /**
-   * @type {Object.<number, Array.<ol.Feature>>}
+   * @type {Object.<number, Array.<import("ol/Feature.js").default>>}
    * @export
    */
   this.featuresCache_ = {};
 
   /**
-   * @type {Array.<ol.Feature>}
+   * @type {Array.<import("ol/Feature.js").default>}
    * @export
    */
   this.features = null;
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.selectedFeature = null;
@@ -359,7 +358,7 @@ exports.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
  * @private
  */
 exports.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
-  const features = /** @type Array.<ol.Feature> */ (
+  const features = /** @type Array.<import("ol/Feature.js").default> */ (
     this.getFeaturesFromCache_(gmfLayerNode));
   this.features = features;
   this.selectedFeature = this.features[0];
@@ -368,7 +367,7 @@ exports.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
 
 /**
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
- * @return {?Array.<ol.Feature>} List of features
+ * @return {?Array.<import("ol/Feature.js").default>} List of features
  * @private
  */
 exports.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {

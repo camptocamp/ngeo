@@ -1,5 +1,4 @@
 /**
- * @module ngeo.geolocation.extraModule
  */
 import angular from 'angular';
 import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';

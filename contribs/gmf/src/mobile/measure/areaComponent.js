@@ -1,5 +1,4 @@
 /**
- * @module gmf.mobile.measure.areaComponent
  */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -14,8 +13,8 @@ const exports = angular.module('gmfMobileMeasureArea', [
 
 exports.value('gmfMobileMeasureAreaTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} The template url.
    */
   (element, attrs) => {
@@ -45,10 +44,10 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {boolean} gmf-mobile-measurearea-active Used to active
  * or deactivate the component.
  * @htmlAttribute {number=} gmf-mobile-measurearea-precision the number of significant digits to display.
- * @htmlAttribute {ol.Map} gmf-mobile-measurearea-map The map.
- * @htmlAttribute {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction=}
+ * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurearea-map The map.
+ * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default=}
  *     gmf-mobile-measurearea-sketchstyle A style for the measure area.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  *     gmfMobileMeasureAreaTemplateUrl Template URL for the directive.
  * @return {angular.Directive} The Directive Definition Object.
  * @ngInject
@@ -69,9 +68,9 @@ function component(gmfMobileMeasureAreaTemplateUrl) {
     templateUrl: gmfMobileMeasureAreaTemplateUrl,
     /**
      * @param {angular.Scope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.mobile.measure.areaComponent.Controller_} controller Controller.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {import("gmf/mobile/measure.js").default.areaComponent.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -103,7 +102,7 @@ function Controller($scope, $filter, gettextCatalog) {
   );
 
   /**
-   * @type {ngeo.interaction.MeasureAreaMobile}
+   * @type {import("ngeo/interaction/MeasureAreaMobile.js").default}
    * @export
    */
   this.measure;

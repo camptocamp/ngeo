@@ -1,5 +1,4 @@
 /**
- * @module ngeo.editing.createregularpolygonfromclickComponent
  */
 import angular from 'angular';
 import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawRegularPolygonFromClick.js';
@@ -43,9 +42,9 @@ const exports = angular.module('ngeoCreateregularpolygonfromclick', [
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-angle
  *     Angle in radians. A value of 0 will have one of the shape's point
  *     facing up. Default value is 0.
- * @htmlAttribute {ol.Collection} ngeo-createregularpolygonfromclick-features
+ * @htmlAttribute {import("ol/Collection.js").default} ngeo-createregularpolygonfromclick-features
  *     The collection of features where to add those created by this directive.
- * @htmlAttribute {ol.Map} ngeo-createregularpolygonfromclick-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-createregularpolygonfromclick-map The map.
  * @htmlAttribute {number} ngeo-createregularpolygonfromclick-radius Radius
  *     size in map units.
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-sides
@@ -105,13 +104,13 @@ function Controller($scope) {
   this.angle;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.features;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -132,13 +131,13 @@ function Controller($scope) {
   // == Other properties ==
 
   /**
-   * @type {ngeo.interaction.DrawRegularPolygonFromClick}
+   * @type {import("ngeo/interaction/DrawRegularPolygonFromClick.js").default}
    * @private
    */
   this.interaction_;
 
   /**
-   * @type {ol.EventsKey}
+   * @type {import("ol/EventsKey.js").default}
    * @private
    */
   this.interactionListenerKey_;
@@ -173,7 +172,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {ol.interaction.Draw.Event} evt Event.
+ * @param {import("ol/interaction/Draw/Event.js").default} evt Event.
  * @private
  */
 Controller.prototype.handleDrawEnd_ = function(evt) {

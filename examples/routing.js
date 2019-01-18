@@ -1,5 +1,4 @@
 /**
- * @module app.routing
  */
 const exports = {};
 
@@ -35,7 +34,7 @@ exports.module = angular.module('app', [
 exports.MainController = function() {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

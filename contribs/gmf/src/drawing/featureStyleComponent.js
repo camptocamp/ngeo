@@ -1,5 +1,4 @@
 /**
- * @module gmf.drawing.featureStyleComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -34,7 +33,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *         gmf-featurestyle-feature="ctrl.selectedFeature">
  *     </gmf-featurestyle>
  *
- * @htmlAttribute {ol.Feature} gmf-featurestyle-feature The feature.
+ * @htmlAttribute {import("ol/Feature.js").default} gmf-featurestyle-feature The feature.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -57,7 +56,7 @@ exports.directive('gmfFeaturestyle', directive);
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {ngeo.misc.FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Gmf feature helper service.
  * @constructor
  * @private
  * @ngInject
@@ -73,7 +72,7 @@ function Controller($scope, ngeoFeatureHelper) {
   this.uid = olUtilGetUid(this);
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.feature;
@@ -85,7 +84,7 @@ function Controller($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -114,7 +113,7 @@ function Controller($scope, ngeoFeatureHelper) {
   );
 
   /**
-   * @type {Array.<ol.EventsKey>}
+   * @type {Array.<import("ol/EventsKey.js").default>}
    * @private
    */
   this.featureListenerKeys_ = [];
@@ -135,8 +134,8 @@ function Controller($scope, ngeoFeatureHelper) {
 
 /**
  * Called when a new feature is set, which can also be null.
- * @param {?ol.Feature} newFeature New feature or null value.
- * @param {?ol.Feature} previousFeature Previous feature or null value.
+ * @param {?import("ol/Feature.js").default} newFeature New feature or null value.
+ * @param {?import("ol/Feature.js").default} previousFeature Previous feature or null value.
  * @private
  */
 Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {

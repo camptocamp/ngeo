@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.decorate
  */
 const exports = {};
 import googAsserts from 'goog/asserts.js';
@@ -20,7 +19,7 @@ import olSourceTile from 'ol/source/Tile.js';
  *
  *      <input type="checkbox" ngModel="interaction.active" />
  *
- * @param {ol.interaction.Interaction} interaction Interaction to decorate.
+ * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to decorate.
  */
 exports.interaction = function(interaction) {
   googAsserts.assertInstanceof(interaction, olInteractionInteraction);
@@ -43,7 +42,7 @@ exports.interaction = function(interaction) {
  *
  *      <input type="checkbox" ngModel="layer.visible" />
  *
- * @param {ol.layer.Base} layer Layer to decorate.
+ * @param {import("ol/layer/Base.js").default} layer Layer to decorate.
  */
 exports.layer = function(layer) {
   googAsserts.assertInstanceof(layer, olLayerBase);
@@ -88,7 +87,7 @@ exports.layer = function(layer) {
  *
  *      <span ng-if="layer.loading">please wait</span>
  *
- * @param {ol.layer.Base} layer layer.
+ * @param {import("ol/layer/Base.js").default} layer layer.
  * @param {angular.IScope} $scope Scope.
  */
 exports.layerLoading = function(layer, $scope) {
@@ -158,12 +157,12 @@ exports.layerLoading = function(layer, $scope) {
 
   /**
    * @function
-   * @param {ol.layer.Base} layer Layer
+   * @param {import("ol/layer/Base.js").default} layer Layer
    * @private
    */
   function increment_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
-    const parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    const parent = /** @type {import("ol/layer/Base.js").default} */ (layer.get('parent_group'));
     layer.set('load_count', ++load_count, true);
     if (parent) {
       increment_(parent);
@@ -172,12 +171,12 @@ exports.layerLoading = function(layer, $scope) {
 
   /**
    * @function
-   * @param {ol.layer.Base} layer Layer
+   * @param {import("ol/layer/Base.js").default} layer Layer
    * @private
    */
   function decrement_(layer) {
     let load_count = /** @type {number} */ (layer.get('load_count'));
-    const parent = /** @type {ol.layer.Base} */ (layer.get('parent_group'));
+    const parent = /** @type {import("ol/layer/Base.js").default} */ (layer.get('parent_group'));
     layer.set('load_count', --load_count, true);
     if (parent) {
       decrement_(parent);

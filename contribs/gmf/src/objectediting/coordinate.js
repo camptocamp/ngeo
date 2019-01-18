@@ -1,5 +1,4 @@
 /**
- * @module gmf.objectediting.coordinate
  */
 const exports = {};
 
@@ -8,9 +7,9 @@ const exports = {};
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
  *
- * @param {Array.<ol.Coordinate>|ol.Coordinate} coordinates Coordinates
+ * @param {Array.<import("ol/coordinate.js").Coordinate>|import("ol/coordinate.js").Coordinate} coordinates Coordinates
  * @param {number} nesting Nesting level.
- * @return {Array.<ol.Coordinate>|ol.Coordinate} Converted coordinates.
+ * @return {Array.<import("ol/coordinate.js").Coordinate>|import("ol/coordinate.js").Coordinate} Converted coordinates.
  */
 exports.toXY = function(coordinates, nesting) {
   if (nesting === 0) {

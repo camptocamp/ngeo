@@ -1,5 +1,4 @@
 /**
- * @module ngeo.editing.createfeatureComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -50,11 +49,11 @@ const exports = angular.module('ngeoCreatefeature', [
  *
  * @htmlAttribute {boolean} ngeo-createfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {ol.Collection} ngeo-createfeature-features The collection of
+ * @htmlAttribute {import("ol/Collection.js").default} ngeo-createfeature-features The collection of
  *     features where to add those created by this directive.
  * @htmlAttribute {string} ngeo-createfeature-geom-type Determines the type
  *     of geometry this directive should draw.
- * @htmlAttribute {ol.Map} ngeo-createfeature-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-createfeature-map The map.
  *
  * @return {angular.IDirective} The directive specs.
  * @ngdoc directive
@@ -82,7 +81,7 @@ exports.directive('ngeoCreatefeature', directive);
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!ngeo.misc.EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @ngInject
@@ -98,7 +97,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.active;
 
   /**
-   * @type {ol.Collection.<!ol.Feature>|!ol.source.Vector}
+   * @type {import("ol/Collection.js").default.<!import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
    * @export
    */
   this.features;
@@ -110,7 +109,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.geomType;
 
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -146,7 +145,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.timeout_ = $timeout;
 
   /**
-   * @type {!ngeo.misc.EventHelper}
+   * @type {!import("ngeo/misc/EventHelper.js").default}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
@@ -154,7 +153,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   /**
    * The draw or measure interaction responsible of drawing the vector feature.
    * The actual type depends on the geometry type.
-   * @type {ol.interaction.Interaction}
+   * @type {import("ol/interaction/Interaction.js").default}
    * @private
    */
   this.interaction_;
@@ -183,7 +182,7 @@ Controller.prototype.$onInit = function() {
       this.geomType === ngeoGeometryType.MULTI_POINT
   ) {
     interaction = new olInteractionDraw({
-      type: /** @type {ol.geom.GeometryType} */ ('Point')
+      type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
     });
   } else if (this.geomType === ngeoGeometryType.LINE_STRING ||
       this.geomType === ngeoGeometryType.MULTI_LINE_STRING
@@ -258,7 +257,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Called when a feature is finished being drawn. Add the feature to the
  * collection.
- * @param {ol.interaction.Draw.Event|MeasureEvent} event Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|MeasureEvent} event Event.
  * @export
  */
 Controller.prototype.handleDrawEnd_ = function(event) {

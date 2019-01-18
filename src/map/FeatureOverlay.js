@@ -1,24 +1,23 @@
 /**
- * @module ngeo.map.FeatureOverlay
  */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
 /**
  * @constructor
- * @param {ngeo.map.FeatureOverlayMgr} manager The feature overlay manager.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  */
 const exports = function(manager, index) {
 
   /**
-   * @type {ngeo.map.FeatureOverlayMgr}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
    * @private
    */
   this.manager_ = manager;
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = null;
@@ -33,7 +32,7 @@ const exports = function(manager, index) {
 
 /**
  * Add a feature to the feature overlay.
- * @param {ol.Feature} feature The feature to add.
+ * @param {import("ol/Feature.js").default} feature The feature to add.
  * @export
  */
 exports.prototype.addFeature = function(feature) {
@@ -43,7 +42,7 @@ exports.prototype.addFeature = function(feature) {
 
 /**
  * Remove a feature from the feature overlay.
- * @param {ol.Feature} feature The feature to remove.
+ * @param {import("ol/Feature.js").default} feature The feature to remove.
  * @export
  */
 exports.prototype.removeFeature = function(feature) {
@@ -66,7 +65,7 @@ exports.prototype.clear = function() {
  * configure the feature overlay with a feature collection you will use the
  * collection to add and remove features instead of using the overlay's
  * `addFeature`, `removeFeature` and `clear` functions.
- * @param {ol.Collection.<ol.Feature>} features Feature collection.
+ * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features Feature collection.
  * @export
  */
 exports.prototype.setFeatures = function(features) {
@@ -88,7 +87,7 @@ exports.prototype.setFeatures = function(features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} style
  * Style.
  * @export
  */
@@ -98,21 +97,21 @@ exports.prototype.setStyle = function(style) {
 
 
 /**
- * @param {ol.Collection.Event} evt Feature collection event.
+ * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
  * @private
  */
 exports.prototype.handleFeatureAdd_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.addFeature(feature);
 };
 
 
 /**
- * @param {ol.Collection.Event} evt Feature collection event.
+ * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
  * @private
  */
 exports.prototype.handleFeatureRemove_ = function(evt) {
-  const feature = /** @type {ol.Feature} */ (evt.element);
+  const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature(feature);
 };
 

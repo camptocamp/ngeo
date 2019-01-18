@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.lidarprofile
  */
 const exports = {};
 
@@ -34,7 +33,7 @@ exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
  */
 exports.MainController = function($scope) {
   /**
-   * @type {ol.geom.LineString}
+   * @type {import("ol/geom/LineString.js").default}
    * @export
    */
   this.profileLine = null;
@@ -46,7 +45,7 @@ exports.MainController = function($scope) {
   this.panelActivated = false;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

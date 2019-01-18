@@ -1,5 +1,4 @@
 /**
- * @module app.elevationProfile
  */
 const exports = {};
 
@@ -45,7 +44,7 @@ exports.MainController = function($http, $scope) {
   const source = new olSourceVector();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -61,7 +60,7 @@ exports.MainController = function($http, $scope) {
             'LAYERS': 'ch.swisstopo.pixelkarte-farbe-pk1000.noscale',
             'FORMAT': 'image/jpeg'
           },
-          serverType: /** @type {ol.source.WMSServerType} */ ('mapserver')
+          serverType: /** @type {import("ol/source/WMSServerType.js").default} */ ('mapserver')
         })
       }),
       new olLayerVector({
@@ -111,14 +110,14 @@ exports.MainController = function($http, $scope) {
     let i;
     const len = data.length;
     const lineString = new olGeomLineString([],
-      /** @type {ol.geom.GeometryLayout} */ ('XYM'));
+      /** @type {import("ol/geom/GeometryLayout.js").default} */ ('XYM'));
     for (i = 0; i < len; i++) {
       const p = data[i];
       lineString.appendCoordinate([p.x, p.y, p.dist]);
     }
     source.addFeature(new olFeature(lineString));
 
-    const size = /** @type {ol.Size} */ (this.map.getSize());
+    const size = /** @type {import("ol/size.js").Size} */ (this.map.getSize());
     map.getView().fit(source.getExtent(), {size});
   });
 
@@ -237,8 +236,8 @@ exports.MainController = function($http, $scope) {
 
 
 /**
- * @param {ol.Coordinate} coordinate The current pointer coordinate.
- * @param {ol.geom.Geometry|undefined} geometry The geometry to snap to.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate The current pointer coordinate.
+ * @param {import("ol/geom/Geometry.js").default|undefined} geometry The geometry to snap to.
  */
 exports.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   const closestPoint = geometry.getClosestPoint(coordinate);

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.print.Utils
  */
 import angular from 'angular';
 import * as olHas from 'ol/has.js';
@@ -46,14 +45,14 @@ exports.DOTS_PER_INCH_ = 72;
 /**
  * Return a function to use as map postcompose listener for drawing a print
  * mask on the map.
- * @param {function():ol.Size} getSize User-defined function returning the
+ * @param {function():import("ol/size.js").Size} getSize User-defined function returning the
  *     size in dots of the map to print.
  * @param {function(olx.FrameState):number} getScale User-defined function
  *     returning the scale of the map to print.
  * @param {function():number=} opt_rotation User defined function returning the
  *     inclination of the canvas in degree (-180 to 180).
  * returning the scale of the map to print.
- * @return {function(ol.render.Event)} Function to use as a map postcompose
+ * @return {function(import("ol/render/Event.js").default)} Function to use as a map postcompose
  * listener.
  * @export
  */
@@ -62,7 +61,7 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
 
   return (
   /**
-        * @param {ol.render.Event} evt Postcompose event.
+        * @param {import("ol/render/Event.js").default} evt Postcompose event.
         */
     function(evt) {
       const context = evt.context;
@@ -182,9 +181,9 @@ exports.prototype.drawPrintZoneWithRotation_ = function(context, center,
 /**
  * Get the optimal print scale for a map, the map being defined by its
  * size (in pixels) and resolution (in map units per pixel).
- * @param {ol.Size} mapSize Size of the map on the screen (px).
+ * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
  * @param {number} mapResolution Resolution of the map on the screen.
- * @param {ol.Size} printMapSize Size of the map on the paper (dots).
+ * @param {import("ol/size.js").Size} printMapSize Size of the map on the paper (dots).
  * @param {Array.<number>} printMapScales Supported map scales on the paper.
  * The scales are provided as scale denominators, sorted in ascending order.
  * E.g. `[500, 1000, 2000, 4000]`.
@@ -219,8 +218,8 @@ exports.prototype.getOptimalScale = function(
 
 /**
  * Get the optimal map resolution for a print scale and a map size.
- * @param {ol.Size} mapSize Size of the map on the screen (px).
- * @param {ol.Size} printMapSize Size of the map on the paper (dots).
+ * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
+ * @param {import("ol/size.js").Size} printMapSize Size of the map on the paper (dots).
  * @param {number} printMapScale Map scale on the paper.
  * @return {number} The optimal map resolution.
  * @export
@@ -244,8 +243,8 @@ exports.prototype.getOptimalResolution = function(
 
 /**
  * Get the coordinates of the bottom left corner of the printed map.
- * @param {ol.Coordinate} mapCenter Center of the map to print.
- * @return {ol.Coordinate} The coordinates of the bottom left corner.
+ * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
+ * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom left corner.
  */
 exports.prototype.getBottomLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
@@ -255,8 +254,8 @@ exports.prototype.getBottomLeftCorner = function(mapCenter) {
 
 /**
  * Get the coordinates of the bottom right corner of the printed map.
- * @param {ol.Coordinate} mapCenter Center of the map to print.ç
- * @return {ol.Coordinate} The coordinates of the bottom right corner.
+ * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.ç
+ * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom right corner.
  */
 exports.prototype.getBottomRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
@@ -266,8 +265,8 @@ exports.prototype.getBottomRightCorner = function(mapCenter) {
 
 /**
  * Get the coordinates of the up left corner of the printed map.
- * @param {ol.Coordinate} mapCenter Center of the map to print.
- * @return {ol.Coordinate} The coordinates of the up left corner.
+ * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
+ * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up left corner.
  */
 exports.prototype.getUpLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
@@ -277,8 +276,8 @@ exports.prototype.getUpLeftCorner = function(mapCenter) {
 
 /**
  * Get the coordinates of the up right corner of the printed map.
- * @param {ol.Coordinate} mapCenter Center of the map to print.
- * @return {ol.Coordinate} The coordinates of the up right corner.
+ * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
+ * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up right corner.
  */
 exports.prototype.getUpRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,

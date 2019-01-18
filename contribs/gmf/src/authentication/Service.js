@@ -1,5 +1,4 @@
 /**
- * @module gmf.authentication.Service
  */
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -17,7 +16,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * - logout
  * - resetPassword
  *
- * @extends {ol.events.EventTarget}
+ * @extends {import("ol/events/EventTarget.js").default}
  */
 const exports = class extends olEventsEventTarget {
 

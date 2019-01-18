@@ -1,5 +1,4 @@
 /**
- * @module ngeo.profile.d3Elevation
  */
 import googAsserts from 'goog/asserts.js';
 

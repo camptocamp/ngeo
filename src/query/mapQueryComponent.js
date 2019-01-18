@@ -1,5 +1,4 @@
 /**
- * @module ngeo.query.mapQueryComponent
  */
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
@@ -37,7 +36,7 @@ const exports = angular.module('ngeoMapQuery', [
  *
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
- * @param {ngeo.query.MapQuerent} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -55,7 +54,7 @@ function directive(ngeoMapQuerent, $injector) {
       /**
        * Called when the map is clicked while this controller is active. Issue
        * a request to the query service using the coordinate that was clicked.
-       * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+       * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
        */
       const handleMapClick_ = function(evt) {
         const action = ngeoQueryKeyboard.action;
@@ -71,7 +70,7 @@ function directive(ngeoMapQuerent, $injector) {
        * Called when the pointer is moved while this controller is active.
        * Change the mouse pointer when hovering a non-transparent pixel on the
        * map.
-       * @param {ol.MapBrowserEvent} evt The map browser event being fired.
+       * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
        */
       const handlePointerMove_ = function(evt) {
         if (!evt.dragging) {

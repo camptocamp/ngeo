@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.Measure
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -44,7 +43,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   feature: ol.Feature
  * }>} MeasureEvent
  */
@@ -55,10 +54,10 @@ import olStyleStyle from 'ol/style/Style.js';
  *
  * @constructor
  * @abstract
- * @extends {ol.interaction.Interaction}
- * @param {ngeo.interaction.MeasureBaseOptions=} options Options
+ * @extends {import("ol/interaction/Interaction.js").default}
+ * @param {import("ngeo/interaction/MeasureBaseOptions.js").default=} options Options
  */
-const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOptions} */ ({})) {
+const exports = function(options = /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ ({})) {
 
   olInteractionInteraction.call(this, {
     handleEvent: exports.handleEvent_
@@ -74,7 +73,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * Overlay to show the help messages.
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.helpTooltipOverlay_ = null;
@@ -90,7 +89,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * Overlay to show the measurement.
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.measureTooltipOverlay_ = null;
@@ -98,7 +97,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The measurement overlay coordinate.
-   * @type {ol.Coordinate}
+   * @type {import("ol/coordinate.js").Coordinate}
    * @private
    */
   this.measureTooltipOverlayCoord_ = null;
@@ -106,7 +105,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The sketch feature.
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @protected
    */
   this.sketchFeature = null;
@@ -154,14 +153,14 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The key for geometry change event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.changeEventKey_ = null;
 
   /**
    * The key for map postcompose event.
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.postcomposeEventKey_ = null;
@@ -188,7 +187,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The vector layer used to show final measure features.
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -198,7 +197,7 @@ const exports = function(options = /** @type {ngeo.interaction.MeasureBaseOption
 
   /**
    * The draw interaction to be used.
-   * @type {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw}
+   * @type {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
    * @private
    */
   this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
@@ -222,22 +221,22 @@ olUtilInherits(exports, olInteractionInteraction);
 
 /**
  * @const
- * @type {ol.Sphere}
+ * @type {import("ol/Sphere.js").default}
  */
 
 
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
- * @param {!ol.geom.Polygon} polygon Polygon.
- * @param {!ol.proj.Projection} projection Projection of the polygon coords.
+ * @param {!import("ol/geom/Polygon.js").default} polygon Polygon.
+ * @param {!import("ol/proj/Projection.js").default} projection Projection of the polygon coords.
  * @param {number|undefined} precision Precision.
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
- * @this {ngeo.interaction.Measure}
+ * @this {import("ngeo/interaction/Measure.js").default}
  */
 exports.getFormattedArea = function(polygon, projection, precision, format) {
-  const geom = /** @type {ol.geom.Polygon} */ (polygon.clone().transform(projection, 'EPSG:4326'));
+  const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
   const area = Math.abs(olSphere.getArea(geom, {'projection': 'EPSG:4326'}));
   return format(area, 'm²', 'square', precision);
 };
@@ -246,7 +245,7 @@ exports.getFormattedArea = function(polygon, projection, precision, format) {
 /**
  * Calculate the area of the passed circle and return a formatted string
  * of the area.
- * @param {!ol.geom.Circle} circle Circle
+ * @param {!import("ol/geom/Circle.js").default} circle Circle
  * @param {number|undefined} precision Precision.
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
@@ -260,8 +259,8 @@ exports.getFormattedCircleArea = function(circle, precision, format) {
 /**
  * Calculate the length of the passed line string and return a formatted
  * string of the length.
- * @param {!ol.geom.LineString} lineString Line string.
- * @param {!ol.proj.Projection} projection Projection of the line string coords.
+ * @param {!import("ol/geom/LineString.js").default} lineString Line string.
+ * @param {!import("ol/proj/Projection.js").default} projection Projection of the line string coords.
  * @param {number|undefined} precision Precision.
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of length.
@@ -280,7 +279,7 @@ exports.getFormattedLength = function(lineString, projection, precision, format)
 
 /**
  * Return a formatted string of the point.
- * @param {!ol.geom.Point} point Point.
+ * @param {!import("ol/geom/Point.js").default} point Point.
  * @param {number|undefined} decimals Decimals.
  * @param {!numberCoordinates} format A function to format coordinate into text
  * @param {string=} opt_template The template.
@@ -293,9 +292,9 @@ exports.getFormattedPoint = function(point, decimals, format, opt_template) {
 
 /**
  * Handle map browser event.
- * @param {ol.MapBrowserEvent} evt Map browser event.
+ * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @return {boolean} `false` if event propagation should be stopped.
- * @this {ngeo.interaction.Measure}
+ * @this {import("ngeo/interaction/Measure.js").default}
  * @private
  */
 exports.handleEvent_ = function(evt) {
@@ -316,7 +315,7 @@ exports.handleEvent_ = function(evt) {
 
 
 /**
- * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The draw interaction.
+ * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The draw interaction.
  */
 exports.prototype.getDrawInteraction = function() {
   return this.drawInteraction_;
@@ -327,10 +326,10 @@ exports.prototype.getDrawInteraction = function() {
  * Creates the draw interaction.
  *
  * @abstract
- * @param {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined}
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default|undefined}
  *     style The sketchStyle used for the drawing interaction.
- * @param {ol.source.Vector} source Vector source.
- * @return {ol.interaction.Draw|ngeo.interaction.DrawAzimut|ngeo.interaction.MobileDraw} The interaction
+ * @param {import("ol/source/Vector.js").default} source Vector source.
+ * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The interaction
  * @protected
  */
 exports.prototype.createDrawInteraction = function(style, source) {};
@@ -358,7 +357,7 @@ exports.prototype.setMap = function(map) {
 
 /**
  * Handle draw interaction `drawstart` event.
- * @param {ol.interaction.Draw.Event|DrawEvent} evt Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
  * @private
  */
 exports.prototype.onDrawStart_ = function(evt) {
@@ -386,7 +385,7 @@ exports.prototype.onDrawStart_ = function(evt) {
 
 /**
  * Handle draw interaction `drawend` event.
- * @param {ol.interaction.Draw.Event|DrawEvent} evt Event.
+ * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
  * @private
  */
 exports.prototype.onDrawEnd_ = function(evt) {
@@ -511,7 +510,7 @@ exports.prototype.updateState_ = function() {
  * where to place the tooltip and determine which help message to display.
  *
  * @abstract
- * @param {function(string, ?ol.Coordinate)} callback The function
+ * @param {function(string, ?import("ol/coordinate.js").Coordinate)} callback The function
  *     to be called.
  * @protected
  */

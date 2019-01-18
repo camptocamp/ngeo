@@ -1,5 +1,4 @@
 /**
- * @module gmf.test.data.themes
  */
 const exports = {
   'themes': [

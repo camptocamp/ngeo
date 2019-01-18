@@ -1,5 +1,4 @@
 /**
- * @module gmf.mobile.measure.baseComponent
  */
 import angular from 'angular';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -47,7 +46,7 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   this.gettextCatalog = gettextCatalog;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -69,7 +68,7 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   this.precision;
 
   /**
-   * @type {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction}
+   * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default}
    * @export
    */
   this.sketchStyle = new olStyleStyle({
@@ -94,13 +93,13 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
   });
 
   /**
-   * @type {ngeo.interaction.Measure}
+   * @type {import("ngeo/interaction/Measure.js").default}
    * @export
    */
   this.measure;
 
   /**
-   * @type {ngeo.interaction.MobileDraw}
+   * @type {import("ngeo/interaction/MobileDraw.js").default}
    * @export
    */
   this.drawInteraction;
@@ -133,7 +132,7 @@ exports.Controller.prototype.init = function() {
   this.measure.setActive(this.active);
   ngeoMiscDecorate.interaction(this.measure);
 
-  this.drawInteraction = /** @type {ngeo.interaction.MobileDraw} */ (
+  this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
     this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;

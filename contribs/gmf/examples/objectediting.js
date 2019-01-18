@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.objectediting
  */
 const exports = {};
 
@@ -51,11 +50,11 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 
 /**
- * @param {gmf.objectediting.Manager} gmfObjectEditingManager The gmf
+ * @param {import("gmf/objectediting/Manager.js").default} gmfObjectEditingManager The gmf
  *     ObjectEditing manager service.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
- * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @ngInject
@@ -64,7 +63,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -75,7 +74,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -83,7 +82,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -91,13 +90,13 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures = new olCollection();
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.sketchLayer_ = new olLayerVector({
@@ -108,7 +107,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
   });
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -168,7 +167,7 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
     'mapTools', dummyToolActivate, false);
 
   /**
-   * @type {?ol.Feature}
+   * @type {?import("ol/Feature.js").default}
    * @export
    */
   this.objectEditingFeature = null;

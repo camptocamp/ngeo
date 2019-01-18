@@ -1,5 +1,4 @@
 /**
- * @module ngeo.interaction.MeasureLengthMobile
  */
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
@@ -10,7 +9,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * Interaction dedicated to measure length on mobile devices.
  *
  * @constructor
- * @extends {ngeo.interaction.MeasureLength}
+ * @extends {import("ngeo/interaction/MeasureLength.js").default}
  * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} opt_options Options
@@ -34,7 +33,7 @@ olUtilInherits(
  */
 exports.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
-    type: /** @type {ol.geom.GeometryType} */ ('LineString'),
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     style: style,
     source: source
   });

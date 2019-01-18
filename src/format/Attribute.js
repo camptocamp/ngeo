@@ -1,5 +1,4 @@
 /**
- * @module ngeo.format.Attribute
  */
 
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';

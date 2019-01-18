@@ -1,5 +1,4 @@
 /**
- * @module gmf.datasource.module
  */
 import angular from 'angular';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.EventHelper
  */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
@@ -15,7 +14,7 @@ import * as olEvents from 'ol/events.js';
 const exports = function() {
 
   /**
-   * @type {Object.<number|string, Array.<ol.EventsKey>>}
+   * @type {Object.<number|string, Array.<import("ol/EventsKey.js").default>>}
    * @private
    */
   this.listenerKeys_ = {};
@@ -27,14 +26,14 @@ const exports = function() {
  * Utility method to add a listener key bound to a unique id. The key has
  * to come from `ol.events`.
  * @param {number|string} uid Unique id.
- * @param {ol.EventsKey} key Key.
+ * @param {import("ol/EventsKey.js").default} key Key.
  * @export
  */
 exports.prototype.addListenerKey = function(uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
-  this.listenerKeys_[uid].push(/** @type {ol.EventsKey} */ (key));
+  this.listenerKeys_[uid].push(/** @type {import("ol/EventsKey.js").default} */ (key));
 };
 
 

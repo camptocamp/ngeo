@@ -1,5 +1,4 @@
 /**
- * @module ngeo.datasource.WMSGroup
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
@@ -30,7 +29,7 @@ export default class extends ngeoDatasourceOGCGroup {
    * Note: the layer is not added to the map here.
    *
    * @param {WMSGroupOptions} options Options.
-   * @param {!ngeo.map.LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
+   * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper the ngeo map LayerHelper service.
    */
   constructor(options, ngeoLayerHelper) {
 
@@ -42,13 +41,13 @@ export default class extends ngeoDatasourceOGCGroup {
     // === PRIVATE properties ===
 
     /**
-     * @type {ol.layer.Image}
+     * @type {import("ol/layer/Image.js").default}
      * @private
      */
     this.layer_;
 
     /**
-     * @type {!ngeo.map.LayerHelper}
+     * @type {!import("ngeo/map/LayerHelper.js").default}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -101,7 +100,7 @@ export default class extends ngeoDatasourceOGCGroup {
   // =======================================
 
   /**
-   * @return {ol.layer.Image} layer
+   * @return {import("ol/layer/Image.js").default} layer
    * @export
    */
   get layer() {
@@ -123,7 +122,7 @@ export default class extends ngeoDatasourceOGCGroup {
   }
 
   /**
-   * @param {!ngeo.datasource.OGC} dataSource OGC data source to register.
+   * @param {!import("ngeo/datasource/OGC.js").default} dataSource OGC data source to register.
    * @private
    */
   registerDataSource_(dataSource) {
@@ -185,7 +184,7 @@ export default class extends ngeoDatasourceOGCGroup {
   }
 
   /**
-   * @param {!ngeo.datasource.OGC} dataSource OGC data source to unregister.
+   * @param {!import("ngeo/datasource/OGC.js").default} dataSource OGC data source to unregister.
    * @private
    */
   unregisterDataSource_(dataSource) {

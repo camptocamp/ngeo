@@ -1,5 +1,4 @@
 /**
- * @module app.backgroundlayer
  */
 const exports = {};
 
@@ -39,7 +38,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
  * for the ngModel expression doesn't actually make a difference. This
  * is because ngModel doesn't actually watch the ngModel expression.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.backgroundlayerComponent = {
   bindings: {
@@ -56,7 +55,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 /**
  * @constructor
  * @param {angular.IHttpService} $http Angular http service.
- * @param {ngeo.map.BackgroundLayerMgr} ngeoBackgroundLayerMgr Background layer
+ * @param {import("ngeo/map/BackgroundLayerMgr.js").default} ngeoBackgroundLayerMgr Background layer
  *     manager.
  * @export
  * @ngInject
@@ -64,7 +63,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
 exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -89,7 +88,7 @@ exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
     });
 
   /**
-   * @type {ngeo.map.BackgroundLayerMgr}
+   * @type {import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
@@ -111,7 +110,7 @@ exports.BackgroundlayerController.prototype.change = function() {
 
 /**
  * @param {string} layerName Layer name.
- * @return {ol.layer.Tile} The layer.
+ * @return {import("ol/layer/Tile.js").default} The layer.
  * @private
  */
 exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
@@ -138,7 +137,7 @@ exports.module.controller('AppBackgroundlayerController',
 exports.MainController = function($scope) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({
@@ -152,7 +151,7 @@ exports.MainController = function($scope) {
 
   /**
    * An overlay layer.
-   * @type {ol.layer.Image}
+   * @type {import("ol/layer/Image.js").default}
    */
   const overlay = new olLayerImage({
     source: new olSourceImageWMS({

@@ -1,5 +1,4 @@
 /**
- * @module gmf.import.wmsCapabilityLayertreeComponent
  */
 
 import angular from 'angular';
@@ -26,7 +25,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -37,8 +36,8 @@ exports.value('gmfWmscapabilitylayertreenodeTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -53,7 +52,7 @@ function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayert
 class Controller {
 
   /**
-   * @param {!gmf.datasource.ExternalDataSourcesManager}
+   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
@@ -91,7 +90,7 @@ class Controller {
     // Injected properties
 
     /**
-     * @type {!gmf.datasource.ExternalDataSourcesManager}
+     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;

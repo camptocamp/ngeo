@@ -1,5 +1,4 @@
 /**
- * @module ngeo.format.XSDAttribute
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
@@ -12,7 +11,7 @@ import olFormatXML from 'ol/format/XML.js';
  * Reads attributes that are defined in XSD format and return them as a list.
  *
  * @constructor
- * @extends {ol.format.XML}
+ * @extends {import("ol/format/XML.js").default}
  */
 const exports = function() {
   olFormatXML.call(this);

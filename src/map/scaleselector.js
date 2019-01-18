@@ -1,5 +1,4 @@
 /**
- * @module ngeo.map.scaleselector
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -28,8 +27,8 @@ const exports = angular.module('ngeoScaleselector', []);
 
 exports.value('ngeoScaleselectorTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {JQLite} element Element.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => {
@@ -84,10 +83,10 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * See our live example: [../examples/scaleselector.html](../examples/scaleselector.html)
  *
  * @htmlAttribute {!Array.<number>} ngeo-scaleselector The available scales.
- * @htmlAttribute {ol.Map} ngeo-scaleselector-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *     Optional. The configuration options.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -111,8 +110,8 @@ exports.directive('ngeoScaleselector', directive);
  * @constructor
  * @private
  * @param {angular.IScope} $scope Directive scope.
- * @param {angular.JQLite} $element Element.
- * @param {angular.Attributes} $attrs Attributes.
+ * @param {JQLite} $element Element.
+ * @param {angular.IAttributes} $attrs Attributes.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
@@ -144,10 +143,10 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   const mapExpr = $attrs['ngeoScaleselectorMap'];
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
-  this.map_ = /** @type {ol.Map} */ ($scope.$eval(mapExpr));
+  this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
   googAsserts.assertInstanceof(this.map_, olMap);
 
   const optionsExpr = $attrs['ngeoScaleselectorOptions'];
@@ -166,7 +165,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   this.$scope_ = $scope;
 
   /**
-   * @type {?ol.EventsKey}
+   * @type {?import("ol/EventsKey.js").default}
    * @private
    */
   this.resolutionChangeKey_ = null;
@@ -230,7 +229,7 @@ ScaleselectorController.prototype.changeZoom = function(zoom) {
 
 
 /**
- * @param {ol.Object.Event} e OpenLayers object event.
+ * @param {import("ol/Object/Event.js").default} e OpenLayers object event.
  * @private
  */
 ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
@@ -257,7 +256,7 @@ ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
 
 
 /**
- * @param {ol.Object.Event} e OpenLayers object event.
+ * @param {import("ol/Object/Event.js").default} e OpenLayers object event.
  * @private
  */
 ScaleselectorController.prototype.handleViewChange_ = function(e) {

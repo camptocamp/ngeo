@@ -1,5 +1,4 @@
 /**
- * @module ngeo.message.Message
  */
 
 
@@ -22,7 +21,7 @@
  *     delay: (number|undefined),
  *     popup: (boolean|undefined),
  *     msg: (string),
- *     target: (angular.JQLite|Element|string|undefined),
+ *     target: (JQLite|Element|string|undefined),
  *     type: (string|undefined)
  * }} Message
  */

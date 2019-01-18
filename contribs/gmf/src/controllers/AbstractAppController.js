@@ -1,5 +1,4 @@
 /**
- * @module gmf.controllers.AbstractAppController
  */
 import 'jquery';
 import angular from 'angular';
@@ -54,7 +53,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * Location service
-   * @type {ngeo.statemanager.Location}
+   * @type {import("ngeo/statemanager/Location.js").default}
    */
   this.ngeoLocation = $injector.get('ngeoLocation');
   if (this.ngeoLocation.hasParam('debug')) {
@@ -66,12 +65,12 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * Collection of features for the draw interaction
-   * @type {ol.Collection.<ol.Feature>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
-   * @type {ngeo.map.FeatureOverlay}
+   * @type {import("ngeo/map/FeatureOverlay.js").default}
    * @export
    */
   this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
@@ -80,26 +79,26 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * Ngeo FeatureHelper service
-   * @type {ngeo.misc.FeatureHelper}
+   * @type {import("ngeo/misc/FeatureHelper.js").default}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(googAsserts.assert(this.map.getView().getProjection()));
 
   /**
-   * @type {gmf.theme.Manager}
+   * @type {import("gmf/theme/Manager.js").default}
    * @export
    */
   this.gmfThemeManager = $injector.get('gmfThemeManager');
 
   /**
-   * @type {gmf.layertree.TreeManager}
+   * @type {import("gmf/layertree/TreeManager.js").default}
    * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * Themes service
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = $injector.get('gmfThemes');
@@ -116,14 +115,14 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * Permalink service
-   * @type {gmf.permalink.Permalink}
+   * @type {import("gmf/permalink/Permalink.js").default}
    * @private
    */
   this.permalink_ = $injector.get('gmfPermalink');
 
   /**
    * Authentication service
-   * @type {gmf.authentication.Service}
+   * @type {import("gmf/authentication/Service.js").default}
    */
   const gmfAuthentication = $injector.get('gmfAuthenticationService');
 
@@ -248,7 +247,7 @@ const exports = function(config, $scope, $injector) {
   }
 
   /**
-   * @type {ngeo.map.BackgroundLayerMgr}
+   * @type {import("ngeo/map/BackgroundLayerMgr.js").default}
    * @private
    */
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
@@ -279,7 +278,7 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * FeatureStyle used by the gmf.query.windowComponent
-   * @type {ol.style.Style}
+   * @type {import("ol/style/Style.js").default}
    * @export
    */
   this.queryFeatureStyle = new olStyleStyle({
@@ -325,7 +324,7 @@ const exports = function(config, $scope, $injector) {
   this.printActive = false;
 
   /**
-   * @type {ngeo.query.MapQuerent}
+   * @type {import("ngeo/query/MapQuerent.js").default}
    * @private
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
@@ -386,7 +385,7 @@ const exports = function(config, $scope, $injector) {
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 
   /**
-   * @type {ngeo.statemanager.Service}
+   * @type {import("ngeo/statemanager/Service.js").default}
    */
   this.stateManager = $injector.get('ngeoStateManager');
 
@@ -436,14 +435,14 @@ const exports = function(config, $scope, $injector) {
 
   /**
    * The ngeo feature overlay manager service
-   * @type {ngeo.map.FeatureOverlayMgr}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
    */
   const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {ngeo.misc.ToolActivateMgr}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -667,9 +666,9 @@ exports.prototype.userMustChangeItsPassword = function() {
 
 
 /**
- * @param {Array.<ol.layer.Base>} layers Layers list.
+ * @param {Array.<import("ol/layer/Base.js").default>} layers Layers list.
  * @param {Array.<string>} labels default_basemap list.
- * @return {ol.layer.Base} layer or null
+ * @return {import("ol/layer/Base.js").default} layer or null
  */
 exports.getLayerByLabels = function(layers, labels) {
   if (labels && labels.length > 0) {

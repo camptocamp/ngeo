@@ -1,5 +1,4 @@
 /**
- * @module ngeo.mainmodule
  */
 import angular from 'angular';
 import ngeoDatasourceModule from 'ngeo/datasource/module.js';

@@ -1,5 +1,4 @@
 /**
- * @module gmf.datasource.DataSourceBeingFiltered
  */
 const exports = {};
 

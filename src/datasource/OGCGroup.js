@@ -1,5 +1,4 @@
 /**
- * @module ngeo.datasource.OGCGroup
  */
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 

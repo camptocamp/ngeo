@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.WMSTime
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -8,7 +7,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
 
 /**
  * ngeo - WMS time service
- * @extends {ngeo.misc.Time}
+ * @extends {import("ngeo/misc/Time.js").default}
  * @param {angular.IFilterService} $filter angular filter service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor

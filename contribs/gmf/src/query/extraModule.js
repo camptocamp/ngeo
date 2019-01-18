@@ -1,5 +1,4 @@
 /**
- * @module gmf.query.extraModule
  */
 import angular from 'angular';
 import gmfQueryGridComponent from 'gmf/query/gridComponent.js';

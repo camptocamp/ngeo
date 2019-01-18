@@ -1,5 +1,4 @@
 /**
- * @module gmf.contextualdata.component
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -32,7 +31,7 @@ const exports = angular.module('gmfContextualdata', [
  *
  * The content of the popover is managed in a partial that must be defined
  * using the `gmfContextualdatacontentTemplateUrl` value. See
- * {@link gmf.contextualdatacontentDirective} for more details.
+ * {@link import("gmf/contextualdatacontentDirective.js").default} for more details.
  *
  * One can also provide a `gmf-contextualdata-callback` attribute in order to
  * do some additional computing on the coordinate or the values received for
@@ -42,7 +41,7 @@ const exports = angular.module('gmfContextualdata', [
  *
  * See the [../examples/contribs/gmf/contextualdata.html](../examples/contribs/gmf/contextualdata.html) example for a usage sample.
  *
- * @htmlAttribute {ol.Map} map The map.
+ * @htmlAttribute {import("ol/Map.js").default} map The map.
  * @htmlAttribute {Array<number>} projections The list of projections.
  * @htmlAttribute {Function} callback A function called after server
  *    (raster) data is received in case some additional computing is required.
@@ -63,9 +62,9 @@ function directive() {
     },
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
-     * @param {gmf.contextualdata.component.Controller_} controller Controller.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
+     * @param {import("gmf/contextualdata/component.js").default.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
@@ -81,7 +80,7 @@ exports.directive('gmfContextualdata', directive);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IScope} $scope Scope.
- * @param {gmf.raster.RasterService} gmfRaster Gmf Raster service
+ * @param {import("gmf/raster/RasterService.js").default} gmfRaster Gmf Raster service
  *
  * @constructor
  * @private
@@ -91,7 +90,7 @@ exports.directive('gmfContextualdata', directive);
 function Controller($compile, $timeout, $scope, gmfRaster) {
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -103,13 +102,13 @@ function Controller($compile, $timeout, $scope, gmfRaster) {
   this.projections;
 
   /**
-   * @type {function(ol.Coordinate, Object):Object}
+   * @type {function(import("ol/coordinate.js").Coordinate, Object):Object}
    * @export
    */
   this.callback;
 
   /**
-   * @type {ol.Overlay}
+   * @type {import("ol/Overlay.js").default}
    * @private
    */
   this.overlay_;
@@ -133,7 +132,7 @@ function Controller($compile, $timeout, $scope, gmfRaster) {
   this.$scope_ = $scope;
 
   /**
-   * @type {gmf.raster.RasterService}
+   * @type {import("gmf/raster/RasterService.js").default}
    * @private
    */
   this.gmfRaster_ = gmfRaster;

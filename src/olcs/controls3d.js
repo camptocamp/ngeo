@@ -1,5 +1,4 @@
 /**
- * @module ngeo.olcs.controls3d
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -18,7 +17,7 @@ const Controller = class {
   /**
    * @ngInject
    * @param {!jQuery} $element The element
-   * @param {ngeo.olcs.Service} ngeoOlcsService The ol-cesium service.
+   * @param {import("ngeo/olcs/Service.js").default} ngeoOlcsService The ol-cesium service.
    */
   constructor($element, ngeoOlcsService) {
 
@@ -89,7 +88,7 @@ const Controller = class {
     this.animationFrameRequestId_;
 
     /**
-     * @type {ngeo.olcs.Service}
+     * @type {import("ngeo/olcs/Service.js").default}
      * @private
      */
     this.olcsService_ = ngeoOlcsService;
@@ -216,7 +215,7 @@ const Controller = class {
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!string} ngeoOlcsControls3dTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
@@ -250,7 +249,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * See our live example: [../examples/simple3d.html](../examples/simple3d.html)
  *
  * @htmlAttribute {olcs.contrib.Manager} ngeo-olcs-manager The OL-Cesium manager.
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */

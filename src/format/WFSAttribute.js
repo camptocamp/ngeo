@@ -1,5 +1,4 @@
 /**
- * @module ngeo.format.WFSAttribute
  */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttribute from 'ngeo/format/Attribute.js';

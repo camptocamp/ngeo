@@ -1,5 +1,4 @@
 /**
- * @module ngeo.map.component
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -34,7 +33,7 @@ const exports = angular.module('ngeoMap', []);
  * [../examples/permalink.html](../examples/permalink.html)
  * [../examples/simple.html](../examples/simple.html)
  *
- * @htmlAttribute {ol.Map} ngeo-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-map The map.
  * @param {angular.IWindowService} $window The Angular $window service.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngdoc directive
@@ -46,8 +45,8 @@ function directive($window) {
     restrict: 'A',
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       // Get the 'ol.Map' object from attributes and manage it accordingly

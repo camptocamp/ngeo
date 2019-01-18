@@ -1,5 +1,4 @@
 /**
- * @module app.notification
  */
 const exports = {};
 
@@ -19,14 +18,14 @@ exports.module = angular.module('app', [
 
 
 /**
- * @param {ngeo.message.Notification} ngeoNotification Ngeo notification service.
+ * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
  * @ngInject
  * @constructor
  */
 exports.MainController = function(ngeoNotification) {
 
   /**
-   * @type {ngeo.message.Notification}
+   * @type {import("ngeo/message/Notification.js").default}
    * @export
    */
   this.notification = ngeoNotification;

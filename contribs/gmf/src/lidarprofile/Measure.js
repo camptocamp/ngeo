@@ -1,5 +1,4 @@
 /**
- * @module ngeo.lidarprofile.Measure
  */
 import {mouse as d3mouse, select as d3select} from 'd3';
 
@@ -8,12 +7,12 @@ export default class {
 
   /**
    * Measure tool for the d3 chart
-   * @param {gmf.lidarprofile.Manager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
+   * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManagerInstance gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
 
     /**
-     * @type {gmf.lidarprofile.Manager}
+     * @type {import("gmf/lidarprofile/Manager.js").default}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;

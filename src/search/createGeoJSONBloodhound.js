@@ -1,5 +1,4 @@
 /**
- * @module ngeo.search.createGeoJSONBloodhound
  */
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
@@ -11,8 +10,8 @@ import 'corejs-typeahead';
  * @param {string} url an URL to a search service.
  * @param {(function(GeoJSONFeature): boolean)=} opt_filter function to filter
  *     results.
- * @param {ol.proj.Projection=} opt_featureProjection Feature projection.
- * @param {ol.proj.Projection=} opt_dataProjection Data projection.
+ * @param {import("ol/proj/Projection.js").default=} opt_featureProjection Feature projection.
+ * @param {import("ol/proj/Projection.js").default=} opt_dataProjection Data projection.
  * @param {BloodhoundOptions=} opt_options optional Bloodhound options. If
  *     undefined, the default Bloodhound config will be used.
  * @param {BloodhoundRemoteOptions=} opt_remoteOptions optional Bloodhound

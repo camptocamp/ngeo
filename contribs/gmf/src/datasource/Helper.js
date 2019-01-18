@@ -1,5 +1,4 @@
 /**
- * @module gmf.datasource.Helper
  */
 import angular from 'angular';
 import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
@@ -13,9 +12,9 @@ const exports = class {
    * sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {gmf.editing.EnumerateAttribute} gmfEnumerateAttribute The Gmf enumerate
+   * @param {import("gmf/editing/EnumerateAttribute.js").default} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
-   * @param {ngeo.datasource.Helper} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfDataSourcesHelper
@@ -32,13 +31,13 @@ const exports = class {
     this.q_ = $q;
 
     /**
-     * @type {gmf.editing.EnumerateAttribute}
+     * @type {import("gmf/editing/EnumerateAttribute.js").default}
      * @private
      */
     this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     /**
-     * @type {ngeo.datasource.Helper}
+     * @type {import("ngeo/datasource/Helper.js").default}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -53,7 +52,7 @@ const exports = class {
     this.collection_;
 
     /**
-     * @type {Object.<number, gmf.datasource.OGC>}
+     * @type {Object.<number, import("gmf/datasource/OGC.js").default>}
      * @protected
      */
     this.cache_;
@@ -72,17 +71,17 @@ const exports = class {
   /**
    * Return a data source using its id.
    * @param {number} id Data source id.
-   * @return {?gmf.datasource.OGC} Data source.
+   * @return {?import("gmf/datasource/OGC.js").default} Data source.
    * @export
    */
   getDataSource(id) {
-    return /** @type {?gmf.datasource.OGC} */ (
+    return /** @type {?import("gmf/datasource/OGC.js").default} */ (
       this.ngeoDataSourcesHelper_.getDataSource(id)
     );
   }
 
   /**
-   * @param {gmf.datasource.OGC} dataSource Filtrable data source.
+   * @param {import("gmf/datasource/OGC.js").default} dataSource Filtrable data source.
    * @return {angular.IPromise} Promise.
    * @export
    */

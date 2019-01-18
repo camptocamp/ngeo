@@ -83,7 +83,7 @@ gmfx.GridSource;
 
 /**
  * Configuration used to initialize a grid.
- * @type {ngeo.grid.Config}
+ * @type {import("ngeo/grid/Config.js").default}
  */
 gmfx.GridSource.prototype.configuration;
 
@@ -96,7 +96,7 @@ gmfx.GridSource.prototype.source;
 
 
 /**
- * Configuration option for {@link gmf.query.gridComponent} to merge
+ * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
  * grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
@@ -256,7 +256,7 @@ gmfx.PermalinkOptions;
 
 /**
  * An alternate style for the crosshair feature added by the permalink service.
- * @type {Array<(null|ol.style.Style)>|null|ol.FeatureStyleFunction|ol.style.Style|undefined}
+ * @type {Array<(null|import("ol/style/Style.js").default)>|null|import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default|undefined}
  */
 gmfx.PermalinkOptions.prototype.crosshairStyle;
 
@@ -445,7 +445,7 @@ gmfx.ProfileHoverPointInformations;
 
 /**
  * Coordinate of the point.
- * @type {ol.Coordinate|undefined}
+ * @type {import("ol/coordinate.js").Coordinate|undefined}
  */
 gmfx.ProfileHoverPointInformations.prototype.coordinate;
 
@@ -550,7 +550,7 @@ gmfx.SearchComponentDatasource.prototype.url;
 
 
 /**
- * @typedef {Object.<string, ol.style.Style|Array.<ol.style.Style>>}
+ * @typedef {Object.<string, import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>>}
  */
 gmfx.StylesObject;
 
@@ -738,7 +738,7 @@ gmfx.datasource;
 
 
 /**
- * @typedef {ol.Collection.<gmf.datasource.OGC>}
+ * @typedef {import("ol/Collection.js").default.<import("gmf/datasource/OGC.js").default>}
  */
 gmfx.datasource.DataSources;
 
@@ -838,7 +838,7 @@ cgxp.tools.openInfoWindow;
 
 
 /**
- * @param {ngeo.message.Popup!} popup a ngeoPopup.
+ * @param {import("ngeo/message/Popup.js").default!} popup a ngeoPopup.
  * @param {string} title (text).
  * @param {string=} opt_width CSS width.
  * @param {string=} opt_height CSS height.
@@ -848,7 +848,7 @@ gmfx.openPopup_;
 
 
 /**
- * @typedef {ngeo.CustomEvent.<{
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
  *   user: gmfx.User
  * }>}
  */

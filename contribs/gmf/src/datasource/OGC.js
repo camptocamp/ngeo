@@ -1,5 +1,4 @@
 /**
- * @module gmf.datasource.OGC
  */
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 

@@ -1,5 +1,4 @@
 /**
- * @module ngeo.misc.controlComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -26,7 +25,7 @@ const exports = angular.module('ngeoControl', []);
  *
  * See our live example: [../examples/control.html](../examples/control.html)
  *
- * @htmlAttribute {ol.Map} ngeo-control-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-control-map The map.
  * @return {angular.IDirective} The directive specs.
  * @ngInject
  * @ngdoc directive
@@ -37,16 +36,16 @@ function component() {
     restrict: 'A',
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {JQLite} element Element.
+     * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
 
-      const control = /** @type {ol.control.Control} */
+      const control = /** @type {import("ol/control/Contrimport("ol/js.js").default").default} */
               (scope.$eval(attrs['ngeoControl']));
       googAsserts.assertInstanceof(control, olControlControl);
 
-      const map = /** @type {ol.Map} */
+      const map = /** @type {import("ol/Map.js").default} */
               (scope.$eval(attrs['ngeoControlMap']));
       googAsserts.assertInstanceof(map, olMap);
 

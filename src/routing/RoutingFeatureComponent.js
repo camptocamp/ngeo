@@ -1,5 +1,4 @@
 /**
- * @module ngeo.routing.RoutingFeatureComponent
  */
 const exports = {};
 import angular from 'angular';
@@ -35,7 +34,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
 
 exports.module.value('ngeoRoutingFeatureTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -46,8 +45,8 @@ exports.module.value('ngeoRoutingFeatureTemplateUrl',
 );
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoRoutingFeatureTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoRoutingFeatureTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -60,7 +59,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IQService} $q Angular q service
- * @param {!ngeo.routing.NominatimService} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -88,19 +87,19 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   this.$q_ = $q;
 
   /**
-   * @type {ngeo.routing.NominatimService}
+   * @type {import("ngeo/routing/NominatimService.js").default}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @private
    */
   this.map;
 
   /**
-   * @type {ol.Feature}
+   * @type {import("ol/Feature.js").default}
    * @export
    */
   this.feature;
@@ -124,19 +123,19 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   this.strokeColor;
 
   /**
-   * @type {function(ol.Feature)}
+   * @type {function(import("ol/Feature.js").default)}
    * @export
    */
   this.onChange;
 
   /**
-   * @type {ol.Collection}
+   * @type {import("ol/Collection.js").default}
    * @private
    */
   this.vectorFeatures_ = new olCollection();
 
   /**
-   * @type {ol.source.Vector}
+   * @type {import("ol/source/Vector.js").default}
    * @private
    */
   this.vectorSource_ = new olSourceVector({
@@ -144,7 +143,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   });
 
   /**
-   * @type {ol.layer.Vector}
+   * @type {import("ol/layer/Vector.js").default}
    * @private
    */
   this.vectorLayer_ = new olLayerVector({
@@ -169,7 +168,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * Interaction for moving start and end.
-   * @type {ol.interaction.Modify}
+   * @type {import("ol/interaction/Modify.js").default}
    * @private
    */
   this.modifyFeature_ = new olInteractionModify({
@@ -177,7 +176,7 @@ exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
   });
 
   /**
-   * @type {ol.interaction.Draw}
+   * @type {import("ol/interaction/Draw.js").default}
    * @private
    */
   this.draw_ = null;
@@ -241,7 +240,7 @@ exports.Controller.prototype.set = function() {
 
   this.draw_ = new olInteractionDraw({
     features: this.vectorFeatures_,
-    type: /** @type {ol.geom.GeometryType} */ ('Point')
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
   });
 
   this.draw_.on('drawstart', () => {
@@ -263,7 +262,7 @@ exports.Controller.prototype.set = function() {
 };
 
 /**
- * @param {ol.Coordinate} coordinate LonLat coordinate.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate LonLat coordinate.
  * @param {string} label Feature name/label.
  * @private
  */
@@ -302,14 +301,14 @@ exports.Controller.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
-  const newCoordinates = /** @type{ol.geom.Point} */(this.feature.getGeometry()).getCoordinates();
+  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry()).getCoordinates();
   this.map.getView().setCenter(newCoordinates);
 };
 
 /**
  * Snaps a feature to the street network using the getNearest
  * function of the routing service. Replaces the feature.
- * @param {ol.Feature} feature Feature to snap
+ * @param {import("ol/Feature.js").default} feature Feature to snap
  * @private
  */
 exports.Controller.prototype.snapFeature_ = function(feature) {
@@ -335,12 +334,12 @@ exports.Controller.prototype.snapFeature_ = function(feature) {
 
 /**
  * Converts feature point into LonLat coordinate.
- * @param {ol.Feature} point Feature point to convert
- * @return {ol.Coordinate} LonLat coordinate
+ * @param {import("ol/Feature.js").default} point Feature point to convert
+ * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
 exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
-  const geometry = /** @type {ol.geom.Point} */ (point.getGeometry());
+  const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
   return olProj.toLonLat(coords, projection);
@@ -350,7 +349,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
 /**
  * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature (point geometry).
  *
- * The text input is provided by {@link ngeo.nominatimInputComponent} and includes Nominatim search.
+ * The text input is provided by {@link import("ngeo/nominatimInputComponent.js").default} and includes Nominatim search.
  *
  * Example:
  *
@@ -361,15 +360,15 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
  *         ngeo-routing-feature-stroke-color="#4CB01E"
  *         ngeo-routing-feature-on-change="ctrl.handleChange">
  *
- * Is used in in the partial of {@link ngeo.routingComponent}.
+ * Is used in in the partial of {@link import("ngeo/routingComponent.js").default}.
  *
  * See the [../examples/routing.html](../examples/routing.html) example for a usage sample.
  *
- * @htmlAttribute {ol.Map} ngeo-routing-feature-map The map.
- * @htmlAttribute {ol.Feature} ngeo-routing-feature-feature The feature.
+ * @htmlAttribute {import("ol/Map.js").default} ngeo-routing-feature-map The map.
+ * @htmlAttribute {import("ol/Feature.js").default} ngeo-routing-feature-feature The feature.
  * @htmlAttribute {string} ngeo-routing-feature-fill-color The marker fill color.
  * @htmlAttribute {string} ngeo-routing-feature-stroke-color The marker stroke color.
- * @htmlAttribute {function(ol.Feature)} ngeo-routing-feature-on-change Event fired when feature changes.
+ * @htmlAttribute {function(import("ol/Feature.js").default)} ngeo-routing-feature-on-change Event fired when feature changes.
  * @ngdoc directive
  * @ngname ngeoRoutingFeature
  */

@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.print
  */
 const exports = {};
 
@@ -43,8 +42,8 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
 
 /**
  * @constructor
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
- * @param {ngeo.map.FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */
@@ -53,7 +52,7 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   gmfThemes.loadThemes();
 
   /**
-   * @type {ol.Map}
+   * @type {import("ol/Map.js").default}
    * @export
    */
   this.map = new olMap({

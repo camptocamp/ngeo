@@ -1,5 +1,4 @@
 /**
- * @module ngeo.statemanager.Service
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -9,7 +8,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
  * @constructor
- * @param {!ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {!import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
  */
@@ -22,7 +21,7 @@ const exports = function(ngeoLocation, ngeoUsedKeyRegexp) {
   this.initialState = {};
 
   /**
-   * @type {!ngeo.statemanager.Location}
+   * @type {!import("ngeo/statemanager/Location.js").default}
    */
   this.ngeoLocation = ngeoLocation;
 

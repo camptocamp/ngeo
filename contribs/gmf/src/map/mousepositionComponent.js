@@ -1,5 +1,4 @@
 /**
- * @module gmf.map.mousepositionComponent
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -25,7 +24,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfMapMousepositionTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -36,8 +35,8 @@ exports.value('gmfMapMousepositionTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfMapMousepositionTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -56,7 +55,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  *     gmf-mouseposition-projections="ctrl.projections">
  *  </gmf-mouseposition>
  *
- * @htmlAttribute {ol.Map} gmf-mouseposition-map The map.
+ * @htmlAttribute {import("ol/Map.js").default} gmf-mouseposition-map The map.
  * @htmlAttribute {Array.<gmfx.MousePositionProjection>}
  *    gmf-mouseposition-projection The list of the projections.
  *
@@ -76,7 +75,7 @@ exports.component('gmfMouseposition', component);
 
 
 /**
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -88,7 +87,7 @@ exports.component('gmfMouseposition', component);
  */
 function Controller($element, $filter, $scope, gettextCatalog) {
   /**
-   * @type {!ol.Map}
+   * @type {!import("ol/Map.js").default}
    * @export
    */
   this.map;
@@ -118,7 +117,7 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.$element_ = $element;
@@ -130,7 +129,7 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.$filter_ = $filter;
 
   /**
-   * @type  {?ol.control.MousePosition}
+   * @type  {?import("ol/control/MousePosition.js").default}
    * @private
    */
   this.control_ = null;

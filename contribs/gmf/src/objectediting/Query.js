@@ -1,5 +1,4 @@
 /**
- * @module gmf.objectediting.Query
  */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -15,7 +14,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
- * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
+ * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
  * @constructor
  * @ngInject
  */
@@ -34,7 +33,7 @@ const exports = function($http, $q, gmfThemes) {
   this.q_ = $q;
 
   /**
-   * @type {gmf.theme.Themes}
+   * @type {import("gmf/theme/Themes.js").default}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -154,8 +153,8 @@ exports.getQueryableLayersInfoFromThemes = function(
  *
  * @param {gmfx.ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
  *     information.
- * @param {ol.Coordinate} coordinate Coordinate.
- * @param {ol.Map} map Map.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
+ * @param {import("ol/Map.js").default} map Map.
  * @return {angular.IPromise} Promise.
  * @export
  */

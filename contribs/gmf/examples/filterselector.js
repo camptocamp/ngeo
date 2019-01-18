@@ -1,5 +1,4 @@
 /**
- * @module gmfapp.filterselector
  */
 const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
@@ -60,12 +59,12 @@ exports.MainController = class {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
-   * @param {gmf.datasource.Manager} gmfDataSourcesManager The gmf
+   * @param {import("gmf/datasource/Manager.js").default} gmfDataSourcesManager The gmf
    *     data sources manager service.
-   * @param {gmf.theme.Themes} gmfThemes The gmf themes service.
-   * @param {gmf.layertree.TreeManager} gmfTreeManager gmf Tree Manager service.
-   * @param {ngeo.datasource.DataSources} ngeoDataSources Ngeo data sources service.
-   * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
+   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
    *     service.
    * @ngInject
    */
@@ -82,13 +81,13 @@ exports.MainController = class {
     gmfThemes.loadThemes();
 
     /**
-     * @type {gmf.layertree.TreeManager}
+     * @type {import("gmf/layertree/TreeManager.js").default}
      * @export
      */
     this.gmfTreeManager = gmfTreeManager;
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @export
      */
     this.map = new olMap({

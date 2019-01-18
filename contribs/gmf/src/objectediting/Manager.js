@@ -1,5 +1,4 @@
 /**
- * @module gmf.objectediting.Manager
  */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
@@ -11,8 +10,8 @@ import olFeature from 'ol/Feature.js';
  * a feature using the GMF protocol.
  *
  * @param {angular.IQService} $q Angular $q service.
- * @param {gmf.editing.EditFeature} gmfEditFeature Gmf edit feature service.
- * @param {ngeo.statemanager.Location} ngeoLocation ngeo location service.
+ * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
+ * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @constructor
  * @ngInject
  */
@@ -25,13 +24,13 @@ const exports = function($q, gmfEditFeature, ngeoLocation) {
   this.q_ = $q;
 
   /**
-   * @type {gmf.editing.EditFeature}
+   * @type {import("gmf/editing/EditFeature.js").default}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {ngeo.statemanager.Location}
+   * @type {import("ngeo/statemanager/Location.js").default}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -119,7 +118,7 @@ exports.prototype.getLayerNodeId = function() {
  *
  * @param {string} key Property key.
  * @param {string} value Property value.
- * @param {Array.<ol.Feature>} features List of features.
+ * @param {Array.<import("ol/Feature.js").default>} features List of features.
  * @private
  */
 exports.prototype.handleGetFeatures_ = function(key, value, features) {

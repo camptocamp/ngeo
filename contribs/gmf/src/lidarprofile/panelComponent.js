@@ -1,5 +1,4 @@
 /**
- * @module gmf.lidarprofile.panelComponent
  */
 import angular from 'angular';
 import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
@@ -26,8 +25,8 @@ const exports = angular.module('gmfLidarprofilePanel', [
 
 exports.value('gmfLidarprofilePanelTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
-     * @param {!angular.Attributes} $attrs Attributes.
+     * @param {!JQLite} $element Element.
+     * @param {!angular.IAttributes} $attrs Attributes.
      * @return {string} Template.
      */
   ($element, $attrs) => {
@@ -42,9 +41,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfLidarprofilePanelTemplateUrl
+ * @param {!JQLite} $element Element.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfLidarprofilePanelTemplateUrl
  *     Template function.
  * @return {string} Template URL.
  * @ngInject
@@ -93,10 +92,10 @@ class Controller {
 
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {gmf.lidarprofile.Manager} gmfLidarprofileManager gmf gmfLidarprofileManager.
-   * @param {gmf.lidarprofile.Config} gmfLidarprofileConfig gmf Lidar profile config.
-   * @param {ngeo.misc.ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service
-   * @param {ngeo.download.Csv} ngeoCsvDownload CSV Download service.
+   * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManager gmf gmfLidarprofileManager.
+   * @param {import("gmf/lidarprofile/Config.js").default} gmfLidarprofileConfig gmf Lidar profile config.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager service
+   * @param {import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV Download service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -112,13 +111,13 @@ class Controller {
     this.ready = false;
 
     /**
-     * @type {gmf.lidarprofile.Config}
+     * @type {import("gmf/lidarprofile/Config.js").default}
      * @private
      */
     this.profileConfig_ = gmfLidarprofileConfig;
 
     /**
-     * @type {gmf.lidarprofile.Manager}
+     * @type {import("gmf/lidarprofile/Manager.js").default}
      */
     this.profile = gmfLidarprofileManager;
 
@@ -129,14 +128,14 @@ class Controller {
     this.active = false;
 
     /**
-     * @type {ol.Map}
+     * @type {import("ol/Map.js").default}
      * @export
      */
     this.map = null;
 
     /**
      * The Openlayers LineString geometry of the profle
-     * @type {ol.geom.LineString}
+     * @type {import("ol/geom/LineString.js").default}
      * @export
      */
     this.line;
@@ -149,13 +148,13 @@ class Controller {
     this.measureActive = false;
 
     /**
-     * @type {ngeo.download.Csv}
+     * @type {import("ngeo/download/Csv.js").default}
      * @private
      */
     this.ngeoCsvDownload_ = ngeoCsvDownload;
 
     /**
-     * @type {ngeo.misc.ToolActivateMgr}
+     * @type {import("ngeo/misc/ToolActivateMgr.js").default}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
