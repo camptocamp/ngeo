@@ -71,7 +71,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfEnumerateAttribute', []);
+const module = angular.module('gmfEnumerateAttribute', []);
 exports.module.service('gmfEnumerateAttribute', exports);
 
 

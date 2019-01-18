@@ -1547,7 +1547,7 @@ exports.prototype.cleanParams = function(groups) {
 };
 
 
-exports.module = angular.module('gmfPermalink', [
+const module = angular.module('gmfPermalink', [
   gmfAuthenticationService.name,
   gmfThemeManager.name,
   gmfThemeThemes.name,

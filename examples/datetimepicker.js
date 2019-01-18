@@ -7,7 +7,7 @@ import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.j
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMiscDatetimepickerComponent.name,
 ]);

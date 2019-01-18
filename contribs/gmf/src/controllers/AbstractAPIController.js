@@ -72,7 +72,7 @@ const exports = function(config, $scope, $injector) {
 olUtilInherits(exports, gmfControllersAbstractAppController);
 
 
-exports.module = angular.module('GmfAbstractAPIControllerModule', [
+const module = angular.module('GmfAbstractAPIControllerModule', [
   gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
   ngeoQueryBboxQueryComponent.name

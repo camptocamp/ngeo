@@ -241,7 +241,7 @@ exports.prototype.handleDrawEnd = function(type, event) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoDrawfeatureController', [
+const module = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscFeatureHelper.name,

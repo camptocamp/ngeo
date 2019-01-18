@@ -174,7 +174,7 @@ exports.prototype.getNearest = function(coordinate, config) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoRoutingService', [
+const module = angular.module('ngeoRoutingService', [
 ]);
 
 exports.module.service('ngeoRoutingService', exports);

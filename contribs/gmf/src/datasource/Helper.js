@@ -133,7 +133,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfDataSourcesHelper', [
+const module = angular.module('gmfDataSourcesHelper', [
   ngeoDatasourceHelper.name,
   gmfEditingEnumerateAttribute.name,
 ]);

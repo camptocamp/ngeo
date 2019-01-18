@@ -419,7 +419,7 @@ exports.prototype.traverseDepthFirst = function(visitor) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoLayertreeController', []);
+const module = angular.module('ngeoLayertreeController', []);
 exports.module.controller('ngeoLayertreeController', exports);
 
 

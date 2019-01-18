@@ -96,7 +96,7 @@ import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoExampleService', [
+const module = angular.module('ngeoExampleService', [
   ngeoMyRequiredService.name
 ]);
 exports.module.service('ngeoExampleService', exports);

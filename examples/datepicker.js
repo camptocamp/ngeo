@@ -10,7 +10,7 @@ import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMiscDatepickerComponent.name,
   ngeoMiscTime.name,

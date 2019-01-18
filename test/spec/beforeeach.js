@@ -4,7 +4,7 @@ import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule.js';
 
 
-exports.module = angular.module('app', []);
+const module = angular.module('app', []);
 
 beforeEach(() => {
   exports.module.requires.push(ngeoMainmodule.name);

@@ -10,7 +10,7 @@ import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeTimeSliderComponent.name,
   ngeoMiscWMSTime.name,

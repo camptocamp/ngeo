@@ -146,7 +146,7 @@ exports.prototype.startDownload = function(data, columnDefs, fileName) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoCsvDownload', [
+const module = angular.module('ngeoCsvDownload', [
   ngeoDownloadService.name
 ]);
 exports.module.service('ngeoCsvDownload', exports);

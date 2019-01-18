@@ -10,7 +10,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   ngeoMessageModalComponent.name,
   gmfPermalinkShareComponent.name,

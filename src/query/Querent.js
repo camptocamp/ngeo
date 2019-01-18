@@ -1029,7 +1029,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoQuerent', [
+const module = angular.module('ngeoQuerent', [
   ngeoFilterRuleHelper.name,
   ngeoMiscWMSTime.name,
 ]);

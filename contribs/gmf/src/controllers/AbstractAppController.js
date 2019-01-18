@@ -784,7 +784,7 @@ exports.prototype.getLocationIcon = function() {
 };
 
 
-exports.module = angular.module('GmfAbstractAppControllerModule', [
+const module = angular.module('GmfAbstractAppControllerModule', [
   'gettext',
   'tmh.dynamicLocale',
   gmfAuthenticationModule.name,

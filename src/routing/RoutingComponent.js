@@ -26,7 +26,7 @@ import 'ngeo/sass/font.scss';
  */
 
 
-exports.module = angular.module('ngeoRoutingComponent', [
+const module = angular.module('ngeoRoutingComponent', [
   ngeoMiscDebounce.name,
   ngeoMiscFilters.name,
   ngeoRoutingNominatimService.name,

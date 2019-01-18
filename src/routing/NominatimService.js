@@ -186,7 +186,7 @@ exports.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoNominatimService', [
+const module = angular.module('ngeoNominatimService', [
   ngeoMiscDebounce.name
 ]);
 

@@ -14,7 +14,7 @@ import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoOlcsOlcsModule.name

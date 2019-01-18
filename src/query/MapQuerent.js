@@ -343,7 +343,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoMapQuerent', [
+const module = angular.module('ngeoMapQuerent', [
   ngeoDatasourceDataSources.name,
   ngeoDatasourceHelper.name,
   ngeoQueryQuerent.name,

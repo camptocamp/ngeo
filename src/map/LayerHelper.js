@@ -529,7 +529,7 @@ exports.prototype.getQuerySourceIds = function(layer) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoLayerHelper', [])
+const module = angular.module('ngeoLayerHelper', [])
   .service('ngeoLayerHelper', exports)
   .value('ngeoTilesPreloadingLimit', Infinity);
 

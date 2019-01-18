@@ -594,7 +594,7 @@ exports.NodeType = {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfThemes', [
+const module = angular.module('gmfThemes', [
   ngeoMapLayerHelper.name,
 ]);
 exports.module.value('gmfThemesOptions', {});

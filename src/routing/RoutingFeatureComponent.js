@@ -21,7 +21,7 @@ import 'ngeo/sass/font.scss';
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoRoutingFeatureComponent', [
+const module = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimService.name,
   ngeoRoutingNominatimInputComponent.name
 ]);

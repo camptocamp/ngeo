@@ -153,7 +153,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoDataSourcesHelper', [
+const module = angular.module('ngeoDataSourcesHelper', [
   ngeoDatasourceDataSources.name,
   ngeoQueryQuerent.name,
 ]);

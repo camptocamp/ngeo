@@ -930,7 +930,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfDataSourcesManager', [
+const module = angular.module('gmfDataSourcesManager', [
   gmfDatasourceWFSAliases.name,
   gmfLayertreeSyncLayertreeMap.name,
   gmfLayertreeTreeManager.name,

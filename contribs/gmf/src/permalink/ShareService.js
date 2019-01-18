@@ -106,7 +106,7 @@ exports.URL_MAX_LEN = 2083;
  */
 exports.URL_PATH_MAX_LEN = 2048;
 
-exports.module = angular.module('gmfShareService', []);
+const module = angular.module('gmfShareService', []);
 
 exports.module.service('gmfShareService', exports);
 

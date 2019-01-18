@@ -150,7 +150,7 @@ const exports = function(opt_options) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoCreateLocationSearchBloodhound', []);
+const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
 exports.module.value(
   'ngeoCreateLocationSearchBloodhound',

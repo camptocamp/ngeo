@@ -19,7 +19,7 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoProfileElevationComponent.name,

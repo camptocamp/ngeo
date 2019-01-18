@@ -27,7 +27,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfDrawingFeatureStyleComponent.name,
   gmfMapComponent.name,

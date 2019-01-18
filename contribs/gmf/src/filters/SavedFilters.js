@@ -214,7 +214,7 @@ const exports = class {
 };
 
 
-exports.module = angular.module('gmfSavedFilters', []);
+const module = angular.module('gmfSavedFilters', []);
 
 exports.module.service('gmfSavedFilters', exports);
 

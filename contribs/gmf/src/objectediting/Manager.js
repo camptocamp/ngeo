@@ -173,7 +173,7 @@ exports.Param = {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfObjectEditingManager', [
+const module = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.name,
   ngeoStatemanagerLocation.name,
 ]);

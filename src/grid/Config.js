@@ -132,7 +132,7 @@ exports.prototype.invertSelection = function() {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoGridConfig', []);
+const module = angular.module('ngeoGridConfig', []);
 
 
 export default exports;

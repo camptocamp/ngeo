@@ -217,7 +217,7 @@ exports = class {...};
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoPrint', [
+const module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.name
 ]);
 
@@ -252,7 +252,7 @@ Then create a module for your application and add the requirement to the abstrac
 an AngularJS controller as another). You must use a unique module name (here it's `AppMain`):
 
 ```
-exports.module = angular.module('AppMain', [
+const module = angular.module('AppMain', [
   gmfAbstractMobileController.name,
   myOtherComponentDependency.name,
   myOtherServiceDependency.name,

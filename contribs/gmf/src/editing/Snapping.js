@@ -582,7 +582,7 @@ exports.prototype.handleMapMoveEnd_ = function() {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfSnapping', [
+const module = angular.module('gmfSnapping', [
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
   ngeoLayertreeController.name,

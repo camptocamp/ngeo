@@ -180,7 +180,7 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoDataSources', []);
+const module = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
 exports.module.service('ngeoDataSources', exports);
 

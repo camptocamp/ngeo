@@ -91,7 +91,7 @@ const exports = function($q, $http, gettext) {
   };
 };
 
-exports.module = angular.module('ngeoFile', []);
+const module = angular.module('ngeoFile', []);
 
 exports.module.service('ngeoFile', exports);
 

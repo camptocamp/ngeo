@@ -21,7 +21,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
   gmfQueryWindowComponent.name,

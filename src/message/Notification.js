@@ -174,7 +174,7 @@ exports.prototype.clearMessageByCacheItem_ = function(item) {
 /**
  * @type {angular.IModule}
  */
-exports.module = angular.module('ngeoNotification', [
+const module = angular.module('ngeoNotification', [
 ]);
 
 exports.module.service('ngeoNotification', exports);
