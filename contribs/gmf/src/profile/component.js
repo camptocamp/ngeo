@@ -23,7 +23,7 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfProfile', [
+const module = angular.module('gmfProfile', [
   ngeoDownloadCsv.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoProfileElevationComponent.name,

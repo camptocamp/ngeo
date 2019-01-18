@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoGetBrowserLanguage', []);
+const module = angular.module('ngeoGetBrowserLanguage', []);
 
 
 /**

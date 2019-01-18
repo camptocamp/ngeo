@@ -12,7 +12,7 @@ import 'angular-sanitize';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMessageDisplaywindowComponent', [
+const module = angular.module('ngeoMessageDisplaywindowComponent', [
   'ngSanitize',
 ]);
 

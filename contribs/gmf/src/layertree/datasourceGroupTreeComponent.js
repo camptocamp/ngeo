@@ -7,7 +7,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
+const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
   ngeoDatasourceDataSources.name,
 ]);
 

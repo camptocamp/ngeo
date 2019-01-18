@@ -44,7 +44,7 @@ import 'ngeo/sass/font.scss';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoRule', [
+const module = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
   ngeoFilterRuleHelper.name,
   ngeoMapFeatureOverlay.name,

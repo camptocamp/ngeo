@@ -29,7 +29,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfSearch', [
+const module = angular.module('gmfSearch', [
   gmfLayertreeTreeManager.name,
   gmfSearchFulltextSearch.name,
   gmfThemeThemes.name,

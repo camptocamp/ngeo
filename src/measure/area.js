@@ -10,7 +10,7 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMeasurearea', [
+const module = angular.module('ngeoMeasurearea', [
   ngeoDrawController.name
 ]);
 

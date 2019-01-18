@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoRecenter', []);
+const module = angular.module('ngeoRecenter', []);
 
 /**
  * Provides the "ngeoRecenter" directive, a widget for recentering a map

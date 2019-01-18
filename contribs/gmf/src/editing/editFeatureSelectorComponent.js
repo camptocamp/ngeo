@@ -11,7 +11,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('GmfEditingFeatureSelectorComponent', [
+const module = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfEditingEditFeatureComponent.name,
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,

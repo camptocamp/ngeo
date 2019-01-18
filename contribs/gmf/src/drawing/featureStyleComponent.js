@@ -13,7 +13,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfDrawingFeatureStyle', [
+const module = angular.module('gmfDrawingFeatureStyle', [
   ngeoMiscColorpickerComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);

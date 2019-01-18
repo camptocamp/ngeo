@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoBtnComponent', []);
+const module = angular.module('ngeoBtnComponent', []);
 
 
 /**

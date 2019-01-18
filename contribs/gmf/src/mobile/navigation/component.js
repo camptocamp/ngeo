@@ -2,7 +2,7 @@
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
-const exports = angular.module('gmfMobileNav', []);
+const module = angular.module('gmfMobileNav', []);
 
 
 /**

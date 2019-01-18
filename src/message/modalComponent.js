@@ -8,7 +8,7 @@ import googAsserts from 'goog/asserts.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoModal', []);
+const module = angular.module('ngeoModal', []);
 
 /**
  * Provides the "ngeoModal" component.

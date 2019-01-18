@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMiscSwipe', []);
+const module = angular.module('ngeoMiscSwipe', []);
 
 
 /**

@@ -13,7 +13,7 @@ import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfDrawProfileLine', [
+const module = angular.module('gmfDrawProfileLine', [
   ngeoMapFeatureOverlayMgr.name,
 ]);
 

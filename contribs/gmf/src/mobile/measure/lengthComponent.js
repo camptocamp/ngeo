@@ -6,7 +6,7 @@ import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMo
 import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
-const exports = angular.module('gmfMobileMeasureLength', [
+const module = angular.module('gmfMobileMeasureLength', [
   ngeoMiscFilters.name,
 ]);
 

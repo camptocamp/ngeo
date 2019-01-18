@@ -6,7 +6,7 @@ import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile
 import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
-const exports = angular.module('gmfMobileMeasureArea', [
+const module = angular.module('gmfMobileMeasureArea', [
   ngeoMiscFilters.name,
 ]);
 

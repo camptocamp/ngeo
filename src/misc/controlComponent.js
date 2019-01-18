@@ -8,7 +8,7 @@ import olControlControl from 'ol/control/Control.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoControl', []);
+const module = angular.module('ngeoControl', []);
 
 
 /**

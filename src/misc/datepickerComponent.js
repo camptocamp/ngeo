@@ -17,7 +17,7 @@ import 'jquery-ui/ui/i18n/datepicker-it.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDatePicker', [
+const module = angular.module('ngeoDatePicker', [
   ngeoMiscTime.name,
   'ui.date',
 ]);

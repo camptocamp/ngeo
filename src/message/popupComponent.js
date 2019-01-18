@@ -4,7 +4,7 @@ import angular from 'angular';
 import 'angular-sanitize';
 
 
-const exports = angular.module('ngeoPopup', [
+const module = angular.module('ngeoPopup', [
   'ngSanitize',
 ]);
 

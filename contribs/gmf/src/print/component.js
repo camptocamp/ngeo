@@ -27,7 +27,7 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfPrintComponent', [
+const module = angular.module('gmfPrintComponent', [
   gmfAuthenticationService.name,
   gmfThemeThemes.name,
   ngeoMapLayerHelper.name,

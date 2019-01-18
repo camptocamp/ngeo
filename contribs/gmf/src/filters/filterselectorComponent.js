@@ -26,7 +26,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import 'bootstrap/js/src/dropdown.js';
 
 
-const exports = angular.module('gmfFilterselector', [
+const module = angular.module('gmfFilterselector', [
   gmfAuthenticationService.name,
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceHelper.name,

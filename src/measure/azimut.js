@@ -13,7 +13,7 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMeasureazimut', [
+const module = angular.module('ngeoMeasureazimut', [
   ngeoDrawController.name,
   ngeoMiscFilters.name,
 ]);

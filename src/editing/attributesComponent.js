@@ -6,7 +6,7 @@ import * as olEvents from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 
-const exports = angular.module('ngeoAttributes', [
+const module = angular.module('ngeoAttributes', [
   ngeoMiscDatetimepickerComponent.name,
   ngeoMiscEventHelper.name,
 ]);

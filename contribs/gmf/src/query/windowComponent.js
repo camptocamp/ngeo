@@ -26,7 +26,7 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfQueryWindowComponent', [
+const module = angular.module('gmfQueryWindowComponent', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,

@@ -7,7 +7,7 @@ import 'bootstrap/js/src/popover.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoPopover', []);
+const module = angular.module('ngeoPopover', []);
 
 
 /**

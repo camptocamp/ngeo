@@ -32,7 +32,7 @@ import 'bootstrap/js/src/collapse.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLayertreeComponent', [
+const module = angular.module('gmfLayertreeComponent', [
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceExternalDataSourcesManager.name,
   gmfPermalinkPermalink.name,

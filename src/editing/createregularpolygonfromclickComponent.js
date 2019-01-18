@@ -5,7 +5,7 @@ import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawReg
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 
-const exports = angular.module('ngeoCreateregularpolygonfromclick', [
+const module = angular.module('ngeoCreateregularpolygonfromclick', [
 ]);
 
 

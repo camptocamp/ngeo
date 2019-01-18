@@ -9,7 +9,7 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDateTimePicker', ['gettext']);
+const module = angular.module('ngeoDateTimePicker', ['gettext']);
 
 /**
  * A directive used to display a date or time picker

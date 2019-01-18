@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoColorpicker', []);
+const module = angular.module('ngeoColorpicker', []);
 
 
 module.value('ngeoColorpickerTemplateUrl',

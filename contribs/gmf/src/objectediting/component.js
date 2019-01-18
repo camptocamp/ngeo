@@ -44,7 +44,7 @@ const jsts = {
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfObjectEditingComponent', [
+const module = angular.module('gmfObjectEditingComponent', [
   gmfEditingEditFeature.name,
   gmfLayertreeSyncLayertreeMap.name,
   gmfLayertreeTreeManager.name,

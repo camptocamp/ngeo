@@ -8,7 +8,7 @@ import olMap from 'ol/Map.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMap', []);
+const module = angular.module('ngeoMap', []);
 
 
 /**

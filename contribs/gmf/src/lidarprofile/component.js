@@ -6,7 +6,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLidarprofile', []);
+const module = angular.module('gmfLidarprofile', []);
 
 
 module.value('gmfLidarprofileTemplateUrl',

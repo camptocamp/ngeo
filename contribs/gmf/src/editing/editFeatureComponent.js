@@ -52,7 +52,7 @@ import olStyleText from 'ol/style/Text.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('GmfEditingFeatureComponent', [
+const module = angular.module('GmfEditingFeatureComponent', [
   gmfEditingEditFeature.name,
   gmfEditingSnapping.name,
   gmfEditingXSDAttributes.name,

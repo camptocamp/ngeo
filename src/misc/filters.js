@@ -72,7 +72,7 @@ import {padNumber} from 'ol/string.js';
  */
 
 
-const exports = angular.module('ngeoAngularFilters', []);
+const module = angular.module('ngeoAngularFilters', []);
 
 /**
  * Format a number as a localized scale.

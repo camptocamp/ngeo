@@ -12,7 +12,7 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfMapMouseposition', [
+const module = angular.module('gmfMapMouseposition', [
   ngeoMiscFilters.name,
 ]);
 

@@ -12,7 +12,7 @@ import olGeomPoint from 'ol/geom/Point.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoGooglestreetview', [
+const module = angular.module('ngeoGooglestreetview', [
   ngeoMapFeatureOverlayMgr.name
 ]);
 

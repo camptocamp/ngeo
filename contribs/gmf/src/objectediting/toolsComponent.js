@@ -20,7 +20,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfObjecteditingToolsComponent', [
+const module = angular.module('gmfObjecteditingToolsComponent', [
   gmfObjecteditingGetWMSFeatureComponent.name,
   ngeoEditingCreatefeatureComponent.name,
   ngeoEditingCreateregularpolygonfromclickComponent.name,

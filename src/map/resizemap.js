@@ -7,7 +7,7 @@ import olMap from 'ol/Map.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoResizemap', []);
+const module = angular.module('ngeoResizemap', []);
 
 /**
  * Provides a directive that resizes the map in an animation loop

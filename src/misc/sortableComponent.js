@@ -18,7 +18,7 @@ import googAsserts from 'goog/asserts.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoSortable', []);
+const module = angular.module('ngeoSortable', []);
 
 
 /**

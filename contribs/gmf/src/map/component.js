@@ -9,7 +9,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfMapComponent', [
+const module = angular.module('gmfMapComponent', [
   gmfPermalinkModule.name,
   gmfEditingSnapping.name,
   ngeoMapModule.name,

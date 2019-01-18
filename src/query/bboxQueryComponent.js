@@ -7,7 +7,7 @@ import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 import olInteractionDragBox from 'ol/interaction/DragBox.js';
 import {platformModifierKeyOnly} from 'ol/events/condition.js';
 
-const exports = angular.module('ngeoBboxQuery', [
+const module = angular.module('ngeoBboxQuery', [
   ngeoQueryMapQuerent.name,
 ]);
 

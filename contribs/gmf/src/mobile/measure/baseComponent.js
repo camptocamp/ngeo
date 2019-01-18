@@ -9,7 +9,7 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-const exports = angular.module('gmfMobileMeasureBase', [
+const module = angular.module('gmfMobileMeasureBase', [
   ngeoMiscFilters.name,
 ]);
 

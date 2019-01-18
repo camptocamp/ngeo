@@ -6,7 +6,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 
-const exports = angular.module('ngeoExportfeatures', [
+const module = angular.module('ngeoExportfeatures', [
   ngeoMiscFeatureHelper.name
 ]);
 

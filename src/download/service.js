@@ -12,7 +12,7 @@ import {saveAs} from 'file-saver';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDownload', []);
+const module = angular.module('ngeoDownload', []);
 
 /**
  * A service to start a download for a file.

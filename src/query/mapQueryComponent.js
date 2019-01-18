@@ -9,7 +9,7 @@ import {
   unlistenByKey as olEventsUnlistenByKey
 } from 'ol/events.js';
 
-const exports = angular.module('ngeoMapQuery', [
+const module = angular.module('ngeoMapQuery', [
   ngeoQueryMapQuerent.name,
 ]);
 

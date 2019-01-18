@@ -13,7 +13,7 @@ import googAsserts from 'goog/asserts.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
-const exports = angular.module('gmfImportdatasource', [
+const module = angular.module('gmfImportdatasource', [
   gmfDatasourceExternalDataSourcesManager.name,
   gmfImportWmsCapabilityLayertreeComponent.name,
   gmfImportWmtsCapabilityLayertreeComponent.name,

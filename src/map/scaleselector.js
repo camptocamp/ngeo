@@ -22,7 +22,7 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoScaleselector', []);
+const module = angular.module('ngeoScaleselector', []);
 
 
 module.value('ngeoScaleselectorTemplateUrl',

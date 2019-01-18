@@ -36,7 +36,7 @@ import olGeomPoint from 'ol/geom/Point.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMobileGeolocation', [
+const module = angular.module('ngeoMobileGeolocation', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMessageNotification.name,
 ]);
