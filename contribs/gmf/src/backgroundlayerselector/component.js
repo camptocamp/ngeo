@@ -84,7 +84,7 @@ const component = {
 
 
 <<<<<<< HEAD
-exports.component('gmfBackgroundlayerselector', component);
+module.component('gmfBackgroundlayerselector', component);
 =======
 module.component('gmfBackgroundlayerselector', component);
 >>>>>>> 1dcf486... f

@@ -128,7 +128,7 @@ class Controller {
 }
 
 
-exports.component('gmfDatasourcegrouptree', {
+module.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<'
   },

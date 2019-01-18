@@ -312,7 +312,7 @@ class Controller {
  * @ngdoc component
  * @ngname ngeoDisplaywindow
  */
-exports.component('ngeoDisplaywindow', {
+module.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',

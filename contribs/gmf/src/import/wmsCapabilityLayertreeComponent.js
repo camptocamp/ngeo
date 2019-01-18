@@ -119,7 +119,7 @@ class Controller {
 }
 
 
-exports.component('gmfWmscapabilitylayertreenode', {
+module.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
     'layer': '<',

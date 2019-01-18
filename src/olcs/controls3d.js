@@ -263,7 +263,7 @@ const component = {
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
 };
 
-exports.component('ngeoOlcsControls3d', component);
+module.component('ngeoOlcsControls3d', component);
 
 module.value('ngeoOlcsControls3dTemplateUrl', '');
 

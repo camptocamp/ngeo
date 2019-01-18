@@ -123,7 +123,7 @@ const component = {
 };
 
 
-exports.component('gmfDisplayquerygrid', component);
+module.component('gmfDisplayquerygrid', component);
 
 
 /**

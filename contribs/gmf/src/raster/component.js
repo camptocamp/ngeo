@@ -343,7 +343,7 @@ const widgetComponent = {
   },
   templateUrl: gmfElevationwidgetTemplateUrl
 };
-exports.component('gmfElevationwidget', widgetComponent);
+module.component('gmfElevationwidget', widgetComponent);
 
 
 /**

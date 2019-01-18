@@ -357,7 +357,7 @@ const component = {
 };
 
 
-exports.component('gmfDisclaimer', component);
+module.component('gmfDisclaimer', component);
 
 
 export default module;

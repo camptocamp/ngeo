@@ -735,7 +735,7 @@ class Controller {
  */
 
 
-exports.component('gmfFilterselector', {
+module.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',

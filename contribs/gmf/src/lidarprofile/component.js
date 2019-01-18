@@ -61,7 +61,7 @@ const component = {
   templateUrl: gmfLidarprofileTemplateUrl
 };
 
-exports.component('gmfLidarprofile', component);
+module.component('gmfLidarprofile', component);
 
 
 /**

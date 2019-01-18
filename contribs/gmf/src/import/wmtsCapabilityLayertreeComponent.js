@@ -117,7 +117,7 @@ class Controller {
 }
 
 
-exports.component('gmfWmtscapabilitylayertree', {
+module.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
     'layers': '<',

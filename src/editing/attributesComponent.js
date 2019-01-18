@@ -71,7 +71,7 @@ const component = {
   templateUrl: ngeoAttributesTemplateUrl
 };
 
-exports.component('ngeoAttributes', component);
+module.component('ngeoAttributes', component);
 
 
 /**

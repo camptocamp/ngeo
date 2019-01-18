@@ -57,7 +57,7 @@ const component = {
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl
 };
-exports.component('gmfShare', component);
+module.component('gmfShare', component);
 
 
 class ShareComponentController {

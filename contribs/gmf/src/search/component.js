@@ -178,7 +178,7 @@ module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module
-exports.component('gmfSearch', component);
+module.component('gmfSearch', component);
 
 
 /**

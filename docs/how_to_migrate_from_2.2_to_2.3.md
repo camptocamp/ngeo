@@ -204,7 +204,7 @@ On this module is attached an AngularJS component and a value, like this:
 
 ```
 module.value('ngeoGridTemplateUrl', a_function);
-exports.component('ngeoGrid', the_grid_component);
+module.component('ngeoGrid', the_grid_component);
 ```
 
 For AngularJS `service`, that's the same concept, but instead of providing the module, we prefer to provide

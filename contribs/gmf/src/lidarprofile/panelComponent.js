@@ -82,7 +82,7 @@ const component = {
 };
 
 
-exports.component('gmfLidarprofilePanel', component);
+module.component('gmfLidarprofilePanel', component);
 
 
 /**

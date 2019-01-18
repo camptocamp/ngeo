@@ -122,7 +122,7 @@ const component = {
 };
 
 
-exports.component('gmfDisplayquerywindow', component);
+module.component('gmfDisplayquerywindow', component);
 
 
 /**

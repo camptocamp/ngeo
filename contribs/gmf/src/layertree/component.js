@@ -139,7 +139,7 @@ const component = {
   template: gmfLayertreeTemplate
 };
 
-exports.component('gmfLayertree', component);
+module.component('gmfLayertree', component);
 
 
 /**

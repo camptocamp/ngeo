@@ -71,7 +71,7 @@ const component = {
   templateUrl: gmfMapMousepositionTemplateUrl
 };
 
-exports.component('gmfMouseposition', component);
+module.component('gmfMouseposition', component);
 
 
 /**

@@ -102,7 +102,7 @@ const component = {
   templateUrl: gmfThemeSelectorTemplateUrl
 };
 
-exports.component('gmfThemeselector', component);
+module.component('gmfThemeselector', component);
 
 
 /**

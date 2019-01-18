@@ -126,7 +126,7 @@ const component = {
   templateUrl: gmfObjecteditingTemplateUrl
 };
 
-exports.component('gmfObjectediting', component);
+module.component('gmfObjectediting', component);
 
 
 /**

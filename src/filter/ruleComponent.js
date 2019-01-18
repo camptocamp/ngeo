@@ -976,7 +976,7 @@ class RuleController {
  * Also, changes are not made on-the-fly. A button must be clicked for the
  * changes to be applied to the rule.
  */
-exports.component('ngeoRule', {
+module.component('ngeoRule', {
   bindings: {
     'featureOverlay': '<',
     'map': '<',

@@ -64,7 +64,7 @@ const component = {
   }
 };
 
-exports.component('ngeoModal', component);
+module.component('ngeoModal', component);
 
 class Controller {
   /**

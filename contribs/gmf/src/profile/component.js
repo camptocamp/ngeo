@@ -111,7 +111,7 @@ const component = {
   templateUrl: gmfProfileTemplateUrl
 };
 
-exports.component('gmfProfile', component);
+module.component('gmfProfile', component);
 
 
 /**

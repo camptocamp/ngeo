@@ -173,7 +173,7 @@ const component = {
 };
 
 
-exports.component('gmfPrint', component);
+module.component('gmfPrint', component);
 
 /**
  * @typedef {{

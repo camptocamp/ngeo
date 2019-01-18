@@ -391,7 +391,7 @@ class Controller {
 }
 
 
-exports.component('ngeoGooglestreetview', {
+module.component('ngeoGooglestreetview', {
   bindings: {
     'active': '<',
     'featureStyle': '<?',

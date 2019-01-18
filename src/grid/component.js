@@ -74,7 +74,7 @@ const component = {
   templateUrl: ngeoGridTemplateUrl
 };
 
-exports.component('ngeoGrid', component);
+module.component('ngeoGrid', component);
 
 
 /**

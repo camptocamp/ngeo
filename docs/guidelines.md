@@ -114,7 +114,7 @@ the module in the value we export directly like:
 exports = angular.module('ngeoExample', [...]);
 
 module.value(...);
-exports.component(the_component);
+module.component(the_component);
 export default module;
 ```
 
@@ -227,7 +227,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentT
  * @ngdoc component
  * @ngname ngeoModuleComponent
  */
-exports.component_ = {
+module.component_ = {
   templateUrl: ngeoModuleComponentTemplateUrl
 }
 
@@ -445,5 +445,5 @@ For example:
 const my_component = function() {
   // …
 };
-exports.component('ngeoMisc', my_component);
+module.component('ngeoMisc', my_component);
 ```

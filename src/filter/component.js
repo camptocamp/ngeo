@@ -63,7 +63,7 @@ function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
 }
 
 
-exports.component('ngeoFilter', {
+module.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
     'customRules': '<',

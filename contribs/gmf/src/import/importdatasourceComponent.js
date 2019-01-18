@@ -400,7 +400,7 @@ class Controller {
 }
 
 
-exports.component('gmfImportdatasource', {
+module.component('gmfImportdatasource', {
   bindings: {
     'map': '<'
   },
