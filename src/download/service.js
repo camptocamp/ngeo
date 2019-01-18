@@ -44,7 +44,7 @@ function factory() {
   return download;
 }
 
-exports.factory('ngeoDownload', factory);
+module.factory('ngeoDownload', factory);
 
 
 export default module;

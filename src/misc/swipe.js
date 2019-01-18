@@ -36,7 +36,7 @@ const module = angular.module('ngeoMiscSwipe', []);
  * documentation for `bind` below.
  */
 
-exports.factory('$verticalSwipe', [function() {
+module.factory('$verticalSwipe', [function() {
   // The total distance in any direction before we make the call on swipe vs. scroll.
   const MOVE_BUFFER_RADIUS = 10;
 

@@ -49,7 +49,7 @@ function factory($window) {
     });
 }
 
-exports.factory('ngeoGetBrowserLanguage', factory);
+module.factory('ngeoGetBrowserLanguage', factory);
 
 
 export default module;

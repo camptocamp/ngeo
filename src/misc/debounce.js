@@ -56,7 +56,7 @@ const factory = function($timeout) {
     });
 };
 
-exports.factory('ngeoDebounce', factory);
+module.factory('ngeoDebounce', factory);
 
 
 export default module;
