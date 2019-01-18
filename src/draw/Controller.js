@@ -15,7 +15,7 @@ import olFeature from 'ol/Feature.js';
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {import("ol/collection.js").Collection.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @constructor
  * @private
  * @ngInject
@@ -38,7 +38,7 @@ function Controller($scope, $sce, gettextCatalog,
   /**
    * Alternate collection of features in which to push the drawn features.
    * If not defined, then `ngeoFeatures` is used instead.
-   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>|undefined}
+   * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>|undefined}
    * @export
    */
   this.features;
@@ -75,7 +75,7 @@ function Controller($scope, $sce, gettextCatalog,
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = ngeoFeatures;

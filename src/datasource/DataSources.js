@@ -9,7 +9,7 @@ import olView from 'ol/View.js';
 
 
 /**
- * @typedef {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} DataSources
+ * @typedef {!import("ol/collection.js").Collection.<!import("ngeo/datasource/DataSource.js").default>} DataSources
  */
 
 

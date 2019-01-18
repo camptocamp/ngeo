@@ -252,7 +252,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {!import("ol/collection.js").Collection}
    * @private
    */
   this.features_ = new olCollection();
@@ -264,7 +264,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {!import("ol/collection.js").Collection}
    * @private
    */
   this.highlightFeatures_ = new olCollection();
