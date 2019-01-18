@@ -40,7 +40,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * of keys and their possible values, see in gmfx.js, under:
  * `gmfx.ObjectEditingToolsOptions`.
  */
-exports.value('gmfObjectEditingToolsOptions', {});
+module.value('gmfObjectEditingToolsOptions', {});
 
 
 /**

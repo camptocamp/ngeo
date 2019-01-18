@@ -26,7 +26,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfImportdatasourceTemplateUrl',
+module.value('gmfImportdatasourceTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

@@ -23,7 +23,7 @@ const exports = angular.module('ngeoDatePicker', [
 ]);
 
 
-exports.value('ngeoDatePickerTemplateUrl',
+module.value('ngeoDatePickerTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

@@ -8,7 +8,7 @@ import olCollection from 'ol/Collection.js';
  */
 const exports = angular.module('ngeoFeatures', []);
 
-exports.value('ngeoFeatures', new olCollection());
+module.value('ngeoFeatures', new olCollection());
 
 
 export default module;

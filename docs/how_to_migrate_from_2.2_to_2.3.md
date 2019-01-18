@@ -203,7 +203,7 @@ exports = angular.module('ngeoGrid', [
 On this module is attached an AngularJS component and a value, like this:
 
 ```
-exports.value('ngeoGridTemplateUrl', a_function);
+module.value('ngeoGridTemplateUrl', a_function);
 exports.component('ngeoGrid', the_grid_component);
 ```
 

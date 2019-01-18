@@ -9,7 +9,7 @@ const exports = angular.module('ngeoPopup', [
 ]);
 
 
-exports.value('ngeoPopupTemplateUrl',
+module.value('ngeoPopupTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

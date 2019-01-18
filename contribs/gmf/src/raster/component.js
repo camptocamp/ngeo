@@ -26,7 +26,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfElevationwidgetTemplateUrl',
+module.value('gmfElevationwidgetTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

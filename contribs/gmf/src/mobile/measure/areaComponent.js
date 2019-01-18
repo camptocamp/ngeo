@@ -11,7 +11,7 @@ const exports = angular.module('gmfMobileMeasureArea', [
 ]);
 
 
-exports.value('gmfMobileMeasureAreaTemplateUrl',
+module.value('gmfMobileMeasureAreaTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

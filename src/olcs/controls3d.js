@@ -265,7 +265,7 @@ const component = {
 
 exports.component('ngeoOlcsControls3d', component);
 
-exports.value('ngeoOlcsControls3dTemplateUrl', '');
+module.value('ngeoOlcsControls3dTemplateUrl', '');
 
 
 export default module;

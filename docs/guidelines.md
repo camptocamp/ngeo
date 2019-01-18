@@ -113,7 +113,7 @@ the module in the value we export directly like:
  */
 exports = angular.module('ngeoExample', [...]);
 
-exports.value(...);
+module.value(...);
 exports.component(the_component);
 export default module;
 ```
@@ -196,7 +196,7 @@ When we use a template URL it should be overwritten by an attribute.
 For that we should use this kind of code:
 
 ```js
-exports.value('ngeoModuleComponentTemplateUrl',
+module.value('ngeoModuleComponentTemplateUrl',
     /**
      * @param {JQLite} element Element.
      * @param {angular.IAttributes} attrs Attributes.

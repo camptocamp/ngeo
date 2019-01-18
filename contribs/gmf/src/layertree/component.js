@@ -49,7 +49,7 @@ const exports = angular.module('gmfLayertreeComponent', [
 
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-exports.value('ngeoLayertreeTemplateUrl',
+module.value('ngeoLayertreeTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -62,7 +62,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfLayertreeTemplate',
+module.value('gmfLayertreeTemplate',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.

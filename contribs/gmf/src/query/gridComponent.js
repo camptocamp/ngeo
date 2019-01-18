@@ -38,7 +38,7 @@ const exports = angular.module('gmfQueryGridComponent', [
 ]);
 
 
-exports.value('gmfDisplayquerygridTemplateUrl',
+module.value('gmfDisplayquerygridTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.

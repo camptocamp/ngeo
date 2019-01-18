@@ -48,7 +48,7 @@ exports.config(['$animateProvider',
 ]);
 
 
-exports.value('gmfDisplayquerywindowTemplateUrl',
+module.value('gmfDisplayquerywindowTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.

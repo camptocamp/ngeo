@@ -11,7 +11,7 @@ const exports = angular.module('gmfMobileMeasureLength', [
 ]);
 
 
-exports.value('gmfMobileMeasureLengthTemplateUrl',
+module.value('gmfMobileMeasureLengthTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

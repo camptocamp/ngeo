@@ -17,7 +17,7 @@ const exports = angular.module('ngeoGooglestreetview', [
 ]);
 
 
-exports.value('ngeoGooglestreetviewTemplateUrl',
+module.value('ngeoGooglestreetviewTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

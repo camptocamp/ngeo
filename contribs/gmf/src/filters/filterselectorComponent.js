@@ -43,7 +43,7 @@ module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
 });
 
-exports.value('gmfFilterselectorTemplateUrl',
+module.value('gmfFilterselectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

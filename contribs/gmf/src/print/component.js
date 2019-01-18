@@ -39,7 +39,7 @@ const exports = angular.module('gmfPrintComponent', [
 ]);
 
 
-exports.value('gmfPrintTemplateUrl',
+module.value('gmfPrintTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -94,7 +94,7 @@ exports.PrintStateEnum = {
 };
 
 
-exports.value('gmfPrintState', {
+module.value('gmfPrintState', {
   'state': PrintStateEnum.CAPABILITIES_NOT_LOADED
 });
 

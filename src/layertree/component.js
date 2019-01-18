@@ -14,7 +14,7 @@ const exports = angular.module('ngeoLayertree', [
 ]);
 
 
-exports.value('ngeoLayertreeTemplateUrl',
+module.value('ngeoLayertreeTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

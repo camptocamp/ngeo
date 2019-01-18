@@ -26,7 +26,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('ngeoGridTemplateUrl',
+module.value('ngeoGridTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.

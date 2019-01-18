@@ -25,7 +25,7 @@ import 'bootstrap/js/src/dropdown.js';
 const exports = angular.module('ngeoScaleselector', []);
 
 
-exports.value('ngeoScaleselectorTemplateUrl',
+module.value('ngeoScaleselectorTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

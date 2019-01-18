@@ -17,7 +17,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
+module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

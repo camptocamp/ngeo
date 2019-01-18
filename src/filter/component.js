@@ -41,7 +41,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('ngeoFilterTemplateUrl',
+module.value('ngeoFilterTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

@@ -9,7 +9,7 @@ import angular from 'angular';
 const exports = angular.module('gmfLidarprofile', []);
 
 
-exports.value('gmfLidarprofileTemplateUrl',
+module.value('gmfLidarprofileTemplateUrl',
   /**
      * @param {!JQLite} $element Element.
      * @param {!angular.IAttributes} $attrs Attributes.

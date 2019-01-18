@@ -115,7 +115,7 @@ const component = {
   templateUrl: gmfAuthenticationTemplateUrl
 };
 
-exports.value('gmfAuthenticationTemplateUrl',
+module.value('gmfAuthenticationTemplateUrl',
   gmfAuthenticationTemplateUrl_);
 
 exports.component('gmfAuthentication', component);

@@ -22,7 +22,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfThemeSelectorTemplateUrl',
+module.value('gmfThemeSelectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

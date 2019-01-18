@@ -59,7 +59,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('ngeoRuleTemplateUrl',
+module.value('ngeoRuleTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

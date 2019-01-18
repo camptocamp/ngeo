@@ -30,7 +30,7 @@ const exports = angular.module('gmfProfile', [
 ]);
 
 
-exports.value('gmfProfileTemplateUrl',
+module.value('gmfProfileTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.

@@ -23,7 +23,7 @@ const exports = angular.module('gmfLidarprofilePanel', [
 ]);
 
 
-exports.value('gmfLidarprofilePanelTemplateUrl',
+module.value('gmfLidarprofilePanelTemplateUrl',
   /**
      * @param {!JQLite} $element Element.
      * @param {!angular.IAttributes} $attrs Attributes.

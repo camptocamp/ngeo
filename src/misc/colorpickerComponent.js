@@ -8,7 +8,7 @@ import angular from 'angular';
 const exports = angular.module('ngeoColorpicker', []);
 
 
-exports.value('ngeoColorpickerTemplateUrl',
+module.value('ngeoColorpickerTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.

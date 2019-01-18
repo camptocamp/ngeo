@@ -20,7 +20,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfWmtscapabilitylayertreTemplateUrl',
+module.value('gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.

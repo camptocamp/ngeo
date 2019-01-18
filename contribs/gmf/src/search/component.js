@@ -174,7 +174,7 @@ const component = {
 };
 
 
-exports.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
+module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module

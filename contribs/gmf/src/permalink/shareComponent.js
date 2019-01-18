@@ -16,7 +16,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 
-exports.value('gmfPermalinkShareTemplateUrl',
+module.value('gmfPermalinkShareTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
