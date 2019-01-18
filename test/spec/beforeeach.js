@@ -53,4 +53,4 @@ beforeEach(() => {
 });
 
 
-export default exports;
+export default module;

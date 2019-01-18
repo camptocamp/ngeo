@@ -1082,4 +1082,4 @@ class SearchController {
 exports.controller('gmfSearchController', SearchController);
 
 
-export default exports;
+export default module;

@@ -95,4 +95,4 @@ exports.MainController.prototype.notifyQuick = function() {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

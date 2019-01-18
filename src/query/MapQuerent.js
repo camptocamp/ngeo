@@ -363,4 +363,4 @@ module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
 }));
 
 
-export default exports;
+export default module;

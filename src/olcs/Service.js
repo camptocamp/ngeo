@@ -133,4 +133,4 @@ Service.module = angular.module(name, [
 const exports = Service;
 
 
-export default exports;
+export default module;

@@ -82,4 +82,4 @@ function directive(ngeoPopupTemplateUrl) {
 exports.directive('ngeoPopup', directive);
 
 
-export default exports;
+export default module;

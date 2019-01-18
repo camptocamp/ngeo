@@ -534,4 +534,4 @@ const module = angular.module('ngeoLayerHelper', [])
   .value('ngeoTilesPreloadingLimit', Infinity);
 
 
-export default exports;
+export default module;

@@ -170,4 +170,4 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

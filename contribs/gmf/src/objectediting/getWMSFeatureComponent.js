@@ -150,4 +150,4 @@ Controller.prototype.handleMapClick_ = function(evt) {
 exports.controller('gmfObjecteditinggetwmsfeatureController', Controller);
 
 
-export default exports;
+export default module;

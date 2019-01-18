@@ -180,4 +180,4 @@ const module = angular.module('ngeoNotification', [
 module.service('ngeoNotification', exports);
 
 
-export default exports;
+export default module;

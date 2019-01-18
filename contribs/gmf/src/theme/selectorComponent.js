@@ -191,4 +191,4 @@ Controller.prototype.handleDestroy_ = function() {
 exports.controller('gmfThemeselectorController', Controller);
 
 
-export default exports;
+export default module;

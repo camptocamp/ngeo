@@ -75,4 +75,4 @@ const module = angular.module('ngeoEventHelper', []);
 module.service('ngeoEventHelper', exports);
 
 
-export default exports;
+export default module;

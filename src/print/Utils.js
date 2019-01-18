@@ -291,4 +291,4 @@ const module = angular.module('ngeoPrintUtils', []);
 module.service('ngeoPrintUtils', exports);
 
 
-export default exports;
+export default module;

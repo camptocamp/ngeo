@@ -692,4 +692,4 @@ module.service('gmfExternalDataSourcesManager',
   exports);
 
 
-export default exports;
+export default module;

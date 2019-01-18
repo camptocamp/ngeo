@@ -52,4 +52,4 @@ const module = angular.module('gmfDatasourceWFSAliases', [
 module.service('gmfWFSAliases', exports);
 
 
-export default exports;
+export default module;

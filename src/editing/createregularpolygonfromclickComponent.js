@@ -195,4 +195,4 @@ Controller.prototype.handleDestroy_ = function() {
 exports.controller('ngeoCreateregularpolygonfromclickController', Controller);
 
 
-export default exports;
+export default module;

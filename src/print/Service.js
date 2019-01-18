@@ -508,4 +508,4 @@ module.service('ngeoPrintService', exports);
 module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
 
 
-export default exports;
+export default module;

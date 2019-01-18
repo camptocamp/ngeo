@@ -771,4 +771,4 @@ Controller.prototype.handleRotateEnd_ = function(evt) {
 exports.controller('GmfDrawfeatureController', Controller);
 
 
-export default exports;
+export default module;

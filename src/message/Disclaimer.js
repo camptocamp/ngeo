@@ -232,4 +232,4 @@ const module = angular.module('ngeoDisclaimer', [
 module.service('ngeoDisclaimer', exports);
 
 
-export default exports;
+export default module;

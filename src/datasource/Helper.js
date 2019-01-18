@@ -160,4 +160,4 @@ const module = angular.module('ngeoDataSourcesHelper', [
 module.service('ngeoDataSourcesHelper', exports);
 
 
-export default exports;
+export default module;

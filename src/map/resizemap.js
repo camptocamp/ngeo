@@ -83,4 +83,4 @@ function directive($window) {
 exports.directive('ngeoResizemap', directive);
 
 
-export default exports;
+export default module;

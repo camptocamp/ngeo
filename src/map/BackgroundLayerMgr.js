@@ -235,4 +235,4 @@ module.service('ngeoBackgroundLayerMgr', exports);
 exports.BACKGROUNDLAYERGROUP_NAME = 'background';
 
 
-export default exports;
+export default module;

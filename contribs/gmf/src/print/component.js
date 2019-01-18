@@ -1281,4 +1281,4 @@ class Controller {
 exports.controller('GmfPrintController', Controller);
 
 
-export default exports;
+export default module;

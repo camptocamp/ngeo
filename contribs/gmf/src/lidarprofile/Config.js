@@ -106,4 +106,4 @@ const exports = class {
 const module = angular.module('gmfLidarprofileConfig', []);
 module.service('gmfLidarprofileConfig', exports);
 
-export default exports;
+export default module;

@@ -11,4 +11,4 @@ const exports = {
 };
 
 
-export default exports;
+export default module;

@@ -11,4 +11,4 @@ const exports = angular.module('ngeoFeatures', []);
 exports.value('ngeoFeatures', new olCollection());
 
 
-export default exports;
+export default module;

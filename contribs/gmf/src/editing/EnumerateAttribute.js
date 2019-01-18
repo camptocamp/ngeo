@@ -75,4 +75,4 @@ const module = angular.module('gmfEnumerateAttribute', []);
 module.service('gmfEnumerateAttribute', exports);
 
 
-export default exports;
+export default module;

@@ -590,4 +590,4 @@ const module = angular.module('gmfSnapping', [
 module.service('gmfSnapping', exports);
 
 
-export default exports;
+export default module;

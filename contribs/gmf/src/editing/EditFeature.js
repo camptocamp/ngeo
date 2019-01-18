@@ -148,4 +148,4 @@ const module = angular.module('gmfEditFeature', []);
 module.service('gmfEditFeature', exports);
 
 
-export default exports;
+export default module;

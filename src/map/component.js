@@ -108,4 +108,4 @@ function directive($window) {
 exports.directive('ngeoMap', directive);
 
 
-export default exports;
+export default module;

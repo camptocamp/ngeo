@@ -829,4 +829,4 @@ module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
 
 bootstrap(exports.module);
 
-export default exports;
+export default module;

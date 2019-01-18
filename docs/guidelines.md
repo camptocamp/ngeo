@@ -100,7 +100,7 @@ const module = angular.module('ngeoExampleService', [
   ngeoMyRequiredService.name
 ]);
 module.service('ngeoExampleService', exports);
-export default exports;
+export default module;
 ```
 
 You can see that we stock the module in a `module` variable on the class. For Component, we prefers to stock
@@ -115,7 +115,7 @@ exports = angular.module('ngeoExample', [...]);
 
 exports.value(...);
 exports.component(the_component);
-export default exports;
+export default module;
 ```
 
 To be able to require a whole functionality at once, we always create a `module.js` file in each directories.

@@ -185,4 +185,4 @@ exports.MainController.prototype.getSetDummyActive = function(val) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

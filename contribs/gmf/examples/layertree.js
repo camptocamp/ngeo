@@ -210,4 +210,4 @@ exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ng
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

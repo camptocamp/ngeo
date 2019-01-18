@@ -988,4 +988,4 @@ exports.component('ngeoRule', {
 });
 
 
-export default exports;
+export default module;

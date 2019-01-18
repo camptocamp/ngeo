@@ -107,4 +107,4 @@ const module = angular.module('ngeoWMSTime', [
 module.service('ngeoWMSTime', exports);
 
 
-export default exports;
+export default module;

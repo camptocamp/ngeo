@@ -746,4 +746,4 @@ exports.component('gmfFilterselector', {
 });
 
 
-export default exports;
+export default module;

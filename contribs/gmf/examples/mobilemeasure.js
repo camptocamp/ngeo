@@ -101,4 +101,4 @@ exports.MainController = function(gmfPermalink) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

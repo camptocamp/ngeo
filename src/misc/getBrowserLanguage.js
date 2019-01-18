@@ -52,4 +52,4 @@ function factory($window) {
 exports.factory('ngeoGetBrowserLanguage', factory);
 
 
-export default exports;
+export default module;

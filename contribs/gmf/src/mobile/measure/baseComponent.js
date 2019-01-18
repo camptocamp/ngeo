@@ -182,4 +182,4 @@ exports.Controller.prototype.init = function() {
 };
 
 
-export default exports;
+export default module;

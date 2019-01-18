@@ -137,4 +137,4 @@ exports.component('gmfDatasourcegrouptree', {
 });
 
 
-export default exports;
+export default module;

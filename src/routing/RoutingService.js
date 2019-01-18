@@ -180,4 +180,4 @@ const module = angular.module('ngeoRoutingService', [
 module.service('ngeoRoutingService', exports);
 
 
-export default exports;
+export default module;

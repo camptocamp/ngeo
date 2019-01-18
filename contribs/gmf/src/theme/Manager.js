@@ -155,4 +155,4 @@ module.value('gmfTreeManagerModeFlush', true);
 module.service('gmfThemeManager', exports);
 
 
-export default exports;
+export default module;

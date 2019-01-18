@@ -152,4 +152,4 @@ exports.MainController = function($scope, ngeoDataSources) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

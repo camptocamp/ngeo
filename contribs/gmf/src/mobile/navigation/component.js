@@ -333,4 +333,4 @@ exports.backOnClickDirective = function() {
 exports.directive('gmfMobileNavBackOnClick', exports.backOnClickDirective);
 
 
-export default exports;
+export default module;

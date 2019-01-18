@@ -145,4 +145,4 @@ exports.MainController = class {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

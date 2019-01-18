@@ -70,4 +70,4 @@ function directive() {
 exports.directive('ngeoDrawrectangle', directive);
 
 
-export default exports;
+export default module;

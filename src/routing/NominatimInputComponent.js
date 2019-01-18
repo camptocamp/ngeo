@@ -167,4 +167,4 @@ const component = {
 module.component('ngeoNominatimInput', component);
 
 
-export default exports;
+export default module;

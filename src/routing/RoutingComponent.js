@@ -413,4 +413,4 @@ module.component('ngeoRouting', {
 });
 
 
-export default exports;
+export default module;

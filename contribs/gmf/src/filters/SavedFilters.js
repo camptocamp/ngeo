@@ -267,4 +267,4 @@ exports.Item.prototype.directedRules;
 exports.Item.prototype.name;
 
 
-export default exports;
+export default module;

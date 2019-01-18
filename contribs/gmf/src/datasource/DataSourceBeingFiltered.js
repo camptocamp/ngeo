@@ -13,4 +13,4 @@ module.value('gmfDataSourceBeingFiltered', {
 });
 
 
-export default exports;
+export default module;

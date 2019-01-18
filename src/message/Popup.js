@@ -305,4 +305,4 @@ const module = angular.module('ngeoCreatePopup', [
 module.factory('ngeoCreatePopup', exports.Factory);
 
 
-export default exports;
+export default module;

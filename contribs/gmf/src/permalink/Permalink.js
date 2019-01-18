@@ -1608,4 +1608,4 @@ module.value('gmfPermalinkOptions',
 })();
 
 
-export default exports;
+export default module;

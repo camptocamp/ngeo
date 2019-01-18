@@ -457,4 +457,4 @@ const module = angular.module('gmfSyncLayertreeMap', [
 module.service('gmfSyncLayertreeMap', exports);
 
 
-export default exports;
+export default module;

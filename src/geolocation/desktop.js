@@ -241,4 +241,4 @@ Controller.prototype.setPosition_ = function(event) {
 exports.controller('ngeoGeolocationDesktopController', Controller);
 
 
-export default exports;
+export default module;

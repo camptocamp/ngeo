@@ -82,4 +82,4 @@ exports.MainController = function($timeout) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

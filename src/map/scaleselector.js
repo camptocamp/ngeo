@@ -282,4 +282,4 @@ ScaleselectorController.prototype.registerResolutionChangeListener_ = function()
 exports.controller('NgeoScaleselectorController', ScaleselectorController);
 
 
-export default exports;
+export default module;

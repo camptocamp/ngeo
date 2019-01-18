@@ -47,4 +47,4 @@ function factory() {
 exports.factory('ngeoDownload', factory);
 
 
-export default exports;
+export default module;

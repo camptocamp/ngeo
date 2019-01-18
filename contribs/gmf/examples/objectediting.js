@@ -183,4 +183,4 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

@@ -204,4 +204,4 @@ const module = angular.module('gmfObjectEditingQuery', [
 module.service('gmfObjectEditingQuery', exports);
 
 
-export default exports;
+export default module;

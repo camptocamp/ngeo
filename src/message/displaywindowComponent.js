@@ -333,4 +333,4 @@ exports.component('ngeoDisplaywindow', {
 });
 
 
-export default exports;
+export default module;

@@ -1412,4 +1412,4 @@ const module = angular.module('ngeoFeatureHelper', [
 module.service('ngeoFeatureHelper', exports);
 
 
-export default exports;
+export default module;

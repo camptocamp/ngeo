@@ -59,4 +59,4 @@ const factory = function($timeout) {
 exports.factory('ngeoDebounce', factory);
 
 
-export default exports;
+export default module;

@@ -188,4 +188,4 @@ const module = angular.module('ngeoSearchDirective', []);
 module.directive('ngeoSearch', exports);
 
 
-export default exports;
+export default module;

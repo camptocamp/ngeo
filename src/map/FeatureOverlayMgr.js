@@ -191,4 +191,4 @@ const module = angular.module('ngeoFeatureOverlayMgr', [
 module.service('ngeoFeatureOverlayMgr', exports);
 
 
-export default exports;
+export default module;

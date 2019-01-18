@@ -154,4 +154,4 @@ class Controller {
 exports.controller('ngeoModalController', Controller);
 
 
-export default exports;
+export default module;

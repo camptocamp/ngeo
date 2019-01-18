@@ -140,4 +140,4 @@ const module = angular.module('gmfDataSourcesHelper', [
 module.service('gmfDataSourcesHelper', exports);
 
 
-export default exports;
+export default module;

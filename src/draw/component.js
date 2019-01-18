@@ -119,4 +119,4 @@ function directive() {
 exports.directive('ngeoDrawfeature', directive);
 
 
-export default exports;
+export default module;

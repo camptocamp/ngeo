@@ -386,4 +386,4 @@ const component = {
 module.component('ngeoRoutingFeature', component);
 
 
-export default exports;
+export default module;

@@ -242,4 +242,4 @@ Controller.prototype.handleDestroy_ = function() {
 exports.controller('GmfBackgroundlayerselectorController', Controller);
 
 
-export default exports;
+export default module;

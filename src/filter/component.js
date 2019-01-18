@@ -463,4 +463,4 @@ class FilterController {
 exports.controller('ngeoFilterController', FilterController);
 
 
-export default exports;
+export default module;

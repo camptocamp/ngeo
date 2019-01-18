@@ -95,4 +95,4 @@ function directive(ngeoMapQuerent) {
 exports.directive('ngeoBboxQuery', directive);
 
 
-export default exports;
+export default module;

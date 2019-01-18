@@ -287,4 +287,4 @@ module.value('ngeoMeasurePrecision', 3);
 module.value('ngeoMeasureDecimals', 0);
 
 
-export default exports;
+export default module;

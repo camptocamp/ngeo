@@ -1036,4 +1036,4 @@ const module = angular.module('ngeoQuerent', [
 module.service('ngeoQuerent', exports);
 
 
-export default exports;
+export default module;

@@ -174,4 +174,4 @@ function component($timeout) {
 exports.directive('ngeoSortable', component);
 
 
-export default exports;
+export default module;

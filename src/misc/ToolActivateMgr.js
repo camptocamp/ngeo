@@ -208,4 +208,4 @@ const module = angular.module('ngeoToolActivateMgr', []);
 module.service('ngeoToolActivateMgr', exports);
 
 
-export default exports;
+export default module;

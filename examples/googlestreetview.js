@@ -112,4 +112,4 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

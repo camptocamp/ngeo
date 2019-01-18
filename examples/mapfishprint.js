@@ -258,4 +258,4 @@ exports.MainController.prototype.handleGetStatusError_ = function(resp) {
 appmodule.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

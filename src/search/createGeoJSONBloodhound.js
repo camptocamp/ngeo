@@ -118,4 +118,4 @@ module.value(
 exports.Function;
 
 
-export default exports;
+export default module;

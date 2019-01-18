@@ -220,4 +220,4 @@ Controller.prototype.handleDestroy_ = function() {
 exports.controller('ngeoExportfeaturesController', Controller);
 
 
-export default exports;
+export default module;

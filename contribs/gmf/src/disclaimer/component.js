@@ -360,4 +360,4 @@ const component = {
 exports.component('gmfDisclaimer', component);
 
 
-export default exports;
+export default module;

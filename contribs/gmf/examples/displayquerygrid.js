@@ -181,4 +181,4 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

@@ -162,4 +162,4 @@ function directive(ngeoDebounce) {
 exports.directive('ngeoProfile', directive);
 
 
-export default exports;
+export default module;

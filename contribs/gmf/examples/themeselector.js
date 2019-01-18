@@ -51,4 +51,4 @@ exports.MainController = function($http, gmfThemes, gmfThemeManager) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

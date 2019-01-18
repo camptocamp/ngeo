@@ -16,4 +16,4 @@ const m = angular.module('ngeoOlcsModule', [
 const exports = m;
 
 
-export default exports;
+export default module;

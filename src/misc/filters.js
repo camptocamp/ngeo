@@ -574,4 +574,4 @@ const removeCDATA = function() {
 exports.filter('removeCDATA', removeCDATA);
 
 
-export default exports;
+export default module;

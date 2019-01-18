@@ -125,4 +125,4 @@ const module = angular.module('ngeoAutoProjection', []);
 module.service('ngeoAutoProjection', exports);
 
 
-export default exports;
+export default module;

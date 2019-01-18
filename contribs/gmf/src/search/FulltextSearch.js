@@ -68,4 +68,4 @@ const module = angular.module('gmfSearchFulltextSearch', []);
 module.service('gmfSearchFulltextSearch', exports);
 
 
-export default exports;
+export default module;

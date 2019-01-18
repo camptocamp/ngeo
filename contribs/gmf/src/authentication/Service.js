@@ -250,4 +250,4 @@ module.value('gmfUser', {
 });
 
 
-export default exports;
+export default module;

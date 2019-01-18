@@ -423,4 +423,4 @@ const module = angular.module('ngeoLayertreeController', []);
 module.controller('ngeoLayertreeController', exports);
 
 
-export default exports;
+export default module;

@@ -111,4 +111,4 @@ const module = angular.module('gmfShareService', []);
 module.service('gmfShareService', exports);
 
 
-export default exports;
+export default module;

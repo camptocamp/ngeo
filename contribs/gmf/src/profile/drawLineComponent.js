@@ -187,4 +187,4 @@ Controller.prototype.clear_ = function() {
 exports.controller('GmfDrawprofilelineController', Controller);
 
 
-export default exports;
+export default module;

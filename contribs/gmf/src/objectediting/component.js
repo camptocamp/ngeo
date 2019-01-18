@@ -1148,4 +1148,4 @@ exports.controller('GmfObjecteditingController',
   exports.Controller);
 
 
-export default exports;
+export default module;

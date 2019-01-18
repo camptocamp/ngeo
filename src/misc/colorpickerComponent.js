@@ -107,4 +107,4 @@ Controller.prototype.setColor = function(color) {
 exports.controller('NgeoColorpickerController', Controller);
 
 
-export default exports;
+export default module;

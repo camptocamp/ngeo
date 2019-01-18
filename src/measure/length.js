@@ -74,4 +74,4 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 exports.directive('ngeoMeasurelength', directive);
 
 
-export default exports;
+export default module;

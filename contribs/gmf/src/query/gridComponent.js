@@ -922,4 +922,4 @@ Controller.prototype.downloadCsv = function() {
 exports.controller('GmfDisplayquerygridController', Controller);
 
 
-export default exports;
+export default module;

@@ -74,4 +74,4 @@ exports['module'] = module;
 module.service('gmfRaster', exports);
 
 
-export default exports;
+export default module;

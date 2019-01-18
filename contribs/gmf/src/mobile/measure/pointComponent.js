@@ -346,4 +346,4 @@ exports.controller('GmfMobileMeasurePointController', Controller);
  */
 
 
-export default exports;
+export default module;

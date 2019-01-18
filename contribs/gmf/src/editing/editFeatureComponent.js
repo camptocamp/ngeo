@@ -1332,4 +1332,4 @@ exports.State = {
 };
 
 
-export default exports;
+export default module;

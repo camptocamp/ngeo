@@ -601,4 +601,4 @@ module.value('gmfThemesOptions', {});
 module.service('gmfThemes', exports);
 
 
-export default exports;
+export default module;

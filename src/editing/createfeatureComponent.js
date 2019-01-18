@@ -301,4 +301,4 @@ Controller.prototype.$onDestroy = function() {
 exports.controller('ngeoCreatefeatureController', Controller);
 
 
-export default exports;
+export default module;

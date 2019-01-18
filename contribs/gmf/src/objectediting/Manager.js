@@ -180,4 +180,4 @@ const module = angular.module('gmfObjectEditingManager', [
 module.service('gmfObjectEditingManager', exports);
 
 
-export default exports;
+export default module;

@@ -131,4 +131,4 @@ function directive(ngeoLayertreeTemplateUrl) {
 exports.directive('ngeoLayertree', directive);
 
 
-export default exports;
+export default module;

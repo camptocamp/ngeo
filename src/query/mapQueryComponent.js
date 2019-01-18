@@ -130,4 +130,4 @@ function directive(ngeoMapQuerent, $injector) {
 exports.directive('ngeoMapQuery', directive);
 
 
-export default exports;
+export default module;

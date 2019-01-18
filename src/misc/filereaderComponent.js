@@ -69,4 +69,4 @@ function component($window) {
 exports.directive('ngeoFilereader', component);
 
 
-export default exports;
+export default module;

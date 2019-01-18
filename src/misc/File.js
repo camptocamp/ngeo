@@ -96,4 +96,4 @@ const module = angular.module('ngeoFile', []);
 module.service('ngeoFile', exports);
 
 
-export default exports;
+export default module;

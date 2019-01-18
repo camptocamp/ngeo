@@ -91,4 +91,4 @@ exports.MainController = function($scope, ngeoWMSTime) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

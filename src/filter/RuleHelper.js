@@ -808,4 +808,4 @@ const module = angular.module('ngeoRuleHelper', [
 module.service('ngeoRuleHelper', exports);
 
 
-export default exports;
+export default module;

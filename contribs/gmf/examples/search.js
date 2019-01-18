@@ -134,4 +134,4 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

@@ -72,4 +72,4 @@ function directive() {
 exports.directive('ngeoRecenter', directive);
 
 
-export default exports;
+export default module;

@@ -128,4 +128,4 @@ exports.component('gmfWmtscapabilitylayertree', {
 });
 
 
-export default exports;
+export default module;

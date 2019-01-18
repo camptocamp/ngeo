@@ -157,4 +157,4 @@ exports.directive('ngeoPopoverAnchor', anchorComponent);
 exports.directive('ngeoPopoverContent', contentComponent);
 
 
-export default exports;
+export default module;

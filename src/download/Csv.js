@@ -152,4 +152,4 @@ const module = angular.module('ngeoCsvDownload', [
 module.service('ngeoCsvDownload', exports);
 
 
-export default exports;
+export default module;

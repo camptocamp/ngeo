@@ -249,4 +249,4 @@ const module = angular.module('ngeoDrawfeatureController', [
 module.controller('ngeoDrawfeatureController', exports);
 
 
-export default exports;
+export default module;

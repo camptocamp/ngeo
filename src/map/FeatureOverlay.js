@@ -121,4 +121,4 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
 const module = angular.module('ngeoFeatureOverlay', []);
 
 
-export default exports;
+export default module;

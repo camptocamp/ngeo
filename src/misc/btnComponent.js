@@ -186,4 +186,4 @@ function btnComponent($parse) {
 exports.directive('ngeoBtn', btnComponent);
 
 
-export default exports;
+export default module;

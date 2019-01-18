@@ -135,4 +135,4 @@ exports.prototype.invertSelection = function() {
 const module = angular.module('ngeoGridConfig', []);
 
 
-export default exports;
+export default module;

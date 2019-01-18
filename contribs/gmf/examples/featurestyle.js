@@ -223,4 +223,4 @@ exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

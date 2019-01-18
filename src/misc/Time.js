@@ -82,4 +82,4 @@ const module = angular.module('ngeoTime', []);
 module.service('ngeoTime', exports);
 
 
-export default exports;
+export default module;

@@ -631,4 +631,4 @@ const module = angular.module('gmfTreeManager', [
 module.service('gmfTreeManager', exports);
 
 
-export default exports;
+export default module;

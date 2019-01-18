@@ -144,4 +144,4 @@ exports.MainController = function($scope) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

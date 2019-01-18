@@ -944,4 +944,4 @@ const module = angular.module('gmfDataSourcesManager', [
 module.service('gmfDataSourcesManager', exports);
 
 
-export default exports;
+export default module;

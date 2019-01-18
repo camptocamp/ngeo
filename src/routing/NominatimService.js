@@ -193,4 +193,4 @@ const module = angular.module('ngeoNominatimService', [
 module.service('ngeoNominatimService', exports);
 
 
-export default exports;
+export default module;

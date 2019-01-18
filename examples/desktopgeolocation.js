@@ -79,4 +79,4 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

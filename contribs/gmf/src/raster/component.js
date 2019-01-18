@@ -401,4 +401,4 @@ exports.controller('gmfElevationwidgetController', WidgetController);
  * }} LayerConfig
  */
 
-export default exports;
+export default module;

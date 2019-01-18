@@ -193,4 +193,4 @@ Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
 exports.controller('ngeoAttributesController', Controller);
 
 
-export default exports;
+export default module;

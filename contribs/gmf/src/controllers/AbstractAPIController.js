@@ -89,4 +89,4 @@ module.value('ngeoQueryOptions', {
 });
 
 
-export default exports;
+export default module;

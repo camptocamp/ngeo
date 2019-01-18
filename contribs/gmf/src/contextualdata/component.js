@@ -283,4 +283,4 @@ function contentDirective(gmfContextualdatacontentTemplateUrl) {
 exports.directive('gmfContextualdatacontent', contentDirective);
 
 
-export default exports;
+export default module;

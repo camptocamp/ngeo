@@ -197,4 +197,4 @@ class ShareComponentController {
 exports.controller('GmfShareController', ShareComponentController);
 
 
-export default exports;
+export default module;

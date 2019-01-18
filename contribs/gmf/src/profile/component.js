@@ -716,4 +716,4 @@ Controller.prototype.downloadCsv = function() {
 exports.controller('GmfProfileController', Controller);
 
 
-export default exports;
+export default module;

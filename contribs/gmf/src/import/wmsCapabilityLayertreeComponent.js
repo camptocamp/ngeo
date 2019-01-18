@@ -130,4 +130,4 @@ exports.component('gmfWmscapabilitylayertreenode', {
 });
 
 
-export default exports;
+export default module;

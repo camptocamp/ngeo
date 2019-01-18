@@ -270,4 +270,4 @@ exports.makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
 exports.makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
 
 
-export default exports;
+export default module;

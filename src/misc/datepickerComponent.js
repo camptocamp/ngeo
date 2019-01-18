@@ -242,4 +242,4 @@ Controller.prototype.init = function() {
 exports.controller('ngeoDatePickerController', Controller);
 
 
-export default exports;
+export default module;

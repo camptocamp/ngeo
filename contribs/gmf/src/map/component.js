@@ -125,4 +125,4 @@ Controller.prototype.$onInit = function() {
 exports.controller('GmfMapController', Controller);
 
 
-export default exports;
+export default module;

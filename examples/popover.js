@@ -13,4 +13,4 @@ const module = angular.module('app', [
 ]);
 
 
-export default exports;
+export default module;

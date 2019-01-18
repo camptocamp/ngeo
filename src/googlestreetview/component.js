@@ -403,4 +403,4 @@ exports.component('ngeoGooglestreetview', {
 });
 
 
-export default exports;
+export default module;

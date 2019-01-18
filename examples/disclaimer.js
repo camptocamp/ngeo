@@ -181,4 +181,4 @@ exports.MainController.prototype.closeAll = function() {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

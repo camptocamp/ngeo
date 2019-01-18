@@ -57,4 +57,4 @@ function directive() {
 exports.directive('ngeoDrawpoint', directive);
 
 
-export default exports;
+export default module;

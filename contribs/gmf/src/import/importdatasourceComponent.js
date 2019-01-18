@@ -409,4 +409,4 @@ exports.component('gmfImportdatasource', {
 });
 
 
-export default exports;
+export default module;

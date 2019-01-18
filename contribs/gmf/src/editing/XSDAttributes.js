@@ -66,4 +66,4 @@ const module = angular.module('gmfXSDAttributes', []);
 module.service('gmfXSDAttributes', exports);
 
 
-export default exports;
+export default module;

@@ -63,4 +63,4 @@ exports.MainController = function($rootScope, ngeoOlcsService) {
 module.controller('MainController', exports.MainController);
 
 
-export default exports;
+export default module;

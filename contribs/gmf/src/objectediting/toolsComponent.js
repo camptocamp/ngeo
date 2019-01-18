@@ -376,4 +376,4 @@ exports.ProcessType = {
 };
 
 
-export default exports;
+export default module;

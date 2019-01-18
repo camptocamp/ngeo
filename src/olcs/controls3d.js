@@ -268,4 +268,4 @@ exports.component('ngeoOlcsControls3d', component);
 exports.value('ngeoOlcsControls3dTemplateUrl', '');
 
 
-export default exports;
+export default module;
