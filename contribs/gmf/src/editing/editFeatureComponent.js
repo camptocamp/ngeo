@@ -67,7 +67,7 @@ const exports = angular.module('GmfEditingFeatureComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
 });
 

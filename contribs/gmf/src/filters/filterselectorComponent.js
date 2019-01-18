@@ -39,7 +39,7 @@ const exports = angular.module('gmfFilterselector', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
 });
 

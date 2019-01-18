@@ -35,7 +35,7 @@ exports.value('gmfLidarprofilePanelTemplateUrl',
       'gmf/lidarprofilePanel';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
 });
 

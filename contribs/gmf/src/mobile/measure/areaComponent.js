@@ -23,7 +23,7 @@ exports.value('gmfMobileMeasureAreaTemplateUrl',
       'gmf/measure/areaComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put(
     'gmf/measure/areaComponent',
     require('./baseComponent.html')

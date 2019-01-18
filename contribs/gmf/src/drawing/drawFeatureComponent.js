@@ -45,7 +45,7 @@ const exports = angular.module('GmfDrawFeatureComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
 });
 

@@ -21,7 +21,7 @@ exports.value('ngeoPopupTemplateUrl',
       'ngeo/message/popupcomponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
 });
 

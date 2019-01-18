@@ -17,7 +17,7 @@ const exports = angular.module('ngeoMessageDisplaywindowComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
 });
 

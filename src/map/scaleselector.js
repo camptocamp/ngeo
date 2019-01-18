@@ -37,7 +37,7 @@ exports.value('ngeoScaleselectorTemplateUrl',
       'ngeo/map/scaleselector';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
 });
 

@@ -12,7 +12,7 @@ const exports = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
 });
 

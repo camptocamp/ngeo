@@ -29,7 +29,7 @@ function gmfAuthenticationTemplateUrl_(element, attrs) {
 };
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/authentication', require('./component.html'));
 });
 

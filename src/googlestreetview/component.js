@@ -28,7 +28,7 @@ exports.value('ngeoGooglestreetviewTemplateUrl',
       'ngeo/googlestreetview';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
 });
 

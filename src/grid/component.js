@@ -21,7 +21,7 @@ const exports = angular.module('ngeoGrid', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/grid', require('./component.html'));
 });
 

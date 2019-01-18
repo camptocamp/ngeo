@@ -229,7 +229,7 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
     'ngeo/olsc/controls3d';
 }
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
 });
 

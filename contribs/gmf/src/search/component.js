@@ -52,7 +52,7 @@ exports.gmfSearchTemplateUrl_ = (element, attrs) => {
     'gmf/search';
 };
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/search', require('./component.html'));
 });
 

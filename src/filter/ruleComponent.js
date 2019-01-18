@@ -54,7 +54,7 @@ const exports = angular.module('ngeoRule', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
 });
 

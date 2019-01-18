@@ -21,7 +21,7 @@ const exports = angular.module('gmfImportdatasource', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
 });
 

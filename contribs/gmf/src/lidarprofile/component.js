@@ -21,7 +21,7 @@ exports.value('gmfLidarprofileTemplateUrl',
       'gmf/lidarprofile';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/lidarprofile', require('./component.html'));
 });
 

@@ -51,7 +51,7 @@ exports.value('gmfDisplayquerygridTemplateUrl',
   }
 );
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
 });
 

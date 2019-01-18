@@ -16,7 +16,7 @@ const exports = angular.module('gmfLayertreeTimeSliderComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
 });
 

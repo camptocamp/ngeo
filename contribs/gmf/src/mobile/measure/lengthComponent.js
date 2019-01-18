@@ -23,7 +23,7 @@ exports.value('gmfMobileMeasureLengthTemplateUrl',
       'gmf/measure/lengthComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put(
     'gmf/measure/lengthComponent',
     require('./baseComponent.html')

@@ -30,7 +30,7 @@ exports.value('gmfMobileMeasurePointTemplateUrl',
       'gmf/measure/pointComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
 });
 

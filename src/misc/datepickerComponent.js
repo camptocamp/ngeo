@@ -35,7 +35,7 @@ exports.value('ngeoDatePickerTemplateUrl',
       'ngeo/misc/datepickerComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
 });
 

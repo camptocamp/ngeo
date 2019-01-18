@@ -17,7 +17,7 @@ const exports = angular.module('gmfThemeSelectorComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
 });
 

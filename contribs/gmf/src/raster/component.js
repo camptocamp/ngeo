@@ -21,7 +21,7 @@ const exports = angular.module('gmfRasterComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
 });
 

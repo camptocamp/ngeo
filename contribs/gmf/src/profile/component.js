@@ -41,7 +41,7 @@ exports.value('gmfProfileTemplateUrl',
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/profile', require('./component.html'));
 });
 

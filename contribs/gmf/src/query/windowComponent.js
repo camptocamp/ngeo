@@ -60,7 +60,7 @@ exports.value('gmfDisplayquerywindowTemplateUrl',
       'gmf/query/windowComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
 });
 

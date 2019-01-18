@@ -26,7 +26,7 @@ exports.value('ngeoLayertreeTemplateUrl',
       'ngeo/layertree';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/layertree', require('./component.html'));
 });
 

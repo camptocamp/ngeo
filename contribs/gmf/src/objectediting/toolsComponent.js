@@ -29,7 +29,7 @@ const exports = angular.module('gmfObjecteditingToolsComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
 });
 

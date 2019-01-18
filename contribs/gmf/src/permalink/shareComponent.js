@@ -11,7 +11,7 @@ const exports = angular.module('gmfPermalinkShareComponent', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
 });
 

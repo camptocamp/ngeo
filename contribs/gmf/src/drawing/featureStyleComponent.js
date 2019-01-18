@@ -19,7 +19,7 @@ const exports = angular.module('gmfDrawingFeatureStyle', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
 });
 

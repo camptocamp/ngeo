@@ -51,7 +51,7 @@ exports.value('gmfPrintTemplateUrl',
       'gmf/print';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/print', require('./component.html'));
 });
 

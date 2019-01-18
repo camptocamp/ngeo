@@ -29,7 +29,7 @@ module.value('gmfBackgroundlayerselectorTemplateUrl',
 
 
 <<<<<<< HEAD
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
 =======
 module.run(/* @ngInject */ ($templateCache) => {
 >>>>>>> 1dcf486... f

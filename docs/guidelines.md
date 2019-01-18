@@ -208,7 +208,7 @@ exports.value('ngeoModuleComponentTemplateUrl',
         'ngeo/module/component';
     });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/module/component', require('./component.html'));
 });
 

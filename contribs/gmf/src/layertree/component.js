@@ -57,7 +57,7 @@ exports.value('ngeoLayertreeTemplateUrl',
    */
   (element, attrs) => 'gmf/layertree');
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/layertree', require('./component.html'));
 });
 

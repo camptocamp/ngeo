@@ -12,7 +12,7 @@ const exports = angular.module('ngeoAttributes', [
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
 });
 

@@ -20,7 +20,7 @@ exports.value('ngeoColorpickerTemplateUrl',
       'ngeo/misc/colorpickerComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
 });
 
