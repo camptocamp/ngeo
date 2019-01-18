@@ -22,7 +22,7 @@ const module = angular.module('gmfAuthentication', [
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
-exports.gmfAuthenticationTemplateUrl_ = (element, attrs) => {
+function gmfAuthenticationTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
     'gmf/authentication';
