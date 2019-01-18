@@ -12,7 +12,7 @@ import ngeoUtils from 'ngeo/utils.js';
  * @export
  * @ngname gmfFulltextSearch
  */
-const exports = function($injector, $http) {
+function FulltextSearch($injector, $http) {
 
   /**
    * @type {angular.IHttpService}
@@ -47,7 +47,7 @@ const exports = function($injector, $http) {
  * @param {Object.<string, string>} params Additional parameters.
  * @returns {Promise} Request promise with data array.
  */
-exports.prototype.search = function(query, params) {
+FulltextSearch.prototype.search = function(query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);
 
   queryParams['query'] = query;

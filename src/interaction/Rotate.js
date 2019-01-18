@@ -36,7 +36,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
-const exports = function(options) {
+function Rotate(options) {
 
   googAsserts.assert(options.features);
 
@@ -135,7 +135,7 @@ olUtilInherits(exports, olInteractionPointer);
  * @param {boolean} active Active.
  * @override
  */
-exports.prototype.setActive = function(active) {
+Rotate.prototype.setActive = function(active) {
 
   if (this.keyPressListenerKey_) {
     olEvents.unlistenByKey(this.keyPressListenerKey_);
@@ -169,7 +169,7 @@ exports.prototype.setActive = function(active) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.addFeature_ = function(feature) {
+Rotate.prototype.addFeature_ = function(feature) {
   const geometry = feature.getGeometry();
   googAsserts.assertInstanceof(geometry, olGeomGeometry);
 
@@ -189,7 +189,7 @@ exports.prototype.addFeature_ = function(feature) {
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
  * @private
  */
-exports.prototype.willModifyFeatures_ = function(evt) {
+Rotate.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     /** @type {ModifyEvent} */
@@ -203,7 +203,7 @@ exports.prototype.willModifyFeatures_ = function(evt) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeFeature_ = function(feature) {
+Rotate.prototype.removeFeature_ = function(feature) {
   this.feature_ = null;
   //this.overlay_.getSource().removeFeature(feature);
 
@@ -221,7 +221,7 @@ exports.prototype.removeFeature_ = function(feature) {
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+Rotate.prototype.setMap = function(map) {
   this.overlay_.setMap(map);
   olInteractionPointer.prototype.setMap.call(this, map);
 };
@@ -231,7 +231,7 @@ exports.prototype.setMap = function(map) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeatureAdd_ = function(evt) {
+Rotate.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
   googAsserts.assertInstanceof(feature, olFeature,
     'feature should be an ol.Feature');
@@ -243,7 +243,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeatureRemove_ = function(evt) {
+Rotate.prototype.handleFeatureRemove_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
@@ -254,7 +254,7 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
  * @return {boolean} Start drag sequence?
  * @private
  */
-exports.prototype.handleDown_ = function(evt) {
+Rotate.prototype.handleDown_ = function(evt) {
   const map = evt.map;
 
   let feature = map.forEachFeatureAtPixel(evt.pixel,
@@ -292,7 +292,7 @@ exports.prototype.handleDown_ = function(evt) {
  * @return {import("ol/coordinate.js").Coordinate} The center coordinate of the geometry.
  * @private
  */
-exports.prototype.getCenterCoordinate_ = function(
+Rotate.prototype.getCenterCoordinate_ = function(
   geometry) {
 
   let center;
@@ -314,7 +314,7 @@ exports.prototype.getCenterCoordinate_ = function(
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Event.
  * @private
  */
-exports.prototype.handleDrag_ = function(evt) {
+Rotate.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
 
   const geometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
@@ -347,7 +347,7 @@ exports.prototype.handleDrag_ = function(evt) {
  * @return {boolean} Stop drag sequence?
  * @private
  */
-exports.prototype.handleUp_ = function(evt) {
+Rotate.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
     /** @type {RotateEvent} */
     const event = new ngeoCustomEvent('rotateend', {feature: this.feature_});
@@ -364,7 +364,7 @@ exports.prototype.handleUp_ = function(evt) {
  * @param {KeyboardEvent} evt Event.
  * @private
  */
-exports.prototype.handleKeyUp_ = function(evt) {
+Rotate.prototype.handleKeyUp_ = function(evt) {
   // 27 == ESC key
   if (evt.keyCode === 27) {
     this.setActive(false);

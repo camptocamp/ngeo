@@ -9,7 +9,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
  * @constructor
  * @export
  */
-const exports = function(data, columnDefs) {
+function Config(data, columnDefs) {
   /**
    * @type {Array.<Object>|undefined}
    * @export
@@ -47,7 +47,7 @@ function getRowUid(attributes) {
  * @return {boolean} True if already selected. False otherwise.
  * @export
  */
-exports.prototype.isRowSelected = function(attributes) {
+Config.prototype.isRowSelected = function(attributes) {
   return !!this.selectedRows[exports.getRowUid(attributes)];
 };
 
@@ -57,7 +57,7 @@ exports.prototype.isRowSelected = function(attributes) {
  * @return {number} Number of selected rows.
  * @export
  */
-exports.prototype.getSelectedCount = function() {
+Config.prototype.getSelectedCount = function() {
   return Object.keys(this.selectedRows).length;
 };
 
@@ -67,7 +67,7 @@ exports.prototype.getSelectedCount = function() {
  * @return {Array.<Object>} Selected rows in the current ordering.
  * @export
  */
-exports.prototype.getSelectedRows = function() {
+Config.prototype.getSelectedRows = function() {
   return this.data.filter(row => this.isRowSelected(row));
 };
 
@@ -76,7 +76,7 @@ exports.prototype.getSelectedRows = function() {
  * @param {Object} attributes An entry/row.
  * @public
  */
-exports.prototype.selectRow = function(attributes) {
+Config.prototype.selectRow = function(attributes) {
   const uid = getRowUid(attributes);
   this.selectedRows[uid] = attributes;
 };
@@ -86,7 +86,7 @@ exports.prototype.selectRow = function(attributes) {
  * @param {Object} attributes An entry/row.
  * @public
  */
-exports.prototype.toggleRow = function(attributes) {
+Config.prototype.toggleRow = function(attributes) {
   const uid = getRowUid(attributes);
   const isSelected = this.isRowSelected(attributes);
   if (isSelected) {
@@ -101,7 +101,7 @@ exports.prototype.toggleRow = function(attributes) {
  * Select all rows.
  * @export
  */
-exports.prototype.selectAll = function() {
+Config.prototype.selectAll = function() {
   this.data.forEach((attributes) => {
     this.selectRow(attributes);
   });
@@ -112,7 +112,7 @@ exports.prototype.selectAll = function() {
  * Deselect all rows.
  * @export
  */
-exports.prototype.unselectAll = function() {
+Config.prototype.unselectAll = function() {
   for (const rowId in this.selectedRows) {
     delete this.selectedRows[rowId];
   }
@@ -123,7 +123,7 @@ exports.prototype.unselectAll = function() {
  * Invert selection.
  * @export
  */
-exports.prototype.invertSelection = function() {
+Config.prototype.invertSelection = function() {
   this.data.forEach((attributes) => {
     this.toggleRow(attributes);
   });

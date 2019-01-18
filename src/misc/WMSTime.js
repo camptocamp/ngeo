@@ -15,7 +15,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * @ngdoc service
  * @ngname ngeoWMSTime
  */
-const exports = function($filter, gettextCatalog) {
+function WMSTime($filter, gettextCatalog) {
 
   /**
    * @private
@@ -44,7 +44,7 @@ olUtilInherits(exports, ngeoMiscTime);
  * @param  {boolean=} opt_toUTC to get the UTC date
  * @return {string} Date string regarding the resolution.
  */
-exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
+WMSTime.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
   const date = new Date(time);
   const utc = opt_toUTC ? 'UTC' : undefined;
 
@@ -84,7 +84,7 @@ exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
  * WMS request
  * @export
  */
-exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
+WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
   googAsserts.assert(wmsTimeProperty.resolution !== undefined);
   if (wmsTimeProperty.mode === 'range') {
     googAsserts.assert(times.end !== undefined);

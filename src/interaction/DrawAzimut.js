@@ -23,7 +23,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @extends {import("ol/interaction/Pointer.js").default}
  * @param {olx.interaction.PointerOptions} options Options.
  */
-const exports = function(options) {
+function DrawAzimut(options) {
 
   olInteractionPointer.call(this, {
     handleDownEvent: handleDownEvent_,
@@ -156,7 +156,7 @@ exports.handleEvent_ = function(mapBrowserEvent) {
  * @return {boolean} Pass the event to other interactions.
  * @private
  */
-exports.prototype.handlePointerMove_ = function(event) {
+DrawAzimut.prototype.handlePointerMove_ = function(event) {
   if (this.started_) {
     this.modifyDrawing_(event);
   } else {
@@ -170,7 +170,7 @@ exports.prototype.handlePointerMove_ = function(event) {
  * @param {import("ol/MapBrowserEvent.js").default} event Event.
  * @private
  */
-exports.prototype.createOrUpdateSketchPoint_ = function(event) {
+DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
   const coordinates = event.coordinate.slice();
   if (this.sketchPoint_ === null) {
     this.sketchPoint_ = new olFeature(new olGeomPoint(coordinates));
@@ -187,7 +187,7 @@ exports.prototype.createOrUpdateSketchPoint_ = function(event) {
  * Redraw the skecth features.
  * @private
  */
-exports.prototype.updateSketchFeatures_ = function() {
+DrawAzimut.prototype.updateSketchFeatures_ = function() {
   const sketchFeatures = [];
   if (this.sketchFeature_ !== null) {
     sketchFeatures.push(this.sketchFeature_);
@@ -206,7 +206,7 @@ exports.prototype.updateSketchFeatures_ = function() {
  * @param {import("ol/MapBrowserEvent.js").default} event Event.
  * @private
  */
-exports.prototype.startDrawing_ = function(event) {
+DrawAzimut.prototype.startDrawing_ = function(event) {
   const start = event.coordinate;
   this.started_ = true;
   const line = new olGeomLineString([start.slice(), start.slice()]);
@@ -227,7 +227,7 @@ exports.prototype.startDrawing_ = function(event) {
  * @param {import("ol/MapBrowserEvent.js").default} event Event.
  * @private
  */
-exports.prototype.modifyDrawing_ = function(event) {
+DrawAzimut.prototype.modifyDrawing_ = function(event) {
   const coordinate = event.coordinate;
   const geometry = googAsserts.assertInstanceof(
     this.sketchFeature_.getGeometry(), olGeomGeometryCollection);
@@ -254,7 +254,7 @@ exports.prototype.modifyDrawing_ = function(event) {
  * @return {import("ol/Feature.js").default} The sketch feature (or null if none).
  * @private
  */
-exports.prototype.abortDrawing_ = function() {
+DrawAzimut.prototype.abortDrawing_ = function() {
   this.started_ = false;
   const sketchFeature = this.sketchFeature_;
   if (sketchFeature !== null) {
@@ -269,13 +269,13 @@ exports.prototype.abortDrawing_ = function() {
 /**
  * @inheritDoc
  */
-exports.prototype.shouldStopEvent = FALSE;
+DrawAzimut.prototype.shouldStopEvent = FALSE;
 
 
 /**
  * @private
  */
-exports.prototype.updateState_ = function() {
+DrawAzimut.prototype.updateState_ = function() {
   const map = this.getMap();
   const active = this.getActive();
   if (map === null || !active) {
@@ -289,7 +289,7 @@ exports.prototype.updateState_ = function() {
  * Stop drawing and add the sketch feature to the target layer.
  * @private
  */
-exports.prototype.finishDrawing_ = function() {
+DrawAzimut.prototype.finishDrawing_ = function() {
   const sketchFeature = this.abortDrawing_();
   googAsserts.assert(sketchFeature !== null);
 
@@ -306,7 +306,7 @@ exports.prototype.finishDrawing_ = function() {
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+DrawAzimut.prototype.setMap = function(map) {
   olInteractionPointer.prototype.setMap.call(this, map);
   this.updateState_();
 };

@@ -4,7 +4,7 @@ import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 
-const exports = class {
+class SavedFilter {
 
   /**
    * The GeoMapFish service responsible of storing filters that can be applied

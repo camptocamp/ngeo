@@ -14,7 +14,7 @@ import * as olColor from 'ol/color.js';
 /**
  * @constructor
  */
-const exports = function() {
+function VectorEncoder() {
   /**
    * @type {import("ol/format/GeoJSON.js").default}
    */
@@ -50,7 +50,7 @@ const PRINT_STYLE_TYPES = {
  * @param {import("ol/layer/Vector.js").default} layer Layer.
  * @param {number} resolution Resolution.
  */
-exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
   const source = layer.getSource();
   googAsserts.assertInstanceof(source, olSourceVector);
 
@@ -143,7 +143,7 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
  */
-exports.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
+VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
     return;
@@ -187,7 +187,7 @@ exports.prototype.encodeVectorStyle = function(object, geometryType, style, styl
  * @param {!import("ol/style/Fill.js").default} fillStyle Fill style.
  * @protected
  */
-exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
+VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
     googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
@@ -205,7 +205,7 @@ exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
  * @param {!import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
-exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
@@ -220,7 +220,7 @@ exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
  * @param {!import("ol/style/Image.js").default} imageStyle Image style.
  * @protected
  */
-exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
+VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
   let symbolizer;
   if (imageStyle instanceof olStyleCircle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -316,7 +316,7 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
-exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
@@ -334,7 +334,7 @@ exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, st
  * @param {!import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
-exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
@@ -364,7 +364,7 @@ exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
  * @param {!import("ol/style/Text.js").default} textStyle Text style.
  * @protected
  */
-exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {
+VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });

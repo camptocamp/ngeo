@@ -28,11 +28,7 @@ module.value('gmfBackgroundlayerselectorTemplateUrl',
 );
 
 
-<<<<<<< HEAD
 module.run(/* @ngInject */ ($templateCache) => {
-=======
-module.run(/* @ngInject */ ($templateCache) => {
->>>>>>> 1dcf486... f
   $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
 });
 
@@ -83,11 +79,7 @@ const component = {
 };
 
 
-<<<<<<< HEAD
 module.component('gmfBackgroundlayerselector', component);
-=======
-module.component('gmfBackgroundlayerselector', component);
->>>>>>> 1dcf486... f
 
 
 /**

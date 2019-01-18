@@ -11,7 +11,7 @@ import {toRadians} from 'ol/math.js';
  * @ngdoc service
  * @ngname ngeoPrintUtils
  */
-const exports = function() {
+function Utils() {
 
   /**
    * @type {number}
@@ -56,7 +56,7 @@ exports.DOTS_PER_INCH_ = 72;
  * listener.
  * @export
  */
-exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
+Utils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
   const self = this;
 
   return (
@@ -126,7 +126,7 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
  * @param {number} extentHalfHeight Extent half height.
  * @private
  */
-exports.prototype.drawPrintZone_ = function(context, center,
+Utils.prototype.drawPrintZone_ = function(context, center,
   extentHalfWidth, extentHalfHeight) {
   const minx = center[0] - extentHalfWidth;
   const miny = center[1] - extentHalfHeight;
@@ -150,7 +150,7 @@ exports.prototype.drawPrintZone_ = function(context, center,
  * @param {number} rotation Rotation value in radians.
  * @private
  */
-exports.prototype.drawPrintZoneWithRotation_ = function(context, center,
+Utils.prototype.drawPrintZoneWithRotation_ = function(context, center,
   extentHalfWidth, extentHalfHeight, rotation) {
   // diagonal = distance p1 to center.
   const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
@@ -192,7 +192,7 @@ exports.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * in `printMapScales`.
  * @export
  */
-exports.prototype.getOptimalScale = function(
+Utils.prototype.getOptimalScale = function(
   mapSize, mapResolution, printMapSize, printMapScales) {
 
   const mapWidth = mapSize[0] * mapResolution;
@@ -224,7 +224,7 @@ exports.prototype.getOptimalScale = function(
  * @return {number} The optimal map resolution.
  * @export
  */
-exports.prototype.getOptimalResolution = function(
+Utils.prototype.getOptimalResolution = function(
   mapSize, printMapSize, printMapScale) {
 
   const dotsPerMeter =
@@ -246,7 +246,7 @@ exports.prototype.getOptimalResolution = function(
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom left corner.
  */
-exports.prototype.getBottomLeftCorner = function(mapCenter) {
+Utils.prototype.getBottomLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
     mapCenter[1] - this.extentHalfVerticalDistance_];
 };
@@ -257,7 +257,7 @@ exports.prototype.getBottomLeftCorner = function(mapCenter) {
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.ç
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom right corner.
  */
-exports.prototype.getBottomRightCorner = function(mapCenter) {
+Utils.prototype.getBottomRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
     mapCenter[1] - this.extentHalfVerticalDistance_];
 };
@@ -268,7 +268,7 @@ exports.prototype.getBottomRightCorner = function(mapCenter) {
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up left corner.
  */
-exports.prototype.getUpLeftCorner = function(mapCenter) {
+Utils.prototype.getUpLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
@@ -279,7 +279,7 @@ exports.prototype.getUpLeftCorner = function(mapCenter) {
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up right corner.
  */
-exports.prototype.getUpRightCorner = function(mapCenter) {
+Utils.prototype.getUpRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };

@@ -9,14 +9,14 @@ import angular from 'angular';
  * @ngdoc service
  * @ngname ngeoTime
  */
-const exports = function() {};
+function Time() {};
 
 /**
  * @param {number|string|null} value The value
  * @param {Date} defaultValue The default value
  * @return {Date} the date
  */
-exports.prototype.createDate = function(value, defaultValue = null) {
+Time.prototype.createDate = function(value, defaultValue = null) {
   return value !== null ? new Date(value) : defaultValue;
 };
 
@@ -25,7 +25,7 @@ exports.prototype.createDate = function(value, defaultValue = null) {
  * @param {number|null=} defaultValue The default value
  * @return {number|null} the time
  */
-exports.prototype.getTime = function(date, defaultValue = null) {
+Time.prototype.getTime = function(date, defaultValue = null) {
   return date ? date.getTime() : defaultValue;
 };
 
@@ -40,7 +40,7 @@ exports.prototype.getTime = function(date, defaultValue = null) {
  * }} - Configuration for the UI components
  * @export
  */
-exports.prototype.getOptions = function(time) {
+Time.prototype.getOptions = function(time) {
 
   const minDate = this.createDate(time.minValue);
   const maxDate = this.createDate(time.maxValue);
@@ -67,7 +67,7 @@ exports.prototype.getOptions = function(time) {
  * @return {Object} UTC date
  * @export
  */
-exports.prototype.getUTCDate = function(localDate) {
+Time.prototype.getUTCDate = function(localDate) {
   return new Date(
     localDate.getUTCFullYear(),
     localDate.getUTCMonth(),

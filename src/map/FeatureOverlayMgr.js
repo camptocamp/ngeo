@@ -40,7 +40,7 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */
-const exports = function() {
+function FeatureOverlayMgr() {
 
   /**
    * @type {Object.<string, number>}
@@ -81,7 +81,7 @@ const exports = function() {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-exports.prototype.addFeature = function(feature, groupIndex) {
+FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
   const featureUid = olUtilGetUid(feature).toString();
@@ -96,7 +96,7 @@ exports.prototype.addFeature = function(feature, groupIndex) {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-exports.prototype.removeFeature = function(feature, groupIndex) {
+FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
   const featureUid = olUtilGetUid(feature).toString();
@@ -110,7 +110,7 @@ exports.prototype.removeFeature = function(feature, groupIndex) {
  * @param {number} groupIndex The group groupIndex.
  * @export
  */
-exports.prototype.clear = function(groupIndex) {
+FeatureOverlayMgr.prototype.clear = function(groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
   const group = this.groups_[groupIndex];
@@ -125,7 +125,7 @@ exports.prototype.clear = function(groupIndex) {
  * @return {import("ol/layer/Vector.js").default} The vector layer used internally.
  * @export
  */
-exports.prototype.getLayer = function() {
+FeatureOverlayMgr.prototype.getLayer = function() {
   return this.layer_;
 };
 
@@ -134,7 +134,7 @@ exports.prototype.getLayer = function() {
  * @return {import("ngeo/map/FeatureOverlay.js").default} Feature overlay.
  * @export
  */
-exports.prototype.getFeatureOverlay = function() {
+FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
   const groupIndex = this.groups_.length;
   this.groups_.push({
     styleFunction: olStyleDefaultFunction,
@@ -148,7 +148,7 @@ exports.prototype.getFeatureOverlay = function() {
  * @param {import("ol/Map.js").default} map Map.
  * @export
  */
-exports.prototype.init = function(map) {
+FeatureOverlayMgr.prototype.init = function(map) {
   this.layer_.setMap(map);
 };
 
@@ -159,7 +159,7 @@ exports.prototype.init = function(map) {
  * @param {number} groupIndex Group index.
  * @export
  */
-exports.prototype.setStyle = function(style, groupIndex) {
+FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   googAsserts.assert(groupIndex >= 0);
   googAsserts.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
@@ -173,7 +173,7 @@ exports.prototype.setStyle = function(style, groupIndex) {
  * @return {Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").default} Styles.
  * @private
  */
-exports.prototype.styleFunction_ = function(feature, resolution) {
+FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();
   googAsserts.assert(featureUid in this.featureUidToGroupIndex_);
   const groupIndex = this.featureUidToGroupIndex_[featureUid];

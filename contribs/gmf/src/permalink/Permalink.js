@@ -66,7 +66,7 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @ngdoc service
  * @ngname gmfPermalink
  */
-const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
+function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
   ngeoStateManager, ngeoLocation, gmfUser) {
 
   /**
@@ -487,7 +487,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
  * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
  * @export
  */
-exports.prototype.getMapCenter = function() {
+Permalink.prototype.getMapCenter = function() {
   const x = this.ngeoStateManager_.getInitialNumberValue(gmfBase.PermalinkParam.MAP_X);
   const y = this.ngeoStateManager_.getInitialNumberValue(gmfBase.PermalinkParam.MAP_Y);
 
@@ -513,7 +513,7 @@ exports.prototype.getMapCenter = function() {
  * @return {number|undefined} The zoom for the map view.
  * @export
  */
-exports.prototype.getMapZoom = function() {
+Permalink.prototype.getMapZoom = function() {
   const zoom = this.ngeoStateManager_.getInitialNumberValue(gmfBase.PermalinkParam.MAP_Z);
   return isNaN(zoom) ? undefined : zoom;
 };
@@ -527,7 +527,7 @@ exports.prototype.getMapZoom = function() {
  * @return {boolean} Whether map crosshair property is set or not.
  * @export
  */
-exports.prototype.getMapCrosshair = function() {
+Permalink.prototype.getMapCrosshair = function() {
   const crosshair = this.ngeoStateManager_.getInitialBooleanValue(gmfBase.PermalinkParam.MAP_CROSSHAIR);
   return crosshair === undefined ? this.crosshairEnabledByDefault_ : crosshair;
 };
@@ -538,7 +538,7 @@ exports.prototype.getMapCrosshair = function() {
  * Overwrites an existing map crosshair.
  * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
-exports.prototype.setMapCrosshair = function(opt_center) {
+Permalink.prototype.setMapCrosshair = function(opt_center) {
   let crosshairCoordinate;
   if (opt_center) {
     crosshairCoordinate = opt_center;
@@ -569,7 +569,7 @@ exports.prototype.setMapCrosshair = function(opt_center) {
  * @return {string|undefined} Tooltip text.
  * @export
  */
-exports.prototype.getMapTooltip = function() {
+Permalink.prototype.getMapTooltip = function() {
   return this.ngeoStateManager_.getInitialStringValue(gmfBase.PermalinkParam.MAP_TOOLTIP);
 };
 
@@ -579,7 +579,7 @@ exports.prototype.getMapTooltip = function() {
  * @param {string} tooltipText Text to display in tooltip.
  * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
-exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
+Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
   let tooltipPosition;
   if (opt_center) {
     tooltipPosition = opt_center;
@@ -614,7 +614,7 @@ exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
  * @return {!Array.<!import("ol/Feature.js").default>} The features read from the state manager.
  * @export
  */
-exports.prototype.getFeatures = function() {
+Permalink.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(gmfBase.PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
     return googAsserts.assert(this.featureHashFormat_.readFeatures(f));
@@ -627,7 +627,7 @@ exports.prototype.getFeatures = function() {
  * @param {!Object.<string, string>} dimensions The global dimensions object.
  * @export
  */
-exports.prototype.setDimensions = function(dimensions) {
+Permalink.prototype.setDimensions = function(dimensions) {
   // apply initial state
   const keys = this.ngeoLocation_.getParamKeysWithPrefix(exports.ParamPrefix.DIMENSIONS);
   for (let i = 0; i < keys.length; i++) {
@@ -657,7 +657,7 @@ exports.prototype.setDimensions = function(dimensions) {
  * @param {?import("ol/Map.js").default} map The ol3 map object.
  * @export
  */
-exports.prototype.setMap = function(map) {
+Permalink.prototype.setMap = function(map) {
 
   if (map === this.map_) {
     return;
@@ -688,7 +688,7 @@ exports.prototype.setMap = function(map) {
  * @param {?import("ol/Feature.js").default} oeFeature ObjectEditing feature
  * @private
  */
-exports.prototype.registerMap_ = function(map, oeFeature) {
+Permalink.prototype.registerMap_ = function(map, oeFeature) {
 
   const view = map.getView();
   let center;
@@ -762,7 +762,7 @@ exports.prototype.registerMap_ = function(map, oeFeature) {
  * Remove any event listeners from the current map.
  * @private
  */
-exports.prototype.unregisterMap_ = function() {
+Permalink.prototype.unregisterMap_ = function() {
   googAsserts.assert(
     this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
   olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
@@ -780,7 +780,7 @@ exports.prototype.unregisterMap_ = function() {
  * @return {?import("ol/layer/Base.js").default} Background layer.
  * @export
  */
-exports.prototype.getBackgroundLayer = function(layers) {
+Permalink.prototype.getBackgroundLayer = function(layers) {
   const layerName = this.ngeoStateManager_.getInitialStringValue(gmfBase.PermalinkParam.BG_LAYER);
   if (layerName !== undefined) {
     for (const layer of layers) {
@@ -798,7 +798,7 @@ exports.prototype.getBackgroundLayer = function(layers) {
  * background layer label, i.e. its name.
  * @private
  */
-exports.prototype.handleBackgroundLayerManagerChange_ = function() {
+Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
   if (!this.map_ || !this.ngeoBackgroundLayerMgr_) {
     return;
   }
@@ -823,7 +823,7 @@ exports.prototype.handleBackgroundLayerManagerChange_ = function() {
  * correspondent state of the permalink.
  * @export
  */
-exports.prototype.refreshFirstLevelGroups = function() {
+Permalink.prototype.refreshFirstLevelGroups = function() {
   if (!this.gmfTreeManager_) {
     return;
   }
@@ -844,7 +844,7 @@ exports.prototype.refreshFirstLevelGroups = function() {
  * @param {Array.<string>} pathElements Array of path elements.
  * @return {boolean} theme in path.
  */
-exports.prototype.themeInUrl_ = function(pathElements) {
+Permalink.prototype.themeInUrl_ = function(pathElements) {
   const indexOfTheme = pathElements.indexOf('theme');
   return indexOfTheme != -1 && indexOfTheme == pathElements.length - 2;
 };
@@ -854,7 +854,7 @@ exports.prototype.themeInUrl_ = function(pathElements) {
  * @param {string} themeName Theme name.
  * @private
  */
-exports.prototype.setThemeInUrl_ = function(themeName) {
+Permalink.prototype.setThemeInUrl_ = function(themeName) {
   if (themeName) {
     const pathElements = this.ngeoLocation_.getPath().split('/');
     googAsserts.assert(pathElements.length > 1);
@@ -878,7 +878,7 @@ exports.prototype.setThemeInUrl_ = function(themeName) {
  * @return {?string} default theme name.
  * @export
  */
-exports.prototype.defaultThemeName = function() {
+Permalink.prototype.defaultThemeName = function() {
 
   // check if we have a theme in url
   const pathElements = this.ngeoLocation_.getPath().split('/');
@@ -911,7 +911,7 @@ exports.prototype.defaultThemeName = function() {
  * @return {?string} default theme name.
  * @export
  */
-exports.prototype.defaultThemeNameFromFunctionalities = function() {
+Permalink.prototype.defaultThemeNameFromFunctionalities = function() {
   //check if we have a theme in the user functionalities
   if (!this.gmfUser_) {
     return null;
@@ -930,7 +930,7 @@ exports.prototype.defaultThemeNameFromFunctionalities = function() {
 /**
  * @private
  */
-exports.prototype.initLayers_ = function() {
+Permalink.prototype.initLayers_ = function() {
   const initialUri = window.location.href;
   let authenticationRequired = false;
 
@@ -1050,7 +1050,7 @@ exports.prototype.initLayers_ = function() {
  * @param {import("ol/Collection/Event.js").default} event Collection event.
  * @private
  */
-exports.prototype.handleNgeoFeaturesAdd_ = function(event) {
+Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
   const feature = event.element;
   googAsserts.assertInstanceof(feature, olFeature);
   this.addNgeoFeature_(feature);
@@ -1061,7 +1061,7 @@ exports.prototype.handleNgeoFeaturesAdd_ = function(event) {
  * @param {import("ol/Collection/Event.js").default} event Collection event.
  * @private
  */
-exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
+Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
   const feature = event.element;
   googAsserts.assertInstanceof(feature, olFeature);
   this.removeNgeoFeature_(feature);
@@ -1074,7 +1074,7 @@ exports.prototype.handleNgeoFeaturesRemove_ = function(event) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.addNgeoFeature_ = function(feature) {
+Permalink.prototype.addNgeoFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
@@ -1089,7 +1089,7 @@ exports.prototype.addNgeoFeature_ = function(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeNgeoFeature_ = function(feature) {
+Permalink.prototype.removeNgeoFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.clearListenerKey(uid);
   this.handleNgeoFeaturesChange_();
@@ -1102,7 +1102,7 @@ exports.prototype.removeNgeoFeature_ = function(feature) {
  * the collection changes or any of the features within the collection changes.
  * @private
  */
-exports.prototype.handleNgeoFeaturesChange_ = function() {
+Permalink.prototype.handleNgeoFeaturesChange_ = function() {
   if (!this.ngeoFeatures_) {
     return;
   }
@@ -1120,7 +1120,7 @@ exports.prototype.handleNgeoFeaturesChange_ = function() {
  * @return {?WfsPermalinkData} The query data.
  * @private
  */
-exports.prototype.getWfsPermalinkData_ = function() {
+Permalink.prototype.getWfsPermalinkData_ = function() {
   const wfsLayer = this.ngeoLocation_.getParam(gmfBase.PermalinkParam.WFS_LAYER);
   if (!wfsLayer) {
     return null;
@@ -1170,7 +1170,7 @@ exports.prototype.getWfsPermalinkData_ = function() {
  * @return {WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
-exports.prototype.createFilterGroup_ = function(prefix, paramKeys) {
+Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
    * @type {Array.<WfsPermalinkFilter>}
    */
@@ -1210,7 +1210,7 @@ exports.prototype.createFilterGroup_ = function(prefix, paramKeys) {
  * @private
  */
 
-exports.prototype.initExternalDataSources_ = function() {
+Permalink.prototype.initExternalDataSources_ = function() {
 
   const ngeoQuerent = googAsserts.assert(this.ngeoQuerent_);
   const gmfExtDSManager = googAsserts.assert(
@@ -1351,7 +1351,7 @@ exports.prototype.initExternalDataSources_ = function() {
  * @param {!import("ol/Collection/Event.js").default} evt Collection event.
  * @private
  */
-exports.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
+Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
   const group = evt.element;
   googAsserts.assertInstanceof(group, ngeoDatasourceGroup);
   this.registerExternalDSGroup_(group);
@@ -1363,7 +1363,7 @@ exports.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
  * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
-exports.prototype.registerExternalDSGroup_ = function(group) {
+Permalink.prototype.registerExternalDSGroup_ = function(group) {
   olEvents.listen(
     group.dataSourcesCollection,
     'add',
@@ -1385,7 +1385,7 @@ exports.prototype.registerExternalDSGroup_ = function(group) {
  * @param {string} name The layer name to find
  * @return {boolean} The containing status
  */
-exports.prototype.containsLayerName = function(layer, name) {
+Permalink.prototype.containsLayerName = function(layer, name) {
   if (layer instanceof olLayerGroup) {
     for (const l of layer.getLayers().getArray()) {
       googAsserts.assert(l);
@@ -1404,7 +1404,7 @@ exports.prototype.containsLayerName = function(layer, name) {
  * @param {!import("ol/Collection/Event.js").default} evt Collection event.
  * @private
  */
-exports.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
+Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
   const group = evt.element;
   googAsserts.assertInstanceof(group, ngeoDatasourceGroup);
   this.unregisterExternalDSGroup_(group);
@@ -1416,7 +1416,7 @@ exports.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
  * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
-exports.prototype.unregisterExternalDSGroup_ = function(group) {
+Permalink.prototype.unregisterExternalDSGroup_ = function(group) {
   olEvents.unlisten(
     group.dataSourcesCollection,
     'add',
@@ -1436,7 +1436,7 @@ exports.prototype.unregisterExternalDSGroup_ = function(group) {
  * Set the External Data Sources parameters in the url.
  * @private
  */
-exports.prototype.setExternalDataSourcesState_ = function() {
+Permalink.prototype.setExternalDataSourcesState_ = function() {
 
   if (this.setExternalDataSourcesStatePromise_) {
     this.$timeout_.cancel(this.setExternalDataSourcesStatePromise_);
@@ -1501,7 +1501,7 @@ exports.prototype.setExternalDataSourcesState_ = function() {
  * Clean the permalink parameters
  * @param {!Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
  */
-exports.prototype.cleanParams = function(groups) {
+Permalink.prototype.cleanParams = function(groups) {
   const keys = googAsserts.assert(this.ngeoLocation_.getParamKeys());
   for (const key of keys) {
     if (key.startsWith(exports.ParamPrefix.TREE_GROUP_LAYERS)) {

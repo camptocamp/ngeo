@@ -76,7 +76,7 @@ import olStyleText from 'ol/style/Text.js';
  * @extends {import("ol/format/TextFeature.js").default}
  * @param {FeatureHashOptions=} opt_options Options.
  */
-const exports = function(opt_options) {
+function FeatureHash(opt_options) {
 
   olFormatTextFeature.call(this);
 
@@ -161,37 +161,37 @@ exports.LegacyProperties_ = {};
 /**
  * @inheritDoc
  */
-exports.prototype.readFeature;
+FeatureHash.prototype.readFeature;
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.readFeatures;
+FeatureHash.prototype.readFeatures;
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.readGeometry;
+FeatureHash.prototype.readGeometry;
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.writeFeature;
+FeatureHash.prototype.writeFeature;
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.writeFeatures;
+FeatureHash.prototype.writeFeatures;
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.writeGeometry;
+FeatureHash.prototype.writeGeometry;
 
 
 /**
@@ -958,7 +958,7 @@ exports.GEOMETRY_WRITERS_ = {
  * @return {Array.<number>} Flat coordinates.
  * @private
  */
-exports.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
+FeatureHash.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
   const len = text.length;
   let index = 0;
   const flatCoordinates = opt_flatCoordinates !== undefined ?
@@ -1002,7 +1002,7 @@ exports.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
  * @return {string} String.
  * @private
  */
-exports.prototype.encodeCoordinates_ = function(flatCoordinates, stride, offset, end) {
+FeatureHash.prototype.encodeCoordinates_ = function(flatCoordinates, stride, offset, end) {
   let encodedCoordinates = '';
   for (let i = offset; i < end; i += stride) {
     let x = flatCoordinates[i];
@@ -1028,7 +1028,7 @@ exports.prototype.encodeCoordinates_ = function(flatCoordinates, stride, offset,
  * @protected
  * @override
  */
-exports.prototype.readFeatureFromText = function(text, opt_options) {
+FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
   googAsserts.assert(text.length > 2);
   googAsserts.assert(text[1] === '(');
   googAsserts.assert(text[text.length - 1] === ')');
@@ -1079,7 +1079,7 @@ exports.prototype.readFeatureFromText = function(text, opt_options) {
  * @protected
  * @override
  */
-exports.prototype.readFeaturesFromText = function(text, opt_options) {
+FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
   googAsserts.assert(text[0] === 'F');
   this.prevX_ = 0;
   this.prevY_ = 0;
@@ -1116,7 +1116,7 @@ exports.prototype.readFeaturesFromText = function(text, opt_options) {
  * @protected
  * @override
  */
-exports.prototype.readGeometryFromText = function(text, opt_options) {
+FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
   const geometryReader = GEOMETRY_READERS_[text[0]];
   googAsserts.assert(geometryReader !== undefined);
   return geometryReader.call(this, text);
@@ -1131,7 +1131,7 @@ exports.prototype.readGeometryFromText = function(text, opt_options) {
  * @protected
  * @override
  */
-exports.prototype.writeFeatureText = function(feature, opt_options) {
+FeatureHash.prototype.writeFeatureText = function(feature, opt_options) {
   const /** @type {Array.<string>} */ encodedParts = [];
 
   // encode geometry
@@ -1205,7 +1205,7 @@ exports.prototype.writeFeatureText = function(feature, opt_options) {
  * @protected
  * @override
  */
-exports.prototype.writeFeaturesText = function(features, opt_options) {
+FeatureHash.prototype.writeFeaturesText = function(features, opt_options) {
   this.prevX_ = 0;
   this.prevY_ = 0;
   const textArray = [];
@@ -1227,7 +1227,7 @@ exports.prototype.writeFeaturesText = function(features, opt_options) {
  * @protected
  * @override
  */
-exports.prototype.writeGeometryText = function(geometry, opt_options) {
+FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
   const geometryWriter = GEOMETRY_WRITERS_[
     geometry.getType()];
   googAsserts.assert(geometryWriter !== undefined);

@@ -15,7 +15,7 @@ import olFeature from 'ol/Feature.js';
  * @constructor
  * @ngInject
  */
-const exports = function($q, gmfEditFeature, ngeoLocation) {
+function Manager($q, gmfEditFeature, ngeoLocation) {
 
   /**
    * @type {angular.IQService}
@@ -55,7 +55,7 @@ const exports = function($q, gmfEditFeature, ngeoLocation) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-exports.prototype.getFeature = function() {
+Manager.prototype.getFeature = function() {
 
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
@@ -94,7 +94,7 @@ exports.prototype.getFeature = function() {
  * @return {string|undefined} The geometry type.
  * @export
  */
-exports.prototype.getGeomType = function() {
+Manager.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
     Param.GEOM_TYPE);
 };
@@ -104,7 +104,7 @@ exports.prototype.getGeomType = function() {
  * @return {number|undefined} The gmf layer node id.
  * @export
  */
-exports.prototype.getLayerNodeId = function() {
+Manager.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
     Param.LAYER);
 };
@@ -121,7 +121,7 @@ exports.prototype.getLayerNodeId = function() {
  * @param {Array.<import("ol/Feature.js").default>} features List of features.
  * @private
  */
-exports.prototype.handleGetFeatures_ = function(key, value, features) {
+Manager.prototype.handleGetFeatures_ = function(key, value, features) {
   let feature;
 
   if (features.length) {

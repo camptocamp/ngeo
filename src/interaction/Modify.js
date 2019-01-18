@@ -41,7 +41,7 @@ import olFeature from 'ol/Feature.js';
  * @extends {import("ol/interaction/Interaction.js").default}
  * @param {olx.interaction.ModifyOptions} options Options.
  */
-const exports = function(options) {
+function Modify(options) {
 
   googAsserts.assert(options.features);
 
@@ -118,7 +118,7 @@ olUtilInherits(exports, olInteractionInteraction);
  * @param {boolean} active Active.
  * @override
  */
-exports.prototype.setActive = function(active) {
+Modify.prototype.setActive = function(active) {
   olInteractionInteraction.prototype.setActive.call(this, active);
   this.setState_();
 };
@@ -131,7 +131,7 @@ exports.prototype.setActive = function(active) {
  * @param {import("ol/PluggableMap.js").default} map Map.
  * @override
  */
-exports.prototype.setMap = function(map) {
+Modify.prototype.setMap = function(map) {
 
   const interactions = this.interactions_;
 
@@ -158,7 +158,7 @@ exports.prototype.setMap = function(map) {
  * Toggle interactions.
  * @private
  */
-exports.prototype.setState_ = function() {
+Modify.prototype.setState_ = function() {
   const map = this.getMap();
   const active = this.getActive();
   const interactions = this.interactions_;
@@ -186,7 +186,7 @@ exports.prototype.setState_ = function() {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeaturesAdd_ = function(evt) {
+Modify.prototype.handleFeaturesAdd_ = function(evt) {
   const feature = evt.element;
   googAsserts.assertInstanceof(feature, olFeature,
     'feature should be an ol.Feature');
@@ -198,7 +198,7 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeaturesRemove_ = function(evt) {
+Modify.prototype.handleFeaturesRemove_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
@@ -208,7 +208,7 @@ exports.prototype.handleFeaturesRemove_ = function(evt) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.addFeature_ = function(feature) {
+Modify.prototype.addFeature_ = function(feature) {
   const collection = this.getFeatureCollection_(feature);
   collection.push(feature);
 };
@@ -218,7 +218,7 @@ exports.prototype.addFeature_ = function(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeFeature_ = function(feature) {
+Modify.prototype.removeFeature_ = function(feature) {
   const collection = this.getFeatureCollection_(feature);
   collection.remove(feature);
 };
@@ -229,7 +229,7 @@ exports.prototype.removeFeature_ = function(feature) {
  * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for this feature.
  * @private
  */
-exports.prototype.getFeatureCollection_ = function(feature) {
+Modify.prototype.getFeatureCollection_ = function(feature) {
   let features;
   const isCircle = feature.get(ngeoFormatFeatureProperties.IS_CIRCLE);
   const isRectangle = feature.get(ngeoFormatFeatureProperties.IS_RECTANGLE);

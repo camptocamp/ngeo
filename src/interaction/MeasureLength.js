@@ -18,7 +18,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} options Options
  */
-const exports = function(format, gettextCatalog, options = /** @type {MeasureOptions} */({})) {
+function MeasureLength(format, gettextCatalog, options = /** @type {MeasureOptions} */({})) {
 
   ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ (options));
 
@@ -47,7 +47,7 @@ olUtilInherits(exports, ngeoInteractionMeasure);
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style, source) {
+MeasureLength.prototype.createDrawInteraction = function(style, source) {
   return new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     source: source,
@@ -59,7 +59,7 @@ exports.prototype.createDrawInteraction = function(style, source) {
 /**
  * @inheritDoc
  */
-exports.prototype.handleMeasure = function(callback) {
+MeasureLength.prototype.handleMeasure = function(callback) {
   const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomLineString);
   const proj = this.getMap().getView().getProjection();
   googAsserts.assert(proj);

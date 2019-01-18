@@ -12,7 +12,7 @@ import olOverlay from 'ol/Overlay.js';
  * @extends {import("ol/Overlay.js").default}
  * @param {olx.OverlayOptions=} opt_options Overlay options.
  */
-const exports = function(opt_options) {
+function Popover(opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
@@ -53,7 +53,7 @@ olUtilInherits(exports, olOverlay);
 /**
  * @override
  */
-exports.prototype.setMap = function(map) {
+Popover.prototype.setMap = function(map) {
 
   const element = this.getElement();
 

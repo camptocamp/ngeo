@@ -23,7 +23,7 @@ import 'ngeo/sass/font.scss';
  * @ngname ngeoDisclaimer
  * @ngInject
  */
-const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
+function Disclaimer($sce, gettextCatalog, ngeoCreatePopup) {
 
   /**
    * @private
@@ -73,7 +73,7 @@ olUtilInherits(exports, ngeoMessageMessage);
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-exports.prototype.alert = function(object) {
+Disclaimer.prototype.alert = function(object) {
   this.show(object);
 };
 
@@ -85,7 +85,7 @@ exports.prototype.alert = function(object) {
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-exports.prototype.close = function(object) {
+Disclaimer.prototype.close = function(object) {
   const msgObjects = this.getMessageObjects(object);
   msgObjects.forEach(this.closeMessage_, this);
 };
@@ -97,7 +97,7 @@ exports.prototype.close = function(object) {
  * @protected
  * @override
  */
-exports.prototype.showMessage = function(message) {
+Disclaimer.prototype.showMessage = function(message) {
   const gettextCatalog = this.gettextCatalog_;
   const type = message.type;
   googAsserts.assertString(type, 'Type should be set.');
@@ -184,7 +184,7 @@ exports.prototype.showMessage = function(message) {
  * @return {string} The uid.
  * @private
  */
-exports.prototype.getMessageUid_ = function(message) {
+Disclaimer.prototype.getMessageUid_ = function(message) {
   return `${message.msg}-${message.type}`;
 };
 
@@ -194,7 +194,7 @@ exports.prototype.getMessageUid_ = function(message) {
  * @param {Message} message Message.
  * @protected
  */
-exports.prototype.closeMessage_ = function(message) {
+Disclaimer.prototype.closeMessage_ = function(message) {
   const uid = this.getMessageUid_(message);
   const obj = this.messages_[uid];
 

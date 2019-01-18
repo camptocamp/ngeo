@@ -25,7 +25,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
-const exports = function(options) {
+function ModifyRectangle(options) {
 
   googAsserts.assert(options.features);
 
@@ -96,7 +96,7 @@ olUtilInherits(exports, olInteractionPointer);
  * @param {boolean} active Active.
  * @override
  */
-exports.prototype.setActive = function(active) {
+ModifyRectangle.prototype.setActive = function(active) {
   olInteractionPointer.prototype.setActive.call(this, active);
   if (this.vectorPoints_) {
     this.vectorPoints_.setVisible(active);
@@ -107,7 +107,7 @@ exports.prototype.setActive = function(active) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.addFeature_ = function(feature) {
+ModifyRectangle.prototype.addFeature_ = function(feature) {
   const featureGeom = feature.getGeometry();
   if (featureGeom instanceof olGeomPolygon) {
 
@@ -184,7 +184,7 @@ exports.prototype.addFeature_ = function(feature) {
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
  * @private
  */
-exports.prototype.willModifyFeatures_ = function(evt) {
+ModifyRectangle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     /** @type {ModifyEvent} */
@@ -199,7 +199,7 @@ exports.prototype.willModifyFeatures_ = function(evt) {
  * @return {ModifyParams} The initialised params
  * @private
  */
-exports.prototype.initializeParams_ = function() {
+ModifyRectangle.prototype.initializeParams_ = function() {
   const feature = this.feature_;
 
   // 1. Find the origin (opposite) point for the modify operation
@@ -268,7 +268,7 @@ exports.prototype.initializeParams_ = function() {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeFeature_ = function(feature) {
+ModifyRectangle.prototype.removeFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   const item = this.cache_[uid];
   const corners = item.corners;
@@ -284,7 +284,7 @@ exports.prototype.removeFeature_ = function(feature) {
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+ModifyRectangle.prototype.setMap = function(map) {
   this.vectorPoints_.setMap(map);
   olInteractionPointer.prototype.setMap.call(this, map);
 };
@@ -294,7 +294,7 @@ exports.prototype.setMap = function(map) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeatureAdd_ = function(evt) {
+ModifyRectangle.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
   googAsserts.assertInstanceof(feature, olFeature,
     'feature should be an ol.Feature');
@@ -306,7 +306,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeatureRemove_ = function(evt) {
+ModifyRectangle.prototype.handleFeatureRemove_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
@@ -318,7 +318,7 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
  * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
-exports.prototype.handleDown_ = function(evt) {
+ModifyRectangle.prototype.handleDown_ = function(evt) {
   const map = evt.map;
 
   const feature = map.forEachFeatureAtPixel(evt.pixel, feature =>
@@ -340,7 +340,7 @@ exports.prototype.handleDown_ = function(evt) {
  * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
-exports.prototype.handleDrag_ = function(evt) {
+ModifyRectangle.prototype.handleDrag_ = function(evt) {
   this.willModifyFeatures_(evt);
   const feature = this.feature_;
 
@@ -389,7 +389,7 @@ exports.prototype.handleDrag_ = function(evt) {
  * @return {import("ol/Pixel.js").default} The new pixel of the point
  * @private
  */
-exports.prototype.calculateNewPixel_ = function(
+ModifyRectangle.prototype.calculateNewPixel_ = function(
   origin, destination, vector) {
 
   const aVector = [destination[0] - origin[0], destination[1] - origin[1]];
@@ -411,7 +411,7 @@ exports.prototype.calculateNewPixel_ = function(
  * @this {import("ngeo/interaction/ModifyRectangle.js").default}
  * @private
  */
-exports.prototype.handleUp_ = function(evt) {
+ModifyRectangle.prototype.handleUp_ = function(evt) {
   if (this.modified_) {
     /** @type {ModifyEvent} */
     const event = new ngeoCustomEvent('modifyend', {features: this.features_});

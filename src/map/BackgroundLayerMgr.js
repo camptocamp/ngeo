@@ -69,7 +69,7 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  * @ngdoc service
  * @ngname ngeoBackgroundLayerMgr
  */
-const exports = function(ngeoLayerHelper) {
+function BackgroundLayerMgr(ngeoLayerHelper) {
 
   olObservable.call(this);
 
@@ -98,7 +98,7 @@ olUtilInherits(exports, olObservable);
  * @return {import("ol/layer/Base.js").default} layer The background layer.
  * @export
  */
-exports.prototype.get = function(map) {
+BackgroundLayerMgr.prototype.get = function(map) {
   const mapUid = olUtilGetUid(map).toString();
   return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
     BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
@@ -113,7 +113,7 @@ exports.prototype.get = function(map) {
  * @return {import("ol/layer/Base.js").default} The previous background layer.
  * @export
  */
-exports.prototype.set = function(map, layer) {
+BackgroundLayerMgr.prototype.set = function(map, layer) {
   const ZIndex = -200;
   const mapUid = olUtilGetUid(map).toString();
   const previous = this.get(map);
@@ -153,7 +153,7 @@ exports.prototype.set = function(map, layer) {
  * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
-exports.prototype.getOpacityBgLayer = function(map) {
+BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
   const mapUid = olUtilGetUid(map).toString();
   return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
     BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
@@ -165,7 +165,7 @@ exports.prototype.getOpacityBgLayer = function(map) {
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  * @export
  */
-exports.prototype.setOpacityBgLayer = function(map, layer) {
+BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
   const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
   const ZIndex = -100;
@@ -185,7 +185,7 @@ exports.prototype.setOpacityBgLayer = function(map, layer) {
  * @param {Object.<string, string>} dimensions The global dimensions object.
  * @export
  */
-exports.prototype.updateDimensions = function(map, dimensions) {
+BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
   const baseBgLayer = this.get(map);
   if (baseBgLayer) {
     let layers = [baseBgLayer];

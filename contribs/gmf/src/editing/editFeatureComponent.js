@@ -1298,7 +1298,7 @@ module.controller('GmfEditfeatureController', Controller);
  * The different possible values of the `state` inner property.
  * @enum {string}
  */
-exports.State = {
+const State = {
   /**
    * The default state. While idle, nothing happens.
    * @type {string}

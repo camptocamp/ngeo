@@ -1,8 +1,4 @@
 /**
- */
-
-
-/**
  * A message to display by the ngeo notification service.
  *
  * delay: The delay in milliseconds the message is shown. Defaults to `7000`.
@@ -33,7 +29,7 @@
  * @constructor
  * @abstract
  */
-const exports = function() {};
+function Message() {};
 
 
 /**
@@ -43,7 +39,7 @@ const exports = function() {};
  * @param {Message} message Message.
  * @protected
  */
-exports.prototype.showMessage = function(message) {};
+Message.prototype.showMessage = function(message) {};
 
 
 /**
@@ -54,7 +50,7 @@ exports.prototype.showMessage = function(message) {};
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-exports.prototype.show = function(object) {
+Message.prototype.show = function(object) {
   const msgObjects = this.getMessageObjects(object);
   msgObjects.forEach(this.showMessage, this);
 };
@@ -66,7 +62,7 @@ exports.prototype.show = function(object) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.error = function(message) {
+Message.prototype.error = function(message) {
   this.show(this.getMessageObjects(message, Type.ERROR));
 };
 
@@ -76,7 +72,7 @@ exports.prototype.error = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.info = function(message) {
+Message.prototype.info = function(message) {
   this.show(this.getMessageObjects(message, Type.INFORMATION));
 };
 
@@ -86,7 +82,7 @@ exports.prototype.info = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.success = function(message) {
+Message.prototype.success = function(message) {
   this.show(this.getMessageObjects(message, Type.SUCCESS));
 };
 
@@ -96,7 +92,7 @@ exports.prototype.success = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.warn = function(message) {
+Message.prototype.warn = function(message) {
   this.show(this.getMessageObjects(message, Type.WARNING));
 };
 
@@ -112,7 +108,7 @@ exports.prototype.warn = function(message) {
  * @return {Array.<Message>} List of message objects.
  * @protected
  */
-exports.prototype.getMessageObjects = function(object, opt_type) {
+Message.prototype.getMessageObjects = function(object, opt_type) {
   const msgObjects = [];
   let msgObject = null;
   const defaultType = Type.INFORMATION;

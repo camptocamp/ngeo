@@ -21,7 +21,7 @@ import olProjProjection from 'ol/proj/Projection.js';
  * @param {!formatNumber} numberFormat The format function
  * @param {!MeasureOptions=} options Options
  */
-const exports = function(unitPrefixFormat, numberFormat, options = /** @type {MeasureOptions} */({})) {
+function MeasureAzimut(unitPrefixFormat, numberFormat, options = /** @type {MeasureOptions} */({})) {
 
   ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ (options));
 
@@ -58,7 +58,7 @@ olUtilInherits(exports, ngeoInteractionMeasure);
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style,
+MeasureAzimut.prototype.createDrawInteraction = function(style,
   source) {
 
   return new ngeoInteractionDrawAzimut({
@@ -73,7 +73,7 @@ exports.prototype.createDrawInteraction = function(style,
 /**
  * @inheritDoc
  */
-exports.prototype.handleMeasure = function(callback) {
+MeasureAzimut.prototype.handleMeasure = function(callback) {
   const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomGeometryCollection);
   const line = googAsserts.assertInstanceof(geom.getGeometries()[0], olGeomLineString);
   const output = getFormattedAzimutRadius(

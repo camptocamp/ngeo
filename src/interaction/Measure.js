@@ -57,7 +57,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @extends {import("ol/interaction/Interaction.js").default}
  * @param {import("ngeo/interaction/MeasureBaseOptions.js").default=} options Options
  */
-const exports = function(options = /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ ({})) {
+function Measure(options = /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ ({})) {
 
   olInteractionInteraction.call(this, {
     handleEvent: handleEvent_
@@ -317,7 +317,7 @@ exports.handleEvent_ = function(evt) {
 /**
  * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The draw interaction.
  */
-exports.prototype.getDrawInteraction = function() {
+Measure.prototype.getDrawInteraction = function() {
   return this.drawInteraction_;
 };
 
@@ -332,13 +332,13 @@ exports.prototype.getDrawInteraction = function() {
  * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The interaction
  * @protected
  */
-exports.prototype.createDrawInteraction = function(style, source) {};
+Measure.prototype.createDrawInteraction = function(style, source) {};
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+Measure.prototype.setMap = function(map) {
 
   olInteractionInteraction.prototype.setMap.call(this, map);
 
@@ -360,7 +360,7 @@ exports.prototype.setMap = function(map) {
  * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
  * @private
  */
-exports.prototype.onDrawStart_ = function(evt) {
+Measure.prototype.onDrawStart_ = function(evt) {
   this.sketchFeature = evt.feature || evt.detail.feature;
   this.vectorLayer_.getSource().clear(true);
   this.createMeasureTooltip_();
@@ -388,7 +388,7 @@ exports.prototype.onDrawStart_ = function(evt) {
  * @param {import("ol/interaction/Draw/Event.js").default|DrawEvent} evt Event.
  * @private
  */
-exports.prototype.onDrawEnd_ = function(evt) {
+Measure.prototype.onDrawEnd_ = function(evt) {
   this.measureTooltipElement_.classList.add('ngeo-tooltip-static');
   this.measureTooltipOverlay_.setOffset([0, -7]);
   /** @type {MeasureEvent} */
@@ -402,7 +402,7 @@ exports.prototype.onDrawEnd_ = function(evt) {
  * Handle unlistener events for 'end of drawing' interaction
  * @private
  */
-exports.prototype.unlistenerEvent_ = function() {
+Measure.prototype.unlistenerEvent_ = function() {
   if (this.changeEventKey_ !== null && this.postcomposeEventKey_ !== null) {
     olEvents.unlistenByKey(this.changeEventKey_);
     olEvents.unlistenByKey(this.postcomposeEventKey_);
@@ -415,7 +415,7 @@ exports.prototype.unlistenerEvent_ = function() {
  * Creates a new help tooltip
  * @private
  */
-exports.prototype.createHelpTooltip_ = function() {
+Measure.prototype.createHelpTooltip_ = function() {
   this.removeHelpTooltip_();
   if (this.displayHelpTooltip_) {
     this.helpTooltipElement_ = document.createElement('div');
@@ -434,7 +434,7 @@ exports.prototype.createHelpTooltip_ = function() {
  * Destroy the help tooltip
  * @private
  */
-exports.prototype.removeHelpTooltip_ = function() {
+Measure.prototype.removeHelpTooltip_ = function() {
   if (this.displayHelpTooltip_) {
     this.getMap().removeOverlay(this.helpTooltipOverlay_);
     if (this.helpTooltipElement_ !== null) {
@@ -450,7 +450,7 @@ exports.prototype.removeHelpTooltip_ = function() {
  * Creates a new measure tooltip
  * @private
  */
-exports.prototype.createMeasureTooltip_ = function() {
+Measure.prototype.createMeasureTooltip_ = function() {
   this.removeMeasureTooltip_();
   this.measureTooltipElement_ = document.createElement('div');
   this.measureTooltipElement_.classList.add('tooltip');
@@ -469,7 +469,7 @@ exports.prototype.createMeasureTooltip_ = function() {
  * Destroy the help tooltip
  * @private
  */
-exports.prototype.removeMeasureTooltip_ = function() {
+Measure.prototype.removeMeasureTooltip_ = function() {
   if (this.measureTooltipElement_ !== null) {
     this.measureTooltipElement_.parentNode.removeChild(this.measureTooltipElement_);
     this.measureTooltipElement_ = null;
@@ -482,7 +482,7 @@ exports.prototype.removeMeasureTooltip_ = function() {
 /**
  * @private
  */
-exports.prototype.updateState_ = function() {
+Measure.prototype.updateState_ = function() {
   const active = this.getActive();
   this.shouldHandleDrawInteractionActiveChange_ = false;
   this.drawInteraction_.setActive(active);
@@ -514,14 +514,14 @@ exports.prototype.updateState_ = function() {
  *     to be called.
  * @protected
  */
-exports.prototype.handleMeasure = function(callback) {};
+Measure.prototype.handleMeasure = function(callback) {};
 
 
 /**
  * Get a reference to the tooltip element.
  * @return {Element} Tooltip Element.
  */
-exports.prototype.getTooltipElement = function() {
+Measure.prototype.getTooltipElement = function() {
   return this.measureTooltipElement_;
 };
 
@@ -533,7 +533,7 @@ exports.prototype.getTooltipElement = function() {
  *
  * @private
  */
-exports.prototype.handleDrawInteractionActiveChange_ = function() {
+Measure.prototype.handleDrawInteractionActiveChange_ = function() {
   if (this.shouldHandleDrawInteractionActiveChange_) {
     this.setActive(this.drawInteraction_.getActive());
   }

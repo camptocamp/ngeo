@@ -33,7 +33,7 @@ import olStructsRBush from 'ol/structs/RBush.js';
  * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
  * @api
  */
-const exports = function(options) {
+function ModifyCircle(options) {
 
   googAsserts.assert(options.features);
 
@@ -131,7 +131,7 @@ olUtilInherits(exports, olInteractionPointer);
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.addFeature_ = function(feature) {
+ModifyCircle.prototype.addFeature_ = function(feature) {
   if (feature.getGeometry().getType() === 'Polygon' &&
       !!feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)) {
     const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (feature.getGeometry());
@@ -149,7 +149,7 @@ exports.prototype.addFeature_ = function(feature) {
  * @param {import("ol/MapBrowserPointerEvent.js").default} evt Map browser event
  * @private
  */
-exports.prototype.willModifyFeatures_ = function(evt) {
+ModifyCircle.prototype.willModifyFeatures_ = function(evt) {
   if (!this.modified_) {
     this.modified_ = true;
     /** @type {ModifyEvent} */
@@ -163,7 +163,7 @@ exports.prototype.willModifyFeatures_ = function(evt) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeFeature_ = function(feature) {
+ModifyCircle.prototype.removeFeature_ = function(feature) {
   this.removeFeatureSegmentData_(feature);
   // Remove the vertex feature if the collection of canditate features
   // is empty.
@@ -178,7 +178,7 @@ exports.prototype.removeFeature_ = function(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeFeatureSegmentData_ = function(feature) {
+ModifyCircle.prototype.removeFeatureSegmentData_ = function(feature) {
   const rBush = this.rBush_;
   const /** @type {Array.<import("ol/ModifySegmentDataType.js").default>} */ nodesToRemove = [];
   rBush.forEach(
@@ -199,7 +199,7 @@ exports.prototype.removeFeatureSegmentData_ = function(feature) {
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+ModifyCircle.prototype.setMap = function(map) {
   this.overlay_.setMap(map);
   olInteractionPointer.prototype.setMap.call(this, map);
 };
@@ -209,7 +209,7 @@ exports.prototype.setMap = function(map) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeatureAdd_ = function(evt) {
+ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
   googAsserts.assertInstanceof(feature, olFeature,
     'feature should be an ol.Feature');
@@ -221,7 +221,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeatureRemove_ = function(evt) {
+ModifyCircle.prototype.handleFeatureRemove_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
@@ -232,7 +232,7 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
  * @param {import("ol/geom/Polygon.js").default} geometry Geometry.
  * @private
  */
-exports.prototype.writeCircleGeometry_ = function(feature, geometry) {
+ModifyCircle.prototype.writeCircleGeometry_ = function(feature, geometry) {
   const rings = geometry.getCoordinates();
   let coordinates, i, ii, j, jj, segment, segmentData;
   for (j = 0, jj = rings.length; j < jj; ++j) {
@@ -257,7 +257,7 @@ exports.prototype.writeCircleGeometry_ = function(feature, geometry) {
  * @return {import("ol/Feature.js").default} Vertex feature.
  * @private
  */
-exports.prototype.createOrUpdateVertexFeature_ = function(coordinates) {
+ModifyCircle.prototype.createOrUpdateVertexFeature_ = function(coordinates) {
   let vertexFeature = this.vertexFeature_;
   if (!vertexFeature) {
     vertexFeature = new olFeature(new olGeomPoint(coordinates));
@@ -402,7 +402,7 @@ function handleEvent(mapBrowserEvent) {
  * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
-exports.prototype.handlePointerMove_ = function(evt) {
+ModifyCircle.prototype.handlePointerMove_ = function(evt) {
   this.lastPixel_ = evt.pixel;
   this.handlePointerAtPixel_(evt.pixel, evt.map);
 };
@@ -413,7 +413,7 @@ exports.prototype.handlePointerMove_ = function(evt) {
  * @param {import("ol/PluggableMap.js").default} map Map.
  * @private
  */
-exports.prototype.handlePointerAtPixel_ = function(pixel, map) {
+ModifyCircle.prototype.handlePointerAtPixel_ = function(pixel, map) {
   const pixelCoordinate = map.getCoordinateFromPixel(pixel);
   const sortByDistance = function(a, b) {
     return olCoordinate.squaredDistanceToSegment(pixelCoordinate, a.segment) -
@@ -477,7 +477,7 @@ exports.prototype.handlePointerAtPixel_ = function(pixel, map) {
  * @param {Array} coordinates Coordinates.
  * @private
  */
-exports.prototype.setGeometryCoordinates_ = function(geometry, coordinates) {
+ModifyCircle.prototype.setGeometryCoordinates_ = function(geometry, coordinates) {
   this.changingFeature_ = true;
   geometry.setCoordinates(coordinates);
   this.changingFeature_ = false;

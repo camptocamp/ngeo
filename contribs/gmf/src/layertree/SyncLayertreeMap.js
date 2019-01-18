@@ -24,7 +24,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  */
-const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
+function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime,
   gmfThemes) {
 
   /**
@@ -68,7 +68,7 @@ const exports = function($rootScope, ngeoLayerHelper, ngeoWMSTime,
  * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default} a new layer.
  * @public
  */
-exports.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_position) {
+SyncLayertreeMap.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_position) {
   /**
    * @type {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default}
    */
@@ -102,7 +102,7 @@ exports.prototype.createLayer = function(treeCtrl, map, dataLayerGroup, opt_posi
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
  * @private
  */
-exports.prototype.sync_ = function(map, treeCtrl) {
+SyncLayertreeMap.prototype.sync_ = function(map, treeCtrl) {
   treeCtrl.traverseDepthFirst((treeCtrl) => {
     if (treeCtrl.layer && !treeCtrl.node.mixed) {
       this.updateLayerState_(/** @type import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default */ (treeCtrl.layer), treeCtrl);
@@ -117,7 +117,7 @@ exports.prototype.sync_ = function(map, treeCtrl) {
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
  * @private
  */
-exports.prototype.updateLayerState_ = function(layer, treeCtrl) {
+SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
   const active = treeCtrl.getState() === 'on';
   if (treeCtrl.node.type === 'WMTS') {
     layer.setVisible(active);
@@ -165,7 +165,7 @@ exports.prototype.updateLayerState_ = function(layer, treeCtrl) {
  * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  * @private
  */
-exports.prototype.createGroup_ = function(treeCtrl, map,
+SyncLayertreeMap.prototype.createGroup_ = function(treeCtrl, map,
   dataLayerGroup, opt_position) {
   const groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
   let layer = null;
@@ -205,7 +205,7 @@ exports.prototype.createGroup_ = function(treeCtrl, map,
  * @return {import("ol/layer/Image.js").default|import("ol/layer/Group.js").default} a new layer.
  * @private
  */
-exports.prototype.createLayerFromGroup_ = function(treeCtrl,
+SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
   mixed) {
   let layer;
   const groupNode = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.node);
@@ -251,7 +251,7 @@ exports.prototype.createLayerFromGroup_ = function(treeCtrl,
  * @return {import("ol/layer/Tile.js").default|import("ol/layer/Image.js").default} a new layer.
  * @private
  */
-exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
+SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
   const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   let layer;
   // Make layer.
@@ -303,7 +303,7 @@ exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
  * @param {import("ol/Map.js").default} map A map that contains the layer to update.
  * @private
  */
-exports.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
+SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
   const leafNode = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   googAsserts.assert(firstLevelGroup);
@@ -327,7 +327,7 @@ exports.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
  *     later).
  * @private
  */
-exports.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
+SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   const newLayer = new olLayerTile();
   googAsserts.assert(gmfLayerWMTS.url);
   googAsserts.assert(gmfLayerWMTS.layer);
@@ -346,7 +346,7 @@ exports.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
  * @param {import("ol/layer/Base.js").default} layer A layer.
  * @private
  */
-exports.prototype.updateLayerReferences_ = function(leafNode, layer) {
+SyncLayertreeMap.prototype.updateLayerReferences_ = function(leafNode, layer) {
   const id = olUtilGetUid(leafNode);
   const querySourceIds = layer.get('querySourceIds') || [];
   querySourceIds.push(id);
@@ -368,7 +368,7 @@ exports.prototype.updateLayerReferences_ = function(leafNode, layer) {
  * @return {string|undefined} A wms time param.
  * @private
  */
-exports.prototype.getTimeParam_ = function(treeCtrl) {
+SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
   let wmsTime;
   let timeParam;
   const node = treeCtrl.node;
@@ -399,7 +399,7 @@ exports.prototype.getTimeParam_ = function(treeCtrl) {
  * @return {boolean} True is any parent is mixed. False Otherwise.
  * @private
  */
-exports.prototype.isOneParentNotMixed_ = function(treeCtrl) {
+SyncLayertreeMap.prototype.isOneParentNotMixed_ = function(treeCtrl) {
   let tree = treeCtrl.parent;
   let isOneParentNotMix = false;
   do {
@@ -417,7 +417,7 @@ exports.prototype.isOneParentNotMixed_ = function(treeCtrl) {
  * @return {import("ngeo/layertree/Controller.js").default} The first not mixed parent.
  * @private
  */
-exports.prototype.getFirstLevelGroupCtrl_ = function(
+SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
   treeCtrl) {
   let tree = treeCtrl;
   while (!tree.parent.isRoot) {

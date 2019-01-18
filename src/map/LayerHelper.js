@@ -26,7 +26,7 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  * @ngname ngeoLayerHelper
  * @ngInject
  */
-const exports = function($q, $http, ngeoTilesPreloadingLimit) {
+function layerHelper($q, $http, ngeoTilesPreloadingLimit) {
 
   /**
    * @type {angular.IQService}
@@ -77,7 +77,7 @@ exports.REFRESH_PARAM = 'random';
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  * @export
  */
-exports.prototype.createBasicWMSLayer = function(sourceURL,
+layerHelper.prototype.createBasicWMSLayer = function(sourceURL,
   sourceLayersName, sourceFormat, opt_serverType, opt_time, opt_params, opt_crossOrigin, opt_customOptions) {
 
   const params = {
@@ -116,7 +116,7 @@ exports.prototype.createBasicWMSLayer = function(sourceURL,
  * @return {import("ol/layer/Image.js").default} WMS Layer.
  * @export
  */
-exports.prototype.createBasicWMSLayerFromDataSource = function(
+layerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   dataSource, opt_crossOrigin
 ) {
   const url = dataSource.wmsUrl;
@@ -163,7 +163,7 @@ exports.prototype.createBasicWMSLayerFromDataSource = function(
  *     no layer else.
  * @export
  */
-exports.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions) {
+layerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, layerName, opt_matrixSet, opt_dimensions, opt_customOptions) {
   const parser = new olFormatWMTSCapabilities();
   const layer = new olLayerTile({
     preload: this.tilesPreloadingLimit_
@@ -209,7 +209,7 @@ exports.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesURL, l
  * @return {!import("ol/layer/Tile.js").default} WMTS layer
  * @export
  */
-exports.prototype.createWMTSLayerFromCapabilititesObj = function(
+layerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   capabilities, layerCap, opt_dimensions
 ) {
 
@@ -242,7 +242,7 @@ exports.prototype.createWMTSLayerFromCapabilititesObj = function(
  * @return {import("ol/layer/Group.js").default} Layer group.
  * @export
  */
-exports.prototype.createBasicGroup = function(opt_layers) {
+layerHelper.prototype.createBasicGroup = function(opt_layers) {
   const group = new OlLayerGroup();
   if (opt_layers) {
     group.setLayers(opt_layers);
@@ -261,7 +261,7 @@ exports.prototype.createBasicGroup = function(opt_layers) {
  * @return {import("ol/layer/Group.js").default} The group corresponding to the given name.
  * @export
  */
-exports.prototype.getGroupFromMap = function(map, groupName) {
+layerHelper.prototype.getGroupFromMap = function(map, groupName) {
   const groups = map.getLayerGroup().getLayers();
   let group;
   groups.getArray().some((existingGroup) => {
@@ -288,7 +288,7 @@ exports.prototype.getGroupFromMap = function(map, groupName) {
  * @return {Array.<import("ol/layer/Layer.js").default>} Layers.
  * @export
  */
-exports.prototype.getFlatLayers = function(layer) {
+layerHelper.prototype.getFlatLayers = function(layer) {
   if (layer instanceof OlLayerGroup) {
     const sublayers = layer.getLayers().getArray();
     const hasGroupLayer = sublayers.some(sublayer => sublayer instanceof OlLayerGroup);
@@ -312,7 +312,7 @@ exports.prototype.getFlatLayers = function(layer) {
  * @return {Array.<import("ol/layer/Layer.js").default>} Layers.
  * @private
  */
-exports.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
+layerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
   const opacity = layer.getOpacity();
   if (computedOpacity !== undefined) {
     computedOpacity *= opacity;
@@ -343,7 +343,7 @@ exports.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
  * @return {?import("ol/layer/Base.js").default} Layer.
  * @export
  */
-exports.prototype.getLayerByName = function(layerName, layers) {
+layerHelper.prototype.getLayerByName = function(layerName, layers) {
   let found = null;
   layers.some((layer) => {
     if (layer instanceof OlLayerGroup) {
@@ -366,7 +366,7 @@ exports.prototype.getLayerByName = function(layerName, layers) {
  * @return {string|undefined} The legend URL or undefined.
  * @export
  */
-exports.prototype.getWMTSLegendURL = function(layer) {
+layerHelper.prototype.getWMTSLegendURL = function(layer) {
   // FIXME case of multiple styles ?  case of multiple legendUrl ?
   let url;
   const styles = layer.get('capabilitiesStyles');
@@ -396,7 +396,7 @@ exports.prototype.getWMTSLegendURL = function(layer) {
  * @return {string|undefined} The legend URL or undefined.
  * @export
  */
-exports.prototype.getWMSLegendURL = function(url,
+layerHelper.prototype.getWMSLegendURL = function(url,
   layerName, opt_scale, opt_legendRule, opt_legendWidth, opt_legendHeight,
   opt_servertype, opt_dpi, opt_bbox, opt_srs, opt_additionalQueryString) {
   if (!url) {
@@ -446,7 +446,7 @@ exports.prototype.getWMSLegendURL = function(url,
  * @param {import("ol/Map.js").default} map Map.
  * @return {boolean} Is the layer currently visible?
  */
-exports.prototype.isLayerVisible = function(layer, map) {
+layerHelper.prototype.isLayerVisible = function(layer, map) {
   if (!layer.getVisible()) {
     return false;
   }
@@ -461,7 +461,7 @@ exports.prototype.isLayerVisible = function(layer, map) {
  * Force a WMS layer to refresh using a random value.
  * @param {import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default} layer Layer to refresh.
  */
-exports.prototype.refreshWMSLayer = function(layer) {
+layerHelper.prototype.refreshWMSLayer = function(layer) {
   const source_ = layer.getSource();
   googAsserts.assert(
     source_ instanceof olSourceImageWMS ||
@@ -479,7 +479,7 @@ exports.prototype.refreshWMSLayer = function(layer) {
  * @param {import("ol/layer/Group.js").default|import("ol/layer/Base.js").default} element The group of layer with first level children layers.
  * @param {number} ZIndex The ZIndex for children element.
  */
-exports.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
+layerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
   if (!(element instanceof OlLayerGroup)) {
     return;
   }
@@ -498,7 +498,7 @@ exports.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
  * in a ISO-8601 string datetime or time interval format
  * @export
  */
-exports.prototype.updateWMSLayerState = function(layer, names, opt_time) {
+layerHelper.prototype.updateWMSLayerState = function(layer, names, opt_time) {
   // Don't send layer without parameters, hide layer instead;
   if (names.length <= 0) {
     layer.setVisible(false);
@@ -520,7 +520,7 @@ exports.prototype.updateWMSLayerState = function(layer, names, opt_time) {
  *     the data source ids this layer is composed of.
  * @export
  */
-exports.prototype.getQuerySourceIds = function(layer) {
+layerHelper.prototype.getQuerySourceIds = function(layer) {
   return /** @type {Array.<number>|undefined} */ (
     layer.get('querySourceIds'));
 };

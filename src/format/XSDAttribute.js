@@ -13,7 +13,7 @@ import olFormatXML from 'ol/format/XML.js';
  * @constructor
  * @extends {import("ol/format/XML.js").default}
  */
-const exports = function() {
+function XSDAttribute() {
   olFormatXML.call(this);
 };
 
@@ -25,7 +25,7 @@ olUtilInherits(exports, olFormatXML);
  * @return {Array.<Attribute>} The parsed result.
  * @override
  */
-exports.prototype.read = function(source) {
+XSDAttribute.prototype.read = function(source) {
   return (
     /** @type {Array.<Attribute>} */ olFormatXML.prototype.read.call(this, source)
   );
@@ -37,7 +37,7 @@ exports.prototype.read = function(source) {
  * @return {Array.<Attribute>} List of attributes.
  * @override
  */
-exports.prototype.readFromDocument = function(doc) {
+XSDAttribute.prototype.readFromDocument = function(doc) {
   googAsserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
     'doc.nodeType should be DOCUMENT');
   for (let n = doc.firstChild; n; n = n.nextSibling) {
@@ -54,7 +54,7 @@ exports.prototype.readFromDocument = function(doc) {
  * @return {Array.<Attribute>} List of attributes.
  * @override
  */
-exports.prototype.readFromNode = function(node) {
+XSDAttribute.prototype.readFromNode = function(node) {
   googAsserts.assert(node.nodeType == Node.ELEMENT_NODE,
     'node.nodeType should be ELEMENT');
   googAsserts.assert(node.localName == 'schema',
@@ -83,7 +83,7 @@ exports.prototype.readFromNode = function(node) {
  * @return {?Attribute} An attribute object.
  * @private
  */
-exports.prototype.readFromElementNode_ = function(node) {
+XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const name = node.getAttribute('name');
   googAsserts.assertString(name, 'name should be defined in element node.');
@@ -167,7 +167,7 @@ exports.prototype.readFromElementNode_ = function(node) {
  * @param {string} type The xsd type.
  * @private
  */
-exports.prototype.setAttributeByXsdType_ = function(
+XSDAttribute.prototype.setAttributeByXsdType_ = function(
   attribute, type
 ) {
   if (type === 'xsd:boolean') {

@@ -19,7 +19,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-const exports = function($scope, $rootScope, $attrs) {
+function Controller($scope, $rootScope, $attrs) {
 
   const isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -191,7 +191,7 @@ const exports = function($scope, $rootScope, $attrs) {
  * @return {string} 'on', 'off', 'indeterminate'.
  * @export
  */
-exports.prototype.getState = function() {
+Controller.prototype.getState = function() {
   return this.state_;
 };
 
@@ -203,7 +203,7 @@ exports.prototype.getState = function() {
  * @param {boolean=} opt_broadcast Broadcast.
  * @export
  */
-exports.prototype.setState = function(state, opt_broadcast) {
+Controller.prototype.setState = function(state, opt_broadcast) {
   if (state === this.state_) {
     return;
   }
@@ -227,7 +227,7 @@ exports.prototype.setState = function(state, opt_broadcast) {
 /**
  * @param {string} state 'on' or 'off'.
  */
-exports.prototype.setStateInternal_ = function(state) {
+Controller.prototype.setStateInternal_ = function(state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
 
@@ -262,7 +262,7 @@ exports.prototype.setStateInternal_ = function(state) {
  * @param {boolean=} opt_broadcast Broadcast.
  * @public
  */
-exports.prototype.refreshState = function(opt_onChild, opt_broadcast) {
+Controller.prototype.refreshState = function(opt_onChild, opt_broadcast) {
 
   if (this.node.children &&
       opt_onChild &&
@@ -294,7 +294,7 @@ exports.prototype.refreshState = function(opt_onChild, opt_broadcast) {
  * @return {string} 'on', 'off' or 'indeterminate'.
  * @export
  */
-exports.prototype.getCalculateState = function() {
+Controller.prototype.getCalculateState = function() {
   if (this.node.children === undefined) {
     return this.state_;
   }
@@ -318,7 +318,7 @@ exports.prototype.getCalculateState = function() {
  * @return {boolean|undefined} Value.
  * @export
  */
-exports.prototype.getSetActive = function(val) {
+Controller.prototype.getSetActive = function(val) {
   const layer = this.layer;
   const map = this.map;
   if (!layer) {
@@ -341,7 +341,7 @@ exports.prototype.getSetActive = function(val) {
  *     this layer tree controller.
  * @export
  */
-exports.prototype.getDataSource = function() {
+Controller.prototype.getDataSource = function() {
   return this.dataSource_;
 };
 
@@ -350,7 +350,7 @@ exports.prototype.getDataSource = function() {
  * @param {?import("ngeo/datasource/DataSource.js").default} dataSource Data source or null.
  * @export
  */
-exports.prototype.setDataSource = function(dataSource) {
+Controller.prototype.setDataSource = function(dataSource) {
   this.dataSource_ = dataSource;
 };
 
@@ -392,7 +392,7 @@ exports.VisitorDecision = {
  * @return {boolean} whether to stop traversing.
  * @export
  */
-exports.prototype.traverseDepthFirst = function(visitor) {
+Controller.prototype.traverseDepthFirst = function(visitor) {
   // First visit the current controller
   const decision = visitor(this) || VisitorDecision.DESCEND;
 

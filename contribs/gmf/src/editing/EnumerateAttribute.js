@@ -2,7 +2,7 @@
  */
 import angular from 'angular';
 
-const exports = class {
+class EnumerateAttribute {
 
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
@@ -72,7 +72,7 @@ const exports = class {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfEnumerateAttribute', []);
-module.service('gmfEnumerateAttribute', exports);
+module.service('gmfEnumerateAttribute', EnumerateAttribute);
 
 
 export default module;

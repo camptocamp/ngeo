@@ -9,7 +9,7 @@ import * as olExtent from 'ol/extent.js';
  * @ngdoc service
  * @ngname ngeoAutoProjection
  */
-const exports = function() {};
+function AutoProjection() {};
 
 
 /**
@@ -19,7 +19,7 @@ const exports = function() {};
  * @return {?import("ol/coordinate.js").Coordinate} A coordinate or null if the format is not valid.
  * @export
  */
-exports.prototype.stringToCoordinates = function(str) {
+AutoProjection.prototype.stringToCoordinates = function(str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
     const x = parseFloat(coords[1].replace('\'', ''));
@@ -40,7 +40,7 @@ exports.prototype.stringToCoordinates = function(str) {
  * @return {Array.<import("ol/proj/Projection.js").default>} An array of projections.
  * @export
  */
-exports.prototype.getProjectionList = function(projectionsCodes) {
+AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
   const projections = [];
   projectionsCodes.forEach((projection) => {
@@ -72,7 +72,7 @@ exports.prototype.getProjectionList = function(projectionsCodes) {
  *     in one of the given projections, or null else.
  * @export
  */
-exports.prototype.tryProjections = function(coordinates,
+AutoProjection.prototype.tryProjections = function(coordinates,
   extent, viewProjection, opt_projections) {
   let position;
   if (opt_projections === undefined) {
@@ -106,7 +106,7 @@ exports.prototype.tryProjections = function(coordinates,
  *     in one of the given projections, or null else.
  * @export
  */
-exports.prototype.tryProjectionsWithInversion = function(
+AutoProjection.prototype.tryProjectionsWithInversion = function(
   coordinates, extent, viewProjection, opt_projections) {
   let position = this.tryProjections(coordinates, extent, viewProjection,
     opt_projections);

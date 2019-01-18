@@ -18,7 +18,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @constructor
  * @ngInject
  */
-const exports = function($http, $q, gmfThemes) {
+function Query($http, $q, gmfThemes) {
 
   /**
    * @type {angular.IHttpService}
@@ -51,7 +51,7 @@ const exports = function($http, $q, gmfThemes) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-exports.prototype.getQueryableLayersInfo = function() {
+Query.prototype.getQueryableLayersInfo = function() {
 
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
@@ -158,7 +158,7 @@ function getQueryableLayersInfoFromThemes(
  * @return {angular.IPromise} Promise.
  * @export
  */
-exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
+Query.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
   const resolution = /** @type {number} */(view.getResolution());

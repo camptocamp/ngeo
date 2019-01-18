@@ -42,7 +42,7 @@ import olStyleText from 'ol/style/Text.js';
  * @ngname ngeoFeatureHelper
  * @ngInject
  */
-const exports = function($injector, $filter) {
+function FeatureHelper($injector, $filter) {
 
   /**
    * @type {!angular.IFilterService}
@@ -129,7 +129,7 @@ const exports = function($injector, $filter) {
  * @param {!import("ol/proj/Projection.js").default} projection Projection.
  * @export
  */
-exports.prototype.setProjection = function(projection) {
+FeatureHelper.prototype.setProjection = function(projection) {
   this.projection_ = projection;
 };
 
@@ -145,7 +145,7 @@ exports.prototype.setProjection = function(projection) {
  *     selected, which includes additional vertex and halo styles.
  * @export
  */
-exports.prototype.setStyle = function(feature, opt_select) {
+FeatureHelper.prototype.setStyle = function(feature, opt_select) {
   const styles = this.getStyle(feature);
   if (opt_select) {
     if (this.supportsVertex_(feature)) {
@@ -164,7 +164,7 @@ exports.prototype.setStyle = function(feature, opt_select) {
  * @return {!Array.<!import("ol/style/Style.js").default>} The style object.
  * @export
  */
-exports.prototype.getStyle = function(feature) {
+FeatureHelper.prototype.getStyle = function(feature) {
   const type = this.getType(feature);
   let style;
 
@@ -205,7 +205,7 @@ exports.prototype.getStyle = function(feature) {
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
-exports.prototype.getLineStringStyle_ = function(feature) {
+FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
@@ -243,7 +243,7 @@ exports.prototype.getLineStringStyle_ = function(feature) {
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
-exports.prototype.getPointStyle_ = function(feature) {
+FeatureHelper.prototype.getPointStyle_ = function(feature) {
   const size = this.getSizeProperty(feature);
   const color = this.getRGBAColorProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
@@ -289,7 +289,7 @@ exports.prototype.getPointStyle_ = function(feature) {
  * @param {string} attrib The attribute name.
  * @return {number|undefined}, The attribute value
  */
-exports.prototype.optNumber = function(feature, attrib) {
+FeatureHelper.prototype.optNumber = function(feature, attrib) {
   const value = feature.get(attrib);
   if (value !== undefined) {
     if (typeof value == 'string') {
@@ -310,7 +310,7 @@ exports.prototype.optNumber = function(feature, attrib) {
  * @param {string} attrib The attribute name.
  * @return {number}, The attribute value
  */
-exports.prototype.getNumber = function(feature, attrib) {
+FeatureHelper.prototype.getNumber = function(feature, attrib) {
   const value = feature.get(attrib);
   if (typeof value == 'string') {
     return +value;
@@ -325,7 +325,7 @@ exports.prototype.getNumber = function(feature, attrib) {
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
-exports.prototype.getPolygonStyle_ = function(feature) {
+FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const opacity = this.getOpacityProperty(feature);
   const color = this.getRGBAColorProperty(feature);
@@ -420,7 +420,7 @@ exports.prototype.getPolygonStyle_ = function(feature) {
  * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
-exports.prototype.getTextStyle_ = function(feature) {
+FeatureHelper.prototype.getTextStyle_ = function(feature) {
 
   return new olStyleStyle({
     text: this.createTextStyle_({
@@ -439,7 +439,7 @@ exports.prototype.getTextStyle_ = function(feature) {
  * @return {!Array.<!import("ol/style/Style.js").default>} List of style.
  * @export
  */
-exports.prototype.createEditingStyles = function(feature) {
+FeatureHelper.prototype.createEditingStyles = function(feature) {
   // (1) Style definition depends on geometry type
   const white = [255, 255, 255, 1];
   const blue = [0, 153, 255, 1];
@@ -527,7 +527,7 @@ exports.prototype.createEditingStyles = function(feature) {
  * @param {number} resolution Current map view resolution.
  * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
  */
-exports.prototype.getVertexInfoAtCoordinate = function(
+FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
   feature, coordinate, resolution
 ) {
   let info = null;
@@ -613,7 +613,7 @@ exports.prototype.getVertexInfoAtCoordinate = function(
  *     is returned.
  * @private
  */
-exports.prototype.getCoordinateIndexThatHitsAt_ = function(
+FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function(
   coordinates, coordinate, min, buffer
 ) {
   let index = -1;
@@ -650,7 +650,7 @@ exports.prototype.getCoordinateIndexThatHitsAt_ = function(
  * @return {!import("ol/style/Style.js").default} Style.
  * @export
  */
-exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
+FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
   const incGeomFunc = opt_incGeomFunc !== undefined ? opt_incGeomFunc : true;
 
   const options = {
@@ -717,7 +717,7 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
  * @param {!Array.<number>} vertexInfo The indexes of the vertex
  *     (coordinate) to remove.
  */
-exports.prototype.removeVertex = function(feature, vertexInfo) {
+FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
   let deleted = false;
 
   const geometry = feature.getGeometry();
@@ -781,7 +781,7 @@ exports.prototype.removeVertex = function(feature, vertexInfo) {
  * @return {boolean} Whether the feature supports vertex or not.
  * @private
  */
-exports.prototype.supportsVertex_ = function(feature) {
+FeatureHelper.prototype.supportsVertex_ = function(feature) {
   const supported = [
     ngeoGeometryType.LINE_STRING,
     ngeoGeometryType.MULTI_LINE_STRING,
@@ -800,7 +800,7 @@ exports.prototype.supportsVertex_ = function(feature) {
  *     removed or not. Does not validate the number of coordinates.
  * @private
  */
-exports.prototype.supportsVertexRemoval_ = function(feature) {
+FeatureHelper.prototype.supportsVertexRemoval_ = function(feature) {
   const supported = [
     ngeoGeometryType.LINE_STRING,
     ngeoGeometryType.MULTI_LINE_STRING,
@@ -817,7 +817,7 @@ exports.prototype.supportsVertexRemoval_ = function(feature) {
  * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
-exports.prototype.getHaloStyle_ = function(feature) {
+FeatureHelper.prototype.getHaloStyle_ = function(feature) {
   const type = this.getType(feature);
   let style;
   const haloSize = 3;
@@ -889,7 +889,7 @@ function getFilteredFeatureValues(feature) {
  * @return {number} Angle.
  * @export
  */
-exports.prototype.getAngleProperty = function(feature) {
+FeatureHelper.prototype.getAngleProperty = function(feature) {
   const angle = +(/** @type {string} */ (
     feature.get(ngeoFormatFeatureProperties.ANGLE)));
   googAsserts.assertNumber(angle);
@@ -902,7 +902,7 @@ exports.prototype.getAngleProperty = function(feature) {
  * @return {string} Color.
  * @export
  */
-exports.prototype.getColorProperty = function(feature) {
+FeatureHelper.prototype.getColorProperty = function(feature) {
 
   const color = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.COLOR));
 
@@ -917,7 +917,7 @@ exports.prototype.getColorProperty = function(feature) {
  * @return {import("ol/Color.js").default} Color.
  * @export
  */
-exports.prototype.getRGBAColorProperty = function(feature) {
+FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
   return olColor.fromString(this.getColorProperty(feature));
 };
 
@@ -927,7 +927,7 @@ exports.prototype.getRGBAColorProperty = function(feature) {
  * @return {string} Name.
  * @export
  */
-exports.prototype.getNameProperty = function(feature) {
+FeatureHelper.prototype.getNameProperty = function(feature) {
   const name = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.NAME));
   googAsserts.assertString(name);
   return name;
@@ -939,7 +939,7 @@ exports.prototype.getNameProperty = function(feature) {
  * @return {number} Opacity.
  * @export
  */
-exports.prototype.getOpacityProperty = function(feature) {
+FeatureHelper.prototype.getOpacityProperty = function(feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.OPACITY);
 };
 
@@ -949,7 +949,7 @@ exports.prototype.getOpacityProperty = function(feature) {
  * @return {boolean} Show measure.
  * @export
  */
-exports.prototype.getShowMeasureProperty = function(feature) {
+FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
   let showMeasure = feature.get(ngeoFormatFeatureProperties.SHOW_MEASURE);
   if (showMeasure === undefined) {
     showMeasure = false;
@@ -964,7 +964,7 @@ exports.prototype.getShowMeasureProperty = function(feature) {
  * @return {boolean} Show feature label.
  * @export
  */
-exports.prototype.getShowLabelProperty = function(feature) {
+FeatureHelper.prototype.getShowLabelProperty = function(feature) {
   let showLabel = feature.get(ngeoFormatFeatureProperties.SHOW_LABEL);
   if (showLabel === undefined) {
     showLabel = false;
@@ -979,7 +979,7 @@ exports.prototype.getShowLabelProperty = function(feature) {
  * @return {number} Size.
  * @export
  */
-exports.prototype.getSizeProperty = function(feature) {
+FeatureHelper.prototype.getSizeProperty = function(feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.SIZE);
 };
 
@@ -989,7 +989,7 @@ exports.prototype.getSizeProperty = function(feature) {
  * @return {number} Stroke.
  * @export
  */
-exports.prototype.getStrokeProperty = function(feature) {
+FeatureHelper.prototype.getStrokeProperty = function(feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.STROKE);
 };
 
@@ -1004,7 +1004,7 @@ exports.prototype.getStrokeProperty = function(feature) {
  * @param {string} formatType Format type to export the features.
  * @export
  */
-exports.prototype.export = function(features, formatType) {
+FeatureHelper.prototype.export = function(features, formatType) {
   switch (formatType) {
     case FormatType.GPX:
       this.exportGPX(features);
@@ -1024,7 +1024,7 @@ exports.prototype.export = function(features, formatType) {
  * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @export
  */
-exports.prototype.exportGPX = function(features) {
+FeatureHelper.prototype.exportGPX = function(features) {
   const format = new olFormatGPX();
   const mimeType = 'application/gpx+xml';
   const fileName = 'export.gpx';
@@ -1038,7 +1038,7 @@ exports.prototype.exportGPX = function(features) {
  * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @export
  */
-exports.prototype.exportKML = function(features) {
+FeatureHelper.prototype.exportKML = function(features) {
   const format = new olFormatKML();
   const mimeType = 'application/vnd.google-earth.kml+xml';
   const fileName = 'export.kml';
@@ -1056,7 +1056,7 @@ exports.prototype.exportKML = function(features) {
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
  */
-exports.prototype.export_ = function(features, format, fileName, opt_mimeType) {
+FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
 
   // clone the features to apply the original style to the clone
@@ -1088,7 +1088,7 @@ exports.prototype.export_ = function(features, format, fileName, opt_mimeType) {
  * @return {!import("ol/style/Text.js").default} Style.
  * @private
  */
-exports.prototype.createTextStyle_ = function(options) {
+FeatureHelper.prototype.createTextStyle_ = function(options) {
   if (options.angle) {
     const angle = options.angle !== undefined ? options.angle : 0;
     const rotation = angle * Math.PI / 180;
@@ -1121,7 +1121,7 @@ exports.prototype.createTextStyle_ = function(options) {
  * @return {string} Measure.
  * @export
  */
-exports.prototype.getMeasure = function(feature) {
+FeatureHelper.prototype.getMeasure = function(feature) {
 
   const geometry = feature.getGeometry();
   googAsserts.assert(geometry, 'Geometry should be truthy');
@@ -1166,7 +1166,7 @@ exports.prototype.getMeasure = function(feature) {
  * @return {string} The type of geometry.
  * @export
  */
-exports.prototype.getType = function(feature) {
+FeatureHelper.prototype.getType = function(feature) {
   const geometry = feature.getGeometry();
   googAsserts.assert(geometry, 'Geometry should be thruthy');
 
@@ -1219,7 +1219,7 @@ exports.prototype.getType = function(feature) {
  * @param {number=} opt_duration Aimation duration. Defaults to `250`.
  * @export
  */
-exports.prototype.fitMapToFeature = function(feature, map, opt_duration) {
+FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
 
   const duration = opt_duration !== undefined ? opt_duration : 250;
   const size = map.getSize();
@@ -1305,7 +1305,7 @@ exports.prototype.fitMapToFeature = function(feature, map, opt_duration) {
  * @param {number} azimut Azimut in degrees.
  * @return {!import("ol/geom/LineString.js").default} The line geometry.
  */
-exports.prototype.getRadiusLine = function(feature, azimut) {
+FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
   const geometry = feature.getGeometry();
   // Determine the radius for the circle
   const extent = geometry.getExtent();
@@ -1326,7 +1326,7 @@ exports.prototype.getRadiusLine = function(feature, azimut) {
  * @return {!Object.<string, *>} Object.
  * @export
  */
-exports.prototype.getNonSpatialProperties = function(feature) {
+FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
   const geometryName = feature.getGeometryName();
   const nonSpatialProperties = {};
   const properties = feature.getProperties();
@@ -1344,7 +1344,7 @@ exports.prototype.getNonSpatialProperties = function(feature) {
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @export
  */
-exports.prototype.clearNonSpatialProperties = function(feature) {
+FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {
   const geometryName = feature.getGeometryName();
   const properties = feature.getProperties();
   for (const key in properties) {
@@ -1361,7 +1361,7 @@ exports.prototype.clearNonSpatialProperties = function(feature) {
  * @return {number} Index of found feature
  * @export
  */
-exports.prototype.findFeatureIndexByFid = function(features, fid) {
+FeatureHelper.prototype.findFeatureIndexByFid = function(features, fid) {
   let index = -1;
   for (let i = 0, ii = features.length; i < ii; i++) {
     if (features[i].getId() == fid) {

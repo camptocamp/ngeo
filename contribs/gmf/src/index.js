@@ -1,7 +1,4 @@
 /**
- */
-
-/**
  * The default template base URL for modules, used as-is by the template cache.
  * @type {string}
  */
@@ -10,25 +7,25 @@
  * @const
  * @export
  */
-exports.DATALAYERGROUP_NAME = 'data';
+export const DATALAYERGROUP_NAME = 'data';
 
 /**
  * @const
  * @export
  */
-exports.EXTERNALLAYERGROUP_NAME = 'external';
+export const EXTERNALLAYERGROUP_NAME = 'external';
 
 /**
  * @const
  * @export
  */
-exports.COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
+export const COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
 
 
 /**
  * @enum {string}
  */
-exports.PermalinkParam = {
+export const PermalinkParam = {
   BG_LAYER: 'baselayer_ref',
   EXTERNAL_DATASOURCES_NAMES: 'eds_n',
   EXTERNAL_DATASOURCES_URLS: 'eds_u',
@@ -44,5 +41,3 @@ exports.PermalinkParam = {
   WFS_SHOW_FEATURES: 'wfs_showFeatures'
 };
 
-
-export default module;

@@ -43,7 +43,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @extends {import("ol/interaction/Translate.js").default}
  * @param {TranslateOptions} options Options.
  */
-const exports = function(options) {
+function Translate(options) {
 
   /**
    * @type {!Array.<import("ol/EventsKey.js").default>}
@@ -106,7 +106,7 @@ olUtilInherits(exports, olInteractionTranslate);
  * @param {boolean} active Active.
  * @override
  */
-exports.prototype.setActive = function(active) {
+Translate.prototype.setActive = function(active) {
 
   if (this.keyPressListenerKey_) {
     olEvents.unlistenByKey(this.keyPressListenerKey_);
@@ -135,7 +135,7 @@ exports.prototype.setActive = function(active) {
  * @param {import("ol/PluggableMap.js").default} map Map.
  * @override
  */
-exports.prototype.setMap = function(map) {
+Translate.prototype.setMap = function(map) {
 
   const currentMap = this.getMap();
   if (currentMap) {
@@ -155,7 +155,7 @@ exports.prototype.setMap = function(map) {
 /**
  * @private
  */
-exports.prototype.setState_ = function() {
+Translate.prototype.setState_ = function() {
   const map = this.getMap();
   const active = this.getActive();
   const features = this.myFeatures_;
@@ -185,7 +185,7 @@ exports.prototype.setState_ = function() {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeaturesAdd_ = function(evt) {
+Translate.prototype.handleFeaturesAdd_ = function(evt) {
   const feature = evt.element;
   googAsserts.assertInstanceof(feature, olFeature,
     'feature should be an ol.Feature');
@@ -197,7 +197,7 @@ exports.prototype.handleFeaturesAdd_ = function(evt) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleFeaturesRemove_ = function(evt) {
+Translate.prototype.handleFeaturesRemove_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature_(feature);
 };
@@ -207,7 +207,7 @@ exports.prototype.handleFeaturesRemove_ = function(evt) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.addFeature_ = function(feature) {
+Translate.prototype.addFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   const geometry = feature.getGeometry();
   googAsserts.assertInstanceof(geometry, olGeomGeometry);
@@ -230,7 +230,7 @@ exports.prototype.addFeature_ = function(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-exports.prototype.removeFeature_ = function(feature) {
+Translate.prototype.removeFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   if (this.featureListenerKeys_[uid]) {
     olEvents.unlistenByKey(this.featureListenerKeys_[uid]);
@@ -247,7 +247,7 @@ exports.prototype.removeFeature_ = function(feature) {
  * @param {import("ol/events/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleGeometryChange_ = function(feature,
+Translate.prototype.handleGeometryChange_ = function(feature,
   evt) {
   const geometry = evt.target;
   googAsserts.assertInstanceof(geometry, olGeomGeometry);
@@ -263,7 +263,7 @@ exports.prototype.handleGeometryChange_ = function(feature,
  * @return {import("ol/geom/Point.js").default} The center point of the geometry.
  * @private
  */
-exports.prototype.getGeometryCenterPoint_ = function(
+Translate.prototype.getGeometryCenterPoint_ = function(
   geometry) {
 
   let center;
@@ -293,7 +293,7 @@ exports.prototype.getGeometryCenterPoint_ = function(
  * @param {KeyboardEvent} evt Event.
  * @private
  */
-exports.prototype.handleKeyUp_ = function(evt) {
+Translate.prototype.handleKeyUp_ = function(evt) {
   // 27 == ESC key
   if (evt.keyCode === 27) {
     this.setActive(false);

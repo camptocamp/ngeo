@@ -13,7 +13,7 @@ import * as olXml from 'ol/xml.js';
  * @extends {import("ol/format/XML.js").default}
  * @api
  */
-const exports = function() {
+function WFSDescribeFeatureType() {
 
   olFormatXML.call(this);
 
@@ -30,13 +30,13 @@ olUtilInherits(exports, olFormatXML);
  * @return {Object} An object representing the WFS DescribeFeatureType.
  * @api
  */
-exports.prototype.read;
+WFSDescribeFeatureType.prototype.read;
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.readFromDocument = function(doc) {
+WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
   for (let n = doc.firstChild; n; n = n.nextSibling) {
     if (n.nodeType == Node.ELEMENT_NODE) {
       return this.readFromNode(n);
@@ -49,7 +49,7 @@ exports.prototype.readFromDocument = function(doc) {
 /**
  * @inheritDoc
  */
-exports.prototype.readFromNode = function(node) {
+WFSDescribeFeatureType.prototype.readFromNode = function(node) {
   let result = {};
   result = olXml.pushParseAndPop(
     result,

@@ -24,7 +24,7 @@ import olFeature from 'ol/Feature.js';
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-const exports = function($scope, $sce, gettextCatalog,
+function Controller($scope, $sce, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -147,7 +147,7 @@ const exports = function($scope, $sce, gettextCatalog,
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
  * @export
  */
-exports.prototype.registerInteraction = function(
+Controller.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
@@ -163,7 +163,7 @@ exports.prototype.registerInteraction = function(
  * @param {import("ol/Object/Event.js").default} event Event.
  * @export
  */
-exports.prototype.handleActiveChange = function(event) {
+Controller.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
@@ -175,7 +175,7 @@ exports.prototype.handleActiveChange = function(event) {
  * @param {import("ol/interaction/Draw/Event.js").default|MeasureEvent} event Event.
  * @export
  */
-exports.prototype.handleDrawEnd = function(type, event) {
+Controller.prototype.handleDrawEnd = function(type, event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
