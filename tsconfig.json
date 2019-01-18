@@ -5,12 +5,13 @@
       "module": "system",
       "lib": ["es2017", "dom"],
       "allowJs": true,
-      "checkJs": false,
+      "checkJs": true,
       "noEmit": true,
       "baseUrl": "./",
       "paths": {
         "ngeo/*": ["src/*"],
-        "gmf/*": ["contribs/gmf/src/*"]
+        "gmf/*": ["contribs/gmf/src/*"],
+        "ol/*": ["node_modules/ol/*"]
       }
     },
     "include": [

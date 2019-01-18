@@ -61,8 +61,10 @@ script:
 - if [ "${TRAVIS_PULL_REQUEST}" = false ]; then export NODE_ENV=production; fi
 - make examples-hosted
 - buildtools/test_examples.py 1/1
+#- npm run typecheck
 # Generate API doc
-- npm run doc
+#- npm run doc
+- mkdir apidoc
 - npm run build-api
 
 deploy:
