@@ -227,7 +227,7 @@ class Service extends olEventsEventTarget {
 /**
  * @enum {string}
  */
-exports.RouteSuffix = {
+const RouteSuffix = {
   CHANGE_PASSWORD: 'loginchange',
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',

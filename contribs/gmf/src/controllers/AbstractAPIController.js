@@ -28,7 +28,7 @@ import * as olInteraction from 'ol/interaction.js';
  * @ngInject
  * @export
  */
-const exports = function(config, $scope, $injector) {
+function AbstractAPIController(config, $scope, $injector) {
 
   const viewConfig = {
     projection: olProj.get(`EPSG:${config.srid || 21781}`)
@@ -69,7 +69,7 @@ const exports = function(config, $scope, $injector) {
   gmfControllersAbstractAppController.call(this, config, $scope, $injector);
 };
 
-olUtilInherits(exports, gmfControllersAbstractAppController);
+olUtilInherits(AbstractAPIController, gmfControllersAbstractAppController);
 
 
 const module = angular.module('GmfAbstractAPIControllerModule', [
@@ -78,9 +78,7 @@ const module = angular.module('GmfAbstractAPIControllerModule', [
   ngeoQueryBboxQueryComponent.name
 ]);
 
-module.controller(
-  'AbstractAPIController',
-  exports);
+module.controller('AbstractAPIController', AbstractAPIController);
 
 module.value('isDesktop', true);
 

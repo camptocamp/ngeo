@@ -23,7 +23,7 @@ import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
-const exports = class {
+class Manager {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
@@ -941,7 +941,7 @@ const module = angular.module('gmfDataSourcesManager', [
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-module.service('gmfDataSourcesManager', exports);
+module.service('gmfDataSourcesManager', Manager);
 
 
 export default module;

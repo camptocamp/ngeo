@@ -17,7 +17,7 @@ import 'angular-sanitize';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('gmfDisclaimer', [
+const module = angular.module('gmfDisclaimer', [
   'ngSanitize',
   ngeoMapLayerHelper.name,
   ngeoMessageDisclaimer.name,

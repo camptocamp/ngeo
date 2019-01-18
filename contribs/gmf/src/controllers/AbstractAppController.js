@@ -49,7 +49,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @ngInject
  * @export
  */
-const exports = function(config, $scope, $injector) {
+function AbstractAppController(config, $scope, $injector) {
 
   /**
    * Location service
@@ -660,7 +660,7 @@ const exports = function(config, $scope, $injector) {
  *     to false.
  * @export
  */
-exports.prototype.userMustChangeItsPassword = function() {
+AbstractAppController.prototype.userMustChangeItsPassword = function() {
   return this.gmfUser.is_password_changed === false;
 };
 
@@ -682,7 +682,7 @@ function getLayerByLabels(layers, labels) {
  * @param {string} lang Language code.
  * @export
  */
-exports.prototype.switchLanguage = function(lang) {
+AbstractAppController.prototype.switchLanguage = function(lang) {
   googAsserts.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
@@ -693,7 +693,7 @@ exports.prototype.switchLanguage = function(lang) {
 
 /**
  */
-exports.prototype.initLanguage = function() {
+AbstractAppController.prototype.initLanguage = function() {
   this.$scope.$watch(() => this.lang, (newValue) => {
     this.stateManager.updateState({
       'lang': newValue
@@ -725,7 +725,7 @@ exports.prototype.initLanguage = function() {
  * @param {gmfThemes.GmfTheme} theme Theme.
  * @private
  */
-exports.prototype.setDefaultBackground_ = function(theme) {
+AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
   this.gmfThemes_.getBgLayers().then((layers) => {
     let layer;
 
@@ -756,7 +756,7 @@ exports.prototype.setDefaultBackground_ = function(theme) {
  * @param {string} fallbackThemeName fallback theme name.
  * @private
  */
-exports.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
+AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
     if (themeName) {
@@ -774,7 +774,7 @@ exports.prototype.updateCurrentTheme_ = function(fallbackThemeName) {
  * @protected
  * @return {Element} Span element with font-awesome inside of it
  */
-exports.prototype.getLocationIcon = function() {
+AbstractAppController.prototype.getLocationIcon = function() {
   const arrow = document.createElement('span');
   arrow.className = 'fa fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
@@ -808,7 +808,7 @@ const module = angular.module('GmfAbstractAppControllerModule', [
 ]);
 
 
-module.controller('AbstractController', exports);
+module.controller('AbstractController', AbstractAppController);
 
 
 module.value('ngeoExportFeatureFormats', [
@@ -827,6 +827,6 @@ module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
   }
 ]);
 
-bootstrap(exports.module);
+bootstrap(module);
 
 export default module;

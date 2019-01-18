@@ -21,7 +21,7 @@ import olCollection from 'ol/Collection.js';
 import olFormatGPX from 'ol/format/GPX.js';
 import olFormatKML from 'ol/format/KML.js';
 
-const exports = class {
+class ExternalDatSourcesManager {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
@@ -688,8 +688,7 @@ const module = angular.module('gmfExternalDataSourcesManager', [
   ngeoMiscFile.name,
   ngeoDatasourceDataSources.name,
 ]);
-module.service('gmfExternalDataSourcesManager',
-  exports);
+module.service('gmfExternalDataSourcesManager', ExternalDatSourcesManager);
 
 
 export default module;
