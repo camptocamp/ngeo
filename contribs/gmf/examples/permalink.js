@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './permalink.css';
 import angular from 'angular';

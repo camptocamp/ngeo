@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './drawfeature.css';
 import angular from 'angular';

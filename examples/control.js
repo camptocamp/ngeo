@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './control.css';
 import angular from 'angular';

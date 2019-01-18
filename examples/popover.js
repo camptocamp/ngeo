@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './popover.css';
 import angular from 'angular';

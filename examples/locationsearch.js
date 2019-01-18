@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './locationsearch.css';
 import angular from 'angular';

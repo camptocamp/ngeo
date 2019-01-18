@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './timeslider.css';
 import angular from 'angular';

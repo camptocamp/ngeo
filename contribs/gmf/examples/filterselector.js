@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 
 import angular from 'angular';

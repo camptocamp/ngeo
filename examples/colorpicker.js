@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './colorpicker.css';
 import angular from 'angular';

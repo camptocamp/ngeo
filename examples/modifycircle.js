@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './modifycircle.css';
 import angular from 'angular';

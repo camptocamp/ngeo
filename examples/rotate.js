@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './rotate.css';
 import angular from 'angular';

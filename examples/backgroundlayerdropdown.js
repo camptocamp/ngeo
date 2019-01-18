@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './backgroundlayerdropdown.css';
 import angular from 'angular';

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './elevationProfile.css';
 import angular from 'angular';

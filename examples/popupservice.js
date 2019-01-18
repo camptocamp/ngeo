@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './popupservice.css';
 import 'jquery-ui/ui/widgets/tooltip.js';

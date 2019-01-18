@@ -91,7 +91,6 @@ AngularJS module, and this module must require all modules it needs to work. And
 AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
-const exports = {};
 import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 
 /**
@@ -108,7 +107,6 @@ You can see that we stock the module in a `module` variable on the class. For Co
 the module in the value we export directly like:
 
 ```js
-const exports = {};
 
 /**
  * @type {angular.IModule}

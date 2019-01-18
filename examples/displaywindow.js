@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './displaywindow.css';
 import angular from 'angular';

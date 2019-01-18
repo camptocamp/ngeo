@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './animation.css';
 import angular from 'angular';

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 /**
  * This example shows how to create a layer tree tree based

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './backgroundlayer.css';
 import angular from 'angular';

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './lidarprofile.css';
 import angular from 'angular';

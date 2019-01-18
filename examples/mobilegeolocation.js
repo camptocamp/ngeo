@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './mobilegeolocation.css';
 import angular from 'angular';

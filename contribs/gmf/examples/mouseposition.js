@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './mouseposition.css';
 import angular from 'angular';

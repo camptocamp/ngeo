@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './measure.css';
 import angular from 'angular';

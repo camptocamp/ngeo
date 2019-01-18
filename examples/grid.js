@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './grid.css';
 import angular from 'angular';

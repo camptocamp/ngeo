@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './toolActivate.css';
 import angular from 'angular';

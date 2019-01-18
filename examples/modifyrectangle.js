@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './modifyrectangle.css';
 import angular from 'angular';

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './layerorder.css';
 import angular from 'angular';

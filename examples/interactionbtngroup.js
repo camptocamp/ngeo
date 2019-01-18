@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './interactionbtngroup.css';
 import angular from 'angular';

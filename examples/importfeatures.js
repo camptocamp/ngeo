@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './importfeatures.css';
 import angular from 'angular';

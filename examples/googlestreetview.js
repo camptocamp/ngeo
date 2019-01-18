@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './googlestreetview.css';
 import angular from 'angular';

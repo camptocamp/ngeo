@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './datepicker.css';
 import angular from 'angular';

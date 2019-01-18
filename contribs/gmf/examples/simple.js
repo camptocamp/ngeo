@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './simple.css';
 import angular from 'angular';

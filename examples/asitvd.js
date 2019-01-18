@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './asitvd.css';
 import angular from 'angular';

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 /**
  * This example shows the ngeo routing directive.

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './disclaimer.css';
 import 'jquery-ui/ui/widgets/tooltip.js';

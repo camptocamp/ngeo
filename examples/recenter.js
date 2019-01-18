@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './recenter.css';
 import angular from 'angular';

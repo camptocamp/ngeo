@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './desktopgeolocation.css';
 import angular from 'angular';

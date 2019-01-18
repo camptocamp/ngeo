@@ -3,7 +3,6 @@
 import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule.js';
 
-const exports = {};
 
 exports.module = angular.module('app', []);
 

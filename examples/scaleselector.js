@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './scaleselector.css';
 import angular from 'angular';

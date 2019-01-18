@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './datetimepicker.scss';
 import angular from 'angular';
