@@ -129,7 +129,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
       type: ngeoMessageMessage.Type.SUCCESS
     });
   };
-};
+}
 
 module.controller('MainController', MainController);
 

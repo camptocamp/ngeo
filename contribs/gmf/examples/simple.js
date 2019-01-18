@@ -42,7 +42,7 @@ function MainController() {
       zoom: 4
     })
   });
-};
+}
 
 
 module.controller('MainController', MainController);

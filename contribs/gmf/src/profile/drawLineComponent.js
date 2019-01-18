@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
@@ -8,7 +6,7 @@ import olMap from 'ol/Map.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 
 /**
  * @type {!angular.IModule}
@@ -122,7 +120,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
     features: this.features_
   });
 
-  ngeoMiscDecorate.interaction(this.interaction);
+  ngeoMiscDecorateInteraction(this.interaction);
 
   // Clear the line as soon as the interaction is activated.
   this.interaction.on('change:active', () => {

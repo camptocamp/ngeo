@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -8,7 +6,7 @@ import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
 
@@ -138,7 +136,7 @@ function Controller($scope, $sce, gettextCatalog,
     }
   );
 
-};
+}
 
 
 /**
@@ -151,7 +149,7 @@ Controller.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
-  ngeoMiscDecorate.interaction(interaction);
+  ngeoMiscDecorateInteraction(interaction);
   this.map.addInteraction(interaction);
 };
 
@@ -246,7 +244,7 @@ const module = angular.module('ngeoDrawfeatureController', [
   ngeoMiscBtnComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-module.controller('ngeoDrawfeatureController', exports);
+module.controller('ngeoDrawfeatureController', Controller);
 
 
 export default module;

@@ -92,7 +92,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
     });
 
   });
-};
+}
 
 
 /**

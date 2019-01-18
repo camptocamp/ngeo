@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -22,6 +20,12 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
  *   previous: ol.layer.Base
  * }>} BackgroundEvent
  */
+
+
+/**
+ * @const
+ */
+const BACKGROUNDLAYERGROUP_NAME = 'background';
 
 
 /**
@@ -86,9 +90,9 @@ function BackgroundLayerMgr(ngeoLayerHelper) {
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
-};
+}
 
-olUtilInherits(const  olObservable);
+olUtilInherits(BackgroundLayerMgr, olObservable);
 
 
 /**
@@ -227,12 +231,7 @@ BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
 const module = angular.module('ngeoBackgroundLayerMgr', [
   ngeoLayerHelper.name
 ]);
-module.service('ngeoBackgroundLayerMgr', const ;
-
-/**
- * @const
- */
-const BACKGROUNDLAYERGROUP_NAME = 'background';
+module.service('ngeoBackgroundLayerMgr', BackgroundLayerMgr);
 
 
 export default module;

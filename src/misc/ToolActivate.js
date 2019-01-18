@@ -14,7 +14,7 @@
  * @ngname ngeoToolActivate
  * @export
  */
-const exports = function(toolContext, activePropertyName) {
+function toolActivate(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
@@ -33,7 +33,7 @@ const exports = function(toolContext, activePropertyName) {
   this.setActive = function(newVal) {
     toolContext[activePropertyName] = newVal;
   };
-};
+}
 
 
-export default exports;
+export default toolActivate;

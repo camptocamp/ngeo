@@ -106,7 +106,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
     dummyToolActivate,
     false
   );
-};
+}
 
 
 module.controller('MainController', MainController);

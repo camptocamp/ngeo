@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 import ngeoRoutingNominatimInputComponent from 'ngeo/routing/NominatimInputComponent.js';
@@ -191,7 +189,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
    * @export
    */
   this.errorMessage = '';
-};
+}
 
 Controller.prototype.$onInit = function() {
   this.map.addLayer(this.vectorLayer_);

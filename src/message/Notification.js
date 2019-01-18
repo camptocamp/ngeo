@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
 import googAsserts from 'goog/asserts.js';
@@ -48,9 +46,9 @@ function Notification($timeout) {
    */
   this.cache_ = {};
 
-};
+}
 
-olUtilInherits(exports, ngeoMessageMessage);
+olUtilInherits(Notification, ngeoMessageMessage);
 
 
 /**
@@ -177,7 +175,7 @@ Notification.prototype.clearMessageByCacheItem_ = function(item) {
 const module = angular.module('ngeoNotification', [
 ]);
 
-module.service('ngeoNotification', exports);
+module.service('ngeoNotification', Notification);
 
 
 export default module;

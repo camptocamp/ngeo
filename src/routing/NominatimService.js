@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
@@ -91,7 +89,7 @@ function NominatimService($http, $injector, ngeoDebounce) {
   this.typeaheadSourceDebounced =
     /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<import("ol/Feature.js").default>)|undefined))} */
     (this.ngeoDebounce_(/** @type {function(?)} */ (this.typeaheadSource_.bind(this)), this.typeaheadDebounceDelay_, true));
-};
+}
 
 /**
  * Search by name
@@ -190,7 +188,7 @@ const module = angular.module('ngeoNominatimService', [
   ngeoMiscDebounce.name
 ]);
 
-module.service('ngeoNominatimService', exports);
+module.service('ngeoNominatimService', NominatimService);
 
 
 export default module;

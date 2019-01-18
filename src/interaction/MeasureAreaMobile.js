@@ -1,5 +1,3 @@
-/**
- */
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -22,10 +20,9 @@ function MeasureAreaMobile(format, gettextCatalog, opt_options) {
 
   ngeoInteractionMeasureArea.call(this, format, gettextCatalog, options);
 
-};
+}
 
-olUtilInherits(
-  exports, ngeoInteractionMeasureArea);
+olUtilInherits(MeasureAreaMobile, ngeoInteractionMeasureArea);
 
 
 /**
@@ -40,4 +37,4 @@ MeasureAreaMobile.prototype.createDrawInteraction = function(style, source) {
 };
 
 
-export default exports;
+export default MeasureAreaMobile;

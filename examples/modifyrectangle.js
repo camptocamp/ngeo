@@ -136,7 +136,7 @@ function MainController() {
   map.addInteraction(interaction);
   interaction.setActive(true);
 
-};
+}
 
 
 appmodule.controller('MainController', MainController);

@@ -121,7 +121,7 @@ function Controller($scope, $filter, gettextCatalog) {
    * @export
    */
   this.valid = false;
-};
+}
 
 
 /**

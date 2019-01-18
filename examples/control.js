@@ -51,7 +51,7 @@ function MainController() {
   this.control = new olControlMousePosition({
     className: 'mouse-position'
   });
-};
+}
 
 
 module.controller('MainController', MainController);

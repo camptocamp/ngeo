@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
@@ -33,7 +31,7 @@ function EditFeature($http, gmfLayersUrl) {
    */
   this.baseUrl_ = gmfLayersUrl;
 
-};
+}
 
 
 /**

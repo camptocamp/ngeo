@@ -1,8 +1,6 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
-import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
+import ngeoMapFeatureOverlay, {FeatureOverlay} from 'ngeo/map/FeatureOverlay.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import * as olObj from 'ol/obj.js';
@@ -73,7 +71,7 @@ function FeatureOverlayMgr() {
     updateWhileInteracting: true
   });
 
-};
+}
 
 
 /**
@@ -140,7 +138,7 @@ FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
     styleFunction: olStyleDefaultFunction,
     features: {}
   });
-  return new ngeoMapFeatureOverlay(this, groupIndex);
+  return new FeatureOverlay(this, groupIndex);
 };
 
 
@@ -188,7 +186,7 @@ FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
 const module = angular.module('ngeoFeatureOverlayMgr', [
   ngeoMapFeatureOverlay.name
 ]);
-module.service('ngeoFeatureOverlayMgr', exports);
+module.service('ngeoFeatureOverlayMgr', FeatureOverlayMgr);
 
 
 export default module;

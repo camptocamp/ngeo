@@ -82,7 +82,7 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
-};
+}
 
 
 module.controller('MainController', MainController);

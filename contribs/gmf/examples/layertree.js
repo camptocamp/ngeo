@@ -205,7 +205,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
       nodes.push(node);
     }
   };
-};
+}
 
 module.controller('MainController', MainController);
 

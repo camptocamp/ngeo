@@ -1,9 +1,4 @@
 /**
- */
-const exports = {};
-
-
-/**
  * Interactions for measure tools base class.
  * @typedef {{
  *    decimals: (number|undefined),
@@ -12,9 +7,5 @@ const exports = {};
  *    startMsg: (Element|undefined),
  *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
  *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
- * }}
+ * }} MeasueBaseOptions
  */
-exports;
-
-
-export default exports;

@@ -24,12 +24,40 @@
 
 
 /**
+ * @enum {string}
+ * @export
+ */
+const Type = {
+  /**
+   * @type {string}
+   * @export
+   */
+  ERROR: 'error',
+  /**
+   * @type {string}
+   * @export
+   */
+  INFORMATION: 'information',
+  /**
+   * @type {string}
+   * @export
+   */
+  SUCCESS: 'success',
+  /**
+   * @type {string}
+   * @export
+   */
+  WARNING: 'warning'
+};
+
+
+/**
  * Abstract class for services that display messages.
  *
  * @constructor
  * @abstract
  */
-function Message() {};
+function Message() {}
 
 
 /**
@@ -148,32 +176,4 @@ Message.prototype.getMessageObjects = function(object, opt_type) {
 };
 
 
-/**
- * @enum {string}
- * @export
- */
-const Type = {
-  /**
-   * @type {string}
-   * @export
-   */
-  ERROR: 'error',
-  /**
-   * @type {string}
-   * @export
-   */
-  INFORMATION: 'information',
-  /**
-   * @type {string}
-   * @export
-   */
-  SUCCESS: 'success',
-  /**
-   * @type {string}
-   * @export
-   */
-  WARNING: 'warning'
-};
-
-
-export default const 
+export default Message;

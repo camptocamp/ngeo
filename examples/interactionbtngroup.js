@@ -128,7 +128,7 @@ function MainController(ngeoFeatureOverlayMgr) {
   ngeoMiscDecorate.interaction(drawLine);
   map.addInteraction(drawLine);
 
-};
+}
 
 
 module.controller('MainController', MainController);

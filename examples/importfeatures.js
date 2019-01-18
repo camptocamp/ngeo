@@ -81,7 +81,7 @@ function MainController($scope) {
 
   $scope.$watch(() => this.fileContent, this.importKml_.bind(this));
 
-};
+}
 
 
 /**

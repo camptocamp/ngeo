@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoUtils from 'ngeo/utils.js';
 
@@ -39,7 +37,7 @@ function FulltextSearch($injector, $http) {
    * @private
    */
   this.defaultParams_ = ngeoUtils.decodeQueryString(queryString);
-};
+}
 
 /**
  * Perform a search query on the c2c-geoportal full-text search.
@@ -65,7 +63,7 @@ FulltextSearch.prototype.search = function(query, params) {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfSearchFulltextSearch', []);
-module.service('gmfSearchFulltextSearch', exports);
+module.service('gmfSearchFulltextSearch', FulltextSearch);
 
 
 export default module;

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
@@ -52,7 +50,7 @@ function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime,
   $rootScope.$on('ngeo-layertree-state', (map, treeCtrl, firstParent) => {
     this.sync_(/** @type import("ol/Map.js").default */ (map), firstParent);
   });
-};
+}
 
 
 /**
@@ -433,7 +431,7 @@ SyncLayertreeMap.prototype.getFirstLevelGroupCtrl_ = function(
  * @return {import("ol/layer/Base.js").default} The layer.
  * @public
  */
-function getLayer(treeCtrl) {
+export function getLayer(treeCtrl) {
   let tree = treeCtrl;
   let layer = null;
   while (!tree.isRoot && layer === null) {
@@ -443,7 +441,7 @@ function getLayer(treeCtrl) {
     tree = tree.parent;
   }
   return layer;
-};
+}
 
 
 /**
@@ -454,7 +452,7 @@ const module = angular.module('gmfSyncLayertreeMap', [
   ngeoLayertreeController.name,
   ngeoMiscWMSTime.name,
 ]);
-module.service('gmfSyncLayertreeMap', exports);
+module.service('gmfSyncLayertreeMap', SyncLayertreeMap);
 
 
 export default module;

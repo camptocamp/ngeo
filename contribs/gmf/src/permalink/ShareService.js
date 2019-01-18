@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 /**
@@ -27,7 +24,7 @@ function ShareService($http, gmfShortenerCreateUrl) {
    */
   this.gmfShortenerCreateUrl_ = gmfShortenerCreateUrl;
 
-};
+}
 
 
 /**
@@ -96,7 +93,7 @@ ShareService.prototype.postShortUrl_ = function(params) {
  * @constant
  * @type {number}
  */
-const URL_MAX_LEN = 2083;
+export const URL_MAX_LEN = 2083;
 
 /**
  * Max length defined for the url parth section.
@@ -104,11 +101,11 @@ const URL_MAX_LEN = 2083;
  * @constant
  * @type {number}
  */
-const URL_PATH_MAX_LEN = 2048;
+export const URL_PATH_MAX_LEN = 2048;
 
 const module = angular.module('gmfShareService', []);
 
-module.service('gmfShareService', exports);
+module.service('gmfShareService', ShareService);
 
 
 export default module;

@@ -1,9 +1,7 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
-import ngeoInteractionCommon from 'ngeo/interaction/common.js';
+import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
 import {
   getUid as olUtilGetUid,
@@ -107,7 +105,7 @@ function ModifyCircle(options) {
       useSpatialIndex: false,
       wrapX: !!options.wrapX
     }),
-    style: options.style || ngeoInteractionCommon.getDefaultModifyStyleFunction(),
+    style: options.style || getDefaultModifyStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -122,9 +120,9 @@ function ModifyCircle(options) {
   olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
   olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
 
-};
+}
 
-olUtilInherits(exports, olInteractionPointer);
+olUtilInherits(ModifyCircle, olInteractionPointer);
 
 
 /**
@@ -322,7 +320,7 @@ function handleDownEvent_(evt) {
     }
   }
   return !!this.vertexFeature_;
-};
+}
 
 
 /**
@@ -351,7 +349,7 @@ function handleDragEvent_(evt) {
   this.features_.getArray()[0].set(ngeoFormatFeatureProperties.AZIMUT, azimut);
 
   this.createOrUpdateVertexFeature_(vertex);
-};
+}
 
 
 /**
@@ -372,7 +370,7 @@ function handleUpEvent_(evt) {
     this.modified_ = false;
   }
   return false;
-};
+}
 
 
 /**
@@ -395,7 +393,7 @@ function handleEvent(mapBrowserEvent) {
   }
 
   return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && !handled;
-};
+}
 
 
 /**
@@ -484,4 +482,4 @@ ModifyCircle.prototype.setGeometryCoordinates_ = function(geometry, coordinates)
 };
 
 
-export default exports;
+export default ModifyCircle;

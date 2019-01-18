@@ -1,5 +1,3 @@
-/**
- */
 import 'jquery';
 import angular from 'angular';
 import 'angular-gettext';
@@ -652,7 +650,7 @@ function AbstractAppController(config, $scope, $injector) {
    * @export
    */
   this.displaywindowWidth = '50vw';
-};
+}
 
 
 /**
@@ -675,7 +673,7 @@ function getLayerByLabels(layers, labels) {
     return olArray.find(layers, layer => layer.get('label') === labels[0]);
   }
   return null;
-};
+}
 
 
 /**

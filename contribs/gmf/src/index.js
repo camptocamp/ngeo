@@ -40,4 +40,3 @@ export const PermalinkParam = {
   WFS_NGROUPS: 'wfs_ngroups',
   WFS_SHOW_FEATURES: 'wfs_showFeatures'
 };
-

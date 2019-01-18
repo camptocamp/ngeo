@@ -40,7 +40,7 @@ function MainController() {
    */
   this.modalShareShown = false;
 
-};
+}
 
 
 module.controller('MainController', MainController);

@@ -1,9 +1,41 @@
-/**
- */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import olFeature from 'ol/Feature.js';
+
+
+/**
+ * @enum {string}
+ * @export
+ */
+const Param = {
+  /**
+   * @type {string}
+   * @export
+   */
+  GEOM_TYPE: 'objectediting_geomtype',
+  /**
+   * @type {string}
+   * @export
+   */
+  ID: 'objectediting_id',
+  /**
+   * @type {string}
+   * @export
+   */
+  LAYER: 'objectediting_layer',
+  /**
+   * @type {string}
+   * @export
+   */
+  PROPERTY: 'objectediting_property',
+  /**
+   * @type {string}
+   * @export
+   */
+  THEME: 'objectediting_theme'
+};
+
 
 /**
  * A service that looks for certain parameters in the url and use them to fetch
@@ -41,7 +73,7 @@ function Manager($q, gmfEditFeature, ngeoLocation) {
    */
   this.getFeatureDefered_ = null;
 
-};
+}
 
 
 /**
@@ -138,46 +170,13 @@ Manager.prototype.handleGetFeatures_ = function(key, value, features) {
 
 
 /**
- * @enum {string}
- * @export
- */
-const Param = {
-  /**
-   * @type {string}
-   * @export
-   */
-  GEOM_TYPE: 'objectediting_geomtype',
-  /**
-   * @type {string}
-   * @export
-   */
-  ID: 'objectediting_id',
-  /**
-   * @type {string}
-   * @export
-   */
-  LAYER: 'objectediting_layer',
-  /**
-   * @type {string}
-   * @export
-   */
-  PROPERTY: 'objectediting_property',
-  /**
-   * @type {string}
-   * @export
-   */
-  THEME: 'objectediting_theme'
-};
-
-
-/**
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.name,
   ngeoStatemanagerLocation.name,
 ]);
-module.service('gmfObjectEditingManager', exports);
+module.service('gmfObjectEditingManager', Manager);
 
 
 export default module;

@@ -41,7 +41,7 @@ function MainController(ngeoNotification) {
     trigger: 'hover'
   });
 
-};
+}
 
 
 /**

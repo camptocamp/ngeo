@@ -1,5 +1,3 @@
-/**
- */
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olEventsEvent from 'ol/events/Event.js';
 
@@ -10,7 +8,7 @@ import olEventsEvent from 'ol/events/Event.js';
  * @param {T} detail Event Detail.
  * @template T
  */
-const exports = function(type, detail = {}) {
+function CustomEvent(type, detail = {}) {
 
   olEventsEvent.call(this, type);
 
@@ -18,10 +16,9 @@ const exports = function(type, detail = {}) {
    * @type {T}
    */
   this.detail = detail;
+}
 
-};
-
-olUtilInherits(exports, olEventsEvent);
+olUtilInherits(CustomEvent, olEventsEvent);
 
 
-export default exports;
+export default CustomEvent;

@@ -1,8 +1,5 @@
-/**
- */
-
 import angular from 'angular';
-import appURL from './url.js';
+import {MAPSERVER_PROXY} from './url.js';
 import './mapquery.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
@@ -73,7 +70,7 @@ function QueryresultController(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 
-};
+}
 
 
 module.controller('AppQueryresultController', QueryresultController);
@@ -103,14 +100,14 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
@@ -141,7 +138,7 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wmsUrl: appURL.MAPSERVER_PROXY,
+    wmsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -152,7 +149,7 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
     id: 2,
     name: 'information',
     visible: true,
-    wmsUrl: appURL.MAPSERVER_PROXY,
+    wmsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'information',
       queryable: true
@@ -165,7 +162,7 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
 
-};
+}
 
 
 /**

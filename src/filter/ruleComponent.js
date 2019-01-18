@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMenu from 'ngeo/Menu.js';
@@ -16,7 +14,7 @@ import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
@@ -759,7 +757,7 @@ class RuleController {
   initializeInteractions_() {
     this.interactions_.forEach((interaction) => {
       interaction.setActive(false);
-      ngeoMiscDecorate.interaction(interaction);
+      ngeoMiscDecorateInteraction(interaction);
     });
   }
 

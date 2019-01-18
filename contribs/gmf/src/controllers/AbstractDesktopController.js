@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
@@ -231,7 +229,7 @@ function AbstractDesktopController(config, $scope, $injector) {
     ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
   );
   this.setDataPanelMaxResizableWidth_();
-};
+}
 
 olUtilInherits(AbstractDesktopController, gmfControllersAbstractAPIController);
 

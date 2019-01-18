@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
@@ -67,7 +65,7 @@ function AbstractAPIController(config, $scope, $injector) {
   });
 
   gmfControllersAbstractAppController.call(this, config, $scope, $injector);
-};
+}
 
 olUtilInherits(AbstractAPIController, gmfControllersAbstractAppController);
 

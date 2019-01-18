@@ -1,6 +1,4 @@
-/**
- */
-const exports = '<?xml version="1.0" encoding="UTF-8"?>' +
+export default '<?xml version="1.0" encoding="UTF-8"?>' +
 '<Capabilities xmlns="http://www.opengis.net/wmts/1.0" xmlns:gml="http://www.opengis.net/gml" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.0" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd">' +
     '<ows:ServiceIdentification>' +
         '<ows:Title>Coordinates Labs</ows:Title>' +
@@ -279,6 +277,3 @@ const exports = '<?xml version="1.0" encoding="UTF-8"?>' +
     '</Contents>' +
     '<ServiceMetadataURL xlink:href="https://labs.coordinates.com/services;key=d740ea02e0c44cafb70dce31a774ca10/wmts/1.0.0/layer/7328/WMTSCapabilities.xml" />' +
 '</Capabilities>';
-
-
-export default exports;

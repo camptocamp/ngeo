@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -55,7 +53,7 @@ function ToolActivateMgr($rootScope) {
    * @private
    */
   this.scope_ = $rootScope;
-};
+}
 
 
 /**
@@ -205,7 +203,7 @@ ToolActivateMgr.prototype.activateDefault_ = function(groupName) {
 
 
 const module = angular.module('ngeoToolActivateMgr', []);
-module.service('ngeoToolActivateMgr', exports);
+module.service('ngeoToolActivateMgr', ToolActivateMgr);
 
 
 export default module;

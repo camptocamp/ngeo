@@ -144,7 +144,7 @@ function MainController() {
       this.interaction.setActive(true);
     }
   });
-};
+}
 
 
 appmodule.controller('MainController', MainController);

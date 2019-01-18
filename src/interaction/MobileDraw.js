@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -125,9 +123,9 @@ function MobileDraw(options) {
   this.set('drawing', false);
   this.set('valid', false);
 
-};
+}
 
-olUtilInherits(exports, olInteractionInteraction);
+olUtilInherits(MobileDraw, olInteractionInteraction);
 
 
 /**
@@ -516,4 +514,4 @@ MobileDraw.prototype.getCenter_ = function() {
 };
 
 
-export default exports;
+export default MobileDraw;

@@ -108,7 +108,7 @@ function Controller($scope, $filter, gettextCatalog) {
   this.measure;
 }
 
-olUtilInherits(exports, gmfMobileMeasureBaseComponent.Controller);
+olUtilInherits(component, gmfMobileMeasureBaseComponent.Controller);
 
 /**
  * Initialise the controller.

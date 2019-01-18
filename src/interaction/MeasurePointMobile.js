@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
@@ -34,9 +32,9 @@ function MeasurePointMobile(format, coordFormat, options = /** @type {MeasureOpt
    * @private
    */
   this.coordFormat_ = coordFormat;
-};
+}
 
-olUtilInherits(exports, ngeoInteractionMeasure);
+olUtilInherits(MeasurePointMobile, ngeoInteractionMeasure);
 
 
 /**
@@ -63,4 +61,4 @@ MeasurePointMobile.prototype.handleMeasure = function(callback) {
 };
 
 
-export default exports;
+export default MeasurePointMobile;

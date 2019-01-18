@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import {ServerType} from 'ngeo/datasource/OGC.js';
@@ -43,7 +41,7 @@ class WFSAlias {
       this.ngeoDataSourcesHelper_.getDataSourceAttributes(dataSource);
     }
   }
-};
+}
 
 
 const module = angular.module('gmfDatasourceWFSAliases', [

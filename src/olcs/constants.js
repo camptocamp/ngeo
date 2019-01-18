@@ -1,12 +1,8 @@
 /**
- */
-const exports = {};
-
-/**
  * @enum {string}
  * @export
  */
-const Permalink3dParam = {
+export const Permalink3dParam = {
   /**
    * @type {string}
    * @export
@@ -43,6 +39,3 @@ const Permalink3dParam = {
    */
   PREFIX: '3d_'
 };
-
-
-export default exports;

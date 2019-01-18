@@ -61,7 +61,7 @@ function MainController($scope) {
     dropup: true
   };
 
-};
+}
 
 
 module.controller('MainController', MainController);

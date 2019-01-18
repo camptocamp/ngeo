@@ -53,7 +53,7 @@ function MainController() {
    * @export
    */
   this.routingfeatureActive = true;
-};
+}
 
 module.controller('MainController', MainController);
 

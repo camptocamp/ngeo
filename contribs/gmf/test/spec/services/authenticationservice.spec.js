@@ -1,4 +1,4 @@
-import gmfAuthenticationService from 'gmf/authentication/Service.js';
+import {RouteSuffix} from 'gmf/authentication/Service.js';
 import * as olEvents from 'ol/events.js';
 
 describe('gmf.authentication.Service', () => {
@@ -14,9 +14,9 @@ describe('gmf.authentication.Service', () => {
       gmfAuthentication = _gmfAuthenticationService_;
       authenticationBaseUrl = _authenticationBaseUrl_;
 
-      isLoggedInUrl = `${authenticationBaseUrl}/${gmfAuthenticationService.RouteSuffix.IS_LOGGED_IN}`;
-      loginUrl = `${authenticationBaseUrl}/${gmfAuthenticationService.RouteSuffix.LOGIN}`;
-      logoutUrl = `${authenticationBaseUrl}/${gmfAuthenticationService.RouteSuffix.LOGOUT}`;
+      isLoggedInUrl = `${authenticationBaseUrl}/${RouteSuffix.IS_LOGGED_IN}`;
+      loginUrl = `${authenticationBaseUrl}/${RouteSuffix.LOGIN}`;
+      logoutUrl = `${authenticationBaseUrl}/${RouteSuffix.LOGOUT}`;
 
       $httpBackend = _$httpBackend_;
       $httpBackend.when('GET', isLoggedInUrl).respond({});

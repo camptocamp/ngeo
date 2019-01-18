@@ -25,21 +25,19 @@ function Utils() {
    */
   this.extentHalfVerticalDistance_;
 
-};
+}
 
 
 /**
  * @const
- * @private
  */
-const INCHES_PER_METER_ = 39.37;
+export const INCHES_PER_METER = 39.37;
 
 
 /**
  * @const
- * @private
  */
-const DOTS_PER_INCH_ = 72;
+export const DOTS_PER_INCH = 72;
 
 
 /**
@@ -79,8 +77,8 @@ Utils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rot
       const width = size[0] * olHas.DEVICE_PIXEL_RATIO;
       const scale = getScale(frameState);
 
-      const ppi = DOTS_PER_INCH_;
-      const ipm = INCHES_PER_METER_;
+      const ppi = DOTS_PER_INCH;
+      const ipm = INCHES_PER_METER;
 
       const extentHalfWidth =
            (((width / ppi) / ipm) * scale / resolution) / 2;
@@ -198,10 +196,8 @@ Utils.prototype.getOptimalScale = function(
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
 
-  const scaleWidth = mapWidth * INCHES_PER_METER_ *
-      DOTS_PER_INCH_ / printMapSize[0];
-  const scaleHeight = mapHeight * INCHES_PER_METER_ *
-      DOTS_PER_INCH_ / printMapSize[1];
+  const scaleWidth = mapWidth * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[0];
+  const scaleHeight = mapHeight * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[1];
 
   const scale = Math.min(scaleWidth, scaleHeight);
 
@@ -224,16 +220,12 @@ Utils.prototype.getOptimalScale = function(
  * @return {number} The optimal map resolution.
  * @export
  */
-Utils.prototype.getOptimalResolution = function(
-  mapSize, printMapSize, printMapScale) {
+Utils.prototype.getOptimalResolution = function(mapSize, printMapSize, printMapScale) {
 
-  const dotsPerMeter =
-      DOTS_PER_INCH_ * INCHES_PER_METER_;
+  const dotsPerMeter = DOTS_PER_INCH * INCHES_PER_METER;
 
-  const resolutionX = (printMapSize[0] * printMapScale) /
-      (dotsPerMeter * mapSize[0]);
-  const resolutionY = (printMapSize[1] * printMapScale) /
-      (dotsPerMeter * mapSize[1]);
+  const resolutionX = (printMapSize[0] * printMapScale) / (dotsPerMeter * mapSize[0]);
+  const resolutionY = (printMapSize[1] * printMapScale) / (dotsPerMeter * mapSize[1]);
 
   const optimalResolution = Math.max(resolutionX, resolutionY);
 
@@ -288,7 +280,7 @@ Utils.prototype.getUpRightCorner = function(mapCenter) {
  * @type {!angular.IModule}
  */
 const module = angular.module('ngeoPrintUtils', []);
-module.service('ngeoPrintUtils', exports);
+module.service('ngeoPrintUtils', Utils);
 
 
 export default module;

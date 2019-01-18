@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 
@@ -75,9 +73,45 @@ import * as olEvents from 'ol/events.js';
 
 
 /**
+ * @enum {string}
+ */
+const OperatorType = {
+  BETWEEN: '..',
+  EQUAL_TO: '=',
+  GREATER_THAN: '>',
+  GREATER_THAN_OR_EQUAL_TO: '>=',
+  LESSER_THAN: '<',
+  LESSER_THAN_OR_EQUAL_TO: '<=',
+  LIKE: '~',
+  NOT_EQUAL_TO: '!='
+};
+
+
+/**
+ * @enum {string}
+ */
+export const SpatialOperatorType = {
+  CONTAINS: 'contains',
+  INTERSECTS: 'intersects',
+  WITHIN: 'within'
+};
+
+
+/**
+ * @enum {string}
+ */
+const TemporalOperatorType = {
+  BEGINS: 'time_start',
+  DURING: 'time_during',
+  ENDS: 'time_end',
+  EQUALS: 'time_equal'
+};
+
+
+/**
  * @implements {Rule}
  */
-const exports = class {
+class Rule {
 
   /**
    * The abstract class for all filter rules.
@@ -328,43 +362,7 @@ const exports = class {
     this.listenerKeys.length = 0;
   }
 
-};
+}
 
 
-/**
- * @enum {string}
- */
-const OperatorType = {
-  BETWEEN: '..',
-  EQUAL_TO: '=',
-  GREATER_THAN: '>',
-  GREATER_THAN_OR_EQUAL_TO: '>=',
-  LESSER_THAN: '<',
-  LESSER_THAN_OR_EQUAL_TO: '<=',
-  LIKE: '~',
-  NOT_EQUAL_TO: '!='
-};
-
-
-/**
- * @enum {string}
- */
-const SpatialOperatorType = {
-  CONTAINS: 'contains',
-  INTERSECTS: 'intersects',
-  WITHIN: 'within'
-};
-
-
-/**
- * @enum {string}
- */
-const TemporalOperatorType = {
-  BEGINS: 'time_start',
-  DURING: 'time_during',
-  ENDS: 'time_end',
-  EQUALS: 'time_equal'
-};
-
-
-export default exports;
+export default Rule;

@@ -24,7 +24,7 @@ function MainController() {
    * @export
    */
   this.modalShown = false;
-};
+}
 
 
 module.controller('MainController', MainController);

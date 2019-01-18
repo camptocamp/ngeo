@@ -1,41 +1,41 @@
 const exports = {};
 
-function assert(condition, opt_message, var_args) {
+exports.assert = function(condition, opt_message, var_args) {
   return condition;
 };
 
-function assertNumber(value, opt_message, var_args) {
+exports.assertNumber = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertString(value, opt_message, var_args) {
+exports.assertString = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertFunction(value, opt_message, var_args) {
+exports.assertFunction = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertObject(value, opt_message, var_args) {
+exports.assertObject = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertArray(value, opt_message, var_args) {
+exports.assertArray = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertBoolean(value, opt_message, var_args) {
+exports.assertBoolean = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertElement(value, opt_message, var_args) {
+exports.assertElement = function(value, opt_message, var_args) {
   return value;
 };
 
-function assertInstanceof(value, type, opt_message, var_args) {
+exports.assertInstanceof = function(value, type, opt_message, var_args) {
   return value;
 };
 
-function assertObjectPrototypeIsIntact() {};
+exports.assertObjectPrototypeIsIntact = function() {};
 
 export default exports;

@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import './featurestyle.css';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';

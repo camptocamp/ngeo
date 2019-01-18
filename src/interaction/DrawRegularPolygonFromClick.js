@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -70,10 +68,9 @@ function DrawRegularPolygonFromClick(options) {
     handleEvent: TRUE
   });
 
-};
+}
 
-olUtilInherits(
-  exports, olInteractionInteraction);
+olUtilInherits(DrawRegularPolygonFromClick, olInteractionInteraction);
 
 
 /**
@@ -160,4 +157,4 @@ DrawRegularPolygonFromClick.prototype.handleMapClick_ = function(evt) {
 };
 
 
-export default exports;
+export default DrawRegularPolygonFromClick;

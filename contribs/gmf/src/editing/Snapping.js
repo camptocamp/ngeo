@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -113,7 +111,7 @@ function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
    */
   this.ogcServers_ = null;
 
-};
+}
 
 
 /**
@@ -587,7 +585,7 @@ const module = angular.module('gmfSnapping', [
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
 ]);
-module.service('gmfSnapping', exports);
+module.service('gmfSnapping', Snapping);
 
 
 export default module;

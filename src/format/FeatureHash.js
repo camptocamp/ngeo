@@ -1,9 +1,7 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
-import ngeoUtils from 'ngeo/utils.js';
+import {rgbArrayToHex} from 'ngeo/utils.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
 import * as olColor from 'ol/color.js';
@@ -54,6 +52,20 @@ import olStyleText from 'ol/style/Text.js';
 
 
 /**
+ * @type {Object.<string, string>}
+ * @private
+ */
+let LegacyProperties_ = {};
+
+
+/**
+ * @const
+ * @private
+ */
+const DEFAULT_ACCURACY = 0.1;
+
+
+/**
  * @classdesc
  * Provide an OpenLayers format for encoding and decoding features for use
  * in permalinks.
@@ -87,7 +99,7 @@ function FeatureHash(opt_options) {
    * @private
    */
   this.accuracy_ = options.accuracy !== undefined ?
-    options.accuracy : ACCURACY_;
+    options.accuracy : DEFAULT_ACCURACY;
 
   /**
    * @type {boolean}
@@ -133,9 +145,9 @@ function FeatureHash(opt_options) {
    */
   this.defaultValues_ = options.defaultValues !== undefined ? options.defaultValues : {};
 
-};
+}
 
-olUtilInherits(const  olFormatTextFeature);
+olUtilInherits(FeatureHash, olFormatTextFeature);
 
 
 /**
@@ -150,12 +162,6 @@ const StyleTypes_ = {
   'MultiPoint': ngeoFormatFeatureHashStyleType.POINT,
   'MultiPolygon': ngeoFormatFeatureHashStyleType.POLYGON
 };
-
-/**
- * @type {Object.<string, string>}
- * @private
- */
-const LegacyProperties_ = {};
 
 
 /**
@@ -206,13 +212,6 @@ const CHAR64_ =
 
 
 /**
- * @const
- * @private
- */
-const ACCURACY_ = 0.1;
-
-
-/**
  * Get features's properties.
  * @param {import("ol/Feature.js").default} feature Feature.
  * @return {Object.<string, (string|number)>} The feature properties to
@@ -221,7 +220,7 @@ const ACCURACY_ = 0.1;
  */
 function defaultPropertiesFunction_(feature) {
   return feature.getProperties();
-};
+}
 
 
 /**
@@ -236,7 +235,7 @@ function encodeSignedNumber_(num) {
     signedNum = ~(signedNum);
   }
   return encodeNumber_(signedNum);
-};
+}
 
 
 /**
@@ -254,7 +253,7 @@ function encodeNumber_(num) {
   }
   encodedNumber += CHAR64_.charAt(num);
   return encodedNumber;
-};
+}
 
 
 /**
@@ -293,7 +292,7 @@ function encodeStyles_(styles, geometryType, encodedStyles) {
       encodeStyleText_(textStyle, encodedStyles);
     }
   }
-};
+}
 
 
 /**
@@ -305,7 +304,7 @@ function encodeStyles_(styles, geometryType, encodedStyles) {
  */
 function encodeStyleLine_(strokeStyle, encodedStyles) {
   encodeStyleStroke_(strokeStyle, encodedStyles);
-};
+}
 
 
 /**
@@ -331,7 +330,7 @@ function encodeStylePoint_(imageStyle, encodedStyles) {
       encodeStyleStroke_(strokeStyle, encodedStyles);
     }
   }
-};
+}
 
 
 /**
@@ -348,7 +347,7 @@ function encodeStylePolygon_(fillStyle, strokeStyle, encodedStyles) {
   if (strokeStyle !== null) {
     encodeStyleStroke_(strokeStyle, encodedStyles);
   }
-};
+}
 
 
 /**
@@ -368,14 +367,14 @@ function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
     googAsserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
     const fillColorRgba = olColor.asArray(fillColor);
     googAsserts.assert(Array.isArray(fillColorRgba), 'fill color must be an array');
-    const fillColorHex = ngeoUtils.rgbArrayToHex(fillColorRgba);
+    const fillColorHex = rgbArrayToHex(fillColorRgba);
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
     }
     encodedStyles.push(
       encodeURIComponent(`${propertyName}*${fillColorHex}`));
   }
-};
+}
 
 
 /**
@@ -391,7 +390,7 @@ function encodeStyleStroke_(strokeStyle, encodedStyles) {
     googAsserts.assert(Array.isArray(strokeColor));
     const strokeColorRgba = olColor.asArray(strokeColor);
     googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-    const strokeColorHex = ngeoUtils.rgbArrayToHex(strokeColorRgba);
+    const strokeColorHex = rgbArrayToHex(strokeColorRgba);
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
     }
@@ -404,7 +403,7 @@ function encodeStyleStroke_(strokeStyle, encodedStyles) {
     }
     encodedStyles.push(encodeURIComponent(`strokeWidth*${strokeWidth}`));
   }
-};
+}
 
 
 /**
@@ -430,7 +429,7 @@ function encodeStyleText_(textStyle, encodedStyles) {
     encodeStyleFill_(
       fillStyle, encodedStyles, 'fontColor');
   }
-};
+}
 
 
 /**
@@ -447,7 +446,7 @@ function readLineStringGeometry_(text) {
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   return new olGeomLineString(flatCoordinates, olGeomGeometryLayout.XY);
-};
+}
 
 
 /**
@@ -470,7 +469,7 @@ function readMultiLineStringGeometry_(text) {
     ends[i] = flatCoordinates.length;
   }
   return new olGeomMultiLineString(flatCoordinates, olGeomGeometryLayout.XY, ends);
-};
+}
 
 
 /**
@@ -488,7 +487,7 @@ function readPointGeometry_(text) {
   const flatCoordinates = this.decodeCoordinates_(text);
   googAsserts.assert(flatCoordinates.length === 2);
   return new olGeomPoint(flatCoordinates, olGeomGeometryLayout.XY);
-};
+}
 
 
 /**
@@ -505,7 +504,7 @@ function readMultiPointGeometry_(text) {
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   return new olGeomMultiPoint(flatCoordinates, olGeomGeometryLayout.XY);
-};
+}
 
 
 /**
@@ -536,7 +535,7 @@ function readPolygonGeometry_(text) {
     ends[i] = end;
   }
   return new olGeomPolygon(flatCoordinates, olGeomGeometryLayout.XY, ends);
-};
+}
 
 
 /**
@@ -571,7 +570,7 @@ function readMultiPolygonGeometry_(text) {
     }
   }
   return new olGeomMultiPolygon(flatCoordinates, olGeomGeometryLayout.XY, endss);
-};
+}
 
 
 /**
@@ -634,7 +633,7 @@ function setStyleInFeature_(text, feature) {
     text: textStyle
   });
   feature.setStyle(style);
-};
+}
 
 
 /**
@@ -690,7 +689,7 @@ function setStyleProperties_(text, feature) {
   }
 
   feature.setProperties(clone);
-};
+}
 
 
 /**
@@ -729,7 +728,7 @@ function castValue_(key, value) {
   } else {
     return value;
   }
-};
+}
 
 
 /**
@@ -758,7 +757,7 @@ function getStyleProperties_(text, feature) {
   }
 
   return properties;
-};
+}
 
 
 /**
@@ -775,7 +774,7 @@ function writeLineStringGeometry_(geometry) {
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
   return `l(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
-};
+}
 
 
 /**
@@ -805,7 +804,7 @@ function writeMultiLineStringGeometry_(geometry) {
   }
   textArray.push(')');
   return textArray.join('');
-};
+}
 
 
 /**
@@ -822,7 +821,7 @@ function writePointGeometry_(geometry) {
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
   return `p(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
-};
+}
 
 
 /**
@@ -839,7 +838,7 @@ function writeMultiPointGeometry_(geometry) {
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
   return `P(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
-};
+}
 
 
 /**
@@ -866,7 +865,7 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
     offset = ends[i];
   }
   return offset;
-};
+}
 
 
 /**
@@ -888,7 +887,7 @@ function writePolygonGeometry_(geometry) {
     flatCoordinates, stride, offset, ends, textArray);
   textArray.push(')');
   return textArray.join('');
-};
+}
 
 
 /**
@@ -915,7 +914,7 @@ function writeMultiPolygonGeometry_(geometry) {
     textArray.push(')');
   }
   return textArray.join('');
-};
+}
 
 
 /**
@@ -1237,4 +1236,4 @@ FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
 };
 
 
-export default const 
+export default FeatureHash;

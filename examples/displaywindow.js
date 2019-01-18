@@ -92,7 +92,7 @@ function MainController($scope) {
    * @export
    */
   this.windowScope = $scope;
-};
+}
 
 
 module.controller('MainController', MainController);

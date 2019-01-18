@@ -1,7 +1,5 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
-import ngeoUtils from 'ngeo/utils.js';
+import {rgbArrayToHex} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -19,7 +17,7 @@ function VectorEncoder() {
    * @type {import("ol/format/GeoJSON.js").default}
    */
   this.geojsonFormat = new olFormatGeoJSON();
-};
+}
 
 
 /**
@@ -193,7 +191,7 @@ VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) 
     googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
     fillColor = olColor.asArray(fillColor);
     googAsserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
-    symbolizer.fillColor = ngeoUtils.rgbArrayToHex(fillColor);
+    symbolizer.fillColor = rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
   }
 };
@@ -340,7 +338,7 @@ VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeSty
     googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
     const strokeColorRgba = olColor.asArray(strokeColor);
     googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-    symbolizer.strokeColor = ngeoUtils.rgbArrayToHex(strokeColorRgba);
+    symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   const strokeDashstyle = strokeStyle.getLineDash();
@@ -415,7 +413,7 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
       googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
       const strokeColorRgba = olColor.asArray(strokeColor);
       googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-      symbolizer.haloColor = ngeoUtils.rgbArrayToHex(strokeColorRgba);
+      symbolizer.haloColor = rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
       if (width !== undefined) {
@@ -430,7 +428,7 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
       googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
       const fillColorRgba = olColor.asArray(fillColor);
       googAsserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
-      symbolizer.fontColor = ngeoUtils.rgbArrayToHex(fillColorRgba);
+      symbolizer.fontColor = rgbArrayToHex(fillColorRgba);
     }
 
     // Mapfish Print allows offset only if labelAlign is defined.
@@ -446,4 +444,4 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
 };
 
 
-export default exports;
+export default VectorEncoder;

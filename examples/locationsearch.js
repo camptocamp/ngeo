@@ -1,6 +1,3 @@
-/**
- */
-
 import './locationsearch.css';
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -94,10 +91,10 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
    * @export
    */
   this.listeners = /** @type {SearchDirectiveListeners} */ ({
-    select: SearchController.select_.bind(this)
+    select: select_.bind(this)
   });
 
-};
+}
 
 
 /**
@@ -140,7 +137,7 @@ function select_(event, suggestion, dataset) {
   googAsserts.assert(size !== undefined);
   const maxZoom = 16;
   this.map.getView().fit(bbox, {size, maxZoom});
-};
+}
 
 
 appmodule.controller('AppSearchController', SearchController);
@@ -167,7 +164,7 @@ function MainController() {
     })
   });
 
-};
+}
 
 
 appmodule.controller('MainController', MainController);

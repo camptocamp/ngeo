@@ -1,5 +1,5 @@
 import gmfTestDataThemes from 'gmf/test/data/themes.js';
-import gmfBase from 'gmf/index.js';
+import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -27,7 +27,7 @@ describe('Permalink service', () => {
     //create fake layerTree
     const LayerHelper = _ngeoLayerHelper_;
 
-    const dataGroup = LayerHelper.getGroupFromMap(map, gmfBase.DATALAYERGROUP_NAME);
+    const dataGroup = LayerHelper.getGroupFromMap(map, DATALAYERGROUP_NAME);
     const firstLevelGroup = LayerHelper.createBasicGroup(new olCollection([
       LayerHelper.createBasicWMSLayer('', 'l_g1_1'),
       LayerHelper.createBasicWMSLayer('', 'l_g1_2')

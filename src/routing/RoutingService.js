@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 
@@ -65,7 +63,7 @@ function RoutingService($http, $injector) {
    */
   this.protocolVersion_ = 'v1';
 
-};
+}
 
 /**
  * Route request
@@ -177,7 +175,7 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
 const module = angular.module('ngeoRoutingService', [
 ]);
 
-module.service('ngeoRoutingService', exports);
+module.service('ngeoRoutingService', RoutingService);
 
 
 export default module;

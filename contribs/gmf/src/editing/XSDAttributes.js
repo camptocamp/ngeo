@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
@@ -32,7 +30,7 @@ function XSDAttribute($http, gmfLayersUrl) {
    */
   this.promises_ = {};
 
-};
+}
 
 
 /**

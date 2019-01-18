@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
 

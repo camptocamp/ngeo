@@ -83,7 +83,7 @@ function MainController() {
     }),
     stroke: stroke
   });
-};
+}
 
 module.controller('MainController', MainController);
 

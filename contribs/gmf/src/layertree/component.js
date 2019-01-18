@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
+import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
@@ -277,8 +275,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
  */
 Controller.prototype.$onInit = function() {
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
-  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-    gmfBase.DATALAYERGROUP_NAME);
+  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 

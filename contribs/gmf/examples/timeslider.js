@@ -1,6 +1,3 @@
-/**
- */
-
 import './timeslider.css';
 import angular from 'angular';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent.js';
@@ -85,7 +82,7 @@ function MainController($scope, ngeoWMSTime) {
     $scope.$digest();
   };
 
-};
+}
 
 
 module.controller('MainController', MainController);

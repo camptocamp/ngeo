@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 
@@ -39,7 +37,7 @@ import angular from 'angular';
  * @ngdoc directive
  * @ngname ngeoSearch
  */
-const exports = function() {
+function searchDirective() {
   return {
     restrict: 'A',
     /**
@@ -136,7 +134,7 @@ const exports = function() {
 
     }
   };
-};
+}
 
 
 /**
@@ -175,7 +173,7 @@ function adaptListeners_(object) {
     };
   }
   return typeaheadListeners;
-};
+}
 
 
 /**
@@ -185,7 +183,7 @@ const module = angular.module('ngeoSearchDirective', []);
 
 
 // Register the directive in the module
-module.directive('ngeoSearch', exports);
+module.directive('ngeoSearch', searchDirective);
 
 
 export default module;

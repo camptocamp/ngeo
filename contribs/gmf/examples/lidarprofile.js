@@ -60,7 +60,7 @@ function MainController($scope) {
       zoom: 3
     })
   });
-};
+}
 
 
 module.controller('MainController', MainController);

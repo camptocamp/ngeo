@@ -1,10 +1,6 @@
-/**
- */
-
 import angular from 'angular';
-import appURL from './url.js';
+import {SEARCH} from './url.js';
 import './search.css';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
@@ -125,7 +121,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   this.listeners = /** @type {SearchDirectiveListeners} */ ({
     select: SearchController.select_.bind(this)
   });
-};
+}
 
 
 /**
@@ -162,33 +158,10 @@ SearchController.prototype.createVectorLayer_ = function() {
  * @private
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
-  const url = appURL.SEARCH;
+  const url = SEARCH;
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG21781);
   bloodhound.initialize();
   return bloodhound;
-};
-
-
-/**
- * @param {jQuery.Event} event Event.
- * @param {Object} suggestion Suggestion.
- * @param {TypeaheadDataset} dataset Dataset.
- * @this {app.search.SearchController}
- * @private
- */
-function select_(event, suggestion, dataset) {
-  const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-  const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
-      (feature.getGeometry());
-  const size = this.map.getSize();
-  googAsserts.assert(size !== undefined);
-  const source = this.vectorLayer_.getSource();
-  source.clear(true);
-  source.addFeature(feature);
-  this.map.getView().fit(featureGeometry, {
-    size: size,
-    maxZoom: 16
-  });
 };
 
 
@@ -216,7 +189,7 @@ function MainController() {
     })
   });
 
-};
+}
 
 
 module.controller('MainController', MainController);

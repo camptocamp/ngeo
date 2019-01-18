@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olExtent from 'ol/extent.js';
@@ -154,7 +152,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @ngname ngeoWfsPermalink
  * @ngInject
  */
-const WfsPermalinkService = function(
+export function WfsPermalinkService(
   $http, ngeoPermalinkOgcserverUrl, ngeoQueryResult, ngeoWfsPermalinkOptions
 ) {
 
@@ -212,7 +210,7 @@ const WfsPermalinkService = function(
    * @private
    */
   this.result_ = ngeoQueryResult;
-};
+}
 
 
 /**
@@ -405,7 +403,7 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 /**
  * @type {!angular.IModule}
  */
-WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
+const module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
 
@@ -413,14 +411,14 @@ WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
 /**
  * Set this value to enable WFS permalink.
  */
-WfsPermalinkService.module.value('ngeoPermalinkOgcserverUrl', '');
+module.value('ngeoPermalinkOgcserverUrl', '');
 
 
 /**
  * Value that is supposed to be set in applications to enable the WFS
  * permalink functionality.
  */
-WfsPermalinkService.module.value('ngeoWfsPermalinkOptions',
+module.value('ngeoWfsPermalinkOptions',
   /** @type {WfsPermalinkOptions} */ ({
     url: '',
     wfsTypes: [],
@@ -430,7 +428,7 @@ WfsPermalinkService.module.value('ngeoWfsPermalinkOptions',
 );
 
 
-WfsPermalinkService.module.service('ngeoWfsPermalink', WfsPermalinkService);
+module.service('ngeoWfsPermalink', WfsPermalinkService);
 
 
-export default WfsPermalinkService;
+export default module;

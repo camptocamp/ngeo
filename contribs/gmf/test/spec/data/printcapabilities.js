@@ -1,6 +1,4 @@
-/**
- */
-const exports = {
+export default {
   'app': 'demo',
   'layouts': [{
     'attributes': [{
@@ -541,6 +539,3 @@ const exports = {
   }],
   'formats': ['bmp', 'gif', 'pdf', 'png', 'tif', 'tiff']
 };
-
-
-export default exports;

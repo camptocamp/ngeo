@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -114,7 +112,7 @@ function Popup($compile, $rootScope, $sce, $timeout) {
   // Compile the element, link it to the scope and add it to the document.
   $compile(this.element_)(this.scope);
   angular.element(document.body).append(this.element_);
-};
+}
 
 
 /**
@@ -291,10 +289,10 @@ function Factory($compile, $rootScope, $sce, $timeout) {
      * @return {!import("ngeo/message/Popup.js").default} The popup instance.
      */
     function() {
-      return new exports($compile, $rootScope, $sce, $timeout);
+      return new Popup($compile, $rootScope, $sce, $timeout);
     }
   );
-};
+}
 
 /**
  * @type {angular.IModule}

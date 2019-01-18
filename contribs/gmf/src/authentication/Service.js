@@ -1,8 +1,19 @@
-/**
- */
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
+
+
+/**
+ * @enum {string}
+ */
+export const RouteSuffix = {
+  CHANGE_PASSWORD: 'loginchange',
+  IS_LOGGED_IN: 'loginuser',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  RESET_PASSWORD: 'loginresetpassword'
+};
+
 
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
@@ -222,18 +233,8 @@ class Service extends olEventsEventTarget {
       this.load_();
     }
   }
-};
+}
 
-/**
- * @enum {string}
- */
-const RouteSuffix = {
-  CHANGE_PASSWORD: 'loginchange',
-  IS_LOGGED_IN: 'loginuser',
-  LOGIN: 'login',
-  LOGOUT: 'logout',
-  RESET_PASSWORD: 'loginresetpassword'
-};
 
 /**
  * @type {!angular.IModule}

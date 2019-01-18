@@ -1,7 +1,4 @@
-/**
- */
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
-
 import angular from 'angular';
 import appURL from './url.js';
 import './importdatasource.css';
@@ -64,7 +61,7 @@ module.constant('defaultTheme', 'Filters');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-MainController = class {
+class MainController {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
@@ -139,7 +136,7 @@ MainController = class {
     });
 
   }
-};
+}
 
 
 module.controller('MainController', MainController);

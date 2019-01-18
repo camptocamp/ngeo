@@ -233,7 +233,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
     });
   });
 
-};
+}
 
 
 /**

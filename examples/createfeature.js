@@ -150,7 +150,7 @@ function MainController(ngeoToolActivateMgr) {
     dummyToolActivate,
     true
   );
-};
+}
 
 
 module.controller('MainController', MainController);

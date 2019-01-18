@@ -1,5 +1,3 @@
-/**
- */
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olOverlay from 'ol/Overlay.js';
 
@@ -45,9 +43,9 @@ function Popover(opt_options) {
 
   olOverlay.call(this, options);
 
-};
+}
 
-olUtilInherits(exports, olOverlay);
+olUtilInherits(Popover, olOverlay);
 
 
 /**
@@ -94,4 +92,4 @@ Popover.prototype.setMap = function(map) {
 };
 
 
-export default exports;
+export default Popover;

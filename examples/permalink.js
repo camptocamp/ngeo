@@ -1,6 +1,3 @@
-/**
- */
-
 import './permalink.css';
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
@@ -73,7 +70,7 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
-};
+}
 
 module.controller('AppMapController', MapComponentController);
 
@@ -178,7 +175,7 @@ function DrawComponentController($scope, ngeoLocation) {
    * @export
    */
   this.interaction;
-};
+}
 
 DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
@@ -269,7 +266,7 @@ function MainController() {
   // makes the vector layer "unmanaged", meaning that it is always on top.
   this.vectorLayer.setMap(this.map);
 
-};
+}
 
 
 module.controller('MainController', MainController);

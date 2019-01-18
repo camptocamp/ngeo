@@ -151,7 +151,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   const drawPolygonTool = new ngeoMiscToolActivate(this.drawPolygon, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
-};
+}
 
 
 module.controller('MainController', MainController);

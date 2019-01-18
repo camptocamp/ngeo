@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent.js';
 

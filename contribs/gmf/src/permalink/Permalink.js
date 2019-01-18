@@ -1,21 +1,19 @@
-/**
- */
 import angular from 'angular';
 
-import gmfBase from 'gmf/index.js';
+import {PermalinkParam} from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
-import gmfThemeManager from 'gmf/theme/Manager.js';
+import gmfThemeManager, {EventType} from 'gmf/theme/Manager.js';
 
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes.js';
 import ngeoPopover from 'ngeo/Popover.js';
 
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 import ngeoDatasourceOGC, {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
-import ngeoOlcsConstants from 'ngeo/olcs/constants.js';
+import {Permalink3dParam} from 'ngeo/olcs/constants.js';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 
@@ -35,6 +33,38 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olLayerGroup from 'ol/layer/Group.js';
+
+
+/**
+ * @enum {string}
+ */
+export const OpenLayersLayerProperties = {
+  OPACITY: 'opacity'
+};
+
+
+/**
+ * External data source separators
+ * @enum {string}
+ */
+const ExtDSSeparator = {
+  LIST: ',',
+  NAMES: ';'
+};
+
+
+/**
+ * @enum {string}
+ */
+const ParamPrefix = {
+  DIMENSIONS: 'dim_',
+  TREE_ENABLE: 'tree_enable_',
+  TREE_GROUP_LAYERS: 'tree_group_layers_',
+  TREE_GROUP_OPACITY: 'tree_group_opacity_',
+  TREE_OPACITY: 'tree_opacity_',
+  WFS: 'wfs_'
+};
+
 
 /**
  * The Permalink service for GMF, which uses the `ngeo.statemanager.Service` to
@@ -422,7 +452,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   }
 
   if (this.gmfThemeManager_) {
-    this.rootScope_.$on(gmfThemeManager.EventType.THEME_NAME_SET, (event, name) => {
+    this.rootScope_.$on(EventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_(name);
     });
   }
@@ -477,7 +507,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   }
 
   this.initLayers_();
-};
+}
 
 
 // === Map X, Y, Z ===
@@ -488,8 +518,8 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
  * @export
  */
 Permalink.prototype.getMapCenter = function() {
-  const x = this.ngeoStateManager_.getInitialNumberValue(gmfBase.PermalinkParam.MAP_X);
-  const y = this.ngeoStateManager_.getInitialNumberValue(gmfBase.PermalinkParam.MAP_Y);
+  const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
+  const y = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Y);
 
   if (!isNaN(x) && !isNaN(y)) {
     const center = [x, y];
@@ -514,7 +544,7 @@ Permalink.prototype.getMapCenter = function() {
  * @export
  */
 Permalink.prototype.getMapZoom = function() {
-  const zoom = this.ngeoStateManager_.getInitialNumberValue(gmfBase.PermalinkParam.MAP_Z);
+  const zoom = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Z);
   return isNaN(zoom) ? undefined : zoom;
 };
 
@@ -528,7 +558,7 @@ Permalink.prototype.getMapZoom = function() {
  * @export
  */
 Permalink.prototype.getMapCrosshair = function() {
-  const crosshair = this.ngeoStateManager_.getInitialBooleanValue(gmfBase.PermalinkParam.MAP_CROSSHAIR);
+  const crosshair = this.ngeoStateManager_.getInitialBooleanValue(PermalinkParam.MAP_CROSSHAIR);
   return crosshair === undefined ? this.crosshairEnabledByDefault_ : crosshair;
 };
 
@@ -570,7 +600,7 @@ Permalink.prototype.setMapCrosshair = function(opt_center) {
  * @export
  */
 Permalink.prototype.getMapTooltip = function() {
-  return this.ngeoStateManager_.getInitialStringValue(gmfBase.PermalinkParam.MAP_TOOLTIP);
+  return this.ngeoStateManager_.getInitialStringValue(PermalinkParam.MAP_TOOLTIP);
 };
 
 /**
@@ -615,7 +645,7 @@ Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
  * @export
  */
 Permalink.prototype.getFeatures = function() {
-  const f = this.ngeoStateManager_.getInitialStringValue(gmfBase.PermalinkParam.FEATURES);
+  const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
     return googAsserts.assert(this.featureHashFormat_.readFeatures(f));
   }
@@ -709,7 +739,7 @@ Permalink.prototype.registerMap_ = function(map, oeFeature) {
       maxZoom
     });
   } else {
-    const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(ngeoOlcsConstants.Permalink3dParam.ENABLED);
+    const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(Permalink3dParam.ENABLED);
     if (!enabled3d) {
       center = this.getMapCenter();
       if (center) {
@@ -732,9 +762,9 @@ Permalink.prototype.registerMap_ = function(map, oeFeature) {
       const center = view.getCenter();
       const zoom = view.getZoom();
       const object = {};
-      object[gmfBase.PermalinkParam.MAP_X] = Math.round(center[0]);
-      object[gmfBase.PermalinkParam.MAP_Y] = Math.round(center[1]);
-      object[gmfBase.PermalinkParam.MAP_Z] = zoom;
+      object[PermalinkParam.MAP_X] = Math.round(center[0]);
+      object[PermalinkParam.MAP_Y] = Math.round(center[1]);
+      object[PermalinkParam.MAP_Z] = zoom;
       this.ngeoStateManager_.updateState(object);
     }, 300, /* invokeApply */ true),
     this);
@@ -781,7 +811,7 @@ Permalink.prototype.unregisterMap_ = function() {
  * @export
  */
 Permalink.prototype.getBackgroundLayer = function(layers) {
-  const layerName = this.ngeoStateManager_.getInitialStringValue(gmfBase.PermalinkParam.BG_LAYER);
+  const layerName = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.BG_LAYER);
   if (layerName !== undefined) {
     for (const layer of layers) {
       if (layer.get('label') === layerName) {
@@ -810,7 +840,7 @@ Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
 
   // set it in state
   const object = {};
-  object[gmfBase.PermalinkParam.BG_LAYER] = layerName;
+  object[PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
 };
 
@@ -833,7 +863,7 @@ Permalink.prototype.refreshFirstLevelGroups = function() {
 
   // set it in state
   const object = {};
-  object[gmfBase.PermalinkParam.TREE_GROUPS] = orderedNames.join(',');
+  object[PermalinkParam.TREE_GROUPS] = orderedNames.join(',');
   this.ngeoStateManager_.updateState(object);
 };
 
@@ -951,16 +981,16 @@ Permalink.prototype.initLayers_ = function() {
     let firstLevelGroups = [];
     let theme;
     // Check if we have the groups in the permalink
-    const groupsNames = this.ngeoLocation_.getParam(gmfBase.PermalinkParam.TREE_GROUPS);
+    const groupsNames = this.ngeoLocation_.getParam(PermalinkParam.TREE_GROUPS);
     if (groupsNames === undefined) {
       googAsserts.assertString(themeName);
-      theme = gmfThemeThemes.findThemeByName(themes, themeName);
+      theme = findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;
       }
     } else {
       groupsNames.split(',').forEach((groupName) => {
-        const group = gmfThemeThemes.findGroupByName(themes, groupName);
+        const group = findGroupByName(themes, groupName);
         if (group) {
           firstLevelGroups.push(group);
         } else {
@@ -1110,7 +1140,7 @@ Permalink.prototype.handleNgeoFeaturesChange_ = function() {
   const data = this.featureHashFormat_.writeFeatures(features);
 
   const object = {};
-  object[gmfBase.PermalinkParam.FEATURES] = data;
+  object[PermalinkParam.FEATURES] = data;
   this.ngeoStateManager_.updateState(object);
 };
 
@@ -1121,12 +1151,12 @@ Permalink.prototype.handleNgeoFeaturesChange_ = function() {
  * @private
  */
 Permalink.prototype.getWfsPermalinkData_ = function() {
-  const wfsLayer = this.ngeoLocation_.getParam(gmfBase.PermalinkParam.WFS_LAYER);
+  const wfsLayer = this.ngeoLocation_.getParam(PermalinkParam.WFS_LAYER);
   if (!wfsLayer) {
     return null;
   }
 
-  const numGroups = this.ngeoLocation_.getParamAsInt(gmfBase.PermalinkParam.WFS_NGROUPS);
+  const numGroups = this.ngeoLocation_.getParamAsInt(PermalinkParam.WFS_NGROUPS);
   const paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(ParamPrefix.WFS);
 
   const filterGroups = [];
@@ -1152,7 +1182,7 @@ Permalink.prototype.getWfsPermalinkData_ = function() {
     return null;
   }
 
-  const showFeaturesParam = this.ngeoLocation_.getParam(gmfBase.PermalinkParam.WFS_SHOW_FEATURES);
+  const showFeaturesParam = this.ngeoLocation_.getParam(PermalinkParam.WFS_SHOW_FEATURES);
   const showFeatures = !(showFeaturesParam === '0' || showFeaturesParam === 'false');
 
   return {
@@ -1177,8 +1207,8 @@ Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   const filters = [];
 
   paramKeys.forEach((paramKey) => {
-    if (paramKey == gmfBase.PermalinkParam.WFS_LAYER || paramKey == gmfBase.PermalinkParam.WFS_SHOW_FEATURES ||
-        paramKey == gmfBase.PermalinkParam.WFS_NGROUPS || paramKey.indexOf(prefix) != 0) {
+    if (paramKey == PermalinkParam.WFS_LAYER || paramKey == PermalinkParam.WFS_SHOW_FEATURES ||
+        paramKey == PermalinkParam.WFS_NGROUPS || paramKey.indexOf(prefix) != 0) {
       return;
     }
     const value = this.ngeoLocation_.getParam(paramKey);
@@ -1219,9 +1249,9 @@ Permalink.prototype.initExternalDataSources_ = function() {
   const promises = [];
 
   const layerNamesString = this.ngeoStateManager_.getInitialValue(
-    gmfBase.PermalinkParam.EXTERNAL_DATASOURCES_NAMES);
+    PermalinkParam.EXTERNAL_DATASOURCES_NAMES);
   const urlsString = this.ngeoStateManager_.getInitialValue(
-    gmfBase.PermalinkParam.EXTERNAL_DATASOURCES_URLS);
+    PermalinkParam.EXTERNAL_DATASOURCES_URLS);
 
   if (layerNamesString && urlsString) {
 
@@ -1483,10 +1513,10 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
 
     // (3) Update state
     this.ngeoStateManager_.updateState({
-      [gmfBase.PermalinkParam.EXTERNAL_DATASOURCES_NAMES]: names.join(
+      [PermalinkParam.EXTERNAL_DATASOURCES_NAMES]: names.join(
         ExtDSSeparator.LIST
       ),
-      [gmfBase.PermalinkParam.EXTERNAL_DATASOURCES_URLS]: urls.join(
+      [PermalinkParam.EXTERNAL_DATASOURCES_URLS]: urls.join(
         ExtDSSeparator.LIST
       )
     });
@@ -1558,41 +1588,10 @@ const module = angular.module('gmfPermalink', [
   ngeoStatemanagerModule.name,
 ]);
 
-module.service('gmfPermalink', exports);
+module.service('gmfPermalink', Permalink);
 
 
-/**
- * @enum {string}
- */
-const OpenLayersLayerProperties = {
-  OPACITY: 'opacity'
-};
-
-/**
- * @enum {string}
- */
-const ParamPrefix = {
-  DIMENSIONS: 'dim_',
-  TREE_ENABLE: 'tree_enable_',
-  TREE_GROUP_LAYERS: 'tree_group_layers_',
-  TREE_GROUP_OPACITY: 'tree_group_opacity_',
-  TREE_OPACITY: 'tree_opacity_',
-  WFS: 'wfs_'
-};
-
-
-/**
- * External data source separators
- * @enum {string}
- */
-const ExtDSSeparator = {
-  LIST: ',',
-  NAMES: ';'
-};
-
-
-module.value('gmfPermalinkOptions',
-  /** @type {gmfx.PermalinkOptions} */ ({}));
+module.value('gmfPermalinkOptions', /** @type {gmfx.PermalinkOptions} */ ({}));
 
 
 /** Configure the ngeo state manager */
@@ -1601,10 +1600,10 @@ module.value('gmfPermalinkOptions',
   for (const key1 in ParamPrefix) {
     regexp.push(new RegExp(`${ParamPrefix[key1]}.*`));
   }
-  for (const key2 in gmfBase.PermalinkParam) {
+  for (const key2 in PermalinkParam) {
     regexp.push(new RegExp(ParamPrefix[key2]));
   }
-  ngeoStatemanagerService.module.value('ngeoUsedKeyRegexp', regexp);
+  ngeoStatemanagerService.value('ngeoUsedKeyRegexp', regexp);
 })();
 
 

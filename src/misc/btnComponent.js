@@ -90,7 +90,7 @@ function BtnGroupController($scope) {
    * @private
    */
   this.scope_ = $scope;
-};
+}
 
 
 /**

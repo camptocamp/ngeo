@@ -95,7 +95,7 @@ function MainController(gmfPermalink) {
    */
   this.measurePointActive = false;
 
-};
+}
 
 
 module.controller('MainController', MainController);

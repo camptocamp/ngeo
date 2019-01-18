@@ -73,7 +73,7 @@ function MainController() {
    */
   this.gridConfig = new ngeoGridConfig(data, columnDefs);
 
-};
+}
 
 
 module.controller('MainController', MainController);

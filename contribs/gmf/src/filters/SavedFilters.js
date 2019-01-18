@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
@@ -211,12 +209,12 @@ class SavedFilter {
     }
   }
 
-};
+}
 
 
 const module = angular.module('gmfSavedFilters', []);
 
-module.service('gmfSavedFilters', exports);
+module.service('gmfSavedFilters', SavedFilter);
 
 
 /**
@@ -224,7 +222,7 @@ module.service('gmfSavedFilters', exports);
  * @constructor
  * @export
  */
-function Item() {};
+function Item() {}
 
 
 /**

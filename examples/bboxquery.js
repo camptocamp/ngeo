@@ -1,8 +1,5 @@
-/**
- */
-
 import angular from 'angular';
-import appURL from './url.js';
+import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
 import './bboxquery.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
@@ -67,7 +64,7 @@ function QueryresultController(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 
-};
+}
 
 
 module.controller('AppQueryresultController', QueryresultController);
@@ -90,14 +87,14 @@ function MainController($scope, ngeoDataSources) {
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });
@@ -128,8 +125,8 @@ function MainController($scope, ngeoDataSources) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wfsFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-    wfsUrl: appURL.MAPSERVER_PROXY,
+    wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
+    wfsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -140,14 +137,14 @@ function MainController($scope, ngeoDataSources) {
     id: 2,
     name: 'information',
     visible: true,
-    wfsFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-    wfsUrl: appURL.MAPSERVER_PROXY,
+    wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
+    wfsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'information',
       queryable: true
     }]
   }));
-};
+}
 
 module.controller('MainController', MainController);
 

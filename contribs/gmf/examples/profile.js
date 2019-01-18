@@ -146,7 +146,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     this.profileLine = e.feature.getGeometry();
     $scope.$digest();
   });
-};
+}
 
 
 module.controller('MainController', MainController);

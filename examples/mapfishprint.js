@@ -1,8 +1,5 @@
-/**
- */
-
 import angular from 'angular';
-import appURL from './url.js';
+import {MAPSERVER_PROXY, PRINT_PROXY} from './url.js';
 import './mapfishprint.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
@@ -80,7 +77,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     layers: [
       new olLayerImage({
         source: new olSourceImageWMS({
-          url: appURL.MAPSERVER_PROXY,
+          url: MAPSERVER_PROXY,
           params: {
             'LAYERS': 'osm'
           },
@@ -121,7 +118,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    * @type {import("ngeo/print/Service.js").default}
    * @private
    */
-  this.print_ = ngeoCreatePrint(appURL.PRINT_PROXY);
+  this.print_ = ngeoCreatePrint(PRINT_PROXY);
 
   /**
    * @type {import("ngeo/print/Utils.js").default}
@@ -155,7 +152,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    * Draw the print window in a map postcompose listener.
    */
   this.map.on('postcompose', postcomposeListener);
-};
+}
 
 
 /**

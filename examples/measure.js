@@ -1,6 +1,3 @@
-/**
- */
-
 import './measure.css';
 import angular from 'angular';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
@@ -221,7 +218,7 @@ function MeasuretoolsController($scope, $compile, $sce,
     const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';
   });
-};
+}
 
 module.controller('AppMeasuretoolsController', MeasuretoolsController);
 
@@ -260,7 +257,7 @@ function MainController() {
   });
 
   this.map.addControl(new olControlScaleLine());
-};
+}
 
 
 module.controller('MainController', MainController);

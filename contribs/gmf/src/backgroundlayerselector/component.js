@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';

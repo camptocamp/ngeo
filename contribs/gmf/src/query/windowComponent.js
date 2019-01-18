@@ -1,9 +1,7 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
 
 import ngeoMiscSwipe from 'ngeo/misc/swipe.js';
 
@@ -433,7 +431,7 @@ Controller.prototype.updateQueryResult_ = function(queryResult) {
     const source = queryResult.sources[i];
     source.features = source.features.filter((feature) => {
       googAsserts.assert(feature);
-      return !olObj.isEmpty(ngeoMiscFeatureHelper.getFilteredFeatureValues(feature));
+      return !olObj.isEmpty(getFilteredFeatureValues(feature));
     });
     this.ngeoQueryResult.sources.push(source);
     this.ngeoQueryResult.total += source.features.length;
@@ -483,7 +481,7 @@ Controller.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
-  return ngeoMiscFeatureHelper.getFilteredFeatureValues(this.feature);
+  return getFilteredFeatureValues(this.feature);
 };
 
 

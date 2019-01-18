@@ -1,6 +1,3 @@
-/**
- */
-
 import './datepicker.css';
 import angular from 'angular';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
@@ -77,7 +74,7 @@ function MainController(ngeoTime) {
   this.onDateRangeSelected = function(date) {
     this.rangeValue = date;
   };
-};
+}
 
 
 module.controller('MainController', MainController);

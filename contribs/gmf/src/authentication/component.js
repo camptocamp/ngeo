@@ -26,7 +26,7 @@ function gmfAuthenticationTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
     'gmf/authentication';
-};
+}
 
 
 module.run(/* @ngInject */ ($templateCache) => {

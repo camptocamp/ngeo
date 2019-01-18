@@ -19,8 +19,7 @@ describe('ngeo.format.FeatureHash', () => {
   let fhFormat;
 
   beforeEach(() => {
-    ngeoFormatFeatureHash.ACCURACY_ = 1; // Easier to test
-    fhFormat = new ngeoFormatFeatureHash();
+    fhFormat = new ngeoFormatFeatureHash({'accuracy': 1}); // Easier to test
   });
 
   describe('decoding', () => {
@@ -504,6 +503,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('With a user-provided feature properties function', () => {
       it('encodes feature properties as expected', () => {
         fhFormat = new ngeoFormatFeatureHash({
+          'accuracy': 1,
           properties(feature) {
             return {foobar: feature.get('foo') + feature.get('bar')};
           }

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -241,7 +239,7 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
             /** @type {function(?)} */ (this.calculateRoute.bind(this)),
             debounceDelay,
             true));
-};
+}
 
 /**
  * Init the controller

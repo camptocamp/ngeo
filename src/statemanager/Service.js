@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
@@ -190,7 +188,7 @@ Service.prototype.deleteParam = function(key) {
 const module = angular.module('ngeoStateManager', [
   ngeoStatemanagerLocation.name
 ]);
-module.service('ngeoStateManager', exports);
+module.service('ngeoStateManager', Service);
 module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
 
 

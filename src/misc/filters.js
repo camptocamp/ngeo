@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import {modulo} from 'ol/math.js';
 import {padNumber} from 'ol/string.js';
@@ -100,9 +98,9 @@ function Scalify($filter) {
   };
   filterFn['$stateful'] = true;
   return filterFn;
-};
+}
 
-exports.filter('ngeoScalify', Scalify);
+module.filter('ngeoScalify', Scalify);
 
 /**
  * A filter used to format a number with a precision, using the locale.
@@ -182,9 +180,9 @@ function Number($locale) {
     );
   };
   return result;
-};
+}
 
-exports.filter('ngeoNumber', Number);
+module.filter('ngeoNumber', Number);
 
 /**
  * A filter used to format a number with the prefix and unit
@@ -244,9 +242,9 @@ function UnitPrefix($filter) {
     return numberFilter(number, opt_precision) + space + postfix;
   };
   return result;
-};
+}
 
-exports.filter('ngeoUnitPrefix', UnitPrefix);
+module.filter('ngeoUnitPrefix', UnitPrefix);
 
 /**
  * Format a couple of numbers as number coordinates.
@@ -297,9 +295,9 @@ function NumberCoordinates($filter) {
     return template.replace('{x}', x).replace('{y}', y);
   };
   return filterFn;
-};
+}
 
-exports.filter('ngeoNumberCoordinates', NumberCoordinates);
+module.filter('ngeoNumberCoordinates', NumberCoordinates);
 
 
 /**
@@ -355,9 +353,9 @@ function DMSCoordinates() {
   };
 
   return filterFn;
-};
+}
 
-exports.filter('ngeoDMSCoordinates', DMSCoordinates);
+module.filter('ngeoDMSCoordinates', DMSCoordinates);
 
 
 /**
@@ -382,9 +380,9 @@ function trustHtmlFilter($sce) {
       return $sce.trustAsHtml('&nbsp;');
     }
   };
-};
+}
 
-exports.filter('ngeoTrustHtml', trustHtmlFilter);
+module.filter('ngeoTrustHtml', trustHtmlFilter);
 
 
 /**
@@ -423,9 +421,9 @@ function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
       return $sce.trustAsHtml('&nbsp;');
     }
   };
-};
+}
 
-exports.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
+module.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
 
 
 /**
@@ -527,16 +525,16 @@ function Duration(gettextCatalog) {
   };
 
   return result;
-};
+}
 
-exports.filter('ngeoDuration', Duration);
+module.filter('ngeoDuration', Duration);
 
 
 /**
  * @type {!Array.<!StringToHtmlReplacement>}
  * @ngname ngeoStringToHtmlReplacements
  */
-exports.StringToHtmlReplacements = [
+const StringToHtmlReplacements = [
   // Hyperlink
   {
     expression: /^(https?:\/\/.+)$/gm,
@@ -549,10 +547,7 @@ exports.StringToHtmlReplacements = [
   }
 ];
 
-exports.constant(
-  'ngeoStringToHtmlReplacements',
-  StringToHtmlReplacements
-);
+module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
 
 
 /**
@@ -571,7 +566,7 @@ const removeCDATA = function() {
   };
 };
 
-exports.filter('removeCDATA', removeCDATA);
+module.filter('removeCDATA', removeCDATA);
 
 
 export default module;

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import {WMSInfoFormat} from 'ngeo/datasource/OGC.js';
@@ -44,7 +42,7 @@ function Query($http, $q, gmfThemes) {
    */
   this.getQueryableLayerNodesDefered_ = null;
 
-};
+}
 
 
 /**
@@ -142,7 +140,7 @@ function getQueryableLayersInfoFromThemes(
   }
 
   return queryableLayersInfo;
-};
+}
 
 
 /**
@@ -201,7 +199,7 @@ Query.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
 const module = angular.module('gmfObjectEditingQuery', [
   gmfThemeThemes.name,
 ]);
-module.service('gmfObjectEditingQuery', exports);
+module.service('gmfObjectEditingQuery', Query);
 
 
 export default module;

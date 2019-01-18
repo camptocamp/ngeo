@@ -1,10 +1,8 @@
 /**
- */
-/**
  * @enum {string}
  * @export
  */
-const exports = {
+export default {
   /**
    * @type {string}
    * @export
@@ -21,6 +19,3 @@ const exports = {
    */
   OR: '||'
 };
-
-
-export default exports;

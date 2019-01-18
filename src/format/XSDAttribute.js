@@ -1,7 +1,5 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
-import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
+import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
@@ -15,9 +13,9 @@ import olFormatXML from 'ol/format/XML.js';
  */
 function XSDAttribute() {
   olFormatXML.call(this);
-};
+}
 
-olUtilInherits(const  olFormatXML);
+olUtilInherits(XSDAttribute, olFormatXML);
 
 
 /**
@@ -106,7 +104,7 @@ XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const type = node.getAttribute('type');
   if (type) {
-    if (!ngeoFormatAttribute.setGeometryType(attribute, type)) {
+    if (!setGeometryType(attribute, type)) {
       this.setAttributeByXsdType_(attribute, type);
     }
   } else {
@@ -160,6 +158,24 @@ XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
 
 /**
+ * @enum {string}
+ * @export
+ */
+const NumberType = {
+  /**
+   * @type {string}
+   * @export
+   */
+  FLOAT: 'float',
+  /**
+   * @type {string}
+   * @export
+   */
+  INTEGER: 'integer'
+};
+
+
+/**
  * Set the `type` and `numType` properties of an attribute depending on the
  * given xsdType.
  *
@@ -195,7 +211,7 @@ XSDAttribute.prototype.setAttributeByXsdType_ = function(
  * @param {Array.<Attribute>} attributes The list of attributes.
  * @return {?Attribute} A geometry attribute object.
  */
-function getGeometryAttribute(attributes) {
+export function getGeometryAttribute(attributes) {
   let geomAttribute = null;
   for (let i = 0, ii = attributes.length; i < ii; i++) {
     if (attributes[i].type === ngeoFormatAttributeType.GEOMETRY) {
@@ -204,25 +220,7 @@ function getGeometryAttribute(attributes) {
     }
   }
   return geomAttribute;
-};
+}
 
 
-/**
- * @enum {string}
- * @export
- */
-const NumberType = {
-  /**
-   * @type {string}
-   * @export
-   */
-  FLOAT: 'float',
-  /**
-   * @type {string}
-   * @export
-   */
-  INTEGER: 'integer'
-};
-
-
-export default const 
+export default XSDAttribute;

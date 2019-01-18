@@ -1,6 +1,3 @@
-/**
- */
-const exports = {};
 import googAsserts from 'goog/asserts.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerBase from 'ol/layer/Base.js';
@@ -21,7 +18,7 @@ import olSourceTile from 'ol/source/Tile.js';
  *
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to decorate.
  */
-function interaction(interaction) {
+export function interaction(interaction) {
   googAsserts.assertInstanceof(interaction, olInteractionInteraction);
 
   Object.defineProperty(interaction, 'active', {
@@ -30,7 +27,7 @@ function interaction(interaction) {
       interaction.setActive(val);
     }
   });
-};
+}
 
 
 /**
@@ -44,7 +41,7 @@ function interaction(interaction) {
  *
  * @param {import("ol/layer/Base.js").default} layer Layer to decorate.
  */
-function layer(layer) {
+export function layer(layer) {
   googAsserts.assertInstanceof(layer, olLayerBase);
 
   Object.defineProperty(layer, 'visible', {
@@ -74,7 +71,7 @@ function layer(layer) {
       layer.setOpacity(val);
     }
   });
-};
+}
 
 
 /**
@@ -90,7 +87,7 @@ function layer(layer) {
  * @param {import("ol/layer/Base.js").default} layer layer.
  * @param {angular.IScope} $scope Scope.
  */
-function layerLoading(layer, $scope) {
+export function layerLoading(layer, $scope) {
 
   let source;
 
@@ -182,7 +179,4 @@ function layerLoading(layer, $scope) {
       decrement_(parent);
     }
   }
-};
-
-
-export default exports;
+}

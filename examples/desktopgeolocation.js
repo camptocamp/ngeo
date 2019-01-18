@@ -73,7 +73,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-};
+}
 
 
 module.controller('MainController', MainController);

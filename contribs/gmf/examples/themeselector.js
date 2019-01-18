@@ -45,7 +45,7 @@ function MainController($http, gmfThemes, gmfThemeManager) {
   this.manager = gmfThemeManager;
 
   gmfThemes.loadThemes();
-};
+}
 
 
 module.controller('MainController', MainController);

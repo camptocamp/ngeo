@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import appURL from './url.js';
 import './editfeature.css';
@@ -133,7 +130,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
     container: 'body',
     trigger: 'hover'
   });
-};
+}
 
 
 /**

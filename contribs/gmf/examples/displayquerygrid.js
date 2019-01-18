@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import appURL from './url.js';
 import './displayquerygrid.css';
@@ -85,7 +82,7 @@ function QueryresultController(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 
-};
+}
 
 
 module.controller('gmfappQueryresultController', QueryresultController);

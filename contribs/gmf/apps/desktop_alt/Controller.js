@@ -1,6 +1,4 @@
 /**
- */
-/**
  * Application entry point.
  *
  * This file includes `goog.require`'s for all the components/directives used

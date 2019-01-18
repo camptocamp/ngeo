@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 class EnumerateAttribute {
@@ -65,7 +63,7 @@ class EnumerateAttribute {
     return data.items;
   }
 
-};
+}
 
 
 /**

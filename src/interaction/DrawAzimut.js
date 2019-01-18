@@ -1,7 +1,5 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
-import ngeoInteractionCommon from 'ngeo/interaction/common.js';
+import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFeature from 'ol/Feature.js';
@@ -86,13 +84,13 @@ function DrawAzimut(options) {
       useSpatialIndex: false,
       wrapX: false
     }),
-    style: options.style || ngeoInteractionCommon.getDefaultDrawStyleFunction()
+    style: options.style || getDefaultDrawStyleFunction()
   });
 
   olEvents.listen(this, 'change:active', this.updateState_, this);
-};
+}
 
-olUtilInherits(exports, olInteractionPointer);
+olUtilInherits(DrawAzimut, olInteractionPointer);
 
 
 /**
@@ -104,7 +102,7 @@ olUtilInherits(exports, olInteractionPointer);
 function handleDownEvent_(event) {
   this.downPx_ = event.pixel;
   return true;
-};
+}
 
 
 /**
@@ -130,7 +128,7 @@ function handleUpEvent_(event) {
     pass = false;
   }
   return pass;
-};
+}
 
 
 /**
@@ -147,7 +145,7 @@ function handleEvent_(mapBrowserEvent) {
     pass = false;
   }
   return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && pass;
-};
+}
 
 
 /**
@@ -312,4 +310,4 @@ DrawAzimut.prototype.setMap = function(map) {
 };
 
 
-export default exports;
+export default DrawAzimut;

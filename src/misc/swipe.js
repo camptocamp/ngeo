@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 /**
@@ -206,7 +204,7 @@ module.factory('$verticalSwipe', [function() {
 }]);
 
 function makeSwipeDirective_(directiveName, direction, eventName) {
-  directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
+  module.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
     // The maximum horizontal delta for a swipe should be less than 75px.
     const MAX_HORIZONTAL_DISTANCE = 75;
     // Horizontal distance should not be more than a fraction of the vertical distance.
@@ -263,11 +261,11 @@ function makeSwipeDirective_(directiveName, direction, eventName) {
       }, pointerTypes);
     };
   }]);
-};
+}
 
 // Down is negative Y-coordinate, up is positive.
-const makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
-const makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
+makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
+makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
 
 
 export default module;

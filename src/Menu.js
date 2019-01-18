@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -126,9 +124,9 @@ function Menu(menuOptions, opt_overlayOptions) {
 
   olOverlay.call(this, options);
 
-};
+}
 
-olUtilInherits(exports, olOverlay);
+olUtilInherits(Menu, olOverlay);
 
 
 /**
@@ -259,4 +257,4 @@ Menu.prototype.handleMapPointerMove_ = function(evt) {
 };
 
 
-export default exports;
+export default Menu;

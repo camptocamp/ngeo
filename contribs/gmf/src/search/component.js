@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';

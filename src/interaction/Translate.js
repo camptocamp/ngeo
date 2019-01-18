@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import {
   getUid as olUtilGetUid,
@@ -96,9 +94,9 @@ function Translate(options) {
 
   olInteractionTranslate.call(
     this, /** @type {olx.interaction.TranslateOptions} */ (options));
-};
+}
 
-olUtilInherits(exports, olInteractionTranslate);
+olUtilInherits(Translate, olInteractionTranslate);
 
 
 /**
@@ -301,4 +299,4 @@ Translate.prototype.handleKeyUp_ = function(evt) {
 };
 
 
-export default exports;
+export default Translate;

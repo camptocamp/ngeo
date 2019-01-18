@@ -64,7 +64,7 @@ function MainController() {
       zoom: 8
     })
   });
-};
+}
 
 module.controller('MainController', MainController);
 

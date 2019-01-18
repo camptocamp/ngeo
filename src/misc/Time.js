@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 /**
@@ -9,7 +7,7 @@ import angular from 'angular';
  * @ngdoc service
  * @ngname ngeoTime
  */
-function Time() {};
+export function Time() {}
 
 /**
  * @param {number|string|null} value The value
@@ -79,7 +77,7 @@ Time.prototype.getUTCDate = function(localDate) {
  * @type {!angular.IModule}
  */
 const module = angular.module('ngeoTime', []);
-module.service('ngeoTime', exports);
+module.service('ngeoTime', Time);
 
 
 export default module;

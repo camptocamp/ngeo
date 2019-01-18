@@ -31,7 +31,7 @@ import googAsserts from 'goog/asserts.js';
  * @return {function()} Function to call to stop synchronization
  * @template T
  */
-const exports = function(arr1, arr2, reverse, scope, filter) {
+function syncArrays(arr1, arr2, reverse, scope, filter) {
 
 
   // Update arr2 when elements are added to, or removed from, arr1.
@@ -80,7 +80,7 @@ const exports = function(arr1, arr2, reverse, scope, filter) {
     dereg1();
     dereg2();
   };
-};
+}
 
 
-export default exports;
+export default syncArrays;

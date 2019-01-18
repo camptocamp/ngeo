@@ -58,7 +58,7 @@ function MainController($rootScope, ngeoOlcsService) {
 
   // Optionally, the manager can be registered into the olcs service
   ngeoOlcsService.initialize(this.ol3dm);
-};
+}
 
 module.controller('MainController', MainController);
 

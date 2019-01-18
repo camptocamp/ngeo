@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import './drawfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
@@ -121,7 +118,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
     container: 'body',
     trigger: 'hover'
   });
-};
+}
 
 
 /**

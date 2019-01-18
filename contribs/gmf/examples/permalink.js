@@ -63,7 +63,7 @@ function MainController() {
       zoom: 3
     })
   });
-};
+}
 
 module.controller('MainController', MainController);
 

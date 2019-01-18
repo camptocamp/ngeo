@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
@@ -18,7 +16,7 @@ import 'corejs-typeahead';
  * remote options. Effective only if `remote` is not defined in `opt_options`.
  * @return {Bloodhound} The Bloodhound object.
  */
-const exports = function(url, opt_filter, opt_featureProjection,
+function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
   opt_dataProjection, opt_options, opt_remoteOptions) {
   const geojsonFormat = new olFormatGeoJSON();
   const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
@@ -65,7 +63,7 @@ const exports = function(url, opt_filter, opt_featureProjection,
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return new Bloodhound(bloodhoundOptions);
-};
+}
 
 
 /**
@@ -73,9 +71,7 @@ const exports = function(url, opt_filter, opt_featureProjection,
  */
 const module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
 
-module.value(
-  'ngeoSearchCreateGeoJSONBloodhound',
-  exports);
+module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
 
 
 /**
@@ -115,7 +111,7 @@ module.value(
  * @ngdoc service
  * @ngname search.createGeoJSONBloodhound
  */
-const Function;
+export function Function() {}
 
 
 export default module;

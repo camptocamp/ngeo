@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -9,7 +7,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 
 import ngeoGridComponent from 'ngeo/grid/component.js';
 
-import ngeoGridConfig from 'ngeo/grid/Config.js';
+import ngeoGridConfig, {getRowUid, GridConfig} from 'ngeo/grid/Config.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
@@ -569,7 +567,7 @@ Controller.prototype.collectData_ = function(source) {
       }
 
       allProperties.push(properties);
-      featuresForSource[ngeoGridConfig.getRowUid(properties)] = feature;
+      featuresForSource[getRowUid(properties)] = feature;
     }
   });
 
@@ -685,7 +683,7 @@ Controller.prototype.getGridConfiguration_ = function(data) {
   });
 
   if (columnDefs.length > 0) {
-    return new ngeoGridConfig(data, columnDefs);
+    return new GridConfig(data, columnDefs);
   } else {
     // no columns, do not show grid
     return null;

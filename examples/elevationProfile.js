@@ -231,7 +231,7 @@ function MainController($http, $scope) {
    * @export
    */
   this.profileHighlight = undefined;
-};
+}
 
 
 /**

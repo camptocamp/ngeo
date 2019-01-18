@@ -90,7 +90,7 @@ function MainController(ngeoDisclaimer) {
     container: 'body',
     trigger: 'hover'
   });
-};
+}
 
 
 /**

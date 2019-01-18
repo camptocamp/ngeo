@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -214,9 +212,9 @@ function Measure(options = /** @type {import("ngeo/interaction/MeasureBaseOption
   olEvents.listen(this.drawInteraction_, 'drawend', this.onDrawEnd_, this);
 
   olEvents.listen(this, 'change:active', this.updateState_, this);
-};
+}
 
-olUtilInherits(exports, olInteractionInteraction);
+olUtilInherits(Measure, olInteractionInteraction);
 
 
 /**
@@ -235,11 +233,11 @@ olUtilInherits(exports, olInteractionInteraction);
  * @return {string} Formatted string of the area.
  * @this {import("ngeo/interaction/Measure.js").default}
  */
-function getFormattedArea(polygon, projection, precision, format) {
+export function getFormattedArea(polygon, projection, precision, format) {
   const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
   const area = Math.abs(olSphere.getArea(geom, {'projection': 'EPSG:4326'}));
   return format(area, 'm²', 'square', precision);
-};
+}
 
 
 /**
@@ -250,10 +248,10 @@ function getFormattedArea(polygon, projection, precision, format) {
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  */
-function getFormattedCircleArea(circle, precision, format) {
+export function getFormattedCircleArea(circle, precision, format) {
   const area = Math.PI * Math.pow(circle.getRadius(), 2);
   return format(area, 'm²', 'square', precision);
-};
+}
 
 
 /**
@@ -265,7 +263,7 @@ function getFormattedCircleArea(circle, precision, format) {
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  */
-function getFormattedLength(lineString, projection, precision, format) {
+export function getFormattedLength(lineString, projection, precision, format) {
   let length = 0;
   const coordinates = lineString.getCoordinates();
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -274,7 +272,7 @@ function getFormattedLength(lineString, projection, precision, format) {
     length += olSphere.getDistance(c1, c2);
   }
   return format(length, 'm', 'unit', precision);
-};
+}
 
 
 /**
@@ -285,9 +283,9 @@ function getFormattedLength(lineString, projection, precision, format) {
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */
-function getFormattedPoint(point, decimals, format, opt_template) {
+export function getFormattedPoint(point, decimals, format, opt_template) {
   return format(point.getCoordinates(), decimals, opt_template);
-};
+}
 
 
 /**
@@ -311,7 +309,7 @@ function handleEvent_(evt) {
   }
 
   return true;
-};
+}
 
 
 /**
@@ -540,4 +538,4 @@ Measure.prototype.handleDrawInteractionActiveChange_ = function() {
 };
 
 
-export default exports;
+export default Measure;

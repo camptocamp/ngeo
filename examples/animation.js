@@ -1,6 +1,3 @@
-/**
- */
-
 import './animation.css';
 import angular from 'angular';
 import olMap from 'ol/Map.js';
@@ -76,7 +73,7 @@ function MainController($timeout) {
   $timeout(() => {
     self.open = true;
   }, 0);
-};
+}
 
 
 module.controller('MainController', MainController);

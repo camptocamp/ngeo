@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import './datepicker.css';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
@@ -83,7 +80,7 @@ function MainController($scope, ngeoWMSTime) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
 
-};
+}
 
 
 module.controller('MainController', MainController);

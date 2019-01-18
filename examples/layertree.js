@@ -1,7 +1,4 @@
 /**
- */
-
-/**
  * This example shows how to create a layer tree tree based
  * on ngeo's ngeoLayertree directive.
  */
@@ -106,7 +103,7 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
    * @private
    */
   this.promises_ = {};
-};
+}
 
 
 /**
@@ -236,7 +233,7 @@ function MainController() {
       zoom: 4
     })
   });
-};
+}
 
 
 module.controller('MainController', MainController);

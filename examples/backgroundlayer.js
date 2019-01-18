@@ -1,6 +1,3 @@
-/**
- */
-
 import './backgroundlayer.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
@@ -91,7 +88,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
-};
+}
 
 
 /**
@@ -162,7 +159,7 @@ function MainController($scope) {
 
   this.map.addLayer(overlay);
 
-};
+}
 
 
 module.controller('MainController', MainController);

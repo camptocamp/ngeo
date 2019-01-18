@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoDownloadService from 'ngeo/download/service.js';
 
@@ -78,7 +76,7 @@ function Csv($injector, gettextCatalog) {
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
-};
+}
 
 
 /**
@@ -149,7 +147,7 @@ Csv.prototype.startDownload = function(data, columnDefs, fileName) {
 const module = angular.module('ngeoCsvDownload', [
   ngeoDownloadService.name
 ]);
-module.service('ngeoCsvDownload', exports);
+module.service('ngeoCsvDownload', Csv);
 
 
 export default module;

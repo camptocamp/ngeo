@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 
@@ -48,6 +46,44 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
+
+
+/**
+ * The different possible values of the `state` inner property.
+ * @enum {string}
+ */
+const State = {
+  /**
+   * The default state. While idle, nothing happens.
+   * @type {string}
+   */
+  IDLE: 'idle',
+  /**
+   * The state active after the deactivation of the editing tools and the
+   * unsaved modifications were saved or discarded.
+   * @type {string}
+   */
+  DEACTIVATE_EXECUTE: 'deactivate_execute',
+  /**
+   * The state active when the deactivation of the editing tools is in
+   * progress while there are unsaved modifications.
+   * @type {string}
+   */
+  DEACTIVATE_PENDING: 'deactivate_pending',
+  /**
+   * Final state set after the "stop editing" button has been clicked while
+   * no unsaved modifications were made or if the user saved them or confirmed
+   * to continue without saving.
+   * @type {string}
+   */
+  STOP_EDITING_EXECUTE: 'stop_editing_execute',
+  /**
+   * The state that is active while when the "stop editing" button has been
+   * clicked but before any confirmation has been made to continue.
+   * @type {string}
+   */
+  STOP_EDITING_PENDING: 'stop_editing_pending'
+};
 
 /**
  * @type {!angular.IModule}
@@ -1292,44 +1328,6 @@ Controller.prototype.handleDestroy_ = function() {
 
 
 module.controller('GmfEditfeatureController', Controller);
-
-
-/**
- * The different possible values of the `state` inner property.
- * @enum {string}
- */
-const State = {
-  /**
-   * The default state. While idle, nothing happens.
-   * @type {string}
-   */
-  IDLE: 'idle',
-  /**
-   * The state active after the deactivation of the editing tools and the
-   * unsaved modifications were saved or discarded.
-   * @type {string}
-   */
-  DEACTIVATE_EXECUTE: 'deactivate_execute',
-  /**
-   * The state active when the deactivation of the editing tools is in
-   * progress while there are unsaved modifications.
-   * @type {string}
-   */
-  DEACTIVATE_PENDING: 'deactivate_pending',
-  /**
-   * Final state set after the "stop editing" button has been clicked while
-   * no unsaved modifications were made or if the user saved them or confirmed
-   * to continue without saving.
-   * @type {string}
-   */
-  STOP_EDITING_EXECUTE: 'stop_editing_execute',
-  /**
-   * The state that is active while when the "stop editing" button has been
-   * clicked but before any confirmation has been made to continue.
-   * @type {string}
-   */
-  STOP_EDITING_PENDING: 'stop_editing_pending'
-};
 
 
 export default module;

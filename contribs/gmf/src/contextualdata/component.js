@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import googAsserts from 'goog/asserts.js';

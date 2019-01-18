@@ -288,7 +288,7 @@ function backDirective() {
       });
     }
   };
-};
+}
 
 module.directive('gmfMobileNavBack', backDirective);
 
@@ -328,7 +328,7 @@ function backOnClickDirective() {
       });
     }
   };
-};
+}
 
 module.directive('gmfMobileNavBackOnClick', backOnClickDirective);
 

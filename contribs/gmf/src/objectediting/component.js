@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
@@ -409,7 +407,7 @@ function Controller($scope, $timeout, gettextCatalog,
    * @private
    */
   this.toolsToolActivate_ = new ngeoMiscToolActivate(this, 'toolsActive');
-};
+}
 
 /**
  * Init the controller
@@ -1119,7 +1117,7 @@ Controller.prototype.handleDestroy_ = function() {
  * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
  */
-function cloneGeometry(geometry) {
+export function cloneGeometry(geometry) {
   let clone = null;
   if (geometry) {
     clone = geometry.clone();
@@ -1132,13 +1130,13 @@ function cloneGeometry(geometry) {
  * @const
  * @private
  */
-const NAMESPACE = 'oe';
+export const NAMESPACE = 'oe';
 
 
 /**
  * @enum {string}
  */
-const State = {
+export const State = {
   INSERT: 'insert',
   UPDATE: 'update'
 };

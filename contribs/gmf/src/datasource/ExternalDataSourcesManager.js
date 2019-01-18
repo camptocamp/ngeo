@@ -1,10 +1,8 @@
-/**
- */
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator
 
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
+import {EXTERNALLAYERGROUP_NAME} from 'gmf/index.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscFile from 'ngeo/misc/File.js';
@@ -283,7 +281,7 @@ class ExternalDatSourcesManager {
     googAsserts.assert(map);
     return this.ngeoLayerHelper_.getGroupFromMap(
       map,
-      gmfBase.EXTERNALLAYERGROUP_NAME
+      EXTERNALLAYERGROUP_NAME
     );
   }
 
@@ -662,7 +660,7 @@ class ExternalDatSourcesManager {
       }
     }
   }
-};
+}
 
 
 /**
@@ -680,7 +678,7 @@ class ExternalDatSourcesManager {
  */
 function getId(layer) {
   return olUtilGetUid(layer) + 1000000;
-};
+}
 
 
 const module = angular.module('gmfExternalDataSourcesManager', [

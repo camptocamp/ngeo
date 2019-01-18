@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Controller.js';
 
 import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 
@@ -123,7 +121,7 @@ function directive(ngeoLayertreeTemplateUrl) {
     restrict: 'A',
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
-    controller: ngeoLayertreeController
+    controller: LayertreeController
   };
 }
 

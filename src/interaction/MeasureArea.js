@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -44,9 +42,9 @@ function MeasureArea(format, gettextCatalog, options = {}) {
    */
   this.format = format;
 
-};
+}
 
-olUtilInherits(exports, ngeoInteractionMeasure);
+olUtilInherits(MeasureArea, ngeoInteractionMeasure);
 
 
 /**
@@ -78,4 +76,4 @@ MeasureArea.prototype.handleMeasure = function(callback) {
 };
 
 
-export default exports;
+export default MeasureArea;

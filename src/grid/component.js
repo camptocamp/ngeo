@@ -3,7 +3,7 @@
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
-import ngeoGridConfig from 'ngeo/grid/Config.js';
+import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
 import * as olHas from 'ol/has.js';
 
 import 'floatthead';
@@ -207,7 +207,7 @@ Controller.prototype.clickRow_ = function(
  * @private
  */
 Controller.prototype.selectRange_ = function(attributes) {
-  const targetUid = ngeoGridConfig.getRowUid(attributes);
+  const targetUid = getRowUid(attributes);
   const data = this.configuration.data;
 
   if (this.configuration.isRowSelected(attributes)) {
@@ -220,7 +220,7 @@ Controller.prototype.selectRange_ = function(attributes) {
   const posSelectedRows = [];
   for (let i = 0; i < data.length; i++) {
     const currentRow = data[i];
-    const currentUid = ngeoGridConfig.getRowUid(currentRow);
+    const currentUid = getRowUid(currentRow);
 
     if (targetUid === currentUid) {
       posClickedRow = i;

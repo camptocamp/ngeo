@@ -164,7 +164,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
     trigger: 'hover'
   });
 
-};
+}
 
 
 module.controller('MainController', MainController);

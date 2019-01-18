@@ -1,4 +1,4 @@
-import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import {getLayer as gmfLayertreeSyncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfTestDataThemes from 'gmf/test/data/themes.js';
 import gmfTestDataThemescapabilities from 'gmf/test/data/themescapabilities.js';
 import olMap from 'ol/Map.js';
@@ -69,7 +69,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const treeLayer = treeGroup.children[0]; // Leaf 'cinema'
-    const layer = gmfLayertreeSyncLayertreeMap.getLayer(treeLayer);
+    const layer = gmfLayertreeSyncLayertreeMapGetLayer(treeLayer);
 
     expect(treeLayer.layer).toBe(null);
     expect(layer.constructor).toBe(olLayerImage);

@@ -1,6 +1,4 @@
-/**
- */
-const exports = {
+export default {
   'results': [{
     'id': 1883,
     'weight': 9,
@@ -93,6 +91,3 @@ const exports = {
     }
   }]
 };
-
-
-export default exports;

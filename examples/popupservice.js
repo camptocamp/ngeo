@@ -40,7 +40,7 @@ function MainController($sce, ngeoCreatePopup) {
     trigger: 'hover'
   });
 
-};
+}
 
 
 /**

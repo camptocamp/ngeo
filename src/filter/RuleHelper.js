@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
@@ -57,7 +55,7 @@ import moment from 'moment';
  */
 
 
-const exports = class {
+class RuleHelper {
 
   /**
    * A service that provides utility methods to create `ngeo.rule.Rule`
@@ -795,7 +793,7 @@ const exports = class {
 
     return filter;
   }
-};
+}
 
 
 /**
@@ -805,7 +803,7 @@ const module = angular.module('ngeoRuleHelper', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-module.service('ngeoRuleHelper', exports);
+module.service('ngeoRuleHelper', RuleHelper);
 
 
 export default module;

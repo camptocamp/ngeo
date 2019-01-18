@@ -65,7 +65,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  */
 
 
-const exports = class {
+class MapQuerent {
 
   /**
    * The ngeo Map Querent is the service bound to a map that issues
@@ -337,7 +337,7 @@ const exports = class {
     this.cleared_ = false;
   }
 
-};
+}
 
 
 /**
@@ -349,7 +349,7 @@ const module = angular.module('ngeoMapQuerent', [
   ngeoQueryQuerent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-module.service('ngeoMapQuerent', exports);
+module.service('ngeoMapQuerent', MapQuerent);
 
 
 /**

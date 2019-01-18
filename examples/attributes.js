@@ -82,7 +82,7 @@ function MainController($http, $timeout, $scope) {
       }
     }
   );
-};
+}
 
 
 /**

@@ -1,8 +1,6 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
-import ngeoUtils from 'ngeo/utils.js';
+import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 
 /**
  * Provides a service for interacting with the URL in the
@@ -65,13 +63,13 @@ function Location(location, history) {
    * @type {!Object.<string, string>}
    * @private
    */
-  this.queryData_ = ngeoUtils.decodeQueryString(location.search);
+  this.queryData_ = decodeQueryString(location.search);
 
   /**
    * @type {!Object.<string, string>}
    * @private
    */
-  this.fragment_ = ngeoUtils.decodeQueryString(location.hash);
+  this.fragment_ = decodeQueryString(location.hash);
 }
 
 
@@ -86,7 +84,7 @@ function replaceState(history, state) {
     // replaceState fails on some browser if the domain in the state
     // is not the same as location.origin
   }
-};
+}
 
 
 /**
@@ -128,12 +126,12 @@ Location.prototype.getUriString = function() {
     out.push(this.path_);
   }
 
-  const encodedQueryData = ngeoUtils.encodeQueryString(this.queryData_);
+  const encodedQueryData = encodeQueryString(this.queryData_);
   if (encodedQueryData.length > 0) {
     out.push('?', encodedQueryData);
   }
 
-  const encodedFragment = ngeoUtils.encodeQueryString(this.fragment_);
+  const encodedFragment = encodeQueryString(this.fragment_);
   if (encodedFragment.length > 0) {
     out.push('#', encodedFragment);
   }
@@ -377,7 +375,7 @@ Location.prototype.setPath = function(path) {
  */
 function LocationFactory($rootScope, $window) {
   const history = $window.history;
-  const service = new exports($window.location, $window.history);
+  const service = new Location($window.location, $window.history);
 
   let lastUri = service.getUriString();
   $rootScope.$watch(() => {
@@ -407,7 +405,7 @@ function LocationFactory($rootScope, $window) {
  *     provider.
  * @ngInject
  */
-function MockProvider($locationProvider) {
+export function MockProvider($locationProvider) {
   /**
    * @return {angular.ILocationService} Mock object for Angular location service.
    */
@@ -471,7 +469,7 @@ function MockProvider($locationProvider) {
     });
     return locationMock;
   };
-};
+}
 
 
 /**

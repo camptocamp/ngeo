@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoSearchSearchDirective from 'ngeo/search/searchDirective.js';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
@@ -116,7 +114,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
    */
   this.placeholder = '';
 
-};
+}
 
 /**
  * @param {jQuery.Event} event Event.

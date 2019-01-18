@@ -178,7 +178,7 @@ function MainController(gmfObjectEditingManager, gmfThemes,
     }
   });
 
-};
+}
 
 module.controller('MainController', MainController);
 
