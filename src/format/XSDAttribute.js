@@ -17,7 +17,7 @@ function XSDAttribute() {
   olFormatXML.call(this);
 };
 
-olUtilInherits(exports, olFormatXML);
+olUtilInherits(const  olFormatXML);
 
 
 /**
@@ -211,7 +211,7 @@ function getGeometryAttribute(attributes) {
  * @enum {string}
  * @export
  */
-exports.NumberType = {
+const NumberType = {
   /**
    * @type {string}
    * @export
@@ -225,4 +225,4 @@ exports.NumberType = {
 };
 
 
-export default exports;
+export default const 

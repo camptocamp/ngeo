@@ -152,7 +152,7 @@ Message.prototype.getMessageObjects = function(object, opt_type) {
  * @enum {string}
  * @export
  */
-exports.Type = {
+const Type = {
   /**
    * @type {string}
    * @export
@@ -176,4 +176,4 @@ exports.Type = {
 };
 
 
-export default exports;
+export default const 

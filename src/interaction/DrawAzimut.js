@@ -101,7 +101,7 @@ olUtilInherits(exports, olInteractionPointer);
  * @this {import("ngeo/interaction/DrawAzimut.js").default}
  * @private
  */
-exports.handleDownEvent_ = function(event) {
+function handleDownEvent_(event) {
   this.downPx_ = event.pixel;
   return true;
 };
@@ -113,7 +113,7 @@ exports.handleDownEvent_ = function(event) {
  * @this {import("ngeo/interaction/DrawAzimut.js").default}
  * @private
  */
-exports.handleUpEvent_ = function(event) {
+function handleUpEvent_(event) {
   const downPx = this.downPx_;
   const clickPx = event.pixel;
   const dx = downPx[0] - clickPx[0];
@@ -139,7 +139,7 @@ exports.handleUpEvent_ = function(event) {
  * @this {import("ngeo/interaction/DrawAzimut.js").default}
  * @private
  */
-exports.handleEvent_ = function(mapBrowserEvent) {
+function handleEvent_(mapBrowserEvent) {
   let pass = true;
   if (mapBrowserEvent.type === 'pointermove') {
     pass = this.handlePointerMove_(mapBrowserEvent);

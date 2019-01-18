@@ -32,14 +32,14 @@ function Utils() {
  * @const
  * @private
  */
-exports.INCHES_PER_METER_ = 39.37;
+const INCHES_PER_METER_ = 39.37;
 
 
 /**
  * @const
  * @private
  */
-exports.DOTS_PER_INCH_ = 72;
+const DOTS_PER_INCH_ = 72;
 
 
 /**

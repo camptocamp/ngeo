@@ -88,7 +88,7 @@ function BackgroundLayerMgr(ngeoLayerHelper) {
 
 };
 
-olUtilInherits(exports, olObservable);
+olUtilInherits(const  olObservable);
 
 
 /**
@@ -227,12 +227,12 @@ BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
 const module = angular.module('ngeoBackgroundLayerMgr', [
   ngeoLayerHelper.name
 ]);
-module.service('ngeoBackgroundLayerMgr', exports);
+module.service('ngeoBackgroundLayerMgr', const ;
 
 /**
  * @const
  */
-exports.BACKGROUNDLAYERGROUP_NAME = 'background';
+const BACKGROUNDLAYERGROUP_NAME = 'background';
 
 
 export default module;

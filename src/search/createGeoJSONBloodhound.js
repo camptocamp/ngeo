@@ -115,7 +115,7 @@ module.value(
  * @ngdoc service
  * @ngname search.createGeoJSONBloodhound
  */
-exports.Function;
+const Function;
 
 
 export default module;

@@ -48,7 +48,7 @@ const exports = {};
  * @throws {goog.asserts.AssertionError} When the value is not a number.
  * @private
  */
-exports.doAssertFailure_ = function(
+function doAssertFailure_(
   defaultMessage, defaultArgs, givenMessage, givenArgs) {
   let message = 'Assertion failed';
   let args;

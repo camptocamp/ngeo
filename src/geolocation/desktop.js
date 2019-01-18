@@ -41,7 +41,7 @@ const module = angular.module('ngeoDesktopGeolocation', [
 /**
  * @enum {string}
  */
-exports.GeolocationEventType = {
+const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
@@ -141,7 +141,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.geolocation_.on('error', function(error) {
     this.deactivate_();
     this.notification_.error(error.message);
-    $scope.$emit(exports.GeolocationEventType.ERROR, error);
+    $scope.$emit(GeolocationEventType.ERROR, error);
   }, this);
 
   /**

@@ -176,7 +176,7 @@ module.value(
  * @ngdoc service
  * @ngname search.createLocationSearchBloodhound
  */
-exports.Function;
+const Function;
 
 
 export default module;

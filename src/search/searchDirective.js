@@ -146,7 +146,7 @@ const exports = function() {
  * @return {SearchDirectiveListeners} The listeners object.
  * @private
  */
-exports.adaptListeners_ = function(object) {
+function adaptListeners_(object) {
   /** @type {SearchDirectiveListeners} */
   let typeaheadListeners;
   if (object === undefined) {

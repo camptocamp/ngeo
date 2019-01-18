@@ -25,7 +25,7 @@ function VectorEncoder() {
 /**
  * @enum {string}
  */
-exports.PrintStyleType = {
+const PrintStyleType = {
   LINE_STRING: 'LineString',
   POINT: 'Point',
   POLYGON: 'Polygon'

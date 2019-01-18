@@ -297,7 +297,7 @@ function getFormattedPoint(point, decimals, format, opt_template) {
  * @this {import("ngeo/interaction/Measure.js").default}
  * @private
  */
-exports.handleEvent_ = function(evt) {
+function handleEvent_(evt) {
   if (evt.type != 'pointermove' || evt.dragging) {
     return true;
   }

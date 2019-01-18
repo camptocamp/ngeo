@@ -44,7 +44,7 @@ const module = angular.module('ngeoMobileGeolocation', [
 /**
  * @enum {string}
  */
-exports.GeolocationEventType = {
+const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
@@ -166,7 +166,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
         break;
     }
     this.notification_.error(msg);
-    $scope.$emit(exports.GeolocationEventType.ERROR, error);
+    $scope.$emit(GeolocationEventType.ERROR, error);
   });
 
   /**
@@ -239,7 +239,7 @@ Controller.prototype.toggleTracking = function() {
     // doesn't return an error
     if (currentPosition === undefined) {
       this.untrack_();
-      this.$scope_.$emit(exports.GeolocationEventType.ERROR, null);
+      this.$scope_.$emit(GeolocationEventType.ERROR, null);
       return;
     }
     googAsserts.assert(currentPosition !== undefined);

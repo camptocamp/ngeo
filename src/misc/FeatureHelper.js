@@ -1380,7 +1380,7 @@ FeatureHelper.prototype.findFeatureIndexByFid = function(features, fid) {
  * @enum {string}
  * @export
  */
-exports.FormatType = {
+const FormatType = {
   /**
    * @type {string}
    * @export
@@ -1399,7 +1399,7 @@ exports.FormatType = {
  * the vertex of a feature while it's being edited.
  * @private
  */
-exports.VertexStyleRegularShapeRadius = 6;
+const VertexStyleRegularShapeRadius = 6;
 
 
 /**

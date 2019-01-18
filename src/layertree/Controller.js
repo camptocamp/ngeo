@@ -214,7 +214,7 @@ Controller.prototype.setState = function(state, opt_broadcast) {
     this.parent.refreshState(this, opt_broadcast);
   }
 
-  const firstParents = this.isRoot ? this.children : [exports.getFirstParentTree(this)];
+  const firstParents = this.isRoot ? this.children : [getFirstParentTree(this)];
 
   if (opt_broadcast === undefined || opt_broadcast) {
     firstParents.forEach((firstParent) => {
@@ -374,7 +374,7 @@ function getFirstParentTree(treeCtrl) {
 /**
  * @enum {string}
  */
-exports.VisitorDecision = {
+const VisitorDecision = {
   STOP: 'STOP',
   SKIP: 'SKIP',
   DESCEND: 'DESCEND'
@@ -420,7 +420,7 @@ Controller.prototype.traverseDepthFirst = function(visitor) {
  * @type {!angular.IModule}
  */
 const module = angular.module('ngeoLayertreeController', []);
-module.controller('ngeoLayertreeController', exports);
+module.controller('ngeoLayertreeController', const ;
 
 
 export default module;

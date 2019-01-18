@@ -48,7 +48,7 @@ function getRowUid(attributes) {
  * @export
  */
 Config.prototype.isRowSelected = function(attributes) {
-  return !!this.selectedRows[exports.getRowUid(attributes)];
+  return !!this.selectedRows[getRowUid(attributes)];
 };
 
 

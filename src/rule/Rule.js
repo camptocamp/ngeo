@@ -334,7 +334,7 @@ const exports = class {
 /**
  * @enum {string}
  */
-exports.OperatorType = {
+const OperatorType = {
   BETWEEN: '..',
   EQUAL_TO: '=',
   GREATER_THAN: '>',
@@ -349,7 +349,7 @@ exports.OperatorType = {
 /**
  * @enum {string}
  */
-exports.SpatialOperatorType = {
+const SpatialOperatorType = {
   CONTAINS: 'contains',
   INTERSECTS: 'intersects',
   WITHIN: 'within'
@@ -359,7 +359,7 @@ exports.SpatialOperatorType = {
 /**
  * @enum {string}
  */
-exports.TemporalOperatorType = {
+const TemporalOperatorType = {
   BEGINS: 'time_start',
   DURING: 'time_during',
   ENDS: 'time_end',

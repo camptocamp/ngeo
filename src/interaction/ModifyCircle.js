@@ -287,7 +287,7 @@ function compareIndexes(a, b) {
  * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @private
  */
-exports.handleDownEvent_ = function(evt) {
+function handleDownEvent_(evt) {
   this.handlePointerAtPixel_(evt.pixel, evt.map);
   this.dragSegments_ = [];
   this.modified_ = false;
@@ -330,7 +330,7 @@ exports.handleDownEvent_ = function(evt) {
  * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @private
  */
-exports.handleDragEvent_ = function(evt) {
+function handleDragEvent_(evt) {
   this.willModifyFeatures_(evt);
   const vertex = evt.coordinate;
   const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (this.dragSegments_[0][0].geometry);
@@ -360,7 +360,7 @@ exports.handleDragEvent_ = function(evt) {
  * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @private
  */
-exports.handleUpEvent_ = function(evt) {
+function handleUpEvent_(evt) {
   this.rBush_.clear();
   this.writeCircleGeometry_(this.dragSegments_[0][0].feature,
     this.dragSegments_[0][0].geometry);

@@ -52,13 +52,13 @@ function layerHelper($q, $http, ngeoTilesPreloadingLimit) {
 /**
  * @const
  */
-exports.GROUP_KEY = 'groupName';
+const GROUP_KEY = 'groupName';
 
 
 /**
  * @const
  */
-exports.REFRESH_PARAM = 'random';
+const REFRESH_PARAM = 'random';
 
 
 /**
@@ -265,7 +265,7 @@ layerHelper.prototype.getGroupFromMap = function(map, groupName) {
   const groups = map.getLayerGroup().getLayers();
   let group;
   groups.getArray().some((existingGroup) => {
-    if (existingGroup.get(exports.GROUP_KEY) === groupName) {
+    if (existingGroup.get(GROUP_KEY) === groupName) {
       group = /** @type {import("ol/layer/Group.js").default} */ (existingGroup);
       return true;
     } else {
@@ -274,7 +274,7 @@ layerHelper.prototype.getGroupFromMap = function(map, groupName) {
   });
   if (!group) {
     group = this.createBasicGroup();
-    group.set(exports.GROUP_KEY, groupName);
+    group.set(GROUP_KEY, groupName);
     map.addLayer(group);
   }
   return group;
@@ -469,7 +469,7 @@ layerHelper.prototype.refreshWMSLayer = function(layer) {
   );
   const source = /** @type {import("ol/source/ImageWMS.js").default|import("ol/source/TileWMS.js").default} */ (source_);
   const params = source.getParams();
-  params[exports.REFRESH_PARAM] = Math.random();
+  params[REFRESH_PARAM] = Math.random();
   source.updateParams(params);
 };
 
@@ -530,7 +530,7 @@ layerHelper.prototype.getQuerySourceIds = function(layer) {
  * @type {!angular.IModule}
  */
 const module = angular.module('ngeoLayerHelper', [])
-  .service('ngeoLayerHelper', exports)
+  .service('ngeoLayerHelper', const 
   .value('ngeoTilesPreloadingLimit', Infinity);
 
 

@@ -67,7 +67,7 @@ WFSDescribeFeatureType.prototype.readFromNode = function(node) {
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Attributes.
  */
-exports.readElement_ = function(node, objectStack) {
+function readElement_(node, objectStack) {
   const attributes = {};
   for (let i = 0, len = node.attributes.length; i < len; i++) {
     const attribute = node.attributes.item(i);
@@ -87,7 +87,7 @@ exports.readElement_ = function(node, objectStack) {
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
-exports.readComplexType_ = function(node, objectStack) {
+function readComplexType_(node, objectStack) {
   const name = node.getAttribute('name');
   const object = olXml.pushParseAndPop(
     {'name': name},
@@ -107,7 +107,7 @@ exports.readComplexType_ = function(node, objectStack) {
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
-exports.readComplexContent_ = function(
+function readComplexContent_(
   node, objectStack
 ) {
   return olXml.pushParseAndPop(
@@ -125,7 +125,7 @@ exports.readComplexContent_ = function(
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
-exports.readExtension_ = function(node, objectStack) {
+function readExtension_(node, objectStack) {
   return olXml.pushParseAndPop(
     {},
     EXTENSION_PARSERS_,
@@ -141,7 +141,7 @@ exports.readExtension_ = function(node, objectStack) {
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
-exports.readSequence_ = function(node, objectStack) {
+function readSequence_(node, objectStack) {
   return olXml.pushParseAndPop(
     {},
     SEQUENCE_PARSERS_,
@@ -156,7 +156,7 @@ exports.readSequence_ = function(node, objectStack) {
  * @private
  * @type {Array.<string>}
  */
-exports.NAMESPACE_URIS_ = [
+const NAMESPACE_URIS_ = [
   null,
   'http://www.w3.org/2001/XMLSchema'
 ];
@@ -167,7 +167,7 @@ exports.NAMESPACE_URIS_ = [
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-exports.PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
+const PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'element': olXml.makeObjectPropertyPusher(
       readElement_
@@ -183,7 +183,7 @@ exports.PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-exports.COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
+const COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'complexContent': olXml.makeObjectPropertySetter(
       readComplexContent_
@@ -196,7 +196,7 @@ exports.COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-exports.COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
+const COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'extension': olXml.makeObjectPropertySetter(
       readExtension_
@@ -209,7 +209,7 @@ exports.COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-exports.EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
+const EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'sequence': olXml.makeObjectPropertySetter(
       readSequence_
@@ -222,7 +222,7 @@ exports.EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-exports.SEQUENCE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
+const SEQUENCE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'element': olXml.makeObjectPropertyPusher(
       readElement_

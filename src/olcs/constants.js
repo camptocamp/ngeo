@@ -6,7 +6,7 @@ const exports = {};
  * @enum {string}
  * @export
  */
-exports.Permalink3dParam = {
+const Permalink3dParam = {
   /**
    * @type {string}
    * @export

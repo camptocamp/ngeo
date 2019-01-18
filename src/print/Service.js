@@ -297,7 +297,7 @@ Service.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
  * @return {string} Absolute URL.
  * @private
  */
-exports.getAbsoluteUrl_ = function(url) {
+function getAbsoluteUrl_(url) {
   const a = document.createElement('a');
   a.href = encodeURI(url);
   return decodeURI(a.href);
