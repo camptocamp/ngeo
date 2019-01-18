@@ -19,7 +19,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('ngeoAttributesTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -29,8 +29,8 @@ exports.value('ngeoAttributesTemplateUrl',
   });
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoAttributesTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

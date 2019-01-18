@@ -12,7 +12,7 @@ const exports = angular.module('ngeoPopup', [
 exports.value('ngeoPopupTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => {
@@ -55,7 +55,7 @@ function directive(ngeoPopupTemplateUrl) {
     /**
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       element.addClass('popover');

@@ -42,7 +42,7 @@ const exports = angular.module('gmfPrintComponent', [
 exports.value('gmfPrintTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template.
    */
   (element, attrs) => {
@@ -101,8 +101,8 @@ exports.value('gmfPrintState', {
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfPrintTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

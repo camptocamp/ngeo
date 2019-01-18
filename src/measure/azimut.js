@@ -36,7 +36,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
     /**
      * @param {!angular.IScope} $scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {angular.IAttributes} attrs Attributes.
      * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {

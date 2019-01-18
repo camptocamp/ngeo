@@ -19,7 +19,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -30,8 +30,8 @@ exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

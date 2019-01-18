@@ -24,7 +24,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfMapMousepositionTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -35,8 +35,8 @@ exports.value('gmfMapMousepositionTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfMapMousepositionTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

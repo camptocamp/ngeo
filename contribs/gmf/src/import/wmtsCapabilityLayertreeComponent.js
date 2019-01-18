@@ -22,7 +22,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfWmtscapabilitylayertreTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -33,8 +33,8 @@ exports.value('gmfWmtscapabilitylayertreTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

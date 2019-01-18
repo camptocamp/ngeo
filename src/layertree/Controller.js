@@ -12,7 +12,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * The controller for the "tree node" directive.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.IScope} $rootScope Angular rootScope.
- * @param {angular.Attributes} $attrs Attributes.
+ * @param {angular.IAttributes} $attrs Attributes.
  * @constructor
  * @ngInject
  * @export

@@ -28,7 +28,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('ngeoGridTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -39,8 +39,8 @@ exports.value('ngeoGridTemplateUrl',
 );
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoGridTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoGridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

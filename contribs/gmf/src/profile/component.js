@@ -33,7 +33,7 @@ const exports = angular.module('gmfProfile', [
 exports.value('gmfProfileTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
   ($element, $attrs) => {
@@ -48,8 +48,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfProfileTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

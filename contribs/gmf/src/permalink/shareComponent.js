@@ -18,7 +18,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfPermalinkShareTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -29,8 +29,8 @@ exports.value('gmfPermalinkShareTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfPermalinkShareTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfPermalinkShareTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -67,7 +67,7 @@ class ShareComponentController {
    * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
    * @param {import("gmf/permalink/ShareService.js").default} gmfShareService service for sharing map.
    * @param {angular.IQService} $q Angular q service
-   * @param {angular.Attributes} $attrs Attributes.
+   * @param {angular.IAttributes} $attrs Attributes.
    * @constructor
    * @ngInject
    * @ngdoc controller

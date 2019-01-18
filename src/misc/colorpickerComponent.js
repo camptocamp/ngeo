@@ -11,7 +11,7 @@ const exports = angular.module('ngeoColorpicker', []);
 exports.value('ngeoColorpickerTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
   (element, attrs) => {
@@ -35,7 +35,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     </div>
  *
  *
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+ * @param {string|function(!angular.JQLite=, !angular.IAttributes=)}
  *     ngeoColorpickerTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -74,7 +74,7 @@ const DEFAULT_COLORS = [
  * @private
  * @param {angular.IScope} $scope Directive scope.
  * @param {angular.JQLite} $element Element.
- * @param {angular.Attributes} $attrs Attributes.
+ * @param {angular.IAttributes} $attrs Attributes.
  * @ngInject
  * @ngdoc controller
  * @ngname NgeoScaleselectorController

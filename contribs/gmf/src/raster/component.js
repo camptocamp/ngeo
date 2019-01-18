@@ -28,7 +28,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfElevationwidgetTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -40,8 +40,8 @@ exports.value('gmfElevationwidgetTemplateUrl',
 
 /**
  * @hidden
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfElevationwidgetTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

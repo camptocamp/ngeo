@@ -24,7 +24,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfThemeSelectorTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -35,8 +35,8 @@ exports.value('gmfThemeSelectorTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfThemeSelectorTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfThemeSelectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

@@ -19,7 +19,7 @@ const exports = angular.module('ngeoGooglestreetview', [
 
 exports.value('ngeoGooglestreetviewTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -34,8 +34,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoGooglestreetviewTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoGooglestreetviewTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

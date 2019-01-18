@@ -21,7 +21,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
 
 exports.module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
@@ -33,8 +33,8 @@ exports.module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} ngeoRoutingNominatimInputComponentTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

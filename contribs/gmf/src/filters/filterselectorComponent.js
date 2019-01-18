@@ -45,7 +45,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 exports.value('gmfFilterselectorTemplateUrl',
   /**
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
@@ -56,8 +56,8 @@ exports.value('gmfFilterselectorTemplateUrl',
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.Attributes): string} gmfFilterselectorTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

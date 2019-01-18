@@ -215,7 +215,7 @@ const Controller = class {
 
 
 /**
- * @param {!angular.Attributes} $attrs Attributes.
+ * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!string} ngeoOlcsControls3dTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject

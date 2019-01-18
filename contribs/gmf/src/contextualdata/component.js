@@ -63,7 +63,7 @@ function directive() {
     /**
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/contextualdata/component.js").default.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {

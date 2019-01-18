@@ -43,7 +43,7 @@ const exports = angular.module('gmfSearch', [
 
 /**
  * @param {angular.JQLite} element Element.
- * @param {angular.Attributes} attrs Attributes.
+ * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
 exports.gmfSearchTemplateUrl_ = (element, attrs) => {
@@ -59,8 +59,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfSearchTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfSearchTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

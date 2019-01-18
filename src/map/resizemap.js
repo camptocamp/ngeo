@@ -38,7 +38,7 @@ function directive($window) {
     /**
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
       const attr = 'ngeoResizemap';

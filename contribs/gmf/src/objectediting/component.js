@@ -64,7 +64,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
 exports.value('gmfObjecteditingTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
@@ -77,8 +77,8 @@ exports.value('gmfObjecteditingTemplateUrl',
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfObjecteditingTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

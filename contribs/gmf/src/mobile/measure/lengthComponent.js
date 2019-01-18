@@ -14,7 +14,7 @@ const exports = angular.module('gmfMobileMeasureLength', [
 exports.value('gmfMobileMeasureLengthTemplateUrl',
   /**
    * @param {angular.JQLite} element Element.
-   * @param {angular.Attributes} attrs Attributes.
+   * @param {angular.IAttributes} attrs Attributes.
    * @return {string} The template url.
    */
   (element, attrs) => {
@@ -47,7 +47,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
- * @param {string|function(!angular.JQLite=, !angular.Attributes=)}
+ * @param {string|function(!angular.JQLite=, !angular.IAttributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -69,7 +69,7 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
     /**
      * @param {angular.IScope} scope Scope.
      * @param {angular.JQLite} element Element.
-     * @param {angular.Attributes} attrs Attributes.
+     * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/measure.js").default.lengthComponent.Controller_} controller Controller.
      */
     link: (scope, element, attrs, controller) => {

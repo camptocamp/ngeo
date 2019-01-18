@@ -17,7 +17,7 @@ const exports = angular.module('gmfBackgroundlayerselector', [
 exports.value('gmfBackgroundlayerselectorTemplateUrl',
   /**
    * @param {!angular.JQLite} $element Element.
-   * @param {!angular.Attributes} $attrs Attributes.
+   * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($element, $attrs) => {
@@ -35,8 +35,8 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 /**
  * @param {!angular.JQLite} $element Element.
- * @param {!angular.Attributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.Attributes): string} gmfBackgroundlayerselectorTemplateUrl Template function.
+ * @param {!angular.IAttributes} $attrs Attributes.
+ * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
