@@ -298,7 +298,7 @@ Controller.prototype.$onDestroy = function() {
   }, 0);
 };
 
-exports.controller('ngeoCreatefeatureController', Controller);
+module.controller('ngeoCreatefeatureController', Controller);
 
 
 export default module;

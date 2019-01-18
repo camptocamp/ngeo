@@ -238,7 +238,7 @@ Controller.prototype.setPosition_ = function(event) {
   this.geolocation_.setTracking(false);
 };
 
-exports.controller('ngeoGeolocationDesktopController', Controller);
+module.controller('ngeoGeolocationDesktopController', Controller);
 
 
 export default module;

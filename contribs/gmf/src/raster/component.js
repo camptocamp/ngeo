@@ -309,7 +309,7 @@ Controller.prototype.getRasterError_ = function() {
 };
 
 
-exports.controller('GmfElevationController', Controller);
+module.controller('GmfElevationController', Controller);
 
 
 /**
@@ -390,7 +390,7 @@ WidgetController.prototype.$onInit = function() {
 };
 
 
-exports.controller('gmfElevationwidgetController', WidgetController);
+module.controller('gmfElevationwidgetController', WidgetController);
 
 /**
  * @typedef {{

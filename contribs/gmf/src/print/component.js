@@ -1278,7 +1278,7 @@ class Controller {
   }
 }
 
-exports.controller('GmfPrintController', Controller);
+module.controller('GmfPrintController', Controller);
 
 
 export default module;

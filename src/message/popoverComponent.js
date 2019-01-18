@@ -151,7 +151,7 @@ PopoverController.prototype.dismissPopover = function() {
 };
 
 
-exports.controller('NgeoPopoverController', PopoverController);
+module.controller('NgeoPopoverController', PopoverController);
 exports.directive('ngeoPopover', component);
 exports.directive('ngeoPopoverAnchor', anchorComponent);
 exports.directive('ngeoPopoverContent', contentComponent);

@@ -217,7 +217,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('ngeoExportfeaturesController', Controller);
+module.controller('ngeoExportfeaturesController', Controller);
 
 
 export default module;

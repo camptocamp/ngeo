@@ -104,7 +104,7 @@ class Controller {
 }
 
 
-exports.controller('GmfLidarprofileController', Controller);
+module.controller('GmfLidarprofileController', Controller);
 
 
 export default module;

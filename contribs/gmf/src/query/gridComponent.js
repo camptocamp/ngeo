@@ -919,7 +919,7 @@ Controller.prototype.downloadCsv = function() {
 };
 
 
-exports.controller('GmfDisplayquerygridController', Controller);
+module.controller('GmfDisplayquerygridController', Controller);
 
 
 export default module;

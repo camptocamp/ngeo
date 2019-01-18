@@ -151,7 +151,7 @@ class Controller {
   }
 }
 
-exports.controller('ngeoModalController', Controller);
+module.controller('ngeoModalController', Controller);
 
 
 export default module;

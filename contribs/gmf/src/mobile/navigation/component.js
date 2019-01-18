@@ -122,7 +122,7 @@ function Controller() {
   this.back = this.back_.bind(this);
 }
 
-exports.controller('gmfMobileNavController', Controller);
+module.controller('gmfMobileNavController', Controller);
 
 
 /**

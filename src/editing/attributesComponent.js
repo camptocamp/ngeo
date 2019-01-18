@@ -190,7 +190,7 @@ Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
 };
 
 
-exports.controller('ngeoAttributesController', Controller);
+module.controller('ngeoAttributesController', Controller);
 
 
 export default module;

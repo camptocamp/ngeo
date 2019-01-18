@@ -239,7 +239,7 @@ Controller.prototype.init = function() {
   }
 };
 
-exports.controller('ngeoDatePickerController', Controller);
+module.controller('ngeoDatePickerController', Controller);
 
 
 export default module;

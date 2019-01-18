@@ -147,7 +147,7 @@ Controller.prototype.handleMapClick_ = function(evt) {
   });
 };
 
-exports.controller('gmfObjecteditinggetwmsfeatureController', Controller);
+module.controller('gmfObjecteditinggetwmsfeatureController', Controller);
 
 
 export default module;

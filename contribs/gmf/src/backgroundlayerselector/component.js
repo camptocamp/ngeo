@@ -247,7 +247,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfBackgroundlayerselectorController', Controller);
+module.controller('GmfBackgroundlayerselectorController', Controller);
 
 
 export default module;

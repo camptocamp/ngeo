@@ -275,7 +275,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfEditfeatureselectorController', Controller);
+module.controller('GmfEditfeatureselectorController', Controller);
 
 
 export default module;

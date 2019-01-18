@@ -84,7 +84,7 @@ Controller.prototype.$onInit = function() {
   this.element_.datetimepicker(this.options);
 };
 
-exports.controller('ngeoDateTimePickerController', Controller);
+module.controller('ngeoDateTimePickerController', Controller);
 
 
 export default module;

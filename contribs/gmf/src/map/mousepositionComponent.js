@@ -191,7 +191,7 @@ Controller.prototype.setProjection = function(projection) {
   this.projection = projection;
 };
 
-exports.controller('gmfMousepositionController', Controller);
+module.controller('gmfMousepositionController', Controller);
 
 
 export default module;

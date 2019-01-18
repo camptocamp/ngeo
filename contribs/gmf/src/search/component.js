@@ -1079,7 +1079,7 @@ class SearchController {
 
 
 // Register the controller in the module
-exports.controller('gmfSearchController', SearchController);
+module.controller('gmfSearchController', SearchController);
 
 
 export default module;

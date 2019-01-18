@@ -335,7 +335,7 @@ Controller.prototype.getMeasure_ = function() {
 };
 
 
-exports.controller('GmfMobileMeasurePointController', Controller);
+module.controller('GmfMobileMeasurePointController', Controller);
 
 /**
  * @typedef {{

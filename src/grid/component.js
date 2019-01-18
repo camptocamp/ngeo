@@ -301,7 +301,7 @@ Controller.prototype.isShiftKeyOnly_ = function(event) {
 };
 
 
-exports.controller('ngeoGridController', Controller);
+module.controller('ngeoGridController', Controller);
 
 
 export default module;

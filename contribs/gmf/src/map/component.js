@@ -122,7 +122,7 @@ Controller.prototype.$onInit = function() {
 };
 
 
-exports.controller('GmfMapController', Controller);
+module.controller('GmfMapController', Controller);
 
 
 export default module;

@@ -793,7 +793,7 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
     );
 };
 
-exports.controller('GmfLayertreeController', Controller);
+module.controller('GmfLayertreeController', Controller);
 
 
 export default module;

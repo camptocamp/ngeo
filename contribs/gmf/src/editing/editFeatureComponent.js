@@ -1291,7 +1291,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfEditfeatureController', Controller);
+module.controller('GmfEditfeatureController', Controller);
 
 
 /**

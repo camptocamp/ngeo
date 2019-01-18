@@ -460,7 +460,7 @@ class FilterController {
 
 }
 
-exports.controller('ngeoFilterController', FilterController);
+module.controller('ngeoFilterController', FilterController);
 
 
 export default module;

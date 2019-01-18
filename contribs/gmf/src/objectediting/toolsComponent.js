@@ -365,7 +365,7 @@ Controller.prototype.handleToolActiveChange_ = function(
 Controller.prototype.handleDestroy_ = function() {};
 
 
-exports.controller('GmfObjecteditingtoolsController', Controller);
+module.controller('GmfObjecteditingtoolsController', Controller);
 
 /**
  * @enum {string}

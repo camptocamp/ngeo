@@ -1144,7 +1144,7 @@ exports.Controller.State = {
 };
 
 
-exports.controller('GmfObjecteditingController',
+module.controller('GmfObjecteditingController',
   Controller);
 
 

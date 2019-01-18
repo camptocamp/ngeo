@@ -320,7 +320,7 @@ Controller.prototype.handleGeometryChange_ = function() {
 };
 
 
-exports.controller('GmfFeaturestyleController', Controller);
+module.controller('GmfFeaturestyleController', Controller);
 
 
 export default module;

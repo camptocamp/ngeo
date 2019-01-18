@@ -451,7 +451,7 @@ class AuthenticationController {
   }
 }
 
-exports.controller('GmfAuthenticationController', AuthenticationController);
+module.controller('GmfAuthenticationController', AuthenticationController);
 
 
 export default module;

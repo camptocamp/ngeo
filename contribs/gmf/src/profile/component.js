@@ -713,7 +713,7 @@ Controller.prototype.downloadCsv = function() {
 };
 
 
-exports.controller('GmfProfileController', Controller);
+module.controller('GmfProfileController', Controller);
 
 
 export default module;

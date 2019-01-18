@@ -188,7 +188,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('gmfThemeselectorController', Controller);
+module.controller('gmfThemeselectorController', Controller);
 
 
 export default module;

@@ -159,7 +159,7 @@ Controller.prototype.deactivate = function() {
 };
 
 
-exports.controller('GmfMobileMeasureLengthController', Controller);
+module.controller('GmfMobileMeasureLengthController', Controller);
 
 
 export default module;

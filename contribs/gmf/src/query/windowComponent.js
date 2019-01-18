@@ -581,7 +581,7 @@ Controller.prototype.setSelectedSource = function(source) {
 };
 
 
-exports.controller('GmfDisplayquerywindowController', Controller);
+module.controller('GmfDisplayquerywindowController', Controller);
 
 
 export default module;

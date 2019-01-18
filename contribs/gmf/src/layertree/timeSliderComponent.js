@@ -321,7 +321,7 @@ Controller.prototype.getLocalizedDate = function(time) {
 };
 
 
-exports.controller('gmfTimeSliderController', Controller);
+module.controller('gmfTimeSliderController', Controller);
 
 
 export default module;

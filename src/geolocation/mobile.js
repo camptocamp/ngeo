@@ -356,7 +356,7 @@ Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
 };
 
 
-exports.controller('ngeoGeolocationMobileController', Controller);
+module.controller('ngeoGeolocationMobileController', Controller);
 
 
 export default module;
