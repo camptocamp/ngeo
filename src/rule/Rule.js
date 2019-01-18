@@ -277,8 +277,8 @@ const exports = class {
     const upperBoundary = this.upperBoundary;
 
     if (operator) {
-      if (operator === exports.OperatorType.BETWEEN ||
-          operator === exports.TemporalOperatorType.DURING) {
+      if (operator === OperatorType.BETWEEN ||
+          operator === TemporalOperatorType.DURING) {
         if (lowerBoundary !== null && upperBoundary !== null) {
           value = {
             operator,

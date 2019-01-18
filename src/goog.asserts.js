@@ -63,8 +63,8 @@ exports.doAssertFailure_ = function(
   // a stack trace is added to var message above. With this, a stack trace is
   // not added until this line (it causes the extra garbage to be added after
   // the assertion message instead of in the middle of it).
-  const e = new exports.AssertionError(`${message}`, args || []);
-  exports.errorHandler_(e);
+  const e = new AssertionError(`${message}`, args || []);
+  errorHandler_(e);
 };
 
 
@@ -76,7 +76,7 @@ exports.doAssertFailure_ = function(
  */
 function setErrorHandler(errorHandler) {
   if (exports.ENABLE_ASSERTS) {
-    exports.errorHandler_ = errorHandler;
+    errorHandler_ = errorHandler;
   }
 };
 
@@ -93,7 +93,7 @@ function setErrorHandler(errorHandler) {
  */
 function assert(condition, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && !condition) {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       '', null, opt_message, Array.prototype.slice.call(arguments, 2));
   }
   return condition;
@@ -120,8 +120,8 @@ function assert(condition, opt_message, var_args) {
  */
 function fail(opt_message, var_args) {
   if (exports.ENABLE_ASSERTS) {
-    exports.errorHandler_(
-      new exports.AssertionError(
+    errorHandler_(
+      new AssertionError(
         `Failure${opt_message ? `: ${opt_message}` : ''}`,
         Array.prototype.slice.call(arguments, 1)));
   }
@@ -138,7 +138,7 @@ function fail(opt_message, var_args) {
  */
 function assertNumber(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && typeof value != 'number') {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected number but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -156,7 +156,7 @@ function assertNumber(value, opt_message, var_args) {
  */
 function assertString(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && typeof value != 'string') {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected string but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -175,7 +175,7 @@ function assertString(value, opt_message, var_args) {
  */
 function assertFunction(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && typeof value != 'function') {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected function but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -195,7 +195,7 @@ function assertObject(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS &&
       (value === null || typeof value != 'object' ||
       Array.isArray(value) || typeof value == 'function')) {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected object but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -213,7 +213,7 @@ function assertObject(value, opt_message, var_args) {
  */
 function assertArray(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && !Array.isArray(value)) {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected array but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -232,7 +232,7 @@ function assertArray(value, opt_message, var_args) {
  */
 function assertBoolean(value, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && typeof value != 'boolean') {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected boolean but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -254,7 +254,7 @@ function assertElement(value, opt_message, var_args) {
       (value === null || typeof value != 'object' ||
       Array.isArray(value) || typeof value == 'function' ||
       value.nodeType == undefined)) {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected Element but got %s: %s.', [typeof value, value],
       opt_message, Array.prototype.slice.call(arguments, 2));
   }
@@ -279,7 +279,7 @@ function assertElement(value, opt_message, var_args) {
  */
 function assertInstanceof(value, type, opt_message, var_args) {
   if (exports.ENABLE_ASSERTS && !(value instanceof type)) {
-    exports.doAssertFailure_(
+    doAssertFailure_(
       'Expected instanceof %s but got %s.',
       [getType(type), getType(value)],
       opt_message, Array.prototype.slice.call(arguments, 3));
@@ -294,7 +294,7 @@ function assertInstanceof(value, type, opt_message, var_args) {
  */
 function assertObjectPrototypeIsIntact() {
   for (const key in Object.prototype) {
-    exports.fail(`${key} should not be enumerable in Object.prototype.`);
+    fail(`${key} should not be enumerable in Object.prototype.`);
   }
 };
 

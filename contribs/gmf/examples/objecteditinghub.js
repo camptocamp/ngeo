@@ -255,7 +255,7 @@ exports.MainController.prototype.runEditor = function() {
   params[gmfObjecteditingManager.Param.THEME] = this.themeName;
   params[gmfObjecteditingManager.Param.PROPERTY] = property;
 
-  const url = exports.MainController.appendParams(this.selectedUrl['url'], params);
+  const url = MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);
 };
 
@@ -300,7 +300,7 @@ exports.MainController.prototype.runViewer_ = function(baseUrl) {
   params['wfs_layer'] = nodeName;
   params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
-  const url = exports.MainController.appendParams(baseUrl, params);
+  const url = MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
@@ -334,7 +334,7 @@ exports.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
   const id = gmfLayerNode.id;
 
-  const url = exports.MainController.appendParams(
+  const url = MainController.appendParams(
     this.gmfServer_.urlWfs,
     {
       'SERVICE': 'WFS',
@@ -468,7 +468,7 @@ exports.MainController.appendParams = function(uri, params) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

@@ -48,7 +48,7 @@ exports.backgroundlayerComponent = {
 };
 
 
-module.component('appBackgroundlayer', exports.backgroundlayerComponent);
+module.component('appBackgroundlayer', backgroundlayerComponent);
 
 
 /**
@@ -125,7 +125,7 @@ exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
 
 
 module.controller('AppBackgroundlayerController',
-  exports.BackgroundlayerController);
+  BackgroundlayerController);
 
 
 /**
@@ -165,7 +165,7 @@ function MainController($scope) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

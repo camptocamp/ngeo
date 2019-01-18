@@ -226,7 +226,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.drawActive = false;
 
   this.registerTool_('drawActive',
-    exports.ProcessType.ADD);
+    ProcessType.ADD);
 
   /**
    * @type {boolean}
@@ -235,7 +235,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.eraseActive = false;
 
   this.registerTool_('eraseActive',
-    exports.ProcessType.DELETE);
+    ProcessType.DELETE);
 
   /**
    * @type {boolean}
@@ -260,13 +260,13 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
     oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive',
-    exports.ProcessType.ADD);
+    ProcessType.ADD);
 
   this.registerTool_('copyFromActive',
-    exports.ProcessType.ADD, true);
+    ProcessType.ADD, true);
 
   this.registerTool_('deleteFromActive',
-    exports.ProcessType.DELETE, true);
+    ProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }

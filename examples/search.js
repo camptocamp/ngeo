@@ -42,7 +42,7 @@ exports.searchComponent = {
 };
 
 
-module.component('appSearch', exports.searchComponent);
+module.component('appSearch', searchComponent);
 
 
 /**
@@ -123,7 +123,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
    * @export
    */
   this.listeners = /** @type {SearchDirectiveListeners} */ ({
-    select: exports.SearchController.select_.bind(this)
+    select: SearchController.select_.bind(this)
   });
 };
 
@@ -192,7 +192,7 @@ exports.SearchController.select_ = function(event, suggestion, dataset) {
 };
 
 
-module.controller('AppSearchController', exports.SearchController);
+module.controller('AppSearchController', SearchController);
 
 
 /**
@@ -219,7 +219,7 @@ function MainController() {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

@@ -55,7 +55,7 @@ function MainController() {
   this.routingfeatureActive = true;
 };
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

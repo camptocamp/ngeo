@@ -26,9 +26,9 @@ import olSourceVector from 'ol/source/Vector.js';
 const exports = function(options) {
 
   olInteractionPointer.call(this, {
-    handleDownEvent: exports.handleDownEvent_,
-    handleEvent: exports.handleEvent_,
-    handleUpEvent: exports.handleUpEvent_
+    handleDownEvent: handleDownEvent_,
+    handleEvent: handleEvent_,
+    handleUpEvent: handleUpEvent_
   });
 
   /**

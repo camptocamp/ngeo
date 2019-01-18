@@ -79,8 +79,8 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
       const width = size[0] * olHas.DEVICE_PIXEL_RATIO;
       const scale = getScale(frameState);
 
-      const ppi = exports.DOTS_PER_INCH_;
-      const ipm = exports.INCHES_PER_METER_;
+      const ppi = DOTS_PER_INCH_;
+      const ipm = INCHES_PER_METER_;
 
       const extentHalfWidth =
            (((width / ppi) / ipm) * scale / resolution) / 2;
@@ -198,10 +198,10 @@ exports.prototype.getOptimalScale = function(
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
 
-  const scaleWidth = mapWidth * exports.INCHES_PER_METER_ *
-      exports.DOTS_PER_INCH_ / printMapSize[0];
-  const scaleHeight = mapHeight * exports.INCHES_PER_METER_ *
-      exports.DOTS_PER_INCH_ / printMapSize[1];
+  const scaleWidth = mapWidth * INCHES_PER_METER_ *
+      DOTS_PER_INCH_ / printMapSize[0];
+  const scaleHeight = mapHeight * INCHES_PER_METER_ *
+      DOTS_PER_INCH_ / printMapSize[1];
 
   const scale = Math.min(scaleWidth, scaleHeight);
 
@@ -228,7 +228,7 @@ exports.prototype.getOptimalResolution = function(
   mapSize, printMapSize, printMapScale) {
 
   const dotsPerMeter =
-      exports.DOTS_PER_INCH_ * exports.INCHES_PER_METER_;
+      DOTS_PER_INCH_ * INCHES_PER_METER_;
 
   const resolutionX = (printMapSize[0] * printMapScale) /
       (dotsPerMeter * mapSize[0]);

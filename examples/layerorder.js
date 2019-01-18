@@ -155,7 +155,7 @@ exports.MainController.prototype.toggleRoadsLayer = function(val) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

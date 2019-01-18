@@ -449,8 +449,8 @@ exports.Controller.prototype.$onInit = function() {
   );
 
   const geometry = this.feature.getGeometry();
-  this.state_ = geometry ? exports.Controller.State.UPDATE :
-    exports.Controller.State.INSERT;
+  this.state_ = geometry ? Controller.State.UPDATE :
+    Controller.State.INSERT;
 
   this.scope_.$watchCollection(
     () => this.geometryChanges_,
@@ -538,14 +538,14 @@ exports.Controller.prototype.save = function() {
     gmfObjecteditingGeom.toXY(geometry);
   }
 
-  if (this.state_ === exports.Controller.State.INSERT) {
+  if (this.state_ === Controller.State.INSERT) {
     this.gmfEditFeature_.insertFeatures(
       this.layerNodeId,
       [feature]
     ).then(
       this.handleEditFeature_.bind(this)
     );
-  } else if (this.state_ === exports.Controller.State.UPDATE) {
+  } else if (this.state_ === Controller.State.UPDATE) {
     this.gmfEditFeature_.updateFeature(
       this.layerNodeId,
       feature
@@ -569,7 +569,7 @@ exports.Controller.prototype.undo = function() {
   this.skipGeometryChange_ = true;
 
   this.geometryChanges_.pop();
-  const clone = exports.Controller.cloneGeometry_(
+  const clone = Controller.cloneGeometry_(
     this.geometryChanges_[this.geometryChanges_.length - 1]);
 
   this.feature.setGeometry(clone);
@@ -583,7 +583,7 @@ exports.Controller.prototype.undo = function() {
  * @export
  */
 exports.Controller.prototype.isStateInsert = function() {
-  return this.state_ === exports.Controller.State.INSERT;
+  return this.state_ === Controller.State.INSERT;
 };
 
 
@@ -598,7 +598,7 @@ exports.Controller.prototype.isStateInsert = function() {
 exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
   this.feature.setGeometry(null);
   this.resetGeometryChanges_();
-  this.state_ = exports.Controller.State.INSERT;
+  this.state_ = Controller.State.INSERT;
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -619,9 +619,9 @@ exports.Controller.prototype.handleEditFeature_ = function(resp) {
   this.resetGeometryChanges_();
   // (3) Update state
   if (this.feature.getGeometry()) {
-    this.state_ = exports.Controller.State.UPDATE;
+    this.state_ = Controller.State.UPDATE;
   } else {
-    this.state_ = exports.Controller.State.INSERT;
+    this.state_ = Controller.State.INSERT;
   }
   // (4) No longer pending
   this.pending = false;
@@ -749,7 +749,7 @@ exports.Controller.prototype.toggle_ = function(active) {
  * @private
  */
 exports.Controller.prototype.undoAllChanges_ = function() {
-  const clone = exports.Controller.cloneGeometry_(
+  const clone = Controller.cloneGeometry_(
     this.geometryChanges_[0]);
   this.feature.setGeometry(clone);
 
@@ -771,7 +771,7 @@ exports.Controller.prototype.resetGeometryChanges_ = function() {
   }
   if (this.geometryChanges_.length === 0) {
     const geometry = this.feature.getGeometry();
-    const clone = exports.Controller.cloneGeometry_(geometry);
+    const clone = Controller.cloneGeometry_(geometry);
     this.geometryChanges_.push(clone);
   }
 };
@@ -801,7 +801,7 @@ exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
     this.skipGeometryChange_ = false;
   }
 
-  const clone = exports.Controller.cloneGeometry_(geometry);
+  const clone = Controller.cloneGeometry_(geometry);
   googAsserts.assert(clone);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
@@ -1145,7 +1145,7 @@ exports.Controller.State = {
 
 
 exports.controller('GmfObjecteditingController',
-  exports.Controller);
+  Controller);
 
 
 export default module;

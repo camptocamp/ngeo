@@ -101,7 +101,7 @@ olUtilInherits(exports, olObservable);
 exports.prototype.get = function(map) {
   const mapUid = olUtilGetUid(map).toString();
   return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
-    exports.BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
+    BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
 };
 
 
@@ -122,7 +122,7 @@ exports.prototype.set = function(map, layer) {
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
   }
 
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, exports.BACKGROUNDLAYERGROUP_NAME);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
 
   if (previous !== null) {
     googAsserts.assert(mapUid in this.mapUids_);
@@ -156,7 +156,7 @@ exports.prototype.set = function(map, layer) {
 exports.prototype.getOpacityBgLayer = function(map) {
   const mapUid = olUtilGetUid(map).toString();
   return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
-    exports.BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+    BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
 };
 
 /**
@@ -166,7 +166,7 @@ exports.prototype.getOpacityBgLayer = function(map) {
  * @export
  */
 exports.prototype.setOpacityBgLayer = function(map, layer) {
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, exports.BACKGROUNDLAYERGROUP_NAME);
+  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
   const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
   const ZIndex = -100;
   layer.setOpacity(previous ? previous.getOpacity() : 0);

@@ -371,7 +371,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
       const visible = state === 'on';
       treeCtrl.traverseDepthFirst((ctrl) => {
         if (ctrl.node.children === undefined) {
-          const param = exports.ParamPrefix.TREE_ENABLE + ctrl.node.name;
+          const param = ParamPrefix.TREE_ENABLE + ctrl.node.name;
           newState[param] = visible;
         }
       });
@@ -390,7 +390,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
     const newState = {};
     const opacity = treeCtrl.layer.getOpacity();
     const stateName = (treeCtrl.parent.node.mixed ?
-      exports.ParamPrefix.TREE_OPACITY : exports.ParamPrefix.TREE_GROUP_OPACITY
+      ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY
     ) + treeCtrl.node.name;
     newState[stateName] = opacity;
     this.ngeoStateManager_.updateState(newState);
@@ -989,8 +989,8 @@ exports.prototype.initLayers_ = function() {
 
         const opacity = this.ngeoStateManager_.getInitialNumberValue((
           treeCtrl.parent.node.mixed ?
-            exports.ParamPrefix.TREE_OPACITY :
-            exports.ParamPrefix.TREE_GROUP_OPACITY
+            ParamPrefix.TREE_OPACITY :
+            ParamPrefix.TREE_GROUP_OPACITY
         ) + treeCtrl.node.name);
         if (opacity !== undefined && treeCtrl.layer) {
           treeCtrl.layer.setOpacity(opacity);
@@ -998,7 +998,7 @@ exports.prototype.initLayers_ = function() {
         if (treeCtrl.parent.node && treeCtrl.parent.node.mixed && treeCtrl.node.children == undefined) {
           // Layer of a mixed group
           const enable = this.ngeoStateManager_.getInitialBooleanValue(
-            exports.ParamPrefix.TREE_ENABLE + treeCtrl.node.name
+            ParamPrefix.TREE_ENABLE + treeCtrl.node.name
           );
           if (enable !== undefined) {
             treeCtrl.setState(enable ? 'on' : 'off', false);
@@ -1006,7 +1006,7 @@ exports.prototype.initLayers_ = function() {
         } else if (!treeCtrl.node.mixed && treeCtrl.depth == 1) {
           // First level non mixed group
           const groupLayers = this.ngeoStateManager_.getInitialStringValue(
-            exports.ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
+            ParamPrefix.TREE_GROUP_LAYERS + treeCtrl.node.name
           );
           if (groupLayers !== undefined) {
             const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
@@ -1238,7 +1238,7 @@ exports.prototype.initExternalDataSources_ = function() {
       }
 
       const groupLayerNames = groupLayerNamesString.split(
-        exports.ExtDSSeparator.NAMES);
+        ExtDSSeparator.NAMES);
       const url = urls[i];
 
       const serviceType = guessServiceTypeByUrl(url);
@@ -1484,10 +1484,10 @@ exports.prototype.setExternalDataSourcesState_ = function() {
     // (3) Update state
     this.ngeoStateManager_.updateState({
       [gmfBase.PermalinkParam.EXTERNAL_DATASOURCES_NAMES]: names.join(
-        exports.ExtDSSeparator.LIST
+        ExtDSSeparator.LIST
       ),
       [gmfBase.PermalinkParam.EXTERNAL_DATASOURCES_URLS]: urls.join(
-        exports.ExtDSSeparator.LIST
+        ExtDSSeparator.LIST
       )
     });
 
@@ -1598,7 +1598,7 @@ module.value('gmfPermalinkOptions',
 /** Configure the ngeo state manager */
 (function() {
   const regexp = [];
-  for (const key1 in exports.ParamPrefix) {
+  for (const key1 in ParamPrefix) {
     regexp.push(new RegExp(`${exports.ParamPrefix[key1]}.*`));
   }
   for (const key2 in gmfBase.PermalinkParam) {

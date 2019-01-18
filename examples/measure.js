@@ -56,7 +56,7 @@ exports.measuretoolsComponent = {
   templateUrl: 'partials/measuretools'
 };
 
-module.component('appMeasuretools', exports.measuretoolsComponent);
+module.component('appMeasuretools', measuretoolsComponent);
 
 
 /**
@@ -223,7 +223,7 @@ function MeasuretoolsController($scope, $compile, $sce,
   });
 };
 
-module.controller('AppMeasuretoolsController', exports.MeasuretoolsController);
+module.controller('AppMeasuretoolsController', MeasuretoolsController);
 
 exports.MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
@@ -263,7 +263,7 @@ function MainController() {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

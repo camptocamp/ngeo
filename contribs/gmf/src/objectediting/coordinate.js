@@ -18,7 +18,7 @@ function toXY(coordinates, nesting) {
     }
   } else {
     for (let i = 0, ii = coordinates.length; i < ii; i++) {
-      coordinates[i] = exports.toXY(coordinates[i], nesting - 1);
+      coordinates[i] = toXY(coordinates[i], nesting - 1);
     }
   }
   return coordinates;

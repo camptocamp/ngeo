@@ -24,7 +24,7 @@ exports.colorpickerComponent = {
 };
 
 
-module.component('appColorpicker', exports.colorpickerComponent);
+module.component('appColorpicker', colorpickerComponent);
 
 
 /**
@@ -47,7 +47,7 @@ function ColorPickerController() {
 };
 
 module.controller('AppColorpickerController',
-  exports.ColorPickerController);
+  ColorPickerController);
 
 
 /**
@@ -67,7 +67,7 @@ function MainController($scope) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

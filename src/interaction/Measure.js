@@ -60,7 +60,7 @@ import olStyleStyle from 'ol/style/Style.js';
 const exports = function(options = /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ ({})) {
 
   olInteractionInteraction.call(this, {
-    handleEvent: exports.handleEvent_
+    handleEvent: handleEvent_
   });
 
   /**

@@ -48,7 +48,7 @@ function MainController($http, gmfThemes, gmfThemeManager) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

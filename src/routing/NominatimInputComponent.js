@@ -155,7 +155,7 @@ exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
  * @ngname ngeoNominatimInput
  */
 const component = {
-  controller: exports.Controller,
+  controller: Controller,
   bindings: {
     'onSelect': '=?ngeoNominatimInputOnSelect',
     'inputValue': '=?ngeoNominatimInputValue',

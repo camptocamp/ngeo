@@ -222,7 +222,7 @@ const module = angular.module('ngeoPrint', [
 ]);
 
 module.service('ngeoPrintService', exports);
-module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
+module.factory('ngeoCreatePrint', createPrintServiceFactory);
 ```
 
 You can see that to require a module inside another module, we add the name of the module into the array of

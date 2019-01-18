@@ -99,7 +99,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
   ngeoFeatureOverlayMgr.init(this.map);
 };
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

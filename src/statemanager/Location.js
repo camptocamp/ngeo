@@ -353,7 +353,7 @@ Location.prototype.deleteFragmentParam = function(key) {
  * @export
  */
 Location.prototype.refresh = function() {
-  exports.replaceState(this.history_, this.getUriString());
+  replaceState(this.history_, this.getUriString());
 };
 
 
@@ -386,7 +386,7 @@ function LocationFactory($rootScope, $window) {
       $rootScope.$evalAsync(() => {
         lastUri = newUri;
         if (history !== undefined && history.replaceState !== undefined) {
-          exports.replaceState(history, newUri);
+          replaceState(history, newUri);
         }
         $rootScope.$broadcast('ngeoLocationChange');
       });

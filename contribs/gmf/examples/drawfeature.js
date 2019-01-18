@@ -141,7 +141,7 @@ exports.MainController.prototype.handleMapPointerMove_ = function(evt) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

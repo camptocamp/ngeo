@@ -38,7 +38,7 @@ exports.locationSearchComponent = {
 };
 
 
-appmodule.component('appLocationSearch', exports.locationSearchComponent);
+appmodule.component('appLocationSearch', locationSearchComponent);
 
 
 /**
@@ -94,7 +94,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
    * @export
    */
   this.listeners = /** @type {SearchDirectiveListeners} */ ({
-    select: exports.SearchController.select_.bind(this)
+    select: SearchController.select_.bind(this)
   });
 
 };
@@ -143,7 +143,7 @@ exports.SearchController.select_ = function(event, suggestion, dataset) {
 };
 
 
-appmodule.controller('AppSearchController', exports.SearchController);
+appmodule.controller('AppSearchController', SearchController);
 
 
 /**
@@ -170,7 +170,7 @@ function MainController() {
 };
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
 export default module;

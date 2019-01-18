@@ -136,7 +136,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     /**
        * @return {import("ol/size.js").Size} Size in dots of the map to print.
        */
-    () => exports.PRINT_PAPER_SIZE_,
+    () => PRINT_PAPER_SIZE_,
     /**
        * @param {olx.FrameState} frameState Frame state.
        * @return {number} Scale of the map to print.
@@ -147,8 +147,8 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
       // we test mapSize and mapResolution just to please the compiler
       return mapSize !== undefined && mapResolution !== undefined ?
         ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
-          exports.PRINT_PAPER_SIZE_, exports.PRINT_SCALES_) :
-        exports.PRINT_SCALES_[0];
+          PRINT_PAPER_SIZE_, PRINT_SCALES_) :
+        PRINT_SCALES_[0];
     });
 
   /**
@@ -170,12 +170,12 @@ exports.MainController.prototype.print = function() {
   // we test mapSize and viewResolution just to please the compiler
   const scale = mapSize !== undefined && viewResolution !== undefined ?
     this.printUtils_.getOptimalScale(mapSize, viewResolution,
-      exports.PRINT_PAPER_SIZE_, exports.PRINT_SCALES_) :
-    exports.PRINT_SCALES_[0];
+      PRINT_PAPER_SIZE_, PRINT_SCALES_) :
+    PRINT_SCALES_[0];
 
-  const dpi = exports.PRINT_DPI_;
-  const format = exports.PRINT_FORMAT_;
-  const layout = exports.PRINT_LAYOUT_;
+  const dpi = PRINT_DPI_;
+  const format = PRINT_FORMAT_;
+  const layout = PRINT_LAYOUT_;
 
   this.printState = 'Printing...';
 
@@ -255,7 +255,7 @@ exports.MainController.prototype.handleGetStatusError_ = function(resp) {
 };
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
 export default module;

@@ -67,9 +67,9 @@ function rgbArrayToHex(rgb) {
   if (r != (r & 255) || g != (g & 255) || b != (b & 255)) {
     throw Error(`"(${r},${g},${b})" is not a valid RGB color`);
   }
-  const hexR = exports.colorZeroPadding(r.toString(16));
-  const hexG = exports.colorZeroPadding(g.toString(16));
-  const hexB = exports.colorZeroPadding(b.toString(16));
+  const hexR = colorZeroPadding(r.toString(16));
+  const hexG = colorZeroPadding(g.toString(16));
+  const hexB = colorZeroPadding(b.toString(16));
   return `#${hexR}${hexG}${hexB}`;
 };
 

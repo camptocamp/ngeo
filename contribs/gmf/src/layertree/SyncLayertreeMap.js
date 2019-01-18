@@ -187,7 +187,7 @@ exports.prototype.createGroup_ = function(treeCtrl, map,
     if (inAMixedGroup) {
       layer = this.createLayerFromGroup_(treeCtrl, true);
       const layerGroup = /** @type {import("ol/layer/Group.js").default} */ (
-        exports.getLayer(treeCtrl.parent));
+        getLayer(treeCtrl.parent));
       layerGroup.getLayers().insertAt(0, layer);
     }
   }
@@ -289,7 +289,7 @@ exports.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
   layer.setVisible(checked);
   // Insert layer in the map.
   const layerGroup = /** @type {import("ol/layer/Group.js").default} */ (
-    exports.getLayer(treeCtrl.parent));
+    getLayer(treeCtrl.parent));
   layerGroup.getLayers().insertAt(0, layer);
   return layer;
 };

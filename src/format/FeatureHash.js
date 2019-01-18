@@ -87,7 +87,7 @@ const exports = function(opt_options) {
    * @private
    */
   this.accuracy_ = options.accuracy !== undefined ?
-    options.accuracy : exports.ACCURACY_;
+    options.accuracy : ACCURACY_;
 
   /**
    * @type {boolean}
@@ -101,7 +101,7 @@ const exports = function(opt_options) {
    * @private
    */
   this.propertiesFunction_ = options.properties !== undefined ?
-    options.properties : exports.defaultPropertiesFunction_;
+    options.properties : defaultPropertiesFunction_;
 
   /**
    * @type {boolean}
@@ -125,7 +125,7 @@ const exports = function(opt_options) {
    * @type {Object.<string, string>}
    * @private
    */
-  exports.LegacyProperties_ = (options.propertiesType !== undefined) && options.propertiesType;
+  LegacyProperties_ = (options.propertiesType !== undefined) && options.propertiesType;
 
   /**
    * @type {Object.<string, function(import("ol/Feature.js").default)>}
@@ -235,7 +235,7 @@ exports.encodeSignedNumber_ = function(num) {
   if (num < 0) {
     signedNum = ~(signedNum);
   }
-  return exports.encodeNumber_(signedNum);
+  return encodeNumber_(signedNum);
 };
 
 
@@ -248,11 +248,11 @@ exports.encodeSignedNumber_ = function(num) {
 exports.encodeNumber_ = function(num) {
   let encodedNumber = '';
   while (num >= 0x20) {
-    encodedNumber += exports.CHAR64_.charAt(
+    encodedNumber += CHAR64_.charAt(
       0x20 | (num & 0x1f));
     num >>= 5;
   }
-  encodedNumber += exports.CHAR64_.charAt(num);
+  encodedNumber += CHAR64_.charAt(num);
   return encodedNumber;
 };
 
@@ -267,7 +267,7 @@ exports.encodeNumber_ = function(num) {
  * @private
  */
 exports.encodeStyles_ = function(styles, geometryType, encodedStyles) {
-  const styleType = exports.StyleTypes_[geometryType];
+  const styleType = StyleTypes_[geometryType];
   googAsserts.assert(styleType !== undefined);
   for (let i = 0; i < styles.length; ++i) {
     const style = styles[i];
@@ -277,20 +277,20 @@ exports.encodeStyles_ = function(styles, geometryType, encodedStyles) {
     const textStyle = style.getText();
     if (styleType == ngeoFormatFeatureHashStyleType.POLYGON) {
       if (fillStyle !== null) {
-        exports.encodeStylePolygon_(
+        encodeStylePolygon_(
           fillStyle, strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeoFormatFeatureHashStyleType.LINE_STRING) {
       if (strokeStyle !== null) {
-        exports.encodeStyleLine_(strokeStyle, encodedStyles);
+        encodeStyleLine_(strokeStyle, encodedStyles);
       }
     } else if (styleType == ngeoFormatFeatureHashStyleType.POINT) {
       if (imageStyle !== null) {
-        exports.encodeStylePoint_(imageStyle, encodedStyles);
+        encodeStylePoint_(imageStyle, encodedStyles);
       }
     }
     if (textStyle !== null) {
-      exports.encodeStyleText_(textStyle, encodedStyles);
+      encodeStyleText_(textStyle, encodedStyles);
     }
   }
 };
@@ -304,7 +304,7 @@ exports.encodeStyles_ = function(styles, geometryType, encodedStyles) {
  * @private
  */
 exports.encodeStyleLine_ = function(strokeStyle, encodedStyles) {
-  exports.encodeStyleStroke_(strokeStyle, encodedStyles);
+  encodeStyleStroke_(strokeStyle, encodedStyles);
 };
 
 
@@ -324,11 +324,11 @@ exports.encodeStylePoint_ = function(imageStyle, encodedStyles) {
     encodedStyles.push(encodeURIComponent(`pointRadius*${radius}`));
     const fillStyle = imageStyle.getFill();
     if (fillStyle !== null) {
-      exports.encodeStyleFill_(fillStyle, encodedStyles);
+      encodeStyleFill_(fillStyle, encodedStyles);
     }
     const strokeStyle = imageStyle.getStroke();
     if (strokeStyle !== null) {
-      exports.encodeStyleStroke_(strokeStyle, encodedStyles);
+      encodeStyleStroke_(strokeStyle, encodedStyles);
     }
   }
 };
@@ -344,9 +344,9 @@ exports.encodeStylePoint_ = function(imageStyle, encodedStyles) {
  * @private
  */
 exports.encodeStylePolygon_ = function(fillStyle, strokeStyle, encodedStyles) {
-  exports.encodeStyleFill_(fillStyle, encodedStyles);
+  encodeStyleFill_(fillStyle, encodedStyles);
   if (strokeStyle !== null) {
-    exports.encodeStyleStroke_(strokeStyle, encodedStyles);
+    encodeStyleStroke_(strokeStyle, encodedStyles);
   }
 };
 
@@ -427,7 +427,7 @@ exports.encodeStyleText_ = function(textStyle, encodedStyles) {
   }
   const fillStyle = textStyle.getFill();
   if (fillStyle !== null) {
-    exports.encodeStyleFill_(
+    encodeStyleFill_(
       fillStyle, encodedStyles, 'fontColor');
   }
 };
@@ -588,7 +588,7 @@ exports.setStyleInFeature_ = function(text, feature) {
   if (text == '') {
     return;
   }
-  const properties = exports.getStyleProperties_(text, feature);
+  const properties = getStyleProperties_(text, feature);
   const fillColor = properties['fillColor'];
   const fontSize = properties['fontSize'];
   const fontColor = properties['fontColor'];
@@ -647,7 +647,7 @@ exports.setStyleInFeature_ = function(text, feature) {
  */
 exports.setStyleProperties_ = function(text, feature) {
 
-  const properties = exports.getStyleProperties_(text, feature);
+  const properties = getStyleProperties_(text, feature);
   const geometry = feature.getGeometry();
 
   // Deal with legacy properties
@@ -754,7 +754,7 @@ exports.getStyleProperties_ = function(text, feature) {
     const key = keyVal[0];
     const val = keyVal[1];
 
-    properties[key] = exports.castValue_(key, val);
+    properties[key] = castValue_(key, val);
   }
 
   return properties;
@@ -884,7 +884,7 @@ exports.writePolygonGeometry_ = function(geometry) {
   const ends = geometry.getEnds();
   const offset = 0;
   const textArray = ['a('];
-  exports.encodeRings_.call(this,
+  encodeRings_.call(this,
     flatCoordinates, stride, offset, ends, textArray);
   textArray.push(')');
   return textArray.join('');
@@ -910,7 +910,7 @@ exports.writeMultiPolygonGeometry_ = function(geometry) {
   for (let i = 0; i < polygonCount; ++i) {
     const ends = endss[i];
     textArray.push('(');
-    offset = exports.encodeRings_.call(this,
+    offset = encodeRings_.call(this,
       flatCoordinates, stride, offset, ends, textArray);
     textArray.push(')');
   }
@@ -924,12 +924,12 @@ exports.writeMultiPolygonGeometry_ = function(geometry) {
  * @type {Object.<string, function(string):import("ol/geom/Geometry.js").default>}
  */
 exports.GEOMETRY_READERS_ = {
-  'P': exports.readMultiPointGeometry_,
-  'L': exports.readMultiLineStringGeometry_,
-  'A': exports.readMultiPolygonGeometry_,
-  'l': exports.readLineStringGeometry_,
-  'p': exports.readPointGeometry_,
-  'a': exports.readPolygonGeometry_
+  'P': readMultiPointGeometry_,
+  'L': readMultiLineStringGeometry_,
+  'A': readMultiPolygonGeometry_,
+  'l': readLineStringGeometry_,
+  'p': readPointGeometry_,
+  'a': readPolygonGeometry_
 };
 
 
@@ -939,12 +939,12 @@ exports.GEOMETRY_READERS_ = {
  * @type {Object.<string, function(import("ol/geom/Geometry.js").default):string>}
  */
 exports.GEOMETRY_WRITERS_ = {
-  'MultiLineString': exports.writeMultiLineStringGeometry_,
-  'MultiPoint': exports.writeMultiPointGeometry_,
-  'MultiPolygon': exports.writeMultiPolygonGeometry_,
-  'LineString': exports.writeLineStringGeometry_,
-  'Point': exports.writePointGeometry_,
-  'Polygon': exports.writePolygonGeometry_
+  'MultiLineString': writeMultiLineStringGeometry_,
+  'MultiPoint': writeMultiPointGeometry_,
+  'MultiPolygon': writeMultiPolygonGeometry_,
+  'LineString': writeLineStringGeometry_,
+  'Point': writePointGeometry_,
+  'Polygon': writePolygonGeometry_
 };
 
 
@@ -969,7 +969,7 @@ exports.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
     let shift = 0;
     let result = 0;
     do {
-      b = exports.CHAR64_.indexOf(text.charAt(index++));
+      b = CHAR64_.indexOf(text.charAt(index++));
       result |= (b & 0x1f) << shift;
       shift += 5;
     } while (b >= 32);
@@ -978,7 +978,7 @@ exports.prototype.decodeCoordinates_ = function(text, opt_flatCoordinates) {
     shift = 0;
     result = 0;
     do {
-      b = exports.CHAR64_.indexOf(text.charAt(index++));
+      b = CHAR64_.indexOf(text.charAt(index++));
       result |= (b & 0x1f) << shift;
       shift += 5;
     } while (b >= 32);
@@ -1013,8 +1013,8 @@ exports.prototype.encodeCoordinates_ = function(flatCoordinates, stride, offset,
     const dy = y - this.prevY_;
     this.prevX_ = x;
     this.prevY_ = y;
-    encodedCoordinates += exports.encodeSignedNumber_(dx) +
-        exports.encodeSignedNumber_(dy);
+    encodedCoordinates += encodeSignedNumber_(dx) +
+        encodeSignedNumber_(dy);
   }
   return encodedCoordinates;
 };
@@ -1052,18 +1052,18 @@ exports.prototype.readFeatureFromText = function(text, opt_options) {
         googAsserts.assert(keyVal.length === 2);
         let key = keyVal[0];
         const value = keyVal[1];
-        if (!this.setStyle_ && exports.LegacyProperties_[key]) {
-          key = exports.LegacyProperties_[key];
+        if (!this.setStyle_ && LegacyProperties_[key]) {
+          key = LegacyProperties_[key];
         }
-        feature.set(key, exports.castValue_(key, value));
+        feature.set(key, castValue_(key, value));
       }
     }
     if (splitIndex >= 0) {
       const stylesText = attributesAndStylesText.substring(splitIndex + 1);
       if (this.setStyle_) {
-        exports.setStyleInFeature_(stylesText, feature);
+        setStyleInFeature_(stylesText, feature);
       } else {
-        exports.setStyleProperties_(stylesText, feature);
+        setStyleProperties_(stylesText, feature);
       }
     }
   }
@@ -1098,7 +1098,7 @@ exports.prototype.readFeaturesFromText = function(text, opt_options) {
   // set default values
   features.forEach((feature) => {
     for (const key in this.defaultValues_) {
-      const property = exports.LegacyProperties_[key];
+      const property = LegacyProperties_[key];
       if (feature.get(property) === undefined) {
         feature.set(property, this.defaultValues_[key].call(null, feature));
       }
@@ -1117,7 +1117,7 @@ exports.prototype.readFeaturesFromText = function(text, opt_options) {
  * @override
  */
 exports.prototype.readGeometryFromText = function(text, opt_options) {
-  const geometryReader = exports.GEOMETRY_READERS_[text[0]];
+  const geometryReader = GEOMETRY_READERS_[text[0]];
   googAsserts.assert(geometryReader !== undefined);
   return geometryReader.call(this, text);
 };
@@ -1180,7 +1180,7 @@ exports.prototype.writeFeatureText = function(feature, opt_options) {
       if (styles !== null) {
         const encodedStyles = [];
         styles = Array.isArray(styles) ? styles : [styles];
-        exports.encodeStyles_(
+        encodeStyles_(
           styles, geometry.getType(), encodedStyles);
         if (encodedStyles.length > 0) {
           encodedParts.push('~');
@@ -1228,7 +1228,7 @@ exports.prototype.writeFeaturesText = function(features, opt_options) {
  * @override
  */
 exports.prototype.writeGeometryText = function(geometry, opt_options) {
-  const geometryWriter = exports.GEOMETRY_WRITERS_[
+  const geometryWriter = GEOMETRY_WRITERS_[
     geometry.getType()];
   googAsserts.assert(geometryWriter !== undefined);
   const transformedGeometry = /** @type {import("ol/geom/Geometry.js").default} */

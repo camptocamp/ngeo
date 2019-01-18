@@ -70,7 +70,7 @@ const exports = function() {
       /**
        * @type {SearchDirectiveListeners}
        */
-      const typeaheadListeners = exports.adaptListeners_(
+      const typeaheadListeners = adaptListeners_(
         typeaheadListeners_);
 
       element.on('typeahead:open', () => {

@@ -534,7 +534,7 @@ exports.prototype.getVertexInfoAtCoordinate = function(
 
   if (this.supportsVertexRemoval_(feature)) {
 
-    const buffer = resolution * exports.VertexStyleRegularShapeRadius;
+    const buffer = resolution * VertexStyleRegularShapeRadius;
     let coordinates = null;
     let coordinatess = null;
     let coordinatesss = null;
@@ -655,7 +655,7 @@ exports.prototype.getVertexStyle = function(opt_incGeomFunc) {
 
   const options = {
     image: new olStyleRegularShape({
-      radius: exports.VertexStyleRegularShapeRadius,
+      radius: VertexStyleRegularShapeRadius,
       points: 4,
       angle: Math.PI / 4,
       fill: new olStyleFill({
@@ -1006,10 +1006,10 @@ exports.prototype.getStrokeProperty = function(feature) {
  */
 exports.prototype.export = function(features, formatType) {
   switch (formatType) {
-    case exports.FormatType.GPX:
+    case FormatType.GPX:
       this.exportGPX(features);
       break;
-    case exports.FormatType.KML:
+    case FormatType.KML:
       this.exportKML(features);
       break;
     default:

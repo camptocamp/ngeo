@@ -127,7 +127,7 @@ function findGroupByLayerNodeName(themes, name) {
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
       const childNodes = [];
-      exports.getFlatNodes(group, childNodes);
+      getFlatNodes(group, childNodes);
       if (exports.findObjectByName(childNodes, name)) {
         return group;
       }
@@ -148,7 +148,7 @@ function findGroupByName(themes, name) {
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
       const group = theme.children[j];
       const internalNodes = [];
-      exports.getFlatInternalNodes(group, internalNodes);
+      getFlatInternalNodes(group, internalNodes);
       if (exports.findObjectByName(internalNodes, name)) {
         return group;
       }
@@ -177,7 +177,7 @@ function findObjectByName(objects, objectName) {
  * @return {gmfThemes.GmfTheme} The theme object or null.
  */
 function findThemeByName(themes, themeName) {
-  return exports.findObjectByName(themes, themeName);
+  return findObjectByName(themes, themeName);
 };
 
 
@@ -193,7 +193,7 @@ function getFlatInternalNodes(node, nodes) {
   if (children !== undefined) {
     nodes.push(node);
     for (let i = 0; i < children.length; i++) {
-      exports.getFlatInternalNodes(children[i], nodes);
+      getFlatInternalNodes(children[i], nodes);
     }
   }
 };
@@ -210,7 +210,7 @@ function getFlatNodes(node, nodes) {
   const children = node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
-      exports.getFlatNodes(children[i], nodes);
+      getFlatNodes(children[i], nodes);
     }
   } else {
     nodes.push(node);
@@ -390,7 +390,7 @@ exports.prototype.getThemeObject = function(themeName) {
        * @return {gmfThemes.GmfTheme?} The theme object for themeName, or null
        *     if not found.
        */
-    data => exports.findThemeByName(data.themes, themeName));
+    data => findThemeByName(data.themes, themeName));
 };
 
 

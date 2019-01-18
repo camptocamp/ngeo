@@ -734,12 +734,12 @@ exports.prototype.setDefaultBackground_ = function(theme) {
 
     if (!layer && this.gmfUser.functionalities) {
       // get the background from the user settings
-      layer = exports.getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
+      layer = getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }
 
     if (!layer && theme) {
       // get the background from the theme
-      layer = exports.getLayerByLabels(layers, theme.functionalities.default_basemap);
+      layer = getLayerByLabels(layers, theme.functionalities.default_basemap);
     }
 
     if (!layer) {

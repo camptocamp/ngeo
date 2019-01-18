@@ -278,7 +278,7 @@ exports.prototype.encodeWmsLayer_ = function(arr, layer, url, params) {
   delete customParams['VERSION'];
 
   const object = /** @type {MapFishPrintWmsLayer} */ ({
-    baseURL: exports.getAbsoluteUrl_(url_url.origin + url_url.pathname),
+    baseURL: getAbsoluteUrl_(url_url.origin + url_url.pathname),
     imageFormat: 'FORMAT' in params ? params['FORMAT'] : 'image/png',
     layers: params['LAYERS'].split(','),
     customParams: customParams,
@@ -400,7 +400,7 @@ exports.prototype.encodeTileWmsLayer_ = function(arr, layer) {
 exports.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
   googAsserts.assert(urls.length > 0);
-  return exports.getAbsoluteUrl_(urls[0]);
+  return getAbsoluteUrl_(urls[0]);
 };
 
 /**
@@ -505,7 +505,7 @@ const module = angular.module('ngeoPrint', [
   ngeoMapLayerHelper.name
 ]);
 module.service('ngeoPrintService', exports);
-module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
+module.factory('ngeoCreatePrint', createPrintServiceFactory);
 
 
 export default module;

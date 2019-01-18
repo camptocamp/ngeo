@@ -102,7 +102,7 @@ function Scalify($filter) {
   return filterFn;
 };
 
-exports.filter('ngeoScalify', exports.Scalify);
+exports.filter('ngeoScalify', Scalify);
 
 /**
  * A filter used to format a number with a precision, using the locale.
@@ -184,7 +184,7 @@ function Number($locale) {
   return result;
 };
 
-exports.filter('ngeoNumber', exports.Number);
+exports.filter('ngeoNumber', Number);
 
 /**
  * A filter used to format a number with the prefix and unit
@@ -246,7 +246,7 @@ function UnitPrefix($filter) {
   return result;
 };
 
-exports.filter('ngeoUnitPrefix', exports.UnitPrefix);
+exports.filter('ngeoUnitPrefix', UnitPrefix);
 
 /**
  * Format a couple of numbers as number coordinates.
@@ -299,7 +299,7 @@ function NumberCoordinates($filter) {
   return filterFn;
 };
 
-exports.filter('ngeoNumberCoordinates', exports.NumberCoordinates);
+exports.filter('ngeoNumberCoordinates', NumberCoordinates);
 
 
 /**
@@ -357,7 +357,7 @@ function DMSCoordinates() {
   return filterFn;
 };
 
-exports.filter('ngeoDMSCoordinates', exports.DMSCoordinates);
+exports.filter('ngeoDMSCoordinates', DMSCoordinates);
 
 
 /**
@@ -384,7 +384,7 @@ function trustHtmlFilter($sce) {
   };
 };
 
-exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
+exports.filter('ngeoTrustHtml', trustHtmlFilter);
 
 
 /**
@@ -425,7 +425,7 @@ function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
   };
 };
 
-exports.filter('ngeoTrustHtmlAuto', exports.trustHtmlAutoFilter);
+exports.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
 
 
 /**
@@ -529,7 +529,7 @@ function Duration(gettextCatalog) {
   return result;
 };
 
-exports.filter('ngeoDuration', exports.Duration);
+exports.filter('ngeoDuration', Duration);
 
 
 /**
@@ -551,7 +551,7 @@ exports.StringToHtmlReplacements = [
 
 exports.constant(
   'ngeoStringToHtmlReplacements',
-  exports.StringToHtmlReplacements
+  StringToHtmlReplacements
 );
 
 

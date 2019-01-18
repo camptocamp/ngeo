@@ -405,7 +405,7 @@ exports.Controller.prototype.deleteVia = function(index) {
 
 
 module.component('ngeoRouting', {
-  controller: exports.Controller,
+  controller: Controller,
   bindings: {
     'map': '<ngeoRoutingMap'
   },

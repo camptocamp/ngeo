@@ -67,7 +67,7 @@ exports.prototype.show = function(object) {
  * @export
  */
 exports.prototype.error = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.ERROR));
+  this.show(this.getMessageObjects(message, Type.ERROR));
 };
 
 
@@ -77,7 +77,7 @@ exports.prototype.error = function(message) {
  * @export
  */
 exports.prototype.info = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.INFORMATION));
+  this.show(this.getMessageObjects(message, Type.INFORMATION));
 };
 
 
@@ -87,7 +87,7 @@ exports.prototype.info = function(message) {
  * @export
  */
 exports.prototype.success = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.SUCCESS));
+  this.show(this.getMessageObjects(message, Type.SUCCESS));
 };
 
 
@@ -97,7 +97,7 @@ exports.prototype.success = function(message) {
  * @export
  */
 exports.prototype.warn = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.WARNING));
+  this.show(this.getMessageObjects(message, Type.WARNING));
 };
 
 
@@ -115,7 +115,7 @@ exports.prototype.warn = function(message) {
 exports.prototype.getMessageObjects = function(object, opt_type) {
   const msgObjects = [];
   let msgObject = null;
-  const defaultType = exports.Type.INFORMATION;
+  const defaultType = Type.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({

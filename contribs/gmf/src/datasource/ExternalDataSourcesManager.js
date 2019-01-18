@@ -318,7 +318,7 @@ const exports = class {
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
-    const id = exports.getId(layer);
+    const id = getId(layer);
     const service = capabilities['Service'];
 
     url = service['OnlineResource'] || url;
@@ -397,7 +397,7 @@ const exports = class {
    * @export
    */
   createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
-    const id = exports.getId(layer);
+    const id = getId(layer);
 
     // (1) No need to do anything if there's already a WMTS data source (and its
     // layer in the map)
@@ -539,7 +539,7 @@ const exports = class {
         }
 
         if (features) {
-          const id = exports.getId(file);
+          const id = getId(file);
 
           const dataSource = new ngeoDatasourceFile({
             features: new olCollection(features),

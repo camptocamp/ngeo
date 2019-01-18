@@ -116,7 +116,7 @@ const component = {
 };
 
 exports.value('gmfAuthenticationTemplateUrl',
-  exports.gmfAuthenticationTemplateUrl_);
+  gmfAuthenticationTemplateUrl_);
 
 exports.component('gmfAuthentication', component);
 

@@ -63,7 +63,7 @@ exports.prototype.getQueryableLayersInfo = function() {
 
         // Get all queryable nodes
         const allQueryableLayersInfo =
-            exports.getQueryableLayersInfoFromThemes(
+            getQueryableLayersInfoFromThemes(
               themes,
               ogcServers
             );

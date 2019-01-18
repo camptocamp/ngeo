@@ -578,7 +578,7 @@ Controller.prototype.$onInit = function() {
   this.scope_.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      const state = exports.State;
+      const state = State;
       if (newValue === state.STOP_EDITING_PENDING) {
         this.confirmCancel().then(() => {
           this.state = state.STOP_EDITING_EXECUTE;
@@ -596,7 +596,7 @@ Controller.prototype.$onInit = function() {
     (newValue, oldValue) => {
       // Reset stop request when closing the confirmation modal
       if (oldValue && !newValue) {
-        this.state = exports.State.IDLE;
+        this.state = State.IDLE;
       }
     }
   );

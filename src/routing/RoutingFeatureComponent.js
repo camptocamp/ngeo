@@ -372,7 +372,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
  * @ngname ngeoRoutingFeature
  */
 const component = {
-  controller: exports.Controller,
+  controller: Controller,
   bindings: {
     'map': '<ngeoRoutingFeatureMap',
     'feature': '=ngeoRoutingFeatureFeature',

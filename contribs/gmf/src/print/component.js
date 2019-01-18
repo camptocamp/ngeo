@@ -95,7 +95,7 @@ exports.PrintStateEnum = {
 
 
 exports.value('gmfPrintState', {
-  'state': exports.PrintStateEnum.CAPABILITIES_NOT_LOADED
+  'state': PrintStateEnum.CAPABILITIES_NOT_LOADED
 });
 
 
@@ -525,7 +525,7 @@ class Controller {
   $onInit() {
     // Clear the capabilities if the roleId changes
     this.$scope_.$watch(() => this.gmfAuthenticationService_.getRoleId(), () => {
-      this.gmfPrintState_.state = exports.PrintStateEnum.CAPABILITIES_NOT_LOADED;
+      this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
       this.capabilities_ = null;
     });
 
@@ -603,7 +603,7 @@ class Controller {
         if (!this.active) {
           return;
         }
-        this.gmfPrintState_.state = exports.PrintStateEnum.NOT_IN_USE;
+        this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
         // Get capabilities - On success
         this.parseCapabilities_(resp);
         this.postComposeListenerKey_ = olEvents.listen(this.map, 'postcompose', this.postcomposeListener_);
@@ -614,7 +614,7 @@ class Controller {
         this.map.render();
       }, (resp) => {
         // Get capabilities - On error
-        this.gmfPrintState_.state = exports.PrintStateEnum.ERROR_ON_GETCAPABILITIES;
+        this.gmfPrintState_.state = PrintStateEnum.ERROR_ON_GETCAPABILITIES;
         this.capabilities_ = null;
       });
     } else {
@@ -862,11 +862,11 @@ class Controller {
    */
   print(format) {
     // Do not print if a print task is already processing.
-    if (this.gmfPrintState_.state === exports.PrintStateEnum.PRINTING) {
+    if (this.gmfPrintState_.state === PrintStateEnum.PRINTING) {
       return;
     }
     this.requestCanceler_ = this.$q_.defer();
-    this.gmfPrintState_.state = exports.PrintStateEnum.PRINTING;
+    this.gmfPrintState_.state = PrintStateEnum.PRINTING;
 
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution() || 0;
@@ -995,7 +995,7 @@ class Controller {
    * @private
    */
   resetPrintStates_(opt_printState) {
-    this.gmfPrintState_.state = opt_printState || exports.PrintStateEnum.NOT_IN_USE;
+    this.gmfPrintState_.state = opt_printState || PrintStateEnum.NOT_IN_USE;
     this.curRef_ = '';
   }
 
@@ -1274,7 +1274,7 @@ class Controller {
    * @export
    */
   isState(stateEnumKey) {
-    return this.gmfPrintState_.state === exports.PrintStateEnum[stateEnumKey];
+    return this.gmfPrintState_.state === PrintStateEnum[stateEnumKey];
   }
 }
 

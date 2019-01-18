@@ -206,7 +206,7 @@ exports.factory('$verticalSwipe', [function() {
 }]);
 
 exports.makeSwipeDirective_ = function(directiveName, direction, eventName) {
-  exports.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
+  directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
     // The maximum horizontal delta for a swipe should be less than 75px.
     const MAX_HORIZONTAL_DISTANCE = 75;
     // Horizontal distance should not be more than a fraction of the vertical distance.

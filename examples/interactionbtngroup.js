@@ -131,7 +131,7 @@ function MainController(ngeoFeatureOverlayMgr) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

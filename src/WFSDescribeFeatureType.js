@@ -53,7 +53,7 @@ exports.prototype.readFromNode = function(node) {
   let result = {};
   result = olXml.pushParseAndPop(
     result,
-    exports.PARSERS_,
+    PARSERS_,
     node,
     []
   );
@@ -91,7 +91,7 @@ exports.readComplexType_ = function(node, objectStack) {
   const name = node.getAttribute('name');
   const object = olXml.pushParseAndPop(
     {'name': name},
-    exports.COMPLEX_TYPE_PARSERS_,
+    COMPLEX_TYPE_PARSERS_,
     node, objectStack
   );
   // flatten
@@ -112,7 +112,7 @@ exports.readComplexContent_ = function(
 ) {
   return olXml.pushParseAndPop(
     {},
-    exports.COMPLEX_CONTENT_PARSERS_,
+    COMPLEX_CONTENT_PARSERS_,
     node,
     objectStack
   );
@@ -128,7 +128,7 @@ exports.readComplexContent_ = function(
 exports.readExtension_ = function(node, objectStack) {
   return olXml.pushParseAndPop(
     {},
-    exports.EXTENSION_PARSERS_,
+    EXTENSION_PARSERS_,
     node,
     objectStack
   );
@@ -144,7 +144,7 @@ exports.readExtension_ = function(node, objectStack) {
 exports.readSequence_ = function(node, objectStack) {
   return olXml.pushParseAndPop(
     {},
-    exports.SEQUENCE_PARSERS_,
+    SEQUENCE_PARSERS_,
     node,
     objectStack
   );
@@ -168,12 +168,12 @@ exports.NAMESPACE_URIS_ = [
  * @private
  */
 exports.PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
-  exports.NAMESPACE_URIS_, {
+  NAMESPACE_URIS_, {
     'element': olXml.makeObjectPropertyPusher(
-      exports.readElement_
+      readElement_
     ),
     'complexType': olXml.makeObjectPropertyPusher(
-      exports.readComplexType_
+      readComplexType_
     )
   }));
 
@@ -184,9 +184,9 @@ exports.PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @private
  */
 exports.COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
-  exports.NAMESPACE_URIS_, {
+  NAMESPACE_URIS_, {
     'complexContent': olXml.makeObjectPropertySetter(
-      exports.readComplexContent_
+      readComplexContent_
     )
   }));
 
@@ -197,9 +197,9 @@ exports.COMPLEX_TYPE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @private
  */
 exports.COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
-  exports.NAMESPACE_URIS_, {
+  NAMESPACE_URIS_, {
     'extension': olXml.makeObjectPropertySetter(
-      exports.readExtension_
+      readExtension_
     )
   }));
 
@@ -210,9 +210,9 @@ exports.COMPLEX_CONTENT_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @private
  */
 exports.EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
-  exports.NAMESPACE_URIS_, {
+  NAMESPACE_URIS_, {
     'sequence': olXml.makeObjectPropertySetter(
-      exports.readSequence_
+      readSequence_
     )
   }));
 
@@ -223,9 +223,9 @@ exports.EXTENSION_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
  * @private
  */
 exports.SEQUENCE_PARSERS_ = googAsserts.assert(olXml.makeStructureNS(
-  exports.NAMESPACE_URIS_, {
+  NAMESPACE_URIS_, {
     'element': olXml.makeObjectPropertyPusher(
-      exports.readElement_
+      readElement_
     )
   }));
 

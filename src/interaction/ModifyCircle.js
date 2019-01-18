@@ -38,10 +38,10 @@ const exports = function(options) {
   googAsserts.assert(options.features);
 
   olInteractionPointer.call(this, {
-    handleDownEvent: exports.handleDownEvent_,
-    handleDragEvent: exports.handleDragEvent_,
-    handleEvent: exports.handleEvent,
-    handleUpEvent: exports.handleUpEvent_
+    handleDownEvent: handleDownEvent_,
+    handleDragEvent: handleDragEvent_,
+    handleEvent: handleEvent,
+    handleUpEvent: handleUpEvent_
   });
 
   /**

@@ -394,14 +394,14 @@ exports.VisitorDecision = {
  */
 exports.prototype.traverseDepthFirst = function(visitor) {
   // First visit the current controller
-  const decision = visitor(this) || exports.VisitorDecision.DESCEND;
+  const decision = visitor(this) || VisitorDecision.DESCEND;
 
   switch (decision) {
-    case exports.VisitorDecision.STOP:
+    case VisitorDecision.STOP:
       return true; // stop traversing
-    case exports.VisitorDecision.SKIP:
+    case VisitorDecision.SKIP:
       return false; // continue traversing but skip current branch
-    case exports.VisitorDecision.DESCEND:
+    case VisitorDecision.DESCEND:
       for (let i = 0; i < this.children.length; ++i) {
         const child = this.children[i];
         const stop = child.traverseDepthFirst(visitor);

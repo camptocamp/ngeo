@@ -116,7 +116,7 @@ exports.BtnGroupController.prototype.addButton = function(expressionFn) {
 
 
 exports.controller('ngeoBtnGroupController',
-  exports.BtnGroupController);
+  BtnGroupController);
 
 
 /**

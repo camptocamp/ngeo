@@ -53,7 +53,7 @@ module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('examples/layertree', require('./partials/layertree.html'));
 });
 
-module.component('appLayertree', exports.layertreeComponent);
+module.component('appLayertree', layertreeComponent);
 
 
 /**
@@ -146,7 +146,7 @@ exports.LayertreeController.prototype.onButtonClick = function(node, layer) {
 };
 
 
-module.controller('AppLayertreeController', exports.LayertreeController);
+module.controller('AppLayertreeController', LayertreeController);
 
 
 /**
@@ -211,7 +211,7 @@ exports.getLayer = (function() {
 })();
 
 
-module.value('appGetLayer', exports.getLayer);
+module.value('appGetLayer', getLayer);
 
 
 /**
@@ -239,7 +239,7 @@ function MainController() {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

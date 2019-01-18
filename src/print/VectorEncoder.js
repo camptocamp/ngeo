@@ -36,12 +36,12 @@ exports.PrintStyleType = {
  * @type {Object.<import("ol/geom/GeometryType.js").default, import("ngeo/print/VectorEncoder.js").default.PrintStyleType>}
  */
 const PRINT_STYLE_TYPES = {
-  'LineString': exports.PrintStyleType.LINE_STRING,
-  'Point': exports.PrintStyleType.POINT,
-  'Polygon': exports.PrintStyleType.POLYGON,
-  'MultiLineString': exports.PrintStyleType.LINE_STRING,
-  'MultiPoint': exports.PrintStyleType.POINT,
-  'MultiPolygon': exports.PrintStyleType.POLYGON
+  'LineString': PrintStyleType.LINE_STRING,
+  'Point': PrintStyleType.POINT,
+  'Polygon': PrintStyleType.POLYGON,
+  'MultiLineString': PrintStyleType.LINE_STRING,
+  'MultiPoint': PrintStyleType.POINT,
+  'MultiPolygon': PrintStyleType.POLYGON
 };
 
 
@@ -162,16 +162,16 @@ exports.prototype.encodeVectorStyle = function(object, geometryType, style, styl
   const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
   const textStyle = style.getText();
-  if (styleType === exports.PrintStyleType.POLYGON) {
+  if (styleType === PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
-  } else if (styleType === exports.PrintStyleType.LINE_STRING) {
+  } else if (styleType === PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       this.encodeVectorStyleLine(styleObject.symbolizers, strokeStyle);
     }
-  } else if (styleType === exports.PrintStyleType.POINT) {
+  } else if (styleType === PrintStyleType.POINT) {
     if (imageStyle !== null) {
       this.encodeVectorStylePoint(styleObject.symbolizers, imageStyle);
     }

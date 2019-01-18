@@ -109,10 +109,10 @@ const exports = class {
       } else {
         const otherState = this.getDataSourceState(dataSource);
         if (otherState !== state) {
-          state = exports.VisibilityState.INDETERMINATE;
+          state = VisibilityState.INDETERMINATE;
         }
       }
-      if (state === exports.VisibilityState.INDETERMINATE) {
+      if (state === VisibilityState.INDETERMINATE) {
         break;
       }
     }
@@ -134,8 +134,8 @@ const exports = class {
    */
   getDataSourceState(dataSource) {
     return dataSource.visible ?
-      exports.VisibilityState.ON :
-      exports.VisibilityState.OFF;
+      VisibilityState.ON :
+      VisibilityState.OFF;
   }
 
   /**
@@ -166,7 +166,7 @@ const exports = class {
    */
   toggleVisibilityState() {
     const visibleToSet =
-        this.visibilityState !== exports.VisibilityState.ON;
+        this.visibilityState !== VisibilityState.ON;
     for (const dataSource of this.dataSources) {
       if (dataSource.visible !== visibleToSet) {
         dataSource.visible = visibleToSet;

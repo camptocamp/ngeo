@@ -34,7 +34,7 @@ exports.mapComponent = {
 };
 
 
-module.component('appMap', exports.mapComponent);
+module.component('appMap', mapComponent);
 
 
 /**
@@ -79,7 +79,7 @@ function MainController($timeout) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

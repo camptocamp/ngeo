@@ -292,7 +292,7 @@ exports.MainController.prototype.refreshWMSLayer_ = function() {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

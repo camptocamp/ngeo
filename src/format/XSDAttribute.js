@@ -180,10 +180,10 @@ exports.prototype.setAttributeByXsdType_ = function(
     attribute.type = ngeoFormatAttributeType.TIME;
   } else if (type === 'xsd:decimal' || type === 'xsd:double') {
     attribute.type = ngeoFormatAttributeType.NUMBER;
-    attribute.numType = exports.NumberType.FLOAT;
+    attribute.numType = NumberType.FLOAT;
   } else if (type === 'xsd:integer') {
     attribute.type = ngeoFormatAttributeType.NUMBER;
-    attribute.numType = exports.NumberType.INTEGER;
+    attribute.numType = NumberType.INTEGER;
   } else if (type === 'xsd:string') {
     attribute.type = ngeoFormatAttributeType.TEXT;
   }

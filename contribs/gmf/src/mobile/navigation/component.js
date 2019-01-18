@@ -290,7 +290,7 @@ function backDirective() {
   };
 };
 
-exports.directive('gmfMobileNavBack', exports.backDirective);
+exports.directive('gmfMobileNavBack', backDirective);
 
 
 /**
@@ -330,7 +330,7 @@ function backOnClickDirective() {
   };
 };
 
-exports.directive('gmfMobileNavBackOnClick', exports.backOnClickDirective);
+exports.directive('gmfMobileNavBackOnClick', backOnClickDirective);
 
 
 export default module;

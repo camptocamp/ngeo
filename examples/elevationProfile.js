@@ -255,7 +255,7 @@ exports.MainController.prototype.snapToGeometry = function(coordinate, geometry)
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

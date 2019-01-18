@@ -77,7 +77,7 @@ exports.prototype.getSelectedRows = function() {
  * @public
  */
 exports.prototype.selectRow = function(attributes) {
-  const uid = exports.getRowUid(attributes);
+  const uid = getRowUid(attributes);
   this.selectedRows[uid] = attributes;
 };
 
@@ -87,7 +87,7 @@ exports.prototype.selectRow = function(attributes) {
  * @public
  */
 exports.prototype.toggleRow = function(attributes) {
-  const uid = exports.getRowUid(attributes);
+  const uid = getRowUid(attributes);
   const isSelected = this.isRowSelected(attributes);
   if (isSelected) {
     delete this.selectedRows[uid];

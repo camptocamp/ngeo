@@ -57,7 +57,7 @@ exports.queryresultComponent = {
   templateUrl: 'partials/queryresult'
 };
 
-module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', queryresultComponent);
 
 
 /**
@@ -76,7 +76,7 @@ function QueryresultController(ngeoQueryResult) {
 };
 
 
-module.controller('AppQueryresultController', exports.QueryresultController);
+module.controller('AppQueryresultController', QueryresultController);
 
 
 /**
@@ -182,7 +182,7 @@ exports.MainController.prototype.getSetDummyActive = function(val) {
 };
 
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

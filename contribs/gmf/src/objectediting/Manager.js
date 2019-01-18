@@ -61,15 +61,15 @@ exports.prototype.getFeature = function() {
     this.getFeatureDefered_ = this.q_.defer();
 
     const geomType = this.ngeoLocation_.getParam(
-      exports.Param.GEOM_TYPE);
+      Param.GEOM_TYPE);
     const id = this.ngeoLocation_.getParam(
-      exports.Param.ID);
+      Param.ID);
     const layer = this.ngeoLocation_.getParam(
-      exports.Param.LAYER);
+      Param.LAYER);
     const property = this.ngeoLocation_.getParam(
-      exports.Param.PROPERTY);
+      Param.PROPERTY);
     const theme = this.ngeoLocation_.getParam(
-      exports.Param.THEME);
+      Param.THEME);
 
     if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_.getFeaturesWithComparisonFilters(
@@ -96,7 +96,7 @@ exports.prototype.getFeature = function() {
  */
 exports.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
-    exports.Param.GEOM_TYPE);
+    Param.GEOM_TYPE);
 };
 
 
@@ -106,7 +106,7 @@ exports.prototype.getGeomType = function() {
  */
 exports.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
-    exports.Param.LAYER);
+    Param.LAYER);
 };
 
 
