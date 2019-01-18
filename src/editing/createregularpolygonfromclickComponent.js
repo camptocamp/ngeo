@@ -69,7 +69,7 @@ function directive() {
   };
 }
 
-exports.directive('ngeoCreateregularpolygonfromclick', directive);
+module.directive('ngeoCreateregularpolygonfromclick', directive);
 
 
 /**

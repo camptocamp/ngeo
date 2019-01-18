@@ -116,7 +116,7 @@ function directive() {
   };
 }
 
-exports.directive('ngeoDrawfeature', directive);
+module.directive('ngeoDrawfeature', directive);
 
 
 export default module;

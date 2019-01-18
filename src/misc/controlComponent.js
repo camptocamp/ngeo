@@ -56,7 +56,7 @@ function component() {
 }
 
 
-exports.directive('ngeoControl', component);
+module.directive('ngeoControl', component);
 
 
 export default module;

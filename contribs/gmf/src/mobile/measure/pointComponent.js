@@ -99,7 +99,7 @@ function component(gmfMobileMeasurePointTemplateUrl) {
 }
 
 
-exports.directive('gmfMobileMeasurepoint', component);
+module.directive('gmfMobileMeasurepoint', component);
 
 
 /**

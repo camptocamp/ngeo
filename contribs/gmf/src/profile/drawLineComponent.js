@@ -57,7 +57,7 @@ function directive() {
 }
 
 
-exports.directive('gmfDrawprofileline', directive);
+module.directive('gmfDrawprofileline', directive);
 
 /**
  * @param {!angular.IScope} $scope Scope.

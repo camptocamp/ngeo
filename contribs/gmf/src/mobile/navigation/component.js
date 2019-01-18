@@ -74,7 +74,7 @@ function component() {
   };
 }
 
-exports.directive('gmfMobileNav', component);
+module.directive('gmfMobileNav', component);
 
 
 /**
@@ -290,7 +290,7 @@ function backDirective() {
   };
 };
 
-exports.directive('gmfMobileNavBack', backDirective);
+module.directive('gmfMobileNavBack', backDirective);
 
 
 /**
@@ -330,7 +330,7 @@ function backOnClickDirective() {
   };
 };
 
-exports.directive('gmfMobileNavBackOnClick', backOnClickDirective);
+module.directive('gmfMobileNavBackOnClick', backOnClickDirective);
 
 
 export default module;

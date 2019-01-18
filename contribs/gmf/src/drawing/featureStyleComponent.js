@@ -51,7 +51,7 @@ function directive() {
 }
 
 
-exports.directive('gmfFeaturestyle', directive);
+module.directive('gmfFeaturestyle', directive);
 
 
 /**

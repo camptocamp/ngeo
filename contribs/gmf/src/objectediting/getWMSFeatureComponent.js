@@ -50,7 +50,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfObjecteditinggetwmsfeature', directive);
+module.directive('gmfObjecteditinggetwmsfeature', directive);
 
 
 /**

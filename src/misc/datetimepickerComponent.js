@@ -36,7 +36,7 @@ function component() {
   };
 }
 
-exports.directive('ngeoDatetimepicker', component);
+module.directive('ngeoDatetimepicker', component);
 
 
 /**

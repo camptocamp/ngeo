@@ -64,7 +64,7 @@ function component() {
 }
 
 
-exports.directive('gmfEditfeatureselector', component);
+module.directive('gmfEditfeatureselector', component);
 
 
 /**

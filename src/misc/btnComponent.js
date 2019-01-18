@@ -68,7 +68,7 @@ function btnGroupComponent($parse) {
 }
 
 
-exports.directive('ngeoBtnGroup', btnGroupComponent);
+module.directive('ngeoBtnGroup', btnGroupComponent);
 
 
 /**
@@ -183,7 +183,7 @@ function btnComponent($parse) {
 }
 
 
-exports.directive('ngeoBtn', btnComponent);
+module.directive('ngeoBtn', btnComponent);
 
 
 export default module;

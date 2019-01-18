@@ -80,7 +80,7 @@ function directive($window) {
 }
 
 
-exports.directive('ngeoResizemap', directive);
+module.directive('ngeoResizemap', directive);
 
 
 export default module;

@@ -79,7 +79,7 @@ function component(gmfMobileMeasureAreaTemplateUrl) {
 }
 
 
-exports.directive('gmfMobileMeasurearea', component);
+module.directive('gmfMobileMeasurearea', component);
 
 
 /**

@@ -159,7 +159,7 @@ function directive(ngeoDebounce) {
   };
 }
 
-exports.directive('ngeoProfile', directive);
+module.directive('ngeoProfile', directive);
 
 
 export default module;

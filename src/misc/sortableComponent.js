@@ -171,7 +171,7 @@ function component($timeout) {
   };
 }
 
-exports.directive('ngeoSortable', component);
+module.directive('ngeoSortable', component);
 
 
 export default module;

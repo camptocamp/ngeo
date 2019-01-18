@@ -92,7 +92,7 @@ function directive(ngeoMapQuerent) {
   };
 }
 
-exports.directive('ngeoBboxQuery', directive);
+module.directive('ngeoBboxQuery', directive);
 
 
 export default module;

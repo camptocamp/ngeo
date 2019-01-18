@@ -45,7 +45,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoExportfeatures', directive);
+module.directive('ngeoExportfeatures', directive);
 
 
 /**

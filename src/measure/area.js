@@ -69,7 +69,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 }
 
 
-exports.directive('ngeoMeasurearea', directive);
+module.directive('ngeoMeasurearea', directive);
 
 
 export default module;

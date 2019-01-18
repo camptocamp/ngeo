@@ -91,7 +91,7 @@ function directive() {
 }
 
 
-exports.directive('gmfTimeSlider', directive);
+module.directive('gmfTimeSlider', directive);
 
 
 /**

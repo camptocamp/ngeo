@@ -127,7 +127,7 @@ function directive(ngeoMapQuerent, $injector) {
   };
 }
 
-exports.directive('ngeoMapQuery', directive);
+module.directive('ngeoMapQuery', directive);
 
 
 export default module;

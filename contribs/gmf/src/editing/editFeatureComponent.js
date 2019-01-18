@@ -129,7 +129,7 @@ function component() {
 }
 
 
-exports.directive('gmfEditfeature', component);
+module.directive('gmfEditfeature', component);
 
 
 /**

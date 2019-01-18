@@ -103,7 +103,7 @@ const directive = function(ngeoScaleselectorTemplateUrl) {
 };
 
 
-exports.directive('ngeoScaleselector', directive);
+module.directive('ngeoScaleselector', directive);
 
 
 /**

@@ -54,7 +54,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoDrawtext', directive);
+module.directive('ngeoDrawtext', directive);
 
 
 export default module;

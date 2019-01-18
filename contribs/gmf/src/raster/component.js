@@ -121,7 +121,7 @@ function component() {
 }
 
 
-exports.directive('gmfElevation', component);
+module.directive('gmfElevation', component);
 
 /**
  * @hidden

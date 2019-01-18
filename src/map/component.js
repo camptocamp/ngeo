@@ -105,7 +105,7 @@ function directive($window) {
 }
 
 // Register the directive in the module
-exports.directive('ngeoMap', directive);
+module.directive('ngeoMap', directive);
 
 
 export default module;

@@ -54,7 +54,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfMap', directive);
+module.directive('gmfMap', directive);
 
 
 /**

@@ -82,7 +82,7 @@ function component() {
 }
 
 
-exports.directive('gmfDrawfeature', component);
+module.directive('gmfDrawfeature', component);
 
 
 /**

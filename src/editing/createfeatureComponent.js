@@ -72,7 +72,7 @@ function directive() {
   };
 }
 
-exports.directive('ngeoCreatefeature', directive);
+module.directive('ngeoCreatefeature', directive);
 
 
 /**

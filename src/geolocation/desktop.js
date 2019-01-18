@@ -80,7 +80,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoDesktopGeolocation', directive);
+module.directive('ngeoDesktopGeolocation', directive);
 
 
 /**

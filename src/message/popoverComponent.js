@@ -152,9 +152,9 @@ PopoverController.prototype.dismissPopover = function() {
 
 
 module.controller('NgeoPopoverController', PopoverController);
-exports.directive('ngeoPopover', component);
-exports.directive('ngeoPopoverAnchor', anchorComponent);
-exports.directive('ngeoPopoverContent', contentComponent);
+module.directive('ngeoPopover', component);
+module.directive('ngeoPopoverAnchor', anchorComponent);
+module.directive('ngeoPopoverContent', contentComponent);
 
 
 export default module;

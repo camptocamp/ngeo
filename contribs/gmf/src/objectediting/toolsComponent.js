@@ -105,7 +105,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfObjecteditingtools', directive);
+module.directive('gmfObjecteditingtools', directive);
 
 
 /**

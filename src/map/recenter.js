@@ -69,7 +69,7 @@ function directive() {
 }
 
 // Register the directive in the module
-exports.directive('ngeoRecenter', directive);
+module.directive('ngeoRecenter', directive);
 
 
 export default module;

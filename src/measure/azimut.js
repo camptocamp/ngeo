@@ -94,7 +94,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 }
 
 
-exports.directive('ngeoMeasureazimut', directive);
+module.directive('ngeoMeasureazimut', directive);
 
 
 export default module;

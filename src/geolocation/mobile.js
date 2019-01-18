@@ -82,7 +82,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoMobileGeolocation', directive);
+module.directive('ngeoMobileGeolocation', directive);
 
 
 /**

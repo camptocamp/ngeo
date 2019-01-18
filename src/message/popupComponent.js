@@ -79,7 +79,7 @@ function directive(ngeoPopupTemplateUrl) {
   };
 }
 
-exports.directive('ngeoPopup', directive);
+module.directive('ngeoPopup', directive);
 
 
 export default module;

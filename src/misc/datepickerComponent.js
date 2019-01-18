@@ -104,7 +104,7 @@ function component(ngeoDatePickerTemplateUrl, $timeout) {
   };
 }
 
-exports.directive('ngeoDatePicker', component);
+module.directive('ngeoDatePicker', component);
 
 
 /**

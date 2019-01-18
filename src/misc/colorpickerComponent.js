@@ -55,7 +55,7 @@ function component(ngeoColorpickerTemplateUrl) {
   };
 }
 
-exports.directive('ngeoColorpicker', component);
+module.directive('ngeoColorpicker', component);
 
 /**
  * Default colors for the colorpicker

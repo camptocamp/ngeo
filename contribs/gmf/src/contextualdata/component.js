@@ -72,7 +72,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfContextualdata', directive);
+module.directive('gmfContextualdata', directive);
 
 
 /**
