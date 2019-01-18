@@ -96,7 +96,7 @@ function MainController(ngeoDisclaimer) {
 /**
  * @export
  */
-exports.MainController.prototype.success = function() {
+MainController.prototype.success = function() {
   this.disclaimer.success(this.successMsg_);
 };
 
@@ -104,7 +104,7 @@ exports.MainController.prototype.success = function() {
 /**
  * @export
  */
-exports.MainController.prototype.info = function() {
+MainController.prototype.info = function() {
   this.disclaimer.info(this.infoMsg_);
 };
 
@@ -112,7 +112,7 @@ exports.MainController.prototype.info = function() {
 /**
  * @export
  */
-exports.MainController.prototype.warn = function() {
+MainController.prototype.warn = function() {
   this.disclaimer.warn(this.warningMsg_);
 };
 
@@ -120,7 +120,7 @@ exports.MainController.prototype.warn = function() {
 /**
  * @export
  */
-exports.MainController.prototype.error = function() {
+MainController.prototype.error = function() {
   this.disclaimer.error(this.errorMsg_);
 };
 
@@ -130,7 +130,7 @@ exports.MainController.prototype.error = function() {
  * this case, it's shown in the map.
  * @export
  */
-exports.MainController.prototype.inMap = function() {
+MainController.prototype.inMap = function() {
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.alert({
       msg: message,
@@ -146,7 +146,7 @@ exports.MainController.prototype.inMap = function() {
  * instead of clicking on the close button.
  * @export
  */
-exports.MainController.prototype.closeAll = function() {
+MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.successMsg_,

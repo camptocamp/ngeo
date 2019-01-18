@@ -64,7 +64,7 @@ module.constant('defaultTheme', 'Filters');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-exports.MainController = class {
+MainController = class {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.

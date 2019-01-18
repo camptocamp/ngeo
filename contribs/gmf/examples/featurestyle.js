@@ -197,7 +197,7 @@ function MainController($scope, ngeoFeatureHelper) {
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
+MainController.prototype.handleMapSingleClick_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);

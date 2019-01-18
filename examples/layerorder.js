@@ -142,7 +142,7 @@ function MainController($scope) {
  *     function is used as setter.
  * @export
  */
-exports.MainController.prototype.toggleRoadsLayer = function(val) {
+MainController.prototype.toggleRoadsLayer = function(val) {
   if (val === undefined) {
     return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {

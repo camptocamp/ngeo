@@ -173,7 +173,7 @@ function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
  * @return {boolean|undefined} Value.
  * @export
  */
-exports.MainController.prototype.getSetDummyActive = function(val) {
+MainController.prototype.getSetDummyActive = function(val) {
   if (val !== undefined) {
     this.dummyActive = val;
   } else {

@@ -49,7 +49,7 @@ function MainController(ngeoNotification) {
  * service.
  * @export
  */
-exports.MainController.prototype.notifyMulti = function() {
+MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
     type: ngeoMessageMessage.Type.ERROR
@@ -71,7 +71,7 @@ exports.MainController.prototype.notifyMulti = function() {
  * one defined by the notification service.
  * @export
  */
-exports.MainController.prototype.notifyTarget = function() {
+MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
@@ -83,7 +83,7 @@ exports.MainController.prototype.notifyTarget = function() {
  * Demonstrates how to display a message for a specific number of seconds.
  * @export
  */
-exports.MainController.prototype.notifyQuick = function() {
+MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',

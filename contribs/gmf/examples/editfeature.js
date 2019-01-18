@@ -140,7 +140,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
+MainController.prototype.handleMapSingleClick_ = function(evt) {
 
   // (1) Launch query to fetch new features
   const coordinate = evt.coordinate;
@@ -170,7 +170,7 @@ exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
  * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @private
  */
-exports.MainController.prototype.handleGetFeatures_ = function(features) {
+MainController.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   if (features.length) {
@@ -183,7 +183,7 @@ exports.MainController.prototype.handleGetFeatures_ = function(features) {
  * Insert a new feature at a random location.
  * @export
  */
-exports.MainController.prototype.insertFeature = function() {
+MainController.prototype.insertFeature = function() {
 
   this.pending = true;
 
@@ -231,7 +231,7 @@ exports.MainController.prototype.insertFeature = function() {
  * Update the currently selected feature with a new name.
  * @export
  */
-exports.MainController.prototype.updateFeature = function() {
+MainController.prototype.updateFeature = function() {
 
   console.assert(this.feature);
 
@@ -254,7 +254,7 @@ exports.MainController.prototype.updateFeature = function() {
  * Delete currently selected feature.
  * @export
  */
-exports.MainController.prototype.deleteFeature = function() {
+MainController.prototype.deleteFeature = function() {
 
   console.assert(this.feature);
 
@@ -276,7 +276,7 @@ exports.MainController.prototype.deleteFeature = function() {
  * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
-exports.MainController.prototype.handleEditFeature_ = function(resp) {
+MainController.prototype.handleEditFeature_ = function(resp) {
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -285,7 +285,7 @@ exports.MainController.prototype.handleEditFeature_ = function(resp) {
 /**
  * @private
  */
-exports.MainController.prototype.refreshWMSLayer_ = function() {
+MainController.prototype.refreshWMSLayer_ = function() {
   this.wmsSource_.updateParams({
     'random': Math.random()
   });

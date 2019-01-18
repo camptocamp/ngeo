@@ -238,7 +238,7 @@ function MainController($http, $scope) {
  * @param {import("ol/coordinate.js").Coordinate} coordinate The current pointer coordinate.
  * @param {import("ol/geom/Geometry.js").default|undefined} geometry The geometry to snap to.
  */
-exports.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
+MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   const closestPoint = geometry.getClosestPoint(coordinate);
   // compute distance to line in pixels
   const dx = closestPoint[0] - coordinate[0];

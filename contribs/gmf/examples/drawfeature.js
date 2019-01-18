@@ -128,7 +128,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-exports.MainController.prototype.handleMapPointerMove_ = function(evt) {
+MainController.prototype.handleMapPointerMove_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);

@@ -161,7 +161,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
 /**
  * @export
  */
-exports.MainController.prototype.print = function() {
+MainController.prototype.print = function() {
   const map = this.map;
 
   const mapSize = map.getSize();
@@ -197,7 +197,7 @@ exports.MainController.prototype.print = function() {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
+MainController.prototype.handleCreateReportSuccess_ = function(resp) {
   const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
   this.getStatus_(mfResp.ref);
 };
@@ -207,7 +207,7 @@ exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
  * @param {string} ref Ref.
  * @private
  */
-exports.MainController.prototype.getStatus_ = function(ref) {
+MainController.prototype.getStatus_ = function(ref) {
   this.print_.getStatus(ref).then(
     this.handleGetStatusSuccess_.bind(this, ref),
     this.handleGetStatusError_.bind(this)
@@ -219,7 +219,7 @@ exports.MainController.prototype.getStatus_ = function(ref) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleCreateReportError_ = function(resp) {
+MainController.prototype.handleCreateReportError_ = function(resp) {
   this.printState = 'Print error';
 };
 
@@ -229,7 +229,7 @@ exports.MainController.prototype.handleCreateReportError_ = function(resp) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
+MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
   const mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
   const done = mfResp.done;
   if (done) {
@@ -250,7 +250,7 @@ exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleGetStatusError_ = function(resp) {
+MainController.prototype.handleGetStatusError_ = function(resp) {
   this.printState = 'Print error';
 };
 

@@ -100,7 +100,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
  * @return {Array.<gmfThemes.GmfLayer>} All layers in all themes.
  * @export
  */
-exports.MainController.prototype.getSetLayers = function(value) {
+MainController.prototype.getSetLayers = function(value) {
   if (value !== undefined && value !== null) {
     this.xsdAttributes_.getAttributes(value.id).then(attr => this.setAttributes_(attr));
   }
@@ -112,7 +112,7 @@ exports.MainController.prototype.getSetLayers = function(value) {
  * @param {Array.<Attribute>} attributes Attributes.
  * @export
  */
-exports.MainController.prototype.setAttributes_ = function(attributes) {
+MainController.prototype.setAttributes_ = function(attributes) {
 
   // (1) Reset first
   this.feature = null;
@@ -130,7 +130,7 @@ exports.MainController.prototype.setAttributes_ = function(attributes) {
  * @return {string} Type of geometry.
  * @export
  */
-exports.MainController.prototype.getGeomType = function() {
+MainController.prototype.getGeomType = function() {
   let type = 'N/A';
   if (this.attributes) {
     const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(
@@ -150,7 +150,7 @@ exports.MainController.prototype.getGeomType = function() {
  * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
  * @export
  */
-exports.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
+MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let i;
   const children = node.children;
   if (children !== undefined) {

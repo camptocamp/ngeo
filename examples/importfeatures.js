@@ -88,7 +88,7 @@ function MainController($scope) {
  * @param {string} kml KML document.
  * @private
  */
-exports.MainController.prototype.importKml_ = function(kml) {
+MainController.prototype.importKml_ = function(kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
   const features = this.kmlFormat_.readFeatures(kml, {

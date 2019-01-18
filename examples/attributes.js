@@ -90,7 +90,7 @@ function MainController($http, $timeout, $scope) {
  * @return {Array.<Attribute>} List of attributes.
  * @private
  */
-exports.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
+MainController.prototype.handleXSDAttributeGet_ = function(resp) {
   const format = new ngeoFormatXSDAttribute();
   const attributes = format.read(resp.data);
   this.attributes = attributes;
@@ -101,7 +101,7 @@ exports.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
 /**
  * @export
  */
-exports.MainController.prototype.updateName = function() {
+MainController.prototype.updateName = function() {
   this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
   }, 0);
@@ -110,7 +110,7 @@ exports.MainController.prototype.updateName = function() {
 /**
  * @param {string} newMessage New message to add to log.
  */
-exports.MainController.prototype.appendLog = function(newMessage) {
+MainController.prototype.appendLog = function(newMessage) {
   this.log = `${newMessage}\n${this.log}`;
 };
 
