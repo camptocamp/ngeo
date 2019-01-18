@@ -117,7 +117,7 @@ exports.MainController = function($http, $scope) {
     }
     source.addFeature(new olFeature(lineString));
 
-    const size = /** @type {import("ol/Size.js").default} */ (this.map.getSize());
+    const size = /** @type {import("ol/size.js").Size} */ (this.map.getSize());
     map.getView().fit(source.getExtent(), {size});
   });
 

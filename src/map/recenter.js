@@ -44,7 +44,7 @@ function directive() {
       function recenter(element) {
         const extent = element.attr('ngeo-extent');
         if (extent !== undefined) {
-          const size = /** @type {import("ol/Size.js").default} */ (map.getSize());
+          const size = /** @type {import("ol/size.js").Size} */ (map.getSize());
           map.getView().fit($scope.$eval(extent), {size});
         }
         const zoom = element.attr('ngeo-zoom');

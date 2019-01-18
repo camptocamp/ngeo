@@ -165,7 +165,7 @@ class Map {
    * @param {Object} options Options.
    * @property {import("ol/coordinate.js").Coordinate} position
    * @property {string} [icon]
-   * @property {import("ol/Size.js").default} [size]
+   * @property {import("ol/size.js").Size} [size]
    */
   addMarker(options = {}) {
     const marker = new Feature({

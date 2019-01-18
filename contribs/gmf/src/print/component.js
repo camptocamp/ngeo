@@ -552,7 +552,7 @@ class Controller {
     });
 
     /**
-     * @return {import("ol/Size.js").default} Size in dots of the map to print.
+     * @return {import("ol/size.js").Size} Size in dots of the map to print.
      */
     const getSizeFn = () => this.paperSize_;
 
@@ -1042,7 +1042,7 @@ class Controller {
   /**
    * Get the optimal scale to display the print mask. Return the first scale if
    * no scale matches.
-   * @param {import("ol/Size.js").default|undefined} mapSize Size of the map on the screen (px).
+   * @param {import("ol/size.js").Size|undefined} mapSize Size of the map on the screen (px).
    * @param {number|undefined} viewResolution Resolution of the map on the screen.
    * @return {number} The best scale. -1 is returned if there is no optimal
    *     scale, that is the optimal scale is lower than or equal to the first

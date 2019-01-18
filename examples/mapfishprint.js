@@ -135,7 +135,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    */
   const postcomposeListener = ngeoPrintUtils.createPrintMaskPostcompose(
     /**
-       * @return {import("ol/Size.js").default} Size in dots of the map to print.
+       * @return {import("ol/size.js").Size} Size in dots of the map to print.
        */
     () => exports.PRINT_PAPER_SIZE_,
     /**

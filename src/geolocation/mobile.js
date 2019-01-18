@@ -296,7 +296,7 @@ Controller.prototype.setPosition_ = function() {
       this.map_.getView().setCenter(position);
       this.map_.getView().setZoom(this.zoom_);
     } else if (accuracy) {
-      const size = /** @type {!import("ol/Size.js").default} */ (this.map_.getSize());
+      const size = /** @type {!import("ol/size.js").Size} */ (this.map_.getSize());
       this.map_.getView().fit(/** @type {!import("ol/geom/Polygon.js").default} */ (accuracy), size);
     }
     this.viewChangedByMe_ = false;
