@@ -89,7 +89,7 @@ exports.directive('ngeoMobileGeolocation', directive);
  * @constructor
  * @private
  * @param {angular.IScope} $scope The directive's scope.
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.

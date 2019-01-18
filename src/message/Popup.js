@@ -99,7 +99,7 @@ const exports = function($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The element.
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.element_ = angular.element('<div ngeo-popup></div>');

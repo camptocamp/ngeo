@@ -32,7 +32,7 @@ const exports = angular.module('gmfProfile', [
 
 exports.value('gmfProfileTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
+   * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
@@ -47,9 +47,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -117,7 +117,7 @@ exports.component('gmfProfile', component);
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay
@@ -147,7 +147,7 @@ function Controller($scope, $http, $element, $filter,
   this.$http_ = $http;
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.$element_ = $element;

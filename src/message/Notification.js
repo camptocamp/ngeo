@@ -37,7 +37,7 @@ const exports = function($timeout) {
   angular.element(document.body).append(container);
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.container_ = container;
@@ -165,7 +165,7 @@ exports.prototype.clearMessageByCacheItem_ = function(item) {
 
 /**
  * @typedef {{
- *     el: angular.JQLite,
+ *     el: JQLite,
  *     promise: angular.IPromise
  * }} CacheItem
  */

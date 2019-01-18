@@ -48,7 +48,7 @@ exports.module.component('appSearch', exports.searchComponent);
 
 /**
  * @constructor
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.IScope} $rootScope Angular root scope.
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {import("ngeo/search/createGeoJSONBloodhound.js").default.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
@@ -58,7 +58,7 @@ exports.module.component('appSearch', exports.searchComponent);
 exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
    * @private
-   * @type {angular.JQLite}
+   * @type {JQLite}
    */
   this.$element = $element;
 

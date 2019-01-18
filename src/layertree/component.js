@@ -16,7 +16,7 @@ const exports = angular.module('ngeoLayertree', [
 
 exports.value('ngeoLayertreeTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
+   * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -111,7 +111,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.
- * @param {string|function(!angular.JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject

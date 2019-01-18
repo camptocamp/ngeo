@@ -18,7 +18,7 @@ const exports = angular.module('gmfAuthentication', [
 
 
 /**
- * @param {angular.JQLite} element Element.
+ * @param {JQLite} element Element.
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
@@ -35,9 +35,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfAuthenticationTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -127,7 +127,7 @@ exports.component('gmfAuthentication', component);
 class AuthenticationController {
   /**
    * @private
-   * @param {!angular.JQLite} $element Element.
+   * @param {!JQLite} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService GMF Authentication service
    * @param {gmfx.User} gmfUser User.
@@ -139,7 +139,7 @@ class AuthenticationController {
   constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
 
     /**
-     * @type {!angular.JQLite}
+     * @type {!JQLite}
      * @private
      */
     this.$element_ = $element;

@@ -64,7 +64,7 @@ function component() {
     scope: true,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
+     * @param {JQLite} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
@@ -127,7 +127,7 @@ exports.controller('gmfMobileNavController', Controller);
 
 /**
  * Initialize the directive with the linked element.
- * @param {angular.JQLite} element Element.
+ * @param {JQLite} element Element.
  */
 Controller.prototype.init = function(element) {
   this.active_ = $(element.find(`.${CLASS_NAMES.ACTIVE}.${CLASS_NAMES.SLIDE}`));
@@ -276,7 +276,7 @@ exports.backDirective = function() {
     scope: false,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
+     * @param {JQLite} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
@@ -318,7 +318,7 @@ exports.backOnClickDirective = function() {
     scope: false,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
+     * @param {JQLite} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */

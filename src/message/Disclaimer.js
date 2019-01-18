@@ -49,14 +49,14 @@ const exports = function($sce, gettextCatalog, ngeoCreatePopup) {
   angular.element(document.body).append(container);
 
   /**
-   * @type {angular.JQLite}
+   * @type {JQLite}
    * @private
    */
   this.container_ = container;
 
   /**
    * Cache of messages.
-   * @type {Object.<string, angular.JQLite|import("ngeo/message/Popup.js").default>}
+   * @type {Object.<string, JQLite|import("ngeo/message/Popup.js").default>}
    * @private
    */
   this.messages_ = {};

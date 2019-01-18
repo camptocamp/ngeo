@@ -50,7 +50,7 @@ function ngeoGooglestreetviewTemplateUrl($attrs, ngeoGooglestreetviewTemplateUrl
 class Controller {
 
   /**
-   * @param {angular.JQLite} $element Element.
+   * @param {JQLite} $element Element.
    * @param {!angular.IScope} $scope Scope.
    * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager.

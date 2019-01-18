@@ -25,7 +25,7 @@ const exports = angular.module('gmfLidarprofilePanel', [
 
 exports.value('gmfLidarprofilePanelTemplateUrl',
   /**
-     * @param {!angular.JQLite} $element Element.
+     * @param {!JQLite} $element Element.
      * @param {!angular.IAttributes} $attrs Attributes.
      * @return {string} Template.
      */
@@ -41,9 +41,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfLidarprofilePanelTemplateUrl
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfLidarprofilePanelTemplateUrl
  *     Template function.
  * @return {string} Template URL.
  * @ngInject

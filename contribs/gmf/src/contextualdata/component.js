@@ -62,7 +62,7 @@ function directive() {
     },
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {angular.JQLite} element Element.
+     * @param {JQLite} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/contextualdata/component.js").default.Controller_} controller Controller.
      */

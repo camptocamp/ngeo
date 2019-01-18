@@ -10,7 +10,7 @@ const exports = angular.module('ngeoColorpicker', []);
 
 exports.value('ngeoColorpickerTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
+   * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -35,7 +35,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  *     </div>
  *
  *
- * @param {string|function(!angular.JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  *     ngeoColorpickerTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -73,7 +73,7 @@ const DEFAULT_COLORS = [
  * @constructor
  * @private
  * @param {angular.IScope} $scope Directive scope.
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @ngInject
  * @ngdoc controller

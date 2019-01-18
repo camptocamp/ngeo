@@ -28,7 +28,7 @@ const exports = angular.module('gmfDisclaimer', [
 /**
  * @constructor
  * @private
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.ISCEService} $sce Angular sce service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -99,7 +99,7 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!angular.JQLite}
+   * @type {!JQLite}
    * @private
    */
   this.element_ = $element;

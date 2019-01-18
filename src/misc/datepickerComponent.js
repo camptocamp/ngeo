@@ -25,7 +25,7 @@ const exports = angular.module('ngeoDatePicker', [
 
 exports.value('ngeoDatePickerTemplateUrl',
   /**
-   * @param {angular.JQLite} element Element.
+   * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -44,7 +44,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * Provide a directive to select a single date or a range of dates. Requires
  * jQuery UI for the 'datepicker' widget.
  *
- * @param {string|function(!angular.JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQLite=, !angular.IAttributes=)}
  * ngeoDatePickerTemplateUrl Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @return {angular.IDirective} The directive specs.

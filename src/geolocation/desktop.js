@@ -87,7 +87,7 @@ exports.directive('ngeoDesktopGeolocation', directive);
  * @constructor
  * @private
  * @param {angular.IScope} $scope The directive's scope.
- * @param {angular.JQLite} $element Element.
+ * @param {JQLite} $element Element.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.

@@ -40,7 +40,7 @@ const exports = angular.module('gmfQueryGridComponent', [
 
 exports.value('gmfDisplayquerygridTemplateUrl',
   /**
-   * @param {!angular.JQLite} $element Element.
+   * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
@@ -57,9 +57,9 @@ exports.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!angular.JQLite, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
+ * @param {!function(!JQLite, !angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -137,7 +137,7 @@ exports.component('gmfDisplayquerygrid', component);
  *     overlay manager service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV download service.
- * @param {!angular.JQLite} $element Element.
+ * @param {!JQLite} $element Element.
  * @constructor
  * @private
  * @ngInject
@@ -182,7 +182,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoCsvDownload_ = ngeoCsvDownload;
 
   /**
-   * @type {!angular.JQLite}
+   * @type {!JQLite}
    * @private
    */
   this.$element_ = $element;
