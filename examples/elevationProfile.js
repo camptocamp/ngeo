@@ -236,7 +236,7 @@ exports.MainController = function($http, $scope) {
 
 
 /**
- * @param {import("ol/Coordinate.js").default} coordinate The current pointer coordinate.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate The current pointer coordinate.
  * @param {import("ol/geom/Geometry.js").default|undefined} geometry The geometry to snap to.
  */
 exports.MainController.prototype.snapToGeometry = function(coordinate, geometry) {

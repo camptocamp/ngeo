@@ -253,7 +253,7 @@ exports.prototype.writeCircleGeometry_ = function(feature, geometry) {
 
 
 /**
- * @param {import("ol/Coordinate.js").default} coordinates Coordinates.
+ * @param {import("ol/coordinate.js").Coordinate} coordinates Coordinates.
  * @return {import("ol/Feature.js").default} Vertex feature.
  * @private
  */

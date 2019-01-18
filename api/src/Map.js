@@ -33,7 +33,7 @@ class Map {
   /**
    * @param {Object} options API options.
    * @property {string} div
-   * @property {import("ol/Coordinate.js").default} center
+   * @property {import("ol/coordinate.js").Coordinate} center
    * @property {number} [zoom=10]
    * @property {boolean} [showCoords=true]
    * TODO: more options
@@ -153,7 +153,7 @@ class Map {
   }
 
   /**
-   * @param {import("ol/Coordinate.js").default} center Center.
+   * @param {import("ol/coordinate.js").Coordinate} center Center.
    * @param {number} zoom Zoom.
    */
   recenter(center, zoom) {
@@ -163,7 +163,7 @@ class Map {
 
   /**
    * @param {Object} options Options.
-   * @property {import("ol/Coordinate.js").default} position
+   * @property {import("ol/coordinate.js").Coordinate} position
    * @property {string} [icon]
    * @property {import("ol/Size.js").default} [size]
    */

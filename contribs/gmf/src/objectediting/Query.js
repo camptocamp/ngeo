@@ -153,7 +153,7 @@ exports.getQueryableLayersInfoFromThemes = function(
  *
  * @param {gmfx.ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
  *     information.
- * @param {import("ol/Coordinate.js").default} coordinate Coordinate.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.
  * @return {angular.IPromise} Promise.
  * @export

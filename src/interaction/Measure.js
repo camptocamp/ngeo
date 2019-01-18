@@ -97,7 +97,7 @@ const exports = function(options = /** @type {import("ngeo/interaction/MeasureBa
 
   /**
    * The measurement overlay coordinate.
-   * @type {import("ol/Coordinate.js").default}
+   * @type {import("ol/coordinate.js").Coordinate}
    * @private
    */
   this.measureTooltipOverlayCoord_ = null;
@@ -510,7 +510,7 @@ exports.prototype.updateState_ = function() {
  * where to place the tooltip and determine which help message to display.
  *
  * @abstract
- * @param {function(string, ?import("ol/Coordinate.js").default)} callback The function
+ * @param {function(string, ?import("ol/coordinate.js").Coordinate)} callback The function
  *     to be called.
  * @protected
  */

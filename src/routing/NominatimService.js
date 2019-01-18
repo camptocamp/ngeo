@@ -124,7 +124,7 @@ exports.prototype.search = function(query, params) {
 
 /**
  * Reverse Geocoding
- * @param {import("ol/Coordinate.js").default} coordinate Search coordinate in LonLat projection
+ * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object|undefined)} params Optional parameters
  * @return {!angular.IHttpPromise} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding

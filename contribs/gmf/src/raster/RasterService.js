@@ -39,7 +39,7 @@ const Param = {
 
 
 /**
- * @param {import("ol/Coordinate.js").default} coordinate Coordinate.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {Object=} opt_params Optional parameters for the request.
  * @return {angular.IPromise} Promise.
  * @export

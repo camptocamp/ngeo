@@ -61,7 +61,7 @@ exports.MainController = function() {
 
 
 /**
- * @param {import("ol/Coordinate.js").default} coordinate The coordinate for the right-clicked
+ * @param {import("ol/coordinate.js").Coordinate} coordinate The coordinate for the right-clicked
  *     point.
  * @param {Object} data The data received from the raster service.
  * @return {Object} The additional data to add to the scope for the

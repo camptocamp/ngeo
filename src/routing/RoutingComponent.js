@@ -268,7 +268,7 @@ exports.Controller.prototype.clearRoute = function() {
 /**
  * Converts feature point into LonLat coordinate.
  * @param {import("ol/Feature.js").default} point Feature point to convert
- * @return {import("ol/Coordinate.js").default} LonLat coordinate
+ * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
 exports.Controller.prototype.getLonLatFromPoint_ = function(point) {

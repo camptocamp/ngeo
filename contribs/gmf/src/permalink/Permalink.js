@@ -484,7 +484,7 @@ const exports = function($q, $timeout, $rootScope, $injector, ngeoDebounce, gett
 
 /**
  * Get the coordinate to use to initialize the map view from the state manager.
- * @return {?import("ol/Coordinate.js").default} The coordinate for the map view center.
+ * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
  * @export
  */
 exports.prototype.getMapCenter = function() {
@@ -536,7 +536,7 @@ exports.prototype.getMapCrosshair = function() {
 /**
  * Sets the map crosshair to the center (or the map center if nothing provided).
  * Overwrites an existing map crosshair.
- * @param {?import("ol/Coordinate.js").default=} opt_center Optional center coordinate.
+ * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
 exports.prototype.setMapCrosshair = function(opt_center) {
   let crosshairCoordinate;
@@ -577,7 +577,7 @@ exports.prototype.getMapTooltip = function() {
  * Sets the map tooltip to the center (or the map center if nothing provided).
  * Overwrites an existing map tooltip.
  * @param {string} tooltipText Text to display in tooltip.
- * @param {?import("ol/Coordinate.js").default=} opt_center Optional center coordinate.
+ * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
 exports.prototype.setMapTooltip = function(tooltipText, opt_center) {
   let tooltipPosition;

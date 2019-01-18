@@ -93,7 +93,7 @@ const exports = function(options) {
   this.coordinate_ = null;
 
   /**
-   * @type {import("ol/Coordinate.js").default}
+   * @type {import("ol/coordinate.js").Coordinate}
    * @private
    */
   this.centerCoordinate_ = null;
@@ -289,7 +289,7 @@ exports.prototype.handleDown_ = function(evt) {
 
 /**
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
- * @return {import("ol/Coordinate.js").default} The center coordinate of the geometry.
+ * @return {import("ol/coordinate.js").Coordinate} The center coordinate of the geometry.
  * @private
  */
 exports.prototype.getCenterCoordinate_ = function(

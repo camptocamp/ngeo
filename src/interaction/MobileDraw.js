@@ -506,7 +506,7 @@ exports.prototype.getSketchPointGeometry_ = function() {
 
 /**
  * Returns the center of the map view
- * @return {import("ol/Coordinate.js").default} Coordinate.
+ * @return {import("ol/coordinate.js").Coordinate} Coordinate.
  * @private
  */
 exports.prototype.getCenter_ = function() {

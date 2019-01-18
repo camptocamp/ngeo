@@ -523,7 +523,7 @@ exports.prototype.createEditingStyles = function(feature) {
  * vertex info is not returned.
  *
  * @param {!import("ol/Feature.js").default} feature Feature.
- * @param {!import("ol/Coordinate.js").default} coordinate Coordinate.
+ * @param {!import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {number} resolution Current map view resolution.
  * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
  */
@@ -602,9 +602,9 @@ exports.prototype.getVertexInfoAtCoordinate = function(
  * Loop in the given coordinates and look one that hits an other given
  * coordinate using a buffer. If one does, return its index.
  *
- * @param {!Array.<!import("ol/Coordinate.js").default>} coordinates Coordinates in which to
+ * @param {!Array.<!import("ol/coordinate.js").Coordinate>} coordinates Coordinates in which to
  *     loop to find the one that hits the other given coordinate.
- * @param {!import("ol/Coordinate.js").default} coordinate Coordinate that has to hit.
+ * @param {!import("ol/coordinate.js").Coordinate} coordinate Coordinate that has to hit.
  * @param {number} min Minimum number of coordinates required to look
  *     for the one that hits.
  * @param {number} buffer Buffer, in map view units, to extend the

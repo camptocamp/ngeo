@@ -20,7 +20,7 @@ export default class {
    * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum
    * @param {number} dRight domain maximum
-   * @return {{clippedLine: Array.<import("ol/Coordinate.js").default>, distanceOffset: number}} Object with clipped lined coordinates and left domain value
+   * @return {{clippedLine: Array.<import("ol/coordinate.js").Coordinate>, distanceOffset: number}} Object with clipped lined coordinates and left domain value
    */
   clipLineByMeasure(config, map_resolution, linestring, dLeft, dRight) {
 

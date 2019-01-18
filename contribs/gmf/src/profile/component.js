@@ -423,7 +423,7 @@ Controller.prototype.onPointerMove_ = function(e) {
  * Return the distance between the beginning of the line and the given point.
  * The point must be on the line. If not, this function will return the total
  * length of the line.
- * @param {import("ol/Coordinate.js").default} pointOnLine A point on the given line.
+ * @param {import("ol/coordinate.js").Coordinate} pointOnLine A point on the given line.
  * @return {number} A distance.
  * @private
  */

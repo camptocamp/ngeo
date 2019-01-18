@@ -175,7 +175,7 @@ exports.prototype.setMap = function(map) {
 /**
  * Opens the menu at the desited coordinate. Also starts listening for the
  * clickout if autoClose is enabled.
- * @param {import("ol/Coordinate.js").default} coordinate Where to open the menu.
+ * @param {import("ol/coordinate.js").Coordinate} coordinate Where to open the menu.
  * @export
  */
 exports.prototype.open = function(coordinate) {
