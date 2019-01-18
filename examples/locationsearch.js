@@ -107,7 +107,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');
   googAsserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({

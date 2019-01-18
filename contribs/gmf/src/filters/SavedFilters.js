@@ -232,7 +232,7 @@ function Item() {};
  * @type {string}
  * @export
  */
-exports.Item.prototype.condition;
+Item.prototype.condition;
 
 
 /**
@@ -240,7 +240,7 @@ exports.Item.prototype.condition;
  * @type {!Array.<!AnyOptions>}
  * @export
  */
-exports.Item.prototype.customRules;
+Item.prototype.customRules;
 
 
 /**
@@ -248,7 +248,7 @@ exports.Item.prototype.customRules;
  * @type {number}
  * @export
  */
-exports.Item.prototype.dataSourceId;
+Item.prototype.dataSourceId;
 
 
 /**
@@ -256,7 +256,7 @@ exports.Item.prototype.dataSourceId;
  * @type {!Array.<!AnyOptions>}
  * @export
  */
-exports.Item.prototype.directedRules;
+Item.prototype.directedRules;
 
 
 /**
@@ -264,7 +264,7 @@ exports.Item.prototype.directedRules;
  * @type {string}
  * @export
  */
-exports.Item.prototype.name;
+Item.prototype.name;
 
 
 export default module;

@@ -76,7 +76,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
  * @param {Object} layerSpec Layer specification object.
  * @export
  */
-exports.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
+BackgroundlayerController.prototype.setLayer = function(layerSpec) {
   this['currentBgLayer'] = layerSpec;
   const layer = this.createLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this['map'], layer);
@@ -88,7 +88,7 @@ exports.BackgroundlayerController.prototype.setLayer = function(layerSpec) {
  * @return {import("ol/layer/Tile.js").default} The layer.
  * @private
  */
-exports.BackgroundlayerController.prototype.createLayer_ = function(layerName) {
+BackgroundlayerController.prototype.createLayer_ = function(layerName) {
   if (layerName === 'blank') {
     return new olLayerTile();
   }

@@ -131,7 +131,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
 /**
  * @export
  */
-exports.SearchController.prototype.$onInit = function() {
+SearchController.prototype.$onInit = function() {
   // Empty the search field on focus and blur.
   const input = this.$element.find('input');
   input.on('focus blur', () => {
@@ -144,7 +144,7 @@ exports.SearchController.prototype.$onInit = function() {
  * @return {import("ol/layer/Vector.js").default} The vector layer.
  * @private
  */
-exports.SearchController.prototype.createVectorLayer_ = function() {
+SearchController.prototype.createVectorLayer_ = function() {
   const vectorLayer = new olLayerVector({
     source: new olSourceVector()
   });
@@ -161,7 +161,7 @@ exports.SearchController.prototype.createVectorLayer_ = function() {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
+SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
   const url = appURL.SEARCH;
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG21781);
   bloodhound.initialize();

@@ -77,7 +77,7 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
 
 module.controller('AppMapController', MapComponentController);
 
-exports.MapComponentController.prototype.$onInit = function() {
+MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
 
   let zoom = this.ngeoLocation_.getParam('z');
@@ -180,7 +180,7 @@ function DrawComponentController($scope, ngeoLocation) {
   this.interaction;
 };
 
-exports.DrawComponentController.prototype.$onInit = function() {
+DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
   this.interaction = new olInteractionDraw({
@@ -228,7 +228,7 @@ exports.DrawComponentController.prototype.$onInit = function() {
  * Clear the vector layer.
  * @export
  */
-exports.DrawComponentController.prototype.clearLayer = function() {
+DrawComponentController.prototype.clearLayer = function() {
   this.layer.getSource().clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');

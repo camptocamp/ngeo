@@ -100,7 +100,7 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
  * it.
  * @export
  */
-exports.BackgroundlayerController.prototype.change = function() {
+BackgroundlayerController.prototype.change = function() {
   const layerSpec = this.bgLayer;
   const layer = this.getLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this.map, layer);
@@ -112,7 +112,7 @@ exports.BackgroundlayerController.prototype.change = function() {
  * @return {import("ol/layer/Tile.js").default} The layer.
  * @private
  */
-exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
+BackgroundlayerController.prototype.getLayer_ = function(layerName) {
   if (layerName === 'blank') {
     return new olLayerTile();
   }

@@ -193,7 +193,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.errorMessage = '';
 };
 
-exports.Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.map.addLayer(this.vectorLayer_);
 
   // setup modify interaction
@@ -223,7 +223,7 @@ exports.Controller.prototype.$onInit = function() {
 /**
  * Cleanup, mostly relevant for vias.
  */
-exports.Controller.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function() {
   this.map.removeLayer(this.vectorLayer_);
   this.modifyFeature_.setActive(false);
   this.map.removeInteraction(this.modifyFeature_);
@@ -232,7 +232,7 @@ exports.Controller.prototype.$onDestroy = function() {
 /**
  * @export
  */
-exports.Controller.prototype.set = function() {
+Controller.prototype.set = function() {
   if (this.draw_) {
     this.map.removeInteraction(this.draw_);
   }
@@ -265,7 +265,7 @@ exports.Controller.prototype.set = function() {
  * @param {string} label Feature name/label.
  * @private
  */
-exports.Controller.prototype.setFeature_ = function(coordinate, label) {
+Controller.prototype.setFeature_ = function(coordinate, label) {
   const transformedCoordinate = olProj.fromLonLat(coordinate, this.map.getView().getProjection());
   if (label === '') {
     label = transformedCoordinate.join('/');
@@ -276,7 +276,7 @@ exports.Controller.prototype.setFeature_ = function(coordinate, label) {
   });
 };
 
-exports.Controller.prototype.onFeatureChange_ = function() {
+Controller.prototype.onFeatureChange_ = function() {
   // update label
   this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
 
@@ -296,7 +296,7 @@ exports.Controller.prototype.onFeatureChange_ = function() {
  * @param {NominatimSearchResult} selected Selected result.
  * @private
  */
-exports.Controller.prototype.onSelect_ = function(selected) {
+Controller.prototype.onSelect_ = function(selected) {
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
@@ -310,7 +310,7 @@ exports.Controller.prototype.onSelect_ = function(selected) {
  * @param {import("ol/Feature.js").default} feature Feature to snap
  * @private
  */
-exports.Controller.prototype.snapFeature_ = function(feature) {
+Controller.prototype.snapFeature_ = function(feature) {
   const coord = this.getLonLatFromPoint_(feature);
   const config = {};
 
@@ -337,7 +337,7 @@ exports.Controller.prototype.snapFeature_ = function(feature) {
  * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
-exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
+Controller.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();

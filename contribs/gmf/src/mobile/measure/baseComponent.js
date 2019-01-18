@@ -127,7 +127,7 @@ function Controller($scope, $filter, gettextCatalog) {
 /**
  * Initialise the controller.
  */
-exports.Controller.prototype.init = function() {
+Controller.prototype.init = function() {
 
   this.measure.setActive(this.active);
   ngeoMiscDecorate.interaction(this.measure);

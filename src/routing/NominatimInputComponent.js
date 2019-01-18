@@ -125,7 +125,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
  * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
  */
-exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
+Controller.prototype.select_ = function(event, suggestion, dataset) {
   if (this.onSelect) {
     this.onSelect(suggestion);
   }

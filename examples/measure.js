@@ -225,7 +225,7 @@ function MeasuretoolsController($scope, $compile, $sce,
 
 module.controller('AppMeasuretoolsController', MeasuretoolsController);
 
-exports.MeasuretoolsController.prototype.$onInit = function() {
+MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);

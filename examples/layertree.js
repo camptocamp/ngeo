@@ -117,7 +117,7 @@ function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
  * @return {import("ol/layer/Layer.js").default} The layer for this node.
  * @export
  */
-exports.LayertreeController.prototype.getLayer = function(node) {
+LayertreeController.prototype.getLayer = function(node) {
   return this.getLayer_(node);
 };
 
@@ -127,7 +127,7 @@ exports.LayertreeController.prototype.getLayer = function(node) {
  * @param {import("ol/layer/Layer.js").default} layer Layer.
  * @export
  */
-exports.LayertreeController.prototype.onButtonClick = function(node, layer) {
+LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(

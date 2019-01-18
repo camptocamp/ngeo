@@ -96,7 +96,7 @@ function BtnGroupController($scope) {
 /**
  * @param {number} index Index of the button in buttons array.
  */
-exports.BtnGroupController.prototype.activate = function(index) {
+BtnGroupController.prototype.activate = function(index) {
   this.buttons_.forEach((expressionFn, i) => {
     if (i != index) {
       expressionFn.assign(this.scope_, false);
@@ -109,7 +109,7 @@ exports.BtnGroupController.prototype.activate = function(index) {
  * @param {angular.parse.Expression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
-exports.BtnGroupController.prototype.addButton = function(expressionFn) {
+BtnGroupController.prototype.addButton = function(expressionFn) {
   this.buttons_.push(expressionFn);
   return this.buttons_.length - 1;
 };
