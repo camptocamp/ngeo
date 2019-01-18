@@ -43,7 +43,7 @@ const exports = angular.module('ngeoModal', []);
  *     closed by clicking outside it or by hiting the `escape` keyboard key. Defaults to `true`.
  * @ngdoc component
  * @ngname ngeoModal
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 const component = {
   template: `<div class="modal fade" tabindex="-1" role="dialog">

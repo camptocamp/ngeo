@@ -249,7 +249,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * See our live example: [../examples/simple3d.html](../examples/simple3d.html)
  *
  * @htmlAttribute {olcs.contrib.Manager} ngeo-olcs-manager The OL-Cesium manager.
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  * @ngdoc component
  * @ngname ngeoOlcsControls3d
  */

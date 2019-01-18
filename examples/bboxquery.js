@@ -45,7 +45,7 @@ exports.module.value('ngeoQueryOptions', {
 /**
  * A sample component to display the result.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.queryresultComponent = {
   controller: 'AppQueryresultController',

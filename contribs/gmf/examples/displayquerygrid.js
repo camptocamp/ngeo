@@ -62,7 +62,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * Demo, NOT USED.
  * A sample component to display the result.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.queryresultComponent = {
   controller: 'gmfappQueryresultController',

@@ -38,7 +38,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
  * for the ngModel expression doesn't actually make a difference. This
  * is because ngModel doesn't actually watch the ngModel expression.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.backgroundlayerComponent = {
   bindings: {

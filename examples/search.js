@@ -28,7 +28,7 @@ exports.module = angular.module('app', [
 
 
 /**
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.searchComponent = {
   bindings: {

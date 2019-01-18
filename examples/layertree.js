@@ -33,7 +33,7 @@ exports.module = angular.module('app', [
  * An application-specific component wrapping the ngeo tree layer component.
  * The component includes a controller defining the tree tree.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.layertreeComponent = {
   bindings: {

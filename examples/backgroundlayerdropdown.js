@@ -33,7 +33,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
  * The component is based on Bootstrap's dropdown jQuery plugin and on
  * the ngeoBackgroundLayerMgr service.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.backgroundlayerComponent = {
   bindings: {

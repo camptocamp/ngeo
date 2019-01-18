@@ -24,7 +24,7 @@ exports.module = angular.module('app', [
  * controller has a property "map" including a reference to the OpenLayers
  * map.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.mapComponent = {
   bindings: {

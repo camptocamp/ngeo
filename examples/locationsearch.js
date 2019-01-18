@@ -24,7 +24,7 @@ const appmodule = angular.module('app', [
 
 
 /**
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.locationSearchComponent = {
   bindings: {

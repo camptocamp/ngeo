@@ -36,7 +36,7 @@ exports.module = angular.module('app', [
  * This component gets a reference to the map instance through the "app-map"
  * attribute.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.mapComponent = {
   controller: 'AppMapController as ctrl',
@@ -117,7 +117,7 @@ exports.MapComponentController.prototype.$onInit = function() {
 /**
  * A draw component that adds a simple draw tool.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 exports.drawComponent = {
   controller: 'AppDrawController as ctrl',

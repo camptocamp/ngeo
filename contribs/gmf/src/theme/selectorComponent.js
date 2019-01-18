@@ -92,7 +92,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  *
  * @htmlAttribute {Function} gmf-themeselector-filter The themes filter.
  *
- * @type {!angular.Component}
+ * @type {!angular.IComponentOptions}
  */
 const component = {
   bindings: {
