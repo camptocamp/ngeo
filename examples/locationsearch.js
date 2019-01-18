@@ -136,7 +136,7 @@ exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreat
  */
 exports.SearchController.select_ = function(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-  const bbox = /** @type {import("ol/Extent.js").default} */ (feature.get('bbox'));
+  const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
   googAsserts.assert(size !== undefined);
   const maxZoom = 16;

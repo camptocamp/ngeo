@@ -311,7 +311,7 @@ WfsPermalinkService.prototype.issueRequest_ = function(wfsType, filter, map, sho
 
 /**
  * @param {Array.<import("ol/Feature.js").default>} features Features.
- * @return {import("ol/Extent.js").default} The extent of all features.
+ * @return {import("ol/extent.js").Extent} The extent of all features.
  * @private
  */
 WfsPermalinkService.prototype.getExtent_ = function(features) {
