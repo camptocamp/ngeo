@@ -27,7 +27,7 @@ const module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function(ngeoDisclaimer) {
+function MainController(ngeoDisclaimer) {
 
   /**
    * @type {import("ngeo/message/Disclaimer.js").default}

@@ -147,7 +147,7 @@ exports.component('gmfObjectediting', component);
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */
-exports.Controller = function($scope, $timeout, gettextCatalog,
+function Controller($scope, $timeout, gettextCatalog,
   gmfEditFeature, gmfObjectEditingQuery, gmfTreeManager,
   ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 

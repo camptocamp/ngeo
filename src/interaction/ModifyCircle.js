@@ -383,7 +383,7 @@ exports.handleUpEvent_ = function(evt) {
  * @this {import("ngeo/interaction/ModifyCircle.js").default}
  * @api
  */
-exports.handleEvent = function(mapBrowserEvent) {
+function handleEvent(mapBrowserEvent) {
   if (!(mapBrowserEvent instanceof olMapBrowserPointerEvent)) {
     return true;
   }

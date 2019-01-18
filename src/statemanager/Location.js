@@ -79,7 +79,7 @@ function Location(location, history) {
  * @param {History} history History.
  * @param {string} state State.
  */
-exports.replaceState = function(history, state) {
+function replaceState(history, state) {
   try {
     history.replaceState(null, '', state);
   } catch (error) {
@@ -407,7 +407,7 @@ function LocationFactory($rootScope, $window) {
  *     provider.
  * @ngInject
  */
-exports.MockProvider = function($locationProvider) {
+function MockProvider($locationProvider) {
   /**
    * @return {angular.ILocationService} Mock object for Angular location service.
    */

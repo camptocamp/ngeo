@@ -49,7 +49,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @ngInject
  */
-exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
+function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 

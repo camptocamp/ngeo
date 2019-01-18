@@ -32,7 +32,7 @@ const module = angular.module('app', [
  * @param {angular.IScope} $scope The $scope angular service.
  * @ngInject
  */
-exports.MainController = function($http, $scope) {
+function MainController($http, $scope) {
 
   /**
    * @type {angular.IScope}

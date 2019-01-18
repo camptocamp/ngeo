@@ -50,7 +50,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
+function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**

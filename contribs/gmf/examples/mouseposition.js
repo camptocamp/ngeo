@@ -27,7 +27,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 

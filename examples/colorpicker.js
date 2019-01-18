@@ -31,7 +31,7 @@ module.component('appColorpicker', exports.colorpickerComponent);
  * @constructor
  * @ngInject
  */
-exports.ColorPickerController = function() {
+function ColorPickerController() {
 
 
   /**
@@ -55,7 +55,7 @@ module.controller('AppColorpickerController',
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * Active color.

@@ -11,7 +11,7 @@ const exports = {};
  * @param {number} nesting Nesting level.
  * @return {Array.<import("ol/coordinate.js").Coordinate>|import("ol/coordinate.js").Coordinate} Converted coordinates.
  */
-exports.toXY = function(coordinates, nesting) {
+function toXY(coordinates, nesting) {
   if (nesting === 0) {
     if (coordinates.length > 2) {
       coordinates = [coordinates[0], coordinates[1]];

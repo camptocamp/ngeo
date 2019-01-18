@@ -269,7 +269,7 @@ Controller.prototype.backIfActive = function(element) {
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-exports.backDirective = function() {
+function backDirective() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -311,7 +311,7 @@ exports.directive('gmfMobileNavBack', exports.backDirective);
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-exports.backOnClickDirective = function() {
+function backOnClickDirective() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',

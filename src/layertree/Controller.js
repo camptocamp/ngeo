@@ -362,7 +362,7 @@ exports.prototype.setDataSource = function(dataSource) {
  * @return {import("ngeo/layertree/Controller.js").default} the top level layertree.
  * @public
  */
-exports.getFirstParentTree = function(treeCtrl) {
+function getFirstParentTree(treeCtrl) {
   let tree = treeCtrl;
   while (!tree.parent.isRoot) {
     tree = tree.parent;

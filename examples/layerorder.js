@@ -30,7 +30,7 @@ const module = angular.module('app', [
  * @export
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /** @type {import("ol/layer/Tile.js").default} */
   const asitvd = new olLayerTile({

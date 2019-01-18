@@ -44,7 +44,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {import("ol/geom/LineString.js").default}
    * @export

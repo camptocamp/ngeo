@@ -43,7 +43,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gmfPermalink) {
+function MainController(gmfPermalink) {
 
   const center = gmfPermalink.getMapCenter() || [537635, 152640];
   const zoom = gmfPermalink.getMapZoom() || 3;

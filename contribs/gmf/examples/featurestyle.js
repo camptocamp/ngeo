@@ -47,7 +47,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureHelper) {
+function MainController($scope, ngeoFeatureHelper) {
 
   /**
    * @type {!angular.IScope}

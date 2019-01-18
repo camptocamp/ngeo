@@ -65,7 +65,7 @@ module.component('appLayertree', exports.layertreeComponent);
  * @ngInject
  * @export
  */
-exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
+function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @type {Object|undefined}
@@ -219,7 +219,7 @@ module.value('appGetLayer', exports.getLayer);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}

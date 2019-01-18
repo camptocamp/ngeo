@@ -670,7 +670,7 @@ exports.prototype.userMustChangeItsPassword = function() {
  * @param {Array.<string>} labels default_basemap list.
  * @return {import("ol/layer/Base.js").default} layer or null
  */
-exports.getLayerByLabels = function(layers, labels) {
+function getLayerByLabels(layers, labels) {
   if (labels && labels.length > 0) {
     return olArray.find(layers, layer => layer.get('label') === labels[0]);
   }

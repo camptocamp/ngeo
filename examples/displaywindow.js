@@ -17,7 +17,7 @@ const module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @type {string}

@@ -37,7 +37,7 @@ const appmodule = angular.module('app', ['ngeo']);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}

@@ -36,7 +36,7 @@ const exports = function(data, columnDefs) {
  * @return {string} Unique id for this object.
  * @export
  */
-exports.getRowUid = function(attributes) {
+function getRowUid(attributes) {
   return `${olUtilGetUid(attributes)}`;
 };
 

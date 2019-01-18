@@ -46,7 +46,7 @@ appmodule.component('appLocationSearch', exports.locationSearchComponent);
  * @param {import("ngeo/search/createLocationSearchBloodhound.js").default.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
-exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
+function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -150,7 +150,7 @@ appmodule.controller('AppSearchController', exports.SearchController);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export

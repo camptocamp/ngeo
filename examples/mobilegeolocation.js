@@ -31,7 +31,7 @@ const appmodule = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope, ngeoFeatureOverlayMgr) {
 
   const positionFeatureStyle = new olStyleStyle({
     image: new olStyleCircle({

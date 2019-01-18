@@ -93,7 +93,7 @@ exports.prototype.handleMeasure = function(callback) {
  * @param {!formatNumber} formatAzimut The format function.
  * @return {string} Formatted measure.
  */
-exports.getFormattedAzimutRadius = function(
+function getFormattedAzimutRadius(
   line, projection, decimals, precision, formatLength, formatAzimut) {
 
   let output = exports.getFormattedAzimut(line, decimals, formatAzimut);
@@ -112,7 +112,7 @@ exports.getFormattedAzimutRadius = function(
  * @param {!formatNumber} format The format function.
  * @return {string} Formatted measure.
  */
-exports.getFormattedAzimut = function(line, decimals, format) {
+function getFormattedAzimut(line, decimals, format) {
   const azimut = exports.getAzimut(line);
   return `${format(azimut, decimals)}°`;
 };
@@ -123,7 +123,7 @@ exports.getFormattedAzimut = function(line, decimals, format) {
  * @param {import("ol/geom/LineString.js").default} line LineString.
  * @return {number} Azimut value.
  */
-exports.getAzimut = function(line) {
+function getAzimut(line) {
   const coords = line.getCoordinates();
   const dx = coords[1][0] - coords[0][0];
   const dy = coords[1][1] - coords[0][1];

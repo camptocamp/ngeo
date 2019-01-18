@@ -47,7 +47,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export

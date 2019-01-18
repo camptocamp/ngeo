@@ -55,7 +55,7 @@ module.component('appMap', exports.mapComponent);
  * @constructor
  * @ngInject
  */
-exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
+function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -142,7 +142,7 @@ module.component('appDraw', exports.drawComponent);
  * @export
  * @ngInject
  */
-exports.DrawComponentController = function($scope, ngeoLocation) {
+function DrawComponentController($scope, ngeoLocation) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -240,7 +240,7 @@ module.controller('AppDrawController', exports.DrawComponentController);
 /**
  * @constructor
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}

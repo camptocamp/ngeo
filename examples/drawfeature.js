@@ -33,7 +33,7 @@ const module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
+function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.IScope}

@@ -678,7 +678,7 @@ const exports = class {
  * @return {number} Data source id.
  * @export
  */
-exports.getId = function(layer) {
+function getId(layer) {
   return olUtilGetUid(layer) + 1000000;
 };
 

@@ -97,7 +97,7 @@ exports.prototype.getQueryableLayersInfo = function() {
  *     queryable layers information.
  * @export
  */
-exports.getQueryableLayersInfoFromThemes = function(
+function getQueryableLayersInfoFromThemes(
   themes, ogcServers
 ) {
   const queryableLayersInfo = [];

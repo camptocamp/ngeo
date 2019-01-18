@@ -31,7 +31,7 @@ const module = angular.module('app', [
  * @export
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @private

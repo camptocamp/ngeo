@@ -61,7 +61,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  * @constructor
  */
-exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
+function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**

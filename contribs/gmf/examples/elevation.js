@@ -32,7 +32,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {Array.<string>}
    * @export

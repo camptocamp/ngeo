@@ -34,7 +34,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoFeatureOverlayMgr) {
+function MainController(ngeoFeatureOverlayMgr) {
 
   /**
    * Collection shared between the drawing interactions and the feature

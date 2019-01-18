@@ -47,7 +47,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
+function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   gmfThemes.loadThemes();
 

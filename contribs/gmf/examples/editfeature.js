@@ -46,7 +46,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, gmfEditFeature, gmfUser) {
+function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {!angular.IScope}

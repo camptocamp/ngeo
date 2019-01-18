@@ -78,7 +78,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @ngdoc controller
  * @ngname NgeoRoutingController
  */
-exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
+function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
 
   /**
    * @type {angular.IScope}

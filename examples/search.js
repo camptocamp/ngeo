@@ -54,7 +54,7 @@ module.component('appSearch', exports.searchComponent);
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
    * @private
    * @type {JQLite}
@@ -199,7 +199,7 @@ module.controller('AppSearchController', exports.SearchController);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export

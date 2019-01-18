@@ -20,7 +20,7 @@ const module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($sce, ngeoCreatePopup) {
+function MainController($sce, ngeoCreatePopup) {
 
   /**
    * @private

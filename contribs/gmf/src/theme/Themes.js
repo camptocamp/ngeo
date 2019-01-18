@@ -121,7 +121,7 @@ olUtilInherits(exports, olEventsEventTarget);
  * @param {string} name The layer name.
  * @return {gmfThemes.GmfGroup} The group.
  */
-exports.findGroupByLayerNodeName = function(themes, name) {
+function findGroupByLayerNodeName(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
@@ -142,7 +142,7 @@ exports.findGroupByLayerNodeName = function(themes, name) {
  * @param {string} name The group name.
  * @return {gmfThemes.GmfGroup} The group.
  */
-exports.findGroupByName = function(themes, name) {
+function findGroupByName(themes, name) {
   for (let i = 0, ii = themes.length; i < ii; i++) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
@@ -165,7 +165,7 @@ exports.findGroupByName = function(themes, name) {
  * @return {T} The object or null.
  * @template T
  */
-exports.findObjectByName = function(objects, objectName) {
+function findObjectByName(objects, objectName) {
   return olArray.find(objects, object => object['name'] === objectName);
 };
 
@@ -176,7 +176,7 @@ exports.findObjectByName = function(objects, objectName) {
  * @param {string} themeName The theme name.
  * @return {gmfThemes.GmfTheme} The theme object or null.
  */
-exports.findThemeByName = function(themes, themeName) {
+function findThemeByName(themes, themeName) {
   return exports.findObjectByName(themes, themeName);
 };
 
@@ -188,7 +188,7 @@ exports.findThemeByName = function(themes, themeName) {
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
  * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
  */
-exports.getFlatInternalNodes = function(node, nodes) {
+function getFlatInternalNodes(node, nodes) {
   const children = node.children;
   if (children !== undefined) {
     nodes.push(node);
@@ -205,7 +205,7 @@ exports.getFlatInternalNodes = function(node, nodes) {
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layertree node.
  * @param {Array.<gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An array.
  */
-exports.getFlatNodes = function(node, nodes) {
+function getFlatNodes(node, nodes) {
   let i;
   const children = node.children;
   if (children !== undefined) {
@@ -491,7 +491,7 @@ exports.prototype.hasNodeEditableLayers_ = function(node) {
  * @return {?gmfThemes.GmfSnappingConfig} Snapping configuration, if found.
  * @export
  */
-exports.getSnappingConfig = function(node) {
+function getSnappingConfig(node) {
   const config = (node.metadata && node.metadata.snappingConfig !== undefined) ?
     node.metadata.snappingConfig : null;
   return config;
@@ -507,7 +507,7 @@ exports.getSnappingConfig = function(node) {
  *     on the node).
  * @return {number|undefined} the max resolution or undefined if any.
  */
-exports.getNodeMaxResolution = function(gmfLayer) {
+function getNodeMaxResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
   let maxResolution = gmfLayer.maxResolutionHint;
   if (maxResolution === undefined && metadata !== undefined) {
@@ -526,7 +526,7 @@ exports.getNodeMaxResolution = function(gmfLayer) {
  *     on the node).
  * @return {number|undefined} the min resolution or undefined if any.
  */
-exports.getNodeMinResolution = function(gmfLayer) {
+function getNodeMinResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
   let minResolution = gmfLayer.minResolutionHint;
   if (minResolution === undefined && metadata !== undefined) {

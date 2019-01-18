@@ -68,7 +68,7 @@ module.component('appMeasuretools', exports.measuretoolsComponent);
  * @constructor
  * @ngInject
  */
-exports.MeasuretoolsController = function($scope, $compile, $sce,
+function MeasuretoolsController($scope, $compile, $sce,
   $filter, gettextCatalog) {
 
   /**
@@ -235,7 +235,7 @@ exports.MeasuretoolsController.prototype.$onInit = function() {
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {string}

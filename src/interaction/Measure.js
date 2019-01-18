@@ -235,7 +235,7 @@ olUtilInherits(exports, olInteractionInteraction);
  * @return {string} Formatted string of the area.
  * @this {import("ngeo/interaction/Measure.js").default}
  */
-exports.getFormattedArea = function(polygon, projection, precision, format) {
+function getFormattedArea(polygon, projection, precision, format) {
   const geom = /** @type {import("ol/geom/Polygon.js").default} */ (polygon.clone().transform(projection, 'EPSG:4326'));
   const area = Math.abs(olSphere.getArea(geom, {'projection': 'EPSG:4326'}));
   return format(area, 'm²', 'square', precision);
@@ -250,7 +250,7 @@ exports.getFormattedArea = function(polygon, projection, precision, format) {
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of the area.
  */
-exports.getFormattedCircleArea = function(circle, precision, format) {
+function getFormattedCircleArea(circle, precision, format) {
   const area = Math.PI * Math.pow(circle.getRadius(), 2);
   return format(area, 'm²', 'square', precision);
 };
@@ -265,7 +265,7 @@ exports.getFormattedCircleArea = function(circle, precision, format) {
  * @param {!unitPrefix} format The format function.
  * @return {string} Formatted string of length.
  */
-exports.getFormattedLength = function(lineString, projection, precision, format) {
+function getFormattedLength(lineString, projection, precision, format) {
   let length = 0;
   const coordinates = lineString.getCoordinates();
   for (let i = 0, ii = coordinates.length - 1; i < ii; ++i) {
@@ -285,7 +285,7 @@ exports.getFormattedLength = function(lineString, projection, precision, format)
  * @param {string=} opt_template The template.
  * @return {string} Formatted string of coordinate.
  */
-exports.getFormattedPoint = function(point, decimals, format, opt_template) {
+function getFormattedPoint(point, decimals, format, opt_template) {
   return format(point.getCoordinates(), decimals, opt_template);
 };
 

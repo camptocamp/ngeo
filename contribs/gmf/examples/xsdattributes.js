@@ -35,7 +35,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
+function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.ITimeoutService}

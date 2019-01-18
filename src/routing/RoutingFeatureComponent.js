@@ -65,7 +65,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @ngdoc controller
  * @ngname NgeoRoutingFeatureController
  */
-exports.Controller = function($scope, $timeout, $q, ngeoNominatimService) {
+function Controller($scope, $timeout, $q, ngeoNominatimService) {
 
   /**
    * @type {!angular.IScope}

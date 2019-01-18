@@ -195,7 +195,7 @@ exports.prototype.setAttributeByXsdType_ = function(
  * @param {Array.<Attribute>} attributes The list of attributes.
  * @return {?Attribute} A geometry attribute object.
  */
-exports.getGeometryAttribute = function(attributes) {
+function getGeometryAttribute(attributes) {
   let geomAttribute = null;
   for (let i = 0, ii = attributes.length; i < ii; i++) {
     if (attributes[i].type === ngeoFormatAttributeType.GEOMETRY) {

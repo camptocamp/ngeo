@@ -24,7 +24,7 @@ const module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($http, $timeout, $scope) {
+function MainController($http, $timeout, $scope) {
 
   /**
    * @type {angular.ITimeoutService}

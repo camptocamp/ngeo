@@ -24,7 +24,7 @@ module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * Model attached to the modal to toggle it

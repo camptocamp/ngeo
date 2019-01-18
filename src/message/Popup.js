@@ -285,7 +285,7 @@ exports.prototype.open = function(options) {
  * @return {PopupFactory} The function to create a popup.
  * @ngInject
  */
-exports.Factory = function($compile, $rootScope, $sce, $timeout) {
+function Factory($compile, $rootScope, $sce, $timeout) {
   return (
     /**
      * @return {!import("ngeo/message/Popup.js").default} The popup instance.

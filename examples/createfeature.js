@@ -37,7 +37,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoToolActivateMgr) {
+function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Collection.js").default}

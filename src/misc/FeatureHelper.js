@@ -876,7 +876,7 @@ exports.prototype.getHaloStyle_ = function(feature) {
  * @return {!Object.<string, *>} Filtered properties of the current feature.
  * @export
  */
-exports.getFilteredFeatureValues = function(feature) {
+function getFilteredFeatureValues(feature) {
   const properties = feature.getProperties();
   delete properties['boundedBy'];
   delete properties[feature.getGeometryName()];

@@ -22,7 +22,7 @@ const module = angular.module('app', [
  * @param {!import("ngeo/misc/Time.js").default} ngeoTime time service.
  * @ngInject
  */
-exports.MainController = function(ngeoTime) {
+function MainController(ngeoTime) {
 
   /**
    * @type {import("ngeo/misc/Time.js").default}

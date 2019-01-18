@@ -54,7 +54,7 @@ module.component('appBackgroundlayer', exports.backgroundlayerComponent);
  * @export
  * @ngInject
  */
-exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then(
     (resp) => {
       const bgLayers = resp.data;
@@ -109,7 +109,7 @@ module.controller('AppBackgroundlayerController',
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}

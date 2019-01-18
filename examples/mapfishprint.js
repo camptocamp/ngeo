@@ -71,7 +71,7 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
  * @ngInject
  * @export
  */
-exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
+function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
    * @type {import("ol/Map.js").default}
    * @export

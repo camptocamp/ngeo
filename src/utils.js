@@ -16,7 +16,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
  * @param {import("ol/geom/Geometry.js").default} geometry A geometry
  * @return {import("ol/geom/Geometry.js").default} A multi geometry
  */
-exports.toMulti = function(geometry) {
+function toMulti(geometry) {
   /** @type {import("ol/geom/Geometry.js").default} */
   let multiGeom;
   if (geometry instanceof olGeomPoint) {
@@ -41,7 +41,7 @@ exports.toMulti = function(geometry) {
  * Checks if on Safari.
  * @return {boolean} True if on Safari.
  */
-exports.isSafari = function() {
+function isSafari() {
   return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;
 };
 
@@ -51,7 +51,7 @@ exports.isSafari = function() {
  * @return {string} hex value prepended with zero if it was single digit,
  *     otherwise the same value that was passed in.
  */
-exports.colorZeroPadding = function(hex) {
+function colorZeroPadding(hex) {
   return hex.length == 1 ? `0${hex}` : hex;
 };
 
@@ -60,7 +60,7 @@ exports.colorZeroPadding = function(hex) {
  * @param {!Array.<number>} rgb rgb representation of the color.
  * @return {string} hex representation of the color.
  */
-exports.rgbArrayToHex = function(rgb) {
+function rgbArrayToHex(rgb) {
   const r = rgb[0];
   const g = rgb[1];
   const b = rgb[2];
@@ -78,7 +78,7 @@ exports.rgbArrayToHex = function(rgb) {
  * @param {string|undefined} queryString The queryString.
  * @return {!Object.<string, string>} The result.
  */
-exports.decodeQueryString = function(queryString) {
+function decodeQueryString(queryString) {
   /** @type {Object.<string, string>} */
   const queryData = {};
   if (queryString) {
@@ -102,7 +102,7 @@ exports.decodeQueryString = function(queryString) {
  * @param {!Object.<string, string>} queryData The queryData,
  * @return {string} The result.
  */
-exports.encodeQueryString = function(queryData) {
+function encodeQueryString(queryData) {
   const queryItem = [];
   for (const key in queryData) {
     const value = queryData[key];
@@ -117,7 +117,7 @@ exports.encodeQueryString = function(queryData) {
  * @param {import("ol/MapBrowserEvent.js").default} event Browser event.
  * @return {boolean} The result.
  */
-exports.deleteCondition = function(event) {
+function deleteCondition(event) {
   return platformModifierKeyOnly(event) && singleClick(event);
 };
 

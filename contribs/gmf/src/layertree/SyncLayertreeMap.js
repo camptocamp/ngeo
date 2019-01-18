@@ -433,7 +433,7 @@ exports.prototype.getFirstLevelGroupCtrl_ = function(
  * @return {import("ol/layer/Base.js").default} The layer.
  * @public
  */
-exports.getLayer = function(treeCtrl) {
+function getLayer(treeCtrl) {
   let tree = treeCtrl;
   let layer = null;
   while (!tree.isRoot && layer === null) {

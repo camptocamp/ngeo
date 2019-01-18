@@ -38,7 +38,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
+function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.IHttpService}

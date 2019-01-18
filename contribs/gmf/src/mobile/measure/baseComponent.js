@@ -25,7 +25,7 @@ const exports = angular.module('gmfMobileMeasureBase', [
  * @ngdoc controller
  * @ngname GmfMobileMeasureBaseController
  */
-exports.Controller = function($scope, $filter, gettextCatalog) {
+function Controller($scope, $filter, gettextCatalog) {
 
   /**
    * @type {angular.IScope}

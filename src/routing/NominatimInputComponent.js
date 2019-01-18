@@ -53,7 +53,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
  */
-exports.Controller = function($element, $injector, $scope, ngeoNominatimService) {
+function Controller($element, $injector, $scope, ngeoNominatimService) {
 
   /**
    * @type {!JQLite}

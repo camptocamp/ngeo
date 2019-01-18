@@ -74,7 +74,7 @@ module.component('appQueryresult', queryresultComponent);
  * @constructor
  * @ngInject
  */
-exports.QueryresultController = function(ngeoQueryResult) {
+function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {QueryResult}
@@ -97,7 +97,7 @@ module.controller('AppQueryresultController', exports.QueryresultController);
  *   overlay manager service.
  * @ngInject
  */
-exports.MainController = function(gmfThemes, gmfDataSourcesManager,
+function MainController(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();

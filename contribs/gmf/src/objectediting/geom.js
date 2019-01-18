@@ -21,7 +21,7 @@ import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * @return {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
  */
-exports.isEmpty = function(geom) {
+function isEmpty(geom) {
   let isEmpty = true;
   if (geom && geom instanceof olGeomSimpleGeometry) {
     isEmpty = geom.getFlatCoordinates().length === 0;
@@ -36,7 +36,7 @@ exports.isEmpty = function(geom) {
  *
  * @param {import("ol/geom/Geometry.js").default} geom Geometry
  */
-exports.toXY = function(geom) {
+function toXY(geom) {
   if (geom instanceof olGeomPoint) {
     geom.setCoordinates(
       gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 0)

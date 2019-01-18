@@ -27,7 +27,7 @@ const module = angular.module('app', [
  * @param {angular.IScope} $rootScope Root scope.
  * @param {import("ngeo/olcs/Service.js").default} ngeoOlcsService The service.
  */
-exports.MainController = function($rootScope, ngeoOlcsService) {
+function MainController($rootScope, ngeoOlcsService) {
 
   /**
    * @type {import("ol/Map.js").default}

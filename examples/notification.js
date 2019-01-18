@@ -21,7 +21,7 @@ const module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function(ngeoNotification) {
+function MainController(ngeoNotification) {
 
   /**
    * @type {import("ngeo/message/Notification.js").default}

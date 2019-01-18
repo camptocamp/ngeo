@@ -27,7 +27,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @param {import("gmf/theme/Manager.js").default} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
-exports.MainController = function($http, gmfThemes, gmfThemeManager) {
+function MainController($http, gmfThemes, gmfThemeManager) {
 
   /**
    * @param {gmfThemes.GmfTheme} theme Theme.

@@ -44,7 +44,7 @@ module.component('appMap', exports.mapComponent);
  * @constructor
  * @ngInject
  */
-exports.MainController = function($timeout) {
+function MainController($timeout) {
   /**
    * @type {import("ol/Map.js").default}
    * @export

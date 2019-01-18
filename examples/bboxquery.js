@@ -59,7 +59,7 @@ module.component('appQueryresult', exports.queryresultComponent);
  * @constructor
  * @ngInject
  */
-exports.QueryresultController = function(ngeoQueryResult) {
+function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {QueryResult}
@@ -80,7 +80,7 @@ module.controller('AppQueryresultController', exports.QueryresultController);
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoDataSources) {
+function MainController($scope, ngeoDataSources) {
 
   /**
    * @type {boolean}

@@ -21,7 +21,7 @@ import olSourceTile from 'ol/source/Tile.js';
  *
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to decorate.
  */
-exports.interaction = function(interaction) {
+function interaction(interaction) {
   googAsserts.assertInstanceof(interaction, olInteractionInteraction);
 
   Object.defineProperty(interaction, 'active', {
@@ -44,7 +44,7 @@ exports.interaction = function(interaction) {
  *
  * @param {import("ol/layer/Base.js").default} layer Layer to decorate.
  */
-exports.layer = function(layer) {
+function layer(layer) {
   googAsserts.assertInstanceof(layer, olLayerBase);
 
   Object.defineProperty(layer, 'visible', {
@@ -90,7 +90,7 @@ exports.layer = function(layer) {
  * @param {import("ol/layer/Base.js").default} layer layer.
  * @param {angular.IScope} $scope Scope.
  */
-exports.layerLoading = function(layer, $scope) {
+function layerLoading(layer, $scope) {
 
   let source;
 

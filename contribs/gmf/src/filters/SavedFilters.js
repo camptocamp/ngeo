@@ -224,7 +224,7 @@ module.service('gmfSavedFilters', exports);
  * @constructor
  * @export
  */
-exports.Item = function() {};
+function Item() {};
 
 
 /**

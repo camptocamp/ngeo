@@ -78,7 +78,7 @@ exports.directive('ngeoBtnGroup', btnGroupComponent);
  * @ngdoc controller
  * @ngname ngeoBtnGroupController
  */
-exports.BtnGroupController = function($scope) {
+function BtnGroupController($scope) {
   /**
    * @type {!Array.<!angular.parse.Expression>}
    * @private

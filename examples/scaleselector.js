@@ -25,7 +25,7 @@ const module = angular.module('app', [
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}

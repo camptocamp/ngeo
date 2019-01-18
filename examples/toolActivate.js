@@ -38,7 +38,7 @@ const module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
