@@ -8,13 +8,13 @@ import * as olEvents from 'ol/events.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfBackgroundlayerselector', [
+const module = angular.module('gmfBackgroundlayerselector', [
   gmfThemeThemes.name,
   ngeoMapBackgroundLayerMgr.name,
 ]);
 
 
-exports.value('gmfBackgroundlayerselectorTemplateUrl',
+module.value('gmfBackgroundlayerselectorTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -28,7 +28,11 @@ exports.value('gmfBackgroundlayerselectorTemplateUrl',
 );
 
 
+<<<<<<< HEAD
 exports.run(/* @ngInject */ ($templateCache) => {
+=======
+module.run(/* @ngInject */ ($templateCache) => {
+>>>>>>> 1dcf486... f
   $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
 });
 
@@ -79,7 +83,11 @@ const component = {
 };
 
 
+<<<<<<< HEAD
 exports.component('gmfBackgroundlayerselector', component);
+=======
+module.component('gmfBackgroundlayerselector', component);
+>>>>>>> 1dcf486... f
 
 
 /**
