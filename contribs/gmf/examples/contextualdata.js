@@ -53,7 +53,7 @@ function MainController() {
       zoom: 3
     })
   });
-};
+}
 
 
 /**

@@ -76,7 +76,7 @@ function Service(ngeoLocation, ngeoUsedKeyRegexp) {
       });
     });
   }
-};
+}
 
 
 /**

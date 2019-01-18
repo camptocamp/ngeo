@@ -63,12 +63,12 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  *
  * @type {!angular.IComponentOptions}
  */
-exports.queryresultComponent = {
+const queryresultComponent = {
   controller: 'gmfappQueryresultController',
   template: require('./partials/queryresult.html')
 };
 
-module.component('gmfappQueryresult', exports.queryresultComponent);
+module.component('gmfappQueryresult', queryresultComponent);
 
 
 /**
@@ -77,7 +77,7 @@ module.component('gmfappQueryresult', exports.queryresultComponent);
  * @constructor
  * @ngInject
  */
-exports.QueryresultController = function(ngeoQueryResult) {
+function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {QueryResult}
@@ -88,7 +88,7 @@ exports.QueryresultController = function(ngeoQueryResult) {
 };
 
 
-module.controller('gmfappQueryresultController', exports.QueryresultController);
+module.controller('gmfappQueryresultController', QueryresultController);
 
 
 /**
@@ -100,7 +100,7 @@ module.controller('gmfappQueryresultController', exports.QueryresultController);
  *   overlay manager service.
  * @ngInject
  */
-exports.MainController = function(gmfThemes, gmfDataSourcesManager,
+function MainController(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
@@ -176,9 +176,9 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-};
+}
 
-module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
 export default module;

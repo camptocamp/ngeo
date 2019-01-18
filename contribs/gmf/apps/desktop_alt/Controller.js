@@ -140,9 +140,9 @@ function Controller($scope, $injector) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(Controller, gmfControllersAbstractDesktopController);
 
 
 /**

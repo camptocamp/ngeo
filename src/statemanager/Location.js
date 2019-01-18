@@ -72,7 +72,7 @@ function Location(location, history) {
    * @private
    */
   this.fragment_ = ngeoUtils.decodeQueryString(location.hash);
-};
+}
 
 
 /**
@@ -394,7 +394,7 @@ function LocationFactory($rootScope, $window) {
   });
 
   return service;
-};
+}
 
 /**
  * A function that changes Angular's $location provider to avoid problem

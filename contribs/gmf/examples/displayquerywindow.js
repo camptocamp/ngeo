@@ -60,12 +60,12 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  *
  * @type {!angular.IComponentOptions}
  */
-exports.queryresultComponent = {
+const queryresultComponent = {
   controller: 'AppQueryresultController',
   template: require('./partials/queryresult.html')
 };
 
-module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', queryresultComponent);
 
 
 /**

@@ -10,7 +10,7 @@ import * as olEvents from 'ol/events.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('gmfContextualdata', [
+const module = angular.module('gmfContextualdata', [
   gmfRasterRasterService.name,
 ]);
 
@@ -241,7 +241,7 @@ Controller.prototype.hidePopover = function() {
   angular.element(element).css('display', 'none');
 };
 
-exports.controller('GmfContextualdataController', Controller);
+module.controller('GmfContextualdataController', Controller);
 
 
 /**
@@ -280,7 +280,7 @@ function contentDirective(gmfContextualdatacontentTemplateUrl) {
   };
 }
 
-exports.directive('gmfContextualdatacontent', contentDirective);
+module.directive('gmfContextualdatacontent', contentDirective);
 
 
 export default module;

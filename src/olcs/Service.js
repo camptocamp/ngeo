@@ -130,7 +130,5 @@ Service.module = angular.module(name, [
   ngeoStatemanagerService.name,
 ]).service(name, Service);
 
-const exports = Service;
-
 
 export default module;
