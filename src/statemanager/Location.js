@@ -187,7 +187,7 @@ Location.prototype.getParamAsInt = function(key) {
   if (value === undefined) {
     return undefined;
   }
-  console.assert(typeof value == string);
+  console.assert(typeof value == 'string');
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };
@@ -206,7 +206,7 @@ Location.prototype.getParamAsFloat = function(key) {
   if (value === undefined) {
     return undefined;
   }
-  console.assert(typeof value == string);
+  console.assert(typeof value == 'string');
   const valueAsFloat = parseFloat(value);
   return isNaN(valueAsFloat) ? undefined : valueAsFloat;
 };
@@ -224,7 +224,7 @@ Location.prototype.getFragmentParamAsInt = function(key) {
   if (value === undefined) {
     return undefined;
   }
-  console.assert(typeof value == string);
+  console.assert(typeof value == 'string');
   const valueAsInt = parseInt(value, 10);
   return (isNaN(valueAsInt)) ? undefined : valueAsInt;
 };

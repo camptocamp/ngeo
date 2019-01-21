@@ -125,7 +125,7 @@ class Group {
       }
     }
 
-    console.assert(typeof state == string);
+    console.assert(typeof state == 'string');
 
     return state;
   }

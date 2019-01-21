@@ -221,7 +221,7 @@ Controller.prototype.getSetAngle = function(value) {
  * @export
  */
 Controller.prototype.getSetName = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value) == string);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value) == 'string');
 };
 
 /**

@@ -118,7 +118,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   if (nodelayerExpr === undefined) {
     const nodelayerexprExpr = $attrs['ngeoLayertreeNodelayerexpr'];
     const newNodelayerExpr = $scope.$eval(nodelayerexprExpr);
-    console.assert(typeof newNodelayerExpr == string);
+    console.assert(typeof newNodelayerExpr == 'string');
     nodelayerExpr = newNodelayerExpr;
   }
   console.assert(nodelayerExpr !== undefined);
@@ -166,7 +166,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   }
 
   if (listenersExpr !== undefined) {
-    console.assert(typeof listenersExpr == string);
+    console.assert(typeof listenersExpr == 'string');
   }
 
   /**

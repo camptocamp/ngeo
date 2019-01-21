@@ -84,7 +84,7 @@ XSDAttribute.prototype.readFromNode = function(node) {
 XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const name = node.getAttribute('name');
-  console.assert(typeof name, 'name should be defined in element node.' == string);
+  console.assert(typeof name, 'name should be defined in element node.' == 'string');
 
   const alias = node.getAttribute('alias');
   const nillable = node.getAttribute('nillable');

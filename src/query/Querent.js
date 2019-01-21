@@ -728,7 +728,7 @@ class Querent {
             getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(
             featureRequestXml);
-          console.assert(typeof url == string);
+          console.assert(typeof url == 'string');
           const canceler = this.registerCanceler_();
           this.http_.post(
             url,

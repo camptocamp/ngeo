@@ -89,7 +89,7 @@ Notification.prototype.clear = function() {
  */
 Notification.prototype.showMessage = function(message) {
   const type = message.type;
-  console.assert(typeof type, 'Type should be set.' == string);
+  console.assert(typeof type, 'Type should be set.' == 'string');
 
   const classNames = ['alert', 'fade', 'show'];
   switch (type) {

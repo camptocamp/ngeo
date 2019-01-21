@@ -222,7 +222,7 @@ class Controller {
          * @return {Array.<string>} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
-          console.assert(typeof datum == string);
+          console.assert(typeof datum == 'string');
           const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(
             datum);
           console.assert(originalDatumTokenizers);
@@ -301,7 +301,7 @@ class Controller {
    * @export
    */
   connect() {
-    const url = console.assert(typeof this.url == string);
+    const url = console.assert(typeof this.url == 'string');
     const serviceType = guessServiceTypeByUrl(url);
 
     this.startWorking_();
