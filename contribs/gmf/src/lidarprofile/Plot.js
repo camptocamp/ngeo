@@ -89,7 +89,7 @@ export default class {
 
   /**
    * Draw the points to the canvas element
-   * @param {gmfx.LidarprofilePoints} points of the profile
+   * @param {LidarprofilePoints} points of the profile
    * @export
    */
   drawPoints(points) {
@@ -369,7 +369,7 @@ export default class {
 
 
   /**
-   * @param {gmfx.LidarPoint} point the concerned point.
+   * @param {LidarPoint} point the concerned point.
    * @param {lidarprofileServer.ConfigClassification} classification_color the classification
    *     object concerning this point.
    * @param {number} distDecimal the number of decimal to keep.

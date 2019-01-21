@@ -20,6 +20,29 @@ import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
+
+/**
+ * @typedef {import("ol/collection.js").Collection.<import("gmf/datasource/OGC.js").default>} DataSources
+ */
+
+
+/**
+ * @typedef {Object<(number|string), ManagerTreeCtrlCacheItem>} ManagerTreeCtrlCache
+ */
+
+
+/**
+ * @typedef {{
+ *     filterRulesWatcherUnregister: (Function),
+ *     stateWatcherUnregister: (Function),
+ *     timeLowerValueWatcherUnregister: (Function|undefined),
+ *     timeUpperValueWatcherUnregister: (Function|undefined),
+ *     treeCtrl: (ngeo.layertree.Controller),
+ *     wmsLayer: (ol.layer.Image|undefined)
+ * }} ManagerTreeCtrlCacheItem
+ */
+
+
 class Manager {
 
   /**
@@ -160,7 +183,7 @@ class Manager {
      * The cache of layertree leaf controller, i.e. those that are added to
      * the tree manager. When treeCtrl is added in this cache, it's given
      * a reference to its according data source.
-     * @type {gmfx.datasource.ManagerTreeCtrlCache}
+     * @type {ManagerTreeCtrlCache}
      * @private
      */
     this.treeCtrlCache_ = {};
@@ -634,7 +657,7 @@ class Manager {
    * Remove a treeCtrl cache item. Unregister event listeners and remove the
    * data source from the ngeo collection.
    *
-   * @param {gmfx.datasource.ManagerTreeCtrlCacheItem} item Layertree
+   * @param {ManagerTreeCtrlCacheItem} item Layertree
    *     controller cache item
    * @private
    */
@@ -703,7 +726,7 @@ class Manager {
    * Returns a layertree controller cache item, if it exists.
    *
    * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
-   * @return {gmfx.datasource.ManagerTreeCtrlCacheItem} Cache item
+   * @return {ManagerTreeCtrlCacheItem} Cache item
    * @private
    */
   getTreeCtrlCacheItem_(treeCtrl) {

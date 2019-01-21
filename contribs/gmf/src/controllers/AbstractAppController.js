@@ -32,13 +32,62 @@ import olStyleStyle from 'ol/style/Style.js';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
+
+/**
+ * A part of the application config.
+ * @typedef {{
+ *    srid: (number),
+ *    positionFeatureStyle: (ol.style.Style|undefined),
+ *    accuracyFeatureStyle: (ol.style.Style|undefined),
+ *    geolocationZoom: (number|undefined),
+ *    autorotate: (boolean|undefined),
+ *    mapViewConfig: (olx.ViewOptions|undefined),
+ *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
+ *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined),
+ *    mapPixelRatio: (number|undefined)
+ * }} Config
+ */
+
+
+/**
+ * Static function to create a popup with html content.
+ * @typedef {Function} openTextPopup
+ * @param {string} content (text or html).
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+ */
+
+
+/**
+ * Static function to create a popup with an iframe.
+ * @typedef {Function} openInfoWindow
+ * @param {string} url an url.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+ */
+
+
+/**
+ * @typedef {Function} openPopup_
+ * @param {import("ngeo/message/Popup.js").default!} popup a ngeoPopup.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+ */
+
+
 /**
  * Application abstract controller.
  *
  * This file includes `goog.require` for base components/directives used
  * by the HTML page and the controller to provide the configuration.
  *
- * @param {gmfx.Config} config A part of the application config.
+ * @param {Config} config A part of the application config.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
@@ -169,7 +218,7 @@ function AbstractAppController(config, $scope, $injector) {
   });
 
   /**
-   * @param {gmfx.AuthenticationEvent} evt Event.
+   * @param {AuthenticationEvent} evt Event.
    */
   const userChange = (evt) => {
     if (this.loginRedirectUrl) {
@@ -206,7 +255,7 @@ function AbstractAppController(config, $scope, $injector) {
   olEvents.listen(gmfAuthentication, 'logout', userChange);
 
   /**
-   * @type {Array.<gmfx.SearchComponentDatasource>}
+   * @type {Array.<SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{
@@ -371,7 +420,7 @@ function AbstractAppController(config, $scope, $injector) {
   this.drawProfilePanelActive = false;
 
   /**
-   * @type {gmfx.User}
+   * @type {User}
    * @export
    */
   this.gmfUser = $injector.get('gmfUser');
@@ -507,6 +556,28 @@ function AbstractAppController(config, $scope, $injector) {
 
   this.updateCurrentBackgroundLayer_(false);
 
+  /**
+   * @param {string} title (text).
+   * @param {number=} opt_width CSS width in pixel.
+   * @param {number=} opt_height CSS height in pixel.
+   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+   */
+  const openPopup_ = (title, opt_width, opt_height, opt_apply) => {
+
+    this.displaywindowTitle = title;
+    this.displaywindowOpen = true;
+
+    if (opt_width) {
+      this.displaywindowWidth = `${opt_width}px`;
+    }
+    if (opt_height) {
+      this.displaywindowHeight = `${opt_height}px`;
+    }
+    if (opt_apply !== false) {
+      this.$scope.$apply();
+    }
+  };
+
   // Static "not used" functions should be in the window because otherwise
   // closure remove them. "export" tag doesn't work on static function below,
   // we "export" them as externs in the gmfx options file.
@@ -529,7 +600,7 @@ function AbstractAppController(config, $scope, $injector) {
     url, title, opt_width, opt_height, opt_apply
   ) => {
     this.displaywindowUrl = url;
-    gmfx.openPopup_(title, opt_width, opt_height, opt_apply);
+    openPopup_(title, opt_width, opt_height, opt_apply);
   };
 
   /**
@@ -541,33 +612,9 @@ function AbstractAppController(config, $scope, $injector) {
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    * @export
    */
-  gmfx.openTextPopup = (
-    content, title, opt_width, opt_height, opt_apply
-  ) => {
+  gmfx.openTextPopup = (content, title, opt_width, opt_height, opt_apply) => {
     this.displaywindowContent = content;
-    gmfx.openPopup_(title, opt_width, opt_height, opt_apply);
-  };
-
-  /**
-   * @param {string} title (text).
-   * @param {number=} opt_width CSS width in pixel.
-   * @param {number=} opt_height CSS height in pixel.
-   * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
-   */
-  gmfx.openPopup_ = (title, opt_width, opt_height, opt_apply) => {
-
-    this.displaywindowTitle = title;
-    this.displaywindowOpen = true;
-
-    if (opt_width) {
-      this.displaywindowWidth = `${opt_width}px`;
-    }
-    if (opt_height) {
-      this.displaywindowHeight = `${opt_height}px`;
-    }
-    if (opt_apply !== false) {
-      this.$scope.$apply();
-    }
+    openPopup_(title, opt_width, opt_height, opt_apply);
   };
 
   /**

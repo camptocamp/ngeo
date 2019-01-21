@@ -44,7 +44,7 @@ class Helper {
     // === Other properties ===
 
     /**
-     * @type {gmfx.datasource.DataSources}
+     * @type {DataSources}
      * @protected
      */
     this.collection_;
@@ -57,11 +57,11 @@ class Helper {
   }
 
   /**
-   * @return {gmfx.datasource.DataSources} Data sources collection.
+   * @return {DataSources} Data sources collection.
    * @export
    */
   get collection() {
-    return /** @type {gmfx.datasource.DataSources} */ (
+    return /** @type {DataSources} */ (
       this.ngeoDataSourcesHelper_.collection
     );
   }

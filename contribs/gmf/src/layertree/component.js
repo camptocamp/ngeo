@@ -26,6 +26,18 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 
 import 'bootstrap/js/src/collapse.js';
 
+
+/**
+ * Static function to create a popup with an iframe.
+ * @typedef {Function} openIframePopup
+ * @param {string} url an url.
+ * @param {string} title (text).
+ * @param {string=} opt_width CSS width.
+ * @param {string=} opt_height CSS height.
+ * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -107,7 +119,7 @@ function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
  *
  * You can add an attribute 'gmf-layertree-openlinksinnewwindow="::true"' to open
  * metadata URLs in a new window. By default, and in the default template,
- * links will be opened in a popup (The window.gmfx.openIframePopup function must be available !)
+ * links will be opened in a popup (The window.openIframePopup function must be available !)
  *
  * Used UI metadata:
  *
@@ -143,7 +155,7 @@ module.component('gmfLayertree', component);
  * @param {JQLite} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
- * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+ * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
  * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
@@ -188,7 +200,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {gmfx.datasource.DataSourceBeingFiltered}
+   * @type {DataSourceBeingFiltered}
    * @export
    */
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -574,7 +586,7 @@ Controller.prototype.getScale_ = function() {
 
 
 /**
- * Opens a gmfx.openIframePopup with the content of the metadata url of a node.
+ * Opens a openIframePopup with the content of the metadata url of a node.
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
  * @export

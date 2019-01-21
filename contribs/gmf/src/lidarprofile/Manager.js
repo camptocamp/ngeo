@@ -115,7 +115,7 @@ class Manager {
 
     /**
      * The variable where all points of the profile are stored
-     * @type {gmfx.LidarprofilePoints}
+     * @type {LidarprofilePoints}
      */
     this.profilePoints = this.getEmptyProfilePoints_();
 
@@ -181,7 +181,7 @@ class Manager {
   }
 
   /**
-   * @return {gmfx.LidarprofilePoints} An empty lidarprofile points object.
+   * @return {LidarprofilePoints} An empty lidarprofile points object.
    * @private
    */
   getEmptyProfilePoints_() {

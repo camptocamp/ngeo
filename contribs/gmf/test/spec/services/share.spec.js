@@ -21,7 +21,7 @@ describe('gmf.permalink.ShareService', () => {
     });
 
     const permalink = 'htpp://fake/c2c/permalink';
-    const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+    const params = /** @type {ShortenerAPIRequestParams} */ ({
       url: permalink
     });
 

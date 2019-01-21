@@ -18,6 +18,15 @@ import olCollection from 'ol/Collection.js';
 import olFormatGPX from 'ol/format/GPX.js';
 import olFormatKML from 'ol/format/KML.js';
 
+
+/**
+ * @typedef {{
+ *     layerObj: (!ol.layer.Tile),
+ *     unregister: Function
+ * }} ExternalDataSourcesManagerWMTSCacheItem
+ */
+
+
 class ExternalDatSourcesManager {
 
   /**
@@ -136,7 +145,7 @@ class ExternalDatSourcesManager {
     /**
      * Cache that stores the information of a WMTS data source. The key is the
      * data source id.
-     * @type {!Object.<number, gmfx.datasource.ExternalDataSourcesManagerWMTSCacheItem>}
+     * @type {!Object.<number, ExternalDataSourcesManagerWMTSCacheItem>}
      * @private
      */
     this.wmtsCache_ = {};

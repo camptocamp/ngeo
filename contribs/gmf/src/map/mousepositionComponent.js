@@ -1,11 +1,19 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olControlMousePosition from 'ol/control/MousePosition.js';
 import * as olProj from 'ol/proj.js';
 
 import 'bootstrap/js/src/dropdown.js';
+
+/**
+ * Projection object for the MousePositionDirective. Define a label and a filter
+ * to use to display coordinates for a projection.
+ * @typedef {Object} MousePositionProjection
+ * @property code {string} The epsg name of a projection.
+ * @property label {string} The label to display with this projection.
+ * @property filter {string} The filter function to use to format this projection. Arguments can be passed
+ * with colon as separator (example: MyFilter:args1:args2:...)
+ */
 
 
 /**
@@ -55,7 +63,7 @@ function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) 
  *  </gmf-mouseposition>
  *
  * @htmlAttribute {import("ol/Map.js").default} gmf-mouseposition-map The map.
- * @htmlAttribute {Array.<gmfx.MousePositionProjection>}
+ * @htmlAttribute {Array.<MousePositionProjection>}
  *    gmf-mouseposition-projection The list of the projections.
  *
  * @ngdoc component
@@ -92,13 +100,13 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.map;
 
   /**
-   * @type {!Array.<!gmfx.MousePositionProjection>}
+   * @type {!Array.<!MousePositionProjection>}
    * @export
    */
   this.projections;
 
   /**
-   * @type {!gmfx.MousePositionProjection}
+   * @type {!MousePositionProjection}
    * @export
    */
   this.projection;
@@ -182,7 +190,7 @@ Controller.prototype.initOlControl_ = function() {
 
 
 /**
- * @param {gmfx.MousePositionProjection} projection The new projection to use.
+ * @param {MousePositionProjection} projection The new projection to use.
  * @export
  */
 Controller.prototype.setProjection = function(projection) {

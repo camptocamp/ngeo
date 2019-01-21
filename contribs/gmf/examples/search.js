@@ -54,7 +54,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
-   * @type {Array.<gmfx.SearchComponentDatasource>}
+   * @type {Array.<SearchComponentDatasource>}
    * @export
    */
   this.searchDatasources = [{

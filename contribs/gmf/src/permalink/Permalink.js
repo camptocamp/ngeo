@@ -35,6 +35,23 @@ import olLayerGroup from 'ol/layer/Group.js';
 
 
 /**
+ * Configuration options for the permalink service.
+ * @typedef {Object} PermalinkOptions
+ * @property crosshairStyle {Array<(null|import("ol/style/Style.js").default)>|null|
+ * import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default|undefined} An alternate
+ * style for the crosshair feature added by the permalink service.
+ * @property crosshairEnabledByDefault {boolean|undefined} Display the crosshair, gets overridden by the
+ * `map_crosshair` parameter. Default is `false`.
+ * @property projectionCodes {Array.<string>|undefined} EPSG codes (e.g. 'EPSG:3857' or '3857').
+ * The permalink service will accept coordinates in these projections and try to detect which projection
+ * the given coordinates are in.
+ * @property useLocalStorage {boolean|undefined} Store the values in the local storage. Default is `false`.
+ * @property pointRecenterZoom {number|undefined} Zoom level to use when result is a single point feature.
+ * If not set the map is not zoomed to a specific zoom level.
+ */
+
+
+/**
  * @enum {string}
  */
 export const OpenLayersLayerProperties = {
@@ -90,7 +107,7 @@ const ParamPrefix = {
  * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
  * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
- * @param {gmfx.User} gmfUser User.
+ * @param {User} gmfUser User.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
@@ -188,7 +205,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
 
   /**
    * The options to configure the gmf permalink service with.
-   * @type {!gmfx.PermalinkOptions}
+   * @type {!PermalinkOptions}
    */
   const gmfPermalinkOptions = $injector.has('gmfPermalinkOptions') ?
     $injector.get('gmfPermalinkOptions') : {};
@@ -252,7 +269,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
     $injector.get('gmfTreeManager') : null;
 
   /**
-   * @type {gmfx.User}
+   * @type {User}
    * @private
    */
   this.user_ = gmfUser;
@@ -273,7 +290,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
     $injector.get('ngeoWfsPermalink') : null;
 
   /**
-   * @type {?gmfx.User}
+   * @type {?User}
    * @export
    */
   this.gmfUser_ = $injector.has('gmfUser') ?
@@ -1589,7 +1606,7 @@ const module = angular.module('gmfPermalink', [
 module.service('gmfPermalink', Permalink);
 
 
-module.value('gmfPermalinkOptions', /** @type {gmfx.PermalinkOptions} */ ({}));
+module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({}));
 
 
 /** Configure the ngeo state manager */

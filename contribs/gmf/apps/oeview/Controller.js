@@ -67,7 +67,7 @@ function Controller($scope, $injector) {
   this.selectedElevationLayer = this.elevationLayers[0];
 
   /**
-   * @type {Object.<string, gmfx.ProfileLineConfiguration>}
+   * @type {Object.<string, ProfileLineConfiguration>}
    * @export
    */
   this.profileLinesconfiguration = {
@@ -76,7 +76,7 @@ function Controller($scope, $injector) {
   };
 
   /**
-   * @type {Array.<gmfx.MousePositionProjection>}
+   * @type {Array.<MousePositionProjection>}
    * @export
    */
   this.mousePositionProjections = [{

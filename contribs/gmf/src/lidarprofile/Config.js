@@ -35,7 +35,7 @@ class Config {
 
     /**
      * The client configuration.
-     * @type {gmfx.LidarprofileClientConfig}
+     * @type {LidarprofileClientConfig}
      */
     this.clientConfig = {
       autoWidth: true,

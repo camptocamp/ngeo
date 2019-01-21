@@ -7,6 +7,17 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
+
+/**
+ * Password validator function with an error message.
+ * Configuration options for the permalink service.
+ * @typedef {{
+ *     isPasswordValid: function(string): string,
+ *     notValidMessage: string
+ * }} PasswordValidator
+ */
+
+
 /**
  * @type {angular.IModule}
  */
@@ -70,9 +81,9 @@ function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplat
  * @htmlAttribute {boolean} gmf-authentication-allow-password-reset Whether to
  *     show the password forgotten link. Default to true.
  * @htmlAttribute {boolean|function} gmf-authentication-allow-password-change Whether to
- *     show the change password button. Default to true. You can also specify a gmfx.PasswordValidator Object
+ *     show the change password button. Default to true. You can also specify a PasswordValidator Object
  *     to add constraint on user's new password.
- * @htmlAttribute {gmfx.PasswordValidator} gmf-authentication-password-validator A gmfx.PasswordValidator
+ * @htmlAttribute {PasswordValidator} gmf-authentication-password-validator A PasswordValidator
  *     Object to add constraint on user's new password. The gmf-authentication-allow-password-change. To use
  *     it you must also allow the user to change its password.
  * @htmlAttribute {boolean} gmf-authentication-force-password-change Force the
@@ -130,7 +141,7 @@ class AuthenticationController {
    * @param {!JQLite} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService GMF Authentication service
-   * @param {gmfx.User} gmfUser User.
+   * @param {User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
    * @ngInject
    * @ngdoc controller
@@ -145,7 +156,7 @@ class AuthenticationController {
     this.$element_ = $element;
 
     /**
-     * @type {gmfx.User}
+     * @type {User}
      * @export
      */
     this.gmfUser = gmfUser;
@@ -181,7 +192,7 @@ class AuthenticationController {
     this.allowPasswordChange;
 
     /**
-     * @type {gmfx.PasswordValidator?}
+     * @type {PasswordValidator?}
      * @export
      */
     this.passwordValidator = null;
@@ -379,7 +390,7 @@ class AuthenticationController {
     const error = gettextCatalog.getString('An error occurred while resetting the password.');
 
     /**
-     * @param {gmfx.AuthenticationDefaultResponse} respData Response.
+     * @param {AuthenticationDefaultResponse} respData Response.
      */
     const resetPasswordSuccessFn = function(respData) {
       this.resetPasswordModalShown = true;

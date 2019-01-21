@@ -74,13 +74,13 @@ class Controller {
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {gmfx.datasource.DataSourceBeingFiltered} gmfDataSourceBeingFiltered
+   * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
    * @param {import("gmf/datasource/Helper.js").default} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import("gmf/filters/SavedFilters.js").default} gmfSavedFilters Gmf saved filters service.
-   * @param {gmfx.User} gmfUser User.
+   * @param {User} gmfUser User.
    * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
    * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager
@@ -139,7 +139,7 @@ class Controller {
      * The data source that can either be selected from the list or have
      * its value set from an external source (for example: the layertree)
      * and that requires to be ready before it can be filtered.
-     * @type {gmfx.datasource.DataSourceBeingFiltered}
+     * @type {DataSourceBeingFiltered}
      * @export
      */
     this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
@@ -173,7 +173,7 @@ class Controller {
     );
 
     /**
-     * @type {gmfx.User}
+     * @type {User}
      * @private
      */
     this.gmfUser_ = gmfUser;
@@ -235,7 +235,7 @@ class Controller {
     this.filtrableLayerNodeNames_ = null;
 
     /**
-     * @type {gmfx.datasource.DataSources}
+     * @type {DataSources}
      * @private
      */
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;

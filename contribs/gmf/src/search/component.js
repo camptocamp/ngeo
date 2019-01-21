@@ -23,6 +23,27 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
+
+/**
+ * Datasource configuration options for the search directive.
+ * @typedef {Object} SearchComponentDatasource
+ * @property bloodhoundOptions {BloodhoundOptions|undefined} The optional Bloodhound configuration for this
+ * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
+ * @property labelKey {string} The name of a corresponding GeoJSON property key in the current dataset.
+ * The bound value of this property key will be used as label.
+ * @property groupValues {Array.<string>|undefined} Possible values for the 'layer_name' key.
+ * Used to define groups of dataset.
+ * @property groupActions {Array.<string>|undefined} List of allowed actions. The list may contain a
+ * combination of `add_theme`, `add_group` or `add_layer`
+ * @property projection {string|undefined} The geometry's projection for this set of data.
+ * @property typeaheadDatasetOptions {TypeaheadDataset|undefined} The optional Typeahead configuration for
+ * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
+ * @property url {string} URL of the search service. Must contain a '%QUERY' term that will be
+ * replaced by the input string.
+ * }}
+ */
+
+
 /**
  * @type {!angular.IModule}
  */
@@ -121,13 +142,13 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * this value, the PostgreSQL function "similarity" (module pg_trgm) is used for the ranking. Read the
  * full-text search c2cgeoportal documentation to know more.
  * You can also add these parameters to the "url" variable of one (or more) of the
- * gmfx.SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
+ * SearchDirectiveDatasource given to this component (here within the "ctrl.searchDatasources"). That
  * allows you to have multiples configurations on one search component.
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
  * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
- * @htmlAttribute {gmfx.SearchComponentDatasource} gmf-search-datasource
+ * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
  *      The datasources.
  * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
  *      gmf-search-styles A map of styles to apply on searched features. Keys
@@ -349,7 +370,7 @@ class SearchController {
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {Array.<gmfx.SearchComponentDatasource>}
+     * @type {Array.<SearchComponentDatasource>}
      * @export
      */
     this.datasources = [];
@@ -594,7 +615,7 @@ class SearchController {
 
 
   /**
-   * @param {gmfx.SearchComponentDatasource} config The config of the dataset.
+   * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(GeoJSONFeature): boolean)=} opt_filter A filter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {TypeaheadDataset} A typeahead dataset.
@@ -698,7 +719,7 @@ class SearchController {
 
 
   /**
-   * @param {gmfx.SearchComponentDatasource} config The config of the dataset.
+   * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(GeoJSONFeature): boolean)=} opt_filter Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Bloodhound} The bloodhound engine.

@@ -26,7 +26,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 module.value('gmfPermalinkOptions',
-  /** @type {gmfx.PermalinkOptions} */ ({
+  /** @type {PermalinkOptions} */ ({
     crosshairStyle: new olStyleStyle({
       image: new olStyleRegularShape({
         stroke: new olStyleStroke({

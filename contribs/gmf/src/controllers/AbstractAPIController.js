@@ -17,7 +17,7 @@ import * as olInteraction from 'ol/interaction.js';
  * This file includes `goog.require`'s for desktop/api components/directives used
  * by the HTML page and the controller to provide the configuration.
  *
- * @param {gmfx.Config} config A part of the application config.
+ * @param {Config} config A part of the application config.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor

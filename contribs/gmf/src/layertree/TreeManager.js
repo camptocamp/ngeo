@@ -7,6 +7,17 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import * as olEvents from 'ol/events.js';
 
+
+/**
+ * @typedef {{
+ *     children: (Object.<string, TreeManagerFullState>|undefined),
+ *     isChecked: (boolean|undefined),
+ *     isExpanded: (boolean|undefined),
+ *     isLegendExpanded: (boolean|undefined)
+ * }} TreeManagerFullState
+ */
+
+
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
  * (default) or not (mode 'add'). In mode 'flush', each theme, group or group
@@ -539,11 +550,11 @@ TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
 
 
 /**
- * Return a gmfx.TreeManagerFullState that keeps the state of the given
+ * Return a TreeManagerFullState that keeps the state of the given
  * treeCtrl including the state of its children.
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl the ngeo layertree controller to
  *     save.
- * @return {gmfx.TreeManagerFullState!} the fullState object.
+ * @return {TreeManagerFullState!} the fullState object.
  * @private
  */
 TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
@@ -589,7 +600,7 @@ TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
  * Set a node's metadata with the given fullState. Update also its children
  * recursively with the fullState children.
  * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node to update.
- * @param {gmfx.TreeManagerFullState|undefined} fullState the fullState object
+ * @param {TreeManagerFullState|undefined} fullState the fullState object
  *     to use.
  * @return {gmfThemes.GmfGroup|gmfThemes.GmfLayer} the node with modification.
  * @private
