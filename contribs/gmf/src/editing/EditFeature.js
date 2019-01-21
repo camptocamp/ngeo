@@ -39,7 +39,7 @@ function EditFeature($http, gmfLayersUrl) {
  * of layer ids inside a specified extent.
  *
  * @param {Array.<number>} layerIds List of layer ids to get the features from.
- * @param {import("ol/Extent.js").default} extent The extent where to get the features from.
+ * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
  * @return {angular.IPromise} Promise.
  * @export
  */

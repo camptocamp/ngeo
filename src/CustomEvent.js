@@ -1,24 +1,20 @@
-import {inherits as olUtilInherits} from 'ol/util.js';
+
 import olEventsEvent from 'ol/events/Event.js';
 
-/**
- * @constructor
- * @extends {import("ol/events/Event.js").default}
- * @param {string} type Event type.
- * @param {T} detail Event Detail.
- * @template T
- */
-function CustomEvent(type, detail = {}) {
 
-  olEventsEvent.call(this, type);
-
+export default class extends olEventsEvent {
   /**
-   * @type {T}
+   * @constructor
+   * @param {string} type Event type.
+   * @param {T} detail Event Detail.
+   * @template T
    */
-  this.detail = detail;
+  constructor(type, detail = {}) {
+    super(type);
+
+    /**
+     * @type {T}
+     */
+    this.detail = detail;
+  }
 }
-
-olUtilInherits(CustomEvent, olEventsEvent);
-
-
-export default CustomEvent;

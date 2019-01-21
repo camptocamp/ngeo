@@ -126,7 +126,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.onChange;
 
   /**
-   * @type {import("ol/Collection.js").default}
+   * @type {import("ol/collection.js").Collection}
    * @private
    */
   this.vectorFeatures_ = new olCollection();

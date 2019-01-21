@@ -91,7 +91,7 @@ function Controller($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
+   * @type {import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures = new olCollection();

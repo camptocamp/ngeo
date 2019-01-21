@@ -27,7 +27,7 @@ const module = angular.module('app', [
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {import("ol/collection.js").Collection.<import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject

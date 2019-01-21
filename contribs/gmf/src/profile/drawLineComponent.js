@@ -88,7 +88,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   this.active;
 
   /**
-   * @type {!import("ol/Collection.js").default}
+   * @type {!import("ol/collection.js").Collection}
    * @private
    */
   this.features_ = new olCollection();

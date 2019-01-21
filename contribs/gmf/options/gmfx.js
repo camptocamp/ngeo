@@ -738,7 +738,7 @@ gmfx.datasource;
 
 
 /**
- * @typedef {import("ol/Collection.js").default.<import("gmf/datasource/OGC.js").default>}
+ * @typedef {import("ol/collection.js").Collection.<import("gmf/datasource/OGC.js").default>}
  */
 gmfx.datasource.DataSources;
 

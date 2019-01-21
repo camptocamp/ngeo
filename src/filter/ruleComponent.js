@@ -282,7 +282,7 @@ class RuleController {
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
+     * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
      * @export
      */
     this.drawnFeatures = new olCollection();
@@ -294,13 +294,13 @@ class RuleController {
     this.menu_ = null;
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
+     * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
      * @export
      */
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {!import("ol/Collection.js").default.<!import("ol/interaction/Interaction.js").default>}
+     * @type {!import("ol/collection.js").Collection.<!import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = new olCollection();
