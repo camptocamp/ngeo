@@ -176,7 +176,7 @@ export function WfsPermalinkService(
    */
   this.wfsTypes_ = {};
 
-  googAsserts.assertArray(options.wfsTypes, 'wfsTypes is not correctly set');
+  console.assert(Array.isArray(options.wfsTypes, 'wfsTypes is not correctly set'));
   options.wfsTypes.forEach((wfsType) => {
     this.wfsTypes_[wfsType.featureType] = wfsType;
   });

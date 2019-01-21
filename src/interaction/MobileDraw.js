@@ -509,7 +509,7 @@ MobileDraw.prototype.getSketchPointGeometry_ = function() {
  */
 MobileDraw.prototype.getCenter_ = function() {
   const center = this.getMap().getView().getCenter();
-  googAsserts.assertArray(center);
+  console.assert(Array.isArray(center));
   return center;
 };
 

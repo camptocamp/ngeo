@@ -1248,7 +1248,7 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
 
   const duration = opt_duration !== undefined ? opt_duration : 250;
   const size = map.getSize();
-  googAsserts.assertArray(size);
+  console.assert(Array.isArray(size));
   const view = map.getView();
   const viewExtent = view.calculateExtent(size);
   const geometry = feature.getGeometry();
@@ -1256,7 +1256,7 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
   const geomIsVisible = geometry.intersectsExtent(viewExtent);
 
   const mapCenter = view.getCenter();
-  googAsserts.assertArray(mapCenter);
+  console.assert(Array.isArray(mapCenter));
 
   const featureExtent = geometry.getExtent();
 

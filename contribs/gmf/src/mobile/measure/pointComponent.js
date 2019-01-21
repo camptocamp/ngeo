@@ -301,7 +301,7 @@ Controller.prototype.handleMeasureActiveChange_ = function() {
  */
 Controller.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
-  googAsserts.assertArray(center);
+  console.assert(Array.isArray(center));
   const params = {
     'layers': this.layersConfig.map(config => config.name).join(',')
   };

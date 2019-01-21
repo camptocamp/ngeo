@@ -230,7 +230,7 @@ Controller.prototype.init = function() {
   this.isModeRange = this.time.mode === 'range';
 
   if (this.isModeRange) {
-    googAsserts.assertArray(initialOptions_.values);
+    console.assert(Array.isArray(initialOptions_.values));
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values[0]);
     this.edate = this.ngeoTime_.createDate(initialOptions_.values[1]);
   } else {

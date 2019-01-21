@@ -121,7 +121,7 @@ class SavedFilter {
   loadItemsFromLocalStorage_() {
     if (window.localStorage[this.localStorageKey_]) {
       const items = JSON.parse(window.localStorage[this.localStorageKey_]);
-      googAsserts.assertArray(items);
+      console.assert(Array.isArray(items));
       this.items_ = items;
     }
   }

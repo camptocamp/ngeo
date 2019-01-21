@@ -575,7 +575,7 @@ Permalink.prototype.setMapCrosshair = function(opt_center) {
   } else {
     crosshairCoordinate = this.map_.getView().getCenter();
   }
-  googAsserts.assertArray(crosshairCoordinate);
+  console.assert(Array.isArray(crosshairCoordinate));
 
   // remove existing crosshair first
   if (this.crosshairFeature_) {
@@ -616,7 +616,7 @@ Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
   } else {
     tooltipPosition = this.map_.getView().getCenter();
   }
-  googAsserts.assertArray(tooltipPosition);
+  console.assert(Array.isArray(tooltipPosition));
 
   const div = $('<div/>', {
     'class': 'gmf-permalink-tooltip',
