@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 
 

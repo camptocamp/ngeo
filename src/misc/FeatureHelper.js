@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 
 import ngeoDownloadService from 'ngeo/download/service.js';

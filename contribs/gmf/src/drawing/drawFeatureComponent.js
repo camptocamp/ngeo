@@ -4,7 +4,6 @@
 import angular from 'angular';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
-import googAsserts from 'goog/asserts.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMenu from 'ngeo/Menu.js';
 

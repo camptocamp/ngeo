@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
 
 import 'angular-ui-date';

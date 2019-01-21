@@ -1,6 +1,5 @@
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import {

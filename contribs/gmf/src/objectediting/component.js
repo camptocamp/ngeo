@@ -7,7 +7,6 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
-import googAsserts from 'goog/asserts.js';
 
 
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';

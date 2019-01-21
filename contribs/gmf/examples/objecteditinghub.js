@@ -4,7 +4,6 @@
 import angular from 'angular';
 import appURL from './url.js';
 import './objecteditinghub.css';
-import googAsserts from 'goog/asserts.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';

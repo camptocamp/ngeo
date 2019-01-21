@@ -1,7 +1,6 @@
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';

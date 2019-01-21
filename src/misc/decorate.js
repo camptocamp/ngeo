@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';

@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import 'ngeo/sass/font.scss';
 import 'jquery-ui/ui/widgets/resizable.js';

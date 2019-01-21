@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import olMap from 'ol/Map.js';
 import olControlControl from 'ol/control/Control.js';
 

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olGeomLineString from 'ol/geom/LineString.js';

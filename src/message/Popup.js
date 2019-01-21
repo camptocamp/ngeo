@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 /**
  * This goog.require is needed because of 'ngeo-popup' used in

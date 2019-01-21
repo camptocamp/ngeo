@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 

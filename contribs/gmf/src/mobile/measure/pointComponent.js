@@ -2,7 +2,6 @@
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';

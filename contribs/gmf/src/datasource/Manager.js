@@ -4,7 +4,6 @@ import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 

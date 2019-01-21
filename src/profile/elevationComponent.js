@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';

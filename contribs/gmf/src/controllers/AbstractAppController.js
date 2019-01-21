@@ -22,7 +22,6 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';

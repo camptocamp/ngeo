@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';

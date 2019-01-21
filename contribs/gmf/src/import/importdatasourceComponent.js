@@ -9,7 +9,6 @@ import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLa
 
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
 
-import googAsserts from 'goog/asserts.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 

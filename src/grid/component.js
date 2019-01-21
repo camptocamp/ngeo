@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
 import * as olHas from 'ol/has.js';

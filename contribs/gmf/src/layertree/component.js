@@ -9,7 +9,6 @@ import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGr
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';

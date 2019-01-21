@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';

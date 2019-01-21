@@ -1,6 +1,5 @@
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 import * as olEvents from 'ol/events.js';

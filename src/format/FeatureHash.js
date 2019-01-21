@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
 import {rgbArrayToHex} from 'ngeo/utils.js';

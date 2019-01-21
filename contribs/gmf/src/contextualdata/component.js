@@ -1,6 +1,5 @@
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import googAsserts from 'goog/asserts.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olProj from 'ol/proj.js';
 import * as olEvents from 'ol/events.js';

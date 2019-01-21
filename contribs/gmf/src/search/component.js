@@ -3,7 +3,6 @@ import gmfBase from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 

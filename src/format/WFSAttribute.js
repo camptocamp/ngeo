@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';

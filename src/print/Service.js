@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import * as olArray from 'ol/array.js';

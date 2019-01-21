@@ -4,7 +4,6 @@ import 'jquery-ui/ui/widgets/tooltip.js';
 import gmfMapComponent from 'gmf/map/component.js';
 
 import gmfDrawingModule from 'gmf/drawing/module.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';

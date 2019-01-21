@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';

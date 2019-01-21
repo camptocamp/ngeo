@@ -1,6 +1,5 @@
 /**
  */
-import googAsserts from 'goog/asserts.js';
 
 /**
  * Provides a function that synchronizes two arrays, arr1 and

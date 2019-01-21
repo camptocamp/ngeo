@@ -1,7 +1,6 @@
 import angular from 'angular';
 import {PermalinkParam} from 'gmf/index.js';
 import gmfThemeThemes, {findGroupByName, findGroupByLayerNodeName} from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';

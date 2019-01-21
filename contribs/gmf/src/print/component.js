@@ -5,7 +5,6 @@ import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';

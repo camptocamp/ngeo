@@ -1,6 +1,5 @@
 /**
  */
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import * as olArray from 'ol/array.js';

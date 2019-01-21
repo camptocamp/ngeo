@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
 import * as olXml from 'ol/xml.js';

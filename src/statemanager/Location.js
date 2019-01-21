@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 
 /**

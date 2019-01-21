@@ -1,6 +1,5 @@
 import './locationsearch.css';
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoSearchModule from 'ngeo/search/module.js';

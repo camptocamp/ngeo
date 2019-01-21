@@ -3,7 +3,6 @@
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/sortable.js';
 import 'jquery-ui-touch-punch';
-import googAsserts from 'goog/asserts.js';
 
 
 /**

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 import {inherits as olUtilInherits} from 'ol/util.js';

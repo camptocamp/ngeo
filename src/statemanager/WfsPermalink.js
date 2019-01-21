@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olExtent from 'ol/extent.js';
 import {equalTo, and, or} from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';

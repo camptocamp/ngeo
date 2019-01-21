@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
 
 

@@ -9,7 +9,6 @@ import gmfDatasourceHelper from 'gmf/datasource/Helper.js';
 
 import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 

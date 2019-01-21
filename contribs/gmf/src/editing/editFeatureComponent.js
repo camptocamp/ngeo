@@ -5,7 +5,6 @@ import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
-import googAsserts from 'goog/asserts.js';
 import DateFormatter from 'ngeo/misc/php-date-formatter.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';

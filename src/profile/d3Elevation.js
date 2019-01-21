@@ -1,6 +1,5 @@
 /**
  */
-import googAsserts from 'goog/asserts.js';
 
 import {
   area as d3area,

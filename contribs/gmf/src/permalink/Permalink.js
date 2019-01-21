@@ -23,7 +23,6 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
-import googAsserts from 'goog/asserts.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';

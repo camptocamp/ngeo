@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olControlMousePosition from 'ol/control/MousePosition.js';
 import * as olProj from 'ol/proj.js';

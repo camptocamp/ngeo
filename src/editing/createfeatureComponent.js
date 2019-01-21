@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';

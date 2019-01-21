@@ -3,7 +3,6 @@
 
 import angular from 'angular';
 import {EXTERNALLAYERGROUP_NAME} from 'gmf/index.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscFile from 'ngeo/misc/File.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';

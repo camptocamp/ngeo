@@ -4,7 +4,6 @@ import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.j
 
 import gmfMapComponent from 'gmf/map/component.js';
 
-import googAsserts from 'goog/asserts.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
