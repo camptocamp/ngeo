@@ -1,13 +1,10 @@
-/**
- */
-
 import './toolActivate.css';
 import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction} from 'ngeo/misc/decorate.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import olCollection from 'ol/Collection.js';
@@ -112,7 +109,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       features: features
     }));
   this.drawPoint.setActive(false);
-  ngeoMiscDecorate.interaction(this.drawPoint);
+  interaction(this.drawPoint);
   map.addInteraction(this.drawPoint);
 
   const drawPointTool = new ngeoMiscToolActivate(this.drawPoint, 'active');
@@ -129,7 +126,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       features: features
     }));
   this.drawLine.setActive(false);
-  ngeoMiscDecorate.interaction(this.drawLine);
+  interaction(this.drawLine);
   map.addInteraction(this.drawLine);
 
   const drawLineTool = new ngeoMiscToolActivate(this.drawLine, 'active');
@@ -146,7 +143,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
       features: features
     }));
   this.drawPolygon.setActive(false);
-  ngeoMiscDecorate.interaction(this.drawPolygon);
+  interaction(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
 
   const drawPolygonTool = new ngeoMiscToolActivate(this.drawPolygon, 'active');

@@ -1,10 +1,8 @@
-/**
- */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction} from 'ngeo/misc/decorate.js';
 import * as olEvents from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
@@ -238,9 +236,9 @@ Controller.prototype.init = function() {
     }
   );
   this.measure.setActive(this.active);
-  ngeoMiscDecorate.interaction(this.measure);
+  interaction(this.measure);
   this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (this.measure.getDrawInteraction());
-  ngeoMiscDecorate.interaction(this.drawInteraction);
+  interaction(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();
   console.assert(Array.isArray(layersConfig));

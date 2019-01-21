@@ -1,13 +1,10 @@
-/**
- */
-
 import './interactionbtngroup.css';
 import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction} from 'ngeo/misc/decorate.js';
 import olCollection from 'ol/Collection.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -95,7 +92,7 @@ function MainController(ngeoFeatureOverlayMgr) {
   const drawPolygon = this.drawPolygon;
 
   drawPolygon.setActive(false);
-  ngeoMiscDecorate.interaction(drawPolygon);
+  interaction(drawPolygon);
   map.addInteraction(drawPolygon);
 
   /**
@@ -110,7 +107,7 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
-  ngeoMiscDecorate.interaction(drawPoint);
+  interaction(drawPoint);
   map.addInteraction(drawPoint);
 
   /**
@@ -125,7 +122,7 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   const drawLine = this.drawLine;
   drawLine.setActive(false);
-  ngeoMiscDecorate.interaction(drawLine);
+  interaction(drawLine);
   map.addInteraction(drawLine);
 
 }
