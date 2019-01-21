@@ -728,7 +728,7 @@ class Querent {
             getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(
             featureRequestXml);
-          googAsserts.assertString(url);
+          console.assert(typeof url == string);
           const canceler = this.registerCanceler_();
           this.http_.post(
             url,

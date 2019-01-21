@@ -836,7 +836,7 @@ Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
   // get layer label, i.e its name
   const layer = this.ngeoBackgroundLayerMgr_.get(this.map_);
   const layerName = layer.get('label');
-  googAsserts.assertString(layerName);
+  console.assert(typeof layerName == string);
 
   // set it in state
   const object = {};
@@ -983,7 +983,7 @@ Permalink.prototype.initLayers_ = function() {
     // Check if we have the groups in the permalink
     const groupsNames = this.ngeoLocation_.getParam(PermalinkParam.TREE_GROUPS);
     if (groupsNames === undefined) {
-      googAsserts.assertString(themeName);
+      console.assert(typeof themeName == string);
       theme = findThemeByName(themes, themeName);
       if (theme) {
         firstLevelGroups = theme.children;

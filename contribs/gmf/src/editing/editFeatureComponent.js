@@ -667,7 +667,7 @@ Controller.prototype.save = function() {
     if (attribute.format) {
       if (this.feature.get(attribute.name)) {
         const name = this.feature.get(attribute.name);
-        googAsserts.assertString(name);
+        console.assert(typeof name == string);
         const value = dateFormatter.parseDate(name, attribute.format);
         let jsonFormat = 'Y-m-d\\TH:i:s';
         if (attribute.type === 'date') {
@@ -896,7 +896,7 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
               jsonFormat = 'H:i:s';
             }
             const name = feature.get(attribute.name);
-            googAsserts.assertString(name);
+            console.assert(typeof name == string);
             value = dateFormatter.parseDate(name, jsonFormat);
           }
           feature.set(attribute.name, dateFormatter.formatDate(value, attribute.format));

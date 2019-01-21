@@ -29,7 +29,7 @@ export default class {
    */
   readFromComplexTypeElement_(object) {
 
-    const name = googAsserts.assertString(object['name']);
+    const name = console.assert(typeof object['name'] == string);
     const alias = 'alias' in object ?
       googAsserts.assertString(object['alias']) : null;
     const required = object['minOccurs'] != '0';
@@ -40,7 +40,7 @@ export default class {
       required
     };
 
-    const type = googAsserts.assertString(object['type']);
+    const type = console.assert(typeof object['type'] == string);
 
     if (!setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType' || type === 'dateTime') {

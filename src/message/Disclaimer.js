@@ -98,7 +98,7 @@ Disclaimer.prototype.close = function(object) {
 Disclaimer.prototype.showMessage = function(message) {
   const gettextCatalog = this.gettextCatalog_;
   const type = message.type;
-  googAsserts.assertString(type, 'Type should be set.');
+  console.assert(typeof type, 'Type should be set.' == string);
 
   // No need to do anything if message already exist.
   const uid = this.getMessageUid_(message);

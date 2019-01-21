@@ -171,7 +171,7 @@ export default class extends ngeoRuleRule {
     let geometry = null;
     if (this.expression) {
       // An expression can only have a string value with a geometry rule.
-      const expression = googAsserts.assertString(this.expression);
+      const expression = console.assert(typeof this.expression == string);
       geometry = this.format_.readGeometry(expression);
     }
     this.geometry = geometry;

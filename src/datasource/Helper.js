@@ -98,7 +98,7 @@ class Helper {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getOGCLayerNames()[0];
-        googAsserts.assertString(ogcLayerName, 'The data source should have only one ogcLayer.');
+        console.assert(typeof ogcLayerName, 'The data source should have only one ogcLayer.' == string);
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
             for (const type of featureType.complexType) {

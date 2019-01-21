@@ -929,9 +929,9 @@ FeatureHelper.prototype.getAngleProperty = function(feature) {
  */
 FeatureHelper.prototype.getColorProperty = function(feature) {
 
-  const color = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.COLOR));
+  const color = console.assert(typeof feature.get(ngeoFormatFeatureProperties.COLOR) == string);
 
-  googAsserts.assertString(color);
+  console.assert(typeof color == string);
 
   return color;
 };
@@ -953,8 +953,8 @@ FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
  * @export
  */
 FeatureHelper.prototype.getNameProperty = function(feature) {
-  const name = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.NAME));
-  googAsserts.assertString(name);
+  const name = console.assert(typeof feature.get(ngeoFormatFeatureProperties.NAME) == string);
+  console.assert(typeof name == string);
   return name;
 };
 

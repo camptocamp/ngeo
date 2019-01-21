@@ -89,7 +89,7 @@ Notification.prototype.clear = function() {
  */
 Notification.prototype.showMessage = function(message) {
   const type = message.type;
-  googAsserts.assertString(type, 'Type should be set.');
+  console.assert(typeof type, 'Type should be set.' == string);
 
   const classNames = ['alert', 'fade', 'show'];
   switch (type) {

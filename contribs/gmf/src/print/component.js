@@ -896,7 +896,7 @@ class Controller {
     }
 
     console.assert(typeof this.layoutInfo.dpi == number);
-    googAsserts.assertString(this.layoutInfo.layout);
+    console.assert(typeof this.layoutInfo.layout == string);
 
     // convert the WMTS layers to WMS
     const map = new olMap({});

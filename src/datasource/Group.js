@@ -125,7 +125,7 @@ class Group {
       }
     }
 
-    googAsserts.assertString(state);
+    console.assert(typeof state == string);
 
     return state;
   }
