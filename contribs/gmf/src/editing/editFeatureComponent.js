@@ -26,7 +26,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
@@ -1152,7 +1152,7 @@ Controller.prototype.handleGetFeatures_ = function(features) {
 Controller.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
-    ngeoMiscDecorate.interaction(interaction);
+    ngeoMiscDecorateInteraction(interaction);
   });
 };
 

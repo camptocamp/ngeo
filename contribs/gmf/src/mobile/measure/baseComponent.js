@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import * as olEvents from 'ol/events.js';
 import olStyleFill from 'ol/style/Fill.js';
@@ -130,13 +128,13 @@ function Controller($scope, $filter, gettextCatalog) {
 Controller.prototype.init = function() {
 
   this.measure.setActive(this.active);
-  ngeoMiscDecorate.interaction(this.measure);
+  interaction(this.measure);
 
   this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
     this.measure.getDrawInteraction());
 
   const drawInteraction = this.drawInteraction;
-  ngeoMiscDecorate.interaction(drawInteraction);
+  interaction(drawInteraction);
 
   Object.defineProperty(this, 'hasPoints', {
     get() {

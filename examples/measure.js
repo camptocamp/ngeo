@@ -8,7 +8,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
 
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -181,7 +181,7 @@ function MeasuretoolsController($scope, $compile, $sce,
   });
 
   this.measureLength.setActive(false);
-  ngeoMiscDecorate.interaction(this.measureLength);
+  interaction(this.measureLength);
 
   /**
    * @type {import("ngeo/interaction/MeasureArea.js").default}
@@ -194,7 +194,7 @@ function MeasuretoolsController($scope, $compile, $sce,
   });
 
   this.measureArea.setActive(false);
-  ngeoMiscDecorate.interaction(this.measureArea);
+  interaction(this.measureArea);
 
   /**
    * @type {import("ngeo/interaction/MeasureAzimut.js").default}
@@ -208,7 +208,7 @@ function MeasuretoolsController($scope, $compile, $sce,
     });
 
   this.measureAzimut.setActive(false);
-  ngeoMiscDecorate.interaction(this.measureAzimut);
+  interaction(this.measureAzimut);
 
 
   // the following code shows how one can add additional information to the

@@ -17,7 +17,7 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionModify from 'ngeo/interaction/Modify.js';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
@@ -362,7 +362,7 @@ Controller.prototype.closeMenu_ = function() {
 Controller.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
-    ngeoMiscDecorate.interaction(interaction);
+    ngeoMiscDecorateInteraction(interaction);
   });
 };
 
