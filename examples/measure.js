@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import './measure.css';
 import angular from 'angular';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
@@ -27,7 +23,7 @@ import 'angular-sanitize';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
@@ -36,7 +32,7 @@ exports.module = angular.module('app', [
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
 });
 
@@ -48,7 +44,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.measuretoolsComponent = {
+const measuretoolsComponent = {
   bindings: {
     'map': '=appMeasuretoolsMap',
     'lang': '=appMeasuretoolsLang'
@@ -57,7 +53,7 @@ exports.measuretoolsComponent = {
   templateUrl: 'partials/measuretools'
 };
 
-exports.module.component('appMeasuretools', exports.measuretoolsComponent);
+module.component('appMeasuretools', measuretoolsComponent);
 
 
 /**
@@ -69,7 +65,7 @@ exports.module.component('appMeasuretools', exports.measuretoolsComponent);
  * @constructor
  * @ngInject
  */
-exports.MeasuretoolsController = function($scope, $compile, $sce,
+function MeasuretoolsController($scope, $compile, $sce,
   $filter, gettextCatalog) {
 
   /**
@@ -222,11 +218,11 @@ exports.MeasuretoolsController = function($scope, $compile, $sce,
     const el = evt.target.getTooltipElement();
     el.innerHTML += '<br>Additional info';
   });
-};
+}
 
-exports.module.controller('AppMeasuretoolsController', exports.MeasuretoolsController);
+module.controller('AppMeasuretoolsController', MeasuretoolsController);
 
-exports.MeasuretoolsController.prototype.$onInit = function() {
+MeasuretoolsController.prototype.$onInit = function() {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);
@@ -236,7 +232,7 @@ exports.MeasuretoolsController.prototype.$onInit = function() {
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {string}
@@ -261,10 +257,10 @@ exports.MainController = function() {
   });
 
   this.map.addControl(new olControlScaleLine());
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

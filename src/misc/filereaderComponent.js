@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoFilereader', []);
+const module = angular.module('ngeoFilereader', []);
 
 /**
  * This directive is to used on an input file element. When a file is selected
@@ -66,7 +66,7 @@ function component($window) {
 }
 
 
-exports.directive('ngeoFilereader', component);
+module.directive('ngeoFilereader', component);
 
 
-export default exports;
+export default module;

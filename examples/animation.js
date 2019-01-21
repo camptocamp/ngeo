@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import './animation.css';
 import angular from 'angular';
 import olMap from 'ol/Map.js';
@@ -13,7 +9,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} */
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
 ]);
@@ -26,7 +22,7 @@ exports.module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.mapComponent = {
+const mapComponent = {
   bindings: {
     'map': '=appMap',
     'class': '=appMapClass'
@@ -35,7 +31,7 @@ exports.mapComponent = {
 };
 
 
-exports.module.component('appMap', exports.mapComponent);
+module.component('appMap', mapComponent);
 
 
 /**
@@ -45,7 +41,7 @@ exports.module.component('appMap', exports.mapComponent);
  * @constructor
  * @ngInject
  */
-exports.MainController = function($timeout) {
+function MainController($timeout) {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -77,10 +73,10 @@ exports.MainController = function($timeout) {
   $timeout(() => {
     self.open = true;
   }, 0);
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

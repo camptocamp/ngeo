@@ -9,15 +9,15 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfMapComponent', [
+const module = angular.module('gmfMapComponent', [
   gmfPermalinkModule.name,
-  gmfEditingSnapping.module.name,
+  gmfEditingSnapping.name,
   ngeoMapModule.name,
-  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMapFeatureOverlayMgr.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/map', require('./component.html'));
 });
 
@@ -54,7 +54,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfMap', directive);
+module.directive('gmfMap', directive);
 
 
 /**
@@ -122,7 +122,7 @@ Controller.prototype.$onInit = function() {
 };
 
 
-exports.controller('GmfMapController', Controller);
+module.controller('GmfMapController', Controller);
 
 
-export default exports;
+export default module;

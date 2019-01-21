@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
@@ -36,15 +34,15 @@ import olGeomPoint from 'ol/geom/Point.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMobileGeolocation', [
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMessageNotification.module.name,
+const module = angular.module('ngeoMobileGeolocation', [
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMessageNotification.name,
 ]);
 
 /**
  * @enum {string}
  */
-exports.GeolocationEventType = {
+const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
@@ -82,7 +80,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoMobileGeolocation', directive);
+module.directive('ngeoMobileGeolocation', directive);
 
 
 /**
@@ -166,7 +164,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
         break;
     }
     this.notification_.error(msg);
-    $scope.$emit(exports.GeolocationEventType.ERROR, error);
+    $scope.$emit(GeolocationEventType.ERROR, error);
   });
 
   /**
@@ -239,7 +237,7 @@ Controller.prototype.toggleTracking = function() {
     // doesn't return an error
     if (currentPosition === undefined) {
       this.untrack_();
-      this.$scope_.$emit(exports.GeolocationEventType.ERROR, null);
+      this.$scope_.$emit(GeolocationEventType.ERROR, null);
       return;
     }
     googAsserts.assert(currentPosition !== undefined);
@@ -356,7 +354,7 @@ Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
 };
 
 
-exports.controller('ngeoGeolocationMobileController', Controller);
+module.controller('ngeoGeolocationMobileController', Controller);
 
 
-export default exports;
+export default module;

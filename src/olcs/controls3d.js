@@ -4,7 +4,7 @@ import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olEasing from 'ol/easing.js';
 import olcsCore from 'olcs/core.js';
-const exports = angular.module('ngeoOlcsControls3d', []);
+const module = angular.module('ngeoOlcsControls3d', []);
 
 
 function shouldUpdate(older, newer) {
@@ -229,7 +229,7 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
     'ngeo/olsc/controls3d';
 }
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
 });
 
@@ -263,9 +263,9 @@ const component = {
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable
 };
 
-exports.component('ngeoOlcsControls3d', component);
+module.component('ngeoOlcsControls3d', component);
 
-exports.value('ngeoOlcsControls3dTemplateUrl', '');
+module.value('ngeoOlcsControls3dTemplateUrl', '');
 
 
-export default exports;
+export default module;

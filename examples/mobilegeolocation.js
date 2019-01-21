@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './mobilegeolocation.css';
 import angular from 'angular';
@@ -32,7 +31,7 @@ const appmodule = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope, ngeoFeatureOverlayMgr) {
 
   const positionFeatureStyle = new olStyleStyle({
     image: new olStyleCircle({
@@ -75,10 +74,10 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-};
+}
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

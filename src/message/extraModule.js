@@ -13,11 +13,11 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
  * @type {angular.IModule}
  */
 export default angular.module('ngeoMessageExtraModule', [
-  ngeoMessageNotification.module.name,
+  ngeoMessageNotification.name,
   ngeoMessageDisplaywindowComponent.name,
-  ngeoMessageDisclaimer.module.name,
+  ngeoMessageDisclaimer.name,
   ngeoMessagePopupComponent.name,
-  ngeoMessagePopup.module.name,
+  ngeoMessagePopup.name,
   ngeoMessagePopoverComponent.name,
   ngeoMessageModalComponent.name,
 ]);

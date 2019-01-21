@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMenu from 'ngeo/Menu.js';
@@ -16,7 +14,7 @@ import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay.js';
 
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
@@ -44,22 +42,22 @@ import 'ngeo/sass/font.scss';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoRule', [
+const module = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
-  ngeoFilterRuleHelper.module.name,
-  ngeoMapFeatureOverlay.module.name,
+  ngeoFilterRuleHelper.name,
+  ngeoMapFeatureOverlay.name,
   ngeoMiscDatepickerComponent.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
 });
 
 
-exports.value('ngeoRuleTemplateUrl',
+module.value('ngeoRuleTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -759,7 +757,7 @@ class RuleController {
   initializeInteractions_() {
     this.interactions_.forEach((interaction) => {
       interaction.setActive(false);
-      ngeoMiscDecorate.interaction(interaction);
+      ngeoMiscDecorateInteraction(interaction);
     });
   }
 
@@ -976,7 +974,7 @@ class RuleController {
  * Also, changes are not made on-the-fly. A button must be clicked for the
  * changes to be applied to the rule.
  */
-exports.component('ngeoRule', {
+module.component('ngeoRule', {
   bindings: {
     'featureOverlay': '<',
     'map': '<',
@@ -988,4 +986,4 @@ exports.component('ngeoRule', {
 });
 
 
-export default exports;
+export default module;

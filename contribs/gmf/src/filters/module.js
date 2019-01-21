@@ -9,5 +9,5 @@ import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
  */
 export default angular.module('gmfFiltersModule', [
   gmfFiltersFilterselectorComponent.name,
-  gmfFiltersSavedFilters.module.name,
+  gmfFiltersSavedFilters.name,
 ]);

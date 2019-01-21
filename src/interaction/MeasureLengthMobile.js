@@ -1,5 +1,3 @@
-/**
- */
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -14,7 +12,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} opt_options Options
  */
-const exports = function(format, gettextCatalog, opt_options) {
+function MeasureLengthMobile(format, gettextCatalog, opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
@@ -22,16 +20,15 @@ const exports = function(format, gettextCatalog, opt_options) {
 
   ngeoInteractionMeasureLength.call(this, format, gettextCatalog, options);
 
-};
+}
 
-olUtilInherits(
-  exports, ngeoInteractionMeasureLength);
+olUtilInherits(MeasureLengthMobile, ngeoInteractionMeasureLength);
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style, source) {
+MeasureLengthMobile.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
     style: style,
@@ -40,4 +37,4 @@ exports.prototype.createDrawInteraction = function(style, source) {
 };
 
 
-export default exports;
+export default MeasureLengthMobile;

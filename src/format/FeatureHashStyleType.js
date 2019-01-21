@@ -1,14 +1,9 @@
 /**
- */
-/**
  * @enum {string}
  * @export
  */
-const exports = {
+export default {
   LINE_STRING: 'LineString',
   POINT: 'Point',
   POLYGON: 'Polygon'
 };
-
-
-export default exports;

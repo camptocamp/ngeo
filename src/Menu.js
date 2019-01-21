@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -54,7 +52,7 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  * @param {MenuOptions=} menuOptions Menu options.
  * @param {olx.OverlayOptions=} opt_overlayOptions Overlay options.
  */
-const exports = function(menuOptions, opt_overlayOptions) {
+function Menu(menuOptions, opt_overlayOptions) {
 
   const options = opt_overlayOptions !== undefined ? opt_overlayOptions : {};
 
@@ -126,9 +124,9 @@ const exports = function(menuOptions, opt_overlayOptions) {
 
   olOverlay.call(this, options);
 
-};
+}
 
-olUtilInherits(exports, olOverlay);
+olUtilInherits(Menu, olOverlay);
 
 
 /**
@@ -136,7 +134,7 @@ olUtilInherits(exports, olOverlay);
  * @export
  * @override
  */
-exports.prototype.setMap = function(map) {
+Menu.prototype.setMap = function(map) {
 
   const currentMap = this.getMap();
   if (currentMap) {
@@ -178,7 +176,7 @@ exports.prototype.setMap = function(map) {
  * @param {import("ol/coordinate.js").Coordinate} coordinate Where to open the menu.
  * @export
  */
-exports.prototype.open = function(coordinate) {
+Menu.prototype.open = function(coordinate) {
   this.setPosition(coordinate);
   if (this.autoClose_) {
     this.clickOutListenerKey_ = olEvents.listen(
@@ -195,7 +193,7 @@ exports.prototype.open = function(coordinate) {
 /**
  * @export
  */
-exports.prototype.close = function() {
+Menu.prototype.close = function() {
   this.setPosition(undefined);
 
   if (this.clickOutListenerKey_ !== null) {
@@ -209,7 +207,7 @@ exports.prototype.close = function() {
  * @param {Event} evt Event.
  * @private
  */
-exports.prototype.handleActionClick_ = function(action, evt) {
+Menu.prototype.handleActionClick_ = function(action, evt) {
 
   this.dispatchEvent(new ngeoCustomEvent('actionclick', {
     action: action
@@ -228,7 +226,7 @@ exports.prototype.handleActionClick_ = function(action, evt) {
  * @param {Event} evt Event.
  * @private
  */
-exports.prototype.handleClickOut_ = function(evt) {
+Menu.prototype.handleClickOut_ = function(evt) {
   const element = this.getElement();
   if (element && $(evt.target).closest(element).length === 0) {
     this.close();
@@ -245,7 +243,7 @@ exports.prototype.handleClickOut_ = function(evt) {
  * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
-exports.prototype.handleMapPointerMove_ = function(evt) {
+Menu.prototype.handleMapPointerMove_ = function(evt) {
   const target = evt.originalEvent.target;
   googAsserts.assertInstanceof(target, Element);
 
@@ -259,4 +257,4 @@ exports.prototype.handleMapPointerMove_ = function(evt) {
 };
 
 
-export default exports;
+export default Menu;

@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionCommon from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
@@ -52,7 +50,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @extends {import("ol/interaction/Interaction.js").default}
  * @param {MobileDrawOptions} options Options
  */
-const exports = function(options) {
+function MobileDraw(options) {
 
   olInteractionInteraction.call(this, {
     handleEvent: TRUE
@@ -125,15 +123,15 @@ const exports = function(options) {
   this.set('drawing', false);
   this.set('valid', false);
 
-};
+}
 
-olUtilInherits(exports, olInteractionInteraction);
+olUtilInherits(MobileDraw, olInteractionInteraction);
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+MobileDraw.prototype.setMap = function(map) {
 
   const currentMap = this.getMap();
   if (currentMap) {
@@ -164,7 +162,7 @@ exports.prototype.setMap = function(map) {
  * @return {boolean} `true` if the interaction is dirty, `false` otherwise.
  * @observable
  */
-exports.prototype.getDirty = function() {
+MobileDraw.prototype.getDirty = function() {
   return /** @type {boolean} */ (
     this.get('dirty'));
 };
@@ -175,7 +173,7 @@ exports.prototype.getDirty = function() {
  * @return {boolean} `true` if the interaction is drawing, `false` otherwise.
  * @observable
  */
-exports.prototype.getDrawing = function() {
+MobileDraw.prototype.getDrawing = function() {
   return /** @type {boolean} */ (
     this.get('drawing'));
 };
@@ -188,7 +186,7 @@ exports.prototype.getDrawing = function() {
  *     `false` otherwise.
  * @observable
  */
-exports.prototype.getValid = function() {
+MobileDraw.prototype.getValid = function() {
   return /** @type {boolean} */ (
     this.get('valid'));
 };
@@ -198,7 +196,7 @@ exports.prototype.getValid = function() {
  * Returns the current sketch feature.
  * @return {?import("ol/Feature.js").default} The sketch feature, or null if none.
  */
-exports.prototype.getFeature = function() {
+MobileDraw.prototype.getFeature = function() {
   return this.sketchFeature_;
 };
 
@@ -210,7 +208,7 @@ exports.prototype.getFeature = function() {
  * Add current sketch point to sketch feature if the latter exists, else create
  * it.
  */
-exports.prototype.addToDrawing = function() {
+MobileDraw.prototype.addToDrawing = function() {
 
   // no need to do anything if interaction is not active, nor drawing
   const active = this.getActive();
@@ -311,7 +309,7 @@ exports.prototype.addToDrawing = function() {
 /**
  * Clear the drawing
  */
-exports.prototype.clearDrawing = function() {
+MobileDraw.prototype.clearDrawing = function() {
   this.setActive(false);
   this.setActive(true);
 };
@@ -320,7 +318,7 @@ exports.prototype.clearDrawing = function() {
 /**
  * Finish drawing. If there's a sketch point, it's added first.
  */
-exports.prototype.finishDrawing = function() {
+MobileDraw.prototype.finishDrawing = function() {
 
   // no need to do anything if interaction is not active, nor drawing
   const active = this.getActive();
@@ -349,7 +347,7 @@ exports.prototype.finishDrawing = function() {
  * Start drawing by adding the sketch point first.
  * @private
  */
-exports.prototype.startDrawing_ = function() {
+MobileDraw.prototype.startDrawing_ = function() {
   this.set('drawing', true);
   this.createOrUpdateSketchPoint_();
   this.updateSketchFeatures_();
@@ -365,7 +363,7 @@ exports.prototype.startDrawing_ = function() {
  * set to the center of the map.
  * @private
  */
-exports.prototype.modifyDrawing_ = function() {
+MobileDraw.prototype.modifyDrawing_ = function() {
   if (!this.sketchFeature_) {
     return;
   }
@@ -402,7 +400,7 @@ exports.prototype.modifyDrawing_ = function() {
  * @return {?import("ol/Feature.js").default} The sketch feature (or null if none).
  * @private
  */
-exports.prototype.abortDrawing_ = function() {
+MobileDraw.prototype.abortDrawing_ = function() {
   const sketchFeature = this.sketchFeature_;
   if (sketchFeature || this.sketchPoints_.length > 0) {
     this.sketchFeature_ = null;
@@ -420,7 +418,7 @@ exports.prototype.abortDrawing_ = function() {
 /**
  * @private
  */
-exports.prototype.updateState_ = function() {
+MobileDraw.prototype.updateState_ = function() {
   const map = this.getMap();
   const active = this.getActive();
   if (!map || !active) {
@@ -436,7 +434,7 @@ exports.prototype.updateState_ = function() {
  * @param {import("ol/Object/Event.js").default} evt Event.
  * @private
  */
-exports.prototype.handleViewCenterChange_ = function(evt) {
+MobileDraw.prototype.handleViewCenterChange_ = function(evt) {
   // no need to do anything if interaction is not active, nor drawing
   const active = this.getActive();
   const drawing = this.getDrawing();
@@ -459,7 +457,7 @@ exports.prototype.handleViewCenterChange_ = function(evt) {
 /**
  * @private
  */
-exports.prototype.createOrUpdateSketchPoint_ = function() {
+MobileDraw.prototype.createOrUpdateSketchPoint_ = function() {
   const center = this.getCenter_();
 
   if (this.sketchPoint_) {
@@ -476,7 +474,7 @@ exports.prototype.createOrUpdateSketchPoint_ = function() {
  * Redraw the sketch features.
  * @private
  */
-exports.prototype.updateSketchFeatures_ = function() {
+MobileDraw.prototype.updateSketchFeatures_ = function() {
   const sketchFeatures = [];
   if (this.sketchFeature_) {
     sketchFeatures.push(this.sketchFeature_);
@@ -496,7 +494,7 @@ exports.prototype.updateSketchFeatures_ = function() {
  * @return {import("ol/geom/Point.js").default} Point.
  * @private
  */
-exports.prototype.getSketchPointGeometry_ = function() {
+MobileDraw.prototype.getSketchPointGeometry_ = function() {
   googAsserts.assert(this.sketchPoint_, 'sketch point should be thruty');
   const geometry = this.sketchPoint_.getGeometry();
   googAsserts.assertInstanceof(geometry, olGeomPoint);
@@ -509,11 +507,11 @@ exports.prototype.getSketchPointGeometry_ = function() {
  * @return {import("ol/coordinate.js").Coordinate} Coordinate.
  * @private
  */
-exports.prototype.getCenter_ = function() {
+MobileDraw.prototype.getCenter_ = function() {
   const center = this.getMap().getView().getCenter();
   googAsserts.assertArray(center);
   return center;
 };
 
 
-export default exports;
+export default MobileDraw;

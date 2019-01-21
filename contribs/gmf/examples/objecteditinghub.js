@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -15,19 +14,19 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
-  gmfEditingXSDAttributes.module.name,
-  gmfObjecteditingManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfEditingXSDAttributes.name,
+  gmfObjecteditingManager.name,
+  gmfThemeThemes.name,
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -39,7 +38,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
+function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.IHttpService}
@@ -234,13 +233,13 @@ exports.MainController = function($http, $q, $scope, gmfThemes, gmfXSDAttributes
     });
   });
 
-};
+}
 
 
 /**
  * @export
  */
-exports.MainController.prototype.runEditor = function() {
+MainController.prototype.runEditor = function() {
 
   const geomType = this.selectedGeomType;
   const feature = this.selectedFeature;
@@ -256,7 +255,7 @@ exports.MainController.prototype.runEditor = function() {
   params[gmfObjecteditingManager.Param.THEME] = this.themeName;
   params[gmfObjecteditingManager.Param.PROPERTY] = property;
 
-  const url = exports.MainController.appendParams(this.selectedUrl['url'], params);
+  const url = MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);
 };
 
@@ -264,7 +263,7 @@ exports.MainController.prototype.runEditor = function() {
 /**
  * @export
  */
-exports.MainController.prototype.runViewerDev = function() {
+MainController.prototype.runViewerDev = function() {
   this.runViewer_(this.viewerUrlDev_);
 };
 
@@ -272,7 +271,7 @@ exports.MainController.prototype.runViewerDev = function() {
 /**
  * @export
  */
-exports.MainController.prototype.runViewerHosted = function() {
+MainController.prototype.runViewerHosted = function() {
   this.runViewer_(this.viewerUrlHosted_);
 };
 
@@ -281,7 +280,7 @@ exports.MainController.prototype.runViewerHosted = function() {
  * @param {string} baseUrl Base url of the viewer.
  * @private
  */
-exports.MainController.prototype.runViewer_ = function(baseUrl) {
+MainController.prototype.runViewer_ = function(baseUrl) {
 
   const node = this.selectedGmfLayerNode;
   const nodeId = node.id;
@@ -301,7 +300,7 @@ exports.MainController.prototype.runViewer_ = function(baseUrl) {
   params['wfs_layer'] = nodeName;
   params[`wfs_${nodeIdAttrFieldName}`] = ids.join(',');
 
-  const url = exports.MainController.appendParams(baseUrl, params);
+  const url = MainController.appendParams(baseUrl, params);
   window.open(url);
 };
 
@@ -311,7 +310,7 @@ exports.MainController.prototype.runViewer_ = function(baseUrl) {
  * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
-exports.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
+MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
   this.getFeaturesDeferred_ = this.q_.defer();
 
@@ -331,11 +330,11 @@ exports.MainController.prototype.getFeatures_ = function(gmfLayerNode) {
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-exports.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
+MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
   const id = gmfLayerNode.id;
 
-  const url = exports.MainController.appendParams(
+  const url = MainController.appendParams(
     this.gmfServer_.urlWfs,
     {
       'SERVICE': 'WFS',
@@ -357,7 +356,7 @@ exports.MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-exports.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
+MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
   const features = /** @type Array.<import("ol/Feature.js").default> */ (
     this.getFeaturesFromCache_(gmfLayerNode));
   this.features = features;
@@ -370,7 +369,7 @@ exports.MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
  * @return {?Array.<import("ol/Feature.js").default>} List of features
  * @private
  */
-exports.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
+MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
   const id = gmfLayerNode.id;
   const features = this.featuresCache_[id] || null;
   return features;
@@ -382,7 +381,7 @@ exports.MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) 
  * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
-exports.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
+MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
   this.getGeometryTypeDeferred_ = this.q_.defer();
 
@@ -402,7 +401,7 @@ exports.MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-exports.MainController.prototype.issueGetAttributesRequest_ = function(
+MainController.prototype.issueGetAttributesRequest_ = function(
   gmfLayerNode
 ) {
 
@@ -424,7 +423,7 @@ exports.MainController.prototype.issueGetAttributesRequest_ = function(
  * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
-exports.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
+MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
   const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
   this.selectedGeomType = geomType;
 };
@@ -435,7 +434,7 @@ exports.MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode)
  * @return {string|undefined} The type of geometry.
  * @private
  */
-exports.MainController.prototype.getGeometryTypeFromCache_ = function(
+MainController.prototype.getGeometryTypeFromCache_ = function(
   gmfLayerNode
 ) {
   const id = gmfLayerNode.id;
@@ -452,7 +451,7 @@ exports.MainController.prototype.getGeometryTypeFromCache_ = function(
  *     and the values are arbitrary types or arrays.
  * @return {string} The new URI.
  */
-exports.MainController.appendParams = function(uri, params) {
+MainController.appendParams = function(uri, params) {
   const keyParams = [];
   // Skip any null or undefined parameter values
   Object.keys(params).forEach((k) => {
@@ -469,7 +468,7 @@ exports.MainController.appendParams = function(uri, params) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

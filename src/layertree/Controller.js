@@ -1,8 +1,6 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {layerLoading, layer} from 'ngeo/misc/decorate.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -19,7 +17,7 @@ import olLayerLayer from 'ol/layer/Layer.js';
  * @ngdoc controller
  * @ngname NgeoLayertreeController
  */
-const exports = function($scope, $rootScope, $attrs) {
+export function LayertreeController($scope, $rootScope, $attrs) {
 
   const isRoot = $attrs['ngeoLayertreeNotroot'] === undefined;
 
@@ -153,8 +151,8 @@ const exports = function($scope, $rootScope, $attrs) {
   this.dataSource_ = null;
 
   if (this.layer) {
-    ngeoMiscDecorate.layerLoading(this.layer, $scope);
-    ngeoMiscDecorate.layer(this.layer);
+    layerLoading(this.layer, $scope);
+    layer(this.layer);
 
     olEvents.listen(this.layer, 'change:opacity', () => {
       this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
@@ -183,7 +181,7 @@ const exports = function($scope, $rootScope, $attrs) {
   }
 
   $scope['layertreeCtrl'] = this;
-};
+}
 
 
 /**
@@ -191,7 +189,7 @@ const exports = function($scope, $rootScope, $attrs) {
  * @return {string} 'on', 'off', 'indeterminate'.
  * @export
  */
-exports.prototype.getState = function() {
+LayertreeController.prototype.getState = function() {
   return this.state_;
 };
 
@@ -203,7 +201,7 @@ exports.prototype.getState = function() {
  * @param {boolean=} opt_broadcast Broadcast.
  * @export
  */
-exports.prototype.setState = function(state, opt_broadcast) {
+LayertreeController.prototype.setState = function(state, opt_broadcast) {
   if (state === this.state_) {
     return;
   }
@@ -214,7 +212,7 @@ exports.prototype.setState = function(state, opt_broadcast) {
     this.parent.refreshState(this, opt_broadcast);
   }
 
-  const firstParents = this.isRoot ? this.children : [exports.getFirstParentTree(this)];
+  const firstParents = this.isRoot ? this.children : [getFirstParentTree(this)];
 
   if (opt_broadcast === undefined || opt_broadcast) {
     firstParents.forEach((firstParent) => {
@@ -227,7 +225,7 @@ exports.prototype.setState = function(state, opt_broadcast) {
 /**
  * @param {string} state 'on' or 'off'.
  */
-exports.prototype.setStateInternal_ = function(state) {
+LayertreeController.prototype.setStateInternal_ = function(state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
 
@@ -262,7 +260,7 @@ exports.prototype.setStateInternal_ = function(state) {
  * @param {boolean=} opt_broadcast Broadcast.
  * @public
  */
-exports.prototype.refreshState = function(opt_onChild, opt_broadcast) {
+LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast) {
 
   if (this.node.children &&
       opt_onChild &&
@@ -294,7 +292,7 @@ exports.prototype.refreshState = function(opt_onChild, opt_broadcast) {
  * @return {string} 'on', 'off' or 'indeterminate'.
  * @export
  */
-exports.prototype.getCalculateState = function() {
+LayertreeController.prototype.getCalculateState = function() {
   if (this.node.children === undefined) {
     return this.state_;
   }
@@ -318,7 +316,7 @@ exports.prototype.getCalculateState = function() {
  * @return {boolean|undefined} Value.
  * @export
  */
-exports.prototype.getSetActive = function(val) {
+LayertreeController.prototype.getSetActive = function(val) {
   const layer = this.layer;
   const map = this.map;
   if (!layer) {
@@ -341,7 +339,7 @@ exports.prototype.getSetActive = function(val) {
  *     this layer tree controller.
  * @export
  */
-exports.prototype.getDataSource = function() {
+LayertreeController.prototype.getDataSource = function() {
   return this.dataSource_;
 };
 
@@ -350,7 +348,7 @@ exports.prototype.getDataSource = function() {
  * @param {?import("ngeo/datasource/DataSource.js").default} dataSource Data source or null.
  * @export
  */
-exports.prototype.setDataSource = function(dataSource) {
+LayertreeController.prototype.setDataSource = function(dataSource) {
   this.dataSource_ = dataSource;
 };
 
@@ -362,19 +360,19 @@ exports.prototype.setDataSource = function(dataSource) {
  * @return {import("ngeo/layertree/Controller.js").default} the top level layertree.
  * @public
  */
-exports.getFirstParentTree = function(treeCtrl) {
+export function getFirstParentTree(treeCtrl) {
   let tree = treeCtrl;
   while (!tree.parent.isRoot) {
     tree = tree.parent;
   }
   return tree;
-};
+}
 
 
 /**
  * @enum {string}
  */
-exports.VisitorDecision = {
+export const VisitorDecision = {
   STOP: 'STOP',
   SKIP: 'SKIP',
   DESCEND: 'DESCEND'
@@ -392,16 +390,16 @@ exports.VisitorDecision = {
  * @return {boolean} whether to stop traversing.
  * @export
  */
-exports.prototype.traverseDepthFirst = function(visitor) {
+LayertreeController.prototype.traverseDepthFirst = function(visitor) {
   // First visit the current controller
-  const decision = visitor(this) || exports.VisitorDecision.DESCEND;
+  const decision = visitor(this) || VisitorDecision.DESCEND;
 
   switch (decision) {
-    case exports.VisitorDecision.STOP:
+    case VisitorDecision.STOP:
       return true; // stop traversing
-    case exports.VisitorDecision.SKIP:
+    case VisitorDecision.SKIP:
       return false; // continue traversing but skip current branch
-    case exports.VisitorDecision.DESCEND:
+    case VisitorDecision.DESCEND:
       for (let i = 0; i < this.children.length; ++i) {
         const child = this.children[i];
         const stop = child.traverseDepthFirst(visitor);
@@ -419,8 +417,8 @@ exports.prototype.traverseDepthFirst = function(visitor) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoLayertreeController', []);
-exports.module.controller('ngeoLayertreeController', exports);
+const module = angular.module('ngeoLayertreeController', []);
+module.controller('ngeoLayertreeController', LayertreeController);
 
 
-export default exports;
+export default module;

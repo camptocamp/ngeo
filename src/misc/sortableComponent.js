@@ -18,7 +18,7 @@ import googAsserts from 'goog/asserts.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoSortable', []);
+const module = angular.module('ngeoSortable', []);
 
 
 /**
@@ -171,7 +171,7 @@ function component($timeout) {
   };
 }
 
-exports.directive('ngeoSortable', component);
+module.directive('ngeoSortable', component);
 
 
-export default exports;
+export default module;

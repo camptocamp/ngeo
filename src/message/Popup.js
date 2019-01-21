@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -64,7 +62,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * @ngdoc service
  * @ngname ngeoCreatePopup
  */
-const exports = function($compile, $rootScope, $sce, $timeout) {
+function Popup($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The scope the compiled element is link to.
@@ -114,7 +112,7 @@ const exports = function($compile, $rootScope, $sce, $timeout) {
   // Compile the element, link it to the scope and add it to the document.
   $compile(this.element_)(this.scope);
   angular.element(document.body).append(this.element_);
-};
+}
 
 
 /**
@@ -122,7 +120,7 @@ const exports = function($compile, $rootScope, $sce, $timeout) {
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
  * @export
  */
-exports.prototype.getOpen = function() {
+Popup.prototype.getOpen = function() {
   return this.scope['open'];
 };
 
@@ -132,7 +130,7 @@ exports.prototype.getOpen = function() {
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  * @export
  */
-exports.prototype.setOpen = function(open) {
+Popup.prototype.setOpen = function(open) {
   this.scope['open'] = open;
 };
 
@@ -141,7 +139,7 @@ exports.prototype.setOpen = function(open) {
  * Destroy the popup.
  * @export
  */
-exports.prototype.destroy = function() {
+Popup.prototype.destroy = function() {
   this.scope.$destroy();
   this.element_.remove();
 };
@@ -152,7 +150,7 @@ exports.prototype.destroy = function() {
  * @param {string} title The title.
  * @export
  */
-exports.prototype.setTitle = function(title) {
+Popup.prototype.setTitle = function(title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
   this.scope['title'] = trustedTitle;
 };
@@ -167,7 +165,7 @@ exports.prototype.setTitle = function(title) {
  *     Default is false.
  * @export
  */
-exports.prototype.setContent = function(content, opt_trusted) {
+Popup.prototype.setContent = function(content, opt_trusted) {
   this.scope['content'] = opt_trusted ? this.sce_.trustAsHtml(/** @type {string} */ (content)) : content;
 };
 
@@ -177,7 +175,7 @@ exports.prototype.setContent = function(content, opt_trusted) {
  * @param {string} url The url of the page.
  * @export
  */
-exports.prototype.setUrl = function(url) {
+Popup.prototype.setUrl = function(url) {
   const content = this.sce_.trustAsHtml(
     `<iframe src="${url}" width="100%" height="100%"></iframe>`
   );
@@ -190,7 +188,7 @@ exports.prototype.setUrl = function(url) {
  * @param {string} width Width the popup should have.
  * @export
  */
-exports.prototype.setWidth = function(width) {
+Popup.prototype.setWidth = function(width) {
   this.element_.width(width);
 };
 
@@ -200,7 +198,7 @@ exports.prototype.setWidth = function(width) {
  * @param {string} height Height the popup should have.
  * @export
  */
-exports.prototype.setHeight = function(height) {
+Popup.prototype.setHeight = function(height) {
   this.element_.height(height);
 };
 
@@ -211,7 +209,7 @@ exports.prototype.setHeight = function(height) {
  * @param {string} height Height the popup should have.
  * @export
  */
-exports.prototype.setSize = function(width, height) {
+Popup.prototype.setSize = function(width, height) {
   this.setWidth(width);
   this.setHeight(height);
 };
@@ -223,7 +221,7 @@ exports.prototype.setSize = function(width, height) {
  *     being closed or not.
  * @export
  */
-exports.prototype.setAutoDestroy = function(autoDestroy) {
+Popup.prototype.setAutoDestroy = function(autoDestroy) {
   this.autoDestroy_ = autoDestroy;
 };
 
@@ -233,7 +231,7 @@ exports.prototype.setAutoDestroy = function(autoDestroy) {
  * @param {string} cls Class name to add to the popup element.
  * @export
  */
-exports.prototype.addClass = function(cls) {
+Popup.prototype.addClass = function(cls) {
   this.element_.addClass(cls);
 };
 
@@ -243,7 +241,7 @@ exports.prototype.addClass = function(cls) {
  * @param {PopupOptions} options Options.
  * @export
  */
-exports.prototype.open = function(options) {
+Popup.prototype.open = function(options) {
 
   if (options.url) {
     this.setUrl(options.url);
@@ -285,24 +283,24 @@ exports.prototype.open = function(options) {
  * @return {PopupFactory} The function to create a popup.
  * @ngInject
  */
-exports.Factory = function($compile, $rootScope, $sce, $timeout) {
+function Factory($compile, $rootScope, $sce, $timeout) {
   return (
     /**
      * @return {!import("ngeo/message/Popup.js").default} The popup instance.
      */
     function() {
-      return new exports($compile, $rootScope, $sce, $timeout);
+      return new Popup($compile, $rootScope, $sce, $timeout);
     }
   );
-};
+}
 
 /**
  * @type {angular.IModule}
  */
-exports.module = angular.module('ngeoCreatePopup', [
+const module = angular.module('ngeoCreatePopup', [
   ngeoMessagePopupComponent.name,
 ]);
-exports.module.factory('ngeoCreatePopup', exports.Factory);
+module.factory('ngeoCreatePopup', Factory);
 
 
-export default exports;
+export default module;

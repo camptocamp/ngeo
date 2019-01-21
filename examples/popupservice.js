@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './popupservice.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
@@ -9,9 +8,9 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
-  ngeoMessagePopup.module.name,
+  ngeoMessagePopup.name,
 ]);
 
 
@@ -21,7 +20,7 @@ exports.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($sce, ngeoCreatePopup) {
+function MainController($sce, ngeoCreatePopup) {
 
   /**
    * @private
@@ -41,13 +40,13 @@ exports.MainController = function($sce, ngeoCreatePopup) {
     trigger: 'hover'
   });
 
-};
+}
 
 
 /**
  * @export
  */
-exports.MainController.prototype.simplePopup = function() {
+MainController.prototype.simplePopup = function() {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.setTitle('Simple popup');
@@ -62,7 +61,7 @@ exports.MainController.prototype.simplePopup = function() {
 /**
  * @export
  */
-exports.MainController.prototype.iframePopup = function() {
+MainController.prototype.iframePopup = function() {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.addClass('popup-with-iframe');
@@ -76,7 +75,7 @@ exports.MainController.prototype.iframePopup = function() {
 /**
  * @export
  */
-exports.MainController.prototype.heavyPopup = function() {
+MainController.prototype.heavyPopup = function() {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.setTitle(
@@ -106,7 +105,7 @@ exports.MainController.prototype.heavyPopup = function() {
 /**
  * @export
  */
-exports.MainController.prototype.openPopupWithContent = function() {
+MainController.prototype.openPopupWithContent = function() {
   const popup = this.createPopup_();
   const content = this.sce_.trustAsHtml(
     'This popup was opened using the <code>open</code> method.');
@@ -123,7 +122,7 @@ exports.MainController.prototype.openPopupWithContent = function() {
 /**
  * @export
  */
-exports.MainController.prototype.openPopupWithUrl = function() {
+MainController.prototype.openPopupWithUrl = function() {
   const popup = this.createPopup_();
   popup.open({
     autoDestroy: true,
@@ -136,7 +135,7 @@ exports.MainController.prototype.openPopupWithUrl = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -23,19 +22,19 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
-  gmfPermalinkPermalink.module.name,
+  gmfPermalinkPermalink.name,
   gmfMapComponent.name,
   gmfProfileModule.name,
   ngeoMapModule.name // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
 
-exports.module.value('gmfProfileJsonUrl', appURL.PROFILE);
+module.value('gmfProfileJsonUrl', appURL.PROFILE);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -45,7 +44,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope, ngeoFeatureOverlayMgr) {
   /**
    * @type {import("ol/geom/LineString.js").default}
    * @export
@@ -147,10 +146,10 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
     this.profileLine = e.feature.getGeometry();
     $scope.$digest();
   });
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

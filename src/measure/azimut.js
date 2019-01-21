@@ -13,8 +13,8 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMeasureazimut', [
-  ngeoDrawController.module.name,
+const module = angular.module('ngeoMeasureazimut', [
+  ngeoDrawController.name,
   ngeoMiscFilters.name,
 ]);
 
@@ -94,7 +94,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 }
 
 
-exports.directive('ngeoMeasureazimut', directive);
+module.directive('ngeoMeasureazimut', directive);
 
 
-export default exports;
+export default module;

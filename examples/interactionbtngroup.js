@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './interactionbtngroup.css';
 import angular from 'angular';
@@ -22,7 +21,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
@@ -35,7 +34,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoFeatureOverlayMgr) {
+function MainController(ngeoFeatureOverlayMgr) {
 
   /**
    * Collection shared between the drawing interactions and the feature
@@ -129,10 +128,10 @@ exports.MainController = function(ngeoFeatureOverlayMgr) {
   ngeoMiscDecorate.interaction(drawLine);
   map.addInteraction(drawLine);
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

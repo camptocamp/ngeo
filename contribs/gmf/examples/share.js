@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -11,21 +10,21 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   ngeoMessageModalComponent.name,
   gmfPermalinkShareComponent.name,
 ]);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-exports.module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * Model attached to the modal to toggle it
@@ -41,10 +40,10 @@ exports.MainController = function() {
    */
   this.modalShareShown = false;
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

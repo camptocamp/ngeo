@@ -7,8 +7,8 @@ import * as olEvents from 'ol/events.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
-  gmfObjecteditingQuery.module.name,
+const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
+  gmfObjecteditingQuery.name,
 ]);
 
 
@@ -50,7 +50,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfObjecteditinggetwmsfeature', directive);
+module.directive('gmfObjecteditinggetwmsfeature', directive);
 
 
 /**
@@ -147,7 +147,7 @@ Controller.prototype.handleMapClick_ = function(evt) {
   });
 };
 
-exports.controller('gmfObjecteditinggetwmsfeatureController', Controller);
+module.controller('gmfObjecteditinggetwmsfeatureController', Controller);
 
 
-export default exports;
+export default module;

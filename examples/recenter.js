@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './recenter.css';
 import angular from 'angular';
@@ -23,7 +22,7 @@ const appmodule = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -40,10 +39,10 @@ exports.MainController = function() {
       zoom: 4
     })
   });
-};
+}
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfDatasourceOGC, {ServerType, WFSOutputFormat, Type} from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
@@ -23,7 +21,7 @@ import olLayerImage from 'ol/layer/Image.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
-const exports = class {
+class Manager {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
@@ -924,24 +922,24 @@ const exports = class {
       }
     }
   }
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfDataSourcesManager', [
-  gmfDatasourceWFSAliases.module.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoFilterRuleHelper.module.name,
-  ngeoDatasourceDataSources.module.name,
-  ngeoMapBackgroundLayerMgr.module.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscWMSTime.module.name,
+const module = angular.module('gmfDataSourcesManager', [
+  gmfDatasourceWFSAliases.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
+  ngeoFilterRuleHelper.name,
+  ngeoDatasourceDataSources.name,
+  ngeoMapBackgroundLayerMgr.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscWMSTime.name,
 ]);
-exports.module.service('gmfDataSourcesManager', exports);
+module.service('gmfDataSourcesManager', Manager);
 
 
-export default exports;
+export default module;

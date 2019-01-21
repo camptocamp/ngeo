@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import ngeoUtils from 'ngeo/utils.js';
+import {isSafari} from 'ngeo/utils.js';
 
 import {saveAs} from 'file-saver';
 
@@ -12,7 +10,7 @@ import {saveAs} from 'file-saver';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDownload', []);
+const module = angular.module('ngeoDownload', []);
 
 /**
  * A service to start a download for a file.
@@ -34,7 +32,7 @@ function factory() {
     // do a manual download with "Save as".
     // See also: https://github.com/eligrey/FileSaver.js/issues/12
     /** @type {string} */
-    const fileType = opt_fileType !== undefined && !ngeoUtils.isSafari() ?
+    const fileType = opt_fileType !== undefined && !isSafari() ?
       opt_fileType : 'text/plain;charset=utf-8';
 
     const blob = new Blob([content], {type: fileType});
@@ -44,7 +42,7 @@ function factory() {
   return download;
 }
 
-exports.factory('ngeoDownload', factory);
+module.factory('ngeoDownload', factory);
 
 
-export default exports;
+export default module;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './simple.css';
 import angular from 'angular';
@@ -13,7 +12,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
 ]);
@@ -23,7 +22,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -40,10 +39,10 @@ exports.MainController = function() {
       zoom: 4
     })
   });
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

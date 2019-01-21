@@ -22,10 +22,10 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoScaleselector', []);
+const module = angular.module('ngeoScaleselector', []);
 
 
-exports.value('ngeoScaleselectorTemplateUrl',
+module.value('ngeoScaleselectorTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -37,7 +37,7 @@ exports.value('ngeoScaleselectorTemplateUrl',
       'ngeo/map/scaleselector';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
 });
 
@@ -103,7 +103,7 @@ const directive = function(ngeoScaleselectorTemplateUrl) {
 };
 
 
-exports.directive('ngeoScaleselector', directive);
+module.directive('ngeoScaleselector', directive);
 
 
 /**
@@ -279,7 +279,7 @@ ScaleselectorController.prototype.registerResolutionChangeListener_ = function()
 };
 
 
-exports.controller('NgeoScaleselectorController', ScaleselectorController);
+module.controller('NgeoScaleselectorController', ScaleselectorController);
 
 
-export default exports;
+export default module;

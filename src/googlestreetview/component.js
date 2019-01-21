@@ -12,12 +12,12 @@ import olGeomPoint from 'ol/geom/Point.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoGooglestreetview', [
-  ngeoMapFeatureOverlayMgr.module.name
+const module = angular.module('ngeoGooglestreetview', [
+  ngeoMapFeatureOverlayMgr.name
 ]);
 
 
-exports.value('ngeoGooglestreetviewTemplateUrl',
+module.value('ngeoGooglestreetviewTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -28,7 +28,7 @@ exports.value('ngeoGooglestreetviewTemplateUrl',
       'ngeo/googlestreetview';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
 });
 
@@ -391,7 +391,7 @@ class Controller {
 }
 
 
-exports.component('ngeoGooglestreetview', {
+module.component('ngeoGooglestreetview', {
   bindings: {
     'active': '<',
     'featureStyle': '<?',
@@ -403,4 +403,4 @@ exports.component('ngeoGooglestreetview', {
 });
 
 
-export default exports;
+export default module;

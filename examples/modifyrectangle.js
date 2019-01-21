@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './modifyrectangle.css';
 import angular from 'angular';
@@ -33,7 +32,7 @@ const appmodule = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -137,10 +136,10 @@ exports.MainController = function() {
   map.addInteraction(interaction);
   interaction.setActive(true);
 
-};
+}
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

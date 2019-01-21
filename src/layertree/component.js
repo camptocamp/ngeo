@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Controller.js';
 
 import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 
@@ -9,12 +7,12 @@ import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoLayertree', [
-  ngeoLayertreeController.module.name
+const module = angular.module('ngeoLayertree', [
+  ngeoLayertreeController.name
 ]);
 
 
-exports.value('ngeoLayertreeTemplateUrl',
+module.value('ngeoLayertreeTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -26,7 +24,7 @@ exports.value('ngeoLayertreeTemplateUrl',
       'ngeo/layertree';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/layertree', require('./component.html'));
 });
 
@@ -123,12 +121,12 @@ function directive(ngeoLayertreeTemplateUrl) {
     restrict: 'A',
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
-    controller: ngeoLayertreeController
+    controller: LayertreeController
   };
 }
 
 
-exports.directive('ngeoLayertree', directive);
+module.directive('ngeoLayertree', directive);
 
 
-export default exports;
+export default module;

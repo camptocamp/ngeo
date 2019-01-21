@@ -7,7 +7,7 @@ import 'bootstrap/js/src/popover.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoPopover', []);
+const module = angular.module('ngeoPopover', []);
 
 
 /**
@@ -151,10 +151,10 @@ PopoverController.prototype.dismissPopover = function() {
 };
 
 
-exports.controller('NgeoPopoverController', PopoverController);
-exports.directive('ngeoPopover', component);
-exports.directive('ngeoPopoverAnchor', anchorComponent);
-exports.directive('ngeoPopoverContent', contentComponent);
+module.controller('NgeoPopoverController', PopoverController);
+module.directive('ngeoPopover', component);
+module.directive('ngeoPopoverAnchor', anchorComponent);
+module.directive('ngeoPopoverContent', contentComponent);
 
 
-export default exports;
+export default module;

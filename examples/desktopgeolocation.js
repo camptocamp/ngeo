@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './desktopgeolocation.css';
 import angular from 'angular';
@@ -18,7 +17,7 @@ import ngeoGeolocationDesktop from 'ngeo/geolocation/desktop.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoGeolocationDesktop.name,
   ngeoMapModule.name
@@ -32,7 +31,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope, ngeoFeatureOverlayMgr) {
 
   const positionFeatureStyle = new olStyleStyle({
     image: new olStyleCircle({
@@ -74,10 +73,10 @@ exports.MainController = function($scope, ngeoFeatureOverlayMgr) {
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

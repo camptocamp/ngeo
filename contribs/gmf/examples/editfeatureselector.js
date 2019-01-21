@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -30,25 +29,25 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
   gmfEditingEditFeatureSelectorComponent.name,
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfMapComponent.name,
-  gmfThemeThemes.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  gmfThemeThemes.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Edit');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Edit');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -62,7 +61,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @ngInject
  * @constructor
  */
-exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
+function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   ngeoFeatureHelper, ngeoToolActivateMgr) {
 
   /**
@@ -165,10 +164,10 @@ exports.MainController = function($scope, gmfThemes, gmfTreeManager, gmfUser,
     trigger: 'hover'
   });
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

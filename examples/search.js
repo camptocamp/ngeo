@@ -1,11 +1,6 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
-import appURL from './url.js';
+import {SEARCH} from './url.js';
 import './search.css';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
@@ -20,7 +15,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoSearchModule.name
@@ -30,7 +25,7 @@ exports.module = angular.module('app', [
 /**
  * @type {!angular.IComponentOptions}
  */
-exports.searchComponent = {
+const searchComponent = {
   bindings: {
     'map': '=appSearchMap'
   },
@@ -43,7 +38,7 @@ exports.searchComponent = {
 };
 
 
-exports.module.component('appSearch', exports.searchComponent);
+module.component('appSearch', searchComponent);
 
 
 /**
@@ -55,7 +50,7 @@ exports.module.component('appSearch', exports.searchComponent);
  *     create GeoJSON Bloodhound service.
  * @ngInject
  */
-exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
+function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
    * @private
    * @type {JQLite}
@@ -124,15 +119,15 @@ exports.SearchController = function($element, $rootScope, $compile, ngeoSearchCr
    * @export
    */
   this.listeners = /** @type {SearchDirectiveListeners} */ ({
-    select: exports.SearchController.select_.bind(this)
+    select: SearchController.select_.bind(this)
   });
-};
+}
 
 
 /**
  * @export
  */
-exports.SearchController.prototype.$onInit = function() {
+SearchController.prototype.$onInit = function() {
   // Empty the search field on focus and blur.
   const input = this.$element.find('input');
   input.on('focus blur', () => {
@@ -145,7 +140,7 @@ exports.SearchController.prototype.$onInit = function() {
  * @return {import("ol/layer/Vector.js").default} The vector layer.
  * @private
  */
-exports.SearchController.prototype.createVectorLayer_ = function() {
+SearchController.prototype.createVectorLayer_ = function() {
   const vectorLayer = new olLayerVector({
     source: new olSourceVector()
   });
@@ -162,45 +157,22 @@ exports.SearchController.prototype.createVectorLayer_ = function() {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
-  const url = appURL.SEARCH;
+SearchController.prototype.createAndInitBloodhound_ = function(ngeoSearchCreateGeoJSONBloodhound) {
+  const url = SEARCH;
   const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG21781);
   bloodhound.initialize();
   return bloodhound;
 };
 
 
-/**
- * @param {jQuery.Event} event Event.
- * @param {Object} suggestion Suggestion.
- * @param {TypeaheadDataset} dataset Dataset.
- * @this {app.search.SearchController}
- * @private
- */
-exports.SearchController.select_ = function(event, suggestion, dataset) {
-  const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-  const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
-      (feature.getGeometry());
-  const size = this.map.getSize();
-  googAsserts.assert(size !== undefined);
-  const source = this.vectorLayer_.getSource();
-  source.clear(true);
-  source.addFeature(feature);
-  this.map.getView().fit(featureGeometry, {
-    size: size,
-    maxZoom: 16
-  });
-};
-
-
-exports.module.controller('AppSearchController', exports.SearchController);
+module.controller('AppSearchController', SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -217,10 +189,10 @@ exports.MainController = function() {
     })
   });
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

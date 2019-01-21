@@ -1,9 +1,7 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olExtent from 'ol/extent.js';
-import * as olFormatFilter from 'ol/format/filter.js';
+import {equalTo, and, or} from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';
 
 
@@ -154,7 +152,7 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @ngname ngeoWfsPermalink
  * @ngInject
  */
-const WfsPermalinkService = function(
+export function WfsPermalinkService(
   $http, ngeoPermalinkOgcserverUrl, ngeoQueryResult, ngeoWfsPermalinkOptions
 ) {
 
@@ -212,7 +210,7 @@ const WfsPermalinkService = function(
    * @private
    */
   this.result_ = ngeoQueryResult;
-};
+}
 
 
 /**
@@ -329,14 +327,13 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
   if (filterGroups.length == 0) {
     return null;
   }
-  const f = olFormatFilter;
   const createFiltersForGroup = function(filterGroup) {
     const filters = filterGroup.filters.map((filterDef) => {
       const condition = filterDef.condition;
       if (Array.isArray(condition)) {
-        return WfsPermalinkService.or_(condition.map(cond => f.equalTo(filterDef.property, cond)));
+        return WfsPermalinkService.or_(condition.map(cond => equalTo(filterDef.property, cond)));
       } else {
-        return f.equalTo(filterDef.property, filterDef.condition);
+        return equalTo(filterDef.property, filterDef.condition);
       }
     });
     return WfsPermalinkService.and_(filters);
@@ -353,7 +350,7 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
  * @private
  */
 WfsPermalinkService.and_ = function(filters) {
-  return WfsPermalinkService.joinFilters_(filters, olFormatFilter.and);
+  return WfsPermalinkService.joinFilters_(filters, and);
 };
 
 
@@ -365,7 +362,7 @@ WfsPermalinkService.and_ = function(filters) {
  * @private
  */
 WfsPermalinkService.or_ = function(filters) {
-  return WfsPermalinkService.joinFilters_(filters, olFormatFilter.or);
+  return WfsPermalinkService.joinFilters_(filters, or);
 };
 
 
@@ -374,7 +371,7 @@ WfsPermalinkService.or_ = function(filters) {
  *
  * @param {Array.<import("ol/format/filter/Filter.js").default>} filters The filters to join.
  * @param {function(!import("ol/format/filter/Filter.js").default, !import("ol/format/filter/Filter.js").default):
- *    ol.format.filter.Filter} joinFn The function to join two filters.
+ *    import("ol/format/filter/Filter.js").default} joinFn The function to join two filters.
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
  */
@@ -406,7 +403,7 @@ WfsPermalinkService.prototype.clearResult_ = function() {
 /**
  * @type {!angular.IModule}
  */
-WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
+const module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
 
@@ -414,14 +411,14 @@ WfsPermalinkService.module = angular.module('ngeoWfsPermalink', [
 /**
  * Set this value to enable WFS permalink.
  */
-WfsPermalinkService.module.value('ngeoPermalinkOgcserverUrl', '');
+module.value('ngeoPermalinkOgcserverUrl', '');
 
 
 /**
  * Value that is supposed to be set in applications to enable the WFS
  * permalink functionality.
  */
-WfsPermalinkService.module.value('ngeoWfsPermalinkOptions',
+module.value('ngeoWfsPermalinkOptions',
   /** @type {WfsPermalinkOptions} */ ({
     url: '',
     wfsTypes: [],
@@ -431,7 +428,7 @@ WfsPermalinkService.module.value('ngeoWfsPermalinkOptions',
 );
 
 
-WfsPermalinkService.module.service('ngeoWfsPermalink', WfsPermalinkService);
+module.service('ngeoWfsPermalink', WfsPermalinkService);
 
 
-export default WfsPermalinkService;
+export default module;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './modal.css';
 import angular from 'angular';
@@ -8,7 +7,7 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMessageModalComponent.name,
 ]);
@@ -18,17 +17,17 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {boolean}
    * @export
    */
   this.modalShown = false;
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

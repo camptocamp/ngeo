@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -22,10 +21,10 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
-  gmfPermalinkPermalink.module.name,
+  gmfPermalinkPermalink.name,
   gmfMobileMeasureAreaComponent.name,
   gmfMobileMeasureLengthComponent.name,
   gmfMobileMeasurePointComponent.name,
@@ -33,10 +32,10 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfRasterUrl', appURL.RASTER);
+module.value('gmfRasterUrl', appURL.RASTER);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -44,7 +43,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gmfPermalink) {
+function MainController(gmfPermalink) {
 
   const center = gmfPermalink.getMapCenter() || [537635, 152640];
   const zoom = gmfPermalink.getMapZoom() || 3;
@@ -96,10 +95,10 @@ exports.MainController = function(gmfPermalink) {
    */
   this.measurePointActive = false;
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

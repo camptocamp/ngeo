@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import './featurestyle.css';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
@@ -28,18 +24,18 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfDrawingFeatureStyleComponent.name,
   gmfMapComponent.name,
-  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscFeatureHelper.name,
 ]);
 
 
-exports.module.value('ngeoMeasureDecimals', 2);
+module.value('ngeoMeasureDecimals', 2);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -48,7 +44,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureHelper) {
+function MainController($scope, ngeoFeatureHelper) {
 
   /**
    * @type {!angular.IScope}
@@ -191,14 +187,14 @@ exports.MainController = function($scope, ngeoFeatureHelper) {
   this.selectedFeature = null;
 
   this.map.on('singleclick', this.handleMapSingleClick_.bind(this), this);
-};
+}
 
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
+MainController.prototype.handleMapSingleClick_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
@@ -221,7 +217,7 @@ exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

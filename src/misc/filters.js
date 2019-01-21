@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import {modulo} from 'ol/math.js';
 import {padNumber} from 'ol/string.js';
@@ -72,7 +70,7 @@ import {padNumber} from 'ol/string.js';
  */
 
 
-const exports = angular.module('ngeoAngularFilters', []);
+const module = angular.module('ngeoAngularFilters', []);
 
 /**
  * Format a number as a localized scale.
@@ -92,7 +90,7 @@ const exports = angular.module('ngeoAngularFilters', []);
  * @ngdoc filter
  * @ngname ngeoScalify
  */
-exports.Scalify = function($filter) {
+function Scalify($filter) {
   const numberFilter = $filter('number');
   const filterFn = function(scale) {
     const text = numberFilter(scale, 0);
@@ -100,9 +98,9 @@ exports.Scalify = function($filter) {
   };
   filterFn['$stateful'] = true;
   return filterFn;
-};
+}
 
-exports.filter('ngeoScalify', exports.Scalify);
+module.filter('ngeoScalify', Scalify);
 
 /**
  * A filter used to format a number with a precision, using the locale.
@@ -124,7 +122,7 @@ exports.filter('ngeoScalify', exports.Scalify);
  * @ngdoc filter
  * @ngname ngeoNumber
  */
-exports.Number = function($locale) {
+function Number($locale) {
   const formats = $locale.NUMBER_FORMATS;
 
   /**
@@ -182,9 +180,9 @@ exports.Number = function($locale) {
     );
   };
   return result;
-};
+}
 
-exports.filter('ngeoNumber', exports.Number);
+module.filter('ngeoNumber', Number);
 
 /**
  * A filter used to format a number with the prefix and unit
@@ -208,7 +206,7 @@ exports.filter('ngeoNumber', exports.Number);
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
  */
-exports.UnitPrefix = function($filter) {
+function UnitPrefix($filter) {
   const numberFilter = $filter('ngeoNumber');
   const standardPrefix = ['', 'k', 'M', 'G', 'T', 'P'];
   const binaryPrefix = ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi'];
@@ -244,9 +242,9 @@ exports.UnitPrefix = function($filter) {
     return numberFilter(number, opt_precision) + space + postfix;
   };
   return result;
-};
+}
 
-exports.filter('ngeoUnitPrefix', exports.UnitPrefix);
+module.filter('ngeoUnitPrefix', UnitPrefix);
 
 /**
  * Format a couple of numbers as number coordinates.
@@ -276,7 +274,7 @@ exports.filter('ngeoUnitPrefix', exports.UnitPrefix);
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
  */
-exports.NumberCoordinates = function($filter) {
+function NumberCoordinates($filter) {
   /**
    * @param {import("ol/coordinate.js").Coordinate} coordinates Array of two numbers.
    * @param {(number|string)=} opt_fractionDigits Optional number of digit.
@@ -297,9 +295,9 @@ exports.NumberCoordinates = function($filter) {
     return template.replace('{x}', x).replace('{y}', y);
   };
   return filterFn;
-};
+}
 
-exports.filter('ngeoNumberCoordinates', exports.NumberCoordinates);
+module.filter('ngeoNumberCoordinates', NumberCoordinates);
 
 
 /**
@@ -320,7 +318,7 @@ exports.filter('ngeoNumberCoordinates', exports.NumberCoordinates);
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
  */
-exports.DMSCoordinates = function() {
+function DMSCoordinates() {
   const degreesToStringHDMS = function(degrees, hemispheres, fractionDigits) {
     const normalizedDegrees = modulo(degrees + 180, 360) - 180;
     const dms = Math.abs(3600 * normalizedDegrees);
@@ -355,9 +353,9 @@ exports.DMSCoordinates = function() {
   };
 
   return filterFn;
-};
+}
 
-exports.filter('ngeoDMSCoordinates', exports.DMSCoordinates);
+module.filter('ngeoDMSCoordinates', DMSCoordinates);
 
 
 /**
@@ -374,7 +372,7 @@ exports.filter('ngeoDMSCoordinates', exports.DMSCoordinates);
  * @param {angular.ISCEService} $sce Angular sce service.
  * @ngname ngeoTrustHtml
  */
-exports.trustHtmlFilter = function($sce) {
+function trustHtmlFilter($sce) {
   return function(input) {
     if (input !== undefined && input !== null) {
       return $sce.trustAsHtml(`${input}`);
@@ -382,9 +380,9 @@ exports.trustHtmlFilter = function($sce) {
       return $sce.trustAsHtml('&nbsp;');
     }
   };
-};
+}
 
-exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
+module.filter('ngeoTrustHtml', trustHtmlFilter);
 
 
 /**
@@ -405,7 +403,7 @@ exports.filter('ngeoTrustHtml', exports.trustHtmlFilter);
  *     ngeoStringToHtmlReplacements List of replacements for string to html.
  * @ngname ngeoTrustHtmlAuto
  */
-exports.trustHtmlAutoFilter = function($sce, ngeoStringToHtmlReplacements) {
+function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
   return function(input) {
     if (input !== undefined && input !== null) {
       if (typeof input === 'string') {
@@ -423,9 +421,9 @@ exports.trustHtmlAutoFilter = function($sce, ngeoStringToHtmlReplacements) {
       return $sce.trustAsHtml('&nbsp;');
     }
   };
-};
+}
 
-exports.filter('ngeoTrustHtmlAuto', exports.trustHtmlAutoFilter);
+module.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
 
 
 /**
@@ -445,7 +443,7 @@ exports.filter('ngeoTrustHtmlAuto', exports.trustHtmlAutoFilter);
  * @ngdoc filter
  * @ngname ngeoDuration
  */
-exports.Duration = function(gettextCatalog) {
+function Duration(gettextCatalog) {
   // time unit enum
   const TimeUnits = Object.freeze({
     SECONDS: Symbol('seconds'),
@@ -527,16 +525,16 @@ exports.Duration = function(gettextCatalog) {
   };
 
   return result;
-};
+}
 
-exports.filter('ngeoDuration', exports.Duration);
+module.filter('ngeoDuration', Duration);
 
 
 /**
  * @type {!Array.<!StringToHtmlReplacement>}
  * @ngname ngeoStringToHtmlReplacements
  */
-exports.StringToHtmlReplacements = [
+const StringToHtmlReplacements = [
   // Hyperlink
   {
     expression: /^(https?:\/\/.+)$/gm,
@@ -549,10 +547,7 @@ exports.StringToHtmlReplacements = [
   }
 ];
 
-exports.constant(
-  'ngeoStringToHtmlReplacements',
-  exports.StringToHtmlReplacements
-);
+module.constant('ngeoStringToHtmlReplacements', StringToHtmlReplacements);
 
 
 /**
@@ -571,7 +566,7 @@ const removeCDATA = function() {
   };
 };
 
-exports.filter('removeCDATA', removeCDATA);
+module.filter('removeCDATA', removeCDATA);
 
 
-export default exports;
+export default module;

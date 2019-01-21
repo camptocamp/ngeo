@@ -28,20 +28,20 @@ import 'ngeo/sass/font.scss';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoFilter', [
-  ngeoFilterRuleHelper.module.name,
+const module = angular.module('ngeoFilter', [
+  ngeoFilterRuleHelper.name,
   ngeoFilterRuleComponent.name,
-  ngeoMapFeatureOverlay.module.name,
-  ngeoQueryMapQuerent.module.name,
+  ngeoMapFeatureOverlay.name,
+  ngeoQueryMapQuerent.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/filter', require('./component.html'));
 });
 
 
-exports.value('ngeoFilterTemplateUrl',
+module.value('ngeoFilterTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -63,7 +63,7 @@ function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
 }
 
 
-exports.component('ngeoFilter', {
+module.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
     'customRules': '<',
@@ -460,7 +460,7 @@ class FilterController {
 
 }
 
-exports.controller('ngeoFilterController', FilterController);
+module.controller('ngeoFilterController', FilterController);
 
 
-export default exports;
+export default module;

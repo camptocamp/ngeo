@@ -1,10 +1,8 @@
-/**
- */
 // TODO - MaxScaleDenominator
 // TODO - MinScaleDenominator
 
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
+import {EXTERNALLAYERGROUP_NAME} from 'gmf/index.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscFile from 'ngeo/misc/File.js';
@@ -21,7 +19,7 @@ import olCollection from 'ol/Collection.js';
 import olFormatGPX from 'ol/format/GPX.js';
 import olFormatKML from 'ol/format/KML.js';
 
-const exports = class {
+class ExternalDatSourcesManager {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
@@ -283,7 +281,7 @@ const exports = class {
     googAsserts.assert(map);
     return this.ngeoLayerHelper_.getGroupFromMap(
       map,
-      gmfBase.EXTERNALLAYERGROUP_NAME
+      EXTERNALLAYERGROUP_NAME
     );
   }
 
@@ -318,7 +316,7 @@ const exports = class {
    */
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
 
-    const id = exports.getId(layer);
+    const id = getId(layer);
     const service = capabilities['Service'];
 
     url = service['OnlineResource'] || url;
@@ -397,7 +395,7 @@ const exports = class {
    * @export
    */
   createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
-    const id = exports.getId(layer);
+    const id = getId(layer);
 
     // (1) No need to do anything if there's already a WMTS data source (and its
     // layer in the map)
@@ -539,7 +537,7 @@ const exports = class {
         }
 
         if (features) {
-          const id = exports.getId(file);
+          const id = getId(file);
 
           const dataSource = new ngeoDatasourceFile({
             features: new olCollection(features),
@@ -662,7 +660,7 @@ const exports = class {
       }
     }
   }
-};
+}
 
 
 /**
@@ -678,18 +676,17 @@ const exports = class {
  * @return {number} Data source id.
  * @export
  */
-exports.getId = function(layer) {
+function getId(layer) {
   return olUtilGetUid(layer) + 1000000;
-};
+}
 
 
-exports.module = angular.module('gmfExternalDataSourcesManager', [
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscFile.module.name,
-  ngeoDatasourceDataSources.module.name,
+const module = angular.module('gmfExternalDataSourcesManager', [
+  ngeoMapLayerHelper.name,
+  ngeoMiscFile.name,
+  ngeoDatasourceDataSources.name,
 ]);
-exports.module.service('gmfExternalDataSourcesManager',
-  exports);
+module.service('gmfExternalDataSourcesManager', ExternalDatSourcesManager);
 
 
-export default exports;
+export default module;

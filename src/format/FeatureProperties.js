@@ -1,10 +1,8 @@
 /**
- */
-/**
  * @enum {string}
  * @export
  */
-const exports = {
+export default {
   /**
    * @type {string}
    * @export
@@ -66,6 +64,3 @@ const exports = {
    */
   STROKE: 'k'
 };
-
-
-export default exports;

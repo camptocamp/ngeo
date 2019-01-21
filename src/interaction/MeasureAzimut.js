@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
@@ -21,7 +19,7 @@ import olProjProjection from 'ol/proj/Projection.js';
  * @param {!formatNumber} numberFormat The format function
  * @param {!MeasureOptions=} options Options
  */
-const exports = function(unitPrefixFormat, numberFormat, options = /** @type {MeasureOptions} */({})) {
+function MeasureAzimut(unitPrefixFormat, numberFormat, options = /** @type {MeasureOptions} */({})) {
 
   ngeoInteractionMeasure.call(this, /** @type {import("ngeo/interaction/MeasureBaseOptions.js").default} */ (options));
 
@@ -50,15 +48,15 @@ const exports = function(unitPrefixFormat, numberFormat, options = /** @type {Me
    */
   this.unitPrefixFormat = googAsserts.assert(unitPrefixFormat);
 
-};
+}
 
-olUtilInherits(exports, ngeoInteractionMeasure);
+olUtilInherits(MeasureAzimut, ngeoInteractionMeasure);
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style,
+MeasureAzimut.prototype.createDrawInteraction = function(style,
   source) {
 
   return new ngeoInteractionDrawAzimut({
@@ -73,10 +71,10 @@ exports.prototype.createDrawInteraction = function(style,
 /**
  * @inheritDoc
  */
-exports.prototype.handleMeasure = function(callback) {
+MeasureAzimut.prototype.handleMeasure = function(callback) {
   const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomGeometryCollection);
   const line = googAsserts.assertInstanceof(geom.getGeometries()[0], olGeomLineString);
-  const output = exports.getFormattedAzimutRadius(
+  const output = getFormattedAzimutRadius(
     line, googAsserts.assertInstanceof(this.getMap().getView().getProjection(), olProjProjection),
     this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);
   callback(output, line.getLastCoordinate());
@@ -93,16 +91,16 @@ exports.prototype.handleMeasure = function(callback) {
  * @param {!formatNumber} formatAzimut The format function.
  * @return {string} Formatted measure.
  */
-exports.getFormattedAzimutRadius = function(
+function getFormattedAzimutRadius(
   line, projection, decimals, precision, formatLength, formatAzimut) {
 
-  let output = exports.getFormattedAzimut(line, decimals, formatAzimut);
+  let output = getFormattedAzimut(line, decimals, formatAzimut);
 
   output += `, ${ngeoInteractionMeasure.getFormattedLength(
     line, projection, precision, formatLength)}`;
 
   return output;
-};
+}
 
 
 /**
@@ -112,10 +110,10 @@ exports.getFormattedAzimutRadius = function(
  * @param {!formatNumber} format The format function.
  * @return {string} Formatted measure.
  */
-exports.getFormattedAzimut = function(line, decimals, format) {
-  const azimut = exports.getAzimut(line);
+function getFormattedAzimut(line, decimals, format) {
+  const azimut = getAzimut(line);
   return `${format(azimut, decimals)}°`;
-};
+}
 
 
 /**
@@ -123,14 +121,14 @@ exports.getFormattedAzimut = function(line, decimals, format) {
  * @param {import("ol/geom/LineString.js").default} line LineString.
  * @return {number} Azimut value.
  */
-exports.getAzimut = function(line) {
+function getAzimut(line) {
   const coords = line.getCoordinates();
   const dx = coords[1][0] - coords[0][0];
   const dy = coords[1][1] - coords[0][1];
   const rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
   const factor = dx > 0 ? 1 : -1;
   return (factor * rad * 180 / Math.PI) % 360;
-};
+}
 
 
-export default exports;
+export default MeasureAzimut;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -24,21 +23,21 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfSearchModule.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeoMessageNotification.module.name,
+  ngeoMessageNotification.name,
 ]);
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('fulltextsearchUrl', `${appURL.SEARCH}?limit=30&partitionlimit=5&interface=desktop`);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('fulltextsearchUrl', `${appURL.SEARCH}?limit=30&partitionlimit=5&interface=desktop`);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -48,7 +47,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
+function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
 
   gmfThemes.loadThemes();
 
@@ -130,9 +129,9 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotifica
       type: ngeoMessageMessage.Type.SUCCESS
     });
   };
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

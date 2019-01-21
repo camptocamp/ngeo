@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
 import googAsserts from 'goog/asserts.js';
@@ -23,7 +21,7 @@ import {
  * @abstract
  * @ngInject
  */
-const exports = function($timeout) {
+function Notification($timeout) {
 
   ngeoMessageMessage.call(this);
 
@@ -48,9 +46,9 @@ const exports = function($timeout) {
    */
   this.cache_ = {};
 
-};
+}
 
-olUtilInherits(exports, ngeoMessageMessage);
+olUtilInherits(Notification, ngeoMessageMessage);
 
 
 /**
@@ -70,7 +68,7 @@ const DEFAULT_DELAY = 7000;
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-exports.prototype.notify = function(object) {
+Notification.prototype.notify = function(object) {
   this.show(object);
 };
 
@@ -79,7 +77,7 @@ exports.prototype.notify = function(object) {
  * Clears all messages that are currently being shown.
  * @export
  */
-exports.prototype.clear = function() {
+Notification.prototype.clear = function() {
   for (const uid in this.cache_) {
     this.clearMessageByCacheItem_(this.cache_[parseInt(uid, 10)]);
   }
@@ -89,7 +87,7 @@ exports.prototype.clear = function() {
 /**
  * @override
  */
-exports.prototype.showMessage = function(message) {
+Notification.prototype.showMessage = function(message) {
   const type = message.type;
   googAsserts.assertString(type, 'Type should be set.');
 
@@ -146,7 +144,7 @@ exports.prototype.showMessage = function(message) {
  * @param {CacheItem} item Cache item.
  * @private
  */
-exports.prototype.clearMessageByCacheItem_ = function(item) {
+Notification.prototype.clearMessageByCacheItem_ = function(item) {
   const el = item.el;
   const promise = item.promise;
   const uid = olUtilGetUid(el);
@@ -174,10 +172,10 @@ exports.prototype.clearMessageByCacheItem_ = function(item) {
 /**
  * @type {angular.IModule}
  */
-exports.module = angular.module('ngeoNotification', [
+const module = angular.module('ngeoNotification', [
 ]);
 
-exports.module.service('ngeoNotification', exports);
+module.service('ngeoNotification', Notification);
 
 
-export default exports;
+export default module;

@@ -1,5 +1,3 @@
-/**
- */
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -14,7 +12,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {MeasureOptions=} opt_options Options
  */
-const exports = function(format, gettextCatalog, opt_options) {
+function MeasureAreaMobile(format, gettextCatalog, opt_options) {
 
   const options = opt_options !== undefined ? opt_options : {};
 
@@ -22,16 +20,15 @@ const exports = function(format, gettextCatalog, opt_options) {
 
   ngeoInteractionMeasureArea.call(this, format, gettextCatalog, options);
 
-};
+}
 
-olUtilInherits(
-  exports, ngeoInteractionMeasureArea);
+olUtilInherits(MeasureAreaMobile, ngeoInteractionMeasureArea);
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style, source) {
+MeasureAreaMobile.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Polygon'),
     style: style,
@@ -40,4 +37,4 @@ exports.prototype.createDrawInteraction = function(style, source) {
 };
 
 
-export default exports;
+export default MeasureAreaMobile;

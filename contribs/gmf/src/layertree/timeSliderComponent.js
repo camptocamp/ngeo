@@ -10,13 +10,13 @@ import './timeslider.scss';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLayertreeTimeSliderComponent', [
-  ngeoMiscWMSTime.module.name,
+const module = angular.module('gmfLayertreeTimeSliderComponent', [
+  ngeoMiscWMSTime.name,
   'ui.slider',
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
 });
 
@@ -91,7 +91,7 @@ function directive() {
 }
 
 
-exports.directive('gmfTimeSlider', directive);
+module.directive('gmfTimeSlider', directive);
 
 
 /**
@@ -321,7 +321,7 @@ Controller.prototype.getLocalizedDate = function(time) {
 };
 
 
-exports.controller('gmfTimeSliderController', Controller);
+module.controller('gmfTimeSliderController', Controller);
 
 
-export default exports;
+export default module;

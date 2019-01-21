@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
@@ -34,7 +32,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
-const exports = function($http, $injector, ngeoDebounce) {
+function NominatimService($http, $injector, ngeoDebounce) {
 
   /**
    * @type {angular.IHttpService}
@@ -91,7 +89,7 @@ const exports = function($http, $injector, ngeoDebounce) {
   this.typeaheadSourceDebounced =
     /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<import("ol/Feature.js").default>)|undefined))} */
     (this.ngeoDebounce_(/** @type {function(?)} */ (this.typeaheadSource_.bind(this)), this.typeaheadDebounceDelay_, true));
-};
+}
 
 /**
  * Search by name
@@ -101,7 +99,7 @@ const exports = function($http, $injector, ngeoDebounce) {
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  * @export
  */
-exports.prototype.search = function(query, params) {
+NominatimService.prototype.search = function(query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
@@ -130,7 +128,7 @@ exports.prototype.search = function(query, params) {
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  * @export
  */
-exports.prototype.reverse = function(coordinate, params) {
+NominatimService.prototype.reverse = function(coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
 
   params = Object.assign({}, params);
@@ -160,7 +158,7 @@ exports.prototype.reverse = function(coordinate, params) {
  * @param {function(Array.<NominatimSearchResult>)} asyncResults Callback for asynchronous execution
  * @private
  */
-exports.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
+NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
   const onSuccess_ = function(resp) {
     /**
      * Parses result response.
@@ -186,11 +184,11 @@ exports.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoNominatimService', [
+const module = angular.module('ngeoNominatimService', [
   ngeoMiscDebounce.name
 ]);
 
-exports.module.service('ngeoNominatimService', exports);
+module.service('ngeoNominatimService', NominatimService);
 
 
-export default exports;
+export default module;

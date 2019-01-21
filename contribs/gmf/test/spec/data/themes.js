@@ -1,6 +1,4 @@
-/**
- */
-const exports = {
+export default {
   'themes': [
     {
       'name': 'Enseignement 2',
@@ -2066,6 +2064,3 @@ const exports = {
     }
   }
 };
-
-
-export default exports;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './toolActivate.css';
 import angular from 'angular';
@@ -24,11 +23,11 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
@@ -39,7 +38,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -152,10 +151,10 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   const drawPolygonTool = new ngeoMiscToolActivate(this.drawPolygon, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

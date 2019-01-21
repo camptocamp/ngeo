@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './notification.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
@@ -11,9 +10,9 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
-  ngeoMessageNotification.module.name,
+  ngeoMessageNotification.name,
 ]);
 
 
@@ -22,7 +21,7 @@ exports.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function(ngeoNotification) {
+function MainController(ngeoNotification) {
 
   /**
    * @type {import("ngeo/message/Notification.js").default}
@@ -42,7 +41,7 @@ exports.MainController = function(ngeoNotification) {
     trigger: 'hover'
   });
 
-};
+}
 
 
 /**
@@ -50,7 +49,7 @@ exports.MainController = function(ngeoNotification) {
  * service.
  * @export
  */
-exports.MainController.prototype.notifyMulti = function() {
+MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
     type: ngeoMessageMessage.Type.ERROR
@@ -72,7 +71,7 @@ exports.MainController.prototype.notifyMulti = function() {
  * one defined by the notification service.
  * @export
  */
-exports.MainController.prototype.notifyTarget = function() {
+MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
@@ -84,7 +83,7 @@ exports.MainController.prototype.notifyTarget = function() {
  * Demonstrates how to display a message for a specific number of seconds.
  * @export
  */
-exports.MainController.prototype.notifyQuick = function() {
+MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',
@@ -93,7 +92,7 @@ exports.MainController.prototype.notifyQuick = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

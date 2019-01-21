@@ -1,4 +1,4 @@
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {layer as ngeoMiscDecorateLayer} from 'ngeo/misc/decorate.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
@@ -8,7 +8,7 @@ describe('ngeo.misc.DecorateLayer', () => {
       source: new olSourceOSM(),
       visible: false
     });
-    ngeoMiscDecorate.layer(layer);
+    ngeoMiscDecorateLayer(layer);
     layer.visible = true;
     expect(layer.getVisible()).toBe(true);
     layer.visible = false;
@@ -20,7 +20,7 @@ describe('ngeo.misc.DecorateLayer', () => {
       source: new olSourceOSM(),
       opacity: 0.5
     });
-    ngeoMiscDecorate.layer(layer);
+    ngeoMiscDecorateLayer(layer);
     layer.opacity = 0.7;
     expect(layer.getOpacity()).toBe(0.7);
   });

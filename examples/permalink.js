@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import './permalink.css';
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash.js';
@@ -21,7 +17,7 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscDebounce.name,
@@ -38,7 +34,7 @@ exports.module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.mapComponent = {
+const mapComponent = {
   controller: 'AppMapController as ctrl',
   bindings: {
     'map': '=appMap'
@@ -47,7 +43,7 @@ exports.mapComponent = {
 };
 
 
-exports.module.component('appMap', exports.mapComponent);
+module.component('appMap', mapComponent);
 
 
 /**
@@ -56,7 +52,7 @@ exports.module.component('appMap', exports.mapComponent);
  * @constructor
  * @ngInject
  */
-exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
+function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -74,11 +70,11 @@ exports.MapComponentController = function(ngeoLocation, ngeoDebounce) {
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
-};
+}
 
-exports.module.controller('AppMapController', exports.MapComponentController);
+module.controller('AppMapController', MapComponentController);
 
-exports.MapComponentController.prototype.$onInit = function() {
+MapComponentController.prototype.$onInit = function() {
   const view = this.map.getView();
 
   let zoom = this.ngeoLocation_.getParam('z');
@@ -119,7 +115,7 @@ exports.MapComponentController.prototype.$onInit = function() {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.drawComponent = {
+const drawComponent = {
   controller: 'AppDrawController as ctrl',
   bindings: {
     'map': '=appDrawMap',
@@ -133,7 +129,7 @@ exports.drawComponent = {
 };
 
 
-exports.module.component('appDraw', exports.drawComponent);
+module.component('appDraw', drawComponent);
 
 
 /**
@@ -143,7 +139,7 @@ exports.module.component('appDraw', exports.drawComponent);
  * @export
  * @ngInject
  */
-exports.DrawComponentController = function($scope, ngeoLocation) {
+function DrawComponentController($scope, ngeoLocation) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -179,9 +175,9 @@ exports.DrawComponentController = function($scope, ngeoLocation) {
    * @export
    */
   this.interaction;
-};
+}
 
-exports.DrawComponentController.prototype.$onInit = function() {
+DrawComponentController.prototype.$onInit = function() {
   const vectorSource = this.layer.getSource();
 
   this.interaction = new olInteractionDraw({
@@ -229,19 +225,19 @@ exports.DrawComponentController.prototype.$onInit = function() {
  * Clear the vector layer.
  * @export
  */
-exports.DrawComponentController.prototype.clearLayer = function() {
+DrawComponentController.prototype.clearLayer = function() {
   this.layer.getSource().clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };
 
-exports.module.controller('AppDrawController', exports.DrawComponentController);
+module.controller('AppDrawController', DrawComponentController);
 
 
 /**
  * @constructor
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -270,10 +266,10 @@ exports.MainController = function() {
   // makes the vector layer "unmanaged", meaning that it is always on top.
   this.vectorLayer.setMap(this.map);
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

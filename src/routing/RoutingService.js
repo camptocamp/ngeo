@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 
@@ -30,7 +28,7 @@ import angular from 'angular';
  * @export
  * @ngname ngeoRoutingService
  */
-const exports = function($http, $injector) {
+function RoutingService($http, $injector) {
 
   /**
    * @type {angular.IHttpService}
@@ -65,7 +63,7 @@ const exports = function($http, $injector) {
    */
   this.protocolVersion_ = 'v1';
 
-};
+}
 
 /**
  * Route request
@@ -73,7 +71,7 @@ const exports = function($http, $injector) {
  * @param {?Object} config optional configuration
  * @return {!angular.IHttpPromise} promise of the OSRM API request
  */
-exports.prototype.getRoute = function(coordinates, config) {
+RoutingService.prototype.getRoute = function(coordinates, config) {
 
   config = config || {};
 
@@ -130,7 +128,7 @@ exports.prototype.getRoute = function(coordinates, config) {
  * @return {!angular.IHttpPromise} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
-exports.prototype.getNearest = function(coordinate, config) {
+RoutingService.prototype.getNearest = function(coordinate, config) {
   config = config || {};
 
   // service is always nearest
@@ -174,10 +172,10 @@ exports.prototype.getNearest = function(coordinate, config) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoRoutingService', [
+const module = angular.module('ngeoRoutingService', [
 ]);
 
-exports.module.service('ngeoRoutingService', exports);
+module.service('ngeoRoutingService', RoutingService);
 
 
-export default exports;
+export default module;

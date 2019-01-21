@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './lidarprofile.css';
 import angular from 'angular';
@@ -15,7 +14,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapComponent.name,
   gmfLidarprofileModule.name,
@@ -23,7 +22,7 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
+module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
 
 
 /**
@@ -31,7 +30,7 @@ exports.module.value('pytreeLidarprofileJsonUrl', 'https://sitn.ne.ch/pytree');
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
   /**
    * @type {import("ol/geom/LineString.js").default}
    * @export
@@ -61,10 +60,10 @@ exports.MainController = function($scope) {
       zoom: 3
     })
   });
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

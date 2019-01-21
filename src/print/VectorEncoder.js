@@ -1,7 +1,5 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
-import ngeoUtils from 'ngeo/utils.js';
+import {rgbArrayToHex} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import olSourceVector from 'ol/source/Vector.js';
@@ -14,18 +12,18 @@ import * as olColor from 'ol/color.js';
 /**
  * @constructor
  */
-const exports = function() {
+function VectorEncoder() {
   /**
    * @type {import("ol/format/GeoJSON.js").default}
    */
   this.geojsonFormat = new olFormatGeoJSON();
-};
+}
 
 
 /**
  * @enum {string}
  */
-exports.PrintStyleType = {
+const PrintStyleType = {
   LINE_STRING: 'LineString',
   POINT: 'Point',
   POLYGON: 'Polygon'
@@ -36,12 +34,12 @@ exports.PrintStyleType = {
  * @type {Object.<import("ol/geom/GeometryType.js").default, import("ngeo/print/VectorEncoder.js").default.PrintStyleType>}
  */
 const PRINT_STYLE_TYPES = {
-  'LineString': exports.PrintStyleType.LINE_STRING,
-  'Point': exports.PrintStyleType.POINT,
-  'Polygon': exports.PrintStyleType.POLYGON,
-  'MultiLineString': exports.PrintStyleType.LINE_STRING,
-  'MultiPoint': exports.PrintStyleType.POINT,
-  'MultiPolygon': exports.PrintStyleType.POLYGON
+  'LineString': PrintStyleType.LINE_STRING,
+  'Point': PrintStyleType.POINT,
+  'Polygon': PrintStyleType.POLYGON,
+  'MultiLineString': PrintStyleType.LINE_STRING,
+  'MultiPoint': PrintStyleType.POINT,
+  'MultiPolygon': PrintStyleType.POLYGON
 };
 
 
@@ -50,7 +48,7 @@ const PRINT_STYLE_TYPES = {
  * @param {import("ol/layer/Vector.js").default} layer Layer.
  * @param {number} resolution Resolution.
  */
-exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
+VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
   const source = layer.getSource();
   googAsserts.assertInstanceof(source, olSourceVector);
 
@@ -143,7 +141,7 @@ exports.prototype.encodeVectorLayer = function(arr, layer, resolution) {
  * @param {string} styleId Style id.
  * @param {string} featureStyleProp Feature style property name.
  */
-exports.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
+VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style, styleId, featureStyleProp) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type
     return;
@@ -162,16 +160,16 @@ exports.prototype.encodeVectorStyle = function(object, geometryType, style, styl
   const imageStyle = style.getImage();
   const strokeStyle = style.getStroke();
   const textStyle = style.getText();
-  if (styleType === exports.PrintStyleType.POLYGON) {
+  if (styleType === PrintStyleType.POLYGON) {
     if (fillStyle !== null) {
       this.encodeVectorStylePolygon(
         styleObject.symbolizers, fillStyle, strokeStyle);
     }
-  } else if (styleType === exports.PrintStyleType.LINE_STRING) {
+  } else if (styleType === PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       this.encodeVectorStyleLine(styleObject.symbolizers, strokeStyle);
     }
-  } else if (styleType === exports.PrintStyleType.POINT) {
+  } else if (styleType === PrintStyleType.POINT) {
     if (imageStyle !== null) {
       this.encodeVectorStylePoint(styleObject.symbolizers, imageStyle);
     }
@@ -187,13 +185,13 @@ exports.prototype.encodeVectorStyle = function(object, geometryType, style, styl
  * @param {!import("ol/style/Fill.js").default} fillStyle Fill style.
  * @protected
  */
-exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
+VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
     googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
     fillColor = olColor.asArray(fillColor);
     googAsserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
-    symbolizer.fillColor = ngeoUtils.rgbArrayToHex(fillColor);
+    symbolizer.fillColor = rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
   }
 };
@@ -205,7 +203,7 @@ exports.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
  * @param {!import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
-exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerLine} */ ({
     type: 'line'
   });
@@ -220,7 +218,7 @@ exports.prototype.encodeVectorStyleLine = function(symbolizers, strokeStyle) {
  * @param {!import("ol/style/Image.js").default} imageStyle Image style.
  * @protected
  */
-exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
+VectorEncoder.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
   let symbolizer;
   if (imageStyle instanceof olStyleCircle) {
     symbolizer = /** @type {MapFishPrintSymbolizerPoint} */ ({
@@ -316,7 +314,7 @@ exports.prototype.encodeVectorStylePoint = function(symbolizers, imageStyle) {
  * @param {import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
-exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, strokeStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon'
   });
@@ -334,13 +332,13 @@ exports.prototype.encodeVectorStylePolygon = function(symbolizers, fillStyle, st
  * @param {!import("ol/style/Stroke.js").default} strokeStyle Stroke style.
  * @protected
  */
-exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
+VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
     googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
     const strokeColorRgba = olColor.asArray(strokeColor);
     googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-    symbolizer.strokeColor = ngeoUtils.rgbArrayToHex(strokeColorRgba);
+    symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
   const strokeDashstyle = strokeStyle.getLineDash();
@@ -364,7 +362,7 @@ exports.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
  * @param {!import("ol/style/Text.js").default} textStyle Text style.
  * @protected
  */
-exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {
+VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
   const symbolizer = /** @type {MapFishPrintSymbolizerText} */ ({
     type: 'Text'
   });
@@ -415,7 +413,7 @@ exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {
       googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
       const strokeColorRgba = olColor.asArray(strokeColor);
       googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-      symbolizer.haloColor = ngeoUtils.rgbArrayToHex(strokeColorRgba);
+      symbolizer.haloColor = rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
       if (width !== undefined) {
@@ -430,7 +428,7 @@ exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {
       googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
       const fillColorRgba = olColor.asArray(fillColor);
       googAsserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
-      symbolizer.fontColor = ngeoUtils.rgbArrayToHex(fillColorRgba);
+      symbolizer.fontColor = rgbArrayToHex(fillColorRgba);
     }
 
     // Mapfish Print allows offset only if labelAlign is defined.
@@ -446,4 +444,4 @@ exports.prototype.encodeTextStyle = function(symbolizers, textStyle) {
 };
 
 
-export default exports;
+export default VectorEncoder;

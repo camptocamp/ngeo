@@ -6,18 +6,18 @@ import * as olEvents from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 
-const exports = angular.module('ngeoAttributes', [
+const module = angular.module('ngeoAttributes', [
   ngeoMiscDatetimepickerComponent.name,
-  ngeoMiscEventHelper.module.name,
+  ngeoMiscEventHelper.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
 });
 
 
-exports.value('ngeoAttributesTemplateUrl',
+module.value('ngeoAttributesTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -71,7 +71,7 @@ const component = {
   templateUrl: ngeoAttributesTemplateUrl
 };
 
-exports.component('ngeoAttributes', component);
+module.component('ngeoAttributes', component);
 
 
 /**
@@ -190,7 +190,7 @@ Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
 };
 
 
-exports.controller('ngeoAttributesController', Controller);
+module.controller('ngeoAttributesController', Controller);
 
 
-export default exports;
+export default module;

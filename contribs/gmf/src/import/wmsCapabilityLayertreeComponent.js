@@ -12,18 +12,18 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import 'bootstrap/js/src/collapse.js';
 
 
-const exports = angular.module('gmfWmscapabilitylayertreenode', [
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  ngeoMessagePopup.module.name,
+const module = angular.module('gmfWmscapabilitylayertreenode', [
+  gmfDatasourceExternalDataSourcesManager.name,
+  ngeoMessagePopup.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html'));
 });
 
 
-exports.value('gmfWmscapabilitylayertreenodeTemplateUrl',
+module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -119,7 +119,7 @@ class Controller {
 }
 
 
-exports.component('gmfWmscapabilitylayertreenode', {
+module.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
     'layer': '<',
@@ -130,4 +130,4 @@ exports.component('gmfWmscapabilitylayertreenode', {
 });
 
 
-export default exports;
+export default module;

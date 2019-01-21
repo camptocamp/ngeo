@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './drawfeature.css';
 import angular from 'angular';
@@ -18,11 +17,11 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoDrawModule.name,
   ngeoMapModule.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
@@ -34,7 +33,7 @@ exports.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
+function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   /**
    * @type {!angular.IScope}
@@ -83,10 +82,10 @@ exports.MainController = function($scope, ngeoFeatures, ngeoToolActivateMgr) {
 
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

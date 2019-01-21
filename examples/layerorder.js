@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './layerorder.css';
 import angular from 'angular';
@@ -18,7 +17,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscSortableComponent.name,
@@ -31,7 +30,7 @@ exports.module = angular.module('app', [
  * @export
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /** @type {import("ol/layer/Tile.js").default} */
   const asitvd = new olLayerTile({
@@ -131,7 +130,7 @@ exports.MainController = function($scope) {
     return layer !== asitvd;
   }
 
-};
+}
 
 
 /**
@@ -143,7 +142,7 @@ exports.MainController = function($scope) {
  *     function is used as setter.
  * @export
  */
-exports.MainController.prototype.toggleRoadsLayer = function(val) {
+MainController.prototype.toggleRoadsLayer = function(val) {
   if (val === undefined) {
     return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {
@@ -156,7 +155,7 @@ exports.MainController.prototype.toggleRoadsLayer = function(val) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

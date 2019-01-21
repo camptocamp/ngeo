@@ -10,8 +10,8 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMeasurearea', [
-  ngeoDrawController.module.name
+const module = angular.module('ngeoMeasurearea', [
+  ngeoDrawController.name
 ]);
 
 
@@ -69,7 +69,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 }
 
 
-exports.directive('ngeoMeasurearea', directive);
+module.directive('ngeoMeasurearea', directive);
 
 
-export default exports;
+export default module;

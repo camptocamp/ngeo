@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
+import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered.js';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink.js';
@@ -32,24 +30,24 @@ import 'bootstrap/js/src/collapse.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLayertreeComponent', [
-  gmfDatasourceDataSourceBeingFiltered.module.name,
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  gmfPermalinkPermalink.module.name,
+const module = angular.module('gmfLayertreeComponent', [
+  gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDatasourceExternalDataSourcesManager.name,
+  gmfPermalinkPermalink.name,
   gmfLayertreeDatasourceGroupTreeComponent.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
   ngeoLayertreeComponent.name,
-  ngeoLayertreeController.module.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscWMSTime.module.name,
+  ngeoLayertreeController.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscWMSTime.name,
 ]);
 
 
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-exports.value('ngeoLayertreeTemplateUrl',
+module.value('ngeoLayertreeTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -57,12 +55,12 @@ exports.value('ngeoLayertreeTemplateUrl',
    */
   (element, attrs) => 'gmf/layertree');
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/layertree', require('./component.html'));
 });
 
 
-exports.value('gmfLayertreeTemplate',
+module.value('gmfLayertreeTemplate',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -139,7 +137,7 @@ const component = {
   template: gmfLayertreeTemplate
 };
 
-exports.component('gmfLayertree', component);
+module.component('gmfLayertree', component);
 
 
 /**
@@ -277,8 +275,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
  */
 Controller.prototype.$onInit = function() {
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
-  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map,
-    gmfBase.DATALAYERGROUP_NAME);
+  this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
@@ -793,7 +790,7 @@ Controller.prototype.supportsOpacityChange = function(treeCtrl) {
     );
 };
 
-exports.controller('GmfLayertreeController', Controller);
+module.controller('GmfLayertreeController', Controller);
 
 
-export default exports;
+export default module;

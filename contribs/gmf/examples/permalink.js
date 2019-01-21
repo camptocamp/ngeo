@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './permalink.css';
 import angular from 'angular';
@@ -17,16 +16,16 @@ import olStyleStyle from 'ol/style/Style.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
 ]);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-exports.module.value('gmfPermalinkOptions',
+module.value('gmfPermalinkOptions',
   /** @type {gmfx.PermalinkOptions} */ ({
     crosshairStyle: new olStyleStyle({
       image: new olStyleRegularShape({
@@ -46,7 +45,7 @@ exports.module.value('gmfPermalinkOptions',
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -64,9 +63,9 @@ exports.MainController = function() {
       zoom: 3
     })
   });
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -6,8 +6,8 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 
-const exports = angular.module('ngeoExportfeatures', [
-  ngeoMiscFeatureHelper.module.name
+const module = angular.module('ngeoExportfeatures', [
+  ngeoMiscFeatureHelper.name
 ]);
 
 /**
@@ -45,7 +45,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoExportfeatures', directive);
+module.directive('ngeoExportfeatures', directive);
 
 
 /**
@@ -217,7 +217,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('ngeoExportfeaturesController', Controller);
+module.controller('ngeoExportfeaturesController', Controller);
 
 
-export default exports;
+export default module;

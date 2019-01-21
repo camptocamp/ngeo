@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import appURL from './url.js';
 import './authentication.css';
@@ -9,17 +5,17 @@ import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name
 ]);
 
 
-exports.module.value(
+module.value(
   'authenticationBaseUrl',
   appURL.GMF_DEMO);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -27,7 +23,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gettextCatalog) {
+function MainController(gettextCatalog) {
   /**
    * A password validator that check if the password as:
    *  - A minimal length of 8 characters.
@@ -49,10 +45,10 @@ exports.MainController = function(gettextCatalog) {
     notValidMessage: gettextCatalog.getString('The new password must have at least 8 characters,'
                              + 'including capital letter, small letter, digit and special character.')
   };
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -1,6 +1,3 @@
-/**
- */
-const exports = {};
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -27,21 +24,21 @@ import 'ngeo/sass/font.scss';
  */
 
 
-exports.module = angular.module('ngeoRoutingComponent', [
+const module = angular.module('ngeoRoutingComponent', [
   ngeoMiscDebounce.name,
   ngeoMiscFilters.name,
-  ngeoRoutingNominatimService.module.name,
-  ngeoRoutingRoutingService.module.name,
-  ngeoRoutingRoutingFeatureComponent.module.name
+  ngeoRoutingNominatimService.name,
+  ngeoRoutingRoutingService.name,
+  ngeoRoutingRoutingFeatureComponent.name
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/routing/routing', require('./routing.html'));
 });
 
 
-exports.module.value('ngeoRoutingTemplateUrl',
+module.value('ngeoRoutingTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -79,7 +76,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @ngdoc controller
  * @ngname NgeoRoutingController
  */
-exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
+function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
 
   /**
    * @type {angular.IScope}
@@ -242,12 +239,12 @@ exports.Controller = function($injector, $scope, ngeoRoutingService, ngeoNominat
             /** @type {function(?)} */ (this.calculateRoute.bind(this)),
             debounceDelay,
             true));
-};
+}
 
 /**
  * Init the controller
  */
-exports.Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.map.addLayer(this.routeLayer_);
 };
 
@@ -255,7 +252,7 @@ exports.Controller.prototype.$onInit = function() {
  * Clears start, end and vias. Removes features from map.
  * @export
  */
-exports.Controller.prototype.clearRoute = function() {
+Controller.prototype.clearRoute = function() {
   this.startFeature_ = null;
   this.targetFeature_ = null;
   this.viaArray = [];
@@ -271,7 +268,7 @@ exports.Controller.prototype.clearRoute = function() {
  * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
-exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
+Controller.prototype.getLonLatFromPoint_ = function(point) {
   const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
@@ -282,7 +279,7 @@ exports.Controller.prototype.getLonLatFromPoint_ = function(point) {
  * Flip start and target and re-calculate route.
  * @export
  */
-exports.Controller.prototype.reverseRoute = function() {
+Controller.prototype.reverseRoute = function() {
   // swap start and target
   const tmpFeature = this.startFeature_;
   this.startFeature_ = this.targetFeature_;
@@ -299,7 +296,7 @@ exports.Controller.prototype.reverseRoute = function() {
  * @returns {Array<import("ol/Feature.js").default>} parsed route features
  * @private
  */
-exports.Controller.prototype.parseRoute_ = function(route) {
+Controller.prototype.parseRoute_ = function(route) {
   let parsedRoutes = [];
   const format = new olFormatGeoJSON();
   const formatConfig = {
@@ -321,7 +318,7 @@ exports.Controller.prototype.parseRoute_ = function(route) {
 /**
  * @export
  */
-exports.Controller.prototype.calculateRoute = function() {
+Controller.prototype.calculateRoute = function() {
   if (this.startFeature_ && this.targetFeature_) {
     // remove rendered routes
     this.routeSource_.clear();
@@ -386,7 +383,7 @@ exports.Controller.prototype.calculateRoute = function() {
 /**
  * @export
  */
-exports.Controller.prototype.addVia = function() {
+Controller.prototype.addVia = function() {
   this.viaArray.push(/** @type{RoutingVia} */({
     feature: null,
     onSelect: null
@@ -397,7 +394,7 @@ exports.Controller.prototype.addVia = function() {
  * @param {number} index Array index.
  * @export
  */
-exports.Controller.prototype.deleteVia = function(index) {
+Controller.prototype.deleteVia = function(index) {
   if (this.viaArray.length > index) {
     this.viaArray.splice(index, 1);
     this.calculateRoute();
@@ -405,8 +402,8 @@ exports.Controller.prototype.deleteVia = function(index) {
 };
 
 
-exports.module.component('ngeoRouting', {
-  controller: exports.Controller,
+module.component('ngeoRouting', {
+  controller: Controller,
   bindings: {
     'map': '<ngeoRoutingMap'
   },
@@ -414,4 +411,4 @@ exports.module.component('ngeoRouting', {
 });
 
 
-export default exports;
+export default module;

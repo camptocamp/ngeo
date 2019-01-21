@@ -11,18 +11,18 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfThemeSelectorComponent', [
-  gmfThemeManager.module.name,
-  gmfThemeThemes.module.name,
+const module = angular.module('gmfThemeSelectorComponent', [
+  gmfThemeManager.name,
+  gmfThemeThemes.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
 });
 
 
-exports.value('gmfThemeSelectorTemplateUrl',
+module.value('gmfThemeSelectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -102,7 +102,7 @@ const component = {
   templateUrl: gmfThemeSelectorTemplateUrl
 };
 
-exports.component('gmfThemeselector', component);
+module.component('gmfThemeselector', component);
 
 
 /**
@@ -188,7 +188,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('gmfThemeselectorController', Controller);
+module.controller('gmfThemeselectorController', Controller);
 
 
-export default exports;
+export default module;

@@ -1,6 +1,3 @@
-/**
- */
-
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 
 
@@ -56,9 +53,6 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  */
 
 
-const exports = {};
-
-
 /**
  * Set the `type` and `geomType` properties of an attribute if the given
  * type is a geometry one.
@@ -67,7 +61,7 @@ const exports = {};
  * @param {string} type Type.
  * @return {boolean} Whether both attribute type and geomType were set.
  */
-exports.setGeometryType = function(attribute, type) {
+export function setGeometryType(attribute, type) {
   const geomRegex =
     /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
   if (geomRegex.exec(type)) {
@@ -87,7 +81,4 @@ exports.setGeometryType = function(attribute, type) {
     }
   }
   return !!attribute.type && !!attribute.geomType;
-};
-
-
-export default exports;
+}

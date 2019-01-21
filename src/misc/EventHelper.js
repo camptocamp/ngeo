@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
@@ -11,7 +9,7 @@ import * as olEvents from 'ol/events.js';
  * @ngname ngeoEventHelper
  * @ngInject
  */
-const exports = function() {
+function EventHelper() {
 
   /**
    * @type {Object.<number|string, Array.<import("ol/EventsKey.js").default>>}
@@ -19,7 +17,7 @@ const exports = function() {
    */
   this.listenerKeys_ = {};
 
-};
+}
 
 
 /**
@@ -29,7 +27,7 @@ const exports = function() {
  * @param {import("ol/EventsKey.js").default} key Key.
  * @export
  */
-exports.prototype.addListenerKey = function(uid, key) {
+EventHelper.prototype.addListenerKey = function(uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
@@ -42,7 +40,7 @@ exports.prototype.addListenerKey = function(uid, key) {
  * @param {number|string} uid Unique id.
  * @export
  */
-exports.prototype.clearListenerKey = function(uid) {
+EventHelper.prototype.clearListenerKey = function(uid) {
   this.initListenerKey_(uid);
 };
 
@@ -56,7 +54,7 @@ exports.prototype.clearListenerKey = function(uid) {
  * @param {number|string} uid Unique id.
  * @private
  */
-exports.prototype.initListenerKey_ = function(uid) {
+EventHelper.prototype.initListenerKey_ = function(uid) {
   if (!this.listenerKeys_[uid]) {
     this.listenerKeys_[uid] = [];
   } else {
@@ -71,8 +69,8 @@ exports.prototype.initListenerKey_ = function(uid) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoEventHelper', []);
-exports.module.service('ngeoEventHelper', exports);
+const module = angular.module('ngeoEventHelper', []);
+module.service('ngeoEventHelper', EventHelper);
 
 
-export default exports;
+export default module;

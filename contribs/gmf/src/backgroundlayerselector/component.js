@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
@@ -8,13 +6,13 @@ import * as olEvents from 'ol/events.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfBackgroundlayerselector', [
-  gmfThemeThemes.module.name,
-  ngeoMapBackgroundLayerMgr.module.name,
+const module = angular.module('gmfBackgroundlayerselector', [
+  gmfThemeThemes.name,
+  ngeoMapBackgroundLayerMgr.name,
 ]);
 
 
-exports.value('gmfBackgroundlayerselectorTemplateUrl',
+module.value('gmfBackgroundlayerselectorTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -28,7 +26,7 @@ exports.value('gmfBackgroundlayerselectorTemplateUrl',
 );
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
 });
 
@@ -79,7 +77,7 @@ const component = {
 };
 
 
-exports.component('gmfBackgroundlayerselector', component);
+module.component('gmfBackgroundlayerselector', component);
 
 
 /**
@@ -239,7 +237,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfBackgroundlayerselectorController', Controller);
+module.controller('GmfBackgroundlayerselectorController', Controller);
 
 
-export default exports;
+export default module;

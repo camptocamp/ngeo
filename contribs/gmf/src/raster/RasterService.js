@@ -13,7 +13,7 @@ import angular from 'angular';
  * @ngdoc service
  * @ngname gmfRaster
  */
-const exports = function($http, gmfRasterUrl) {
+function RasterService($http, gmfRasterUrl) {
 
   /**
    * @type {angular.IHttpService}
@@ -26,7 +26,7 @@ const exports = function($http, gmfRasterUrl) {
    * @private
    */
   this.url_ = gmfRasterUrl;
-};
+}
 
 
 /**
@@ -44,7 +44,7 @@ const Param = {
  * @return {angular.IPromise} Promise.
  * @export
  */
-exports.prototype.getRaster = function(coordinate, opt_params) {
+RasterService.prototype.getRaster = function(coordinate, opt_params) {
 
   const params = opt_params || {};
   params[Param.X] = coordinate[0];
@@ -61,7 +61,7 @@ exports.prototype.getRaster = function(coordinate, opt_params) {
  * @return {Object.<string, number>} The response object.
  * @private
  */
-exports.prototype.handleGetRaster_ = function(resp) {
+RasterService.prototype.handleGetRaster_ = function(resp) {
   return resp.data;
 };
 
@@ -70,8 +70,7 @@ exports.prototype.handleGetRaster_ = function(resp) {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfRaster', []);
-exports['module'] = module;
-module.service('gmfRaster', exports);
+module.service('gmfRaster', RasterService);
 
 
-export default exports;
+export default module;

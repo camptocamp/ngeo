@@ -1,10 +1,8 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 
-const exports = class {
+class SavedFilter {
 
   /**
    * The GeoMapFish service responsible of storing filters that can be applied
@@ -211,12 +209,12 @@ const exports = class {
     }
   }
 
-};
+}
 
 
-exports.module = angular.module('gmfSavedFilters', []);
+const module = angular.module('gmfSavedFilters', []);
 
-exports.module.service('gmfSavedFilters', exports);
+module.service('gmfSavedFilters', SavedFilter);
 
 
 /**
@@ -224,7 +222,7 @@ exports.module.service('gmfSavedFilters', exports);
  * @constructor
  * @export
  */
-exports.Item = function() {};
+function Item() {}
 
 
 /**
@@ -232,7 +230,7 @@ exports.Item = function() {};
  * @type {string}
  * @export
  */
-exports.Item.prototype.condition;
+Item.prototype.condition;
 
 
 /**
@@ -240,7 +238,7 @@ exports.Item.prototype.condition;
  * @type {!Array.<!AnyOptions>}
  * @export
  */
-exports.Item.prototype.customRules;
+Item.prototype.customRules;
 
 
 /**
@@ -248,7 +246,7 @@ exports.Item.prototype.customRules;
  * @type {number}
  * @export
  */
-exports.Item.prototype.dataSourceId;
+Item.prototype.dataSourceId;
 
 
 /**
@@ -256,7 +254,7 @@ exports.Item.prototype.dataSourceId;
  * @type {!Array.<!AnyOptions>}
  * @export
  */
-exports.Item.prototype.directedRules;
+Item.prototype.directedRules;
 
 
 /**
@@ -264,7 +262,7 @@ exports.Item.prototype.directedRules;
  * @type {string}
  * @export
  */
-exports.Item.prototype.name;
+Item.prototype.name;
 
 
-export default exports;
+export default module;

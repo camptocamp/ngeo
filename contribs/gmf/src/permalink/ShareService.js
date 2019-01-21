@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 /**
@@ -12,7 +9,7 @@ import angular from 'angular';
  * @export
  * @ngname gmfShareService
  */
-const exports = function($http, gmfShortenerCreateUrl) {
+function ShareService($http, gmfShortenerCreateUrl) {
 
   /**
    * @type {angular.IHttpService}
@@ -27,7 +24,7 @@ const exports = function($http, gmfShortenerCreateUrl) {
    */
   this.gmfShortenerCreateUrl_ = gmfShortenerCreateUrl;
 
-};
+}
 
 
 /**
@@ -37,7 +34,7 @@ const exports = function($http, gmfShortenerCreateUrl) {
  * @return {gmfx.ShortenerAPIResponse|angular.IHttpPromise} an object containing the permalink not shortened or
  * the promise attached to the shortener API request
  */
-exports.prototype.getShortUrl = function(url) {
+ShareService.prototype.getShortUrl = function(url) {
   const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
     url
   });
@@ -63,7 +60,7 @@ exports.prototype.getShortUrl = function(url) {
  * @param  {string=} opt_message message for the email
  * @return {angular.IHttpPromise} the promise attached to the shortener API request
  */
-exports.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
+ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
     url: shortUrl,
     email: email
@@ -82,7 +79,7 @@ exports.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
  * @return {angular.IHttpPromise} the promise attached to the shortener API request
  * @private
  */
-exports.prototype.postShortUrl_ = function(params) {
+ShareService.prototype.postShortUrl_ = function(params) {
   // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -96,7 +93,7 @@ exports.prototype.postShortUrl_ = function(params) {
  * @constant
  * @type {number}
  */
-exports.URL_MAX_LEN = 2083;
+export const URL_MAX_LEN = 2083;
 
 /**
  * Max length defined for the url parth section.
@@ -104,11 +101,11 @@ exports.URL_MAX_LEN = 2083;
  * @constant
  * @type {number}
  */
-exports.URL_PATH_MAX_LEN = 2048;
+export const URL_PATH_MAX_LEN = 2048;
 
-exports.module = angular.module('gmfShareService', []);
+const module = angular.module('gmfShareService', []);
 
-exports.module.service('gmfShareService', exports);
+module.service('gmfShareService', ShareService);
 
 
-export default exports;
+export default module;

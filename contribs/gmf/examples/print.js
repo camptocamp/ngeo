@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -21,23 +20,23 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
   gmfPrintComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoMapModule.name //for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('gmfPrintUrl', appURL.PRINT_PROXY);
-exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfPrintUrl', appURL.PRINT_PROXY);
+module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -47,7 +46,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  *   overlay manager service.
  * @ngInject
  */
-exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
+function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
 
@@ -98,9 +97,9 @@ exports.MainController = function(gmfThemes, ngeoFeatureOverlayMgr) {
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

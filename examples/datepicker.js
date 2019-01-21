@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import './datepicker.css';
 import angular from 'angular';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
@@ -11,10 +7,10 @@ import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMiscDatepickerComponent.name,
-  ngeoMiscTime.module.name,
+  ngeoMiscTime.name,
 ]);
 
 
@@ -23,7 +19,7 @@ exports.module = angular.module('app', [
  * @param {!import("ngeo/misc/Time.js").default} ngeoTime time service.
  * @ngInject
  */
-exports.MainController = function(ngeoTime) {
+function MainController(ngeoTime) {
 
   /**
    * @type {import("ngeo/misc/Time.js").default}
@@ -78,10 +74,10 @@ exports.MainController = function(ngeoTime) {
   this.onDateRangeSelected = function(date) {
     this.rangeValue = date;
   };
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

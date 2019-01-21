@@ -11,5 +11,5 @@ import './search.scss';
  */
 export default angular.module('gmfSearchModule', [
   gmfSearchComponent.name,
-  gmfSearchFulltextSearch.module.name
+  gmfSearchFulltextSearch.name
 ]);

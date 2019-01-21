@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './simple3d.css';
 import angular from 'angular';
@@ -15,7 +14,7 @@ import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoOlcsOlcsModule.name
@@ -28,7 +27,7 @@ exports.module = angular.module('app', [
  * @param {angular.IScope} $rootScope Root scope.
  * @param {import("ngeo/olcs/Service.js").default} ngeoOlcsService The service.
  */
-exports.MainController = function($rootScope, ngeoOlcsService) {
+function MainController($rootScope, ngeoOlcsService) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -59,9 +58,9 @@ exports.MainController = function($rootScope, ngeoOlcsService) {
 
   // Optionally, the manager can be registered into the olcs service
   ngeoOlcsService.initialize(this.ol3dm);
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

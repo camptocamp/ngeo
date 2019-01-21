@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
@@ -44,24 +42,24 @@ const jsts = {
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfObjectEditingComponent', [
-  gmfEditingEditFeature.module.name,
-  gmfLayertreeSyncLayertreeMap.module.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfObjecteditingQuery.module.name,
+const module = angular.module('gmfObjectEditingComponent', [
+  gmfEditingEditFeature.name,
+  gmfLayertreeSyncLayertreeMap.name,
+  gmfLayertreeTreeManager.name,
+  gmfObjecteditingQuery.name,
   gmfObjecteditingToolsComponent.name,
-  ngeoMapLayerHelper.module.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMapLayerHelper.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/objectediting', require('./component.html'));
 });
 
 
-exports.value('gmfObjecteditingTemplateUrl',
+module.value('gmfObjecteditingTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -126,7 +124,7 @@ const component = {
   templateUrl: gmfObjecteditingTemplateUrl
 };
 
-exports.component('gmfObjectediting', component);
+module.component('gmfObjectediting', component);
 
 
 /**
@@ -147,7 +145,7 @@ exports.component('gmfObjectediting', component);
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */
-exports.Controller = function($scope, $timeout, gettextCatalog,
+function Controller($scope, $timeout, gettextCatalog,
   gmfEditFeature, gmfObjectEditingQuery, gmfTreeManager,
   ngeoFeatureHelper, ngeoLayerHelper, ngeoToolActivateMgr) {
 
@@ -409,12 +407,12 @@ exports.Controller = function($scope, $timeout, gettextCatalog,
    * @private
    */
   this.toolsToolActivate_ = new ngeoMiscToolActivate(this, 'toolsActive');
-};
+}
 
 /**
  * Init the controller
  */
-exports.Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function() {
   this.gmfObjectEditingQuery_.getQueryableLayersInfo().then(
     this.handleGetQueryableLayersInfo_.bind(this)
   );
@@ -449,8 +447,8 @@ exports.Controller.prototype.$onInit = function() {
   );
 
   const geometry = this.feature.getGeometry();
-  this.state_ = geometry ? exports.Controller.State.UPDATE :
-    exports.Controller.State.INSERT;
+  this.state_ = geometry ? Controller.State.UPDATE :
+    Controller.State.INSERT;
 
   this.scope_.$watchCollection(
     () => this.geometryChanges_,
@@ -497,7 +495,7 @@ exports.Controller.prototype.$onInit = function() {
  * Delete the feature after asking for a confirmation.
  * @export
  */
-exports.Controller.prototype.delete = function() {
+Controller.prototype.delete = function() {
   const gettextCatalog = this.gettextCatalog_;
   const msg = gettextCatalog.getString(
     'Do you really want to delete the feature?');
@@ -521,7 +519,7 @@ exports.Controller.prototype.delete = function() {
  * Save the current modifications.
  * @export
  */
-exports.Controller.prototype.save = function() {
+Controller.prototype.save = function() {
 
   this.pending = true;
 
@@ -538,14 +536,14 @@ exports.Controller.prototype.save = function() {
     gmfObjecteditingGeom.toXY(geometry);
   }
 
-  if (this.state_ === exports.Controller.State.INSERT) {
+  if (this.state_ === Controller.State.INSERT) {
     this.gmfEditFeature_.insertFeatures(
       this.layerNodeId,
       [feature]
     ).then(
       this.handleEditFeature_.bind(this)
     );
-  } else if (this.state_ === exports.Controller.State.UPDATE) {
+  } else if (this.state_ === Controller.State.UPDATE) {
     this.gmfEditFeature_.updateFeature(
       this.layerNodeId,
       feature
@@ -560,7 +558,7 @@ exports.Controller.prototype.save = function() {
  * Undo the latest modifications.
  * @export
  */
-exports.Controller.prototype.undo = function() {
+Controller.prototype.undo = function() {
 
   if (this.geometryChanges_.length <= 1) {
     return;
@@ -569,7 +567,7 @@ exports.Controller.prototype.undo = function() {
   this.skipGeometryChange_ = true;
 
   this.geometryChanges_.pop();
-  const clone = exports.Controller.cloneGeometry_(
+  const clone = Controller.cloneGeometry_(
     this.geometryChanges_[this.geometryChanges_.length - 1]);
 
   this.feature.setGeometry(clone);
@@ -582,8 +580,8 @@ exports.Controller.prototype.undo = function() {
  * @return {boolean} Whether the state is INSERT or not.
  * @export
  */
-exports.Controller.prototype.isStateInsert = function() {
-  return this.state_ === exports.Controller.State.INSERT;
+Controller.prototype.isStateInsert = function() {
+  return this.state_ === Controller.State.INSERT;
 };
 
 
@@ -595,10 +593,10 @@ exports.Controller.prototype.isStateInsert = function() {
  * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
-exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
+Controller.prototype.handleDeleteFeature_ = function(resp) {
   this.feature.setGeometry(null);
   this.resetGeometryChanges_();
-  this.state_ = exports.Controller.State.INSERT;
+  this.state_ = Controller.State.INSERT;
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -609,7 +607,7 @@ exports.Controller.prototype.handleDeleteFeature_ = function(resp) {
  * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
-exports.Controller.prototype.handleEditFeature_ = function(resp) {
+Controller.prototype.handleEditFeature_ = function(resp) {
   // (1) Update the id
   const features = new olFormatGeoJSON().readFeatures(resp.data);
   if (features.length) {
@@ -619,9 +617,9 @@ exports.Controller.prototype.handleEditFeature_ = function(resp) {
   this.resetGeometryChanges_();
   // (3) Update state
   if (this.feature.getGeometry()) {
-    this.state_ = exports.Controller.State.UPDATE;
+    this.state_ = Controller.State.UPDATE;
   } else {
-    this.state_ = exports.Controller.State.INSERT;
+    this.state_ = Controller.State.INSERT;
   }
   // (4) No longer pending
   this.pending = false;
@@ -634,7 +632,7 @@ exports.Controller.prototype.handleEditFeature_ = function(resp) {
  * Initialize interactions by setting them inactive and decorating them
  * @private
  */
-exports.Controller.prototype.initializeInteractions_ = function() {
+Controller.prototype.initializeInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     interaction.setActive(false);
     ngeoMiscDecorate.interaction(interaction);
@@ -646,7 +644,7 @@ exports.Controller.prototype.initializeInteractions_ = function() {
  * Register interactions by adding them to the map
  * @private
  */
-exports.Controller.prototype.registerInteractions_ = function() {
+Controller.prototype.registerInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.addInteraction(interaction);
   });
@@ -657,7 +655,7 @@ exports.Controller.prototype.registerInteractions_ = function() {
  * Unregister interactions, i.e. remove them from the map
  * @private
  */
-exports.Controller.prototype.unregisterInteractions_ = function() {
+Controller.prototype.unregisterInteractions_ = function() {
   this.interactions_.forEach((interaction) => {
     this.map.removeInteraction(interaction);
   });
@@ -669,10 +667,10 @@ exports.Controller.prototype.unregisterInteractions_ = function() {
  * @param {boolean} active Whether to activate this component or not.
  * @private
  */
-exports.Controller.prototype.toggle_ = function(active) {
+Controller.prototype.toggle_ = function(active) {
 
   const keys = this.listenerKeys_;
-  const uid = `${exports.Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
+  const uid = `${Controller.NAMESPACE_}-${olUtilGetUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
 
   if (active) {
@@ -748,8 +746,8 @@ exports.Controller.prototype.toggle_ = function(active) {
  * Undo all current changes.
  * @private
  */
-exports.Controller.prototype.undoAllChanges_ = function() {
-  const clone = exports.Controller.cloneGeometry_(
+Controller.prototype.undoAllChanges_ = function() {
+  const clone = Controller.cloneGeometry_(
     this.geometryChanges_[0]);
   this.feature.setGeometry(clone);
 
@@ -765,13 +763,13 @@ exports.Controller.prototype.undoAllChanges_ = function() {
  * as the first entry. One entry means that there's no changes.
  * @private
  */
-exports.Controller.prototype.resetGeometryChanges_ = function() {
+Controller.prototype.resetGeometryChanges_ = function() {
   if (this.geometryChanges_.length > 1) {
     this.geometryChanges_.length = 0;
   }
   if (this.geometryChanges_.length === 0) {
     const geometry = this.feature.getGeometry();
-    const clone = exports.Controller.cloneGeometry_(geometry);
+    const clone = Controller.cloneGeometry_(geometry);
     this.geometryChanges_.push(clone);
   }
 };
@@ -787,7 +785,7 @@ exports.Controller.prototype.resetGeometryChanges_ = function() {
  * @param {import("ol/interaction/Modify/Event.js").default} evt Event.
  * @private
  */
-exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
+Controller.prototype.handleModifyInteractionModifyEnd_ = function(
   evt
 ) {
   let geometry = this.feature.getGeometry();
@@ -801,7 +799,7 @@ exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
     this.skipGeometryChange_ = false;
   }
 
-  const clone = exports.Controller.cloneGeometry_(geometry);
+  const clone = Controller.cloneGeometry_(geometry);
   googAsserts.assert(clone);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
@@ -815,7 +813,7 @@ exports.Controller.prototype.handleModifyInteractionModifyEnd_ = function(
  *     to `true`.
  * @private
  */
-exports.Controller.prototype.initializeStyles_ = function(
+Controller.prototype.initializeStyles_ = function(
   styles, color, opt_incVertice
 ) {
 
@@ -910,7 +908,7 @@ exports.Controller.prototype.initializeStyles_ = function(
  *
  * @private
  */
-exports.Controller.prototype.setFeatureStyle_ = function() {
+Controller.prototype.setFeatureStyle_ = function() {
   const geometry = this.feature.getGeometry();
   if (geometry) {
     const geomType = geometry.getType();
@@ -945,7 +943,7 @@ exports.Controller.prototype.setFeatureStyle_ = function() {
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
  * @private
  */
-exports.Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
+Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
@@ -973,7 +971,7 @@ exports.Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
  *
  * @private
  */
-exports.Controller.prototype.unregisterAllTreeCtrl_ = function() {
+Controller.prototype.unregisterAllTreeCtrl_ = function() {
   this.editableWMSLayer_ = null;
 };
 
@@ -982,7 +980,7 @@ exports.Controller.prototype.unregisterAllTreeCtrl_ = function() {
  * Refresh the WMS layer, if set.
  * @private
  */
-exports.Controller.prototype.refreshWMSLayer_ = function() {
+Controller.prototype.refreshWMSLayer_ = function() {
   if (this.editableWMSLayer_) {
     this.ngeoLayerHelper_.refreshWMSLayer(this.editableWMSLayer_);
   }
@@ -996,7 +994,7 @@ exports.Controller.prototype.refreshWMSLayer_ = function() {
  * @return {string|undefined} Message
  * @private
  */
-exports.Controller.prototype.handleWindowBeforeUnload_ = function(e) {
+Controller.prototype.handleWindowBeforeUnload_ = function(e) {
   const gettextCatalog = this.gettextCatalog_;
   if (this.dirty) {
     const msg = gettextCatalog.getString('There are unsaved changes.');
@@ -1015,7 +1013,7 @@ exports.Controller.prototype.handleWindowBeforeUnload_ = function(e) {
  * @param {import("ol/Collection/Event.js").default} evt Event.
  * @private
  */
-exports.Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
+Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
   const sketchFeature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   const sketchGeom = /** @type {import("ol/geom/Geometry.js").default} */ (
     sketchFeature.getGeometry());
@@ -1060,7 +1058,7 @@ exports.Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
  *
  * @private
  */
-exports.Controller.prototype.handleFeatureGeometryChange_ = function() {
+Controller.prototype.handleFeatureGeometryChange_ = function() {
   const geom = this.feature.getGeometry();
   this.timeout_(() => {
     this.featureHasGeom = !gmfObjecteditingGeom.isEmpty(geom);
@@ -1089,7 +1087,7 @@ exports.Controller.prototype.handleFeatureGeometryChange_ = function() {
  *     of queryable layers information, which contains the node and ogcServer.
  * @private
  */
-exports.Controller.prototype.handleGetQueryableLayersInfo_ = function(layersInfo) {
+Controller.prototype.handleGetQueryableLayersInfo_ = function(layersInfo) {
   this.queryableLayersInfo = layersInfo;
   if (this.queryableLayersInfo.length) {
     this.selectedQueryableLayerInfo = this.queryableLayersInfo[0];
@@ -1100,7 +1098,7 @@ exports.Controller.prototype.handleGetQueryableLayersInfo_ = function(layersInfo
 /**
  * @private
  */
-exports.Controller.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function() {
   this.features_.clear();
   this.toggle_(false);
   this.undoAllChanges_();
@@ -1119,33 +1117,33 @@ exports.Controller.prototype.handleDestroy_ = function() {
  * @return {?import("ol/geom/Geometry.js").default} A geometry clone or null value.
  * @private
  */
-exports.Controller.cloneGeometry_ = function(geometry) {
+export function cloneGeometry(geometry) {
   let clone = null;
   if (geometry) {
     clone = geometry.clone();
   }
   return clone;
-};
+}
 
 
 /**
  * @const
  * @private
  */
-exports.Controller.NAMESPACE_ = 'oe';
+export const NAMESPACE = 'oe';
 
 
 /**
  * @enum {string}
  */
-exports.Controller.State = {
+export const State = {
   INSERT: 'insert',
   UPDATE: 'update'
 };
 
 
-exports.controller('GmfObjecteditingController',
-  exports.Controller);
+module.controller('GmfObjecteditingController',
+  Controller);
 
 
-export default exports;
+export default module;

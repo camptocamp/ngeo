@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -8,7 +6,7 @@ import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent.js';
-import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
+import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import olFeature from 'ol/Feature.js';
 
@@ -24,7 +22,7 @@ import olFeature from 'ol/Feature.js';
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-const exports = function($scope, $sce, gettextCatalog,
+function Controller($scope, $sce, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -138,7 +136,7 @@ const exports = function($scope, $sce, gettextCatalog,
     }
   );
 
-};
+}
 
 
 /**
@@ -147,11 +145,11 @@ const exports = function($scope, $sce, gettextCatalog,
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
  * @export
  */
-exports.prototype.registerInteraction = function(
+Controller.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
-  ngeoMiscDecorate.interaction(interaction);
+  ngeoMiscDecorateInteraction(interaction);
   this.map.addInteraction(interaction);
 };
 
@@ -163,7 +161,7 @@ exports.prototype.registerInteraction = function(
  * @param {import("ol/Object/Event.js").default} event Event.
  * @export
  */
-exports.prototype.handleActiveChange = function(event) {
+Controller.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
@@ -175,7 +173,7 @@ exports.prototype.handleActiveChange = function(event) {
  * @param {import("ol/interaction/Draw/Event.js").default|MeasureEvent} event Event.
  * @export
  */
-exports.prototype.handleDrawEnd = function(type, event) {
+Controller.prototype.handleDrawEnd = function(type, event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
@@ -241,12 +239,12 @@ exports.prototype.handleDrawEnd = function(type, event) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoDrawfeatureController', [
+const module = angular.module('ngeoDrawfeatureController', [
   ngeoDrawFeatures.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscFeatureHelper.name,
 ]);
-exports.module.controller('ngeoDrawfeatureController', exports);
+module.controller('ngeoDrawfeatureController', Controller);
 
 
-export default exports;
+export default module;

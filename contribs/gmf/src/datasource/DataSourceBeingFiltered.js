@@ -1,17 +1,16 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfDataSourceBeingFiltered', []);
+const module = angular.module('gmfDataSourceBeingFiltered', []);
 // type gmfx.datasource.DataSourceBeingFiltered
-exports.module.value('gmfDataSourceBeingFiltered', {
+module.value('gmfDataSourceBeingFiltered', {
   dataSource: null
 });
 
 
-export default exports;
+export default module;

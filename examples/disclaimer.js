@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './disclaimer.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
@@ -16,10 +15,10 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
-  ngeoMessageDisclaimer.module.name,
+  ngeoMessageDisclaimer.name,
 ]);
 
 
@@ -28,7 +27,7 @@ exports.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function(ngeoDisclaimer) {
+function MainController(ngeoDisclaimer) {
 
   /**
    * @type {import("ngeo/message/Disclaimer.js").default}
@@ -91,13 +90,13 @@ exports.MainController = function(ngeoDisclaimer) {
     container: 'body',
     trigger: 'hover'
   });
-};
+}
 
 
 /**
  * @export
  */
-exports.MainController.prototype.success = function() {
+MainController.prototype.success = function() {
   this.disclaimer.success(this.successMsg_);
 };
 
@@ -105,7 +104,7 @@ exports.MainController.prototype.success = function() {
 /**
  * @export
  */
-exports.MainController.prototype.info = function() {
+MainController.prototype.info = function() {
   this.disclaimer.info(this.infoMsg_);
 };
 
@@ -113,7 +112,7 @@ exports.MainController.prototype.info = function() {
 /**
  * @export
  */
-exports.MainController.prototype.warn = function() {
+MainController.prototype.warn = function() {
   this.disclaimer.warn(this.warningMsg_);
 };
 
@@ -121,7 +120,7 @@ exports.MainController.prototype.warn = function() {
 /**
  * @export
  */
-exports.MainController.prototype.error = function() {
+MainController.prototype.error = function() {
   this.disclaimer.error(this.errorMsg_);
 };
 
@@ -131,7 +130,7 @@ exports.MainController.prototype.error = function() {
  * this case, it's shown in the map.
  * @export
  */
-exports.MainController.prototype.inMap = function() {
+MainController.prototype.inMap = function() {
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.alert({
       msg: message,
@@ -147,7 +146,7 @@ exports.MainController.prototype.inMap = function() {
  * instead of clicking on the close button.
  * @export
  */
-exports.MainController.prototype.closeAll = function() {
+MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.successMsg_,
@@ -179,7 +178,7 @@ exports.MainController.prototype.closeAll = function() {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

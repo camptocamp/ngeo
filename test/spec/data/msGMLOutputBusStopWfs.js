@@ -1,6 +1,4 @@
-/**
- */
-const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
+export default '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +
 '   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"' +
 '   xmlns:gml="http://www.opengis.net/gml"' +
@@ -111,6 +109,3 @@ const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '      </ms:bus_stop>' +
 '    </gml:featureMember>' +
 '</wfs:FeatureCollection>';
-
-
-export default exports;

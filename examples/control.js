@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './control.css';
 import angular from 'angular';
@@ -16,7 +15,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscControlComponent.name,
@@ -27,7 +26,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -52,10 +51,10 @@ exports.MainController = function() {
   this.control = new olControlMousePosition({
     className: 'mouse-position'
   });
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

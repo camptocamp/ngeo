@@ -1,9 +1,19 @@
-/**
- */
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
+
+
+/**
+ * @enum {string}
+ */
+export const EventType = {
+  /**
+   * Triggered when the theme name change.
+   */
+  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
+};
+
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
@@ -27,7 +37,7 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
+function Manager($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   gmfTreeManager, ngeoStateManager) {
 
   /**
@@ -65,7 +75,7 @@ const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
    * @private
    */
   this.themeName_ = '';
-};
+}
 
 
 /**
@@ -76,7 +86,7 @@ const exports = function($rootScope, gmfThemes, gmfTreeManagerModeFlush,
  *     the theme should be added but it's already added.
  * @export
  */
-exports.prototype.addTheme = function(theme, opt_silent) {
+Manager.prototype.addTheme = function(theme, opt_silent) {
   if (this.modeFlush) {
     this.ngeoStateManager_.updateState({
       'theme': theme.name
@@ -93,7 +103,7 @@ exports.prototype.addTheme = function(theme, opt_silent) {
  * @return {string} The theme name. Will be empty on 'not flush' mode.
  * @export
  */
-exports.prototype.getThemeName = function() {
+Manager.prototype.getThemeName = function() {
   return this.themeName_;
 };
 
@@ -102,7 +112,7 @@ exports.prototype.getThemeName = function() {
  * @return {boolean} true if the theme is loading.
  * @export
  */
-exports.prototype.isLoading = function() {
+Manager.prototype.isLoading = function() {
   return !this.gmfThemes_.loaded;
 };
 
@@ -110,10 +120,10 @@ exports.prototype.isLoading = function() {
  * @param {string} name The new theme name.
  * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
  */
-exports.prototype.setThemeName = function(name, opt_silent) {
+Manager.prototype.setThemeName = function(name, opt_silent) {
   this.themeName_ = name;
   if (!opt_silent) {
-    this.$rootScope_.$emit(exports.EventType.THEME_NAME_SET, name);
+    this.$rootScope_.$emit(EventType.THEME_NAME_SET, name);
   }
 };
 
@@ -122,37 +132,26 @@ exports.prototype.setThemeName = function(name, opt_silent) {
  * Remove all groups.
  * @export
  */
-exports.prototype.removeAll = function() {
+Manager.prototype.removeAll = function() {
   this.gmfTreeManager_.removeAll();
-};
-
-
-/**
- * @enum {string}
- */
-exports.EventType = {
-  /**
-   * Triggered when the theme name change.
-   */
-  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
 };
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfThemeManager', [
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoStatemanagerService.module.name,
+const module = angular.module('gmfThemeManager', [
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
+  ngeoStatemanagerService.name,
 ]);
 
 /**
  * The default value for `modeFlush` that `gmf.layertree.TreeManager` is initialized with.
  */
-exports.module.value('gmfTreeManagerModeFlush', true);
+module.value('gmfTreeManagerModeFlush', true);
 
-exports.module.service('gmfThemeManager', exports);
+module.service('gmfThemeManager', Manager);
 
 
-export default exports;
+export default module;

@@ -36,7 +36,7 @@ import {select as d3select} from 'd3';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoProfile', [
+const module = angular.module('ngeoProfile', [
   ngeoMiscDebounce.name
 ]);
 
@@ -159,7 +159,7 @@ function directive(ngeoDebounce) {
   };
 }
 
-exports.directive('ngeoProfile', directive);
+module.directive('ngeoProfile', directive);
 
 
-export default exports;
+export default module;

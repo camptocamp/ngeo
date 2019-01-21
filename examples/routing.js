@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 /**
  * This example shows the ngeo routing directive.
@@ -19,7 +18,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoRoutingModule.name
@@ -31,7 +30,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -54,9 +53,9 @@ exports.MainController = function() {
    * @export
    */
   this.routingfeatureActive = true;
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

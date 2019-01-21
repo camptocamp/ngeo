@@ -65,7 +65,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  */
 
 
-const exports = class {
+class MapQuerent {
 
   /**
    * The ngeo Map Querent is the service bound to a map that issues
@@ -337,30 +337,30 @@ const exports = class {
     this.cleared_ = false;
   }
 
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoMapQuerent', [
-  ngeoDatasourceDataSources.module.name,
-  ngeoDatasourceHelper.module.name,
-  ngeoQueryQuerent.module.name,
-  ngeoMiscFeatureHelper.module.name,
+const module = angular.module('ngeoMapQuerent', [
+  ngeoDatasourceDataSources.name,
+  ngeoDatasourceHelper.name,
+  ngeoQueryQuerent.name,
+  ngeoMiscFeatureHelper.name,
 ]);
-exports.module.service('ngeoMapQuerent', exports);
+module.service('ngeoMapQuerent', MapQuerent);
 
 
 /**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-exports.module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
+module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
   sources: [],
   total: 0,
   pending: false
 }));
 
 
-export default exports;
+export default module;

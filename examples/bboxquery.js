@@ -1,9 +1,5 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
-import appURL from './url.js';
+import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url.js';
 import './bboxquery.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
@@ -23,21 +19,21 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} */
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
-  ngeoDatasourceDataSources.module.name,
+  ngeoDatasourceDataSources.name,
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
   ngeoQueryModule.name
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
 });
 
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -47,12 +43,12 @@ exports.module.value('ngeoQueryOptions', {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.queryresultComponent = {
+const queryresultComponent = {
   controller: 'AppQueryresultController',
   templateUrl: 'partials/queryresult'
 };
 
-exports.module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', queryresultComponent);
 
 
 /**
@@ -60,7 +56,7 @@ exports.module.component('appQueryresult', exports.queryresultComponent);
  * @constructor
  * @ngInject
  */
-exports.QueryresultController = function(ngeoQueryResult) {
+function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {QueryResult}
@@ -68,10 +64,10 @@ exports.QueryresultController = function(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 
-};
+}
 
 
-exports.module.controller('AppQueryresultController', exports.QueryresultController);
+module.controller('AppQueryresultController', QueryresultController);
 
 
 /**
@@ -81,7 +77,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoDataSources) {
+function MainController($scope, ngeoDataSources) {
 
   /**
    * @type {boolean}
@@ -91,14 +87,14 @@ exports.MainController = function($scope, ngeoDataSources) {
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });
@@ -129,8 +125,8 @@ exports.MainController = function($scope, ngeoDataSources) {
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wfsFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-    wfsUrl: appURL.MAPSERVER_PROXY,
+    wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
+    wfsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -141,16 +137,16 @@ exports.MainController = function($scope, ngeoDataSources) {
     id: 2,
     name: 'information',
     visible: true,
-    wfsFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-    wfsUrl: appURL.MAPSERVER_PROXY,
+    wfsFeatureNS: MAPSERVER_WFS_FEATURE_NS,
+    wfsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'information',
       queryable: true
     }]
   }));
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

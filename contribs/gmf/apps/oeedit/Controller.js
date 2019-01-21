@@ -38,7 +38,7 @@ if (!window.requestAnimationFrame) {
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector, $timeout) {
+function Controller($scope, $injector, $timeout) {
 
   /**
    * @type {boolean}
@@ -216,25 +216,25 @@ const exports = function($scope, $injector, $timeout) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(Controller, gmfControllersAbstractDesktopController);
 
-exports.module = angular.module('Appoeedit', [
-  appBase.module.name,
-  gmfControllersAbstractDesktopController.module.name,
+const module = angular.module('Appoeedit', [
+  appBase.name,
+  gmfControllersAbstractDesktopController.name,
   gmfObjecteditingModule.name,
 ]);
 
-exports.module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
 });
 
-exports.module.value('gmfPermalinkOptions', /** @type {gmfx.PermalinkOptions} */ ({
+module.value('gmfPermalinkOptions', /** @type {gmfx.PermalinkOptions} */ ({
   pointRecenterZoom: 10
 }));
 
-exports.module.controller('OEEditController', exports);
+module.controller('OEEditController', Controller);
 
-export default exports;
+export default module;

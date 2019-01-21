@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfBase from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
@@ -29,14 +27,14 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfSearch', [
-  gmfLayertreeTreeManager.module.name,
-  gmfSearchFulltextSearch.module.name,
-  gmfThemeThemes.module.name,
-  ngeoMiscAutoProjection.module.name,
+const module = angular.module('gmfSearch', [
+  gmfLayertreeTreeManager.name,
+  gmfSearchFulltextSearch.name,
+  gmfThemeThemes.name,
+  ngeoMiscAutoProjection.name,
   ngeoMiscColorpickerComponent.name,
   ngeoSearchModule.name,
-  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMapFeatureOverlayMgr.name,
   ngeoMessagePopoverComponent.name,
 ]);
 
@@ -46,13 +44,13 @@ const exports = angular.module('gmfSearch', [
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
-exports.gmfSearchTemplateUrl_ = (element, attrs) => {
+function gmfSearchTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfSearchTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
     'gmf/search';
-};
+}
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/search', require('./component.html'));
 });
 
@@ -174,11 +172,11 @@ const component = {
 };
 
 
-exports.value('gmfSearchTemplateUrl', exports.gmfSearchTemplateUrl_);
+module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
 
 // Register the controller in the module
-exports.component('gmfSearch', component);
+module.component('gmfSearch', component);
 
 
 /**
@@ -1079,7 +1077,7 @@ class SearchController {
 
 
 // Register the controller in the module
-exports.controller('gmfSearchController', SearchController);
+module.controller('gmfSearchController', SearchController);
 
 
-export default exports;
+export default module;

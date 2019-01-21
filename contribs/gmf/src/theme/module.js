@@ -10,6 +10,6 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  */
 export default angular.module('gmfThemeModule', [
   gmfThemeSelectorComponent.name,
-  gmfThemeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfThemeManager.name,
+  gmfThemeThemes.name,
 ]);

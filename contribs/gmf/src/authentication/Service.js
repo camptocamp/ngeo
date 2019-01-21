@@ -1,8 +1,19 @@
-/**
- */
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
+
+
+/**
+ * @enum {string}
+ */
+export const RouteSuffix = {
+  CHANGE_PASSWORD: 'loginchange',
+  IS_LOGGED_IN: 'loginuser',
+  LOGIN: 'login',
+  LOGOUT: 'logout',
+  RESET_PASSWORD: 'loginresetpassword'
+};
+
 
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
@@ -18,7 +29,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  *
  * @extends {import("ol/events/EventTarget.js").default}
  */
-const exports = class extends olEventsEventTarget {
+class Service extends olEventsEventTarget {
 
   /**
    * @param {angular.IHttpService} $http Angular http service.
@@ -76,7 +87,7 @@ const exports = class extends olEventsEventTarget {
    * @private
    */
   load_() {
-    const url = `${this.baseUrl_}/${exports.RouteSuffix.IS_LOGGED_IN}`;
+    const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
     this.$http_.get(url, {withCredentials: true}).then(
       this.handleLogin_.bind(this, true)
     );
@@ -90,7 +101,7 @@ const exports = class extends olEventsEventTarget {
    * @export
    */
   changePassword(oldPwd, newPwd, confPwd) {
-    const url = `${this.baseUrl_}/${exports.RouteSuffix.CHANGE_PASSWORD}`;
+    const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
 
     return this.$http_.post(url, $.param({
       'oldPassword': oldPwd,
@@ -111,7 +122,7 @@ const exports = class extends olEventsEventTarget {
    * @export
    */
   login(login, pwd) {
-    const url = `${this.baseUrl_}/${exports.RouteSuffix.LOGIN}`;
+    const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
 
     return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -126,7 +137,7 @@ const exports = class extends olEventsEventTarget {
    */
   logout() {
     const noReload = this.user_['role_name'] === this.noReloadRole_;
-    const url = `${this.baseUrl_}/${exports.RouteSuffix.LOGOUT}`;
+    const url = `${this.baseUrl_}/${RouteSuffix.LOGOUT}`;
     return this.$http_.get(url, {withCredentials: true}).then(() => {
       this.resetUser_(noReload);
     });
@@ -138,7 +149,7 @@ const exports = class extends olEventsEventTarget {
    * @export
    */
   resetPassword(login) {
-    const url = `${this.baseUrl_}/${exports.RouteSuffix.RESET_PASSWORD}`;
+    const url = `${this.baseUrl_}/${RouteSuffix.RESET_PASSWORD}`;
 
     /**
      * @param {angular.IHttpResponse} resp Ajax response.
@@ -222,26 +233,16 @@ const exports = class extends olEventsEventTarget {
       this.load_();
     }
   }
-};
+}
 
-/**
- * @enum {string}
- */
-exports.RouteSuffix = {
-  CHANGE_PASSWORD: 'loginchange',
-  IS_LOGGED_IN: 'loginuser',
-  LOGIN: 'login',
-  LOGOUT: 'logout',
-  RESET_PASSWORD: 'loginresetpassword'
-};
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfAuthenticationService', []);
-exports.module.service('gmfAuthenticationService', exports);
+const module = angular.module('gmfAuthenticationService', []);
+module.service('gmfAuthenticationService', Service);
 
-exports.module.value('gmfUser', {
+module.value('gmfUser', {
   'functionalities': null,
   'is_password_changed': null,
   'role_id': null,
@@ -250,4 +251,4 @@ exports.module.value('gmfUser', {
 });
 
 
-export default exports;
+export default module;

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 
@@ -9,7 +7,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 
 import ngeoGridComponent from 'ngeo/grid/component.js';
 
-import ngeoGridConfig from 'ngeo/grid/Config.js';
+import ngeoGridConfig, {getRowUid, GridConfig} from 'ngeo/grid/Config.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
@@ -28,17 +26,17 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfQueryGridComponent', [
-  ngeoDownloadCsv.module.name,
+const module = angular.module('gmfQueryGridComponent', [
+  ngeoDownloadCsv.name,
   ngeoDownloadService.name,
   ngeoGridComponent.name,
-  ngeoGridConfig.module.name,
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoQueryMapQuerent.module.name,
+  ngeoGridConfig.name,
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoQueryMapQuerent.name,
 ]);
 
 
-exports.value('gmfDisplayquerygridTemplateUrl',
+module.value('gmfDisplayquerygridTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -51,7 +49,7 @@ exports.value('gmfDisplayquerygridTemplateUrl',
   }
 );
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
 });
 
@@ -123,7 +121,7 @@ const component = {
 };
 
 
-exports.component('gmfDisplayquerygrid', component);
+module.component('gmfDisplayquerygrid', component);
 
 
 /**
@@ -569,7 +567,7 @@ Controller.prototype.collectData_ = function(source) {
       }
 
       allProperties.push(properties);
-      featuresForSource[ngeoGridConfig.getRowUid(properties)] = feature;
+      featuresForSource[getRowUid(properties)] = feature;
     }
   });
 
@@ -685,7 +683,7 @@ Controller.prototype.getGridConfiguration_ = function(data) {
   });
 
   if (columnDefs.length > 0) {
-    return new ngeoGridConfig(data, columnDefs);
+    return new GridConfig(data, columnDefs);
   } else {
     // no columns, do not show grid
     return null;
@@ -919,7 +917,7 @@ Controller.prototype.downloadCsv = function() {
 };
 
 
-exports.controller('GmfDisplayquerygridController', Controller);
+module.controller('GmfDisplayquerygridController', Controller);
 
 
-export default exports;
+export default module;

@@ -160,7 +160,7 @@ import {
  * @param {ProfileOptions} options Profile options.
  * @export
  */
-const exports = function(options) {
+function d3Elevation(options) {
   /**
    * Whether the simplified profile should be shown.
    * @type {boolean}
@@ -720,9 +720,8 @@ const exports = function(options) {
     profile.showPois([]);
   }
 
-
   return profile;
-};
+}
 
 
-export default exports;
+export default d3Elevation;

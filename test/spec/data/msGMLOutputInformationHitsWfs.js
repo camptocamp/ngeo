@@ -1,6 +1,4 @@
-/**
- */
-const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
+export default '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '<wfs:FeatureCollection' +
 '   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"' +
 '   xmlns:gml="http://www.opengis.net/gml"' +
@@ -10,6 +8,3 @@ const exports = '<?xml version=\'1.0\' encoding="UTF-8" ?>' +
 '   xsi:schemaLocation="http://mapserver.gis.umn.edu/mapserver https://geomapfish-demo-dc.camptocamp.com/2.4/mapserv?SERVICE=WFS&amp;VERSION=1.1.0&amp;REQUEST=DescribeFeatureType&amp;TYPENAME=feature:information,feature:bus_stop&amp;OUTPUTFORMAT=SFE_XMLSCHEMA  http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.1.0/wfs.xsd"' +
 '   numberOfFeatures="3">' +
 '</wfs:FeatureCollection>';
-
-
-export default exports;

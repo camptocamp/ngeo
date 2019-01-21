@@ -11,7 +11,7 @@ import {toRadians} from 'ol/math.js';
  * @ngdoc service
  * @ngname ngeoPrintUtils
  */
-const exports = function() {
+function Utils() {
 
   /**
    * @type {number}
@@ -25,21 +25,19 @@ const exports = function() {
    */
   this.extentHalfVerticalDistance_;
 
-};
+}
 
 
 /**
  * @const
- * @private
  */
-exports.INCHES_PER_METER_ = 39.37;
+export const INCHES_PER_METER = 39.37;
 
 
 /**
  * @const
- * @private
  */
-exports.DOTS_PER_INCH_ = 72;
+export const DOTS_PER_INCH = 72;
 
 
 /**
@@ -56,7 +54,7 @@ exports.DOTS_PER_INCH_ = 72;
  * listener.
  * @export
  */
-exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
+Utils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
   const self = this;
 
   return (
@@ -79,8 +77,8 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
       const width = size[0] * olHas.DEVICE_PIXEL_RATIO;
       const scale = getScale(frameState);
 
-      const ppi = exports.DOTS_PER_INCH_;
-      const ipm = exports.INCHES_PER_METER_;
+      const ppi = DOTS_PER_INCH;
+      const ipm = INCHES_PER_METER;
 
       const extentHalfWidth =
            (((width / ppi) / ipm) * scale / resolution) / 2;
@@ -126,7 +124,7 @@ exports.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_r
  * @param {number} extentHalfHeight Extent half height.
  * @private
  */
-exports.prototype.drawPrintZone_ = function(context, center,
+Utils.prototype.drawPrintZone_ = function(context, center,
   extentHalfWidth, extentHalfHeight) {
   const minx = center[0] - extentHalfWidth;
   const miny = center[1] - extentHalfHeight;
@@ -150,7 +148,7 @@ exports.prototype.drawPrintZone_ = function(context, center,
  * @param {number} rotation Rotation value in radians.
  * @private
  */
-exports.prototype.drawPrintZoneWithRotation_ = function(context, center,
+Utils.prototype.drawPrintZoneWithRotation_ = function(context, center,
   extentHalfWidth, extentHalfHeight, rotation) {
   // diagonal = distance p1 to center.
   const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
@@ -192,16 +190,14 @@ exports.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * in `printMapScales`.
  * @export
  */
-exports.prototype.getOptimalScale = function(
+Utils.prototype.getOptimalScale = function(
   mapSize, mapResolution, printMapSize, printMapScales) {
 
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
 
-  const scaleWidth = mapWidth * exports.INCHES_PER_METER_ *
-      exports.DOTS_PER_INCH_ / printMapSize[0];
-  const scaleHeight = mapHeight * exports.INCHES_PER_METER_ *
-      exports.DOTS_PER_INCH_ / printMapSize[1];
+  const scaleWidth = mapWidth * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[0];
+  const scaleHeight = mapHeight * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[1];
 
   const scale = Math.min(scaleWidth, scaleHeight);
 
@@ -224,16 +220,12 @@ exports.prototype.getOptimalScale = function(
  * @return {number} The optimal map resolution.
  * @export
  */
-exports.prototype.getOptimalResolution = function(
-  mapSize, printMapSize, printMapScale) {
+Utils.prototype.getOptimalResolution = function(mapSize, printMapSize, printMapScale) {
 
-  const dotsPerMeter =
-      exports.DOTS_PER_INCH_ * exports.INCHES_PER_METER_;
+  const dotsPerMeter = DOTS_PER_INCH * INCHES_PER_METER;
 
-  const resolutionX = (printMapSize[0] * printMapScale) /
-      (dotsPerMeter * mapSize[0]);
-  const resolutionY = (printMapSize[1] * printMapScale) /
-      (dotsPerMeter * mapSize[1]);
+  const resolutionX = (printMapSize[0] * printMapScale) / (dotsPerMeter * mapSize[0]);
+  const resolutionY = (printMapSize[1] * printMapScale) / (dotsPerMeter * mapSize[1]);
 
   const optimalResolution = Math.max(resolutionX, resolutionY);
 
@@ -246,7 +238,7 @@ exports.prototype.getOptimalResolution = function(
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom left corner.
  */
-exports.prototype.getBottomLeftCorner = function(mapCenter) {
+Utils.prototype.getBottomLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
     mapCenter[1] - this.extentHalfVerticalDistance_];
 };
@@ -257,7 +249,7 @@ exports.prototype.getBottomLeftCorner = function(mapCenter) {
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.ç
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom right corner.
  */
-exports.prototype.getBottomRightCorner = function(mapCenter) {
+Utils.prototype.getBottomRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
     mapCenter[1] - this.extentHalfVerticalDistance_];
 };
@@ -268,7 +260,7 @@ exports.prototype.getBottomRightCorner = function(mapCenter) {
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up left corner.
  */
-exports.prototype.getUpLeftCorner = function(mapCenter) {
+Utils.prototype.getUpLeftCorner = function(mapCenter) {
   return [mapCenter[0] - this.extentHalfHorizontalDistance_,
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
@@ -279,7 +271,7 @@ exports.prototype.getUpLeftCorner = function(mapCenter) {
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up right corner.
  */
-exports.prototype.getUpRightCorner = function(mapCenter) {
+Utils.prototype.getUpRightCorner = function(mapCenter) {
   return [mapCenter[0] + this.extentHalfHorizontalDistance_,
     mapCenter[1] + this.extentHalfVerticalDistance_];
 };
@@ -287,8 +279,8 @@ exports.prototype.getUpRightCorner = function(mapCenter) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoPrintUtils', []);
-exports.module.service('ngeoPrintUtils', exports);
+const module = angular.module('ngeoPrintUtils', []);
+module.service('ngeoPrintUtils', Utils);
 
 
-export default exports;
+export default module;

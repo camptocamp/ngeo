@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent.js';
@@ -17,19 +14,29 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
+
+/**
+ * @enum {string}
+ */
+const ProcessType = {
+  ADD: 'add',
+  DELETE: 'delete'
+};
+
+
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfObjecteditingToolsComponent', [
+const module = angular.module('gmfObjecteditingToolsComponent', [
   gmfObjecteditingGetWMSFeatureComponent.name,
   ngeoEditingCreatefeatureComponent.name,
   ngeoEditingCreateregularpolygonfromclickComponent.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
 });
 
@@ -40,7 +47,7 @@ exports.run(/* @ngInject */ ($templateCache) => {
  * of keys and their possible values, see in gmfx.js, under:
  * `gmfx.ObjectEditingToolsOptions`.
  */
-exports.value('gmfObjectEditingToolsOptions', {});
+module.value('gmfObjectEditingToolsOptions', {});
 
 
 /**
@@ -105,7 +112,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfObjecteditingtools', directive);
+module.directive('gmfObjecteditingtools', directive);
 
 
 /**
@@ -226,7 +233,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.drawActive = false;
 
   this.registerTool_('drawActive',
-    exports.ProcessType.ADD);
+    ProcessType.ADD);
 
   /**
    * @type {boolean}
@@ -235,7 +242,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.eraseActive = false;
 
   this.registerTool_('eraseActive',
-    exports.ProcessType.DELETE);
+    ProcessType.DELETE);
 
   /**
    * @type {boolean}
@@ -260,13 +267,13 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
     oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive',
-    exports.ProcessType.ADD);
+    ProcessType.ADD);
 
   this.registerTool_('copyFromActive',
-    exports.ProcessType.ADD, true);
+    ProcessType.ADD, true);
 
   this.registerTool_('deleteFromActive',
-    exports.ProcessType.DELETE, true);
+    ProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
@@ -365,15 +372,7 @@ Controller.prototype.handleToolActiveChange_ = function(
 Controller.prototype.handleDestroy_ = function() {};
 
 
-exports.controller('GmfObjecteditingtoolsController', Controller);
-
-/**
- * @enum {string}
- */
-exports.ProcessType = {
-  ADD: 'add',
-  DELETE: 'delete'
-};
+module.controller('GmfObjecteditingtoolsController', Controller);
 
 
-export default exports;
+export default module;

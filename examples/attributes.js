@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
@@ -11,7 +10,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} */
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoEditingAttributesComponent.name,
@@ -25,7 +24,7 @@ exports.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($http, $timeout, $scope) {
+function MainController($http, $timeout, $scope) {
 
   /**
    * @type {angular.ITimeoutService}
@@ -83,7 +82,7 @@ exports.MainController = function($http, $timeout, $scope) {
       }
     }
   );
-};
+}
 
 
 /**
@@ -91,7 +90,7 @@ exports.MainController = function($http, $timeout, $scope) {
  * @return {Array.<Attribute>} List of attributes.
  * @private
  */
-exports.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
+MainController.prototype.handleXSDAttributeGet_ = function(resp) {
   const format = new ngeoFormatXSDAttribute();
   const attributes = format.read(resp.data);
   this.attributes = attributes;
@@ -102,7 +101,7 @@ exports.MainController.prototype.handleXSDAttributeGet_ = function(resp) {
 /**
  * @export
  */
-exports.MainController.prototype.updateName = function() {
+MainController.prototype.updateName = function() {
   this.timeout_(() => {
     this.feature.set('name', 'An alternate name');
   }, 0);
@@ -111,12 +110,12 @@ exports.MainController.prototype.updateName = function() {
 /**
  * @param {string} newMessage New message to add to log.
  */
-exports.MainController.prototype.appendLog = function(newMessage) {
+MainController.prototype.appendLog = function(newMessage) {
   this.log = `${newMessage}\n${this.log}`;
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

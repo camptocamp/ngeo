@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import {WMSInfoFormat} from 'ngeo/datasource/OGC.js';
@@ -18,7 +16,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @constructor
  * @ngInject
  */
-const exports = function($http, $q, gmfThemes) {
+function Query($http, $q, gmfThemes) {
 
   /**
    * @type {angular.IHttpService}
@@ -44,14 +42,14 @@ const exports = function($http, $q, gmfThemes) {
    */
   this.getQueryableLayerNodesDefered_ = null;
 
-};
+}
 
 
 /**
  * @return {angular.IPromise} Promise.
  * @export
  */
-exports.prototype.getQueryableLayersInfo = function() {
+Query.prototype.getQueryableLayersInfo = function() {
 
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
@@ -63,7 +61,7 @@ exports.prototype.getQueryableLayersInfo = function() {
 
         // Get all queryable nodes
         const allQueryableLayersInfo =
-            exports.getQueryableLayersInfoFromThemes(
+            getQueryableLayersInfoFromThemes(
               themes,
               ogcServers
             );
@@ -97,7 +95,7 @@ exports.prototype.getQueryableLayersInfo = function() {
  *     queryable layers information.
  * @export
  */
-exports.getQueryableLayersInfoFromThemes = function(
+function getQueryableLayersInfoFromThemes(
   themes, ogcServers
 ) {
   const queryableLayersInfo = [];
@@ -142,7 +140,7 @@ exports.getQueryableLayersInfoFromThemes = function(
   }
 
   return queryableLayersInfo;
-};
+}
 
 
 /**
@@ -158,7 +156,7 @@ exports.getQueryableLayersInfoFromThemes = function(
  * @return {angular.IPromise} Promise.
  * @export
  */
-exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
+Query.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
   const resolution = /** @type {number} */(view.getResolution());
@@ -198,10 +196,10 @@ exports.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfObjectEditingQuery', [
-  gmfThemeThemes.module.name,
+const module = angular.module('gmfObjectEditingQuery', [
+  gmfThemeThemes.name,
 ]);
-exports.module.service('gmfObjectEditingQuery', exports);
+module.service('gmfObjectEditingQuery', Query);
 
 
-export default exports;
+export default module;

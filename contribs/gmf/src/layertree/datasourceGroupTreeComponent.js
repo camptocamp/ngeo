@@ -7,17 +7,17 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
-  ngeoDatasourceDataSources.module.name,
+const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
+  ngeoDatasourceDataSources.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
 });
 
 
-exports.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
+module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -128,7 +128,7 @@ class Controller {
 }
 
 
-exports.component('gmfDatasourcegrouptree', {
+module.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<'
   },
@@ -137,4 +137,4 @@ exports.component('gmfDatasourcegrouptree', {
 });
 
 
-export default exports;
+export default module;

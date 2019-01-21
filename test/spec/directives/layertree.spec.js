@@ -1,7 +1,7 @@
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import {getFirstParentTree, VisitorDecision} from 'ngeo/layertree/Controller.js';
 
 describe('ngeo.layertree.component', () => {
 
@@ -128,8 +128,8 @@ describe('ngeo.layertree.component', () => {
     const treeNode0 = roottreeCtrl.children[0];
     const treeLeaf01 = treeNode0.children[1];
     const treeLeaf1 = roottreeCtrl.children[1];
-    expect(ngeoLayertreeController.getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
-    expect(ngeoLayertreeController.getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
+    expect(getFirstParentTree(treeLeaf01).node.name).toBe(treeNode0.node.name);
+    expect(getFirstParentTree(treeLeaf1).node.name).toBe(treeLeaf1.node.name);
   });
 
   it('Traverse tree', () => {
@@ -144,7 +144,7 @@ describe('ngeo.layertree.component', () => {
     visited = '';
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
-      return ngeoLayertreeController.VisitorDecision.STOP;
+      return VisitorDecision.STOP;
     });
     expect(visited).toBe(', Root');
 
@@ -153,7 +153,7 @@ describe('ngeo.layertree.component', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Leaf 01') {
-        return ngeoLayertreeController.VisitorDecision.STOP;
+        return VisitorDecision.STOP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01');
@@ -163,7 +163,7 @@ describe('ngeo.layertree.component', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Node 0') {
-        return ngeoLayertreeController.VisitorDecision.SKIP;
+        return VisitorDecision.SKIP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 1');

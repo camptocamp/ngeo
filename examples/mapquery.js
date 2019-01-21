@@ -1,9 +1,5 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
-import appURL from './url.js';
+import {MAPSERVER_PROXY} from './url.js';
 import './mapquery.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
@@ -27,23 +23,23 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
-  ngeoDatasourceDataSources.module.name,
+  ngeoDatasourceDataSources.name,
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
   ngeoQueryMapQueryComponent.name,
   ngeoQueryModule.name,
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
 });
 
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
@@ -53,12 +49,12 @@ exports.module.value('ngeoQueryOptions', {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.queryresultComponent = {
+const queryresultComponent = {
   controller: 'AppQueryresultController',
   templateUrl: 'partials/queryresult'
 };
 
-exports.module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', queryresultComponent);
 
 
 /**
@@ -66,7 +62,7 @@ exports.module.component('appQueryresult', exports.queryresultComponent);
  * @constructor
  * @ngInject
  */
-exports.QueryresultController = function(ngeoQueryResult) {
+function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {QueryResult}
@@ -74,10 +70,10 @@ exports.QueryresultController = function(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 
-};
+}
 
 
-exports.module.controller('AppQueryresultController', exports.QueryresultController);
+module.controller('AppQueryresultController', QueryresultController);
 
 
 /**
@@ -88,7 +84,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) {
+function MainController($scope, ngeoDataSources, ngeoToolActivateMgr) {
 
   /**
    * @type {boolean}
@@ -104,14 +100,14 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
 
   const busStopLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'bus_stop'}
     })
   });
 
   const informationLayer = new olLayerImage({
     'source': new olSourceImageWMS({
-      'url': appURL.MAPSERVER_PROXY,
+      'url': MAPSERVER_PROXY,
       params: {'LAYERS': 'information'}
     })
   });
@@ -142,7 +138,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
     id: 1,
     name: 'bus_stop',
     visible: true,
-    wmsUrl: appURL.MAPSERVER_PROXY,
+    wmsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'bus_stop',
       queryable: true
@@ -153,7 +149,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
     id: 2,
     name: 'information',
     visible: true,
-    wmsUrl: appURL.MAPSERVER_PROXY,
+    wmsUrl: MAPSERVER_PROXY,
     ogcLayers: [{
       name: 'information',
       queryable: true
@@ -166,7 +162,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate);
 
-};
+}
 
 
 /**
@@ -174,7 +170,7 @@ exports.MainController = function($scope, ngeoDataSources, ngeoToolActivateMgr) 
  * @return {boolean|undefined} Value.
  * @export
  */
-exports.MainController.prototype.getSetDummyActive = function(val) {
+MainController.prototype.getSetDummyActive = function(val) {
   if (val !== undefined) {
     this.dummyActive = val;
   } else {
@@ -183,7 +179,7 @@ exports.MainController.prototype.getSetDummyActive = function(val) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

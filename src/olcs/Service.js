@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
@@ -126,11 +124,9 @@ const Service = class {
 const name = 'ngeoOlcsService';
 Service.module = angular.module(name, [
   ngeoMiscDebounce.name,
-  ngeoStatemanagerLocation.module.name,
-  ngeoStatemanagerService.module.name,
+  ngeoStatemanagerLocation.name,
+  ngeoStatemanagerService.name,
 ]).service(name, Service);
 
-const exports = Service;
 
-
-export default exports;
+export default module;

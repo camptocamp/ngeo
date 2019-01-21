@@ -4,7 +4,7 @@ import * as olProj from 'ol/proj.js';
 import * as olFormatFilter from 'ol/format/filter.js';
 import olFormatFilterEqualTo from 'ol/format/filter/EqualTo.js';
 import olFormatFilterLogicalNary from 'ol/format/filter/LogicalNary.js';
-import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
+import {WfsPermalinkService} from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoTestDataMsGMLOutputFuel from 'ngeo/test/data/msGMLOutputFuel.js';
 
 describe('ngeo.statemanager.WfsPermalink', () => {
@@ -32,7 +32,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   });
 
   it('creates a service', () => {
-    expect(ngeoWfsPermalink instanceof ngeoStatemanagerWfsPermalink).toBe(true);
+    expect(ngeoWfsPermalink instanceof WfsPermalinkService).toBe(true);
   });
 
   describe('#issue', () => {

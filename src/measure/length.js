@@ -11,8 +11,8 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMeasurelength', [
-  ngeoDrawController.module.name,
+const module = angular.module('ngeoMeasurelength', [
+  ngeoDrawController.name,
   ngeoMiscFilters.name,
 ]);
 
@@ -71,7 +71,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
 }
 
 
-exports.directive('ngeoMeasurelength', directive);
+module.directive('ngeoMeasurelength', directive);
 
 
-export default exports;
+export default module;

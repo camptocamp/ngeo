@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
 
@@ -20,7 +18,17 @@ import olCollection from 'ol/Collection.js';
  */
 
 
-const exports = class {
+/**
+ * @enum {string}
+ */
+const VisibilityState = {
+  INDETERMINATE: 'indeterminate',
+  OFF: 'off',
+  ON: 'on'
+};
+
+
+class Group {
 
   /**
    * A Group data source combines multiple `ngeo.datasource.DataSource` objects.
@@ -109,10 +117,10 @@ const exports = class {
       } else {
         const otherState = this.getDataSourceState(dataSource);
         if (otherState !== state) {
-          state = exports.VisibilityState.INDETERMINATE;
+          state = VisibilityState.INDETERMINATE;
         }
       }
-      if (state === exports.VisibilityState.INDETERMINATE) {
+      if (state === VisibilityState.INDETERMINATE) {
         break;
       }
     }
@@ -134,8 +142,8 @@ const exports = class {
    */
   getDataSourceState(dataSource) {
     return dataSource.visible ?
-      exports.VisibilityState.ON :
-      exports.VisibilityState.OFF;
+      VisibilityState.ON :
+      VisibilityState.OFF;
   }
 
   /**
@@ -166,24 +174,14 @@ const exports = class {
    */
   toggleVisibilityState() {
     const visibleToSet =
-        this.visibilityState !== exports.VisibilityState.ON;
+        this.visibilityState !== VisibilityState.ON;
     for (const dataSource of this.dataSources) {
       if (dataSource.visible !== visibleToSet) {
         dataSource.visible = visibleToSet;
       }
     }
   }
-};
+}
 
 
-/**
- * @enum {string}
- */
-exports.VisibilityState = {
-  INDETERMINATE: 'indeterminate',
-  OFF: 'off',
-  ON: 'on'
-};
-
-
-export default exports;
+export default Group;

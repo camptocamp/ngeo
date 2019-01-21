@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
@@ -36,7 +34,7 @@ import olStyleText from 'ol/style/Text.js';
  * @ngInject
  * @export
  */
-const exports = function(config, $scope, $injector) {
+function AbstractDesktopController(config, $scope, $injector) {
 
   gmfControllersAbstractAPIController.call(this, config, $scope, $injector);
 
@@ -231,9 +229,9 @@ const exports = function(config, $scope, $injector) {
     ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
   );
   this.setDataPanelMaxResizableWidth_();
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractAPIController);
+olUtilInherits(AbstractDesktopController, gmfControllersAbstractAPIController);
 
 /**
  * Set the data panel (on the left) maximum resizable width depending
@@ -244,7 +242,7 @@ olUtilInherits(exports, gmfControllersAbstractAPIController);
  * resize it as well.
  * @private
  */
-exports.prototype.setDataPanelMaxResizableWidth_ = function() {
+AbstractDesktopController.prototype.setDataPanelMaxResizableWidth_ = function() {
 
   let rightPanelWidth = 320;
   if (this.googleStreetViewActive) {
@@ -267,8 +265,8 @@ exports.prototype.setDataPanelMaxResizableWidth_ = function() {
   }
 };
 
-exports.module = angular.module('GmfAbstractDesktopControllerModule', [
-  gmfControllersAbstractAPIController.module.name,
+const module = angular.module('GmfAbstractDesktopControllerModule', [
+  gmfControllersAbstractAPIController.name,
   gmfContextualdataModule.name,
   gmfEditingModule.name,
   gmfPermalinkShareComponent.name,
@@ -279,12 +277,10 @@ exports.module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfImportModule.name,
 ]);
 
-exports.module.controller(
-  'AbstractDesktopController',
-  exports);
+module.controller('AbstractDesktopController', AbstractDesktopController);
 
-exports.module.value('ngeoMeasurePrecision', 3);
-exports.module.value('ngeoMeasureDecimals', 0);
+module.value('ngeoMeasurePrecision', 3);
+module.value('ngeoMeasureDecimals', 0);
 
 
-export default exports;
+export default module;

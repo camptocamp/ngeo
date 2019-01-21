@@ -91,33 +91,31 @@ AngularJS module, and this module must require all modules it needs to work. And
 AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
-const exports = {};
 import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoExampleService', [
-  ngeoMyRequiredService.module.name
+const module = angular.module('ngeoExampleService', [
+  ngeoMyRequiredService.name
 ]);
-exports.module.service('ngeoExampleService', exports);
-export default exports;
+module.service('ngeoExampleService', exports);
+export default module;
 ```
 
 You can see that we stock the module in a `module` variable on the class. For Component, we prefers to stock
 the module in the value we export directly like:
 
 ```js
-const exports = {};
 
 /**
  * @type {angular.IModule}
  */
 exports = angular.module('ngeoExample', [...]);
 
-exports.value(...);
-exports.component(the_component);
-export default exports;
+module.value(...);
+module.component(the_component);
+export default module;
 ```
 
 To be able to require a whole functionality at once, we always create a `module.js` file in each directories.
@@ -198,7 +196,7 @@ When we use a template URL it should be overwritten by an attribute.
 For that we should use this kind of code:
 
 ```js
-exports.value('ngeoModuleComponentTemplateUrl',
+module.value('ngeoModuleComponentTemplateUrl',
     /**
      * @param {JQLite} element Element.
      * @param {angular.IAttributes} attrs Attributes.
@@ -210,7 +208,7 @@ exports.value('ngeoModuleComponentTemplateUrl',
         'ngeo/module/component';
     });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/module/component', require('./component.html'));
 });
 
@@ -229,7 +227,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentT
  * @ngdoc component
  * @ngname ngeoModuleComponent
  */
-exports.component_ = {
+module.component_ = {
   templateUrl: ngeoModuleComponentTemplateUrl
 }
 
@@ -447,5 +445,5 @@ For example:
 const my_component = function() {
   // …
 };
-exports.component('ngeoMisc', my_component);
+module.component('ngeoMisc', my_component);
 ```

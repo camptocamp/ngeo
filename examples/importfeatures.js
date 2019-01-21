@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './importfeatures.css';
 import angular from 'angular';
@@ -19,7 +18,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscFilereaderComponent.name,
@@ -32,7 +31,7 @@ exports.module = angular.module('app', [
  * @export
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @private
@@ -82,14 +81,14 @@ exports.MainController = function($scope) {
 
   $scope.$watch(() => this.fileContent, this.importKml_.bind(this));
 
-};
+}
 
 
 /**
  * @param {string} kml KML document.
  * @private
  */
-exports.MainController.prototype.importKml_ = function(kml) {
+MainController.prototype.importKml_ = function(kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
   const features = this.kmlFormat_.readFeatures(kml, {
@@ -105,7 +104,7 @@ exports.MainController.prototype.importKml_ = function(kml) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

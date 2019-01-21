@@ -1,6 +1,3 @@
-/**
- */
-const exports = {};
 import gmfObjecteditingCoordinate from 'gmf/objectediting/coordinate.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
@@ -21,13 +18,13 @@ import olGeomSimpleGeometry from 'ol/geom/SimpleGeometry.js';
  * @return {boolean} Whether the given geometry is empty or not. A null or
  *     undefined geometry is considered empty.
  */
-exports.isEmpty = function(geom) {
+export function isEmpty(geom) {
   let isEmpty = true;
   if (geom && geom instanceof olGeomSimpleGeometry) {
     isEmpty = geom.getFlatCoordinates().length === 0;
   }
   return isEmpty;
-};
+}
 
 
 /**
@@ -36,7 +33,7 @@ exports.isEmpty = function(geom) {
  *
  * @param {import("ol/geom/Geometry.js").default} geom Geometry
  */
-exports.toXY = function(geom) {
+export function toXY(geom) {
   if (geom instanceof olGeomPoint) {
     geom.setCoordinates(
       gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 0)
@@ -60,7 +57,4 @@ exports.toXY = function(geom) {
   } else {
     throw 'gmf.objectediting.geom.toXY - unsupported geometry type';
   }
-};
-
-
-export default exports;
+}

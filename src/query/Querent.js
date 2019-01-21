@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
@@ -96,7 +94,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  */
 
 
-const exports = class {
+class Querent {
 
   /**
    * The ngeo Querent is a service that issues all sorts of queries using
@@ -1018,7 +1016,7 @@ const exports = class {
     }
     this.requestCancelers_.length = 0;
   }
-};
+}
 
 
 /**
@@ -1029,11 +1027,11 @@ const exports = class {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoQuerent', [
-  ngeoFilterRuleHelper.module.name,
-  ngeoMiscWMSTime.module.name,
+const module = angular.module('ngeoQuerent', [
+  ngeoFilterRuleHelper.name,
+  ngeoMiscWMSTime.name,
 ]);
-exports.module.service('ngeoQuerent', exports);
+module.service('ngeoQuerent', Querent);
 
 
-export default exports;
+export default module;

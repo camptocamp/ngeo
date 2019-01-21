@@ -12,17 +12,17 @@ import 'angular-sanitize';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMessageDisplaywindowComponent', [
+const module = angular.module('ngeoMessageDisplaywindowComponent', [
   'ngSanitize',
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
 });
 
 
-exports.value('ngeoMessageDisplaywindowTemplateUrl',
+module.value('ngeoMessageDisplaywindowTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -312,7 +312,7 @@ class Controller {
  * @ngdoc component
  * @ngname ngeoDisplaywindow
  */
-exports.component('ngeoDisplaywindow', {
+module.component('ngeoDisplaywindow', {
   bindings: {
     'clearOnClose': '<?',
     'content': '=?',
@@ -333,4 +333,4 @@ exports.component('ngeoDisplaywindow', {
 });
 
 
-export default exports;
+export default module;

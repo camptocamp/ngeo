@@ -4,12 +4,12 @@ import angular from 'angular';
 import 'angular-sanitize';
 
 
-const exports = angular.module('ngeoPopup', [
+const module = angular.module('ngeoPopup', [
   'ngSanitize',
 ]);
 
 
-exports.value('ngeoPopupTemplateUrl',
+module.value('ngeoPopupTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -21,7 +21,7 @@ exports.value('ngeoPopupTemplateUrl',
       'ngeo/message/popupcomponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
 });
 
@@ -79,7 +79,7 @@ function directive(ngeoPopupTemplateUrl) {
   };
 }
 
-exports.directive('ngeoPopup', directive);
+module.directive('ngeoPopup', directive);
 
 
-export default exports;
+export default module;

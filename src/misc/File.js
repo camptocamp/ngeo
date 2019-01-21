@@ -9,7 +9,7 @@ import angular from 'angular';
  * @param {gettext} gettext .
  * @ngInject
  */
-const exports = function($q, $http, gettext) {
+function File($q, $http, gettext) {
   let fileReader, canceler;
 
   // Test the validity of the file size
@@ -89,11 +89,11 @@ const exports = function($q, $http, gettext) {
     });
     return defer.promise;
   };
-};
+}
 
-exports.module = angular.module('ngeoFile', []);
+const module = angular.module('ngeoFile', []);
 
-exports.module.service('ngeoFile', exports);
+module.service('ngeoFile', File);
 
 
-export default exports;
+export default module;

@@ -1,9 +1,7 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
 
 import ngeoMiscSwipe from 'ngeo/misc/swipe.js';
 
@@ -26,17 +24,17 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfQueryWindowComponent', [
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMiscFeatureHelper.module.name,
+const module = angular.module('gmfQueryWindowComponent', [
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,
-  ngeoQueryMapQuerent.module.name,
+  ngeoQueryMapQuerent.name,
   'ngAnimate',
   'ngTouch',
 ]);
 
 
-exports.config(['$animateProvider',
+module.config(['$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
@@ -48,7 +46,7 @@ exports.config(['$animateProvider',
 ]);
 
 
-exports.value('gmfDisplayquerywindowTemplateUrl',
+module.value('gmfDisplayquerywindowTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -60,7 +58,7 @@ exports.value('gmfDisplayquerywindowTemplateUrl',
       'gmf/query/windowComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
 });
 
@@ -122,7 +120,7 @@ const component = {
 };
 
 
-exports.component('gmfDisplayquerywindow', component);
+module.component('gmfDisplayquerywindow', component);
 
 
 /**
@@ -433,7 +431,7 @@ Controller.prototype.updateQueryResult_ = function(queryResult) {
     const source = queryResult.sources[i];
     source.features = source.features.filter((feature) => {
       googAsserts.assert(feature);
-      return !olObj.isEmpty(ngeoMiscFeatureHelper.getFilteredFeatureValues(feature));
+      return !olObj.isEmpty(getFilteredFeatureValues(feature));
     });
     this.ngeoQueryResult.sources.push(source);
     this.ngeoQueryResult.total += source.features.length;
@@ -483,7 +481,7 @@ Controller.prototype.getFeatureValues = function() {
   if (!this.feature) {
     return null;
   }
-  return ngeoMiscFeatureHelper.getFilteredFeatureValues(this.feature);
+  return getFilteredFeatureValues(this.feature);
 };
 
 
@@ -581,7 +579,7 @@ Controller.prototype.setSelectedSource = function(source) {
 };
 
 
-exports.controller('GmfDisplayquerywindowController', Controller);
+module.controller('GmfDisplayquerywindowController', Controller);
 
 
-export default exports;
+export default module;

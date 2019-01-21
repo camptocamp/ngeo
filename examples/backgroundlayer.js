@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import './backgroundlayer.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD.js';
@@ -16,13 +12,13 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
 ]);
 
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('partials/backgroundlayer', require('./partials/backgroundlayer.html'));
 });
 
@@ -40,7 +36,7 @@ exports.module.run(/* @ngInject */ ($templateCache) => {
  *
  * @type {!angular.IComponentOptions}
  */
-exports.backgroundlayerComponent = {
+const backgroundlayerComponent = {
   bindings: {
     'map': '=appBackgroundlayerMap'
   },
@@ -49,7 +45,7 @@ exports.backgroundlayerComponent = {
 };
 
 
-exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent);
+module.component('appBackgroundlayer', backgroundlayerComponent);
 
 
 /**
@@ -60,7 +56,7 @@ exports.module.component('appBackgroundlayer', exports.backgroundlayerComponent)
  * @export
  * @ngInject
  */
-exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
+function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -92,7 +88,7 @@ exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
    * @private
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
-};
+}
 
 
 /**
@@ -101,7 +97,7 @@ exports.BackgroundlayerController = function($http, ngeoBackgroundLayerMgr) {
  * it.
  * @export
  */
-exports.BackgroundlayerController.prototype.change = function() {
+BackgroundlayerController.prototype.change = function() {
   const layerSpec = this.bgLayer;
   const layer = this.getLayer_(layerSpec['name']);
   this.backgroundLayerMgr_.set(this.map, layer);
@@ -113,7 +109,7 @@ exports.BackgroundlayerController.prototype.change = function() {
  * @return {import("ol/layer/Tile.js").default} The layer.
  * @private
  */
-exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
+BackgroundlayerController.prototype.getLayer_ = function(layerName) {
   if (layerName === 'blank') {
     return new olLayerTile();
   }
@@ -125,8 +121,8 @@ exports.BackgroundlayerController.prototype.getLayer_ = function(layerName) {
 };
 
 
-exports.module.controller('AppBackgroundlayerController',
-  exports.BackgroundlayerController);
+module.controller('AppBackgroundlayerController',
+  BackgroundlayerController);
 
 
 /**
@@ -134,7 +130,7 @@ exports.module.controller('AppBackgroundlayerController',
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -163,10 +159,10 @@ exports.MainController = function($scope) {
 
   this.map.addLayer(overlay);
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -12,10 +12,10 @@ import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
  * @type {!angular.IModule}
  */
 export default angular.module('gmfEditingModule', [
-  gmfEditingEditFeature.module.name,
+  gmfEditingEditFeature.name,
   gmfEditingEditFeatureComponent.name,
   gmfEditingEditFeatureSelectorComponent.name,
-  gmfEditingEnumerateAttribute.module.name,
-  gmfEditingSnapping.module.name,
-  gmfEditingXSDAttributes.module.name,
+  gmfEditingEnumerateAttribute.name,
+  gmfEditingSnapping.name,
+  gmfEditingXSDAttributes.name,
 ]);

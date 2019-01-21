@@ -194,7 +194,7 @@ requires three others modules to work:
  * @type {!angular.IModule}
  */
 exports = angular.module('ngeoGrid', [
-  ngeoGridConfig.module.name,
+  ngeoGridConfig.name,
   ngeoMiscFilters.name,
   'floatThead',
 ]);
@@ -203,8 +203,8 @@ exports = angular.module('ngeoGrid', [
 On this module is attached an AngularJS component and a value, like this:
 
 ```
-exports.value('ngeoGridTemplateUrl', a_function);
-exports.component('ngeoGrid', the_grid_component);
+module.value('ngeoGridTemplateUrl', a_function);
+module.component('ngeoGrid', the_grid_component);
 ```
 
 For AngularJS `service`, that's the same concept, but instead of providing the module, we prefer to provide
@@ -217,17 +217,17 @@ exports = class {...};
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoPrint', [
-  ngeoMapLayerHelper.module.name
+const module = angular.module('ngeoPrint', [
+  ngeoMapLayerHelper.name
 ]);
 
-exports.module.service('ngeoPrintService', exports);
-exports.module.factory('ngeoCreatePrint', exports.createPrintServiceFactory);
+module.service('ngeoPrintService', exports);
+module.factory('ngeoCreatePrint', createPrintServiceFactory);
 ```
 
 You can see that to require a module inside another module, we add the name of the module into the array of
-dependencies of the module. In the last two examples, that are the `ngeoGridConfig.module.name`,
-`ngeoMiscFilters.name` and `ngeoMapLayerHelper.module.name`. In the case of the component
+dependencies of the module. In the last two examples, that are the `ngeoGridConfig.name`,
+`ngeoMiscFilters.name` and `ngeoMapLayerHelper.name`. In the case of the component
 `ngeoMiscFilters.name`, the module is assigned to the `ngeoMiscFilters` component, that's why we can use its
 name directly.
 `floatThead` is an external dependency that is not using webpack. So we provide directly the name because
@@ -252,10 +252,10 @@ Then create a module for your application and add the requirement to the abstrac
 an AngularJS controller as another). You must use a unique module name (here it's `AppMain`):
 
 ```
-exports.module = angular.module('AppMain', [
-  gmfAbstractMobileController.module.name,
+const module = angular.module('AppMain', [
+  gmfAbstractMobileController.name,
   myOtherComponentDependency.name,
-  myOtherServiceDependency.module.name,
+  myOtherServiceDependency.name,
   'etc'
 ]);
 ```
@@ -263,7 +263,7 @@ exports.module = angular.module('AppMain', [
 Finally, export your module with an unique controller name (here it's `AppMainController`):
 
 ```
-exports.module.controller('AppMainController', exports);
+module.controller('AppMainController', exports);
 ```
 
 #### In each of your application controller (`<package>/templates/<interface>.html`)

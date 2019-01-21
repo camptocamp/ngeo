@@ -8,7 +8,7 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDrawtext', []);
+const module = angular.module('ngeoDrawtext', []);
 
 
 /**
@@ -54,7 +54,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoDrawtext', directive);
+module.directive('ngeoDrawtext', directive);
 
 
-export default exports;
+export default module;

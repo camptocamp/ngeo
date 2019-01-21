@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './elevationProfile.css';
 import angular from 'angular';
@@ -20,7 +19,7 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoProfileElevationComponent.name,
@@ -33,7 +32,7 @@ exports.module = angular.module('app', [
  * @param {angular.IScope} $scope The $scope angular service.
  * @ngInject
  */
-exports.MainController = function($http, $scope) {
+function MainController($http, $scope) {
 
   /**
    * @type {angular.IScope}
@@ -232,14 +231,14 @@ exports.MainController = function($http, $scope) {
    * @export
    */
   this.profileHighlight = undefined;
-};
+}
 
 
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate The current pointer coordinate.
  * @param {import("ol/geom/Geometry.js").default|undefined} geometry The geometry to snap to.
  */
-exports.MainController.prototype.snapToGeometry = function(coordinate, geometry) {
+MainController.prototype.snapToGeometry = function(coordinate, geometry) {
   const closestPoint = geometry.getClosestPoint(coordinate);
   // compute distance to line in pixels
   const dx = closestPoint[0] - coordinate[0];
@@ -256,7 +255,7 @@ exports.MainController.prototype.snapToGeometry = function(coordinate, geometry)
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

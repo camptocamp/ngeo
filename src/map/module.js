@@ -15,9 +15,9 @@ import ngeoMapScaleselector from 'ngeo/map/scaleselector.js';
  * @type {!angular.IModule}
  */
 export default angular.module('ngeoMapModule', [
-  ngeoMapBackgroundLayerMgr.module.name,
+  ngeoMapBackgroundLayerMgr.name,
   ngeoMapComponent.name,
-  ngeoMapFeatureOverlayMgr.module.name,
+  ngeoMapFeatureOverlayMgr.name,
   ngeoMapRecenter.name,
   ngeoMapResizemap.name,
   ngeoMapScaleselector.name

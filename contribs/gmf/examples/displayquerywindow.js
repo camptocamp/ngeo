@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import appURL from './url.js';
 import './displayquerywindow.css';
@@ -30,13 +26,13 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
-  gmfDatasourceManager.module.name,
+  gmfDatasourceManager.name,
   gmfLayertreeComponent.name,
   gmfMapComponent.name,
   gmfQueryWindowComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,
   ngeoQueryBboxQueryComponent.name,
@@ -44,15 +40,15 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -61,12 +57,12 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  *
  * @type {!angular.IComponentOptions}
  */
-exports.queryresultComponent = {
+const queryresultComponent = {
   controller: 'AppQueryresultController',
   template: require('./partials/queryresult.html')
 };
 
-exports.module.component('appQueryresult', exports.queryresultComponent);
+module.component('appQueryresult', queryresultComponent);
 
 
 /**
@@ -75,7 +71,7 @@ exports.module.component('appQueryresult', exports.queryresultComponent);
  * @constructor
  * @ngInject
  */
-exports.QueryresultController = function(ngeoQueryResult) {
+function QueryresultController(ngeoQueryResult) {
 
   /**
    * @type {QueryResult}
@@ -83,10 +79,10 @@ exports.QueryresultController = function(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 
-};
+}
 
 
-exports.module.controller('AppQueryresultController', exports.QueryresultController);
+module.controller('AppQueryresultController', QueryresultController);
 
 
 /**
@@ -98,7 +94,7 @@ exports.module.controller('AppQueryresultController', exports.QueryresultControl
  *   overlay manager service.
  * @ngInject
  */
-exports.MainController = function(gmfThemes, gmfDataSourcesManager,
+function MainController(gmfThemes, gmfDataSourcesManager,
   ngeoFeatureOverlayMgr) {
 
   gmfThemes.loadThemes();
@@ -174,9 +170,9 @@ exports.MainController = function(gmfThemes, gmfDataSourcesManager,
   });
 
   ngeoFeatureOverlayMgr.init(this.map);
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -9,7 +9,7 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-const exports = angular.module('gmfMobileMeasureBase', [
+const module = angular.module('gmfMobileMeasureBase', [
   ngeoMiscFilters.name,
 ]);
 
@@ -25,7 +25,7 @@ const exports = angular.module('gmfMobileMeasureBase', [
  * @ngdoc controller
  * @ngname GmfMobileMeasureBaseController
  */
-exports.Controller = function($scope, $filter, gettextCatalog) {
+function Controller($scope, $filter, gettextCatalog) {
 
   /**
    * @type {angular.IScope}
@@ -121,13 +121,13 @@ exports.Controller = function($scope, $filter, gettextCatalog) {
    * @export
    */
   this.valid = false;
-};
+}
 
 
 /**
  * Initialise the controller.
  */
-exports.Controller.prototype.init = function() {
+Controller.prototype.init = function() {
 
   this.measure.setActive(this.active);
   ngeoMiscDecorate.interaction(this.measure);
@@ -182,4 +182,4 @@ exports.Controller.prototype.init = function() {
 };
 
 
-export default exports;
+export default module;

@@ -26,24 +26,24 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import 'bootstrap/js/src/dropdown.js';
 
 
-const exports = angular.module('gmfFilterselector', [
-  gmfAuthenticationService.module.name,
-  gmfDatasourceDataSourceBeingFiltered.module.name,
-  gmfDatasourceHelper.module.name,
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMessageNotification.module.name,
+const module = angular.module('gmfFilterselector', [
+  gmfAuthenticationService.name,
+  gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDatasourceHelper.name,
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
-  ngeoFilterRuleHelper.module.name,
+  ngeoFilterRuleHelper.name,
   ngeoFilterComponent.name,
-  gmfFiltersSavedFilters.module.name,
+  gmfFiltersSavedFilters.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
 });
 
-exports.value('gmfFilterselectorTemplateUrl',
+module.value('gmfFilterselectorTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -735,7 +735,7 @@ class Controller {
  */
 
 
-exports.component('gmfFilterselector', {
+module.component('gmfFilterselector', {
   bindings: {
     active: '=',
     map: '<',
@@ -746,4 +746,4 @@ exports.component('gmfFilterselector', {
 });
 
 
-export default exports;
+export default module;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './scaleselector.css';
 import angular from 'angular';
@@ -14,7 +13,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscFilters.name,
@@ -26,7 +25,7 @@ exports.module = angular.module('app', [
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -62,10 +61,10 @@ exports.MainController = function($scope) {
     dropup: true
   };
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

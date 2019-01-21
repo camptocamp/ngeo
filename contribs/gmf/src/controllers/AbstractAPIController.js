@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
@@ -28,7 +26,7 @@ import * as olInteraction from 'ol/interaction.js';
  * @ngInject
  * @export
  */
-const exports = function(config, $scope, $injector) {
+function AbstractAPIController(config, $scope, $injector) {
 
   const viewConfig = {
     projection: olProj.get(`EPSG:${config.srid || 21781}`)
@@ -67,26 +65,24 @@ const exports = function(config, $scope, $injector) {
   });
 
   gmfControllersAbstractAppController.call(this, config, $scope, $injector);
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractAppController);
+olUtilInherits(AbstractAPIController, gmfControllersAbstractAppController);
 
 
-exports.module = angular.module('GmfAbstractAPIControllerModule', [
-  gmfControllersAbstractAppController.module.name,
+const module = angular.module('GmfAbstractAPIControllerModule', [
+  gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
   ngeoQueryBboxQueryComponent.name
 ]);
 
-exports.module.controller(
-  'AbstractAPIController',
-  exports);
+module.controller('AbstractAPIController', AbstractAPIController);
 
-exports.module.value('isDesktop', true);
+module.value('isDesktop', true);
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'limit': 20
 });
 
 
-export default exports;
+export default module;

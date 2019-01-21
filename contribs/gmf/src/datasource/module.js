@@ -11,9 +11,9 @@ import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
  * @type {!angular.IModule}
  */
 export default angular.module('gmfDatasourceModule', [
-  gmfDatasourceDataSourceBeingFiltered.module.name,
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  gmfDatasourceHelper.module.name,
-  gmfDatasourceManager.module.name,
-  gmfDatasourceWFSAliases.module.name,
+  gmfDatasourceDataSourceBeingFiltered.name,
+  gmfDatasourceExternalDataSourcesManager.name,
+  gmfDatasourceHelper.name,
+  gmfDatasourceManager.name,
+  gmfDatasourceWFSAliases.name,
 ]);

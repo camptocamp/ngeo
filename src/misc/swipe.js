@@ -1,11 +1,9 @@
-/**
- */
 import angular from 'angular';
 
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMiscSwipe', []);
+const module = angular.module('ngeoMiscSwipe', []);
 
 
 /**
@@ -36,7 +34,7 @@ const exports = angular.module('ngeoMiscSwipe', []);
  * documentation for `bind` below.
  */
 
-exports.factory('$verticalSwipe', [function() {
+module.factory('$verticalSwipe', [function() {
   // The total distance in any direction before we make the call on swipe vs. scroll.
   const MOVE_BUFFER_RADIUS = 10;
 
@@ -205,8 +203,8 @@ exports.factory('$verticalSwipe', [function() {
   };
 }]);
 
-exports.makeSwipeDirective_ = function(directiveName, direction, eventName) {
-  exports.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
+function makeSwipeDirective_(directiveName, direction, eventName) {
+  module.directive(directiveName, ['$parse', '$verticalSwipe', function($parse, $verticalSwipe) {
     // The maximum horizontal delta for a swipe should be less than 75px.
     const MAX_HORIZONTAL_DISTANCE = 75;
     // Horizontal distance should not be more than a fraction of the vertical distance.
@@ -263,11 +261,11 @@ exports.makeSwipeDirective_ = function(directiveName, direction, eventName) {
       }, pointerTypes);
     };
   }]);
-};
+}
 
 // Down is negative Y-coordinate, up is positive.
-exports.makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
-exports.makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
+makeSwipeDirective_('ngeoSwipeDown', 1, 'swipedown');
+makeSwipeDirective_('ngeoSwipeUp', -1, 'swipeup');
 
 
-export default exports;
+export default module;

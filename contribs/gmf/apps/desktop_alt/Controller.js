@@ -1,6 +1,4 @@
 /**
- */
-/**
  * Application entry point.
  *
  * This file includes `goog.require`'s for all the components/directives used
@@ -35,7 +33,7 @@ if (!window.requestAnimationFrame) {
  * @ngInject
  * @export
  */
-const exports = function($scope, $injector) {
+function Controller($scope, $injector) {
   gmfControllersAbstractDesktopController.call(this, {
     srid: 21781,
     mapViewConfig: {
@@ -140,16 +138,16 @@ const exports = function($scope, $injector) {
       .addPlugin(RavenPluginsAngular)
       .install();
   }
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractDesktopController);
+olUtilInherits(Controller, gmfControllersAbstractDesktopController);
 
 
 /**
  * @param {jQuery.Event} event keydown event.
  * @export
  */
-exports.prototype.onKeydown = function(event) {
+Controller.prototype.onKeydown = function(event) {
   if (event.ctrlKey && event.key === 'p') {
     this.printPanelActive = true;
     event.preventDefault();
@@ -157,15 +155,15 @@ exports.prototype.onKeydown = function(event) {
 };
 
 
-exports.module = angular.module('Appdesktop_alt', [
-  appBase.module.name,
-  gmfControllersAbstractDesktopController.module.name,
+const module = angular.module('Appdesktop_alt', [
+  appBase.name,
+  gmfControllersAbstractDesktopController.name,
   gmfImportModule.name,
   ngeoRoutingModule.name,
   ngeoGooglestreetviewModule.name,
-  ngeoStatemanagerWfsPermalink.module.name,
+  ngeoStatemanagerWfsPermalink.name,
 ]);
 
-exports.module.controller('AlternativeDesktopController', exports);
+module.controller('AlternativeDesktopController', Controller);
 
-export default exports;
+export default module;

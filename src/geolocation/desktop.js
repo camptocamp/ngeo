@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
@@ -32,16 +30,16 @@ import olGeomPoint from 'ol/geom/Point.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDesktopGeolocation', [
-  ngeoMapFeatureOverlayMgr.module.name,
-  ngeoMessageNotification.module.name,
+const module = angular.module('ngeoDesktopGeolocation', [
+  ngeoMapFeatureOverlayMgr.name,
+  ngeoMessageNotification.name,
 ]);
 
 
 /**
  * @enum {string}
  */
-exports.GeolocationEventType = {
+const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
@@ -80,7 +78,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoDesktopGeolocation', directive);
+module.directive('ngeoDesktopGeolocation', directive);
 
 
 /**
@@ -141,7 +139,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.geolocation_.on('error', function(error) {
     this.deactivate_();
     this.notification_.error(error.message);
-    $scope.$emit(exports.GeolocationEventType.ERROR, error);
+    $scope.$emit(GeolocationEventType.ERROR, error);
   }, this);
 
   /**
@@ -238,7 +236,7 @@ Controller.prototype.setPosition_ = function(event) {
   this.geolocation_.setTracking(false);
 };
 
-exports.controller('ngeoGeolocationDesktopController', Controller);
+module.controller('ngeoGeolocationDesktopController', Controller);
 
 
-export default exports;
+export default module;

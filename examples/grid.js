@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './grid.css';
 import angular from 'angular';
@@ -10,7 +9,7 @@ import ngeoGridModule from 'ngeo/grid/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoGridModule.name
 ]);
@@ -20,7 +19,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   const data = [
     {
@@ -74,10 +73,10 @@ exports.MainController = function() {
    */
   this.gridConfig = new ngeoGridConfig(data, columnDefs);
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

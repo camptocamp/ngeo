@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 
@@ -8,7 +6,7 @@ import * as olEvents from 'ol/events.js';
  * @param {import("ngeo/map/FeatureOverlayMgr.js").default} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  */
-const exports = function(manager, index) {
+export function FeatureOverlay(manager, index) {
 
   /**
    * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
@@ -27,7 +25,7 @@ const exports = function(manager, index) {
    * @private
    */
   this.index_ = index;
-};
+}
 
 
 /**
@@ -35,7 +33,7 @@ const exports = function(manager, index) {
  * @param {import("ol/Feature.js").default} feature The feature to add.
  * @export
  */
-exports.prototype.addFeature = function(feature) {
+FeatureOverlay.prototype.addFeature = function(feature) {
   this.manager_.addFeature(feature, this.index_);
 };
 
@@ -45,7 +43,7 @@ exports.prototype.addFeature = function(feature) {
  * @param {import("ol/Feature.js").default} feature The feature to remove.
  * @export
  */
-exports.prototype.removeFeature = function(feature) {
+FeatureOverlay.prototype.removeFeature = function(feature) {
   this.manager_.removeFeature(feature, this.index_);
 };
 
@@ -54,7 +52,7 @@ exports.prototype.removeFeature = function(feature) {
  * Remove all the features from the feature overlay.
  * @export
  */
-exports.prototype.clear = function() {
+FeatureOverlay.prototype.clear = function() {
   this.manager_.clear(this.index_);
 };
 
@@ -68,7 +66,7 @@ exports.prototype.clear = function() {
  * @param {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features Feature collection.
  * @export
  */
-exports.prototype.setFeatures = function(features) {
+FeatureOverlay.prototype.setFeatures = function(features) {
   if (this.features_ !== null) {
     this.features_.clear();
     olEvents.unlisten(this.features_, 'add', this.handleFeatureAdd_, this);
@@ -91,7 +89,7 @@ exports.prototype.setFeatures = function(features) {
  * Style.
  * @export
  */
-exports.prototype.setStyle = function(style) {
+FeatureOverlay.prototype.setStyle = function(style) {
   this.manager_.setStyle(style, this.index_);
 };
 
@@ -100,7 +98,7 @@ exports.prototype.setStyle = function(style) {
  * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
  * @private
  */
-exports.prototype.handleFeatureAdd_ = function(evt) {
+FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.addFeature(feature);
 };
@@ -110,7 +108,7 @@ exports.prototype.handleFeatureAdd_ = function(evt) {
  * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
  * @private
  */
-exports.prototype.handleFeatureRemove_ = function(evt) {
+FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {
   const feature = /** @type {import("ol/Feature.js").default} */ (evt.element);
   this.removeFeature(feature);
 };
@@ -118,7 +116,7 @@ exports.prototype.handleFeatureRemove_ = function(evt) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoFeatureOverlay', []);
+const module = angular.module('ngeoFeatureOverlay', []);
 
 
-export default exports;
+export default module;

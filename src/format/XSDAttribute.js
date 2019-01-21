@@ -1,7 +1,5 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
-import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
+import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
@@ -13,11 +11,11 @@ import olFormatXML from 'ol/format/XML.js';
  * @constructor
  * @extends {import("ol/format/XML.js").default}
  */
-const exports = function() {
+function XSDAttribute() {
   olFormatXML.call(this);
-};
+}
 
-olUtilInherits(exports, olFormatXML);
+olUtilInherits(XSDAttribute, olFormatXML);
 
 
 /**
@@ -25,7 +23,7 @@ olUtilInherits(exports, olFormatXML);
  * @return {Array.<Attribute>} The parsed result.
  * @override
  */
-exports.prototype.read = function(source) {
+XSDAttribute.prototype.read = function(source) {
   return (
     /** @type {Array.<Attribute>} */ olFormatXML.prototype.read.call(this, source)
   );
@@ -37,7 +35,7 @@ exports.prototype.read = function(source) {
  * @return {Array.<Attribute>} List of attributes.
  * @override
  */
-exports.prototype.readFromDocument = function(doc) {
+XSDAttribute.prototype.readFromDocument = function(doc) {
   googAsserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
     'doc.nodeType should be DOCUMENT');
   for (let n = doc.firstChild; n; n = n.nextSibling) {
@@ -54,7 +52,7 @@ exports.prototype.readFromDocument = function(doc) {
  * @return {Array.<Attribute>} List of attributes.
  * @override
  */
-exports.prototype.readFromNode = function(node) {
+XSDAttribute.prototype.readFromNode = function(node) {
   googAsserts.assert(node.nodeType == Node.ELEMENT_NODE,
     'node.nodeType should be ELEMENT');
   googAsserts.assert(node.localName == 'schema',
@@ -83,7 +81,7 @@ exports.prototype.readFromNode = function(node) {
  * @return {?Attribute} An attribute object.
  * @private
  */
-exports.prototype.readFromElementNode_ = function(node) {
+XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const name = node.getAttribute('name');
   googAsserts.assertString(name, 'name should be defined in element node.');
@@ -106,7 +104,7 @@ exports.prototype.readFromElementNode_ = function(node) {
 
   const type = node.getAttribute('type');
   if (type) {
-    if (!ngeoFormatAttribute.setGeometryType(attribute, type)) {
+    if (!setGeometryType(attribute, type)) {
       this.setAttributeByXsdType_(attribute, type);
     }
   } else {
@@ -160,58 +158,10 @@ exports.prototype.readFromElementNode_ = function(node) {
 
 
 /**
- * Set the `type` and `numType` properties of an attribute depending on the
- * given xsdType.
- *
- * @param {AttributeBase} attribute Attribute.
- * @param {string} type The xsd type.
- * @private
- */
-exports.prototype.setAttributeByXsdType_ = function(
-  attribute, type
-) {
-  if (type === 'xsd:boolean') {
-    attribute.type = ngeoFormatAttributeType.BOOLEAN;
-  } else if (type === 'xsd:date') {
-    attribute.type = ngeoFormatAttributeType.DATE;
-  } else if (type === 'xsd:dateTime') {
-    attribute.type = ngeoFormatAttributeType.DATETIME;
-  } else if (type === 'xsd:time') {
-    attribute.type = ngeoFormatAttributeType.TIME;
-  } else if (type === 'xsd:decimal' || type === 'xsd:double') {
-    attribute.type = ngeoFormatAttributeType.NUMBER;
-    attribute.numType = exports.NumberType.FLOAT;
-  } else if (type === 'xsd:integer') {
-    attribute.type = ngeoFormatAttributeType.NUMBER;
-    attribute.numType = exports.NumberType.INTEGER;
-  } else if (type === 'xsd:string') {
-    attribute.type = ngeoFormatAttributeType.TEXT;
-  }
-};
-
-
-/**
- * Returns the first geometry attribute among a given list of attributes.
- * @param {Array.<Attribute>} attributes The list of attributes.
- * @return {?Attribute} A geometry attribute object.
- */
-exports.getGeometryAttribute = function(attributes) {
-  let geomAttribute = null;
-  for (let i = 0, ii = attributes.length; i < ii; i++) {
-    if (attributes[i].type === ngeoFormatAttributeType.GEOMETRY) {
-      geomAttribute = attributes[i];
-      break;
-    }
-  }
-  return geomAttribute;
-};
-
-
-/**
  * @enum {string}
  * @export
  */
-exports.NumberType = {
+const NumberType = {
   /**
    * @type {string}
    * @export
@@ -225,4 +175,52 @@ exports.NumberType = {
 };
 
 
-export default exports;
+/**
+ * Set the `type` and `numType` properties of an attribute depending on the
+ * given xsdType.
+ *
+ * @param {AttributeBase} attribute Attribute.
+ * @param {string} type The xsd type.
+ * @private
+ */
+XSDAttribute.prototype.setAttributeByXsdType_ = function(
+  attribute, type
+) {
+  if (type === 'xsd:boolean') {
+    attribute.type = ngeoFormatAttributeType.BOOLEAN;
+  } else if (type === 'xsd:date') {
+    attribute.type = ngeoFormatAttributeType.DATE;
+  } else if (type === 'xsd:dateTime') {
+    attribute.type = ngeoFormatAttributeType.DATETIME;
+  } else if (type === 'xsd:time') {
+    attribute.type = ngeoFormatAttributeType.TIME;
+  } else if (type === 'xsd:decimal' || type === 'xsd:double') {
+    attribute.type = ngeoFormatAttributeType.NUMBER;
+    attribute.numType = NumberType.FLOAT;
+  } else if (type === 'xsd:integer') {
+    attribute.type = ngeoFormatAttributeType.NUMBER;
+    attribute.numType = NumberType.INTEGER;
+  } else if (type === 'xsd:string') {
+    attribute.type = ngeoFormatAttributeType.TEXT;
+  }
+};
+
+
+/**
+ * Returns the first geometry attribute among a given list of attributes.
+ * @param {Array.<Attribute>} attributes The list of attributes.
+ * @return {?Attribute} A geometry attribute object.
+ */
+export function getGeometryAttribute(attributes) {
+  let geomAttribute = null;
+  for (let i = 0, ii = attributes.length; i < ii; i++) {
+    if (attributes[i].type === ngeoFormatAttributeType.GEOMETRY) {
+      geomAttribute = attributes[i];
+      break;
+    }
+  }
+  return geomAttribute;
+}
+
+
+export default XSDAttribute;

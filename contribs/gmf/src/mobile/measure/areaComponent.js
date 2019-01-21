@@ -6,12 +6,12 @@ import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile
 import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
-const exports = angular.module('gmfMobileMeasureArea', [
+const module = angular.module('gmfMobileMeasureArea', [
   ngeoMiscFilters.name,
 ]);
 
 
-exports.value('gmfMobileMeasureAreaTemplateUrl',
+module.value('gmfMobileMeasureAreaTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -23,7 +23,7 @@ exports.value('gmfMobileMeasureAreaTemplateUrl',
       'gmf/measure/areaComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put(
     'gmf/measure/areaComponent',
     require('./baseComponent.html')
@@ -79,7 +79,7 @@ function component(gmfMobileMeasureAreaTemplateUrl) {
 }
 
 
-exports.directive('gmfMobileMeasurearea', component);
+module.directive('gmfMobileMeasurearea', component);
 
 
 /**
@@ -108,7 +108,7 @@ function Controller($scope, $filter, gettextCatalog) {
   this.measure;
 }
 
-olUtilInherits(exports, gmfMobileMeasureBaseComponent.Controller);
+olUtilInherits(component, gmfMobileMeasureBaseComponent.Controller);
 
 /**
  * Initialise the controller.
@@ -159,7 +159,7 @@ Controller.prototype.deactivate = function() {
 };
 
 
-exports.controller('GmfMobileMeasureAreaController', Controller);
+module.controller('GmfMobileMeasureAreaController', Controller);
 
 
-export default exports;
+export default module;

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
@@ -9,8 +7,8 @@ import {
   unlistenByKey as olEventsUnlistenByKey
 } from 'ol/events.js';
 
-const exports = angular.module('ngeoMapQuery', [
-  ngeoQueryMapQuerent.module.name,
+const module = angular.module('ngeoMapQuery', [
+  ngeoQueryMapQuerent.name,
 ]);
 
 
@@ -127,7 +125,7 @@ function directive(ngeoMapQuerent, $injector) {
   };
 }
 
-exports.directive('ngeoMapQuery', directive);
+module.directive('ngeoMapQuery', directive);
 
 
-export default exports;
+export default module;

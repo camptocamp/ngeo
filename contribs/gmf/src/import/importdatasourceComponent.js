@@ -13,20 +13,20 @@ import googAsserts from 'goog/asserts.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
-const exports = angular.module('gmfImportdatasource', [
-  gmfDatasourceExternalDataSourcesManager.module.name,
+const module = angular.module('gmfImportdatasource', [
+  gmfDatasourceExternalDataSourcesManager.name,
   gmfImportWmsCapabilityLayertreeComponent.name,
   gmfImportWmtsCapabilityLayertreeComponent.name,
-  ngeoQueryQuerent.module.name,
+  ngeoQueryQuerent.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
 });
 
 
-exports.value('gmfImportdatasourceTemplateUrl',
+module.value('gmfImportdatasourceTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -400,7 +400,7 @@ class Controller {
 }
 
 
-exports.component('gmfImportdatasource', {
+module.component('gmfImportdatasource', {
   bindings: {
     'map': '<'
   },
@@ -409,4 +409,4 @@ exports.component('gmfImportdatasource', {
 });
 
 
-export default exports;
+export default module;

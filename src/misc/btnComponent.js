@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoBtnComponent', []);
+const module = angular.module('ngeoBtnComponent', []);
 
 
 /**
@@ -68,7 +68,7 @@ function btnGroupComponent($parse) {
 }
 
 
-exports.directive('ngeoBtnGroup', btnGroupComponent);
+module.directive('ngeoBtnGroup', btnGroupComponent);
 
 
 /**
@@ -78,7 +78,7 @@ exports.directive('ngeoBtnGroup', btnGroupComponent);
  * @ngdoc controller
  * @ngname ngeoBtnGroupController
  */
-exports.BtnGroupController = function($scope) {
+function BtnGroupController($scope) {
   /**
    * @type {!Array.<!angular.parse.Expression>}
    * @private
@@ -90,13 +90,13 @@ exports.BtnGroupController = function($scope) {
    * @private
    */
   this.scope_ = $scope;
-};
+}
 
 
 /**
  * @param {number} index Index of the button in buttons array.
  */
-exports.BtnGroupController.prototype.activate = function(index) {
+BtnGroupController.prototype.activate = function(index) {
   this.buttons_.forEach((expressionFn, i) => {
     if (i != index) {
       expressionFn.assign(this.scope_, false);
@@ -109,14 +109,14 @@ exports.BtnGroupController.prototype.activate = function(index) {
  * @param {angular.parse.Expression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
-exports.BtnGroupController.prototype.addButton = function(expressionFn) {
+BtnGroupController.prototype.addButton = function(expressionFn) {
   this.buttons_.push(expressionFn);
   return this.buttons_.length - 1;
 };
 
 
-exports.controller('ngeoBtnGroupController',
-  exports.BtnGroupController);
+module.controller('ngeoBtnGroupController',
+  BtnGroupController);
 
 
 /**
@@ -183,7 +183,7 @@ function btnComponent($parse) {
 }
 
 
-exports.directive('ngeoBtn', btnComponent);
+module.directive('ngeoBtn', btnComponent);
 
 
-export default exports;
+export default module;

@@ -6,12 +6,12 @@ import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMo
 import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
-const exports = angular.module('gmfMobileMeasureLength', [
+const module = angular.module('gmfMobileMeasureLength', [
   ngeoMiscFilters.name,
 ]);
 
 
-exports.value('gmfMobileMeasureLengthTemplateUrl',
+module.value('gmfMobileMeasureLengthTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -23,7 +23,7 @@ exports.value('gmfMobileMeasureLengthTemplateUrl',
       'gmf/measure/lengthComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put(
     'gmf/measure/lengthComponent',
     require('./baseComponent.html')
@@ -79,7 +79,7 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
 }
 
 
-exports.directive('gmfMobileMeasurelength', component);
+module.directive('gmfMobileMeasurelength', component);
 
 
 /**
@@ -108,7 +108,7 @@ function Controller($scope, $filter, gettextCatalog) {
   this.measure;
 }
 
-olUtilInherits(exports, gmfMobileMeasureBaseComponent.Controller);
+olUtilInherits(component, gmfMobileMeasureBaseComponent.Controller);
 
 /**
  * Initialise the controller.
@@ -159,7 +159,7 @@ Controller.prototype.deactivate = function() {
 };
 
 
-exports.controller('GmfMobileMeasureLengthController', Controller);
+module.controller('GmfMobileMeasureLengthController', Controller);
 
 
-export default exports;
+export default module;

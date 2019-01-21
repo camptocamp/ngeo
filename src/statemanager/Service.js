@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
@@ -12,7 +10,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
  */
-const exports = function(ngeoLocation, ngeoUsedKeyRegexp) {
+function Service(ngeoLocation, ngeoUsedKeyRegexp) {
 
   /**
    * Object representing the application's initial state.
@@ -76,14 +74,14 @@ const exports = function(ngeoLocation, ngeoUsedKeyRegexp) {
       });
     });
   }
-};
+}
 
 
 /**
  * @param {boolean} value Use localStorage
  * @return {boolean} localStorage will be used.
  */
-exports.prototype.setUseLocalStorage = function(value) {
+Service.prototype.setUseLocalStorage = function(value) {
   this.useLocalStorage_ = value;
 
   // check if localStorage is supported
@@ -108,7 +106,7 @@ exports.prototype.setUseLocalStorage = function(value) {
  * @param {string} key State key.
  * @return {string|undefined} State value.
  */
-exports.prototype.getInitialValue = function(key) {
+Service.prototype.getInitialValue = function(key) {
   return this.initialState[key];
 };
 
@@ -118,7 +116,7 @@ exports.prototype.getInitialValue = function(key) {
  * @param {string} key State key.
  * @return {string|undefined} State value.
  */
-exports.prototype.getInitialStringValue = function(key) {
+Service.prototype.getInitialStringValue = function(key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -132,7 +130,7 @@ exports.prototype.getInitialStringValue = function(key) {
  * @param {string} key State key.
  * @return {number|undefined} State value.
  */
-exports.prototype.getInitialNumberValue = function(key) {
+Service.prototype.getInitialNumberValue = function(key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -146,7 +144,7 @@ exports.prototype.getInitialNumberValue = function(key) {
  * @param {string} key State key.
  * @return {boolean|undefined} State value.
  */
-exports.prototype.getInitialBooleanValue = function(key) {
+Service.prototype.getInitialBooleanValue = function(key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -159,7 +157,7 @@ exports.prototype.getInitialBooleanValue = function(key) {
  * Update the application state with the values in `object`.
  * @param {!Object.<string, string>} object Object.
  */
-exports.prototype.updateState = function(object) {
+Service.prototype.updateState = function(object) {
   this.ngeoLocation.updateParams(object);
   if (this.useLocalStorage_) {
     for (const key in object) {
@@ -176,7 +174,7 @@ exports.prototype.updateState = function(object) {
  * Delete a parameter
  * @param {string} key Key.
  */
-exports.prototype.deleteParam = function(key) {
+Service.prototype.deleteParam = function(key) {
   this.ngeoLocation.deleteParam(key);
   if (this.useLocalStorage_) {
     delete window.localStorage[key];
@@ -187,11 +185,11 @@ exports.prototype.deleteParam = function(key) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoStateManager', [
-  ngeoStatemanagerLocation.module.name
+const module = angular.module('ngeoStateManager', [
+  ngeoStatemanagerLocation.name
 ]);
-exports.module.service('ngeoStateManager', exports);
-exports.module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
+module.service('ngeoStateManager', Service);
+module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
 
 
-export default exports;
+export default module;

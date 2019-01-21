@@ -12,13 +12,13 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-const exports = angular.module('gmfMobileMeasurePoint', [
-  gmfRasterRasterService.module.name,
+const module = angular.module('gmfMobileMeasurePoint', [
+  gmfRasterRasterService.name,
   ngeoMiscDebounce.name,
 ]);
 
 
-exports.value('gmfMobileMeasurePointTemplateUrl',
+module.value('gmfMobileMeasurePointTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -30,7 +30,7 @@ exports.value('gmfMobileMeasurePointTemplateUrl',
       'gmf/measure/pointComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
 });
 
@@ -99,7 +99,7 @@ function component(gmfMobileMeasurePointTemplateUrl) {
 }
 
 
-exports.directive('gmfMobileMeasurepoint', component);
+module.directive('gmfMobileMeasurepoint', component);
 
 
 /**
@@ -335,7 +335,7 @@ Controller.prototype.getMeasure_ = function() {
 };
 
 
-exports.controller('GmfMobileMeasurePointController', Controller);
+module.controller('GmfMobileMeasurePointController', Controller);
 
 /**
  * @typedef {{
@@ -346,4 +346,4 @@ exports.controller('GmfMobileMeasurePointController', Controller);
  */
 
 
-export default exports;
+export default module;

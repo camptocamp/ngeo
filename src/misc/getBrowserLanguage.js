@@ -5,7 +5,7 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoGetBrowserLanguage', []);
+const module = angular.module('ngeoGetBrowserLanguage', []);
 
 
 /**
@@ -49,7 +49,7 @@ function factory($window) {
     });
 }
 
-exports.factory('ngeoGetBrowserLanguage', factory);
+module.factory('ngeoGetBrowserLanguage', factory);
 
 
-export default exports;
+export default module;

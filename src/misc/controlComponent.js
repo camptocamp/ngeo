@@ -8,7 +8,7 @@ import olControlControl from 'ol/control/Control.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoControl', []);
+const module = angular.module('ngeoControl', []);
 
 
 /**
@@ -56,7 +56,7 @@ function component() {
 }
 
 
-exports.directive('ngeoControl', component);
+module.directive('ngeoControl', component);
 
 
-export default exports;
+export default module;

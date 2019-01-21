@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
@@ -17,7 +15,7 @@ import olGeomPoint from 'ol/geom/Point.js';
  * @param {string} coordFormat the coordinates formatter
  * @param {MeasureOptions=} options Options
  */
-const exports = function(format, coordFormat, options = /** @type {MeasureOptions} */ ({})) {
+function MeasurePointMobile(format, coordFormat, options = /** @type {MeasureOptions} */ ({})) {
 
   Object.assign(options, {displayHelpTooltip: false});
 
@@ -34,15 +32,15 @@ const exports = function(format, coordFormat, options = /** @type {MeasureOption
    * @private
    */
   this.coordFormat_ = coordFormat;
-};
+}
 
-olUtilInherits(exports, ngeoInteractionMeasure);
+olUtilInherits(MeasurePointMobile, ngeoInteractionMeasure);
 
 
 /**
  * @inheritDoc
  */
-exports.prototype.createDrawInteraction = function(style, source) {
+MeasurePointMobile.prototype.createDrawInteraction = function(style, source) {
   return new ngeoInteractionMobileDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
     style: style,
@@ -54,7 +52,7 @@ exports.prototype.createDrawInteraction = function(style, source) {
 /**
  * @inheritDoc
  */
-exports.prototype.handleMeasure = function(callback) {
+MeasurePointMobile.prototype.handleMeasure = function(callback) {
   const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomPoint);
   const dec = this.decimals;
   const output = ngeoInteractionMeasure.getFormattedPoint(geom, dec, this.format_, this.coordFormat_);
@@ -63,4 +61,4 @@ exports.prototype.handleMeasure = function(callback) {
 };
 
 
-export default exports;
+export default MeasurePointMobile;

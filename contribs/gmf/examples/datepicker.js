@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import './datepicker.css';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
@@ -11,13 +7,13 @@ import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   ngeoMiscDatepickerComponent.name,
-  ngeoMiscWMSTime.module.name,
+  ngeoMiscWMSTime.name,
 ]);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -26,7 +22,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wmstime service.
  * @ngInject
  */
-exports.MainController = function($scope, ngeoWMSTime) {
+function MainController($scope, ngeoWMSTime) {
 
   /**
    * @type {import("ngeo/misc/WMSTime.js").default}
@@ -84,10 +80,10 @@ exports.MainController = function($scope, ngeoWMSTime) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

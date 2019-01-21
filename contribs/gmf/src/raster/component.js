@@ -15,18 +15,18 @@ import 'bootstrap/js/src/dropdown.js';
  * @type {!angular.IModule}
  * @hidden
 */
-const exports = angular.module('gmfRasterComponent', [
+const module = angular.module('gmfRasterComponent', [
   gmfRasterRasterService['module'].name,
   ngeoMiscDebounce.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
 });
 
 
-exports.value('gmfElevationwidgetTemplateUrl',
+module.value('gmfElevationwidgetTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -121,7 +121,7 @@ function component() {
 }
 
 
-exports.directive('gmfElevation', component);
+module.directive('gmfElevation', component);
 
 /**
  * @hidden
@@ -309,7 +309,7 @@ Controller.prototype.getRasterError_ = function() {
 };
 
 
-exports.controller('GmfElevationController', Controller);
+module.controller('GmfElevationController', Controller);
 
 
 /**
@@ -343,7 +343,7 @@ const widgetComponent = {
   },
   templateUrl: gmfElevationwidgetTemplateUrl
 };
-exports.component('gmfElevationwidget', widgetComponent);
+module.component('gmfElevationwidget', widgetComponent);
 
 
 /**
@@ -390,7 +390,7 @@ WidgetController.prototype.$onInit = function() {
 };
 
 
-exports.controller('gmfElevationwidgetController', WidgetController);
+module.controller('gmfElevationwidgetController', WidgetController);
 
 /**
  * @typedef {{
@@ -401,4 +401,4 @@ exports.controller('gmfElevationwidgetController', WidgetController);
  * }} LayerConfig
  */
 
-export default exports;
+export default module;

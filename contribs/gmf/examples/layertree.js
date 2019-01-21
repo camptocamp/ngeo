@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -24,23 +23,23 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfMapComponent.name,
-  gmfThemeManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoStatemanagerLocation.module.name,
+  gmfThemeManager.name,
+  gmfThemeThemes.name,
+  ngeoStatemanagerLocation.name,
   ngeoLayertreeModule.name,
   gmfDisclaimerModule.name,
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -51,7 +50,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
  * @ngInject
  */
-exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
+function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
 
   gmfThemes.loadThemes();
 
@@ -206,9 +205,9 @@ exports.MainController = function(gmfTreeManager, gmfThemes, gmfThemeManager, ng
       nodes.push(node);
     }
   };
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

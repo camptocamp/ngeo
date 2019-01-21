@@ -1,6 +1,3 @@
-/**
- */
-const exports = {};
 import angular from 'angular';
 import ngeoSearchSearchDirective from 'ngeo/search/searchDirective.js';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
@@ -9,17 +6,17 @@ import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoRoutingNominatimInputComponent', [
-  ngeoSearchSearchDirective.module.name,
-  ngeoRoutingNominatimService.module.name
+const module = angular.module('ngeoRoutingNominatimInputComponent', [
+  ngeoSearchSearchDirective.name,
+  ngeoRoutingNominatimService.name
 ]);
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
 });
 
 
-exports.module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
+module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
@@ -54,7 +51,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
  */
-exports.Controller = function($element, $injector, $scope, ngeoNominatimService) {
+function Controller($element, $injector, $scope, ngeoNominatimService) {
 
   /**
    * @type {!JQLite}
@@ -117,7 +114,7 @@ exports.Controller = function($element, $injector, $scope, ngeoNominatimService)
    */
   this.placeholder = '';
 
-};
+}
 
 /**
  * @param {jQuery.Event} event Event.
@@ -126,7 +123,7 @@ exports.Controller = function($element, $injector, $scope, ngeoNominatimService)
  * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
  */
-exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
+Controller.prototype.select_ = function(event, suggestion, dataset) {
   if (this.onSelect) {
     this.onSelect(suggestion);
   }
@@ -156,7 +153,7 @@ exports.Controller.prototype.select_ = function(event, suggestion, dataset) {
  * @ngname ngeoNominatimInput
  */
 const component = {
-  controller: exports.Controller,
+  controller: Controller,
   bindings: {
     'onSelect': '=?ngeoNominatimInputOnSelect',
     'inputValue': '=?ngeoNominatimInputValue',
@@ -165,7 +162,7 @@ const component = {
   templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl
 };
 
-exports.module.component('ngeoNominatimInput', component);
+module.component('ngeoNominatimInput', component);
 
 
-export default exports;
+export default module;

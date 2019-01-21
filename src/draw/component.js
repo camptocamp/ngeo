@@ -19,8 +19,8 @@ import ngeoMeasureLength from 'ngeo/measure/length.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDrawfeature', [
-  ngeoDrawController.module.name,
+const module = angular.module('ngeoDrawfeature', [
+  ngeoDrawController.name,
   ngeoDrawPoint.name,
   ngeoDrawRectangle.name,
   ngeoDrawText.name,
@@ -116,7 +116,7 @@ function directive() {
   };
 }
 
-exports.directive('ngeoDrawfeature', directive);
+module.directive('ngeoDrawfeature', directive);
 
 
-export default exports;
+export default module;

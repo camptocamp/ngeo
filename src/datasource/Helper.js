@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
@@ -8,7 +6,7 @@ import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import * as olEvents from 'ol/events.js';
 
-const exports = class {
+class Helper {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
@@ -147,17 +145,17 @@ const exports = class {
     delete this.cache_[dataSource.id];
   }
 
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoDataSourcesHelper', [
-  ngeoDatasourceDataSources.module.name,
-  ngeoQueryQuerent.module.name,
+const module = angular.module('ngeoDataSourcesHelper', [
+  ngeoDatasourceDataSources.name,
+  ngeoQueryQuerent.name,
 ]);
-exports.module.service('ngeoDataSourcesHelper', exports);
+module.service('ngeoDataSourcesHelper', Helper);
 
 
-export default exports;
+export default module;

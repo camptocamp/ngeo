@@ -5,18 +5,18 @@ import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
-const exports = angular.module('gmfPermalinkShareComponent', [
-  gmfPermalinkShareService.module.name,
-  ngeoStatemanagerLocation.module.name,
+const module = angular.module('gmfPermalinkShareComponent', [
+  gmfPermalinkShareService.name,
+  ngeoStatemanagerLocation.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
 });
 
 
-exports.value('gmfPermalinkShareTemplateUrl',
+module.value('gmfPermalinkShareTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -57,7 +57,7 @@ const component = {
   controller: 'GmfShareController',
   templateUrl: gmfPermalinkShareTemplateUrl
 };
-exports.component('gmfShare', component);
+module.component('gmfShare', component);
 
 
 class ShareComponentController {
@@ -194,7 +194,7 @@ class ShareComponentController {
   }
 }
 
-exports.controller('GmfShareController', ShareComponentController);
+module.controller('GmfShareController', ShareComponentController);
 
 
-export default exports;
+export default module;

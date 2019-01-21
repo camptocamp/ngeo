@@ -6,10 +6,10 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfLidarprofile', []);
+const module = angular.module('gmfLidarprofile', []);
 
 
-exports.value('gmfLidarprofileTemplateUrl',
+module.value('gmfLidarprofileTemplateUrl',
   /**
      * @param {!JQLite} $element Element.
      * @param {!angular.IAttributes} $attrs Attributes.
@@ -21,7 +21,7 @@ exports.value('gmfLidarprofileTemplateUrl',
       'gmf/lidarprofile';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/lidarprofile', require('./component.html'));
 });
 
@@ -61,7 +61,7 @@ const component = {
   templateUrl: gmfLidarprofileTemplateUrl
 };
 
-exports.component('gmfLidarprofile', component);
+module.component('gmfLidarprofile', component);
 
 
 /**
@@ -104,7 +104,7 @@ class Controller {
 }
 
 
-exports.controller('GmfLidarprofileController', Controller);
+module.controller('GmfLidarprofileController', Controller);
 
 
-export default exports;
+export default module;

@@ -8,7 +8,7 @@ import googAsserts from 'goog/asserts.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('ngeoModal', []);
+const module = angular.module('ngeoModal', []);
 
 /**
  * Provides the "ngeoModal" component.
@@ -64,7 +64,7 @@ const component = {
   }
 };
 
-exports.component('ngeoModal', component);
+module.component('ngeoModal', component);
 
 class Controller {
   /**
@@ -151,7 +151,7 @@ class Controller {
   }
 }
 
-exports.controller('ngeoModalController', Controller);
+module.controller('ngeoModalController', Controller);
 
 
-export default exports;
+export default module;

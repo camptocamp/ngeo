@@ -1,10 +1,8 @@
-/**
- */
 import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import {ServerType} from 'ngeo/datasource/OGC.js';
 
-const exports = class {
+class WFSAlias {
 
   /**
    * Service that provides methods to get additional information and actions
@@ -43,13 +41,13 @@ const exports = class {
       this.ngeoDataSourcesHelper_.getDataSourceAttributes(dataSource);
     }
   }
-};
+}
 
 
-exports.module = angular.module('gmfDatasourceWFSAliases', [
-  ngeoDatasourceHelper.module.name,
+const module = angular.module('gmfDatasourceWFSAliases', [
+  ngeoDatasourceHelper.name,
 ]);
-exports.module.service('gmfWFSAliases', exports);
+module.service('gmfWFSAliases', WFSAlias);
 
 
-export default exports;
+export default module;

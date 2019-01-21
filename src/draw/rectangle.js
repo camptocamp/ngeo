@@ -9,7 +9,7 @@ import olGeomPolygon from 'ol/geom/Polygon.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDrawrectangle', []);
+const module = angular.module('ngeoDrawrectangle', []);
 
 
 /**
@@ -67,7 +67,7 @@ function directive() {
 }
 
 
-exports.directive('ngeoDrawrectangle', directive);
+module.directive('ngeoDrawrectangle', directive);
 
 
-export default exports;
+export default module;

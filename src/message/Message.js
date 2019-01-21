@@ -1,8 +1,4 @@
 /**
- */
-
-
-/**
  * A message to display by the ngeo notification service.
  *
  * delay: The delay in milliseconds the message is shown. Defaults to `7000`.
@@ -28,12 +24,40 @@
 
 
 /**
+ * @enum {string}
+ * @export
+ */
+const Type = {
+  /**
+   * @type {string}
+   * @export
+   */
+  ERROR: 'error',
+  /**
+   * @type {string}
+   * @export
+   */
+  INFORMATION: 'information',
+  /**
+   * @type {string}
+   * @export
+   */
+  SUCCESS: 'success',
+  /**
+   * @type {string}
+   * @export
+   */
+  WARNING: 'warning'
+};
+
+
+/**
  * Abstract class for services that display messages.
  *
  * @constructor
  * @abstract
  */
-const exports = function() {};
+function Message() {}
 
 
 /**
@@ -43,7 +67,7 @@ const exports = function() {};
  * @param {Message} message Message.
  * @protected
  */
-exports.prototype.showMessage = function(message) {};
+Message.prototype.showMessage = function(message) {};
 
 
 /**
@@ -54,7 +78,7 @@ exports.prototype.showMessage = function(message) {};
  *     object A message or list of messages as text or configuration objects.
  * @export
  */
-exports.prototype.show = function(object) {
+Message.prototype.show = function(object) {
   const msgObjects = this.getMessageObjects(object);
   msgObjects.forEach(this.showMessage, this);
 };
@@ -66,8 +90,8 @@ exports.prototype.show = function(object) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.error = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.ERROR));
+Message.prototype.error = function(message) {
+  this.show(this.getMessageObjects(message, Type.ERROR));
 };
 
 
@@ -76,8 +100,8 @@ exports.prototype.error = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.info = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.INFORMATION));
+Message.prototype.info = function(message) {
+  this.show(this.getMessageObjects(message, Type.INFORMATION));
 };
 
 
@@ -86,8 +110,8 @@ exports.prototype.info = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.success = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.SUCCESS));
+Message.prototype.success = function(message) {
+  this.show(this.getMessageObjects(message, Type.SUCCESS));
 };
 
 
@@ -96,8 +120,8 @@ exports.prototype.success = function(message) {
  * @param {string|Array.<string>} message Message or list of messages.
  * @export
  */
-exports.prototype.warn = function(message) {
-  this.show(this.getMessageObjects(message, exports.Type.WARNING));
+Message.prototype.warn = function(message) {
+  this.show(this.getMessageObjects(message, Type.WARNING));
 };
 
 
@@ -112,10 +136,10 @@ exports.prototype.warn = function(message) {
  * @return {Array.<Message>} List of message objects.
  * @protected
  */
-exports.prototype.getMessageObjects = function(object, opt_type) {
+Message.prototype.getMessageObjects = function(object, opt_type) {
   const msgObjects = [];
   let msgObject = null;
-  const defaultType = exports.Type.INFORMATION;
+  const defaultType = Type.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({
@@ -152,32 +176,4 @@ exports.prototype.getMessageObjects = function(object, opt_type) {
 };
 
 
-/**
- * @enum {string}
- * @export
- */
-exports.Type = {
-  /**
-   * @type {string}
-   * @export
-   */
-  ERROR: 'error',
-  /**
-   * @type {string}
-   * @export
-   */
-  INFORMATION: 'information',
-  /**
-   * @type {string}
-   * @export
-   */
-  SUCCESS: 'success',
-  /**
-   * @type {string}
-   * @export
-   */
-  WARNING: 'warning'
-};
-
-
-export default exports;
+export default Message;

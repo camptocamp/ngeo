@@ -9,18 +9,18 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
-const exports = angular.module('gmfWmtscapabilitylayertree', [
-  gmfDatasourceExternalDataSourcesManager.module.name,
-  ngeoMessagePopup.module.name,
+const module = angular.module('gmfWmtscapabilitylayertree', [
+  gmfDatasourceExternalDataSourcesManager.name,
+  ngeoMessagePopup.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html'));
 });
 
 
-exports.value('gmfWmtscapabilitylayertreTemplateUrl',
+module.value('gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
@@ -117,7 +117,7 @@ class Controller {
 }
 
 
-exports.component('gmfWmtscapabilitylayertree', {
+module.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
     'layers': '<',
@@ -128,4 +128,4 @@ exports.component('gmfWmtscapabilitylayertree', {
 });
 
 
-export default exports;
+export default module;

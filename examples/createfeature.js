@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './createfeature.css';
 import angular from 'angular';
@@ -23,11 +22,11 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoMiscBtnComponent.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscToolActivateMgr.name,
   ngeoEditingCreatefeatureComponent.name,
 ]);
 
@@ -38,7 +37,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoToolActivateMgr) {
+function MainController(ngeoToolActivateMgr) {
 
   /**
    * @type {import("ol/Collection.js").default}
@@ -151,10 +150,10 @@ exports.MainController = function(ngeoToolActivateMgr) {
     dummyToolActivate,
     true
   );
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

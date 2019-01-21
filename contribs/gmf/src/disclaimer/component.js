@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -17,11 +15,11 @@ import 'angular-sanitize';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('gmfDisclaimer', [
+const module = angular.module('gmfDisclaimer', [
   'ngSanitize',
-  ngeoMapLayerHelper.module.name,
-  ngeoMessageDisclaimer.module.name,
-  ngeoMiscEventHelper.module.name,
+  ngeoMapLayerHelper.name,
+  ngeoMessageDisclaimer.name,
+  ngeoMiscEventHelper.name,
 ]);
 
 
@@ -357,7 +355,7 @@ const component = {
 };
 
 
-exports.component('gmfDisclaimer', component);
+module.component('gmfDisclaimer', component);
 
 
-export default exports;
+export default module;

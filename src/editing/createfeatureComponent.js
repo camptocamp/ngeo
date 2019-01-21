@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -7,7 +5,7 @@ import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
-import ngeoUtils from 'ngeo/utils.js';
+import {toMulti} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
@@ -15,8 +13,8 @@ import olFeature from 'ol/Feature.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-const exports = angular.module('ngeoCreatefeature', [
-  ngeoMiscEventHelper.module.name,
+const module = angular.module('ngeoCreatefeature', [
+  ngeoMiscEventHelper.name,
   ngeoMiscFilters.name,
 ]);
 
@@ -72,7 +70,7 @@ function directive() {
   };
 }
 
-exports.directive('ngeoCreatefeature', directive);
+module.directive('ngeoCreatefeature', directive);
 
 
 /**
@@ -275,7 +273,7 @@ Controller.prototype.handleDrawEnd_ = function(event) {
   let geometry = sketch.getGeometry();
   const type = geometry.getType();
   if (this.geomType.indexOf('Multi') != type.indexOf('Multi')) {
-    geometry = ngeoUtils.toMulti(geometry);
+    geometry = toMulti(geometry);
   }
   const feature = new olFeature(geometry);
   if (this.features instanceof olCollection) {
@@ -298,7 +296,7 @@ Controller.prototype.$onDestroy = function() {
   }, 0);
 };
 
-exports.controller('ngeoCreatefeatureController', Controller);
+module.controller('ngeoCreatefeatureController', Controller);
 
 
-export default exports;
+export default module;

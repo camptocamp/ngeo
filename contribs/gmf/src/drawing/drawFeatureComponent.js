@@ -35,17 +35,17 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('GmfDrawFeatureComponent', [
+const module = angular.module('GmfDrawFeatureComponent', [
   gmfDrawingFeatureStyleComponent.name,
   ngeoEditingExportfeaturesComponent.name,
   ngeoMiscBtnComponent.name,
   ngeoDrawComponent.name,
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
 });
 
@@ -82,7 +82,7 @@ function component() {
 }
 
 
-exports.directive('gmfDrawfeature', component);
+module.directive('gmfDrawfeature', component);
 
 
 /**
@@ -768,7 +768,7 @@ Controller.prototype.handleRotateEnd_ = function(evt) {
 };
 
 
-exports.controller('GmfDrawfeatureController', Controller);
+module.controller('GmfDrawfeatureController', Controller);
 
 
-export default exports;
+export default module;

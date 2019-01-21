@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import './locationsearch.css';
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
@@ -26,7 +22,7 @@ const appmodule = angular.module('app', [
 /**
  * @type {!angular.IComponentOptions}
  */
-exports.locationSearchComponent = {
+const locationSearchComponent = {
   bindings: {
     'map': '=appSearchMap'
   },
@@ -39,7 +35,7 @@ exports.locationSearchComponent = {
 };
 
 
-appmodule.component('appLocationSearch', exports.locationSearchComponent);
+appmodule.component('appLocationSearch', locationSearchComponent);
 
 
 /**
@@ -47,7 +43,7 @@ appmodule.component('appLocationSearch', exports.locationSearchComponent);
  * @param {import("ngeo/search/createLocationSearchBloodhound.js").default.Function} ngeoCreateLocationSearchBloodhound Bloodhound service.
  * @ngInject
  */
-exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
+function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -95,10 +91,10 @@ exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
    * @export
    */
   this.listeners = /** @type {SearchDirectiveListeners} */ ({
-    select: exports.SearchController.select_.bind(this)
+    select: select_.bind(this)
   });
 
-};
+}
 
 
 /**
@@ -108,7 +104,7 @@ exports.SearchController = function(ngeoCreateLocationSearchBloodhound) {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');
   googAsserts.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
@@ -134,24 +130,24 @@ exports.SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreat
  * @this {app.locationsearch.SearchController}
  * @private
  */
-exports.SearchController.select_ = function(event, suggestion, dataset) {
+function select_(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
   const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
   googAsserts.assert(size !== undefined);
   const maxZoom = 16;
   this.map.getView().fit(bbox, {size, maxZoom});
-};
+}
 
 
-appmodule.controller('AppSearchController', exports.SearchController);
+appmodule.controller('AppSearchController', SearchController);
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -168,10 +164,10 @@ exports.MainController = function() {
     })
   });
 
-};
+}
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

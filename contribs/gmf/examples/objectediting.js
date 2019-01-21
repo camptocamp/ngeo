@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -29,24 +28,24 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfMapComponent.name,
   gmfObjecteditingComponent.name,
-  gmfObjecteditingManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  gmfObjecteditingManager.name,
+  gmfThemeThemes.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
-exports.module.constant('defaultTheme', 'ObjectEditing');
-exports.module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
-exports.module.constant('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.constant('gmfObjectEditingToolsOptions', {
+module.constant('defaultTheme', 'ObjectEditing');
+module.constant('gmfLayersUrl', appURL.GMF_LAYERS);
+module.constant('gmfTreeUrl', appURL.GMF_THEMES);
+module.constant('gmfObjectEditingToolsOptions', {
   regularPolygonRadius: 150
 });
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -59,7 +58,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gmfObjectEditingManager, gmfThemes,
+function MainController(gmfObjectEditingManager, gmfThemes,
   gmfTreeManager, ngeoToolActivateMgr) {
 
   /**
@@ -179,9 +178,9 @@ exports.MainController = function(gmfObjectEditingManager, gmfThemes,
     }
   });
 
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

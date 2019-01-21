@@ -13,13 +13,13 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfDrawingFeatureStyle', [
+const module = angular.module('gmfDrawingFeatureStyle', [
   ngeoMiscColorpickerComponent.name,
-  ngeoMiscFeatureHelper.module.name,
+  ngeoMiscFeatureHelper.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
 });
 
@@ -51,7 +51,7 @@ function directive() {
 }
 
 
-exports.directive('gmfFeaturestyle', directive);
+module.directive('gmfFeaturestyle', directive);
 
 
 /**
@@ -320,7 +320,7 @@ Controller.prototype.handleGeometryChange_ = function() {
 };
 
 
-exports.controller('GmfFeaturestyleController', Controller);
+module.controller('GmfFeaturestyleController', Controller);
 
 
-export default exports;
+export default module;

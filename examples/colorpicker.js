@@ -1,13 +1,9 @@
-/**
- */
-const exports = {};
-
 import './colorpicker.css';
 import angular from 'angular';
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMiscColorpickerComponent.name,
 ]);
@@ -19,20 +15,20 @@ exports.module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.colorpickerComponent = {
+const colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
   controller: 'AppColorpickerController'
 };
 
 
-exports.module.component('appColorpicker', exports.colorpickerComponent);
+module.component('appColorpicker', colorpickerComponent);
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.ColorPickerController = function() {
+function ColorPickerController() {
 
 
   /**
@@ -45,10 +41,10 @@ exports.ColorPickerController = function() {
     ['red', 'yellow', 'green', 'lightgreen', 'lightblue', 'orange', 'purple'],
     ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000']];
 
-};
+}
 
-exports.module.controller('AppColorpickerController',
-  exports.ColorPickerController);
+module.controller('AppColorpickerController',
+  ColorPickerController);
 
 
 /**
@@ -56,7 +52,7 @@ exports.module.controller('AppColorpickerController',
  * @param {angular.IScope} $scope Controller scope.
  * @ngInject
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * Active color.
@@ -65,10 +61,10 @@ exports.MainController = function($scope) {
    */
   this.color = 'red';
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

@@ -1,8 +1,6 @@
-/**
- */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
-import ngeoMiscTime from 'ngeo/misc/Time.js';
+import ngeoMiscTime, {Time} from 'ngeo/misc/Time.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 
 /**
@@ -15,7 +13,7 @@ import {inherits as olUtilInherits} from 'ol/util.js';
  * @ngdoc service
  * @ngname ngeoWMSTime
  */
-const exports = function($filter, gettextCatalog) {
+function WMSTime($filter, gettextCatalog) {
 
   /**
    * @private
@@ -29,10 +27,10 @@ const exports = function($filter, gettextCatalog) {
    */
   this.gettextCatalog_ = gettextCatalog;
 
-  ngeoMiscTime.call(this);
-};
+  Time.call(this);
+}
 
-olUtilInherits(exports, ngeoMiscTime);
+olUtilInherits(WMSTime, Time);
 
 
 /**
@@ -44,7 +42,7 @@ olUtilInherits(exports, ngeoMiscTime);
  * @param  {boolean=} opt_toUTC to get the UTC date
  * @return {string} Date string regarding the resolution.
  */
-exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
+WMSTime.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat, opt_toUTC) {
   const date = new Date(time);
   const utc = opt_toUTC ? 'UTC' : undefined;
 
@@ -84,7 +82,7 @@ exports.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
  * WMS request
  * @export
  */
-exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
+WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
   googAsserts.assert(wmsTimeProperty.resolution !== undefined);
   if (wmsTimeProperty.mode === 'range') {
     googAsserts.assert(times.end !== undefined);
@@ -101,10 +99,10 @@ exports.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUT
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoWMSTime', [
-  ngeoMiscTime.module.name,
+const module = angular.module('ngeoWMSTime', [
+  ngeoMiscTime.name,
 ]);
-exports.module.service('ngeoWMSTime', exports);
+module.service('ngeoWMSTime', WMSTime);
 
 
-export default exports;
+export default module;

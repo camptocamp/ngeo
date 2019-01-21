@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './mouseposition.css';
 import angular from 'angular';
@@ -15,20 +14,20 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
 ]);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 
@@ -65,9 +64,9 @@ exports.MainController = function() {
       zoom: 8
     })
   });
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

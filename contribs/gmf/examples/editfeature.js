@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import appURL from './url.js';
 import './editfeature.css';
@@ -25,19 +21,19 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
-  gmfEditingEditFeature.module.name,
+  gmfEditingEditFeature.name,
   gmfMapComponent.name,
 ]);
 
 
-exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -47,7 +43,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, gmfEditFeature, gmfUser) {
+function MainController($scope, gmfEditFeature, gmfUser) {
 
   /**
    * @type {!angular.IScope}
@@ -134,14 +130,14 @@ exports.MainController = function($scope, gmfEditFeature, gmfUser) {
     container: 'body',
     trigger: 'hover'
   });
-};
+}
 
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
+MainController.prototype.handleMapSingleClick_ = function(evt) {
 
   // (1) Launch query to fetch new features
   const coordinate = evt.coordinate;
@@ -171,7 +167,7 @@ exports.MainController.prototype.handleMapSingleClick_ = function(evt) {
  * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @private
  */
-exports.MainController.prototype.handleGetFeatures_ = function(features) {
+MainController.prototype.handleGetFeatures_ = function(features) {
   this.pending = false;
 
   if (features.length) {
@@ -184,7 +180,7 @@ exports.MainController.prototype.handleGetFeatures_ = function(features) {
  * Insert a new feature at a random location.
  * @export
  */
-exports.MainController.prototype.insertFeature = function() {
+MainController.prototype.insertFeature = function() {
 
   this.pending = true;
 
@@ -232,7 +228,7 @@ exports.MainController.prototype.insertFeature = function() {
  * Update the currently selected feature with a new name.
  * @export
  */
-exports.MainController.prototype.updateFeature = function() {
+MainController.prototype.updateFeature = function() {
 
   console.assert(this.feature);
 
@@ -255,7 +251,7 @@ exports.MainController.prototype.updateFeature = function() {
  * Delete currently selected feature.
  * @export
  */
-exports.MainController.prototype.deleteFeature = function() {
+MainController.prototype.deleteFeature = function() {
 
   console.assert(this.feature);
 
@@ -277,7 +273,7 @@ exports.MainController.prototype.deleteFeature = function() {
  * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
-exports.MainController.prototype.handleEditFeature_ = function(resp) {
+MainController.prototype.handleEditFeature_ = function(resp) {
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -286,14 +282,14 @@ exports.MainController.prototype.handleEditFeature_ = function(resp) {
 /**
  * @private
  */
-exports.MainController.prototype.refreshWMSLayer_ = function() {
+MainController.prototype.refreshWMSLayer_ = function() {
   this.wmsSource_.updateParams({
     'random': Math.random()
   });
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

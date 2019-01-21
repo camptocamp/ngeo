@@ -1,8 +1,4 @@
-/**
- */
-const exports = {};
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
-
 import angular from 'angular';
 import appURL from './url.js';
 import './filterselector.css';
@@ -31,31 +27,31 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfAuthenticationModule.name,
-  gmfDatasourceManager.module.name,
+  gmfDatasourceManager.name,
   gmfLayertreeComponent.name,
-  gmfLayertreeTreeManager.module.name,
+  gmfLayertreeTreeManager.name,
   gmfFiltersModule.name,
   gmfMapComponent.name,
-  gmfThemeThemes.module.name,
-  ngeoDatasourceDataSources.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  gmfThemeThemes.name,
+  ngeoDatasourceDataSources.name,
+  ngeoMiscToolActivateMgr.name,
   ngeoQueryBboxQueryComponent.name,
   ngeoQueryMapQueryComponent.name,
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('authenticationBaseUrl', appURL.GMF_DEMO);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('authenticationBaseUrl', appURL.GMF_DEMO);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('defaultTheme', 'Filters');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Filters');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
-exports.MainController = class {
+class MainController {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
@@ -165,10 +161,10 @@ exports.MainController = class {
     });
 
   }
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

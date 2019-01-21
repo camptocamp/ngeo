@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
@@ -34,7 +32,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * @ngInject
  * @export
  */
-const exports = function(config, $scope, $injector) {
+function AbstractMobileController(config, $scope, $injector) {
 
   /**
    * @type {boolean}
@@ -139,15 +137,15 @@ const exports = function(config, $scope, $injector) {
    * @export
    */
   this.redirectUrl = $injector.get('redirectUrl');
-};
+}
 
-olUtilInherits(exports, gmfControllersAbstractAppController);
+olUtilInherits(AbstractMobileController, gmfControllersAbstractAppController);
 
 
 /**
  * @export
  */
-exports.prototype.toggleLeftNavVisibility = function() {
+AbstractMobileController.prototype.toggleLeftNavVisibility = function() {
   this.leftNavVisible = !this.leftNavVisible;
 };
 
@@ -155,7 +153,7 @@ exports.prototype.toggleLeftNavVisibility = function() {
 /**
  * @export
  */
-exports.prototype.toggleRightNavVisibility = function() {
+AbstractMobileController.prototype.toggleRightNavVisibility = function() {
   this.rightNavVisible = !this.rightNavVisible;
 };
 
@@ -164,7 +162,7 @@ exports.prototype.toggleRightNavVisibility = function() {
  * Hide both navigation menus.
  * @export
  */
-exports.prototype.hideNav = function() {
+AbstractMobileController.prototype.hideNav = function() {
   this.leftNavVisible = this.rightNavVisible = false;
 };
 
@@ -174,7 +172,7 @@ exports.prototype.hideNav = function() {
  * otherwise false.
  * @export
  */
-exports.prototype.navIsVisible = function() {
+AbstractMobileController.prototype.navIsVisible = function() {
   return this.leftNavVisible || this.rightNavVisible;
 };
 
@@ -184,7 +182,7 @@ exports.prototype.navIsVisible = function() {
  * @param {string} target the data-target value.
  * @export
  */
-exports.prototype.openNavMenu = function(target) {
+AbstractMobileController.prototype.openNavMenu = function(target) {
   const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
   for (let i = 0; i < navElements.length; i++) {
     const element = navElements[i];
@@ -195,21 +193,21 @@ exports.prototype.openNavMenu = function(target) {
 };
 
 
-exports.module = angular.module('GmfAbstractMobileControllerModule', [
-  gmfControllersAbstractAppController.module.name,
+const module = angular.module('GmfAbstractMobileControllerModule', [
+  gmfControllersAbstractAppController.name,
   gmfMobileMeasureModule.name,
   gmfMobileNavigationModule.name,
   gmfQueryWindowComponent.name,
   ngeoGeolocationMobile.name,
 ]);
 
-exports.module.controller('AbstractMobileController', exports);
+module.controller('AbstractMobileController', AbstractMobileController);
 
-exports.module.value('isMobile', true);
+module.value('isMobile', true);
 
-exports.module.value('ngeoQueryOptions', {
+module.value('ngeoQueryOptions', {
   'tolerance': 10
 });
 
 
-export default exports;
+export default module;

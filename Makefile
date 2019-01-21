@@ -157,7 +157,7 @@ test: .build/node_modules.timestamp
 
 .PHONY: test-debug
 test-debug: .build/node_modules.timestamp .build/node_modules_karma-chrome-launcher.timestamp
-	./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
+	TS_NODE_PROJECT=disable.json ./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true --debug
 
 .build/node_modules_karma-chrome-launcher.timestamp:
 	npm install karma-chrome-launcher
@@ -217,7 +217,7 @@ gh-pages: .build/python-venv.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(WEBPACK_CONFIG_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
+	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.timestamp $(ESLINT_CONFIG_FILES), $^)
 	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \

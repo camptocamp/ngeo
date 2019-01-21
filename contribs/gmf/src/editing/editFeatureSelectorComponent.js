@@ -11,14 +11,14 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('GmfEditingFeatureSelectorComponent', [
+const module = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfEditingEditFeatureComponent.name,
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
 ]);
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html'));
 });
 
@@ -64,7 +64,7 @@ function component() {
 }
 
 
-exports.directive('gmfEditfeatureselector', component);
+module.directive('gmfEditfeatureselector', component);
 
 
 /**
@@ -275,7 +275,7 @@ Controller.prototype.handleDestroy_ = function() {
 };
 
 
-exports.controller('GmfEditfeatureselectorController', Controller);
+module.controller('GmfEditfeatureselectorController', Controller);
 
 
-export default exports;
+export default module;

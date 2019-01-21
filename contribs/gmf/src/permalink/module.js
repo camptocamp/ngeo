@@ -11,7 +11,7 @@ import './share.scss';
  * @type {!angular.IModule}
  */
 export default angular.module('gmfPermalinkModule', [
-  gmfPermalinkPermalink.module.name,
-  gmfPermalinkShareService.module.name,
+  gmfPermalinkPermalink.name,
+  gmfPermalinkShareService.name,
   gmfPermalinkShareComponent.name,
 ]);

@@ -1,9 +1,5 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
-import appURL from './url.js';
+import {MAPSERVER_PROXY, PRINT_PROXY} from './url.js';
 import './mapfishprint.css';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
@@ -23,8 +19,8 @@ import ngeoMapModule from 'ngeo/map/module.js';
 const appmodule = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
-  ngeoPrintService.module.name,
-  ngeoPrintUtils.module.name,
+  ngeoPrintService.name,
+  ngeoPrintUtils.name,
 ]);
 
 
@@ -32,7 +28,7 @@ const appmodule = angular.module('app', [
  * @const
  * @private
  */
-exports.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
+const PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
   100000, 500000];
 
 
@@ -40,28 +36,28 @@ exports.PRINT_SCALES_ = [100, 250, 500, 2500, 5000, 10000, 25000, 50000,
  * @const
  * @private
  */
-exports.PRINT_FORMAT_ = 'pdf';
+const PRINT_FORMAT_ = 'pdf';
 
 
 /**
  * @const
  * @private
  */
-exports.PRINT_LAYOUT_ = '1 A4 portrait';
+const PRINT_LAYOUT_ = '1 A4 portrait';
 
 
 /**
  * @const
  * @private
  */
-exports.PRINT_DPI_ = 72;
+const PRINT_DPI_ = 72;
 
 
 /**
  * @const
  * @private
  */
-exports.PRINT_PAPER_SIZE_ = [555, 675];
+const PRINT_PAPER_SIZE_ = [555, 675];
 
 
 /**
@@ -72,7 +68,7 @@ exports.PRINT_PAPER_SIZE_ = [555, 675];
  * @ngInject
  * @export
  */
-exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
+function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -81,7 +77,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     layers: [
       new olLayerImage({
         source: new olSourceImageWMS({
-          url: appURL.MAPSERVER_PROXY,
+          url: MAPSERVER_PROXY,
           params: {
             'LAYERS': 'osm'
           },
@@ -122,7 +118,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    * @type {import("ngeo/print/Service.js").default}
    * @private
    */
-  this.print_ = ngeoCreatePrint(appURL.PRINT_PROXY);
+  this.print_ = ngeoCreatePrint(PRINT_PROXY);
 
   /**
    * @type {import("ngeo/print/Utils.js").default}
@@ -137,7 +133,7 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
     /**
        * @return {import("ol/size.js").Size} Size in dots of the map to print.
        */
-    () => exports.PRINT_PAPER_SIZE_,
+    () => PRINT_PAPER_SIZE_,
     /**
        * @param {olx.FrameState} frameState Frame state.
        * @return {number} Scale of the map to print.
@@ -148,21 +144,21 @@ exports.MainController = function($timeout, ngeoCreatePrint, ngeoPrintUtils) {
       // we test mapSize and mapResolution just to please the compiler
       return mapSize !== undefined && mapResolution !== undefined ?
         ngeoPrintUtils.getOptimalScale(mapSize, mapResolution,
-          exports.PRINT_PAPER_SIZE_, exports.PRINT_SCALES_) :
-        exports.PRINT_SCALES_[0];
+          PRINT_PAPER_SIZE_, PRINT_SCALES_) :
+        PRINT_SCALES_[0];
     });
 
   /**
    * Draw the print window in a map postcompose listener.
    */
   this.map.on('postcompose', postcomposeListener);
-};
+}
 
 
 /**
  * @export
  */
-exports.MainController.prototype.print = function() {
+MainController.prototype.print = function() {
   const map = this.map;
 
   const mapSize = map.getSize();
@@ -171,12 +167,12 @@ exports.MainController.prototype.print = function() {
   // we test mapSize and viewResolution just to please the compiler
   const scale = mapSize !== undefined && viewResolution !== undefined ?
     this.printUtils_.getOptimalScale(mapSize, viewResolution,
-      exports.PRINT_PAPER_SIZE_, exports.PRINT_SCALES_) :
-    exports.PRINT_SCALES_[0];
+      PRINT_PAPER_SIZE_, PRINT_SCALES_) :
+    PRINT_SCALES_[0];
 
-  const dpi = exports.PRINT_DPI_;
-  const format = exports.PRINT_FORMAT_;
-  const layout = exports.PRINT_LAYOUT_;
+  const dpi = PRINT_DPI_;
+  const format = PRINT_FORMAT_;
+  const layout = PRINT_LAYOUT_;
 
   this.printState = 'Printing...';
 
@@ -198,7 +194,7 @@ exports.MainController.prototype.print = function() {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
+MainController.prototype.handleCreateReportSuccess_ = function(resp) {
   const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
   this.getStatus_(mfResp.ref);
 };
@@ -208,7 +204,7 @@ exports.MainController.prototype.handleCreateReportSuccess_ = function(resp) {
  * @param {string} ref Ref.
  * @private
  */
-exports.MainController.prototype.getStatus_ = function(ref) {
+MainController.prototype.getStatus_ = function(ref) {
   this.print_.getStatus(ref).then(
     this.handleGetStatusSuccess_.bind(this, ref),
     this.handleGetStatusError_.bind(this)
@@ -220,7 +216,7 @@ exports.MainController.prototype.getStatus_ = function(ref) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleCreateReportError_ = function(resp) {
+MainController.prototype.handleCreateReportError_ = function(resp) {
   this.printState = 'Print error';
 };
 
@@ -230,7 +226,7 @@ exports.MainController.prototype.handleCreateReportError_ = function(resp) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
+MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
   const mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
   const done = mfResp.done;
   if (done) {
@@ -251,12 +247,12 @@ exports.MainController.prototype.handleGetStatusSuccess_ = function(ref, resp) {
  * @param {!angular.IHttpResponse} resp Response.
  * @private
  */
-exports.MainController.prototype.handleGetStatusError_ = function(resp) {
+MainController.prototype.handleGetStatusError_ = function(resp) {
   this.printState = 'Print error';
 };
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

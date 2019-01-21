@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -15,18 +14,18 @@ import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
-  gmfEditingXSDAttributes.module.name,
-  gmfThemeThemes.module.name,
+  gmfEditingXSDAttributes.name,
+  gmfThemeThemes.name,
   ngeoEditingAttributesComponent.name,
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
-exports.module.value('gmfLayersUrl', appURL.GMF_LAYERS);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -36,7 +35,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
+function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
   /**
    * @type {angular.ITimeoutService}
@@ -93,7 +92,7 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
     });
 
   });
-};
+}
 
 
 /**
@@ -101,7 +100,7 @@ exports.MainController = function($timeout, gmfThemes, gmfXSDAttributes) {
  * @return {Array.<gmfThemes.GmfLayer>} All layers in all themes.
  * @export
  */
-exports.MainController.prototype.getSetLayers = function(value) {
+MainController.prototype.getSetLayers = function(value) {
   if (value !== undefined && value !== null) {
     this.xsdAttributes_.getAttributes(value.id).then(attr => this.setAttributes_(attr));
   }
@@ -113,7 +112,7 @@ exports.MainController.prototype.getSetLayers = function(value) {
  * @param {Array.<Attribute>} attributes Attributes.
  * @export
  */
-exports.MainController.prototype.setAttributes_ = function(attributes) {
+MainController.prototype.setAttributes_ = function(attributes) {
 
   // (1) Reset first
   this.feature = null;
@@ -131,7 +130,7 @@ exports.MainController.prototype.setAttributes_ = function(attributes) {
  * @return {string} Type of geometry.
  * @export
  */
-exports.MainController.prototype.getGeomType = function() {
+MainController.prototype.getGeomType = function() {
   let type = 'N/A';
   if (this.attributes) {
     const geomAttr = ngeoFormatXSDAttribute.getGeometryAttribute(
@@ -151,7 +150,7 @@ exports.MainController.prototype.getGeomType = function() {
  * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
  * @export
  */
-exports.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
+MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let i;
   const children = node.children;
   if (children !== undefined) {
@@ -171,7 +170,7 @@ exports.MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

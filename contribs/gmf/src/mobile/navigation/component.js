@@ -2,7 +2,7 @@
  */
 import angular from 'angular';
 import googAsserts from 'goog/asserts.js';
-const exports = angular.module('gmfMobileNav', []);
+const module = angular.module('gmfMobileNav', []);
 
 
 /**
@@ -74,7 +74,7 @@ function component() {
   };
 }
 
-exports.directive('gmfMobileNav', component);
+module.directive('gmfMobileNav', component);
 
 
 /**
@@ -122,7 +122,7 @@ function Controller() {
   this.back = this.back_.bind(this);
 }
 
-exports.controller('gmfMobileNavController', Controller);
+module.controller('gmfMobileNavController', Controller);
 
 
 /**
@@ -269,7 +269,7 @@ Controller.prototype.backIfActive = function(element) {
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-exports.backDirective = function() {
+function backDirective() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -288,9 +288,9 @@ exports.backDirective = function() {
       });
     }
   };
-};
+}
 
-exports.directive('gmfMobileNavBack', exports.backDirective);
+module.directive('gmfMobileNavBack', backDirective);
 
 
 /**
@@ -311,7 +311,7 @@ exports.directive('gmfMobileNavBack', exports.backDirective);
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  */
-exports.backOnClickDirective = function() {
+function backOnClickDirective() {
   return {
     require: '^^gmfMobileNav',
     restrict: 'A',
@@ -328,9 +328,9 @@ exports.backOnClickDirective = function() {
       });
     }
   };
-};
+}
 
-exports.directive('gmfMobileNavBackOnClick', exports.backOnClickDirective);
+module.directive('gmfMobileNavBackOnClick', backOnClickDirective);
 
 
-export default exports;
+export default module;

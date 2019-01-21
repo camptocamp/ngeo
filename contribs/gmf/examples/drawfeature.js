@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import './drawfeature.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
@@ -21,23 +17,23 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfDrawingModule.name,
   gmfMapComponent.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
-  ngeoMiscFeatureHelper.module.name,
-  ngeoMiscToolActivateMgr.module.name,
+  ngeoMiscFeatureHelper.name,
+  ngeoMiscToolActivateMgr.name,
 ]);
 
 
-exports.module.value('ngeoExportFeatureFormats', [
+module.value('ngeoExportFeatureFormats', [
   ngeoMiscFeatureHelper.FormatType.KML,
   ngeoMiscFeatureHelper.FormatType.GPX
 ]);
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -51,7 +47,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
+function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
   ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
 
   /**
@@ -122,14 +118,14 @@ exports.MainController = function($scope, ngeoFeatureHelper, ngeoFeatures,
     container: 'body',
     trigger: 'hover'
   });
-};
+}
 
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-exports.MainController.prototype.handleMapPointerMove_ = function(evt) {
+MainController.prototype.handleMapPointerMove_ = function(evt) {
   const pixel = evt.pixel;
 
   const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
@@ -142,7 +138,7 @@ exports.MainController.prototype.handleMapPointerMove_ = function(evt) {
 };
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

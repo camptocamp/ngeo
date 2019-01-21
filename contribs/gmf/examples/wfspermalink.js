@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import angular from 'angular';
 import appURL from './url.js';
@@ -22,14 +21,14 @@ import olStyleCircle from 'ol/style/Circle.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfMapModule.name,
   gmfQueryWindowComponent.name,
-  ngeoStatemanagerWfsPermalink.module.name,
+  ngeoStatemanagerWfsPermalink.name,
 ]);
 
-exports.module.value('ngeoWfsPermalinkOptions',
+module.value('ngeoWfsPermalinkOptions',
   /** @type {WfsPermalinkOptions} */ ({
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
@@ -39,16 +38,16 @@ exports.module.value('ngeoWfsPermalinkOptions',
     defaultFeaturePrefix: 'feature'
   }));
 
-exports.module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -84,9 +83,9 @@ exports.MainController = function() {
     }),
     stroke: stroke
   });
-};
+}
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

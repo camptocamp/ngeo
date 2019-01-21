@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './datetimepicker.scss';
 import angular from 'angular';
@@ -8,7 +7,7 @@ import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.j
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMiscDatetimepickerComponent.name,
 ]);
@@ -18,7 +17,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {string}
@@ -38,10 +37,10 @@ exports.MainController = function() {
    */
   this.datetime = '2018-01-01 12:00:00';
 
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

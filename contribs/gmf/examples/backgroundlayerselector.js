@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import appURL from './url.js';
 import './backgroundlayerselector.css';
@@ -16,17 +12,17 @@ import olView from 'ol/View.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfBackgroundlayerselectorModule.name,
   gmfMapComponent.name,
-  gmfThemeThemes.module.name,
+  gmfThemeThemes.name,
 ]);
 
 
-exports.module.value('gmfTreeUrl', appURL.GMF_THEMES);
+module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
@@ -34,7 +30,7 @@ exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale
  * @constructor
  * @ngInject
  */
-exports.MainController = function(gmfThemes) {
+function MainController(gmfThemes) {
 
   gmfThemes.loadThemes();
 
@@ -51,10 +47,10 @@ exports.MainController = function(gmfThemes) {
       zoom: 3
     })
   });
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

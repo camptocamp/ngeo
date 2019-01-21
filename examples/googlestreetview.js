@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './googlestreetview.css';
 import angular from 'angular';
@@ -20,11 +19,11 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name,
   ngeoGooglestreetviewModule.name,
-  ngeoMiscToolActivateMgr.module.name
+  ngeoMiscToolActivateMgr.name
 ]);
 
 
@@ -36,7 +35,7 @@ exports.module = angular.module('app', [
  * @constructor
  * @ngInject
  */
-exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
 
   /**
    * @type {number}
@@ -107,10 +106,10 @@ exports.MainController = function(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
     dummyToolActivate,
     false
   );
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

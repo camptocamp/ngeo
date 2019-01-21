@@ -1,7 +1,3 @@
-/**
- */
-const exports = {};
-
 import angular from 'angular';
 import appURL from './url.js';
 import './contextualdata.css';
@@ -17,7 +13,7 @@ import olSourceOSM from 'ol/source/OSM.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('gmfapp', [
+const module = angular.module('gmfapp', [
   'gettext',
   gmfContextualdataModule.name,
   gmfMapComponent.name,
@@ -25,21 +21,21 @@ exports.module = angular.module('gmfapp', [
 ]);
 
 
-exports.module.value('gmfRasterUrl', appURL.RASTER);
+module.value('gmfRasterUrl', appURL.RASTER);
 
-exports.module.value(
+module.value(
   'gmfContextualdatacontentTemplateUrl',
   'partials/contextualdata.html');
 
-exports.module.constant('defaultTheme', 'Demo');
-exports.module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
+module.constant('defaultTheme', 'Demo');
+module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
   /**
    * @type {import("ol/Map.js").default}
    * @export
@@ -57,7 +53,7 @@ exports.MainController = function() {
       zoom: 3
     })
   });
-};
+}
 
 
 /**
@@ -67,13 +63,13 @@ exports.MainController = function() {
  * @return {Object} The additional data to add to the scope for the
  *     contextualdata popover.
  */
-exports.MainController.prototype.onRasterData = function(coordinate, data) {
+MainController.prototype.onRasterData = function(coordinate, data) {
   return {
     'elelvation_diff': data['srtm'] - data['aster']
   };
 };
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default MainController;

@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './displaywindow.css';
 import angular from 'angular';
@@ -8,7 +7,7 @@ import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowCompone
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   ngeoMessageDisplaywindowComponent.name
 ]);
 
@@ -18,7 +17,7 @@ exports.module = angular.module('app', [
  * @ngInject
  * @constructor
  */
-exports.MainController = function($scope) {
+function MainController($scope) {
 
   /**
    * @type {string}
@@ -93,10 +92,10 @@ exports.MainController = function($scope) {
    * @export
    */
   this.windowScope = $scope;
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

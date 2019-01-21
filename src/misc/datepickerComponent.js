@@ -17,13 +17,13 @@ import 'jquery-ui/ui/i18n/datepicker-it.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoDatePicker', [
-  ngeoMiscTime.module.name,
+const module = angular.module('ngeoDatePicker', [
+  ngeoMiscTime.name,
   'ui.date',
 ]);
 
 
-exports.value('ngeoDatePickerTemplateUrl',
+module.value('ngeoDatePickerTemplateUrl',
   /**
    * @param {JQLite} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -35,7 +35,7 @@ exports.value('ngeoDatePickerTemplateUrl',
       'ngeo/misc/datepickerComponent';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
 });
 
@@ -104,7 +104,7 @@ function component(ngeoDatePickerTemplateUrl, $timeout) {
   };
 }
 
-exports.directive('ngeoDatePicker', component);
+module.directive('ngeoDatePicker', component);
 
 
 /**
@@ -239,7 +239,7 @@ Controller.prototype.init = function() {
   }
 };
 
-exports.controller('ngeoDatePickerController', Controller);
+module.controller('ngeoDatePickerController', Controller);
 
 
-export default exports;
+export default module;

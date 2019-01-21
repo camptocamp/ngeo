@@ -1,6 +1,5 @@
 /**
  */
-const exports = {};
 
 import './rotate.css';
 import angular from 'angular';
@@ -24,7 +23,7 @@ import ngeoMapModule from 'ngeo/map/module.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoMapModule.name
 ]);
@@ -38,7 +37,7 @@ const appmodule = angular.module('app', ['ngeo']);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -145,10 +144,10 @@ exports.MainController = function() {
       this.interaction.setActive(true);
     }
   });
-};
+}
 
 
-appmodule.controller('MainController', exports.MainController);
+appmodule.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

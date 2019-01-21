@@ -1,4 +1,4 @@
-import ngeoPrintService from 'ngeo/print/Service.js';
+import {PrintService} from 'ngeo/print/Service.js';
 import * as olBase from 'ol/index.js';
 import olFeature from 'ol/Feature.js';
 import olMap from 'ol/Map.js';
@@ -35,7 +35,7 @@ describe('ngeo.print.Service', () => {
 
   it('creates an ngeo.print.Service instance', () => {
     const print = ngeoCreatePrint('http://example.com/print');
-    expect(print instanceof ngeoPrintService).toBe(true);
+    expect(print instanceof PrintService).toBe(true);
   });
 
   describe('#createSpec', () => {

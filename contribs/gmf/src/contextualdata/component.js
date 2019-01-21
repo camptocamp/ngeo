@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 import googAsserts from 'goog/asserts.js';
@@ -10,8 +8,8 @@ import * as olEvents from 'ol/events.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('gmfContextualdata', [
-  gmfRasterRasterService.module.name,
+const module = angular.module('gmfContextualdata', [
+  gmfRasterRasterService.name,
 ]);
 
 
@@ -72,7 +70,7 @@ function directive() {
   };
 }
 
-exports.directive('gmfContextualdata', directive);
+module.directive('gmfContextualdata', directive);
 
 
 /**
@@ -241,7 +239,7 @@ Controller.prototype.hidePopover = function() {
   angular.element(element).css('display', 'none');
 };
 
-exports.controller('GmfContextualdataController', Controller);
+module.controller('GmfContextualdataController', Controller);
 
 
 /**
@@ -280,7 +278,7 @@ function contentDirective(gmfContextualdatacontentTemplateUrl) {
   };
 }
 
-exports.directive('gmfContextualdatacontent', contentDirective);
+module.directive('gmfContextualdatacontent', contentDirective);
 
 
-export default exports;
+export default module;

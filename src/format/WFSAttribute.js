@@ -1,7 +1,5 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
-import ngeoFormatAttribute from 'ngeo/format/Attribute.js';
+import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 
@@ -44,7 +42,7 @@ export default class {
 
     const type = googAsserts.assertString(object['type']);
 
-    if (!ngeoFormatAttribute.setGeometryType(attribute, type)) {
+    if (!setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType' || type === 'dateTime') {
         attribute.type = ngeoFormatAttributeType.DATETIME;
       } else if (type === 'date') {

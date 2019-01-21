@@ -13,7 +13,7 @@ import olView from 'ol/View.js';
  */
 
 
-const exports = class {
+class DataSources {
 
   /**
    * This service is responsible of the synchronization between the ngeo
@@ -174,15 +174,15 @@ const exports = class {
     }
   }
 
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoDataSources', []);
+const module = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
-exports.module.service('ngeoDataSources', exports);
+module.service('ngeoDataSources', DataSources);
 
 
-export default exports;
+export default module;

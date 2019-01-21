@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -33,7 +31,7 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @ngdoc service
  * @ngname gmfSnapping
  */
-const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
+function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
   gmfTreeManager) {
 
   // === Injected services ===
@@ -113,7 +111,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
    */
   this.ogcServers_ = null;
 
-};
+}
 
 
 /**
@@ -125,7 +123,7 @@ const exports = function($http, $q, $rootScope, $timeout, gmfThemes,
  *
  * @export
  */
-exports.prototype.ensureSnapInteractionsOnTop = function() {
+Snapping.prototype.ensureSnapInteractionsOnTop = function() {
   const map = this.map_;
   googAsserts.assert(map);
 
@@ -146,7 +144,7 @@ exports.prototype.ensureSnapInteractionsOnTop = function() {
  * @param {?import("ol/Map.js").default} map Map
  * @export
  */
-exports.prototype.setMap = function(map) {
+Snapping.prototype.setMap = function(map) {
 
   const keys = this.listenerKeys_;
 
@@ -188,7 +186,7 @@ exports.prototype.setMap = function(map) {
  * tree manager Layertree controllers array changes.
  * @private
  */
-exports.prototype.handleThemesChange_ = function() {
+Snapping.prototype.handleThemesChange_ = function() {
   this.ogcServers_ = null;
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
@@ -204,7 +202,7 @@ exports.prototype.handleThemesChange_ = function() {
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
  * @private
  */
-exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
+Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
@@ -255,7 +253,7 @@ exports.prototype.registerTreeCtrl_ = function(treeCtrl) {
  *
  * @private
  */
-exports.prototype.unregisterAllTreeCtrl_ = function() {
+Snapping.prototype.unregisterAllTreeCtrl_ = function() {
   for (const uid in this.cache_) {
     const item = this.cache_[+uid];
     if (item) {
@@ -274,7 +272,7 @@ exports.prototype.unregisterAllTreeCtrl_ = function() {
  * @return {?gmfThemes.GmfOgcServers} The OGC server.
  * @private
  */
-exports.prototype.getOGCServer_ = function(treeCtrl) {
+Snapping.prototype.getOGCServer_ = function(treeCtrl) {
   const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== gmfThemeThemes.NodeType.WMS) {
     return null;
@@ -314,7 +312,7 @@ exports.prototype.getOGCServer_ = function(treeCtrl) {
  * @return {?WFSConfig} The configuration object.
  * @private
  */
-exports.prototype.getWFSConfig_ = function(treeCtrl) {
+Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
 
   // (1)
   if (this.ogcServers_ === null) {
@@ -364,7 +362,7 @@ exports.prototype.getWFSConfig_ = function(treeCtrl) {
  * @param {string|undefined} newVal New state value
  * @private
  */
-exports.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
+Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
 
   const uid = olUtilGetUid(treeCtrl);
   const item = this.cache_[uid];
@@ -386,7 +384,7 @@ exports.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
  * @param {CacheItem} item Cache item.
  * @private
  */
-exports.prototype.activateItem_ = function(item) {
+Snapping.prototype.activateItem_ = function(item) {
 
   // No need to do anything if item is already active
   if (item.active) {
@@ -420,7 +418,7 @@ exports.prototype.activateItem_ = function(item) {
  * @param {CacheItem} item Cache item.
  * @private
  */
-exports.prototype.deactivateItem_ = function(item) {
+Snapping.prototype.deactivateItem_ = function(item) {
 
   // No need to do anything if item is already inactive
   if (!item.active) {
@@ -449,7 +447,7 @@ exports.prototype.deactivateItem_ = function(item) {
 /**
  * @private
  */
-exports.prototype.loadAllItems_ = function() {
+Snapping.prototype.loadAllItems_ = function() {
   this.mapViewChangePromise_ = null;
   let item;
   for (const uid in this.cache_) {
@@ -464,7 +462,7 @@ exports.prototype.loadAllItems_ = function() {
 /**
  * Manually refresh all features
  */
-exports.prototype.refresh = function() {
+Snapping.prototype.refresh = function() {
   this.loadAllItems_();
 };
 
@@ -477,7 +475,7 @@ exports.prototype.refresh = function() {
  * @param {CacheItem} item Cache item.
  * @private
  */
-exports.prototype.loadItemFeatures_ = function(item) {
+Snapping.prototype.loadItemFeatures_ = function(item) {
 
   // If a previous request is still running, cancel it.
   if (item.requestDeferred) {
@@ -537,7 +535,7 @@ exports.prototype.loadItemFeatures_ = function(item) {
  * delay. Cancel any currently delayed call, if required.
  * @private
  */
-exports.prototype.handleMapMoveEnd_ = function() {
+Snapping.prototype.handleMapMoveEnd_ = function() {
   if (this.mapViewChangePromise_) {
     this.timeout_.cancel(this.mapViewChangePromise_);
   }
@@ -582,12 +580,12 @@ exports.prototype.handleMapMoveEnd_ = function() {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfSnapping', [
-  gmfLayertreeTreeManager.module.name,
-  gmfThemeThemes.module.name,
-  ngeoLayertreeController.module.name,
+const module = angular.module('gmfSnapping', [
+  gmfLayertreeTreeManager.name,
+  gmfThemeThemes.name,
+  ngeoLayertreeController.name,
 ]);
-exports.module.service('gmfSnapping', exports);
+module.service('gmfSnapping', Snapping);
 
 
-export default exports;
+export default module;

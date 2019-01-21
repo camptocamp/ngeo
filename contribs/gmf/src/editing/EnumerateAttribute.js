@@ -1,8 +1,6 @@
-/**
- */
 import angular from 'angular';
 
-const exports = class {
+class EnumerateAttribute {
 
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
@@ -65,14 +63,14 @@ const exports = class {
     return data.items;
   }
 
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfEnumerateAttribute', []);
-exports.module.service('gmfEnumerateAttribute', exports);
+const module = angular.module('gmfEnumerateAttribute', []);
+module.service('gmfEnumerateAttribute', EnumerateAttribute);
 
 
-export default exports;
+export default module;

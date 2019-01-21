@@ -14,7 +14,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import {select as d3select} from 'd3';
 
 
-const exports = class {
+class Manager {
 
   /**
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
@@ -487,16 +487,15 @@ const exports = class {
 
     this.plot.previousDomainX = domainX;
   }
-
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfLidarprofileManager', [
+const module = angular.module('gmfLidarprofileManager', [
   ngeoMiscDebounce.name,
 ]);
-exports.module.service('gmfLidarprofileManager', exports);
+module.service('gmfLidarprofileManager', Manager);
 
-export default exports;
+export default module;

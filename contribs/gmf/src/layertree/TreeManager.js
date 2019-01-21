@@ -1,8 +1,6 @@
-/**
- */
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import {PermalinkParam} from 'gmf/index.js';
+import gmfThemeThemes, {findGroupByName, findGroupByLayerNodeName} from 'gmf/theme/Themes.js';
 import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
@@ -34,7 +32,7 @@ import * as olEvents from 'ol/events.js';
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
+function TreeManager($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   ngeoNotification, gmfThemes, ngeoStateManager) {
 
   /**
@@ -126,7 +124,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.ogcServers_ = null;
 
   olEvents.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
-};
+}
 
 /**
  * Called when the themes change. Get the OGC servers, then listen to the
@@ -135,7 +133,7 @@ const exports = function($timeout, $injector, gettextCatalog, ngeoLayerHelper,
  * layertree.
  * @private
  */
-exports.prototype.handleThemesChange_ = function() {
+TreeManager.prototype.handleThemesChange_ = function() {
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
   });
@@ -155,9 +153,9 @@ exports.prototype.handleThemesChange_ = function() {
  * @return {boolean} True if the group has been added. False otherwise.
  * @export
  */
-exports.prototype.setFirstLevelGroups = function(firstLevelGroups) {
+TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
   this.root.children.length = 0;
-  this.ngeoStateManager_.deleteParam(gmfBase.PermalinkParam.TREE_GROUPS);
+  this.ngeoStateManager_.deleteParam(PermalinkParam.TREE_GROUPS);
   return this.addFirstLevelGroups(firstLevelGroups);
 };
 
@@ -172,7 +170,7 @@ exports.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  * @return{boolean} True if the group has been added. False otherwise.
  * @export
  */
-exports.prototype.addFirstLevelGroups = function(firstLevelGroups,
+TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
   opt_add, opt_silent) {
   const groupNotAdded = [];
 
@@ -194,9 +192,9 @@ exports.prototype.addFirstLevelGroups = function(firstLevelGroups,
  * @param {Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
  * @private
  */
-exports.prototype.updateTreeGroupsState_ = function(groups) {
+TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
   const treeGroupsParam = {};
-  treeGroupsParam[gmfBase.PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
+  treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map(node => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
     /** @type {import("gmf/permalink/Permalink.js").default} */(this.$injector_.get('gmfPermalink')).cleanParams(groups);
@@ -211,7 +209,7 @@ exports.prototype.updateTreeGroupsState_ = function(groups) {
  * @return {boolean} true if the group has been added.
  * @private
  */
-exports.prototype.addFirstLevelGroup_ = function(group) {
+TreeManager.prototype.addFirstLevelGroup_ = function(group) {
   let alreadyAdded = false;
   const groupID = group.id;
   this.root.children.some((rootChild) => {
@@ -278,7 +276,7 @@ exports.prototype.addFirstLevelGroup_ = function(group) {
  * @return {boolean} Whether a checked node was already found or not.
  * @private
  */
-exports.prototype.manageExclusiveGroupSingleChecked_ = function(node, found) {
+TreeManager.prototype.manageExclusiveGroupSingleChecked_ = function(node, found) {
   const children = node.children;
   if (children) {
     for (const child of children) {
@@ -305,9 +303,9 @@ exports.prototype.manageExclusiveGroupSingleChecked_ = function(node, found) {
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @export
  */
-exports.prototype.addGroupByName = function(groupName, opt_add) {
+TreeManager.prototype.addGroupByName = function(groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then((themes) => {
-    const group = gmfThemeThemes.findGroupByName(themes, groupName);
+    const group = findGroupByName(themes, groupName);
     if (group) {
       this.addFirstLevelGroups([group], opt_add, false);
     }
@@ -324,9 +322,9 @@ exports.prototype.addGroupByName = function(groupName, opt_add) {
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called
  * @export
  */
-exports.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
+TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {
-    const group = gmfThemeThemes.findGroupByLayerNodeName(themes, layerName);
+    const group = findGroupByLayerNodeName(themes, layerName);
     if (group) {
       const groupAdded = this.addFirstLevelGroups([group], opt_add, opt_silent);
       this.$timeout_(() => {
@@ -364,7 +362,7 @@ exports.prototype.addGroupByLayerName = function(layerName, opt_add, opt_silent)
  * @param {gmfThemes.GmfGroup} group The group to remove.
  * @export
  */
-exports.prototype.removeGroup = function(group) {
+TreeManager.prototype.removeGroup = function(group) {
   const children = this.root.children;
   let index = 0, found = false;
   children.some((child) => {
@@ -384,7 +382,7 @@ exports.prototype.removeGroup = function(group) {
  * Remove all groups.
  * @export
  */
-exports.prototype.removeAll = function() {
+TreeManager.prototype.removeAll = function() {
   while (this.root.children.length) {
     this.removeGroup(this.root.children[0]);
   }
@@ -400,7 +398,7 @@ exports.prototype.removeAll = function() {
  * @return {gmfThemes.GmfGroup} Cloned node.
  * @private
  */
-exports.prototype.cloneGroupNode_ = function(group, names) {
+TreeManager.prototype.cloneGroupNode_ = function(group, names) {
   const clone = /** @type {gmfThemes.GmfGroup} */ (Object.assign({}, group));
   this.toggleNodeCheck_(clone, names);
   return clone;
@@ -415,7 +413,7 @@ exports.prototype.cloneGroupNode_ = function(group, names) {
  *     should have their checkbox checked)
  * @private
  */
-exports.prototype.toggleNodeCheck_ = function(node, names) {
+TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
   if (!node.children) {
     return;
   }
@@ -436,7 +434,7 @@ exports.prototype.toggleNodeCheck_ = function(node, names) {
  *   the tree.
  * @private
  */
-exports.prototype.notifyCantAddGroups_ = function(groups) {
+TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
   const names = [];
   const gettextCatalog = this.gettextCatalog_;
   groups.forEach((group) => {
@@ -458,7 +456,7 @@ exports.prototype.notifyCantAddGroups_ = function(groups) {
  * @return {import("ngeo/layertree/Controller.js").default?} treeCtrl The associated controller or null.
  * @public
  */
-exports.prototype.getTreeCtrlByNodeId = function(id) {
+TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
   let correspondingTreeCtrl = null;
   if (this.rootCtrl && this.rootCtrl.traverseDepthFirst) {
     this.rootCtrl.traverseDepthFirst((treeCtrl) => {
@@ -478,7 +476,7 @@ exports.prototype.getTreeCtrlByNodeId = function(id) {
  *     the current node.
  * @return {gmfThemes.GmfOgcServer} The OGC server.
  */
-exports.prototype.getOgcServer = function(treeCtrl) {
+TreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (treeCtrl.parent.node.mixed) {
     const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
     googAsserts.assert(gmfLayerWMS.ogcServer);
@@ -504,7 +502,7 @@ exports.prototype.getOgcServer = function(treeCtrl) {
  * @param {Array.<gmfThemes.GmfTheme>} themes the array of themes to be based on.
  * @private
  */
-exports.prototype.refreshFirstLevelGroups_ = function(themes) {
+TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
   const firstLevelGroupsFullState = {};
 
   // Save state of each child
@@ -520,7 +518,7 @@ exports.prototype.refreshFirstLevelGroups_ = function(themes) {
     const name = node.name;
 
     // Find the right firstlevelgroup in the new theme.
-    const nodeToRestore = gmfThemeThemes.findGroupByName(themes, name);
+    const nodeToRestore = findGroupByName(themes, name);
     if (nodeToRestore) {
       // Restore state.
       const fullState = firstLevelGroupsFullState[name];
@@ -549,7 +547,7 @@ exports.prototype.refreshFirstLevelGroups_ = function(themes) {
  * @return {gmfx.TreeManagerFullState!} the fullState object.
  * @private
  */
-exports.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
+TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
   const children = {};
   // Get the state of the treeCtrl children recursively.
   treeCtrl.children.map((child) => {
@@ -597,7 +595,7 @@ exports.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
  * @return {gmfThemes.GmfGroup|gmfThemes.GmfLayer} the node with modification.
  * @private
  */
-exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
+TreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
   if (!fullState) {
     return node;
   }
@@ -622,13 +620,13 @@ exports.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('gmfTreeManager', [
-  gmfThemeThemes.module.name,
-  ngeoLayertreeController.module.name,
-  ngeoMessageNotification.module.name,
-  ngeoStatemanagerService.module.name,
+const module = angular.module('gmfTreeManager', [
+  gmfThemeThemes.name,
+  ngeoLayertreeController.name,
+  ngeoMessageNotification.name,
+  ngeoStatemanagerService.name,
 ]);
-exports.module.service('gmfTreeManager', exports);
+module.service('gmfTreeManager', TreeManager);
 
 
-export default exports;
+export default module;

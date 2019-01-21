@@ -10,9 +10,9 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 /**
  * @type {angular.IModule}
  */
-const exports = angular.module('gmfAuthentication', [
-  gmfAuthenticationService.module.name,
-  ngeoMessageNotification.module.name,
+const module = angular.module('gmfAuthentication', [
+  gmfAuthenticationService.name,
+  ngeoMessageNotification.name,
   ngeoMessageModalComponent.name,
 ]);
 
@@ -22,14 +22,14 @@ const exports = angular.module('gmfAuthentication', [
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
-exports.gmfAuthenticationTemplateUrl_ = (element, attrs) => {
+function gmfAuthenticationTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
   return templateUrl !== undefined ? templateUrl :
     'gmf/authentication';
-};
+}
 
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/authentication', require('./component.html'));
 });
 
@@ -115,10 +115,10 @@ const component = {
   templateUrl: gmfAuthenticationTemplateUrl
 };
 
-exports.value('gmfAuthenticationTemplateUrl',
-  exports.gmfAuthenticationTemplateUrl_);
+module.value('gmfAuthenticationTemplateUrl',
+  gmfAuthenticationTemplateUrl_);
 
-exports.component('gmfAuthentication', component);
+module.component('gmfAuthentication', component);
 
 
 /**
@@ -451,7 +451,7 @@ class AuthenticationController {
   }
 }
 
-exports.controller('GmfAuthenticationController', AuthenticationController);
+module.controller('GmfAuthenticationController', AuthenticationController);
 
 
-export default exports;
+export default module;

@@ -1,8 +1,4 @@
 /**
- */
-const exports = {};
-
-/**
  * This example shows how to create a layer tree tree based
  * on ngeo's ngeoLayertree directive.
  */
@@ -21,11 +17,11 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 
 /** @type {!angular.IModule} **/
-exports.module = angular.module('app', [
+const module = angular.module('app', [
   'gettext',
   ngeoLayertreeModule.name,
   ngeoMapModule.name,
-  ngeoMessagePopup.module.name,
+  ngeoMessagePopup.name,
 ]);
 
 
@@ -35,7 +31,7 @@ exports.module = angular.module('app', [
  *
  * @type {!angular.IComponentOptions}
  */
-exports.layertreeComponent = {
+const layertreeComponent = {
   bindings: {
     'map': '=appLayertreeMap'
   },
@@ -50,11 +46,11 @@ exports.layertreeComponent = {
       '</div>'
 };
 
-exports.module.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('examples/layertree', require('./partials/layertree.html'));
 });
 
-exports.module.component('appLayertree', exports.layertreeComponent);
+module.component('appLayertree', layertreeComponent);
 
 
 /**
@@ -66,7 +62,7 @@ exports.module.component('appLayertree', exports.layertreeComponent);
  * @ngInject
  * @export
  */
-exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup) {
+function LayertreeController($http, $sce, appGetLayer, ngeoCreatePopup) {
 
   /**
    * @type {Object|undefined}
@@ -107,7 +103,7 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
    * @private
    */
   this.promises_ = {};
-};
+}
 
 
 /**
@@ -118,7 +114,7 @@ exports.LayertreeController = function($http, $sce, appGetLayer, ngeoCreatePopup
  * @return {import("ol/layer/Layer.js").default} The layer for this node.
  * @export
  */
-exports.LayertreeController.prototype.getLayer = function(node) {
+LayertreeController.prototype.getLayer = function(node) {
   return this.getLayer_(node);
 };
 
@@ -128,7 +124,7 @@ exports.LayertreeController.prototype.getLayer = function(node) {
  * @param {import("ol/layer/Layer.js").default} layer Layer.
  * @export
  */
-exports.LayertreeController.prototype.onButtonClick = function(node, layer) {
+LayertreeController.prototype.onButtonClick = function(node, layer) {
   const layerType = node['layerType'];
   if (!(layerType in this.promises_)) {
     this.promises_[layerType] = this.http_.get('data/metadata.html').then(
@@ -147,7 +143,7 @@ exports.LayertreeController.prototype.onButtonClick = function(node, layer) {
 };
 
 
-exports.module.controller('AppLayertreeController', exports.LayertreeController);
+module.controller('AppLayertreeController', LayertreeController);
 
 
 /**
@@ -159,7 +155,7 @@ exports.module.controller('AppLayertreeController', exports.LayertreeController)
  * @param {Object} node Layer tree node.
  * @return {import("ol/layer/Layer.js").default} Layer.
  */
-exports.getLayer = (function() {
+const getLayer = (function() {
   /**
    * @type {Object.<string, import("ol/layer/Layer.js").default>}
    */
@@ -212,7 +208,7 @@ exports.getLayer = (function() {
 })();
 
 
-exports.module.value('appGetLayer', exports.getLayer);
+module.value('appGetLayer', getLayer);
 
 
 /**
@@ -220,7 +216,7 @@ exports.module.value('appGetLayer', exports.getLayer);
  * @constructor
  * @ngInject
  */
-exports.MainController = function() {
+function MainController() {
 
   /**
    * @type {import("ol/Map.js").default}
@@ -237,10 +233,10 @@ exports.MainController = function() {
       zoom: 4
     })
   });
-};
+}
 
 
-exports.module.controller('MainController', exports.MainController);
+module.controller('MainController', MainController);
 
 
-export default exports;
+export default module;

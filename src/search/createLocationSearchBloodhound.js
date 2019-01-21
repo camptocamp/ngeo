@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olProj from 'ol/proj.js';
 
@@ -41,7 +39,7 @@ import 'corejs-typeahead';
  * @param {LocationSearchOptions=} opt_options Options.
  * @return {Bloodhound} The Bloodhound object.
  */
-const exports = function(opt_options) {
+function createLocationSearchBloodhound(opt_options) {
   const options = opt_options || {};
 
   const sourceProjection = olProj.get(EPSG21781);
@@ -144,17 +142,15 @@ const exports = function(opt_options) {
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return new Bloodhound(bloodhoundOptions);
-};
+}
 
 
 /**
  * @type {!angular.IModule}
  */
-exports.module = angular.module('ngeoCreateLocationSearchBloodhound', []);
+const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
-exports.module.value(
-  'ngeoCreateLocationSearchBloodhound',
-  exports);
+module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhound);
 
 
 /**
@@ -176,7 +172,7 @@ exports.module.value(
  * @ngdoc service
  * @ngname search.createLocationSearchBloodhound
  */
-exports.Function;
+export function Function() {}
 
 
-export default exports;
+export default module;

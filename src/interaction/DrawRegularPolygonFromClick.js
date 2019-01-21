@@ -1,5 +1,3 @@
-/**
- */
 import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -40,7 +38,7 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
  * @extends {import("ol/interaction/Interaction.js").default}
  * @param {DrawRegularPolygonFromClickOptions} options Options
  */
-const exports = function(options) {
+function DrawRegularPolygonFromClick(options) {
 
   /**
    * @type {number}
@@ -70,10 +68,9 @@ const exports = function(options) {
     handleEvent: TRUE
   });
 
-};
+}
 
-olUtilInherits(
-  exports, olInteractionInteraction);
+olUtilInherits(DrawRegularPolygonFromClick, olInteractionInteraction);
 
 
 /**
@@ -81,7 +78,7 @@ olUtilInherits(
  * @param {boolean} active Active.
  * @override
  */
-exports.prototype.setActive = function(active) {
+DrawRegularPolygonFromClick.prototype.setActive = function(active) {
   olInteractionInteraction.prototype.setActive.call(this, active);
 
   if (this.getMap()) {
@@ -97,7 +94,7 @@ exports.prototype.setActive = function(active) {
 /**
  * @inheritDoc
  */
-exports.prototype.setMap = function(map) {
+DrawRegularPolygonFromClick.prototype.setMap = function(map) {
 
   const active = this.getActive();
 
@@ -119,7 +116,7 @@ exports.prototype.setMap = function(map) {
  * Enable the interaction. Called when added to a map AND active.
  * @private
  */
-exports.prototype.enable_ = function() {
+DrawRegularPolygonFromClick.prototype.enable_ = function() {
   const map = this.getMap();
   googAsserts.assert(map, 'Map should be set.');
   this.listenerKeys_.push(
@@ -132,7 +129,7 @@ exports.prototype.enable_ = function() {
  * Disable the interaction. Called when removed from a map or deactivated.
  * @private
  */
-exports.prototype.disable_ = function() {
+DrawRegularPolygonFromClick.prototype.disable_ = function() {
   const map = this.getMap();
   googAsserts.assert(map, 'Map should be set.');
   this.listenerKeys_.forEach(olEvents.unlistenByKey);
@@ -146,7 +143,7 @@ exports.prototype.disable_ = function() {
  * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
  * @private
  */
-exports.prototype.handleMapClick_ = function(evt) {
+DrawRegularPolygonFromClick.prototype.handleMapClick_ = function(evt) {
   const center = evt.coordinate;
   const geometry = olGeomPolygon.fromCircle(
     new olGeomCircle(center), this.sides_
@@ -160,4 +157,4 @@ exports.prototype.handleMapClick_ = function(evt) {
 };
 
 
-export default exports;
+export default DrawRegularPolygonFromClick;

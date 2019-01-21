@@ -23,14 +23,14 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('gmfProfile', [
-  ngeoDownloadCsv.module.name,
-  ngeoMapFeatureOverlayMgr.module.name,
+const module = angular.module('gmfProfile', [
+  ngeoDownloadCsv.name,
+  ngeoMapFeatureOverlayMgr.name,
   ngeoProfileElevationComponent.name,
 ]);
 
 
-exports.value('gmfProfileTemplateUrl',
+module.value('gmfProfileTemplateUrl',
   /**
    * @param {!JQLite} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -41,7 +41,7 @@ exports.value('gmfProfileTemplateUrl',
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
   });
 
-exports.run(/* @ngInject */ ($templateCache) => {
+module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/profile', require('./component.html'));
 });
 
@@ -111,7 +111,7 @@ const component = {
   templateUrl: gmfProfileTemplateUrl
 };
 
-exports.component('gmfProfile', component);
+module.component('gmfProfile', component);
 
 
 /**
@@ -713,7 +713,7 @@ Controller.prototype.downloadCsv = function() {
 };
 
 
-exports.controller('GmfProfileController', Controller);
+module.controller('GmfProfileController', Controller);
 
 
-export default exports;
+export default module;

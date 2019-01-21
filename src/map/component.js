@@ -8,7 +8,7 @@ import olMap from 'ol/Map.js';
 /**
  * @type {!angular.IModule}
  */
-const exports = angular.module('ngeoMap', []);
+const module = angular.module('ngeoMap', []);
 
 
 /**
@@ -105,7 +105,7 @@ function directive($window) {
 }
 
 // Register the directive in the module
-exports.directive('ngeoMap', directive);
+module.directive('ngeoMap', directive);
 
 
-export default exports;
+export default module;
