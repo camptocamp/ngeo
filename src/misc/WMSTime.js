@@ -83,9 +83,9 @@ WMSTime.prototype.formatTimeValue = function(time, resolution, opt_useISOFormat,
  * @export
  */
 WMSTime.prototype.formatWMSTimeParam = function(wmsTimeProperty, times, opt_toUTC) {
-  googAsserts.assert(wmsTimeProperty.resolution !== undefined);
+  console.assert(wmsTimeProperty.resolution !== undefined);
   if (wmsTimeProperty.mode === 'range') {
-    googAsserts.assert(times.end !== undefined);
+    console.assert(times.end !== undefined);
     return (
       `${this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC)}/${
         this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`

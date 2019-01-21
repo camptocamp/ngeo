@@ -154,7 +154,7 @@ function MainController($scope, ngeoFeatureHelper) {
     zoom: 6
   });
 
-  ngeoFeatureHelper.setProjection(googAsserts.assert(view.getProjection()));
+  ngeoFeatureHelper.setProjection(console.assert(view.getProjection()));
 
   // set style
   features.forEach((feature) => {

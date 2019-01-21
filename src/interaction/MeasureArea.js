@@ -65,7 +65,7 @@ MeasureArea.prototype.createDrawInteraction = function(style, source) {
 MeasureArea.prototype.handleMeasure = function(callback) {
   const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomPolygon);
   const proj = this.getMap().getView().getProjection();
-  googAsserts.assert(proj);
+  console.assert(proj);
   const output = ngeoInteractionMeasure.getFormattedArea(geom, proj, this.precision, this.format);
   const verticesCount = geom.getCoordinates()[0].length;
   let coord = null;

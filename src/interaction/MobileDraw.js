@@ -495,7 +495,7 @@ MobileDraw.prototype.updateSketchFeatures_ = function() {
  * @private
  */
 MobileDraw.prototype.getSketchPointGeometry_ = function() {
-  googAsserts.assert(this.sketchPoint_, 'sketch point should be thruty');
+  console.assert(this.sketchPoint_, 'sketch point should be thruty');
   const geometry = this.sketchPoint_.getGeometry();
   googAsserts.assertInstanceof(geometry, olGeomPoint);
   return geometry;

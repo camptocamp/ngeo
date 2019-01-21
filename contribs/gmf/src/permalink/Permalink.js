@@ -397,7 +397,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
     const newState = {};
     if (firstParent.node.mixed) {
       const state = treeCtrl.getState();
-      googAsserts.assert(state === 'on' || state === 'off');
+      console.assert(state === 'on' || state === 'off');
       const visible = state === 'on';
       treeCtrl.traverseDepthFirst((ctrl) => {
         if (ctrl.node.children === undefined) {
@@ -647,7 +647,7 @@ Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
 Permalink.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    return googAsserts.assert(this.featureHashFormat_.readFeatures(f));
+    return console.assert(this.featureHashFormat_.readFeatures(f));
   }
   return [];
 };
@@ -663,7 +663,7 @@ Permalink.prototype.setDimensions = function(dimensions) {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
     const value = this.ngeoLocation_.getParam(key);
-    googAsserts.assert(value);
+    console.assert(value);
     dimensions[key.slice(ParamPrefix.DIMENSIONS.length)] = value;
   }
 
@@ -729,7 +729,7 @@ Permalink.prototype.registerMap_ = function(map, oeFeature) {
   const geom = typeof oeFeature !== 'undefined' && oeFeature !== null ? oeFeature.getGeometry() : undefined;
   if (geom) {
     const size = map.getSize();
-    googAsserts.assert(size);
+    console.assert(size);
     let maxZoom;
     if (geom instanceof olGeomPoint || geom instanceof olGeomMultiPoint) {
       maxZoom = this.pointRecenterZoom_;
@@ -793,7 +793,7 @@ Permalink.prototype.registerMap_ = function(map, oeFeature) {
  * @private
  */
 Permalink.prototype.unregisterMap_ = function() {
-  googAsserts.assert(
+  console.assert(
     this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
   olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
   this.mapViewPropertyChangeEventKey_ = null;
@@ -887,7 +887,7 @@ Permalink.prototype.themeInUrl_ = function(pathElements) {
 Permalink.prototype.setThemeInUrl_ = function(themeName) {
   if (themeName) {
     const pathElements = this.ngeoLocation_.getPath().split('/');
-    googAsserts.assert(pathElements.length > 1);
+    console.assert(pathElements.length > 1);
     if (pathElements[pathElements.length - 1] === '') {
       // case where the path is just "/"
       pathElements.splice(pathElements.length - 1);
@@ -969,7 +969,7 @@ Permalink.prototype.initLayers_ = function() {
   }
   this.gmfThemes_.getThemesObject().then((themes) => {
     const themeName = this.defaultThemeName();
-    googAsserts.assert(themeName !== null);
+    console.assert(themeName !== null);
 
     if (this.gmfThemeManager_) {
       this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
@@ -1242,8 +1242,8 @@ Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 Permalink.prototype.initExternalDataSources_ = function() {
 
-  const ngeoQuerent = googAsserts.assert(this.ngeoQuerent_);
-  const gmfExtDSManager = googAsserts.assert(
+  const ngeoQuerent = console.assert(this.ngeoQuerent_);
+  const gmfExtDSManager = console.assert(
     this.gmfExternalDataSourcesManager_);
 
   const promises = [];
@@ -1418,7 +1418,7 @@ Permalink.prototype.registerExternalDSGroup_ = function(group) {
 Permalink.prototype.containsLayerName = function(layer, name) {
   if (layer instanceof olLayerGroup) {
     for (const l of layer.getLayers().getArray()) {
-      googAsserts.assert(l);
+      console.assert(l);
       if (this.containsLayerName(l, name)) {
         return true;
       }
@@ -1505,7 +1505,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
       // (2b) layer names
       const wmtsGroupLayerNames = [];
       for (const wmtsDataSource of wmtsGroup.dataSources) {
-        googAsserts.assert(wmtsDataSource.wmtsLayer);
+        console.assert(wmtsDataSource.wmtsLayer);
         wmtsGroupLayerNames.push(wmtsDataSource.wmtsLayer);
       }
       names.push(wmtsGroupLayerNames.join(ExtDSSeparator.NAMES));
@@ -1532,7 +1532,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
  * @param {!Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
  */
 Permalink.prototype.cleanParams = function(groups) {
-  const keys = googAsserts.assert(this.ngeoLocation_.getParamKeys());
+  const keys = console.assert(this.ngeoLocation_.getParamKeys());
   for (const key of keys) {
     if (key.startsWith(ParamPrefix.TREE_GROUP_LAYERS)) {
       const value = key.substring(ParamPrefix.TREE_GROUP_LAYERS.length);
@@ -1558,7 +1558,7 @@ Permalink.prototype.cleanParams = function(groups) {
       return;
     }
     const layer = this.map_.getLayerGroup();
-    googAsserts.assert(layer);
+    console.assert(layer);
     for (const key of keys) {
       if (key.startsWith(ParamPrefix.TREE_ENABLE)) {
         const value = key.substring(ParamPrefix.TREE_ENABLE.length);

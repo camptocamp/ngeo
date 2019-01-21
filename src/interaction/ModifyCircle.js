@@ -33,7 +33,7 @@ import olStructsRBush from 'ol/structs/RBush.js';
  */
 function ModifyCircle(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   olInteractionPointer.call(this, {
     handleDownEvent: handleDownEvent_,

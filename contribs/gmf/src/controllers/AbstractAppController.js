@@ -80,7 +80,7 @@ function AbstractAppController(config, $scope, $injector) {
    * @type {import("ngeo/misc/FeatureHelper.js").default}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(googAsserts.assert(this.map.getView().getProjection()));
+  ngeoFeatureHelper.setProjection(console.assert(this.map.getView().getProjection()));
 
   /**
    * @type {import("gmf/theme/Manager.js").default}
@@ -681,7 +681,7 @@ function getLayerByLabels(layers, labels) {
  * @export
  */
 AbstractAppController.prototype.switchLanguage = function(lang) {
-  googAsserts.assert(lang in this.langUrls);
+  console.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
@@ -745,7 +745,7 @@ AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
       layer = layers[layers.length > 1 ? 1 : 0];
     }
 
-    googAsserts.assert(layer);
+    console.assert(layer);
     this.backgroundLayerMgr_.set(this.map, layer);
   });
 };

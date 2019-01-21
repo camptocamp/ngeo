@@ -240,7 +240,7 @@ Controller.prototype.toggleTracking = function() {
       this.$scope_.$emit(GeolocationEventType.ERROR, null);
       return;
     }
-    googAsserts.assert(currentPosition !== undefined);
+    console.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
     const center = this.map_.getView().getCenter();
     const diff = Math.abs(currentPosition[0] - center[0]) + Math.abs(currentPosition[1] - center[1]);

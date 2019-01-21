@@ -25,7 +25,7 @@ import olSourceVector from 'ol/source/Vector.js';
  */
 function ModifyRectangle(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   olInteractionPointer.call(this, {
     handleDownEvent: this.handleDown_,

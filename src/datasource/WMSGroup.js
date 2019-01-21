@@ -74,7 +74,7 @@ export default class extends ngeoDatasourceOGCGroup {
    * @private
    */
   init_() {
-    googAsserts.assert(
+    console.assert(
       this.dataSources.length, 'At least one data source is required.');
 
     for (const dataSource of this.dataSources) {

@@ -129,7 +129,7 @@ BackgroundLayerMgr.prototype.set = function(map, layer) {
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
 
   if (previous !== null) {
-    googAsserts.assert(mapUid in this.mapUids_);
+    console.assert(mapUid in this.mapUids_);
     if (layer !== null) {
       bgGroup.getLayers().setAt(0, layer);
     } else {

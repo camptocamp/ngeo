@@ -59,12 +59,12 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     });
   } else {
     this.node = /** @type {!Object} */ ($scope.$eval(nodeExpr));
-    googAsserts.assert(this.node !== undefined);
+    console.assert(this.node !== undefined);
   }
 
   const mapExpr = $attrs['ngeoLayertreeMap'];
   const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
-  googAsserts.assert(map !== undefined);
+  console.assert(map !== undefined);
 
   /**
    * @type {import("ngeo/layertree/Controller.js").default}
@@ -85,7 +85,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   $scope.$on('$destroy', () => {
     if (this.parent) {
       const index = this.parent.children.indexOf(this);
-      googAsserts.assert(index >= 0);
+      console.assert(index >= 0);
       this.parent.children.splice(index, 1);
     }
   });
@@ -121,7 +121,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     googAsserts.assertString(newNodelayerExpr);
     nodelayerExpr = newNodelayerExpr;
   }
-  googAsserts.assert(nodelayerExpr !== undefined);
+  console.assert(nodelayerExpr !== undefined);
 
   /**
    * @type {string}
@@ -137,7 +137,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   if (!isRoot) {
     const layer = $scope.$eval(nodelayerExpr, {'treeCtrl': this}) || null;
     if (layer) {
-      googAsserts.assert(
+      console.assert(
         layer instanceof olLayerLayer || layer instanceof olLayerGroup
       );
       this.layer = layer;
@@ -268,7 +268,7 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
       this.node.metadata &&
       this.node.metadata.exclusiveGroup
   ) {
-    const onChild = googAsserts.assert(opt_onChild);
+    const onChild = console.assert(opt_onChild);
     this.children.forEach((child) => {
       if (child !== onChild) {
         child.setState('off', opt_broadcast);

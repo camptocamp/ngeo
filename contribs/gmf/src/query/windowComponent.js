@@ -430,7 +430,7 @@ Controller.prototype.updateQueryResult_ = function(queryResult) {
   for (let i = 0; i < queryResult.sources.length; i++) {
     const source = queryResult.sources[i];
     source.features = source.features.filter((feature) => {
-      googAsserts.assert(feature);
+      console.assert(feature);
       return !olObj.isEmpty(getFilteredFeatureValues(feature));
     });
     this.ngeoQueryResult.sources.push(source);

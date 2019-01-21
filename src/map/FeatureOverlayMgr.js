@@ -80,8 +80,8 @@ function FeatureOverlayMgr() {
  * @export
  */
 FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
-  googAsserts.assert(groupIndex >= 0);
-  googAsserts.assert(groupIndex < this.groups_.length);
+  console.assert(groupIndex >= 0);
+  console.assert(groupIndex < this.groups_.length);
   const featureUid = olUtilGetUid(feature).toString();
   this.featureUidToGroupIndex_[featureUid] = groupIndex;
   this.groups_[groupIndex].features[featureUid] = feature;
@@ -95,8 +95,8 @@ FeatureOverlayMgr.prototype.addFeature = function(feature, groupIndex) {
  * @export
  */
 FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
-  googAsserts.assert(groupIndex >= 0);
-  googAsserts.assert(groupIndex < this.groups_.length);
+  console.assert(groupIndex >= 0);
+  console.assert(groupIndex < this.groups_.length);
   const featureUid = olUtilGetUid(feature).toString();
   delete this.featureUidToGroupIndex_[featureUid];
   delete this.groups_[groupIndex].features[featureUid];
@@ -109,13 +109,13 @@ FeatureOverlayMgr.prototype.removeFeature = function(feature, groupIndex) {
  * @export
  */
 FeatureOverlayMgr.prototype.clear = function(groupIndex) {
-  googAsserts.assert(groupIndex >= 0);
-  googAsserts.assert(groupIndex < this.groups_.length);
+  console.assert(groupIndex >= 0);
+  console.assert(groupIndex < this.groups_.length);
   const group = this.groups_[groupIndex];
   for (const featureUid in group.features) {
     this.removeFeature(group.features[featureUid], groupIndex);
   }
-  googAsserts.assert(olObj.isEmpty(group.features));
+  console.assert(olObj.isEmpty(group.features));
 };
 
 
@@ -158,8 +158,8 @@ FeatureOverlayMgr.prototype.init = function(map) {
  * @export
  */
 FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
-  googAsserts.assert(groupIndex >= 0);
-  googAsserts.assert(groupIndex < this.groups_.length);
+  console.assert(groupIndex >= 0);
+  console.assert(groupIndex < this.groups_.length);
   this.groups_[groupIndex].styleFunction = style === null ?
     olStyleStyle.defaultFunction : toStyleFunction(style);
 };
@@ -173,7 +173,7 @@ FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
  */
 FeatureOverlayMgr.prototype.styleFunction_ = function(feature, resolution) {
   const featureUid = olUtilGetUid(feature).toString();
-  googAsserts.assert(featureUid in this.featureUidToGroupIndex_);
+  console.assert(featureUid in this.featureUidToGroupIndex_);
   const groupIndex = this.featureUidToGroupIndex_[featureUid];
   const group = this.groups_[groupIndex];
   return group.styleFunction(feature, resolution);

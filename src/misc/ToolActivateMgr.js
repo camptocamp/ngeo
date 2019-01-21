@@ -98,7 +98,7 @@ ToolActivateMgr.prototype.registerTool = function(groupName, tool,
         defaultTools++;
       }
     });
-    googAsserts.assert(
+    console.assert(
       defaultTools <= 1, `more than one default tool in group ${groupName}`);
   }
 };

@@ -479,7 +479,7 @@ TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
 TreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (treeCtrl.parent.node.mixed) {
     const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
-    googAsserts.assert(gmfLayerWMS.ogcServer);
+    console.assert(gmfLayerWMS.ogcServer);
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
     let firstLevelGroupCtrl = treeCtrl;
@@ -487,7 +487,7 @@ TreeManager.prototype.getOgcServer = function(treeCtrl) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
     const gmfGroup = /** @type {gmfThemes.GmfGroup} */ (firstLevelGroupCtrl.node);
-    googAsserts.assert(gmfGroup.ogcServer);
+    console.assert(gmfGroup.ogcServer);
     return this.ogcServers_[gmfGroup.ogcServer];
   }
 };

@@ -242,7 +242,7 @@ class MapQuerent {
       const id = Number(idStr);
       const dataSource = this.ngeoDataSourcesHelper_.getDataSource(id);
       let label = dataSource.name;
-      googAsserts.assert(dataSource);
+      console.assert(dataSource);
 
       const querentResultItem = response[id];
       const features = querentResultItem.features;

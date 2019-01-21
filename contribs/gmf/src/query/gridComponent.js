@@ -668,7 +668,7 @@ Controller.prototype.makeGrid_ = function(data, source) {
  * @private
  */
 Controller.prototype.getGridConfiguration_ = function(data) {
-  googAsserts.assert(data.length > 0);
+  console.assert(data.length > 0);
   const clone = {};
   Object.assign(clone, data[0]);
   delete clone.ol_uid;
@@ -893,7 +893,7 @@ Controller.prototype.zoomToSelection = function() {
       olExtent.extend(extent, feature.getGeometry().getExtent());
     });
     const size = this.map_.getSize();
-    googAsserts.assert(size !== undefined);
+    console.assert(size !== undefined);
     const maxZoom = this.maxRecenterZoom;
     this.map_.getView().fit(extent, {size, maxZoom});
   }
@@ -908,7 +908,7 @@ Controller.prototype.downloadCsv = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const columnDefs = source.configuration.columnDefs;
-    googAsserts.assert(columnDefs !== undefined);
+    console.assert(columnDefs !== undefined);
     const selectedRows = source.configuration.getSelectedRows();
 
     this.ngeoCsvDownload_.startDownload(

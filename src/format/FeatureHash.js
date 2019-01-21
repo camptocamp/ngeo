@@ -267,7 +267,7 @@ function encodeNumber_(num) {
  */
 function encodeStyles_(styles, geometryType, encodedStyles) {
   const styleType = StyleTypes_[geometryType];
-  googAsserts.assert(styleType !== undefined);
+  console.assert(styleType !== undefined);
   for (let i = 0; i < styles.length; ++i) {
     const style = styles[i];
     const fillStyle = style.getFill();
@@ -364,9 +364,9 @@ function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
     opt_propertyName : 'fillColor';
   const fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    googAsserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+    console.assert(Array.isArray(fillColor), 'only supporting fill colors');
     const fillColorRgba = olColor.asArray(fillColor);
-    googAsserts.assert(Array.isArray(fillColorRgba), 'fill color must be an array');
+    console.assert(Array.isArray(fillColorRgba), 'fill color must be an array');
     const fillColorHex = rgbArrayToHex(fillColorRgba);
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
@@ -387,9 +387,9 @@ function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
 function encodeStyleStroke_(strokeStyle, encodedStyles) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    googAsserts.assert(Array.isArray(strokeColor));
+    console.assert(Array.isArray(strokeColor));
     const strokeColorRgba = olColor.asArray(strokeColor);
-    googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+    console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     const strokeColorHex = rgbArrayToHex(strokeColorRgba);
     if (encodedStyles.length > 0) {
       encodedStyles.push('\'');
@@ -441,8 +441,8 @@ function encodeStyleText_(textStyle, encodedStyles) {
  * @private
  */
 function readLineStringGeometry_(text) {
-  googAsserts.assert(text.substring(0, 2) === 'l(');
-  googAsserts.assert(text[text.length - 1] == ')');
+  console.assert(text.substring(0, 2) === 'l(');
+  console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   return new olGeomLineString(flatCoordinates, olGeomGeometryLayout.XY);
@@ -458,8 +458,8 @@ function readLineStringGeometry_(text) {
  * @private
  */
 function readMultiLineStringGeometry_(text) {
-  googAsserts.assert(text.substring(0, 2) === 'L(');
-  googAsserts.assert(text[text.length - 1] == ')');
+  console.assert(text.substring(0, 2) === 'L(');
+  console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
   let flatCoordinates = [];
   const ends = [];
@@ -481,11 +481,11 @@ function readMultiLineStringGeometry_(text) {
  * @private
  */
 function readPointGeometry_(text) {
-  googAsserts.assert(text.substring(0, 2) === 'p(');
-  googAsserts.assert(text[text.length - 1] == ')');
+  console.assert(text.substring(0, 2) === 'p(');
+  console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
-  googAsserts.assert(flatCoordinates.length === 2);
+  console.assert(flatCoordinates.length === 2);
   return new olGeomPoint(flatCoordinates, olGeomGeometryLayout.XY);
 }
 
@@ -499,8 +499,8 @@ function readPointGeometry_(text) {
  * @private
  */
 function readMultiPointGeometry_(text) {
-  googAsserts.assert(text.substring(0, 2) === 'P(');
-  googAsserts.assert(text[text.length - 1] == ')');
+  console.assert(text.substring(0, 2) === 'P(');
+  console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
   const flatCoordinates = this.decodeCoordinates_(text);
   return new olGeomMultiPoint(flatCoordinates, olGeomGeometryLayout.XY);
@@ -516,8 +516,8 @@ function readMultiPointGeometry_(text) {
  * @private
  */
 function readPolygonGeometry_(text) {
-  googAsserts.assert(text.substring(0, 2) === 'a(');
-  googAsserts.assert(text[text.length - 1] == ')');
+  console.assert(text.substring(0, 2) === 'a(');
+  console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
   let flatCoordinates = [];
   const ends = [];
@@ -547,8 +547,8 @@ function readPolygonGeometry_(text) {
  * @private
  */
 function readMultiPolygonGeometry_(text) {
-  googAsserts.assert(text.substring(0, 2) === 'A(');
-  googAsserts.assert(text[text.length - 1] == ')');
+  console.assert(text.substring(0, 2) === 'A(');
+  console.assert(text[text.length - 1] == ')');
   text = text.substring(2, text.length - 1);
   let flatCoordinates = [];
   const endss = [];
@@ -749,7 +749,7 @@ function getStyleProperties_(text, feature) {
   for (let i = 0; i < parts.length; ++i) {
     const part = decodeURIComponent(parts[i]);
     const keyVal = part.split('*');
-    googAsserts.assert(keyVal.length === 2);
+    console.assert(keyVal.length === 2);
     const key = keyVal[0];
     const val = keyVal[1];
 
@@ -1028,9 +1028,9 @@ FeatureHash.prototype.encodeCoordinates_ = function(flatCoordinates, stride, off
  * @override
  */
 FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
-  googAsserts.assert(text.length > 2);
-  googAsserts.assert(text[1] === '(');
-  googAsserts.assert(text[text.length - 1] === ')');
+  console.assert(text.length > 2);
+  console.assert(text[1] === '(');
+  console.assert(text[text.length - 1] === ')');
   let splitIndex = text.indexOf('~');
   const geometryText = splitIndex >= 0 ?
     `${text.substring(0, splitIndex)})` : text;
@@ -1048,7 +1048,7 @@ FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
       for (let i = 0; i < parts.length; ++i) {
         const part = decodeURIComponent(parts[i]);
         const keyVal = part.split('*');
-        googAsserts.assert(keyVal.length === 2);
+        console.assert(keyVal.length === 2);
         let key = keyVal[0];
         const value = keyVal[1];
         if (!this.setStyle_ && LegacyProperties_[key]) {
@@ -1079,7 +1079,7 @@ FeatureHash.prototype.readFeatureFromText = function(text, opt_options) {
  * @override
  */
 FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
-  googAsserts.assert(text[0] === 'F');
+  console.assert(text[0] === 'F');
   this.prevX_ = 0;
   this.prevY_ = 0;
   /** @type {Array.<import("ol/Feature.js").default>} */
@@ -1087,7 +1087,7 @@ FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
   text = text.substring(1);
   while (text.length > 0) {
     const index = text.indexOf(')');
-    googAsserts.assert(index >= 0);
+    console.assert(index >= 0);
     const feature = this.readFeatureFromText(
       text.substring(0, index + 1), opt_options);
     features.push(feature);
@@ -1117,7 +1117,7 @@ FeatureHash.prototype.readFeaturesFromText = function(text, opt_options) {
  */
 FeatureHash.prototype.readGeometryFromText = function(text, opt_options) {
   const geometryReader = GEOMETRY_READERS_[text[0]];
-  googAsserts.assert(geometryReader !== undefined);
+  console.assert(geometryReader !== undefined);
   return geometryReader.call(this, text);
 };
 
@@ -1143,7 +1143,7 @@ FeatureHash.prototype.writeFeatureText = function(feature, opt_options) {
 
   if (encodedGeometry.length > 0) {
     // remove the final bracket
-    googAsserts.assert(encodedGeometry[encodedGeometry.length - 1] === ')');
+    console.assert(encodedGeometry[encodedGeometry.length - 1] === ')');
     encodedGeometry = encodedGeometry.substring(0, encodedGeometry.length - 1);
     encodedParts.push(encodedGeometry);
   }
@@ -1229,7 +1229,7 @@ FeatureHash.prototype.writeFeaturesText = function(features, opt_options) {
 FeatureHash.prototype.writeGeometryText = function(geometry, opt_options) {
   const geometryWriter = GEOMETRY_WRITERS_[
     geometry.getType()];
-  googAsserts.assert(geometryWriter !== undefined);
+  console.assert(geometryWriter !== undefined);
   const transformedGeometry = /** @type {import("ol/geom/Geometry.js").default} */
       (olFormatFeature.transformWithOptions(geometry, true, opt_options));
   return geometryWriter.call(this, transformedGeometry);

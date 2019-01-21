@@ -169,8 +169,8 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   const viewResolution = view.getResolution();
   const viewRotation = object.rotation || toDegrees(view.getRotation());
 
-  googAsserts.assert(viewCenter !== undefined);
-  googAsserts.assert(viewProjection !== undefined);
+  console.assert(viewCenter !== undefined);
+  console.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
@@ -179,7 +179,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
-  googAsserts.assert(mapLayerGroup);
+  console.assert(mapLayerGroup);
   this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
@@ -189,7 +189,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
 
   layers.forEach((layer) => {
     if (layer.getVisible()) {
-      googAsserts.assert(viewResolution !== undefined);
+      console.assert(viewResolution !== undefined);
       this.encodeLayer(object.layers, layer, viewResolution);
     }
   });
@@ -397,7 +397,7 @@ PrintService.prototype.encodeTileWmsLayer_ = function(arr, layer) {
  */
 PrintService.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
-  googAsserts.assert(urls.length > 0);
+  console.assert(urls.length > 0);
   return getAbsoluteUrl_(urls[0]);
 };
 

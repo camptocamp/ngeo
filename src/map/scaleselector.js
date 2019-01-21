@@ -127,7 +127,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
    */
   this.scales = /** @type {!Array.<number>} */
     ($scope.$eval(scalesExpr));
-  googAsserts.assert(this.scales !== undefined);
+  console.assert(this.scales !== undefined);
 
   /**
    * @type {Array.<number>}

@@ -220,7 +220,7 @@ Controller.prototype.$onInit = function() {
     );
   }
 
-  googAsserts.assert(interaction);
+  console.assert(interaction);
 
   interaction.setActive(this.active);
   this.interaction_ = interaction;
@@ -267,7 +267,7 @@ Controller.prototype.handleDrawEnd_ = function(event) {
     // MeasureEvent
     sketch = event.detail.feature;
   }
-  googAsserts.assert(sketch);
+  console.assert(sketch);
 
   // convert to multi if geomType is multi and feature is not
   let geometry = sketch.getGeometry();

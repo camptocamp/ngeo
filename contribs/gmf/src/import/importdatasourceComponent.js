@@ -225,7 +225,7 @@ class Controller {
           googAsserts.assertString(datum);
           const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(
             datum);
-          googAsserts.assert(originalDatumTokenizers);
+          console.assert(originalDatumTokenizers);
           const datumTokenizers = [];
           for (const originalDatumTokenizer of originalDatumTokenizers) {
             let i = 0;
@@ -266,7 +266,7 @@ class Controller {
       // Timeout to let Angular render the placeholder of the input properly,
       // otherwise typeahead would copy the string with {{}} in it...
       this.timeout_(() => {
-        googAsserts.assert(this.serversEngine_);
+        console.assert(this.serversEngine_);
         const $urlInput = this.element_.find('input[name=url]');
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput.typeahead({
@@ -340,7 +340,7 @@ class Controller {
    * @export
    */
   load() {
-    const file = googAsserts.assert(this.file);
+    const file = console.assert(this.file);
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file, (success) => {
       if (!success) {
         this.hasError = true;

@@ -218,7 +218,7 @@ class Rule {
      * @type {string}
      * @private
      */
-    this.type_ = googAsserts.assert(options.type);
+    this.type_ = console.assert(options.type);
 
 
     // === Other properties ===

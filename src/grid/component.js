@@ -228,7 +228,7 @@ Controller.prototype.selectRange_ = function(attributes) {
       posSelectedRows.push(i);
     }
   }
-  googAsserts.assert(posClickedRow !== undefined);
+  console.assert(posClickedRow !== undefined);
 
   if (posSelectedRows.length == 0) {
     // if no other row is selected, select the clicked one and stop

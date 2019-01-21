@@ -244,7 +244,7 @@ Controller.prototype.init = function() {
   ngeoMiscDecorate.interaction(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();
-  googAsserts.assert(Array.isArray(layersConfig));
+  console.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
 
   this.map.addInteraction(this.measure);

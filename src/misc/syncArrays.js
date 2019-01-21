@@ -65,14 +65,14 @@ function syncArrays(arr1, arr2, reverse, scope, filter) {
           arr1[i] = arr2[j--];
         }
       }
-      googAsserts.assert(j == -1);
+      console.assert(j == -1);
     } else {
       for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
         if (filter(arr1[i])) {
           arr1[i] = arr2[j++];
         }
       }
-      googAsserts.assert(j == arr2.length);
+      console.assert(j == arr2.length);
     }
   });
 

@@ -77,9 +77,9 @@ const Service = class {
     const heading = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.HEADING) || 0;
     const pitch = stateManager.getInitialNumberValue(ngeoOlcsConstants.Permalink3dParam.PITCH) || 0;
 
-    googAsserts.assert(lon !== undefined);
-    googAsserts.assert(lat !== undefined);
-    googAsserts.assert(elevation !== undefined);
+    console.assert(lon !== undefined);
+    console.assert(lat !== undefined);
+    console.assert(elevation !== undefined);
     return this.manager_.set3dWithView(lon, lat, elevation, heading, pitch);
   }
 

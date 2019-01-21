@@ -814,7 +814,7 @@ class SearchController {
    * @private
    */
   getSearchStyle_(feature, resolution) {
-    googAsserts.assert(feature);
+    console.assert(feature);
     const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
     if (this.color) {
       const color = olColor.asArray(this.color);

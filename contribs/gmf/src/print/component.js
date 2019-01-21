@@ -572,8 +572,8 @@ class Controller {
   getScaleFn(frameState) {
     // Don't compute an optimal scale if the user manually choose a value not in
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
-    googAsserts.assert(this.layoutInfo.scales);
-    googAsserts.assert(this.layoutInfo.scale !== undefined);
+    console.assert(this.layoutInfo.scales);
+    console.assert(this.layoutInfo.scale !== undefined);
     if (!this.scaleManuallySelected_ &&
         (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))) {
       const mapSize = frameState.size;
@@ -1010,7 +1010,7 @@ class Controller {
       data = [];
       columns = [];
       source.features.forEach(function(feature, i) {
-        googAsserts.assert(feature);
+        console.assert(feature);
         const properties = getFilteredFeatureValues(feature);
         if (i === 0) {
           columns = Object.keys(properties).map(function tanslateColumns(prop) {
@@ -1062,7 +1062,7 @@ class Controller {
   handleCreateReportSuccess_(resp) {
     const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
     const ref = mfResp.ref;
-    googAsserts.assert(ref.length > 0);
+    console.assert(ref.length > 0);
     this.curRef_ = ref;
     this.getStatus_(ref);
   }

@@ -723,7 +723,7 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
   switch (action) {
     case 'delete':
-      googAsserts.assert(
+      console.assert(
         this.selectedFeature, 'Selected feature should be truthy');
       if (vertexInfo) {
         this.featureHelper_.removeVertex(this.selectedFeature, vertexInfo);

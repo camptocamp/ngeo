@@ -187,7 +187,7 @@ class RuleHelper {
         break;
       case ngeoFormatAttributeType.SELECT:
         rule = new ngeoRuleSelect({
-          choices: googAsserts.assert(attribute.choices),
+          choices: console.assert(attribute.choices),
           name: name,
           propertyName: attribute.name
         });
@@ -248,7 +248,7 @@ class RuleHelper {
       case ngeoFormatAttributeType.SELECT:
         const selectOptions = /** @type {!SelectOptions} */ (
           options);
-        googAsserts.assert(selectOptions.choices);
+        console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
       default:
@@ -620,7 +620,7 @@ class RuleHelper {
     } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
       googAsserts.assertInstanceof(rule, ngeoRuleGeometry);
-      const geometry = googAsserts.assert(rule.geometry);
+      const geometry = console.assert(rule.geometry);
       if (operator === rsot.CONTAINS) {
         filter = olFormatFilter.contains(
           geometryName,

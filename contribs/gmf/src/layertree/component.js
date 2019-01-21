@@ -213,7 +213,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.gmfTreeManager_ = gmfTreeManager;
 
   const root = gmfTreeManager.root;
-  googAsserts.assert(root);
+  console.assert(root);
 
   /**
    * @type {!gmfThemes.GmfRootNode}

@@ -134,7 +134,7 @@ class Controller {
 
     this.modal_.on('shown.bs.modal hidden.bs.modal', (e) => {
       const type = e.type;
-      googAsserts.assert(type == 'shown' || type == 'hidden');
+      console.assert(type == 'shown' || type == 'hidden');
       this.ngModel.$setViewValue(type == 'shown');
     });
   }

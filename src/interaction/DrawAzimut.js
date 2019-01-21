@@ -210,7 +210,7 @@ DrawAzimut.prototype.startDrawing_ = function(event) {
   const line = new olGeomLineString([start.slice(), start.slice()]);
   const circle = new olGeomCircle(start, 0);
   const geometry = new olGeomGeometryCollection([line, circle]);
-  googAsserts.assert(geometry !== undefined);
+  console.assert(geometry !== undefined);
   this.sketchFeature_ = new olFeature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
@@ -289,7 +289,7 @@ DrawAzimut.prototype.updateState_ = function() {
  */
 DrawAzimut.prototype.finishDrawing_ = function() {
   const sketchFeature = this.abortDrawing_();
-  googAsserts.assert(sketchFeature !== null);
+  console.assert(sketchFeature !== null);
 
   if (this.source_ !== null) {
     this.source_.addFeature(sketchFeature);

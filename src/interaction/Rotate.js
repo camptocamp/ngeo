@@ -36,7 +36,7 @@ import olSourceVector from 'ol/source/Vector.js';
  */
 function Rotate(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   /**
    * @type {Array.<import("ol/EventsKey.js").default>}

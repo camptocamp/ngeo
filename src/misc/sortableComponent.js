@@ -75,7 +75,7 @@ function component($timeout) {
 
       const sortable = /** @type {Array} */
               (scope.$eval(attrs['ngeoSortable'])) || [];
-      googAsserts.assert(Array.isArray(sortable));
+      console.assert(Array.isArray(sortable));
 
       scope.$watchCollection(() => sortable, () => {
         sortable.length && $timeout(resetUpDragDrop, 0);

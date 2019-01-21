@@ -173,7 +173,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
     }, this);
 
     const geometry = newFeature.getGeometry();
-    googAsserts.assert(geometry, 'Geometry should be thruthy');
+    console.assert(geometry, 'Geometry should be thruthy');
 
     keys.push(
       olEvents.listen(
@@ -308,7 +308,7 @@ Controller.prototype.handleFeatureChange_ = function() {
  * @private
  */
 Controller.prototype.handleGeometryChange_ = function() {
-  googAsserts.assert(this.feature);
+  console.assert(this.feature);
   this.measure = this.featureHelper_.getMeasure(this.feature);
 
   const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);

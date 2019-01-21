@@ -116,7 +116,7 @@ class Controller {
      * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @private
      */
-    this.featureOverlay_ = googAsserts.assert(
+    this.featureOverlay_ = console.assert(
       ngeoFeatureOverlayMgr.getFeatureOverlay()
     );
 

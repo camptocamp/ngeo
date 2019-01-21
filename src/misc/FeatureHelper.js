@@ -212,7 +212,7 @@ FeatureHelper.prototype.getStyle = function(feature) {
       break;
   }
 
-  googAsserts.assert(style, 'Style should be thruthy');
+  console.assert(style, 'Style should be thruthy');
 
   let styles;
   if (style.constructor === Array) {
@@ -885,7 +885,7 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       break;
   }
 
-  googAsserts.assert(style, 'Style should be thruthy');
+  console.assert(style, 'Style should be thruthy');
 
   return style;
 };
@@ -1149,7 +1149,7 @@ FeatureHelper.prototype.createTextStyle_ = function(options) {
 FeatureHelper.prototype.getMeasure = function(feature) {
 
   const geometry = feature.getGeometry();
-  googAsserts.assert(geometry, 'Geometry should be truthy');
+  console.assert(geometry, 'Geometry should be truthy');
 
   let measure = '';
 
@@ -1193,7 +1193,7 @@ FeatureHelper.prototype.getMeasure = function(feature) {
  */
 FeatureHelper.prototype.getType = function(feature) {
   const geometry = feature.getGeometry();
-  googAsserts.assert(geometry, 'Geometry should be thruthy');
+  console.assert(geometry, 'Geometry should be thruthy');
 
   let type;
 
@@ -1221,7 +1221,7 @@ FeatureHelper.prototype.getType = function(feature) {
     type = ngeoGeometryType.MULTI_LINE_STRING;
   }
 
-  googAsserts.assert(type, 'Type should be thruthy');
+  console.assert(type, 'Type should be thruthy');
 
   return type;
 };

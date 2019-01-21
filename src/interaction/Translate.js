@@ -280,7 +280,7 @@ Translate.prototype.getGeometryCenterPoint_ = function(
     point = new olGeomPoint(center);
   }
 
-  googAsserts.assert(point, 'Point should be thruthy');
+  console.assert(point, 'Point should be thruthy');
 
   return point;
 };

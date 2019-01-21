@@ -263,7 +263,7 @@ Themes.prototype.getBgLayers = function() {
   const layerLayerCreationFn = function(ogcServers, gmfLayer) {
     if (gmfLayer.type === 'WMTS') {
       const gmfLayerWMTS = /** @type gmfThemes.GmfLayerWMTS */ (gmfLayer);
-      googAsserts.assert(gmfLayerWMTS.url, 'Layer URL is required');
+      console.assert(gmfLayerWMTS.url, 'Layer URL is required');
       return layerHelper.createWMTSLayerFromCapabilitites(
         gmfLayerWMTS.url,
         gmfLayerWMTS.layer || '',
@@ -279,11 +279,11 @@ Themes.prototype.getBgLayers = function() {
       });
     } else if (gmfLayer.type === 'WMS') {
       const gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
-      googAsserts.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
+      console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
       const server = ogcServers[gmfLayerWMS.ogcServer];
-      googAsserts.assert(server, 'The OGC server was not found');
-      googAsserts.assert(server.url, 'The server URL is required');
-      googAsserts.assert(server.imageType, 'The server image type is required');
+      console.assert(server, 'The OGC server was not found');
+      console.assert(server.url, 'The server URL is required');
+      console.assert(server.imageType, 'The server image type is required');
 
       // Manage WMS styles
       const opt_params = {STYLES: gmfLayerWMS.styles};
@@ -413,7 +413,7 @@ Themes.prototype.getThemesObject = function() {
  * @return {angular.IPromise.<!Array.<!gmfThemes.GmfLayer>>} Promise.
  */
 Themes.prototype.getBackgroundLayersObject = function() {
-  googAsserts.assert(this.promise_ !== null);
+  console.assert(this.promise_ !== null);
   return this.promise_.then(
     /**
        * @param {!gmfThemes.GmfThemesResponse} data The "themes" web service
@@ -431,7 +431,7 @@ Themes.prototype.getBackgroundLayersObject = function() {
  * @export
  */
 Themes.prototype.getOgcServersObject = function() {
-  googAsserts.assert(this.promise_ !== null);
+  console.assert(this.promise_ !== null);
   return this.promise_.then(
     /**
        * @param {gmfThemes.GmfThemesResponse} data The "themes" web service
@@ -447,7 +447,7 @@ Themes.prototype.getOgcServersObject = function() {
  * @return {angular.IPromise.<boolean>} Promise.
  */
 Themes.prototype.hasEditableLayers = function() {
-  googAsserts.assert(this.promise_ !== null);
+  console.assert(this.promise_ !== null);
   return this.promise_.then(this.hasEditableLayers_.bind(this));
 };
 
@@ -541,7 +541,7 @@ export function getNodeMinResolution(gmfLayer) {
  */
 Themes.prototype.loadThemes = function(opt_roleId) {
 
-  googAsserts.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
+  console.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
 
   if (this.loaded) {
     // reload the themes

@@ -182,7 +182,7 @@ Controller.prototype.handleDrawEnd = function(type, event) {
     // MeasureEvent
     sketch = event.detail.feature;
   }
-  googAsserts.assert(sketch);
+  console.assert(sketch);
 
   const azimut = sketch.get('azimut');
 

@@ -81,7 +81,7 @@ function directive(ngeoDebounce) {
     link: (scope, element, attrs) => {
 
       const optionsAttr = attrs['ngeoProfileOptions'];
-      googAsserts.assert(optionsAttr !== undefined);
+      console.assert(optionsAttr !== undefined);
 
       const selection = d3select(element[0]);
       let profile, elevationData, poiData;

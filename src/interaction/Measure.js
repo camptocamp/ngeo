@@ -365,7 +365,7 @@ Measure.prototype.onDrawStart_ = function(evt) {
 
   const geometry = this.sketchFeature.getGeometry();
 
-  googAsserts.assert(geometry !== undefined);
+  console.assert(geometry !== undefined);
   this.changeEventKey_ = olEvents.listen(geometry, 'change', () => {
     this.handleMeasure((measure, coord) => {
       if (coord !== null) {

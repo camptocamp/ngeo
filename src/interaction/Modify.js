@@ -41,7 +41,7 @@ import olFeature from 'ol/Feature.js';
  */
 function Modify(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   /**
    * @type {!import("ol/collection.js").Collection.<import("ol/Feature.js").default>}

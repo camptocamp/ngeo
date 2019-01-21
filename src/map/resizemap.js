@@ -47,7 +47,7 @@ function directive($window) {
       googAsserts.assertInstanceof(map, olMap);
 
       const stateExpr = attrs['ngeoResizemapState'];
-      googAsserts.assert(stateExpr !== undefined);
+      console.assert(stateExpr !== undefined);
 
       let start;
       let animationDelayKey;

@@ -72,7 +72,7 @@ VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
      * @type {Array<import("ol/style/Style.js").default>}
      */
     const styles = (styleData !== null && !Array.isArray(styleData)) ? [styleData] : styleData;
-    googAsserts.assert(Array.isArray(styles));
+    console.assert(Array.isArray(styles));
 
     if (styles !== null && styles.length > 0) {
       let isOriginalFeatureAdded = false;
@@ -188,9 +188,9 @@ VectorEncoder.prototype.encodeVectorStyle = function(object, geometryType, style
 VectorEncoder.prototype.encodeVectorStyleFill = function(symbolizer, fillStyle) {
   let fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+    console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
     fillColor = olColor.asArray(fillColor);
-    googAsserts.assert(Array.isArray(fillColor), 'only supporting fill colors');
+    console.assert(Array.isArray(fillColor), 'only supporting fill colors');
     symbolizer.fillColor = rgbArrayToHex(fillColor);
     symbolizer.fillOpacity = fillColor[3];
   }
@@ -335,9 +335,9 @@ VectorEncoder.prototype.encodeVectorStylePolygon = function(symbolizers, fillSty
 VectorEncoder.prototype.encodeVectorStyleStroke = function(symbolizer, strokeStyle) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
+    console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
     const strokeColorRgba = olColor.asArray(strokeColor);
-    googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+    console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
     symbolizer.strokeColor = rgbArrayToHex(strokeColorRgba);
     symbolizer.strokeOpacity = strokeColorRgba[3];
   }
@@ -410,9 +410,9 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
     const strokeStyle = textStyle.getStroke();
     if (strokeStyle !== null) {
       const strokeColor = strokeStyle.getColor();
-      googAsserts.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
+      console.assert(typeof strokeColor === 'string' || Array.isArray(strokeColor));
       const strokeColorRgba = olColor.asArray(strokeColor);
-      googAsserts.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
+      console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
       symbolizer.haloColor = rgbArrayToHex(strokeColorRgba);
       symbolizer.haloOpacity = strokeColorRgba[3];
       const width = strokeStyle.getWidth();
@@ -425,9 +425,9 @@ VectorEncoder.prototype.encodeTextStyle = function(symbolizers, textStyle) {
     const fillStyle = textStyle.getFill();
     if (fillStyle !== null) {
       const fillColor = fillStyle.getColor();
-      googAsserts.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
+      console.assert(typeof fillColor === 'string' || Array.isArray(fillColor));
       const fillColorRgba = olColor.asArray(fillColor);
-      googAsserts.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
+      console.assert(Array.isArray(fillColorRgba), 'only supporting fill colors');
       symbolizer.fontColor = rgbArrayToHex(fillColorRgba);
     }
 

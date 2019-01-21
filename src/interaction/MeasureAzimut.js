@@ -40,13 +40,13 @@ function MeasureAzimut(unitPrefixFormat, numberFormat, options = /** @type {Meas
    * The format function
    * @type {formatNumber}
    */
-  this.numberFormat = googAsserts.assert(numberFormat);
+  this.numberFormat = console.assert(numberFormat);
 
   /**
    * The format function
    * @type {unitPrefix}
    */
-  this.unitPrefixFormat = googAsserts.assert(unitPrefixFormat);
+  this.unitPrefixFormat = console.assert(unitPrefixFormat);
 
 }
 

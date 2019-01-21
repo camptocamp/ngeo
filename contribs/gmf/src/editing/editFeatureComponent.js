@@ -532,7 +532,7 @@ Controller.prototype.$onInit = function() {
 
   // (1.1) Set editable WMS layer
   const layer = gmfLayertreeSyncLayertreeMap.getLayer(this.editableTreeCtrl);
-  googAsserts.assert(
+  console.assert(
     layer instanceof olLayerImage || layer instanceof olLayerTile);
   this.editableWMSLayer_ = layer;
 
@@ -654,7 +654,7 @@ Controller.prototype.$onInit = function() {
  * @export
  */
 Controller.prototype.save = function() {
-  googAsserts.assert(this.attributes);
+  console.assert(this.attributes);
 
   const feature = this.feature.clone();
   feature.setId(this.feature.getId());
@@ -876,7 +876,7 @@ Controller.prototype.setAttributes_ = function(attributes) {
 Controller.prototype.handleFeatureAdd_ = function(evt) {
   this.feature = null;
   this.timeout_(() => {
-    googAsserts.assert(this.attributes);
+    console.assert(this.attributes);
     const feature = evt.element;
     googAsserts.assertInstanceof(feature, olFeature);
     const dateFormatter = new DateFormatter();
@@ -1191,7 +1191,7 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
   if (oldFeature) {
     olEvents.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = oldFeature.getGeometry();
-    googAsserts.assert(geom);
+    console.assert(geom);
     olEvents.unlisten(
       geom,
       'change',
@@ -1205,7 +1205,7 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
     this.featureId = newFeature.getId();
     olEvents.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
-    googAsserts.assert(geom);
+    console.assert(geom);
     olEvents.listen(
       geom,
       'change',
@@ -1281,8 +1281,8 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
   switch (action) {
     case 'delete':
-      const feature = googAsserts.assert(this.feature);
-      const vertexInfo = googAsserts.assert(this.vertexInfo_);
+      const feature = console.assert(this.feature);
+      const vertexInfo = console.assert(this.vertexInfo_);
       this.ngeoFeatureHelper_.removeVertex(feature, vertexInfo);
       this.scope_.$apply();
       break;

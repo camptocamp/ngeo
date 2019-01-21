@@ -278,7 +278,7 @@ class ExternalDatSourcesManager {
    */
   get layerGroup() {
     const map = this.map_;
-    googAsserts.assert(map);
+    console.assert(map);
     return this.ngeoLayerHelper_.getGroupFromMap(
       map,
       EXTERNALLAYERGROUP_NAME
@@ -619,7 +619,7 @@ class ExternalDatSourcesManager {
     if (dataSource.ogcType === Type.WMS) {
       // WMS data source
       const url = dataSource.wmsUrl;
-      googAsserts.assert(url);
+      console.assert(url);
 
       const wmsGroup = this.getWMSGroup(url);
       if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
@@ -637,7 +637,7 @@ class ExternalDatSourcesManager {
     } else if (dataSource.ogcType === Type.WMTS) {
       // WMTS data source
       const url = dataSource.wmtsUrl;
-      googAsserts.assert(url);
+      console.assert(url);
 
       const wmtsGroup = this.getWMTSGroup(url);
       if (wmtsGroup && wmtsGroup.dataSources.includes(dataSource)) {

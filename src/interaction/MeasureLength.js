@@ -60,7 +60,7 @@ MeasureLength.prototype.createDrawInteraction = function(style, source) {
 MeasureLength.prototype.handleMeasure = function(callback) {
   const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomLineString);
   const proj = this.getMap().getView().getProjection();
-  googAsserts.assert(proj);
+  console.assert(proj);
   const output = ngeoInteractionMeasure.getFormattedLength(geom, proj, this.precision, this.format);
   const coord = geom.getLastCoordinate();
   callback(output, coord);

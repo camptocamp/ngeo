@@ -231,7 +231,7 @@ WfsPermalinkService.prototype.clear = function() {
  * @export
  */
 WfsPermalinkService.prototype.issue = function(queryData, map) {
-  googAsserts.assert(this.url_,
+  console.assert(this.url_,
     'url is not set. to use the wfs permalink service, ' +
       'set the value `ngeoWfsPermalinkOptions`');
   this.clearResult_();
@@ -380,7 +380,7 @@ WfsPermalinkService.joinFilters_ = function(filters, joinFn) {
     if (combinedFilters === null) {
       return currentFilter;
     } else {
-      googAsserts.assert(currentFilter !== null);
+      console.assert(currentFilter !== null);
       return joinFn(combinedFilters, currentFilter);
     }
   }, null);

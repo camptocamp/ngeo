@@ -209,7 +209,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       const groupNode = theme.children[0];
 
       // (4) Set OGC server, which must support WFS for this example to work
-      googAsserts.assert(groupNode.ogcServer);
+      console.assert(groupNode.ogcServer);
       const gmfServer = this.gmfServers_[groupNode.ogcServer];
       if (gmfServer && gmfServer.wfsSupport === true && gmfServer.urlWfs) {
         this.gmfServer_ = gmfServer;
@@ -245,7 +245,7 @@ MainController.prototype.runEditor = function() {
   const feature = this.selectedFeature;
   const layer = this.selectedGmfLayerNode.id;
   const property = this.selectedGmfLayerNode.metadata.identifierAttributeField;
-  googAsserts.assert(property !== undefined);
+  console.assert(property !== undefined);
   const id = feature.get(property);
 
   const params = {};
@@ -286,7 +286,7 @@ MainController.prototype.runViewer_ = function(baseUrl) {
   const nodeId = node.id;
   const nodeName = node.name;
   const nodeIdAttrFieldName = node.metadata.identifierAttributeField;
-  googAsserts.assert(nodeIdAttrFieldName !== undefined);
+  console.assert(nodeIdAttrFieldName !== undefined);
   const ids = [];
 
   const features = this.featuresCache_[nodeId];
