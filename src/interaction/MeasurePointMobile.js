@@ -53,7 +53,7 @@ MeasurePointMobile.prototype.createDrawInteraction = function(style, source) {
  * @inheritDoc
  */
 MeasurePointMobile.prototype.handleMeasure = function(callback) {
-  const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomPoint);
+  const geom = console.assert(this.sketchFeature.getGeometry() instanceof olGeomPoint);
   const dec = this.decimals;
   const output = ngeoInteractionMeasure.getFormattedPoint(geom, dec, this.format_, this.coordFormat_);
   const coord = geom.getLastCoordinate();

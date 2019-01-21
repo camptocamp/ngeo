@@ -59,7 +59,7 @@ function AbstractAppController(config, $scope, $injector) {
     window.injector = $injector;
   }
 
-  googAsserts.assertInstanceof(this.map, olMap);
+  console.assert(this.map instanceof olMap);
 
   /**
    * Collection of features for the draw interaction

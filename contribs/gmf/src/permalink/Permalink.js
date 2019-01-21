@@ -1082,7 +1082,7 @@ Permalink.prototype.initLayers_ = function() {
  */
 Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
   const feature = event.element;
-  googAsserts.assertInstanceof(feature, olFeature);
+  console.assert(feature instanceof olFeature);
   this.addNgeoFeature_(feature);
 };
 
@@ -1093,7 +1093,7 @@ Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
  */
 Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
   const feature = event.element;
-  googAsserts.assertInstanceof(feature, olFeature);
+  console.assert(feature instanceof olFeature);
   this.removeNgeoFeature_(feature);
 };
 
@@ -1383,7 +1383,7 @@ Permalink.prototype.initExternalDataSources_ = function() {
  */
 Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
   const group = evt.element;
-  googAsserts.assertInstanceof(group, ngeoDatasourceGroup);
+  console.assert(group instanceof ngeoDatasourceGroup);
   this.registerExternalDSGroup_(group);
   this.setExternalDataSourcesState_();
 };
@@ -1436,7 +1436,7 @@ Permalink.prototype.containsLayerName = function(layer, name) {
  */
 Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
   const group = evt.element;
-  googAsserts.assertInstanceof(group, ngeoDatasourceGroup);
+  console.assert(group instanceof ngeoDatasourceGroup);
   this.unregisterExternalDSGroup_(group);
   this.setExternalDataSourcesState_();
 };
@@ -1485,7 +1485,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
       // (1b) layer names
       const wmsGroupLayerNames = [];
       for (const wmsDataSource of wmsGroup.dataSources) {
-        googAsserts.assertInstanceof(wmsDataSource, ngeoDatasourceOGC);
+        console.assert(wmsDataSource instanceof ngeoDatasourceOGC);
 
         // External WMS data sources always have only one OGC layer name,
         // as they are created using a single Capability Layer object that

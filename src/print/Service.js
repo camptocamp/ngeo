@@ -218,7 +218,7 @@ PrintService.prototype.encodeLayer = function(arr, layer, resolution) {
  * @private
  */
 PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
-  googAsserts.assertInstanceof(layer, olLayerImage);
+  console.assert(layer instanceof olLayerImage);
   const source = layer.getSource();
   if (source instanceof olSourceImageWMS) {
     this.encodeImageWmsLayer_(arr, layer);
@@ -234,8 +234,8 @@ PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
 PrintService.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
-  googAsserts.assertInstanceof(layer, olLayerImage);
-  googAsserts.assertInstanceof(source, olSourceImageWMS);
+  console.assert(layer instanceof olLayerImage);
+  console.assert(source instanceof olSourceImageWMS);
 
   const url = source.getUrl();
   if (url !== undefined) {
@@ -308,7 +308,7 @@ function getAbsoluteUrl_(url) {
  * @private
  */
 PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
-  googAsserts.assertInstanceof(layer, olLayerTile);
+  console.assert(layer instanceof olLayerTile);
   const source = layer.getSource();
   if (source instanceof olSourceWMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
@@ -324,13 +324,13 @@ PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
  * @private
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
-  googAsserts.assertInstanceof(layer, olLayerTile);
+  console.assert(layer instanceof olLayerTile);
   const source = layer.getSource();
-  googAsserts.assertInstanceof(source, olSourceWMTS);
+  console.assert(source instanceof olSourceWMTS);
 
   const projection = source.getProjection();
   const tileGrid = source.getTileGrid();
-  googAsserts.assertInstanceof(tileGrid, olTilegridWMTS);
+  console.assert(tileGrid instanceof olTilegridWMTS);
   const matrixIds = tileGrid.getMatrixIds();
 
   /** @type {Array.<MapFishPrintWmtsMatrix>} */
@@ -381,8 +381,8 @@ PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
 PrintService.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
-  googAsserts.assertInstanceof(layer, olLayerTile);
-  googAsserts.assertInstanceof(source, olSourceTileWMS);
+  console.assert(layer instanceof olLayerTile);
+  console.assert(source instanceof olSourceTileWMS);
 
   this.encodeWmsLayer_(
     arr, layer, source.getUrls()[0], source.getParams());

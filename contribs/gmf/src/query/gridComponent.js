@@ -312,7 +312,7 @@ Controller.prototype.$onInit = function() {
   featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
-    googAsserts.assertInstanceof(featuresStyle, olStyleStyle);
+    console.assert(featuresStyle instanceof olStyleStyle);
     featuresOverlay.setStyle(featuresStyle);
   }
 
@@ -320,7 +320,7 @@ Controller.prototype.$onInit = function() {
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
-    googAsserts.assertInstanceof(highlightFeatureStyle, olStyleStyle);
+    console.assert(highlightFeatureStyle instanceof olStyleStyle);
   } else {
     const fill = new olStyleFill({color: [255, 0, 0, 0.6]});
     const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
@@ -340,7 +340,7 @@ Controller.prototype.$onInit = function() {
   const mapFn = this['getMapFn'];
   if (mapFn) {
     const map = mapFn();
-    googAsserts.assertInstanceof(map, olMap);
+    console.assert(map instanceof olMap);
     this.map_ = map;
   }
 };

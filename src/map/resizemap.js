@@ -44,7 +44,7 @@ function directive($window) {
       const attr = 'ngeoResizemap';
       const prop = attrs[attr];
       const map = scope.$eval(prop);
-      googAsserts.assertInstanceof(map, olMap);
+      console.assert(map instanceof olMap);
 
       const stateExpr = attrs['ngeoResizemapState'];
       console.assert(stateExpr !== undefined);

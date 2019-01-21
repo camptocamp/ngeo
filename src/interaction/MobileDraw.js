@@ -232,7 +232,7 @@ MobileDraw.prototype.addToDrawing = function() {
       this.dispatchEvent(event);
     }
     sketchFeatureGeom = this.sketchFeature_.getGeometry();
-    googAsserts.assertInstanceof(sketchFeatureGeom, olGeomSimpleGeometry);
+    console.assert(sketchFeatureGeom instanceof olGeomSimpleGeometry);
     sketchFeatureGeom.setCoordinates(coordinate);
     return;
   }
@@ -248,7 +248,7 @@ MobileDraw.prototype.addToDrawing = function() {
       this.dispatchEvent(event);
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomSimpleGeometry);
+      console.assert(sketchFeatureGeom instanceof olGeomSimpleGeometry);
       coordinates = sketchFeatureGeom.getCoordinates();
       coordinates.push(coordinate.slice());
       sketchFeatureGeom.setCoordinates(coordinates);
@@ -271,7 +271,7 @@ MobileDraw.prototype.addToDrawing = function() {
       this.dispatchEvent(event);
     } else {
       sketchFeatureGeom = this.sketchFeature_.getGeometry();
-      googAsserts.assertInstanceof(sketchFeatureGeom, olGeomPolygon);
+      console.assert(sketchFeatureGeom instanceof olGeomPolygon);
       const coordinatess = sketchFeatureGeom.getCoordinates();
       coordinates = coordinatess[0];
       coordinates.push(coordinate.slice());
@@ -372,14 +372,14 @@ MobileDraw.prototype.modifyDrawing_ = function() {
 
   if (this.type_ === 'LineString') {
     const sketchFeatureGeom = this.sketchFeature_.getGeometry();
-    googAsserts.assertInstanceof(sketchFeatureGeom, olGeomSimpleGeometry);
+    console.assert(sketchFeatureGeom instanceof olGeomSimpleGeometry);
     const coordinates = sketchFeatureGeom.getCoordinates();
     coordinates.pop();
     coordinates.push(center);
     sketchFeatureGeom.setCoordinates(coordinates);
   } else if (this.type_ === 'Polygon') {
     const sketchFeatureGeom = this.sketchFeature_.getGeometry();
-    googAsserts.assertInstanceof(sketchFeatureGeom, olGeomPolygon);
+    console.assert(sketchFeatureGeom instanceof olGeomPolygon);
     const coordinatess = sketchFeatureGeom.getCoordinates();
     const coordinates = coordinatess[0];
     coordinates.pop();
@@ -497,7 +497,7 @@ MobileDraw.prototype.updateSketchFeatures_ = function() {
 MobileDraw.prototype.getSketchPointGeometry_ = function() {
   console.assert(this.sketchPoint_, 'sketch point should be thruty');
   const geometry = this.sketchPoint_.getGeometry();
-  googAsserts.assertInstanceof(geometry, olGeomPoint);
+  console.assert(geometry instanceof olGeomPoint);
   return geometry;
 };
 

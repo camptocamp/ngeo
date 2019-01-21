@@ -72,8 +72,8 @@ MeasureAzimut.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 MeasureAzimut.prototype.handleMeasure = function(callback) {
-  const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomGeometryCollection);
-  const line = googAsserts.assertInstanceof(geom.getGeometries()[0], olGeomLineString);
+  const geom = console.assert(this.sketchFeature.getGeometry() instanceof olGeomGeometryCollection);
+  const line = console.assert(geom.getGeometries()[0] instanceof olGeomLineString);
   const output = getFormattedAzimutRadius(
     line, googAsserts.assertInstanceof(this.getMap().getView().getProjection(), olProjProjection),
     this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);

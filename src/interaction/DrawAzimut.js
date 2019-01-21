@@ -175,7 +175,7 @@ DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
     this.updateSketchFeatures_();
   } else {
     const sketchPointGeom = this.sketchPoint_.getGeometry();
-    googAsserts.assertInstanceof(sketchPointGeom, olGeomPoint);
+    console.assert(sketchPointGeom instanceof olGeomPoint);
     sketchPointGeom.setCoordinates(coordinates);
   }
 };
@@ -231,17 +231,17 @@ DrawAzimut.prototype.modifyDrawing_ = function(event) {
     this.sketchFeature_.getGeometry(), olGeomGeometryCollection);
   const geometries = geometry.getGeometriesArray();
   const line = geometries[0];
-  googAsserts.assertInstanceof(line, olGeomLineString);
+  console.assert(line instanceof olGeomLineString);
   const coordinates = line.getCoordinates();
   const sketchPointGeom = this.sketchPoint_.getGeometry();
-  googAsserts.assertInstanceof(sketchPointGeom, olGeomPoint);
+  console.assert(sketchPointGeom instanceof olGeomPoint);
   sketchPointGeom.setCoordinates(coordinate);
   const last = coordinates[coordinates.length - 1];
   last[0] = coordinate[0];
   last[1] = coordinate[1];
-  googAsserts.assertInstanceof(line, olGeomLineString);
+  console.assert(line instanceof olGeomLineString);
   line.setCoordinates(coordinates);
-  const circle = googAsserts.assertInstanceof(geometries[1], olGeomCircle);
+  const circle = console.assert(geometries[1] instanceof olGeomCircle);
   circle.setRadius(line.getLength());
   this.updateSketchFeatures_();
 };

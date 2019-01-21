@@ -50,7 +50,7 @@ const PRINT_STYLE_TYPES = {
  */
 VectorEncoder.prototype.encodeVectorLayer = function(arr, layer, resolution) {
   const source = layer.getSource();
-  googAsserts.assertInstanceof(source, olSourceVector);
+  console.assert(source instanceof olSourceVector);
 
   const features = source.getFeatures();
 

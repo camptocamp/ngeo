@@ -150,7 +150,7 @@ Controller.prototype.$onInit = function() {
 Controller.prototype.handleLayersAdd_ = function(evt) {
   this.timeout_(() => {
     const layer = evt.element;
-    googAsserts.assertInstanceof(layer, olLayerBase);
+    console.assert(layer instanceof olLayerBase);
     this.registerLayer_(layer);
   });
 };
@@ -162,7 +162,7 @@ Controller.prototype.handleLayersAdd_ = function(evt) {
  */
 Controller.prototype.handleLayersRemove_ = function(evt) {
   const layer = evt.element;
-  googAsserts.assertInstanceof(layer, olLayerBase);
+  console.assert(layer instanceof olLayerBase);
   this.unregisterLayer_(layer);
 };
 

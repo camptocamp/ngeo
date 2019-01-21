@@ -147,7 +147,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
    * @private
    */
   this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
-  googAsserts.assertInstanceof(this.map_, olMap);
+  console.assert(this.map_ instanceof olMap);
 
   const optionsExpr = $attrs['ngeoScaleselectorOptions'];
   const options = $scope.$eval(optionsExpr);

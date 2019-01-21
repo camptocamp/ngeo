@@ -101,7 +101,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   $element.on('click', this.toggleTracking.bind(this));
 
   const map = $scope['getMobileMapFn']();
-  googAsserts.assertInstanceof(map, olMap);
+  console.assert(map instanceof olMap);
 
   /**
    * @type {!angular.IScope}

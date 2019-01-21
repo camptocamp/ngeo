@@ -203,20 +203,20 @@ ModifyRectangle.prototype.initializeParams_ = function() {
   // 1. Find the origin (opposite) point for the modify operation
   // siblingY relative to the origin is siblingX relative to the opposite
   const siblingY = feature.get('siblingX');
-  googAsserts.assertInstanceof(siblingY, olFeature);
+  console.assert(siblingY instanceof olFeature);
 
   const origin = siblingY.get('siblingY');
-  googAsserts.assertInstanceof(origin, olFeature);
+  console.assert(origin instanceof olFeature);
   const originPoint = origin.getGeometry();
-  googAsserts.assertInstanceof(originPoint, olGeomPoint);
+  console.assert(originPoint instanceof olGeomPoint);
   const originCoordinate = originPoint.getCoordinates();
   const originPixel = this.getMap().getPixelFromCoordinate(originCoordinate);
 
   // 2. Find the origin's X sibling and the normal vector from the origin to it
   const siblingX = origin.get('siblingX');
-  googAsserts.assertInstanceof(siblingX, olFeature);
+  console.assert(siblingX instanceof olFeature);
   const siblingXPoint = siblingX.getGeometry();
-  googAsserts.assertInstanceof(siblingXPoint, olGeomPoint);
+  console.assert(siblingXPoint instanceof olGeomPoint);
   const siblingXCoordinate = siblingXPoint.getCoordinates();
   const siblingXPixel = this.getMap().getPixelFromCoordinate(siblingXCoordinate);
   let vectorX = [
@@ -229,7 +229,7 @@ ModifyRectangle.prototype.initializeParams_ = function() {
 
   // 3. Find the origin's Y sibling and the normal vector from the origin to it
   const siblingYPoint = siblingY.getGeometry();
-  googAsserts.assertInstanceof(siblingYPoint, olGeomPoint);
+  console.assert(siblingYPoint instanceof olGeomPoint);
   const siblingYCoordinate = siblingYPoint.getCoordinates();
   const siblingYPixel = this.getMap().getPixelFromCoordinate(siblingYCoordinate);
   let vectorY = [
@@ -372,7 +372,7 @@ ModifyRectangle.prototype.handleDrag_ = function(evt) {
     // Resize the box
     const boxFeature = feature.get('boxFeature');
     const geom = boxFeature.getGeometry();
-    googAsserts.assertInstanceof(geom, olGeomPolygon);
+    console.assert(geom instanceof olGeomPolygon);
     geom.setCoordinates([[evt.coordinate, b2Coordinate, originCoordinate, c2Coordinate, evt.coordinate]]);
   }
 };

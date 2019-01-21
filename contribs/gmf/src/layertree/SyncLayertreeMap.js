@@ -121,7 +121,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     layer.setVisible(active);
   } else if (!treeCtrl.node.mixed && treeCtrl.depth === 1) {
     // First level non mixed group
-    googAsserts.assertInstanceof(layer, olLayerImage);
+    console.assert(layer instanceof olLayerImage);
     const names = [];
     const styles = [];
     treeCtrl.traverseDepthFirst((treeCtrl) => {
@@ -143,7 +143,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     }
   } else {
     // WMS mixed layer
-    googAsserts.assertInstanceof(layer, olLayerImage);
+    console.assert(layer instanceof olLayerImage);
     layer.setVisible(active);
   }
 };
@@ -306,7 +306,7 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, ma
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
   console.assert(firstLevelGroup);
   const layer = /** @type {import("ol/layer/Image.js").default} */ (firstLevelGroup.layer);
-  googAsserts.assertInstanceof(layer, olLayerImage);
+  console.assert(layer instanceof olLayerImage);
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);
   if (leafNode.metadata.isChecked) {

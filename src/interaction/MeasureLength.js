@@ -58,7 +58,7 @@ MeasureLength.prototype.createDrawInteraction = function(style, source) {
  * @inheritDoc
  */
 MeasureLength.prototype.handleMeasure = function(callback) {
-  const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomLineString);
+  const geom = console.assert(this.sketchFeature.getGeometry() instanceof olGeomLineString);
   const proj = this.getMap().getView().getProjection();
   console.assert(proj);
   const output = ngeoInteractionMeasure.getFormattedLength(geom, proj, this.precision, this.format);

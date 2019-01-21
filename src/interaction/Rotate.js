@@ -169,7 +169,7 @@ Rotate.prototype.setActive = function(active) {
  */
 Rotate.prototype.addFeature_ = function(feature) {
   const geometry = feature.getGeometry();
-  googAsserts.assertInstanceof(geometry, olGeomGeometry);
+  console.assert(geometry instanceof olGeomGeometry);
 
   feature.set('angle', 0);
 

@@ -100,7 +100,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   const styleFn = this['getStyleFn'];
   if (styleFn) {
     style = styleFn();
-    googAsserts.assertInstanceof(style, olStyleStyle);
+    console.assert(style instanceof olStyleStyle);
   } else {
     style = new olStyleStyle({
       stroke: new olStyleStroke({
@@ -166,7 +166,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
  */
 Controller.prototype.$onInit = function() {
   const map = this['getMapFn']();
-  googAsserts.assertInstanceof(map, olMap);
+  console.assert(map instanceof olMap);
   this.map_ = map;
   this.map_.addInteraction(this.interaction);
 };

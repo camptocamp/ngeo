@@ -878,7 +878,7 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
   this.timeout_(() => {
     console.assert(this.attributes);
     const feature = evt.element;
-    googAsserts.assertInstanceof(feature, olFeature);
+    console.assert(feature instanceof olFeature);
     const dateFormatter = new DateFormatter();
     for (const attribute of this.attributes) {
       if (attribute.format) {

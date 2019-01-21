@@ -63,7 +63,7 @@ MeasureArea.prototype.createDrawInteraction = function(style, source) {
  * @inheritDoc
  */
 MeasureArea.prototype.handleMeasure = function(callback) {
-  const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomPolygon);
+  const geom = console.assert(this.sketchFeature.getGeometry() instanceof olGeomPolygon);
   const proj = this.getMap().getView().getProjection();
   console.assert(proj);
   const output = ngeoInteractionMeasure.getFormattedArea(geom, proj, this.precision, this.format);

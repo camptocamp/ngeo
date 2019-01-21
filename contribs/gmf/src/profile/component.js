@@ -326,7 +326,7 @@ Controller.prototype.$onInit = function() {
   const hoverPointStyleFn = this['getHoverPointStyleFn'];
   if (hoverPointStyleFn) {
     hoverPointStyle = hoverPointStyleFn();
-    googAsserts.assertInstanceof(hoverPointStyle, olStyleStyle);
+    console.assert(hoverPointStyle instanceof olStyleStyle);
   } else {
     hoverPointStyle = new olStyleStyle({
       image: new olStyleCircle({
@@ -338,7 +338,7 @@ Controller.prototype.$onInit = function() {
   this.pointHoverOverlay_.setStyle(hoverPointStyle);
 
   const linesConfiguration = this['getLinesConfigurationFn']();
-  googAsserts.assertInstanceof(linesConfiguration, Object);
+  console.assert(linesConfiguration instanceof Object);
 
   this.linesConfiguration_ = linesConfiguration;
 

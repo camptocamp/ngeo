@@ -55,7 +55,7 @@ export default class extends ngeoDatasourceGroup {
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
-    googAsserts.assertInstanceof(dataSource, ngeoDatasourceFile);
+    console.assert(dataSource instanceof ngeoDatasourceFile);
     this.registerDataSource_(dataSource);
   }
 
@@ -87,7 +87,7 @@ export default class extends ngeoDatasourceGroup {
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
-    googAsserts.assertInstanceof(dataSource, ngeoDatasourceFile);
+    console.assert(dataSource instanceof ngeoDatasourceFile);
     this.unregisterDataSource_(dataSource);
   }
 

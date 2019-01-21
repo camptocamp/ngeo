@@ -98,7 +98,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   $element.on('click', this.toggle.bind(this));
 
   const map = $scope['getDesktopMapFn']();
-  googAsserts.assertInstanceof(map, olMap);
+  console.assert(map instanceof olMap);
 
   /**
    * @type {!import("ol/Map.js").default}

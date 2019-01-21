@@ -114,7 +114,7 @@ class DataSources {
    */
   handleViewResolutionChange_(evt) {
     const view = evt.target;
-    googAsserts.assertInstanceof(view, olView);
+    console.assert(view instanceof olView);
     const resolution = view.getResolution();
     console.assert(typeof resolution == number);
     this.syncDataSourcesToResolution_(resolution);

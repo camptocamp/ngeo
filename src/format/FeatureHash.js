@@ -769,7 +769,7 @@ function getStyleProperties_(text, feature) {
  * @private
  */
 function writeLineStringGeometry_(geometry) {
-  googAsserts.assertInstanceof(geometry, olGeomLineString);
+  console.assert(geometry instanceof olGeomLineString);
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
@@ -786,7 +786,7 @@ function writeLineStringGeometry_(geometry) {
  * @private
  */
 function writeMultiLineStringGeometry_(geometry) {
-  googAsserts.assertInstanceof(geometry, olGeomMultiLineString);
+  console.assert(geometry instanceof olGeomMultiLineString);
   const ends = geometry.getEnds();
   const lineStringCount = ends.length;
   const flatCoordinates = geometry.getFlatCoordinates();
@@ -816,7 +816,7 @@ function writeMultiLineStringGeometry_(geometry) {
  * @private
  */
 function writePointGeometry_(geometry) {
-  googAsserts.assertInstanceof(geometry, olGeomPoint);
+  console.assert(geometry instanceof olGeomPoint);
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
@@ -833,7 +833,7 @@ function writePointGeometry_(geometry) {
  * @private
  */
 function writeMultiPointGeometry_(geometry) {
-  googAsserts.assertInstanceof(geometry, olGeomMultiPoint);
+  console.assert(geometry instanceof olGeomMultiPoint);
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const end = flatCoordinates.length;
@@ -877,7 +877,7 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
  * @private
  */
 function writePolygonGeometry_(geometry) {
-  googAsserts.assertInstanceof(geometry, olGeomPolygon);
+  console.assert(geometry instanceof olGeomPolygon);
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const ends = geometry.getEnds();
@@ -899,7 +899,7 @@ function writePolygonGeometry_(geometry) {
  * @private
  */
 function writeMultiPolygonGeometry_(geometry) {
-  googAsserts.assertInstanceof(geometry, olGeomMultiPolygon);
+  console.assert(geometry instanceof olGeomMultiPolygon);
   const flatCoordinates = geometry.getFlatCoordinates();
   const stride = geometry.getStride();
   const endss = geometry.getEndss();

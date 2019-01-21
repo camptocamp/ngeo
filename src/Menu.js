@@ -245,10 +245,10 @@ Menu.prototype.handleClickOut_ = function(evt) {
  */
 Menu.prototype.handleMapPointerMove_ = function(evt) {
   const target = evt.originalEvent.target;
-  googAsserts.assertInstanceof(target, Element);
+  console.assert(target instanceof Element);
 
   const element = this.getElement();
-  googAsserts.assertInstanceof(element, Element);
+  console.assert(element instanceof Element);
 
   if (element.contains(target)) {
     evt.coordinate = [Infinity, Infinity];

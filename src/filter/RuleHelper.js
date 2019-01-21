@@ -619,7 +619,7 @@ class RuleHelper {
       }
     } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
-      googAsserts.assertInstanceof(rule, ngeoRuleGeometry);
+      console.assert(rule instanceof ngeoRuleGeometry);
       const geometry = console.assert(rule.geometry);
       if (operator === rsot.CONTAINS) {
         filter = olFormatFilter.contains(

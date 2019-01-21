@@ -575,7 +575,7 @@ class RuleController {
    * @export
    */
   toggleChoiceSelection(choice) {
-    const rule = googAsserts.assertInstanceof(this.clone, ngeoRuleSelect);
+    const rule = console.assert(this.clone instanceof ngeoRuleSelect);
     const choices = rule.getExpression() ? rule.getExpression().split(',') : [];
     const idx = choices.indexOf(choice);
     if (idx > -1) {
@@ -824,7 +824,7 @@ class RuleController {
    * @export
    */
   getRuleGeometryType() {
-    const rule = googAsserts.assertInstanceof(this.rule, ngeoRuleGeometry);
+    const rule = console.assert(this.rule instanceof ngeoRuleGeometry);
     return this.ngeoFeatureHelper_.getType(rule.feature);
   }
 

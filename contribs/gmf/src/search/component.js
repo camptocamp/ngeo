@@ -932,7 +932,7 @@ class SearchController {
       this.map.getView().setCenter(suggestion['position']);
       this.leaveSearch_();
     } else {
-      googAsserts.assertInstanceof(suggestion, olFeature);
+      console.assert(suggestion instanceof olFeature);
       this.selectFromGMF_(event, suggestion, dataset);
     }
   }

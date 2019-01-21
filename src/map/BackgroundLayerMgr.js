@@ -199,7 +199,7 @@ BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
     }
 
     layers.forEach((layer) => {
-      googAsserts.assertInstanceof(layer, olLayerLayer);
+      console.assert(layer instanceof olLayerLayer);
       if (layer) {
         let hasUpdates = false;
         const updatedDimensions = {};

@@ -54,7 +54,7 @@ function directive($window) {
       const prop = attrs[attr];
 
       const map = scope.$eval(prop);
-      googAsserts.assertInstanceof(map, olMap);
+      console.assert(map instanceof olMap);
 
       map.setTarget(element[0]);
 

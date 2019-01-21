@@ -746,7 +746,7 @@ FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
   let deleted = false;
 
   const geometry = feature.getGeometry();
-  googAsserts.assertInstanceof(geometry, olGeomSimpleGeometry);
+  console.assert(geometry instanceof olGeomSimpleGeometry);
   const coordinates = geometry.getCoordinates();
 
   if (geometry instanceof olGeomLineString) {

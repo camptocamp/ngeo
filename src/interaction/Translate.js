@@ -208,7 +208,7 @@ Translate.prototype.handleFeaturesRemove_ = function(evt) {
 Translate.prototype.addFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   const geometry = feature.getGeometry();
-  googAsserts.assertInstanceof(geometry, olGeomGeometry);
+  console.assert(geometry instanceof olGeomGeometry);
 
   this.featureListenerKeys_[uid] = olEvents.listen(
     geometry,
@@ -248,7 +248,7 @@ Translate.prototype.removeFeature_ = function(feature) {
 Translate.prototype.handleGeometryChange_ = function(feature,
   evt) {
   const geometry = evt.target;
-  googAsserts.assertInstanceof(geometry, olGeomGeometry);
+  console.assert(geometry instanceof olGeomGeometry);
 
   const point = this.getGeometryCenterPoint_(geometry);
   const uid = olUtilGetUid(feature);
