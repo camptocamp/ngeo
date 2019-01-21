@@ -5,7 +5,7 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  * Provides a service for managing the application state.
  * The application state is written to both the URL and the local storage.
  * @constructor
- * @param {!import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
+ * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @param {!Array.<!RegExp>} ngeoUsedKeyRegexp regexp used to identify the used keys.
  * @ngInject
  */
@@ -18,7 +18,7 @@ function Service(ngeoLocation, ngeoUsedKeyRegexp) {
   this.initialState = {};
 
   /**
-   * @type {!import("ngeo/statemanager/Location.js").default}
+   * @type {!import("ngeo/statemanager/Location.js").StatemanagerLocation}
    */
   this.ngeoLocation = ngeoLocation;
 
