@@ -127,7 +127,7 @@ function FeatureHelper($injector, $filter) {
     const filterElements = $injector.get('ngeoPointfilter').split(':');
     const filterName = filterElements.shift();
     const filter = this.$filter_(filterName);
-    console.assert(typeof filter == function);
+    console.assert(typeof filter == 'function');
     this.pointFilterFn_ = filter;
     this.pointFilterArgs_ = filterElements;
   } else {

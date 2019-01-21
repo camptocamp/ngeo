@@ -162,7 +162,7 @@ Controller.prototype.initOlControl_ = function() {
   const formatFn = function(coordinates) {
     const filterAndArgs = this.projection.filter.split(':');
     const filter = this.$filter_(filterAndArgs.shift());
-    console.assert(typeof filter == function);
+    console.assert(typeof filter == 'function');
     const args = filterAndArgs;
     args.unshift(coordinates);
     return filter.apply(this, args);
