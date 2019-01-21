@@ -11,6 +11,7 @@
       "paths": {
         "ngeo/*": ["src/*"],
         "gmf/*": ["contribs/gmf/src/*"],
+        "goog/*": ["src/goog.asserts.js"],
         // "ol/*": ["node_modules/ol/*"],
         // Temporary, run that to use it:
         // npm install --prefix openlayers_src https://api.github.com/repos/openlayers/openlayers/tarball/v5.3.0
