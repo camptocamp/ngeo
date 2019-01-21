@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -118,7 +117,7 @@ DrawRegularPolygonFromClick.prototype.setMap = function(map) {
  */
 DrawRegularPolygonFromClick.prototype.enable_ = function() {
   const map = this.getMap();
-  googAsserts.assert(map, 'Map should be set.');
+  console.assert(map, 'Map should be set.');
   this.listenerKeys_.push(
     olEvents.listen(map, 'click', this.handleMapClick_, this)
   );
@@ -131,7 +130,7 @@ DrawRegularPolygonFromClick.prototype.enable_ = function() {
  */
 DrawRegularPolygonFromClick.prototype.disable_ = function() {
   const map = this.getMap();
-  googAsserts.assert(map, 'Map should be set.');
+  console.assert(map, 'Map should be set.');
   this.listenerKeys_.forEach(olEvents.unlistenByKey);
   this.listenerKeys_.length = 0;
 };

@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
@@ -197,7 +196,7 @@ class Querent {
       queryableDataSources = options.queryableDataSources;
     } else {
       const dataSources = options.dataSources;
-      googAsserts.assert(dataSources, 'DataSources should be set');
+      console.assert(dataSources, 'DataSources should be set');
       queryableDataSources = this.getQueryableDataSources(dataSources, map);
     }
 
@@ -241,7 +240,7 @@ class Querent {
       wfs: [],
       wms: []
     };
-    const resolution = googAsserts.assertNumber(map.getView().getResolution());
+    const resolution = map.getView().getResolution();
 
     for (const dataSource of dataSources) {
 
@@ -270,7 +269,7 @@ class Querent {
    */
   wfsDescribeFeatureType(dataSource) {
 
-    googAsserts.assert(
+    console.assert(
       dataSource.supportsAttributes,
       `The data source must support WFS, have a single OGCLayer that
       is queryable in order to issue WFS DescribeFeatureType requests`
@@ -278,7 +277,7 @@ class Querent {
 
     const ogcLayerNames = dataSource.getOGCLayerNames();
 
-    const url = olUriAppendParams(googAsserts.assertString(dataSource.wfsUrl), {
+    const url = olUriAppendParams(dataSource.wfsUrl, {
       'REQUEST': 'DescribeFeatureType',
       'SERVICE': 'WFS',
       'VERSION': '2.0.0',
@@ -347,7 +346,7 @@ class Querent {
       promise = this.wmsGetCapabilitiesPromises_[baseUrl];
     }
 
-    googAsserts.assert(promise);
+    console.assert(promise);
 
     if (cache && !this.wmsGetCapabilitiesPromises_[baseUrl]) {
       this.wmsGetCapabilitiesPromises_[baseUrl] = promise;
@@ -396,7 +395,7 @@ class Querent {
       promise = this.wmtsGetCapabilitiesPromises_[url];
     }
 
-    googAsserts.assert(promise);
+    console.assert(promise);
 
     if (cache && !this.wmtsGetCapabilitiesPromises_[url]) {
       this.wmtsGetCapabilitiesPromises_[url] = promise;
@@ -559,11 +558,11 @@ class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const maxFeatures = googAsserts.assertNumber(options.limit);
+    const maxFeatures = options.limit;
 
     const map = options.map;
     const view = map.getView();
-    const resolution = googAsserts.assertNumber(view.getResolution());
+    const resolution = view.getResolution();
     const projection = view.getProjection();
     const srsName = projection.getCode();
     const wfsCount = options.wfsCount === true;
@@ -573,7 +572,7 @@ class Querent {
     const coordinate = options.coordinate;
     if (coordinate) {
       const tolerancePx = options.tolerancePx;
-      googAsserts.assert(tolerancePx);
+      console.assert(tolerancePx);
       const tolerance = tolerancePx * resolution;
       bbox = olExtent.buffer(
         olExtent.createOrUpdateFromCoordinate(coordinate),
@@ -637,7 +636,7 @@ class Querent {
             dataSource.timeRangeValue ||
             (dataSource.dimensionsFiltersConfig && Object.keys(dataSource.dimensionsFiltersConfig).length > 0)) {
 
-          googAsserts.assert(
+          console.assert(
             dataSources.length === 1,
             `A data source having filterRules or timeRangeValue should issue
             a single query, alone.`
@@ -656,9 +655,9 @@ class Querent {
         }
       }
 
-      googAsserts.assert(getFeatureCommonOptions);
+      console.assert(getFeatureCommonOptions);
       getFeatureCommonOptions.featureTypes = featureTypes;
-      googAsserts.assert(url);
+      console.assert(url);
 
       // (4) Build query then launch
       //
@@ -728,7 +727,7 @@ class Querent {
             getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(
             featureRequestXml);
-          googAsserts.assertString(url);
+          console.assert(typeof url == 'string');
           const canceler = this.registerCanceler_();
           this.http_.post(
             url,
@@ -767,17 +766,17 @@ class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const FEATURE_COUNT = googAsserts.assertNumber(options.limit);
+    const FEATURE_COUNT = options.limit;
 
     const map = options.map;
     const view = map.getView();
-    const resolution = googAsserts.assertNumber(view.getResolution());
+    const resolution = view.getResolution();
     const projection = view.getProjection();
     const projCode = projection.getCode();
 
     // (1) Coordinate, which is required to issue WMS GetFeatureInfo requests
     const coordinate = options.coordinate;
-    googAsserts.assert(coordinate);
+    console.assert(coordinate);
 
     // (2) Launch one request per combinaison of data sources
     for (const dataSources of combinedDataSources) {
@@ -817,7 +816,7 @@ class Querent {
         //     then it is expected that one request will be sent for this
         //     data source only.
         if (dataSource.filterRules && dataSource.filterRules.length) {
-          googAsserts.assert(dataSources.length === 1);
+          console.assert(dataSources.length === 1);
           filtrableLayerName = dataSource.getFiltrableOGCLayerName();
           filterString = this.ngeoRuleHelper_.createFilterString({
             dataSource: dataSource,
@@ -829,7 +828,7 @@ class Querent {
         //     If that's the case, then it is expected that one request will be
         //     sent for this data source only.
         if (dataSource.timeRangeValue !== null && dataSource.timeProperty) {
-          googAsserts.assert(dataSources.length === 1);
+          console.assert(dataSources.length === 1);
           params['TIME'] = this.ngeoWMSTime_.formatWMSTimeParam(
             dataSource.timeProperty,
             dataSource.timeRangeValue
@@ -864,21 +863,19 @@ class Querent {
         params['FILTER'] = filterParamValue;
       }
 
-      googAsserts.assert(url);
+      console.assert(url);
       const wmsSource = new olSourceImageWMS({
         params,
         url
       });
 
       // (4) Build query url, then launch
-      const wmsGetFeatureInfoUrl = googAsserts.assertString(
-        wmsSource.getGetFeatureInfoUrl(
-          coordinate, resolution, projCode, {
-            // Without extern, quoting is necessary
-            'FEATURE_COUNT': FEATURE_COUNT,
-            'INFO_FORMAT': INFO_FORMAT
-          }
-        )
+      const wmsGetFeatureInfoUrl = wmsSource.getGetFeatureInfoUrl(
+        coordinate, resolution, projCode, {
+          // Without extern, quoting is necessary
+          'FEATURE_COUNT': FEATURE_COUNT,
+          'INFO_FORMAT': INFO_FORMAT
+        }
       );
 
       const canceler = this.registerCanceler_();

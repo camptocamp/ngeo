@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import * as olEasing from 'ol/easing.js';
@@ -101,7 +100,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   $element.on('click', this.toggleTracking.bind(this));
 
   const map = $scope['getMobileMapFn']();
-  googAsserts.assertInstanceof(map, olMap);
+  console.assert(map instanceof olMap);
 
   /**
    * @type {!angular.IScope}
@@ -116,7 +115,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.map_ = map;
 
   const options = $scope['getMobileGeolocationOptionsFn']() || {};
-  googAsserts.assertObject(options);
+  console.assert(options);
 
   /**
    * @type {import("ngeo/message/Notification.js").default}
@@ -240,7 +239,7 @@ Controller.prototype.toggleTracking = function() {
       this.$scope_.$emit(GeolocationEventType.ERROR, null);
       return;
     }
-    googAsserts.assert(currentPosition !== undefined);
+    console.assert(currentPosition !== undefined);
     // stop tracking if the position is close to the center of the map.
     const center = this.map_.getView().getCenter();
     const diff = Math.abs(currentPosition[0] - center[0]) + Math.abs(currentPosition[1] - center[1]);

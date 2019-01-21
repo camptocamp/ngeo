@@ -4,7 +4,6 @@ import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
@@ -265,7 +264,7 @@ class Manager {
         // Create a DataSources for each theme
         for (const theme of themes) {
           for (const child of theme.children) {
-            googAsserts.assert(child);
+            console.assert(child);
             this.createDataSource_(child, child, ogcServers);
           }
         }
@@ -399,7 +398,7 @@ class Manager {
     //     group node itself is **skipped**.
     if (children) {
       for (const child of children) {
-        googAsserts.assert(child);
+        console.assert(child);
         this.createDataSource_(firstLevelGroup, child, ogcServers);
       }
       return;
@@ -475,7 +474,7 @@ class Manager {
       // OGC Server
       const ogcServerName = (!firstLevelGroup || firstLevelGroup.mixed) ?
         gmfLayerWMS.ogcServer : firstLevelGroup.ogcServer;
-      googAsserts.assert(ogcServerName);
+      console.assert(ogcServerName);
       ogcServer = ogcServers[ogcServerName];
       ogcImageType = ogcServer.imageType;
 
@@ -578,7 +577,7 @@ class Manager {
 
     const id = olUtilGetUid(treeCtrl.node);
     const dataSource = this.dataSourcesCache_[id];
-    googAsserts.assert(dataSource, 'DataSource should be set');
+    console.assert(dataSource, 'DataSource should be set');
     treeCtrl.setDataSource(dataSource);
 
     const stateWatcherUnregister = this.rootScope_.$watch(
@@ -614,10 +613,7 @@ class Manager {
         );
       }
 
-      wmsLayer = googAsserts.assertInstanceof(
-        gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl),
-        olLayerImage
-      );
+      wmsLayer = gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
     }
 
     this.treeCtrlCache_[id] = {
@@ -646,7 +642,7 @@ class Manager {
 
     // (1) Remove data source
     const dataSource = item.treeCtrl.getDataSource();
-    googAsserts.assert(dataSource, 'DataSource should be set');
+    console.assert(dataSource, 'DataSource should be set');
     this.dataSources_.remove(dataSource);
 
     // (2) Remove item and clear event listeners
@@ -689,7 +685,7 @@ class Manager {
    */
   handleTreeCtrlStateChange_(treeCtrl, newVal) {
     const treeDataSource = treeCtrl.getDataSource();
-    googAsserts.assert(treeDataSource, 'DataSource should be set');
+    console.assert(treeDataSource, 'DataSource should be set');
     const visible = newVal === 'on';
     treeDataSource.visible = visible;
 
@@ -744,7 +740,7 @@ class Manager {
    * @private
    */
   updateLayerFilter_(layer) {
-    googAsserts.assert(
+    console.assert(
       layer instanceof olLayerImage ||
       layer instanceof olLayerTile
     );
@@ -758,7 +754,7 @@ class Manager {
     const params = source.getParams();
     const layersParam = params['LAYERS'];
     const layersList = layersParam.split(',');
-    googAsserts.assert(layersList.length >= 1);
+    console.assert(layersList.length >= 1);
 
     const filterParam = 'FILTER';
     const filterParamValues = [];
@@ -778,7 +774,7 @@ class Manager {
 
           const id = olUtilGetUid(dataSource.gmfLayer);
           const item = this.treeCtrlCache_[id];
-          googAsserts.assert(item);
+          console.assert(item);
           const treeCtrl = item.treeCtrl;
           const projCode = treeCtrl.map.getView().getProjection().getCode();
 
@@ -847,14 +843,11 @@ class Manager {
 
     const id = olUtilGetUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
-    googAsserts.assert(item);
-    const wmsLayer = googAsserts.assert(item.wmsLayer);
-    const wmsSource = googAsserts.assertInstanceof(
-      wmsLayer.getSource(),
-      olSourceImageWMS
-    );
+    console.assert(item);
+    const wmsLayer = item.wmsLayer;
+    const wmsSource = wmsLayer.getSource();
 
-    const timeProperty = googAsserts.assert(dataSource.timeProperty);
+    const timeProperty = dataSource.timeProperty;
     let timeParam;
     const range = dataSource.timeRangeValue;
     if (range) {

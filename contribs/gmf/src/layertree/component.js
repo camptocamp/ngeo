@@ -9,7 +9,6 @@ import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGr
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
@@ -213,7 +212,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.gmfTreeManager_ = gmfTreeManager;
 
   const root = gmfTreeManager.root;
-  googAsserts.assert(root);
+  console.assert(root);
 
   /**
    * @type {!gmfThemes.GmfRootNode}
@@ -306,7 +305,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
   treeCtrl.traverseDepthFirst((ctrl) => {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
-      googAsserts.assertInstanceof(layer, olLayerLayer);
+      console.assert(layer instanceof olLayerLayer);
       this.updateLayerDimensions_(layer, /** @type gmfThemes.GmfGroup|gmfThemes.GmfLayer */ (ctrl.node));
     }
   });
@@ -340,7 +339,7 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
       } else {
         // the source is not ready yet
         layer.once('change:source', () => {
-          googAsserts.assertInstanceof(layer, olLayerLayer);
+          console.assert(layer instanceof olLayerLayer);
           this.updateLayerDimensions_(layer, node);
         });
       }
@@ -448,7 +447,7 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
   }
   const dataSource = layertreeCtrl.getDataSource();
   if (dataSource) {
-    googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
+    console.assert(dataSource instanceof ngeoDatasourceOGC);
     dataSource.timeRangeValue = time;
   } else if (layertreeCtrl.children) {
     for (let i = 0, ii = layertreeCtrl.children.length; i < ii; i++) {
@@ -523,7 +522,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
 
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
-    googAsserts.assertInstanceof(layer, olLayerTile);
+    console.assert(layer instanceof olLayerTile);
     const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);
     legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
     return wmtsLegendURL ? legendsObject : null;

@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
 
@@ -54,7 +53,7 @@ function directive($window) {
       const prop = attrs[attr];
 
       const map = scope.$eval(prop);
-      googAsserts.assertInstanceof(map, olMap);
+      console.assert(map instanceof olMap);
 
       map.setTarget(element[0]);
 

@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {
   getUid as olUtilGetUid,
@@ -129,7 +128,7 @@ BackgroundLayerMgr.prototype.set = function(map, layer) {
   const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
 
   if (previous !== null) {
-    googAsserts.assert(mapUid in this.mapUids_);
+    console.assert(mapUid in this.mapUids_);
     if (layer !== null) {
       bgGroup.getLayers().setAt(0, layer);
     } else {
@@ -199,7 +198,7 @@ BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
     }
 
     layers.forEach((layer) => {
-      googAsserts.assertInstanceof(layer, olLayerLayer);
+      console.assert(layer instanceof olLayerLayer);
       if (layer) {
         let hasUpdates = false;
         const updatedDimensions = {};

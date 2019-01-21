@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
 
@@ -283,7 +282,7 @@ Controller.prototype.$onInit = function() {
   featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
-    googAsserts.assertInstanceof(featuresStyle, olStyleStyle);
+    console.assert(featuresStyle instanceof olStyleStyle);
     featuresOverlay.setStyle(featuresStyle);
   }
 
@@ -291,7 +290,7 @@ Controller.prototype.$onInit = function() {
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
-    googAsserts.assertInstanceof(highlightFeatureStyle, olStyleStyle);
+    console.assert(highlightFeatureStyle instanceof olStyleStyle);
   } else {
     const fill = new olStyleFill({color: [255, 0, 0, 0.6]});
     const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
@@ -430,7 +429,7 @@ Controller.prototype.updateQueryResult_ = function(queryResult) {
   for (let i = 0; i < queryResult.sources.length; i++) {
     const source = queryResult.sources[i];
     source.features = source.features.filter((feature) => {
-      googAsserts.assert(feature);
+      console.assert(feature);
       return !olObj.isEmpty(getFilteredFeatureValues(feature));
     });
     this.ngeoQueryResult.sources.push(source);

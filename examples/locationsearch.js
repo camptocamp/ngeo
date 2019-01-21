@@ -1,6 +1,5 @@
 import './locationsearch.css';
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoSearchModule from 'ngeo/search/module.js';
@@ -106,7 +105,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  */
 SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');
-  googAsserts.assert(epsg3857 !== null);
+  console.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
     targetProjection: epsg3857,
     limit: limit,
@@ -134,7 +133,7 @@ function select_(event, suggestion, dataset) {
   const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
   const bbox = /** @type {import("ol/extent.js").Extent} */ (feature.get('bbox'));
   const size = this.map.getSize();
-  googAsserts.assert(size !== undefined);
+  console.assert(size !== undefined);
   const maxZoom = 16;
   this.map.getView().fit(bbox, {size, maxZoom});
 }

@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
@@ -98,7 +97,7 @@ class Helper {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getOGCLayerNames()[0];
-        googAsserts.assertString(ogcLayerName, 'The data source should have only one ogcLayer.');
+        console.assert(typeof ogcLayerName, 'The data source should have only one ogcLayer.' == 'string');
         for (const element of featureType.element) {
           if (element.name === ogcLayerName) {
             for (const type of featureType.complexType) {
@@ -128,8 +127,7 @@ class Helper {
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = googAsserts.assertInstanceof(
-      evt.element, ngeoDatasourceDataSource);
+    const dataSource = evt.element instanceof ngeoDatasourceDataSource;
     this.cache_[dataSource.id] = dataSource;
   }
 
@@ -140,8 +138,7 @@ class Helper {
    * @private
    */
   handleDataSourcesRemove_(evt) {
-    const dataSource = googAsserts.assertInstanceof(
-      evt.element, ngeoDatasourceDataSource);
+    const dataSource = evt.element;
     delete this.cache_[dataSource.id];
   }
 

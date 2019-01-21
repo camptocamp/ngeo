@@ -3,7 +3,6 @@
 
 import angular from 'angular';
 import {EXTERNALLAYERGROUP_NAME} from 'gmf/index.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscFile from 'ngeo/misc/File.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -278,7 +277,7 @@ class ExternalDatSourcesManager {
    */
   get layerGroup() {
     const map = this.map_;
-    googAsserts.assert(map);
+    console.assert(map);
     return this.ngeoLayerHelper_.getGroupFromMap(
       map,
       EXTERNALLAYERGROUP_NAME
@@ -410,8 +409,8 @@ class ExternalDatSourcesManager {
       dataSource = this.extDataSources_[id];
     } else {
 
-      const name = googAsserts.assertString(layer['Title']);
-      const wmtsLayer = googAsserts.assertString(layer['Identifier']);
+      const name = typeof layer['Title'];
+      const wmtsLayer = typeof layer['Identifier'];
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
@@ -619,7 +618,7 @@ class ExternalDatSourcesManager {
     if (dataSource.ogcType === Type.WMS) {
       // WMS data source
       const url = dataSource.wmsUrl;
-      googAsserts.assert(url);
+      console.assert(url);
 
       const wmsGroup = this.getWMSGroup(url);
       if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
@@ -637,7 +636,7 @@ class ExternalDatSourcesManager {
     } else if (dataSource.ogcType === Type.WMTS) {
       // WMTS data source
       const url = dataSource.wmtsUrl;
-      googAsserts.assert(url);
+      console.assert(url);
 
       const wmtsGroup = this.getWMTSGroup(url);
       if (wmtsGroup && wmtsGroup.dataSources.includes(dataSource)) {

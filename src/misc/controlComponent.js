@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import olMap from 'ol/Map.js';
 import olControlControl from 'ol/control/Control.js';
 
@@ -43,11 +42,11 @@ function component() {
 
       const control = /** @type {import("ol/control/Contrimport("ol/js.js").default").default} */
               (scope.$eval(attrs['ngeoControl']));
-      googAsserts.assertInstanceof(control, olControlControl);
+      console.assert(control instanceof olControlControl);
 
       const map = /** @type {import("ol/Map.js").default} */
               (scope.$eval(attrs['ngeoControlMap']));
-      googAsserts.assertInstanceof(map, olMap);
+      console.assert(map instanceof olMap);
 
       control.setTarget(element[0]);
       map.addControl(control);

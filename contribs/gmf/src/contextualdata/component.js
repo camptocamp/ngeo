@@ -1,6 +1,5 @@
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import googAsserts from 'goog/asserts.js';
 import olOverlay from 'ol/Overlay.js';
 import * as olProj from 'ol/proj.js';
 import * as olEvents from 'ol/events.js';
@@ -145,7 +144,7 @@ Controller.prototype.init = function() {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
-  googAsserts.assertElement(mapDiv);
+  console.assert(mapDiv);
 
   olEvents.listen(mapDiv, 'contextmenu',
     this.handleMapContextMenu_, this);

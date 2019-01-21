@@ -4,7 +4,6 @@
 import angular from 'angular';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
-import googAsserts from 'goog/asserts.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoMenu from 'ngeo/Menu.js';
 
@@ -534,7 +533,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function(
   active) {
 
   const mapDiv = this.map.getViewport();
-  googAsserts.assertElement(mapDiv);
+  console.assert(mapDiv);
 
   if (active) {
     olEvents.listen(this.map, 'click',
@@ -723,7 +722,7 @@ Controller.prototype.handleMenuActionClick_ = function(vertexInfo, evt) {
 
   switch (action) {
     case 'delete':
-      googAsserts.assert(
+      console.assert(
         this.selectedFeature, 'Selected feature should be truthy');
       if (vertexInfo) {
         this.featureHelper_.removeVertex(this.selectedFeature, vertexInfo);

@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olExtent from 'ol/extent.js';
 import {equalTo, and, or} from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';
@@ -176,7 +175,7 @@ export function WfsPermalinkService(
    */
   this.wfsTypes_ = {};
 
-  googAsserts.assertArray(options.wfsTypes, 'wfsTypes is not correctly set');
+  console.assert(Array.isArray(options.wfsTypes, 'wfsTypes is not correctly set'));
   options.wfsTypes.forEach((wfsType) => {
     this.wfsTypes_[wfsType.featureType] = wfsType;
   });
@@ -231,7 +230,7 @@ WfsPermalinkService.prototype.clear = function() {
  * @export
  */
 WfsPermalinkService.prototype.issue = function(queryData, map) {
-  googAsserts.assert(this.url_,
+  console.assert(this.url_,
     'url is not set. to use the wfs permalink service, ' +
       'set the value `ngeoWfsPermalinkOptions`');
   this.clearResult_();
@@ -380,7 +379,7 @@ WfsPermalinkService.joinFilters_ = function(filters, joinFn) {
     if (combinedFilters === null) {
       return currentFilter;
     } else {
-      googAsserts.assert(currentFilter !== null);
+      console.assert(currentFilter !== null);
       return joinFn(combinedFilters, currentFilter);
     }
   }, null);

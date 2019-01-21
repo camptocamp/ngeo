@@ -3,7 +3,6 @@ import gmfBase from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection.js';
 
@@ -814,7 +813,7 @@ class SearchController {
    * @private
    */
   getSearchStyle_(feature, resolution) {
-    googAsserts.assert(feature);
+    console.assert(feature);
     const style = this.styles_[feature.get('layer_name')] || this.styles_['default'];
     if (this.color) {
       const color = olColor.asArray(this.color);
@@ -932,7 +931,7 @@ class SearchController {
       this.map.getView().setCenter(suggestion['position']);
       this.leaveSearch_();
     } else {
-      googAsserts.assertInstanceof(suggestion, olFeature);
+      console.assert(suggestion instanceof olFeature);
       this.selectFromGMF_(event, suggestion, dataset);
     }
   }

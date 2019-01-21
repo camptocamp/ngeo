@@ -9,7 +9,6 @@ import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLa
 
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent.js';
 
-import googAsserts from 'goog/asserts.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
@@ -222,10 +221,10 @@ class Controller {
          * @return {Array.<string>} List of datum tokenizers.
          */
         datumTokenizer: (datum) => {
-          googAsserts.assertString(datum);
+          console.assert(typeof datum == 'string');
           const originalDatumTokenizers = Bloodhound.tokenizers.whitespace(
             datum);
-          googAsserts.assert(originalDatumTokenizers);
+          console.assert(originalDatumTokenizers);
           const datumTokenizers = [];
           for (const originalDatumTokenizer of originalDatumTokenizers) {
             let i = 0;
@@ -266,7 +265,7 @@ class Controller {
       // Timeout to let Angular render the placeholder of the input properly,
       // otherwise typeahead would copy the string with {{}} in it...
       this.timeout_(() => {
-        googAsserts.assert(this.serversEngine_);
+        console.assert(this.serversEngine_);
         const $urlInput = this.element_.find('input[name=url]');
         const $connectBtn = this.element_.find('button.gmf-importdatasource-connect-btn');
         $urlInput.typeahead({
@@ -301,7 +300,7 @@ class Controller {
    * @export
    */
   connect() {
-    const url = googAsserts.assertString(this.url);
+    const url = this.url;
     const serviceType = guessServiceTypeByUrl(url);
 
     this.startWorking_();
@@ -340,7 +339,7 @@ class Controller {
    * @export
    */
   load() {
-    const file = googAsserts.assert(this.file);
+    const file = this.file;
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file, (success) => {
       if (!success) {
         this.hasError = true;

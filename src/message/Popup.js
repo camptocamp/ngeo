@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 /**
  * This goog.require is needed because of 'ngeo-popup' used in
@@ -248,7 +247,7 @@ Popup.prototype.open = function(options) {
   } else if (options.content) {
     this.setContent(options.content);
   } else {
-    googAsserts.fail('ngeo.message.Popup options requirest "url" or "content".');
+    console.assert(false, 'ngeo.message.Popup options requirest "url" or "content".');
   }
 
   if (options.autoDestroy !== undefined) {

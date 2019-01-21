@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 
@@ -233,7 +232,7 @@ class FilterController {
     );
 
     // (1) Separate the attributes in 2: geometry and the others.
-    const attributes = googAsserts.assert(this.datasource.attributes);
+    const attributes = this.datasource.attributes;
     for (const attribute of attributes) {
       if (attribute.type === ngeoFormatAttributeType.GEOMETRY) {
         this.geometryAttributes.push(attribute);
@@ -319,7 +318,7 @@ class FilterController {
       filterRules: filterRules,
       srsName: projCode
     });
-    googAsserts.assert(filter);
+    console.assert(filter);
 
     this.ngeoMapQuerent_.issue({
       dataSources: [dataSource],
@@ -414,7 +413,7 @@ class FilterController {
   unregisterRule_(rule) {
     const uid = olUtilGetUid(rule);
     const unlistener = this.ruleUnlisteners_[uid];
-    googAsserts.assert(unlistener);
+    console.assert(unlistener);
     unlistener();
     delete this.ruleUnlisteners_[uid];
 

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
@@ -33,7 +32,7 @@ import olStructsRBush from 'ol/structs/RBush.js';
  */
 function ModifyCircle(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   olInteractionPointer.call(this, {
     handleDownEvent: handleDownEvent_,
@@ -209,8 +208,7 @@ ModifyCircle.prototype.setMap = function(map) {
  */
 ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
-  googAsserts.assertInstanceof(feature, olFeature,
-    'feature should be an ol.Feature');
+  console.assert(feature instanceof olFeature, 'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 

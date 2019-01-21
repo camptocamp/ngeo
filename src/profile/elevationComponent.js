@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation.js';
@@ -81,7 +80,7 @@ function directive(ngeoDebounce) {
     link: (scope, element, attrs) => {
 
       const optionsAttr = attrs['ngeoProfileOptions'];
-      googAsserts.assert(optionsAttr !== undefined);
+      console.assert(optionsAttr !== undefined);
 
       const selection = d3select(element[0]);
       let profile, elevationData, poiData;

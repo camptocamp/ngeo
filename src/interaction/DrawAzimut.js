@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -175,7 +174,7 @@ DrawAzimut.prototype.createOrUpdateSketchPoint_ = function(event) {
     this.updateSketchFeatures_();
   } else {
     const sketchPointGeom = this.sketchPoint_.getGeometry();
-    googAsserts.assertInstanceof(sketchPointGeom, olGeomPoint);
+    console.assert(sketchPointGeom instanceof olGeomPoint);
     sketchPointGeom.setCoordinates(coordinates);
   }
 };
@@ -210,7 +209,7 @@ DrawAzimut.prototype.startDrawing_ = function(event) {
   const line = new olGeomLineString([start.slice(), start.slice()]);
   const circle = new olGeomCircle(start, 0);
   const geometry = new olGeomGeometryCollection([line, circle]);
-  googAsserts.assert(geometry !== undefined);
+  console.assert(geometry !== undefined);
   this.sketchFeature_ = new olFeature();
   this.sketchFeature_.setGeometry(geometry);
   this.updateSketchFeatures_();
@@ -227,21 +226,20 @@ DrawAzimut.prototype.startDrawing_ = function(event) {
  */
 DrawAzimut.prototype.modifyDrawing_ = function(event) {
   const coordinate = event.coordinate;
-  const geometry = googAsserts.assertInstanceof(
-    this.sketchFeature_.getGeometry(), olGeomGeometryCollection);
+  const geometry = this.sketchFeature_.getGeometry();
   const geometries = geometry.getGeometriesArray();
   const line = geometries[0];
-  googAsserts.assertInstanceof(line, olGeomLineString);
+  console.assert(line instanceof olGeomLineString);
   const coordinates = line.getCoordinates();
   const sketchPointGeom = this.sketchPoint_.getGeometry();
-  googAsserts.assertInstanceof(sketchPointGeom, olGeomPoint);
+  console.assert(sketchPointGeom instanceof olGeomPoint);
   sketchPointGeom.setCoordinates(coordinate);
   const last = coordinates[coordinates.length - 1];
   last[0] = coordinate[0];
   last[1] = coordinate[1];
-  googAsserts.assertInstanceof(line, olGeomLineString);
+  console.assert(line instanceof olGeomLineString);
   line.setCoordinates(coordinates);
-  const circle = googAsserts.assertInstanceof(geometries[1], olGeomCircle);
+  const circle = geometries[1];
   circle.setRadius(line.getLength());
   this.updateSketchFeatures_();
 };
@@ -289,7 +287,7 @@ DrawAzimut.prototype.updateState_ = function() {
  */
 DrawAzimut.prototype.finishDrawing_ = function() {
   const sketchFeature = this.abortDrawing_();
-  googAsserts.assert(sketchFeature !== null);
+  console.assert(sketchFeature !== null);
 
   if (this.source_ !== null) {
     this.source_.addFeature(sketchFeature);

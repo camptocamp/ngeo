@@ -1,6 +1,5 @@
 /**
  */
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import * as olArray from 'ol/array.js';
@@ -74,11 +73,11 @@ export default class extends ngeoDatasourceOGCGroup {
    * @private
    */
   init_() {
-    googAsserts.assert(
+    console.assert(
       this.dataSources.length, 'At least one data source is required.');
 
     for (const dataSource of this.dataSources) {
-      googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
+      console.assert(dataSource instanceof ngeoDatasourceOGC);
       this.registerDataSource_(dataSource);
     }
   }
@@ -88,7 +87,7 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   destroy() {
     for (const dataSource of this.dataSources) {
-      googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
+      console.assert(dataSource instanceof ngeoDatasourceOGC);
       this.unregisterDataSource_(dataSource);
     }
     super.destroy();
@@ -117,7 +116,7 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
-    googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
+    console.assert(dataSource instanceof ngeoDatasourceOGC);
     this.registerDataSource_(dataSource);
   }
 
@@ -164,7 +163,7 @@ export default class extends ngeoDatasourceOGCGroup {
 
     // (1) Collect layer names from data sources in the group
     for (const dataSource of this.dataSources) {
-      googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
+      console.assert(dataSource instanceof ngeoDatasourceOGC);
       if (dataSource.visible) {
         layerNames = layerNames.concat(dataSource.getOGCLayerNames());
       }
@@ -179,7 +178,7 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
-    googAsserts.assertInstanceof(dataSource, ngeoDatasourceOGC);
+    console.assert(dataSource instanceof ngeoDatasourceOGC);
     this.unregisterDataSource_(dataSource);
   }
 

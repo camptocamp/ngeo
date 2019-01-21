@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
@@ -19,7 +18,7 @@ import olSourceTile from 'ol/source/Tile.js';
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to decorate.
  */
 export function interaction(interaction) {
-  googAsserts.assertInstanceof(interaction, olInteractionInteraction);
+  console.assert(interaction instanceof olInteractionInteraction);
 
   Object.defineProperty(interaction, 'active', {
     get: () => interaction.getActive(),
@@ -42,7 +41,7 @@ export function interaction(interaction) {
  * @param {import("ol/layer/Base.js").default} layer Layer to decorate.
  */
 export function layer(layer) {
-  googAsserts.assertInstanceof(layer, olLayerBase);
+  console.assert(layer instanceof olLayerBase);
 
   Object.defineProperty(layer, 'visible', {
     configurable: true,
@@ -133,7 +132,7 @@ export function layerLoading(layer, $scope) {
       incrementEvents = ['imageloadstart'];
       decrementEvents = ['imageloadend', 'imageloaderror'];
     } else {
-      googAsserts.fail('unsupported source type');
+      console.assert(false, 'unsupported source type');
     }
 
     source.on(incrementEvents, () => {

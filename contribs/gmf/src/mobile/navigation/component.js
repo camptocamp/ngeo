@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 const module = angular.module('gmfMobileNav', []);
 
 
@@ -139,7 +138,7 @@ Controller.prototype.init = function(element) {
 
     // the element to slide out is the div.slide parent
     const slideOut = $(evt.currentTarget).parents(`.${CLASS_NAMES.SLIDE}`);
-    googAsserts.assert(slideOut.length === 1);
+    console.assert(slideOut.length === 1);
 
     // push the item to the selected stack
     this.slid_.push(slideOut);
@@ -149,7 +148,7 @@ Controller.prototype.init = function(element) {
 
     // element to slide in
     const slideIn = $($(evt.currentTarget).attr('data-target'));
-    googAsserts.assert(slideIn.length === 1);
+    console.assert(slideIn.length === 1);
 
     // slide the "new" element in
     slideIn.addClass(CLASS_NAMES.ACTIVE);

@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 
 class SavedFilter {
@@ -121,7 +120,7 @@ class SavedFilter {
   loadItemsFromLocalStorage_() {
     if (window.localStorage[this.localStorageKey_]) {
       const items = JSON.parse(window.localStorage[this.localStorageKey_]);
-      googAsserts.assertArray(items);
+      console.assert(Array.isArray(items));
       this.items_ = items;
     }
   }

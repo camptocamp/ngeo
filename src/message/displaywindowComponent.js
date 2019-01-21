@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import 'ngeo/sass/font.scss';
 import 'jquery-ui/ui/widgets/resizable.js';
@@ -218,7 +217,7 @@ class Controller {
    *  @private
    */
   updateContentTemplate_() {
-    const scope = googAsserts.assert(this.contentScope || this.scope_);
+    const scope = this.contentScope || this.scope_;
     const compiled = this.compile_(this.contentTemplate)(scope);
     const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container .content-template-container');
     displayWindow.empty();

@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
 
 import 'angular-ui-date';
@@ -230,11 +229,11 @@ Controller.prototype.init = function() {
   this.isModeRange = this.time.mode === 'range';
 
   if (this.isModeRange) {
-    googAsserts.assertArray(initialOptions_.values);
+    console.assert(Array.isArray(initialOptions_.values));
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values[0]);
     this.edate = this.ngeoTime_.createDate(initialOptions_.values[1]);
   } else {
-    googAsserts.assertNumber(initialOptions_.values);
+    console.assert(typeof initialOptions_.values == 'number');
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values);
   }
 };

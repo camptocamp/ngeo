@@ -2,7 +2,6 @@
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
@@ -222,7 +221,7 @@ function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCatalog) {
 Controller.prototype.toggleActive_ = function(active) {
   this.elevation = undefined;
   if (active) {
-    googAsserts.assert(this.listenerKeys_.length === 0);
+    console.assert(this.listenerKeys_.length === 0);
 
     // Moving the mouse clears previously displayed elevation
     this.listenerKeys_.push(olEvents.listen(this.map, 'pointermove',
@@ -280,7 +279,7 @@ Controller.prototype.pointerStop_ = function(e) {
  * @private
  */
 Controller.prototype.getRasterSuccess_ = function(resp) {
-  googAsserts.assert(this.layer, 'A layer should be selected');
+  console.assert(this.layer, 'A layer should be selected');
   const value = resp[this.layer];
   if (value !== undefined && value !== null) {
     const options = this.layersconfig[this.layer] || {};

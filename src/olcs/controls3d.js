@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olEasing from 'ol/easing.js';
 import olcsCore from 'olcs/core.js';
 const module = angular.module('ngeoOlcsControls3d', []);
@@ -140,7 +139,7 @@ const Controller = class {
       this.maxTilt = 7 * Math.PI / 16;
     }
     if (!this.ol3dm) {
-      this.ol3dm = googAsserts.assert(this.olcsService_.getManager());
+      this.ol3dm = this.olcsService_.getManager();
     }
     this.tiltRightEl_ = this.element_.find('.ngeo-tilt-right');
     this.tiltLeftEl_ = this.element_.find('.ngeo-tilt-left');

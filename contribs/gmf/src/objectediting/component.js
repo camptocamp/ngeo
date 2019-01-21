@@ -7,8 +7,6 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
-import googAsserts from 'goog/asserts.js';
-
 
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -800,7 +798,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(
   }
 
   const clone = Controller.cloneGeometry_(geometry);
-  googAsserts.assert(clone);
+  console.assert(clone);
   this.geometryChanges_.push(clone);
   this.scope_.$apply();
 };
@@ -955,7 +953,7 @@ Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
   // Set editable WMS layer for refresh purpose
   if (node.id === this.layerNodeId) {
     const layer = gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
-    googAsserts.assert(
+    console.assert(
       layer instanceof olLayerImage || layer instanceof olLayerTile);
     this.editableWMSLayer_ = layer;
   }

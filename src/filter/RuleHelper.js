@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
@@ -187,7 +186,7 @@ class RuleHelper {
         break;
       case ngeoFormatAttributeType.SELECT:
         rule = new ngeoRuleSelect({
-          choices: googAsserts.assert(attribute.choices),
+          choices: attribute.choices,
           name: name,
           propertyName: attribute.name
         });
@@ -248,7 +247,7 @@ class RuleHelper {
       case ngeoFormatAttributeType.SELECT:
         const selectOptions = /** @type {!SelectOptions} */ (
           options);
-        googAsserts.assert(selectOptions.choices);
+        console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
       default:
@@ -619,8 +618,8 @@ class RuleHelper {
       }
     } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
-      googAsserts.assertInstanceof(rule, ngeoRuleGeometry);
-      const geometry = googAsserts.assert(rule.geometry);
+      console.assert(rule instanceof ngeoRuleGeometry);
+      const geometry = rule.geometry;
       if (operator === rsot.CONTAINS) {
         filter = olFormatFilter.contains(
           geometryName,
@@ -641,7 +640,7 @@ class RuleHelper {
         );
       }
     } else if (numericTypes.includes(operator)) {
-      const numericExpression = googAsserts.assertNumber(expression);
+      const numericExpression = expression;
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
           propertyName,

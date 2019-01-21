@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import olMap from 'ol/Map.js';
@@ -100,7 +99,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   const styleFn = this['getStyleFn'];
   if (styleFn) {
     style = styleFn();
-    googAsserts.assertInstanceof(style, olStyleStyle);
+    console.assert(style instanceof olStyleStyle);
   } else {
     style = new olStyleStyle({
       stroke: new olStyleStroke({
@@ -166,7 +165,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
  */
 Controller.prototype.$onInit = function() {
   const map = this['getMapFn']();
-  googAsserts.assertInstanceof(map, olMap);
+  console.assert(map instanceof olMap);
   this.map_ = map;
   this.map_.addInteraction(this.interaction);
 };

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import olCollection from 'ol/Collection.js';
 
 
@@ -125,7 +124,7 @@ class Group {
       }
     }
 
-    googAsserts.assertString(state);
+    console.assert(typeof state == 'string');
 
     return state;
   }

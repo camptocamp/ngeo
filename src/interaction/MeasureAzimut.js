@@ -1,10 +1,7 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
-import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
-import olGeomLineString from 'ol/geom/LineString.js';
-import olProjProjection from 'ol/proj/Projection.js';
+
 
 /**
  * @classdesc
@@ -40,13 +37,13 @@ function MeasureAzimut(unitPrefixFormat, numberFormat, options = /** @type {Meas
    * The format function
    * @type {formatNumber}
    */
-  this.numberFormat = googAsserts.assert(numberFormat);
+  this.numberFormat = numberFormat;
 
   /**
    * The format function
    * @type {unitPrefix}
    */
-  this.unitPrefixFormat = googAsserts.assert(unitPrefixFormat);
+  this.unitPrefixFormat = unitPrefixFormat;
 
 }
 
@@ -72,10 +69,10 @@ MeasureAzimut.prototype.createDrawInteraction = function(style,
  * @inheritDoc
  */
 MeasureAzimut.prototype.handleMeasure = function(callback) {
-  const geom = googAsserts.assertInstanceof(this.sketchFeature.getGeometry(), olGeomGeometryCollection);
-  const line = googAsserts.assertInstanceof(geom.getGeometries()[0], olGeomLineString);
+  const geom = this.sketchFeature.getGeometry();
+  const line = geom.getGeometries()[0];
   const output = getFormattedAzimutRadius(
-    line, googAsserts.assertInstanceof(this.getMap().getView().getProjection(), olProjProjection),
+    line, this.getMap().getView().getProjection(),
     this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);
   callback(output, line.getLastCoordinate());
 };

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olDom from 'ol/dom.js';
@@ -365,7 +364,7 @@ Measure.prototype.onDrawStart_ = function(evt) {
 
   const geometry = this.sketchFeature.getGeometry();
 
-  googAsserts.assert(geometry !== undefined);
+  console.assert(geometry !== undefined);
   this.changeEventKey_ = olEvents.listen(geometry, 'change', () => {
     this.handleMeasure((measure, coord) => {
       if (coord !== null) {

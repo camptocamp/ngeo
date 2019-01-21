@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import olControlMousePosition from 'ol/control/MousePosition.js';
 import * as olProj from 'ol/proj.js';
@@ -162,7 +161,7 @@ Controller.prototype.initOlControl_ = function() {
   const formatFn = function(coordinates) {
     const filterAndArgs = this.projection.filter.split(':');
     const filter = this.$filter_(filterAndArgs.shift());
-    googAsserts.assertFunction(filter);
+    console.assert(typeof filter == 'function');
     const args = filterAndArgs;
     args.unshift(coordinates);
     return filter.apply(this, args);

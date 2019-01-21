@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
 
@@ -151,7 +150,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
         editables.length = 0;
         this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.editable) {
-            googAsserts.assert(treeCtrl.children.length === 0);
+            console.assert(treeCtrl.children.length === 0);
             editables.push(treeCtrl);
           }
         });

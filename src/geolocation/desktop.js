@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import * as olEvents from 'ol/events.js';
@@ -98,7 +97,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   $element.on('click', this.toggle.bind(this));
 
   const map = $scope['getDesktopMapFn']();
-  googAsserts.assertInstanceof(map, olMap);
+  console.assert(map instanceof olMap);
 
   /**
    * @type {!import("ol/Map.js").default}
@@ -107,7 +106,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.map_ = map;
 
   const options = $scope['getDesktopGeolocationOptionsFn']() || {};
-  googAsserts.assertObject(options);
+  console.assert(options);
 
   /**
    * @type {!angular.IScope}

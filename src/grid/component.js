@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
 import * as olHas from 'ol/has.js';
@@ -228,7 +227,7 @@ Controller.prototype.selectRange_ = function(attributes) {
       posSelectedRows.push(i);
     }
   }
-  googAsserts.assert(posClickedRow !== undefined);
+  console.assert(posClickedRow !== undefined);
 
   if (posSelectedRows.length == 0) {
     // if no other row is selected, select the clicked one and stop

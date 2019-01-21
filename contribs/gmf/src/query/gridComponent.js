@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 
@@ -312,7 +311,7 @@ Controller.prototype.$onInit = function() {
   featuresOverlay.setFeatures(this.features_);
   const featuresStyle = this['featuresStyleFn']();
   if (featuresStyle !== undefined) {
-    googAsserts.assertInstanceof(featuresStyle, olStyleStyle);
+    console.assert(featuresStyle instanceof olStyleStyle);
     featuresOverlay.setStyle(featuresStyle);
   }
 
@@ -320,7 +319,7 @@ Controller.prototype.$onInit = function() {
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   let highlightFeatureStyle = this['selectedFeatureStyleFn']();
   if (highlightFeatureStyle !== undefined) {
-    googAsserts.assertInstanceof(highlightFeatureStyle, olStyleStyle);
+    console.assert(highlightFeatureStyle instanceof olStyleStyle);
   } else {
     const fill = new olStyleFill({color: [255, 0, 0, 0.6]});
     const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
@@ -340,7 +339,7 @@ Controller.prototype.$onInit = function() {
   const mapFn = this['getMapFn'];
   if (mapFn) {
     const map = mapFn();
-    googAsserts.assertInstanceof(map, olMap);
+    console.assert(map instanceof olMap);
     this.map_ = map;
   }
 };
@@ -668,7 +667,7 @@ Controller.prototype.makeGrid_ = function(data, source) {
  * @private
  */
 Controller.prototype.getGridConfiguration_ = function(data) {
-  googAsserts.assert(data.length > 0);
+  console.assert(data.length > 0);
   const clone = {};
   Object.assign(clone, data[0]);
   delete clone.ol_uid;
@@ -893,7 +892,7 @@ Controller.prototype.zoomToSelection = function() {
       olExtent.extend(extent, feature.getGeometry().getExtent());
     });
     const size = this.map_.getSize();
-    googAsserts.assert(size !== undefined);
+    console.assert(size !== undefined);
     const maxZoom = this.maxRecenterZoom;
     this.map_.getView().fit(extent, {size, maxZoom});
   }
@@ -908,7 +907,7 @@ Controller.prototype.downloadCsv = function() {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const columnDefs = source.configuration.columnDefs;
-    googAsserts.assert(columnDefs !== undefined);
+    console.assert(columnDefs !== undefined);
     const selectedRows = source.configuration.getSelectedRows();
 
     this.ngeoCsvDownload_.startDownload(

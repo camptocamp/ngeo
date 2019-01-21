@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
 import OlLayerGroup from 'ol/layer/Group.js';
@@ -118,7 +117,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function(
   dataSource, opt_crossOrigin
 ) {
   const url = dataSource.wmsUrl;
-  googAsserts.assert(url);
+  console.assert(url);
 
   const layerNames = dataSource.getOGCLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
@@ -216,7 +215,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
     layer: layerCap['Identifier']
   });
 
-  googAsserts.assert(options);
+  console.assert(options);
   const source = new olSourceWMTS(
     /** @type {olx.source.WMTSOptions} */ (options));
 
@@ -461,7 +460,7 @@ LayerHelper.prototype.isLayerVisible = function(layer, map) {
  */
 LayerHelper.prototype.refreshWMSLayer = function(layer) {
   const source_ = layer.getSource();
-  googAsserts.assert(
+  console.assert(
     source_ instanceof olSourceImageWMS ||
     source_ instanceof olSourceTileWMS
   );

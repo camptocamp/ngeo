@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import * as olEvents from 'ol/events.js';
 
 
@@ -218,7 +217,7 @@ class Rule {
      * @type {string}
      * @private
      */
-    this.type_ = googAsserts.assert(options.type);
+    this.type_ = options.type;
 
 
     // === Other properties ===

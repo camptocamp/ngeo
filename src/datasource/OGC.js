@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
@@ -517,7 +516,7 @@ export default class extends ngeoDatasourceDataSource {
       } else if (this.wfsOutputFormat_ === WFSOutputFormat.GML2) {
         format = new olFormatGML2();
       }
-      googAsserts.assert(format);
+      console.assert(format);
       wfsFormat = new olFormatWFS({
         featureNS: this.wfsFeatureNS,
         featureType: layers,
@@ -1028,9 +1027,9 @@ export default class extends ngeoDatasourceDataSource {
    * @export
    */
   getFiltrableOGCLayerName() {
-    googAsserts.assert(this.filtrable);
+    console.assert(this.filtrable);
     const layerNames = this.getOGCLayerNames();
-    googAsserts.assert(layerNames.length === 1);
+    console.assert(layerNames.length === 1);
     return layerNames[0];
   }
 

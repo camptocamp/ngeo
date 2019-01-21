@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
@@ -173,7 +172,7 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
     }, this);
 
     const geometry = newFeature.getGeometry();
-    googAsserts.assert(geometry, 'Geometry should be thruthy');
+    console.assert(geometry, 'Geometry should be thruthy');
 
     keys.push(
       olEvents.listen(
@@ -211,7 +210,7 @@ Controller.prototype.handleColorSet_ = function(newColor) {
  * @export
  */
 Controller.prototype.getSetAngle = function(value) {
-  return googAsserts.assertNumber(this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
+  return this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value);
 };
 
 
@@ -221,7 +220,7 @@ Controller.prototype.getSetAngle = function(value) {
  * @export
  */
 Controller.prototype.getSetName = function(value) {
-  return googAsserts.assertString(this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
+  return this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value);
 };
 
 /**
@@ -231,7 +230,7 @@ Controller.prototype.getSetName = function(value) {
  * @export
  */
 Controller.prototype.getSetShowLabel = function(value) {
-  return googAsserts.assertBoolean(this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
+  return typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value);
 };
 
 /**
@@ -240,7 +239,7 @@ Controller.prototype.getSetShowLabel = function(value) {
  * @export
  */
 Controller.prototype.getSetOpacity = function(value) {
-  return googAsserts.assertNumber(this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
+  return typeof this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value);
 };
 
 
@@ -251,7 +250,7 @@ Controller.prototype.getSetOpacity = function(value) {
  * @export
  */
 Controller.prototype.getSetShowMeasure = function(value) {
-  return googAsserts.assertBoolean(this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
+  return this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value);
 };
 
 
@@ -261,7 +260,7 @@ Controller.prototype.getSetShowMeasure = function(value) {
  * @export
  */
 Controller.prototype.getSetSize = function(value) {
-  return googAsserts.assertNumber(this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
+  return this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value);
 };
 
 
@@ -271,7 +270,7 @@ Controller.prototype.getSetSize = function(value) {
  * @export
  */
 Controller.prototype.getSetStroke = function(value) {
-  return googAsserts.assertNumber(this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
+  return this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value);
 };
 
 
@@ -308,7 +307,7 @@ Controller.prototype.handleFeatureChange_ = function() {
  * @private
  */
 Controller.prototype.handleGeometryChange_ = function() {
-  googAsserts.assert(this.feature);
+  console.assert(this.feature);
   this.measure = this.featureHelper_.getMeasure(this.feature);
 
   const showMeasure = this.featureHelper_.getShowMeasureProperty(this.feature);

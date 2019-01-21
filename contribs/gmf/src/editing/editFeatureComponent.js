@@ -5,7 +5,6 @@ import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
-import googAsserts from 'goog/asserts.js';
 import DateFormatter from 'ngeo/misc/php-date-formatter.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
@@ -532,7 +531,7 @@ Controller.prototype.$onInit = function() {
 
   // (1.1) Set editable WMS layer
   const layer = gmfLayertreeSyncLayertreeMap.getLayer(this.editableTreeCtrl);
-  googAsserts.assert(
+  console.assert(
     layer instanceof olLayerImage || layer instanceof olLayerTile);
   this.editableWMSLayer_ = layer;
 
@@ -654,7 +653,7 @@ Controller.prototype.$onInit = function() {
  * @export
  */
 Controller.prototype.save = function() {
-  googAsserts.assert(this.attributes);
+  console.assert(this.attributes);
 
   const feature = this.feature.clone();
   feature.setId(this.feature.getId());
@@ -667,7 +666,7 @@ Controller.prototype.save = function() {
     if (attribute.format) {
       if (this.feature.get(attribute.name)) {
         const name = this.feature.get(attribute.name);
-        googAsserts.assertString(name);
+        console.assert(typeof name == 'string');
         const value = dateFormatter.parseDate(name, attribute.format);
         let jsonFormat = 'Y-m-d\\TH:i:s';
         if (attribute.type === 'date') {
@@ -876,9 +875,9 @@ Controller.prototype.setAttributes_ = function(attributes) {
 Controller.prototype.handleFeatureAdd_ = function(evt) {
   this.feature = null;
   this.timeout_(() => {
-    googAsserts.assert(this.attributes);
+    console.assert(this.attributes);
     const feature = evt.element;
-    googAsserts.assertInstanceof(feature, olFeature);
+    console.assert(feature instanceof olFeature);
     const dateFormatter = new DateFormatter();
     for (const attribute of this.attributes) {
       if (attribute.format) {
@@ -896,7 +895,7 @@ Controller.prototype.handleFeatureAdd_ = function(evt) {
               jsonFormat = 'H:i:s';
             }
             const name = feature.get(attribute.name);
-            googAsserts.assertString(name);
+            console.assert(typeof name == 'string');
             value = dateFormatter.parseDate(name, jsonFormat);
           }
           feature.set(attribute.name, dateFormatter.formatDate(value, attribute.format));
@@ -987,7 +986,7 @@ Controller.prototype.toggle_ = function(active) {
 Controller.prototype.handleMapSelectActiveChange_ = function(active) {
 
   const mapDiv = this.map.getViewport();
-  googAsserts.assertElement(mapDiv);
+  console.assert(mapDiv);
 
   if (active) {
     olEvents.listen(this.map, 'click',
@@ -1191,7 +1190,7 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
   if (oldFeature) {
     olEvents.unlisten(oldFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = oldFeature.getGeometry();
-    googAsserts.assert(geom);
+    console.assert(geom);
     olEvents.unlisten(
       geom,
       'change',
@@ -1205,7 +1204,7 @@ Controller.prototype.handleFeatureChange_ = function(newFeature, oldFeature) {
     this.featureId = newFeature.getId();
     olEvents.listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this);
     geom = newFeature.getGeometry();
-    googAsserts.assert(geom);
+    console.assert(geom);
     olEvents.listen(
       geom,
       'change',
@@ -1281,8 +1280,8 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
   switch (action) {
     case 'delete':
-      const feature = googAsserts.assert(this.feature);
-      const vertexInfo = googAsserts.assert(this.vertexInfo_);
+      const feature = this.feature;
+      const vertexInfo = this.vertexInfo_;
       this.ngeoFeatureHelper_.removeVertex(feature, vertexInfo);
       this.scope_.$apply();
       break;

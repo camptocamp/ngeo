@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import olMap from 'ol/Map.js';
 
 /**
@@ -44,10 +43,10 @@ function directive($window) {
       const attr = 'ngeoResizemap';
       const prop = attrs[attr];
       const map = scope.$eval(prop);
-      googAsserts.assertInstanceof(map, olMap);
+      console.assert(map instanceof olMap);
 
       const stateExpr = attrs['ngeoResizemapState'];
-      googAsserts.assert(stateExpr !== undefined);
+      console.assert(stateExpr !== undefined);
 
       let start;
       let animationDelayKey;

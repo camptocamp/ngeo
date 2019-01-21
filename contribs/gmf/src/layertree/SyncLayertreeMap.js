@@ -1,6 +1,5 @@
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -121,7 +120,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     layer.setVisible(active);
   } else if (!treeCtrl.node.mixed && treeCtrl.depth === 1) {
     // First level non mixed group
-    googAsserts.assertInstanceof(layer, olLayerImage);
+    console.assert(layer instanceof olLayerImage);
     const names = [];
     const styles = [];
     treeCtrl.traverseDepthFirst((treeCtrl) => {
@@ -143,7 +142,7 @@ SyncLayertreeMap.prototype.updateLayerState_ = function(layer, treeCtrl) {
     }
   } else {
     // WMS mixed layer
-    googAsserts.assertInstanceof(layer, olLayerImage);
+    console.assert(layer instanceof olLayerImage);
     layer.setVisible(active);
   }
 };
@@ -212,10 +211,10 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function(treeCtrl,
   } else { // Will be one ol.layer for multiple WMS nodes.
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[groupNode.ogcServer || ''];
-    googAsserts.assert(ogcServer);
-    googAsserts.assert(ogcServer.url);
-    googAsserts.assert(ogcServer.type);
-    googAsserts.assert(ogcServer.imageType);
+    console.assert(ogcServer);
+    console.assert(ogcServer.url);
+    console.assert(ogcServer.type);
+    console.assert(ogcServer.imageType);
     layer = this.layerHelper_.createBasicWMSLayer(
       ogcServer.url,
       '',
@@ -259,11 +258,11 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
     const gmfLayerWMS = /** @type gmfThemes.GmfLayerWMS */ (gmfLayer);
     const timeParam = this.getTimeParam_(treeCtrl);
     const ogcServer = this.ogcServersObject_[/** @type string */ (gmfLayerWMS.ogcServer)];
-    googAsserts.assert(ogcServer);
-    googAsserts.assert(ogcServer.url);
-    googAsserts.assert(ogcServer.type);
-    googAsserts.assert(gmfLayerWMS.layers);
-    googAsserts.assert(ogcServer.imageType);
+    console.assert(ogcServer);
+    console.assert(ogcServer.url);
+    console.assert(ogcServer.type);
+    console.assert(gmfLayerWMS.layers);
+    console.assert(ogcServer.imageType);
 
     const opt_params = {STYLES: gmfLayerWMS.style};
 
@@ -304,9 +303,9 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function(treeCtrl, map) {
 SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, map) {
   const leafNode = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
   const firstLevelGroup = this.getFirstLevelGroupCtrl_(treeCtrl);
-  googAsserts.assert(firstLevelGroup);
+  console.assert(firstLevelGroup);
   const layer = /** @type {import("ol/layer/Image.js").default} */ (firstLevelGroup.layer);
-  googAsserts.assertInstanceof(layer, olLayerImage);
+  console.assert(layer instanceof olLayerImage);
   // Update layer information and tree state.
   this.updateLayerReferences_(leafNode, layer);
   if (leafNode.metadata.isChecked) {
@@ -327,8 +326,8 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function(treeCtrl, ma
  */
 SyncLayertreeMap.prototype.createWMTSLayer_ = function(gmfLayerWMTS) {
   const newLayer = new olLayerTile();
-  googAsserts.assert(gmfLayerWMTS.url);
-  googAsserts.assert(gmfLayerWMTS.layer);
+  console.assert(gmfLayerWMTS.url);
+  console.assert(gmfLayerWMTS.layer);
   this.layerHelper_.createWMTSLayerFromCapabilitites(gmfLayerWMTS.url,
     gmfLayerWMTS.layer, gmfLayerWMTS.matrixSet, gmfLayerWMTS.dimensions).then((layer) => {
     newLayer.setSource(layer.getSource());

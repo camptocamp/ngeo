@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import olMap from 'ol/Map.js';
 import * as olEvents from 'ol/events.js';
@@ -127,7 +126,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
    */
   this.scales = /** @type {!Array.<number>} */
     ($scope.$eval(scalesExpr));
-  googAsserts.assert(this.scales !== undefined);
+  console.assert(this.scales !== undefined);
 
   /**
    * @type {Array.<number>}
@@ -147,7 +146,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
    * @private
    */
   this.map_ = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
-  googAsserts.assertInstanceof(this.map_, olMap);
+  console.assert(this.map_ instanceof olMap);
 
   const optionsExpr = $attrs['ngeoScaleselectorOptions'];
   const options = $scope.$eval(optionsExpr);

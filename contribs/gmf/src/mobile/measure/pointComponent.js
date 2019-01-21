@@ -2,7 +2,6 @@
  */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoInteractionMeasurePointMobile from 'ngeo/interaction/MeasurePointMobile.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
@@ -244,7 +243,7 @@ Controller.prototype.init = function() {
   ngeoMiscDecorate.interaction(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();
-  googAsserts.assert(Array.isArray(layersConfig));
+  console.assert(Array.isArray(layersConfig));
   this.layersConfig = layersConfig;
 
   this.map.addInteraction(this.measure);
@@ -301,7 +300,7 @@ Controller.prototype.handleMeasureActiveChange_ = function() {
  */
 Controller.prototype.getMeasure_ = function() {
   const center = this.map.getView().getCenter();
-  googAsserts.assertArray(center);
+  console.assert(Array.isArray(center));
   const params = {
     'layers': this.layersConfig.map(config => config.name).join(',')
   };

@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 
@@ -182,7 +181,7 @@ Controller.prototype.handleDrawEnd = function(type, event) {
     // MeasureEvent
     sketch = event.detail.feature;
   }
-  googAsserts.assert(sketch);
+  console.assert(sketch);
 
   const azimut = sketch.get('azimut');
 

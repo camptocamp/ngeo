@@ -5,7 +5,6 @@ import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper.js';
@@ -572,8 +571,8 @@ class Controller {
   getScaleFn(frameState) {
     // Don't compute an optimal scale if the user manually choose a value not in
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
-    googAsserts.assert(this.layoutInfo.scales);
-    googAsserts.assert(this.layoutInfo.scale !== undefined);
+    console.assert(this.layoutInfo.scales);
+    console.assert(this.layoutInfo.scale !== undefined);
     if (!this.scaleManuallySelected_ &&
         (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))) {
       const mapSize = frameState.size;
@@ -675,9 +674,9 @@ class Controller {
     this.layoutInfo.layout = this.layout_.name;
 
     const mapInfo = this.isAttributeInCurrentLayout_('map');
-    googAsserts.assertObject(mapInfo);
+    console.assert(mapInfo);
     const clientInfo = mapInfo['clientInfo'];
-    googAsserts.assertObject(clientInfo);
+    console.assert(clientInfo);
     this.paperSize_ = [clientInfo['width'], clientInfo['height']];
 
     this.updateCustomFields_();
@@ -895,8 +894,8 @@ class Controller {
       }
     }
 
-    googAsserts.assertNumber(this.layoutInfo.dpi);
-    googAsserts.assertString(this.layoutInfo.layout);
+    console.assert(typeof this.layoutInfo.dpi == 'number');
+    console.assert(typeof this.layoutInfo.layout == 'string');
 
     // convert the WMTS layers to WMS
     const map = new olMap({});
@@ -1010,7 +1009,7 @@ class Controller {
       data = [];
       columns = [];
       source.features.forEach(function(feature, i) {
-        googAsserts.assert(feature);
+        console.assert(feature);
         const properties = getFilteredFeatureValues(feature);
         if (i === 0) {
           columns = Object.keys(properties).map(function tanslateColumns(prop) {
@@ -1062,7 +1061,7 @@ class Controller {
   handleCreateReportSuccess_(resp) {
     const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
     const ref = mfResp.ref;
-    googAsserts.assert(ref.length > 0);
+    console.assert(ref.length > 0);
     this.curRef_ = ref;
     this.getStatus_(ref);
   }

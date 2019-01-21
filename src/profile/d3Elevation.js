@@ -1,6 +1,5 @@
 /**
  */
-import googAsserts from 'goog/asserts.js';
 
 import {
   area as d3area,
@@ -655,7 +654,7 @@ function d3Elevation(options) {
 
   profile.showPois = function(pois) {
     pois = pois !== undefined ? pois : [];
-    googAsserts.assert(pois.length === 0 || poiExtractor !== undefined);
+    console.assert(pois.length === 0 || poiExtractor !== undefined);
 
     const pe = poiExtractor;
     const g = svg.select('g');

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {deleteCondition} from 'ngeo/utils.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle.js';
@@ -41,7 +40,7 @@ import olFeature from 'ol/Feature.js';
  */
 function Modify(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   /**
    * @type {!import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
@@ -186,8 +185,7 @@ Modify.prototype.setState_ = function() {
  */
 Modify.prototype.handleFeaturesAdd_ = function(evt) {
   const feature = evt.element;
-  googAsserts.assertInstanceof(feature, olFeature,
-    'feature should be an ol.Feature');
+  console.assert(feature instanceof olFeature, 'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
@@ -36,7 +35,7 @@ XSDAttribute.prototype.read = function(source) {
  * @override
  */
 XSDAttribute.prototype.readFromDocument = function(doc) {
-  googAsserts.assert(doc.nodeType == Node.DOCUMENT_NODE,
+  console.assert(doc.nodeType == Node.DOCUMENT_NODE,
     'doc.nodeType should be DOCUMENT');
   for (let n = doc.firstChild; n; n = n.nextSibling) {
     if (n.nodeType == Node.ELEMENT_NODE) {
@@ -53,9 +52,9 @@ XSDAttribute.prototype.readFromDocument = function(doc) {
  * @override
  */
 XSDAttribute.prototype.readFromNode = function(node) {
-  googAsserts.assert(node.nodeType == Node.ELEMENT_NODE,
+  console.assert(node.nodeType == Node.ELEMENT_NODE,
     'node.nodeType should be ELEMENT');
-  googAsserts.assert(node.localName == 'schema',
+  console.assert(node.localName == 'schema',
     'localName should be schema');
 
   let elements = node.getElementsByTagName('element');
@@ -84,7 +83,7 @@ XSDAttribute.prototype.readFromNode = function(node) {
 XSDAttribute.prototype.readFromElementNode_ = function(node) {
 
   const name = node.getAttribute('name');
-  googAsserts.assertString(name, 'name should be defined in element node.');
+  console.assert(typeof name, 'name should be defined in element node.' == 'string');
 
   const alias = node.getAttribute('alias');
   const nillable = node.getAttribute('nillable');
@@ -151,7 +150,7 @@ XSDAttribute.prototype.readFromElementNode_ = function(node) {
     return null;
   }
 
-  googAsserts.assert(attribute.type);
+  console.assert(attribute.type);
 
   return attribute;
 };

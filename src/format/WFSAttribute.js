@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
@@ -29,9 +28,8 @@ export default class {
    */
   readFromComplexTypeElement_(object) {
 
-    const name = googAsserts.assertString(object['name']);
-    const alias = 'alias' in object ?
-      googAsserts.assertString(object['alias']) : null;
+    const name = object['name'];
+    const alias = 'alias' in object ? object['alias'] : null;
     const required = object['minOccurs'] != '0';
 
     const attribute = {
@@ -40,7 +38,7 @@ export default class {
       required
     };
 
-    const type = googAsserts.assertString(object['type']);
+    const type = object['type'];
 
     if (!setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType' || type === 'dateTime') {

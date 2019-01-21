@@ -3,7 +3,6 @@
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'bootstrap/js/src/modal.js';
-import googAsserts from 'goog/asserts.js';
 
 /**
  * @type {angular.IModule}
@@ -134,7 +133,7 @@ class Controller {
 
     this.modal_.on('shown.bs.modal hidden.bs.modal', (e) => {
       const type = e.type;
-      googAsserts.assert(type == 'shown' || type == 'hidden');
+      console.assert(type == 'shown' || type == 'hidden');
       this.ngModel.$setViewValue(type == 'shown');
     });
   }

@@ -1,4 +1,3 @@
-import googAsserts from 'goog/asserts.js';
 import {getDefaultModifyStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {
@@ -36,7 +35,7 @@ import olSourceVector from 'ol/source/Vector.js';
  */
 function Rotate(options) {
 
-  googAsserts.assert(options.features);
+  console.assert(options.features);
 
   /**
    * @type {Array.<import("ol/EventsKey.js").default>}
@@ -169,7 +168,7 @@ Rotate.prototype.setActive = function(active) {
  */
 Rotate.prototype.addFeature_ = function(feature) {
   const geometry = feature.getGeometry();
-  googAsserts.assertInstanceof(geometry, olGeomGeometry);
+  console.assert(geometry instanceof olGeomGeometry);
 
   feature.set('angle', 0);
 
@@ -231,8 +230,7 @@ Rotate.prototype.setMap = function(map) {
  */
 Rotate.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
-  googAsserts.assertInstanceof(feature, olFeature,
-    'feature should be an ol.Feature');
+  console.assert(feature instanceof olFeature, 'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 

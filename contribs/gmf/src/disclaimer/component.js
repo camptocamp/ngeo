@@ -4,7 +4,6 @@ import * as olEvents from 'ol/events.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import gmfBase from 'gmf/index.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
@@ -150,7 +149,7 @@ Controller.prototype.$onInit = function() {
 Controller.prototype.handleLayersAdd_ = function(evt) {
   this.timeout_(() => {
     const layer = evt.element;
-    googAsserts.assertInstanceof(layer, olLayerBase);
+    console.assert(layer instanceof olLayerBase);
     this.registerLayer_(layer);
   });
 };
@@ -162,7 +161,7 @@ Controller.prototype.handleLayersAdd_ = function(evt) {
  */
 Controller.prototype.handleLayersRemove_ = function(evt) {
   const layer = evt.element;
-  googAsserts.assertInstanceof(layer, olLayerBase);
+  console.assert(layer instanceof olLayerBase);
   this.unregisterLayer_(layer);
 };
 

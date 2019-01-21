@@ -1,7 +1,6 @@
 /**
  */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -242,7 +241,7 @@ class MapQuerent {
       const id = Number(idStr);
       const dataSource = this.ngeoDataSourcesHelper_.getDataSource(id);
       let label = dataSource.name;
-      googAsserts.assert(dataSource);
+      console.assert(dataSource);
 
       const querentResultItem = response[id];
       const features = querentResultItem.features;
@@ -252,7 +251,7 @@ class MapQuerent {
 
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
-        const type = googAsserts.assertString(feature.get('ngeo_feature_type_'));
+        const type = feature.get('ngeo_feature_type_');
         if (!typeSeparatedFeatures[type]) {
           typeSeparatedFeatures[type] = [];
         }

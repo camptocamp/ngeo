@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 
 import ngeoDownloadService from 'ngeo/download/service.js';
@@ -127,7 +126,7 @@ function FeatureHelper($injector, $filter) {
     const filterElements = $injector.get('ngeoPointfilter').split(':');
     const filterName = filterElements.shift();
     const filter = this.$filter_(filterName);
-    googAsserts.assertFunction(filter);
+    console.assert(typeof filter == 'function');
     this.pointFilterFn_ = filter;
     this.pointFilterArgs_ = filterElements;
   } else {
@@ -212,7 +211,7 @@ FeatureHelper.prototype.getStyle = function(feature) {
       break;
   }
 
-  googAsserts.assert(style, 'Style should be thruthy');
+  console.assert(style, 'Style should be thruthy');
 
   let styles;
   if (style.constructor === Array) {
@@ -320,7 +319,7 @@ FeatureHelper.prototype.optNumber = function(feature, attrib) {
     if (typeof value == 'string') {
       return +value;
     } else {
-      return googAsserts.assertNumber(value);
+      return value;
     }
   } else {
     return undefined;
@@ -340,7 +339,7 @@ FeatureHelper.prototype.getNumber = function(feature, attrib) {
   if (typeof value == 'string') {
     return +value;
   } else {
-    return googAsserts.assertNumber(value);
+    return value;
   }
 };
 
@@ -746,7 +745,7 @@ FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
   let deleted = false;
 
   const geometry = feature.getGeometry();
-  googAsserts.assertInstanceof(geometry, olGeomSimpleGeometry);
+  console.assert(geometry instanceof olGeomSimpleGeometry);
   const coordinates = geometry.getCoordinates();
 
   if (geometry instanceof olGeomLineString) {
@@ -885,7 +884,7 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       break;
   }
 
-  googAsserts.assert(style, 'Style should be thruthy');
+  console.assert(style, 'Style should be thruthy');
 
   return style;
 };
@@ -917,7 +916,7 @@ export function getFilteredFeatureValues(feature) {
 FeatureHelper.prototype.getAngleProperty = function(feature) {
   const angle = +(/** @type {string} */ (
     feature.get(ngeoFormatFeatureProperties.ANGLE)));
-  googAsserts.assertNumber(angle);
+  console.assert(typeof angle == 'number');
   return angle;
 };
 
@@ -929,9 +928,9 @@ FeatureHelper.prototype.getAngleProperty = function(feature) {
  */
 FeatureHelper.prototype.getColorProperty = function(feature) {
 
-  const color = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.COLOR));
+  const color = feature.get(ngeoFormatFeatureProperties.COLOR);
 
-  googAsserts.assertString(color);
+  console.assert(typeof color == 'string');
 
   return color;
 };
@@ -953,8 +952,8 @@ FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
  * @export
  */
 FeatureHelper.prototype.getNameProperty = function(feature) {
-  const name = googAsserts.assertString(feature.get(ngeoFormatFeatureProperties.NAME));
-  googAsserts.assertString(name);
+  const name = feature.get(ngeoFormatFeatureProperties.NAME);
+  console.assert(typeof name == 'string');
   return name;
 };
 
@@ -981,7 +980,7 @@ FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
   } else if (typeof showMeasure === 'string') {
     showMeasure = (showMeasure === 'true') ? true : false;
   }
-  return googAsserts.assertBoolean(showMeasure);
+  return showMeasure;
 };
 
 /**
@@ -996,7 +995,7 @@ FeatureHelper.prototype.getShowLabelProperty = function(feature) {
   } else if (typeof showLabel === 'string') {
     showLabel = (showLabel === 'true') ? true : false;
   }
-  return googAsserts.assertBoolean(showLabel);
+  return showLabel;
 };
 
 /**
@@ -1149,14 +1148,14 @@ FeatureHelper.prototype.createTextStyle_ = function(options) {
 FeatureHelper.prototype.getMeasure = function(feature) {
 
   const geometry = feature.getGeometry();
-  googAsserts.assert(geometry, 'Geometry should be truthy');
+  console.assert(geometry, 'Geometry should be truthy');
 
   let measure = '';
 
   if (geometry instanceof olGeomPolygon) {
     if (this.getType(feature) === ngeoGeometryType.CIRCLE) {
       const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
-      googAsserts.assertNumber(azimut);
+      console.assert(typeof azimut == 'number');
       const line = this.getRadiusLine(feature, azimut);
 
       measure = ngeoInteractionMeasureAzimut.getFormattedAzimutRadius(
@@ -1193,7 +1192,7 @@ FeatureHelper.prototype.getMeasure = function(feature) {
  */
 FeatureHelper.prototype.getType = function(feature) {
   const geometry = feature.getGeometry();
-  googAsserts.assert(geometry, 'Geometry should be thruthy');
+  console.assert(geometry, 'Geometry should be thruthy');
 
   let type;
 
@@ -1221,7 +1220,7 @@ FeatureHelper.prototype.getType = function(feature) {
     type = ngeoGeometryType.MULTI_LINE_STRING;
   }
 
-  googAsserts.assert(type, 'Type should be thruthy');
+  console.assert(type, 'Type should be thruthy');
 
   return type;
 };
@@ -1248,7 +1247,7 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
 
   const duration = opt_duration !== undefined ? opt_duration : 250;
   const size = map.getSize();
-  googAsserts.assertArray(size);
+  console.assert(Array.isArray(size));
   const view = map.getView();
   const viewExtent = view.calculateExtent(size);
   const geometry = feature.getGeometry();
@@ -1256,7 +1255,7 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
   const geomIsVisible = geometry.intersectsExtent(viewExtent);
 
   const mapCenter = view.getCenter();
-  googAsserts.assertArray(mapCenter);
+  console.assert(Array.isArray(mapCenter));
 
   const featureExtent = geometry.getExtent();
 

@@ -1,8 +1,4 @@
-/**
- */
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
-import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
@@ -92,7 +88,7 @@ class DataSources {
 
     // (2) Sync resolution with existing data sources
     const resolution = view.getResolution();
-    googAsserts.assertNumber(resolution);
+    console.assert(typeof resolution == 'number');
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -114,9 +110,9 @@ class DataSources {
    */
   handleViewResolutionChange_(evt) {
     const view = evt.target;
-    googAsserts.assertInstanceof(view, olView);
+    console.assert(view instanceof olView);
     const resolution = view.getResolution();
-    googAsserts.assertNumber(resolution);
+    console.assert(typeof resolution == 'number');
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -165,11 +161,10 @@ class DataSources {
    * @private
    */
   handleDataSourcesAdd_(event) {
-    const dataSource = googAsserts.assertInstanceof(
-      event.element, ngeoDatasourceDataSource);
+    const dataSource = event.element;
     if (this.map_) {
       const resolution = this.map_.getView().getResolution();
-      googAsserts.assertNumber(resolution);
+      console.assert(typeof resolution == 'number');
       this.syncDataSourceToResolution_(dataSource, resolution);
     }
   }

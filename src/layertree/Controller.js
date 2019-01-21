@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import {layerLoading, layer} from 'ngeo/misc/decorate.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -59,12 +58,12 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     });
   } else {
     this.node = /** @type {!Object} */ ($scope.$eval(nodeExpr));
-    googAsserts.assert(this.node !== undefined);
+    console.assert(this.node !== undefined);
   }
 
   const mapExpr = $attrs['ngeoLayertreeMap'];
   const map = /** @type {import("ol/Map.js").default} */ ($scope.$eval(mapExpr));
-  googAsserts.assert(map !== undefined);
+  console.assert(map !== undefined);
 
   /**
    * @type {import("ngeo/layertree/Controller.js").default}
@@ -85,7 +84,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   $scope.$on('$destroy', () => {
     if (this.parent) {
       const index = this.parent.children.indexOf(this);
-      googAsserts.assert(index >= 0);
+      console.assert(index >= 0);
       this.parent.children.splice(index, 1);
     }
   });
@@ -118,10 +117,10 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   if (nodelayerExpr === undefined) {
     const nodelayerexprExpr = $attrs['ngeoLayertreeNodelayerexpr'];
     const newNodelayerExpr = $scope.$eval(nodelayerexprExpr);
-    googAsserts.assertString(newNodelayerExpr);
+    console.assert(typeof newNodelayerExpr == 'string');
     nodelayerExpr = newNodelayerExpr;
   }
-  googAsserts.assert(nodelayerExpr !== undefined);
+  console.assert(nodelayerExpr !== undefined);
 
   /**
    * @type {string}
@@ -137,7 +136,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   if (!isRoot) {
     const layer = $scope.$eval(nodelayerExpr, {'treeCtrl': this}) || null;
     if (layer) {
-      googAsserts.assert(
+      console.assert(
         layer instanceof olLayerLayer || layer instanceof olLayerGroup
       );
       this.layer = layer;
@@ -166,7 +165,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   }
 
   if (listenersExpr !== undefined) {
-    googAsserts.assertString(listenersExpr);
+    console.assert(typeof listenersExpr == 'string');
   }
 
   /**
@@ -268,7 +267,7 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
       this.node.metadata &&
       this.node.metadata.exclusiveGroup
   ) {
-    const onChild = googAsserts.assert(opt_onChild);
+    const onChild = opt_onChild;
     this.children.forEach((child) => {
       if (child !== onChild) {
         child.setState('off', opt_broadcast);
@@ -409,7 +408,7 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
       }
       return false; // continue traversing
     default:
-      googAsserts.fail('Unhandled case');
+      console.assert(false, 'Unhandled case');
   }
 };
 

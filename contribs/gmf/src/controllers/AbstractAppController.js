@@ -22,7 +22,6 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink.js';
-import googAsserts from 'goog/asserts.js';
 import * as olArray from 'ol/array.js';
 import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
@@ -59,7 +58,7 @@ function AbstractAppController(config, $scope, $injector) {
     window.injector = $injector;
   }
 
-  googAsserts.assertInstanceof(this.map, olMap);
+  console.assert(this.map instanceof olMap);
 
   /**
    * Collection of features for the draw interaction
@@ -80,7 +79,7 @@ function AbstractAppController(config, $scope, $injector) {
    * @type {import("ngeo/misc/FeatureHelper.js").default}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(googAsserts.assert(this.map.getView().getProjection()));
+  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
    * @type {import("gmf/theme/Manager.js").default}
@@ -681,7 +680,7 @@ function getLayerByLabels(layers, labels) {
  * @export
  */
 AbstractAppController.prototype.switchLanguage = function(lang) {
-  googAsserts.assert(lang in this.langUrls);
+  console.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
   this.tmhDynamicLocale.set(lang);
@@ -745,7 +744,7 @@ AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
       layer = layers[layers.length > 1 ? 1 : 0];
     }
 
-    googAsserts.assert(layer);
+    console.assert(layer);
     this.backgroundLayerMgr_.set(this.map, layer);
   });
 };

@@ -1,7 +1,6 @@
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import googAsserts from 'goog/asserts.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -125,13 +124,13 @@ function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
  */
 Snapping.prototype.ensureSnapInteractionsOnTop = function() {
   const map = this.map_;
-  googAsserts.assert(map);
+  console.assert(map);
 
   let item;
   for (const uid in this.cache_) {
     item = this.cache_[+uid];
     if (item.active) {
-      googAsserts.assert(item.interaction);
+      console.assert(item.interaction);
       map.removeInteraction(item.interaction);
       map.addInteraction(item.interaction);
     }
@@ -348,7 +347,7 @@ Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
   // At this point, every requirements have been met.
   // Create and return the configuration.
   const urlWfs = ogcServer.urlWfs;
-  googAsserts.assert(urlWfs, 'urlWfs should be defined.');
+  console.assert(urlWfs, 'urlWfs should be defined.');
 
   return {
     featureTypes: featureTypes.join(','),
@@ -392,7 +391,7 @@ Snapping.prototype.activateItem_ = function(item) {
   }
 
   const map = this.map_;
-  googAsserts.assert(map);
+  console.assert(map);
 
   const interaction = new olInteractionSnap({
     edge: item.snappingConfig.edge,
@@ -426,7 +425,7 @@ Snapping.prototype.deactivateItem_ = function(item) {
   }
 
   const map = this.map_;
-  googAsserts.assert(map);
+  console.assert(map);
 
   const interaction = item.interaction;
   map.removeInteraction(interaction);
@@ -483,11 +482,11 @@ Snapping.prototype.loadItemFeatures_ = function(item) {
   }
 
   const map = this.map_;
-  googAsserts.assert(map);
+  console.assert(map);
 
   const view = map.getView();
   const size = map.getSize();
-  googAsserts.assert(size);
+  console.assert(size);
 
   const extent = view.calculateExtent(size);
   const projCode = view.getProjection().getCode();

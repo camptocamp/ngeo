@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea.js';
@@ -220,7 +219,7 @@ Controller.prototype.$onInit = function() {
     );
   }
 
-  googAsserts.assert(interaction);
+  console.assert(interaction);
 
   interaction.setActive(this.active);
   this.interaction_ = interaction;
@@ -267,7 +266,7 @@ Controller.prototype.handleDrawEnd_ = function(event) {
     // MeasureEvent
     sketch = event.detail.feature;
   }
-  googAsserts.assert(sketch);
+  console.assert(sketch);
 
   // convert to multi if geomType is multi and feature is not
   let geometry = sketch.getGeometry();

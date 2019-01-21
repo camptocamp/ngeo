@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 
 /**
@@ -46,7 +45,7 @@ function Service(ngeoLocation, ngeoUsedKeyRegexp) {
   if (paramKeys.length === 0) {
     if (this.useLocalStorage_) {
       for (const key in window.localStorage) {
-        googAsserts.assert(key);
+        console.assert(key);
 
         this.usedKeyRegexp.some((keyRegexp) => {
           if (key.match(keyRegexp)) {
@@ -161,9 +160,9 @@ Service.prototype.updateState = function(object) {
   this.ngeoLocation.updateParams(object);
   if (this.useLocalStorage_) {
     for (const key in object) {
-      googAsserts.assert(key);
+      console.assert(key);
       const value = object[key];
-      googAsserts.assert(value !== undefined);
+      console.assert(value !== undefined);
       window.localStorage[key] = value;
     }
   }

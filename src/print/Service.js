@@ -1,5 +1,4 @@
 import angular from 'angular';
-import googAsserts from 'goog/asserts.js';
 import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import * as olArray from 'ol/array.js';
@@ -169,8 +168,8 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   const viewResolution = view.getResolution();
   const viewRotation = object.rotation || toDegrees(view.getRotation());
 
-  googAsserts.assert(viewCenter !== undefined);
-  googAsserts.assert(viewProjection !== undefined);
+  console.assert(viewCenter !== undefined);
+  console.assert(viewProjection !== undefined);
 
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
@@ -179,7 +178,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
   object.layers = [];
 
   const mapLayerGroup = map.getLayerGroup();
-  googAsserts.assert(mapLayerGroup);
+  console.assert(mapLayerGroup);
   this.printNativeAngle_ = !(mapLayerGroup.get('printNativeAngle') === false);
   let layers = this.ngeoLayerHelper_.getFlatLayers(mapLayerGroup);
 
@@ -189,7 +188,7 @@ PrintService.prototype.encodeMap_ = function(map, scale, object) {
 
   layers.forEach((layer) => {
     if (layer.getVisible()) {
-      googAsserts.assert(viewResolution !== undefined);
+      console.assert(viewResolution !== undefined);
       this.encodeLayer(object.layers, layer, viewResolution);
     }
   });
@@ -218,7 +217,7 @@ PrintService.prototype.encodeLayer = function(arr, layer, resolution) {
  * @private
  */
 PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
-  googAsserts.assertInstanceof(layer, olLayerImage);
+  console.assert(layer instanceof olLayerImage);
   const source = layer.getSource();
   if (source instanceof olSourceImageWMS) {
     this.encodeImageWmsLayer_(arr, layer);
@@ -234,8 +233,8 @@ PrintService.prototype.encodeImageLayer_ = function(arr, layer) {
 PrintService.prototype.encodeImageWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
-  googAsserts.assertInstanceof(layer, olLayerImage);
-  googAsserts.assertInstanceof(source, olSourceImageWMS);
+  console.assert(layer instanceof olLayerImage);
+  console.assert(source instanceof olSourceImageWMS);
 
   const url = source.getUrl();
   if (url !== undefined) {
@@ -308,7 +307,7 @@ function getAbsoluteUrl_(url) {
  * @private
  */
 PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
-  googAsserts.assertInstanceof(layer, olLayerTile);
+  console.assert(layer instanceof olLayerTile);
   const source = layer.getSource();
   if (source instanceof olSourceWMTS) {
     this.encodeTileWmtsLayer_(arr, layer);
@@ -324,13 +323,13 @@ PrintService.prototype.encodeTileLayer_ = function(arr, layer) {
  * @private
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
-  googAsserts.assertInstanceof(layer, olLayerTile);
+  console.assert(layer instanceof olLayerTile);
   const source = layer.getSource();
-  googAsserts.assertInstanceof(source, olSourceWMTS);
+  console.assert(source instanceof olSourceWMTS);
 
   const projection = source.getProjection();
   const tileGrid = source.getTileGrid();
-  googAsserts.assertInstanceof(tileGrid, olTilegridWMTS);
+  console.assert(tileGrid instanceof olTilegridWMTS);
   const matrixIds = tileGrid.getMatrixIds();
 
   /** @type {Array.<MapFishPrintWmtsMatrix>} */
@@ -381,8 +380,8 @@ PrintService.prototype.encodeTileWmtsLayer_ = function(arr, layer) {
 PrintService.prototype.encodeTileWmsLayer_ = function(arr, layer) {
   const source = layer.getSource();
 
-  googAsserts.assertInstanceof(layer, olLayerTile);
-  googAsserts.assertInstanceof(source, olSourceTileWMS);
+  console.assert(layer instanceof olLayerTile);
+  console.assert(source instanceof olSourceTileWMS);
 
   this.encodeWmsLayer_(
     arr, layer, source.getUrls()[0], source.getParams());
@@ -397,7 +396,7 @@ PrintService.prototype.encodeTileWmsLayer_ = function(arr, layer) {
  */
 PrintService.prototype.getWmtsUrl_ = function(source) {
   const urls = source.getUrls();
-  googAsserts.assert(urls.length > 0);
+  console.assert(urls.length > 0);
   return getAbsoluteUrl_(urls[0]);
 };
 
