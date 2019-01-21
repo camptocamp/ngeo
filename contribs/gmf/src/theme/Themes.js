@@ -9,6 +9,14 @@ import olCollection from 'ol/Collection.js';
 import olEventsEventTarget from 'ol/events/Target.js';
 import olLayerTile from 'ol/layer/Tile.js';
 
+
+/**
+ * Configuration options for the themes service.
+ * @typedef {Object} ThemesOptions
+ * @property addBlankBackgroundLayer {boolean|undefined} Whether to add a blank background layer to the list of available backgrounds.
+ */
+
+
 /**
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
@@ -21,7 +29,7 @@ import olLayerTile from 'ol/layer/Tile.js';
  * @param {angular.IQService} $q Angular q service
  * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {gmfx.ThemesOptions} gmfThemesOptions Themes options.
+ * @param {ThemesOptions} gmfThemesOptions Themes options.
  * @ngInject
  * @ngdoc service
  * @ngname gmfThemes

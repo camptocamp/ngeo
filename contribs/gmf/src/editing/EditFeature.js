@@ -2,6 +2,17 @@ import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
+
+/**
+ * @typedef {Object} ComparisonFilter
+ * @property property {string} The type of operator for the comparison filter.
+ * @property operator {string} The name of the property for the comparison filter.
+ * @property value {string} The value for the comparison filter that must match the combinaison of
+ * the operator and property.
+ * }}
+ */
+
+
 /**
  * Service that provides methods to get, insert, update and delete vector
  * features with the use of a GeoMapFish Protocol as back-end.
@@ -61,7 +72,7 @@ EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * empty array of features if the url is not defined.
  *
  * @param {!Array.<number>} layerIds List of layer ids to get the features from.
- * @param {!Array.<!gmfx.ComparisonFilter>} filters List of comparison filters
+ * @param {!Array.<!ComparisonFilter>} filters List of comparison filters
  * @return {angular.IPromise} Promise.
  */
 EditFeature.prototype.getFeaturesWithComparisonFilters = function(

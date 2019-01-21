@@ -1,13 +1,18 @@
+import angular from 'angular';
+
+
 /**
+ * @typedef {{
+ *  dataSource : (gmf.datasource.OGC|null)
+ * }} DataSourceBeingFiltered
  */
 
-import angular from 'angular';
 
 /**
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfDataSourceBeingFiltered', []);
-// type gmfx.datasource.DataSourceBeingFiltered
+// type DataSourceBeingFiltered
 module.value('gmfDataSourceBeingFiltered', {
   dataSource: null
 });

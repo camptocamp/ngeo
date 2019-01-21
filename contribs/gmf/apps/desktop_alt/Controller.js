@@ -80,7 +80,7 @@ function Controller($scope, $injector) {
   this.elevationLayersConfig = {};
 
   /**
-   * @type {Object.<string, gmfx.ProfileLineConfiguration>}
+   * @type {Object.<string, ProfileLineConfiguration>}
    * @export
    */
   this.profileLinesconfiguration = {
@@ -88,7 +88,7 @@ function Controller($scope, $injector) {
   };
 
   /**
-   * @type {Array.<gmfx.MousePositionProjection>}
+   * @type {Array.<MousePositionProjection>}
    * @export
    */
   this.mousePositionProjections = [{
@@ -106,7 +106,7 @@ function Controller($scope, $injector) {
   }];
 
   /**
-   * @type {gmfx.GridMergeTabs}
+   * @type {GridMergeTabs}
    * @export
    */
   this.gridMergeTabs = {

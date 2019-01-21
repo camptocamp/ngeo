@@ -16,6 +16,23 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 
 /**
+ * @typedef {{
+ *     ogcServer: (gmfThemes.GmfOgcServer),
+ *     layerNode: (gmfThemes.GmfLayerWMS)
+ * }} ObjectEditingQueryableLayerInfo
+ */
+
+
+/**
+ * Additional configuration options for the object editing tools directive.
+ * @typedef {Object} ObjectEditingToolsOptions
+ * @property regularPolygonRadius {number|undefined} The radius of the shapes created by the regular polygon
+ * radius creation tool. Default value is `100`. The value is in map units.
+ * }}
+ */
+
+
+/**
  * @enum {string}
  */
 const ProcessType = {
@@ -44,8 +61,8 @@ module.run(/* @ngInject */ ($templateCache) => {
 /**
  * A list of additional options for this directive that are not defined as
  * html attributes. All keys of this hash are optional. For the complete list
- * of keys and their possible values, see in gmfx.js, under:
- * `gmfx.ObjectEditingToolsOptions`.
+ * of keys and their possible values, see in js, under:
+ * `ObjectEditingToolsOptions`.
  */
 module.value('gmfObjectEditingToolsOptions', {});
 
@@ -81,7 +98,7 @@ module.value('gmfObjectEditingToolsOptions', {});
  * @htmlAttribute {import("ol/Map.js").default} gmf-objecteditingtools-map The map.
  * @htmlAttribute {string} gmf-objectediting-process Determines the
  *     behavior to adopt when sketch features are added.
- * @htmlAttribute {gmfx.ObjectEditingQueryableLayerInfo} gmf-objectediting-queryablelayerinfo
+ * @htmlAttribute {ObjectEditingQueryableLayerInfo} gmf-objectediting-queryablelayerinfo
  *     Queryable layer information.
  * @htmlAttribute {boolean} gmf-objectediting-requireslayer Flag that determines
  *     if the currently active tool requires a queryable layer or not.
@@ -174,7 +191,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.map;
 
   /**
-   * @type {gmfx.ObjectEditingQueryableLayerInfo}
+   * @type {ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.queryableLayerInfo;
@@ -256,7 +273,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
    */
   this.triangleAngle = Math.PI / 180 * 90; // 90 degrees
 
-  const oeToolsOptions = /** @type {gmfx.ObjectEditingToolsOptions} */ (
+  const oeToolsOptions = /** @type {ObjectEditingToolsOptions} */ (
     $injector.get('gmfObjectEditingToolsOptions'));
 
   /**

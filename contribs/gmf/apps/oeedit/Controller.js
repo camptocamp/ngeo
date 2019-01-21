@@ -176,7 +176,7 @@ function Controller($scope, $injector, $timeout) {
   this.selectedElevationLayer = this.elevationLayers[0];
 
   /**
-   * @type {Object.<string, gmfx.ProfileLineConfiguration>}
+   * @type {Object.<string, ProfileLineConfiguration>}
    * @export
    */
   this.profileLinesconfiguration = {
@@ -185,7 +185,7 @@ function Controller($scope, $injector, $timeout) {
   };
 
   /**
-   * @type {Array.<gmfx.MousePositionProjection>}
+   * @type {Array.<MousePositionProjection>}
    * @export
    */
   this.mousePositionProjections = [{
@@ -231,7 +231,7 @@ module.run(/* @ngInject */ ($templateCache) => {
   $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
 });
 
-module.value('gmfPermalinkOptions', /** @type {gmfx.PermalinkOptions} */ ({
+module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({
   pointRecenterZoom: 10
 }));
 

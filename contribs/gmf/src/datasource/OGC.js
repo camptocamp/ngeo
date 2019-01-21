@@ -1,6 +1,14 @@
-/**
- */
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
+
+
+/**
+ * The options required to create a `gmf.datasource.OGC`.
+ * @typedef {Object} OGCOptions
+ * @extends import('ngeo/datasource/OGC.js').OGCOptions
+ * @property gmfLayer {gmfThemes.GmfLayer} A reference to the GMF layer node that was used to create the
+ * data source. It may contains additional information, such as metadata, about the data source.
+ */
+
 
 export default class extends ngeoDatasourceOGC {
 
@@ -8,7 +16,7 @@ export default class extends ngeoDatasourceOGC {
    * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
    * adds some properties that are proper to GMF only.
    *
-   * @param {gmfx.datasource.OGCOptions} options Options.
+   * @param {OGCOptions} options Options.
    */
   constructor(options) {
 

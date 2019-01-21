@@ -91,7 +91,7 @@ Query.prototype.getQueryableLayersInfo = function() {
  *
  * @param {Array.<gmfThemes.GmfTheme>} themes List of theme nodes.
  * @param {gmfThemes.GmfOgcServers} ogcServers List of ogc servers
- * @return {Array.<gmfx.ObjectEditingQueryableLayerInfo>} List of
+ * @return {Array.<ObjectEditingQueryableLayerInfo>} List of
  *     queryable layers information.
  * @export
  */
@@ -149,7 +149,7 @@ function getQueryableLayersInfoFromThemes(
  * specific map to fetch a single feature. If no feature is found, a `null`
  * value is returned.
  *
- * @param {gmfx.ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
+ * @param {ObjectEditingQueryableLayerInfo} layerInfo Queryable layer
  *     information.
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {import("ol/Map.js").default} map Map.

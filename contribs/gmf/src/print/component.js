@@ -22,6 +22,47 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
+ * Fields that can come from a print v3 server and can be used in the partial
+ * of the gmf print panel.
+ * @typedef {Object} PrintLayoutInfo
+ * @property simpleAttributes {Array.<PrintSimpleAttributes>|undefined} Custom print layoutInfo.
+ * @property dpi {number|undefined} The selected 'dpi'.
+ * @property dpis {Array.<number>|undefined} The list of 'dpis'.
+ * @property formats {Object.<string, boolean>|undefined} The list of active 'formats' (png, pdf, ...).
+ * @property layout {string|undefined} The selected 'layout'.
+ * @property layouts {Array.<string>|undefined} The list of 'layouts'.
+ * @property legend {boolean|undefined} The legend checkbox.
+ * @property scale {number|undefined} The selected 'scale'.
+ * @property scales {Array.<number>|undefined} The list of 'scales'
+ */
+
+
+/**
+ * Object that can be used to generate a form field.
+ * @typedef {Object}
+ * @protected default {string|boolean|number|undefined} Default value of the form field.
+ * @protected name {string} Name of the form field.
+ * @protected type {string} Type of the field. Can be `String`, `Boolean` or `Number`.
+ */
+
+
+/**
+ * @typedef {{
+ *  columns : Array.<string>,
+ *  data : Array.<Array.<string|number|boolean>>
+ * }} DataSourceTableObject
+ */
+
+
+/**
+ * @typedef {{
+ *  title : string,
+ *  table : DataSourceTableObject
+ * }} DataSourcePrintReportObject
+ */
+
+
+/**
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfPrintComponent', [
@@ -112,7 +153,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  * Provide a component that display a print panel. This panel is populated with
  * a form corresponding to the capabilities delivered by a GMF print v3 server.
  * If you want to use another template for your print panel, you can see the
- * available layout information in the 'gmfx.PrintLayoutInfo' classes.
+ * available layout information in the 'PrintLayoutInfo' classes.
  *
  * Simple example:
  *
@@ -446,7 +487,7 @@ class Controller {
     this.paperSize_ = [];
 
     /**
-     * @type {gmfx.PrintLayoutInfo}
+     * @type {PrintLayoutInfo}
      * @export
      */
     this.layoutInfo = {};
@@ -711,7 +752,7 @@ class Controller {
 
 
   /**
-   * Update simple attributes information with gmfx.Customfield to be able to generate a form
+   * Update simple attributes information with Customfield to be able to generate a form
    * from a custom GMF print v3 configuration.
    * @private
    */
@@ -756,7 +797,7 @@ class Controller {
           }
         });
 
-        this.layoutInfo.simpleAttributes.push(/** gmfx.PrintSimpleAttributes */ ({
+        this.layoutInfo.simpleAttributes.push(/** PrintSimpleAttributes */ ({
           name,
           type,
           value
@@ -998,7 +1039,7 @@ class Controller {
   /**
    * Get datasource object for print report
    * @private
-   * @return {Array.<gmfx.datasource.DataSourcePrintReportObject>} the data
+   * @return {Array.<DataSourcePrintReportObject>} the data
    *     source object for the print report
    */
   getDataSource_() {
@@ -1020,7 +1061,7 @@ class Controller {
       }, this);
       if (columns.length) {
         datasourceObj =
-          /** @type {gmfx.datasource.DataSourcePrintReportObject} */({
+          /** @type {DataSourcePrintReportObject} */({
             title: this.translate_(source.label),
             table: {
               columns,

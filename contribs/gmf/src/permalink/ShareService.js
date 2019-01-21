@@ -1,5 +1,29 @@
 import angular from 'angular';
 
+
+/**
+ * @typedef {{
+ *  short_url: string
+ * }} ShortenerAPIResponseData
+ */
+
+
+/**
+ * @typedef {Object} ShortenerAPIResponse
+ * @property data {ShortenerAPIResponseData} Response payload to the shortener API
+ * @property status {number} HTTP status
+ */
+
+
+/**
+ * @typedef {{
+ *  url: string,
+ *  email: (string|undefined),
+ *  message : (string|undefined)
+ * }} ShortenerAPIRequestParams
+ */
+
+
 /**
  * Service to handle the sharing of the permalink.
  * @param {angular.IHttpService} $http Angular http service.
@@ -31,11 +55,11 @@ function ShareService($http, gmfShortenerCreateUrl) {
  * Get a short URL of the permalink by calling the url shortener service.
  * - If no shortener API url have been specified, it returns the permalink itself.
  * @param  {string} url the permalink
- * @return {gmfx.ShortenerAPIResponse|angular.IHttpPromise} an object containing the permalink not shortened or
+ * @return {ShortenerAPIResponse|angular.IHttpPromise} an object containing the permalink not shortened or
  * the promise attached to the shortener API request
  */
 ShareService.prototype.getShortUrl = function(url) {
-  const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+  const params = /** @type {ShortenerAPIRequestParams} */ ({
     url
   });
 
@@ -61,7 +85,7 @@ ShareService.prototype.getShortUrl = function(url) {
  * @return {angular.IHttpPromise} the promise attached to the shortener API request
  */
 ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
-  const params = /** @type {gmfx.ShortenerAPIRequestParams} */ ({
+  const params = /** @type {ShortenerAPIRequestParams} */ ({
     url: shortUrl,
     email: email
   });
@@ -75,7 +99,7 @@ ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
 
 
 /**
- * @param  {gmfx.ShortenerAPIRequestParams} params parameters for the request
+ * @param  {ShortenerAPIRequestParams} params parameters for the request
  * @return {angular.IHttpPromise} the promise attached to the shortener API request
  * @private
  */

@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
@@ -11,6 +8,17 @@ import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapability
 
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
+
+
+/**
+ * The definition of an external OGC server
+ * @typedef {{
+ *   name: (string),
+ *   type: (string),
+ *   url: (string)
+ * }} ExternalOGCServer
+ */
+
 
 const module = angular.module('gmfImportdatasource', [
   gmfDatasourceExternalDataSourcesManager.name,
@@ -202,7 +210,7 @@ class Controller {
     this.serversEngine_;
 
     const servers = $injector.has('gmfExternalOGCServers') ?
-      /** @type {Array.<!gmfx.ExternalOGCServer>|undefined} */ (
+      /** @type {Array.<!ExternalOGCServer>|undefined} */ (
         $injector.get('gmfExternalOGCServers')
       ) : undefined;
 

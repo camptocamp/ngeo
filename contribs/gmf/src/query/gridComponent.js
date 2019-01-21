@@ -23,6 +23,26 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
+ * Configuration for a grid tab.
+ * @typedef {Object} GridSource
+ * @property configuration {import("ngeo/grid/Config.js").default} Configuration used to initialize a grid.
+ * @property source {QueryResultSource} Results of the query source.
+ * }}
+ */
+
+
+/**
+ * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
+ * grid tabs.
+ *
+ * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
+ * with label `velo_park` and `moto_park` into a new source `two_wheels_park`.
+ *
+ * @typedef {Object<string, Array.<string>>} GridMergeTabs
+ */
+
+
+/**
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfQueryGridComponent', [
@@ -98,7 +118,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
  *     empty columns be hidden? Default: `false`.
  * @htmlAttribute {number?} gmf-displayquerygrid-maxrecenterzoom Optional. Maximum
  *     zoom-level to use when zooming to selected features.
- * @htmlAttribute {gmfx.GridMergeTabs?} gmf-displayquerygrid-gridmergetabs Optional.
+ * @htmlAttribute {GridMergeTabs?} gmf-displayquerygrid-gridmergetabs Optional.
  *     Configuration to merge grids with the same attributes into a single grid.
  *
  * @ngdoc component
@@ -203,7 +223,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.pending = false;
 
   /**
-   * @type {!Object.<string, gmfx.GridSource>}
+   * @type {!Object.<string, GridSource>}
    * @export
    */
   this.gridSources = {};
@@ -235,7 +255,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.maxRecenterZoom;
 
   /**
-   * @type {!gmfx.GridMergeTabs}
+   * @type {!GridMergeTabs}
    * @export
    */
   this.mergeTabs = {};
@@ -347,7 +367,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Returns a list of grid sources in the order they were loaded.
  * @export
- * @return {Array.<gmfx.GridSource>} Grid sources.
+ * @return {Array.<GridSource>} Grid sources.
  */
 Controller.prototype.getGridSources = function() {
   return this.loadedGridSources.map(sourceLabel => this.gridSources[sourceLabel]);
@@ -441,7 +461,7 @@ Controller.prototype.escapeValue = function(value) {
 /**
  * Returns if the given grid source is selected?
  * @export
- * @param {gmfx.GridSource} gridSource Grid source.
+ * @param {GridSource} gridSource Grid source.
  * @return {boolean} Is selected?
  */
 Controller.prototype.isSelected = function(gridSource) {
@@ -714,7 +734,7 @@ Controller.prototype.clear = function() {
 
 /**
  * Select the tab for the given grid source.
- * @param {gmfx.GridSource} gridSource Grid source.
+ * @param {GridSource} gridSource Grid source.
  * @export
  */
 Controller.prototype.selectTab = function(gridSource) {
@@ -774,7 +794,7 @@ Controller.prototype.onSelectionChanged_ = function() {
 
 
 /**
- * @param {gmfx.GridSource} gridSource Grid source
+ * @param {GridSource} gridSource Grid source
  * @private
  */
 Controller.prototype.updateFeatures_ = function(gridSource) {
@@ -803,7 +823,7 @@ Controller.prototype.updateFeatures_ = function(gridSource) {
 /**
  * Get the currently shown grid source.
  * @export
- * @return {gmfx.GridSource|null} Grid source.
+ * @return {GridSource|null} Grid source.
  */
 Controller.prototype.getActiveGridSource = function() {
   if (this.selectedTab === null) {

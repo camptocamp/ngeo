@@ -7,7 +7,6 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
-
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
@@ -35,6 +34,11 @@ const jsts = {
     OL3Parser,
   },
 };
+
+
+/**
+ * @typedef {Object.<string, import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>>} StylesObject
+ */
 
 
 /**
@@ -219,13 +223,13 @@ function Controller($scope, $timeout, gettextCatalog,
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
 
   /**
-   * @type {Array.<!gmfx.ObjectEditingQueryableLayerInfo>}
+   * @type {Array.<!ObjectEditingQueryableLayerInfo>}
    * @export
    */
   this.queryableLayersInfo;
 
   /**
-   * @type {gmfx.ObjectEditingQueryableLayerInfo}
+   * @type {ObjectEditingQueryableLayerInfo}
    * @export
    */
   this.selectedQueryableLayerInfo;
@@ -323,25 +327,25 @@ function Controller($scope, $timeout, gettextCatalog,
   this.geometryChanges_ = [];
 
   /**
-   * @type {!gmfx.StylesObject}
+   * @type {!StylesObject}
    * @private
    */
   this.defaultStyles_ = {};
 
   /**
-   * @type {!gmfx.StylesObject}
+   * @type {!StylesObject}
    * @private
    */
   this.defaultStylesWoVertice_ = {};
 
   /**
-   * @type {!gmfx.StylesObject}
+   * @type {!StylesObject}
    * @private
    */
   this.dirtyStyles_ = {};
 
   /**
-   * @type {!gmfx.StylesObject}
+   * @type {!StylesObject}
    * @private
    */
   this.dirtyStylesWoVertice_ = {};
@@ -805,7 +809,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(
 
 
 /**
- * @param {gmfx.StylesObject} styles Hash of style.
+ * @param {StylesObject} styles Hash of style.
  * @param {import("ol/Color.js").default} color Color.
  * @param {boolean=} opt_incVertice Whether to include vertice or not. Defaults
  *     to `true`.
@@ -1081,7 +1085,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function() {
 
 
 /**
- * @param {Array.<gmfx.ObjectEditingQueryableLayerInfo>} layersInfo List
+ * @param {Array.<ObjectEditingQueryableLayerInfo>} layersInfo List
  *     of queryable layers information, which contains the node and ogcServer.
  * @private
  */

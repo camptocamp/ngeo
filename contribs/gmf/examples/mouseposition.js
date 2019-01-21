@@ -32,7 +32,7 @@ function MainController() {
   const epsg2056template = 'Coordinates (m)&#58; {x}, {y}';
 
   /**
-   * @type {Array.<gmfx.MousePositionProjection>}
+   * @type {Array.<MousePositionProjection>}
    * @export
    */
   this.projections = [{

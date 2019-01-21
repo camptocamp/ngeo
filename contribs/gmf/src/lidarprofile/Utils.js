@@ -1,5 +1,3 @@
-/**
- */
 import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
@@ -9,6 +7,53 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {saveAs} from 'file-saver';
 import {select as d3select} from 'd3';
+
+/**
+ * The lidar point attribute list width default option
+ * @typedef {{
+ *   availableOptions: (Array.<lidarprofileServer.ConfigPointAttributes>|undefined),
+ *   selectedOption: (lidarprofileServer.ConfigPointAttributes|undefined)
+ * }} LidarPointAttributeList
+ */
+
+
+/**
+ * The object containing all points in profile
+ * @typedef {{
+ *  autoWidth: (boolean|undefined),
+ *  margin: (Object.<string, number>|undefined),
+ *  pointAttributes: (LidarPointAttributeList|undefined),
+ *  pointSum: (number|undefined),
+ *  tolerance: (number|undefined)
+ * }} LidarprofileClientConfig
+ */
+
+
+/**
+ * The object containing all points in profile
+ * @typedef {{
+ * distance: (Array.<number>|undefined),
+ * altitude: (Array.<number>|undefined),
+ * color_packed: (Array.<Array<number>>|undefined),
+ * intensity: (Array.<number>|undefined),
+ * classification: (Array.<number>|undefined),
+ * coords: (Array.<Array<number>>|undefined)
+ * }} LidarprofilePoints
+ */
+
+
+/**
+ * Profile point after measure or after parsing of the binary array returned by Pytree
+ * @typedef {{
+ *   distance: (number|undefined),
+ *   altitude: (number|undefined),
+ *   color_packed: (Array.<number>|undefined),
+ *   coords: (Array.<number>|undefined),
+ *   intensity: (number|undefined),
+ *   classification: (number|undefined),
+ *   set: (boolean|undefined)
+ * }} LidarPoint
+ */
 
 
 export default class {
@@ -175,7 +220,7 @@ export default class {
 
   /**
    * Create a image file by combining SVG and canvas elements and let the user downloads it.
-   * @param {gmfx.LidarprofileClientConfig} profileClientConfig The profile client configuration.
+   * @param {LidarprofileClientConfig} profileClientConfig The profile client configuration.
    * @export
    */
   downloadProfileAsImageFile(profileClientConfig) {
@@ -224,8 +269,8 @@ export default class {
 
   /**
    * Transforms a lidarprofile into multiple single points sorted by distance.
-   * @param {gmfx.LidarprofilePoints} profilePoints in the profile
-   * @return {Array.<gmfx.LidarPoint>} An array of Lidar Points.
+   * @param {LidarprofilePoints} profilePoints in the profile
+   * @return {Array.<LidarPoint>} An array of Lidar Points.
    */
   getFlatPointsByDistance(profilePoints) {
     const points = [];
@@ -247,7 +292,7 @@ export default class {
 
   /**
    * Get the data for a CSV export of the profile.
-   * @param {gmfx.LidarPoint} points a lidar profile points object.
+   * @param {LidarPoint} points a lidar profile points object.
    * @return {Array.<Object>} Objects for a csv export (column: value).
    * @export
    */
@@ -314,14 +359,14 @@ export default class {
 
   /**
    * Find the profile's closest point in profile data to the chart mouse position
-   * @param {gmfx.LidarprofilePoints} points Object containing points properties as arrays
+   * @param {LidarprofilePoints} points Object containing points properties as arrays
    * @param {number} xs mouse x coordinate on canvas element
    * @param {number} ys mouse y coordinate on canvas element
    * @param {number} tolerance snap sensibility
    * @param {Function} sx d3.scalelinear x scale
    * @param {Function} sy d3.scalelinear y scale
    * @param {lidarprofileServer.ConfigClassifications} classification_colors classification colors
-   * @return {gmfx.LidarPoint} closestPoint the closest point to the clicked coordinates
+   * @return {LidarPoint} closestPoint the closest point to the clicked coordinates
    */
   getClosestPoint(points, xs, ys, tolerance, sx, sy, classification_colors) {
     const d = points;

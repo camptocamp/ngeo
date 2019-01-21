@@ -4,6 +4,51 @@ import olEventsEventTarget from 'ol/events/Target.js';
 
 
 /**
+ * Availables functionalities.
+ * @typedef {Object} AuthenticationFunctionalities
+ * @property default_basemap {Array.<string>} Base maps to use by default.
+ * @property default_theme {Array.<string>} Theme to use by default.
+ * @property filtrable_layers {Array.<string>|undefined} A list of layer names that can be filtered.
+ * @property location: {Array.<string>} Availables locations.
+ */
+
+
+/**
+ * @typedef {Object} User
+ * @property functionalities {AuthenticationFunctionalities|null} Configured functionalities of the user
+ * @property is_password_changed {boolean|null} True if the password of the user has been changed. False otherwise.
+ * @property role_id {number|null} the role id of the user.
+ * @property role_name {string|null} The role name of the user.
+ * @property username {string|null} The name of the user.
+ */
+
+
+/**
+ * @typedef {import("ngeo/CustomEvent.js").default.<{
+ *   user: User
+ * }>} AuthenticationEvent
+ */
+
+
+/**
+ * @typedef {{
+ *     functionalities: (AuthenticationFunctionalities|undefined),
+ *     is_password_changed: (boolean|undefined),
+ *     role_id: (number|undefined),
+ *     role_name: (string|undefined),
+ *     username: (string|undefined)
+ * }} AuthenticationLoginResponse
+ */
+
+
+/**
+ * @typedef {{
+ *     success: boolean
+ * }} AuthenticationDefaultResponse
+ */
+
+
+/**
  * @enum {string}
  */
 export const RouteSuffix = {
@@ -36,7 +81,7 @@ class Service extends olEventsEventTarget {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.Scope} $rootScope The directive's scope.
    * @param {string} authenticationBaseUrl URL to "authentication" web service.
-   * @param {gmfx.User} gmfUser User.
+   * @param {User} gmfUser User.
    * @ngInject
    */
   constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser) {
@@ -63,7 +108,7 @@ class Service extends olEventsEventTarget {
     this.baseUrl_ = authenticationBaseUrl.replace(/\/$/, '');
 
     /**
-     * @type {gmfx.User}
+     * @type {User}
      * @private
      */
     this.user_ = gmfUser;
@@ -153,10 +198,10 @@ class Service extends olEventsEventTarget {
 
     /**
      * @param {angular.IHttpResponse} resp Ajax response.
-     * @return {gmfx.AuthenticationDefaultResponse} Response.
+     * @return {AuthenticationDefaultResponse} Response.
      */
     const successFn = function(resp) {
-      const respData = /** @type gmfx.AuthenticationDefaultResponse} */ (
+      const respData = /** @type AuthenticationDefaultResponse} */ (
         resp.data);
       return respData;
     }.bind(this);
@@ -167,7 +212,7 @@ class Service extends olEventsEventTarget {
   }
 
   /**
-   * @return {?gmfx.AuthenticationFunctionalities} The role functionalities.
+   * @return {?AuthenticationFunctionalities} The role functionalities.
    */
   getFunctionalities() {
     return this.user_.functionalities;
@@ -187,10 +232,10 @@ class Service extends olEventsEventTarget {
    * @private
    */
   handleLogin_(checkingLoginStatus, resp) {
-    const respData = /** @type {gmfx.AuthenticationLoginResponse} */ (resp.data);
+    const respData = /** @type {AuthenticationLoginResponse} */ (resp.data);
     this.setUser_(respData, !checkingLoginStatus);
     if (checkingLoginStatus) {
-      /** @type {gmfx.AuthenticationEvent} */
+      /** @type {AuthenticationEvent} */
       const event = new ngeoCustomEvent('ready', {user: this.user_});
       this.dispatchEvent(event);
     }
@@ -198,7 +243,7 @@ class Service extends olEventsEventTarget {
   }
 
   /**
-   * @param {gmfx.AuthenticationLoginResponse} respData Response.
+   * @param {AuthenticationLoginResponse} respData Response.
    * @param {boolean} emitEvent Emit a login event?
    * @private
    */
@@ -210,7 +255,7 @@ class Service extends olEventsEventTarget {
       this.user_[key] = respData[key];
     }
     if (emitEvent && respData.username !== undefined) {
-      /** @type {gmfx.AuthenticationEvent} */
+      /** @type {AuthenticationEvent} */
       const event = new ngeoCustomEvent('login', {user: this.user_});
       this.dispatchEvent(event);
     }
@@ -226,7 +271,7 @@ class Service extends olEventsEventTarget {
     for (const key in this.user_) {
       this.user_[key] = null;
     }
-    /** @type {gmfx.AuthenticationEvent} */
+    /** @type {AuthenticationEvent} */
     const event = new ngeoCustomEvent('logout', {user: this.user_});
     this.dispatchEvent(event);
     if (!noReload) {

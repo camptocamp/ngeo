@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -17,6 +15,27 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 
 import 'bootstrap/js/src/dropdown.js';
+
+
+/**
+ * Configuration object for one profile's line.
+ * @typedef {Object} ProfileLineConfiguration
+ * @property color {string|undefined} Color of the line (hex color string).
+ * @property zExtractor {function(Object): number|undefined} Extract the elevation of a point
+ * (an item of the elevation data array).
+ */
+
+
+/**
+ * Information to display for a given point in the profile. The point is
+ * typically given by the profile's hover.
+ * @typedef {Object} ProfileHoverPointInformations
+ * @property coordinate {import("ol/coordinate.js").Coordinate|undefined} Coordinate of the point.
+ * @property distance {number|undefined} distance of the point on the line. Can be in meters or kilometers.
+ * @property elevations {Object.<string, number>|undefined} Elevations of the point (example: {aster: 556.5, srtm: 560}).
+ * @property xUnits {string|undefined} Units of the x axis.
+ * @property yUnits {string|undefined} Units of the y axis.
+ */
 
 
 /**
@@ -80,7 +99,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @htmlAttribute {import("ol/geom/LineString.js").default} gmf-profile-line The linestring geometry
  *     to use to draw the profile.
  * @htmlAttribute {import("ol/Map.js").default?} gmf-profile-map An optional map.
- * @htmlAttribute {Object.<string, gmfx.ProfileLineConfiguration>}
+ * @htmlAttribute {Object.<string, ProfileLineConfiguration>}
  *     gmf-profile-linesconfiguration The configuration of the lines. Each keys
  *     will be used to request elevation layers.
  * @htmlAttribute {import("ol/style/Style.js").default?} gmf-profile-hoverpointstyle Optional style
@@ -188,7 +207,7 @@ function Controller($scope, $http, $element, $filter,
   this.map_ = null;
 
   /**
-   * @type {?Object<string, !gmfx.ProfileLineConfiguration>}
+   * @type {?Object<string, !ProfileLineConfiguration>}
    * @private
    */
   this.linesConfiguration_ = null;
@@ -218,7 +237,7 @@ function Controller($scope, $http, $element, $filter,
   this.profileData = [];
 
   /**
-   * @type {gmfx.ProfileHoverPointInformations}
+   * @type {ProfileHoverPointInformations}
    * @export
    */
   this.currentPoint = {
@@ -552,7 +571,7 @@ Controller.prototype.removeMeasureTooltip_ = function() {
 
 
 /**
- * Return the styler value of a gmfx.ProfileLineConfiguration.
+ * Return the styler value of a ProfileLineConfiguration.
  * @param {string} layerName name of the elevation layer.
  * @return {object} The object representation of the style.
  * @export

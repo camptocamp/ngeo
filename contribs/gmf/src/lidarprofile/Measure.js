@@ -18,13 +18,13 @@ export default class {
     this.manager_ = gmfLidarprofileManagerInstance;
 
     /**
-     * @type {!gmfx.LidarPoint}
+     * @type {!LidarPoint}
      * @private
      */
     this.pStart_ = {};
 
     /**
-     * @type {!gmfx.LidarPoint}
+     * @type {!LidarPoint}
      * @private
      */
     this.pEnd_ = {};
