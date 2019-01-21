@@ -3,14 +3,11 @@ import angular from 'angular';
 
 /**
  * @typedef {{
- *   open: (function()|undefined),
- *   close: (function()|undefined),
- *   cursorchange: (function(JQueryEventObject, Object,
- *       TypeaheadDataset)|undefined),
- *   select: (function(JQueryEventObject, Object,
- *       TypeaheadDataset)|undefined),
- *   autocomplete: (function(JQueryEventObject, Object,
- *       TypeaheadDataset)|undefined),
+ *   open: (Function|undefined),
+ *   close: (Function|undefined),
+ *   cursorchange: (function(JQueryEventObject, Object, TypeaheadDataset)|undefined),
+ *   select: (function(JQueryEventObject, Object, TypeaheadDataset)|undefined),
+ *   autocomplete: (function(JQueryEventObject, Object, TypeaheadDataset)|undefined),
  *   datasetsempty: (function(JQueryEventObject, string, boolean)|undefined)
  * }} SearchDirectiveListeners
  */
