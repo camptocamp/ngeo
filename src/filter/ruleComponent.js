@@ -670,7 +670,7 @@ class RuleController {
     const cloneFeature = this.clone.feature;
 
     const mapDiv = this.map.getViewport();
-    googAsserts.assertElement(mapDiv);
+    console.assert(mapDiv);
 
     if (active) {
       keys.push(

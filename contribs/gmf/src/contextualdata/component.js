@@ -145,7 +145,7 @@ Controller.prototype.init = function() {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
-  googAsserts.assertElement(mapDiv);
+  console.assert(mapDiv);
 
   olEvents.listen(mapDiv, 'contextmenu',
     this.handleMapContextMenu_, this);

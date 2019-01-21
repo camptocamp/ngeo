@@ -534,7 +534,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function(
   active) {
 
   const mapDiv = this.map.getViewport();
-  googAsserts.assertElement(mapDiv);
+  console.assert(mapDiv);
 
   if (active) {
     olEvents.listen(this.map, 'click',
