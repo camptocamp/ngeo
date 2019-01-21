@@ -408,7 +408,7 @@ LayertreeController.prototype.traverseDepthFirst = function(visitor) {
       }
       return false; // continue traversing
     default:
-      googAsserts.fail('Unhandled case');
+      console.assert(false, 'Unhandled case');
   }
 };
 

@@ -132,7 +132,7 @@ export function layerLoading(layer, $scope) {
       incrementEvents = ['imageloadstart'];
       decrementEvents = ['imageloadend', 'imageloaderror'];
     } else {
-      googAsserts.fail('unsupported source type');
+      console.assert(false, 'unsupported source type');
     }
 
     source.on(incrementEvents, () => {

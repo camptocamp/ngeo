@@ -303,7 +303,7 @@ Themes.prototype.getBgLayers = function() {
         gmfLayerWMS.metadata.customOpenLayersOptions
       ));
     }
-    googAsserts.fail(`Unsupported type: ${gmfLayer.type}`);
+    console.assert(false, `Unsupported type: ${gmfLayer.type}`);
   };
 
   /**
