@@ -981,7 +981,7 @@ FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
   } else if (typeof showMeasure === 'string') {
     showMeasure = (showMeasure === 'true') ? true : false;
   }
-  return console.assert(typeof showMeasure == boolean);
+  return console.assert(typeof showMeasure == 'boolean');
 };
 
 /**
@@ -996,7 +996,7 @@ FeatureHelper.prototype.getShowLabelProperty = function(feature) {
   } else if (typeof showLabel === 'string') {
     showLabel = (showLabel === 'true') ? true : false;
   }
-  return console.assert(typeof showLabel == boolean);
+  return console.assert(typeof showLabel == 'boolean');
 };
 
 /**

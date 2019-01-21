@@ -231,7 +231,7 @@ Controller.prototype.getSetName = function(value) {
  * @export
  */
 Controller.prototype.getSetShowLabel = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value) == boolean);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value) == 'boolean');
 };
 
 /**
@@ -251,7 +251,7 @@ Controller.prototype.getSetOpacity = function(value) {
  * @export
  */
 Controller.prototype.getSetShowMeasure = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value) == boolean);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value) == 'boolean');
 };
 
 
