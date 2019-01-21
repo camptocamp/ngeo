@@ -77,12 +77,12 @@ import olFormatWFS from 'ol/format/WFS.js';
  * maxFeatures: The maximum number of records per request the query service should ask.
  * Defaults to `50`.
  *
- * @typedef {{
- *     wfsTypes: (!Array.<WfsType>),
- *     pointRecenterZoom: (number|undefined),
- *     maxFeatures: (number|undefined)
- *     defaultFeatureNS: (string),
- *     defaultFeaturePrefix: (string),
+ * @typedef {Object} WfsPermalinkOptions
+ * @property wfsTypes
+ * @property pointRecenterZoom {number|undefined}
+ * @property maxFeatures {number|undefined}
+ * @property defaultFeatureNS {string}
+ * @property defaultFeaturePrefix {string}
  * }} WfsPermalinkOptions
  */
 
