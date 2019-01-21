@@ -8,7 +8,7 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @typedef {Object} AuthenticationFunctionalities
  * @property default_basemap {Array.<string>} Base maps to use by default.
  * @property default_theme {Array.<string>} Theme to use by default.
- * @property filtrable_layers {Array.<string>|undefined} A list of layer names that can be filtered.
+ * @property {Array.<string>} [filtrable_layers] A list of layer names that can be filtered.
  * @property location: {Array.<string>} Availables locations.
  */
 

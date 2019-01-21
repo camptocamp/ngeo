@@ -13,7 +13,7 @@ import olLayerTile from 'ol/layer/Tile.js';
 /**
  * Configuration options for the themes service.
  * @typedef {Object} ThemesOptions
- * @property addBlankBackgroundLayer {boolean|undefined} Whether to add a blank background layer to the list of available backgrounds.
+ * @property {boolean} [addBlankBackgroundLayer] Whether to add a blank background layer to the list of available backgrounds.
  */
 
 

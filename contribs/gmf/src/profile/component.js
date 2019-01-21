@@ -20,8 +20,8 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * Configuration object for one profile's line.
  * @typedef {Object} ProfileLineConfiguration
- * @property color {string|undefined} Color of the line (hex color string).
- * @property zExtractor {function(Object): number|undefined} Extract the elevation of a point
+ * @property {string} [color] Color of the line (hex color string).
+ * @property {function(Object): number} [zExtractor] Extract the elevation of a point
  * (an item of the elevation data array).
  */
 
@@ -30,11 +30,11 @@ import 'bootstrap/js/src/dropdown.js';
  * Information to display for a given point in the profile. The point is
  * typically given by the profile's hover.
  * @typedef {Object} ProfileHoverPointInformations
- * @property coordinate {import("ol/coordinate.js").Coordinate|undefined} Coordinate of the point.
- * @property distance {number|undefined} distance of the point on the line. Can be in meters or kilometers.
- * @property elevations {Object.<string, number>|undefined} Elevations of the point (example: {aster: 556.5, srtm: 560}).
- * @property xUnits {string|undefined} Units of the x axis.
- * @property yUnits {string|undefined} Units of the y axis.
+ * @property {import("ol/coordinate.js").Coordinate} [coordinate] Coordinate of the point.
+ * @property {number} [distance] distance of the point on the line. Can be in meters or kilometers.
+ * @property {Object.<string, number>} [elevations] Elevations of the point (example: {aster: 556.5, srtm: 560}).
+ * @property {string} [xUnits] Units of the x axis.
+ * @property {string} [yUnits] Units of the y axis.
  */
 
 

@@ -27,16 +27,16 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
 /**
  * Datasource configuration options for the search directive.
  * @typedef {Object} SearchComponentDatasource
- * @property bloodhoundOptions {BloodhoundOptions|undefined} The optional Bloodhound configuration for this
+ * @property {BloodhoundOptions} [bloodhoundOptions] The optional Bloodhound configuration for this
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
  * @property labelKey {string} The name of a corresponding GeoJSON property key in the current dataset.
  * The bound value of this property key will be used as label.
- * @property groupValues {Array.<string>|undefined} Possible values for the 'layer_name' key.
+ * @property {Array.<string>} [groupValues] Possible values for the 'layer_name' key.
  * Used to define groups of dataset.
- * @property groupActions {Array.<string>|undefined} List of allowed actions. The list may contain a
+ * @property {Array.<string>} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
- * @property projection {string|undefined} The geometry's projection for this set of data.
- * @property typeaheadDatasetOptions {TypeaheadDataset|undefined} The optional Typeahead configuration for
+ * @property {string} [projection] The geometry's projection for this set of data.
+ * @property {TypeaheadDataset} [typeaheadDatasetOptions] The optional Typeahead configuration for
  * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property url {string} URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.

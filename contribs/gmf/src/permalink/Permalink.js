@@ -40,13 +40,13 @@ import olLayerGroup from 'ol/layer/Group.js';
  * @property crosshairStyle {Array<(null|import("ol/style/Style.js").default)>|null|
  * import("ol/FeatureStyleFunction.js").default|import("ol/style/Style.js").default|undefined} An alternate
  * style for the crosshair feature added by the permalink service.
- * @property crosshairEnabledByDefault {boolean|undefined} Display the crosshair, gets overridden by the
+ * @property {boolean} [crosshairEnabledByDefault] Display the crosshair, gets overridden by the
  * `map_crosshair` parameter. Default is `false`.
- * @property projectionCodes {Array.<string>|undefined} EPSG codes (e.g. 'EPSG:3857' or '3857').
+ * @property {Array.<string>} [projectionCodes] EPSG codes (e.g. 'EPSG:3857' or '3857').
  * The permalink service will accept coordinates in these projections and try to detect which projection
  * the given coordinates are in.
- * @property useLocalStorage {boolean|undefined} Store the values in the local storage. Default is `false`.
- * @property pointRecenterZoom {number|undefined} Zoom level to use when result is a single point feature.
+ * @property {boolean} [useLocalStorage] Store the values in the local storage. Default is `false`.
+ * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature.
  * If not set the map is not zoomed to a specific zoom level.
  */
 
