@@ -1,4 +1,4 @@
-import ngeoPrintUtils, {DOTS_PER_INCH, INCHES_PER_METER} from 'ngeo/print/Utils.js';
+import {DOTS_PER_INCH, INCHES_PER_METER} from 'ngeo/print/Utils.js';
 
 describe('ngeo.print.Utils', () => {
 
