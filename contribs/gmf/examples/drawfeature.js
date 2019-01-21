@@ -60,7 +60,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
     zoom: 3
   });
 
-  ngeoFeatureHelper.setProjection(console.assert(view.getProjection()));
+  ngeoFeatureHelper.setProjection(view.getProjection());
 
   const featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);

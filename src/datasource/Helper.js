@@ -127,8 +127,7 @@ class Helper {
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = googAsserts.assertInstanceof(
-      evt.element, ngeoDatasourceDataSource);
+    const dataSource = evt.element instanceof ngeoDatasourceDataSource;
     this.cache_[dataSource.id] = dataSource;
   }
 
@@ -139,8 +138,7 @@ class Helper {
    * @private
    */
   handleDataSourcesRemove_(evt) {
-    const dataSource = googAsserts.assertInstanceof(
-      evt.element, ngeoDatasourceDataSource);
+    const dataSource = evt.element;
     delete this.cache_[dataSource.id];
   }
 

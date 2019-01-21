@@ -646,7 +646,7 @@ Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
 Permalink.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
-    return console.assert(this.featureHashFormat_.readFeatures(f));
+    return this.featureHashFormat_.readFeatures(f);
   }
   return [];
 };
@@ -1241,9 +1241,8 @@ Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
 
 Permalink.prototype.initExternalDataSources_ = function() {
 
-  const ngeoQuerent = console.assert(this.ngeoQuerent_);
-  const gmfExtDSManager = console.assert(
-    this.gmfExternalDataSourcesManager_);
+  const ngeoQuerent = this.ngeoQuerent_;
+  const gmfExtDSManager = this.gmfExternalDataSourcesManager_;
 
   const promises = [];
 
@@ -1531,7 +1530,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
  * @param {!Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
  */
 Permalink.prototype.cleanParams = function(groups) {
-  const keys = console.assert(this.ngeoLocation_.getParamKeys());
+  const keys = this.ngeoLocation_.getParamKeys();
   for (const key of keys) {
     if (key.startsWith(ParamPrefix.TREE_GROUP_LAYERS)) {
       const value = key.substring(ParamPrefix.TREE_GROUP_LAYERS.length);

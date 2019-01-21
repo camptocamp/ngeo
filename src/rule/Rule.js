@@ -217,7 +217,7 @@ class Rule {
      * @type {string}
      * @private
      */
-    this.type_ = console.assert(options.type);
+    this.type_ = options.type;
 
 
     // === Other properties ===

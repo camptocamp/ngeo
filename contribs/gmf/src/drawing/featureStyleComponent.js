@@ -210,7 +210,7 @@ Controller.prototype.handleColorSet_ = function(newColor) {
  * @export
  */
 Controller.prototype.getSetAngle = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value) == 'number');
+  return this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value);
 };
 
 
@@ -220,7 +220,7 @@ Controller.prototype.getSetAngle = function(value) {
  * @export
  */
 Controller.prototype.getSetName = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value) == 'string');
+  return this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value);
 };
 
 /**
@@ -230,7 +230,7 @@ Controller.prototype.getSetName = function(value) {
  * @export
  */
 Controller.prototype.getSetShowLabel = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value) == 'boolean');
+  return typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value);
 };
 
 /**
@@ -239,7 +239,7 @@ Controller.prototype.getSetShowLabel = function(value) {
  * @export
  */
 Controller.prototype.getSetOpacity = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value) == 'number');
+  return typeof this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value);
 };
 
 
@@ -250,7 +250,7 @@ Controller.prototype.getSetOpacity = function(value) {
  * @export
  */
 Controller.prototype.getSetShowMeasure = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value) == 'boolean');
+  return this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value);
 };
 
 
@@ -260,7 +260,7 @@ Controller.prototype.getSetShowMeasure = function(value) {
  * @export
  */
 Controller.prototype.getSetSize = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value) == 'number');
+  return this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value);
 };
 
 
@@ -270,7 +270,7 @@ Controller.prototype.getSetSize = function(value) {
  * @export
  */
 Controller.prototype.getSetStroke = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value) == 'number');
+  return this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value);
 };
 
 

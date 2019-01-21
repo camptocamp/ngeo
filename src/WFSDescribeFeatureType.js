@@ -19,7 +19,7 @@ const NAMESPACE_URIS_ = [
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-const PARSERS_ = console.assert(olXml.makeStructureNS(
+const PARSERS_ = olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'element': olXml.makeObjectPropertyPusher(
       readElement_
@@ -27,7 +27,7 @@ const PARSERS_ = console.assert(olXml.makeStructureNS(
     'complexType': olXml.makeObjectPropertyPusher(
       readComplexType_
     )
-  }));
+  });
 
 
 /**
@@ -35,12 +35,12 @@ const PARSERS_ = console.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-const COMPLEX_TYPE_PARSERS_ = console.assert(olXml.makeStructureNS(
+const COMPLEX_TYPE_PARSERS_ = olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'complexContent': olXml.makeObjectPropertySetter(
       readComplexContent_
     )
-  }));
+  });
 
 
 /**
@@ -48,12 +48,12 @@ const COMPLEX_TYPE_PARSERS_ = console.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-const COMPLEX_CONTENT_PARSERS_ = console.assert(olXml.makeStructureNS(
+const COMPLEX_CONTENT_PARSERS_ = olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'extension': olXml.makeObjectPropertySetter(
       readExtension_
     )
-  }));
+  });
 
 
 /**
@@ -61,12 +61,12 @@ const COMPLEX_CONTENT_PARSERS_ = console.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-const EXTENSION_PARSERS_ = console.assert(olXml.makeStructureNS(
+const EXTENSION_PARSERS_ = olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'sequence': olXml.makeObjectPropertySetter(
       readSequence_
     )
-  }));
+  });
 
 
 /**
@@ -74,12 +74,12 @@ const EXTENSION_PARSERS_ = console.assert(olXml.makeStructureNS(
  * @type {!Object.<string, !Object.<string, !import("ol/XmlParser.js").default>>}
  * @private
  */
-const SEQUENCE_PARSERS_ = console.assert(olXml.makeStructureNS(
+const SEQUENCE_PARSERS_ = olXml.makeStructureNS(
   NAMESPACE_URIS_, {
     'element': olXml.makeObjectPropertyPusher(
       readElement_
     )
-  }));
+  });
 
 
 /**

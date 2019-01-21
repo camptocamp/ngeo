@@ -1,7 +1,7 @@
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
+
 
 /**
  * @classdesc
@@ -62,7 +62,7 @@ MeasureArea.prototype.createDrawInteraction = function(style, source) {
  * @inheritDoc
  */
 MeasureArea.prototype.handleMeasure = function(callback) {
-  const geom = console.assert(this.sketchFeature.getGeometry() instanceof olGeomPolygon);
+  const geom = this.sketchFeature.getGeometry();
   const proj = this.getMap().getView().getProjection();
   console.assert(proj);
   const output = ngeoInteractionMeasure.getFormattedArea(geom, proj, this.precision, this.format);

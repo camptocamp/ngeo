@@ -3,7 +3,6 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
-import olGeomGeometry from 'ol/geom/Geometry.js';
 
 
 /**
@@ -154,9 +153,7 @@ export default class extends ngeoRuleRule {
    * @private
    */
   handleGeometryChange_(evt) {
-    const geometry = googAsserts.assertInstanceof(
-      evt.target, olGeomGeometry
-    );
+    const geometry = evt.target;
     this.updatingGeometry_ = true;
     this.expression = this.format_.writeGeometry(geometry);
     this.updatingGeometry_ = false;
@@ -170,7 +167,7 @@ export default class extends ngeoRuleRule {
     let geometry = null;
     if (this.expression) {
       // An expression can only have a string value with a geometry rule.
-      const expression = console.assert(typeof this.expression == 'string');
+      const expression = this.expression;
       geometry = this.format_.readGeometry(expression);
     }
     this.geometry = geometry;

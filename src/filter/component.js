@@ -232,7 +232,7 @@ class FilterController {
     );
 
     // (1) Separate the attributes in 2: geometry and the others.
-    const attributes = console.assert(this.datasource.attributes);
+    const attributes = this.datasource.attributes;
     for (const attribute of attributes) {
       if (attribute.type === ngeoFormatAttributeType.GEOMETRY) {
         this.geometryAttributes.push(attribute);

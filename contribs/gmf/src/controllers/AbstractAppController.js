@@ -79,7 +79,7 @@ function AbstractAppController(config, $scope, $injector) {
    * @type {import("ngeo/misc/FeatureHelper.js").default}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
-  ngeoFeatureHelper.setProjection(console.assert(this.map.getView().getProjection()));
+  ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
    * @type {import("gmf/theme/Manager.js").default}

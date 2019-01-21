@@ -19,15 +19,12 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
-import ngeoRuleSelect from 'ngeo/rule/Select.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
-import olFeature from 'ol/Feature.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
-import olGeomGeometry from 'ol/geom/Geometry.js';
 import 'ngeo/sass/font.scss';
 
 
@@ -453,8 +450,7 @@ class RuleController {
           if (newVal &&
               newVal === ngeoRuleRule.SpatialOperatorType.CONTAINS
           ) {
-            const clone = googAsserts.assertInstanceof(
-              this.clone, ngeoRuleGeometry);
+            const clone = this.clone instanceof ngeoRuleGeometry;
             const geometry = clone.feature.getGeometry();
             if (geometry) {
               const geomType = this.ngeoFeatureHelper_.getType(clone.feature);
@@ -476,8 +472,7 @@ class RuleController {
         () => this.clone.expression,
         (newVal) => {
           if (newVal) {
-            const clone = googAsserts.assertInstanceof(
-              this.clone, ngeoRuleGeometry);
+            const clone = this.clone;
             this.geomType = this.ngeoFeatureHelper_.getType(clone.feature);
           } else {
             this.geomType = null;
@@ -499,8 +494,7 @@ class RuleController {
         },
         (newVal) => {
           if (newVal) {
-            const clone = googAsserts.assertInstanceof(
-              this.clone, ngeoRuleGeometry);
+            const clone = this.clone;
             this.selectedFeatures.push(clone.feature);
           } else {
             this.selectedFeatures.clear();
@@ -574,7 +568,7 @@ class RuleController {
    * @export
    */
   toggleChoiceSelection(choice) {
-    const rule = console.assert(this.clone instanceof ngeoRuleSelect);
+    const rule = this.clone;
     const choices = rule.getExpression() ? rule.getExpression().split(',') : [];
     const idx = choices.indexOf(choice);
     if (idx > -1) {
@@ -788,19 +782,12 @@ class RuleController {
     // timeout to prevent double-click to zoom the map
     this.timeout_(() => {
 
-      const clone = googAsserts.assertInstanceof(
-        this.clone, ngeoRuleGeometry);
+      const clone = this.clone;
       const feature = clone.feature;
 
       // (1) Apply geometry
-      const drawnFeature = googAsserts.assertInstanceof(
-        evt.element,
-        olFeature
-      );
-      const geometry = googAsserts.assertInstanceof(
-        drawnFeature.getGeometry(),
-        olGeomGeometry
-      );
+      const drawnFeature = evt.element;
+      const geometry = drawnFeature.getGeometry();
       clone.geometry = geometry;
 
       // (2) Deactivate draw tools
@@ -823,7 +810,7 @@ class RuleController {
    * @export
    */
   getRuleGeometryType() {
-    const rule = console.assert(this.rule instanceof ngeoRuleGeometry);
+    const rule = this.rule;
     return this.ngeoFeatureHelper_.getType(rule.feature);
   }
 

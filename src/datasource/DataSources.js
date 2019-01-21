@@ -1,7 +1,4 @@
-/**
- */
 import angular from 'angular';
-import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
@@ -164,8 +161,7 @@ class DataSources {
    * @private
    */
   handleDataSourcesAdd_(event) {
-    const dataSource = googAsserts.assertInstanceof(
-      event.element, ngeoDatasourceDataSource);
+    const dataSource = event.element;
     if (this.map_) {
       const resolution = this.map_.getView().getResolution();
       console.assert(typeof resolution == 'number');

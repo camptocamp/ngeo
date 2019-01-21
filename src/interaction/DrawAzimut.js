@@ -226,8 +226,7 @@ DrawAzimut.prototype.startDrawing_ = function(event) {
  */
 DrawAzimut.prototype.modifyDrawing_ = function(event) {
   const coordinate = event.coordinate;
-  const geometry = googAsserts.assertInstanceof(
-    this.sketchFeature_.getGeometry(), olGeomGeometryCollection);
+  const geometry = this.sketchFeature_.getGeometry();
   const geometries = geometry.getGeometriesArray();
   const line = geometries[0];
   console.assert(line instanceof olGeomLineString);
@@ -240,7 +239,7 @@ DrawAzimut.prototype.modifyDrawing_ = function(event) {
   last[1] = coordinate[1];
   console.assert(line instanceof olGeomLineString);
   line.setCoordinates(coordinates);
-  const circle = console.assert(geometries[1] instanceof olGeomCircle);
+  const circle = geometries[1];
   circle.setRadius(line.getLength());
   this.updateSketchFeatures_();
 };

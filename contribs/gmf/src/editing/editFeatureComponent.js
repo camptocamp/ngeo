@@ -1280,8 +1280,8 @@ Controller.prototype.handleMenuVertexActionClick_ = function(evt) {
 
   switch (action) {
     case 'delete':
-      const feature = console.assert(this.feature);
-      const vertexInfo = console.assert(this.vertexInfo_);
+      const feature = this.feature;
+      const vertexInfo = this.vertexInfo_;
       this.ngeoFeatureHelper_.removeVertex(feature, vertexInfo);
       this.scope_.$apply();
       break;

@@ -1,7 +1,7 @@
 import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
-import olGeomLineString from 'ol/geom/LineString.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
+
 
 /**
  * @classdesc
@@ -57,7 +57,7 @@ MeasureLength.prototype.createDrawInteraction = function(style, source) {
  * @inheritDoc
  */
 MeasureLength.prototype.handleMeasure = function(callback) {
-  const geom = console.assert(this.sketchFeature.getGeometry() instanceof olGeomLineString);
+  const geom = this.sketchFeature.getGeometry();
   const proj = this.getMap().getView().getProjection();
   console.assert(proj);
   const output = ngeoInteractionMeasure.getFormattedLength(geom, proj, this.precision, this.format);

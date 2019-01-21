@@ -319,7 +319,7 @@ FeatureHelper.prototype.optNumber = function(feature, attrib) {
     if (typeof value == 'string') {
       return +value;
     } else {
-      return console.assert(typeof value == 'number');
+      return value;
     }
   } else {
     return undefined;
@@ -339,7 +339,7 @@ FeatureHelper.prototype.getNumber = function(feature, attrib) {
   if (typeof value == 'string') {
     return +value;
   } else {
-    return console.assert(typeof value == 'number');
+    return value;
   }
 };
 
@@ -928,7 +928,7 @@ FeatureHelper.prototype.getAngleProperty = function(feature) {
  */
 FeatureHelper.prototype.getColorProperty = function(feature) {
 
-  const color = console.assert(typeof feature.get(ngeoFormatFeatureProperties.COLOR) == 'string');
+  const color = feature.get(ngeoFormatFeatureProperties.COLOR);
 
   console.assert(typeof color == 'string');
 
@@ -952,7 +952,7 @@ FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
  * @export
  */
 FeatureHelper.prototype.getNameProperty = function(feature) {
-  const name = console.assert(typeof feature.get(ngeoFormatFeatureProperties.NAME) == 'string');
+  const name = feature.get(ngeoFormatFeatureProperties.NAME);
   console.assert(typeof name == 'string');
   return name;
 };
@@ -980,7 +980,7 @@ FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
   } else if (typeof showMeasure === 'string') {
     showMeasure = (showMeasure === 'true') ? true : false;
   }
-  return console.assert(typeof showMeasure == 'boolean');
+  return showMeasure;
 };
 
 /**
@@ -995,7 +995,7 @@ FeatureHelper.prototype.getShowLabelProperty = function(feature) {
   } else if (typeof showLabel === 'string') {
     showLabel = (showLabel === 'true') ? true : false;
   }
-  return console.assert(typeof showLabel == 'boolean');
+  return showLabel;
 };
 
 /**

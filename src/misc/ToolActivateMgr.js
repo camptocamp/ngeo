@@ -88,18 +88,6 @@ ToolActivateMgr.prototype.registerTool = function(groupName, tool,
     defaultTool: opt_defaultActivate || false,
     unlisten: unlisten
   });
-
-  if (googAsserts.ENABLE_ASSERTS) {
-    // check that only one default tool per group exists
-    let defaultTools = 0;
-    entries.forEach((entry) => {
-      if (entry.defaultTool) {
-        defaultTools++;
-      }
-    });
-    console.assert(
-      defaultTools <= 1, `more than one default tool in group ${groupName}`);
-  }
 };
 
 

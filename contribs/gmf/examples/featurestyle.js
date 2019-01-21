@@ -153,7 +153,7 @@ function MainController($scope, ngeoFeatureHelper) {
     zoom: 6
   });
 
-  ngeoFeatureHelper.setProjection(console.assert(view.getProjection()));
+  ngeoFeatureHelper.setProjection(view.getProjection());
 
   // set style
   features.forEach((feature) => {

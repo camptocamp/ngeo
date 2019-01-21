@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import * as olArray from 'ol/array.js';
@@ -115,9 +113,7 @@ class Controller {
      * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @private
      */
-    this.featureOverlay_ = console.assert(
-      ngeoFeatureOverlayMgr.getFeatureOverlay()
-    );
+    this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
      * @type {Array.<!import("ol/EventsKey.js").default>}

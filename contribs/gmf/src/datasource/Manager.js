@@ -613,10 +613,7 @@ class Manager {
         );
       }
 
-      wmsLayer = googAsserts.assertInstanceof(
-        gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl),
-        olLayerImage
-      );
+      wmsLayer = gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
     }
 
     this.treeCtrlCache_[id] = {
@@ -847,13 +844,10 @@ class Manager {
     const id = olUtilGetUid(dataSource.gmfLayer);
     const item = this.treeCtrlCache_[id];
     console.assert(item);
-    const wmsLayer = console.assert(item.wmsLayer);
-    const wmsSource = googAsserts.assertInstanceof(
-      wmsLayer.getSource(),
-      olSourceImageWMS
-    );
+    const wmsLayer = item.wmsLayer;
+    const wmsSource = wmsLayer.getSource();
 
-    const timeProperty = console.assert(dataSource.timeProperty);
+    const timeProperty = dataSource.timeProperty;
     let timeParam;
     const range = dataSource.timeRangeValue;
     if (range) {

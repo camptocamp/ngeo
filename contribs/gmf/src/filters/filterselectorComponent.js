@@ -193,9 +193,7 @@ class Controller {
      * @type {!import("ngeo/map/FeatureOverlay.js").default}
      * @export
      */
-    this.featureOverlay = console.assert(
-      ngeoFeatureOverlayMgr.getFeatureOverlay()
-    );
+    this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
      * @type {!import("ngeo/filter/RuleHelper.js").default}
@@ -489,7 +487,7 @@ class Controller {
     let filtrable = true;
     const gettext = this.gettextCatalog_;
     const notify = opt_notify !== false;
-    const names = console.assert(this.filtrableLayerNodeNames_);
+    const names = this.filtrableLayerNodeNames_;
     const msgs = [];
 
     // (1) The name of the DS must be in list of filtrable layer node names
@@ -585,7 +583,7 @@ class Controller {
         ) {
           const directedAttributes =
               dataSource.gmfLayer.metadata.directedFilterAttributes;
-          const attributes = console.assert(dataSource.attributes);
+          const attributes = dataSource.attributes;
           for (const attribute of attributes) {
             if (directedAttributes.includes(attribute.name)) {
               item.directedRules.push(
@@ -635,7 +633,7 @@ class Controller {
   saveFilterSave() {
 
     const name = this.saveFilterName;
-    const dataSource = console.assert(this.readyDataSource);
+    const dataSource = this.readyDataSource;
     const dataSourceId = dataSource.id;
     const alreadyExist = (this.gmfSavedFilters.indexOfItem(
       name, dataSourceId) !== -1);
@@ -674,7 +672,7 @@ class Controller {
    */
   saveFilterLoadItem(filterItem) {
 
-    const dataSource = console.assert(this.readyDataSource);
+    const dataSource = this.readyDataSource;
 
     // (1) Reset current rules
     this.customRules = null;
@@ -696,7 +694,7 @@ class Controller {
       dataSource.filterCondition = filterItem.condition;
 
       // (4) Update cache item
-      const cacheItem = console.assert(this.getRuleCacheItem_(dataSource));
+      const cacheItem = this.getRuleCacheItem_(dataSource);
       cacheItem.customRules = customRules;
       cacheItem.directedRules = directedRules;
     });

@@ -28,7 +28,7 @@ export default class {
    */
   readFromComplexTypeElement_(object) {
 
-    const name = console.assert(typeof object['name'] == 'string');
+    const name = object['name'];
     const alias = 'alias' in object ? object['alias'] : null;
     const required = object['minOccurs'] != '0';
 
@@ -38,7 +38,7 @@ export default class {
       required
     };
 
-    const type = console.assert(typeof object['type'] == 'string');
+    const type = object['type'];
 
     if (!setGeometryType(attribute, type)) {
       if (type === 'gml:TimeInstantType' || type === 'dateTime') {

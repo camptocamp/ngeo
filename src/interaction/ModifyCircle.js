@@ -208,8 +208,7 @@ ModifyCircle.prototype.setMap = function(map) {
  */
 ModifyCircle.prototype.handleFeatureAdd_ = function(evt) {
   const feature = evt.element;
-  googAsserts.assertInstanceof(feature, olFeature,
-    'feature should be an ol.Feature');
+  console.assert(feature instanceof olFeature, 'feature should be an ol.Feature');
   this.addFeature_(feature);
 };
 

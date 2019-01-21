@@ -217,7 +217,7 @@ class Controller {
    *  @private
    */
   updateContentTemplate_() {
-    const scope = console.assert(this.contentScope || this.scope_);
+    const scope = this.contentScope || this.scope_;
     const compiled = this.compile_(this.contentTemplate)(scope);
     const displayWindow = this.element_.find('.ngeo-displaywindow .windowcontainer .animation-container .content-template-container');
     displayWindow.empty();

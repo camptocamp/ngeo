@@ -300,7 +300,7 @@ class Controller {
    * @export
    */
   connect() {
-    const url = console.assert(typeof this.url == 'string');
+    const url = this.url;
     const serviceType = guessServiceTypeByUrl(url);
 
     this.startWorking_();
@@ -339,7 +339,7 @@ class Controller {
    * @export
    */
   load() {
-    const file = console.assert(this.file);
+    const file = this.file;
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromFile(file, (success) => {
       if (!success) {
         this.hasError = true;

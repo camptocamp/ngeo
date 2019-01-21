@@ -139,7 +139,7 @@ const Controller = class {
       this.maxTilt = 7 * Math.PI / 16;
     }
     if (!this.ol3dm) {
-      this.ol3dm = console.assert(this.olcsService_.getManager());
+      this.ol3dm = this.olcsService_.getManager();
     }
     this.tiltRightEl_ = this.element_.find('.ngeo-tilt-right');
     this.tiltLeftEl_ = this.element_.find('.ngeo-tilt-left');

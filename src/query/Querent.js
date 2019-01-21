@@ -240,7 +240,7 @@ class Querent {
       wfs: [],
       wms: []
     };
-    const resolution = console.assert(typeof map.getView().getResolution() == 'number');
+    const resolution = map.getView().getResolution();
 
     for (const dataSource of dataSources) {
 
@@ -277,7 +277,7 @@ class Querent {
 
     const ogcLayerNames = dataSource.getOGCLayerNames();
 
-    const url = olUriAppendParams(googAsserts.assertString(dataSource.wfsUrl), {
+    const url = olUriAppendParams(dataSource.wfsUrl, {
       'REQUEST': 'DescribeFeatureType',
       'SERVICE': 'WFS',
       'VERSION': '2.0.0',
@@ -558,11 +558,11 @@ class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const maxFeatures = console.assert(typeof options.limit == 'number');
+    const maxFeatures = options.limit;
 
     const map = options.map;
     const view = map.getView();
-    const resolution = console.assert(typeof view.getResolution() == 'number');
+    const resolution = view.getResolution();
     const projection = view.getProjection();
     const srsName = projection.getCode();
     const wfsCount = options.wfsCount === true;
@@ -766,11 +766,11 @@ class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const FEATURE_COUNT = console.assert(typeof options.limit == 'number');
+    const FEATURE_COUNT = options.limit;
 
     const map = options.map;
     const view = map.getView();
-    const resolution = console.assert(typeof view.getResolution() == 'number');
+    const resolution = view.getResolution();
     const projection = view.getProjection();
     const projCode = projection.getCode();
 
@@ -870,14 +870,12 @@ class Querent {
       });
 
       // (4) Build query url, then launch
-      const wmsGetFeatureInfoUrl = googAsserts.assertString(
-        wmsSource.getGetFeatureInfoUrl(
-          coordinate, resolution, projCode, {
-            // Without extern, quoting is necessary
-            'FEATURE_COUNT': FEATURE_COUNT,
-            'INFO_FORMAT': INFO_FORMAT
-          }
-        )
+      const wmsGetFeatureInfoUrl = wmsSource.getGetFeatureInfoUrl(
+        coordinate, resolution, projCode, {
+          // Without extern, quoting is necessary
+          'FEATURE_COUNT': FEATURE_COUNT,
+          'INFO_FORMAT': INFO_FORMAT
+        }
       );
 
       const canceler = this.registerCanceler_();

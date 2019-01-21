@@ -8,7 +8,6 @@ import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
 
 
-
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscDecorate from 'ngeo/misc/decorate.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';

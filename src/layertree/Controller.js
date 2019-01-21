@@ -267,7 +267,7 @@ LayertreeController.prototype.refreshState = function(opt_onChild, opt_broadcast
       this.node.metadata &&
       this.node.metadata.exclusiveGroup
   ) {
-    const onChild = console.assert(opt_onChild);
+    const onChild = opt_onChild;
     this.children.forEach((child) => {
       if (child !== onChild) {
         child.setState('off', opt_broadcast);

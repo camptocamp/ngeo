@@ -251,7 +251,7 @@ class MapQuerent {
 
       const typeSeparatedFeatures = {};
       features.forEach((feature) => {
-        const type = console.assert(typeof feature.get('ngeo_feature_type_') == 'string');
+        const type = feature.get('ngeo_feature_type_');
         if (!typeSeparatedFeatures[type]) {
           typeSeparatedFeatures[type] = [];
         }

@@ -409,8 +409,8 @@ class ExternalDatSourcesManager {
       dataSource = this.extDataSources_[id];
     } else {
 
-      const name = console.assert(typeof layer['Title'] == 'string');
-      const wmtsLayer = console.assert(typeof layer['Identifier'] == 'string');
+      const name = typeof layer['Title'];
+      const wmtsLayer = typeof layer['Identifier'];
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator

@@ -186,7 +186,7 @@ class RuleHelper {
         break;
       case ngeoFormatAttributeType.SELECT:
         rule = new ngeoRuleSelect({
-          choices: console.assert(attribute.choices),
+          choices: attribute.choices,
           name: name,
           propertyName: attribute.name
         });
@@ -619,7 +619,7 @@ class RuleHelper {
     } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
       console.assert(rule instanceof ngeoRuleGeometry);
-      const geometry = console.assert(rule.geometry);
+      const geometry = rule.geometry;
       if (operator === rsot.CONTAINS) {
         filter = olFormatFilter.contains(
           geometryName,
@@ -640,7 +640,7 @@ class RuleHelper {
         );
       }
     } else if (numericTypes.includes(operator)) {
-      const numericExpression = console.assert(typeof expression == 'number');
+      const numericExpression = expression;
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
           propertyName,
