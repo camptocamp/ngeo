@@ -363,7 +363,7 @@ Controller.prototype.$onInit = function() {
   const optionsFn = this['getOptionsFn'];
   if (optionsFn) {
     const options = optionsFn();
-    googAsserts.assertObject(options);
+    console.assert(options);
     Object.assign(this.profileOptions, options);
   }
 };

@@ -675,9 +675,9 @@ class Controller {
     this.layoutInfo.layout = this.layout_.name;
 
     const mapInfo = this.isAttributeInCurrentLayout_('map');
-    googAsserts.assertObject(mapInfo);
+    console.assert(mapInfo);
     const clientInfo = mapInfo['clientInfo'];
-    googAsserts.assertObject(clientInfo);
+    console.assert(clientInfo);
     this.paperSize_ = [clientInfo['width'], clientInfo['height']];
 
     this.updateCustomFields_();

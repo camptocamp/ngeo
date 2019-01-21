@@ -107,7 +107,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.map_ = map;
 
   const options = $scope['getDesktopGeolocationOptionsFn']() || {};
-  googAsserts.assertObject(options);
+  console.assert(options);
 
   /**
    * @type {!angular.IScope}

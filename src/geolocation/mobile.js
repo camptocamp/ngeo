@@ -116,7 +116,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.map_ = map;
 
   const options = $scope['getMobileGeolocationOptionsFn']() || {};
-  googAsserts.assertObject(options);
+  console.assert(options);
 
   /**
    * @type {import("ngeo/message/Notification.js").default}
