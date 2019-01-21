@@ -92,7 +92,7 @@ class DataSources {
 
     // (2) Sync resolution with existing data sources
     const resolution = view.getResolution();
-    googAsserts.assertNumber(resolution);
+    console.assert(typeof resolution == number);
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -116,7 +116,7 @@ class DataSources {
     const view = evt.target;
     googAsserts.assertInstanceof(view, olView);
     const resolution = view.getResolution();
-    googAsserts.assertNumber(resolution);
+    console.assert(typeof resolution == number);
     this.syncDataSourcesToResolution_(resolution);
   }
 
@@ -169,7 +169,7 @@ class DataSources {
       event.element, ngeoDatasourceDataSource);
     if (this.map_) {
       const resolution = this.map_.getView().getResolution();
-      googAsserts.assertNumber(resolution);
+      console.assert(typeof resolution == number);
       this.syncDataSourceToResolution_(dataSource, resolution);
     }
   }

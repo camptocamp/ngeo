@@ -895,7 +895,7 @@ class Controller {
       }
     }
 
-    googAsserts.assertNumber(this.layoutInfo.dpi);
+    console.assert(typeof this.layoutInfo.dpi == number);
     googAsserts.assertString(this.layoutInfo.layout);
 
     // convert the WMTS layers to WMS

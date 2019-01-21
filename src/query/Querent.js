@@ -241,7 +241,7 @@ class Querent {
       wfs: [],
       wms: []
     };
-    const resolution = googAsserts.assertNumber(map.getView().getResolution());
+    const resolution = console.assert(typeof map.getView().getResolution() == number);
 
     for (const dataSource of dataSources) {
 
@@ -559,11 +559,11 @@ class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const maxFeatures = googAsserts.assertNumber(options.limit);
+    const maxFeatures = console.assert(typeof options.limit == number);
 
     const map = options.map;
     const view = map.getView();
-    const resolution = googAsserts.assertNumber(view.getResolution());
+    const resolution = console.assert(typeof view.getResolution() == number);
     const projection = view.getProjection();
     const srsName = projection.getCode();
     const wfsCount = options.wfsCount === true;
@@ -767,11 +767,11 @@ class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const FEATURE_COUNT = googAsserts.assertNumber(options.limit);
+    const FEATURE_COUNT = console.assert(typeof options.limit == number);
 
     const map = options.map;
     const view = map.getView();
-    const resolution = googAsserts.assertNumber(view.getResolution());
+    const resolution = console.assert(typeof view.getResolution() == number);
     const projection = view.getProjection();
     const projCode = projection.getCode();
 

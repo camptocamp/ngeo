@@ -641,7 +641,7 @@ class RuleHelper {
         );
       }
     } else if (numericTypes.includes(operator)) {
-      const numericExpression = googAsserts.assertNumber(expression);
+      const numericExpression = console.assert(typeof expression == number);
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
           propertyName,

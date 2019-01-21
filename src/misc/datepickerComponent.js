@@ -234,7 +234,7 @@ Controller.prototype.init = function() {
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values[0]);
     this.edate = this.ngeoTime_.createDate(initialOptions_.values[1]);
   } else {
-    googAsserts.assertNumber(initialOptions_.values);
+    console.assert(typeof initialOptions_.values == number);
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values);
   }
 };
