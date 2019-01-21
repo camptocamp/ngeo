@@ -5,9 +5,9 @@ import angular from 'angular';
  * @typedef {{
  *   open: (Function|undefined),
  *   close: (Function|undefined),
- *   cursorchange: (function(JQueryEventObject, Object, TypeaheadDataset)|undefined),
- *   select: (function(JQueryEventObject, Object, TypeaheadDataset)|undefined),
- *   autocomplete: (function(JQueryEventObject, Object, TypeaheadDataset)|undefined),
+ *   cursorchange: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset)|undefined),
+ *   select: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset)|undefined),
+ *   autocomplete: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset)|undefined),
  *   datasetsempty: (function(JQueryEventObject, string, boolean)|undefined)
  * }} SearchDirectiveListeners
  */
@@ -26,8 +26,8 @@ import angular from 'angular';
  *
  * See our live example: [../examples/search.html](../examples/search.html)
  *
- * @htmlAttribute {TypeaheadOptions} ngeo-search The options.
- * @htmlAttribute {Array.<TypeaheadDataset>} ngeo-search-datasets The sources datasets.
+ * @htmlAttribute {Twitter.Typeahead.Options} ngeo-search The options.
+ * @htmlAttribute {Array.<Twitter.Typeahead.Dataset>} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -45,11 +45,11 @@ function searchDirective() {
     link: (scope, element, attrs) => {
 
       const typeaheadOptionsExpr = attrs['ngeoSearch'];
-      const typeaheadOptions = /** @type {TypeaheadOptions} */
+      const typeaheadOptions = /** @type {Twitter.Typeahead.Options} */
               (scope.$eval(typeaheadOptionsExpr));
 
       const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
-      const typeaheadDatasets = /** @type {Array.<TypeaheadDataset>} */
+      const typeaheadDatasets = /** @type {Array.<Twitter.Typeahead.Dataset>} */
               (scope.$eval(typeaheadDatasetsExpr));
 
       const args = typeaheadDatasets.slice();
@@ -84,7 +84,7 @@ function searchDirective() {
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
-         * @param {TypeaheadDataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
          */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
@@ -96,7 +96,7 @@ function searchDirective() {
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
-         * @param {TypeaheadDataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
          */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
@@ -108,7 +108,7 @@ function searchDirective() {
         /**
          * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
-         * @param {TypeaheadDataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
          */
         (event, suggestion, dataset) => {
           scope.$apply(() => {
@@ -119,7 +119,7 @@ function searchDirective() {
       element.on('typeahead:asyncreceive',
         /**
          * @param {JQueryEventObject} event Event.
-         * @param {TypeaheadDataset} dataset Dataset.
+         * @param {Twitter.Typeahead.Dataset} dataset Dataset.
          * @param {string} query Query.
          */
         (event, dataset, query) => {

@@ -84,17 +84,17 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
   this.inputValue;
 
   /**
-   * @type {TypeaheadOptions}
+   * @type {Twitter.Typeahead.Options}
    * @export
    */
-  this.options = /** @type {TypeaheadOptions} */ ({
+  this.options = /** @type {Twitter.Typeahead.Options} */ ({
   });
 
   /**
-   * @type {Array.<TypeaheadDataset>}
+   * @type {Array.<Twitter.Typeahead.Dataset>}
    * @export
    */
-  this.datasets = [/** @type {TypeaheadDataset} */({
+  this.datasets = [/** @type {Twitter.Typeahead.Dataset} */({
     name: 'nominatim',
     display: 'name',
     source: this.ngeoNominatimService.typeaheadSourceDebounced
@@ -119,7 +119,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 /**
  * @param {JQueryEventObject} event Event.
  * @param {NominatimSearchResult} suggestion Suggestion.
- * @param {TypeaheadDataset} dataset Dataset.
+ * @param {Twitter.Typeahead.Dataset} dataset Dataset.
  * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
  */
