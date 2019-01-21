@@ -935,7 +935,7 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @param {Object|import("ol/Feature.js").default} suggestion Suggestion.
    * @param {TypeaheadDataset} dataset Dataset.
    * @private
@@ -959,7 +959,7 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @param {import("ol/Feature.js").default} feature Feature.
    * @param {TypeaheadDataset} dataset Dataset.
    * @private
@@ -1028,7 +1028,7 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @private
    */
   close_(event) {
@@ -1039,7 +1039,7 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @param {string} query Query.
    * @param {boolean} empty Empty.
    * @private

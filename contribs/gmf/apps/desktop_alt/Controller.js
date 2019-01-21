@@ -144,7 +144,7 @@ olUtilInherits(Controller, gmfControllersAbstractDesktopController);
 
 
 /**
- * @param {jQuery.Event} event keydown event.
+ * @param {JQueryEventObject} event keydown event.
  * @export
  */
 Controller.prototype.onKeydown = function(event) {

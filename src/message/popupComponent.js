@@ -61,7 +61,7 @@ function directive(ngeoPopupTemplateUrl) {
       element.addClass('popover');
 
       /**
-       * @param {jQuery.Event} evt Event.
+       * @param {JQueryEventObject} evt Event.
        */
       scope.close = function(evt) {
         if (evt) {

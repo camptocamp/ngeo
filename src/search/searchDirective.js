@@ -5,13 +5,13 @@ import angular from 'angular';
  * @typedef {{
  *   open: (function()|undefined),
  *   close: (function()|undefined),
- *   cursorchange: (function(jQuery.Event, Object,
+ *   cursorchange: (function(JQueryEventObject, Object,
  *       TypeaheadDataset)|undefined),
- *   select: (function(jQuery.Event, Object,
+ *   select: (function(JQueryEventObject, Object,
  *       TypeaheadDataset)|undefined),
- *   autocomplete: (function(jQuery.Event, Object,
+ *   autocomplete: (function(JQueryEventObject, Object,
  *       TypeaheadDataset)|undefined),
- *   datasetsempty: (function(jQuery.Event, string, boolean)|undefined)
+ *   datasetsempty: (function(JQueryEventObject, string, boolean)|undefined)
  * }} SearchDirectiveListeners
  */
 
@@ -85,7 +85,7 @@ function searchDirective() {
 
       element.on('typeahead:cursorchange',
         /**
-         * @param {jQuery.Event} event Event.
+         * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
          * @param {TypeaheadDataset} dataset Dataset.
          */
@@ -97,7 +97,7 @@ function searchDirective() {
 
       element.on('typeahead:select',
         /**
-         * @param {jQuery.Event} event Event.
+         * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
          * @param {TypeaheadDataset} dataset Dataset.
          */
@@ -109,7 +109,7 @@ function searchDirective() {
 
       element.on('typeahead:autocomplete',
         /**
-         * @param {jQuery.Event} event Event.
+         * @param {JQueryEventObject} event Event.
          * @param {Object} suggestion Suggestion.
          * @param {TypeaheadDataset} dataset Dataset.
          */
@@ -121,7 +121,7 @@ function searchDirective() {
 
       element.on('typeahead:asyncreceive',
         /**
-         * @param {jQuery.Event} event Event.
+         * @param {JQueryEventObject} event Event.
          * @param {TypeaheadDataset} dataset Dataset.
          * @param {string} query Query.
          */

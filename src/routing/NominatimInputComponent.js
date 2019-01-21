@@ -117,7 +117,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 }
 
 /**
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @param {NominatimSearchResult} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}

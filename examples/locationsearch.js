@@ -123,7 +123,7 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
 
 
 /**
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @param {Object} suggestion Suggestion.
  * @param {TypeaheadDataset} dataset Dataset.
  * @this {app.locationsearch.SearchController}
