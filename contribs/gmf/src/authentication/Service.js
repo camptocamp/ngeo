@@ -6,8 +6,8 @@ import olEventsEventTarget from 'ol/events/Target.js';
 /**
  * Availables functionalities.
  * @typedef {Object} AuthenticationFunctionalities
- * @property default_basemap {Array.<string>} Base maps to use by default.
- * @property default_theme {Array.<string>} Theme to use by default.
+ * @property {Array.<string>} default_basemap Base maps to use by default.
+ * @property {Array.<string>} default_theme Theme to use by default.
  * @property {Array.<string>} [filtrable_layers] A list of layer names that can be filtered.
  * @property location: {Array.<string>} Availables locations.
  */
@@ -15,11 +15,11 @@ import olEventsEventTarget from 'ol/events/Target.js';
 
 /**
  * @typedef {Object} User
- * @property functionalities {AuthenticationFunctionalities|null} Configured functionalities of the user
- * @property is_password_changed {boolean|null} True if the password of the user has been changed. False otherwise.
- * @property role_id {number|null} the role id of the user.
- * @property role_name {string|null} The role name of the user.
- * @property username {string|null} The name of the user.
+ * @property {AuthenticationFunctionalities|null} functionalities Configured functionalities of the user
+ * @property {boolean|null} is_password_changed True if the password of the user has been changed. False otherwise.
+ * @property {number|null} role_id the role id of the user.
+ * @property {string|null} role_name The role name of the user.
+ * @property {string|null} username The name of the user.
  */
 
 

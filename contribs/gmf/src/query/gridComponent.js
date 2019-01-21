@@ -25,8 +25,8 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * Configuration for a grid tab.
  * @typedef {Object} GridSource
- * @property configuration {import("ngeo/grid/Config.js").default} Configuration used to initialize a grid.
- * @property source {QueryResultSource} Results of the query source.
+ * @property {import("ngeo/grid/Config.js").default} configuration Configuration used to initialize a grid.
+ * @property {QueryResultSource} source Results of the query source.
  * }}
  */
 

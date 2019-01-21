@@ -81,8 +81,8 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @property wfsTypes
  * @property {number} [pointRecenterZoom]
  * @property {number} [maxFeatures]
- * @property defaultFeatureNS {string}
- * @property defaultFeaturePrefix {string}
+ * @property {string} defaultFeatureNS
+ * @property {string} defaultFeaturePrefix
  * }} WfsPermalinkOptions
  */
 

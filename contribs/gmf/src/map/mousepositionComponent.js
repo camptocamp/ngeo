@@ -9,9 +9,9 @@ import 'bootstrap/js/src/dropdown.js';
  * Projection object for the MousePositionDirective. Define a label and a filter
  * to use to display coordinates for a projection.
  * @typedef {Object} MousePositionProjection
- * @property code {string} The epsg name of a projection.
- * @property label {string} The label to display with this projection.
- * @property filter {string} The filter function to use to format this projection. Arguments can be passed
+ * @property {string} code The epsg name of a projection.
+ * @property {string} label The label to display with this projection.
+ * @property {string} filter The filter function to use to format this projection. Arguments can be passed
  * with colon as separator (example: MyFilter:args1:args2:...)
  */
 

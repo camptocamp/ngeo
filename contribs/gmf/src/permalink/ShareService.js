@@ -10,8 +10,8 @@ import angular from 'angular';
 
 /**
  * @typedef {Object} ShortenerAPIResponse
- * @property data {ShortenerAPIResponseData} Response payload to the shortener API
- * @property status {number} HTTP status
+ * @property {ShortenerAPIResponseData} data Response payload to the shortener API
+ * @property {number} status HTTP status
  */
 
 

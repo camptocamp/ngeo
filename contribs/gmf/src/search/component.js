@@ -29,7 +29,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @typedef {Object} SearchComponentDatasource
  * @property {BloodhoundOptions} [bloodhoundOptions] The optional Bloodhound configuration for this
  * data set. See: https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
- * @property labelKey {string} The name of a corresponding GeoJSON property key in the current dataset.
+ * @property {string} labelKey The name of a corresponding GeoJSON property key in the current dataset.
  * The bound value of this property key will be used as label.
  * @property {Array.<string>} [groupValues] Possible values for the 'layer_name' key.
  * Used to define groups of dataset.
@@ -38,7 +38,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {string} [projection] The geometry's projection for this set of data.
  * @property {TypeaheadDataset} [typeaheadDatasetOptions] The optional Typeahead configuration for
  * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
- * @property url {string} URL of the search service. Must contain a '%QUERY' term that will be
+ * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
  * }}
  */
