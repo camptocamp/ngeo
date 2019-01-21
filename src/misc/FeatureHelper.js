@@ -320,7 +320,7 @@ FeatureHelper.prototype.optNumber = function(feature, attrib) {
     if (typeof value == 'string') {
       return +value;
     } else {
-      return console.assert(typeof value == number);
+      return console.assert(typeof value == 'number');
     }
   } else {
     return undefined;
@@ -340,7 +340,7 @@ FeatureHelper.prototype.getNumber = function(feature, attrib) {
   if (typeof value == 'string') {
     return +value;
   } else {
-    return console.assert(typeof value == number);
+    return console.assert(typeof value == 'number');
   }
 };
 
@@ -917,7 +917,7 @@ export function getFilteredFeatureValues(feature) {
 FeatureHelper.prototype.getAngleProperty = function(feature) {
   const angle = +(/** @type {string} */ (
     feature.get(ngeoFormatFeatureProperties.ANGLE)));
-  console.assert(typeof angle == number);
+  console.assert(typeof angle == 'number');
   return angle;
 };
 
@@ -1156,7 +1156,7 @@ FeatureHelper.prototype.getMeasure = function(feature) {
   if (geometry instanceof olGeomPolygon) {
     if (this.getType(feature) === ngeoGeometryType.CIRCLE) {
       const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
-      console.assert(typeof azimut == number);
+      console.assert(typeof azimut == 'number');
       const line = this.getRadiusLine(feature, azimut);
 
       measure = ngeoInteractionMeasureAzimut.getFormattedAzimutRadius(

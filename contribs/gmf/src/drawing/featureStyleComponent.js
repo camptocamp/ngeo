@@ -211,7 +211,7 @@ Controller.prototype.handleColorSet_ = function(newColor) {
  * @export
  */
 Controller.prototype.getSetAngle = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value) == number);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value) == 'number');
 };
 
 
@@ -240,7 +240,7 @@ Controller.prototype.getSetShowLabel = function(value) {
  * @export
  */
 Controller.prototype.getSetOpacity = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value) == number);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value) == 'number');
 };
 
 
@@ -261,7 +261,7 @@ Controller.prototype.getSetShowMeasure = function(value) {
  * @export
  */
 Controller.prototype.getSetSize = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value) == number);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value) == 'number');
 };
 
 
@@ -271,7 +271,7 @@ Controller.prototype.getSetSize = function(value) {
  * @export
  */
 Controller.prototype.getSetStroke = function(value) {
-  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value) == number);
+  return console.assert(typeof this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value) == 'number');
 };
 
 
