@@ -42,7 +42,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @property {number} [geolocationZoom]
  * @property {string} [autorotate]
  * @property {olx.ViewOptions} [mapViewConfig]
- * @property {ol.Collection.<import("ol/control/Control.js").default>|Array.<import("ol/control/Contrimport("ol/js.js").default").default>} [mapControls]
+ * @property {ol.Collection.<import("ol/control/Contrimport("ol/js.js").default").default>|Array.<import("ol/control/Contrimport("ol/js.js").default").default>} [mapControls]
  * @property {import("ol/Collection.js").default.<import("ol/interaction/Interaction.js").default>|Array.<import("ol/interaction/Interaction.js").default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  * }} Config
