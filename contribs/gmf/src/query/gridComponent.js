@@ -165,7 +165,7 @@ module.component('gmfDisplayquerygrid', component);
 function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
 
-  const queryOptions = /** @type {QueryOptions} */ (
+  const queryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
     $injector.has('ngeoQueryOptions') ?
       $injector.get('ngeoQueryOptions') : {});
 

@@ -10,7 +10,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * Results of the query source.
  *
  * @typedef {Object} QueryResult
- * @property {!Array.<QueryResultSource>} sources Results for each query source.
+ * @property {!Array.<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} sources Results for each query source.
  * @property {number} total The number of results for all sources.
  * @property {boolean} pending If at least one source is pending.
  */
@@ -30,13 +30,14 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * @property {number} [tolerance=3] When issuing an identify feature request at a click position, either a WMS GetFeatureInfo
  * or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
  * around the position. This `tolerance` in pixel determines the size of the bbox.
- * @property {string} [featureNS=http://mapserver.gis.umn.edu/mapserver] The feature namespace for WFS GetFeature requests.
+ * @property {string} [featureNS='http://mapserver.gis.umn.edu/mapserver'] The feature namespace for WFS GetFeature requests.
  * @property {string} [featurePrefix=feature] The feature prefix for WFS GetFeature requests.
  * @property {string} [geometryName=geom] The name of the geometry property for WFS GetFeature requests.
+ * @property {boolean} [cursorHover]
  */
 
 
-class MapQuerent {
+export class MapQuerent {
 
   /**
    * The ngeo Map Querent is the service bound to a map that issues
@@ -44,12 +45,12 @@ class MapQuerent {
    * service.
    *
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
-   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/datasource/Helper.js").Helper} ngeoDataSourcesHelper Ngeo data
    *     sources helper service.
-   * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature
+   * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature
    *     helper service.
-   * @param {import("ngeo/query/Querent.js").default} ngeoQuerent The ngeo querent service.
+   * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent The ngeo querent service.
    * @param {QueryResult} ngeoQueryResult The ngeo query result service.
    * @ngdoc service
    * @ngname ngeoQuerent
@@ -63,25 +64,25 @@ class MapQuerent {
         $injector.get('ngeoQueryOptions') : {});
 
     /**
-     * @type {DataSources}
+     * @type {import("ngeo/datasource/DataSource.js").DataSources}
      * @private
      */
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {import("ngeo/misc/FeatureHelper.js").default}
+     * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
      * @private
      */
     this.featureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").default}
+     * @type {import("ngeo/datasource/Helper.js").Helper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
 
     /**
-     * @type {import("ngeo/query/Querent.js").default}
+     * @type {import("ngeo/query/Querent.js").Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
@@ -133,7 +134,7 @@ class MapQuerent {
   }
 
   /**
-   * @param {IssueGetFeaturesOptions} options Options.
+   * @param {import('ngeo/query/Querent.js').IssueGetFeaturesOptions} options Options.
    * @export
    */
   issue(options) {
@@ -202,7 +203,7 @@ class MapQuerent {
    * Called after a request to the querent service. Update the result.
    *
    * @param {string} action Query action
-   * @param {QuerentResult} response Response
+   * @param {import('ngeo/query/Querent.js').QuerentResult} response Response
    * @private
    */
   handleResult_(action, response) {

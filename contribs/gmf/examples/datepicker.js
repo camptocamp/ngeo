@@ -31,7 +31,7 @@ function MainController($scope, ngeoWMSTime) {
   this.ngeoWMSTime_ = ngeoWMSTime;
 
   /**
-   * @type {TimeProperty}
+   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
    * @export
    */
   this.wmsTimeRangeMode = {
@@ -46,7 +46,7 @@ function MainController($scope, ngeoWMSTime) {
   };
 
   /**
-   * @type {TimeProperty}
+   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
    * @export
    */
   this.wmsTimeValueMode = {

@@ -34,7 +34,7 @@ const module = angular.module('ngeoMapQuery', [
  *
  * See our live example: [../examples/mapquery.html](../examples/mapquery.html)
  *
- * @param {import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -47,6 +47,7 @@ function directive(ngeoMapQuerent, $injector) {
     scope: false,
     link: (scope, elem, attrs) => {
       const map = scope.$eval(attrs['ngeoMapQueryMap']);
+      /** @type {Array<import('ol/events.js').EventsKey>} */
       const listenerKeys_ = [];
 
       /**
@@ -90,7 +91,7 @@ function directive(ngeoMapQuerent, $injector) {
         listenerKeys_.push(
           olEventsListen(map, 'singleclick', handleMapClick_)
         );
-        const queryOptions = /** @type {QueryOptions} */ (
+        const queryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
           $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
         );
         if (queryOptions.cursorHover) {
@@ -104,7 +105,9 @@ function directive(ngeoMapQuerent, $injector) {
        * Unlisten the map events.
        */
       const deactivate_ = function() {
-        olEventsUnlistenByKey(listenerKeys_);
+        for (const lk of listenerKeys_) {
+          olEventsUnlistenByKey(lk);
+        }
         listenerKeys_.length = 0;
         if (scope.$eval(attrs['ngeoMapQueryAutoclear']) !== false) {
           ngeoMapQuerent.clear();

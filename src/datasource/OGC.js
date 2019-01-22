@@ -63,8 +63,22 @@ export const WMSInfoFormat = {
 
 
 /**
+ * @typedef {Object} DimensionFilterConfig
+ * @property {string} field
+ * @property {string} [value]
+ */
+
+
+/**
+* Dimensions applied by filters configuration.
+* @typedef {Object.<string, DimensionFilterConfig>} DimensionsFiltersConfig
+*/
+
+
+/**
  * The options required to create a `OGC`.
  *
+ * extends DataSourceOptions
  * @typedef {Object} OGCOptions
  * @property {Dimensions} [activeDimensions] The dimensions that are currently active on the data source.
  * @property {boolean} [copyable] Whether the geometry from this data source can be copied to other data
@@ -75,7 +89,7 @@ export const WMSInfoFormat = {
  * dimensions.
  * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any). Defaults to
  * `ngeo.filter.Condition.AND`.
- * @property {!Array.<!Rule>} [filterRules] A list of filter rules to apply to this data source using the filter condition.
+ * @property {!Array.<!import('ngeo/rule/Rule.js').default>} [filterRules] A list of filter rules to apply to this data source using the filter condition.
  * @property {boolean} [filtrable] Whether the data source is filtrable or not.
  * @property {string} [geometryName] The name of the geometry attribute.
  * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
@@ -106,29 +120,15 @@ export const WMSInfoFormat = {
  * @property {string} [wmsUrl] The URL to use for (WMS) requests.
  * @property {string} [wmtsLayer] The layer name to use for the (WMTS) requests.
  * @property {string} [wmtsUrl] The URL to use for (WMTS) requests.
- * @extends DataSourceOptions
- */
-
-
-/**
- * @typedef {Object} OGC
- * @property {DimensionsActive} activeDimensions
- * @property {boolean} combinableForWMS
- * @property {boolean} combinableForWFS
- * @property {boolean} supportsWFS
- * @property {boolean} supportsWMS
- * @property {string} [wmsUrl]
- * @property {string} [wfsUrl]
- * @property {string} filterCondition
- * @property {?Array.<!Rule>} filterRules
- * @property {function(OGC): boolean} combinableWithDataSourceForWFS Whether this data source can be
- * combined to the given other data source to fetch features in a single WFS request.
- * @property {function(OGC): boolean} combinableWithDataSourceForWMS Whether this data source can be
- * combined to the given other data source to fetch features in a single WMS request.
- * @property {function(OGC): boolean} haveTheSameActiveDimensionsRemote data source to compare with this one.
- * Whether the two data sources have the same active dimensions. If both have no dimensions, they are
- * considered to be sharing the same dimensions.
- * @extends DataSource
+ * @property {Array.<Attribute>} [attributes] (DataSourceOptions)
+ * @property {DimensionsFiltersConfig} [dimensionsFiltersConfig] (DataSourceOptions)
+ * @property {number} id (DataSourceOptions)
+ * @property {string} [identifierAttribute] (DataSourceOptions)
+ * @property {boolean} [inRange] (DataSourceOptions)
+ * @property {number} [minResolution] (DataSourceOptions)
+ * @property {number} [maxResolution] (DataSourceOptions)
+ * @property {string} name (DataSourceOptions)
+ * @property {boolean} [visible=false] (DataSourceOptions)
  */
 
 
@@ -178,10 +178,7 @@ export const WMSInfoFormat = {
 const DEFAULT_GEOMETRY_NAME = 'geom';
 
 
-/**
- * @implements {OGC}
- */
-export default class extends ngeoDatasourceDataSource {
+class OGC extends ngeoDatasourceDataSource {
 
   /**
    * A data source contains information of a single source of data that can
@@ -708,6 +705,7 @@ export default class extends ngeoDatasourceDataSource {
    * @export
    */
   get activeDimensions() {
+    /** @type {DimensionsActive} */
     const active = {};
     const dimensions = this.dimensions_ || {};
     const config = this.dimensionsConfig || {};
@@ -1060,3 +1058,5 @@ export const TimePropertyResolutionEnum = {
   YEAR: 'year',
   SECOND: 'second'
 };
+
+export default OGC;

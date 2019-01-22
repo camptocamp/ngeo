@@ -76,10 +76,7 @@ const TemporalOperatorType = {
 };
 
 
-/**
- * @implements {Rule}
- */
-class Rule {
+export default class Rule {
 
   /**
    * The abstract class for all filter rules.
@@ -330,6 +327,3 @@ class Rule {
   }
 
 }
-
-
-export default Rule;

@@ -14,6 +14,7 @@
  * @typedef {Object.<string, DimensionFilterConfig>} DimensionsFiltersConfig
  */
 
+
 /**
  * @typedef {Object} GmfThemes
  */
@@ -75,7 +76,7 @@
  * All the group child will have the same value of his parent,
  * In other word, all the group of a first level group will have the same value.
  * @property {string} [ogcServer] On non mixed first level group it is the ogc server to use.
- * @property {TimeProperty} [time] On non mixed first level group with more then one time layer, it is the time information.
+ * @property {import('ngeo/datasource/OGC.js').TimeProperty} [time] On non mixed first level group with more then one time layer, it is the time information.
  */
 
 
@@ -115,7 +116,7 @@
  * @property {number} maxResolutionHint The max resolution where the layer is visible.
  * @property {number} minResolutionHint The min resolution where the layer is visible.
  * @property {string} [ogcServer]
- * @property {TimeProperty} [time] The time information if the layer directly manage it, see
+ * @property {import('ngeo/datasource/OGC.js').TimeProperty} [time] The time information if the layer directly manage it, see
  * also {GmfGroup.time}.
  */
 

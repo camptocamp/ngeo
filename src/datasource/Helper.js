@@ -5,7 +5,7 @@ import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import * as olEvents from 'ol/events.js';
 
-class Helper {
+export class Helper {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *

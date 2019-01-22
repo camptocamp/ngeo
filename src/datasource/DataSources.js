@@ -4,12 +4,7 @@ import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
 
 
-/**
- * @typedef {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} DataSources
- */
-
-
-class DataSources {
+export class DataSource {
 
   /**
    * This service is responsible of the synchronization between the ngeo
@@ -157,7 +152,7 @@ class DataSources {
   /**
    * Called when a new data source is added to the ngeo collection. If there's
    * map bound, update its `inRange` right away.
-   * @param {!import("ol/Collection/Event.js").default} event Event
+   * @param {!import("ol/Collection.js").CollectionEvent} event Event
    * @private
    */
   handleDataSourcesAdd_(event) {
@@ -177,7 +172,7 @@ class DataSources {
  */
 const module = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
-module.service('ngeoDataSources', DataSources);
+module.service('ngeoDataSources', DataSource);
 
 
 export default module;

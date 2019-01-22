@@ -66,7 +66,7 @@ const FormatType = {
  * @ngname ngeoFeatureHelper
  * @ngInject
  */
-function FeatureHelper($injector, $filter) {
+export function FeatureHelper($injector, $filter) {
 
   /**
    * @type {!angular.IFilterService}
