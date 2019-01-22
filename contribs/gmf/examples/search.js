@@ -89,7 +89,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   };
 
   /**
-   * @type {TypeaheadOptions}
+   * @type {Twitter.Typeahead.Options}
    * @export
    */
   this.searchOptions = {

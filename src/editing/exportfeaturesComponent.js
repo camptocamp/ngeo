@@ -186,7 +186,7 @@ Controller.prototype.handleElementClick_ = function() {
  * Called when a menu item is clicked. Export the features to the selected
  * format.
  * @param {string} format Format.
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @private
  */
 Controller.prototype.handleMenuItemClick_ = function(format, event) {

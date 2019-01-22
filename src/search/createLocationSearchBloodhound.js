@@ -10,28 +10,18 @@ import 'corejs-typeahead';
 
 
 /**
- * limit: The maximum number of results to retrieve per request (max. and default limit=50)
- *
- * origins: A comma separated list of origins.
+ * @typedef {Object} LocationSearchOptions
+ * @property {number} [limit=50] The maximum number of results to retrieve per request.
+ * @property {string} [origins] A comma separated list of origins.
  * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel
  * Per default all origins are used.
- *
- * targetProjection: Target projection.
- *
- * options: Optional Bloodhound options. If `undefined`, the default Bloodhound config will be used.
- *
- * remoteOptions: Optional Bloodhound remote options. Only used if `remote` is not defined in `options`.
- *
- * prepare: Optional function to prepare the request.
- *
- * @typedef {{
- *    limit: (number|undefined),
- *    origins: (string|undefined),
- *    targetProjection: (!ol.proj.Projection|undefined),
- *    options: (!BloodhoundOptions|undefined),
- *    remoteOptions: (!BloodhoundRemoteOptions|undefined),
- *    prepare: (undefined|function(string, jQueryAjaxSettings):jQueryAjaxSettings)
- * }} LocationSearchOptions
+ * @property {!import('ol/proj/Projection').default} [targetProjection] Target projection.
+ * @property {!Bloodhound.BloodhoundOptions} [options] Optional Bloodhound options. If `undefined`,
+ * the default Bloodhound config will be used.
+ * @property {!Bloodhound.RemoteOptions} [remoteOptions] Optional Bloodhound remote options.
+ * Only used if `remote` is not defined in `options`.
+ * @property {function(string, JQueryAjaxSettings): JQueryAjaxSettings} [prepare] Optional function to
+ * prepare the request.
  */
 
 
@@ -40,6 +30,7 @@ import 'corejs-typeahead';
  * @return {Bloodhound} The Bloodhound object.
  */
 function createLocationSearchBloodhound(opt_options) {
+  /** @type {LocationSearchOptions} */
   const options = opt_options || {};
 
   const sourceProjection = olProj.get(EPSG21781);
@@ -76,7 +67,7 @@ function createLocationSearchBloodhound(opt_options) {
     }
   };
 
-  const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
+  const bloodhoundOptions = /** @type {Bloodhound.BloodhoundOptions} */ ({
     remote: {
       url: 'https://api3.geo.admin.ch/rest/services/api/SearchServer?type=locations&searchText=%QUERY',
       prepare: (query, settings) => {
@@ -91,8 +82,8 @@ function createLocationSearchBloodhound(opt_options) {
         return (options.prepare !== undefined) ?
           options.prepare(query, settings) : settings;
       },
-      transform: (/** @type {geoAdminx.SearchLocationResponse} */ parsedResponse) => {
-        const features = parsedResponse.results.map((/** @type {geoAdminx.SearchLocationResult} */ result) => {
+      transform: (parsedResponse) => {
+        const features = parsedResponse.results.map((result) => {
           const attrs = result.attrs;
 
           // note that x and y are switched!
@@ -124,16 +115,24 @@ function createLocationSearchBloodhound(opt_options) {
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
-    datumTokenizer: () => {},
+    datumTokenizer: (datum) => {
+      return [];
+    },
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
 
-  // the options objects are cloned to avoid updating the passed object
-  const bhOptions = Object.assign({}, options.options || {});
+  // The options objects are cloned to avoid updating the passed object
+  /** @type {Bloodhound.BloodhoundOptions} */
+  const bhOptions = Object.assign({}, options.options || {
+    datumTokenizer: (datum) => {
+      return [];
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
   const remoteOptions = Object.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
-    // move the remote options to opt_remoteOptions
+    // Move the remote options to opt_remoteOptions
     Object.assign(remoteOptions, bhOptions.remote);
     delete bhOptions.remote;
   }

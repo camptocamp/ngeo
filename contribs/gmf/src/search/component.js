@@ -36,7 +36,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {Array.<string>} [groupActions] List of allowed actions. The list may contain a
  * combination of `add_theme`, `add_group` or `add_layer`
  * @property {string} [projection] The geometry's projection for this set of data.
- * @property {TypeaheadDataset} [typeaheadDatasetOptions] The optional Typeahead configuration for
+ * @property {Twitter.Typeahead.Dataset} [typeaheadDatasetOptions] The optional Twitter.Typeahead. configuration for
  * this dataset. See: https://github.com/twitter/typeahead.js/blob/master/
  * @property {string} url URL of the search service. Must contain a '%QUERY' term that will be
  * replaced by the input string.
@@ -147,7 +147,7 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  *
  * @htmlAttribute {string} gmf-search-input-value The input value (read only).
  * @htmlAttribute {import("ol/Map.js").default} gmf-search-map The map.
- * @htmlAttribute {TypeaheadOptions|undefined} gmf-search-options Addition Typeahead options.
+ * @htmlAttribute {Twitter.Typeahead.Options|undefined} gmf-search-options Addition Twitter.Typeahead. options.
  * @htmlAttribute {SearchComponentDatasource} gmf-search-datasource
  *      The datasources.
  * @htmlAttribute {Object.<string, import("ol/style/Style.js").default>}
@@ -376,16 +376,16 @@ class SearchController {
     this.datasources = [];
 
     /**
-     * @type {TypeaheadOptions}
+     * @type {Twitter.Typeahead.Options}
      * @export
      */
     this.typeaheadOptions;
 
     /**
-     * @type {TypeaheadOptions}
+     * @type {Twitter.Typeahead.Options}
      * @export
      */
-    this.options = /** @type {TypeaheadOptions} */ ({
+    this.options = /** @type {Twitter.Typeahead.Options} */ ({
       highlight: true
     });
 
@@ -396,7 +396,7 @@ class SearchController {
     this.featuresStyles;
 
     /**
-     * @type {Array.<TypeaheadDataset>}
+     * @type {Array.<Twitter.Typeahead.Dataset>}
      * @export
      */
     this.datasets = [];
@@ -618,7 +618,7 @@ class SearchController {
    * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(GeoJSONFeature): boolean)=} opt_filter A filter function
    *     based on a GeoJSONFeaturesCollection's array.
-   * @return {TypeaheadDataset} A typeahead dataset.
+   * @return {Twitter.Typeahead.Dataset} A typeahead dataset.
    * @private
    */
   createDataset_(config, opt_filter) {
@@ -626,14 +626,14 @@ class SearchController {
     const componentScope = this.scope_;
     const compile = this.compile_;
     const bloodhoundEngine = this.createAndInitBloodhound_(config, opt_filter);
-    const typeaheadDataset = /** @type {TypeaheadDataset} */ ({
+    const typeaheadDataset = /** @type {Twitter.Typeahead.Dataset} */ ({
       limit: Infinity,
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
         const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
         return feature.get(config.labelKey);
       },
-      templates: /* TypeaheadTemplates */ ({
+      templates: /* Twitter.Typeahead.Templates */ ({
         header: () => {
           if (config.datasetTitle === undefined) {
             return '';
@@ -935,9 +935,9 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @param {Object|import("ol/Feature.js").default} suggestion Suggestion.
-   * @param {TypeaheadDataset} dataset Dataset.
+   * @param {Twitter.Typeahead.Dataset} dataset Dataset.
    * @private
    */
   select_(event, suggestion, dataset) {
@@ -959,9 +959,9 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @param {import("ol/Feature.js").default} feature Feature.
-   * @param {TypeaheadDataset} dataset Dataset.
+   * @param {Twitter.Typeahead.Dataset} dataset Dataset.
    * @private
    */
   selectFromGMF_(event, feature, dataset) {
@@ -1028,7 +1028,7 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @private
    */
   close_(event) {
@@ -1039,7 +1039,7 @@ class SearchController {
 
 
   /**
-   * @param {jQuery.Event} event Event.
+   * @param {JQueryEventObject} event Event.
    * @param {string} query Query.
    * @param {boolean} empty Empty.
    * @private

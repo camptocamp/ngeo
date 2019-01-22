@@ -56,17 +56,17 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
     ngeoCreateLocationSearchBloodhound, limit);
 
   /**
-   * @type {TypeaheadOptions}
+   * @type {Twitter.Typeahead.Options}
    * @export
    */
-  this.options = /** @type {TypeaheadOptions} */ ({
+  this.options = /** @type {Twitter.Typeahead.Options} */ ({
     highlight: true,
     hint: undefined,
     minLength: undefined
   });
 
   /**
-   * @type {Array.<TypeaheadDataset>}
+   * @type {Array.<Twitter.Typeahead.Dataset>}
    * @export
    */
   this.datasets = [{
@@ -123,9 +123,9 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
 
 
 /**
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @param {Object} suggestion Suggestion.
- * @param {TypeaheadDataset} dataset Dataset.
+ * @param {Twitter.Typeahead.Dataset} dataset Dataset.
  * @this {app.locationsearch.SearchController}
  * @private
  */

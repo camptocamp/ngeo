@@ -166,7 +166,7 @@ Controller.prototype.sort = function(columnName) {
 /**
  * Handler for clicks on a row.
  * @param {Object} attributes An entry/row.
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @export
  */
 Controller.prototype.clickRow = function(attributes, event) {
@@ -260,7 +260,7 @@ Controller.prototype.selectRange_ = function(attributes) {
 /**
  * Prevent the default browser behaviour of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @export
  */
 Controller.prototype.preventTextSelection = function(event) {
@@ -275,7 +275,7 @@ Controller.prototype.preventTextSelection = function(event) {
 
 /**
  * Same as `ol.events.condition.platformModifierKeyOnly`.
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @return {boolean} True if only the platform modifier key is pressed.
  * @private
  */
@@ -288,7 +288,7 @@ Controller.prototype.isPlatformModifierKeyOnly_ = function(event) {
 
 /**
  * Same as `ol.events.condition.shiftKeyOnly`.
- * @param {jQuery.Event} event Event.
+ * @param {JQueryEventObject} event Event.
  * @return {boolean} True if only the shift key is pressed.
  * @private
  */

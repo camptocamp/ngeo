@@ -31,20 +31,18 @@ import olEventsEventTarget from 'ol/events/Target.js';
 
 
 /**
- * @typedef {{
- *     functionalities: (AuthenticationFunctionalities|undefined),
- *     is_password_changed: (boolean|undefined),
- *     role_id: (number|undefined),
- *     role_name: (string|undefined),
- *     username: (string|undefined)
- * }} AuthenticationLoginResponse
+ * @typedef {Object} AuthenticationLoginResponse
+ * @property {AuthenticationFunctionalities} [functionalities]
+ * @property {boolean} [is_password_changed]
+ * @property {number} [role_id]
+ * @property {string} [role_name]
+ * @property {string} [username]
  */
 
 
 /**
- * @typedef {{
- *     success: boolean
- * }} AuthenticationDefaultResponse
+ * @typedef {Object} AuthenticationDefaultResponse
+ * @property {boolean} success
  */
 
 

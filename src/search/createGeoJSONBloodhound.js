@@ -6,20 +6,19 @@ import 'corejs-typeahead';
 
 /**
  * @param {string} url an URL to a search service.
- * @param {(function(GeoJSONFeature): boolean)=} opt_filter function to filter
- *     results.
+ * @param {(function(GeoJSON.Feature): boolean)=} opt_filter function to filter results.
  * @param {import("ol/proj/Projection.js").default=} opt_featureProjection Feature projection.
  * @param {import("ol/proj/Projection.js").default=} opt_dataProjection Data projection.
- * @param {BloodhoundOptions=} opt_options optional Bloodhound options. If
+ * @param {Bloodhound.BloodhoundOptions=} opt_options optional Bloodhound options. If
  *     undefined, the default Bloodhound config will be used.
- * @param {BloodhoundRemoteOptions=} opt_remoteOptions optional Bloodhound
+ * @param {Bloodhound.RemoteOptions=} opt_remoteOptions optional Bloodhound
  * remote options. Effective only if `remote` is not defined in `opt_options`.
  * @return {Bloodhound} The Bloodhound object.
  */
 function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
   opt_dataProjection, opt_options, opt_remoteOptions) {
   const geojsonFormat = new olFormatGeoJSON();
-  const bloodhoundOptions = /** @type {BloodhoundOptions} */ ({
+  const bloodhoundOptions = /** @type {Bloodhound.BloodhoundOptions} */ ({
     remote: {
       url,
       prepare(query, settings) {
@@ -27,14 +26,13 @@ function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
         return settings;
       },
       transform(parsedResponse) {
-        /** @type {GeoJSONFeatureCollection} */
-        let featureCollection = /** @type {GeoJSONFeatureCollection} */
-            (parsedResponse);
+        /** @type {GeoJSON.FeatureCollection} */
+        let featureCollection = parsedResponse;
         if (opt_filter !== undefined) {
-          featureCollection = /** @type {GeoJSONFeatureCollection} */ ({
+          featureCollection = {
             type: 'FeatureCollection',
             features: featureCollection.features.filter(opt_filter)
-          });
+          };
         }
 
         return geojsonFormat.readFeatures(featureCollection, {
@@ -45,16 +43,27 @@ function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
-    datumTokenizer: () => {},
+    datumTokenizer: (datum) => {
+      return [];
+    },
     queryTokenizer: Bloodhound.tokenizers.whitespace
   });
 
-  // the options objects are cloned to avoid updating the passed object
-  const options = Object.assign({}, opt_options || {});
-  const remoteOptions = Object.assign({}, opt_remoteOptions || {});
+  // The options objects are cloned to avoid updating the passed object
+  /** @type {Bloodhound.BloodhoundOptions} */
+  const options = Object.assign({}, opt_options || {
+    datumTokenizer: (datum) => {
+      return [];
+    },
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+  });
+  /** @type {Bloodhound.RemoteOptions} */
+  const remoteOptions = Object.assign({}, opt_remoteOptions || {
+    url: ''
+  });
 
   if (options.remote) {
-    // move the remote options to opt_remoteOptions
+    // Move the remote options to opt_remoteOptions
     Object.assign(remoteOptions, options.remote);
     delete options.remote;
   }

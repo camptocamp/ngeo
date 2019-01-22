@@ -75,17 +75,17 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
     ngeoSearchCreateGeoJSONBloodhound);
 
   /**
-   * @type {TypeaheadOptions}
+   * @type {Twitter.Typeahead.Options}
    * @export
    */
-  this.options = /** @type {TypeaheadOptions} */ ({
+  this.options = /** @type {Twitter.Typeahead.Options} */ ({
     highlight: true,
     hint: undefined,
     minLength: undefined
   });
 
   /**
-   * @type {Array.<TypeaheadDataset>}
+   * @type {Array.<Twitter.Typeahead.Dataset>}
    * @export
    */
   this.datasets = [{
