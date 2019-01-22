@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
@@ -11,10 +9,9 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 /**
  * Password validator function with an error message.
  * Configuration options for the permalink service.
- * @typedef {{
- *     isPasswordValid: function(string): string,
- *     notValidMessage: string
- * }} PasswordValidator
+ * @typedef {Object} PasswordValidator
+ * @property {function(string): string} isPasswordValid
+ * @property {string} notValidMessage
  */
 
 

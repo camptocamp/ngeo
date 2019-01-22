@@ -1,5 +1,3 @@
-/**
- */
 import ngeoDatasourceDataSource from 'ngeo/datasource/DataSource.js';
 import olCollection from 'ol/Collection.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -9,11 +7,8 @@ import olSourceVector from 'ol/source/Vector.js';
 /**
  * The options required to create a `File`.
  *
- * features: Collection of `ol.Feature` objects.
- *
- * @typedef {{
- *   features: (ol.Collection.<!ol.Feature>|undefined)
- * }} FileOptions
+ * @typedef {Object} DataSourceOptions
+ * @property {ol.Collection.<!ol.Feature>} [features] Collection of `ol.Feature` objects.
  * @extends DataSourceOptions
  */
 

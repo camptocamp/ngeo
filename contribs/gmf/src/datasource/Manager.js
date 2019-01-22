@@ -32,14 +32,13 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /**
- * @typedef {{
- *     filterRulesWatcherUnregister: (Function),
- *     stateWatcherUnregister: (Function),
- *     timeLowerValueWatcherUnregister: (Function|undefined),
- *     timeUpperValueWatcherUnregister: (Function|undefined),
- *     treeCtrl: (ngeo.layertree.Controller),
- *     wmsLayer: (ol.layer.Image|undefined)
- * }} ManagerTreeCtrlCacheItem
+ * @typedef {Object} ManagerTreeCtrlCacheItem
+ * @property {Function} filterRulesWatcherUnregister
+ * @property {Function} stateWatcherUnregister
+ * @property {Function} [timeLowerValueWatcherUnregister]
+ * @property {Function} [timeUpperValueWatcherUnregister]
+ * @property {ngeo.layertree.Controller} treeCtrl
+ * @property {ol.layer.Image} [wmsLayer]
  */
 
 

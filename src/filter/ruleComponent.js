@@ -30,7 +30,7 @@ import 'ngeo/sass/font.scss';
 
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<{
- *   action: string
+ * @property {string} action
  * }>} MenuEvent
  */
 

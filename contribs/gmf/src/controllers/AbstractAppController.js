@@ -35,16 +35,16 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 /**
  * A part of the application config.
- * @typedef {{
- *    srid: (number),
- *    positionFeatureStyle: (ol.style.Style|undefined),
- *    accuracyFeatureStyle: (ol.style.Style|undefined),
- *    geolocationZoom: (number|undefined),
- *    autorotate: (boolean|undefined),
- *    mapViewConfig: (olx.ViewOptions|undefined),
- *    mapControls: (ol.Collection.<ol.control.Control>|Array.<ol.control.Control>|undefined),
- *    mapInteractions: (ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>|undefined),
- *    mapPixelRatio: (number|undefined)
+ * @typedef {Object} Config
+ * @property {number} srid
+ * @property {ol.style.Style} [positionFeatureStyle]
+ * @property {ol.style.Style} [accuracyFeatureStyle]
+ * @property {number} [geolocationZoom]
+ * @property {string} [autorotate]
+ * @property {olx.ViewOptions} [mapViewConfig]
+ * @property {ol.Collection.<ol.control.Control>|Array.<ol.control.Control>} [mapControls]
+ * @property {ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>} [mapInteractions]
+ * @property {number} [mapPixelRatio]
  * }} Config
  */
 

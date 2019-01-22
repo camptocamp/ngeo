@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoFilterCondition from 'ngeo/filter/Condition.js';
@@ -17,10 +15,9 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @typedef {{
- *     text: (string),
- *     value: (string)
- * }} FilterCondition
+ * @typedef {Object} FilterCondition
+ * @property {string} text
+ * @property {string} value
  */
 
 

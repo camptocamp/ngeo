@@ -3,8 +3,7 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
 
 /**
- * @typedef {{
- * }} DateOptions
+ * @typedef {Object} DateOptions
  * @extends RuleOptions
  */
 

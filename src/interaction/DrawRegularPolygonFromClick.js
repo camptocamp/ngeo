@@ -11,19 +11,10 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
 /**
  * DrawRegularPolygonFromClick Interaction.
  *
- * angle: Angle in radians. A value of 0 will have one of the shape's point facing up.
- * Default value is 0.
- *
- * radius: Radius size in map units.
- *
- * sides: The number of sides for the regular polygon.
- * Default value is 3.
- *
- * @typedef {{
- *     angle: (number|undefined),
- *     radius: (number),
- *     sides: (number|undefined)
- * }} DrawRegularPolygonFromClickOptions
+ * @typedef {Object} DrawRegularPolygonFromClickOptions
+ * @property {number} [angle=0] Angle in radians. A value of 0 will have one of the shape's point facing up
+ * @property {number} radius Radius size in map units.
+ * @property {number} [sides=3] The number of sides for the regular polygon.
  */
 
 

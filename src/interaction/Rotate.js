@@ -18,7 +18,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<{
- *   feature: ol.Feature
+ * @property {ol.Feature} feature
  * }>} RotateEvent
  */
 

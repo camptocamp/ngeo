@@ -12,11 +12,10 @@ import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC.js';
 
 /**
  * The definition of an external OGC server
- * @typedef {{
- *   name: (string),
- *   type: (string),
- *   url: (string)
- * }} ExternalOGCServer
+ * @typedef {Object} ExternalOGCServer
+ * @property {string} name
+ * @property {string} type
+ * @property {string} url
  */
 
 

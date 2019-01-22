@@ -17,10 +17,9 @@ import 'ngeo/sass/font.scss';
 
 
 /**
- * @typedef {{
- *     feature: (?ol.Feature),
- *     onSelect: (function(NominatimSearchResult))
- * }} RoutingVia
+ * @typedef {Object} RoutingVia
+ * @property {?ol.Feature} feature
+ * @property {function(NominatimSearchResult)} onSelect
  */
 
 

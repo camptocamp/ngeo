@@ -9,12 +9,11 @@ import * as olEvents from 'ol/events.js';
 
 
 /**
- * @typedef {{
- *     children: (Object.<string, TreeManagerFullState>|undefined),
- *     isChecked: (boolean|undefined),
- *     isExpanded: (boolean|undefined),
- *     isLegendExpanded: (boolean|undefined)
- * }} TreeManagerFullState
+ * @typedef {Object} TreeManagerFullState
+ * @property {Object.<string, TreeManagerFullState>} [children]
+ * @property {boolean} [isChecked]
+ * @property {boolean} [isExpanded]
+ * @property {boolean} [isLegendExpanded]
  */
 
 

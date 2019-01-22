@@ -3,11 +3,10 @@ import angular from 'angular';
 
 /**
  * An entry for a tool in a `ngeo.misc.ToolActivateMgr` group.
- * @typedef {{
- *    tool: (ngeo.misc.ToolActivate),
- *    defaultTool: boolean,
- *    unlisten: (function(): void)
- * }} miscToolActivateMgrEntry
+ * @typedef {Object} miscToolActivateMgrEntry
+ * @property {ngeo.misc.ToolActivate} tool
+ * @property {boolean} defaultTool
+ * @property {function(): void} unlisten
  */
 
 

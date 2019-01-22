@@ -4,14 +4,9 @@ import {padNumber} from 'ol/string.js';
 
 
 /**
- * expression: The regex expression that must match to do the replacement.
- *
- * template: The template to use to create a new value as replacement if the regex matches.
- *
- * @typedef {{
- *     expression: (string),
- *     template: (string)
- * }} StringToHtmlReplacement
+ * @typedef {Object} StringToHtmlReplacement
+ * @property {string} expression The regex expression that must match to do the replacement.
+ * @property {string} template The template to use to create a new value as replacement if the regex matches.
  */
 
 

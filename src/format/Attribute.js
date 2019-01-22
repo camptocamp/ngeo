@@ -8,47 +8,27 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  *
  * type: The attribute type, which determines how to render it.
  *
- * @typedef {{
- *   geomType: (string|undefined),
- *   numType: (string|undefined),
- *   type: (string|undefined),
- * }} AttributeBase
+ * @typedef {Object} AttributeBase
+ * @property {string} [geomType]
+ * @property {string} [numType]
+ * @property {string} [type]
  */
 
 
 /**
  * A feature attribute definition.
  *
- * choices: The list of possible values for the attribute.
- *
- * maxLength: Specifies the maximum number of character for the attribute value.
- *
- * name: The attribute name.
- *
- * alias: The attribute alias.
- *
- * readonly: Whether the attribute's value should be prevented from being edited
+ * @typedef {Object} Attribute
+ * @property {Array.<string>} [choices] The list of possible values for the attribute.
+ * @property {number} [maxLength] Specifies the maximum number of character for the attribute value.
+ * @property {string|null} name The attribute name.
+ * @property {string|null} alias The attribute alias
+ * @property {boolean} [readonly] Whether the attribute's value should be prevented from being edited
  * or not. Defaults to `false`.
- *
- * required: Whether the attribute is required to have a value set or not. Defaults to `false`.
- *
- * type: The attribute type, which determines how to render it.
- *
- * format: The format used in the date, time and datetime type.
- *
- * mask: The mask used in the date, time and datetime type.
- *
- * @typedef {{
- *   choices: (Array.<string>|undefined),
- *   maxLength: (number|undefined),
- *   name: (string|null),
- *   alias: (string|null),
- *   readonly: (boolean|undefined),
- *   required: (boolean|undefined),
- *   type: (string),
- *   format: (string|undefined),
- *   mask: (string|undefined)
- * }} Attribute
+ * @property {boolean} [required] Whether the attribute is required to have a value set or not. Defaults to `false`.
+ * @property {string} type The attribute type, which determines how to render it.
+ * @property {string} [format] The format used in the date, time and datetime type.
+ * @property {string} [mask] The mask used in the date, time and datetime type.
  * @extends AttributeBase
  */
 

@@ -1,5 +1,3 @@
-/**
- */
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup.js';
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 import * as olArray from 'ol/array.js';
@@ -8,11 +6,8 @@ import * as olArray from 'ol/array.js';
 /**
  * The options required to create a `WMSGroup`.
  *
- * injector: Angular main injector.
- *
- * @typedef {{
- *   injector: (!angular.auto.IInjectorService)
- * }} WMSGroupOptions
+ * @typedef {Object} WMSGroupOptions
+ * @property {!angular.auto.IInjectorService} injector Angular main injector.
  * @extends OGCGroupOptions
  */
 

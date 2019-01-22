@@ -15,16 +15,11 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /**
- * features: Only features contained in this collection will be able to be translated. If
- * not specified, all features on the map will be able to be translated.
- *
- * style: Style for the center features added by the translate interaction to
- * to show that features can be moved.
- *
- * @typedef {{
- *     features: (ol.Collection.<ol.Feature>|undefined),
- *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
- * }} TranslateOptions
+ * @typedef {Object} TranslateOptions
+ * @property {ol.Collection.<ol.Feature>} [features] Only features contained in this collection will be able
+ * to be translated. If not specified, all features on the map will be able to be translated.
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style] Style for the center features
+ * added by the translate interaction to to show that features can be moved.
  */
 
 

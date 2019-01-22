@@ -8,8 +8,8 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
 
 
 /**
- * @typedef {{
- *  styleFunction: ol.StyleFunction,
+ * @typedef {Object}
+ * @property {ol.StyleFunction} styleFunction
  *  features: Object.<string, ol.Feature>
  * }} MapFeatureOverlayGroup
  */

@@ -3,11 +3,8 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
 
 /**
- * choices: List of choices available for selection.
- *
- * @typedef {{
- *   choices: (Array.<string>)
- * }} SelectOptions
+ * @typedef {Object} SelectOptions
+ * @property {Array.<string>} choices List of choices available for selection.
  * @extends RuleOptions
  */
 

@@ -47,18 +47,16 @@ import 'bootstrap/js/src/dropdown.js';
 
 
 /**
- * @typedef {{
- *  columns : Array.<string>,
- *  data : Array.<Array.<string|number|boolean>>
- * }} DataSourceTableObject
+ * @typedef {Object} DataSourceTableObject
+ * @property {Array.<string>} columns
+ * @property {Array.<Array.<string|number|boolean>>} data
  */
 
 
 /**
- * @typedef {{
- *  title : string,
- *  table : DataSourceTableObject
- * }} DataSourcePrintReportObject
+ * @typedef {Object} DataSourcePrintReportObject
+ * @property {string} title
+ * @property {DataSourceTableObject} table
  */
 
 
@@ -213,19 +211,20 @@ const component = {
 
 module.component('gmfPrint', component);
 
-/**
- * @typedef {{
- *     useBbox: (boolean|undefined),
- *     label: (Object.<string, boolean>),
- *     params: (Object.<string, Object.<string, string>>)
- * }} OptionsLegendType
- */
 
 /**
- * @typedef {{
- *     scaleInput: (boolean|undefined),
- *     legend: (OptionsLegendType|undefined)
- * }} OptionsType
+ * @typedef {Object} OptionsLegendType
+ * @property {boolean} [useBbox]
+ * @property {Object.<string, boolean>} label
+ * @property {Object.<string, Object.<string, string>>} params
+ */
+
+
+/**
+ * @typedef {Object} OptionsType
+ * @property {boolean} [scaleInput]
+ * @property {OptionsLegendType} [legend]
+ */
 
 
 /**

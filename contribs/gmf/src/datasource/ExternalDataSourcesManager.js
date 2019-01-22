@@ -20,10 +20,9 @@ import olFormatKML from 'ol/format/KML.js';
 
 
 /**
- * @typedef {{
- *     layerObj: (!ol.layer.Tile),
- *     unregister: Function
- * }} ExternalDataSourcesManagerWMTSCacheItem
+ * @typedef {Object} ExternalDataSourcesManagerWMTSCacheItem
+ * @property {!ol.layer.Tile} layerObj
+ * @property {Function} unregister
  */
 
 

@@ -1,5 +1,3 @@
-/**
- */
 import ngeoDatasourceFile from 'ngeo/datasource/File.js';
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
@@ -7,12 +5,8 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 /**
  * The options required to create a `FileGroup`.
  *
- * injector: Angular main injector.
- *
- * @typedef {{
- *   injector: (!angular.auto.IInjectorService)
- * }} FileGroupOptions
- * @extends GroupOptions
+ * @typedef {Object} GroupOptions
+ * @property {!angular.auto.IInjectorService} injector Angular main injector.
  */
 
 

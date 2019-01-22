@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olArray from 'ol/array.js';
 import olMap from 'ol/Map.js';
@@ -10,11 +8,8 @@ import 'bootstrap/js/src/dropdown.js';
 /**
  * Options to configure the scale selector.
  *
- * dropup: True to get a drop menu that opens imself to the top, instead of the bottom.
- *
- * @typedef {{
- *     dropup: (boolean|undefined)
- * }} ScaleselectorOptions
+ * @typedef {Object} ScaleselectorOptions
+ * @property {boolean} [dropup] True to get a drop menu that opens imself to the top, instead of the bottom.
  */
 
 

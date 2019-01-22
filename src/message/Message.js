@@ -1,25 +1,13 @@
 /**
  * A message to display by the ngeo notification service.
  *
- * delay: The delay in milliseconds the message is shown. Defaults to `7000`.
- *
- * popup: Whether the message should be displayed inside a popup window or not.
- * Defaults to `false`.
- *
- * msg: The message text to display.
- *
- * target: The target element (or selector to get the element) in which to display the
+ * @typedef {Object} Message
+ * @property {number} [delay=7000] The delay in milliseconds the message is shown
+ * @property {boolean} [popup=false] Whether the message should be displayed inside a popup window or not.
+ * @property {string} msg The message text to display.
+ * @property {JQLite|Element|string} [target] The target element (or selector to get the element) in which to display the
  * message. If not defined, then the default target of the notification service is used.
- *
- * type: The type of message. Defaults to `info`.
- *
- * @typedef {{
- *     delay: (number|undefined),
- *     popup: (boolean|undefined),
- *     msg: (string),
- *     target: (JQLite|Element|string|undefined),
- *     type: (string|undefined)
- * }} Message
+ * @property {string} [type] The type of message. Defaults to `info`.
  */
 
 

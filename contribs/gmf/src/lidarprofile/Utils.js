@@ -10,49 +10,45 @@ import {select as d3select} from 'd3';
 
 /**
  * The lidar point attribute list width default option
- * @typedef {{
- *   availableOptions: (Array.<lidarprofileServer.ConfigPointAttributes>|undefined),
- *   selectedOption: (lidarprofileServer.ConfigPointAttributes|undefined)
- * }} LidarPointAttributeList
+ * @typedef {Object} LidarPointAttributeList
+ * @property {Array.<lidarprofileServer.ConfigPointAttributes>} [availableOptions]
+ * @property {lidarprofileServer.ConfigPointAttributes} [selectedOption]
  */
 
 
 /**
  * The object containing all points in profile
- * @typedef {{
- *  autoWidth: (boolean|undefined),
- *  margin: (Object.<string, number>|undefined),
- *  pointAttributes: (LidarPointAttributeList|undefined),
- *  pointSum: (number|undefined),
- *  tolerance: (number|undefined)
- * }} LidarprofileClientConfig
+ * @typedef {Object} LidarprofileClientConfig
+ * @property {boolean} [autoWidth]
+ * @property {Object.<string, number>} [margin]
+ * @property {LidarPointAttributeList} [pointAttributes]
+ * @property {number} [pointSum]
+ * @property {number} [tolerance]
  */
 
 
 /**
  * The object containing all points in profile
- * @typedef {{
- * distance: (Array.<number>|undefined),
- * altitude: (Array.<number>|undefined),
- * color_packed: (Array.<Array<number>>|undefined),
- * intensity: (Array.<number>|undefined),
- * classification: (Array.<number>|undefined),
- * coords: (Array.<Array<number>>|undefined)
- * }} LidarprofilePoints
+ * @typedef {Object} LidarprofilePoints
+ * @property {Array.<number>} [distance]
+ * @property {Array.<number>} [altitude]
+ * @property {Array.<Array<number>>} [color_packed]
+ * @property {Array.<number>} [intensity]
+ * @property {Array.<number>} [classification]
+ * @property {Array.<Array<number>>} [coords]
  */
 
 
 /**
  * Profile point after measure or after parsing of the binary array returned by Pytree
- * @typedef {{
- *   distance: (number|undefined),
- *   altitude: (number|undefined),
- *   color_packed: (Array.<number>|undefined),
- *   coords: (Array.<number>|undefined),
- *   intensity: (number|undefined),
- *   classification: (number|undefined),
- *   set: (boolean|undefined)
- * }} LidarPoint
+ * @typedef {Object} LidarPoint
+ * @property {number} [distance]
+ * @property {number} [altitude]
+ * @property {Array.<number>} [color_packed]
+ * @property {Array.<number>} [coords]
+ * @property {number} [intensity]
+ * @property {number} [classification]
+ * @property {boolean} [set]
  */
 
 

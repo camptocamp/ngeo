@@ -11,18 +11,13 @@ import olGeomPoint from 'ol/geom/Point.js';
 /**
  * Options for the mobile geolocations directive.
  *
- * accuracyFeatureStyle: The style to use to sketch the accuracy feature, which is a regular polygon.
- *
- * positionFeatureStyle: The style to use to sketch the position feature, which is a point.
- *
- * zoom: If set, in addition to recentering the map view at the location, determines
+ * @typedef {Object} DesktopGeolocationDirectiveOptions
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [accuracyFeatureStyle] The style to
+ * use to sketch the accuracy feature, which is a regular polygon.
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [positionFeatureStyle] The style to
+ * use to sketch the position feature, which is a point.
+ * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
  * the zoom level to set when obtaining a new position.
- *
- * @typedef {{
- *    accuracyFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *    positionFeatureStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *    zoom: (number|undefined)
- * }} DesktopGeolocationDirectiveOptions
  */
 
 

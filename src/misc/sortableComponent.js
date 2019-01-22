@@ -1,16 +1,13 @@
-/**
- */
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/sortable.js';
 import 'jquery-ui-touch-punch';
 
 
 /**
- * @typedef {{
- *     handleClassName: (string|undefined),
- *     draggerClassName: (string|undefined),
- *     placeholderClassName: (string|undefined)
- * }} miscSortableOptions
+ * @typedef {Object} miscSortableOptions
+ * @property {string} [handleClassName]
+ * @property {string} [draggerClassName]
+ * @property {string} [placeholderClassName]
  */
 
 

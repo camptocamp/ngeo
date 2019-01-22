@@ -420,21 +420,19 @@ ModifyRectangle.prototype.handleUp_ = function(evt) {
 
 
 /**
- * @typedef {{
- *     corners: Array.<ol.Feature>
- * }} CacheItem
+ * @typedef {Object} CacheItem
+ * @property {Array.<ol.Feature>} corners
  */
 
 
 /**
- * @typedef {{
- *     originCoordinate: ol.Coordinate,
- *     originPixel: ol.Pixel,
- *     siblingXPoint: ol.geom.Point,
- *     siblingYPoint: ol.geom.Point,
- *     vectorX: Array.<number>,
- *     vectorY: Array.<number>
- * }} ModifyParams
+ * @typedef {Object} ModifyParams
+ * @property {ol.Coordinate} originCoordinate
+ * @property {ol.Pixel} originPixel
+ * @property {ol.geom.Point} siblingXPoint
+ * @property {ol.geom.Point} siblingYPoint
+ * @property {Array<number>} vectorX
+ * @property {Array<number>} vectorY
  */
 
 

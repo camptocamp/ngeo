@@ -23,34 +23,21 @@ import moment from 'moment';
  * The options to use when creating a filter using the `ngeo.RuleHelper`
  * service.
  *
- * dataSource: The data source from which to get the filterRules that will be used to
+ * @typedef {Object} CreateFilterOptions
+ * @property {DataSource} dataSource The data source from which to get the filterRules that will be used to
  * create the OL filter object.
- *
- * incDimensions: Whether to include the dimensions related filters. Default to `true`.
- *
- * incTime: Whether to include the data source's time values in the filter created. The
+ * @property {boolean} [incDimensions] Whether to include the dimensions related filters. Default to `true`.
+ * @property {boolean} [incTime] Whether to include the data source's time values in the filter created. The
  * property that contains those values is `timeRangeValue`. Defaults to `false`.
  * When building a filter for WMS, it should not be included as it is given as
  * the TIME parameter of the query instead. When used for a WFS request, it
  * should be included in the filter.
- *
- * filter: A filter that is directly given the the method instead of creating one.
+ * @property {ol.format.filter.Filter} [filter] A filter that is directly given the the method instead of creating one.
  * Useful to automatically combine the time values.
- *
- * filterRules: An alternative list of filter rules to use instead of those that are defined
+ * @property {!Array.<Rule>} [filterRules] An alternative list of filter rules to use instead of those that are defined
  * within the data source. Useful when one wants to get the data of a given
  * filter without applying it to the data source.
- *
- * srsName: The SRS name used with the spatial filters created by the method.
- *
- * @typedef {{
- *     dataSource: (DataSource),
- *     incDimensions: (boolean|undefined),
- *     incTime: (boolean|undefined),
- *     filter: (ol.format.filter.Filter|undefined),
- *     filterRules: (!Array.<Rule>|undefined),
- *     srsName: (string|undefined)
- * }} CreateFilterOptions
+ * @property {string} [srsName] The SRS name used with the spatial filters created by the method.
  */
 
 

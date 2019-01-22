@@ -16,21 +16,12 @@ import olSourceVector from 'ol/source/Vector.js';
 /**
  * MobileDraw Interaction.
  *
- * minPoints: The number of points that must be drawn before a polygon ring or line string
- * can be finished. Default is `3` for polygon rings and `2` for line strings.
- *
- * style: Style for sketch features.
- *
- * type: Drawing type ('Point' or 'LineString'.
- *
- * wrapX: Wrap the world horizontally on the sketch overlay. Default is `false`.
- *
- * @typedef {{
- *     minPoints: (number|undefined),
- *     style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *     type: ol.geom.GeometryType,
- *     wrapX: (boolean|undefined)
- * }} MobileDrawOptions
+ * @typedef {Object} MobileDrawOptions
+ * @property {number} [minPoints] The number of points that must be drawn before a polygon ring or line
+ * string can be finished. Default is `3` for polygon rings and `2` for line strings.
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style] Style for sketch features.
+ * @property {ol.geom.GeometryType} type Drawing type ('Point' or 'LineString'.
+ * @property {boolean} [wrapX] Wrap the world horizontally on the sketch overlay. Default is `false`.
  */
 
 

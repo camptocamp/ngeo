@@ -17,14 +17,9 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * has priority, i.e. if the data source supports WFS, it's put in the
  * `wfs` list.
  *
- * wms: List of queryable data sources that support WMS.
- *
- * wfs: List of queryable data sources that support WFS.
- *
- * @typedef {{
- *     wms: (!Array.<!ngeoDatasourceOGC>),
- *     wfs: (!Array.<!ngeoDatasourceOGC>)
- * }} QueryableDataSources
+ * @typedef {Object} QueryableDataSources
+ * @property {!Array.<!ngeoDatasourceOGC>} wms List of queryable data sources that support WMS.
+ * @property {!Array.<!ngeoDatasourceOGC>} wfs List of queryable data sources that support WFS.
  */
 
 
@@ -38,58 +33,35 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * The options to use when sending GetFeature/GetFeatureInfo requests using
  * the querent or map query service.
  *
- * action: The action the MapQuerent should take regarding the queried
+ * @typedef {Object} IssueGetFeaturesOptions
+ * @property {string} [action=replace] The action the MapQuerent should take regarding the queried
  * features. Possible values are:
  *
  * - `replace`: newly queried features are used as result
  * - `add`:     newly queried features are added to the existing ones
  * - `remove`:  newly queried features are removed from the existing ones
- *
- * Defaults to `replace`.
- *
- * coordinate: The coordinate to issue the requests with, which can end up with either
+ * @property {ol.Coordinate} [coordinate] The coordinate to issue the requests with, which can end up with either
  * WMS or WFS requests.
- *
- * dataSources:List of data sources to query. Only those that meet the requirements will
+ * @property {Array.<DataSource>} [dataSources] ist of data sources to query. Only those that meet the requirements will
  * actually be queried. The querent service requires either the `dataSources`
  * or `queryableDataSources` property to be set.
- *
- * extent: The extent to issue the requests with, which can end up with WFS requests
+ * @property {ol.Extent} [extent] The extent to issue the requests with, which can end up with WFS requests
  * only.
- *
- * filter: A filter to additionally use with the query. Only used by WFS requests.
- * If a filter is defined, then it is used instead of the data source's
- * filter rules.
- *
- * limit: The maximum number of features to get per request.
- *
- * map: The ol3 map object. Used to fill some parameters of the queries, such as
+ * @property {ol.format.filter.Filter} [filter] A filter to additionally use with the query. Only used by WFS requests.
+ * If a filter is defined, then it is used instead of the data source's filter rules.
+ * @property {number} [limit] The maximum number of features to get per request.
+ * @property {ol.Map} map The ol3 map object. Used to fill some parameters of the queries, such as
  * 'srs' and filter the queryable layers within the data sources.
- *
- * queryableDataSources: A hash of queryable data sources, which must meet all requirements. The
+ * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet all requirements. The
  * querent service requires either the `dataSources` or `queryableDataSources`
  * property to be set.
  *
- * tolerancePx: A tolerance value in pixels used to create an extent from a coordinate
+ * @property {number} [tolerancePx] A tolerance value in pixels used to create an extent from a coordinate
  * to issue WFS requests.
- *
- * wfsCount: When set, before making WFS GetFeature requests to fetch features,
+ * @property {boolean} [wfsCount] When set, before making WFS GetFeature requests to fetch features,
  * WFS GetFeature requests with `resultType = 'hits'` are made first. If
  * the number of records for the request would exceed the limit, then
  * no features are returned.
- *
- * @typedef {{
- *     action: (string|undefined),
- *     coordinate: (ol.Coordinate|undefined),
- *     dataSources: (Array.<DataSource>|undefined),
- *     extent: (ol.Extent|undefined),
- *     filter: (ol.format.filter.Filter|undefined),
- *     limit: (number|undefined),
- *     map: (ol.Map),
- *     queryableDataSources: (QueryableDataSources|undefined),
- *     tolerancePx: (number|undefined),
- *     wfsCount: (boolean|undefined)
- * }} IssueGetFeaturesOptions
  */
 
 

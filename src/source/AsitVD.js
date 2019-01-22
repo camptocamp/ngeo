@@ -3,10 +3,9 @@ import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
 
 /**
- * layer: Layer name. Possible values are `asitvd.fond_couleur`, `asitvd.fond_gris`
+ * @typedef {Object} AsitVDOptions
+ * @property {string} layer Layer name. Possible values are `asitvd.fond_couleur`, `asitvd.fond_gris`
  * and `asitvd.fond_pourortho`.
- *
- * @typedef {{layer: string}} AsitVDOptions
  */
 
 
