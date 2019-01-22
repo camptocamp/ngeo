@@ -19,7 +19,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * @typedef {Object} MobileDrawOptions
  * @property {number} [minPoints] The number of points that must be drawn before a polygon ring or line
  * string can be finished. Default is `3` for polygon rings and `2` for line strings.
- * @property {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [style] Style for sketch features.
+ * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [style] Style for sketch features.
  * @property {import("ol/geom/GeometryType.js").default} type Drawing type ('Point' or 'LineString'.
  * @property {boolean} [wrapX] Wrap the world horizontally on the sketch overlay. Default is `false`.
  */
