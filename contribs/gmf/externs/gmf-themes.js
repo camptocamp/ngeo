@@ -6,10 +6,9 @@
 
 
 /**
- * @typedef {{
- *     field: (string),
- *     value: (string|undefined)
- * }} DimensionFilterConfig
+ * @typedef {Object} DimensionFilterConfig
+ * @property {string} field
+ * @property {string} [value]
  */
 
 

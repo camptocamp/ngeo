@@ -10,7 +10,7 @@ import 'corejs-typeahead';
 
 
 /**
- * @typedef LocationSearchOptions
+ * @typedef {Object} LocationSearchOptions
  * @property {number} [limit=50] The maximum number of results to retrieve per request.
  * @property {string} [origins] A comma separated list of origins.
  * Possible origins are: zipcode,gg25,district,kantone,gazetteer,address,parcel

@@ -5,15 +5,14 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
 /**
  * The options for creating a text style.
  *
- * @typedef {{
- *     text: (string),
- *     size: (number|undefined),
- *     angle: (number|undefined),
- *     color: (ol.Color|undefined),
- *     width: (number|undefined),
- *     offsetX: (number|undefined),
- *     offsetY: (number|undefined)
- * }} TextOptions
+ * @typedef {Object} TextOptions
+ * @property {string} text
+ * @property {number} [size]
+ * @property {number} [angle]
+ * @property {ol.Color} [color]
+ * @property {number} [width]
+ * @property {number} [offsetX]
+ * @property {number} [offsetY]
  */
 
 export default class extends ngeoRuleRule {
