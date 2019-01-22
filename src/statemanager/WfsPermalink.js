@@ -24,73 +24,49 @@ import olFormatWFS from 'ol/format/WFS.js';
 /**
  * A WFS type. To be used with {@link WfsPermalinkOptions}.
  *
- * featureType: The feature type name. Required.
- *
- * label: The field of a feature used as label.
- *
- * featureNS: The namespace URI used for features. If not given, the default namespace set
+ * @typedef {Object} WfsType
+ * @property {string} featureType The feature type name. Required.
+ * @property {string} [label] The field of a feature used as label.
+ * @property {string} [featureNS] The namespace URI used for features. If not given, the default namespace set
  * in {@link WfsPermalinkOptions} will be used.
- *
- * featurePrefix: The prefix for the feature namespace. If not given, the default prefix set
+ * @property {string} [featurePrefix] The prefix for the feature namespace. If not given, the default prefix set
  * in {@link WfsPermalinkOptions} will be used.
- *
- * defaultFeatureNS: The default namespace URI used for features. This will be used if no custom
+ * @property {string} [defaultFeatureNS] The default namespace URI used for features. This will be used if no custom
  * namespace is given for a WFS type.
- *
- * defaultFeaturePrefix: The default prefix for the feature namespace. This will be used if no custom
+ * @property {string} [defaultFeaturePrefix] The default prefix for the feature namespace. This will be used if no custom
  * prefix is given for a WFS type.
- *
- * @typedef {{
- *     featureType: (string),
- *     label: (string|undefined),
- *     featureNS: (string|undefined),
- *     featurePrefix: (string|undefined),
- *     defaultFeatureNS: (string|undefined),
- *     defaultFeaturePrefix: (string|undefined)
- * }} WfsType
  */
 
 
 /**
  * The options for the WFS query service (permalink).
  *
- * wfsTypes: The queryable WFS types.
- *
- * pointRecenterZoom: Zoom level to use when result is a single point feature. If not set the map
- * is not zoomed to a specific zoom level.
- *
- * maxFeatures: The maximum number of records per request the query service should ask.
- * Defaults to `50`.
- *
  * @typedef {Object} WfsPermalinkOptions
- * @property {!Array.<WfsType>} wfsTypes
- * @property {number} [pointRecenterZoom]
- * @property {number} [maxFeatures]
+ * @property {!Array.<WfsType>} wfsTypes The queryable WFS types.
+ * @property {number} [pointRecenterZoom] Zoom level to use when result is a single point feature. If not set the map
+ * is not zoomed to a specific zoom level.
+ * @property {number} [maxFeatures=50] The maximum number of records per request the query service should ask.
  * @property {string} defaultFeatureNS
  * @property {string} defaultFeaturePrefix
- * }} WfsPermalinkOptions
  */
 
 
 /**
- * @typedef {{
- *     wfsType: (string),
- *     filterGroups: (Array.<WfsPermalinkFilterGroup>),
- *     showFeatures: (boolean)
- * }} WfsPermalinkData
+ * @typedef {Object} WfsPermalinkData
+ * @property {string} wfsType
+ * @property {Array.<WfsPermalinkFilterGroup>} filterGroups
+ * @property {boolean} showFeatures
  */
 
 /**
- * @typedef {{
- *     property: (string),
- *     condition: (string|Array.<string>)
- * }} WfsPermalinkFilter
+ * @typedef {Object} WfsPermalinkFilter
+ * @property {string} property
+ * @property {string|Array.<string>} condition
  */
 
 /**
- * @typedef {{
- *     filters: (Array.<WfsPermalinkFilter>)
- * }} WfsPermalinkFilterGroup
+ * @typedef {Object} WfsPermalinkFilterGroup
+ * @property {Array.<WfsPermalinkFilter>} filters
  */
 
 /**

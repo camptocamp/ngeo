@@ -161,10 +161,9 @@ Notification.prototype.clearMessageByCacheItem_ = function(item) {
 
 
 /**
- * @typedef {{
- *     el: JQLite,
- *     promise: angular.IPromise
- * }} CacheItem
+ * @typedef {Object} CacheItem
+ * @property {JQLite} el
+ * @property {angular.IPromise} promise
  */
 
 

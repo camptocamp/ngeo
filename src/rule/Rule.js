@@ -2,71 +2,36 @@ import * as olEvents from 'ol/events.js';
 
 
 /**
- * active: Whether the rule is active or not. Used by the `ngeo-rule` component.
- * Defaults to `false`.
- *
- * expression: The expression of the rule. The expression and boundaries are mutually exclusives
- *
- * isCustom: Whether the rule is a custom one or not. Defaults to `true`.
- *
- * lowerBoundary: The lower boundary of the rule. The expression and boundaries are mutually exclusives.
- *
- * name: The human-readable name of the rule.
- *
- * operator: he rule operator.
- *
- * operators: The rule operators.
- *
- * propertyName: The property name (a.k.a. the attribute name).
- *
- * type: The type of rule.
- *
- * upperBoundary: The upper boundary of the rule. The expression and boundaries are mutually exclusives.
- *
- * @typedef {{
- *   active: (boolean|undefined),
- *   expression: (number|string|undefined),
- *   isCustom: (boolean|undefined),
- *   lowerBoundary: (number|undefined),
- *   name: (string),
- *   operator: (string|undefined),
- *   operators: (Array.<string>|undefined),
- *   propertyName: (string),
- *   type: (string|undefined),
- *   upperBoundary: (number|undefined)
- * }} RuleOptions
+ * @typedef {Object} RuleOptions
+ * @property {boolean} [active=false] Whether the rule is active or not. Used by the `ngeo-rule` component.
+ * @property {number|string} [expression] The expression of the rule. The expression and boundaries are mutually exclusives.
+ * @property {boolean} [isCustom] Whether the rule is a custom one or not. Defaults to `true`.
+ * @property {number} [lowerBoundary] The lower boundary of the rule. The expression and boundaries are mutually exclusives.
+ * @property {string} name The human-readable name of the rule.
+ * @property {string} [operator] The rule operator.
+ * @property {Array.<string>} [operators] The rule operators.
+ * @property {string} propertyName The property name (a.k.a. the attribute name).
+ * @property {string} [type] The type of rule.
+ * @property {number} [upperBoundary] The upper boundary of the rule. The expression and boundaries are mutually exclusives.
  */
 
 
 /**
- * operator: The operator of the rule value.
- *
- * propertyName: The property name of the rule value
- *
- * @typedef {{
- *   operator: (string),
- *   propertyName: (string)
- * }} RuleBaseValue
+ * @typedef {Object} RuleBaseValue
+ * @property {string} operator The operator of the rule value.
+ * @property {string} propertyName The property name of the rule value
  */
 
 /**
- * expression: The expression of the rule value.
- *
- * @typedef {{
- *   expression: (number|string)
- * }} RuleSimpleValue
+ * @typedef {Object} RuleSimpleValue
+ * @property {number|string} expression The expression of the rule value.
  * @extends RuleBaseValue
  */
 
 /**
- * lowerBoundary: The lower boundary of the rule value.
- *
- * upperBoundary: The upper boundary of the rule value.
- *
- * @typedef {{
- *   lowerBoundary: (number),
- *   upperBoundary: (number)
- * }} RuleRangeValue
+ * @typedef {Object} RuleRangeValue
+ * @property {number} lowerBoundary The lower boundary of the rule value.
+ * @property {number} upperBoundary The upper boundary of the rule value.
  * @extends RuleBaseValue
  */
 

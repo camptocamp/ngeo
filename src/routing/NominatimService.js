@@ -3,19 +3,17 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
 
 /**
- * @typedef {{
- *     name: (string),
- *     coordinate: (ol.Coordinate)
- * }} NominatimSearchResult
+ * @typedef {Object} NominatimSearchResult
+ * @property {string} name
+ * @property {ol.Coordinate} coordinate
  */
 
 
 /**
- * @typedef {{
- *     display_name: (string),
- *     lon: (number),
- *     lat: (number)
- * }} NominatimSearchResponseResult
+ * @typedef {Object} NominatimSearchResponseResult
+ * @property {string} display_name
+ * @property {number} lon
+ * @property {number} lat
  */
 
 

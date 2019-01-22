@@ -8,34 +8,21 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
 /**
  * The options for an action item for the contextual menu overlay.
  *
- * cls: CSS class name(s) to use for the icon of the action item.
- *
- * label: The label to display for the action item. If not defined, the name is used.
- *
- * name:  unique name for the menu action, which is used in the event fired when
+ * @typedef {Object} MenuActionOptions
+ * @property {string} [cls] CSS class name(s) to use for the icon of the action item.
+ * @property {string} [label] The label to display for the action item. If not defined, the name is used.
+ * @property {string} name unique name for the menu action, which is used in the event fired when
  * the action is clicked.
- *
- * @typedef {{
- *     cls: (string|undefined),
- *     label: (string|undefined),
- *     name: (string)
- * }} MenuActionOptions
  */
 
 /**
  * The options for the contextual menu overlay.
  *
- * actions: A list of menu actions.
- *
- * autoClose: Whether to automatically close the contextual menu when an action is
- * clicked or not. Defaults to `true`.
- *
- * title: A title to display as header of the contextual menu.
- *
- * @typedef {{
- *     actions: (Array.<MenuActionOptions>),
- *     autoClose: (boolean|undefined),
- *     title: (string|undefined)
+ * @typedef {Object} MenuOptions
+ * @property {Array.<MenuActionOptions>} actions A list of menu actions.
+ * @property {boolean} [autoClose=true] Whether to automatically close the contextual menu when an action is
+ * clicked or not.
+ * @property {string} [title] A title to display as header of the contextual menu.
  * }} MenuOptions
  */
 

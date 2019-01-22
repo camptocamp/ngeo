@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
@@ -725,10 +723,9 @@ class Controller {
 
 
 /**
- * @typedef {{
- *     customRules: (Array.<ngeo.rule.Rule>),
- *     directedRules: (Array.<ngeo.rule.Rule>)
- * }} RuleCacheItem
+ * @typedef {Object} RuleCacheItem
+ * @property {Array.<ngeo.rule.Rule>} customRules
+ * @property {Array.<ngeo.rule.Rule>} directedRules
  */
 
 

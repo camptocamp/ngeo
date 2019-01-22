@@ -335,11 +335,10 @@ Controller.prototype.getMeasure_ = function() {
 module.controller('GmfMobileMeasurePointController', Controller);
 
 /**
- * @typedef {{
- *     name: string,
- *     decimals: (number|undefined),
- *     unit: (string|undefined)
- * }} LayerConfig
+ * @typedef {Object} LayerConfig
+ * @property {string} name
+ * @property {number} [decimals]
+ * @property {string} [unit]
  */
 
 

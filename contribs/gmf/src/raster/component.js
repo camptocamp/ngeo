@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
 
@@ -391,13 +389,14 @@ WidgetController.prototype.$onInit = function() {
 
 module.controller('gmfElevationwidgetController', WidgetController);
 
+
 /**
- * @typedef {{
- *     filter: (string|undefined),
- *     args: (Array.<string>|undefined),
- *     postfix: (string|undefined),
- *     separator: (string|undefined)
- * }} LayerConfig
+ * @typedef {Object} LayerConfig
+ * @property {string} [filter]
+ * @property {Array.<string>} [args]
+ * @property {string} [postfix]
+ * @property {string} [separator]
  */
+
 
 export default module;

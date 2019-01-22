@@ -2,14 +2,13 @@ import angular from 'angular';
 
 
 /**
- * @typedef {{
- *   open: (Function|undefined),
- *   close: (Function|undefined),
- *   cursorchange: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void|undefined),
- *   select: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void|undefined),
- *   autocomplete: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void|undefined),
- *   datasetsempty: (function(JQueryEventObject, string, boolean): void|undefined)
- * }} SearchDirectiveListeners
+ * @typedef {Object} SearchDirectiveListeners
+ * @property {Function} [open]
+ * @property {Function} [close]
+ * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [cursorchange]
+ * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [select]
+ * @property {function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void} [autocomplete]
+ * @property {function(JQueryEventObject, string, boolean): void} [datasetsempty]
  */
 
 

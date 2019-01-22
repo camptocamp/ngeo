@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
@@ -12,23 +10,12 @@ import {select as d3select} from 'd3';
  * The POI data extractor is used to extract data from a POI.
  * The POI is an item of the POI data array.
  *
- * id: Extract the id of a POI.
- *
- * dist: Extract the distance from origin of a POI.
- *
- * z: Extract the elevation of a POI.
- *
- * sort: Extract the sequence number of a POI.
- *
- * title: Extract the title of a POI.
- *
- * @typedef {{
- *   id: function(Object): string,
- *   dist: function(Object): number,
- *   z: function(Object, number=): number,
- *   sort: function(Object): number,
- *   title: function(Object): string
- * }} PoiExtractor
+ * @typedef {Object} PoiExtractor
+ * @property {function(Object): string} id Extract the id of a POI.
+ * @property {function(Object): number} dist Extract the distance from origin of a POI.
+ * @property {function(Object, number=): number} z Extract the elevation of a POI.
+ * @property {function(Object): number} sort Extract the sequence number of a POI.
+ * @property {function(Object): string} title Extract the title of a POI.
  */
 
 

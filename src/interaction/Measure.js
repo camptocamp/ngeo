@@ -16,33 +16,27 @@ import olStyleStyle from 'ol/style/Style.js';
 /**
  * Interactions for measure tools.
  *
- * startMsg: Element including the message to display in the help tooltip when the user
+ * @typedef {Object} MeasureOptions
+ * @property {Element} [startMsg] Element including the message to display in the help tooltip when the user
  * just activated the interaction.
- *
- * continueMsg: Element including the message to display in the help tooltip when the user
- * already added the first point.
- *
- * precision: Defines the number of decimals to keep in the measurement. If not defined,
+ * @property {Element} [continueMsg] Element including the message to display in the help tooltip when the
+ * user already added the first point.
+ * @property {number} [precision] Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
- *
- * style: The style to be used when drawing is finished.
- *
- * sketchStyle: The style to be used while drawing.
- *
- * @typedef {{
- *    startMsg: (Element|undefined),
- *    continueMsg: (Element|undefined),
- *    precision: (number|undefined),
- *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
- * }} MeasureOptions
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style] The style to be used when
+ * drawing is finished.
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [sketchStyle] The style to be used
+ * while drawing.
  */
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<{
- *   feature: ol.Feature
- * }>} MeasureEvent
+  * @typedef {Object} MeasureEventItem
+  * @property {ol.Feature} feature
+  */
+
+/**
+ * @typedef {ngeo.CustomEvent<MeasureEventItem>} MeasureEvent
  */
 
 

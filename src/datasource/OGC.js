@@ -65,137 +65,69 @@ export const WMSInfoFormat = {
 /**
  * The options required to create a `OGC`.
  *
- * activeDimensions: The dimensions that are currently active on the data source.
- *
- * copyable: Whether the geometry from this data source can be copied to other data
+ * @typedef {Object} OGCOptions
+ * @property {Dimensions} [activeDimensions] The dimensions that are currently active on the data source.
+ * @property {boolean} [copyable] Whether the geometry from this data source can be copied to other data
  * sources or not. Defaults to `false`.
- *
- * dimensions: A reference to the dimensions.
- *
- * dimensionsConfig: The dimensions configuration, which determines those supported by this data
+ * @property {Dimensions} [dimensions] A reference to the dimensions.
+ * @property {Dimensions} [dimensionsConfig] The dimensions configuration, which determines those supported by this data
  * source and whether they should use a static value or the one defined in the
  * dimensions.
- *
- * filterCondition: The filter condition to apply to the filter rules (if any). Defaults to
+ * @property {string} [filterCondition] The filter condition to apply to the filter rules (if any). Defaults to
  * `ngeo.filter.Condition.AND`.
- *
- * filterRules: A list of filter rules to apply to this data source using the filter condition.
- *
- * filtrable: Whether the data source is filtrable or not.
- *
- * geometryName: The name of the geometry attribute.
- *
- * ogcImageType: The type of images to fetch by queries by the (WMS) or (WMTS).
- *
- * ogcLayers: A list of layer definitions that are used by (WMS) and (WFS) queries.
- * These are **not** used by the (WMTS) queries (the wmtsLayers is used
- * by WMTS queries).
- *
- * ogcServerType: The type of OGC server.
- *
- * ogcType: The type data source. Can be: 'WMS' or 'WMTS'.
- *
- * snappable: Whether the geometry from this data source can be used to snap the geometry
+ * @property {!Array.<!Rule>} [filterRules] A list of filter rules to apply to this data source using the filter condition.
+ * @property {boolean} [filtrable] Whether the data source is filtrable or not.
+ * @property {string} [geometryName] The name of the geometry attribute.
+ * @property {string} [ogcImageType] The type of images to fetch by queries by the (WMS) or (WMTS).
+ * @property {Array.<!OGCLayer>} [ogcLayers] A list of layer definitions that are used by (WMS) and (WFS) queries.
+ * These are **not** used by the (WMTS) queries (the wmtsLayers is used by WMTS queries).
+ * @property {string} [ogcServerType] The type of OGC server.
+ * @property {string} [ogcType] The type data source. Can be: 'WMS' or 'WMTS'.
+ * @property {boolean} [snappable] Whether the geometry from this data source can be used to snap the geometry
  * of features from other data sources that are being edited. Defaults to `false`.
- *
- * snappingToEdges: Determines whether external features can be snapped to the edges of
+ * @property {boolean} [snappingToEdges] Determines whether external features can be snapped to the edges of
  * features from this data source or not. Defaults to `true`. Requires `snappable` to be set.
- *
- * snappingToVertice: Determines whether external features can be snapped to the vertice of
+ * @property {boolean} [snappingToVertice] Determines whether external features can be snapped to the vertice of
  * features from this data source or not. Defaults to `true`. Requires `snappable` to be set.
- *
- * snappingTolerance: The tolerance in pixels the snapping should occur. Defaults to `10`.
- *
- * timeAttributeName: The name of the time attribute.
- *testgeomapfishapp
- * timeLowerValue: The time lower value, which can be combined with the time upper value
+ * @property {number} [snappingTolerance=10] The tolerance in pixels the snapping should occur.
+ * @property {string} [timeAttributeName]  The name of the time attribute.
+ * @property {number} [timeLowerValue] The time lower value, which can be combined with the time upper value
  * to determine a range.
- *
- * timeProperty: The time property for the data source. Used to apply time filters.
- *
- * timeUpperValue: The time upper value, which can be combined with the time lower value
+ * @property {TimeProperty} [timeProperty] The time property for the data source. Used to apply time filters.
+ * @property {number} [timeUpperValue] The time upper value, which can be combined with the time lower value
  * to determine a range.
- *
- * wfsFeatureNS: The feature namespace to use with WFS requests.
- *
- * wfsFeaturePrefix: The feature prefix to use with WFS requests.
- *
- * wfsOutputFormat: The OutputFormat to use with WFS requests.
- *
- * wfsUrl: The URL to use for (WFS) requests.
- *
- * wmsInfoFormat: The InfoFormat to use with WMS requests.
- *
- * wmsIsSingleTile: Whether the (WMS) images returned by this data source should be single tiles
+ * @property {string} [wfsFeatureNS] The feature namespace to use with WFS requests.
+ * @property {string} [wfsFeaturePrefix] The feature prefix to use with WFS requests.
+ * @property {string} [wfsOutputFormat] The OutputFormat to use with WFS requests.
+ * @property {string} [wfsUrl] The URL to use for (WFS) requests.
+ * @property {string} [wmsInfoFormat] The InfoFormat to use with WMS requests.
+ * @property {boolean} [wmsIsSingleTile] Whether the (WMS) images returned by this data source should be single tiles
  * or not. Defaults to `false`
- *
- * wmsUrl: The URL to use for (WMS) requests.
- *
- * wmtsLayer: The layer name to use for the (WMTS) requests.
- *
- * wmtsUrl: The URL to use for (WMTS) requests.
- *
- * @typedef {{
- *   activeDimensions: (Dimensions|undefined),
- *   copyable: (boolean|undefined),
- *   dimensions: (Dimensions|undefined),
- *   dimensionsConfig: (Dimensions|undefined),
- *   filterCondition: (string|undefined),
- *   filterRules: (!Array.<!Rule>|undefined),
- *   filtrable: (boolean|undefined),
- *   geometryName: (string|undefined),
- *   ogcImageType: (string|undefined),
- *   ogcLayers: (Array.<!OGCLayer>|undefined),
- *   ogcServerType: (string|undefined),
- *   ogcType: (string|undefined),
- *   snappable: (boolean|undefined),
- *   snappingToEdges: (boolean|undefined),
- *   snappingToVertice: (boolean|undefined),
- *   snappingTolerance: (number|undefined),
- *   timeAttributeName: (string|undefined),
- *   timeLowerValue: (number|undefined),
- *   timeProperty: (TimeProperty|undefined),
- *   timeUpperValue: (number|undefined),
- *   wfsFeatureNS: (string|undefined),
- *   wfsFeaturePrefix: (string|undefined),
- *   wfsOutputFormat: (string|undefined),
- *   wfsUrl: (string|undefined),
- *   wmsInfoFormat: (string|undefined),
- *   wmsIsSingleTile: (boolean|undefined),
- *   wmsUrl: (string|undefined),
- *   wmtsLayer: (string|undefined),
- *   wmtsUrl: (string|undefined,
- * }} OGCOptions
+ * @property {string} [wmsUrl] The URL to use for (WMS) requests.
+ * @property {string} [wmtsLayer] The layer name to use for the (WMTS) requests.
+ * @property {string} [wmtsUrl] The URL to use for (WMTS) requests.
  * @extends DataSourceOptions
  */
 
 
 /**
- * combinableWithDataSourceForWFS: Whether this data source can be combined to the given
- *     other data source to fetch features in a single WFS request.
- *
- * combinableWithDataSourceForWMS:  Whether this data source can be combined to the given
- *     other data source to fetch features in a single WMS request.
- *
- * haveTheSameActiveDimensions: Remote data source to compare with this one.
- * Whether the two data sources have the same active
- *     dimensions. If both have no dimensions, they are considered to be
- *     sharing the same dimensions.
- *
- * @typedef {{
- *   activeDimensions: (DimensionsActive),
- *   combinableForWMS: (boolean),
- *   combinableForWFS: (boolean),
- *   supportsWFS: (boolean),
- *   supportsWMS: (boolean),
- *   wmsUrl: (string|undefined),
- *   wfsUrl: (string|undefined),
- *   filterCondition: (string),
- *   filterRules: (?Array.<!Rule>),
- *   combinableWithDataSourceForWFS: (function(OGC): boolean),
- *   combinableWithDataSourceForWMS: (function(OGC): boolean),
- *   haveTheSameActiveDimensions: (function(OGC): boolean),
- * }} OGC
+ * @typedef {Object} OGC
+ * @property {DimensionsActive} activeDimensions
+ * @property {boolean} combinableForWMS
+ * @property {boolean} combinableForWFS
+ * @property {boolean} supportsWFS
+ * @property {boolean} supportsWMS
+ * @property {string} [wmsUrl]
+ * @property {string} [wfsUrl]
+ * @property {string} filterCondition
+ * @property {?Array.<!Rule>} filterRules
+ * @property {function(OGC): boolean} combinableWithDataSourceForWFS Whether this data source can be
+ * combined to the given other data source to fetch features in a single WFS request.
+ * @property {function(OGC): boolean} combinableWithDataSourceForWMS Whether this data source can be
+ * combined to the given other data source to fetch features in a single WMS request.
+ * @property {function(OGC): boolean} haveTheSameActiveDimensionsRemote data source to compare with this one.
+ * Whether the two data sources have the same active dimensions. If both have no dimensions, they are
+ * considered to be sharing the same dimensions.
  * @extends DataSource
  */
 
@@ -203,44 +135,33 @@ export const WMSInfoFormat = {
 /**
  * The definition of a single layer (WMS) and/or featureType (WFS).
  *
- * maxResolution: The maximum resolution the layer should be rendered (when visible).
- *
- * minResolution: The minimum resolution the layer should be rendered (when visible).
- *
- * name: The layer name (WMS) and/or feature type name (WFS)
- *
- * queryable: Whether the the layer is queryable or not. Defaults to `false`.
- *
- * @typedef {{
- *   maxResolution: (number|undefined),
- *   minResolution: (number|undefined),
- *   name: (string),
- *   queryable: (boolean|undefined)
- * }} OGCLayer
+ * @typedef {Object} OGCLayer
+ * @property {number} [maxResolution] The maximum resolution the layer should be rendered (when visible).
+ * @property {number} [minResolution] The minimum resolution the layer should be rendered (when visible).
+ * @property {string} name The layer name (WMS) and/or feature type name (WFS)
+ * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
  */
 
 
 /**
  * Time object
- * @typedef {{
- *  widget: TimePropertyWidgetEnum,
- *  maxValue: string,
- *  minValue: string,
- *  maxDefValue: (string|null),
- *  minDefValue: (string|null),
- *  mode: TimePropertyModeEnum,
- *  resolution: (TimePropertyResolutionEnum|undefined),
- *  values: (Array<string>|undefined),
- *  interval : Array<number>
- * }} TimeProperty
+ * @typedef {Object} TimeProperty
+ * @property {TimePropertyWidgetEnum} widget
+ * @property {string} maxValue
+ * @property {string} minValue
+ * @property {string|null} maxDefValue
+ * @property {string|null} minDefValue
+ * @property {TimePropertyModeEnum} mode
+ * @property {TimePropertyResolutionEnum} [resolution]
+ * @property {Array<string>} [values]
+ * @property {Array<number>} interval
  */
 
 
 /**
- * @typedef {{
- *     end: (number|undefined),
- *     start: number
- * }} TimeRange
+ * @typedef {Object} TimeRange
+ * @property {number} [end]
+ * @property {number} start
  */
 
 

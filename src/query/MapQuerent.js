@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
@@ -11,56 +9,30 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 /**
  * Results of the query source.
  *
- * sources: Results for each query source.
- *
- * total: The number of results for all sources.
- *
- * pending: If at least one source is pending.
- *
- * @typedef {{
- *     sources: (!Array.<QueryResultSource>),
- *     total: (number),
- *     pending: (boolean)
- * }} QueryResult
+ * @typedef {Object} QueryResult
+ * @property {!Array.<QueryResultSource>} sources Results for each query source.
+ * @property {number} total The number of results for all sources.
+ * @property {boolean} pending If at least one source is pending.
  */
 
 
 /**
  * The options for the query service.
  *
- * limit: The maximum number of records per request the query service should ask.
- * Defaults to `50`. Note that sources sharing the same URL are combined
+ * @typedef {Object} QueryOptions
+ * @property {number} [limit=50] The maximum number of records per request the query service should ask.
+ * Note that sources sharing the same URL are combined
  * together in a single request. This limit will still apply to those.
- *
- * queryCountFirst: For WFS sources, should the number of features first be requested with
+ * @property {boolean} [queryCountFirst=false] For WFS sources, should the number of features first be requested with
  * `resultType=hits` before requesting the actual features in an seconds request?
- * Defaults to `false`.
- *
- * sourceIdsProperty: Defines the name of the layer property that holds the ids of the sources.
- * Use this if you have more than one source bound to a layer.  Defaults to
- * `querySourceIds`.
- *
- * tolerance: When issuing an identify feature request at a click position, either a WMS GetFeatureInfo
+ * @property {string} [sourceIdsProperty=querySourceIds] Defines the name of the layer property that holds the ids of the sources.
+ * Use this if you have more than one source bound to a layer.
+ * @property {number} [tolerance=3] When issuing an identify feature request at a click position, either a WMS GetFeatureInfo
  * or a WFS GetFeature request will be used. For GetFeature requests a bbox is built
  * around the position. This `tolerance` in pixel determines the size of the bbox.
- * The default is `3` pixel.
- *
- * featureNS: The feature namespace for WFS GetFeature requests. The default is
- * `http://mapserver.gis.umn.edu/mapserver`.
- *
- * featurePrefix: The feature prefix for WFS GetFeature requests. The default is `feature`.
- *
- * geometryName: The name of the geometry property for WFS GetFeature requests. The default is `geom`.
- *
- * @typedef {{
- *     limit: (number|undefined),
- *     queryCountFirst: (boolean|undefined),
- *     sourceIdsProperty: (string|undefined),
- *     tolerance: (number|undefined),
- *     featureNS: (string|undefined),
- *     featurePrefix: (string|undefined),
- *     geometryName: (string|undefined)
- * }} QueryOptions
+ * @property {string} [featureNS=http://mapserver.gis.umn.edu/mapserver] The feature namespace for WFS GetFeature requests.
+ * @property {string} [featurePrefix=feature] The feature prefix for WFS GetFeature requests.
+ * @property {string} [geometryName=geom] The name of the geometry property for WFS GetFeature requests.
  */
 
 

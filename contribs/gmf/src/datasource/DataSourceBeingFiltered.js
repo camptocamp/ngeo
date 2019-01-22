@@ -2,9 +2,8 @@ import angular from 'angular';
 
 
 /**
- * @typedef {{
- *  dataSource : (gmf.datasource.OGC|null)
- * }} DataSourceBeingFiltered
+ * @typedef {Object} DataSourceBeingFiltered
+ * @property {gmf.datasource.OGC|null} dataSource
  */
 
 

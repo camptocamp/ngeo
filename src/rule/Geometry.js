@@ -6,11 +6,8 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
 
 /**
- * featureProperties: Properties for the feature.
- *
- * @typedef {{
- *   featureProperties: (Object.<string, *>|undefined)
- * }} GeometryOptions
+ * @typedef {Object} GeometryOptions
+ * @property {Object.<string, *>} [featureProperties] Properties for the feature.
  * @extends RuleOptions
  */
 

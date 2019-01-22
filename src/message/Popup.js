@@ -15,30 +15,14 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 /**
  * The options for a popup created by the popup factory.
  *
- * autoDestroy: Whether the popup should be automatically destroyed when hidden or not.
- * Defaults to `false`.
- *
- * cls: Extra class name to add to the popup.
- *
- * content: The content of the popup. Either the content or URL must be set.
- *
- * height: The height of the popup.
- *
- * title: The title of the popup.
- *
- * utl: The URL to use for the iframe to include as content for the popup.
- *
- * width: The width of the popup.
- *
- * @typedef {{
- *     autoDestroy: (boolean|undefined),
- *     cls: (string|undefined),
- *     content: (*|undefined),
- *     height: (string|undefined),
- *     title: (string|undefined),
- *     url: (string|undefined),
- *     width: (string|undefined)
- * }} PopupOptions
+ * @typedef {Object} PopupOptions
+ * @property {boolean} [autoDestroy=false] Whether the popup should be automatically destroyed when hidden or not.
+ * @property {string} [cls] Extra class name to add to the popup.
+ * @property {*} [content] The content of the popup. Either the content or URL must be set.
+ * @property {string} [height] The height of the popup.
+ * @property {string} [title] The title of the popup.
+ * @property {string} [url] The URL to use for the iframe to include as content for the popup.
+ * @property {string} [width] The width of the popup.
  */
 
 

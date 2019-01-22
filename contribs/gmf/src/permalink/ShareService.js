@@ -2,9 +2,8 @@ import angular from 'angular';
 
 
 /**
- * @typedef {{
- *  short_url: string
- * }} ShortenerAPIResponseData
+ * @typedef {Object} ShortenerAPIResponseData
+ * @property {string} short_url
  */
 
 
@@ -16,11 +15,10 @@ import angular from 'angular';
 
 
 /**
- * @typedef {{
- *  url: string,
- *  email: (string|undefined),
- *  message : (string|undefined)
- * }} ShortenerAPIRequestParams
+ * @typedef {Object} ShortenerAPIRequestParams
+ * @property {string} url
+ * @property {string} [email]
+ * @property {string} [message]
  */
 
 

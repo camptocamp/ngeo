@@ -2,18 +2,16 @@ import angular from 'angular';
 
 
 /**
- * @typedef {{
- *     label: (string),
- *     profile: (string)
- * }} RoutingProfile
+ * @typedef {Object} RoutingProfile
+ * @property {string} label
+ * @property {string} profile
  */
 
 
 /**
- * @typedef {{
- *     backendUrl: (string|undefined),
- *     profiles: (Array.<RoutingProfile>|undefined)
- * }} RoutingOptions
+ * @typedef {Object} RoutingOptions
+ * @property {string} [backendUrl]
+ * @property {Array.<RoutingProfile>} [profiles]
  */
 
 

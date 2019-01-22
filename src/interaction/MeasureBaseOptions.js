@@ -1,11 +1,10 @@
 /**
  * Interactions for measure tools base class.
- * @typedef {{
- *    decimals: (number|undefined),
- *    precision: (number|undefined),
- *    displayHelpTooltip: (boolean|undefined),
- *    startMsg: (Element|undefined),
- *    style: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined),
- *    sketchStyle: (ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction|undefined)
- * }} MeasueBaseOptions
+ * @typedef {Object} MeasueBaseOptions
+ * @property {number} [decimals]
+ * @property {number} [precision]
+ * @property {boolean} [displayHelpTooltip]
+ * @property {Element} [startMsg]
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style]
+ * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [sketchStyle]
  */

@@ -5,9 +5,8 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 /**
  * Definition for grid columns.
  *
- * name: Name of a column.
- *
- * @typedef {{name: (string)}} GridColumnDef
+ * @typedef {Object} GridColumnDef
+ * @property {string} name Name of a column.
  */
 
 

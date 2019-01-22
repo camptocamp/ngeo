@@ -114,13 +114,8 @@ module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *     );
  *     bloodhound.initialize();
  *
- * @typedef {function(string, (function(GeoJSONFeature): boolean)=,
- * ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=,
- * BloodhoundRemoteOptions=):Bloodhound}
- * @ngdoc service
- * @ngname search.createGeoJSONBloodhound
+ * @typedef {function(string, (function(GeoJSONFeature): boolean)=, ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=, BloodhoundRemoteOptions=):Bloodhound}
  */
-export function Function() {}
 
 
 export default module;

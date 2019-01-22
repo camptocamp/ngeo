@@ -551,28 +551,26 @@ Snapping.prototype.handleMapMoveEnd_ = function() {
 
 
 /**
- * @typedef {{
- *     active: (boolean),
- *     featureNS: (string),
- *     featurePrefix: (string),
- *     features: (ol.Collection.<ol.Feature>),
- *     geometryName: (string),
- *     interaction: (?ol.interaction.Snap),
- *     maxFeatures: (number),
- *     requestDeferred: (?angular.IDeferred),
- *     snappingConfig: (gmfThemes.GmfSnappingConfig),
- *     stateWatcherUnregister: (Function),
- *     treeCtrl: (ngeo.layertree.Controller),
- *     wfsConfig: (WFSConfig)
- * }} CacheItem
+ * @typedef {Object} CacheItem
+ * @property {boolean} active
+ * @property {string} featureNS
+ * @property {string} featurePrefix
+ * @property {ol.Collection.<ol.Feature>} features
+ * @property {string} geometryName
+ * @property {?ol.interaction.Snap} interaction
+ * @property {number} maxFeatures
+ * @property {?angular.IDeferred} requestDeferred
+ * @property {gmfThemes.GmfSnappingConfig} snappingConfig
+ * @property {Function} stateWatcherUnregister
+ * @property {ngeo.layertree.Controller} treeCtrl
+ * @property {WFSConfig} wfsConfig
  */
 
 
 /**
- * @typedef {{
- *     featureTypes: (string),
- *     url: (string)
- * }} WFSConfig
+ * @typedef {Object} WFSConfig
+ * @property {string} featureTypes
+ * @property {string} url
  */
 
 

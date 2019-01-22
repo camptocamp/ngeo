@@ -13,7 +13,7 @@ import olFeature from 'ol/Feature.js';
 
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<{
- *   features: ol.Feature
+ * @property {ol.Feature} features
  * }>} ModifyEvent
  */
 
