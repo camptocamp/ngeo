@@ -19,7 +19,7 @@ import 'ngeo/sass/font.scss';
 /**
  * @typedef {Object} RoutingVia
  * @property {?ol.Feature} feature
- * @property {function(NominatimSearchResult)} onSelect
+ * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} onSelect
  */
 
 

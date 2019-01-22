@@ -32,7 +32,7 @@ import moment from 'moment';
  * When building a filter for WMS, it should not be included as it is given as
  * the TIME parameter of the query instead. When used for a WFS request, it
  * should be included in the filter.
- * @property {ol.format.filter.Filter} [filter] A filter that is directly given the the method instead of creating one.
+ * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the the method instead of creating one.
  * Useful to automatically combine the time values.
  * @property {!Array.<Rule>} [filterRules] An alternative list of filter rules to use instead of those that are defined
  * within the data source. Useful when one wants to get the data of a given

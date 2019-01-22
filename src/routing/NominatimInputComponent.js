@@ -118,7 +118,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 
 /**
  * @param {JQueryEventObject} event Event.
- * @param {NominatimSearchResult} suggestion Suggestion.
+ * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset} dataset Dataset.
  * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
@@ -143,7 +143,7 @@ Controller.prototype.select_ = function(event, suggestion, dataset) {
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *
- * @htmlAttribute {function(NominatimSearchResult)} ngeo-nominatim-input-on-select
+ * @htmlAttribute {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} ngeo-nominatim-input-on-select
  *  Event fired when user selects a new suggestion.
  * @htmlAttribute {string} ngeo-nominatim-input-value
  *  Value of input field, will be set to the label of the search result.

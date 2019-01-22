@@ -47,7 +47,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * or `queryableDataSources` property to be set.
  * @property {ol.Extent} [extent] The extent to issue the requests with, which can end up with WFS requests
  * only.
- * @property {ol.format.filter.Filter} [filter] A filter to additionally use with the query. Only used by WFS requests.
+ * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the query. Only used by WFS requests.
  * If a filter is defined, then it is used instead of the data source's filter rules.
  * @property {number} [limit] The maximum number of features to get per request.
  * @property {ol.Map} map The ol3 map object. Used to fill some parameters of the queries, such as
