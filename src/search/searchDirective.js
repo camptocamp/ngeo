@@ -5,10 +5,10 @@ import angular from 'angular';
  * @typedef {{
  *   open: (Function|undefined),
  *   close: (Function|undefined),
- *   cursorchange: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset)|undefined),
- *   select: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset)|undefined),
- *   autocomplete: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset)|undefined),
- *   datasetsempty: (function(JQueryEventObject, string, boolean)|undefined)
+ *   cursorchange: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void|undefined),
+ *   select: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void|undefined),
+ *   autocomplete: (function(JQueryEventObject, Object, Twitter.Typeahead.Dataset): void|undefined),
+ *   datasetsempty: (function(JQueryEventObject, string, boolean): void|undefined)
  * }} SearchDirectiveListeners
  */
 
@@ -45,22 +45,18 @@ function searchDirective() {
     link: (scope, element, attrs) => {
 
       const typeaheadOptionsExpr = attrs['ngeoSearch'];
-      const typeaheadOptions = /** @type {Twitter.Typeahead.Options} */
-              (scope.$eval(typeaheadOptionsExpr));
+      /** @type {Twitter.Typeahead.Options} */
+      const typeaheadOptions = scope.$eval(typeaheadOptionsExpr);
 
       const typeaheadDatasetsExpr = attrs['ngeoSearchDatasets'];
-      const typeaheadDatasets = /** @type {Array.<Twitter.Typeahead.Dataset>} */
-              (scope.$eval(typeaheadDatasetsExpr));
+      /** @type {Array.<Twitter.Typeahead.Dataset>} */
+      const typeaheadDatasets = scope.$eval(typeaheadDatasetsExpr);
 
-      const args = typeaheadDatasets.slice();
-      args.unshift(typeaheadOptions);
-
-      element.typeahead(...args);
+      element.typeahead(typeaheadOptions, typeaheadDatasets);
 
       const typeaheadListenersExpr = attrs['ngeoSearchListeners'];
-      const typeaheadListeners_ =
-              /** @type {SearchDirectiveListeners} */
-              (scope.$eval(typeaheadListenersExpr));
+      /** @type {SearchDirectiveListeners} */
+      const typeaheadListeners_ = scope.$eval(typeaheadListenersExpr);
 
       /**
        * @type {SearchDirectiveListeners}
