@@ -22,7 +22,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /**
- * @typedef {import("ol/collection.js").Collection.<import("gmf/datasource/OGC.js").default>} DataSources
+ * @typedef {import("ol/Collection.js").Collection.<import("gmf/datasource/OGC.js").default>} DataSources
  */
 
 

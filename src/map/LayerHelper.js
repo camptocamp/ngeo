@@ -234,7 +234,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
 /**
  * Create and return an ol.layer.Group. You can pass a collection of layers to
  * directly add them in the returned group.
- * @param {import("ol/collection.js").Collection.<import("ol/layer/Base.js").default>=} opt_layers The layer to add to the
+ * @param {import("ol/Collection.js").Collection.<import("ol/layer/Base.js").default>=} opt_layers The layer to add to the
  * returned Group.
  * @return {import("ol/layer/Group.js").default} Layer group.
  * @export

@@ -91,7 +91,7 @@ const module = angular.module('ngeoDrawfeature', [
  *
  * @htmlAttribute {boolean} ngeo-drawfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {!import("ol/collection.js").Collection=} ngeo-drawfeature-features The features
+ * @htmlAttribute {!import("ol/Collection.js").Collection=} ngeo-drawfeature-features The features
  *     collection in which to push the drawn features. If none is provided,
  *     then the `ngeoFeatures` collection is used.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-drawfeature-map The map.

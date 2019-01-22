@@ -395,13 +395,13 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {import("ol/collection.js").Collection}
+   * @type {import("ol/Collection.js").Collection}
    * @export
    */
   this.features;
 
   /**
-   * @type {import("ol/collection.js").Collection}
+   * @type {import("ol/Collection.js").Collection}
    * @private
    */
   this.interactions_ = new olCollection();

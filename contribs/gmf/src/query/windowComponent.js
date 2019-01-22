@@ -193,7 +193,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.selectedSource = null;
 
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").Collection}
    * @private
    */
   this.features_ = new olCollection();
@@ -205,7 +205,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").Collection}
    * @private
    */
   this.highlightFeatures_ = new olCollection();

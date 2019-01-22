@@ -110,7 +110,7 @@ function ModifyCircle(options) {
   });
 
   /**
-   * @type {!import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
