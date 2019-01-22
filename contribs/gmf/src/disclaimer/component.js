@@ -142,7 +142,7 @@ Controller.prototype.$onInit = function() {
 };
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleLayersAdd_ = function(evt) {
@@ -155,7 +155,7 @@ Controller.prototype.handleLayersAdd_ = function(evt) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleLayersRemove_ = function(evt) {

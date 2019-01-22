@@ -390,7 +390,7 @@ class Controller {
    * If the data source is 'valid', add it to the list of filtrable data
    * sources.
    *
-   * @param {import("ol/Collection/Event.js").default} evt Collection event.
+   * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
    * @private
    */
   handleDataSourcesAdd_(evt) {
@@ -406,7 +406,7 @@ class Controller {
    * sources. If the data source is 'valid', remove it from the list of
    * filtrable data sources.
    *
-   * @param {import("ol/Collection/Event.js").default} evt Collection event.
+   * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
    * @private
    */
   handleDataSourcesRemove_(evt) {

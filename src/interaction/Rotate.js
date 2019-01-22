@@ -225,7 +225,7 @@ Rotate.prototype.setMap = function(map) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Rotate.prototype.handleFeatureAdd_ = function(evt) {
@@ -236,7 +236,7 @@ Rotate.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Rotate.prototype.handleFeatureRemove_ = function(evt) {

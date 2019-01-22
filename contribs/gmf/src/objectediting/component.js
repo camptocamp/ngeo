@@ -1013,7 +1013,7 @@ Controller.prototype.handleWindowBeforeUnload_ = function(e) {
  * Depending on the current behaviour, use the added sketch feature to process
  * the existing geometry.
  *
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {

@@ -870,7 +870,7 @@ Controller.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleFeatureAdd_ = function(evt) {

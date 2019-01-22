@@ -1093,7 +1093,7 @@ Permalink.prototype.initLayers_ = function() {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} event Collection event.
+ * @param {import("ol/Collection.js").CollectionEvent} event Collection event.
  * @private
  */
 Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
@@ -1104,7 +1104,7 @@ Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} event Collection event.
+ * @param {import("ol/Collection.js").CollectionEvent} event Collection event.
  * @private
  */
 Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
@@ -1393,7 +1393,7 @@ Permalink.prototype.initExternalDataSources_ = function() {
 
 
 /**
- * @param {!import("ol/Collection/Event.js").default} evt Collection event.
+ * @param {!import("ol/Collection.js").CollectionEvent} evt Collection event.
  * @private
  */
 Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
@@ -1446,7 +1446,7 @@ Permalink.prototype.containsLayerName = function(layer, name) {
 
 
 /**
- * @param {!import("ol/Collection/Event.js").default} evt Collection event.
+ * @param {!import("ol/Collection.js").CollectionEvent} evt Collection event.
  * @private
  */
 Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {

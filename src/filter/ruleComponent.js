@@ -776,7 +776,7 @@ class RuleController {
   }
 
   /**
-   * @param {import("ol/Collection/Event.js").default} evt Event.
+   * @param {import("ol/Collection.js").CollectionEvent} evt Event.
    * @private
    */
   handleFeaturesAdd_(evt) {
