@@ -26,6 +26,7 @@ module.value('ngeoGooglestreetviewTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
 });
 
@@ -116,7 +117,7 @@ class Controller {
     this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {Array.<!import("ol/EventsKey.js").default>}
+     * @type {Array.<!import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

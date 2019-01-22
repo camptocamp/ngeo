@@ -102,7 +102,7 @@ const ParamPrefix = {
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
@@ -137,7 +137,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;
@@ -145,7 +145,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   // == properties from params ==
 
   /**
-   * @type {miscDebounce}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -163,7 +163,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?

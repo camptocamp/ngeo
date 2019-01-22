@@ -28,6 +28,7 @@ module.value('gmfMobileMeasurePointTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
 });
 
@@ -104,7 +105,7 @@ module.directive('gmfMobileMeasurepoint', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {import("gmf/raster/RasterService.js").default} gmfRaster gmf Raster service.
- * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
  * @ngInject
@@ -120,7 +121,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {miscDebounce}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -216,7 +217,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;

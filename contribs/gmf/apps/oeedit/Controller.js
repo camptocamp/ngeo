@@ -1,6 +1,4 @@
 /**
- */
-/**
  * Application entry point.
  *
  * This file includes `goog.require`'s for all the components/directives used
@@ -91,7 +89,7 @@ function Controller($scope, $injector, $timeout) {
   });
 
   /**
-   * @type {import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures = new olCollection();
@@ -228,6 +226,7 @@ const module = angular.module('Appoeedit', [
 
 module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
 });
 

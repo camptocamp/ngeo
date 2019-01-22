@@ -2,7 +2,7 @@ import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfObjecteditingGeom from 'gmf/objectediting/geom.js';
+import {isEmpty, toXY} from 'gmf/objectediting/geom.js';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
 import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
@@ -14,7 +14,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
-import ngeoUtils from 'ngeo/utils.js';
+import {toMulti, deleteCondition} from 'ngeo/utils.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
@@ -57,6 +57,7 @@ const module = angular.module('gmfObjectEditingComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/objectediting', require('./component.html'));
 });
 
@@ -108,7 +109,7 @@ function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateU
  * @htmlAttribute {string} gmf-objectediting-geomtype The geometry type.
  * @htmlAttribute {number} gmf-objectediting-layernodeid The GMF layer node id.
  * @htmlAttribute {import("ol/Map.js").default} gmf-objectediting-map The map.
- * @htmlAttribute {import("ol/collection.js").Collection.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
+ * @htmlAttribute {import("ol/Collection.js").default.<import("ol/Feature.js").default>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @ngdoc component
  * @ngname gmfObjectediting
@@ -184,7 +185,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.map;
 
   /**
-   * @type {import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.sketchFeatures;
@@ -364,19 +365,19 @@ function Controller($scope, $timeout, gettextCatalog,
   this.dirty = false;
 
   /**
-   * @type {!Array.<!import("ol/EventsKey.js").default>}
+   * @type {!Array.<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
 
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
@@ -386,7 +387,7 @@ function Controller($scope, $timeout, gettextCatalog,
    * @private
    */
   this.modify_ = new olInteractionModify({
-    deleteCondition: ngeoUtils.deleteCondition,
+    deleteCondition: deleteCondition,
     features: this.features_,
     style: ngeoFeatureHelper.getVertexStyle(false)
   });
@@ -479,7 +480,7 @@ Controller.prototype.$onInit = function() {
 
   this.features_.push(this.feature);
 
-  this.featureHasGeom = !gmfObjecteditingGeom.isEmpty(geometry);
+  this.featureHasGeom = !isEmpty(geometry);
 
   // Toggle on
   this.initializeInteractions_();
@@ -535,7 +536,7 @@ Controller.prototype.save = function() {
   feature.setId(this.feature.getId());
   const geometry = feature.getGeometry();
   if (geometry) {
-    gmfObjecteditingGeom.toXY(geometry);
+    toXY(geometry);
   }
 
   if (this.state_ === Controller.State.INSERT) {
@@ -795,7 +796,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(
   if (geometry instanceof olGeomMultiPolygon) {
     const jstsGeom = this.jstsOL3Parser_.read(geometry);
     const jstsBuffered = jstsGeom.buffer(0);
-    geometry = ngeoUtils.toMulti(this.jstsOL3Parser_.write(jstsBuffered));
+    geometry = toMulti(this.jstsOL3Parser_.write(jstsBuffered));
     this.skipGeometryChange_ = true;
     this.feature.setGeometry(geometry.clone());
     this.skipGeometryChange_ = false;
@@ -1037,12 +1038,12 @@ Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
 
     if (jstsProcessedGeom) {
       const processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
-      const multiGeom = ngeoUtils.toMulti(processedGeom);
+      const multiGeom = toMulti(processedGeom);
       this.feature.setGeometry(multiGeom.clone());
     }
 
   } else if (this.process === gmfObjecteditingToolsComponent.ProcessType.ADD) {
-    this.feature.setGeometry(ngeoUtils.toMulti(sketchGeom.clone()));
+    this.feature.setGeometry(toMulti(sketchGeom.clone()));
   }
 
   this.sketchFeatures.clear();
@@ -1063,7 +1064,7 @@ Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
 Controller.prototype.handleFeatureGeometryChange_ = function() {
   const geom = this.feature.getGeometry();
   this.timeout_(() => {
-    this.featureHasGeom = !gmfObjecteditingGeom.isEmpty(geom);
+    this.featureHasGeom = !isEmpty(geom);
   });
 
   if (this.skipGeometryChange_) {

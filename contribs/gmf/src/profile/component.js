@@ -60,6 +60,7 @@ module.value('gmfProfileTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/profile', require('./component.html'));
 });
 
@@ -299,7 +300,7 @@ function Controller($scope, $http, $element, $filter,
   this.active = false;
 
   /**
-   * @type {import("ol/EventsKey.js").default}
+   * @type {import("ol/events.js").EventsKey}
    * @private
    */
   this.pointerMoveKey_;

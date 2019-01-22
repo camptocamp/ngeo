@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 /**
@@ -19,7 +16,7 @@ const module = angular.module('ngeoDebounce', []);
  * used to debounce calls to a user-provided function.
  *
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @return {miscDebounce} The debounce function.
+ * @return {import("ngeo/misc/debounce.js").miscDebounce} The debounce function.
  *
  * @ngdoc service
  * @ngname ngeoDebounce

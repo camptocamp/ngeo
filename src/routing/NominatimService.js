@@ -5,7 +5,8 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 /**
  * @typedef {Object} NominatimSearchResult
  * @property {string} name
- * @property {ol.Coordinate} coordinate
+ * @property {string} label
+ * @property {import("ol/coordinate.js").Coordinate} coordinate
  */
 
 
@@ -22,7 +23,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {miscDebounce} ngeoDebounce ngeo Debounce service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngdoc service
  * @ngInject
@@ -30,7 +31,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  */
-function NominatimService($http, $injector, ngeoDebounce) {
+export function NominatimService($http, $injector, ngeoDebounce) {
 
   /**
    * @type {angular.IHttpService}
@@ -39,7 +40,7 @@ function NominatimService($http, $injector, ngeoDebounce) {
   this.$http_ = $http;
 
   /**
-   * @type {miscDebounce}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -82,18 +83,17 @@ function NominatimService($http, $injector, ngeoDebounce) {
 
   /**
    * @export
-   * @type {function(string,function(Array.<BloodhoundDatum>),(function(Array.<import("ol/Feature.js").default>)|undefined))}
+   * @type {Bloodhound | ((query: string, syncResults: (result: []) => void, asyncResults?: (result: []) => void) => void)}
    */
   this.typeaheadSourceDebounced =
-    /** @type{function(string,function(Array.<BloodhoundDatum>),(function(Array.<import("ol/Feature.js").default>)|undefined))} */
-    (this.ngeoDebounce_(/** @type {function(?)} */ (this.typeaheadSource_.bind(this)), this.typeaheadDebounceDelay_, true));
+    this.ngeoDebounce_(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, true);
 }
 
 /**
  * Search by name
  * @param {string} query Search query
  * @param {?Object} params Optional parameters
- * @return {!angular.IHttpPromise} promise of the Nominatim API request
+ * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  * @export
  */
@@ -122,7 +122,7 @@ NominatimService.prototype.search = function(query, params) {
  * Reverse Geocoding
  * @param {import("ol/coordinate.js").Coordinate} coordinate Search coordinate in LonLat projection
  * @param {(Object|undefined)} params Optional parameters
- * @return {!angular.IHttpPromise} promise of the Nominatim API request
+ * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  * @export
  */
@@ -152,8 +152,8 @@ NominatimService.prototype.reverse = function(coordinate, params) {
 
 /**
  * @param {string} query Search query
- * @param {function(Array.<BloodhoundDatum>)} syncResults Callback for synchronous execution, unused
- * @param {function(Array.<NominatimSearchResult>)} asyncResults Callback for asynchronous execution
+ * @param {function(Array<Object>): void} syncResults Callback for synchronous execution, unused
+ * @param {function(Array<NominatimSearchResult>): void} asyncResults Callback for asynchronous execution
  * @private
  */
 NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
@@ -164,7 +164,7 @@ NominatimService.prototype.typeaheadSource_ = function(query, syncResults, async
      * @return {NominatimSearchResult} Parsed result
      */
     const parse = function(result) {
-      return /** @type{NominatimSearchResult} */({
+      return /** @type {NominatimSearchResult} */({
         coordinate: [result.lon, result.lat],
         name: result.display_name
       });

@@ -53,7 +53,7 @@ function ShareService($http, gmfShortenerCreateUrl) {
  * Get a short URL of the permalink by calling the url shortener service.
  * - If no shortener API url have been specified, it returns the permalink itself.
  * @param  {string} url the permalink
- * @return {ShortenerAPIResponse|angular.IHttpPromise} an object containing the permalink not shortened or
+ * @return {ShortenerAPIResponse|angular.IHttpPromise<Object>} an object containing the permalink not shortened or
  * the promise attached to the shortener API request
  */
 ShareService.prototype.getShortUrl = function(url) {
@@ -80,7 +80,7 @@ ShareService.prototype.getShortUrl = function(url) {
  * @param  {string} shortUrl the short permalink to send
  * @param  {string} email the email to which the short url must be send
  * @param  {string=} opt_message message for the email
- * @return {angular.IHttpPromise} the promise attached to the shortener API request
+ * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
  */
 ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
@@ -98,7 +98,7 @@ ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
 
 /**
  * @param  {ShortenerAPIRequestParams} params parameters for the request
- * @return {angular.IHttpPromise} the promise attached to the shortener API request
+ * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
  * @private
  */
 ShareService.prototype.postShortUrl_ = function(params) {

@@ -25,21 +25,25 @@ import * as olEvents from 'ol/events.js';
 /**
  * @typedef {Object} RuleSimpleValue
  * @property {number|string} expression The expression of the rule value.
- * @extends RuleBaseValue
+ * extends RuleBaseValue
+ * @property {string} operator The operator of the rule value.
+ * @property {string} propertyName The property name of the rule value
  */
 
 /**
  * @typedef {Object} RuleRangeValue
  * @property {number} lowerBoundary The lower boundary of the rule value.
  * @property {number} upperBoundary The upper boundary of the rule value.
- * @extends RuleBaseValue
+ * extends RuleBaseValue
+ * @property {string} operator The operator of the rule value.
+ * @property {string} propertyName The property name of the rule value
  */
 
 
 /**
  * @enum {string}
  */
-const OperatorType = {
+export const OperatorType = {
   BETWEEN: '..',
   EQUAL_TO: '=',
   GREATER_THAN: '>',
@@ -123,8 +127,7 @@ class Rule {
      * @type {?number|string}
      * @export
      */
-    this.expression = options.expression !== undefined ?
-      options.expression : null;
+    this.expression = options.expression !== undefined ? options.expression : null;
 
     /**
      * The lower boundary of the rule. The expression and boundaries are
@@ -188,7 +191,7 @@ class Rule {
     // === Other properties ===
 
     /**
-     * @type {Array.<!import("ol/EventsKey.js").default>}
+     * @type {Array.<!import("ol/events.js").EventsKey>}
      * @protected
      */
     this.listenerKeys = [];

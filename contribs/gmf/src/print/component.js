@@ -88,6 +88,7 @@ module.value('gmfPrintTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/print', require('./component.html'));
 });
 
@@ -434,19 +435,19 @@ class Controller {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {import("ol/EventsKey.js").default}
+     * @type {import("ol/events.js").EventsKey}
      * @private
      */
     this.postComposeListenerKey_;
 
     /**
-     * @type {import("ol/EventsKey.js").default}
+     * @type {import("ol/events.js").EventsKey}
      * @private
      */
     this.pointerDragListenerKey_;
 
     /**
-     * @type {import("ol/EventsKey.js").default}
+     * @type {import("ol/events.js").EventsKey}
      * @private
      */
     this.mapViewResolutionChangeKey_;
@@ -535,7 +536,7 @@ class Controller {
     this.postcomposeListener_;
 
     /**
-     * @type {angular.IHttpPromise}
+     * @type {angular.IHttpPromise<Object>}
      * @private
      */
     this.capabilities_;

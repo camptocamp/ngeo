@@ -83,7 +83,7 @@ function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
   this.cache_ = {};
 
   /**
-   * @type {!Array.<import("ol/EventsKey.js").default>}
+   * @type {!Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -555,9 +555,9 @@ Snapping.prototype.handleMapMoveEnd_ = function() {
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {ol.Collection.<ol.Feature>} features
+ * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} features
  * @property {string} geometryName
- * @property {?ol.interaction.Snap} interaction
+ * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
  * @property {?angular.IDeferred} requestDeferred
  * @property {gmfThemes.GmfSnappingConfig} snappingConfig

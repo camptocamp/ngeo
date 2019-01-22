@@ -12,7 +12,7 @@ import * as olEvents from 'ol/events.js';
 function EventHelper() {
 
   /**
-   * @type {Object.<number|string, Array.<import("ol/EventsKey.js").default>>}
+   * @type {Object.<number|string, Array.<import("ol/events.js").EventsKey>>}
    * @private
    */
   this.listenerKeys_ = {};
@@ -24,14 +24,14 @@ function EventHelper() {
  * Utility method to add a listener key bound to a unique id. The key has
  * to come from `ol.events`.
  * @param {number|string} uid Unique id.
- * @param {import("ol/EventsKey.js").default} key Key.
+ * @param {import("ol/events.js").EventsKey} key Key.
  * @export
  */
 EventHelper.prototype.addListenerKey = function(uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
-  this.listenerKeys_[uid].push(/** @type {import("ol/EventsKey.js").default} */ (key));
+  this.listenerKeys_[uid].push(/** @type {import("ol/events.js").EventsKey} */ (key));
 };
 
 

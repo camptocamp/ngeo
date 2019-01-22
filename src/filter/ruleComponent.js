@@ -49,6 +49,7 @@ const module = angular.module('ngeoRule', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
 });
 
@@ -278,7 +279,7 @@ class RuleController {
     this.drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
 
     /**
-     * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
      * @export
      */
     this.drawnFeatures = new olCollection();
@@ -290,13 +291,13 @@ class RuleController {
     this.menu_ = null;
 
     /**
-     * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
      * @export
      */
     this.selectedFeatures = new olCollection();
 
     /**
-     * @type {!import("ol/collection.js").Collection.<!import("ol/interaction/Interaction.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ol/interaction/Interaction.js").default>}
      * @private
      */
     this.interactions_ = new olCollection();
@@ -348,7 +349,7 @@ class RuleController {
     this.interactions_.push(this.translate_);
 
     /**
-     * @type {!Array.<!import("ol/EventsKey.js").default>}
+     * @type {!Array.<!import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

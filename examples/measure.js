@@ -33,6 +33,7 @@ const module = angular.module('app', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
 });
 

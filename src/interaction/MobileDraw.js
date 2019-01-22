@@ -1,4 +1,4 @@
-import ngeoInteractionCommon from 'ngeo/interaction/common.js';
+import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -19,8 +19,8 @@ import olSourceVector from 'ol/source/Vector.js';
  * @typedef {Object} MobileDrawOptions
  * @property {number} [minPoints] The number of points that must be drawn before a polygon ring or line
  * string can be finished. Default is `3` for polygon rings and `2` for line strings.
- * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style] Style for sketch features.
- * @property {ol.geom.GeometryType} type Drawing type ('Point' or 'LineString'.
+ * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} [style] Style for sketch features.
+ * @property {import("ol/geom/GeometryType.js").default} type Drawing type ('Point' or 'LineString'.
  * @property {boolean} [wrapX] Wrap the world horizontally on the sketch overlay. Default is `false`.
  */
 
@@ -48,7 +48,7 @@ function MobileDraw(options) {
 
   /**
    * The key for view center change event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.changeEventKey_ = null;
@@ -102,7 +102,7 @@ function MobileDraw(options) {
       useSpatialIndex: false,
       wrapX: options.wrapX ? options.wrapX : false
     }),
-    style: options.style || ngeoInteractionCommon.getDefaultDrawStyleFunction(),
+    style: options.style || getDefaultDrawStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });
@@ -421,7 +421,7 @@ MobileDraw.prototype.updateState_ = function() {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} evt Event.
+ * @param {import("ol/events/Event.js").default} evt Event.
  * @private
  */
 MobileDraw.prototype.handleViewCenterChange_ = function(evt) {

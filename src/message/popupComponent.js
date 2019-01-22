@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import 'angular-sanitize';
 
@@ -22,6 +20,7 @@ module.value('ngeoPopupTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
 });
 

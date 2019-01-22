@@ -25,6 +25,7 @@ const module = angular.module('ngeoRoutingFeatureComponent', [
 ]);
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
 });
 
@@ -56,7 +57,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IQService} $q Angular q service
- * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -84,7 +85,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.$q_ = $q;
 
   /**
-   * @type {import("ngeo/routing/NominatimService.js").default}
+   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;
@@ -120,13 +121,13 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.strokeColor;
 
   /**
-   * @type {function(import("ol/Feature.js").default)}
+   * @type {function(import("ol/Feature.js").default): void}
    * @export
    */
   this.onChange;
 
   /**
-   * @type {import("ol/collection.js").Collection}
+   * @type {import("ol/Collection.js").default}
    * @private
    */
   this.vectorFeatures_ = new olCollection();
@@ -179,7 +180,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.draw_ = null;
 
   /**
-   * @param {NominatimSearchResult} selected Selected result.
+   * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
    * @export
    */
   this.onSelect = this.onSelect_.bind(this);
@@ -291,10 +292,11 @@ Controller.prototype.onFeatureChange_ = function() {
 };
 
 /**
- * @param {NominatimSearchResult} selected Selected result.
+ * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
  * @private
  */
 Controller.prototype.onSelect_ = function(selected) {
+  // @ts-ignore: If types are not respected
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);

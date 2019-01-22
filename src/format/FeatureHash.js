@@ -25,9 +25,9 @@ import olStyleText from 'ol/style/Text.js';
  *
  * @typedef {Object} FeatureHashOptions
  * @property {number} [accuracy] The encoding and decoding accuracy. Optional. Default value is 1.
- * @property {Object.<string, function(ol.Feature)>} [defaultValues] defaultValues.
+ * @property {Object.<string, function(import("ol/Feature.js").default)>} [defaultValues] defaultValues.
  * @property {boolean} [encodeStyles] Encode styles. Optional. Default is `true`.
- * @property {function(ol.Feature): Object.<string, (string|undefined)>} [properties] A function that
+ * @property {function(import("ol/Feature.js").default): Object.<string, (string|undefined)>} [properties] A function that
  * returns serializable properties for a feature. Optional. By default the feature properties (as returned
  * by `feature.getProperties()`) are used. To be serializable the returned properties should be numbers or
  * strings.

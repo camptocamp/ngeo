@@ -37,7 +37,7 @@ class Group {
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
-     * @type {!import("ol/collection.js").Collection.<!import("ngeo/datasource/DataSource.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>}
      * @protected
      */
     this.dataSourcesCollection_ = new olCollection(options.dataSources);
@@ -73,7 +73,7 @@ class Group {
 
 
   /**
-   * @return {!import("ol/collection.js").Collection.<!import("ngeo/datasource/DataSource.js").default>} Data sources
+   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} Data sources
    * @export
    */
   get dataSourcesCollection() {

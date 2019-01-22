@@ -1,10 +1,11 @@
 import angular from 'angular';
-import gmfDatasourceOGC, {ServerType, WFSOutputFormat, Type} from 'gmf/datasource/OGC.js';
+import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
+import {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
@@ -22,7 +23,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 
 
 /**
- * @typedef {import("ol/collection.js").Collection.<import("gmf/datasource/OGC.js").default>} DataSources
+ * @typedef {import("ol/Collection.js").default.<import("gmf/datasource/OGC.js").default>} DataSources
  */
 
 
@@ -38,7 +39,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
  * @property {Function} [timeLowerValueWatcherUnregister]
  * @property {Function} [timeUpperValueWatcherUnregister]
  * @property {ngeo.layertree.Controller} treeCtrl
- * @property {ol.layer.Image} [wmsLayer]
+ * @property {import("ol/layer/Image.js").default} [wmsLayer]
  */
 
 

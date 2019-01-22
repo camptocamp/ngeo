@@ -37,6 +37,7 @@ const module = angular.module('gmfFilterselector', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
 });
 
@@ -239,7 +240,7 @@ class Controller {
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;
 
     /**
-     * @type {Array.<import("ol/EventsKey.js").default>}
+     * @type {Array.<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

@@ -53,7 +53,7 @@ function ModifyRectangle(options) {
   });
 
   /**
-   * @type {!import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
@@ -421,16 +421,16 @@ ModifyRectangle.prototype.handleUp_ = function(evt) {
 
 /**
  * @typedef {Object} CacheItem
- * @property {Array.<ol.Feature>} corners
+ * @property {Array.<import("ol/Feature.js").default>} corners
  */
 
 
 /**
  * @typedef {Object} ModifyParams
- * @property {ol.Coordinate} originCoordinate
- * @property {ol.Pixel} originPixel
- * @property {ol.geom.Point} siblingXPoint
- * @property {ol.geom.Point} siblingYPoint
+ * @property {import("ol/coordinate.js").Coordinate} originCoordinate
+ * @property {import("ol/Pixel.js").default} originPixel
+ * @property {import("ol/geom/Point.js").default} siblingXPoint
+ * @property {import("ol/geom/Point.js").default} siblingYPoint
  * @property {Array<number>} vectorX
  * @property {Array<number>} vectorY
  */

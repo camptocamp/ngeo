@@ -1,5 +1,5 @@
 import angular from 'angular';
-import ngeoUtils from 'ngeo/utils.js';
+import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
 
 /**
  * Provides the c2c-geoportal full-text search.
@@ -36,7 +36,7 @@ function FulltextSearch($injector, $http) {
    * @type {Object.<string, string>}
    * @private
    */
-  this.defaultParams_ = ngeoUtils.decodeQueryString(queryString);
+  this.defaultParams_ = decodeQueryString(queryString);
 }
 
 /**
@@ -50,7 +50,7 @@ FulltextSearch.prototype.search = function(query, params) {
 
   queryParams['query'] = query;
 
-  const url = `${this.baseUrl_}?${ngeoUtils.encodeQueryString(queryParams)}`;
+  const url = `${this.baseUrl_}?${encodeQueryString(queryParams)}`;
 
   return new Promise((resolve, reject) => {
     this.$http_.get(url)

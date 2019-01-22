@@ -48,7 +48,7 @@ module.component('appMap', mapComponent);
 
 /**
  * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
- * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
  */
@@ -66,7 +66,7 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
   this.ngeoLocation_ = ngeoLocation;
 
   /**
-   * @type {miscDebounce}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;

@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
+import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -71,6 +71,7 @@ function gmfSearchTemplateUrl_(element, attrs) {
 }
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/search', require('./component.html'));
 });
 
@@ -420,13 +421,13 @@ class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {SearchDirectiveListeners}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      * @export
      */
     this.listeners;
 
     /**
-     * @type {SearchDirectiveListeners}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      * @export
      */
     this.additionalListeners;
@@ -485,7 +486,7 @@ class SearchController {
 
     this.listeners = this.mergeListeners_(
       this.additionalListeners,
-      /** @type {SearchDirectiveListeners} */ ({
+      /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
         select: this.select_.bind(this),
         close: this.close_.bind(this),
         datasetsempty: this.datasetsempty_.bind(this)
@@ -514,10 +515,10 @@ class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {SearchDirectiveListeners} additionalListeners Custom provided
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} additionalListeners Custom provided
    *    listeners.
-   * @param {SearchDirectiveListeners} listeners Default listeners.
-   * @return {SearchDirectiveListeners} Merged listeners.
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} listeners Default listeners.
+   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {
@@ -797,7 +798,7 @@ class SearchController {
    * @private
    */
   initStyles_() {
-    this.styles_[gmfBase.COORDINATES_LAYER_NAME] = new olStyleStyle({
+    this.styles_[COORDINATES_LAYER_NAME] = new olStyleStyle({
       image: new olStyleRegularShape({
         stroke: new olStyleStroke({color: [0, 0, 0, 0.7], width: 2}),
         points: 4,
@@ -947,7 +948,7 @@ class SearchController {
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(new olFeature({
         geometry: geom,
-        'layer_name': gmfBase.COORDINATES_LAYER_NAME
+        'layer_name': COORDINATES_LAYER_NAME
       }));
       this.map.getView().setCenter(suggestion['position']);
       this.leaveSearch_();

@@ -86,10 +86,10 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   }];
 
   /**
-   * @type {SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {SearchDirectiveListeners} */ ({
+  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     select: select_.bind(this)
   });
 

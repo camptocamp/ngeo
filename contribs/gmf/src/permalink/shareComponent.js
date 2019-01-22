@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfPermalinkShareService from 'gmf/permalink/ShareService.js';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
@@ -12,6 +10,7 @@ const module = angular.module('gmfPermalinkShareComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
 });
 

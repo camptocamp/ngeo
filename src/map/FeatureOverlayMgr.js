@@ -9,7 +9,7 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
 
 /**
  * @typedef {Object}
- * @property {ol.StyleFunction} styleFunction
+ * @property {import("ol/StyleFunction.js").default} styleFunction
  *  features: Object.<string, ol.Feature>
  * }} MapFeatureOverlayGroup
  */

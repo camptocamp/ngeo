@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 import 'ngeo/sass/font.scss';
@@ -17,6 +15,7 @@ const module = angular.module('ngeoMessageDisplaywindowComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
 });
 

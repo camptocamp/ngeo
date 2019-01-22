@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 
@@ -17,6 +15,7 @@ const module = angular.module('gmfLayertreeTimeSliderComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
 });
 

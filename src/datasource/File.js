@@ -8,7 +8,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * The options required to create a `File`.
  *
  * @typedef {Object} DataSourceOptions
- * @property {ol.Collection.<!ol.Feature>} [features] Collection of `ol.Feature` objects.
+ * @property {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} [features] Collection of `import("ol/Feature.js").default` objects.
  * @extends DataSourceOptions
  */
 
@@ -27,7 +27,7 @@ export default class extends ngeoDatasourceDataSource {
     // === STATIC properties (i.e. that never change) ===
 
     /**
-     * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
      * @private
      */
     this.featuresCollection_ = options.features || new olCollection();
@@ -69,7 +69,7 @@ export default class extends ngeoDatasourceDataSource {
   // =======================================
 
   /**
-   * @return {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>} Features collection
+   * @return {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} Features collection
    * @export
    */
   get featuresCollection() {

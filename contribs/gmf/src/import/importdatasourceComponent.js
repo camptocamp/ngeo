@@ -28,6 +28,7 @@ const module = angular.module('gmfImportdatasource', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
 });
 

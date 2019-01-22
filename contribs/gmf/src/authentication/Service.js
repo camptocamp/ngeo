@@ -23,10 +23,10 @@ import olEventsEventTarget from 'ol/events/Target.js';
  */
 
 
- /**
-  * @typedef {Object} AuthenticationEventItem
-  * @property {User} user
-  */
+/**
+ * @typedef {Object} AuthenticationEventItem
+ * @property {User} user
+ */
 
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<AuthenticationEventItem>} AuthenticationEvent

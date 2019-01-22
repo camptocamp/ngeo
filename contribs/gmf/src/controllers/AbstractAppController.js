@@ -37,13 +37,13 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * A part of the application config.
  * @typedef {Object} Config
  * @property {number} srid
- * @property {ol.style.Style} [positionFeatureStyle]
- * @property {ol.style.Style} [accuracyFeatureStyle]
+ * @property {import("ol/style/Style.js").default} [positionFeatureStyle]
+ * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
  * @property {number} [geolocationZoom]
  * @property {string} [autorotate]
  * @property {olx.ViewOptions} [mapViewConfig]
- * @property {ol.Collection.<ol.control.Control>|Array.<ol.control.Control>} [mapControls]
- * @property {ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>} [mapInteractions]
+ * @property {import("ol/Collection.js").default.<import("ol/control/Contrimport("ol/js.js").default").default>|Array.<import("ol/control/Contrimport("ol/js.js").default").default>} [mapControls]
+ * @property {import("ol/Collection.js").default.<import("ol/interaction/Interaction.js").default>|Array.<import("ol/interaction/Interaction.js").default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  * }} Config
  */
@@ -111,7 +111,7 @@ function AbstractAppController(config, $scope, $injector) {
 
   /**
    * Collection of features for the draw interaction
-   * @type {import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
   const ngeoFeatures = $injector.get('ngeoFeatures');
 

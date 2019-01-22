@@ -6,9 +6,19 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
 
 /**
+ * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} GeometryOptions
  * @property {Object.<string, *>} [featureProperties] Properties for the feature.
- * @extends RuleOptions
+ * @property {boolean} [active=false] (RuleOptions)
+ * @property {number|string} [expression] (RuleOptions)
+ * @property {boolean} [isCustom] (RuleOptions)
+ * @property {number} [lowerBoundary] (RuleOptions)
+ * @property {string} name (RuleOptions)
+ * @property {string} [operator] (RuleOptions)
+ * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {string} propertyName (RuleOptions)
+ * @property {string} [type] (RuleOptions)
+ * @property {number} [upperBoundary] (RuleOptions)
  */
 
 
@@ -55,7 +65,7 @@ export default class extends ngeoRuleRule {
     this.updatingGeometry_ = false;
 
     /**
-     * @type {?import("ol/EventsKey.js").default}
+     * @type {?import("ol/events.js").EventsKey}
      * @private
      */
     this.geometryChangeListenerKey_ = null;
@@ -146,7 +156,7 @@ export default class extends ngeoRuleRule {
   /**
    * Called when the geometry of the features changes. Update the expression
    * accordingly.
-   * @param {import("ol/Object/Event.js").default} evt Event
+   * @param {import("ol/events/Event.js").default} evt Event
    * @private
    */
   handleGeometryChange_(evt) {

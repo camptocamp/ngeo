@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -18,6 +16,7 @@ const module = angular.module('gmfThemeSelectorComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
 });
 
@@ -142,7 +141,7 @@ function Controller($scope, gmfThemeManager, gmfThemes) {
   this.filter;
 
   /**
-   * @type {Array.<import("ol/EventsKey.js").default>}
+   * @type {Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

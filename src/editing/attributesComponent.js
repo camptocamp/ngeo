@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -13,6 +11,7 @@ const module = angular.module('ngeoAttributes', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
 });
 

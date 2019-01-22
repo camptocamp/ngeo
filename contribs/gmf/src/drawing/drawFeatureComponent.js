@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
@@ -45,6 +42,7 @@ const module = angular.module('GmfDrawFeatureComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
 });
 
@@ -89,7 +87,7 @@ module.directive('gmfDrawfeature', component);
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -165,7 +163,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.features = ngeoFeatures;
@@ -183,14 +181,14 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.selectedFeature = null;
 
   /**
-   * @type {!import("ol/collection.js").Collection.<!import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.selectedFeatures = new olCollection();
 
 
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
@@ -212,7 +210,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.menu_ = null;
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.menuListenerKey_ = null;
@@ -274,7 +272,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
   /**
-   * @type {!Array.<!import("ol/EventsKey.js").default>}
+   * @type {!Array.<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

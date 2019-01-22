@@ -32,6 +32,7 @@ module.value('ngeoScaleselectorTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
 });
 
@@ -159,7 +160,7 @@ const ScaleselectorController = function($scope, $element, $attrs) {
   this.$scope_ = $scope;
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.resolutionChangeKey_ = null;
@@ -223,7 +224,7 @@ ScaleselectorController.prototype.changeZoom = function(zoom) {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} e OpenLayers object event.
+ * @param {import("ol/events/Event.js").default} e OpenLayers object event.
  * @private
  */
 ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
@@ -250,7 +251,7 @@ ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} e OpenLayers object event.
+ * @param {import("ol/events/Event.js").default} e OpenLayers object event.
  * @private
  */
 ScaleselectorController.prototype.handleViewChange_ = function(e) {

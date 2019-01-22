@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
@@ -24,10 +22,8 @@ module.value('gmfMobileMeasureLengthTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    'gmf/measure/lengthComponent',
-    require('./baseComponent.html')
-  );
+  // @ts-ignore: webpack
+  $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
 });
 
 

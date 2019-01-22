@@ -114,7 +114,7 @@ module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *     );
  *     bloodhound.initialize();
  *
- * @typedef {function(string, (function(GeoJSONFeature): boolean)=, ol.proj.Projection=, ol.proj.Projection=, BloodhoundOptions=, BloodhoundRemoteOptions=):Bloodhound}
+ * @typedef {function(string, (function(GeoJSONFeature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, BloodhoundOptions=, BloodhoundRemoteOptions=):Bloodhound}
  */
 
 

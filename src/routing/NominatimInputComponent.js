@@ -12,6 +12,7 @@ const module = angular.module('ngeoRoutingNominatimInputComponent', [
 ]);
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
 });
 
@@ -44,7 +45,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @param {!JQLite} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -66,13 +67,13 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
   this.$scope_ = $scope;
 
   /**
-   * @type {import("ngeo/routing/NominatimService.js").default}
+   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
    * @export
    */
   this.ngeoNominatimService = ngeoNominatimService;
 
   /**
-   * @type {(function(Object)|undefined)}
+   * @type {(function(Object): void|undefined)}
    * @export
    */
   this.onSelect;
@@ -101,10 +102,10 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
   })];
 
   /**
-   * @type {SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {SearchDirectiveListeners} */({
+  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */({
     select: this.select_.bind(this)
   });
 
@@ -118,7 +119,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
 
 /**
  * @param {JQueryEventObject} event Event.
- * @param {NominatimSearchResult} suggestion Suggestion.
+ * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} suggestion Suggestion.
  * @param {Twitter.Typeahead.Dataset} dataset Dataset.
  * @this {import("ngeo/routing/NominatimInputComponent.js").default.Controller}
  * @private
@@ -143,7 +144,7 @@ Controller.prototype.select_ = function(event, suggestion, dataset) {
  *
  * See the [../examples/routing.html](../examples/routing.html) example to see it in action.
  *
- * @htmlAttribute {function(NominatimSearchResult)} ngeo-nominatim-input-on-select
+ * @htmlAttribute {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} ngeo-nominatim-input-on-select
  *  Event fired when user selects a new suggestion.
  * @htmlAttribute {string} ngeo-nominatim-input-value
  *  Value of input field, will be set to the label of the search result.

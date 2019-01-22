@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import * as olEasing from 'ol/easing.js';
 import olcsCore from 'olcs/core.js';
@@ -229,6 +227,7 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
 }
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
 });
 

@@ -14,7 +14,7 @@ import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent.js'
 
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent.js';
 
-import ngeoUtils from 'ngeo/utils.js';
+import {deleteCondition} from 'ngeo/utils.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';
@@ -103,6 +103,7 @@ const module = angular.module('GmfEditingFeatureComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
 });
 
@@ -395,13 +396,13 @@ function Controller($element, $q, $scope, $timeout,
   this.featureId = undefined;
 
   /**
-   * @type {import("ol/collection.js").Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features;
 
   /**
-   * @type {import("ol/collection.js").Collection}
+   * @type {import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();
@@ -471,7 +472,7 @@ function Controller($element, $q, $scope, $timeout,
   this.translateToolActivate;
 
   /**
-   * @type {!Array.<!import("ol/EventsKey.js").default>}
+   * @type {!Array.<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -537,7 +538,7 @@ Controller.prototype.$onInit = function() {
 
   // (1.2) Create, set and initialize interactions
   this.modify_ = new olInteractionModify({
-    deleteCondition: ngeoUtils.deleteCondition,
+    deleteCondition: deleteCondition,
     features: this.features,
     style: this.ngeoFeatureHelper_.getVertexStyle(false)
   });

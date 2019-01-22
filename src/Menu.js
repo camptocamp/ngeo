@@ -45,13 +45,13 @@ function Menu(menuOptions, opt_overlayOptions) {
   options.positioning = olOverlayPositioning.TOP_LEFT;
 
   /**
-   * @type {Array.<import("ol/EventsKey.js").default>}
+   * @type {Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.clickOutListenerKey_ = null;

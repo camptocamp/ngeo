@@ -69,6 +69,7 @@ module.value('gmfDisplayquerygridTemplateUrl',
 );
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
 });
 
@@ -271,7 +272,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   // Styles for displayed features (features) and selected features
   // (highlightFeatures_) (user can set both styles).
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.features_ = new olCollection();
@@ -283,7 +284,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("ol/collection.js").Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.highlightFeatures_ = new olCollection();

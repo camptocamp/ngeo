@@ -3,7 +3,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
-import gmfBase from 'gmf/index.js';
+import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMessageMessage from 'ngeo/message/Message.js';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
@@ -137,8 +137,7 @@ function Controller($element, $sce, $timeout, gettextCatalog, ngeoCreatePopup, n
  * Initialise the controller.
  */
 Controller.prototype.$onInit = function() {
-  this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map,
-    gmfBase.DATALAYERGROUP_NAME);
+  this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
 };
 

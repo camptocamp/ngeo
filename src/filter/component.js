@@ -33,6 +33,7 @@ const module = angular.module('ngeoFilter', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/filter', require('./component.html'));
 });
 

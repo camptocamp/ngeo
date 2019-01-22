@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfPermalinkModule from 'gmf/permalink/module.js';
 import gmfEditingSnapping from 'gmf/editing/Snapping.js';
@@ -18,6 +16,7 @@ const module = angular.module('gmfMapComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/map', require('./component.html'));
 });
 

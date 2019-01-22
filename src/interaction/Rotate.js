@@ -18,7 +18,7 @@ import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<{
- * @property {ol.Feature} feature
+ * @property {import("ol/Feature.js").default} feature
  * }>} RotateEvent
  */
 
@@ -38,7 +38,7 @@ function Rotate(options) {
   console.assert(options.features);
 
   /**
-   * @type {Array.<import("ol/EventsKey.js").default>}
+   * @type {Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -50,7 +50,7 @@ function Rotate(options) {
   this.modified_ = false;
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.keyPressListenerKey_ = null;
@@ -71,7 +71,7 @@ function Rotate(options) {
     options.pixelTolerance : 10;
 
   /**
-   * @type {!import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;

@@ -5,7 +5,7 @@ import olView from 'ol/View.js';
 
 
 /**
- * @typedef {!import("ol/collection.js").Collection.<!import("ngeo/datasource/DataSource.js").default>} DataSources
+ * @typedef {!import("ol/Collection.js").default.<!import("ngeo/datasource/DataSource.js").default>} DataSources
  */
 
 
@@ -41,7 +41,7 @@ class DataSources {
     this.map_ = null;
 
     /**
-     * @type {!Array.<!import("ol/EventsKey.js").default>}
+     * @type {!Array.<!import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

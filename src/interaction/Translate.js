@@ -16,9 +16,9 @@ import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * @typedef {Object} TranslateOptions
- * @property {ol.Collection.<ol.Feature>} [features] Only features contained in this collection will be able
+ * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} [features] Only features contained in this collection will be able
  * to be translated. If not specified, all features on the map will be able to be translated.
- * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style] Style for the center features
+ * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} [style] Style for the center features
  * added by the translate interaction to to show that features can be moved.
  */
 
@@ -38,25 +38,25 @@ import olSourceVector from 'ol/source/Vector.js';
 function Translate(options) {
 
   /**
-   * @type {!Array.<import("ol/EventsKey.js").default>}
+   * @type {!Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!Object.<number, import("ol/EventsKey.js").default>}
+   * @type {!Object.<number, import("ol/events.js").EventsKey>}
    * @private
    */
   this.featureListenerKeys_ = {};
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.keyPressListenerKey_ = null;
 
   /**
-   * @type {import("ol/collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.myFeatures_ = options.features !== undefined ? options.features : null;
