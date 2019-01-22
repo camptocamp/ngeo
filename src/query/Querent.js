@@ -40,7 +40,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * - `replace`: newly queried features are used as result
  * - `add`:     newly queried features are added to the existing ones
  * - `remove`:  newly queried features are removed from the existing ones
- * @property {import("ol/Coordinate.js").default} [coordinate] The coordinate to issue the requests with, which can end up with either
+ * @property {import("ol/coordinate.js").default} [coordinate] The coordinate to issue the requests with, which can end up with either
  * WMS or WFS requests.
  * @property {Array.<DataSource>} [dataSources] ist of data sources to query. Only those that meet the requirements will
  * actually be queried. The querent service requires either the `dataSources`
