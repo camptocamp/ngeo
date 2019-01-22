@@ -992,7 +992,7 @@ Permalink.prototype.initLayers_ = function() {
     }
 
     /**
-     * @type {Array<(gmfThemes.GmfGroup)>}
+     * @type {Array<(import(gmf/themes.js).GmfGroup)>}
      */
     let firstLevelGroups = [];
     let theme;
@@ -1544,7 +1544,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
 
 /**
  * Clean the permalink parameters
- * @param {!Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
+ * @param {!Array.<import(gmf/themes.js).GmfGroup>} groups firstlevel groups of the tree
  */
 Permalink.prototype.cleanParams = function(groups) {
   const keys = this.ngeoLocation_.getParamKeys();

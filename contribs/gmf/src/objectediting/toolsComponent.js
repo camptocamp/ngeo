@@ -17,8 +17,8 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 /**
  * @typedef {Object} ObjectEditingQueryableLayerInfo
- * @property {gmfThemes.GmfOgcServer} ogcServer
- * @property {gmfThemes.GmfLayerWMS} layerNode
+ * @property {import(gmf/themes.js).GmfOgcServer} ogcServer
+ * @property {import(gmf/themes.js).GmfLayerWMS} layerNode
  */
 
 

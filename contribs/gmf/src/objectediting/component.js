@@ -949,7 +949,7 @@ Controller.prototype.setFeatureStyle_ = function() {
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
+  const node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} */ (
     treeCtrl.node);
   if (node.children && node.children.length) {
     return;

@@ -228,7 +228,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   console.assert(root);
 
   /**
-   * @type {!gmfThemes.GmfRootNode}
+   * @type {!import(gmf/themes.js).GmfRootNode}
    * @export
    */
   this.root = root;
@@ -319,7 +319,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
       console.assert(layer instanceof olLayerLayer);
-      this.updateLayerDimensions_(layer, /** @type gmfThemes.GmfGroup|gmfThemes.GmfLayer */ (ctrl.node));
+      this.updateLayerDimensions_(layer, /** @type import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer */ (ctrl.node));
     }
   });
 };
@@ -327,7 +327,7 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
 
 /**
  * @param {import("ol/layer/Layer.js").default} layer Layer to update.
- * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Layer tree node.
+ * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node Layer tree node.
  * @private
  */
 Controller.prototype.updateLayerDimensions_ = function(layer, node) {
@@ -384,7 +384,7 @@ Controller.prototype.getLayer = function(treeCtrl) {
     this.dataLayerGroup_, opt_position);
 
   if (layer instanceof olLayerLayer) {
-    const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
+    const node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
     this.updateLayerDimensions_(layer, node);
   }
 
@@ -489,12 +489,12 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
     return undefined;
   }
 
-  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
 
-  const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
 
   const legendRule = gmfLayerWMS.metadata.legendRule;
 
@@ -522,11 +522,11 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
  */
 Controller.prototype.getLegendsObject = function(treeCtrl) {
   const legendsObject = {};
-  if (/** @type gmfThemes.GmfGroup */ (treeCtrl.node).children !== undefined) {
+  if (/** @type import(gmf/themes.js).GmfGroup */ (treeCtrl.node).children !== undefined) {
     return null;
   }
 
-  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
   const gmfLayerDefaultName = gmfLayer.name;
   if (gmfLayer.metadata.legendImage) {
     legendsObject[gmfLayerDefaultName] = gmfLayer.metadata.legendImage;
@@ -540,7 +540,7 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
     legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
     return wmtsLegendURL ? legendsObject : null;
   } else {
-    const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+    const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
     let layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
@@ -640,7 +640,7 @@ Controller.prototype.afterReorder = function() {
 
 
 /**
- * @param {gmfThemes.GmfGroup} node Layer tree node to remove.
+ * @param {import(gmf/themes.js).GmfGroup} node Layer tree node to remove.
  * @export
  */
 Controller.prototype.removeNode = function(node) {
@@ -667,7 +667,7 @@ Controller.prototype.nodesCount = function() {
 /**
  * Return 'out-of-resolution' if the current resolution of the map is out of
  * the min/max resolution in the node.
- * @param {gmfThemes.GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayer the GeoMapFish Layer. WMTS layer is
  *     also allowed (the type is defined as GmfLayerWMS only to avoid some
  *     useless tests to know if a minResolutionHint property can exist
  *     on the node).
@@ -695,7 +695,7 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
  * @export
  */
 Controller.prototype.zoomToResolution = function(treeCtrl) {
-  const gmfLayer = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
   const minResolution = gmfThemeThemes.getNodeMinResolution(gmfLayer);
@@ -775,7 +775,7 @@ Controller.prototype.supportsCustomization = function(treeCtrl) {
  * @export
  */
 Controller.prototype.supportsLegend = function(treeCtrl) {
-  const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
+  const node = /** @type {!import(gmf/themes.js).GmfGroup} */ (treeCtrl.node);
   return !!node.metadata &&
     !!node.metadata.legend &&
     !!this.getLegendsObject(treeCtrl);
@@ -789,8 +789,8 @@ Controller.prototype.supportsLegend = function(treeCtrl) {
  * @export
  */
 Controller.prototype.supportsOpacityChange = function(treeCtrl) {
-  const node = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.node);
-  const parentNode = /** @type {!gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
+  const node = /** @type {!import(gmf/themes.js).GmfGroup} */ (treeCtrl.node);
+  const parentNode = /** @type {!import(gmf/themes.js).GmfGroup} */ (treeCtrl.parent.node);
   return !!treeCtrl.layer &&
     (
       (

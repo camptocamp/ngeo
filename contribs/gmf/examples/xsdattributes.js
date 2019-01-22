@@ -62,7 +62,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.feature = null;
 
   /**
-   * @type {Array.<gmfThemes.GmfLayer>}
+   * @type {Array.<import(gmf/themes.js).GmfLayer>}
    * @export
    */
   this.layers = [];
@@ -96,8 +96,8 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
 
 
 /**
- * @param {gmfThemes.GmfLayer|undefined} value A layer or undefined to get layers.
- * @return {Array.<gmfThemes.GmfLayer>} All layers in all themes.
+ * @param {import(gmf/themes.js).GmfLayer|undefined} value A layer or undefined to get layers.
+ * @return {Array.<import(gmf/themes.js).GmfLayer>} All layers in all themes.
  * @export
  */
 MainController.prototype.getSetLayers = function(value) {
@@ -146,8 +146,8 @@ MainController.prototype.getGeomType = function() {
 
 /**
  * Just for this example
- * @param {gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer} node A theme, group or layer node.
- * @param {Array.<gmfThemes.GmfTheme|gmfThemes.GmfGroup|gmfThemes.GmfLayer>} nodes An Array of nodes.
+ * @param {import(gmf/themes.js).GmfTheme|import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node A theme, group or layer node.
+ * @param {Array.<import(gmf/themes.js).GmfTheme|import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer>} nodes An Array of nodes.
  * @export
  */
 MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {

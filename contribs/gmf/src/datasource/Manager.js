@@ -345,7 +345,7 @@ class Manager {
       // (2) Collect 'leaf' treeCtrls
       const newTreeCtrls = [];
       const visitor = (treeCtrls, treeCtrl) => {
-        const node = /** @type {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} */ (
+        const node = /** @type {!import(gmf/themes.js).GmfGroup|!import(gmf/themes.js).GmfLayer} */ (
           treeCtrl.node);
         const children = node.children;
         if (!children) {
@@ -406,10 +406,10 @@ class Manager {
    *
    * Once a data source is created, it is added to the data sources cache.
    *
-   * @param {gmfThemes.GmfGroup} firstLevelGroup The first level group node.
-   * @param {!gmfThemes.GmfGroup|!gmfThemes.GmfLayer} node The node, which
+   * @param {import(gmf/themes.js).GmfGroup} firstLevelGroup The first level group node.
+   * @param {!import(gmf/themes.js).GmfGroup|!import(gmf/themes.js).GmfLayer} node The node, which
    *     may have children or not.
-   * @param {!gmfThemes.GmfOgcServers} ogcServers OGC servers.
+   * @param {!import(gmf/themes.js).GmfOgcServers} ogcServers OGC servers.
    * @private
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
@@ -428,7 +428,7 @@ class Manager {
     }
 
     // From there on, the node is a layer node.
-    const gmfLayer = /** @type gmfThemes.GmfLayer */ (node);
+    const gmfLayer = /** @type import(gmf/themes.js).GmfLayer */ (node);
 
     // (2) Skip layer node if a data source with the same id exists
     const id = olUtilGetUid(gmfLayer);
@@ -450,7 +450,7 @@ class Manager {
 
     if (ogcType === gmfThemeThemes.NodeType.WMTS) {
       // (3) Manage WMTS
-      const gmfLayerWMTS = /** @type {gmfThemes.GmfLayerWMTS} */ (gmfLayer);
+      const gmfLayerWMTS = /** @type {import(gmf/themes.js).GmfLayerWMTS} */ (gmfLayer);
 
       // Common options for WMTS
       wmtsLayer = gmfLayerWMTS.layer;
@@ -478,7 +478,7 @@ class Manager {
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === gmfThemeThemes.NodeType.WMS) {
       // (4) Manage WMS
-      const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+      const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
 
       // Common options for WMS
       maxResolution = gmfLayerWMS.maxResolutionHint;

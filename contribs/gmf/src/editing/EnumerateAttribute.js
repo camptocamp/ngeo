@@ -53,12 +53,12 @@ class EnumerateAttribute {
 
   /**
    * @param {angular.IHttpResponse} resp Ajax response.
-   * @return {Array.<gmfThemes.GmfLayerAttributeValue>} List of the attribute
+   * @return {Array.<import(gmf/themes.js).GmfLayerAttributeValue>} List of the attribute
    *     values.
    * @export
    */
   handleGetAttributeValues_(resp) {
-    const data = /** @type {gmfThemes.GmfLayerAttributeValuesResponse} */ (
+    const data = /** @type {import(gmf/themes.js).GmfLayerAttributeValuesResponse} */ (
       resp.data);
     return data.items;
   }

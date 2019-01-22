@@ -83,10 +83,10 @@ function TreeManager($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   /**
    * The root node and its children used to generate the layertree (with the
    * same ordre).
-   * @type {gmfThemes.GmfRootNode}
+   * @type {import(gmf/themes.js).GmfRootNode}
    * @public
    */
-  this.root = /** @type {gmfThemes.GmfRootNode} */ ({
+  this.root = /** @type {import(gmf/themes.js).GmfRootNode} */ ({
     children: []
   });
 
@@ -108,7 +108,7 @@ function TreeManager($timeout, $injector, gettextCatalog, ngeoLayerHelper,
   this.numberOfGroupsToAddInThisDigestLoop = 0;
 
   /**
-   * @type {Array.<gmfThemes.GmfGroup>}
+   * @type {Array.<import(gmf/themes.js).GmfGroup>}
    * @private
    */
   this.groupsToAddInThisDigestLoop_ = [];
@@ -127,7 +127,7 @@ function TreeManager($timeout, $injector, gettextCatalog, ngeoLayerHelper,
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {gmfThemes.GmfOgcServers|null}
+   * @type {import(gmf/themes.js).GmfOgcServers|null}
    * @private
    */
   this.ogcServers_ = null;
@@ -158,7 +158,7 @@ TreeManager.prototype.handleThemesChange_ = function() {
  * Set some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<gmfThemes.GmfGroup>} firstLevelGroups An array of gmf theme group.
+ * @param {Array.<import(gmf/themes.js).GmfGroup>} firstLevelGroups An array of gmf theme group.
  * @return {boolean} True if the group has been added. False otherwise.
  * @export
  */
@@ -172,7 +172,7 @@ TreeManager.prototype.setFirstLevelGroups = function(firstLevelGroups) {
  * Add some groups as tree's children. If the service use mode 'flush', the
  * previous tree's children will be removed. Add only groups that are not
  * already in the tree.
- * @param {Array.<gmfThemes.GmfGroup>} firstLevelGroups An array of gmf theme
+ * @param {Array.<import(gmf/themes.js).GmfGroup>} firstLevelGroups An array of gmf theme
  *     group.
  * @param {boolean=} opt_add if true, force to use the 'add' mode this time.
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
@@ -198,7 +198,7 @@ TreeManager.prototype.addFirstLevelGroups = function(firstLevelGroups,
 
 /**
  * Update the application state with the list of first level groups in the tree
- * @param {Array.<gmfThemes.GmfGroup>} groups firstlevel groups of the tree
+ * @param {Array.<import(gmf/themes.js).GmfGroup>} groups firstlevel groups of the tree
  * @private
  */
 TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
@@ -214,7 +214,7 @@ TreeManager.prototype.updateTreeGroupsState_ = function(groups) {
 /**
  * Add a group as tree's children without consideration of this service 'mode'.
  * Add it only if it's not already in the tree.
- * @param {gmfThemes.GmfGroup} group The group to add.
+ * @param {import(gmf/themes.js).GmfGroup} group The group to add.
  * @return {boolean} true if the group has been added.
  * @private
  */
@@ -280,7 +280,7 @@ TreeManager.prototype.addFirstLevelGroup_ = function(group) {
  * be checked. If a child also have children, include them in the loop
  * as well.
  *
- * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node Group or layer node
+ * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node Group or layer node
  * @param {boolean} found Whether a checked node was already found or not.
  * @return {boolean} Whether a checked node was already found or not.
  * @private
@@ -368,7 +368,7 @@ TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_sil
 /**
  * Remove a group from this tree's children. The first group that is found (
  * based on its name) will be removed. If any is found, nothing will append.
- * @param {gmfThemes.GmfGroup} group The group to remove.
+ * @param {import(gmf/themes.js).GmfGroup} group The group to remove.
  * @export
  */
 TreeManager.prototype.removeGroup = function(group) {
@@ -401,14 +401,14 @@ TreeManager.prototype.removeAll = function() {
 /**
  * Clone a group node and recursively set all child node `isChecked` using
  * the given list of layer names.
- * @param {gmfThemes.GmfGroup} group The original group node.
+ * @param {import(gmf/themes.js).GmfGroup} group The original group node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
- * @return {gmfThemes.GmfGroup} Cloned node.
+ * @return {import(gmf/themes.js).GmfGroup} Cloned node.
  * @private
  */
 TreeManager.prototype.cloneGroupNode_ = function(group, names) {
-  const clone = /** @type {gmfThemes.GmfGroup} */ (Object.assign({}, group));
+  const clone = /** @type {import(gmf/themes.js).GmfGroup} */ (Object.assign({}, group));
   this.toggleNodeCheck_(clone, names);
   return clone;
 };
@@ -417,7 +417,7 @@ TreeManager.prototype.cloneGroupNode_ = function(group, names) {
 /**
  * Set the child nodes metadata `isChecked` if its name is among the list of
  * given names. If a child node also has children, check those instead.
- * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node The original node.
+ * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node The original node.
  * @param {Array.<string>} names Array of node names to check (i.e. that
  *     should have their checkbox checked)
  * @private
@@ -439,7 +439,7 @@ TreeManager.prototype.toggleNodeCheck_ = function(node, names) {
 /**
  * Display a notification that informs that the given groups are already in the
  * tree.
- * @param {Array.<gmfThemes.GmfGroup>} groups An array of groups that already in
+ * @param {Array.<import(gmf/themes.js).GmfGroup>} groups An array of groups that already in
  *   the tree.
  * @private
  */
@@ -483,11 +483,11 @@ TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
  * Get the OGC server.
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller, from
  *     the current node.
- * @return {gmfThemes.GmfOgcServer} The OGC server.
+ * @return {import(gmf/themes.js).GmfOgcServer} The OGC server.
  */
 TreeManager.prototype.getOgcServer = function(treeCtrl) {
   if (treeCtrl.parent.node.mixed) {
-    const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (treeCtrl.node);
+    const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (treeCtrl.node);
     console.assert(gmfLayerWMS.ogcServer);
     return this.ogcServers_[gmfLayerWMS.ogcServer];
   } else {
@@ -495,7 +495,7 @@ TreeManager.prototype.getOgcServer = function(treeCtrl) {
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    const gmfGroup = /** @type {gmfThemes.GmfGroup} */ (firstLevelGroupCtrl.node);
+    const gmfGroup = /** @type {import(gmf/themes.js).GmfGroup} */ (firstLevelGroupCtrl.node);
     console.assert(gmfGroup.ogcServer);
     return this.ogcServers_[gmfGroup.ogcServer];
   }
@@ -508,7 +508,7 @@ TreeManager.prototype.getOgcServer = function(treeCtrl) {
  * the corresponding saved state (when possible, otherwise, juste take the
  * corresponding new node).
  * FIXME: Currently doesn't save nor restore the opacity.
- * @param {Array.<gmfThemes.GmfTheme>} themes the array of themes to be based on.
+ * @param {Array.<import(gmf/themes.js).GmfTheme>} themes the array of themes to be based on.
  * @private
  */
 TreeManager.prototype.refreshFirstLevelGroups_ = function(themes) {
@@ -598,10 +598,10 @@ TreeManager.prototype.getFirstLevelGroupFullState_ = function(treeCtrl) {
 /**
  * Set a node's metadata with the given fullState. Update also its children
  * recursively with the fullState children.
- * @param {gmfThemes.GmfGroup|gmfThemes.GmfLayer} node to update.
+ * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node to update.
  * @param {TreeManagerFullState|undefined} fullState the fullState object
  *     to use.
- * @return {gmfThemes.GmfGroup|gmfThemes.GmfLayer} the node with modification.
+ * @return {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} the node with modification.
  * @private
  */
 TreeManager.prototype.setNodeMetadataFromFullState_ = function(node, fullState) {
