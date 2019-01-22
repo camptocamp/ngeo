@@ -26,8 +26,8 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 /**
  * Additional configuration options for the object editing tools directive.
  * @typedef {Object} ObjectEditingToolsOptions
- * @property {number} [regularPolygonRadius] The radius of the shapes created by the regular polygon
- * radius creation tool. Default value is `100`. The value is in map units.
+ * @property {number} [regularPolygonRadius=100] The radius of the shapes created by the regular polygon
+ * radius creation tool. The value is in map units.
  * }}
  */
 
