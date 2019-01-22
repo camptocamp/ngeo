@@ -14,6 +14,8 @@ import {createStringXY} from 'ol/coordinate.js';
 import ScaleLine from 'ol/control/ScaleLine.js';
 import OverviewMap from 'ol/control/OverviewMap.js';
 
+import LayerSwitcher from 'ol-layerswitcher';
+
 import {
   createEmpty as olExtentCreateEmpty,
   extend as olExtentExtend,
@@ -84,7 +86,7 @@ class Map {
     }
     if (options.addMiniMap) {
       this.map_.addControl(new OverviewMap({
-        collapsed: !options.layerSwitcherExpanded,
+        collapsed: !options.miniMapExpanded,
         view: new View({
           projection: this.view_.getProjection(),
           resolutions: this.view_.getResolutions()
@@ -92,10 +94,16 @@ class Map {
       }));
     }
 
+    if (options.addLayerSwitcher) {
+      this.map_.addControl(new LayerSwitcher());
+    }
+
     // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
       for (const layer of layers) {
         if (layer.get('config.name') === constants.backgroundLayer) {
+          // we don't want the background layer in the layerswitch so we remove the title.
+          layer.set('title', undefined);
           this.map_.addLayer(layer);
         }
       }
