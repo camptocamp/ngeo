@@ -8,7 +8,7 @@ import olSourceVector from 'ol/source/Vector.js';
  * The options required to create a `File`.
  *
  * @typedef {Object} DataSourceOptions
- * @property {ol.Collection.<!import("ol/Feature.js").default>} [features] Collection of `import("ol/Feature.js").default` objects.
+ * @property {import("ol/Collection.js").default.<!import("ol/Feature.js").default>} [features] Collection of `import("ol/Feature.js").default` objects.
  * @extends DataSourceOptions
  */
 
