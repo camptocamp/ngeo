@@ -23,9 +23,9 @@ import olStyleStyle from 'ol/style/Style.js';
  * user already added the first point.
  * @property {number} [precision] Defines the number of decimals to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
- * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style] The style to be used when
+ * @property {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [style] The style to be used when
  * drawing is finished.
- * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [sketchStyle] The style to be used
+ * @property {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [sketchStyle] The style to be used
  * while drawing.
  */
 

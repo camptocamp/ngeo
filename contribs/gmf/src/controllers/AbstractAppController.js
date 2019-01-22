@@ -37,13 +37,13 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * A part of the application config.
  * @typedef {Object} Config
  * @property {number} srid
- * @property {ol.style.Style} [positionFeatureStyle]
- * @property {ol.style.Style} [accuracyFeatureStyle]
+ * @property {import("ol/style/Style.js").default} [positionFeatureStyle]
+ * @property {import("ol/style/Style.js").default} [accuracyFeatureStyle]
  * @property {number} [geolocationZoom]
  * @property {string} [autorotate]
  * @property {olx.ViewOptions} [mapViewConfig]
- * @property {ol.Collection.<ol.control.Control>|Array.<ol.control.Control>} [mapControls]
- * @property {ol.Collection.<ol.interaction.Interaction>|Array.<ol.interaction.Interaction>} [mapInteractions]
+ * @property {ol.Collection.<ol.control.Control>|Array.<import("ol/control/Control.js").default>} [mapControls]
+ * @property {ol.Collection.<ol.interaction.Interaction>|Array.<import("ol/interaction/Interaction.js").default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  * }} Config
  */

@@ -429,8 +429,8 @@ ModifyRectangle.prototype.handleUp_ = function(evt) {
  * @typedef {Object} ModifyParams
  * @property {ol.Coordinate} originCoordinate
  * @property {ol.Pixel} originPixel
- * @property {ol.geom.Point} siblingXPoint
- * @property {ol.geom.Point} siblingYPoint
+ * @property {import("ol/geom/Point.js").default} siblingXPoint
+ * @property {import("ol/geom/Point.js").default} siblingYPoint
  * @property {Array<number>} vectorX
  * @property {Array<number>} vectorY
  */

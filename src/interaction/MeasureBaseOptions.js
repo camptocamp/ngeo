@@ -5,6 +5,6 @@
  * @property {number} [precision]
  * @property {boolean} [displayHelpTooltip]
  * @property {Element} [startMsg]
- * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [style]
- * @property {ol.style.Style|Array.<ol.style.Style>|ol.StyleFunction} [sketchStyle]
+ * @property {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [style]
+ * @property {ol.style.Style|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [sketchStyle]
  */

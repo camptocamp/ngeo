@@ -21,7 +21,7 @@ import olFormatKML from 'ol/format/KML.js';
 
 /**
  * @typedef {Object} ExternalDataSourcesManagerWMTSCacheItem
- * @property {!ol.layer.Tile} layerObj
+ * @property {!import("ol/layer/Tile.js").default} layerObj
  * @property {Function} unregister
  */
 
