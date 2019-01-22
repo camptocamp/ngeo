@@ -25,6 +25,7 @@ const module = angular.module('ngeoRoutingFeatureComponent', [
 ]);
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
 });
 
@@ -295,6 +296,7 @@ Controller.prototype.onFeatureChange_ = function() {
  * @private
  */
 Controller.prototype.onSelect_ = function(selected) {
+  // @ts-ignore: If types are not respected
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);

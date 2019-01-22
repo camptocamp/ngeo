@@ -1,4 +1,4 @@
-import gmfObjecteditingCoordinate from 'gmf/objectediting/coordinate.js';
+import {toXY as coordinateToXY} from 'gmf/objectediting/coordinate.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomMultiLineString from 'ol/geom/MultiLineString.js';
 import olGeomMultiPoint from 'ol/geom/MultiPoint.js';
@@ -35,24 +35,20 @@ export function isEmpty(geom) {
  */
 export function toXY(geom) {
   if (geom instanceof olGeomPoint) {
-    geom.setCoordinates(
-      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 0)
+    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 0)
     );
   } else if (geom instanceof olGeomMultiPoint ||
              geom instanceof olGeomLineString
   ) {
-    geom.setCoordinates(
-      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 1)
+    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 1)
     );
   } else if (geom instanceof olGeomMultiLineString ||
              geom instanceof olGeomPolygon
   ) {
-    geom.setCoordinates(
-      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 2)
+    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 2)
     );
   } else if (geom instanceof olGeomMultiPolygon) {
-    geom.setCoordinates(
-      gmfObjecteditingCoordinate.toXY(geom.getCoordinates(), 3)
+    geom.setCoordinates(coordinateToXY(geom.getCoordinates(), 3)
     );
   } else {
     throw 'gmf.objectediting.geom.toXY - unsupported geometry type';

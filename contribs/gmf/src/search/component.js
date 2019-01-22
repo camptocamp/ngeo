@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfBase from 'gmf/index.js';
+import {COORDINATES_LAYER_NAME} from 'gmf/index.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -797,7 +797,7 @@ class SearchController {
    * @private
    */
   initStyles_() {
-    this.styles_[gmfBase.COORDINATES_LAYER_NAME] = new olStyleStyle({
+    this.styles_[COORDINATES_LAYER_NAME] = new olStyleStyle({
       image: new olStyleRegularShape({
         stroke: new olStyleStroke({color: [0, 0, 0, 0.7], width: 2}),
         points: 4,
@@ -947,7 +947,7 @@ class SearchController {
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(new olFeature({
         geometry: geom,
-        'layer_name': gmfBase.COORDINATES_LAYER_NAME
+        'layer_name': COORDINATES_LAYER_NAME
       }));
       this.map.getView().setCenter(suggestion['position']);
       this.leaveSearch_();

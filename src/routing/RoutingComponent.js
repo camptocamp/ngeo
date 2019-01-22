@@ -33,6 +33,7 @@ const module = angular.module('ngeoRoutingComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/routing/routing', require('./routing.html'));
 });
 

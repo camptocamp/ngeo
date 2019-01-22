@@ -1,4 +1,4 @@
-import ngeoInteractionCommon from 'ngeo/interaction/common.js';
+import {getDefaultDrawStyleFunction} from 'ngeo/interaction/common.js';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -102,7 +102,7 @@ function MobileDraw(options) {
       useSpatialIndex: false,
       wrapX: options.wrapX ? options.wrapX : false
     }),
-    style: options.style || ngeoInteractionCommon.getDefaultDrawStyleFunction(),
+    style: options.style || getDefaultDrawStyleFunction(),
     updateWhileAnimating: true,
     updateWhileInteracting: true
   });

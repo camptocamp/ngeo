@@ -5,7 +5,7 @@
  */
 
 import angular from 'angular';
-import ngeoUtils from 'ngeo/utils.js';
+import {decodeQueryString} from 'ngeo/utils.js';
 
 /**
  * @type {!angular.IModule}
@@ -13,7 +13,7 @@ import ngeoUtils from 'ngeo/utils.js';
 const module = angular.module('app', []);
 
 module.config(['$compileProvider', function($compileProvider) {
-  if (!('debug' in ngeoUtils.decodeQueryString(window.location.search))) {
+  if (!('debug' in decodeQueryString(window.location.search))) {
     // Disable the debug info
     $compileProvider.debugInfoEnabled(false);
   }

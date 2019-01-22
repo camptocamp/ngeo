@@ -12,6 +12,7 @@ const module = angular.module('ngeoRoutingNominatimInputComponent', [
 ]);
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
 });
 

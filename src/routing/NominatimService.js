@@ -86,7 +86,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
    * @type {Bloodhound | ((query: string, syncResults: (result: []) => void, asyncResults?: (result: []) => void) => void)}
    */
   this.typeaheadSourceDebounced =
-    this.ngeoDebounce_(/** @type {function} */ (this.typeaheadSource_.bind(this)), this.typeaheadDebounceDelay_, true);
+    this.ngeoDebounce_(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, true);
 }
 
 /**
