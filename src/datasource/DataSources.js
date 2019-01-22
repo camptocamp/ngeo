@@ -41,7 +41,7 @@ class DataSources {
     this.map_ = null;
 
     /**
-     * @type {!Array.<!import("ol/EventsKey.js").default>}
+     * @type {!Array.<!import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

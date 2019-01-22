@@ -364,7 +364,7 @@ function Controller($scope, $timeout, gettextCatalog,
   this.dirty = false;
 
   /**
-   * @type {!Array.<!import("ol/EventsKey.js").default>}
+   * @type {!Array.<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

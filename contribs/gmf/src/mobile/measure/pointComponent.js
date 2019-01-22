@@ -216,7 +216,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;

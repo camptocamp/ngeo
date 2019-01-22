@@ -212,7 +212,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.menu_ = null;
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.menuListenerKey_ = null;
@@ -274,7 +274,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
   /**
-   * @type {!Array.<!import("ol/EventsKey.js").default>}
+   * @type {!Array.<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

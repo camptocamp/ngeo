@@ -65,7 +65,7 @@ export default class extends ngeoRuleRule {
     this.updatingGeometry_ = false;
 
     /**
-     * @type {?import("ol/EventsKey.js").default}
+     * @type {?import("ol/events.js").EventsKey}
      * @private
      */
     this.geometryChangeListenerKey_ = null;

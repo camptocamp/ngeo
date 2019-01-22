@@ -348,7 +348,7 @@ class RuleController {
     this.interactions_.push(this.translate_);
 
     /**
-     * @type {!Array.<!import("ol/EventsKey.js").default>}
+     * @type {!Array.<!import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

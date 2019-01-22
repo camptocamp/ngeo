@@ -38,19 +38,19 @@ import olSourceVector from 'ol/source/Vector.js';
 function Translate(options) {
 
   /**
-   * @type {!Array.<import("ol/EventsKey.js").default>}
+   * @type {!Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
 
   /**
-   * @type {!Object.<number, import("ol/EventsKey.js").default>}
+   * @type {!Object.<number, import("ol/events.js").EventsKey>}
    * @private
    */
   this.featureListenerKeys_ = {};
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.keyPressListenerKey_ = null;

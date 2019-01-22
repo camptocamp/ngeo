@@ -38,7 +38,7 @@ function Rotate(options) {
   console.assert(options.features);
 
   /**
-   * @type {Array.<import("ol/EventsKey.js").default>}
+   * @type {Array.<import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];
@@ -50,7 +50,7 @@ function Rotate(options) {
   this.modified_ = false;
 
   /**
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.keyPressListenerKey_ = null;

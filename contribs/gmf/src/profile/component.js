@@ -299,7 +299,7 @@ function Controller($scope, $http, $element, $filter,
   this.active = false;
 
   /**
-   * @type {import("ol/EventsKey.js").default}
+   * @type {import("ol/events.js").EventsKey}
    * @private
    */
   this.pointerMoveKey_;

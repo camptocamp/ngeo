@@ -434,19 +434,19 @@ class Controller {
     this.rotationTimeoutPromise_ = null;
 
     /**
-     * @type {import("ol/EventsKey.js").default}
+     * @type {import("ol/events.js").EventsKey}
      * @private
      */
     this.postComposeListenerKey_;
 
     /**
-     * @type {import("ol/EventsKey.js").default}
+     * @type {import("ol/events.js").EventsKey}
      * @private
      */
     this.pointerDragListenerKey_;
 
     /**
-     * @type {import("ol/EventsKey.js").default}
+     * @type {import("ol/events.js").EventsKey}
      * @private
      */
     this.mapViewResolutionChangeKey_;

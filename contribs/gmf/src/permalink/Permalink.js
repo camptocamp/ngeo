@@ -137,7 +137,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
 
   /**
    * The key for map view 'propertychange' event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.mapViewPropertyChangeEventKey_ = null;

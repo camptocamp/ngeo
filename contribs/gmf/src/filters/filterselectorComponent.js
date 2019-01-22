@@ -239,7 +239,7 @@ class Controller {
     this.gmfDataSources_ = gmfDataSourcesHelper.collection;
 
     /**
-     * @type {Array.<import("ol/EventsKey.js").default>}
+     * @type {Array.<import("ol/events.js").EventsKey>}
      * @private
      */
     this.listenerKeys_ = [];

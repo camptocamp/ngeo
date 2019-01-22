@@ -137,7 +137,7 @@ function Controller($scope) {
   this.interaction_;
 
   /**
-   * @type {import("ol/EventsKey.js").default}
+   * @type {import("ol/events.js").EventsKey}
    * @private
    */
   this.interactionListenerKey_;

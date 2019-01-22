@@ -144,14 +144,14 @@ function Measure(options = /** @type {import("ngeo/interaction/MeasureBaseOption
 
   /**
    * The key for geometry change event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.changeEventKey_ = null;
 
   /**
    * The key for map postcompose event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.postcomposeEventKey_ = null;

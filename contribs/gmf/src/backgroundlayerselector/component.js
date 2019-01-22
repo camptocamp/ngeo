@@ -136,7 +136,7 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {!Array.<!import("ol/EventsKey.js").default>}
+   * @type {!Array.<!import("ol/events.js").EventsKey>}
    * @private
    */
   this.listenerKeys_ = [];

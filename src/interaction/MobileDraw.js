@@ -48,7 +48,7 @@ function MobileDraw(options) {
 
   /**
    * The key for view center change event.
-   * @type {?import("ol/EventsKey.js").default}
+   * @type {?import("ol/events.js").EventsKey}
    * @private
    */
   this.changeEventKey_ = null;
