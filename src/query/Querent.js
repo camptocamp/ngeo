@@ -40,17 +40,17 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * - `replace`: newly queried features are used as result
  * - `add`:     newly queried features are added to the existing ones
  * - `remove`:  newly queried features are removed from the existing ones
- * @property {ol.Coordinate} [coordinate] The coordinate to issue the requests with, which can end up with either
+ * @property {import("ol/Coordinate.js").default} [coordinate] The coordinate to issue the requests with, which can end up with either
  * WMS or WFS requests.
  * @property {Array.<DataSource>} [dataSources] ist of data sources to query. Only those that meet the requirements will
  * actually be queried. The querent service requires either the `dataSources`
  * or `queryableDataSources` property to be set.
- * @property {ol.Extent} [extent] The extent to issue the requests with, which can end up with WFS requests
+ * @property {import("ol/Extent.js").default} [extent] The extent to issue the requests with, which can end up with WFS requests
  * only.
  * @property {import("ol/format/filter/Filter.js").default} [filter] A filter to additionally use with the query. Only used by WFS requests.
  * If a filter is defined, then it is used instead of the data source's filter rules.
  * @property {number} [limit] The maximum number of features to get per request.
- * @property {ol.Map} map The ol3 map object. Used to fill some parameters of the queries, such as
+ * @property {import("ol/Map.js").default} map The ol3 map object. Used to fill some parameters of the queries, such as
  * 'srs' and filter the queryable layers within the data sources.
  * @property {QueryableDataSources} [queryableDataSources] A hash of queryable data sources, which must meet all requirements. The
  * querent service requires either the `dataSources` or `queryableDataSources`

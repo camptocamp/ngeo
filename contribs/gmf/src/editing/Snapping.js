@@ -555,7 +555,7 @@ Snapping.prototype.handleMapMoveEnd_ = function() {
  * @property {boolean} active
  * @property {string} featureNS
  * @property {string} featurePrefix
- * @property {ol.Collection.<ol.Feature>} features
+ * @property {ol.Collection.<import("ol/Feature.js").default>} features
  * @property {string} geometryName
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures

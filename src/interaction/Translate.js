@@ -16,9 +16,9 @@ import olSourceVector from 'ol/source/Vector.js';
 
 /**
  * @typedef {Object} TranslateOptions
- * @property {ol.Collection.<ol.Feature>} [features] Only features contained in this collection will be able
+ * @property {ol.Collection.<import("ol/Feature.js").default>} [features] Only features contained in this collection will be able
  * to be translated. If not specified, all features on the map will be able to be translated.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|ol.StyleFunction} [style] Style for the center features
+ * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} [style] Style for the center features
  * added by the translate interaction to to show that features can be moved.
  */
 

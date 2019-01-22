@@ -5,7 +5,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 /**
  * @typedef {Object} NominatimSearchResult
  * @property {string} name
- * @property {ol.Coordinate} coordinate
+ * @property {import("ol/Coordinate.js").default} coordinate
  */
 
 
