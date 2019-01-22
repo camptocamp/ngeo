@@ -26,7 +26,7 @@ import angular from 'angular';
  * @export
  * @ngname ngeoRoutingService
  */
-function RoutingService($http, $injector) {
+export function RoutingService($http, $injector) {
 
   /**
    * @type {angular.IHttpService}
@@ -123,7 +123,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
  * Snaps a coordinate to the street network and returns the nearest match
  * @param {import("ol/coordinate.js").Coordinate} coordinate coordinate to query
  * @param {?Object} config optional configuration
- * @return {!angular.IHttpPromise<Object><Object>} promise of the OSRM API request
+ * @return {!angular.IHttpPromise<Object>} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
 RoutingService.prototype.getNearest = function(coordinate, config) {

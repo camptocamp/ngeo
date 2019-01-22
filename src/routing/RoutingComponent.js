@@ -65,10 +65,10 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * The controller for the routing directive.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/RoutingService.js").default} ngeoRoutingService service for OSRM routing
- * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM routing
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @param {!angular.IQService} $q Angular q service
- * @param {miscDebounce} ngeoDebounce ngeo Debounce service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @private
  * @ngInject
@@ -84,19 +84,19 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
   this.$scope_ = $scope;
 
   /**
-   * @type {import("ngeo/routing/RoutingService.js").default}
+   * @type {import("ngeo/routing/RoutingService.js").RoutingService}
    * @private
    */
   this.ngeoRoutingService_ = ngeoRoutingService;
 
   /**
-   * @type {import("ngeo/routing/NominatimService.js").default}
+   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;
 
   /**
-   * @type {RoutingOptions}
+   * @type {import('ngeo/routing/RoutingService').RoutingOptions}
    * @private
    */
   this.routingOptions_ = $injector.has('ngeoRoutingOptions') ? $injector.get('ngeoRoutingOptions') : {};
@@ -109,13 +109,13 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
    *              profile: 'routed-car' // used as part of the query
    *            }
    *          ]
-   * @type {Array<RoutingProfile>}
+   * @type {Array<import('ngeo/routing/RoutingService').RoutingProfile>}
    * @export
    */
   this.routingProfiles = this.routingOptions_.profiles || [];
 
   /**
-   * @type {?RoutingProfile}
+   * @type {?import('ngeo/routing/RoutingService').RoutingProfile}
    * @export
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
@@ -231,11 +231,11 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
    * Debounced because in some cases (reverse route) multiple changes are done
    * at once and spam this function.
    * @export
-   * @type {function()}
+   * @type {function(): void}
    */
-  this.handleChange = /** @type {function()} */
+  this.handleChange = /** @type {function(): void} */
           (ngeoDebounce(
-            /** @type {function(?)} */ (this.calculateRoute.bind(this)),
+            /** @type {function(?): void} */ (this.calculateRoute.bind(this)),
             debounceDelay,
             true));
 }

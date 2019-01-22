@@ -53,10 +53,10 @@ function AbstractMobileController(config, $scope, $injector) {
   this.searchOverlayVisible = false;
 
   /**
-   * @type {SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    * @export
    */
-  this.searchListeners = /** @type {SearchDirectiveListeners} */ ({
+  this.searchListeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     open: function() {
       this.searchOverlayVisible = true;
     }.bind(this),

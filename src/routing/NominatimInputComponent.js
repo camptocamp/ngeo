@@ -44,7 +44,7 @@ function ngeoRoutingNominatimInputComponentTemplateUrl($attrs, ngeoRoutingNomina
  * @param {!JQLite} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -66,13 +66,13 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
   this.$scope_ = $scope;
 
   /**
-   * @type {import("ngeo/routing/NominatimService.js").default}
+   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
    * @export
    */
   this.ngeoNominatimService = ngeoNominatimService;
 
   /**
-   * @type {(function(Object)|undefined)}
+   * @type {(function(Object): void|undefined)}
    * @export
    */
   this.onSelect;
@@ -101,10 +101,10 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
   })];
 
   /**
-   * @type {SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {SearchDirectiveListeners} */({
+  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */({
     select: this.select_.bind(this)
   });
 

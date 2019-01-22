@@ -104,7 +104,7 @@ module.directive('gmfMobileMeasurepoint', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {import("gmf/raster/RasterService.js").default} gmfRaster gmf Raster service.
- * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @private
  * @ngInject
@@ -120,7 +120,7 @@ function Controller(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
   this.gmfRaster_ = gmfRaster;
 
   /**
-   * @type {miscDebounce}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;

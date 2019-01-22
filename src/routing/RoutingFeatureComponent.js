@@ -56,7 +56,7 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.IQService} $q Angular q service
- * @param {!import("ngeo/routing/NominatimService.js").default} ngeoNominatimService service for Nominatim
+ * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @constructor
  * @private
  * @ngInject
@@ -84,7 +84,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.$q_ = $q;
 
   /**
-   * @type {import("ngeo/routing/NominatimService.js").default}
+   * @type {import("ngeo/routing/NominatimService.js").NominatimService}
    * @private
    */
   this.ngeoNominatimService_ = ngeoNominatimService;
@@ -120,7 +120,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.strokeColor;
 
   /**
-   * @type {function(import("ol/Feature.js").default)}
+   * @type {function(import("ol/Feature.js").default): void}
    * @export
    */
   this.onChange;

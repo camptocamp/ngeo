@@ -50,7 +50,7 @@ const module = angular.module('ngeoProfile', [
  * @htmlAttribute {?Array} ngeo-profile-pois The data for POIs.
  * @htmlAttribute {*} ngeo-profile-highlight Any property on the scope which
  * evaluated value may correspond to distance from origin.
- * @param {miscDebounce} ngeoDebounce ngeo Debounce factory.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce factory.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
  * @ngdoc directive

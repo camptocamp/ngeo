@@ -115,10 +115,10 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   }];
 
   /**
-   * @type {SearchDirectiveListeners}
+   * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    * @export
    */
-  this.listeners = /** @type {SearchDirectiveListeners} */ ({
+  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
     select: SearchController.select_.bind(this)
   });
 }

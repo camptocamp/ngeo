@@ -420,13 +420,13 @@ class SearchController {
     this.displayColorPicker = false;
 
     /**
-     * @type {SearchDirectiveListeners}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      * @export
      */
     this.listeners;
 
     /**
-     * @type {SearchDirectiveListeners}
+     * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      * @export
      */
     this.additionalListeners;
@@ -485,7 +485,7 @@ class SearchController {
 
     this.listeners = this.mergeListeners_(
       this.additionalListeners,
-      /** @type {SearchDirectiveListeners} */ ({
+      /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
         select: this.select_.bind(this),
         close: this.close_.bind(this),
         datasetsempty: this.datasetsempty_.bind(this)
@@ -514,10 +514,10 @@ class SearchController {
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
-   * @param {SearchDirectiveListeners} additionalListeners Custom provided
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} additionalListeners Custom provided
    *    listeners.
-   * @param {SearchDirectiveListeners} listeners Default listeners.
-   * @return {SearchDirectiveListeners} Merged listeners.
+   * @param {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} listeners Default listeners.
+   * @return {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} Merged listeners.
    * @private
    */
   mergeListeners_(additionalListeners, listeners) {
