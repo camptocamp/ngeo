@@ -421,7 +421,7 @@ MobileDraw.prototype.updateState_ = function() {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} evt Event.
+ * @param {import("ol/events/Event.js").default} evt Event.
  * @private
  */
 MobileDraw.prototype.handleViewCenterChange_ = function(evt) {

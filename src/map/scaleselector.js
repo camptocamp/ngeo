@@ -223,7 +223,7 @@ ScaleselectorController.prototype.changeZoom = function(zoom) {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} e OpenLayers object event.
+ * @param {import("ol/events/Event.js").default} e OpenLayers object event.
  * @private
  */
 ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
@@ -250,7 +250,7 @@ ScaleselectorController.prototype.handleResolutionChange_ = function(e) {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} e OpenLayers object event.
+ * @param {import("ol/events/Event.js").default} e OpenLayers object event.
  * @private
  */
 ScaleselectorController.prototype.handleViewChange_ = function(e) {
