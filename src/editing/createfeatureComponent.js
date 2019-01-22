@@ -46,7 +46,7 @@ const module = angular.module('ngeoCreatefeature', [
  *
  * @htmlAttribute {boolean} ngeo-createfeature-active Whether the directive is
  *     active or not.
- * @htmlAttribute {import("ol/Collection.js").Collection} ngeo-createfeature-features The collection of
+ * @htmlAttribute {import("ol/Collection.js").default} ngeo-createfeature-features The collection of
  *     features where to add those created by this directive.
  * @htmlAttribute {string} ngeo-createfeature-geom-type Determines the type
  *     of geometry this directive should draw.
@@ -94,7 +94,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.active;
 
   /**
-   * @type {import("ol/Collection.js").Collection.<!import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
+   * @type {import("ol/Collection.js").default.<!import("ol/Feature.js").default>|!import("ol/source/Vector.js").default}
    * @export
    */
   this.features;

@@ -89,7 +89,7 @@ module.directive('gmfDrawfeature', component);
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!import("ol/Collection.js").Collection.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
+ * @param {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>} ngeoFeatures Collection of features.
  * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
@@ -165,7 +165,7 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.featureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!import("ol/Collection.js").Collection.<!import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.features = ngeoFeatures;
@@ -183,14 +183,14 @@ function Controller($scope, $timeout, gettextCatalog, ngeoFeatureHelper, ngeoFea
   this.selectedFeature = null;
 
   /**
-   * @type {!import("ol/Collection.js").Collection.<!import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<!import("ol/Feature.js").default>}
    * @export
    */
   this.selectedFeatures = new olCollection();
 
 
   /**
-   * @type {!import("ol/Collection.js").Collection}
+   * @type {!import("ol/Collection.js").default}
    * @private
    */
   this.interactions_ = new olCollection();

@@ -40,7 +40,7 @@ const module = angular.module('app', [
 function MainController(ngeoToolActivateMgr) {
 
   /**
-   * @type {import("ol/Collection.js").Collection}
+   * @type {import("ol/Collection.js").default}
    * @export
    */
   this.features = new olCollection();

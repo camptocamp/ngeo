@@ -42,7 +42,7 @@ const module = angular.module('ngeoCreateregularpolygonfromclick', [
  * @htmlAttribute {number|undefined} ngeo-createregularpolygonfromclick-angle
  *     Angle in radians. A value of 0 will have one of the shape's point
  *     facing up. Default value is 0.
- * @htmlAttribute {import("ol/Collection.js").Collection} ngeo-createregularpolygonfromclick-features
+ * @htmlAttribute {import("ol/Collection.js").default} ngeo-createregularpolygonfromclick-features
  *     The collection of features where to add those created by this directive.
  * @htmlAttribute {import("ol/Map.js").default} ngeo-createregularpolygonfromclick-map The map.
  * @htmlAttribute {number} ngeo-createregularpolygonfromclick-radius Radius
@@ -104,7 +104,7 @@ function Controller($scope) {
   this.angle;
 
   /**
-   * @type {import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @export
    */
   this.features;

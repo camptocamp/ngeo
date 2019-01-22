@@ -129,14 +129,14 @@ class ExternalDatSourcesManager {
 
     /**
      * Collection of WMS groups.
-     * @type {!import("ol/Collection.js").Collection.<!import("ngeo/datasource/WMSGroup.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ngeo/datasource/WMSGroup.js").default>}
      * @private
      */
     this.wmsGroupsCollection_ = new olCollection();
 
     /**
      * Collection of groups for WMTS data sources.
-     * @type {!import("ol/Collection.js").Collection.<!import("ngeo/datasource/OGCGroup.js").default>}
+     * @type {!import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>}
      * @private
      */
     this.wmtsGroupsCollection_ = new olCollection();
@@ -206,7 +206,7 @@ class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {!import("ol/Collection.js").Collection.<!import("ngeo/datasource/WMSGroup.js").default>} Collection of WMS
+   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/WMSGroup.js").default>} Collection of WMS
    *     groups.
    * @export
    */
@@ -258,7 +258,7 @@ class ExternalDatSourcesManager {
   }
 
   /**
-   * @return {!import("ol/Collection.js").Collection.<!import("ngeo/datasource/OGCGroup.js").default>} Collection of groups
+   * @return {!import("ol/Collection.js").default.<!import("ngeo/datasource/OGCGroup.js").default>} Collection of groups
    *     for WMTS data sources.
    * @export
    */

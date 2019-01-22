@@ -163,7 +163,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   this.ngeoStateManager_ = ngeoStateManager;
 
   /**
-   * @type {?import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {?import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.ngeoFeatures_ = $injector.has('ngeoFeatures') ?

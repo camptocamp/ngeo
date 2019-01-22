@@ -94,7 +94,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
   });
 
   /**
-   * @type {import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    */
   const features = new olCollection();
 

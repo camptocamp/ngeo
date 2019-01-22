@@ -43,7 +43,7 @@ function Modify(options) {
   console.assert(options.features);
 
   /**
-   * @type {!import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {!import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.features_ = options.features;
@@ -61,7 +61,7 @@ function Modify(options) {
   this.interactions_ = [];
 
   /**
-   * @type {import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.otherFeatures_ = new olCollection();
@@ -75,7 +75,7 @@ function Modify(options) {
   }));
 
   /**
-   * @type {import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.circleFeatures_ = new olCollection();
@@ -88,7 +88,7 @@ function Modify(options) {
   }));
 
   /**
-   * @type {import("ol/Collection.js").Collection.<import("ol/Feature.js").default>}
+   * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
    */
   this.rectangleFeatures_ = new olCollection();
@@ -222,7 +222,7 @@ Modify.prototype.removeFeature_ = function(feature) {
 
 /**
  * @param {import("ol/Feature.js").default} feature Feature.
- * @return {import("ol/Collection.js").Collection.<import("ol/Feature.js").default>} Collection of features for this feature.
+ * @return {import("ol/Collection.js").default.<import("ol/Feature.js").default>} Collection of features for this feature.
  * @private
  */
 Modify.prototype.getFeatureCollection_ = function(feature) {
