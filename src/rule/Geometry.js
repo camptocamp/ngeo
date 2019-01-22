@@ -6,6 +6,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
 
 /**
+ * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} GeometryOptions
  * @property {Object.<string, *>} [featureProperties] Properties for the feature.
  * @property {boolean} [active=false] (RuleOptions)
@@ -18,7 +19,6 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
  * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
- * @extends import('ngeo/rule/Rule.js').RuleOptions
  */
 
 
