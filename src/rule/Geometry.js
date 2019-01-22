@@ -8,7 +8,17 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 /**
  * @typedef {Object} GeometryOptions
  * @property {Object.<string, *>} [featureProperties] Properties for the feature.
- * @extends RuleOptions
+ * @property {boolean} [active=false] (RuleOptions)
+ * @property {number|string} [expression] (RuleOptions)
+ * @property {boolean} [isCustom] (RuleOptions)
+ * @property {number} [lowerBoundary] (RuleOptions)
+ * @property {string} name (RuleOptions)
+ * @property {string} [operator] (RuleOptions)
+ * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {string} propertyName (RuleOptions)
+ * @property {string} [type] (RuleOptions)
+ * @property {number} [upperBoundary] (RuleOptions)
+ * @extends import('ngeo/rule/Rule.js').RuleOptions
  */
 
 

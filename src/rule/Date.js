@@ -3,8 +3,18 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
 
 /**
+ * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} DateOptions
- * @extends RuleOptions
+ * @property {boolean} [active=false] (RuleOptions)
+ * @property {number|string} [expression] (RuleOptions)
+ * @property {boolean} [isCustom] (RuleOptions)
+ * @property {number} [lowerBoundary] (RuleOptions)
+ * @property {string} name (RuleOptions)
+ * @property {string} [operator] (RuleOptions)
+ * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {string} propertyName (RuleOptions)
+ * @property {string} [type] (RuleOptions)
+ * @property {number} [upperBoundary] (RuleOptions)
  */
 
 

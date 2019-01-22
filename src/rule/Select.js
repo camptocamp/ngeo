@@ -1,11 +1,21 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoRuleRule from 'ngeo/rule/Rule.js';
+import ngeoRuleRule, {OperatorType} from 'ngeo/rule/Rule.js';
 
 
 /**
+ * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} SelectOptions
  * @property {Array.<string>} choices List of choices available for selection.
- * @extends RuleOptions
+ * @property {boolean} [active=false] (RuleOptions)
+ * @property {number|string} [expression] (RuleOptions)
+ * @property {boolean} [isCustom] (RuleOptions)
+ * @property {number} [lowerBoundary] (RuleOptions)
+ * @property {string} name (RuleOptions)
+ * @property {string} [operator] (RuleOptions)
+ * @property {Array.<string>} [operators] (RuleOptions)
+ * @property {string} propertyName (RuleOptions)
+ * @property {string} [type] (RuleOptions)
+ * @property {number} [upperBoundary] (RuleOptions)
  */
 
 
@@ -22,7 +32,7 @@ export default class extends ngeoRuleRule {
    */
   constructor(options) {
 
-    options.operator = ngeoRuleRule.OperatorType.EQUAL_TO;
+    options.operator = OperatorType.EQUAL_TO;
     options.type = ngeoFormatAttributeType.SELECT;
 
     super(options);
@@ -34,7 +44,6 @@ export default class extends ngeoRuleRule {
      * @private
      */
     this.choices_ = options.choices;
-
   }
 
   // === Static property getters/setters ===
@@ -63,5 +72,4 @@ export default class extends ngeoRuleRule {
     }
     return selectedChoices;
   }
-
 }
