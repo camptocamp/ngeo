@@ -32,6 +32,7 @@ module.value('ngeoScaleselectorTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
 });
 

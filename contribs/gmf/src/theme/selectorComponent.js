@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfThemeManager from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -18,6 +16,7 @@ const module = angular.module('gmfThemeSelectorComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
 });
 

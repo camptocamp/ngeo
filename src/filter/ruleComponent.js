@@ -49,6 +49,7 @@ const module = angular.module('ngeoRule', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
 });
 

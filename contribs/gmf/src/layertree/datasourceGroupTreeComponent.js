@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
@@ -13,6 +11,7 @@ const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html'));
 });
 

@@ -38,6 +38,7 @@ function gmfAuthenticationTemplateUrl_(element, attrs) {
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/authentication', require('./component.html'));
 });
 

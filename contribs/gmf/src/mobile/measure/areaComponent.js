@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
@@ -24,10 +22,8 @@ module.value('gmfMobileMeasureAreaTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    'gmf/measure/areaComponent',
-    require('./baseComponent.html')
-  );
+  // @ts-ignore: webpack
+  $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
 });
 
 

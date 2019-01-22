@@ -62,6 +62,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  */
 const queryresultComponent = {
   controller: 'gmfappQueryresultController',
+  // @ts-ignore: webpack
   template: require('./partials/queryresult.html')
 };
 

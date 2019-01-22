@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 /**
@@ -21,6 +19,7 @@ module.value('ngeoColorpickerTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
 });
 

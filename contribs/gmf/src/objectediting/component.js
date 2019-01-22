@@ -57,6 +57,7 @@ const module = angular.module('gmfObjectEditingComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/objectediting', require('./component.html'));
 });
 

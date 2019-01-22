@@ -60,6 +60,7 @@ module.value('gmfProfileTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/profile', require('./component.html'));
 });
 

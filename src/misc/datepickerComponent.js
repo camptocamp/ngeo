@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
 
@@ -35,6 +33,7 @@ module.value('ngeoDatePickerTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
 });
 

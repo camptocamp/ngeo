@@ -28,6 +28,7 @@ module.value('gmfMobileMeasurePointTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
 });
 

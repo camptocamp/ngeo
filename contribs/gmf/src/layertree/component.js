@@ -67,6 +67,7 @@ module.value('ngeoLayertreeTemplateUrl',
   (element, attrs) => 'gmf/layertree');
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/layertree', require('./component.html'));
 });
 

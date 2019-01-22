@@ -69,6 +69,7 @@ module.value('gmfDisplayquerygridTemplateUrl',
 );
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
 });
 

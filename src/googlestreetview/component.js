@@ -26,6 +26,7 @@ module.value('ngeoGooglestreetviewTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/googlestreetview', require('./component.html'));
 });
 

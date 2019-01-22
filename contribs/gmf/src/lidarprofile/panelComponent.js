@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfLidarprofileConfig from 'gmf/lidarprofile/Config.js';
 import gmfLidarprofileManager from 'gmf/lidarprofile/Manager.js';
@@ -36,6 +34,7 @@ module.value('gmfLidarprofilePanelTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
 });
 

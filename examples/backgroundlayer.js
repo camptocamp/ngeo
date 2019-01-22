@@ -19,6 +19,7 @@ const module = angular.module('app', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('partials/backgroundlayer', require('./partials/backgroundlayer.html'));
 });
 

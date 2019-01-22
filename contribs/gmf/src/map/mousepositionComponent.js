@@ -25,6 +25,7 @@ const module = angular.module('gmfMapMouseposition', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
 });
 

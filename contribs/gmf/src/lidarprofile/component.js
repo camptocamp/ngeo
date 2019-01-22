@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 /**
@@ -22,6 +19,7 @@ module.value('gmfLidarprofileTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/lidarprofile', require('./component.html'));
 });
 

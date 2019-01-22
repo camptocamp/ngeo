@@ -47,6 +47,7 @@ const layertreeComponent = {
 };
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('examples/layertree', require('./partials/layertree.html'));
 });
 

@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
@@ -18,6 +16,7 @@ const module = angular.module('GmfEditingFeatureSelectorComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/editing/editFeatureSelectorComponent', require('./editFeatureSelectorComponent.html'));
 });
 

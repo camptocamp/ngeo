@@ -209,6 +209,7 @@ module.value('ngeoModuleComponentTemplateUrl',
     });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/module/component', require('./component.html'));
 });
 

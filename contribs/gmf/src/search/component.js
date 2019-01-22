@@ -71,6 +71,7 @@ function gmfSearchTemplateUrl_(element, attrs) {
 }
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/search', require('./component.html'));
 });
 

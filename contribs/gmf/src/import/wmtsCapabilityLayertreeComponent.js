@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager.js';
@@ -16,6 +13,7 @@ const module = angular.module('gmfWmtscapabilitylayertree', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html'));
 });
 

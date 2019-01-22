@@ -1,6 +1,3 @@
-/**
- */
-
 import angular from 'angular';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent.js';
 
@@ -45,6 +42,7 @@ const module = angular.module('GmfDrawFeatureComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
 });
 

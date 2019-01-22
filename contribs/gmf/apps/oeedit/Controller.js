@@ -1,6 +1,4 @@
 /**
- */
-/**
  * Application entry point.
  *
  * This file includes `goog.require`'s for all the components/directives used
@@ -228,6 +226,7 @@ const module = angular.module('Appoeedit', [
 
 module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
 });
 

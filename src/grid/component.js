@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config.js';
@@ -21,6 +19,7 @@ const module = angular.module('ngeoGrid', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('ngeo/grid', require('./component.html'));
 });
 

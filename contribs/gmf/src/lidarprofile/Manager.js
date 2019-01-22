@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfLidarprofileMeasure from 'gmf/lidarprofile/Measure.js';
 import gmfLidarprofilePlot from 'gmf/lidarprofile/Plot.js';

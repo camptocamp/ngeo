@@ -58,6 +58,7 @@ module.value('gmfDisplayquerywindowTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
 });
 

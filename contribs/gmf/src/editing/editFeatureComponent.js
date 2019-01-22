@@ -103,6 +103,7 @@ const module = angular.module('GmfEditingFeatureComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
 });
 

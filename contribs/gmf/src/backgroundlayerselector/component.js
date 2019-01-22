@@ -27,6 +27,7 @@ module.value('gmfBackgroundlayerselectorTemplateUrl',
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
 });
 

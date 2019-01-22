@@ -88,6 +88,7 @@ module.value('gmfPrintTemplateUrl',
   });
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/print', require('./component.html'));
 });
 

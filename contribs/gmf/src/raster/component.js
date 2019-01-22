@@ -19,6 +19,7 @@ const module = angular.module('gmfRasterComponent', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
 });
 

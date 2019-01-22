@@ -29,6 +29,7 @@ const module = angular.module('app', [
 
 
 module.run(/* @ngInject */ ($templateCache) => {
+  // @ts-ignore: webpack
   $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
 });
 
