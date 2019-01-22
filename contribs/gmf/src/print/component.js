@@ -535,7 +535,7 @@ class Controller {
     this.postcomposeListener_;
 
     /**
-     * @type {angular.IHttpPromise}
+     * @type {angular.IHttpPromise<Object>}
      * @private
      */
     this.capabilities_;

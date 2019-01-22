@@ -104,7 +104,7 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
  * Cancel a report.
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
- * @return {angular.IHttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise<Object>} HTTP promise.
  * @export
  */
 PrintService.prototype.cancel = function(ref, opt_httpConfig) {
@@ -417,7 +417,7 @@ PrintService.prototype.getOpacityOrInherited_ = function(layer) {
  * Send a create report request to the MapFish Print service.
  * @param {MapFishPrintSpec} printSpec Print specification.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
- * @return {angular.IHttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise<Object>} HTTP promise.
  * @export
  */
 PrintService.prototype.createReport = function(printSpec, opt_httpConfig) {
@@ -438,7 +438,7 @@ PrintService.prototype.createReport = function(printSpec, opt_httpConfig) {
  * Get the status of a report.
  * @param {string} ref Print report reference.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
- * @return {angular.IHttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise<Object>} HTTP promise.
  * @export
  */
 PrintService.prototype.getStatus = function(ref, opt_httpConfig) {
@@ -463,7 +463,7 @@ PrintService.prototype.getReportUrl = function(ref) {
 /**
  * Get the print capabilities from MapFish Print.
  * @param {angular.IRequestShortcutConfig=} opt_httpConfig $http config object.
- * @return {angular.IHttpPromise} HTTP promise.
+ * @return {angular.IHttpPromise<Object>} HTTP promise.
  */
 PrintService.prototype.getCapabilities = function(opt_httpConfig) {
   const httpConfig =
