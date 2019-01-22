@@ -5,34 +5,19 @@ import olFormatWFS from 'ol/format/WFS.js';
 
 
 /**
+ * @typedef {import('ngeo/query/MapQuerent.js').QueryResult} QueryResult
+ */
+/**
  * Results for a query source.
- *
- * features: The matching features for this source.
- *
- * id: Identifier (can be not unique).
- *
- * label: Label.
- *
- * limit: The maximum number of features that can be returned for a query with this source.
- *
- * pending: Is the request for this source still ongoing?
- *
- * queried: Has this source been queried for the last query request?
- *
- * tooManyResults: If the last query for this source would return more features than the configured limit.
- *
- * totalFeatureCount: If `tooManyResults` is `true`, this contains the total number of features.
- *
- * @typedef {{
- *     features: (Array.<ol.Feature>),
- *     id: (number|string),
- *     label: (string),
- *     limit: (number),
- *     pending: (boolean),
- *     queried: (boolean),
- *     tooManyResults: (boolean),
- *     totalFeatureCount: (number|undefined)
- * }} QueryResultSource
+ * @typedef {Object} QueryResultSource
+ * @property {Array.<import("ol/Feature.js").default>} features The matching features for this source.
+ * @property {number|string} id Identifier (can be not unique).
+ * @property {string} label Label.
+ * @property {number} [limit] The maximum number of features that can be returned for a query with this source.
+ * @property {boolean} pending Is the request for this source still ongoing?
+ * @property {boolean} [queried] Has this source been queried for the last query request?
+ * @property {boolean} [tooManyResults] If the last query for this source would return more features than the configured limit.
+ * @property {number} [totalFeatureCount] If `tooManyResults` is `true`, this contains the total number of features.
  */
 
 
@@ -77,12 +62,12 @@ import olFormatWFS from 'ol/format/WFS.js';
  * maxFeatures: The maximum number of records per request the query service should ask.
  * Defaults to `50`.
  *
- * @typedef {{
- *     wfsTypes: (!Array.<WfsType>),
- *     pointRecenterZoom: (number|undefined),
- *     maxFeatures: (number|undefined)
- *     defaultFeatureNS: (string),
- *     defaultFeaturePrefix: (string),
+ * @typedef {Object} WfsPermalinkOptions
+ * @property {!Array.<WfsType>} wfsTypes
+ * @property {number} [pointRecenterZoom]
+ * @property {number} [maxFeatures]
+ * @property {string} defaultFeatureNS
+ * @property {string} defaultFeaturePrefix
  * }} WfsPermalinkOptions
  */
 
@@ -175,7 +160,7 @@ export function WfsPermalinkService(
    */
   this.wfsTypes_ = {};
 
-  console.assert(Array.isArray(options.wfsTypes, 'wfsTypes is not correctly set'));
+  console.assert(Array.isArray(options.wfsTypes), 'wfsTypes is not correctly set');
   options.wfsTypes.forEach((wfsType) => {
     this.wfsTypes_[wfsType.featureType] = wfsType;
   });

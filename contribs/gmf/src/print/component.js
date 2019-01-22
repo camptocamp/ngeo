@@ -25,15 +25,15 @@ import 'bootstrap/js/src/dropdown.js';
  * Fields that can come from a print v3 server and can be used in the partial
  * of the gmf print panel.
  * @typedef {Object} PrintLayoutInfo
- * @property simpleAttributes {Array.<PrintSimpleAttributes>|undefined} Custom print layoutInfo.
- * @property dpi {number|undefined} The selected 'dpi'.
- * @property dpis {Array.<number>|undefined} The list of 'dpis'.
- * @property formats {Object.<string, boolean>|undefined} The list of active 'formats' (png, pdf, ...).
- * @property layout {string|undefined} The selected 'layout'.
- * @property layouts {Array.<string>|undefined} The list of 'layouts'.
- * @property legend {boolean|undefined} The legend checkbox.
- * @property scale {number|undefined} The selected 'scale'.
- * @property scales {Array.<number>|undefined} The list of 'scales'
+ * @property {Array.<PrintSimpleAttributes>} [simpleAttributes] Custom print layoutInfo.
+ * @property {number} [dpi] The selected 'dpi'.
+ * @property {Array.<number>} [dpis] The list of 'dpis'.
+ * @property {Object.<string, boolean>} [formats] The list of active 'formats' (png, pdf, ...).
+ * @property {string} [layout] The selected 'layout'.
+ * @property {Array.<string>} [layouts] The list of 'layouts'.
+ * @property {boolean} [legend] The legend checkbox.
+ * @property {number} [scale] The selected 'scale'.
+ * @property {Array.<number>} [scales] The list of 'scales'
  */
 
 
