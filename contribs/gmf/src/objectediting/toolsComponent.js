@@ -34,7 +34,7 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 /**
  * @enum {string}
  */
-const ProcessType = {
+export const ObjecteditingProcessType = {
   ADD: 'add',
   DELETE: 'delete'
 };
@@ -250,7 +250,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.drawActive = false;
 
   this.registerTool_('drawActive',
-    ProcessType.ADD);
+    ObjecteditingProcessType.ADD);
 
   /**
    * @type {boolean}
@@ -259,7 +259,7 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
   this.eraseActive = false;
 
   this.registerTool_('eraseActive',
-    ProcessType.DELETE);
+    ObjecteditingProcessType.DELETE);
 
   /**
    * @type {boolean}
@@ -284,13 +284,13 @@ function Controller($injector, $scope, ngeoToolActivateMgr) {
     oeToolsOptions.regularPolygonRadius : 100;
 
   this.registerTool_('drawTriangleActive',
-    ProcessType.ADD);
+    ObjecteditingProcessType.ADD);
 
   this.registerTool_('copyFromActive',
-    ProcessType.ADD, true);
+    ObjecteditingProcessType.ADD, true);
 
   this.registerTool_('deleteFromActive',
-    ProcessType.DELETE, true);
+    ObjecteditingProcessType.DELETE, true);
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }

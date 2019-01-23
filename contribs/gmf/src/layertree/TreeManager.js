@@ -1,8 +1,8 @@
 import angular from 'angular';
 import {PermalinkParam} from 'gmf/index.js';
 import gmfThemeThemes, {findGroupByName, findGroupByLayerNodeName} from 'gmf/theme/Themes.js';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
+import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 import * as olEvents from 'ol/events.js';
@@ -346,7 +346,7 @@ TreeManager.prototype.addGroupByLayerName = function(layerName, opt_add, opt_sil
         treeCtrl.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.node.name === layerName) {
             treeCtrlToActive = treeCtrl;
-            return ngeoLayertreeController.VisitorDecision.STOP;
+            return LayertreeVisitorDecision.STOP;
           }
         });
 
@@ -454,7 +454,7 @@ TreeManager.prototype.notifyCantAddGroups_ = function(groups) {
     gettextCatalog.getString('groups are already loaded.');
   this.ngeoNotification_.notify({
     msg: `${names.join(', ')} ${msg}`,
-    type: ngeoMessageMessage.Type.INFORMATION
+    type: MessageType.INFORMATION
   });
 };
 
@@ -471,7 +471,7 @@ TreeManager.prototype.getTreeCtrlByNodeId = function(id) {
     this.rootCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.id === id) {
         correspondingTreeCtrl = treeCtrl;
-        return ngeoLayertreeController.VisitorDecision.STOP;
+        return LayertreeVisitorDecision.STOP;
       }
     });
   }

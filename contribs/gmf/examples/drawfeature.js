@@ -6,7 +6,7 @@ import gmfMapComponent from 'gmf/map/component.js';
 import gmfDrawingModule from 'gmf/drawing/module.js';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoMapModule from 'ngeo/map/module.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 import olMap from 'ol/Map.js';
@@ -27,8 +27,8 @@ const module = angular.module('gmfapp', [
 
 
 module.value('ngeoExportFeatureFormats', [
-  ngeoMiscFeatureHelper.FormatType.KML,
-  ngeoMiscFeatureHelper.FormatType.GPX
+  FeatureFormatType.KML,
+  FeatureFormatType.GPX
 ]);
 
 module.constant('defaultTheme', 'Demo');

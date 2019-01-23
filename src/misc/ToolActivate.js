@@ -1,6 +1,4 @@
 /**
- */
-/**
  * A simple object that can be managed by `ngeo.misc.ToolActivateMgr`.
  *
  * See our live examples:

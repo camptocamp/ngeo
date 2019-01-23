@@ -1,7 +1,7 @@
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerImage from 'ol/layer/Image.js';
-import {getFirstParentTree, VisitorDecision} from 'ngeo/layertree/Controller.js';
+import {getFirstParentTree, LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 
 describe('ngeo.layertree.component', () => {
 
@@ -144,7 +144,7 @@ describe('ngeo.layertree.component', () => {
     visited = '';
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
-      return VisitorDecision.STOP;
+      return LayertreeVisitorDecision.STOP;
     });
     expect(visited).toBe(', Root');
 
@@ -153,7 +153,7 @@ describe('ngeo.layertree.component', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Leaf 01') {
-        return VisitorDecision.STOP;
+        return LayertreeVisitorDecision.STOP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 00, Leaf 01');
@@ -163,7 +163,7 @@ describe('ngeo.layertree.component', () => {
     roottreeCtrl.traverseDepthFirst((treeCtrl) => {
       visited = `${visited}, ${treeCtrl.node.name}`;
       if (treeCtrl.node.name === 'Node 0') {
-        return VisitorDecision.SKIP;
+        return LayertreeVisitorDecision.SKIP;
       }
     });
     expect(visited).toBe(', Root, Node 0, Leaf 1');

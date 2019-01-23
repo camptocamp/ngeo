@@ -5,7 +5,7 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import {isEmpty, toXY} from 'gmf/objectediting/geom.js';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 
-import gmfObjecteditingToolsComponent from 'gmf/objectediting/toolsComponent.js';
+import gmfObjecteditingToolsComponent, {ObjecteditingProcessType} from 'gmf/objectediting/toolsComponent.js';
 
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js';
@@ -39,6 +39,15 @@ const jsts = {
 /**
  * @typedef {Object.<string, import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>>} StylesObject
  */
+
+
+/**
+ * @enum {string}
+ */
+const ObjecteditingState = {
+  INSERT: 'insert',
+  UPDATE: 'update'
+};
 
 
 /**
@@ -299,7 +308,7 @@ function Controller($scope, $timeout, gettextCatalog,
    * @type {string}
    * @export
    */
-  this.process = gmfObjecteditingToolsComponent.ProcessType.ADD;
+  this.process = ObjecteditingProcessType.ADD;
 
   /**
    * @type {?import("ol/layer/Image.js").default|import("ol/layer/Tile.js").default}
@@ -450,8 +459,7 @@ Controller.prototype.$onInit = function() {
   );
 
   const geometry = this.feature.getGeometry();
-  this.state_ = geometry ? Controller.State.UPDATE :
-    Controller.State.INSERT;
+  this.state_ = geometry ? ObjecteditingState.UPDATE : ObjecteditingState.INSERT;
 
   this.scope_.$watchCollection(
     () => this.geometryChanges_,
@@ -539,14 +547,14 @@ Controller.prototype.save = function() {
     toXY(geometry);
   }
 
-  if (this.state_ === Controller.State.INSERT) {
+  if (this.state_ === ObjecteditingState.INSERT) {
     this.gmfEditFeature_.insertFeatures(
       this.layerNodeId,
       [feature]
     ).then(
       this.handleEditFeature_.bind(this)
     );
-  } else if (this.state_ === Controller.State.UPDATE) {
+  } else if (this.state_ === ObjecteditingState.UPDATE) {
     this.gmfEditFeature_.updateFeature(
       this.layerNodeId,
       feature
@@ -584,7 +592,7 @@ Controller.prototype.undo = function() {
  * @export
  */
 Controller.prototype.isStateInsert = function() {
-  return this.state_ === Controller.State.INSERT;
+  return this.state_ === ObjecteditingState.INSERT;
 };
 
 
@@ -599,7 +607,7 @@ Controller.prototype.isStateInsert = function() {
 Controller.prototype.handleDeleteFeature_ = function(resp) {
   this.feature.setGeometry(null);
   this.resetGeometryChanges_();
-  this.state_ = Controller.State.INSERT;
+  this.state_ = ObjecteditingState.INSERT;
   this.pending = false;
   this.refreshWMSLayer_();
 };
@@ -620,9 +628,9 @@ Controller.prototype.handleEditFeature_ = function(resp) {
   this.resetGeometryChanges_();
   // (3) Update state
   if (this.feature.getGeometry()) {
-    this.state_ = Controller.State.UPDATE;
+    this.state_ = ObjecteditingState.UPDATE;
   } else {
-    this.state_ = Controller.State.INSERT;
+    this.state_ = ObjecteditingState.INSERT;
   }
   // (4) No longer pending
   this.pending = false;
@@ -1028,7 +1036,7 @@ Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
     const jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
     let jstsProcessedGeom;
 
-    if (this.process === gmfObjecteditingToolsComponent.ProcessType.ADD) {
+    if (this.process === ObjecteditingProcessType.ADD) {
       jstsProcessedGeom = jstsGeom.union(jstsSketchGeom);
     } else {
       if (jstsGeom.intersects(jstsSketchGeom)) {
@@ -1042,7 +1050,7 @@ Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {
       this.feature.setGeometry(multiGeom.clone());
     }
 
-  } else if (this.process === gmfObjecteditingToolsComponent.ProcessType.ADD) {
+  } else if (this.process === ObjecteditingProcessType.ADD) {
     this.feature.setGeometry(toMulti(sketchGeom.clone()));
   }
 
@@ -1134,15 +1142,6 @@ export function cloneGeometry(geometry) {
  * @private
  */
 export const NAMESPACE = 'oe';
-
-
-/**
- * @enum {string}
- */
-export const State = {
-  INSERT: 'insert',
-  UPDATE: 'update'
-};
 
 
 module.controller('GmfObjecteditingController',

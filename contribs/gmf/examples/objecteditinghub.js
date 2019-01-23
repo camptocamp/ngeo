@@ -1,12 +1,9 @@
-/**
- */
-
 import angular from 'angular';
 import appURL from './url.js';
 import './objecteditinghub.css';
 
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes.js';
-import gmfObjecteditingManager from 'gmf/objectediting/Manager.js';
+import gmfObjecteditingManager, {ObjecteditingParam} from 'gmf/objectediting/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
@@ -248,11 +245,11 @@ MainController.prototype.runEditor = function() {
   const id = feature.get(property);
 
   const params = {};
-  params[gmfObjecteditingManager.Param.GEOM_TYPE] = geomType;
-  params[gmfObjecteditingManager.Param.ID] = id;
-  params[gmfObjecteditingManager.Param.LAYER] = layer;
-  params[gmfObjecteditingManager.Param.THEME] = this.themeName;
-  params[gmfObjecteditingManager.Param.PROPERTY] = property;
+  params[ObjecteditingParam.GEOM_TYPE] = geomType;
+  params[ObjecteditingParam.ID] = id;
+  params[ObjecteditingParam.LAYER] = layer;
+  params[ObjecteditingParam.THEME] = this.themeName;
+  params[ObjecteditingParam.PROPERTY] = property;
 
   const url = MainController.appendParams(this.selectedUrl['url'], params);
   window.open(url);

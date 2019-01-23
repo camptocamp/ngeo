@@ -7,7 +7,7 @@ import olFormatXML from 'ol/format/XML.js';
  * @enum {string}
  * @export
  */
-const NumberType = {
+export const FormatNumberType = {
   /**
    * @type {string}
    * @export
@@ -186,10 +186,10 @@ class XSDAttribute extends olFormatXML {
       attribute.type = ngeoFormatAttributeType.TIME;
     } else if (type === 'xsd:decimal' || type === 'xsd:double') {
       attribute.type = ngeoFormatAttributeType.NUMBER;
-      attribute.numType = NumberType.FLOAT;
+      attribute.numType = FormatNumberType.FLOAT;
     } else if (type === 'xsd:integer') {
       attribute.type = ngeoFormatAttributeType.NUMBER;
-      attribute.numType = NumberType.INTEGER;
+      attribute.numType = FormatNumberType.INTEGER;
     } else if (type === 'xsd:string') {
       attribute.type = ngeoFormatAttributeType.TEXT;
     }

@@ -1,7 +1,5 @@
-/**
- */
 import angular from 'angular';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomLineString from 'ol/geom/LineString.js';
@@ -92,7 +90,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   if ($injector.has('ngeoExportFeatureFormats')) {
     formats = $injector.get('ngeoExportFeatureFormats');
   } else {
-    formats = [ngeoMiscFeatureHelper.FormatType.KML];
+    formats = [FeatureFormatType.KML];
   }
 
   /**
@@ -169,7 +167,7 @@ Controller.prototype.handleElementClick_ = function() {
     let $item;
     this.formats_.forEach((format, i) => {
       $item = this.items_[i];
-      if (format === ngeoMiscFeatureHelper.FormatType.GPX) {
+      if (format === FeatureFormatType.GPX) {
         if (geom instanceof olGeomPoint ||
             geom instanceof olGeomLineString) {
           $item.removeClass('disabled');

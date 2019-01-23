@@ -1,9 +1,4 @@
 import angular from 'angular';
-
-/**
- * This goog.require is needed because of 'ngeo-popup' used in
- * the template.
- */
 import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 
 

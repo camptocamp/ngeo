@@ -40,7 +40,7 @@ const VertexStyleRegularShapeRadius = 6;
  * @enum {string}
  * @export
  */
-const FormatType = {
+export const FeatureFormatType = {
   /**
    * @type {string}
    * @export
@@ -1039,10 +1039,10 @@ FeatureHelper.prototype.getStrokeProperty = function(feature) {
  */
 FeatureHelper.prototype.export = function(features, formatType) {
   switch (formatType) {
-    case FormatType.GPX:
+    case FeatureFormatType.GPX:
       this.exportGPX(features);
       break;
-    case FormatType.KML:
+    case FeatureFormatType.KML:
       this.exportKML(features);
       break;
     default:

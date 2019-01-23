@@ -1,7 +1,7 @@
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
 
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
 
@@ -83,16 +83,16 @@ class Notification extends ngeoMessageMessage {
 
     const classNames = ['alert', 'fade', 'show'];
     switch (type) {
-      case ngeoMessageMessage.Type.ERROR:
+      case MessageType.ERROR:
         classNames.push('alert-danger');
         break;
-      case ngeoMessageMessage.Type.INFORMATION:
+      case MessageType.INFORMATION:
         classNames.push('alert-info');
         break;
-      case ngeoMessageMessage.Type.SUCCESS:
+      case MessageType.SUCCESS:
         classNames.push('alert-success');
         break;
-      case ngeoMessageMessage.Type.WARNING:
+      case MessageType.WARNING:
         classNames.push('alert-warning');
         break;
       default:

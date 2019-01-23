@@ -1,7 +1,4 @@
 /**
- */
-
-/**
  * Provides a function that synchronizes two arrays, arr1 and
  * arr2. arr2 is a subset of arr1, it includes the elements of arr1 that passes
  * the filter. When elements are added to/removed from arr1, arr2 is updated to

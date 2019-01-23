@@ -569,7 +569,7 @@ export function getNodeMinResolution(gmfLayer) {
 /**
  * @enum {string}
  */
-export const NodeType = {
+export const ThemeNodeType = {
   MIXED_GROUP: 'MixedGroup',
   NOT_MIXED_GROUP: 'NotMixedGroup',
   WMTS: 'WMTS',

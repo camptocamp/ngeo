@@ -16,7 +16,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeModule from 'gmf/theme/module.js';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
@@ -29,7 +29,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
-import gmfThemeManager from 'gmf/theme/Manager.js';
+import {ThemeEventType} from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 
@@ -513,7 +513,7 @@ function AbstractAppController(config, $scope, $injector) {
   const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
-  $scope.$root.$on(gmfThemeManager.EventType.THEME_NAME_SET, (event, name) => {
+  $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       this.setDefaultBackground_(theme);
     });
@@ -856,8 +856,8 @@ module.controller('AbstractController', AbstractAppController);
 
 
 module.value('ngeoExportFeatureFormats', [
-  ngeoMiscFeatureHelper.FormatType.KML,
-  ngeoMiscFeatureHelper.FormatType.GPX
+  FeatureFormatType.KML,
+  FeatureFormatType.GPX
 ]);
 
 module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',

@@ -1,10 +1,7 @@
-/**
- */
-
 import './notification.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import angular from 'angular';
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import {MessageType} from 'ngeo/message/Message.js';
 
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
@@ -52,16 +49,16 @@ function MainController(ngeoNotification) {
 MainController.prototype.notifyMulti = function() {
   this.notification.notify([{
     msg: ['Error #', this.i_++].join(''),
-    type: ngeoMessageMessage.Type.ERROR
+    type: MessageType.ERROR
   }, {
     msg: ['Warning #', this.i_++].join(''),
-    type: ngeoMessageMessage.Type.WARNING
+    type: MessageType.WARNING
   }, {
     msg: ['Information #', this.i_++].join(''),
-    type: ngeoMessageMessage.Type.INFORMATION
+    type: MessageType.INFORMATION
   }, {
     msg: ['Success #', this.i_++].join(''),
-    type: ngeoMessageMessage.Type.SUCCESS
+    type: MessageType.SUCCESS
   }]);
 };
 
@@ -75,7 +72,7 @@ MainController.prototype.notifyTarget = function() {
   this.notification.notify({
     msg: 'Error in an other target',
     target: angular.element('#my-messages'),
-    type: ngeoMessageMessage.Type.ERROR
+    type: MessageType.ERROR
   });
 };
 
@@ -87,7 +84,7 @@ MainController.prototype.notifyQuick = function() {
   this.notification.notify({
     delay: 1000,
     msg: 'Lasts one second',
-    type: ngeoMessageMessage.Type.SUCCESS
+    type: MessageType.SUCCESS
   });
 };
 

@@ -8,7 +8,7 @@ import olFeature from 'ol/Feature.js';
  * @enum {string}
  * @export
  */
-const Param = {
+export const ObjecteditingParam = {
   /**
    * @type {string}
    * @export
@@ -93,15 +93,15 @@ Manager.prototype.getFeature = function() {
     this.getFeatureDefered_ = this.q_.defer();
 
     const geomType = this.ngeoLocation_.getParam(
-      Param.GEOM_TYPE);
+      ObjecteditingParam.GEOM_TYPE);
     const id = this.ngeoLocation_.getParam(
-      Param.ID);
+      ObjecteditingParam.ID);
     const layer = this.ngeoLocation_.getParam(
-      Param.LAYER);
+      ObjecteditingParam.LAYER);
     const property = this.ngeoLocation_.getParam(
-      Param.PROPERTY);
+      ObjecteditingParam.PROPERTY);
     const theme = this.ngeoLocation_.getParam(
-      Param.THEME);
+      ObjecteditingParam.THEME);
 
     if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_.getFeaturesWithComparisonFilters(
@@ -128,7 +128,7 @@ Manager.prototype.getFeature = function() {
  */
 Manager.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
-    Param.GEOM_TYPE);
+    ObjecteditingParam.GEOM_TYPE);
 };
 
 
@@ -138,7 +138,7 @@ Manager.prototype.getGeomType = function() {
  */
 Manager.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
-    Param.LAYER);
+    ObjecteditingParam.LAYER);
 };
 
 

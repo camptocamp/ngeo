@@ -3,7 +3,7 @@ import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes.js';
 
 import {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC.js';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
@@ -448,7 +448,7 @@ class Manager {
     let ogcImageType;
     let timeProperty;
 
-    if (ogcType === gmfThemeThemes.NodeType.WMTS) {
+    if (ogcType === ThemeNodeType.WMTS) {
       // (3) Manage WMTS
       const gmfLayerWMTS = /** @type {import(gmf/themes.js).GmfLayerWMTS} */ (gmfLayer);
 
@@ -476,7 +476,7 @@ class Manager {
         ogcServer = ogcServers[meta.ogcServer];
       }
       ogcImageType = gmfLayerWMTS.imageType;
-    } else if (ogcType === gmfThemeThemes.NodeType.WMS) {
+    } else if (ogcType === ThemeNodeType.WMS) {
       // (4) Manage WMS
       const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
 

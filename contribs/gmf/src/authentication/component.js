@@ -1,6 +1,6 @@
 import angular from 'angular';
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
@@ -446,7 +446,7 @@ class AuthenticationController {
       this.notification_.notify({
         msg: error,
         target: container,
-        type: ngeoMessageMessage.Type.ERROR
+        type: MessageType.ERROR
       });
     }, this);
   }

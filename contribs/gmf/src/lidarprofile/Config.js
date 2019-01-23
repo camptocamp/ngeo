@@ -1,10 +1,7 @@
-/**
- */
-
 import angular from 'angular';
 
-class Config {
 
+class Config {
   /**
    * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarprofile instance
    * Requires a Pytree service: https://github.com/sitn/pytree

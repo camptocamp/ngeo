@@ -4,7 +4,7 @@ import {PermalinkParam} from 'gmf/index.js';
 
 import gmfAuthenticationService from 'gmf/authentication/Service.js';
 
-import gmfThemeManager, {EventType} from 'gmf/theme/Manager.js';
+import gmfThemeManager, {ThemeEventType} from 'gmf/theme/Manager.js';
 
 import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes.js';
 import ngeoPopover from 'ngeo/Popover.js';
@@ -22,7 +22,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
@@ -468,7 +468,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   }
 
   if (this.gmfThemeManager_) {
-    this.rootScope_.$on(EventType.THEME_NAME_SET, (event, name) => {
+    this.rootScope_.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_(name);
     });
   }
@@ -1076,7 +1076,7 @@ Permalink.prototype.initLayers_ = function() {
         firstParent.traverseDepthFirst((treeCtrl) => {
           if (treeCtrl.getState() !== 'indeterminate') {
             this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, firstParent);
-            return ngeoLayertreeController.VisitorDecision.STOP;
+            return LayertreeVisitorDecision.STOP;
           }
         });
       });
