@@ -1100,7 +1100,7 @@ class Controller {
    * @private
    */
   handleCreateReportSuccess_(resp) {
-    const mfResp = /** @type {MapFishPrintReportResponse} */ (resp.data);
+    const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (resp.data);
     const ref = mfResp.ref;
     console.assert(ref.length > 0);
     this.curRef_ = ref;
@@ -1129,7 +1129,7 @@ class Controller {
    * @private
    */
   handleGetStatusSuccess_(ref, resp) {
-    const mfResp = /** @type {MapFishPrintStatusResponse} */ (resp.data);
+    const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (resp.data);
     const done = mfResp.done;
     if (done) {
       if (mfResp.status != 'error') {

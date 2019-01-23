@@ -110,7 +110,7 @@ describe('ngeo.print.Service', () => {
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
                 customParams: {
-                  TRANSPARENT: true
+                  TRANSPARENT: 'true'
                 },
                 layers: ['foo', 'bar'],
                 type: 'wms',
@@ -169,7 +169,7 @@ describe('ngeo.print.Service', () => {
                 baseURL: 'http://example.com/wms',
                 imageFormat: 'image/jpeg',
                 customParams: {
-                  TRANSPARENT: true
+                  TRANSPARENT: 'true'
                 },
                 layers: ['foo', 'bar'],
                 type: 'wms',

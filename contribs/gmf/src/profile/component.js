@@ -108,7 +108,7 @@ function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
  * @htmlAttribute {number?} gmf-profile-numberofpoints Optional maximum limit of
  *     points to request. Default to 100.
  * @htmlAttribute {Object.<string, *>?} gmf-profile-options Optional options
- *     object like {@link ProfileOptions} but without any
+ *     object like {@link import('ngeo/profile/elevationComponent.js').ProfileOptions} but without any
  *     mandatory value. Will be passed to the ngeo profile component. Providing
  *     'linesConfiguration', 'distanceExtractor', hoverCallback, outCallback
  *     or i18n will override native gmf profile values.
@@ -288,7 +288,7 @@ function Controller($scope, $http, $element, $filter,
 
 
   /**
-   * @type {?ProfileOptions}
+   * @type {?import('ngeo/profile/elevationComponent.js').ProfileOptions}
    * @export
    */
   this.profileOptions = null;
@@ -371,7 +371,7 @@ Controller.prototype.$onInit = function() {
     }
   }
 
-  this.profileOptions = /** @type {ProfileOptions} */ ({
+  this.profileOptions = /** @type {import('ngeo/profile/elevationComponent.js').ProfileOptions} */ ({
     linesConfiguration: this.linesConfiguration_,
     distanceExtractor: this.getDist_,
     hoverCallback: this.hoverCallback_.bind(this),

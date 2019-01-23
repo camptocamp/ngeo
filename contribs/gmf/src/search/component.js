@@ -617,7 +617,7 @@ class SearchController {
 
   /**
    * @param {SearchComponentDatasource} config The config of the dataset.
-   * @param {(function(GeoJSONFeature): boolean)=} opt_filter A filter function
+   * @param {(function(import("geojson").Feature): boolean)=} opt_filter A filter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Twitter.Typeahead.Dataset} A typeahead dataset.
    * @private
@@ -667,14 +667,14 @@ class SearchController {
 
   /**
    * @param {string} action The action to keep.
-   * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
+   * @return {(function(import("geojson").Feature): boolean)} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
   filterAction_(action) {
     return (
     /**
-         * @param {GeoJSONFeature} feature
+         * @param {import("geojson").Feature} feature
          * @return {boolean}
          */
       function(feature) {
@@ -694,14 +694,14 @@ class SearchController {
   /**
    * @param {string=} opt_layerName The layerName to keep. If null, keep all layers
    *     (In all cases, except actions layers).
-   * @return {(function(GeoJSONFeature): boolean)} A filter function based on a
+   * @return {(function(import("geojson").Feature): boolean)} A filter function based on a
    *     GeoJSONFeaturesCollection's array.
    * @private
    */
   filterLayername_(opt_layerName) {
     return (
     /**
-         * @param {GeoJSONFeature} feature
+         * @param {import("geojson").Feature} feature
          * @return {boolean}
          */
       function(feature) {
@@ -721,7 +721,7 @@ class SearchController {
 
   /**
    * @param {SearchComponentDatasource} config The config of the dataset.
-   * @param {(function(GeoJSONFeature): boolean)=} opt_filter Afilter function
+   * @param {(function(import("geojson").Feature): boolean)=} opt_filter Afilter function
    *     based on a GeoJSONFeaturesCollection's array.
    * @return {Bloodhound} The bloodhound engine.
    * @private
