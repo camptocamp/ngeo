@@ -43,14 +43,14 @@ export const DOTS_PER_INCH = 72;
 /**
  * Return a function to use as map postcompose listener for drawing a print
  * mask on the map.
- * @param {function():import("ol/size.js").Size} getSize User-defined function returning the
+ * @param {function():import('ol/size.js').Size} getSize User-defined function returning the
  *     size in dots of the map to print.
- * @param {function(olx.FrameState):number} getScale User-defined function
+ * @param {function(import('ol/PluggableMap.js').FrameState):number} getScale User-defined function
  *     returning the scale of the map to print.
  * @param {function():number=} opt_rotation User defined function returning the
  *     inclination of the canvas in degree (-180 to 180).
  * returning the scale of the map to print.
- * @return {function(import("ol/render/Event.js").default)} Function to use as a map postcompose
+ * @return {function(import('ol/render/Event.js').default)} Function to use as a map postcompose
  * listener.
  * @export
  */

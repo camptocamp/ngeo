@@ -360,6 +360,7 @@ function d3Elevation(options) {
         let elevationsValues = [];
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
+          /** @type {[number, number]} */
           const extent = d3extent(data, d => linesConfiguration[name].zExtractor(d));
           // only include defined extent
           if (extent.every(Number.isFinite)) {

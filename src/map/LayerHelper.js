@@ -23,7 +23,7 @@ import {ServerType} from 'ngeo/datasource/OGC.js';
  * @ngname ngeoLayerHelper
  * @ngInject
  */
-function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
+export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
 
   /**
    * @type {angular.IQService}
