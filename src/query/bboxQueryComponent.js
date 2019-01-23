@@ -4,6 +4,8 @@ import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 
 import olInteractionDragBox from 'ol/interaction/DragBox.js';
 import {platformModifierKeyOnly} from 'ol/events/condition.js';
+import {VOID} from 'ol/functions.js';
+
 
 const module = angular.module('ngeoBboxQuery', [
   ngeoQueryMapQuerent.name,
@@ -33,7 +35,7 @@ const module = angular.module('ngeoBboxQuery', [
  *
  * See the live example: [../examples/bboxquery.html](../examples/bboxquery.html)
  *
- * @param {import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
+ * @param {import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -50,15 +52,15 @@ function directive(ngeoMapQuerent) {
       const map = scope.$eval(attrs['ngeoBboxQueryMap']);
 
       const interaction = new olInteractionDragBox({
-        condition: platformModifierKeyOnly
+        condition: platformModifierKeyOnly,
+        onBoxEnd: VOID
       });
 
       /**
        * Called when a bbox is drawn while this controller is active. Issue
        * a request to the query service using the extent that was drawn.
-       * @param {import("ol/interaction/DragBox/Event.js").default} evt Event.
        */
-      const handleBoxEnd = function(evt) {
+      const handleBoxEnd = function() {
         const action = ngeoQueryKeyboard.action;
         const extent = interaction.getGeometry().getExtent();
         const limit = scope.$eval(attrs['ngeoBboxQueryLimit']);

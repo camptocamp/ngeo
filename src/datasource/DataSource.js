@@ -7,7 +7,7 @@
  *
  * @typedef {Object} DataSourceOptions
  * @property {Array.<Attribute>} [attributes] The attributes of the data source.
- * @property {DimensionsFiltersConfig} [dimensionsFiltersConfig] The dimensions filters configuration,
+ * @property {import('ngeo/datasource/OGC.js').DimensionsFiltersConfig} [dimensionsFiltersConfig] The dimensions filters configuration,
  * which determines dimensions supported by this data source using filters and give the corresponding field
  * and whether they should use a static value or the one defined in the dimensions.
  * @property {number} id The data source id.
@@ -20,21 +20,11 @@
  * @property {number} [minResolution] Minimum resolution where the data source can be displayed or queried.
  * @property {number} [maxResolution] Maximum resolution where the data source can be displayed or queried.
  * @property {string} name A human-readable name for the data source.
- * @property {boolean} [visible] Whether the data source is visible or not, i.e. whether its is ON or OFF.
- * Defaults to `false`.
+ * @property {boolean} [visible=false] Whether the data source is visible or not, i.e. whether its is ON or OFF.
  */
 
 
-/**
- * @typedef {Object} DataSource
- * @property {boolean} queryable
- */
-
-
-/**
- * @implements {DataSource}
- */
-export default class {
+class DataSource {
 
   /**
    * A `ngeo.datasource.DataSource` represents a single source of data, which
@@ -211,3 +201,10 @@ export default class {
     return this.maxResolution !== null || this.minResolution !== null;
   }
 }
+
+
+/**
+ * @typedef {!import("ol/Collection.js").default<!DataSource>} DataSources
+ */
+
+export default DataSource;

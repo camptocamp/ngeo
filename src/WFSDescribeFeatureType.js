@@ -1,4 +1,3 @@
-import {inherits as olUtilInherits} from 'ol/util.js';
 import olFormatXML from 'ol/format/XML.js';
 import * as olXml from 'ol/xml.js';
 
@@ -83,20 +82,13 @@ const SEQUENCE_PARSERS_ = olXml.makeStructureNS(
 
 
 /**
- * @classdesc
  * Format for reading WFS DescribeFeatureType data.
- *
- * @constructor
- * @extends {import("ol/format/XML.js").default}
- * @api
  */
-function WFSDescribeFeatureType() {
-
-  olFormatXML.call(this);
-
+class WFSDescribeFeatureType extends olFormatXML {
+  constructor() {
+    super();
+  }
 }
-
-olUtilInherits(WFSDescribeFeatureType, olFormatXML);
 
 
 /**

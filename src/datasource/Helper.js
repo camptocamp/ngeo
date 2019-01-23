@@ -5,7 +5,7 @@ import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import * as olEvents from 'ol/events.js';
 
-class Helper {
+export class Helper {
   /**
    * A service that provides utility methods to manipulate or get data sources.
    *
@@ -123,7 +123,7 @@ class Helper {
   /**
    * Called when a new data source is added to the ngeo collection. Add it
    * to the cache.
-   * @param {import("ol/Collection/Event.js").default} evt Event
+   * @param {import("ol/Collection.js").CollectionEvent} evt Event
    * @private
    */
   handleDataSourcesAdd_(evt) {
@@ -134,7 +134,7 @@ class Helper {
   /**
    * Called when a data source is removed from the ngeo collection. Remove it
    * from the cache.
-   * @param {import("ol/Collection/Event.js").default} evt Event
+   * @param {import("ol/Collection.js").CollectionEvent} evt Event
    * @private
    */
   handleDataSourcesRemove_(evt) {

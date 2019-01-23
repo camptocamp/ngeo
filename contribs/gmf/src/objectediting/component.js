@@ -949,7 +949,7 @@ Controller.prototype.setFeatureStyle_ = function() {
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  const node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (
+  const node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} */ (
     treeCtrl.node);
   if (node.children && node.children.length) {
     return;
@@ -1013,7 +1013,7 @@ Controller.prototype.handleWindowBeforeUnload_ = function(e) {
  * Depending on the current behaviour, use the added sketch feature to process
  * the existing geometry.
  *
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleSketchFeaturesAdd_ = function(evt) {

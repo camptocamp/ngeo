@@ -32,7 +32,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *          gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)">
  *      </gmf-time-slider>
  *
- * @htmlAttribute {TimeProperty} gmf-time-slider-time parameter for initialization.
+ * @htmlAttribute {import('ngeo/datasource/OGC.js').TimeProperty} gmf-time-slider-time parameter for initialization.
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
  * @return {angular.IDirective} The directive specs.
@@ -120,7 +120,7 @@ function Controller(ngeoWMSTime) {
 
   /**
    * A time object for directive initialization
-   * @type {TimeProperty}
+   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
    * @export
    */
   this.time;

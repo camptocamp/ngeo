@@ -102,25 +102,25 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.selectedUrl = this.urls[0];
 
   /**
-   * @type {gmfThemes.GmfOgcServers} ogcServers OGC servers.
+   * @type {import(gmf/themes.js).GmfOgcServers} ogcServers OGC servers.
    * @private
    */
   this.gmfServers_;
 
   /**
-   * @type {gmfThemes.GmfOgcServer} ogcServer OGC server to use.
+   * @type {import(gmf/themes.js).GmfOgcServer} ogcServer OGC server to use.
    * @private
    */
   this.gmfServer_;
 
   /**
-   * @type {Array.<gmfThemes.GmfLayerWMS>}
+   * @type {Array.<import(gmf/themes.js).GmfLayerWMS>}
    * @export
    */
   this.gmfLayerNodes = [];
 
   /**
-   * @type {?gmfThemes.GmfLayerWMS}
+   * @type {?import(gmf/themes.js).GmfLayerWMS}
    * @export
    */
   this.selectedGmfLayerNode = null;
@@ -305,7 +305,7 @@ MainController.prototype.runViewer_ = function(baseUrl) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
@@ -326,7 +326,7 @@ MainController.prototype.getFeatures_ = function(gmfLayerNode) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
 MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
@@ -352,7 +352,7 @@ MainController.prototype.issueGetFeatures_ = function(gmfLayerNode) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
 MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
@@ -364,7 +364,7 @@ MainController.prototype.handleGetFeatures_ = function(gmfLayerNode) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @return {?Array.<import("ol/Feature.js").default>} List of features
  * @private
  */
@@ -376,7 +376,7 @@ MainController.prototype.getFeaturesFromCache_ = function(gmfLayerNode) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @return {angular.IPromise} The promise attached to the deferred object.
  * @private
  */
@@ -397,7 +397,7 @@ MainController.prototype.getGeometryType_ = function(gmfLayerNode) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
 MainController.prototype.issueGetAttributesRequest_ = function(
@@ -419,7 +419,7 @@ MainController.prototype.issueGetAttributesRequest_ = function(
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @private
  */
 MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
@@ -429,7 +429,7 @@ MainController.prototype.handleGetGeometryType_ = function(gmfLayerNode) {
 
 
 /**
- * @param {gmfThemes.GmfLayerWMS} gmfLayerNode Layer node.
+ * @param {import(gmf/themes.js).GmfLayerWMS} gmfLayerNode Layer node.
  * @return {string|undefined} The type of geometry.
  * @private
  */

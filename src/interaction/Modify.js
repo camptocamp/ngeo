@@ -180,7 +180,7 @@ Modify.prototype.setState_ = function() {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Modify.prototype.handleFeaturesAdd_ = function(evt) {
@@ -191,7 +191,7 @@ Modify.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Modify.prototype.handleFeaturesRemove_ = function(evt) {

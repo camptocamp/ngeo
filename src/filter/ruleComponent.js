@@ -222,7 +222,7 @@ class RuleController {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a range of date.
-     * @type {!TimeProperty}
+     * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
      * @export
      */
     this.timeRangeMode = {
@@ -238,7 +238,7 @@ class RuleController {
     /**
      * Time property used when the rule is of type 'date|datetime' and uses
      * a single date.
-     * @type {!TimeProperty}
+     * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
      * @export
      */
     this.timeValueMode = {
@@ -776,7 +776,7 @@ class RuleController {
   }
 
   /**
-   * @param {import("ol/Collection/Event.js").default} evt Event.
+   * @param {import("ol/Collection.js").CollectionEvent} evt Event.
    * @private
    */
   handleFeaturesAdd_(evt) {

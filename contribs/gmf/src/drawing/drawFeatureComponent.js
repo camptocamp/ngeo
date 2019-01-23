@@ -500,7 +500,7 @@ Controller.prototype.removeFeature = function(feature) {
 
 
 /**
- * @param {!import("ol/Collection/Event.js").default} evt Event.
+ * @param {!import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturesAdd_ = function(evt) {
@@ -514,7 +514,7 @@ Controller.prototype.handleFeaturesAdd_ = function(evt) {
 
 
 /**
- * @param {!import("ol/Collection/Event.js").default} evt Event.
+ * @param {!import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturesRemove_ = function(evt) {

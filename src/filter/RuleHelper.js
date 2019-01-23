@@ -41,7 +41,7 @@ import moment from 'moment';
  */
 
 
-class RuleHelper {
+export class RuleHelper {
 
   /**
    * A service that provides utility methods to create `ngeo.rule.Rule`

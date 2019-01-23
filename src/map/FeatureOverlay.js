@@ -95,7 +95,7 @@ FeatureOverlay.prototype.setStyle = function(style) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Feature collection event.
  * @private
  */
 FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
@@ -105,7 +105,7 @@ FeatureOverlay.prototype.handleFeatureAdd_ = function(evt) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Feature collection event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Feature collection event.
  * @private
  */
 FeatureOverlay.prototype.handleFeatureRemove_ = function(evt) {

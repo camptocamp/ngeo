@@ -127,7 +127,7 @@ function Controller($scope, $injector,
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {!TimeProperty}
+   * @type {!import('ngeo/datasource/OGC.js').TimeProperty}
    * @export
    */
   this.time;

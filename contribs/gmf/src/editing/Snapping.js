@@ -105,7 +105,7 @@ function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
 
   /**
    * A reference to the OGC servers loaded by the theme service.
-   * @type {gmfThemes.GmfOgcServers|null}
+   * @type {import(gmf/themes.js).GmfOgcServers|null}
    * @private
    */
   this.ogcServers_ = null;
@@ -204,14 +204,14 @@ Snapping.prototype.handleThemesChange_ = function() {
 Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
-  let node = /** @type {gmfThemes.GmfGroup|gmfThemes.GmfLayer} */ (treeCtrl.node);
+  let node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
   if (node.children) {
     return;
   }
 
   // If treeCtrl is snappable and supports WFS, listen to its state change.
   // When it becomes visible, it's added to the list of snappable tree ctrls.
-  node = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  node = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
   const snappingConfig = gmfThemeThemes.getSnappingConfig(node);
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
@@ -268,23 +268,23 @@ Snapping.prototype.unregisterAllTreeCtrl_ = function() {
  * Get the OGC server.
  *
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl The layer tree controller
- * @return {?gmfThemes.GmfOgcServers} The OGC server.
+ * @return {?import(gmf/themes.js).GmfOgcServers} The OGC server.
  * @private
  */
 Snapping.prototype.getOGCServer_ = function(treeCtrl) {
-  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== gmfThemeThemes.NodeType.WMS) {
     return null;
   }
-  const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
 
   let ogcServerName;
-  const gmfGroup = /** @type {gmfThemes.GmfGroup} */ (treeCtrl.parent.node);
+  const gmfGroup = /** @type {import(gmf/themes.js).GmfGroup} */ (treeCtrl.parent.node);
   if (gmfGroup.mixed) {
     ogcServerName = gmfLayerWMS.ogcServer;
   } else {
     const firstTreeCtrl = ngeoLayertreeController.getFirstParentTree(treeCtrl);
-    const firstNode = /** @type {gmfThemes.GmfGroup} */ (firstTreeCtrl.node);
+    const firstNode = /** @type {import(gmf/themes.js).GmfGroup} */ (firstTreeCtrl.node);
     ogcServerName = firstNode.ogcServer;
   }
   if (!ogcServerName) {
@@ -318,14 +318,14 @@ Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
     return null;
   }
 
-  const gmfLayer = /** @type {gmfThemes.GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
 
   // (2)
   if (gmfLayer.type !== gmfThemeThemes.NodeType.WMS) {
     return null;
   }
 
-  const gmfLayerWMS = /** @type {gmfThemes.GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
 
   // (3)
   const featureTypes = [];
@@ -560,7 +560,7 @@ Snapping.prototype.handleMapMoveEnd_ = function() {
  * @property {?import("ol/interaction/Snap.js").default} interaction
  * @property {number} maxFeatures
  * @property {?angular.IDeferred} requestDeferred
- * @property {gmfThemes.GmfSnappingConfig} snappingConfig
+ * @property {import(gmf/themes.js).GmfSnappingConfig} snappingConfig
  * @property {Function} stateWatcherUnregister
  * @property {ngeo.layertree.Controller} treeCtrl
  * @property {WFSConfig} wfsConfig

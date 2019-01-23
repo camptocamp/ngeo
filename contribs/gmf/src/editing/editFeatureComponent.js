@@ -314,7 +314,7 @@ function Controller($element, $q, $scope, $timeout,
   // === Private properties ===
 
   /**
-   * @type {gmfThemes.GmfLayer}
+   * @type {import(gmf/themes.js).GmfLayer}
    * @private
    */
   this.editableNode_;
@@ -525,7 +525,7 @@ Controller.prototype.$onInit = function() {
 
   // (1) Set default values and other properties
   this.dirty = this.dirty === true;
-  this.editableNode_ = /** @type {gmfThemes.GmfLayer} */ (
+  this.editableNode_ = /** @type {import(gmf/themes.js).GmfLayer} */ (
     this.editableTreeCtrl.node);
   this.features = this.vectorLayer.getSource().getFeaturesCollection();
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
@@ -870,7 +870,7 @@ Controller.prototype.setAttributes_ = function(attributes) {
 
 
 /**
- * @param {import("ol/Collection/Event.js").default} evt Event.
+ * @param {import("ol/Collection.js").CollectionEvent} evt Event.
  * @private
  */
 Controller.prototype.handleFeatureAdd_ = function(evt) {

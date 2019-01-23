@@ -28,7 +28,7 @@ function MainController(ngeoTime) {
   this.ngeoTime_ = ngeoTime;
 
   /**
-   * @type {TimeProperty}
+   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
    * @export
    */
   this.timeRangeMode = {
@@ -42,7 +42,7 @@ function MainController(ngeoTime) {
   };
 
   /**
-   * @type {TimeProperty}
+   * @type {import('ngeo/datasource/OGC.js').TimeProperty}
    * @export
    */
   this.timeValueMode = {

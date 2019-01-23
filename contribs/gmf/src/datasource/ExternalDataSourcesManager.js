@@ -583,7 +583,7 @@ class ExternalDatSourcesManager {
    * Called when a data source is removed from the collection of ngeo data
    * sources. If it's an external data source, remove it from its WMS Group
    *
-   * @param {import("ol/Collection/Event.js").default} evt Collection event.
+   * @param {import("ol/Collection.js").CollectionEvent} evt Collection event.
    * @private
    */
   handleDataSourcesRemove_(evt) {
