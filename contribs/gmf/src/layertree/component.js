@@ -60,7 +60,7 @@ const module = angular.module('gmfLayertreeComponent', [
 // the root node that path is defined by the gmfLayertreeTemplate value.
 module.value('ngeoLayertreeTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -74,7 +74,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 
 module.value('gmfLayertreeTemplate',
   /**
-   * @param {!JQLite} $element Element.
+   * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
@@ -91,9 +91,9 @@ module.value('gmfLayertreeTemplate',
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfLayertreeTemplate Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfLayertreeTemplate Template function.
  * @return {string} Template.
  * @ngInject
  */
@@ -153,7 +153,7 @@ module.component('gmfLayertree', component);
 
 
 /**
- * @param {JQLite} $element Element.
+ * @param {JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
  * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered

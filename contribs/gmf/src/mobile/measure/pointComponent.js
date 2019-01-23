@@ -17,7 +17,7 @@ const module = angular.module('gmfMobileMeasurePoint', [
 
 module.value('gmfMobileMeasurePointTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} The template url.
    */
@@ -63,7 +63,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurepoint-map The map.
  * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default=}
  *     gmf-mobile-measurepoint-sketchstyle A style for the measure point.
- * @param {string|function(!JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=)}
  *     gmfMobileMeasurePointTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -86,7 +86,7 @@ function component(gmfMobileMeasurePointTemplateUrl) {
     templateUrl: gmfMobileMeasurePointTemplateUrl,
     /**
      * @param {!angular.IScope} scope Scope.
-     * @param {!JQLite} element Element.
+     * @param {!JQuery} element Element.
      * @param {!angular.IAttributes} attrs Attributes.
      * @param {!import("gmf/mobile/measure.js").default.pointComponent.Controller_} controller Controller.
      */

@@ -60,7 +60,7 @@ const module = angular.module('gmfSearch', [
 
 
 /**
- * @param {JQLite} element Element.
+ * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
  * @return {string} Template URL.
  */
@@ -77,9 +77,9 @@ module.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfSearchTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfSearchTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

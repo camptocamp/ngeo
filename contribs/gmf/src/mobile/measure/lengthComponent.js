@@ -1,7 +1,6 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
-import {inherits as olUtilInherits} from 'ol/util.js';
 import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
 
 const module = angular.module('gmfMobileMeasureLength', [
@@ -11,7 +10,7 @@ const module = angular.module('gmfMobileMeasureLength', [
 
 module.value('gmfMobileMeasureLengthTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} The template url.
    */
@@ -43,7 +42,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} gmf-mobile-measurelength-map The map.
  * @htmlAttribute {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default=}
  *     gmf-mobile-measurelength-sketchstyle A style for the measure length.
- * @param {string|function(!JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=)}
  *     gmfMobileMeasureLengthTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject
@@ -64,7 +63,7 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
     templateUrl: gmfMobileMeasureLengthTemplateUrl,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/measure.js").default.lengthComponent.Controller_} controller Controller.
      */
@@ -78,82 +77,67 @@ function component(gmfMobileMeasureLengthTemplateUrl) {
 module.directive('gmfMobileMeasurelength', component);
 
 
-/**
- * @param {!angular.IScope} $scope Angular scope.
- * @param {!angular.IFilterService} $filter Angular filter
- * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @constructor
- * @private
- * @ngInject
- * @ngdoc controller
- * @ngname GmfMobileMeasureLengthController
- */
-function Controller($scope, $filter, gettextCatalog) {
+class Controller extends gmfMobileMeasureBaseComponent.Controller {
+  /**
+   * @param {!angular.IScope} $scope Angular scope.
+   * @param {!angular.IFilterService} $filter Angular filter
+   * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @ngInject
+   */
+  constructor($scope, $filter, gettextCatalog) {
+    super($scope, $filter, gettextCatalog);
 
-  gmfMobileMeasureBaseComponent.Controller.call(
-    this,
-    $scope,
-    $filter,
-    gettextCatalog
-  );
+    /**
+     * @type {import("ngeo/interaction/MeasureLengthMobile.js").default}
+     * @export
+     */
+    this.measure;
+  }
 
   /**
-   * @type {import("ngeo/interaction/MeasureLengthMobile.js").default}
+   * Initialise the controller.
+   */
+  init() {
+    this.measure = new ngeoInteractionMeasureLengthMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
+      precision: this.precision,
+      sketchStyle: this.sketchStyle
+    });
+
+    gmfMobileMeasureBaseComponent.Controller.prototype.init.call(this);
+  }
+
+  /**
+   * Add current sketch point to line measure
    * @export
    */
-  this.measure;
+  addPoint() {
+    this.drawInteraction.addToDrawing();
+  }
+
+  /**
+   * Clear the sketch feature
+   * @export
+   */
+  clear() {
+    this.drawInteraction.clearDrawing();
+  }
+
+  /**
+   * Finish line measure
+   * @export
+   */
+  finish() {
+    this.drawInteraction.finishDrawing();
+  }
+
+  /**
+   * Deactivate the directive.
+   * @export
+   */
+  deactivate() {
+    this.active = false;
+  }
 }
-
-olUtilInherits(component, gmfMobileMeasureBaseComponent.Controller);
-
-/**
- * Initialise the controller.
- */
-Controller.prototype.init = function() {
-
-  this.measure = new ngeoInteractionMeasureLengthMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
-    precision: this.precision,
-    sketchStyle: this.sketchStyle
-  });
-
-  gmfMobileMeasureBaseComponent.Controller.prototype.init.call(this);
-};
-
-/**
- * Add current sketch point to line measure
- * @export
- */
-Controller.prototype.addPoint = function() {
-  this.drawInteraction.addToDrawing();
-};
-
-
-/**
- * Clear the sketch feature
- * @export
- */
-Controller.prototype.clear = function() {
-  this.drawInteraction.clearDrawing();
-};
-
-
-/**
- * Finish line measure
- * @export
- */
-Controller.prototype.finish = function() {
-  this.drawInteraction.finishDrawing();
-};
-
-
-/**
- * Deactivate the directive.
- * @export
- */
-Controller.prototype.deactivate = function() {
-  this.active = false;
-};
-
 
 module.controller('GmfMobileMeasureLengthController', Controller);
 

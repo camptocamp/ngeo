@@ -24,7 +24,7 @@ function directive() {
     require: '^^ngeoDrawfeature',
     /**
      * @param {!angular.IScope} $scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
      */

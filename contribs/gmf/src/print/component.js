@@ -77,7 +77,7 @@ const module = angular.module('gmfPrintComponent', [
 
 module.value('gmfPrintTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template.
    */
@@ -137,9 +137,9 @@ module.value('gmfPrintState', {
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -234,7 +234,7 @@ module.component('gmfPrint', component);
 class Controller {
 
   /**
-   * @param {JQLite} $element Element.
+   * @param {JQuery} $element Element.
    * @param {angular.IScope} $rootScope Angular root scope.
    * @param {angular.IScope} $scope Angular scope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -511,7 +511,7 @@ class Controller {
     this.scaleManuallySelected_ = false;
 
     /**
-     * @type {JQLite}
+     * @type {JQuery}
      * @export
      */
     this.rotationInput_ = $element.find('.gmf-print-rotation-input');

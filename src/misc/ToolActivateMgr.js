@@ -4,7 +4,7 @@ import angular from 'angular';
 /**
  * An entry for a tool in a `ngeo.misc.ToolActivateMgr` group.
  * @typedef {Object} miscToolActivateMgrEntry
- * @property {ngeo.misc.ToolActivate} tool
+ * @property {import('ngeo/misc/ToolActivate.js').default} tool
  * @property {boolean} defaultTool
  * @property {function(): void} unlisten
  */

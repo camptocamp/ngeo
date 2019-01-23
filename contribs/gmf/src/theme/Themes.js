@@ -1,9 +1,6 @@
 import angular from 'angular';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import {
-  getUid as olUtilGetUid,
-  inherits as olUtilInherits
-} from 'ol/util.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olArray from 'ol/array.js';
 import olCollection from 'ol/Collection.js';
 import olEventsEventTarget from 'ol/events/Target.js';
@@ -21,104 +18,401 @@ import olLayerTile from 'ol/layer/Tile.js';
  * The Themes service. This service interacts
  * with c2cgeoportal's "themes" web service and exposes functions that return
  * objects in the tree returned by the "themes" web service.
- *
- * @constructor
- * @extends {import("ol/events/EventTarget.js").default}
- * @param {angular.IHttpService} $http Angular http service.
- * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {angular.IQService} $q Angular q service
- * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
- * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {ThemesOptions} gmfThemesOptions Themes options.
- * @ngInject
- * @ngdoc service
- * @ngname gmfThemes
  */
-function Themes($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions) {
-
-  olEventsEventTarget.call(this);
-
+class Themes extends olEventsEventTarget {
   /**
-   * @type {boolean}
-   * @private
+   * @param {angular.IHttpService} $http Angular http service.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @param {angular.IQService} $q Angular q service
+   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
+   * @param {ThemesOptions} gmfThemesOptions Themes options.
+   * @ngInject
    */
-  this.addBlankBackgroundLayer_ = true;
-  if (gmfThemesOptions.addBlankBackgroundLayer !== undefined) {
-    this.addBlankBackgroundLayer_ = gmfThemesOptions.addBlankBackgroundLayer;
+  constructor($http, $injector, $q, ngeoLayerHelper, gettextCatalog, gmfThemesOptions) {
+    super();
+
+    /**
+     * @type {boolean}
+     * @private
+     */
+    this.addBlankBackgroundLayer_ = true;
+    if (gmfThemesOptions.addBlankBackgroundLayer !== undefined) {
+      this.addBlankBackgroundLayer_ = gmfThemesOptions.addBlankBackgroundLayer;
+    }
+
+    /**
+     * @type {angular.IQService}
+     * @private
+     */
+    this.$q_ = $q;
+
+    /**
+     * @type {angular.IHttpService}
+     * @private
+     */
+    this.$http_ = $http;
+
+    /**
+     * @type {string|undefined}
+     * @private
+     */
+    this.treeUrl_ = undefined;
+    if ($injector.has('gmfTreeUrl')) {
+      this.treeUrl_ = $injector.get('gmfTreeUrl');
+    }
+
+    this.cacheVersion_ = '0';
+    if ($injector.has('cacheVersion')) {
+      this.cacheVersion_ = $injector.get('cacheVersion');
+    }
+
+    /**
+     * @type {?import("ngeo/statemanager/Location.js").default}
+     * @private
+     */
+    this.ngeoLocation_ = null;
+    if ($injector.has('ngeoLocation')) {
+      this.ngeoLocation_ = $injector.get('ngeoLocation');
+    }
+
+    /**
+     * @type {import("ngeo/map/LayerHelper.js").default}
+     * @private
+     */
+    this.layerHelper_ = ngeoLayerHelper;
+
+    /**
+     * @type {angular.gettext.gettextCatalog}
+     * @private
+     */
+    this.gettextCatalog = gettextCatalog;
+
+    /**
+     * @type {angular.IDeferred}
+     * @private
+     */
+    this.deferred_ = $q.defer();
+
+    /**
+     * @type {angular.IPromise}
+     * @private
+     */
+    this.promise_ = this.deferred_.promise;
+
+    /**
+     * @type {boolean}
+     */
+    this.loaded = false;
+
+    /**
+     * @type {angular.IPromise}
+     * @private
+     */
+    this.bgLayerPromise_ = null;
   }
 
   /**
-   * @type {angular.IQService}
-   * @private
+   * Get background layers.
+   * @return {!angular.IPromise.<!Array.<!import("ol/layer/Base.js").default>>} Promise.
    */
-  this.$q_ = $q;
+  getBgLayers() {
+    const gettextCatalog = this.gettextCatalog;
+    if (this.bgLayerPromise_) {
+      return this.bgLayerPromise_;
+    }
+    const $q = this.$q_;
+    const layerHelper = this.layerHelper_;
 
-  /**
-   * @type {angular.IHttpService}
-   * @private
-   */
-  this.$http_ = $http;
+    /**
+     * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} item A group or a leaf.
+     * @param {Array.<number>} array Array of ids;
+     */
+    const getIds = function(item, array) {
+      array.push(olUtilGetUid(item));
+      const children = item.children || [];
+      children.forEach((child) => {
+        getIds(child, array);
+      });
+    };
 
-  /**
-   * @type {string|undefined}
-   * @private
-   */
-  this.treeUrl_ = undefined;
-  if ($injector.has('gmfTreeUrl')) {
-    this.treeUrl_ = $injector.get('gmfTreeUrl');
+    /**
+     * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} item The item.
+     * @param {import("ol/layer/Base.js").default} layer The layer.
+     * @return {import("ol/layer/Base.js").default} the provided layer.
+     */
+    const callback = function(item, layer) {
+      layer.set('label', item.name);
+      layer.set('metadata', item.metadata);
+      layer.set('dimensions', item.dimensions);
+      const ids = [];
+      getIds(item, ids);
+      layer.set('querySourceIds', ids);
+      return layer;
+    };
+
+    /**
+     * @param {import(gmf/themes.js).GmfOgcServers} ogcServers The ogc servers.
+     * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} gmfLayer The item.
+     * @return {angular.IPromise.<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default} the created layer.
+     */
+    const layerLayerCreationFn = function(ogcServers, gmfLayer) {
+      if (gmfLayer.type === 'WMTS') {
+        const gmfLayerWMTS = /** @type import(gmf/themes.js).GmfLayerWMTS */ (gmfLayer);
+        console.assert(gmfLayerWMTS.url, 'Layer URL is required');
+        return layerHelper.createWMTSLayerFromCapabilitites(
+          gmfLayerWMTS.url,
+          gmfLayerWMTS.layer || '',
+          gmfLayerWMTS.matrixSet,
+          gmfLayer.dimensions,
+          gmfLayerWMTS.metadata.customOpenLayersOptions
+        ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
+          let message = `Unable to build layer "${gmfLayerWMTS.layer}" from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
+          message += `OpenLayers error is "${response['message']}`;
+          console.error(message);
+          // Continue even if some layers have failed loading.
+          return $q.resolve(undefined);
+        });
+      } else if (gmfLayer.type === 'WMS') {
+        const gmfLayerWMS = /** @type import(gmf/themes.js).GmfLayerWMS */ (gmfLayer);
+        console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
+        const server = ogcServers[gmfLayerWMS.ogcServer];
+        console.assert(server, 'The OGC server was not found');
+        console.assert(server.url, 'The server URL is required');
+        console.assert(server.imageType, 'The server image type is required');
+
+        // Manage WMS styles
+        const opt_params = {STYLES: gmfLayerWMS.styles};
+        if (gmfLayer.dimensions) {
+          for (const [key, value] of Object.entries(gmfLayer.dimensions)) {
+            opt_params[key] = value;
+          }
+        }
+
+        return callback(gmfLayer, layerHelper.createBasicWMSLayer(
+          server.url,
+          gmfLayerWMS.layers || '',
+          server.imageType,
+          server.type,
+          undefined, // time
+          opt_params,
+          server.credential ? 'use-credentials' : 'anonymous',
+          gmfLayerWMS.metadata.customOpenLayersOptions
+        ));
+      }
+      console.assert(false, `Unsupported type: ${gmfLayer.type}`);
+    };
+
+    /**
+     * @param {import(gmf/themes.js).GmfOgcServers} ogcServers The ogc servers.
+     * @param {import(gmf/themes.js).GmfGroup} item The item.
+     * @return {angular.IPromise.<import("ol/layer/Group.js").default>} the created layer.
+     */
+    const layerGroupCreationFn = function(ogcServers, item) {
+      // We assume no child is a layer group.
+      const orderedChildren = item.children.map(x => x).reverse(); // the order of insertion in OL3 is the contrary of the theme
+      const promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
+      return $q.all(promises).then((layers) => {
+        let collection;
+        if (layers) {
+          layers = layers.filter(l => l);
+          collection = new olCollection(layers);
+        }
+        const group = layerHelper.createBasicGroup(collection);
+        callback(item, group);
+        return group;
+      });
+    };
+
+    /**
+     * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
+     *     response.
+     * @return {angular.IPromise.<Array.<import("ol/layer/Base.js").default>>} Promise.
+     */
+    const promiseSuccessFn = function(data) {
+      const promises = data.background_layers.map((item) => {
+        const itemType = item.type;
+        if (itemType === 'WMTS' || itemType === 'WMS') {
+          return layerLayerCreationFn(data.ogcServers, item);
+        } else if (item.children) {
+          // group of layers
+          return layerGroupCreationFn(data.ogcServers, item);
+        } else {
+          return undefined;
+        }
+      }, this);
+      return $q.all(promises);
+    }.bind(this);
+
+    this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then((values) => {
+      const layers = [];
+
+      // (1) add a blank layer
+      if (this.addBlankBackgroundLayer_) {
+        // For i18n string collection
+        gettextCatalog.getString('blank');
+        layers.push(new olLayerTile({
+          'label': 'blank',
+          'metadata': {'thumbnail': ''}
+        }));
+      }
+
+      // (2) add layers that were returned
+      values.forEach((layer) => {
+        if (layer) {
+          layers.push(layer);
+        }
+      });
+      return layers;
+    });
+
+    return this.bgLayerPromise_;
   }
 
-  this.cacheVersion_ = '0';
-  if ($injector.has('cacheVersion')) {
-    this.cacheVersion_ = $injector.get('cacheVersion');
+  /**
+   * Get a theme object by its name.
+   * @param {string} themeName Theme name.
+   * @return {angular.IPromise.<import(gmf/themes.js).GmfTheme>} Promise.
+   * @export
+   */
+  getThemeObject(themeName) {
+    return this.promise_.then(
+      /**
+         * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
+         *     response.
+         * @return {import(gmf/themes.js).GmfTheme?} The theme object for themeName, or null
+         *     if not found.
+         */
+      data => findThemeByName(data.themes, themeName));
   }
 
   /**
-   * @type {?import("ngeo/statemanager/Location.js").default}
-   * @private
+   * Get an array of theme objects.
+   * @return {angular.IPromise.<!Array.<!import(gmf/themes.js).GmfTheme>>} Promise.
+   * @export
    */
-  this.ngeoLocation_ = null;
-  if ($injector.has('ngeoLocation')) {
-    this.ngeoLocation_ = $injector.get('ngeoLocation');
+  getThemesObject() {
+    return this.promise_.then(
+      /**
+         * @param {!import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
+         *     response.
+         * @return {!Array.<!import(gmf/themes.js).GmfTheme>} The themes object.
+         */
+      data => data.themes);
   }
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").default}
-   * @private
+   * Get an array of background layer objects.
+   * @return {angular.IPromise.<!Array.<!import(gmf/themes.js).GmfLayer>>} Promise.
    */
-  this.layerHelper_ = ngeoLayerHelper;
+  getBackgroundLayersObject() {
+    console.assert(this.promise_ !== null);
+    return this.promise_.then(
+      /**
+         * @param {!import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
+         *     response.
+         * @return {!Array.<!import(gmf/themes.js).GmfLayer>} The background layers object.
+         */
+      data => data.background_layers
+    );
+  }
 
   /**
-   * @type {angular.gettext.gettextCatalog}
-   * @private
+   * Get the `ogcServers` object.
+   * @return {angular.IPromise.<!import(gmf/themes.js).GmfOgcServers>} Promise.
+   * @export
    */
-  this.gettextCatalog = gettextCatalog;
+  getOgcServersObject() {
+    console.assert(this.promise_ !== null);
+    return this.promise_.then(
+      /**
+         * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
+         *     response.
+         * @return {import(gmf/themes.js).GmfOgcServers} The `ogcServers` object.
+         */
+      data => data.ogcServers);
+  }
 
   /**
-   * @type {angular.IDeferred}
-   * @private
+   * Returns a promise to check if one of the layers in the themes is editable.
+   * @return {angular.IPromise.<boolean>} Promise.
    */
-  this.deferred_ = $q.defer();
+  hasEditableLayers() {
+    console.assert(this.promise_ !== null);
+    return this.promise_.then(this.hasEditableLayers_.bind(this));
+  }
 
   /**
-   * @type {angular.IPromise}
-   * @private
+   * Returns if one of the layers in the themes is editable.
+   * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service response.
+   * @return {boolean} Editable layers?
    */
-  this.promise_ = this.deferred_.promise;
+  hasEditableLayers_(data) {
+    return data.themes.some((theme) => {
+      const hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
+      return hasEditableLayers;
+    });
+  }
 
   /**
-   * @type {boolean}
+   * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node Theme node
+   * @return {boolean} Editable layers?
    */
-  this.loaded = false;
+  hasNodeEditableLayers_(node) {
+    if (node.editable) {
+      return true;
+    }
+
+    let hasEditableLayers = false;
+    const children = node.children;
+    if (children && children.length) {
+      hasEditableLayers = children.some(this.hasNodeEditableLayers_.bind(this));
+    }
+    return hasEditableLayers;
+  }
 
   /**
-   * @type {angular.IPromise}
-   * @private
+   * @param {number=} opt_roleId The role id to send in the request.
+   * Load themes from the "themes" service.
+   * @export
    */
-  this.bgLayerPromise_ = null;
+  loadThemes(opt_roleId) {
+    console.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
+
+    if (this.loaded) {
+      // reload the themes
+      this.deferred_ = this.$q_.defer();
+      this.promise_ = this.deferred_.promise;
+      this.bgLayerPromise_ = null;
+      this.loaded = false;
+    }
+
+    this.$http_.get(this.treeUrl_, {
+      params: opt_roleId !== undefined ? {
+        'role': opt_roleId,
+        'cache_version': this.cacheVersion_
+      } : {
+        'cache_version': this.cacheVersion_
+      },
+      cache: false,
+      withCredentials: true
+    }).then((response) => {
+      if (response.data.errors.length != 0) {
+        const message = `The themes contain some errors:\n${
+          response.data.errors.join('\n')}`;
+        console.error(message);
+        if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
+          window.alert(message);
+        }
+      }
+      this.deferred_.resolve(response.data);
+      this.dispatchEvent('change');
+      this.loaded = true;
+    }, (response) => {
+      this.deferred_.reject(response);
+    });
+  }
 }
-
-olUtilInherits(Themes, olEventsEventTarget);
 
 
 /**
@@ -222,274 +516,6 @@ function getFlatNodes(node, nodes) {
   }
 }
 
-
-/**
- * Get background layers.
- * @return {!angular.IPromise.<!Array.<!import("ol/layer/Base.js").default>>} Promise.
- */
-Themes.prototype.getBgLayers = function() {
-  const gettextCatalog = this.gettextCatalog;
-  if (this.bgLayerPromise_) {
-    return this.bgLayerPromise_;
-  }
-  const $q = this.$q_;
-  const layerHelper = this.layerHelper_;
-
-  /**
-   * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} item A group or a leaf.
-   * @param {Array.<number>} array Array of ids;
-   */
-  const getIds = function(item, array) {
-    array.push(olUtilGetUid(item));
-    const children = item.children || [];
-    children.forEach((child) => {
-      getIds(child, array);
-    });
-  };
-
-  /**
-   * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} item The item.
-   * @param {import("ol/layer/Base.js").default} layer The layer.
-   * @return {import("ol/layer/Base.js").default} the provided layer.
-   */
-  const callback = function(item, layer) {
-    layer.set('label', item.name);
-    layer.set('metadata', item.metadata);
-    layer.set('dimensions', item.dimensions);
-    const ids = [];
-    getIds(item, ids);
-    layer.set('querySourceIds', ids);
-    return layer;
-  };
-
-  /**
-   * @param {import(gmf/themes.js).GmfOgcServers} ogcServers The ogc servers.
-   * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} gmfLayer The item.
-   * @return {angular.IPromise.<import("ol/layer/Base.js").default>|import("ol/layer/Base.js").default} the created layer.
-   */
-  const layerLayerCreationFn = function(ogcServers, gmfLayer) {
-    if (gmfLayer.type === 'WMTS') {
-      const gmfLayerWMTS = /** @type import(gmf/themes.js).GmfLayerWMTS */ (gmfLayer);
-      console.assert(gmfLayerWMTS.url, 'Layer URL is required');
-      return layerHelper.createWMTSLayerFromCapabilitites(
-        gmfLayerWMTS.url,
-        gmfLayerWMTS.layer || '',
-        gmfLayerWMTS.matrixSet,
-        gmfLayer.dimensions,
-        gmfLayerWMTS.metadata.customOpenLayersOptions
-      ).then(callback.bind(null, gmfLayer)).then(null, (response) => {
-        let message = `Unable to build layer "${gmfLayerWMTS.layer}" from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
-        message += `OpenLayers error is "${response['message']}`;
-        console.error(message);
-        // Continue even if some layers have failed loading.
-        return $q.resolve(undefined);
-      });
-    } else if (gmfLayer.type === 'WMS') {
-      const gmfLayerWMS = /** @type import(gmf/themes.js).GmfLayerWMS */ (gmfLayer);
-      console.assert(gmfLayerWMS.ogcServer, 'An OGC server is required');
-      const server = ogcServers[gmfLayerWMS.ogcServer];
-      console.assert(server, 'The OGC server was not found');
-      console.assert(server.url, 'The server URL is required');
-      console.assert(server.imageType, 'The server image type is required');
-
-      // Manage WMS styles
-      const opt_params = {STYLES: gmfLayerWMS.styles};
-      if (gmfLayer.dimensions) {
-        for (const [key, value] of Object.entries(gmfLayer.dimensions)) {
-          opt_params[key] = value;
-        }
-      }
-
-      return callback(gmfLayer, layerHelper.createBasicWMSLayer(
-        server.url,
-        gmfLayerWMS.layers || '',
-        server.imageType,
-        server.type,
-        undefined, // time
-        opt_params,
-        server.credential ? 'use-credentials' : 'anonymous',
-        gmfLayerWMS.metadata.customOpenLayersOptions
-      ));
-    }
-    console.assert(false, `Unsupported type: ${gmfLayer.type}`);
-  };
-
-  /**
-   * @param {import(gmf/themes.js).GmfOgcServers} ogcServers The ogc servers.
-   * @param {import(gmf/themes.js).GmfGroup} item The item.
-   * @return {angular.IPromise.<import("ol/layer/Group.js").default>} the created layer.
-   */
-  const layerGroupCreationFn = function(ogcServers, item) {
-    // We assume no child is a layer group.
-    const orderedChildren = item.children.map(x => x).reverse(); // the order of insertion in OL3 is the contrary of the theme
-    const promises = orderedChildren.map(layerLayerCreationFn.bind(null, ogcServers));
-    return $q.all(promises).then((layers) => {
-      let collection;
-      if (layers) {
-        layers = layers.filter(l => l);
-        collection = new olCollection(layers);
-      }
-      const group = layerHelper.createBasicGroup(collection);
-      callback(item, group);
-      return group;
-    });
-  };
-
-  /**
-   * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
-   *     response.
-   * @return {angular.IPromise.<Array.<import("ol/layer/Base.js").default>>} Promise.
-   */
-  const promiseSuccessFn = function(data) {
-    const promises = data.background_layers.map((item) => {
-      const itemType = item.type;
-      if (itemType === 'WMTS' || itemType === 'WMS') {
-        return layerLayerCreationFn(data.ogcServers, item);
-      } else if (item.children) {
-        // group of layers
-        return layerGroupCreationFn(data.ogcServers, item);
-      } else {
-        return undefined;
-      }
-    }, this);
-    return $q.all(promises);
-  }.bind(this);
-
-  this.bgLayerPromise_ = this.promise_.then(promiseSuccessFn).then((values) => {
-    const layers = [];
-
-    // (1) add a blank layer
-    if (this.addBlankBackgroundLayer_) {
-      // For i18n string collection
-      gettextCatalog.getString('blank');
-      layers.push(new olLayerTile({
-        'label': 'blank',
-        'metadata': {'thumbnail': ''}
-      }));
-    }
-
-    // (2) add layers that were returned
-    values.forEach((layer) => {
-      if (layer) {
-        layers.push(layer);
-      }
-    });
-    return layers;
-  });
-
-  return this.bgLayerPromise_;
-};
-
-
-/**
- * Get a theme object by its name.
- * @param {string} themeName Theme name.
- * @return {angular.IPromise.<import(gmf/themes.js).GmfTheme>} Promise.
- * @export
- */
-Themes.prototype.getThemeObject = function(themeName) {
-  return this.promise_.then(
-    /**
-       * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
-       *     response.
-       * @return {import(gmf/themes.js).GmfTheme?} The theme object for themeName, or null
-       *     if not found.
-       */
-    data => findThemeByName(data.themes, themeName));
-};
-
-
-/**
- * Get an array of theme objects.
- * @return {angular.IPromise.<!Array.<!import(gmf/themes.js).GmfTheme>>} Promise.
- * @export
- */
-Themes.prototype.getThemesObject = function() {
-  return this.promise_.then(
-    /**
-       * @param {!import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
-       *     response.
-       * @return {!Array.<!import(gmf/themes.js).GmfTheme>} The themes object.
-       */
-    data => data.themes);
-};
-
-
-/**
- * Get an array of background layer objects.
- * @return {angular.IPromise.<!Array.<!import(gmf/themes.js).GmfLayer>>} Promise.
- */
-Themes.prototype.getBackgroundLayersObject = function() {
-  console.assert(this.promise_ !== null);
-  return this.promise_.then(
-    /**
-       * @param {!import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
-       *     response.
-       * @return {!Array.<!import(gmf/themes.js).GmfLayer>} The background layers object.
-       */
-    data => data.background_layers
-  );
-};
-
-
-/**
- * Get the `ogcServers` object.
- * @return {angular.IPromise.<!import(gmf/themes.js).GmfOgcServers>} Promise.
- * @export
- */
-Themes.prototype.getOgcServersObject = function() {
-  console.assert(this.promise_ !== null);
-  return this.promise_.then(
-    /**
-       * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service
-       *     response.
-       * @return {import(gmf/themes.js).GmfOgcServers} The `ogcServers` object.
-       */
-    data => data.ogcServers);
-};
-
-
-/**
- * Returns a promise to check if one of the layers in the themes is editable.
- * @return {angular.IPromise.<boolean>} Promise.
- */
-Themes.prototype.hasEditableLayers = function() {
-  console.assert(this.promise_ !== null);
-  return this.promise_.then(this.hasEditableLayers_.bind(this));
-};
-
-
-/**
- * Returns if one of the layers in the themes is editable.
- * @param {import(gmf/themes.js).GmfThemesResponse} data The "themes" web service response.
- * @return {boolean} Editable layers?
- */
-Themes.prototype.hasEditableLayers_ = function(data) {
-  return data.themes.some((theme) => {
-    const hasEditableLayers = theme.children.some(this.hasNodeEditableLayers_.bind(this));
-    return hasEditableLayers;
-  });
-};
-
-
-/**
- * @param {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} node Theme node
- * @return {boolean} Editable layers?
- */
-Themes.prototype.hasNodeEditableLayers_ = function(node) {
-  if (node.editable) {
-    return true;
-  }
-
-  let hasEditableLayers = false;
-  const children = node.children;
-  if (children && children.length) {
-    hasEditableLayers = children.some(this.hasNodeEditableLayers_.bind(this));
-  }
-  return hasEditableLayers;
-};
-
-
 /**
  * Get the snapping configuration object from a Layertree controller
  * @param {import(gmf/themes.js).GmfLayer} node Layer node from the theme.
@@ -539,51 +565,6 @@ export function getNodeMinResolution(gmfLayer) {
   }
   return minResolution;
 }
-
-
-/**
- * @param {number=} opt_roleId The role id to send in the request.
- * Load themes from the "themes" service.
- * @export
- */
-Themes.prototype.loadThemes = function(opt_roleId) {
-
-  console.assert(this.treeUrl_, 'gmfTreeUrl should be defined.');
-
-  if (this.loaded) {
-    // reload the themes
-    this.deferred_ = this.$q_.defer();
-    this.promise_ = this.deferred_.promise;
-    this.bgLayerPromise_ = null;
-    this.loaded = false;
-  }
-
-  this.$http_.get(this.treeUrl_, {
-    params: opt_roleId !== undefined ? {
-      'role': opt_roleId,
-      'cache_version': this.cacheVersion_
-    } : {
-      'cache_version': this.cacheVersion_
-    },
-    cache: false,
-    withCredentials: true
-  }).then((response) => {
-    if (response.data.errors.length != 0) {
-      const message = `The themes contain some errors:\n${
-        response.data.errors.join('\n')}`;
-      console.error(message);
-      if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
-        window.alert(message);
-      }
-    }
-    this.deferred_.resolve(response.data);
-    this.dispatchEvent('change');
-    this.loaded = true;
-  }, (response) => {
-    this.deferred_.reject(response);
-  });
-};
-
 
 /**
  * @enum {string}

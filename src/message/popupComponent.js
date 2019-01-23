@@ -9,7 +9,7 @@ const module = angular.module('ngeoPopup', [
 
 module.value('ngeoPopupTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -53,7 +53,7 @@ function directive(ngeoPopupTemplateUrl) {
     templateUrl: ngeoPopupTemplateUrl,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {

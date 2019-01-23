@@ -44,7 +44,7 @@ export default {
    */
   OPACITY: 'o',
   /**
-   * @type {number}
+   * @type {string}
    * @export
    */
   AZIMUT: 'z',

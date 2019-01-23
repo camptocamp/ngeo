@@ -83,7 +83,7 @@ module.component('gmfMouseposition', component);
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IFilterService} $filter Angular filter.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -125,7 +125,7 @@ function Controller($element, $filter, $scope, gettextCatalog) {
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {JQLite}
+   * @type {JQuery}
    * @private
    */
   this.$element_ = $element;

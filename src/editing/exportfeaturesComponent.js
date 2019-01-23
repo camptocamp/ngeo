@@ -49,7 +49,7 @@ module.directive('ngeoExportfeatures', directive);
 
 
 /**
- * @param {JQLite} $element Element.
+ * @param {JQuery} $element Element.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
@@ -68,7 +68,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   this.features;
 
   /**
-   * @type {JQLite}
+   * @type {JQuery}
    * @private
    */
   this.element_ = $element;

@@ -36,11 +36,7 @@ function factory($window) {
      */
     function(availableLanguages) {
       const nav = $window.navigator;
-      let browserLanguages = nav.languages || nav.language ||
-            nav.browserLanguage || nav.systemLanguage || nav.userLanguage;
-      if (!Array.isArray(browserLanguages)) {
-        browserLanguages = [browserLanguages];
-      }
+      let browserLanguages = nav.languages || [nav.language];
       browserLanguages = browserLanguages.map(item => item.substring(0, 2));
       // remove duplicated language codes
       browserLanguages = browserLanguages.filter((item, index, arr) => arr.indexOf(item) == index);

@@ -2,7 +2,6 @@ import angular from 'angular';
 import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
-import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olProj from 'ol/proj.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
@@ -16,59 +15,56 @@ import * as olInteraction from 'ol/interaction.js';
  *
  * This file includes `goog.require`'s for desktop/api components/directives used
  * by the HTML page and the controller to provide the configuration.
- *
- * @param {Config} config A part of the application config.
- * @param {angular.IScope} $scope Scope.
- * @param {angular.auto.IInjectorService} $injector Main injector.
- * @constructor
- * @extends {import("gmf/controllers/AbstractAppController.js").default}
- * @ngdoc controller
- * @ngInject
- * @export
  */
-function AbstractAPIController(config, $scope, $injector) {
-
-  const viewConfig = {
-    projection: olProj.get(`EPSG:${config.srid || 21781}`)
-  };
-  Object.assign(viewConfig, config.mapViewConfig || {});
-
-  const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
-
+class AbstractAPIController extends gmfControllersAbstractAppController {
   /**
-   * @type {import("ol/Map.js").default}
-   * @export
+   * @param {Config} config A part of the application config.
+   * @param {angular.IScope} $scope Scope.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @ngInject
    */
-  this.map = new olMap({
-    pixelRatio: config.mapPixelRatio,
-    layers: [],
-    view: new olView(viewConfig),
-    controls: config.mapControls || [
-      new olControlScaleLine({
-        target: document.getElementById('scaleline')
-      }),
-      new olControlZoom({
-        zoomInTipLabel: '',
-        zoomOutTipLabel: ''
-      }),
-      new olControlRotate({
-        label: arrow,
-        tipLabel: ''
-      })
-    ],
-    interactions: config.mapInteractions || olInteraction.defaults({
-      pinchRotate: true,
-      altShiftDragRotate: true
-    }),
-    loadTilesWhileAnimating: true,
-    loadTilesWhileInteracting: true
-  });
+  constructor(config, $scope, $injector) {
+    super();
 
-  gmfControllersAbstractAppController.call(this, config, $scope, $injector);
+    const viewConfig = {
+      projection: olProj.get(`EPSG:${config.srid || 21781}`)
+    };
+    Object.assign(viewConfig, config.mapViewConfig || {});
+
+    const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
+
+    /**
+     * @type {import("ol/Map.js").default}
+     * @export
+     */
+    this.map = new olMap({
+      pixelRatio: config.mapPixelRatio,
+      layers: [],
+      view: new olView(viewConfig),
+      controls: config.mapControls || [
+        new olControlScaleLine({
+          target: document.getElementById('scaleline')
+        }),
+        new olControlZoom({
+          zoomInTipLabel: '',
+          zoomOutTipLabel: ''
+        }),
+        new olControlRotate({
+          label: arrow,
+          tipLabel: ''
+        })
+      ],
+      interactions: config.mapInteractions || olInteraction.defaults({
+        pinchRotate: true,
+        altShiftDragRotate: true
+      }),
+      loadTilesWhileAnimating: true,
+      loadTilesWhileInteracting: true
+    });
+
+    gmfControllersAbstractAppController.call(this, config, $scope, $injector);
+  }
 }
-
-olUtilInherits(AbstractAPIController, gmfControllersAbstractAppController);
-
 
 const module = angular.module('GmfAbstractAPIControllerModule', [
   gmfControllersAbstractAppController.name,

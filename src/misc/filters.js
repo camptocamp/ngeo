@@ -5,7 +5,7 @@ import {padNumber} from 'ol/string.js';
 
 /**
  * @typedef {Object} StringToHtmlReplacement
- * @property {string} expression The regex expression that must match to do the replacement.
+ * @property {RegExp} expression The regex expression that must match to do the replacement.
  * @property {string} template The template to use to create a new value as replacement if the regex matches.
  */
 
@@ -282,12 +282,12 @@ function NumberCoordinates($filter) {
    */
   const filterFn = function(coordinates, opt_fractionDigits, opt_template) {
     const template = opt_template ? opt_template : '{x} {y}';
-    let x = coordinates[0];
-    let y = coordinates[1];
-    const fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
-    x = $filter('number')(x, fractionDigits);
-    y = $filter('number')(y, fractionDigits);
-    return template.replace('{x}', x).replace('{y}', y);
+    const x = coordinates[0];
+    const y = coordinates[1];
+    const fractionDigits = parseInt(/** @type {string} */(opt_fractionDigits), 10) | 0;
+    const x_str = $filter('number')(x, fractionDigits);
+    const y_str = $filter('number')(y, fractionDigits);
+    return template.replace('{x}', x_str).replace('{y}', y_str);
   };
   return filterFn;
 }
@@ -337,7 +337,7 @@ function DMSCoordinates() {
    * @return {string} DMS formatted coordinates.
    */
   const filterFn = function(coordinates, opt_fractionDigits, opt_template) {
-    const fractionDigits = parseInt(opt_fractionDigits, 10) | 0;
+    const fractionDigits = parseInt(/** @type {string} */(opt_fractionDigits), 10) | 0;
 
     const template = opt_template ? opt_template : '{x} {y}';
 

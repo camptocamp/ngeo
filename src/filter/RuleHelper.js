@@ -15,7 +15,7 @@ import moment from 'moment';
 
 
 /**
- * @typedef {!RuleOptions|!GeometryOptions|!SelectOptions|!TextOptions} AnyOptions
+ * @typedef {!RuleOptions|!GeometryOptions|!SelectOptions|!import('ngeo/rule/Text.js').TextOptions} AnyOptions
  */
 
 

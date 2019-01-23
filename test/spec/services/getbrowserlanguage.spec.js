@@ -19,7 +19,7 @@ describe('ngeo.misc.getBrowserLanguage', () => {
   });
 
   it('gets language from navigator.language', () => {
-    win.navigator.language = ['fr-FR'];
+    win.navigator.language = 'fr-FR';
     const langCode = ngeoGetBrowserLanguage(['de', 'fr', 'it']);
     expect(langCode).toBe('fr');
   });

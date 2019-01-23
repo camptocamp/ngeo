@@ -1,6 +1,4 @@
 /**
- */
-/**
  * Application entry point.
  *
  * This file includes `goog.require`'s for all the components/directives used
@@ -13,7 +11,6 @@ import './sass/mobile_alt.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import {inherits as olUtilInherits} from 'ol/util.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
@@ -28,84 +25,80 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-/**
- * @param {angular.IScope} $scope Scope.
- * @param {angular.auto.IInjectorService} $injector Main injector.
- * @constructor
- * @extends {import("gmf/controllers/AbstractMobileController.js").default}
- * @ngInject
- * @export
- */
-function Controller($scope, $injector) {
-  gmfControllersAbstractMobileController.call(this, {
-    autorotate: true,
-    mapPixelRatio: 1,
-    srid: 21781,
-    mapViewConfig: {
-      center: [632464, 185457],
-      zoom: 3,
-      resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
-    }
-  }, $scope, $injector);
-
+class Controller extends gmfControllersAbstractMobileController {
   /**
-   * @type {Array.<import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
-   * @export
+   * @param {angular.IScope} $scope Scope.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @ngInject
    */
-  this.elevationLayersConfig = [
-    {name: 'aster', unit: 'm'},
-    {name: 'srtm', unit: 'm'}
-  ];
+  constructor($scope, $injector) {
+    super({
+      autorotate: true,
+      mapPixelRatio: 1,
+      srid: 21781,
+      mapViewConfig: {
+        center: [632464, 185457],
+        zoom: 3,
+        resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
+      }
+    }, $scope, $injector);
 
-  /**
-   * @type {number}
-   * @export
-   */
-  this.searchDelay = 50;
+    /**
+     * @type {Array.<import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
+     * @export
+     */
+    this.elevationLayersConfig = [
+      {name: 'aster', unit: 'm'},
+      {name: 'srtm', unit: 'm'}
+    ];
 
-  /**
-   * @type {Array.<string>}
-   * @export
-   */
-  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+    /**
+     * @type {number}
+     * @export
+     */
+    this.searchDelay = 50;
+
+    /**
+     * @type {Array.<string>}
+     * @export
+     */
+    this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
 
 
-  /**
-   * @type {import("ol/style/Style.js").default}
-   * @export
-   */
-  this.customMeasureStyle = new olStyleStyle({
-    fill: new olStyleFill({
-      color: 'rgba(255, 128, 128, 0.2)'
-    }),
-    stroke: new olStyleStroke({
-      color: 'rgba(255, 0, 0, 0.5)',
-      lineDash: [10, 10],
-      width: 2
-    }),
-    image: new olStyleRegularShape({
+    /**
+     * @type {import("ol/style/Style.js").default}
+     * @export
+     */
+    this.customMeasureStyle = new olStyleStyle({
+      fill: new olStyleFill({
+        color: 'rgba(255, 128, 128, 0.2)'
+      }),
       stroke: new olStyleStroke({
-        color: 'rgba(255, 0, 0, 0.7)',
+        color: 'rgba(255, 0, 0, 0.5)',
+        lineDash: [10, 10],
         width: 2
       }),
-      points: 4,
-      radius: 8,
-      radius2: 0,
-      angle: 0
-    })
-  });
+      image: new olStyleRegularShape({
+        stroke: new olStyleStroke({
+          color: 'rgba(255, 0, 0, 0.7)',
+          width: 2
+        }),
+        points: 4,
+        radius: 8,
+        radius2: 0,
+        angle: 0
+      })
+    });
 
-  if ($injector.has('sentryUrl')) {
-    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
-    const raven = new Raven();
-    raven.config($injector.get('sentryUrl'), options)
-      .addPlugin(RavenPluginsAngular)
-      .install();
+    if ($injector.has('sentryUrl')) {
+      const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+      const raven = new Raven();
+      raven.config($injector.get('sentryUrl'), options)
+        .addPlugin(RavenPluginsAngular)
+        .install();
+    }
   }
 }
-
-olUtilInherits(Controller, gmfControllersAbstractMobileController);
-
 
 const module = angular.module('Appmobile_alt', [
   appBase.name,
@@ -114,4 +107,4 @@ const module = angular.module('Appmobile_alt', [
 
 module.controller('AlternativeMobileController', Controller);
 
-export default Controller;
+export default module;
