@@ -12,56 +12,6 @@ import {
 
 
 /**
- * @typedef {Object} I18n
- * @property {string} [xAxis] Text for the x axis. Will be completed by ` km` or ' m' (for kilometers or meters).
- * @property {string} [yAxis] Text for the y axis. Will be completed by ' m' (for meters).
- */
-
-
-/**
- * Configuration object for one profile's line.
- *
- * @typedef {Object} LineConfiguration
- * @property {string} [color] Color of the line (hex color string).
- * @property {!function(Object): number} zExtractor Extract the elevation of a point (an item of the
- * elevation data array).
- */
-
-
-/**
- * Options for the profile.
- *
- * @typedef {Object} ProfileOptions
- * @property {string} [styleDefs] Inline CSS style definition to inject in the SVG.
- * @property {number} [poiLabelAngle] Inline CSS style definition to inject in the SVG.
- * @property {ProfileFormatter} [formatter] Formatter giving full control on how numbers are formatted.
- * @property {function(Object): number} distanceExtractor Extract the distance from origin of a point (an
- * item of the elevation data array).
- * @property {!Object.<string, LineConfiguration>} linesConfiguration Configuration object for the profile's
- * lines. The key string of each object is used as class for its respective svg line.
- * @property {PoiExtractor} [poiExtractor] Extractor for parsing POI data.
- * @property {boolean} [light] Show a simplified profile when true.
- * @property {boolean} [lightXAxis] Show a simplified x axis with only both end ticks.
- * @property {function(function(), function(), number, number)} [scaleModifier] Allows to modify the raw x
- * and y scales. Notably, it is possible to modify the y domain according to XY ratio rules,
- * add padding or enforce y lower bound.
- * @property {function(Object)} [hoverCallback] A callback called from the profile when the mouse moves over
- * a point. The point, an item of the elevation data array, is passed as the first argument of the function.
- * @property {function()} [outCallback] A callback called from the profile when the mouse leaves the profile.
- * @property {I18n} [i18n]
- */
-
-
-/**
- * @typedef {Object} ProfileFormatter
- * @property {function(number, string): string} xhover Format the xhover distance.
- * @property {function(number, string): string} yhover Format the yhover elevation.
- * @property {function(number, string): (string|number)} xtick Format the xtick, for graduating the x axis.
- * @property {function(number, string): (string|number)} ytick Format the ytick, for graduating the y axis.
- */
-
-
-/**
  * Provides a D3js component to be used to draw an elevation
  * profile chart.
  *
@@ -110,7 +60,7 @@ import {
  *     ]
  *
  * @return {Object} D3js component.
- * @param {ProfileOptions} options Profile options.
+ * @param {import('ngeo/profile/elevationComponent.js').ProfileOptions} options Profile options.
  * @export
  */
 function d3Elevation(options) {
@@ -129,17 +79,15 @@ function d3Elevation(options) {
 
   /**
    * Hover callback function.
-   * @type {function(Object, number, string, Object.<string, number>, string)}
+   * @type {function(Object, number, string, Object.<string, number>, string): void}
    */
-  const hoverCallback = options.hoverCallback !== undefined ?
-    options.hoverCallback : () => {};
+  const hoverCallback = options.hoverCallback !== undefined ? options.hoverCallback : () => {};
 
   /**
    * Out callback function.
-   * @type {function()}
+   * @type {function}
    */
-  const outCallback = options.outCallback !== undefined ?
-    options.outCallback : () => {};
+  const outCallback = options.outCallback !== undefined ? options.outCallback : () => {};
 
   /**
    * Distance data extractor used to get the dist values.
@@ -193,7 +141,7 @@ function d3Elevation(options) {
   const yAxisLabel = (i18n.yAxis || 'Elevation');
 
   /**
-   * @type {ProfileFormatter}
+   * @type {import('ngeo/profile/elevationComponent.js').ProfileFormatter}
    */
   const formatter = {
     /**
@@ -239,7 +187,6 @@ function d3Elevation(options) {
    */
   const lightXAxis = options.lightXAxis !== undefined ? options.lightXAxis : false;
 
-  // Objects shared with the showPois function
   /**
    * @type {Object}
    */
@@ -247,43 +194,54 @@ function d3Elevation(options) {
 
   /**
    * D3 x scale.
+   * @type {import('d3').ScaleLinear<number, number>}
    */
   let x;
 
   /**
    * D3 y scale.
+   * @type {import('d3').ScaleLinear<number, number>}
    */
   let y;
 
   /**
    * Scale modifier to allow customizing the x and y scales.
+   * @type {function(function, function, number, number): void}
    */
   const scaleModifier = options.scaleModifier;
 
+  /**
+   * @type {import('d3').Selection}
+   */
   let g;
 
   /**
    * Height of the chart in pixels
+   * @type {number}
    */
   let height;
 
   /**
    * Width of the chart in pixels
+   * @type {number}
    */
   let width;
 
   /**
-  * Factor to determine whether to use 'm' or 'km'.
-  */
+   * Factor to determine whether to use 'm' or 'km'.
+   * @type {number}
+   */
   let xFactor;
 
   /**
-  * Distance units. Either 'm' or 'km'.
-  */
+   * Distance units. Either 'm' or 'km'.
+   * @type {string}
+   */
   let xUnits;
 
   /**
    * D3 extent of the distance.
+   * @type {[number, number]}
    */
   let xDomain;
 
@@ -301,7 +259,9 @@ function d3Elevation(options) {
       height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
       y = d3scaleLinear().range([height, 0]);
 
+      /** @type {import('d3').Axis<import('d3').AxisDomain>} */
       const xAxis = d3axisBottom(x);
+      /** @type {import('d3').Axis<import('d3').AxisDomain>} */
       const yAxis = d3axisLeft(y);
 
       let area;
@@ -316,7 +276,7 @@ function d3Elevation(options) {
       }
 
       // Select the svg element, if it exists.
-      svg = d3select(this).selectAll('svg').data([data]);
+      let svg = d3select(this).selectAll('svg').data([data]);
       // Otherwise, create the skeletal chart.
       const svgEnter = svg.enter().append('svg');
       // Then select it again to get the complete object.
@@ -456,21 +416,16 @@ function d3Elevation(options) {
           .attr('d', line);
       }
 
-      if (xDomain[1] > 2000) {
-        xFactor = 1000;
-        xUnits = 'km';
-      } else {
-        xFactor = 1;
-        xUnits = 'm';
-      }
+      xFactor = xDomain[1] > 2000 ? 1000 : 1;
+      xUnits = xDomain[1] > 2000 ? 'km' : 'm';
 
       if (!light) {
-        xAxis.tickFormat(d => formatter.xtick(d / xFactor, xUnits));
+        xAxis.tickFormat((domainValue) => /** @type {string} */(formatter.xtick(/** @type {number} */(domainValue) / xFactor, xUnits)));
         if (lightXAxis) {
           xAxis.tickValues([0, x.domain()[1]]);
         }
 
-        yAxis.tickFormat(d => formatter.ytick(d, 'm'));
+        yAxis.tickFormat((dommainValue) => /** @type {string} */(formatter.ytick(/** @type {number} */(dommainValue), 'm')));
 
         g.select('.x.axis')
           .transition()
@@ -493,7 +448,7 @@ function d3Elevation(options) {
 
       g.select('.grid-y')
         .transition()
-        .call(yAxis.tickSize(-width, 0).tickFormat(''))
+        .call(yAxis.tickSize(-width).tickFormat(null))
         .selectAll('.tick line')
         .style('stroke', '#ccc')
         .style('opacity', 0.7);
