@@ -124,7 +124,7 @@ module.component('gmfDisplayquerywindow', component);
 
 
 /**
- * @param {!jQuery} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
  * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
@@ -248,7 +248,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.open = false;
 
   /**
-   * @const {!jQuery}
+   * @const {!JQuery}
    * @private
    */
   this.element_ = $element;

@@ -87,28 +87,28 @@ function Controller() {
   /**
    * Stack of slid-in items.
    * @private
-   * @type {Array.<!jQuery>}
+   * @type {Array.<!JQuery>}
    */
   this.slid_ = [];
 
   /**
    * Currently active sliding box.
    * @private
-   * @type {jQuery}
+   * @type {JQuery}
    */
   this.active_ = null;
 
   /**
    * The navigation header.
    * @private
-   * @type {jQuery}
+   * @type {JQuery}
    */
   this.header_ = null;
 
   /**
    * The back button in the navigation header.
    * @private
-   * @type {jQuery}
+   * @type {JQuery}
    */
   this.backButton_ = null;
 
@@ -165,7 +165,7 @@ Controller.prototype.init = function(element) {
 
 
 /**
- * @param {!jQuery} active The currently active sliding box.
+ * @param {!JQuery} active The currently active sliding box.
  * @param {boolean} back Whether to move back.
  * @private
  */

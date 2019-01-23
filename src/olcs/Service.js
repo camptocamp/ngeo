@@ -4,18 +4,18 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {Permalink3dParam} from 'ngeo/olcs/constants.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
-const Service = class {
+export const OlcsService = class {
 
   /**
    * @ngInject
    * @param {!import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo debounce service.
-   * @param {!import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
-   * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo StateManager service.
+   * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
+   * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo StateManager service.
    */
   constructor(ngeoDebounce, ngeoLocation, ngeoStateManager) {
     /**
      * @private
-     * @type {olcs.contrib.Manager|undefined}
+     * @type {import('olcs/contrib/Manager.js').default|undefined}
      */
     this.manager_;
 
@@ -27,13 +27,13 @@ const Service = class {
 
     /**
      * @private
-     * @type {!import("ngeo/statemanager/Location.js").default}
+     * @type {!import("ngeo/statemanager/Location.js").StatemanagerLocation}
      */
     this.ngeoLocation_ = ngeoLocation;
 
     /**
      * @private
-     * @type {import("ngeo/statemanager/Service.js").default}
+     * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
      */
     this.ngeoStateManager_ = ngeoStateManager;
 
@@ -41,7 +41,7 @@ const Service = class {
 
   /**
    * @export
-   * @param {olcs.contrib.Manager} manager Manager.
+   * @param {import('olcs/contrib/Manager.js').default} manager Manager.
    */
   initialize(manager) {
     this.manager_ = manager;
@@ -57,7 +57,7 @@ const Service = class {
 
   /**
    * @export
-   * @return {olcs.contrib.Manager|undefined} the manager.
+   * @return {import('olcs/contrib/Manager.js').default|undefined} the manager.
    */
   getManager() {
     return this.manager_;
@@ -94,10 +94,14 @@ const Service = class {
       const position = camera.positionCartographic;
       this.ngeoStateManager_.updateState({
         [Permalink3dParam.ENABLED]: true,
+        // @ts-ignore: Cesium
         [Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
+        // @ts-ignore: Cesium
         [Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
         [Permalink3dParam.ELEVATION]: position.height.toFixed(0),
+        // @ts-ignore: Cesium
         [Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
+        // @ts-ignore: Cesium
         [Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3)
       });
     }, 1000, true));
@@ -120,12 +124,11 @@ const Service = class {
 
 };
 
-const name = 'ngeoOlcsService';
-Service.module = angular.module(name, [
+const module = angular.module(name, [
   ngeoMiscDebounce.name,
   ngeoStatemanagerLocation.name,
   ngeoStatemanagerService.name,
-]).service(name, Service);
+]).service('ngeoOlcsService', OlcsService);
 
 
 export default module;

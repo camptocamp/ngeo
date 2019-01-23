@@ -84,7 +84,7 @@ function Menu(menuOptions, opt_overlayOptions) {
   }).appendTo(contentEl);
 
   /**
-   * @type {Array.<jQuery>}
+   * @type {Array.<JQuery>}
    * @private
    */
   this.actions_ = [];

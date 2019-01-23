@@ -207,7 +207,7 @@ class SearchController {
 
   /**
    * @private
-   * @param {jQuery} $element Element.
+   * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope The component's scope.
    * @param {angular.ICompileService} $compile Angular compile service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -231,7 +231,7 @@ class SearchController {
 
 
     /**
-     * @type {jQuery}
+     * @type {JQuery}
      * @private
      */
     this.element_ = $element;

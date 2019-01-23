@@ -96,13 +96,13 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   }
 
   /**
-   * @type {?jQuery}
+   * @type {?JQuery}
    * @private
    */
   this.menu_ = null;
 
   /**
-   * @type {Array.<jQuery>}
+   * @type {Array.<JQuery>}
    * @private
    */
   this.items_ = [];

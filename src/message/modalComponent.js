@@ -69,12 +69,12 @@ class Controller {
   /**
    * @ngInject
    * @param {!angular.IScope} $scope Scope.
-   * @param {!jQuery} $element Element.
+   * @param {!JQuery} $element Element.
    */
   constructor($scope, $element) {
     /**
      * @private
-     * @type {!jQuery}
+     * @type {!JQuery}
      */
     this.$element_ = $element;
 
@@ -86,7 +86,7 @@ class Controller {
 
     /**
      * @private
-     * @type {jQuery}
+     * @type {JQuery}
      */
     this.modal_;
 

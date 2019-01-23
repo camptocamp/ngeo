@@ -190,7 +190,7 @@ function AbstractDesktopController(config, $scope, $injector) {
     });
 
   /**
-   * @type {jQuery}
+   * @type {JQuery}
    * @private
    */
   this.$dataPanel_ = $dataPanel;

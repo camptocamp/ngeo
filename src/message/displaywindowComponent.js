@@ -48,7 +48,7 @@ function ngeoMessageDisplaywindowTemplateUrl($attrs, ngeoMessageDisplaywindowTem
 class Controller {
 
   /**
-   * @param {!jQuery} $element Element.
+   * @param {!JQuery} $element Element.
    * @param {!angular.ISCEService} $sce Angular sce service.
    * @param {!angular.IScope} $scope Scope.
    * @param {!angular.ICompileService} $compile The compile provider.
@@ -141,7 +141,7 @@ class Controller {
     // === Injected Properties ===
 
     /**
-     * @type {!jQuery}
+     * @type {!JQuery}
      * @private
      */
     this.element_ = $element;

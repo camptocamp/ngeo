@@ -23,7 +23,7 @@ function Popover(opt_options) {
   }
 
   /**
-   * @type {jQuery}
+   * @type {JQuery}
    * @private
    */
   this.closeEl_ = $('<button>', {
@@ -32,7 +32,7 @@ function Popover(opt_options) {
   });
 
   /**
-   * @type {jQuery}
+   * @type {JQuery}
    * @private
    */
   this.contentEl_ = $('<div/>')
