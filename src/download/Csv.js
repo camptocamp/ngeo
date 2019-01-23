@@ -71,7 +71,7 @@ function Csv($injector, gettextCatalog) {
 
   /**
    * Download service.
-   * @type {Download}
+   * @type {import('ngeo/download/service.js').Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');

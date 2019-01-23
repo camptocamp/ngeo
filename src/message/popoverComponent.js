@@ -114,13 +114,13 @@ function PopoverController($scope) {
   this.shown = false;
 
   /**
-   * @type {JQLite|undefined}
+   * @type {JQuery|undefined}
    * @export
    */
   this.anchorElm = undefined;
 
   /**
-   * @type {JQLite|undefined}
+   * @type {JQuery|undefined}
    * @export
    */
   this.bodyElm = undefined;

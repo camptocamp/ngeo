@@ -44,7 +44,7 @@ function directive($window) {
     restrict: 'A',
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {

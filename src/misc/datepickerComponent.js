@@ -22,7 +22,7 @@ const module = angular.module('ngeoDatePicker', [
 
 module.value('ngeoDatePickerTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -42,7 +42,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * Provide a directive to select a single date or a range of dates. Requires
  * jQuery UI for the 'datepicker' widget.
  *
- * @param {string|function(!JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=): string}
  * ngeoDatePickerTemplateUrl Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @return {angular.IDirective} The directive specs.
@@ -109,7 +109,7 @@ module.directive('ngeoDatePicker', component);
  * DatePickerController - directive conttroller
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.auto.IInjectorService} $injector injector.
- * @param {!import("ngeo/misc/Time.js").default} ngeoTime time service.
+ * @param {!import("ngeo/misc/Time.js").Time} ngeoTime time service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
@@ -121,7 +121,7 @@ function Controller($scope, $injector,
   ngeoTime, gettextCatalog) {
 
   /**
-   * @type {!import("ngeo/misc/Time.js").default}
+   * @type {!import("ngeo/misc/Time.js").Time}
    * @private
    */
   this.ngeoTime_ = ngeoTime;
@@ -150,7 +150,7 @@ function Controller($scope, $injector,
 
   /**
    * Function called after date(s) changed/selected
-   * @type {function({time: {start: number, end: number}})}
+   * @type {function({time: {start: number, end: number}}): void}
    * @export
    */
   this.onDateSelected;
@@ -233,7 +233,7 @@ Controller.prototype.init = function() {
     this.edate = this.ngeoTime_.createDate(initialOptions_.values[1]);
   } else {
     console.assert(typeof initialOptions_.values == 'number');
-    this.sdate = this.ngeoTime_.createDate(initialOptions_.values);
+    this.sdate = this.ngeoTime_.createDate(/** @type {number} */(initialOptions_.values));
   }
 };
 

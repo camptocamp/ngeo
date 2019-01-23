@@ -111,7 +111,7 @@ function directive(ngeoDebounce) {
     restrict: 'A',
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {

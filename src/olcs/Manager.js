@@ -1,5 +1,3 @@
-/**
- */
 import olcsContribManager from 'olcs/contrib/Manager.js';
 
 class Manager extends olcsContribManager {
@@ -26,9 +24,9 @@ class Manager extends olcsContribManager {
     // The transition is asynchronous and at the end of it the state of OLCesium is changed.
     // In order to have all code dependent on OLCesium state updated, we kick an Angular digest cycle.
     const promise = super.toggle3d();
-    return promise.then(() => {
+    return /** @type {Promise<undefined>} */(promise.then(() => {
       this.rootScope_.$apply();
-    });
+    }));
   }
 }
 

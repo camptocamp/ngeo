@@ -38,7 +38,7 @@ function component($window) {
     },
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
@@ -52,8 +52,8 @@ function component($window) {
         const fileReader = new $window.FileReader();
         fileReader.onload = (
           /**
-                 * @param {!ProgressEvent} evt Event.
-                 */
+           * @param {!ProgressEvent} evt Event.
+           */
           function(evt) {
             scope.$apply(() => {
               scope['fileContent'] = evt.target.result;

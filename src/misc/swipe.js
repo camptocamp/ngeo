@@ -84,7 +84,7 @@ module.factory('$verticalSwipe', [function() {
     /**
      * @ngdoc method
      * @name $verticalSwipe#bind
-     * @param {!JQLite} element Element.
+     * @param {!JQuery} element Element.
      * @param {Object} eventHandlers - Event handlers object with `start`, `cancel` and `end` callbacks
      * @param {Array<string>} pointerTypes - Types of pointer
      *

@@ -47,7 +47,7 @@ module.config(['$animateProvider',
 
 module.value('gmfDisplayquerywindowTemplateUrl',
   /**
-   * @param {!JQLite} $element Element.
+   * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template.
    */
@@ -64,9 +64,9 @@ module.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -124,7 +124,7 @@ module.component('gmfDisplayquerywindow', component);
 
 
 /**
- * @param {!jQuery} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
  * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
@@ -248,7 +248,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.open = false;
 
   /**
-   * @const {!jQuery}
+   * @const {!JQuery}
    * @private
    */
   this.element_ = $element;

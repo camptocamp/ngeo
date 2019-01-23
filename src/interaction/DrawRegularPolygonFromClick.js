@@ -1,5 +1,4 @@
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {inherits as olUtilInherits} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import {TRUE} from 'ol/functions.js';
@@ -19,132 +18,121 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
 
 
 /**
- * @classdesc
  * This interactions allows drawing regular polygons of a pre-determined number
  * of sides and size a a clicked location on the map.
- *
- * @constructor
- * @fires DrawEvent
- * @extends {import("ol/interaction/Interaction.js").default}
- * @param {DrawRegularPolygonFromClickOptions} options Options
  */
-function DrawRegularPolygonFromClick(options) {
+export default class extends olInteractionInteraction {
+  /**
+   * @fires DrawEvent
+   * @param {DrawRegularPolygonFromClickOptions} options Options
+   */
+  constructor(options) {
+    super();
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.angle_ = options.angle !== undefined ? options.angle : 0;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.radius_ = options.radius;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.sides_ = options.sides !== undefined ? options.sides : 3;
+
+    /**
+     * @type {!Array.<import("ol/events.js").EventsKey>}
+     * @private
+     */
+    this.listenerKeys_ = [];
+
+    olInteractionInteraction.call(this, {
+      handleEvent: TRUE
+    });
+  }
 
   /**
-   * @type {number}
-   * @private
+   * Activate or deactivate the interaction.
+   * @param {boolean} active Active.
+   * @override
    */
-  this.angle_ = options.angle !== undefined ? options.angle : 0;
+  setActive(active) {
+    super.setActive.call(this, active);
 
-  /**
-   * @type {number}
-   * @private
-   */
-  this.radius_ = options.radius;
-
-  /**
-   * @type {number}
-   * @private
-   */
-  this.sides_ = options.sides !== undefined ? options.sides : 3;
-
-  /**
-   * @type {!Array.<import("ol/events.js").EventsKey>}
-   * @private
-   */
-  this.listenerKeys_ = [];
-
-  olInteractionInteraction.call(this, {
-    handleEvent: TRUE
-  });
-
-}
-
-olUtilInherits(DrawRegularPolygonFromClick, olInteractionInteraction);
-
-
-/**
- * Activate or deactivate the interaction.
- * @param {boolean} active Active.
- * @override
- */
-DrawRegularPolygonFromClick.prototype.setActive = function(active) {
-  olInteractionInteraction.prototype.setActive.call(this, active);
-
-  if (this.getMap()) {
-    if (active) {
-      this.enable_();
-    } else {
-      this.disable_();
+    if (this.getMap()) {
+      if (active) {
+        this.enable_();
+      } else {
+        this.disable_();
+      }
     }
   }
-};
 
+  /**
+   * @inheritDoc
+   */
+  setMap(map) {
+    const active = this.getActive();
 
-/**
- * @inheritDoc
- */
-DrawRegularPolygonFromClick.prototype.setMap = function(map) {
+    const currentMap = this.getMap();
+    if (currentMap && active) {
+      this.disable_();
+    }
 
-  const active = this.getActive();
+    super.setMap.call(this, map);
 
-  const currentMap = this.getMap();
-  if (currentMap && active) {
-    this.disable_();
+    if (map && active) {
+      this.enable_();
+    }
+
   }
 
-  olInteractionInteraction.prototype.setMap.call(this, map);
-
-  if (map && active) {
-    this.enable_();
+  /**
+   * Enable the interaction. Called when added to a map AND active.
+   * @private
+   */
+  enable_() {
+    const map = this.getMap();
+    console.assert(map, 'Map should be set.');
+    this.listenerKeys_.push(
+      olEvents.listen(map, 'click', this.handleMapClick_, this)
+    );
   }
 
-};
+  /**
+   * Disable the interaction. Called when removed from a map or deactivated.
+   * @private
+   */
+  disable_() {
+    const map = this.getMap();
+    console.assert(map, 'Map should be set.');
+    this.listenerKeys_.forEach(olEvents.unlistenByKey);
+    this.listenerKeys_.length = 0;
+  }
 
+  /**
+   * Called the the map is clicked. Create a regular polygon at the clicked
+   * location using the configuration
+   * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
+   * @private
+   */
+  handleMapClick_(evt) {
+    const center = evt.coordinate;
+    const geometry = olGeomPolygon.fromCircle(
+      new olGeomCircle(center), this.sides_
+    );
 
-/**
- * Enable the interaction. Called when added to a map AND active.
- * @private
- */
-DrawRegularPolygonFromClick.prototype.enable_ = function() {
-  const map = this.getMap();
-  console.assert(map, 'Map should be set.');
-  this.listenerKeys_.push(
-    olEvents.listen(map, 'click', this.handleMapClick_, this)
-  );
-};
+    olGeomPolygon.makeRegular(geometry, center, this.radius_, this.angle_);
 
-
-/**
- * Disable the interaction. Called when removed from a map or deactivated.
- * @private
- */
-DrawRegularPolygonFromClick.prototype.disable_ = function() {
-  const map = this.getMap();
-  console.assert(map, 'Map should be set.');
-  this.listenerKeys_.forEach(olEvents.unlistenByKey);
-  this.listenerKeys_.length = 0;
-};
-
-
-/**
- * Called the the map is clicked. Create a regular polygon at the clicked
- * location using the configuration
- * @param {import("ol/MapBrowserEvent.js").default} evt Map browser event.
- * @private
- */
-DrawRegularPolygonFromClick.prototype.handleMapClick_ = function(evt) {
-  const center = evt.coordinate;
-  const geometry = olGeomPolygon.fromCircle(
-    new olGeomCircle(center), this.sides_
-  );
-
-  olGeomPolygon.makeRegular(geometry, center, this.radius_, this.angle_);
-
-  /** @type {DrawEvent} */
-  const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
-  this.dispatchEvent(event);
-};
-
-
-export default DrawRegularPolygonFromClick;
+    /** @type {DrawEvent} */
+    const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
+    this.dispatchEvent(event);
+  }
+}

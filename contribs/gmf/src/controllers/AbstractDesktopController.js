@@ -9,7 +9,6 @@ import gmfRasterComponent from 'gmf/raster/component.js';
 import ngeoDrawFeatures from 'ngeo/draw/features.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import gmfImportModule from 'gmf/import/module.js';
-import {inherits as olUtilInherits} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olLayerVector from 'ol/layer/Vector.js';
@@ -24,246 +23,242 @@ import olStyleText from 'ol/style/Text.js';
  *
  * This file includes `goog.require`'s for desktop components/directives used
  * by the HTML page and the controller to provide the configuration.
- *
- * @param {Config} config A part of the application config.
- * @param {angular.IScope} $scope Scope.
- * @param {angular.auto.IInjectorService} $injector Main injector.
- * @constructor
- * @extends {import("gmf/controllers/AbstractAppController.js").default}
- * @ngdoc controller
- * @ngInject
- * @export
  */
-function AbstractDesktopController(config, $scope, $injector) {
-
-  gmfControllersAbstractAPIController.call(this, config, $scope, $injector);
-
+class AbstractDesktopController extends gmfControllersAbstractAPIController {
   /**
-   * @type {boolean}
-   * @export
+   * @param {Config} config A part of the application config.
+   * @param {angular.IScope} $scope Scope.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @ngInject
    */
-  this.dataPanelActive = true;
+  constructor(config, $scope, $injector) {
+    super(config, $scope, $injector);
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.loginActive = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.dataPanelActive = true;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.toolsActive = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.loginActive = false;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.modalShareShown = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.toolsActive = false;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.editFeatureActive = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.modalShareShown = false;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.routingfeatureActive = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.editFeatureActive = false;
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.googleStreetViewActive = false;
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.routingfeatureActive = false;
 
-  $scope.$watch(() => this.googleStreetViewActive, (newVal) => {
-    this.setDataPanelMaxResizableWidth_();
-  });
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.googleStreetViewActive = false;
 
-  /**
-   * @type {!import("ol/style/Style.js").default}
-   * @export
-   */
-  this.googleStreetViewStyle = new olStyleStyle({
-    text: new olStyleText({
-      fill: new olStyleFill({color: '#279B61'}),
-      font: 'normal 30px FontAwesome',
-      offsetY: -15,
-      stroke: new olStyleStroke({color: '#ffffff', width: 3}),
-      text: '\uf041'
-    })
-  });
+    $scope.$watch(() => this.googleStreetViewActive, (newVal) => {
+      this.setDataPanelMaxResizableWidth_();
+    });
 
-  /**
-   * @type {boolean}
-   * @export
-   */
-  this.importDataSourceActive = false;
+    /**
+     * @type {!import("ol/style/Style.js").default}
+     * @export
+     */
+    this.googleStreetViewStyle = new olStyleStyle({
+      text: new olStyleText({
+        fill: new olStyleFill({color: '#279B61'}),
+        font: 'normal 30px FontAwesome',
+        offsetY: -15,
+        stroke: new olStyleStroke({color: '#ffffff', width: 3}),
+        text: '\uf041'
+      })
+    });
 
-  const body = $('body');
+    /**
+     * @type {boolean}
+     * @export
+     */
+    this.importDataSourceActive = false;
 
-  // initialize tooltips
-  body.tooltip({
-    container: 'body',
-    trigger: 'hover',
-    selector: '[data-toggle="tooltip"]'
-  });
+    const body = $('body');
 
-  // deactivate tooltips on touch device
-  body.on('touchstart.detectTouch', () => {
-    body.tooltip('destroy');
-    body.off('touchstart.detectTouch');
-  });
+    // initialize tooltips
+    body.tooltip({
+      container: 'body',
+      trigger: 'hover',
+      selector: '[data-toggle="tooltip"]'
+    });
 
-  const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
+    // deactivate tooltips on touch device
+    body.on('touchstart.detectTouch', () => {
+      body.tooltip('destroy');
+      body.off('touchstart.detectTouch');
+    });
 
-  /**
-   * @type {import("ol/layer/Vector.js").default}
-   * @export
-   */
-  this.editFeatureVectorLayer = new olLayerVector({
-    source: new olSourceVector({
-      wrapX: false,
-      features: new olCollection()
-    }),
-    style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
-    // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
-  });
-  this.editFeatureVectorLayer.setMap(this.map);
+    const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
-  /**
-   * The ngeo ToolActivate manager service.
-   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
-   */
-  const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
+    /**
+     * @type {import("ol/layer/Vector.js").default}
+     * @export
+     */
+    this.editFeatureVectorLayer = new olLayerVector({
+      source: new olSourceVector({
+        wrapX: false,
+        features: new olCollection()
+      }),
+      style: (feature, resolution) => ngeoFeatureHelper.createEditingStyles(feature)
+      // style: ngeoFeatureHelper.createEditingStyles.bind(ngeoFeatureHelper)
+    });
+    this.editFeatureVectorLayer.setMap(this.map);
 
-  const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
-  ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
+    /**
+     * The ngeo ToolActivate manager service.
+     * @type {import("ngeo/misc/ToolActivateMgr.js").default}
+     */
+    const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
-  const googleStreetViewActivate = new ngeoMiscToolActivate(
-    this,
-    'googleStreetViewActive'
-  );
-  ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
+    const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
+    ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
 
-  /**
-   * @type {ScaleselectorOptions}
-   * @export
-   */
-  this.scaleSelectorOptions = {
-    dropup: true
-  };
+    const googleStreetViewActivate = new ngeoMiscToolActivate(
+      this,
+      'googleStreetViewActive'
+    );
+    ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
 
-  /**
-   * @type {import("ol/geom/LineString.js").default}
-   * @export
-   */
-  this.profileLine = null;
+    /**
+     * @type {ScaleselectorOptions}
+     * @export
+     */
+    this.scaleSelectorOptions = {
+      dropup: true
+    };
 
-  // Close the login panel on successful login.
-  $scope.$watch(() => this.gmfUser.username, (newVal) => {
-    if (newVal !== null && this.loginActive) {
-      this.loginActive = false;
-    }
-  });
+    /**
+     * @type {import("ol/geom/LineString.js").default}
+     * @export
+     */
+    this.profileLine = null;
 
-  /**
-   * @type {number}
-   * @private
-   */
-  this.dataPanelMinResizableWidth_ = 320;
-
-  // Make the data panel (on the left) resizable...
-  const dataPanelCls = 'gmf-app-data-panel';
-  const $dataPanel = $(`.${dataPanelCls}`)
-    .resizable({
-      'ghost': true,
-      'handles': 'e',
-      'minWidth': this.dataPanelMinResizableWidth_,
-      'stop': (event, ui) => {
-        this.map.updateSize();
+    // Close the login panel on successful login.
+    $scope.$watch(() => this.gmfUser.username, (newVal) => {
+      if (newVal !== null && this.loginActive) {
+        this.loginActive = false;
       }
     });
 
+    /**
+     * @type {number}
+     * @private
+     */
+    this.dataPanelMinResizableWidth_ = 320;
+
+    // Make the data panel (on the left) resizable...
+    const dataPanelCls = 'gmf-app-data-panel';
+    const $dataPanel = $(`.${dataPanelCls}`)
+      .resizable({
+        'ghost': true,
+        'handles': 'e',
+        'minWidth': this.dataPanelMinResizableWidth_,
+        'stop': (event, ui) => {
+          this.map.updateSize();
+        }
+      });
+
+    /**
+     * @type {JQuery}
+     * @private
+     */
+    this.$dataPanel_ = $dataPanel;
+
+    // ... and collapsible when the handle is clicked.
+    const $resizableEastHandle = $dataPanel
+      .find('.ui-resizable-e')
+      .on('click', (evt) => {
+        this.dataPanelActive = !this.dataPanelActive;
+        this.$scope.$apply();
+      });
+
+    // Add an extra element to act as a button to be clicked on for
+    // collapse/expand
+    $('<div>', {
+      'class': `${dataPanelCls}-toggle-btn btn prime btn-sm`
+    })
+      .appendTo($resizableEastHandle)
+      .append(
+        $('<span>', {
+          'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`
+        })
+      )
+      .append(
+        $('<span>', {
+          'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`
+        })
+      );
+
+    // Listen to window resize to set the max resizable width
+    // accordingly, and set it also right away.
+    const ngeoDebounce = $injector.get('ngeoDebounce');
+    olEvents.listen(
+      window,
+      'resize',
+      ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
+    );
+    this.setDataPanelMaxResizableWidth_();
+  }
+
   /**
-   * @type {jQuery}
+   * Set the data panel (on the left) maximum resizable width depending
+   * on the current size of the window, taking into consideration the
+   * width the right panel can have.
+   *
+   * If, after resizing, the size of the data panel would be too big,
+   * resize it as well.
    * @private
    */
-  this.$dataPanel_ = $dataPanel;
+  setDataPanelMaxResizableWidth_() {
 
-  // ... and collapsible when the handle is clicked.
-  const $resizableEastHandle = $dataPanel
-    .find('.ui-resizable-e')
-    .on('click', (evt) => {
-      this.dataPanelActive = !this.dataPanelActive;
-      this.$scope.$apply();
-    });
+    let rightPanelWidth = 320;
+    if (this.googleStreetViewActive) {
+      rightPanelWidth += 140;
+    }
 
-  // Add an extra element to act as a button to be clicked on for
-  // collapse/expand
-  $('<div>', {
-    'class': `${dataPanelCls}-toggle-btn btn prime btn-sm`
-  })
-    .appendTo($resizableEastHandle)
-    .append(
-      $('<span>', {
-        'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`
-      })
-    )
-    .append(
-      $('<span>', {
-        'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`
-      })
-    );
+    const minimumMapWidth = 120;
+    const windowWidth = window.innerWidth;
 
-  // Listen to window resize to set the max resizable width
-  // accordingly, and set it also right away.
-  const ngeoDebounce = $injector.get('ngeoDebounce');
-  olEvents.listen(
-    window,
-    'resize',
-    ngeoDebounce(this.setDataPanelMaxResizableWidth_.bind(this), 50, true)
-  );
-  this.setDataPanelMaxResizableWidth_();
+    let maxWidth = windowWidth - rightPanelWidth - minimumMapWidth;
+    if (maxWidth < this.dataPanelMinResizableWidth_) {
+      maxWidth = this.dataPanelMinResizableWidth_;
+    }
+
+    this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
+
+    if (this.$dataPanel_.width() > maxWidth) {
+      this.$dataPanel_.width(maxWidth);
+      this.map.updateSize();
+    }
+  }
 }
-
-olUtilInherits(AbstractDesktopController, gmfControllersAbstractAPIController);
-
-/**
- * Set the data panel (on the left) maximum resizable width depending
- * on the current size of the window, taking into consideration the
- * width the right panel can have.
- *
- * If, after resizing, the size of the data panel would be too big,
- * resize it as well.
- * @private
- */
-AbstractDesktopController.prototype.setDataPanelMaxResizableWidth_ = function() {
-
-  let rightPanelWidth = 320;
-  if (this.googleStreetViewActive) {
-    rightPanelWidth += 140;
-  }
-
-  const minimumMapWidth = 120;
-  const windowWidth = window.innerWidth;
-
-  let maxWidth = windowWidth - rightPanelWidth - minimumMapWidth;
-  if (maxWidth < this.dataPanelMinResizableWidth_) {
-    maxWidth = this.dataPanelMinResizableWidth_;
-  }
-
-  this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
-
-  if (this.$dataPanel_.width() > maxWidth) {
-    this.$dataPanel_.width(maxWidth);
-    this.map.updateSize();
-  }
-};
 
 const module = angular.module('GmfAbstractDesktopControllerModule', [
   gmfControllersAbstractAPIController.name,

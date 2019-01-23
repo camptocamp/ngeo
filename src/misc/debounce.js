@@ -8,7 +8,7 @@ const module = angular.module('ngeoDebounce', []);
 /**
  * Provides a debounce function used to debounce calls to a user-provided
  * function.
- * @typedef {function(function(?), number, boolean):function()} miscDebounce
+ * @typedef {function(function, number, boolean):function} miscDebounce
  */
 
 /**

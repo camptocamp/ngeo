@@ -13,19 +13,19 @@ const Controller = class {
 
   /**
    * @ngInject
-   * @param {!jQuery} $element The element
-   * @param {import("ngeo/olcs/Service.js").default} ngeoOlcsService The ol-cesium service.
+   * @param {!JQuery} $element The element
+   * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The ol-cesium service.
    */
   constructor($element, ngeoOlcsService) {
 
     /**
-     * @type {jQuery}
+     * @type {!JQuery}
      * @private
      */
     this.element_ = $element;
 
     /**
-     * @type {olcs.contrib.Manager}
+     * @type {import('olcs/contrib/Manager.js').default}
      * @export
      */
     this.ol3dm;
@@ -43,25 +43,25 @@ const Controller = class {
     this.maxTilt;
 
     /**
-     * @type {jQuery}
+     * @type {JQuery}
      * @private
      */
     this.tiltRightEl_;
 
     /**
-     * @type {jQuery}
+     * @type {JQuery}
      * @private
      */
     this.tiltLeftEl_;
 
     /**
-     * @type {jQuery}
+     * @type {JQuery}
      * @private
      */
     this.rotation3dEl_;
 
     /**
-     * @type {jQuery}
+     * @type {JQuery}
      * @private
      */
     this.angle3dEl_;
@@ -85,7 +85,7 @@ const Controller = class {
     this.animationFrameRequestId_;
 
     /**
-     * @type {import("ngeo/olcs/Service.js").default}
+     * @type {import("ngeo/olcs/Service.js").OlcsService}
      * @private
      */
     this.olcsService_ = ngeoOlcsService;
@@ -99,10 +99,12 @@ const Controller = class {
     }
 
     const newViewMatrix = this.ol3dm.getCesiumViewMatrix();
+    // @ts-ignore: Cesium
     if (!Cesium.Matrix4.equalsEpsilon(this.previousViewMatrix_, newViewMatrix, 1e-5)) {
       const newTilt = this.ol3dm.getTiltOnGlobe(); // this is expensive!!
       if (Number.isFinite(newTilt || 0)) { // Workaround https://github.com/google/closure-compiler/pull/2712
         this.rotateElement_(this.angle3dEl_, newTilt);
+        // @ts-ignore: Cesium
         this.previousViewMatrix_ = Cesium.Matrix4.clone(newViewMatrix);
 
         // if min or max tilt is reached, disable the tilting buttons
@@ -148,7 +150,7 @@ const Controller = class {
 
 
   /**
-   * @param {jQuery} element Element to rotate.
+   * @param {JQuery} element Element to rotate.
    * @param {(number|undefined)} angle Angle in radians
    * @private
    */
@@ -169,6 +171,7 @@ const Controller = class {
    * @export
    */
   rotate(angle) {
+    // @ts-ignore: Cesium
     angle = Cesium.Math.toRadians(angle);
     this.ol3dm.setHeading(angle);
   }
@@ -179,6 +182,7 @@ const Controller = class {
    * @export
    */
   tilt(angle) {
+    // @ts-ignore: Cesium
     angle = Cesium.Math.toRadians(angle);
     const tiltOnGlobe = this.ol3dm.getTiltOnGlobe();
     if (tiltOnGlobe + angle < this.minTilt) {

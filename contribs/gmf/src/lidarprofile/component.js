@@ -8,7 +8,7 @@ const module = angular.module('gmfLidarprofile', []);
 
 module.value('gmfLidarprofileTemplateUrl',
   /**
-     * @param {!JQLite} $element Element.
+     * @param {!JQuery} $element Element.
      * @param {!angular.IAttributes} $attrs Attributes.
      * @return {string} Template.
      */
@@ -25,9 +25,9 @@ module.run(/* @ngInject */ ($templateCache) => {
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfLidarprofileTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfLidarprofileTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

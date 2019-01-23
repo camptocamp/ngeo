@@ -40,7 +40,7 @@ module.directive('ngeoDatetimepicker', component);
 
 
 /**
- * @param {!jQuery} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog service.
  * @constructor
  * @private
@@ -50,7 +50,7 @@ module.directive('ngeoDatetimepicker', component);
  */
 function Controller($element, gettextCatalog) {
   /**
-   * @const {!jQuery}
+   * @const {!JQuery}
    * @private
    */
   this.element_ = $element;

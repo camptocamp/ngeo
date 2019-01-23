@@ -21,7 +21,7 @@ const module = angular.module('ngeoScaleselector', []);
 
 module.value('ngeoScaleselectorTemplateUrl',
   /**
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
@@ -81,7 +81,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @htmlAttribute {import("ol/Map.js").default} ngeo-scaleselector-map The map.
  * @htmlAttribute {ScaleselectorOptions} ngeo-scaleselector-options
  *     Optional. The configuration options.
- * @param {string|function(!JQLite=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=)}
  *     ngeoScaleselectorTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} Directive Definition Object.
  * @ngInject
@@ -105,7 +105,7 @@ module.directive('ngeoScaleselector', directive);
  * @constructor
  * @private
  * @param {angular.IScope} $scope Directive scope.
- * @param {JQLite} $element Element.
+ * @param {JQuery} $element Element.
  * @param {angular.IAttributes} $attrs Attributes.
  * @ngInject
  * @ngdoc controller

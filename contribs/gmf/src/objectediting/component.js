@@ -64,7 +64,7 @@ module.run(/* @ngInject */ ($templateCache) => {
 
 module.value('gmfObjecteditingTemplateUrl',
   /**
-   * @param {!JQLite} $element Element.
+   * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
@@ -77,9 +77,9 @@ module.value('gmfObjecteditingTemplateUrl',
 
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */
@@ -811,7 +811,7 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function(
 
 /**
  * @param {StylesObject} styles Hash of style.
- * @param {import("ol/Color.js").default} color Color.
+ * @param {import('ol/color.js').Color} color Color.
  * @param {boolean=} opt_incVertice Whether to include vertice or not. Defaults
  *     to `true`.
  * @private

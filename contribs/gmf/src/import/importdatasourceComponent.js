@@ -70,7 +70,7 @@ const Mode = {
 class Controller {
 
   /**
-   * @param {!jQuery} $element Element.
+   * @param {!JQuery} $element Element.
    * @param {!angular.IFilterService} $filter Angular filter.
    * @param {!angular.auto.IInjectorService} $injector Main injector.
    * @param {!angular.IScope} $scope Angular scope.
@@ -99,7 +99,7 @@ class Controller {
     // Injected properties
 
     /**
-     * @type {!jQuery}
+     * @type {!JQuery}
      * @private
      */
     this.element_ = $element;
@@ -147,7 +147,7 @@ class Controller {
     // Inner properties
 
     /**
-     * @type {!jQuery}
+     * @type {!JQuery}
      * @private
      */
     this.fileInput_ = $element.find('input[type=file]');

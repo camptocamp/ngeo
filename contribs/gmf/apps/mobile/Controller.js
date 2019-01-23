@@ -13,7 +13,6 @@ import 'gmf/controllers/mobile.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
-import {inherits as olUtilInherits} from 'ol/util.js';
 import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
@@ -24,50 +23,47 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-/**
- * @param {angular.IScope} $scope Scope.
- * @param {angular.auto.IInjectorService} $injector Main injector.
- * @constructor
- * @extends {import("gmf/controllers/AbstractMobileController.js").default}
- * @ngInject
- * @export
- */
-function Controller($scope, $injector) {
-  gmfControllersAbstractMobileController.call(this, {
-    autorotate: false,
-    srid: 21781,
-    mapViewConfig: {
-      center: [632464, 185457],
-      zoom: 3,
-      resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
+class Controller extends gmfControllersAbstractMobileController {
+  /**
+   * @param {angular.IScope} $scope Scope.
+   * @param {angular.auto.IInjectorService} $injector Main injector.
+   * @ngInject
+   */
+  constructor($scope, $injector) {
+    super({
+      autorotate: false,
+      srid: 21781,
+      mapViewConfig: {
+        center: [632464, 185457],
+        zoom: 3,
+        resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
+      }
+    }, $scope, $injector);
+
+    /**
+     * @type {Array.<import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
+     * @export
+     */
+    this.elevationLayersConfig = [
+      {name: 'aster', unit: 'm'},
+      {name: 'srtm', unit: 'm'}
+    ];
+
+    /**
+     * @type {Array.<string>}
+     * @export
+     */
+    this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
+
+    if ($injector.has('sentryUrl')) {
+      const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
+      const raven = new Raven();
+      raven.config($injector.get('sentryUrl'), options)
+        .addPlugin(RavenPluginsAngular)
+        .install();
     }
-  }, $scope, $injector);
-
-  /**
-   * @type {Array.<import("gmf/mobile/measure.js").default.pointComponent.LayerConfig>}
-   * @export
-   */
-  this.elevationLayersConfig = [
-    {name: 'aster', unit: 'm'},
-    {name: 'srtm', unit: 'm'}
-  ];
-
-  /**
-   * @type {Array.<string>}
-   * @export
-   */
-  this.searchCoordinatesProjections = [EPSG21781, EPSG2056, 'EPSG:4326'];
-
-  if ($injector.has('sentryUrl')) {
-    const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
-    const raven = new Raven();
-    raven.config($injector.get('sentryUrl'), options)
-      .addPlugin(RavenPluginsAngular)
-      .install();
   }
 }
-
-olUtilInherits(Controller, gmfControllersAbstractMobileController);
 
 const module = angular.module('Appmobile', [
   appBase.name,

@@ -1,9 +1,6 @@
 import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
-import {
-  getUid as olUtilGetUid,
-  inherits as olUtilInherits
-} from 'ol/util.js';
+import {getUid as olUtilGetUid} from 'ol/util.js';
 import olObservable from 'ol/Observable.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerLayer from 'ol/layer/Layer.js';
@@ -64,165 +61,158 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
  * See our live examples:
  * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
  * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
- *
- * @extends {import("ol/Observable.js").default}
- * @constructor
- * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Themes service.
- * @ngInject
- * @ngdoc service
- * @ngname ngeoBackgroundLayerMgr
  */
-function BackgroundLayerMgr(ngeoLayerHelper) {
+class BackgroundLayerMgr extends olObservable {
+  /**
+   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Themes service.
+   * @ngInject
+   */
+  constructor(ngeoLayerHelper) {
+    super();
 
-  olObservable.call(this);
+    /**
+     * Object used to track if maps have background layers.
+     * @type {Object.<string, boolean>}
+     * @private
+     */
+    this.mapUids_ = {};
+
+    /**
+     * @type {import("ngeo/map/LayerHelper.js").default}
+     * @private
+     */
+    this.ngeoLayerHelper_ = ngeoLayerHelper;
+  }
 
   /**
-   * Object used to track if maps have background layers.
-   * @type {Object.<string, boolean>}
-   * @private
+   * Return the current background layer of a given map. `null` is returned if
+   * the map does not have a background layer.
+   * @param {import("ol/Map.js").default} map Map.
+   * @return {import("ol/layer/Base.js").default} layer The background layer.
+   * @export
    */
-  this.mapUids_ = {};
+  get(map) {
+    const mapUid = olUtilGetUid(map).toString();
+    return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
+      BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
+  }
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").default}
-   * @private
+   * Set the background layer of a map. If `layer` is `null` the background layer
+   * is removed.
+   * @param {import("ol/Map.js").default} map The map.
+   * @param {import("ol/layer/Base.js").default} layer The new background layer.
+   * @return {import("ol/layer/Base.js").default} The previous background layer.
+   * @export
    */
-  this.ngeoLayerHelper_ = ngeoLayerHelper;
+  set(map, layer) {
+    const ZIndex = -200;
+    const mapUid = olUtilGetUid(map).toString();
+    const previous = this.get(map);
+    if (layer !== null) {
+      layer.setZIndex(ZIndex);
+      this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
+    }
 
-}
+    const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
 
-olUtilInherits(BackgroundLayerMgr, olObservable);
+    if (previous !== null) {
+      console.assert(mapUid in this.mapUids_);
+      if (layer !== null) {
+        bgGroup.getLayers().setAt(0, layer);
+      } else {
+        bgGroup.getLayers().removeAt(0);
+        delete this.mapUids_[mapUid];
+      }
+    } else if (layer !== null) {
+      bgGroup.getLayers().insertAt(0, layer);
+      this.mapUids_[mapUid] = true;
+    }
+    /** @type {BackgroundEvent} */
+    const event = new ngeoCustomEvent('change', {
+      current: layer,
+      previous: previous
+    });
+    this.dispatchEvent(event);
 
+    return previous;
+  }
 
-/**
- * Return the current background layer of a given map. `null` is returned if
- * the map does not have a background layer.
- * @param {import("ol/Map.js").default} map Map.
- * @return {import("ol/layer/Base.js").default} layer The background layer.
- * @export
- */
-BackgroundLayerMgr.prototype.get = function(map) {
-  const mapUid = olUtilGetUid(map).toString();
-  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
-    BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
-};
+  /**
+   * Return the current background layer overlay of a given map, used by the opacity slider.
+   * `null` is returned if the map does not have an opacity background layer.
+   * @param {import("ol/Map.js").default} map Map.
+   * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
+   * @export
+   */
+  getOpacityBgLayer(map) {
+    const mapUid = olUtilGetUid(map).toString();
+    return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
+      BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+  }
 
-
-/**
- * Set the background layer of a map. If `layer` is `null` the background layer
- * is removed.
- * @param {import("ol/Map.js").default} map The map.
- * @param {import("ol/layer/Base.js").default} layer The new background layer.
- * @return {import("ol/layer/Base.js").default} The previous background layer.
- * @export
- */
-BackgroundLayerMgr.prototype.set = function(map, layer) {
-  const ZIndex = -200;
-  const mapUid = olUtilGetUid(map).toString();
-  const previous = this.get(map);
-  if (layer !== null) {
+  /**
+   * Set an background layer overlay, used by the opacity slider.
+   * @param {import("ol/Map.js").default} map The map.
+   * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
+   * @export
+   */
+  setOpacityBgLayer(map, layer) {
+    const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
+    const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
+    const ZIndex = -100;
+    layer.setOpacity(previous ? previous.getOpacity() : 0);
+    layer.setVisible(previous ? previous.getVisible() : true);
     layer.setZIndex(ZIndex);
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
-  }
 
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
-
-  if (previous !== null) {
-    console.assert(mapUid in this.mapUids_);
-    if (layer !== null) {
-      bgGroup.getLayers().setAt(0, layer);
-    } else {
-      bgGroup.getLayers().removeAt(0);
-      delete this.mapUids_[mapUid];
+    const index = bgGroup.getLayers().getArray().indexOf(layer);
+    if (index === -1) {
+      bgGroup.getLayers().push(layer);
     }
-  } else if (layer !== null) {
-    bgGroup.getLayers().insertAt(0, layer);
-    this.mapUids_[mapUid] = true;
   }
-  /** @type {BackgroundEvent} */
-  const event = new ngeoCustomEvent('change', {
-    current: layer,
-    previous: previous
-  });
-  this.dispatchEvent(event);
 
-  return previous;
-};
-
-/**
- * Return the current background layer overlay of a given map, used by the opacity slider.
- * `null` is returned if the map does not have an opacity background layer.
- * @param {import("ol/Map.js").default} map Map.
- * @return {import("ol/layer/Base.js").default} layer The opacity background layer.
- * @export
- */
-BackgroundLayerMgr.prototype.getOpacityBgLayer = function(map) {
-  const mapUid = olUtilGetUid(map).toString();
-  return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
-    BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
-};
-
-/**
- * Set an background layer overlay, used by the opacity slider.
- * @param {import("ol/Map.js").default} map The map.
- * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
- * @export
- */
-BackgroundLayerMgr.prototype.setOpacityBgLayer = function(map, layer) {
-  const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
-  const previous = bgGroup.getLayers().remove(this.getOpacityBgLayer(map));
-  const ZIndex = -100;
-  layer.setOpacity(previous ? previous.getOpacity() : 0);
-  layer.setVisible(previous ? previous.getVisible() : true);
-  layer.setZIndex(ZIndex);
-  this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
-
-  const index = bgGroup.getLayers().getArray().indexOf(layer);
-  if (index === -1) {
-    bgGroup.getLayers().push(layer);
-  }
-};
-
-/**
- * @param {import("ol/Map.js").default} map The map.
- * @param {Object.<string, string>} dimensions The global dimensions object.
- * @export
- */
-BackgroundLayerMgr.prototype.updateDimensions = function(map, dimensions) {
-  const baseBgLayer = this.get(map);
-  if (baseBgLayer) {
-    let layers = [baseBgLayer];
-    if (baseBgLayer instanceof olLayerGroup) {
-      // Handle the first level of layers of the base background layer.
-      layers = baseBgLayer.getLayers().getArray();
-    }
-
-    layers.forEach((layer) => {
-      console.assert(layer instanceof olLayerLayer);
-      if (layer) {
-        let hasUpdates = false;
-        const updatedDimensions = {};
-        for (const key in layer.get('dimensions')) {
-          const value = dimensions[key];
-          if (value !== undefined) {
-            updatedDimensions[key] = value;
-            hasUpdates = true;
-          }
-        }
-        if (hasUpdates) {
-          const source = layer.getSource();
-          if (source instanceof olSourceWMTS) {
-            source.updateDimensions(updatedDimensions);
-            source.refresh();
-          } else if (source instanceof olSourceTileWMS || source instanceof olSourceImageWMS) {
-            source.updateParams(updatedDimensions);
-            source.refresh();
-          }
-        }
+  /**
+   * @param {import("ol/Map.js").default} map The map.
+   * @param {Object.<string, string>} dimensions The global dimensions object.
+   * @export
+   */
+  updateDimensions(map, dimensions) {
+    const baseBgLayer = this.get(map);
+    if (baseBgLayer) {
+      let layers = [baseBgLayer];
+      if (baseBgLayer instanceof olLayerGroup) {
+        // Handle the first level of layers of the base background layer.
+        layers = baseBgLayer.getLayers().getArray();
       }
-    });
+
+      layers.forEach((layer) => {
+        console.assert(layer instanceof olLayerLayer);
+        if (layer) {
+          let hasUpdates = false;
+          const updatedDimensions = {};
+          for (const key in layer.get('dimensions')) {
+            const value = dimensions[key];
+            if (value !== undefined) {
+              updatedDimensions[key] = value;
+              hasUpdates = true;
+            }
+          }
+          if (hasUpdates) {
+            const source = layer.getSource();
+            if (source instanceof olSourceWMTS) {
+              source.updateDimensions(updatedDimensions);
+              source.refresh();
+            } else if (source instanceof olSourceTileWMS || source instanceof olSourceImageWMS) {
+              source.updateParams(updatedDimensions);
+              source.refresh();
+            }
+          }
+        }
+      });
+    }
   }
-};
+}
 
 /**
  * @type {!angular.IModule}

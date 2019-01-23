@@ -48,7 +48,7 @@ const module = angular.module('ngeoSortable', []);
  *
  * @htmlAttribute {Array.<import("ol/layer/Base.js").default>} ngeo-sortable The layers to sort.
  * @htmlAttribute {!miscSortableOptions} ngeo-sortable-options The options.
- * @htmlAttribute {Function(JQLite, Array)?} ngeo-sortable-callback
+ * @htmlAttribute {Function(JQuery, Array)?} ngeo-sortable-callback
  *     Callback function called after the move end. The Function will be called
  *     with the element and the sort array as arguments.
  * @htmlAttribute {Object?} ngeo-sortable-callback-ctx Context to apply at
@@ -64,7 +64,7 @@ function component($timeout) {
     restrict: 'A',
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {

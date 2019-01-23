@@ -170,7 +170,7 @@ avoid to have a specific template. it can be preferable to add the action on the
 ```js
   /**
    * Function in a controller, that injects its own element.
-   * @param {JQLite} element Element.
+   * @param {JQuery} element Element.
    */
   function(element) {
     element.on('click', function() {console.log('Action');});
@@ -198,7 +198,7 @@ For that we should use this kind of code:
 ```js
 module.value('ngeoModuleComponentTemplateUrl',
     /**
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @return {string} Template URL.
      */
@@ -214,9 +214,9 @@ module.run(/* @ngInject */ ($templateCache) => {
 });
 
 /**
- * @param {!JQLite} $element Element.
+ * @param {!JQuery} $element Element.
  * @param {!angular.IAttributes} $attrs Attributes.
- * @param {!function(!JQLite, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
+ * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
  * @ngInject
  */

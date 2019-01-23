@@ -10,10 +10,11 @@ import ngeoRuleRule, {OperatorType} from 'ngeo/rule/Rule.js';
  * @property {string} text
  * @property {number} [size]
  * @property {number} [angle]
- * @property {import("ol/Color.js").default} [color]
+ * @property {import('ol/color.js').Color} [color]
  * @property {number} [width]
  * @property {number} [offsetX]
  * @property {number} [offsetY]
+ * @property {boolean} [exceedLength]
  * @property {boolean} [active=false] (RuleOptions)
  * @property {number|string} [expression] (RuleOptions)
  * @property {boolean} [isCustom] (RuleOptions)
@@ -21,7 +22,7 @@ import ngeoRuleRule, {OperatorType} from 'ngeo/rule/Rule.js';
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
  * @property {Array.<string>} [operators] (RuleOptions)
- * @property {string} propertyName (RuleOptions)
+ * @property {string} [propertyName] (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
  */
@@ -35,11 +36,9 @@ export default class extends ngeoRuleRule {
    * @param {!TextOptions} options Options.
    */
   constructor(options) {
-
     options.operator = options.operator || OperatorType.LIKE;
     options.type = ngeoFormatAttributeType.TEXT;
 
     super(options);
-
   }
 }

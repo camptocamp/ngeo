@@ -5,8 +5,8 @@ import ngeoDownloadService from 'ngeo/download/service.js';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
-import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import {getFormattedLength, getFormattedArea, getFormattedPoint} from 'ngeo/interaction/Measure.js';
+import {getFormattedAzimutRadius} from 'ngeo/interaction/MeasureAzimut.js';
 import * as olColor from 'ol/color.js';
 import * as olExtent from 'ol/extent.js';
 import olFeature from 'ol/Feature.js';
@@ -94,23 +94,23 @@ export function FeatureHelper($injector, $filter) {
   }
 
   /**
-   * @type {!formatNumber}
+   * @type {!import('ngeo/misc/filters.js').formatNumber}
    */
-  this.numberFormat_ = /** @type {formatNumber} */ ($filter('number'));
+  this.numberFormat_ = /** @type {import('ngeo/misc/filters.js').formatNumber} */ ($filter('number'));
 
   /**
-   * @type {!unitPrefix}
+   * @type {!import('ngeo/misc/filters.js').unitPrefix}
    */
-  this.unitPrefixFormat_ = /** @type {unitPrefix} */ ($filter('ngeoUnitPrefix'));
+  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter('ngeoUnitPrefix'));
 
   /**
-   * @type {!numberCoordinates}
+   * @type {!import('ngeo/misc/filters.js').numberCoordinates}
    */
-  this.ngeoNumberCoordinates_ = /** @type {numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
+  this.ngeoNumberCoordinates_ = /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
-   * @type {function(*):string|null}
+   * @type {angular.IFilterFilter}
    * @private
    */
   this.pointFilterFn_ = null;
@@ -141,7 +141,7 @@ export function FeatureHelper($injector, $filter) {
 
   /**
    * Download service.
-   * @type {Download}
+   * @type {import('ngeo/download/service.js').Download}
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
@@ -213,11 +213,12 @@ FeatureHelper.prototype.getStyle = function(feature) {
 
   console.assert(style, 'Style should be thruthy');
 
+  /** @type {!Array<!import("ol/style/Style.js").default>} */
   let styles;
   if (style.constructor === Array) {
     styles = /** @type {!Array.<!import("ol/style/Style.js").default>}*/ (style);
   } else {
-    styles = [style];
+    styles = [/** @type {!import("ol/style/Style.js").default}*/(style)];
   }
 
   return styles;
@@ -254,6 +255,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
     const textLabelValue = textLabelValues.join('\n');
     styles.push(new olStyleStyle({
       text: this.createTextStyle_({
+        name: '',
         text: textLabelValue
       })
     }));
@@ -296,6 +298,7 @@ FeatureHelper.prototype.getPointStyle_ = function(feature) {
     const point_to_px = 1.3;
     styles.push(new olStyleStyle({
       text: this.createTextStyle_({
+        name: '',
         text: textLabelValue,
         size: font_size,
         offsetY: -(size + (font_size / 2) * textLabelValues.length * point_to_px + 4)
@@ -375,7 +378,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
     if (showMeasure && azimut !== undefined) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
-      const length = ngeoInteractionMeasure.getFormattedLength(
+      const length = getFormattedLength(
         line, this.projection_, this.precision_, this.unitPrefixFormat_);
 
       styles.push(new olStyleStyle({
@@ -388,6 +391,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
           width: strokeWidth
         }),
         text: this.createTextStyle_({
+          name: '',
           text: length,
           angle: ((azimut % 180) + 180) % 180 - 90
         })
@@ -397,6 +401,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       styles.push(new olStyleStyle({
         geometry: new olGeomPoint(line.getLastCoordinate()),
         text: this.createTextStyle_({
+          name: '',
           text: `${this.numberFormat_(azimut, this.decimals_)}°`,
           size: 10,
           offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 20,
@@ -408,9 +413,10 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       if (showLabel) {
         styles.push(new olStyleStyle({
           text: this.createTextStyle_({
+            name: '',
             text: this.getNameProperty(feature),
             offsetY: -8,
-            exceedLength: true
+            exceedLength: true,
           })
         }));
       }
@@ -428,6 +434,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         const textLabelValue = textLabelValues.join('\n');
         styles.push(new olStyleStyle({
           text: this.createTextStyle_({
+            name: '',
             text: textLabelValue,
             exceedLength: true
           })
@@ -448,6 +455,7 @@ FeatureHelper.prototype.getTextStyle_ = function(feature) {
 
   return new olStyleStyle({
     text: this.createTextStyle_({
+      name: '',
       text: this.getNameProperty(feature),
       size: this.getSizeProperty(feature),
       angle: this.getAngleProperty(feature),
@@ -744,7 +752,7 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
 FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
   let deleted = false;
 
-  const geometry = feature.getGeometry();
+  const geometry = /** @type {olGeomSimpleGeometry} */(feature.getGeometry());
   console.assert(geometry instanceof olGeomSimpleGeometry);
   const coordinates = geometry.getCoordinates();
 
@@ -873,6 +881,7 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
     case ngeoGeometryType.TEXT:
       style = new olStyleStyle({
         text: this.createTextStyle_({
+          name: '',
           text: this.getNameProperty(feature),
           size: this.getSizeProperty(feature),
           angle: this.getAngleProperty(feature),
@@ -937,8 +946,8 @@ FeatureHelper.prototype.getColorProperty = function(feature) {
 
 
 /**
- * @param {!import("ol/Feature.js").default} feature Feature.
- * @return {import("ol/Color.js").default} Color.
+ * @param {!import('ol/Feature.js').default} feature Feature.
+ * @return {import('ol/color.js').Color} Color.
  * @export
  */
 FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
@@ -1108,32 +1117,34 @@ FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeT
 
 
 /**
- * @param {!TextOptions} options Options.
- * @return {!import("ol/style/Text.js").default} Style.
+ * @param {!import('ngeo/rule/Text.js').TextOptions} options Options.
+ * @return {!import('ol/style/Text.js').default} Style.
  * @private
  */
 FeatureHelper.prototype.createTextStyle_ = function(options) {
+  /** @type {import('ol/style/Text.js').Options} */
+  const text_options = options;
   if (options.angle) {
     const angle = options.angle !== undefined ? options.angle : 0;
     const rotation = angle * Math.PI / 180;
-    options.rotation = rotation;
+    text_options.rotation = rotation;
     delete options.angle;
   }
 
-  options.font = ['normal', `${options.size || 10}pt`, 'Arial'].join(' ');
+  text_options.font = ['normal', `${options.size || 10}pt`, 'Arial'].join(' ');
 
   if (options.color) {
-    options.fill = new olStyleFill({color: options.color || [0, 0, 0, 1]});
+    text_options.fill = new olStyleFill({color: options.color || [0, 0, 0, 1]});
     delete options.color;
   }
 
-  options.stroke = new olStyleStroke({
+  text_options.stroke = new olStyleStroke({
     color: [255, 255, 255, 1],
     width: options.width || 3
   });
   delete options.width;
 
-  return new olStyleText(options);
+  return new olStyleText(text_options);
 };
 
 
@@ -1158,19 +1169,17 @@ FeatureHelper.prototype.getMeasure = function(feature) {
       console.assert(typeof azimut == 'number');
       const line = this.getRadiusLine(feature, azimut);
 
-      measure = ngeoInteractionMeasureAzimut.getFormattedAzimutRadius(
+      measure = getFormattedAzimutRadius(
         line, this.projection_, this.decimals_, this.precision_, this.unitPrefixFormat_, this.numberFormat_);
     } else {
-      measure = ngeoInteractionMeasure.getFormattedArea(
-        geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
+      measure = getFormattedArea(geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
     }
   } else if (geometry instanceof olGeomLineString) {
-    measure = ngeoInteractionMeasure.getFormattedLength(
+    measure = getFormattedLength(
       geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
   } else if (geometry instanceof olGeomPoint) {
     if (this.pointFilterFn_ === null) {
-      measure = ngeoInteractionMeasure.getFormattedPoint(
-        geometry, this.decimals_, this.ngeoNumberCoordinates_);
+      measure = getFormattedPoint(geometry, this.decimals_, this.ngeoNumberCoordinates_);
     } else {
       const coordinates = geometry.getCoordinates();
       const args = this.pointFilterArgs_.slice(0);

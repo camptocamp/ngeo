@@ -169,7 +169,7 @@ module.directive('gmfEditfeature', component);
 
 
 /**
- * @param {jQuery} $element Element.
+ * @param {JQuery} $element Element.
  * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -239,7 +239,7 @@ function Controller($element, $q, $scope, $timeout,
   // === Injected properties ===
 
   /**
-   * @type {jQuery}
+   * @type {JQuery}
    * @private
    */
   this.element_ = $element;

@@ -63,7 +63,7 @@ function component() {
     scope: true,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
@@ -87,28 +87,28 @@ function Controller() {
   /**
    * Stack of slid-in items.
    * @private
-   * @type {Array.<!jQuery>}
+   * @type {Array.<!JQuery>}
    */
   this.slid_ = [];
 
   /**
    * Currently active sliding box.
    * @private
-   * @type {jQuery}
+   * @type {JQuery}
    */
   this.active_ = null;
 
   /**
    * The navigation header.
    * @private
-   * @type {jQuery}
+   * @type {JQuery}
    */
   this.header_ = null;
 
   /**
    * The back button in the navigation header.
    * @private
-   * @type {jQuery}
+   * @type {JQuery}
    */
   this.backButton_ = null;
 
@@ -126,7 +126,7 @@ module.controller('gmfMobileNavController', Controller);
 
 /**
  * Initialize the directive with the linked element.
- * @param {JQLite} element Element.
+ * @param {JQuery} element Element.
  */
 Controller.prototype.init = function(element) {
   this.active_ = $(element.find(`.${CLASS_NAMES.ACTIVE}.${CLASS_NAMES.SLIDE}`));
@@ -165,7 +165,7 @@ Controller.prototype.init = function(element) {
 
 
 /**
- * @param {!jQuery} active The currently active sliding box.
+ * @param {!JQuery} active The currently active sliding box.
  * @param {boolean} back Whether to move back.
  * @private
  */
@@ -275,7 +275,7 @@ function backDirective() {
     scope: false,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */
@@ -317,7 +317,7 @@ function backOnClickDirective() {
     scope: false,
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQLite} element Element.
+     * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @param {import("gmf/mobile/navigation.js").default.component.Controller_} navCtrl Controller.
      */

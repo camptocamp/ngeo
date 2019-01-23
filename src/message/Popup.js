@@ -80,7 +80,7 @@ function Popup($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The element.
-   * @type {JQLite}
+   * @type {JQuery}
    * @private
    */
   this.element_ = angular.element('<div ngeo-popup></div>');
