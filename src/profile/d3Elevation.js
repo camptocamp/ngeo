@@ -563,6 +563,9 @@ function d3Elevation(options) {
 
 
   profile.showPois = function(pois) {
+    if (!svg) {
+      return;
+    }
     pois = pois !== undefined ? pois : [];
     console.assert(pois.length === 0 || poiExtractor !== undefined);
 

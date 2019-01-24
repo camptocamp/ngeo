@@ -51,7 +51,7 @@ import olStyleText from 'ol/style/Text.js';
  * The different possible values of the `state` inner property.
  * @enum {string}
  */
-const State = {
+export const EditingState = {
   /**
    * The default state. While idle, nothing happens.
    * @type {string}
@@ -614,7 +614,7 @@ Controller.prototype.$onInit = function() {
   this.scope_.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      const state = State;
+      const state = EditingState;
       if (newValue === state.STOP_EDITING_PENDING) {
         this.confirmCancel().then(() => {
           this.state = state.STOP_EDITING_EXECUTE;
@@ -632,7 +632,7 @@ Controller.prototype.$onInit = function() {
     (newValue, oldValue) => {
       // Reset stop request when closing the confirmation modal
       if (oldValue && !newValue) {
-        this.state = State.IDLE;
+        this.state = EditingState.IDLE;
       }
     }
   );

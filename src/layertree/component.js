@@ -110,7 +110,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.
- * @param {string|function(!JQuery=, !angular.IAttributes=)}
+ * @param {string|function(!JQuery=, !angular.IAttributes=): string}
  *     ngeoLayertreeTemplateUrl Template URL for the directive.
  * @return {angular.IDirective} The Directive Definition Object.
  * @ngInject

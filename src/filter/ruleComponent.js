@@ -17,7 +17,7 @@ import {interaction as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate.js'
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
-import ngeoRuleRule from 'ngeo/rule/Rule.js';
+import {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} from 'ngeo/rule/Rule.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olCollection from 'ol/Collection.js';
@@ -175,9 +175,9 @@ class RuleController {
      */
     this.clone;
 
-    const operatorType = ngeoRuleRule.OperatorType;
-    const spatialOperatorType = ngeoRuleRule.SpatialOperatorType;
-    const temporalOperatorType = ngeoRuleRule.TemporalOperatorType;
+    const operatorType = RuleOperatorType;
+    const spatialOperatorType = RuleSpatialOperatorType;
+    const temporalOperatorType = RuleTemporalOperatorType;
 
     /**
      * @type {Object.<string, string>}
@@ -449,7 +449,7 @@ class RuleController {
         () => this.clone.operator,
         (newVal) => {
           if (newVal &&
-              newVal === ngeoRuleRule.SpatialOperatorType.CONTAINS
+              newVal === RuleSpatialOperatorType.CONTAINS
           ) {
             const clone = this.clone instanceof ngeoRuleGeometry;
             const geometry = clone.feature.getGeometry();

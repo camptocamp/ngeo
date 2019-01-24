@@ -9,14 +9,11 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  * @extends {import("ngeo/interaction/MeasureArea.js").default}
  * @param {!unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {MeasureOptions=} opt_options Options
+ * @param {MeasureOptions=} options Options
  */
 class MeasureAreaMobile extends ngeoInteractionMeasureArea {
-  constructor(format, gettextCatalog, opt_options) {
-    const options = opt_options !== undefined ? opt_options : {};
-
+  constructor(format, gettextCatalog, options = {}) {
     Object.assign(options, {displayHelpTooltip: false});
-
     super(format, gettextCatalog, options);
   }
 

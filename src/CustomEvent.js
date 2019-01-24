@@ -1,4 +1,3 @@
-
 import olEventsEvent from 'ol/events/Event.js';
 
 

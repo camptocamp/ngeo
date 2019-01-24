@@ -1,6 +1,4 @@
 /**
- */
-/**
  * Application entry point.
  *
  * This file includes `goog.require`'s for all the components/directives used
@@ -8,7 +6,7 @@
  */
 
 import angular from 'angular';
-import gmfControllersAbstractMobileController from 'gmf/controllers/AbstractMobileController.js';
+import gmfControllersAbstractMobileController, {AbstractMobileController} from 'gmf/controllers/AbstractMobileController.js';
 import 'gmf/controllers/mobile.scss';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
@@ -23,7 +21,7 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-class Controller extends gmfControllersAbstractMobileController {
+class Controller extends AbstractMobileController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.

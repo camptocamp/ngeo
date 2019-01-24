@@ -16,7 +16,7 @@ import gmfSearchModule from 'gmf/search/module.js';
 import gmfThemeModule from 'gmf/theme/module.js';
 import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowComponent.js';
 import ngeoMiscExtraModule from 'ngeo/misc/extraModule.js';
-import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
+import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryMapQueryComponent from 'ngeo/query/mapQueryComponent.js';
@@ -29,7 +29,7 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
-import gmfThemeManager from 'gmf/theme/Manager.js';
+import {ThemeEventType} from 'gmf/theme/Manager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
 
 
@@ -88,6 +88,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {Config} config A part of the application config.
+ * @param {import('ol/Map.js').default} map The map.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
@@ -95,7 +96,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @ngInject
  * @export
  */
-function AbstractAppController(config, $scope, $injector) {
+export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Location service
@@ -106,6 +107,12 @@ function AbstractAppController(config, $scope, $injector) {
     // make the injector globally available
     window.injector = $injector;
   }
+
+  /**
+   * @type {import("ol/Map.js").default}
+   * @export
+   */
+  this.map = map;
 
   console.assert(this.map instanceof olMap);
 
@@ -513,7 +520,7 @@ function AbstractAppController(config, $scope, $injector) {
   const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
   ngeoToolActivateMgr.registerTool(mapTools, printPanelActivate, false);
 
-  $scope.$root.$on(gmfThemeManager.EventType.THEME_NAME_SET, (event, name) => {
+  $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes_.getThemeObject(name).then((theme) => {
       this.setDefaultBackground_(theme);
     });
@@ -818,14 +825,14 @@ AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName
  * @protected
  * @return {Element} Span element with font-awesome inside of it
  */
-AbstractAppController.prototype.getLocationIcon = function() {
+export function getLocationIcon() {
   const arrow = document.createElement('span');
   arrow.className = 'fa fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
   const arrowWrapper = document.createElement('span');
   arrowWrapper.appendChild(arrow);
   return arrowWrapper;
-};
+}
 
 
 const module = angular.module('GmfAbstractAppControllerModule', [
@@ -856,8 +863,8 @@ module.controller('AbstractController', AbstractAppController);
 
 
 module.value('ngeoExportFeatureFormats', [
-  ngeoMiscFeatureHelper.FormatType.KML,
-  ngeoMiscFeatureHelper.FormatType.GPX
+  FeatureFormatType.KML,
+  FeatureFormatType.GPX
 ]);
 
 module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',

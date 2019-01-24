@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-import gmfEditingEditFeatureComponent from 'gmf/editing/editFeatureComponent.js';
+import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeatureComponent.js';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
@@ -196,7 +196,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
     () => this.selectedEditableTreeCtrl,
     (newValue, oldValue) => {
       this.dirty = false;
-      this.state = gmfEditingEditFeatureComponent.State.IDLE;
+      this.state = EditingState.IDLE;
     }
   );
 
@@ -209,16 +209,16 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * @type {string}
    * @export
    */
-  this.state = gmfEditingEditFeatureComponent.State.IDLE;
+  this.state = EditingState.IDLE;
 
   $scope.$watch(
     () => this.state,
     (newValue, oldValue) => {
-      if (newValue === gmfEditingEditFeatureComponent.State.STOP_EDITING_EXECUTE ||
-          newValue === gmfEditingEditFeatureComponent.State.DEACTIVATE_EXECUTE) {
+      if (newValue === EditingState.STOP_EDITING_EXECUTE ||
+          newValue === EditingState.DEACTIVATE_EXECUTE) {
         this.selectedEditableTreeCtrl = null;
       }
-      if (newValue === gmfEditingEditFeatureComponent.State.DEACTIVATE_EXECUTE) {
+      if (newValue === EditingState.DEACTIVATE_EXECUTE) {
         this.active = false;
       }
     }
@@ -236,7 +236,7 @@ function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
  * @export
  */
 Controller.prototype.stopEditing = function() {
-  this.state = gmfEditingEditFeatureComponent.State.STOP_EDITING_PENDING;
+  this.state = EditingState.STOP_EDITING_PENDING;
 };
 
 

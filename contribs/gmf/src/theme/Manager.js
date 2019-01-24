@@ -7,7 +7,7 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 /**
  * @enum {string}
  */
-export const EventType = {
+export const ThemeEventType = {
   /**
    * Triggered when the theme name change.
    */
@@ -123,7 +123,7 @@ Manager.prototype.isLoading = function() {
 Manager.prototype.setThemeName = function(name, opt_silent) {
   this.themeName_ = name;
   if (!opt_silent) {
-    this.$rootScope_.$emit(EventType.THEME_NAME_SET, name);
+    this.$rootScope_.$emit(ThemeEventType.THEME_NAME_SET, name);
   }
 };
 

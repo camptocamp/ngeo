@@ -15,7 +15,7 @@
  * @enum {string}
  * @export
  */
-const Type = {
+export const MessageType = {
   /**
    * @type {string}
    * @export
@@ -79,7 +79,7 @@ Message.prototype.show = function(object) {
  * @export
  */
 Message.prototype.error = function(message) {
-  this.show(this.getMessageObjects(message, Type.ERROR));
+  this.show(this.getMessageObjects(message, MessageType.ERROR));
 };
 
 
@@ -89,7 +89,7 @@ Message.prototype.error = function(message) {
  * @export
  */
 Message.prototype.info = function(message) {
-  this.show(this.getMessageObjects(message, Type.INFORMATION));
+  this.show(this.getMessageObjects(message, MessageType.INFORMATION));
 };
 
 
@@ -99,7 +99,7 @@ Message.prototype.info = function(message) {
  * @export
  */
 Message.prototype.success = function(message) {
-  this.show(this.getMessageObjects(message, Type.SUCCESS));
+  this.show(this.getMessageObjects(message, MessageType.SUCCESS));
 };
 
 
@@ -109,7 +109,7 @@ Message.prototype.success = function(message) {
  * @export
  */
 Message.prototype.warn = function(message) {
-  this.show(this.getMessageObjects(message, Type.WARNING));
+  this.show(this.getMessageObjects(message, MessageType.WARNING));
 };
 
 
@@ -127,7 +127,7 @@ Message.prototype.warn = function(message) {
 Message.prototype.getMessageObjects = function(object, opt_type) {
   const msgObjects = [];
   let msgObject = null;
-  const defaultType = Type.INFORMATION;
+  const defaultType = MessageType.INFORMATION;
 
   if (typeof object === 'string') {
     msgObjects.push({

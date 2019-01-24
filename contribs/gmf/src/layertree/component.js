@@ -8,7 +8,7 @@ import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGr
 
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {getNodeMinResolution, getNodeMaxResolution} from 'gmf/theme/Themes.js';
 import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
@@ -676,11 +676,11 @@ Controller.prototype.nodesCount = function() {
  */
 Controller.prototype.getResolutionStyle = function(gmfLayer) {
   const resolution = this.map.getView().getResolution();
-  const minResolution = gmfThemeThemes.getNodeMinResolution(gmfLayer);
+  const minResolution = getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
     return 'out-of-resolution';
   }
-  const maxResolution = gmfThemeThemes.getNodeMaxResolution(gmfLayer);
+  const maxResolution = getNodeMaxResolution(gmfLayer);
   if (maxResolution !== undefined && resolution > maxResolution) {
     return 'out-of-resolution';
   }
@@ -702,7 +702,7 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
   if (minResolution !== undefined && resolution < minResolution) {
     view.setResolution(view.constrainResolution(minResolution, 0, 1));
   } else {
-    const maxResolution = gmfThemeThemes.getNodeMaxResolution(gmfLayer);
+    const maxResolution = getNodeMaxResolution(gmfLayer);
     if (maxResolution !== undefined && resolution > maxResolution) {
       view.setResolution(view.constrainResolution(maxResolution, 0, -1));
     }

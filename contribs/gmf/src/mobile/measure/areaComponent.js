@@ -1,7 +1,7 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
-import gmfMobileMeasureBaseComponent from 'gmf/mobile/measure/baseComponent.js';
+import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
 
 const module = angular.module('gmfMobileMeasureArea', [
   ngeoMiscFilters.name,
@@ -77,7 +77,7 @@ function component(gmfMobileMeasureAreaTemplateUrl) {
 module.directive('gmfMobileMeasurearea', component);
 
 
-class Controller extends gmfMobileMeasureBaseComponent.Controller {
+class Controller extends MeasueMobileBaseController {
   /**
    * @param {!angular.Scope} $scope Angular scope.
    * @param {!angular.IFilterService} $filter Angular filter
@@ -89,7 +89,6 @@ class Controller extends gmfMobileMeasureBaseComponent.Controller {
 
     /**
      * @type {import("ngeo/interaction/MeasureAreaMobile.js").default}
-     * @export
      */
     this.measure;
   }
@@ -103,7 +102,7 @@ class Controller extends gmfMobileMeasureBaseComponent.Controller {
       sketchStyle: this.sketchStyle
     });
 
-    gmfMobileMeasureBaseComponent.Controller.prototype.init.call(this);
+    super.init(this);
   }
 
   /**

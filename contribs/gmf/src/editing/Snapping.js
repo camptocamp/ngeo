@@ -1,12 +1,13 @@
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
 import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olInteractionSnap from 'ol/interaction/Snap.js';
+
 
 /**
  * The snapping service of GMF. Responsible of collecting the treeCtrls that
@@ -212,7 +213,7 @@ Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
   // If treeCtrl is snappable and supports WFS, listen to its state change.
   // When it becomes visible, it's added to the list of snappable tree ctrls.
   node = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
-  const snappingConfig = gmfThemeThemes.getSnappingConfig(node);
+  const snappingConfig = getSnappingConfig(node);
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
@@ -273,7 +274,7 @@ Snapping.prototype.unregisterAllTreeCtrl_ = function() {
  */
 Snapping.prototype.getOGCServer_ = function(treeCtrl) {
   const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
-  if (gmfLayer.type !== gmfThemeThemes.NodeType.WMS) {
+  if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
   const gmfLayerWMS = /** @type {import(gmf/themes.js).GmfLayerWMS} */ (gmfLayer);
@@ -321,7 +322,7 @@ Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
   const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
 
   // (2)
-  if (gmfLayer.type !== gmfThemeThemes.NodeType.WMS) {
+  if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
   }
 

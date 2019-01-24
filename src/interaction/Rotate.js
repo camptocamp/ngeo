@@ -14,9 +14,13 @@ import olSourceVector from 'ol/source/Vector.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<{
+ * @typedef {Object} RotateEventItem
  * @property {import("ol/Feature.js").default} feature
- * }>} RotateEvent
+ */
+
+
+/**
+ * @typedef {import("ngeo/CustomEvent.js").default.<RotateEventItem>} RotateEvent
  */
 
 
@@ -121,6 +125,9 @@ export default class extends olInteractionPointer {
    * @override
    */
   setActive(active) {
+    if (!this.features_) {
+      return;
+    }
     if (this.keyPressListenerKey_) {
       olEvents.unlistenByKey(this.keyPressListenerKey_);
       this.keyPressListenerKey_ = null;

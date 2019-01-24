@@ -1,9 +1,4 @@
 import angular from 'angular';
-
-/**
- * This goog.require is needed because of 'ngeo-popup' used in
- * the template.
- */
 import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
 
 
@@ -45,7 +40,7 @@ import ngeoMessagePopupComponent from 'ngeo/message/popupComponent.js';
  * @ngdoc service
  * @ngname ngeoCreatePopup
  */
-function Popup($compile, $rootScope, $sce, $timeout) {
+export function MessagePopup($compile, $rootScope, $sce, $timeout) {
 
   /**
    * The scope the compiled element is link to.
@@ -103,7 +98,7 @@ function Popup($compile, $rootScope, $sce, $timeout) {
  * @return {boolean} `true` if the popup is currently, otherwise `false`.
  * @export
  */
-Popup.prototype.getOpen = function() {
+MessagePopup.prototype.getOpen = function() {
   return this.scope['open'];
 };
 
@@ -113,7 +108,7 @@ Popup.prototype.getOpen = function() {
  * @param {boolean} open `true` to show the popup, `false` to hide it.
  * @export
  */
-Popup.prototype.setOpen = function(open) {
+MessagePopup.prototype.setOpen = function(open) {
   this.scope['open'] = open;
 };
 
@@ -122,7 +117,7 @@ Popup.prototype.setOpen = function(open) {
  * Destroy the popup.
  * @export
  */
-Popup.prototype.destroy = function() {
+MessagePopup.prototype.destroy = function() {
   this.scope.$destroy();
   this.element_.remove();
 };
@@ -133,7 +128,7 @@ Popup.prototype.destroy = function() {
  * @param {string} title The title.
  * @export
  */
-Popup.prototype.setTitle = function(title) {
+MessagePopup.prototype.setTitle = function(title) {
   const trustedTitle = this.sce_.trustAsHtml(title);
   this.scope['title'] = trustedTitle;
 };
@@ -148,7 +143,7 @@ Popup.prototype.setTitle = function(title) {
  *     Default is false.
  * @export
  */
-Popup.prototype.setContent = function(content, opt_trusted) {
+MessagePopup.prototype.setContent = function(content, opt_trusted) {
   this.scope['content'] = opt_trusted ? this.sce_.trustAsHtml(/** @type {string} */ (content)) : content;
 };
 
@@ -158,7 +153,7 @@ Popup.prototype.setContent = function(content, opt_trusted) {
  * @param {string} url The url of the page.
  * @export
  */
-Popup.prototype.setUrl = function(url) {
+MessagePopup.prototype.setUrl = function(url) {
   const content = this.sce_.trustAsHtml(
     `<iframe src="${url}" width="100%" height="100%"></iframe>`
   );
@@ -171,7 +166,7 @@ Popup.prototype.setUrl = function(url) {
  * @param {string} width Width the popup should have.
  * @export
  */
-Popup.prototype.setWidth = function(width) {
+MessagePopup.prototype.setWidth = function(width) {
   this.element_.width(width);
 };
 
@@ -181,7 +176,7 @@ Popup.prototype.setWidth = function(width) {
  * @param {string} height Height the popup should have.
  * @export
  */
-Popup.prototype.setHeight = function(height) {
+MessagePopup.prototype.setHeight = function(height) {
   this.element_.height(height);
 };
 
@@ -192,7 +187,7 @@ Popup.prototype.setHeight = function(height) {
  * @param {string} height Height the popup should have.
  * @export
  */
-Popup.prototype.setSize = function(width, height) {
+MessagePopup.prototype.setSize = function(width, height) {
   this.setWidth(width);
   this.setHeight(height);
 };
@@ -204,7 +199,7 @@ Popup.prototype.setSize = function(width, height) {
  *     being closed or not.
  * @export
  */
-Popup.prototype.setAutoDestroy = function(autoDestroy) {
+MessagePopup.prototype.setAutoDestroy = function(autoDestroy) {
   this.autoDestroy_ = autoDestroy;
 };
 
@@ -214,7 +209,7 @@ Popup.prototype.setAutoDestroy = function(autoDestroy) {
  * @param {string} cls Class name to add to the popup element.
  * @export
  */
-Popup.prototype.addClass = function(cls) {
+MessagePopup.prototype.addClass = function(cls) {
   this.element_.addClass(cls);
 };
 
@@ -224,7 +219,7 @@ Popup.prototype.addClass = function(cls) {
  * @param {PopupOptions} options Options.
  * @export
  */
-Popup.prototype.open = function(options) {
+MessagePopup.prototype.open = function(options) {
 
   if (options.url) {
     this.setUrl(options.url);
@@ -272,7 +267,7 @@ function Factory($compile, $rootScope, $sce, $timeout) {
      * @return {!import("ngeo/message/Popup.js").default} The popup instance.
      */
     function() {
-      return new Popup($compile, $rootScope, $sce, $timeout);
+      return new MessagePopup($compile, $rootScope, $sce, $timeout);
     }
   );
 }

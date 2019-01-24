@@ -1,5 +1,5 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoRuleRule, {OperatorType} from 'ngeo/rule/Rule.js';
+import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
 
 
 /**
@@ -32,7 +32,7 @@ export default class extends ngeoRuleRule {
    */
   constructor(options) {
 
-    options.operator = OperatorType.EQUAL_TO;
+    options.operator = RuleOperatorType.EQUAL_TO;
     options.type = ngeoFormatAttributeType.SELECT;
 
     super(options);

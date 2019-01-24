@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon} from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import * as olProj from 'ol/proj.js';
@@ -16,7 +16,7 @@ import * as olInteraction from 'ol/interaction.js';
  * This file includes `goog.require`'s for desktop/api components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-class AbstractAPIController extends gmfControllersAbstractAppController {
+export class AbstractAPIController extends AbstractAppController {
   /**
    * @param {Config} config A part of the application config.
    * @param {angular.IScope} $scope Scope.
@@ -24,20 +24,12 @@ class AbstractAPIController extends gmfControllersAbstractAppController {
    * @ngInject
    */
   constructor(config, $scope, $injector) {
-    super();
-
     const viewConfig = {
       projection: olProj.get(`EPSG:${config.srid || 21781}`)
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
-    const arrow = gmfControllersAbstractAppController.prototype.getLocationIcon();
-
-    /**
-     * @type {import("ol/Map.js").default}
-     * @export
-     */
-    this.map = new olMap({
+    super(config, new olMap({
       pixelRatio: config.mapPixelRatio,
       layers: [],
       view: new olView(viewConfig),
@@ -50,7 +42,7 @@ class AbstractAPIController extends gmfControllersAbstractAppController {
           zoomOutTipLabel: ''
         }),
         new olControlRotate({
-          label: arrow,
+          label: getLocationIcon(),
           tipLabel: ''
         })
       ],
@@ -60,9 +52,7 @@ class AbstractAPIController extends gmfControllersAbstractAppController {
       }),
       loadTilesWhileAnimating: true,
       loadTilesWhileInteracting: true
-    });
-
-    gmfControllersAbstractAppController.call(this, config, $scope, $injector);
+    }), $scope, $injector);
   }
 }
 

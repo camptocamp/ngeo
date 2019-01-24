@@ -23,7 +23,7 @@ const module = angular.module('gmfMobileMeasureBase', [
  * @ngdoc controller
  * @ngname GmfMobileMeasureBaseController
  */
-function Controller($scope, $filter, gettextCatalog) {
+export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
 
   /**
    * @type {angular.IScope}
@@ -125,7 +125,7 @@ function Controller($scope, $filter, gettextCatalog) {
 /**
  * Initialise the controller.
  */
-Controller.prototype.init = function() {
+MeasueMobileBaseController.prototype.init = function() {
 
   this.measure.setActive(this.active);
   interaction(this.measure);
@@ -179,5 +179,6 @@ Controller.prototype.init = function() {
   this.map.addInteraction(this.measure);
 };
 
+module.controller('gmfMeasueMobileBaseController', MeasueMobileBaseController);
 
 export default module;

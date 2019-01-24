@@ -1,6 +1,5 @@
-/**
- */
 import angular from 'angular';
+
 
 /**
  * @constructor

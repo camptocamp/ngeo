@@ -5,7 +5,7 @@ import olLayerBase from 'ol/layer/Base.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import {DATALAYERGROUP_NAME} from 'gmf/index.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import {MessageType} from 'ngeo/message/Message.js';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 
@@ -265,7 +265,7 @@ Controller.prototype.showDisclaimerMessage_ = function(msg) {
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeoMessageMessage.Type.WARNING
+      type: MessageType.WARNING
     });
   }
 };
@@ -286,7 +286,7 @@ Controller.prototype.closeDisclaimerMessage_ = function(msg) {
       popup: this.popup,
       msg: msg,
       target: this.element_,
-      type: ngeoMessageMessage.Type.WARNING
+      type: MessageType.WARNING
     });
   }
 };

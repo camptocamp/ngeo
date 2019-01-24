@@ -5,7 +5,7 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import ngeoRuleDate from 'ngeo/rule/Date.js';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry.js';
-import ngeoRuleRule from 'ngeo/rule/Rule.js';
+import ngeoRuleRule, {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} from 'ngeo/rule/Rule.js';
 import ngeoRuleSelect from 'ngeo/rule/Select.js';
 import ngeoRuleText from 'ngeo/rule/Text.js';
 import {writeFilter} from 'ol/format/WFS.js';
@@ -115,11 +115,11 @@ export class RuleHelper {
         if (isCustom) {
           rule = new ngeoRuleDate({
             name: name,
-            operator: ngeoRuleRule.TemporalOperatorType.EQUALS,
+            operator: RuleTemporalOperatorType.EQUALS,
             operators: [
-              ngeoRuleRule.TemporalOperatorType.EQUALS,
-              ngeoRuleRule.TemporalOperatorType.BEGINS,
-              ngeoRuleRule.TemporalOperatorType.ENDS
+              RuleTemporalOperatorType.EQUALS,
+              RuleTemporalOperatorType.BEGINS,
+              RuleTemporalOperatorType.ENDS
             ],
             propertyName: attribute.name,
             type: attribute.type
@@ -127,7 +127,7 @@ export class RuleHelper {
         } else {
           rule = new ngeoRuleDate({
             name: name,
-            operator: ngeoRuleRule.TemporalOperatorType.DURING,
+            operator: RuleTemporalOperatorType.DURING,
             propertyName: attribute.name,
             type: attribute.type
           });
@@ -136,11 +136,11 @@ export class RuleHelper {
       case ngeoFormatAttributeType.GEOMETRY:
         rule = new ngeoRuleGeometry({
           name: name,
-          operator: ngeoRuleRule.SpatialOperatorType.WITHIN,
+          operator: RuleSpatialOperatorType.WITHIN,
           operators: [
-            ngeoRuleRule.SpatialOperatorType.CONTAINS,
-            ngeoRuleRule.SpatialOperatorType.INTERSECTS,
-            ngeoRuleRule.SpatialOperatorType.WITHIN
+            RuleSpatialOperatorType.CONTAINS,
+            RuleSpatialOperatorType.INTERSECTS,
+            RuleSpatialOperatorType.WITHIN
           ],
           propertyName: attribute.name,
           type: attribute.type
@@ -150,14 +150,14 @@ export class RuleHelper {
         if (isCustom) {
           rule = new ngeoRuleRule({
             name: name,
-            operator: ngeoRuleRule.OperatorType.EQUAL_TO,
+            operator: RuleOperatorType.EQUAL_TO,
             operators: [
-              ngeoRuleRule.OperatorType.EQUAL_TO,
-              ngeoRuleRule.OperatorType.GREATER_THAN,
-              ngeoRuleRule.OperatorType.GREATER_THAN_OR_EQUAL_TO,
-              ngeoRuleRule.OperatorType.LESSER_THAN,
-              ngeoRuleRule.OperatorType.LESSER_THAN_OR_EQUAL_TO,
-              ngeoRuleRule.OperatorType.NOT_EQUAL_TO
+              RuleOperatorType.EQUAL_TO,
+              RuleOperatorType.GREATER_THAN,
+              RuleOperatorType.GREATER_THAN_OR_EQUAL_TO,
+              RuleOperatorType.LESSER_THAN,
+              RuleOperatorType.LESSER_THAN_OR_EQUAL_TO,
+              RuleOperatorType.NOT_EQUAL_TO
             ],
             propertyName: attribute.name,
             type: ngeoFormatAttributeType.NUMBER
@@ -165,7 +165,7 @@ export class RuleHelper {
         } else {
           rule = new ngeoRuleRule({
             name: name,
-            operator: ngeoRuleRule.OperatorType.BETWEEN,
+            operator: RuleOperatorType.BETWEEN,
             propertyName: attribute.name,
             type: ngeoFormatAttributeType.NUMBER
           });
@@ -182,18 +182,18 @@ export class RuleHelper {
         if (isCustom) {
           rule = new ngeoRuleText({
             name: name,
-            operator: ngeoRuleRule.OperatorType.LIKE,
+            operator: RuleOperatorType.LIKE,
             operators: [
-              ngeoRuleRule.OperatorType.LIKE,
-              ngeoRuleRule.OperatorType.EQUAL_TO,
-              ngeoRuleRule.OperatorType.NOT_EQUAL_TO
+              RuleOperatorType.LIKE,
+              RuleOperatorType.EQUAL_TO,
+              RuleOperatorType.NOT_EQUAL_TO
             ],
             propertyName: attribute.name
           });
         } else {
           rule = new ngeoRuleText({
             name: name,
-            operator: ngeoRuleRule.OperatorType.LIKE,
+            operator: RuleOperatorType.LIKE,
             propertyName: attribute.name
           });
         }
@@ -515,9 +515,9 @@ export class RuleHelper {
     const propertyName = value.propertyName;
     const upperBoundary = value.upperBoundary;
 
-    const rot = ngeoRuleRule.OperatorType;
-    const rsot = ngeoRuleRule.SpatialOperatorType;
-    const rtot = ngeoRuleRule.TemporalOperatorType;
+    const rot = RuleOperatorType;
+    const rsot = RuleSpatialOperatorType;
+    const rtot = RuleTemporalOperatorType;
 
     const spatialTypes = [
       rsot.CONTAINS,

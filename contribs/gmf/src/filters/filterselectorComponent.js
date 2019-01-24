@@ -11,7 +11,7 @@ import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters.js';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
 import ngeoMessageNotification from 'ngeo/message/Notification.js';
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import {MessageType} from 'ngeo/message/Message.js';
 
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper.js';
 
@@ -530,7 +530,7 @@ class Controller {
         console.warn(msgs.join(' '));
         this.ngeoNotification_.notify({
           msg: msgs.join(' '),
-          type: ngeoMessageMessage.Type.WARNING
+          type: MessageType.WARNING
         });
       }
     } else {

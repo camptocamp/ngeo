@@ -1,6 +1,6 @@
 import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
-import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
+import {FormatNumberType} from 'ngeo/format/XSDAttribute.js';
 
 export default class {
 
@@ -49,10 +49,10 @@ export default class {
         attribute.type = ngeoFormatAttributeType.TIME;
       } else if (type === 'decimal' || type === 'double') {
         attribute.type = ngeoFormatAttributeType.NUMBER;
-        attribute.numType = ngeoFormatXSDAttribute.NumberType.FLOAT;
+        attribute.numType = FormatNumberType.FLOAT;
       } else if (type === 'integer' || type === 'long') {
         attribute.type = ngeoFormatAttributeType.NUMBER;
-        attribute.numType = ngeoFormatXSDAttribute.NumberType.INTEGER;
+        attribute.numType = FormatNumberType.INTEGER;
       } else if (type === 'boolean') {
         attribute.type = ngeoFormatAttributeType.BOOLEAN;
       } else {

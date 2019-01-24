@@ -1,6 +1,6 @@
 import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes.js';
-import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerImage from 'ol/layer/Image.js';
@@ -375,7 +375,7 @@ SyncLayertreeMap.prototype.getTimeParam_ = function(treeCtrl) {
     treeCtrl.traverseDepthFirst((treeCtrl) => {
       if (treeCtrl.node.children === undefined && treeCtrl.node.time) {
         wmsTime = treeCtrl.node.time;
-        return ngeoLayertreeController.VisitorDecision.STOP;
+        return LayertreeVisitorDecision.STOP;
       }
     });
   }

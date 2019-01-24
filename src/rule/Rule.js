@@ -43,7 +43,7 @@ import * as olEvents from 'ol/events.js';
 /**
  * @enum {string}
  */
-export const OperatorType = {
+export const RuleOperatorType = {
   BETWEEN: '..',
   EQUAL_TO: '=',
   GREATER_THAN: '>',
@@ -58,7 +58,7 @@ export const OperatorType = {
 /**
  * @enum {string}
  */
-export const SpatialOperatorType = {
+export const RuleSpatialOperatorType = {
   CONTAINS: 'contains',
   INTERSECTS: 'intersects',
   WITHIN: 'within'
@@ -68,7 +68,7 @@ export const SpatialOperatorType = {
 /**
  * @enum {string}
  */
-const TemporalOperatorType = {
+export const RuleTemporalOperatorType = {
   BEGINS: 'time_start',
   DURING: 'time_during',
   ENDS: 'time_end',
@@ -275,8 +275,8 @@ export default class Rule {
     const upperBoundary = this.upperBoundary;
 
     if (operator) {
-      if (operator === OperatorType.BETWEEN ||
-          operator === TemporalOperatorType.DURING) {
+      if (operator === RuleOperatorType.BETWEEN ||
+          operator === RuleTemporalOperatorType.DURING) {
         if (lowerBoundary !== null && upperBoundary !== null) {
           value = {
             operator,

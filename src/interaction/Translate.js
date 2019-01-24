@@ -139,6 +139,9 @@ export default class extends olInteractionTranslate {
    */
   setState_() {
     const map = this.getMap();
+    if (!map) {
+      return;
+    }
     const active = this.getActive();
     const features = this.myFeatures_;
     const keys = this.listenerKeys_;

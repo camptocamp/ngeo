@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import gmfRasterComponent from 'gmf/raster/component.js';
 import gmfRasterRasterService from 'gmf/raster/RasterService.js';
@@ -9,5 +7,5 @@ import gmfRasterRasterService from 'gmf/raster/RasterService.js';
  */
 export default angular.module('gmfRasterModule', [
   gmfRasterComponent.name,
-  gmfRasterRasterService['module'].name,
+  gmfRasterRasterService.name,
 ]);

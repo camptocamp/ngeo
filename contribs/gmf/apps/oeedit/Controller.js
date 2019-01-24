@@ -6,7 +6,7 @@
  */
 
 import angular from 'angular';
-import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractDesktopController, {AbstractDesktopController} from 'gmf/controllers/AbstractDesktopController.js';
 import './sass/oeedit.scss';
 import appBase from '../appmodule.js';
 import gmfObjecteditingModule from 'gmf/objectediting/module.js';
@@ -26,7 +26,7 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-class Controller extends gmfControllersAbstractDesktopController {
+class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.

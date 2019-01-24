@@ -371,7 +371,7 @@ export function getFirstParentTree(treeCtrl) {
 /**
  * @enum {string}
  */
-export const VisitorDecision = {
+export const LayertreeVisitorDecision = {
   STOP: 'STOP',
   SKIP: 'SKIP',
   DESCEND: 'DESCEND'
@@ -379,7 +379,7 @@ export const VisitorDecision = {
 
 
 /**
- * @typedef {function(import("ngeo/layertree/Controller.js").default): (!import("ngeo/layertree/Controller.js").default.VisitorDecision|undefined)} Visitor
+ * @typedef {function(LayertreeController): (!LayertreeVisitorDecision|undefined)} Visitor
  */
 
 
@@ -391,14 +391,14 @@ export const VisitorDecision = {
  */
 LayertreeController.prototype.traverseDepthFirst = function(visitor) {
   // First visit the current controller
-  const decision = visitor(this) || VisitorDecision.DESCEND;
+  const decision = visitor(this) || LayertreeVisitorDecision.DESCEND;
 
   switch (decision) {
-    case VisitorDecision.STOP:
+    case LayertreeVisitorDecision.STOP:
       return true; // stop traversing
-    case VisitorDecision.SKIP:
+    case LayertreeVisitorDecision.SKIP:
       return false; // continue traversing but skip current branch
-    case VisitorDecision.DESCEND:
+    case LayertreeVisitorDecision.DESCEND:
       for (let i = 0; i < this.children.length; ++i) {
         const child = this.children[i];
         const stop = child.traverseDepthFirst(visitor);

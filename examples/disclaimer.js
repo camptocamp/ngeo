@@ -1,12 +1,9 @@
-/**
- */
-
 import './disclaimer.css';
 import 'jquery-ui/ui/widgets/tooltip.js';
 import angular from 'angular';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer.js';
 
-import ngeoMessageMessage from 'ngeo/message/Message.js';
+import {MessageType} from 'ngeo/message/Message.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
@@ -135,7 +132,7 @@ MainController.prototype.inMap = function() {
     this.disclaimer.alert({
       msg: message,
       target: angular.element('#disclaimers-in-map'),
-      type: ngeoMessageMessage.Type.WARNING
+      type: MessageType.WARNING
     });
   }, this);
 };
@@ -150,28 +147,28 @@ MainController.prototype.closeAll = function() {
 
   this.disclaimer.close({
     msg: this.successMsg_,
-    type: ngeoMessageMessage.Type.SUCCESS
+    type: MessageType.SUCCESS
   });
 
   this.disclaimer.close({
     msg: this.infoMsg_,
-    type: ngeoMessageMessage.Type.INFORMATION
+    type: MessageType.INFORMATION
   });
 
   this.disclaimer.close({
     msg: this.warningMsg_,
-    type: ngeoMessageMessage.Type.WARNING
+    type: MessageType.WARNING
   });
 
   this.disclaimer.close({
     msg: this.errorMsg_,
-    type: ngeoMessageMessage.Type.ERROR
+    type: MessageType.ERROR
   });
 
   this.inMapMsgs_.forEach(function(message) {
     this.disclaimer.close({
       msg: message,
-      type: ngeoMessageMessage.Type.WARNING
+      type: MessageType.WARNING
     });
   }, this);
 

@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfControllersAbstractAppController from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon} from 'gmf/controllers/AbstractAppController.js';
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
@@ -22,7 +22,7 @@ import olStyleStyle from 'ol/style/Style.js';
  * This file includes `goog.require`'s mobile components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-class AbstractMobileController extends gmfControllersAbstractAppController {
+export class AbstractMobileController extends AbstractAppController {
   /**
    * @param {Config} config A part of the application config.
    * @param {angular.IScope} $scope Scope.
@@ -30,7 +30,30 @@ class AbstractMobileController extends gmfControllersAbstractAppController {
    * @ngInject
    */
   constructor(config, $scope, $injector) {
-    super();
+    const viewConfig = {
+      projection: olProj.get(`EPSG:${config.srid || 21781}`)
+    };
+    Object.assign(viewConfig, config.mapViewConfig || {});
+
+    super(config, new olMap({
+      pixelRatio: config.mapPixelRatio,
+      layers: [],
+      view: new olView(viewConfig),
+      controls: config.mapControls || [
+        new olControlScaleLine(),
+        new olControlZoom({
+          zoomInTipLabel: '',
+          zoomOutTipLabel: ''
+        }),
+        new olControlRotate({
+          label: getLocationIcon(),
+          tipLabel: ''
+        })
+      ],
+      interactions:
+          config.mapInteractions ||
+          olInteraction.defaults({pinchRotate: true})
+    }), $scope, $injector);
 
     /**
      * @type {boolean}
@@ -87,39 +110,6 @@ class AbstractMobileController extends gmfControllersAbstractAppController {
       autorotate: config.autorotate
     };
 
-    const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 21781}`)
-    };
-    Object.assign(viewConfig, config.mapViewConfig || {});
-
-    const arrow = super.getLocationIcon();
-
-    /**
-     * @type {import("ol/Map.js").default}
-     * @export
-     */
-    this.map = new olMap({
-      pixelRatio: config.mapPixelRatio,
-      layers: [],
-      view: new olView(viewConfig),
-      controls: config.mapControls || [
-        new olControlScaleLine(),
-        new olControlZoom({
-          zoomInTipLabel: '',
-          zoomOutTipLabel: ''
-        }),
-        new olControlRotate({
-          label: arrow,
-          tipLabel: ''
-        })
-      ],
-      interactions:
-          config.mapInteractions ||
-          olInteraction.defaults({pinchRotate: true})
-    });
-
-    gmfControllersAbstractAppController.call(this, config, $scope, $injector);
-
     this.manageResize = true;
     this.resizeTransition = 500;
 
@@ -144,14 +134,12 @@ class AbstractMobileController extends gmfControllersAbstractAppController {
     this.leftNavVisible = !this.leftNavVisible;
   }
 
-
   /**
    * @export
    */
   toggleRightNavVisibility() {
     this.rightNavVisible = !this.rightNavVisible;
   }
-
 
   /**
    * Hide both navigation menus.
@@ -161,7 +149,6 @@ class AbstractMobileController extends gmfControllersAbstractAppController {
     this.leftNavVisible = this.rightNavVisible = false;
   }
 
-
   /**
    * @return {boolean} Return true if one of the navigation menus is visible,
    * otherwise false.
@@ -170,7 +157,6 @@ class AbstractMobileController extends gmfControllersAbstractAppController {
   navIsVisible() {
     return this.leftNavVisible || this.rightNavVisible;
   }
-
 
   /**
    * Open the menu with corresponding to the data-target attribute value.

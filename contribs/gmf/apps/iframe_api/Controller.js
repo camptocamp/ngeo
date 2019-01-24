@@ -7,7 +7,7 @@
 
 import 'gmf/controllers/iframe_api.scss';
 import angular from 'angular';
-import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
+import gmfControllersAbstractAPIController, {AbstractAPIController} from 'gmf/controllers/AbstractAPIController.js';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
@@ -21,7 +21,7 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-class Controller extends gmfControllersAbstractAPIController {
+class Controller extends AbstractAPIController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
