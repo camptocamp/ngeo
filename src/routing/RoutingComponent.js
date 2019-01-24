@@ -69,7 +69,7 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @param {!import("ngeo/routing/RoutingService.js").RoutingService} ngeoRoutingService service for OSRM routing
  * @param {!import("ngeo/routing/NominatimService.js").NominatimService} ngeoNominatimService service for Nominatim
  * @param {!angular.IQService} $q Angular q service
- * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce service.
  * @constructor
  * @private
  * @ngInject
@@ -234,11 +234,7 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
    * @export
    * @type {function(): void}
    */
-  this.handleChange = /** @type {function(): void} */
-          (ngeoDebounce(
-            /** @type {function(?): void} */ (this.calculateRoute.bind(this)),
-            debounceDelay,
-            true));
+  this.handleChange = ngeoDebounce(this.calculateRoute.bind(this), debounceDelay, true);
 }
 
 /**

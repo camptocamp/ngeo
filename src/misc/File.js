@@ -5,7 +5,7 @@ import angular from 'angular';
  * @constructor
  * @param {angular.IQService} $q .
  * @param {angular.IHttpService} $http .
- * @param {gettext} gettext .
+ * @param {angular.gettext.gettextFunction} gettext .
  * @ngInject
  */
 function File($q, $http, gettext) {

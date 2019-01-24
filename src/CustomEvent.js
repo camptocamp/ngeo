@@ -1,14 +1,15 @@
 import olEventsEvent from 'ol/events/Event.js';
 
 
+/**
+ * @template T
+ */
 export default class extends olEventsEvent {
   /**
-   * @constructor
    * @param {string} type Event type.
    * @param {T} detail Event Detail.
-   * @template T
    */
-  constructor(type, detail = {}) {
+  constructor(type, detail = /** @type {T} */({})) {
     super(type);
 
     /**

@@ -98,7 +98,7 @@ function Controller($element, $injector, $scope, ngeoNominatimService) {
   this.datasets = [/** @type {Twitter.Typeahead.Dataset} */({
     name: 'nominatim',
     display: 'name',
-    source: this.ngeoNominatimService.typeaheadSourceDebounced
+    source: this.ngeoNominatimService.typeaheadSourceDebounced,
   })];
 
   /**
