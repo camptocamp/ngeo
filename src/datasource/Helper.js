@@ -127,7 +127,8 @@ export class Helper {
    * @private
    */
   handleDataSourcesAdd_(evt) {
-    const dataSource = evt.element instanceof ngeoDatasourceDataSource;
+    const dataSource = evt.element;
+    console.assert(dataSource instanceof ngeoDatasourceDataSource);
     this.cache_[dataSource.id] = dataSource;
   }
 

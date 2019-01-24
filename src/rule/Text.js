@@ -30,8 +30,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
 export default class extends ngeoRuleRule {
 
   /**
-   * A text rule, which always compares the value with the LIKE operator, by
-   * default.
+   * A text rule, which always compares the value with the LIKE operator, by default.
    *
    * @param {!TextOptions} options Options.
    */
