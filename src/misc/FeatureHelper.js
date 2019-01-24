@@ -255,6 +255,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
     const textLabelValue = textLabelValues.join('\n');
     styles.push(new olStyleStyle({
       text: this.createTextStyle_({
+        propertyName: '',
         name: '',
         text: textLabelValue
       })
@@ -298,6 +299,7 @@ FeatureHelper.prototype.getPointStyle_ = function(feature) {
     const point_to_px = 1.3;
     styles.push(new olStyleStyle({
       text: this.createTextStyle_({
+        propertyName: '',
         name: '',
         text: textLabelValue,
         size: font_size,
@@ -391,6 +393,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
           width: strokeWidth
         }),
         text: this.createTextStyle_({
+          propertyName: '',
           name: '',
           text: length,
           angle: ((azimut % 180) + 180) % 180 - 90
@@ -401,6 +404,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       styles.push(new olStyleStyle({
         geometry: new olGeomPoint(line.getLastCoordinate()),
         text: this.createTextStyle_({
+          propertyName: '',
           name: '',
           text: `${this.numberFormat_(azimut, this.decimals_)}°`,
           size: 10,
@@ -413,6 +417,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       if (showLabel) {
         styles.push(new olStyleStyle({
           text: this.createTextStyle_({
+            propertyName: '',
             name: '',
             text: this.getNameProperty(feature),
             offsetY: -8,
@@ -434,6 +439,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
         const textLabelValue = textLabelValues.join('\n');
         styles.push(new olStyleStyle({
           text: this.createTextStyle_({
+            propertyName: '',
             name: '',
             text: textLabelValue,
             exceedLength: true
@@ -455,6 +461,7 @@ FeatureHelper.prototype.getTextStyle_ = function(feature) {
 
   return new olStyleStyle({
     text: this.createTextStyle_({
+      propertyName: '',
       name: '',
       text: this.getNameProperty(feature),
       size: this.getSizeProperty(feature),
@@ -881,6 +888,7 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
     case ngeoGeometryType.TEXT:
       style = new olStyleStyle({
         text: this.createTextStyle_({
+          propertyName: '',
           name: '',
           text: this.getNameProperty(feature),
           size: this.getSizeProperty(feature),

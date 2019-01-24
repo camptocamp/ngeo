@@ -23,7 +23,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * OSM data by name and address.
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
- * @param {import("ngeo/misc/debounce.js").miscDebounce} ngeoDebounce ngeo Debounce service.
+ * @param {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void>}  ngeoDebounce ngeo Debounce service.
  * @constructor
  * @ngdoc service
  * @ngInject
@@ -40,7 +40,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   this.$http_ = $http;
 
   /**
-   * @type {import("ngeo/misc/debounce.js").miscDebounce}
+   * @type {import("ngeo/misc/debounce.js").miscDebounce<function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void>}
    * @private
    */
   this.ngeoDebounce_ = ngeoDebounce;
@@ -82,8 +82,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   this.typeaheadDebounceDelay_ = 500;
 
   /**
-   * @export
-   * @type {Bloodhound | ((query: string, syncResults: (result: []) => void, asyncResults?: (result: []) => void) => void)}
+   * @type {function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void}
    */
   this.typeaheadSourceDebounced =
     this.ngeoDebounce_(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, true);

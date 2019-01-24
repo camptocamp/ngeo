@@ -22,7 +22,7 @@ import ngeoRuleRule, {RuleOperatorType} from 'ngeo/rule/Rule.js';
  * @property {string} name (RuleOptions)
  * @property {string} [operator] (RuleOptions)
  * @property {Array.<string>} [operators] (RuleOptions)
- * @property {string} [propertyName] (RuleOptions)
+ * @property {string} propertyName (RuleOptions)
  * @property {string} [type] (RuleOptions)
  * @property {number} [upperBoundary] (RuleOptions)
  */
