@@ -20,7 +20,7 @@ class Keyboard {
      * @type {string}
      * @private
      */
-    this.keyAdd_ = 'a';
+    this.keyAdd_ = 'q';
 
     /**
      * The key to press for "REMOVE" action
