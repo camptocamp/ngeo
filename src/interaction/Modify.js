@@ -11,9 +11,13 @@ import olFeature from 'ol/Feature.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<{
+ * @typedef {Object} ModifyEventItem
  * @property {import("ol/Feature.js").default} features
- * }>} ModifyEvent
+ */
+
+
+/**
+ * @typedef {import("ngeo/CustomEvent.js").default.<ModifyEventItem>} ModifyEvent
  */
 
 
@@ -108,7 +112,7 @@ export default class extends olInteractionInteraction {
    * @override
    */
   setActive(active) {
-    olInteractionInteraction.prototype.setActive.call(this, active);
+    super.setActive.call(this, active);
     this.setState_();
   }
 
@@ -129,7 +133,7 @@ export default class extends olInteractionInteraction {
       });
     }
 
-    olInteractionInteraction.prototype.setMap.call(this, map);
+    super.setMap.call(this, map);
 
     if (map) {
       interactions.forEach((interaction) => {
@@ -146,6 +150,9 @@ export default class extends olInteractionInteraction {
    */
   setState_() {
     const map = this.getMap();
+    if (!map) {
+      return;
+    }
     const active = this.getActive();
     const interactions = this.interactions_;
     const keys = this.listenerKeys_;

@@ -13,7 +13,7 @@ import 'bootstrap/js/src/dropdown.js';
  * @hidden
 */
 const module = angular.module('gmfRasterComponent', [
-  gmfRasterRasterService['module'].name,
+  gmfRasterRasterService.name,
   ngeoMiscDebounce.name,
 ]);
 

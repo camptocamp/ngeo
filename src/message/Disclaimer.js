@@ -1,7 +1,7 @@
 import angular from 'angular';
 import 'bootstrap/js/src/alert.js';
 
-import ngeoMessagePopup from 'ngeo/message/Popup.js';
+import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup.js';
 import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message.js';
 import 'ngeo/sass/font.scss';
 
@@ -192,7 +192,7 @@ class Disclaimer extends ngeoMessageMessage {
     }
 
     // (2) Close message (popup or alert)
-    if (obj instanceof ngeoMessagePopup) {
+    if (obj instanceof MessagePopup) {
       // (2.1) Close popup, if not already closed
       if (obj.getOpen()) {
         obj.setOpen(false);

@@ -1,6 +1,6 @@
 import angular from 'angular';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
-import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes.js';
+import gmfThemeThemes, {ThemeNodeType, getSnappingConfig} from 'gmf/theme/Themes.js';
 import ngeoLayertreeController from 'ngeo/layertree/Controller.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
@@ -213,7 +213,7 @@ Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
   // If treeCtrl is snappable and supports WFS, listen to its state change.
   // When it becomes visible, it's added to the list of snappable tree ctrls.
   node = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
-  const snappingConfig = gmfThemeThemes.getSnappingConfig(node);
+  const snappingConfig = getSnappingConfig(node);
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {

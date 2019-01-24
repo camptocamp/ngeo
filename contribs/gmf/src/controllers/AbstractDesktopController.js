@@ -1,5 +1,5 @@
 import angular from 'angular';
-import gmfControllersAbstractAPIController from 'gmf/controllers/AbstractAPIController.js';
+import gmfControllersAbstractAPIController, {AbstractAPIController} from 'gmf/controllers/AbstractAPIController.js';
 import gmfContextualdataModule from 'gmf/contextualdata/module.js';
 import gmfEditingModule from 'gmf/editing/module.js';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
@@ -24,7 +24,7 @@ import olStyleText from 'ol/style/Text.js';
  * This file includes `goog.require`'s for desktop components/directives used
  * by the HTML page and the controller to provide the configuration.
  */
-class AbstractDesktopController extends gmfControllersAbstractAPIController {
+export class AbstractDesktopController extends AbstractAPIController {
   /**
    * @param {Config} config A part of the application config.
    * @param {angular.IScope} $scope Scope.

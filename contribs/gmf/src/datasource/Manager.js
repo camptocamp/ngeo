@@ -1,7 +1,7 @@
 import angular from 'angular';
 import gmfDatasourceOGC from 'gmf/datasource/OGC.js';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases.js';
-import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap.js';
+import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertreeMap.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes.js';
 
@@ -636,7 +636,7 @@ class Manager {
         );
       }
 
-      wmsLayer = gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
+      wmsLayer = getLayer(treeCtrl);
     }
 
     this.treeCtrlCache_[id] = {
@@ -753,7 +753,7 @@ class Manager {
       return;
     }
     const treeCtrl = item.treeCtrl;
-    return gmfLayertreeSyncLayertreeMap.getLayer(treeCtrl);
+    return getLayer(treeCtrl);
   }
 
   /**

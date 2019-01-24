@@ -6,7 +6,7 @@
  */
 import angular from 'angular';
 import './sass/desktop_alt.scss';
-import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractDesktopController, {AbstractDesktopController} from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import gmfImportModule from 'gmf/import/module.js';
 import ngeoGooglestreetviewModule from 'ngeo/googlestreetview/module.js';
@@ -24,7 +24,7 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-class Controller extends gmfControllersAbstractDesktopController {
+class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.

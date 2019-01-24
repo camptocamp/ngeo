@@ -7,7 +7,7 @@
 
 import 'gmf/controllers/desktop.scss';
 import angular from 'angular';
-import gmfControllersAbstractDesktopController from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractDesktopController, {AbstractDesktopController} from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import EPSG2056 from '@geoblocks/proj/src/EPSG_2056.js';
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
@@ -21,7 +21,7 @@ if (!window.requestAnimationFrame) {
   window.location = 'http://geomapfish.org/';
 }
 
-class Controller extends gmfControllersAbstractDesktopController {
+class Controller extends AbstractDesktopController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.

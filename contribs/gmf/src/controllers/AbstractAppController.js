@@ -88,6 +88,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * by the HTML page and the controller to provide the configuration.
  *
  * @param {Config} config A part of the application config.
+ * @param {import('ol/Map.js').default} map The map.
  * @param {angular.IScope} $scope Scope.
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @constructor
@@ -95,7 +96,7 @@ import gmfThemeThemes from 'gmf/theme/Themes.js';
  * @ngInject
  * @export
  */
-function AbstractAppController(config, $scope, $injector) {
+export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Location service
@@ -106,6 +107,12 @@ function AbstractAppController(config, $scope, $injector) {
     // make the injector globally available
     window.injector = $injector;
   }
+
+  /**
+   * @type {import("ol/Map.js").default}
+   * @export
+   */
+  this.map = map;
 
   console.assert(this.map instanceof olMap);
 
@@ -818,14 +825,14 @@ AbstractAppController.prototype.updateCurrentTheme_ = function(fallbackThemeName
  * @protected
  * @return {Element} Span element with font-awesome inside of it
  */
-AbstractAppController.prototype.getLocationIcon = function() {
+export function getLocationIcon() {
   const arrow = document.createElement('span');
   arrow.className = 'fa fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
   const arrowWrapper = document.createElement('span');
   arrowWrapper.appendChild(arrow);
   return arrowWrapper;
-};
+}
 
 
 const module = angular.module('GmfAbstractAppControllerModule', [
