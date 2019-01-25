@@ -20,11 +20,13 @@ import olStyleStyle from 'ol/style/Style.js';
  * just activated the interaction.
  * @property {Element} [continueMsg] Element including the message to display in the help tooltip when the
  * user already added the first point.
- * @property {number} [precision] Defines the number of decimals to keep in the measurement. If not defined,
+ * @property {number} [precision] Defines the number of digits to keep in the measurement. If not defined,
  * then the default behaviour occurs depending on the measure type.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} [style] The style to be used when
+ * @property {number} [decimals] Defines the number of decimals to keep in the measurement. If not defined,
+ * then the default behaviour occurs depending on the measure type.
+ * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [style] The style to be used when
  * drawing is finished.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} [sketchStyle] The style to be used
+ * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [sketchStyle] The style to be used
  * while drawing.
  */
 
@@ -215,7 +217,7 @@ class Measure extends olInteractionInteraction {
    * Creates the draw interaction.
    *
    * @abstract
-   * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default|undefined}
+   * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction|undefined}
    *     style The sketchStyle used for the drawing interaction.
    * @param {import("ol/source/Vector.js").default} source Vector source.
    * @return {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default} The interaction

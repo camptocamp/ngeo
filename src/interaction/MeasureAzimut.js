@@ -74,23 +74,23 @@ export default class extends ngeoInteractionMeasure {
    * @return {string} Formatted measure.
    */
   getFormattedAzimut(line, decimals, format) {
-    const azimut = this.getAzimut(line);
+    const azimut = getAzimut(line);
     return `${format(azimut, decimals)}°`;
   }
+}
 
-  /**
-   * Compute azimut from a 2 points line.
-   * @param {import("ol/geom/LineString.js").default} line LineString.
-   * @return {number} Azimut value.
-   */
-  getAzimut(line) {
-    const coords = line.getCoordinates();
-    const dx = coords[1][0] - coords[0][0];
-    const dy = coords[1][1] - coords[0][1];
-    const rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
-    const factor = dx > 0 ? 1 : -1;
-    return (factor * rad * 180 / Math.PI) % 360;
-  }
+/**
+ * Compute azimut from a 2 points line.
+ * @param {import("ol/geom/LineString.js").default} line LineString.
+ * @return {number} Azimut value.
+ */
+export function getAzimut(line) {
+  const coords = line.getCoordinates();
+  const dx = coords[1][0] - coords[0][0];
+  const dy = coords[1][1] - coords[0][1];
+  const rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
+  const factor = dx > 0 ? 1 : -1;
+  return (factor * rad * 180 / Math.PI) % 360;
 }
 
 

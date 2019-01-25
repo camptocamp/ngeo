@@ -21,7 +21,7 @@ import olFeature from 'ol/Feature.js';
  * @ngdoc controller
  * @ngname ngeoDrawfeatureController
  */
-function Controller($scope, $sce, gettextCatalog,
+export function DrawController($scope, $sce, gettextCatalog,
   ngeoFeatureHelper, ngeoFeatures) {
 
   /**
@@ -144,7 +144,7 @@ function Controller($scope, $sce, gettextCatalog,
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
  * @export
  */
-Controller.prototype.registerInteraction = function(
+DrawController.prototype.registerInteraction = function(
   interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
@@ -160,7 +160,7 @@ Controller.prototype.registerInteraction = function(
  * @param {import("ol/Object/Event.js").default} event Event.
  * @export
  */
-Controller.prototype.handleActiveChange = function(event) {
+DrawController.prototype.handleActiveChange = function(event) {
   this.active = this.interactions_.some(interaction => interaction.getActive(), this);
 };
 
@@ -172,7 +172,7 @@ Controller.prototype.handleActiveChange = function(event) {
  * @param {import("ol/interaction/Draw/Event.js").default|MeasureEvent} event Event.
  * @export
  */
-Controller.prototype.handleDrawEnd = function(type, event) {
+DrawController.prototype.handleDrawEnd = function(type, event) {
   let sketch;
   if (event.feature) {
     // ol.interaction.Draw.Event
@@ -243,7 +243,7 @@ const module = angular.module('ngeoDrawfeatureController', [
   ngeoMiscBtnComponent.name,
   ngeoMiscFeatureHelper.name,
 ]);
-module.controller('ngeoDrawfeatureController', Controller);
+module.controller('ngeoDrawfeatureController', DrawController);
 
 
 export default module;
