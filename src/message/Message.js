@@ -45,123 +45,115 @@ export const MessageType = {
  * @constructor
  * @abstract
  */
-function Message() {}
+export default class {
+  constructor() {}
 
+  /**
+   * Show the message.
+   *
+   * @abstract
+   * @param {Message} message Message.
+   * @protected
+   */
+  showMessage(message) {}
 
-/**
- * Show the message.
- *
- * @abstract
- * @param {Message} message Message.
- * @protected
- */
-Message.prototype.showMessage = function(message) {};
-
-
-/**
- * Show disclaimer message string or object or list of disclame message
- * strings or objects.
- *
- * @param {string|Array.<string>|Message|Array.<Message>}
- *     object A message or list of messages as text or configuration objects.
- * @export
- */
-Message.prototype.show = function(object) {
-  const msgObjects = this.getMessageObjects(object);
-  msgObjects.forEach(this.showMessage, this);
-};
-
-
-/**
- * Display the given error message or list of error messages.
- *
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-Message.prototype.error = function(message) {
-  this.show(this.getMessageObjects(message, MessageType.ERROR));
-};
-
-
-/**
- * Display the given info message or list of info messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-Message.prototype.info = function(message) {
-  this.show(this.getMessageObjects(message, MessageType.INFORMATION));
-};
-
-
-/**
- * Display the given success message or list of success messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-Message.prototype.success = function(message) {
-  this.show(this.getMessageObjects(message, MessageType.SUCCESS));
-};
-
-
-/**
- * Display the given warning message or list of warning messages.
- * @param {string|Array.<string>} message Message or list of messages.
- * @export
- */
-Message.prototype.warn = function(message) {
-  this.show(this.getMessageObjects(message, MessageType.WARNING));
-};
-
-
-/**
- * Returns an array of message object from any given message string, list of
- * message strings, message object or list message objects. The type can be
- * overridden here as well OR defined (if the message(s) is/are string(s),
- * defaults to 'information').
- * @param {string|Array.<string>|Message|Array.<Message>}
- *     object A message or list of messages as text or configuration objects.
- * @param {string=} opt_type The type of message to override the messages with.
- * @return {Array.<Message>} List of message objects.
- * @protected
- */
-Message.prototype.getMessageObjects = function(object, opt_type) {
-  const msgObjects = [];
-  let msgObject = null;
-  const defaultType = MessageType.INFORMATION;
-
-  if (typeof object === 'string') {
-    msgObjects.push({
-      msg: object,
-      type: opt_type !== undefined ? opt_type : defaultType
-    });
-  } else if (Array.isArray(object)) {
-    object.forEach((msg) => {
-      if (typeof object === 'string') {
-        msgObject = {
-          msg: msg,
-          type: opt_type !== undefined ? opt_type : defaultType
-        };
-      } else {
-        msgObject = msg;
-        if (opt_type !== undefined) {
-          msgObject.type = opt_type;
-        }
-      }
-      msgObjects.push(msgObject);
-    }, this);
-  } else {
-    msgObject = object;
-    if (opt_type !== undefined) {
-      msgObject.type = opt_type;
-    }
-    if (msgObject.type === undefined) {
-      msgObject.type = defaultType;
-    }
-    msgObjects.push(msgObject);
+  /**
+   * Show disclaimer message string or object or list of disclame message
+   * strings or objects.
+   *
+   * @param {string|Message|Array<string|Message>}
+   *     object A message or list of messages as text or configuration objects.
+   * @export
+   */
+  show(object) {
+    const msgObjects = this.getMessageObjects(object);
+    msgObjects.forEach(this.showMessage, this);
   }
 
-  return msgObjects;
-};
+  /**
+   * Display the given error message or list of error messages.
+   *
+   * @param {string|Array.<string>} message Message or list of messages.
+   * @export
+   */
+  error(message) {
+    this.show(this.getMessageObjects(message, MessageType.ERROR));
+  }
 
+  /**
+   * Display the given info message or list of info messages.
+   * @param {string|Array.<string>} message Message or list of messages.
+   * @export
+   */
+  info(message) {
+    this.show(this.getMessageObjects(message, MessageType.INFORMATION));
+  }
 
-export default Message;
+  /**
+   * Display the given success message or list of success messages.
+   * @param {string|Array.<string>} message Message or list of messages.
+   * @export
+   */
+  success(message) {
+    this.show(this.getMessageObjects(message, MessageType.SUCCESS));
+  }
+
+  /**
+   * Display the given warning message or list of warning messages.
+   * @param {string|Array.<string>} message Message or list of messages.
+   * @export
+   */
+  warn(message) {
+    this.show(this.getMessageObjects(message, MessageType.WARNING));
+  }
+
+  /**
+   * Returns an array of message object from any given message string, list of
+   * message strings, message object or list message objects. The type can be
+   * overridden here as well OR defined (if the message(s) is/are string(s),
+   * defaults to 'information').
+   * @param {string|Message|Array<string|Message>}
+   *     object A message or list of messages as text or configuration objects.
+   * @param {string=} opt_type The type of message to override the messages with.
+   * @return {Array<Message>} List of message objects.
+   * @protected
+   */
+  getMessageObjects(object, opt_type) {
+    /** @type {Array<Message>} */
+    const msgObjects = [];
+    const defaultType = MessageType.INFORMATION;
+
+    if (typeof object === 'string') {
+      msgObjects.push({
+        msg: /** @type {string} */(object),
+        type: opt_type !== undefined ? opt_type : defaultType
+      });
+    } else if (Array.isArray(object)) {
+      /** @type {Array<string|Message>} */(object).forEach((msg) => {
+        if (typeof object === 'string') {
+          msgObjects.push({
+            msg: /** @type {string} */(msg),
+            type: opt_type !== undefined ? opt_type : defaultType
+          });
+        } else {
+          const msgObject = /** @type {Message} */(msg);
+          if (opt_type !== undefined) {
+            msgObject.type = opt_type;
+          }
+          msgObjects.push(msgObject);
+        }
+      });
+    } else {
+      const msgObject = /** @type {Message} */(object);
+      if (opt_type !== undefined) {
+        msgObject.type = opt_type;
+      }
+      if (msgObject.type === undefined) {
+        msgObject.type = defaultType;
+      }
+      msgObjects.push(msgObject);
+    }
+
+    return msgObjects;
+  }
+}

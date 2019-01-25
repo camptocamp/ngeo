@@ -15,7 +15,7 @@ class Disclaimer extends ngeoMessageMessage {
   /**
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {PopupFactory} ngeoCreatePopup Popup service.
+   * @param {import('ngeo/message/Popup.js').PopupFactory} ngeoCreatePopup Popup service.
    * @ngInject
    */
   constructor($sce, gettextCatalog, ngeoCreatePopup) {
@@ -35,7 +35,7 @@ class Disclaimer extends ngeoMessageMessage {
 
     /**
      * @private
-     * @type {PopupFactory}
+     * @type {import('ngeo/message/Popup.js').PopupFactory}
      */
     this.createPopup_ = ngeoCreatePopup;
 
@@ -52,7 +52,7 @@ class Disclaimer extends ngeoMessageMessage {
 
     /**
      * Cache of messages.
-     * @type {Object.<string, JQuery|import("ngeo/message/Popup.js").default>}
+     * @type {Object.<string, JQuery|import("ngeo/message/Popup.js").MessagePopup>}
      * @private
      */
     this.messages_ = {};
@@ -61,7 +61,7 @@ class Disclaimer extends ngeoMessageMessage {
   /**
    * Show disclaimer message string or object or list of disclaimer message
    * strings or objects.
-   * @param {string|Array.<string>|Message|Array.<Message>}
+   * @param {string|import('ngeo/message/Message.js').Message|Array.<string|import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    * @export
    */
@@ -72,7 +72,7 @@ class Disclaimer extends ngeoMessageMessage {
   /**
    * Close disclaimer message string or object or list of disclaimer message
    * strings or objects.
-   * @param {string|Array.<string>|Message|Array.<Message>}
+   * @param {string|import('ngeo/message/Message.js').Message|Array.<string|import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    * @export
    */
@@ -83,14 +83,14 @@ class Disclaimer extends ngeoMessageMessage {
 
   /**
    * Show the message.
-   * @param {Message} message Message.
+   * @param {import('ngeo/message/Message.js').Message} message Message.
    * @protected
    * @override
    */
   showMessage(message) {
     const gettextCatalog = this.gettextCatalog_;
     const type = message.type;
-    console.assert(typeof type, 'Type should be set.' == 'string');
+    console.assert(typeof type == 'string', 'Type should be set.');
 
     // No need to do anything if message already exist.
     const uid = this.getMessageUid_(message);
@@ -169,7 +169,7 @@ class Disclaimer extends ngeoMessageMessage {
   }
 
   /**
-   * @param {Message} message Message.
+   * @param {import('ngeo/message/Message.js').Message} message Message.
    * @return {string} The uid.
    * @private
    */
@@ -179,7 +179,7 @@ class Disclaimer extends ngeoMessageMessage {
 
   /**
    * Close the message.
-   * @param {Message} message Message.
+   * @param {import('ngeo/message/Message.js').Message} message Message.
    * @protected
    */
   closeMessage_(message) {
@@ -194,14 +194,16 @@ class Disclaimer extends ngeoMessageMessage {
     // (2) Close message (popup or alert)
     if (obj instanceof MessagePopup) {
       // (2.1) Close popup, if not already closed
-      if (obj.getOpen()) {
-        obj.setOpen(false);
+      const mpObj = /** @type {MessagePopup} */(obj);
+      if (mpObj.getOpen()) {
+        mpObj.setOpen(false);
       }
     } else {
       // (2.2) Check if the message hasn't been closed using the UI, i.e. by
       //       clicking the close button. If not, then close it.
-      if (obj.hasClass('show')) {
-        obj.alert('close');
+      const jqueryObj = /** @type {JQuery} */(obj);
+      if (jqueryObj.hasClass('show')) {
+        jqueryObj.alert('close');
       }
     }
 

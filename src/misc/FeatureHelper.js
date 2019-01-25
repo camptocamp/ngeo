@@ -1190,9 +1190,11 @@ FeatureHelper.prototype.getMeasure = function(feature) {
       measure = getFormattedPoint(geometry, this.decimals_, this.ngeoNumberCoordinates_);
     } else {
       const coordinates = geometry.getCoordinates();
-      const args = this.pointFilterArgs_.slice(0);
-      args.unshift(coordinates);
-      measure = this.pointFilterFn_(...args);
+      if (this.pointFilterArgs_.length > 1) {
+        measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0], this.pointFilterArgs_[1]).join(', ');
+      } else {
+        measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0]).join(', ');
+      }
     }
   }
 

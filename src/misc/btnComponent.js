@@ -1,6 +1,5 @@
-/**
- */
 import angular from 'angular';
+
 
 /**
  * @type {!angular.IModule}
@@ -49,7 +48,7 @@ function btnGroupComponent($parse) {
      * @param {!angular.IScope} scope Scope.
      * @param {!JQuery=} element Element.
      * @param {!angular.IAttributes=} attrs Attributes.
-     * @param {!import("ngeo/misc/btnComponent.js").default.BtnGroupController=} controller Controller.
+     * @param {!BtnGroupController=} controller Controller.
      */
     link: (scope, element, attrs, controller) => {
       const setActive = $parse(attrs['ngeoBtnGroupActive']).assign;
@@ -80,7 +79,7 @@ module.directive('ngeoBtnGroup', btnGroupComponent);
  */
 function BtnGroupController($scope) {
   /**
-   * @type {!Array.<!angular.parse.Expression>}
+   * @type {!Array.<!angular.ICompiledExpression>}
    * @private
    */
   this.buttons_ = [];
@@ -106,7 +105,7 @@ BtnGroupController.prototype.activate = function(index) {
 
 
 /**
- * @param {angular.parse.Expression} expressionFn Expression function.
+ * @param {angular.ICompiledExpression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
 BtnGroupController.prototype.addButton = function(expressionFn) {

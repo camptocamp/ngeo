@@ -38,7 +38,7 @@ function component($window) {
     },
     /**
      * @param {angular.IScope} scope Scope.
-     * @param {JQuery} element Element.
+     * @param {JQuery<HTMLInputElement>} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
@@ -55,8 +55,9 @@ function component($window) {
            * @param {!ProgressEvent} evt Event.
            */
           function(evt) {
+            const target = /** @type {FileReader} */(evt.target);
             scope.$apply(() => {
-              scope['fileContent'] = evt.target.result;
+              scope['fileContent'] = target.result;
             });
           });
         fileReader.readAsText(changeEvent.target.files[0]);

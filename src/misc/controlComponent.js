@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 import olControlControl from 'ol/control/Control.js';
@@ -40,11 +38,11 @@ function component() {
      */
     link: (scope, element, attrs) => {
 
-      const control = /** @type {import("ol/control/Contrimport("ol/js.js").default").default} */
+      const control = /** @type {import('ol/control/Control.js').default} */
               (scope.$eval(attrs['ngeoControl']));
       console.assert(control instanceof olControlControl);
 
-      const map = /** @type {import("ol/Map.js").default} */
+      const map = /** @type {import('ol/Map.js').default} */
               (scope.$eval(attrs['ngeoControlMap']));
       console.assert(map instanceof olMap);
 

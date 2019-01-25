@@ -56,7 +56,7 @@ class Notification extends ngeoMessageMessage {
   /**
    * Display the given message string or object or list of message strings or
    * objects.
-   * @param {string|Array.<string>|Message|Array.<Message>}
+   * @param {string|Array.<string>|import('ngeo/message/Message.js').Message|Array.<import('ngeo/message/Message.js').Message>}
    *     object A message or list of messages as text or configuration objects.
    * @export
    */
@@ -79,7 +79,7 @@ class Notification extends ngeoMessageMessage {
    */
   showMessage(message) {
     const type = message.type;
-    console.assert(typeof type, 'Type should be set.' == 'string');
+    console.assert(typeof type == 'string', 'Type should be set.');
 
     const classNames = ['alert', 'fade', 'show'];
     switch (type) {
