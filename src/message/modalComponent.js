@@ -104,7 +104,7 @@ class Controller {
 
     /**
      * @export
-     * @type {angular.NgModelController|null}
+     * @type {angular.INgModelController|null}
      */
     this.ngModel;
   }
@@ -115,7 +115,7 @@ class Controller {
     this.modal_ = this.$element_.children();
 
     if (!this.closable) {
-      this.modal_.attr('data-keyboard', false);
+      this.modal_.attr('data-keyboard', 'false');
       this.modal_.attr('data-backdrop', 'static');
     }
 

@@ -1,6 +1,3 @@
-/**
- */
-
 import './control.css';
 import angular from 'angular';
 import ngeoMapModule from 'ngeo/map/module.js';
@@ -45,7 +42,7 @@ function MainController() {
   });
 
   /**
-   * @type {import("ol/control/Contrimport("ol/js.js").default").default}
+   * @type {import('ol/control/Control.js').default").default}
    * @export
    */
   this.control = new olControlMousePosition({

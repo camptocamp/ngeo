@@ -43,10 +43,12 @@ function File($q, $http, gettext) {
     }
     fileReader = new FileReader();
     fileReader.onload = function(evt) {
-      defer.resolve(evt.target.result);
+      const target = /** @type {FileReader} */(evt.target);
+      defer.resolve(target.result);
     };
     fileReader.onerror = function(evt) {
-      const err = evt.target.error;
+      const target = /** @type {FileReader} */(evt.target);
+      const err = target.error;
       console.error('Reading file failed: ', err);
       defer.reject({
         'message': err.code == 20 ? gettext('Operation canceled') : gettext('Read failed'),

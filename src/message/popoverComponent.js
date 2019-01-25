@@ -127,7 +127,7 @@ function PopoverController($scope) {
 
   function onMouseDown(clickEvent) {
     if (this.anchorElm[0] !== clickEvent.target &&
-      this.bodyElm.parent()[0] !== clickEvent.target &
+      this.bodyElm.parent()[0] !== clickEvent.target &&
       this.bodyElm.parent().find(clickEvent.target).length === 0 && this.shown) {
       this.dismissPopover();
     }

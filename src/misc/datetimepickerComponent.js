@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import DateFormatter from 'ngeo/misc/php-date-formatter.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.js';
@@ -76,7 +74,9 @@ function Controller($element, gettextCatalog) {
  */
 Controller.prototype.$onInit = function() {
   const lang = this.gettextCatalog_.getCurrentLanguage();
+  // @ts-ignore: Missing in DefinitelyTyped
   $.datetimepicker.setLocale(lang);
+  // @ts-ignore: Missing in DefinitelyTyped
   $.datetimepicker.setDateFormatter(new DateFormatter());
   if (typeof this.options === 'string') {
     this.options = angular.fromJson(this.options);
