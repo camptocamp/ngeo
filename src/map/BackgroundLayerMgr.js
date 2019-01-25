@@ -11,10 +11,14 @@ import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
 
 /**
- * @typedef {import("ngeo/CustomEvent.js").default.<{
+ * @typedef {Object} BackgroundEventDetails
  * @property {import("ol/layer/Base.js").default} current
  * @property {import("ol/layer/Base.js").default} previous
- * }>} BackgroundEvent
+ */
+
+
+/**
+ * @typedef {import("ngeo/CustomEvent.js").default.<BackgroundEventDetails>} BackgroundEvent
  */
 
 
@@ -64,7 +68,7 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
  */
 class BackgroundLayerMgr extends olObservable {
   /**
-   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Themes service.
+   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Themes service.
    * @ngInject
    */
   constructor(ngeoLayerHelper) {
@@ -78,7 +82,7 @@ class BackgroundLayerMgr extends olObservable {
     this.mapUids_ = {};
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").default}
+     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -187,8 +191,7 @@ class BackgroundLayerMgr extends olObservable {
       }
 
       layers.forEach((layer) => {
-        console.assert(layer instanceof olLayerLayer);
-        if (layer) {
+        if (layer instanceof olLayerLayer) {
           let hasUpdates = false;
           const updatedDimensions = {};
           for (const key in layer.get('dimensions')) {

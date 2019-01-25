@@ -1,9 +1,10 @@
 import angular from 'angular';
 import * as olArray from 'ol/array.js';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities.js';
-import OlLayerGroup from 'ol/layer/Group.js';
+import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 import olLayerTile from 'ol/layer/Tile.js';
+import olLayerLayer from 'ol/layer/Layer.js';
 import * as olObj from 'ol/obj.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
@@ -178,7 +179,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function(capabilitiesUR
         crossOrigin: 'anonymous',
         layer: layerName
       }));
-      const source = new olSourceWMTS(/** @type {olx.source.WMTSOptions} */ (options));
+      const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */ (options));
       if (opt_dimensions && !olObj.isEmpty(opt_dimensions)) {
         source.updateDimensions(opt_dimensions);
       }
@@ -216,18 +217,18 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
   });
 
   console.assert(options);
-  const source = new olSourceWMTS(
-    /** @type {olx.source.WMTSOptions} */ (options));
+  const source = new olSourceWMTS(/** @type {import('ol/source/WMTS.js').Options} */(options));
 
   if (opt_dimensions && !olObj.isEmpty(opt_dimensions)) {
     source.updateDimensions(opt_dimensions);
   }
 
-  return new olLayerTile({
-    'capabilitiesStyles': layerCap['Style'],
+  const result = new olLayerTile({
     preload: Infinity,
     source: source
   });
+  result.set('capabilitiesStyles', layerCap['Style']);
+  return result;
 };
 
 
@@ -240,7 +241,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function(
  * @export
  */
 LayerHelper.prototype.createBasicGroup = function(opt_layers) {
-  const group = new OlLayerGroup();
+  const group = new olLayerGroup();
   if (opt_layers) {
     group.setLayers(opt_layers);
   }
@@ -282,15 +283,15 @@ LayerHelper.prototype.getGroupFromMap = function(map, groupName) {
  * Get an array of all layers in a group. The group can contain multiple levels
  * of others groups.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @return {Array.<import("ol/layer/Layer.js").default>} Layers.
+ * @return {Array<import("ol/layer/Layer.js").default>} Layers.
  * @export
  */
 LayerHelper.prototype.getFlatLayers = function(layer) {
-  if (layer instanceof OlLayerGroup) {
+  if (layer instanceof olLayerGroup) {
     const sublayers = layer.getLayers().getArray();
-    const hasGroupLayer = sublayers.some(sublayer => sublayer instanceof OlLayerGroup);
+    const hasGroupLayer = sublayers.some(sublayer => sublayer instanceof olLayerGroup);
     if (!hasGroupLayer) {
-      return sublayers.slice();
+      return /** @type {Array<import("ol/layer/Layer.js").default>} */(sublayers.slice());
     }
   }
   return this.getFlatLayers_(layer, [], undefined);
@@ -304,9 +305,9 @@ LayerHelper.prototype.getFlatLayers = function(layer) {
  * Computed opacity is a custom 'back-up' value that contains
  * the calculated value of all ancestors and the given layer.
  * @param {import("ol/layer/Base.js").default} layer The base layer, mostly a group of layers.
- * @param {Array.<import("ol/layer/Base.js").default>} array An array to add layers.
+ * @param {Array<olLayerLayer>} array An array to add layers.
  * @param {number|undefined} computedOpacity Opacity inherited from ancestor layer groups.
- * @return {Array.<import("ol/layer/Layer.js").default>} Layers.
+ * @return {Array<olLayerLayer>} Layers.
  * @private
  */
 LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
@@ -316,12 +317,12 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
   } else {
     computedOpacity = opacity;
   }
-  if (layer instanceof OlLayerGroup) {
+  if (layer instanceof olLayerGroup) {
     const sublayers = layer.getLayers();
     sublayers.forEach((l) => {
       this.getFlatLayers_(l, array, computedOpacity);
     });
-  } else {
+  } else if (layer instanceof olLayerLayer) {
     if (array.indexOf(layer) < 0) {
       layer.set('inheritedOpacity', computedOpacity, true);
       array.push(layer);
@@ -343,7 +344,7 @@ LayerHelper.prototype.getFlatLayers_ = function(layer, array, computedOpacity) {
 LayerHelper.prototype.getLayerByName = function(layerName, layers) {
   let found = null;
   layers.some((layer) => {
-    if (layer instanceof OlLayerGroup) {
+    if (layer instanceof olLayerGroup) {
       const sublayers = layer.getLayers().getArray();
       found = this.getLayerByName(layerName, sublayers);
     } else if (layer.get('layerNodeName') === layerName) {
@@ -387,7 +388,7 @@ LayerHelper.prototype.getWMTSLegendURL = function(layer) {
  * @param {number=} opt_legendHeight the legend height.
  * @param {string=} opt_servertype the OpenLayers server type.
  * @param {number=} opt_dpi the DPI.
- * @param {Array.number=} opt_bbox the bbox.
+ * @param {Array<number>=} opt_bbox the bbox.
  * @param {string=} opt_srs The projection code.
  * @param {Object.<string, string>=} opt_additionalQueryString Additional query string parameters.
  * @return {string|undefined} The legend URL or undefined.
@@ -477,11 +478,10 @@ LayerHelper.prototype.refreshWMSLayer = function(layer) {
  * @param {number} ZIndex The ZIndex for children element.
  */
 LayerHelper.prototype.setZIndexToFirstLevelChildren = function(element, ZIndex) {
-  if (!(element instanceof OlLayerGroup)) {
-    return;
+  if (element instanceof olLayerGroup) {
+    const innerGroupLayers = element.getLayers();
+    innerGroupLayers.forEach(innerLayer => innerLayer.setZIndex(ZIndex));
   }
-  const innerGroupLayers = element.getLayers();
-  innerGroupLayers.forEach(innerLayer => innerLayer.setZIndex(ZIndex));
 };
 
 

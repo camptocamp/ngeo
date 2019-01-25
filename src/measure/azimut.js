@@ -1,10 +1,8 @@
-/**
- */
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoGeometryType from 'ngeo/GeometryType.js';
-import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut.js';
+import ngeoInteractionMeasureAzimut, {getAzimut} from 'ngeo/interaction/MeasureAzimut.js';
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import {fromCircle} from 'ol/geom/Polygon.js';
@@ -37,7 +35,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
      * @param {!angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
+     * @param {import("ngeo/draw/Controller.js").DrawController} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 
@@ -60,7 +58,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
         measureAzimut,
         'measureend',
         /**
-         * @param {MeasureEvent} event Event.
+         * @param {import('ngeo/interaction/Measure.js').MeasureEvent} event Event.
          */
         (event) => {
           // In the case of azimut measure interaction, the feature's
@@ -73,7 +71,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
             geometry.getGeometries()[1]);
           const polygon = fromCircle(circle, 64);
           event.detail.feature = new olFeature(polygon);
-          const azimut = ngeoInteractionMeasureAzimut.getAzimut(
+          const azimut = getAzimut(
             /** @type {import("ol/geom/LineString.js").default} */ (geometry.getGeometries()[0])
           );
           event.detail.feature.set('azimut', azimut);

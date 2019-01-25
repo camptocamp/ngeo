@@ -62,7 +62,7 @@ function directive(ngeoPopupTemplateUrl) {
       /**
        * @param {JQueryEventObject} evt Event.
        */
-      scope.close = function(evt) {
+      scope['close'] = function(evt) {
         if (evt) {
           evt.stopPropagation();
           evt.preventDefault();

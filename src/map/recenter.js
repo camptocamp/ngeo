@@ -1,6 +1,5 @@
-/**
- */
 import angular from 'angular';
+
 
 /**
  * @type {!angular.IModule}
@@ -59,11 +58,14 @@ function directive() {
       });
 
       // if the children is an option inside a select
-      $element.on('change', (event) => {
+      /**
+       * @param {JQuery.ChangeEvent<any, any, any, HTMLSelectElement>} event The event
+       */
+      const ce = (event) => {
         const selected = event.target.options[event.target.selectedIndex];
         recenter(angular.element(selected));
-      });
-
+      };
+      $element.on({change: ce});
     }
   };
 }

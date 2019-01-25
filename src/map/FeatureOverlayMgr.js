@@ -4,14 +4,13 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import * as olObj from 'ol/obj.js';
 import olSourceVector from 'ol/source/Vector.js';
-import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunction} from 'ol/style/Style.js';
+import {toFunction as toStyleFunction, createDefaultStyle as olStyleDefaultFunction} from 'ol/style/Style.js';
 
 
 /**
- * @typedef {Object}
- * @property {import("ol/StyleFunction.js").default} styleFunction
- *  features: Object.<string, ol.Feature>
- * }} MapFeatureOverlayGroup
+ * @typedef {Object} MapFeatureOverlayGroup
+ * @property {import('ol/style/Style.js').StyleFunction} styleFunction
+ * @property {Object.<string, import('ol/Feature.js').default>} features
  */
 
 
@@ -37,16 +36,16 @@ import olStyleStyle, {toFunction as toStyleFunction, createDefaultStyle as olSty
  * @ngdoc service
  * @ngname ngeoFeatureOverlayMgr
  */
-function FeatureOverlayMgr() {
+export function FeatureOverlayMgr() {
 
   /**
-   * @type {Object.<string, number>}
+   * @type {Object<string, number>}
    * @private
    */
   this.featureUidToGroupIndex_ = {};
 
   /**
-   * @type {Array.<MapFeatureOverlayGroup>}
+   * @type {Array<MapFeatureOverlayGroup>}
    * @private
    */
   this.groups_ = [];
@@ -128,7 +127,7 @@ FeatureOverlayMgr.prototype.getLayer = function() {
 
 
 /**
- * @return {import("ngeo/map/FeatureOverlay.js").default} Feature overlay.
+ * @return {import("ngeo/map/FeatureOverlay.js").FeatureOverlay} Feature overlay.
  * @export
  */
 FeatureOverlayMgr.prototype.getFeatureOverlay = function() {
@@ -151,7 +150,7 @@ FeatureOverlayMgr.prototype.init = function(map) {
 
 
 /**
- * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/style/Style.js").StyleFunction} style
  * Style.
  * @param {number} groupIndex Group index.
  * @export
@@ -159,8 +158,7 @@ FeatureOverlayMgr.prototype.init = function(map) {
 FeatureOverlayMgr.prototype.setStyle = function(style, groupIndex) {
   console.assert(groupIndex >= 0);
   console.assert(groupIndex < this.groups_.length);
-  this.groups_[groupIndex].styleFunction = style === null ?
-    olStyleStyle.defaultFunction : toStyleFunction(style);
+  this.groups_[groupIndex].styleFunction = style === null ? olStyleDefaultFunction : toStyleFunction(style);
 };
 
 

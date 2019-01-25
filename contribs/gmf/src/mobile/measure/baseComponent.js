@@ -66,7 +66,7 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   this.precision;
 
   /**
-   * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default}
+   * @type {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction}
    * @export
    */
   this.sketchStyle = new olStyleStyle({

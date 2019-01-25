@@ -3,13 +3,13 @@ import * as olEvents from 'ol/events.js';
 
 /**
  * @constructor
- * @param {import("ngeo/map/FeatureOverlayMgr.js").default} manager The feature overlay manager.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  */
 export function FeatureOverlay(manager, index) {
 
   /**
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.manager_ = manager;
@@ -85,7 +85,7 @@ FeatureOverlay.prototype.setFeatures = function(features) {
 
 /**
  * Set a style for the feature overlay.
- * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import("ol/StyleFunction.js").default} style
+ * @param {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} style
  * Style.
  * @export
  */

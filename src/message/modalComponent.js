@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'bootstrap/js/src/modal.js';

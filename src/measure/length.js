@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 import ngeoDrawController from 'ngeo/draw/Controller.js';
 import ngeoMiscFilters from 'ngeo/misc/filters.js';
@@ -35,7 +33,7 @@ function directive($compile, gettextCatalog, $filter, $injector) {
      * @param {!angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
-     * @param {import("ngeo/draw/Controller.js").default} drawFeatureCtrl Controller.
+     * @param {import('ngeo/draw/Controller.js').DrawController} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
 

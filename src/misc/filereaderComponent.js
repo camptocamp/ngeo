@@ -1,5 +1,3 @@
-/**
- */
 import angular from 'angular';
 
 /**
@@ -47,7 +45,11 @@ function component($window) {
       if (!supported) {
         return;
       }
-      element.on('change', (changeEvent) => {
+
+      /**
+       * @param {JQuery.ChangeEvent<any, any, any, HTMLInputElement>} changeEvent The event
+       */
+      const ce = (changeEvent) => {
         /** @type {!FileReader} */
         const fileReader = new $window.FileReader();
         fileReader.onload = (
@@ -61,7 +63,8 @@ function component($window) {
             });
           });
         fileReader.readAsText(changeEvent.target.files[0]);
-      });
+      };
+      element.on({change: ce});
     }
   };
 }
