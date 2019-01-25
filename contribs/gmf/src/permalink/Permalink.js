@@ -107,13 +107,12 @@ const ParamPrefix = {
  * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
  * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
  * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
- * @param {User} gmfUser User.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
 function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
-  ngeoStateManager, ngeoLocation, gmfUser) {
+  ngeoStateManager, ngeoLocation) {
 
   /**
    * @type {!angular.IQService}
@@ -230,8 +229,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
    * @type {?import("gmf/datasource/ExternalDataSourcesManager.js").default}
    * @private
    */
-  this.gmfExternalDataSourcesManager_ =
-    $injector.has('gmfExternalDataSourcesManager') ?
+  this.gmfExternalDataSourcesManager_ = $injector.has('gmfExternalDataSourcesManager') ?
       $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
@@ -251,28 +249,19 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
    * @type {?import("gmf/theme/Manager.js").default}
    * @private
    */
-  this.gmfThemeManager_ = $injector.has('gmfThemeManager') ?
-    $injector.get('gmfThemeManager') : null;
+  this.gmfThemeManager_ = $injector.has('gmfThemeManager') ? $injector.get('gmfThemeManager') : null;
 
   /**
    * @type {string|undefined}
    * @private
    */
-  this.defaultTheme_ = $injector.has('defaultTheme') ?
-    $injector.get('defaultTheme') : undefined;
+  this.defaultTheme_ = $injector.has('defaultTheme') ? $injector.get('defaultTheme') : undefined;
 
   /**
    * @type {?import("gmf/layertree/TreeManager.js").default}
    * @private
    */
-  this.gmfTreeManager_ = $injector.has('gmfTreeManager') ?
-    $injector.get('gmfTreeManager') : null;
-
-  /**
-   * @type {User}
-   * @private
-   */
-  this.user_ = gmfUser;
+  this.gmfTreeManager_ = $injector.has('gmfTreeManager') ? $injector.get('gmfTreeManager') : null;
 
   // == other properties ==
 
@@ -286,15 +275,13 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
    * @type {?import("ngeo/statemanager/WfsPermalink.js").default}
    * @private
    */
-  this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ?
-    $injector.get('ngeoWfsPermalink') : null;
+  this.ngeoWfsPermalink_ = $injector.has('ngeoWfsPermalink') ? $injector.get('ngeoWfsPermalink') : null;
 
   /**
    * @type {?User}
    * @export
    */
-  this.gmfUser_ = $injector.has('gmfUser') ?
-    $injector.get('gmfUser') : null;
+  this.gmfUser_ = $injector.has('gmfUser') ? $injector.get('gmfUser') : null;
 
   /**
    * @type {?import("ol/Map.js").default}
@@ -1022,7 +1009,7 @@ Permalink.prototype.initLayers_ = function() {
     this.$timeout_(() => {
       if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
         // we don't have any layertree
-        if (authenticationRequired && this.user_.role_id === null) {
+        if (authenticationRequired && this.gmfUser_ && this.gmfUser_.role_id === null) {
           this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
         }
         return;
@@ -1081,7 +1068,7 @@ Permalink.prototype.initLayers_ = function() {
         });
       });
 
-      if (authenticationRequired && this.user_.role_id === null) {
+      if (authenticationRequired && this.gmfUser_ && this.gmfUser_.role_id === null) {
         this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
       }
     });
