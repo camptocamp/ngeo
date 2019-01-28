@@ -12,11 +12,11 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  *
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
  * @constructor
  * @ngInject
  */
-function Query($http, $q, gmfThemes) {
+export function ObjectEditingQuery($http, $q, gmfThemes) {
 
   /**
    * @type {angular.IHttpService}
@@ -31,7 +31,7 @@ function Query($http, $q, gmfThemes) {
   this.q_ = $q;
 
   /**
-   * @type {import("gmf/theme/Themes.js").default}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -41,7 +41,6 @@ function Query($http, $q, gmfThemes) {
    * @private
    */
   this.getQueryableLayerNodesDefered_ = null;
-
 }
 
 
@@ -49,7 +48,7 @@ function Query($http, $q, gmfThemes) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-Query.prototype.getQueryableLayersInfo = function() {
+ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
 
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
@@ -156,7 +155,7 @@ function getQueryableLayersInfoFromThemes(
  * @return {angular.IPromise} Promise.
  * @export
  */
-Query.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
+ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
   const resolution = /** @type {number} */(view.getResolution());
@@ -199,7 +198,7 @@ Query.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
 const module = angular.module('gmfObjectEditingQuery', [
   gmfThemeThemes.name,
 ]);
-module.service('gmfObjectEditingQuery', Query);
+module.service('gmfObjectEditingQuery', ObjectEditingQuery);
 
 
 export default module;

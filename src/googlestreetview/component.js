@@ -50,7 +50,7 @@ class Controller {
   /**
    * @param {JQuery} $element Element.
    * @param {!angular.IScope} $scope Scope.
-   * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager.
    * @private
    * @ngInject

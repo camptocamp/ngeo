@@ -95,7 +95,7 @@ module.directive('gmfTimeSlider', directive);
 
 /**
  * TimeSliderController - directive controller
- * @param {import("ngeo/misc/WMSTime.js").default} ngeoWMSTime WMSTime service.
+ * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime WMSTime service.
  * @constructor
  * @private
  * @ngInject
@@ -105,7 +105,7 @@ module.directive('gmfTimeSlider', directive);
 function Controller(ngeoWMSTime) {
 
   /**
-   * @type {import("ngeo/misc/WMSTime.js").default}
+   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

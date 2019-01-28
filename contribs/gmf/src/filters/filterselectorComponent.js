@@ -76,14 +76,14 @@ class Controller {
    * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered
    *     The Gmf value service that determines the data source currently being
    *     filtered.
-   * @param {import("gmf/datasource/Helper.js").default} gmfDataSourcesHelper Gmf data
+   * @param {import("gmf/datasource/Helper.js").Helper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
-   * @param {import("gmf/filters/SavedFilters.js").default} gmfSavedFilters Gmf saved filters service.
+   * @param {import("gmf/filters/SavedFilters.js").SavedFilter} gmfSavedFilters Gmf saved filters service.
    * @param {User} gmfUser User.
-   * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
-   * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
+   * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
+   * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo FeatureOverlay
    *     manager
-   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -149,13 +149,13 @@ class Controller {
     );
 
     /**
-     * @type {import("gmf/datasource/Helper.js").default}
+     * @type {import("gmf/datasource/Helper.js").Helper}
      * @private
      */
     this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
 
     /**
-     * @type {import("gmf/filters/SavedFilters.js").default}
+     * @type {import("gmf/filters/SavedFilters.js").SavedFilter}
      * @export
      */
     this.gmfSavedFilters = gmfSavedFilters;
@@ -183,7 +183,7 @@ class Controller {
     );
 
     /**
-     * @type {import("ngeo/message/Notification.js").default}
+     * @type {import("ngeo/message/Notification.js").MessageNotification}
      * @private
      */
     this.ngeoNotification_ = ngeoNotification;
@@ -195,7 +195,7 @@ class Controller {
     this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").default}
+     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
@@ -650,7 +650,7 @@ class Controller {
         this.ngeoRuleHelper_.serializeRules(this.directedRules) : [];
 
       // (2) Ask the service to save it
-      const item = /** @type {!import("gmf/filters/SavedFilters.js").default.Item} */ ({
+      const item = /** @type {!import("gmf/filters/SavedFilters.js").SavedFilterItem} */ ({
         condition,
         customRules,
         dataSourceId,
@@ -666,7 +666,7 @@ class Controller {
 
   /**
    * Load a saved filter item, replacing the current rules.
-   * @param {!import("gmf/filters/SavedFilters.js").default.Item} filterItem Filter item.
+   * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} filterItem Filter item.
    * @export
    */
   saveFilterLoadItem(filterItem) {
@@ -708,7 +708,7 @@ class Controller {
 
   /**
    * Remove a saved filter item.
-   * @param {!import("gmf/filters/SavedFilters.js").default.Item} item Filter item.
+   * @param {!import("gmf/filters/SavedFilters.js").SavedFilterItem} item Filter item.
    * @export
    */
   saveFilterRemoveItem(item) {

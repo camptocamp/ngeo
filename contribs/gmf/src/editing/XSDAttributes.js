@@ -10,7 +10,7 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute.js';
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-function XSDAttribute($http, gmfLayersUrl) {
+function EditingXSDAttributeService($http, gmfLayersUrl) {
 
   /**
    * @type {angular.IHttpService}
@@ -38,7 +38,7 @@ function XSDAttribute($http, gmfLayersUrl) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-XSDAttribute.prototype.getAttributes = function(id) {
+EditingXSDAttributeService.prototype.getAttributes = function(id) {
   if (!this.promises_[id]) {
     const url = `${this.baseUrl_}/${id}/md.xsd`;
     this.promises_[id] = this.http_.get(url).then(
@@ -52,7 +52,7 @@ XSDAttribute.prototype.getAttributes = function(id) {
  * @return {Array.<Attribute>} List of attributes.
  * @export
  */
-XSDAttribute.prototype.handleGetAttributes_ = function(resp) {
+EditingXSDAttributeService.prototype.handleGetAttributes_ = function(resp) {
   return new ngeoFormatXSDAttribute().read(resp.data);
 };
 
@@ -61,7 +61,7 @@ XSDAttribute.prototype.handleGetAttributes_ = function(resp) {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfXSDAttributes', []);
-module.service('gmfXSDAttributes', XSDAttribute);
+module.service('gmfXSDAttributes', EditingXSDAttributeService);
 
 
 export default module;

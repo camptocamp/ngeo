@@ -10,9 +10,9 @@ export class Helper {
    * A service that provides utility methods to manipulate or get data sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data source
+   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data source
    *     service.
-   * @param {import("ngeo/query/Querent.js").default} ngeoQuerent Ngeo querent service.
+   * @param {import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
    * @ngInject
@@ -34,7 +34,7 @@ export class Helper {
     this.collection_ = ngeoDataSources.collection;
 
     /**
-     * @type {import("ngeo/query/Querent.js").default}
+     * @type {import("ngeo/query/Querent.js").Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

@@ -79,8 +79,8 @@ module.controller('AppQueryresultController', QueryresultController);
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr The ngeo ToolActivate
+ * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr The ngeo ToolActivate
  *     manager.
  * @constructor
  * @ngInject

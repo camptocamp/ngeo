@@ -66,7 +66,7 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
  * [../examples/backgroundlayer.html](../examples/backgroundlayer.html)
  * [../examples/backgroundlayerdropdown.html](../examples/backgroundlayerdropdown.html)
  */
-class BackgroundLayerMgr extends olObservable {
+export class MapBackgroundLayerManager extends olObservable {
   /**
    * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Themes service.
    * @ngInject
@@ -223,7 +223,7 @@ class BackgroundLayerMgr extends olObservable {
 const module = angular.module('ngeoBackgroundLayerMgr', [
   ngeoLayerHelper.name
 ]);
-module.service('ngeoBackgroundLayerMgr', BackgroundLayerMgr);
+module.service('ngeoBackgroundLayerMgr', MapBackgroundLayerManager);
 
 
 export default module;

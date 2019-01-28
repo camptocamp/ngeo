@@ -48,8 +48,8 @@ export class RuleHelper {
    * objects.
    *
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
-   * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
-   * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
+   * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+   * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoRuleHelper
    * @ngInject
@@ -63,13 +63,13 @@ export class RuleHelper {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {!import("ngeo/misc/FeatureHelper.js").default}
+     * @type {!import("ngeo/misc/FeatureHelper.js").FeatureHelper}
      * @private
      */
     this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
     /**
-     * @type {!import("ngeo/misc/WMSTime.js").default}
+     * @type {!import("ngeo/misc/WMSTime.js").WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;

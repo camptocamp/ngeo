@@ -85,8 +85,8 @@ class FilterController {
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent The ngeo map querent service.
-   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent The ngeo map querent service.
+   * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -161,13 +161,13 @@ class FilterController {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!import("ngeo/query/MapQuerent.js").default}
+     * @type {!import("ngeo/query/MapQuerent.js").MapQuerent}
      * @private
      */
     this.ngeoMapQuerent_ = ngeoMapQuerent;
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").default}
+     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;

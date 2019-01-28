@@ -100,7 +100,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Location service
-   * @type {import("ngeo/statemanager/Location.js").default}
+   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
    */
   this.ngeoLocation = $injector.get('ngeoLocation');
   if (this.ngeoLocation.hasParam('debug')) {
@@ -132,26 +132,26 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Ngeo FeatureHelper service
-   * @type {import("ngeo/misc/FeatureHelper.js").default}
+   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    */
   const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
   ngeoFeatureHelper.setProjection(this.map.getView().getProjection());
 
   /**
-   * @type {import("gmf/theme/Manager.js").default}
+   * @type {import("gmf/theme/Manager.js").ThemeManagerService}
    * @export
    */
   this.gmfThemeManager = $injector.get('gmfThemeManager');
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").default}
+   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = $injector.get('gmfTreeManager');
 
   /**
    * Themes service
-   * @type {import("gmf/theme/Themes.js").default}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = $injector.get('gmfThemes');
@@ -168,14 +168,14 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * Permalink service
-   * @type {import("gmf/permalink/Permalink.js").default}
+   * @type {import("gmf/permalink/Permalink.js").PermalinkService}
    * @private
    */
   this.permalink_ = $injector.get('gmfPermalink');
 
   /**
    * Authentication service
-   * @type {import("gmf/authentication/Service.js").default}
+   * @type {import("gmf/authentication/Service.js").AuthenticationService}
    */
   const gmfAuthentication = $injector.get('gmfAuthenticationService');
 
@@ -300,7 +300,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   }
 
   /**
-   * @type {import("ngeo/map/BackgroundLayerMgr.js").default}
+   * @type {import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
    * @private
    */
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
@@ -377,7 +377,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.printActive = false;
 
   /**
-   * @type {import("ngeo/query/MapQuerent.js").default}
+   * @type {import("ngeo/query/MapQuerent.js").MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
@@ -438,7 +438,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.getBrowserLanguage = $injector.get('ngeoGetBrowserLanguage');
 
   /**
-   * @type {import("ngeo/statemanager/Service.js").default}
+   * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
    */
   this.stateManager = $injector.get('ngeoStateManager');
 
@@ -488,14 +488,14 @@ export function AbstractAppController(config, map, $scope, $injector) {
 
   /**
    * The ngeo feature overlay manager service
-   * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
+   * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**
    * The ngeo ToolActivate manager service.
-   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 

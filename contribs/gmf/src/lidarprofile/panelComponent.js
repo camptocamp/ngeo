@@ -91,10 +91,10 @@ class Controller {
 
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManager gmf gmfLidarprofileManager.
-   * @param {import("gmf/lidarprofile/Config.js").default} gmfLidarprofileConfig gmf Lidar profile config.
-   * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager service
-   * @param {import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV Download service.
+   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManager gmf gmfLidarprofileManager.
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} gmfLidarprofileConfig gmf Lidar profile config.
+   * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager service
+   * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -110,13 +110,13 @@ class Controller {
     this.ready = false;
 
     /**
-     * @type {import("gmf/lidarprofile/Config.js").default}
+     * @type {import("gmf/lidarprofile/Config.js").LidarprofileConfigService}
      * @private
      */
     this.profileConfig_ = gmfLidarprofileConfig;
 
     /**
-     * @type {import("gmf/lidarprofile/Manager.js").default}
+     * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
      */
     this.profile = gmfLidarprofileManager;
 
@@ -147,13 +147,13 @@ class Controller {
     this.measureActive = false;
 
     /**
-     * @type {import("ngeo/download/Csv.js").default}
+     * @type {import("ngeo/download/Csv.js").DownloadCsvService}
      * @private
      */
     this.ngeoCsvDownload_ = ngeoCsvDownload;
 
     /**
-     * @type {import("ngeo/misc/ToolActivateMgr.js").default}
+     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      * @private
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

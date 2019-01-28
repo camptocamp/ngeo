@@ -37,7 +37,7 @@ import angular from 'angular';
  * @ngname ngeoToolActivateMgr
  * @ngInject
  */
-function ToolActivateMgr($rootScope) {
+export function ToolActivateMgr($rootScope) {
 
   /**
    * @type {!Object.<string, Array.<miscToolActivateMgrEntry>>}

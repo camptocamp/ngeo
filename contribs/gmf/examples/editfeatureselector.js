@@ -52,11 +52,11 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
- * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
  * @param {User} gmfUser User.
- * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @ngInject
  * @constructor
@@ -77,7 +77,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   this.gmfUser = gmfUser;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").default}
+   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;
@@ -85,7 +85,7 @@ function MainController($scope, gmfThemes, gmfTreeManager, gmfUser,
   gmfThemes.loadThemes();
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").default}
+   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @export
    */
   this.gmfTreeManager = gmfTreeManager;

@@ -29,15 +29,15 @@ export const ThemeEventType = {
  * Thought to be the tree source of the gmf layertree directive.
  * @constructor
  * @param {angular.IScope} $rootScope Angular rootScope.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
  * @param {boolean} gmfTreeManagerModeFlush Flush mode active?
- * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager the tree manager.
- * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager the tree manager.
+ * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  */
-function Manager($rootScope, gmfThemes, gmfTreeManagerModeFlush,
+export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   gmfTreeManager, ngeoStateManager) {
 
   /**
@@ -47,7 +47,7 @@ function Manager($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.$rootScope_ = $rootScope;
 
   /**
-   * @type {import("gmf/theme/Themes.js").default}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
@@ -59,13 +59,13 @@ function Manager($rootScope, gmfThemes, gmfTreeManagerModeFlush,
   this.modeFlush = gmfTreeManagerModeFlush;
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").default}
+   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {import("ngeo/statemanager/Service.js").default}
+   * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -86,7 +86,7 @@ function Manager($rootScope, gmfThemes, gmfTreeManagerModeFlush,
  *     the theme should be added but it's already added.
  * @export
  */
-Manager.prototype.addTheme = function(theme, opt_silent) {
+ThemeManagerService.prototype.addTheme = function(theme, opt_silent) {
   if (this.modeFlush) {
     this.ngeoStateManager_.updateState({
       'theme': theme.name
@@ -103,7 +103,7 @@ Manager.prototype.addTheme = function(theme, opt_silent) {
  * @return {string} The theme name. Will be empty on 'not flush' mode.
  * @export
  */
-Manager.prototype.getThemeName = function() {
+ThemeManagerService.prototype.getThemeName = function() {
   return this.themeName_;
 };
 
@@ -112,7 +112,7 @@ Manager.prototype.getThemeName = function() {
  * @return {boolean} true if the theme is loading.
  * @export
  */
-Manager.prototype.isLoading = function() {
+ThemeManagerService.prototype.isLoading = function() {
   return !this.gmfThemes_.loaded;
 };
 
@@ -120,7 +120,7 @@ Manager.prototype.isLoading = function() {
  * @param {string} name The new theme name.
  * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
  */
-Manager.prototype.setThemeName = function(name, opt_silent) {
+ThemeManagerService.prototype.setThemeName = function(name, opt_silent) {
   this.themeName_ = name;
   if (!opt_silent) {
     this.$rootScope_.$emit(ThemeEventType.THEME_NAME_SET, name);
@@ -132,7 +132,7 @@ Manager.prototype.setThemeName = function(name, opt_silent) {
  * Remove all groups.
  * @export
  */
-Manager.prototype.removeAll = function() {
+ThemeManagerService.prototype.removeAll = function() {
   this.gmfTreeManager_.removeAll();
 };
 
@@ -151,7 +151,7 @@ const module = angular.module('gmfThemeManager', [
  */
 module.value('gmfTreeManagerModeFlush', true);
 
-module.service('gmfThemeManager', Manager);
+module.service('gmfThemeManager', ThemeManagerService);
 
 
 export default module;

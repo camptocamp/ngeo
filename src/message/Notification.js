@@ -18,7 +18,7 @@ const DEFAULT_DELAY = 7000;
  * properly.
  * @abstract
  */
-class Notification extends ngeoMessageMessage {
+export class MessageNotification extends ngeoMessageMessage {
   /**
    * Provides methods to display any sort of messages, notifications, errors,
    * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
@@ -162,6 +162,6 @@ class Notification extends ngeoMessageMessage {
  */
 const module = angular.module('ngeoNotification', []);
 
-module.service('ngeoNotification', Notification);
+module.service('ngeoNotification', MessageNotification);
 
 export default module;

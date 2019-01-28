@@ -241,17 +241,17 @@ class Controller {
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Ngeo Feature Overlay
+   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature Overlay
    *     Manager service.
    * @param {import("ngeo/print/Utils.js").default} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl A MapFishPrint url.
-   * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService The authentication service.
+   * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService The authentication service.
    * @param {QueryResult} ngeoQueryResult ngeo query result.
    * @param {angular.IFilterService} $filter Angular $filter service.
-   * @param {import("gmf/print/component.js").default.PrintStateEnum} gmfPrintState GMF print state.
-   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+   * @param {import("gmf/print/component.js").PrintStateEnum} gmfPrintState GMF print state.
+   * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -335,7 +335,7 @@ class Controller {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").default}
+     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
@@ -365,13 +365,13 @@ class Controller {
     this.ngeoQueryResult_ = ngeoQueryResult;
 
     /**
-     * @type {import("gmf/authentication/Service.js").default}
+     * @type {import("gmf/authentication/Service.js").AuthenticationService}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {import("gmf/theme/Themes.js").default}
+     * @type {import("gmf/theme/Themes.js").ThemesService}
      * @private
      */
     this.gmfThemes_ = gmfThemes;

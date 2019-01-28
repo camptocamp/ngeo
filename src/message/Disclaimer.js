@@ -11,7 +11,7 @@ import 'ngeo/sass/font.scss';
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
  */
-class Disclaimer extends ngeoMessageMessage {
+export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
@@ -219,7 +219,7 @@ const module = angular.module('ngeoDisclaimer', [
   ngeoMessagePopup.name,
 ]);
 
-module.service('ngeoDisclaimer', Disclaimer);
+module.service('ngeoDisclaimer', MessageDisclaimerService);
 
 
 export default module;

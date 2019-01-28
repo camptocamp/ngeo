@@ -38,7 +38,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
+ * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {User} gmfUser User.
  * @constructor
  * @ngInject
@@ -52,7 +52,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("gmf/editing/EditFeature.js").default}
+   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
    * @export
    */
   this.editFeature_ = gmfEditFeature;

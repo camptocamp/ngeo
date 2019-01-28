@@ -12,7 +12,7 @@ import olStyleStyle from 'ol/style/Style.js';
 import {select as d3select} from 'd3';
 
 
-class Manager {
+export class LidarprofileManager {
 
   /**
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
@@ -21,7 +21,7 @@ class Manager {
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.IFilterService} $filter Angular filter.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/Debounce.js").default} ngeoDebounce ngeo debounce service.
+   * @param {import("ngeo/misc/Debounce.js").miscDebounce} ngeoDebounce ngeo debounce service.
    * @ngInject
    * @ngdoc service
    * @ngname gmflidarprofileManager
@@ -44,7 +44,7 @@ class Manager {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {import("ngeo/misc/Debounce.js").default}
+     * @type {import("ngeo/misc/Debounce.js").miscDebounce}
      * @private
      */
     this.ngeoDebounce_ = ngeoDebounce;
@@ -66,7 +66,7 @@ class Manager {
     this.measure = null;
 
     /**
-     * @type {import("gmf/lidarprofile/Config.js").default}
+     * @type {import("gmf/lidarprofile/Config.js").LidarprofileConfigService}
      */
     this.config = null;
 
@@ -136,7 +136,7 @@ class Manager {
   }
 
   /**
-   * @param {import("gmf/lidarprofile.js").default.Config} config Instance of import("gmf/lidarprofile/Config.js").default
+   * @param {import("gmf/lidarprofile.js").LidarprofileConfigService} config Config
    * @param {import("ol/Map.js").default} map The map.
    */
   init(config, map) {
@@ -494,6 +494,6 @@ class Manager {
 const module = angular.module('gmfLidarprofileManager', [
   ngeoMiscDebounce.name,
 ]);
-module.service('gmfLidarprofileManager', Manager);
+module.service('gmfLidarprofileManager', LidarprofileManager);
 
 export default module;

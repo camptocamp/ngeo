@@ -73,7 +73,7 @@ module.controller('AppQueryresultController', QueryresultController);
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo collection of
+ * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo collection of
  *     data sources objects.
  * @constructor
  * @ngInject

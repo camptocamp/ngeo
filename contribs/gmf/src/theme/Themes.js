@@ -19,12 +19,12 @@ import olLayerTile from 'ol/layer/Tile.js';
  * with c2cgeoportal's "themes" web service and exposes functions that return
  * objects in the tree returned by the "themes" web service.
  */
-class Themes extends olEventsEventTarget {
+export class ThemesService extends olEventsEventTarget {
   /**
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.IQService} $q Angular q service
-   * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {ThemesOptions} gmfThemesOptions Themes options.
    * @ngInject
@@ -68,7 +68,7 @@ class Themes extends olEventsEventTarget {
     }
 
     /**
-     * @type {?import("ngeo/statemanager/Location.js").default}
+     * @type {?import("ngeo/statemanager/Location.js").StatemanagerLocation}
      * @private
      */
     this.ngeoLocation_ = null;
@@ -77,7 +77,7 @@ class Themes extends olEventsEventTarget {
     }
 
     /**
-     * @type {import("ngeo/map/LayerHelper.js").default}
+     * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.layerHelper_ = ngeoLayerHelper;
@@ -585,7 +585,7 @@ const module = angular.module('gmfThemes', [
 ]);
 
 module.value('gmfThemesOptions', {});
-module.service('gmfThemes', Themes);
+module.service('gmfThemes', ThemesService);
 
 
 export default module;

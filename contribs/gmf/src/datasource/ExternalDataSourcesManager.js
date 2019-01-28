@@ -26,7 +26,7 @@ import olFormatKML from 'ol/format/KML.js';
  */
 
 
-class ExternalDatSourcesManager {
+export class ExternalDatSourcesManager {
 
   /**
    * External data sources come remote online resources, such as WMS/WMTS
@@ -37,9 +37,9 @@ class ExternalDatSourcesManager {
    * @param {!angular.auto.IInjectorService} $injector Main injector.
    * @param {!angular.IQService} $q The Angular $q service.
    * @param {!angular.IScope} $rootScope The rootScope provider.
-   * @param {!import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
-   * @param {!import("ngeo/misc/File.js").default} ngeoFile Ngeo file.
-   * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo layer helper service
+   * @param {!import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
+   * @param {!import("ngeo/misc/File.js").FileService} ngeoFile Ngeo file.
+   * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo layer helper service
    * @ngInject
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager
@@ -76,13 +76,13 @@ class ExternalDatSourcesManager {
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {!import("ngeo/misc/File.js").default}
+     * @type {!import("ngeo/misc/File.js").FileService}
      * @private
      */
     this.ngeoFile_ = ngeoFile;
 
     /**
-     * @type {!import("ngeo/map/LayerHelper.js").default}
+     * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;

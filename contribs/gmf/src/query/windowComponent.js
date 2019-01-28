@@ -77,7 +77,7 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindo
 
 /**
  * Provide a component to display results of the {@link import("ngeo/queryResult.js").default}
- * and shows related features on the map using the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
+ * and shows related features on the map using the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerywindowTemplateUrl`.
@@ -127,8 +127,8 @@ module.component('gmfDisplayquerywindow', component);
  * @param {!JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
- * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @constructor
  * @private
@@ -182,7 +182,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   };
 
   /**
-   * @type {!import("ngeo/query/MapQuerent.js").default}
+   * @type {!import("ngeo/query/MapQuerent.js").MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
@@ -200,7 +200,7 @@ function Controller($element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatu
   this.features_ = new olCollection();
 
   /**
-   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;

@@ -43,7 +43,7 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
  */
 
 
-class Manager {
+export class DatasourceManager {
 
   /**
    * The GeoMapFish DataSources Manager is responsible of listenening to the
@@ -57,16 +57,16 @@ class Manager {
    * @param {angular.IQService} $q Angular q service
    * @param {!angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
-   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
-   * @param {!import("ngeo/map/BackgroundLayerMgr.js").default} ngeoBackgroundLayerMgr Background layer
+   * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
+   * @param {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager} ngeoBackgroundLayerMgr Background layer
    *     manager.
-   * @param {import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources service.
+   * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    *     data sources service.
-   * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
-   * @param {!import("ngeo/filter/RuleHelper.js").default} ngeoRuleHelper Ngeo rule helper service.
-   * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
-   * @param {!import("gmf/datasource/WFSAliases.js").default} gmfWFSAliases Gmf WFS aliases service.
+   * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+   * @param {!import("ngeo/filter/RuleHelper.js").RuleHelper} ngeoRuleHelper Ngeo rule helper service.
+   * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+   * @param {!import("gmf/datasource/WFSAliases.js").DatasourceWFSAlias} gmfWFSAliases Gmf WFS aliases service.
    * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
@@ -97,25 +97,25 @@ class Manager {
     this.timeout_ = $timeout;
 
     /**
-     * @type {import("gmf/theme/Themes.js").default}
+     * @type {import("gmf/theme/Themes.js").ThemesService}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {import("gmf/layertree/TreeManager.js").default}
+     * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {!import("ngeo/map/BackgroundLayerMgr.js").default}
+     * @type {!import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
      * @private
      */
     this.ngeoBackgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
     /**
-     * @type {import("ngeo/datasource/DataSources.js").default}
+     * @type {import("ngeo/datasource/DataSources.js").DataSource}
      * @private
      */
     this.ngeoDataSources_ = ngeoDataSources;
@@ -130,25 +130,25 @@ class Manager {
     this.dataSources_ = ngeoDataSources.collection;
 
     /**
-     * @type {!import("ngeo/map/LayerHelper.js").default}
+     * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;
 
     /**
-     * @type {!import("ngeo/filter/RuleHelper.js").default}
+     * @type {!import("ngeo/filter/RuleHelper.js").RuleHelper}
      * @private
      */
     this.ngeoRuleHelper_ = ngeoRuleHelper;
 
     /**
-     * @type {!import("ngeo/misc/WMSTime.js").default}
+     * @type {!import("ngeo/misc/WMSTime.js").WMSTime}
      * @private
      */
     this.ngeoWMSTime_ = ngeoWMSTime;
 
     /**
-     * @type {!import("gmf/datasource/WFSAliases.js").default}
+     * @type {!import("gmf/datasource/WFSAliases.js").DatasourceWFSAlias}
      * @private
      */
     this.gmfWFSAliases_ = gmfWFSAliases;
@@ -955,7 +955,7 @@ const module = angular.module('gmfDataSourcesManager', [
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
 ]);
-module.service('gmfDataSourcesManager', Manager);
+module.service('gmfDataSourcesManager', DatasourceManager);
 
 
 export default module;

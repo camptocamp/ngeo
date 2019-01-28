@@ -21,7 +21,7 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * @ngname ngeoCsvDownload
  * @ngInject
  */
-function Csv($injector, gettextCatalog) {
+function DownloadCsvService($injector, gettextCatalog) {
 
   /**
    * @type {angular.gettext.gettextCatalog}
@@ -86,7 +86,7 @@ function Csv($injector, gettextCatalog) {
  * @return {string} The CSV file as string.
  * @export
  */
-Csv.prototype.generateCsv = function(data, columnDefs) {
+DownloadCsvService.prototype.generateCsv = function(data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
     return '';
   }
@@ -108,7 +108,7 @@ Csv.prototype.generateCsv = function(data, columnDefs) {
  * @return {string} CSV row.
  * @private
  */
-Csv.prototype.getRow_ = function(values) {
+DownloadCsvService.prototype.getRow_ = function(values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
   const doubleQuote = this.quote_ + this.quote_;
 
@@ -134,7 +134,7 @@ Csv.prototype.getRow_ = function(values) {
  * @param {string} fileName The CSV file name, without the extension.
  * @export
  */
-Csv.prototype.startDownload = function(data, columnDefs, fileName) {
+DownloadCsvService.prototype.startDownload = function(data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);
   this.download_(
     fileContent, fileName, `text/csv;charset=${this.encoding_}`);
@@ -146,7 +146,7 @@ Csv.prototype.startDownload = function(data, columnDefs, fileName) {
 const module = angular.module('ngeoCsvDownload', [
   ngeoDownloadService.name
 ]);
-module.service('ngeoCsvDownload', Csv);
+module.service('ngeoCsvDownload', DownloadCsvService);
 
 
 export default module;

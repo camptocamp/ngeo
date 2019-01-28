@@ -8,7 +8,7 @@ import * as olExtent from 'ol/extent.js';
  * @ngdoc service
  * @ngname ngeoAutoProjection
  */
-function AutoProjection() {}
+export function AutoProjectionService() {}
 
 
 /**
@@ -18,7 +18,7 @@ function AutoProjection() {}
  * @return {?import("ol/coordinate.js").Coordinate} A coordinate or null if the format is not valid.
  * @export
  */
-AutoProjection.prototype.stringToCoordinates = function(str) {
+AutoProjectionService.prototype.stringToCoordinates = function(str) {
   const coords = str.match(/([\d\.']+)[\s,]+([\d\.']+)/);
   if (coords) {
     const x = parseFloat(coords[1].replace('\'', ''));
@@ -39,7 +39,7 @@ AutoProjection.prototype.stringToCoordinates = function(str) {
  * @return {Array.<import("ol/proj/Projection.js").default>} An array of projections.
  * @export
  */
-AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
+AutoProjectionService.prototype.getProjectionList = function(projectionsCodes) {
   let code, proj;
   const projections = [];
   projectionsCodes.forEach((projection) => {
@@ -71,7 +71,7 @@ AutoProjection.prototype.getProjectionList = function(projectionsCodes) {
  *     in one of the given projections, or null else.
  * @export
  */
-AutoProjection.prototype.tryProjections = function(coordinates,
+AutoProjectionService.prototype.tryProjections = function(coordinates,
   extent, viewProjection, opt_projections) {
   let position;
   if (opt_projections === undefined) {
@@ -105,7 +105,7 @@ AutoProjection.prototype.tryProjections = function(coordinates,
  *     in one of the given projections, or null else.
  * @export
  */
-AutoProjection.prototype.tryProjectionsWithInversion = function(
+AutoProjectionService.prototype.tryProjectionsWithInversion = function(
   coordinates, extent, viewProjection, opt_projections) {
   let position = this.tryProjections(coordinates, extent, viewProjection,
     opt_projections);
@@ -121,7 +121,7 @@ AutoProjection.prototype.tryProjectionsWithInversion = function(
  * @type {!angular.IModule}
  */
 const module = angular.module('ngeoAutoProjection', []);
-module.service('ngeoAutoProjection', AutoProjection);
+module.service('ngeoAutoProjection', AutoProjectionService);
 
 
 export default module;

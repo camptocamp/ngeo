@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 
-class Config {
+class LidarprofileConfigService {
   /**
    * Configuration service to configure the gmf.lidarPanelComponent and gmf.lidarprofile instance
    * Requires a Pytree service: https://github.com/sitn/pytree
@@ -101,6 +101,6 @@ class Config {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfLidarprofileConfig', []);
-module.service('gmfLidarprofileConfig', Config);
+module.service('gmfLidarprofileConfig', LidarprofileConfigService);
 
 export default module;
