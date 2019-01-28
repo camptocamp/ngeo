@@ -325,5 +325,4 @@ export default class Rule {
     this.listenerKeys.forEach(olEvents.unlistenByKey);
     this.listenerKeys.length = 0;
   }
-
 }

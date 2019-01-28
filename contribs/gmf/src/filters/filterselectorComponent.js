@@ -725,8 +725,8 @@ class Controller {
 
 /**
  * @typedef {Object} RuleCacheItem
- * @property {Array.<ngeo.rule.Rule>} customRules
- * @property {Array.<ngeo.rule.Rule>} directedRules
+ * @property {Array.<import('ngeo/rule/Rule.js').default>} customRules
+ * @property {Array.<import('ngeo/rule/Rule.js').default>} directedRules
  */
 
 

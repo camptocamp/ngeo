@@ -15,7 +15,7 @@ import moment from 'moment';
 
 
 /**
- * @typedef {!RuleOptions|!GeometryOptions|!SelectOptions|!import('ngeo/rule/Text.js').TextOptions} AnyOptions
+ * @typedef {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Geometry.js').GeometryOptions|!import('ngeo/rule/Select.js').SelectOptions|!import('ngeo/rule/Text.js').TextOptions} AnyOptions
  */
 
 
@@ -24,7 +24,7 @@ import moment from 'moment';
  * service.
  *
  * @typedef {Object} CreateFilterOptions
- * @property {DataSource} dataSource The data source from which to get the filterRules that will be used to
+ * @property {import('ngeo/datasource/DataSource.js').default} dataSource The data source from which to get the filterRules that will be used to
  * create the OL filter object.
  * @property {boolean} [incDimensions] Whether to include the dimensions related filters. Default to `true`.
  * @property {boolean} [incTime] Whether to include the data source's time values in the filter created. The
@@ -34,7 +34,7 @@ import moment from 'moment';
  * should be included in the filter.
  * @property {import("ol/format/filter/Filter.js").default} [filter] A filter that is directly given the the method instead of creating one.
  * Useful to automatically combine the time values.
- * @property {!Array.<Rule>} [filterRules] An alternative list of filter rules to use instead of those that are defined
+ * @property {!Array.<import('ngeo/rule/Rule.js').default>} [filterRules] An alternative list of filter rules to use instead of those that are defined
  * within the data source. Useful when one wants to get the data of a given
  * filter without applying it to the data source.
  * @property {string} [srsName] The SRS name used with the spatial filters created by the method.
@@ -44,7 +44,7 @@ import moment from 'moment';
 export class RuleHelper {
 
   /**
-   * A service that provides utility methods to create `ngeo.rule.Rule`
+   * A service that provides utility methods to create `import('ngeo/rule/Rule.js').default`
    * objects.
    *
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
@@ -181,6 +181,7 @@ export class RuleHelper {
       default:
         if (isCustom) {
           rule = new ngeoRuleText({
+            text: null,
             name: name,
             operator: RuleOperatorType.LIKE,
             operators: [
@@ -192,6 +193,7 @@ export class RuleHelper {
           });
         } else {
           rule = new ngeoRuleText({
+            text: null,
             name: name,
             operator: RuleOperatorType.LIKE,
             propertyName: attribute.name
@@ -204,7 +206,7 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!RuleOptions|!SelectOptions>} optionsList List of options
+   * @param {!Array.<!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions>} optionsList List of options
    * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
    * @export
    */
@@ -217,7 +219,7 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!RuleOptions|!SelectOptions} options Options
+   * @param {!import('ngeo/rule/Rule.js').RuleOptions|!import('ngeo/rule/Select.js').SelectOptions} options Options
    * @return {!import("ngeo/rule/Rule.js").default} Rule.
    * @export
    */
@@ -232,20 +234,19 @@ export class RuleHelper {
         rule = new ngeoRuleGeometry(options);
         break;
       case ngeoFormatAttributeType.SELECT:
-        const selectOptions = /** @type {!SelectOptions} */ (
-          options);
+        const selectOptions = /** @type {!import('ngeo/rule/Select.js').SelectOptions} */ (options);
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
       default:
-        rule = new ngeoRuleText(options);
+        rule = new ngeoRuleText(/** @type {!import('ngeo/rule/Text').TextOptions} */ (options));
         break;
     }
     return rule;
   }
 
   /**
-   * Create a new `ngeo.rule.Rule` object using an other given rule.
+   * Create a new `import('ngeo/rule/Rule.js').default` object using an other given rule.
    *
    * @param {!import("ngeo/rule/Rule.js").default} rule Original rule to clone.
    * @return {!import("ngeo/rule/Rule.js").default} A clone rule.
@@ -291,9 +292,9 @@ export class RuleHelper {
       );
     } else if (rule instanceof ngeoRuleSelect) {
       options.choices = rule.choices.slice(0);
-      clone = new ngeoRuleSelect(options);
+      clone = new ngeoRuleSelect(/** @type {!import('ngeo/rule/Select.js').SelectOptions} */ (options));
     } else if (rule instanceof ngeoRuleText) {
-      clone = new ngeoRuleText(options);
+      clone = new ngeoRuleText(/** @type {!import('ngeo/rule/Text').TextOptions} */ (options));
     } else {
       clone = new ngeoRuleRule(options);
     }
@@ -407,6 +408,7 @@ export class RuleHelper {
   createFilter(options) {
 
     const dataSource = /** @type {import("ngeo/datasource/OGC.js").default} */ (options.dataSource);
+    //const dataSource = options.dataSource;
     let mainFilter = null;
 
     if (options.filter) {
@@ -509,11 +511,11 @@ export class RuleHelper {
       return null;
     }
 
-    const expression = value.expression;
-    const lowerBoundary = value.lowerBoundary;
+    const expression = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */(value).expression;
+    const lowerBoundary = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */(value).lowerBoundary;
     const operator = value.operator;
     const propertyName = value.propertyName;
-    const upperBoundary = value.upperBoundary;
+    const upperBoundary = /** @type {import("ngeo/rule/Rule.js").RuleOptions} */(value).upperBoundary;
 
     const rot = RuleOperatorType;
     const rsot = RuleSpatialOperatorType;
@@ -605,29 +607,30 @@ export class RuleHelper {
       }
     } else if (spatialTypes.includes(operator)) {
       const geometryName = dataSource.geometryName;
-      console.assert(rule instanceof ngeoRuleGeometry);
-      const geometry = rule.geometry;
-      if (operator === rsot.CONTAINS) {
-        filter = olFormatFilter.contains(
-          geometryName,
-          geometry,
-          opt_srsName
-        );
-      } else if (operator === rsot.INTERSECTS) {
-        filter = olFormatFilter.intersects(
-          geometryName,
-          geometry,
-          opt_srsName
-        );
-      } else if (operator === rsot.WITHIN) {
-        filter = olFormatFilter.within(
-          geometryName,
-          geometry,
-          opt_srsName
-        );
+      if (rule instanceof ngeoRuleGeometry) {
+        const geometry = rule.geometry;
+        if (operator === rsot.CONTAINS) {
+          filter = olFormatFilter.contains(
+            geometryName,
+            geometry,
+            opt_srsName
+          );
+        } else if (operator === rsot.INTERSECTS) {
+          filter = olFormatFilter.intersects(
+            geometryName,
+            geometry,
+            opt_srsName
+          );
+        } else if (operator === rsot.WITHIN) {
+          filter = olFormatFilter.within(
+            geometryName,
+            geometry,
+            opt_srsName
+          );
+        }
       }
     } else if (numericTypes.includes(operator)) {
-      const numericExpression = expression;
+      const numericExpression = /** @type {number} */(expression);
       if (operator === rot.GREATER_THAN) {
         filter = olFormatFilter.greaterThan(
           propertyName,
@@ -686,7 +689,7 @@ export class RuleHelper {
   /**
    * Create and return an OpenLayers filter object using the available
    * dimensions filters configuration within the data source.
-   * @param {import("ngeo/DataSource.js").default} dataSource Data source from which to create the
+   * @param {import("ngeo/datasource/OGC.js").OGCOptions} dataSource Data source from which to create the
    *     filter.
    * @return {?import("ol/format/filter/Filter.js").default} Filter
    * @private
