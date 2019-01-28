@@ -951,7 +951,7 @@ Controller.prototype.setFeatureStyle_ = function() {
  * with this component, then find the WMS layer associated with it for
  * for refresh purpose.
  *
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layertree controller to register
  * @private
  */
 Controller.prototype.registerTreeCtrl_ = function(treeCtrl) {

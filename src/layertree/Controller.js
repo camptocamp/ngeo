@@ -66,13 +66,13 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   console.assert(map !== undefined);
 
   /**
-   * @type {import("ngeo/layertree/Controller.js").default}
+   * @type {import("ngeo/layertree/Controller.js").LayertreeController}
    * @export
    */
   this.parent = $scope.$parent['layertreeCtrl'];
 
   /**
-   * @type {Array.<import("ngeo/layertree/Controller.js").default>}
+   * @type {Array.<import("ngeo/layertree/Controller.js").LayertreeController>}
    * @export
    */
   this.children = [];
@@ -90,7 +90,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
   });
 
   /**
-   * @type {number}
+   * @type {string}
    * @export
    */
   this.uid = olUtilGetUid(this);
@@ -254,7 +254,7 @@ LayertreeController.prototype.setStateInternal_ = function(state) {
  * Refresh the state of this treeCtrl based on it's children value. The call its
  * parent to do the same.
  *
- * @param {import("ngeo/layertree/Controller.js").default=} opt_onChild Child tree
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController=} opt_onChild Child tree
  *     controller that had its state changed to 'on'.
  * @param {boolean=} opt_broadcast Broadcast.
  * @public
@@ -295,13 +295,15 @@ LayertreeController.prototype.getCalculateState = function() {
   if (this.node.children === undefined) {
     return this.state_;
   }
+  /** @type {string} */
   let childState;
+  /** @type {string} */
   let previousChildState;
   this.children.some((child) => {
     childState = child.getCalculateState();
     if (previousChildState) {
       if (previousChildState !== childState) {
-        return childState = 'indeterminate';
+        return childState == 'indeterminate';
       }
     }
     previousChildState = childState;
@@ -355,8 +357,8 @@ LayertreeController.prototype.setDataSource = function(dataSource) {
 /**
  * Get the "top level" layertree (one of the first level child under the root
  * layertree). Can return itself.
- * @param {import("ngeo/layertree/Controller.js").default} treeCtrl ngeo layertree controller.
- * @return {import("ngeo/layertree/Controller.js").default} the top level layertree.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller.
+ * @return {import("ngeo/layertree/Controller.js").LayertreeController} the top level layertree.
  * @public
  */
 export function getFirstParentTree(treeCtrl) {
