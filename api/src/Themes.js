@@ -119,6 +119,7 @@ export function getOverlayLayers(layerNames) {
 export function createWMSLayer(config, ogcServer) {
   return Promise.resolve(
     new TileLayer({
+      title: config.name,
       source: new TileWMS({
         url: ogcServer.url,
         params: {
@@ -144,6 +145,7 @@ export function createWMTSLayer(config) {
     const source = new WMTS(options);
     source.updateDimensions(config.dimensions);
     const layer = new TileLayer({
+      title: config.name,
       preload: Infinity,
       source: source
     });
