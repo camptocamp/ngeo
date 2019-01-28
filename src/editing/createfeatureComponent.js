@@ -78,7 +78,7 @@ module.directive('ngeoCreatefeature', directive);
  * @param {!angular.IFilterService} $filter Angular filter
  * @param {!angular.IScope} $scope Scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
+ * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @ngInject
@@ -142,7 +142,7 @@ function Controller(gettextCatalog, $compile, $filter, $scope, $timeout, ngeoEve
   this.timeout_ = $timeout;
 
   /**
-   * @type {!import("ngeo/misc/EventHelper.js").default}
+   * @type {!import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

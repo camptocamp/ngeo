@@ -19,13 +19,13 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 /**
  * @constructor
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wmstime service.
+ * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wmstime service.
  * @ngInject
  */
 function MainController($scope, ngeoWMSTime) {
 
   /**
-   * @type {import("ngeo/misc/WMSTime.js").default}
+   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

@@ -106,7 +106,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  *      to be a {@link Function} with the argument:
  *      {
  *          'treeScope': !{@link angular.IScope},
- *          'treeCtrl': {@link import("ngeo/layertree/Controller.js").default}
+ *          'treeCtrl': {@link import("ngeo/layertree/Controller.js").LayertreeController}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
  *      to be a {@link ngeo-layertree-listeners}.

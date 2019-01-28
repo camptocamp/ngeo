@@ -174,13 +174,13 @@ module.directive('gmfEditfeature', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
- * @param {import("gmf/editing/Snapping.js").default} gmfSnapping The gmf snapping service.
- * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
- * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo Event Helper.
- * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
- * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
+ * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo Event Helper.
+ * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -269,43 +269,43 @@ function Controller($element, $q, $scope, $timeout,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("gmf/editing/EditFeature.js").default}
+   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {import("gmf/editing/Snapping.js").default}
+   * @type {import("gmf/editing/Snapping.js").EditingSnappingService}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {import("gmf/editing/XSDAttributes.js").default}
+   * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").default}
+   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").default}
+   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").default}
+   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {import("ngeo/misc/ToolActivateMgr.js").default}
+   * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

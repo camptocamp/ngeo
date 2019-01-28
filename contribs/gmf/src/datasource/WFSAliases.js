@@ -2,13 +2,13 @@ import angular from 'angular';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import {ServerType} from 'ngeo/datasource/OGC.js';
 
-class WFSAlias {
+export class DatasourceWFSAlias {
 
   /**
    * Service that provides methods to get additional information and actions
    * when performing WFS requests.
    *
-   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").Helper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
@@ -19,7 +19,7 @@ class WFSAlias {
     // === Injected properties ===
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").default}
+     * @type {import("ngeo/datasource/Helper.js").Helper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
@@ -47,7 +47,7 @@ class WFSAlias {
 const module = angular.module('gmfDatasourceWFSAliases', [
   ngeoDatasourceHelper.name,
 ]);
-module.service('gmfWFSAliases', WFSAlias);
+module.service('gmfWFSAliases', DatasourceWFSAlias);
 
 
 export default module;

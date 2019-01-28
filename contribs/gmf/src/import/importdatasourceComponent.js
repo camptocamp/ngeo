@@ -75,10 +75,10 @@ class Controller {
    * @param {!angular.auto.IInjectorService} $injector Main injector.
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
+   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
-   * @param {!import("ngeo/query/Querent.js").default} ngeoQuerent Ngeo querent service.
+   * @param {!import("ngeo/query/Querent.js").Querent} ngeoQuerent Ngeo querent service.
    * @private
    * @ngInject
    * @ngdoc controller
@@ -117,13 +117,13 @@ class Controller {
     this.timeout_ = $timeout;
 
     /**
-     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
+     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;
 
     /**
-     * @type {!import("ngeo/query/Querent.js").default}
+     * @type {!import("ngeo/query/Querent.js").Querent}
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;

@@ -12,7 +12,7 @@
  * @ngname ngeoToolActivate
  * @export
  */
-function toolActivate(toolContext, activePropertyName) {
+export default function(toolContext, activePropertyName) {
 
   /**
    * A getter function to get the active state of the tool.
@@ -32,6 +32,3 @@ function toolActivate(toolContext, activePropertyName) {
     toolContext[activePropertyName] = newVal;
   };
 }
-
-
-export default toolActivate;

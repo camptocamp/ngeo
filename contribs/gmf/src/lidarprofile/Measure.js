@@ -7,12 +7,12 @@ export default class {
 
   /**
    * Measure tool for the d3 chart
-   * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManagerInstance gmf lidar profile manager instance
+   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
 
     /**
-     * @type {import("gmf/lidarprofile/Manager.js").default}
+     * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;

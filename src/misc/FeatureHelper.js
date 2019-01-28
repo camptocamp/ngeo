@@ -1159,7 +1159,7 @@ FeatureHelper.prototype.createTextStyle_ = function(options) {
 /**
  * Get the measure of the given feature as a string. For points, you can format
  * the result by setting a filter to apply on the coordinate with the function
- * {@link import("ngeo/misc/FeatureHelper.js").default.prototype.setPointFilterFn}.
+ * {@link import("ngeo/misc/FeatureHelper.js").setPointFilterFn}.
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} Measure.
  * @export

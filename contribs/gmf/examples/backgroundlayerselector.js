@@ -26,7 +26,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @constructor
  * @ngInject
  */

@@ -10,7 +10,7 @@ import * as olEvents from 'ol/events.js';
  * @ngname ngeoEventHelper
  * @ngInject
  */
-function EventHelper() {
+export function EventHelper() {
 
   /**
    * @type {Object.<number|string, Array.<import("ol/events.js").EventsKey>>}

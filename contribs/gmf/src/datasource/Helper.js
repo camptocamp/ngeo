@@ -10,9 +10,9 @@ class Helper {
    * sources.
    *
    * @param {angular.IQService} $q The Angular $q service.
-   * @param {import("gmf/editing/EnumerateAttribute.js").default} gmfEnumerateAttribute The Gmf enumerate
+   * @param {import("gmf/editing/EnumerateAttribute.js").EditingEnumerateAttributeService} gmfEnumerateAttribute The Gmf enumerate
    *     attribute service.
-   * @param {import("ngeo/datasource/Helper.js").default} ngeoDataSourcesHelper Ngeo data
+   * @param {import("ngeo/datasource/Helper.js").Helper} ngeoDataSourcesHelper Ngeo data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfDataSourcesHelper
@@ -29,13 +29,13 @@ class Helper {
     this.q_ = $q;
 
     /**
-     * @type {import("gmf/editing/EnumerateAttribute.js").default}
+     * @type {import("gmf/editing/EnumerateAttribute.js").EditingEnumerateAttributeService}
      * @private
      */
     this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     /**
-     * @type {import("ngeo/datasource/Helper.js").default}
+     * @type {import("ngeo/datasource/Helper.js").Helper}
      * @private
      */
     this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;

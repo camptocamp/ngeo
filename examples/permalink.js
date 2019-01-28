@@ -47,7 +47,7 @@ module.component('appMap', mapComponent);
 
 
 /**
- * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
+ * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @constructor
  * @ngInject
@@ -60,7 +60,7 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
   this.map;
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").default}
+   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -134,7 +134,7 @@ module.component('appDraw', drawComponent);
 
 /**
  * @param {!angular.IScope} $scope Scope.
- * @param {!import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo Location service.
+ * @param {!import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo Location service.
  * @constructor
  * @export
  * @ngInject
@@ -153,7 +153,7 @@ function DrawComponentController($scope, ngeoLocation) {
   this.layer;
 
   /**
-   * @type {!import("ngeo/statemanager/Location.js").default}
+   * @type {!import("ngeo/statemanager/Location.js").StatemanagerLocation}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;

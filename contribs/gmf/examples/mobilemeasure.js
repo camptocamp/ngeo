@@ -39,7 +39,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
+ * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
  * @constructor
  * @ngInject
  */

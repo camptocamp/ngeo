@@ -1,6 +1,7 @@
 import angular from 'angular';
 
-class EnumerateAttribute {
+
+export class EditingEnumerateAttributeService {
 
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
@@ -70,7 +71,7 @@ class EnumerateAttribute {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfEnumerateAttribute', []);
-module.service('gmfEnumerateAttribute', EnumerateAttribute);
+module.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
 
 
 export default module;

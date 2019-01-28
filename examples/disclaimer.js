@@ -20,14 +20,14 @@ const module = angular.module('app', [
 
 
 /**
- * @param {import("ngeo/message/Disclaimer.js").default} ngeoDisclaimer Ngeo disclaimer service.
+ * @param {import("ngeo/message/Disclaimer.js").MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer service.
  * @ngInject
  * @constructor
  */
 function MainController(ngeoDisclaimer) {
 
   /**
-   * @type {import("ngeo/message/Disclaimer.js").default}
+   * @type {import("ngeo/message/Disclaimer.js").MessageDisclaimerService}
    * @export
    */
   this.disclaimer = ngeoDisclaimer;

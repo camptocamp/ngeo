@@ -143,13 +143,13 @@ module.component('gmfObjectediting', component);
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {!import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
- * @param {!import("gmf/objectediting/Query.js").default} gmfObjectEditingQuery Gmf ObjectEditing
+ * @param {!import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {!import("gmf/objectediting/Query.js").ObjectEditingQuery} gmfObjectEditingQuery Gmf ObjectEditing
  *     query service.
- * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
- * @param {!import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Ngeo feature helper service.
- * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
- * @param {!import("ngeo/misc/ToolActivateMgr.js").default} ngeoToolActivateMgr Ngeo ToolActivate manager
+ * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
+ * @param {!import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
+ * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate manager
  *     service.
  * @constructor
  * @private
@@ -221,13 +221,13 @@ function Controller($scope, $timeout, gettextCatalog,
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {!import("gmf/editing/EditFeature.js").default}
+   * @type {!import("gmf/editing/EditFeature.js").EditingEditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {!import("gmf/objectediting/Query.js").default}
+   * @type {!import("gmf/objectediting/Query.js").ObjectEditingQuery}
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
@@ -272,25 +272,25 @@ function Controller($scope, $timeout, gettextCatalog,
   this.featureHasGeom;
 
   /**
-   * @type {!import("ngeo/map/LayerHelper.js").default}
+   * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.ngeoLayerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {!import("gmf/layertree/TreeManager.js").default}
+   * @type {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
   /**
-   * @type {!import("ngeo/misc/FeatureHelper.js").default}
+   * @type {!import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
   this.ngeoFeatureHelper_ = ngeoFeatureHelper;
 
   /**
-   * @type {!import("ngeo/misc/ToolActivateMgr.js").default}
+   * @type {!import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
    * @private
    */
   this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;

@@ -24,7 +24,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @param {string} gmfLayersUrl Url to the GeoMapFish layers service.
  * @ngInject
  */
-function EditFeature($http, gmfLayersUrl) {
+export function EditingEditFeature($http, gmfLayersUrl) {
 
   /**
    * @type {angular.IHttpService}
@@ -54,7 +54,7 @@ function EditFeature($http, gmfLayersUrl) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
+EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
     'bbox': extent.join(',')
   });
@@ -75,7 +75,7 @@ EditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * @param {!Array.<!ComparisonFilter>} filters List of comparison filters
  * @return {angular.IPromise} Promise.
  */
-EditFeature.prototype.getFeaturesWithComparisonFilters = function(
+EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(
   layerIds, filters
 ) {
   const properties = [];
@@ -98,7 +98,7 @@ EditFeature.prototype.getFeaturesWithComparisonFilters = function(
  * @return {Array.<import("ol/Feature.js").default>} List of features.
  * @private
  */
-EditFeature.prototype.handleGetFeatures_ = function(resp) {
+EditingEditFeature.prototype.handleGetFeatures_ = function(resp) {
   return new olFormatGeoJSON().readFeatures(resp.data);
 };
 
@@ -109,7 +109,7 @@ EditFeature.prototype.handleGetFeatures_ = function(resp) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-EditFeature.prototype.insertFeatures = function(layerId, features) {
+EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
   const geoJSON = new olFormatGeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
@@ -125,7 +125,7 @@ EditFeature.prototype.insertFeatures = function(layerId, features) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-EditFeature.prototype.updateFeature = function(layerId, feature) {
+EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   const geoJSON = new olFormatGeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
@@ -141,7 +141,7 @@ EditFeature.prototype.updateFeature = function(layerId, feature) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-EditFeature.prototype.deleteFeature = function(layerId, feature) {
+EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   return this.http_.delete(url, {
     headers: {'Content-Type': 'application/json'},
@@ -154,7 +154,7 @@ EditFeature.prototype.deleteFeature = function(layerId, feature) {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfEditFeature', []);
-module.service('gmfEditFeature', EditFeature);
+module.service('gmfEditFeature', EditingEditFeature);
 
 
 export default module;

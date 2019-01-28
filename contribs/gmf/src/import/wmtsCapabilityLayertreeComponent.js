@@ -47,7 +47,7 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
 class Controller {
 
   /**
-   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
+   * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
    *     external data sources.
    * @private
@@ -85,7 +85,7 @@ class Controller {
     // Injected properties
 
     /**
-     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
+     * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
      * @private
      */
     this.gmfExternalDataSourcesManager_ = gmfExternalDataSourcesManager;

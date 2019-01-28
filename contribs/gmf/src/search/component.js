@@ -94,9 +94,9 @@ function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
  * It can search in multiple GeoJSON datasources.
  * It can filter and group results by a feature's property.
  *
- * This component uses the {@link import("ngeo/map/FeatureOverlayMgr.js").default} to create a
+ * This component uses the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} to create a
  * feature overlay for drawing features on the map. The application
- * is responsible to initialize the {@link import("ngeo/map/FeatureOverlayMgr.js").default}
+ * is responsible to initialize the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
  * with the map.
  *
  * Example flat results:
@@ -213,14 +213,14 @@ class SearchController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("ngeo/misc/AutoProjection.js").default} ngeoAutoProjection The ngeo coordinates service.
-   * @param {import("ngeo/search/createGeoJSONBloodhound.js").default.Function} ngeoSearchCreateGeoJSONBloodhound The ngeo
+   * @param {import("ngeo/misc/AutoProjection.js").AutoProjectionService} ngeoAutoProjection The ngeo coordinates service.
+   * @param {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound} ngeoSearchCreateGeoJSONBloodhound The ngeo
    *     create GeoJSON Bloodhound service.
-   * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
+   * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
    *     overlay manager service.
-   * @param {import("gmf/theme/Themes.js").default} gmfThemes gmf Themes service.
-   * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
-   * @param {import("gmf/search/FulltextSearch.js").default} gmfSearchFulltextSearch gmf Full text search service.
+   * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes gmf Themes service.
+   * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
+   * @param {import("gmf/search/FulltextSearch.js").FulltextSearchService} gmfSearchFulltextSearch gmf Full text search service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
@@ -261,37 +261,37 @@ class SearchController {
     this.gettextCatalog_ = gettextCatalog;
 
     /**
-     * @type {import("gmf/theme/Themes.js").default}
+     * @type {import("gmf/theme/Themes.js").ThemesService}
      * @private
      */
     this.gmfThemes_ = gmfThemes;
 
     /**
-     * @type {import("gmf/layertree/TreeManager.js").default}
+     * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
      * @private
      */
     this.gmfTreeManager_ = gmfTreeManager;
 
     /**
-     * @type {import("gmf/search/FulltextSearch.js").default}
+     * @type {import("gmf/search/FulltextSearch.js").FulltextSearchService}
      * @private
      */
     this.fullTextSearch_ = gmfSearchFulltextSearch;
 
     /**
-     * @type {import("ngeo/search/createGeoJSONBloodhound.js").default.Function}
+     * @type {import("ngeo/search/createGeoJSONBloodhound.js").createGeoJSONBloodhound}
      * @private
      */
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
     /**
-     * @type {import("ngeo/map/FeatureOverlayMgr.js").default}
+     * @type {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
      * @private
      */
     this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
 
     /**
-     * @type {import("ngeo/statemanager/Location.js").default|undefined}
+     * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation|undefined}
      * @private
      */
     this.ngeoLocation_;
@@ -301,7 +301,7 @@ class SearchController {
     }
 
     /**
-     * @type {import("ngeo/misc/AutoProjection.js").default}
+     * @type {import("ngeo/misc/AutoProjection.js").AutoProjectionService}
      * @private
      */
     this.ngeoAutoProjection_ = ngeoAutoProjection;

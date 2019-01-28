@@ -40,7 +40,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 /**
  * @constructor
  * @param {!angular.IScope} $scope Angular scope.
- * @param {import("ngeo/misc/FeatureHelper.js").default} ngeoFeatureHelper Gmf feature helper service.
+ * @param {import("ngeo/misc/FeatureHelper.js").FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @ngInject
  */
 function MainController($scope, ngeoFeatureHelper) {
@@ -52,7 +52,7 @@ function MainController($scope, ngeoFeatureHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {import("ngeo/misc/FeatureHelper.js").default}
+   * @type {import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
   this.featureHelper_ = ngeoFeatureHelper;

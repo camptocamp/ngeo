@@ -88,10 +88,10 @@ module.controller('AppQueryresultController', QueryresultController);
 
 /**
  * @constructor
- * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
- * @param {import("gmf/datasource/Manager.js").default} gmfDataSourcesManager The gmf
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
+ * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *   overlay manager service.
  * @ngInject
  */

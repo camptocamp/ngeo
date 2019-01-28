@@ -46,7 +46,7 @@ import olStyleStyle from 'ol/style/Style.js';
  */
 class Measure extends olInteractionInteraction {
   /**
-   * @param {import("ngeo/interaction/MeasureBaseOptions.js").default=} options Options
+   * @param {import("ngeo/interaction/MeasureBaseOptions.js").MeasueBaseOptions=} options Options
    */
   constructor(options = {}) {
     super({

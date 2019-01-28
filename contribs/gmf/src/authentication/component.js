@@ -138,9 +138,9 @@ class AuthenticationController {
    * @private
    * @param {!JQuery} $element Element.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import("gmf/authentication/Service.js").default} gmfAuthenticationService GMF Authentication service
+   * @param {import("gmf/authentication/Service.js").AuthenticationService} gmfAuthenticationService GMF Authentication service
    * @param {User} gmfUser User.
-   * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
+   * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
    * @ngInject
    * @ngdoc controller
    * @ngname GmfAuthenticationController
@@ -166,13 +166,13 @@ class AuthenticationController {
     this.gettextCatalog = gettextCatalog;
 
     /**
-     * @type {import("gmf/authentication/Service.js").default}
+     * @type {import("gmf/authentication/Service.js").AuthenticationService}
      * @private
      */
     this.gmfAuthenticationService_ = gmfAuthenticationService;
 
     /**
-     * @type {import("ngeo/message/Notification.js").default}
+     * @type {import("ngeo/message/Notification.js").MessageNotification}
      * @private
      */
     this.notification_ = ngeoNotification;

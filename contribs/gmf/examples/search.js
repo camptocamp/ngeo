@@ -38,9 +38,9 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
 
 /**
- * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
- * @param {import("ngeo/message/Notification.js").default} ngeoNotification Ngeo notification service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature overlay manager service.
+ * @param {import("ngeo/message/Notification.js").MessageNotification} ngeoNotification Ngeo notification service.
  * @constructor
  * @ngInject
  */

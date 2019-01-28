@@ -57,9 +57,9 @@ module.directive('gmfMap', directive);
 
 
 /**
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
- * @param {!import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
- * @param {!import("gmf/editing/Snapping.js").default} gmfSnapping The gmf snapping service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
+ * @param {!import("gmf/editing/Snapping.js").EditingSnappingService} gmfSnapping The gmf snapping service.
  * @constructor
  * @private
  * @ngInject
@@ -92,19 +92,19 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   // Injected properties
 
   /**
-   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
-   * @type {!import("gmf/permalink/Permalink.js").default}
+   * @type {!import("gmf/permalink/Permalink.js").PermalinkService}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!import("gmf/editing/Snapping.js").default}
+   * @type {!import("gmf/editing/Snapping.js").EditingSnappingService}
    * @private
    */
   this.gmfSnapping_ = gmfSnapping;

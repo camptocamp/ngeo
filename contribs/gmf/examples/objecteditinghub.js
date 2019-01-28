@@ -29,8 +29,8 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @param {angular.IHttpService} $http Angular $http service.
  * @param {angular.IQService} $q Angular $q service.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf themes service.
- * @param {import("gmf/editing/XSDAttributes.js").default} gmfXSDAttributes The gmf XSDAttributes service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf themes service.
+ * @param {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService} gmfXSDAttributes The gmf XSDAttributes service.
  * @constructor
  * @ngInject
  */
@@ -49,13 +49,13 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   this.q_ = $q;
 
   /**
-   * @type {import("gmf/theme/Themes.js").default}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import("gmf/editing/XSDAttributes.js").default}
+   * @type {import("gmf/editing/XSDAttributes.js").EditingXSDAttributeService}
    * @private
    */
   this.gmfXSDAttributes_ = gmfXSDAttributes;

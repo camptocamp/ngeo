@@ -25,14 +25,13 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @param {angular.IQService} $q The Angular $q service.
  * @param {!angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
- * @param {import("gmf/layertree/TreeManager.js").default} gmfTreeManager The gmf TreeManager service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
+ * @param {import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager The gmf TreeManager service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
  */
-function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
-  gmfTreeManager) {
+export function EditingSnappingService($http, $q, $rootScope, $timeout, gmfThemes, gmfTreeManager) {
 
   // === Injected services ===
 
@@ -61,13 +60,13 @@ function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
   this.timeout_ = $timeout;
 
   /**
-   * @type {import("gmf/theme/Themes.js").default}
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;
 
   /**
-   * @type {import("gmf/layertree/TreeManager.js").default}
+   * @type {import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -123,7 +122,7 @@ function Snapping($http, $q, $rootScope, $timeout, gmfThemes,
  *
  * @export
  */
-Snapping.prototype.ensureSnapInteractionsOnTop = function() {
+EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
   const map = this.map_;
   console.assert(map);
 
@@ -144,7 +143,7 @@ Snapping.prototype.ensureSnapInteractionsOnTop = function() {
  * @param {?import("ol/Map.js").default} map Map
  * @export
  */
-Snapping.prototype.setMap = function(map) {
+EditingSnappingService.prototype.setMap = function(map) {
 
   const keys = this.listenerKeys_;
 
@@ -186,7 +185,7 @@ Snapping.prototype.setMap = function(map) {
  * tree manager Layertree controllers array changes.
  * @private
  */
-Snapping.prototype.handleThemesChange_ = function() {
+EditingSnappingService.prototype.handleThemesChange_ = function() {
   this.ogcServers_ = null;
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
@@ -202,7 +201,7 @@ Snapping.prototype.handleThemesChange_ = function() {
  * @param {import("ngeo/layertree/Controller.js").default} treeCtrl Layertree controller to register
  * @private
  */
-Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
+EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {import(gmf/themes.js).GmfGroup|import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
@@ -253,7 +252,7 @@ Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
  *
  * @private
  */
-Snapping.prototype.unregisterAllTreeCtrl_ = function() {
+EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
   for (const uid in this.cache_) {
     const item = this.cache_[+uid];
     if (item) {
@@ -272,7 +271,7 @@ Snapping.prototype.unregisterAllTreeCtrl_ = function() {
  * @return {?import(gmf/themes.js).GmfOgcServers} The OGC server.
  * @private
  */
-Snapping.prototype.getOGCServer_ = function(treeCtrl) {
+EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
   const gmfLayer = /** @type {import(gmf/themes.js).GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
@@ -312,7 +311,7 @@ Snapping.prototype.getOGCServer_ = function(treeCtrl) {
  * @return {?WFSConfig} The configuration object.
  * @private
  */
-Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
+EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
 
   // (1)
   if (this.ogcServers_ === null) {
@@ -362,7 +361,7 @@ Snapping.prototype.getWFSConfig_ = function(treeCtrl) {
  * @param {string|undefined} newVal New state value
  * @private
  */
-Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
+EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
 
   const uid = olUtilGetUid(treeCtrl);
   const item = this.cache_[uid];
@@ -384,7 +383,7 @@ Snapping.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
  * @param {CacheItem} item Cache item.
  * @private
  */
-Snapping.prototype.activateItem_ = function(item) {
+EditingSnappingService.prototype.activateItem_ = function(item) {
 
   // No need to do anything if item is already active
   if (item.active) {
@@ -418,7 +417,7 @@ Snapping.prototype.activateItem_ = function(item) {
  * @param {CacheItem} item Cache item.
  * @private
  */
-Snapping.prototype.deactivateItem_ = function(item) {
+EditingSnappingService.prototype.deactivateItem_ = function(item) {
 
   // No need to do anything if item is already inactive
   if (!item.active) {
@@ -447,7 +446,7 @@ Snapping.prototype.deactivateItem_ = function(item) {
 /**
  * @private
  */
-Snapping.prototype.loadAllItems_ = function() {
+EditingSnappingService.prototype.loadAllItems_ = function() {
   this.mapViewChangePromise_ = null;
   let item;
   for (const uid in this.cache_) {
@@ -462,7 +461,7 @@ Snapping.prototype.loadAllItems_ = function() {
 /**
  * Manually refresh all features
  */
-Snapping.prototype.refresh = function() {
+EditingSnappingService.prototype.refresh = function() {
   this.loadAllItems_();
 };
 
@@ -475,7 +474,7 @@ Snapping.prototype.refresh = function() {
  * @param {CacheItem} item Cache item.
  * @private
  */
-Snapping.prototype.loadItemFeatures_ = function(item) {
+EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
 
   // If a previous request is still running, cancel it.
   if (item.requestDeferred) {
@@ -535,7 +534,7 @@ Snapping.prototype.loadItemFeatures_ = function(item) {
  * delay. Cancel any currently delayed call, if required.
  * @private
  */
-Snapping.prototype.handleMapMoveEnd_ = function() {
+EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
   if (this.mapViewChangePromise_) {
     this.timeout_.cancel(this.mapViewChangePromise_);
   }
@@ -583,7 +582,7 @@ const module = angular.module('gmfSnapping', [
   gmfThemeThemes.name,
   ngeoLayertreeController.name,
 ]);
-module.service('gmfSnapping', Snapping);
+module.service('gmfSnapping', EditingSnappingService);
 
 
 export default module;

@@ -53,10 +53,9 @@ import {select as d3select} from 'd3';
 
 
 export default class {
-
   /**
    * Clip a linstring with start and end measure given by D3 Chart domain
-   * @param {import("gmf/lidarprofile/Config.js").default} config the LIDAR profile config instance
+   * @param {import("gmf/lidarprofile/Config.js").LidarprofileConfigService} config the LIDAR profile config instance
    * @param {number} map_resolution the current resolution of the map
    * @param {import("ol/geom/LineString.js").default} linestring an OpenLayer Linestring
    * @param {number} dLeft domain minimum

@@ -51,7 +51,7 @@ class Controller extends AbstractDesktopController {
 
     /**
      * The ngeo ToolActivate manager service.
-     * @type {import("ngeo/misc/ToolActivateMgr.js").default}
+     * @type {import('ngeo/misc/ToolActivateMgr.js').default}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
@@ -102,7 +102,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("gmf/theme/Themes.js").default} gmfObjectEditingManager The gmf theme service
+     * @type {import("gmf/theme/Themes.js").ThemesService} gmfObjectEditingManager The gmf theme service
      */
     const gmfThemes = $injector.get('gmfThemes');
 
@@ -115,7 +115,7 @@ class Controller extends AbstractDesktopController {
     });
 
     /**
-     * @type {import("gmf/objectediting/Manager.js").default} gmfObjectEditingManager The gmf
+     * @type {import("gmf/objectediting/Manager.js").ObjecteditingManagerService} gmfObjectEditingManager The gmf
      *     ObjectEditing manager service.
      */
     const gmfObjectEditingManager = $injector.get('gmfObjectEditingManager');

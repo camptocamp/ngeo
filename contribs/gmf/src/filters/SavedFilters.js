@@ -1,7 +1,7 @@
 import angular from 'angular';
 import * as olArray from 'ol/array.js';
 
-class SavedFilter {
+export class SavedFilter {
 
   /**
    * The GeoMapFish service responsible of storing filters that can be applied
@@ -38,7 +38,7 @@ class SavedFilter {
     this.currentDataSourceId_ = null;
 
     /**
-     * @type {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>}
+     * @type {!Array.<!SavedFilterItem>}
      * @private
      */
     this.currentDataSourceItems_ = [];
@@ -69,7 +69,7 @@ class SavedFilter {
     }
 
     /**
-     * @type {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>}
+     * @type {!Array.<!SavedFilterItem>}
      * @private
      */
     this.items_ = [];
@@ -88,7 +88,7 @@ class SavedFilter {
   }
 
   /**
-   * @return {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>} Items
+   * @return {!Array.<!SavedFilterItem>} Items
    * @export
    */
   get currentDataSourceItems() {
@@ -105,7 +105,7 @@ class SavedFilter {
   }
 
   /**
-   * @return {!Array.<!import("gmf/filters/SavedFilters.js").default.Item>} Items
+   * @return {!Array.<!SavedFilterItem>} Items
    * @export
    */
   get items() {
@@ -149,7 +149,7 @@ class SavedFilter {
   }
 
   /**
-   * @param {!import("gmf/filters/SavedFilters.js").default.Item} item Item.
+   * @param {!SavedFilterItem} item Item.
    * @export
    */
   save(item) {
@@ -169,7 +169,7 @@ class SavedFilter {
   }
 
   /**
-   * @param {!import("gmf/filters/SavedFilters.js").default.Item} item Item.
+   * @param {!SavedFilterItem} item Item.
    * @export
    */
   remove(item) {
@@ -221,7 +221,7 @@ module.service('gmfSavedFilters', SavedFilter);
  * @constructor
  * @export
  */
-function Item() {}
+export function SavedFilterItem() {}
 
 
 /**
@@ -229,7 +229,7 @@ function Item() {}
  * @type {string}
  * @export
  */
-Item.prototype.condition;
+SavedFilterItem.prototype.condition;
 
 
 /**
@@ -237,7 +237,7 @@ Item.prototype.condition;
  * @type {!Array.<!AnyOptions>}
  * @export
  */
-Item.prototype.customRules;
+SavedFilterItem.prototype.customRules;
 
 
 /**
@@ -245,7 +245,7 @@ Item.prototype.customRules;
  * @type {number}
  * @export
  */
-Item.prototype.dataSourceId;
+SavedFilterItem.prototype.dataSourceId;
 
 
 /**
@@ -253,7 +253,7 @@ Item.prototype.dataSourceId;
  * @type {!Array.<!AnyOptions>}
  * @export
  */
-Item.prototype.directedRules;
+SavedFilterItem.prototype.directedRules;
 
 
 /**
@@ -261,7 +261,7 @@ Item.prototype.directedRules;
  * @type {string}
  * @export
  */
-Item.prototype.name;
+SavedFilterItem.prototype.name;
 
 
 export default module;

@@ -45,7 +45,7 @@ class Controller {
 
   /**
    * @param {!angular.IScope} $scope Angular scope.
-   * @param {!import("ngeo/datasource/DataSources.js").default} ngeoDataSources Ngeo data sources
+   * @param {!import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources
    *     service.
    * @private
    * @ngInject

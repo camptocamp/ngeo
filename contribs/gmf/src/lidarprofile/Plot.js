@@ -22,12 +22,12 @@ export default class {
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mechanism.
    *
-   * @param {import("gmf/lidarprofile/Manager.js").default} gmfLidarprofileManagerInstance gmf lidar profile manager instance
+   * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManagerInstance gmf lidar profile manager instance
    */
   constructor(gmfLidarprofileManagerInstance) {
 
     /**
-     * @type {import("gmf/lidarprofile/Manager.js").default}
+     * @type {import("gmf/lidarprofile/Manager.js").LidarprofileManager}
      * @private
      */
     this.manager_ = gmfLidarprofileManagerInstance;

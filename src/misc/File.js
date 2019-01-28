@@ -8,7 +8,7 @@ import angular from 'angular';
  * @param {angular.gettext.gettextFunction} gettext .
  * @ngInject
  */
-function File($q, $http, gettext) {
+export function FileService($q, $http, gettext) {
   let fileReader, canceler;
 
   // Test the validity of the file size
@@ -94,7 +94,7 @@ function File($q, $http, gettext) {
 
 const module = angular.module('ngeoFile', []);
 
-module.service('ngeoFile', File);
+module.service('ngeoFile', FileService);
 
 
 export default module;

@@ -23,8 +23,8 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 /**
  * @constructor
  * @param {angular.IHttpService} $http Angular's $http service.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes Themes service.
- * @param {import("gmf/theme/Manager.js").default} gmfThemeManager gmf Tree Manager service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
+ * @param {import("gmf/theme/Manager.js").ThemeManagerService} gmfThemeManager gmf Tree Manager service.
  * @ngInject
  */
 function MainController($http, gmfThemes, gmfThemeManager) {
@@ -39,7 +39,7 @@ function MainController($http, gmfThemes, gmfThemeManager) {
   };
 
   /**
-   * @type {import("gmf/theme/Manager.js").default}
+   * @type {import("gmf/theme/Manager.js").ThemeManagerService}
    * @export
    */
   this.manager = gmfThemeManager;

@@ -31,7 +31,7 @@ import angular from 'angular';
  * @export
  * @ngname gmfShareService
  */
-function ShareService($http, gmfShortenerCreateUrl) {
+function PermalinkShareService($http, gmfShortenerCreateUrl) {
 
   /**
    * @type {angular.IHttpService}
@@ -56,7 +56,7 @@ function ShareService($http, gmfShortenerCreateUrl) {
  * @return {ShortenerAPIResponse|angular.IHttpPromise<Object>} an object containing the permalink not shortened or
  * the promise attached to the shortener API request
  */
-ShareService.prototype.getShortUrl = function(url) {
+PermalinkShareService.prototype.getShortUrl = function(url) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
     url
   });
@@ -82,7 +82,7 @@ ShareService.prototype.getShortUrl = function(url) {
  * @param  {string=} opt_message message for the email
  * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
  */
-ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
+PermalinkShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
   const params = /** @type {ShortenerAPIRequestParams} */ ({
     url: shortUrl,
     email: email
@@ -101,7 +101,7 @@ ShareService.prototype.sendShortUrl = function(shortUrl, email, opt_message) {
  * @return {angular.IHttpPromise<Object>} the promise attached to the shortener API request
  * @private
  */
-ShareService.prototype.postShortUrl_ = function(params) {
+PermalinkShareService.prototype.postShortUrl_ = function(params) {
   // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -127,7 +127,7 @@ export const URL_PATH_MAX_LEN = 2048;
 
 const module = angular.module('gmfShareService', []);
 
-module.service('gmfShareService', ShareService);
+module.service('gmfShareService', PermalinkShareService);
 
 
 export default module;

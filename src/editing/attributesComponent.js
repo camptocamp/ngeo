@@ -75,7 +75,7 @@ module.component('ngeoAttributes', component);
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
+ * @param {!import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
  * @constructor
  * @private
  * @ngInject
@@ -120,7 +120,7 @@ function Controller($scope, ngeoEventHelper) {
   this.scope_ = $scope;
 
   /**
-   * @type {!import("ngeo/misc/EventHelper.js").default}
+   * @type {!import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;

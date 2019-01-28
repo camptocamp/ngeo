@@ -89,7 +89,7 @@ function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTem
 /**
  * Provides a component to display results of the {@link import("ngeo/queryResult.js").default} in a
  * grid and shows related features on the map using
- * the {@link import("ngeo/map/FeatureOverlayMgr.js").default}.
+ * the {@link import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}.
  *
  * You can override the default component's template by setting the
  * value `gmfDisplayquerygridTemplateUrl`.
@@ -150,11 +150,11 @@ module.component('gmfDisplayquerygrid', component);
  * @param {!angular.auto.IInjectorService} $injector Main injector.
  * @param {!angular.IScope} $scope Angular scope.
  * @param {!QueryResult} ngeoQueryResult ngeo query result.
- * @param {!import("ngeo/query/MapQuerent.js").default} ngeoMapQuerent ngeo map querent service.
- * @param {!import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {!import("ngeo/query/MapQuerent.js").MapQuerent} ngeoMapQuerent ngeo map querent service.
+ * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {!angular.ITimeoutService} $timeout Angular timeout service.
- * @param {!import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV download service.
+ * @param {!import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {!JQuery} $element Element.
  * @constructor
  * @private
@@ -188,13 +188,13 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.ngeoQueryResult = ngeoQueryResult;
 
   /**
-   * @type {!import("ngeo/query/MapQuerent.js").default}
+   * @type {!import("ngeo/query/MapQuerent.js").MapQuerent}
    * @private
    */
   this.ngeoMapQuerent_ = ngeoMapQuerent;
 
   /**
-   * @type {!import("ngeo/download/Csv.js").default}
+   * @type {!import("ngeo/download/Csv.js").DownloadCsvService}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;
@@ -278,7 +278,7 @@ function Controller($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
   this.features_ = new olCollection();
 
   /**
-   * @type {!import("ngeo/map/FeatureOverlayMgr.js").default}
+   * @type {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    * @private
    */
   this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;

@@ -139,19 +139,18 @@ module.component('gmfProfile', component);
  * @param {JQuery} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import("ngeo/map/FeatureOverlayMgr.js").default} ngeoFeatureOverlayMgr Feature overlay
+ * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
  *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {import("ngeo/download/Csv.js").default} ngeoCsvDownload CSV Download service.
+ * @param {import("ngeo/download/Csv.js").DownloadCsvService} ngeoCsvDownload CSV Download service.
  * @constructor
  * @private
  * @ngInject
  * @ngdoc controller
  * @ngname GmfProfileController
  */
-function Controller($scope, $http, $element, $filter,
-  gettextCatalog, ngeoFeatureOverlayMgr, gmfProfileJsonUrl,
-  ngeoCsvDownload) {
+function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatureOverlayMgr,
+  gmfProfileJsonUrl, ngeoCsvDownload) {
 
   /**
    * @type {angular.IScope}
@@ -196,7 +195,7 @@ function Controller($scope, $http, $element, $filter,
   this.gmfProfileJsonUrl_ = gmfProfileJsonUrl;
 
   /**
-   * @type {import("ngeo/download/Csv.js").default}
+   * @type {import("ngeo/download/Csv.js").DownloadCsvService}
    * @private
    */
   this.ngeoCsvDownload_ = ngeoCsvDownload;

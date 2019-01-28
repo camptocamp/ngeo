@@ -104,14 +104,14 @@ const ParamPrefix = {
  * @param {angular.auto.IInjectorService} $injector Main injector.
  * @param {import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import("ngeo/misc/EventHelper.js").default} ngeoEventHelper Ngeo event helper service
- * @param {import("ngeo/statemanager/Service.js").default} ngeoStateManager The ngeo statemanager service.
- * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
+ * @param {import("ngeo/misc/EventHelper.js").EventHelper} ngeoEventHelper Ngeo event helper service
+ * @param {import("ngeo/statemanager/Service.js").StatemanagerService} ngeoStateManager The ngeo statemanager service.
+ * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
-function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
+export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCatalog, ngeoEventHelper,
   ngeoStateManager, ngeoLocation) {
 
   /**
@@ -150,13 +150,13 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   this.ngeoDebounce_ = ngeoDebounce;
 
   /**
-   * @type {import("ngeo/misc/EventHelper.js").default}
+   * @type {import("ngeo/misc/EventHelper.js").EventHelper}
    * @private
    */
   this.ngeoEventHelper_ = ngeoEventHelper;
 
   /**
-   * @type {import("ngeo/statemanager/Service.js").default}
+   * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
    * @private
    */
   this.ngeoStateManager_ = ngeoStateManager;
@@ -169,14 +169,14 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
     $injector.get('ngeoFeatures') : null;
 
   /**
-   * @type {?import("ngeo/map/BackgroundLayerMgr.js").default}
+   * @type {?import("ngeo/map/BackgroundLayerMgr.js").MapBackgroundLayerManager}
    * @private
    */
   this.ngeoBackgroundLayerMgr_ = $injector.has('ngeoBackgroundLayerMgr') ?
     $injector.get('ngeoBackgroundLayerMgr') : null;
 
   /**
-   * @type {?import("ngeo/map/FeatureOverlayMgr.js").default}
+   * @type {?import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr}
    */
   const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr') ?
     $injector.get('ngeoFeatureOverlayMgr') : null;
@@ -189,14 +189,14 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
     ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
-   * @type {?import("ngeo/misc/FeatureHelper.js").default}
+   * @type {?import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
   this.featureHelper_ = $injector.has('ngeoFeatureHelper') ?
     $injector.get('ngeoFeatureHelper') : null;
 
   /**
-   * @type {?import("ngeo/query/Querent.js").default}
+   * @type {?import("ngeo/query/Querent.js").Querent}
    * @private
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ?
@@ -226,27 +226,27 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   this.pointRecenterZoom_ = gmfPermalinkOptions.pointRecenterZoom;
 
   /**
-   * @type {?import("gmf/datasource/ExternalDataSourcesManager.js").default}
+   * @type {?import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    * @private
    */
   this.gmfExternalDataSourcesManager_ = $injector.has('gmfExternalDataSourcesManager') ?
       $injector.get('gmfExternalDataSourcesManager') : null;
 
   /**
-   * @type {?import("gmf/theme/Themes.js").default}
+   * @type {?import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = $injector.has('gmfThemes') ? $injector.get('gmfThemes') : null;
 
   /**
-   * @type {?import("gmf/objectediting/Manager.js").default}
+   * @type {?import("gmf/objectediting/Manager.js").ObjecteditingManagerService}
    * @private
    */
   this.gmfObjectEditingManager_ = $injector.has('gmfObjectEditingManager') ?
     $injector.get('gmfObjectEditingManager') : null;
 
   /**
-   * @type {?import("gmf/theme/Manager.js").default}
+   * @type {?import("gmf/theme/Manager.js").ThemeManagerService}
    * @private
    */
   this.gmfThemeManager_ = $injector.has('gmfThemeManager') ? $injector.get('gmfThemeManager') : null;
@@ -258,7 +258,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   this.defaultTheme_ = $injector.has('defaultTheme') ? $injector.get('defaultTheme') : undefined;
 
   /**
-   * @type {?import("gmf/layertree/TreeManager.js").default}
+   * @type {?import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = $injector.has('gmfTreeManager') ? $injector.get('gmfTreeManager') : null;
@@ -266,7 +266,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   // == other properties ==
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").default}
+   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -290,7 +290,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
   this.map_ = null;
 
   /**
-   * @type {?import("ngeo/misc/AutoProjection.js").default}
+   * @type {?import("ngeo/misc/AutoProjection.js").AutoProjectionService}
    * @private
    */
   this.ngeoAutoProjection_ = $injector.has('ngeoAutoProjection') ?
@@ -520,7 +520,7 @@ function Permalink($q, $timeout, $rootScope, $injector, ngeoDebounce, gettextCat
  * @return {?import("ol/coordinate.js").Coordinate} The coordinate for the map view center.
  * @export
  */
-Permalink.prototype.getMapCenter = function() {
+PermalinkService.prototype.getMapCenter = function() {
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
   const y = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Y);
 
@@ -546,7 +546,7 @@ Permalink.prototype.getMapCenter = function() {
  * @return {number|undefined} The zoom for the map view.
  * @export
  */
-Permalink.prototype.getMapZoom = function() {
+PermalinkService.prototype.getMapZoom = function() {
   const zoom = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Z);
   return isNaN(zoom) ? undefined : zoom;
 };
@@ -560,7 +560,7 @@ Permalink.prototype.getMapZoom = function() {
  * @return {boolean} Whether map crosshair property is set or not.
  * @export
  */
-Permalink.prototype.getMapCrosshair = function() {
+PermalinkService.prototype.getMapCrosshair = function() {
   const crosshair = this.ngeoStateManager_.getInitialBooleanValue(PermalinkParam.MAP_CROSSHAIR);
   return crosshair === undefined ? this.crosshairEnabledByDefault_ : crosshair;
 };
@@ -571,7 +571,7 @@ Permalink.prototype.getMapCrosshair = function() {
  * Overwrites an existing map crosshair.
  * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
-Permalink.prototype.setMapCrosshair = function(opt_center) {
+PermalinkService.prototype.setMapCrosshair = function(opt_center) {
   let crosshairCoordinate;
   if (opt_center) {
     crosshairCoordinate = opt_center;
@@ -602,7 +602,7 @@ Permalink.prototype.setMapCrosshair = function(opt_center) {
  * @return {string|undefined} Tooltip text.
  * @export
  */
-Permalink.prototype.getMapTooltip = function() {
+PermalinkService.prototype.getMapTooltip = function() {
   return this.ngeoStateManager_.getInitialStringValue(PermalinkParam.MAP_TOOLTIP);
 };
 
@@ -612,7 +612,7 @@ Permalink.prototype.getMapTooltip = function() {
  * @param {string} tooltipText Text to display in tooltip.
  * @param {?import("ol/coordinate.js").Coordinate=} opt_center Optional center coordinate.
  */
-Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
+PermalinkService.prototype.setMapTooltip = function(tooltipText, opt_center) {
   let tooltipPosition;
   if (opt_center) {
     tooltipPosition = opt_center;
@@ -647,7 +647,7 @@ Permalink.prototype.setMapTooltip = function(tooltipText, opt_center) {
  * @return {!Array.<!import("ol/Feature.js").default>} The features read from the state manager.
  * @export
  */
-Permalink.prototype.getFeatures = function() {
+PermalinkService.prototype.getFeatures = function() {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
     return this.featureHashFormat_.readFeatures(f);
@@ -660,7 +660,7 @@ Permalink.prototype.getFeatures = function() {
  * @param {!Object.<string, string>} dimensions The global dimensions object.
  * @export
  */
-Permalink.prototype.setDimensions = function(dimensions) {
+PermalinkService.prototype.setDimensions = function(dimensions) {
   // apply initial state
   const keys = this.ngeoLocation_.getParamKeysWithPrefix(ParamPrefix.DIMENSIONS);
   for (let i = 0; i < keys.length; i++) {
@@ -690,7 +690,7 @@ Permalink.prototype.setDimensions = function(dimensions) {
  * @param {?import("ol/Map.js").default} map The ol3 map object.
  * @export
  */
-Permalink.prototype.setMap = function(map) {
+PermalinkService.prototype.setMap = function(map) {
 
   if (map === this.map_) {
     return;
@@ -721,7 +721,7 @@ Permalink.prototype.setMap = function(map) {
  * @param {?import("ol/Feature.js").default} oeFeature ObjectEditing feature
  * @private
  */
-Permalink.prototype.registerMap_ = function(map, oeFeature) {
+PermalinkService.prototype.registerMap_ = function(map, oeFeature) {
 
   const view = map.getView();
   let center;
@@ -795,7 +795,7 @@ Permalink.prototype.registerMap_ = function(map, oeFeature) {
  * Remove any event listeners from the current map.
  * @private
  */
-Permalink.prototype.unregisterMap_ = function() {
+PermalinkService.prototype.unregisterMap_ = function() {
   console.assert(
     this.mapViewPropertyChangeEventKey_, 'Key should be thruthy');
   olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
@@ -813,7 +813,7 @@ Permalink.prototype.unregisterMap_ = function() {
  * @return {?import("ol/layer/Base.js").default} Background layer.
  * @export
  */
-Permalink.prototype.getBackgroundLayer = function(layers) {
+PermalinkService.prototype.getBackgroundLayer = function(layers) {
   const layerName = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.BG_LAYER);
   if (layerName !== undefined) {
     for (const layer of layers) {
@@ -831,7 +831,7 @@ Permalink.prototype.getBackgroundLayer = function(layers) {
  * background layer label, i.e. its name.
  * @private
  */
-Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
+PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function() {
   if (!this.map_ || !this.ngeoBackgroundLayerMgr_) {
     return;
   }
@@ -856,7 +856,7 @@ Permalink.prototype.handleBackgroundLayerManagerChange_ = function() {
  * correspondent state of the permalink.
  * @export
  */
-Permalink.prototype.refreshFirstLevelGroups = function() {
+PermalinkService.prototype.refreshFirstLevelGroups = function() {
   if (!this.gmfTreeManager_) {
     return;
   }
@@ -877,7 +877,7 @@ Permalink.prototype.refreshFirstLevelGroups = function() {
  * @param {Array.<string>} pathElements Array of path elements.
  * @return {boolean} theme in path.
  */
-Permalink.prototype.themeInUrl_ = function(pathElements) {
+PermalinkService.prototype.themeInUrl_ = function(pathElements) {
   const indexOfTheme = pathElements.indexOf('theme');
   return indexOfTheme != -1 && indexOfTheme == pathElements.length - 2;
 };
@@ -887,7 +887,7 @@ Permalink.prototype.themeInUrl_ = function(pathElements) {
  * @param {string} themeName Theme name.
  * @private
  */
-Permalink.prototype.setThemeInUrl_ = function(themeName) {
+PermalinkService.prototype.setThemeInUrl_ = function(themeName) {
   if (themeName) {
     const pathElements = this.ngeoLocation_.getPath().split('/');
     console.assert(pathElements.length > 1);
@@ -911,7 +911,7 @@ Permalink.prototype.setThemeInUrl_ = function(themeName) {
  * @return {?string} default theme name.
  * @export
  */
-Permalink.prototype.defaultThemeName = function() {
+PermalinkService.prototype.defaultThemeName = function() {
 
   // check if we have a theme in url
   const pathElements = this.ngeoLocation_.getPath().split('/');
@@ -944,7 +944,7 @@ Permalink.prototype.defaultThemeName = function() {
  * @return {?string} default theme name.
  * @export
  */
-Permalink.prototype.defaultThemeNameFromFunctionalities = function() {
+PermalinkService.prototype.defaultThemeNameFromFunctionalities = function() {
   //check if we have a theme in the user functionalities
   if (!this.gmfUser_) {
     return null;
@@ -963,7 +963,7 @@ Permalink.prototype.defaultThemeNameFromFunctionalities = function() {
 /**
  * @private
  */
-Permalink.prototype.initLayers_ = function() {
+PermalinkService.prototype.initLayers_ = function() {
   const initialUri = window.location.href;
   let authenticationRequired = false;
 
@@ -1083,7 +1083,7 @@ Permalink.prototype.initLayers_ = function() {
  * @param {import("ol/Collection.js").CollectionEvent} event Collection event.
  * @private
  */
-Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
+PermalinkService.prototype.handleNgeoFeaturesAdd_ = function(event) {
   const feature = event.element;
   console.assert(feature instanceof olFeature);
   this.addNgeoFeature_(feature);
@@ -1094,7 +1094,7 @@ Permalink.prototype.handleNgeoFeaturesAdd_ = function(event) {
  * @param {import("ol/Collection.js").CollectionEvent} event Collection event.
  * @private
  */
-Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
+PermalinkService.prototype.handleNgeoFeaturesRemove_ = function(event) {
   const feature = event.element;
   console.assert(feature instanceof olFeature);
   this.removeNgeoFeature_(feature);
@@ -1107,7 +1107,7 @@ Permalink.prototype.handleNgeoFeaturesRemove_ = function(event) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-Permalink.prototype.addNgeoFeature_ = function(feature) {
+PermalinkService.prototype.addNgeoFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
@@ -1122,7 +1122,7 @@ Permalink.prototype.addNgeoFeature_ = function(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @private
  */
-Permalink.prototype.removeNgeoFeature_ = function(feature) {
+PermalinkService.prototype.removeNgeoFeature_ = function(feature) {
   const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.clearListenerKey(uid);
   this.handleNgeoFeaturesChange_();
@@ -1135,7 +1135,7 @@ Permalink.prototype.removeNgeoFeature_ = function(feature) {
  * the collection changes or any of the features within the collection changes.
  * @private
  */
-Permalink.prototype.handleNgeoFeaturesChange_ = function() {
+PermalinkService.prototype.handleNgeoFeaturesChange_ = function() {
   if (!this.ngeoFeatures_) {
     return;
   }
@@ -1153,7 +1153,7 @@ Permalink.prototype.handleNgeoFeaturesChange_ = function() {
  * @return {?WfsPermalinkData} The query data.
  * @private
  */
-Permalink.prototype.getWfsPermalinkData_ = function() {
+PermalinkService.prototype.getWfsPermalinkData_ = function() {
   const wfsLayer = this.ngeoLocation_.getParam(PermalinkParam.WFS_LAYER);
   if (!wfsLayer) {
     return null;
@@ -1203,7 +1203,7 @@ Permalink.prototype.getWfsPermalinkData_ = function() {
  * @return {WfsPermalinkFilterGroup|null} A filter group.
  * @private
  */
-Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
+PermalinkService.prototype.createFilterGroup_ = function(prefix, paramKeys) {
   /**
    * @type {Array.<WfsPermalinkFilter>}
    */
@@ -1243,7 +1243,7 @@ Permalink.prototype.createFilterGroup_ = function(prefix, paramKeys) {
  * @private
  */
 
-Permalink.prototype.initExternalDataSources_ = function() {
+PermalinkService.prototype.initExternalDataSources_ = function() {
 
   const ngeoQuerent = this.ngeoQuerent_;
   const gmfExtDSManager = this.gmfExternalDataSourcesManager_;
@@ -1383,7 +1383,7 @@ Permalink.prototype.initExternalDataSources_ = function() {
  * @param {!import("ol/Collection.js").CollectionEvent} evt Collection event.
  * @private
  */
-Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
+PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
   const group = evt.element;
   console.assert(group instanceof ngeoDatasourceGroup);
   this.registerExternalDSGroup_(group);
@@ -1395,7 +1395,7 @@ Permalink.prototype.handleExternalDSGroupCollectionAdd_ = function(evt) {
  * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
-Permalink.prototype.registerExternalDSGroup_ = function(group) {
+PermalinkService.prototype.registerExternalDSGroup_ = function(group) {
   olEvents.listen(
     group.dataSourcesCollection,
     'add',
@@ -1417,7 +1417,7 @@ Permalink.prototype.registerExternalDSGroup_ = function(group) {
  * @param {string} name The layer name to find
  * @return {boolean} The containing status
  */
-Permalink.prototype.containsLayerName = function(layer, name) {
+PermalinkService.prototype.containsLayerName = function(layer, name) {
   if (layer instanceof olLayerGroup) {
     for (const l of layer.getLayers().getArray()) {
       console.assert(l);
@@ -1436,7 +1436,7 @@ Permalink.prototype.containsLayerName = function(layer, name) {
  * @param {!import("ol/Collection.js").CollectionEvent} evt Collection event.
  * @private
  */
-Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
+PermalinkService.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
   const group = evt.element;
   console.assert(group instanceof ngeoDatasourceGroup);
   this.unregisterExternalDSGroup_(group);
@@ -1448,7 +1448,7 @@ Permalink.prototype.handleExternalDSGroupCollectionRemove_ = function(evt) {
  * @param {!import("ngeo/datasource/Group.js").default} group Data source group.
  * @private
  */
-Permalink.prototype.unregisterExternalDSGroup_ = function(group) {
+PermalinkService.prototype.unregisterExternalDSGroup_ = function(group) {
   olEvents.unlisten(
     group.dataSourcesCollection,
     'add',
@@ -1468,7 +1468,7 @@ Permalink.prototype.unregisterExternalDSGroup_ = function(group) {
  * Set the External Data Sources parameters in the url.
  * @private
  */
-Permalink.prototype.setExternalDataSourcesState_ = function() {
+PermalinkService.prototype.setExternalDataSourcesState_ = function() {
 
   if (this.setExternalDataSourcesStatePromise_) {
     this.$timeout_.cancel(this.setExternalDataSourcesStatePromise_);
@@ -1533,7 +1533,7 @@ Permalink.prototype.setExternalDataSourcesState_ = function() {
  * Clean the permalink parameters
  * @param {!Array.<import(gmf/themes.js).GmfGroup>} groups firstlevel groups of the tree
  */
-Permalink.prototype.cleanParams = function(groups) {
+PermalinkService.prototype.cleanParams = function(groups) {
   const keys = this.ngeoLocation_.getParamKeys();
   for (const key of keys) {
     if (key.startsWith(ParamPrefix.TREE_GROUP_LAYERS)) {
@@ -1590,7 +1590,7 @@ const module = angular.module('gmfPermalink', [
   ngeoStatemanagerModule.name,
 ]);
 
-module.service('gmfPermalink', Permalink);
+module.service('gmfPermalink', PermalinkService);
 
 
 module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({}));

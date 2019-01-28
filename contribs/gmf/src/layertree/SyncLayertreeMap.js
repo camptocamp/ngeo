@@ -14,24 +14,23 @@ import olLayerTile from 'ol/layer/Tile.js';
  *
  * @constructor
  * @param {angular.IScope} $rootScope Angular rootScope.
- * @param {import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
- * @param {import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
- * @param {import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+ * @param {import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  */
-function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime,
-  gmfThemes) {
+export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfThemes) {
 
   /**
-   * @type {import("ngeo/map/LayerHelper.js").default}
+   * @type {import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
 
   /**
-   * @type {import("ngeo/misc/WMSTime.js").default}
+   * @type {import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;

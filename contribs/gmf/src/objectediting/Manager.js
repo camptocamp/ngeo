@@ -42,12 +42,12 @@ export const ObjecteditingParam = {
  * a feature using the GMF protocol.
  *
  * @param {angular.IQService} $q Angular $q service.
- * @param {import("gmf/editing/EditFeature.js").default} gmfEditFeature Gmf edit feature service.
- * @param {import("ngeo/statemanager/Location.js").default} ngeoLocation ngeo location service.
+ * @param {import("gmf/editing/EditFeature.js").EditingEditFeature} gmfEditFeature Gmf edit feature service.
+ * @param {import("ngeo/statemanager/Location.js").StatemanagerLocation} ngeoLocation ngeo location service.
  * @constructor
  * @ngInject
  */
-function Manager($q, gmfEditFeature, ngeoLocation) {
+export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
 
   /**
    * @type {angular.IQService}
@@ -56,13 +56,13 @@ function Manager($q, gmfEditFeature, ngeoLocation) {
   this.q_ = $q;
 
   /**
-   * @type {import("gmf/editing/EditFeature.js").default}
+   * @type {import("gmf/editing/EditFeature.js").EditingEditFeature}
    * @private
    */
   this.gmfEditFeature_ = gmfEditFeature;
 
   /**
-   * @type {import("ngeo/statemanager/Location.js").default}
+   * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
    * @private
    */
   this.ngeoLocation_ = ngeoLocation;
@@ -87,7 +87,7 @@ function Manager($q, gmfEditFeature, ngeoLocation) {
  * @return {angular.IPromise} Promise.
  * @export
  */
-Manager.prototype.getFeature = function() {
+ObjecteditingManagerService.prototype.getFeature = function() {
 
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
@@ -126,7 +126,7 @@ Manager.prototype.getFeature = function() {
  * @return {string|undefined} The geometry type.
  * @export
  */
-Manager.prototype.getGeomType = function() {
+ObjecteditingManagerService.prototype.getGeomType = function() {
   return this.ngeoLocation_.getParam(
     ObjecteditingParam.GEOM_TYPE);
 };
@@ -136,7 +136,7 @@ Manager.prototype.getGeomType = function() {
  * @return {number|undefined} The gmf layer node id.
  * @export
  */
-Manager.prototype.getLayerNodeId = function() {
+ObjecteditingManagerService.prototype.getLayerNodeId = function() {
   return this.ngeoLocation_.getParamAsInt(
     ObjecteditingParam.LAYER);
 };
@@ -153,7 +153,7 @@ Manager.prototype.getLayerNodeId = function() {
  * @param {Array.<import("ol/Feature.js").default>} features List of features.
  * @private
  */
-Manager.prototype.handleGetFeatures_ = function(key, value, features) {
+ObjecteditingManagerService.prototype.handleGetFeatures_ = function(key, value, features) {
   let feature;
 
   if (features.length) {
@@ -176,7 +176,7 @@ const module = angular.module('gmfObjectEditingManager', [
   gmfEditingEditFeature.name,
   ngeoStatemanagerLocation.name,
 ]);
-module.service('gmfObjectEditingManager', Manager);
+module.service('gmfObjectEditingManager', ObjecteditingManagerService);
 
 
 export default module;

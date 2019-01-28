@@ -23,7 +23,7 @@ export default class extends ngeoDatasourceOGCGroup {
    * Note: the layer is not added to the map here.
    *
    * @param {WMSGroupOptions} options Options.
-   * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper the ngeo map LayerHelper service.
+   * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper the ngeo map LayerHelper service.
    */
   constructor(options, ngeoLayerHelper) {
 
@@ -41,7 +41,7 @@ export default class extends ngeoDatasourceOGCGroup {
     this.layer_;
 
     /**
-     * @type {!import("ngeo/map/LayerHelper.js").default}
+     * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
      * @private
      */
     this.ngeoLayerHelper_ = ngeoLayerHelper;

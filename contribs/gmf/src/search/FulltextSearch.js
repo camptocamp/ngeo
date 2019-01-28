@@ -10,7 +10,7 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils.js';
  * @export
  * @ngname gmfFulltextSearch
  */
-function FulltextSearch($injector, $http) {
+export function FulltextSearchService($injector, $http) {
 
   /**
    * @type {angular.IHttpService}
@@ -45,7 +45,7 @@ function FulltextSearch($injector, $http) {
  * @param {Object.<string, string>} params Additional parameters.
  * @returns {Promise} Request promise with data array.
  */
-FulltextSearch.prototype.search = function(query, params) {
+FulltextSearchService.prototype.search = function(query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);
 
   queryParams['query'] = query;
@@ -63,7 +63,7 @@ FulltextSearch.prototype.search = function(query, params) {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfSearchFulltextSearch', []);
-module.service('gmfSearchFulltextSearch', FulltextSearch);
+module.service('gmfSearchFulltextSearch', FulltextSearchService);
 
 
 export default module;

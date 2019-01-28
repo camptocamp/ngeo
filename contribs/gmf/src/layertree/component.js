@@ -155,18 +155,18 @@ module.component('gmfLayertree', component);
 /**
  * @param {JQuery} $element Element.
  * @param {!angular.IScope} $scope Angular scope.
- * @param {!import("ngeo/map/LayerHelper.js").default} ngeoLayerHelper Ngeo Layer Helper.
+ * @param {!import("ngeo/map/LayerHelper.js").LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {DataSourceBeingFiltered} gmfDataSourceBeingFiltered
  *     The Gmf value service that determines the data source currently being
  *     filtered.
- * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
+ * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
  *     gmfExternalDataSourcesManager The Gmf external data sources manager
  *     service. Used here to fetch the external WMS groups.
- * @param {!import("gmf/permalink/Permalink.js").default} gmfPermalink The gmf permalink service.
- * @param {!import("gmf/layertree/TreeManager.js").default} gmfTreeManager gmf Tree Manager service.
- * @param {!import("gmf/layertree/SyncLayertreeMap.js").default} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
- * @param {!import("ngeo/misc/WMSTime.js").default} ngeoWMSTime wms time service.
- * @param {!import("gmf/theme/Themes.js").default} gmfThemes The gmf Themes service.
+ * @param {!import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
+ * @param {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager} gmfTreeManager gmf Tree Manager service.
+ * @param {!import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap} gmfSyncLayertreeMap gmfSyncLayertreeMap service.
+ * @param {!import("ngeo/misc/WMSTime.js").WMSTime} ngeoWMSTime wms time service.
+ * @param {!import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @constructor
  * @private
  * @ngInject
@@ -195,7 +195,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.scope_ = $scope;
 
   /**
-   * @type {!import("ngeo/map/LayerHelper.js").default}
+   * @type {!import("ngeo/map/LayerHelper.js").LayerHelper}
    * @private
    */
   this.layerHelper_ = ngeoLayerHelper;
@@ -207,19 +207,19 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.gmfDataSourceBeingFiltered = gmfDataSourceBeingFiltered;
 
   /**
-   * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").default}
+   * @type {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    * @export
    */
   this.gmfExternalDataSourcesManager = gmfExternalDataSourcesManager;
 
   /**
-   * @type {!import("gmf/permalink/Permalink.js").default}
+   * @type {!import("gmf/permalink/Permalink.js").PermalinkService}
    * @private
    */
   this.gmfPermalink_ = gmfPermalink;
 
   /**
-   * @type {!import("gmf/layertree/TreeManager.js").default}
+   * @type {!import("gmf/layertree/TreeManager.js").LayertreeTreeManager}
    * @private
    */
   this.gmfTreeManager_ = gmfTreeManager;
@@ -234,13 +234,13 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.root = root;
 
   /**
-   * @type {!import("gmf/layertree/SyncLayertreeMap.js").default}
+   * @type {!import("gmf/layertree/SyncLayertreeMap.js").SyncLayertreeMap}
    * @private
    */
   this.gmfSyncLayertreeMap_ = gmfSyncLayertreeMap;
 
   /**
-   * @type {!import("ngeo/misc/WMSTime.js").default}
+   * @type {!import("ngeo/misc/WMSTime.js").WMSTime}
    * @private
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
@@ -270,7 +270,7 @@ function Controller($element, $scope, ngeoLayerHelper, gmfDataSourceBeingFiltere
   this.layers = [];
 
   /**
-   * @type {!import("gmf/theme/Themes.js").default}
+   * @type {!import("gmf/theme/Themes.js").ThemesService}
    * @private
    */
   this.gmfThemes_ = gmfThemes;

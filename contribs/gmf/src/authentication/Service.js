@@ -75,7 +75,7 @@ export const RouteSuffix = {
  *
  * @extends {import("ol/events/EventTarget.js").default}
  */
-class Service extends olEventsEventTarget {
+export class AuthenticationService extends olEventsEventTarget {
 
   /**
    * @param {angular.IHttpService} $http Angular http service.
@@ -286,7 +286,7 @@ class Service extends olEventsEventTarget {
  * @type {!angular.IModule}
  */
 const module = angular.module('gmfAuthenticationService', []);
-module.service('gmfAuthenticationService', Service);
+module.service('gmfAuthenticationService', AuthenticationService);
 
 module.value('gmfUser', {
   'functionalities': null,

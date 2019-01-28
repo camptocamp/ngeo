@@ -133,7 +133,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     /**
      * The ngeo ToolActivate manager service.
-     * @type {import("ngeo/misc/ToolActivateMgr.js").default}
+     * @type {import("ngeo/misc/ToolActivateMgr.js").ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
 
