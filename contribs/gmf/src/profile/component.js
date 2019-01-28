@@ -183,7 +183,7 @@ function Controller($scope, $http, $element, $filter, gettextCatalog, ngeoFeatur
   this.gettextCatalog_ = gettextCatalog;
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").default}
+   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    * @private
    */
   this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

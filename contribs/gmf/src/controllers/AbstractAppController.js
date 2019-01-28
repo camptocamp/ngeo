@@ -123,11 +123,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
   const ngeoFeatures = $injector.get('ngeoFeatures');
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").default}
-   * @export
+   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    */
-  this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr')
-    .getFeatureOverlay();
+  this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr').getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
   /**

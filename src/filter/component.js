@@ -122,7 +122,7 @@ class FilterController {
     this.directedRules;
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").default}
+     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      * @export
      */
     this.featureOverlay;

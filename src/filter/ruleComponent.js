@@ -100,7 +100,7 @@ class RuleController {
     // Binding properties
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").default}
+     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      * @export
      */
     this.featureOverlay;

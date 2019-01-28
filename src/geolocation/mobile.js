@@ -117,7 +117,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.notification_ = ngeoNotification;
 
   /**
-   * @type {import("ngeo/map/FeatureOverlay.js").default}
+   * @type {import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    * @private
    */
   this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();

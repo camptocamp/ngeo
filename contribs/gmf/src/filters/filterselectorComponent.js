@@ -189,7 +189,7 @@ class Controller {
     this.ngeoNotification_ = ngeoNotification;
 
     /**
-     * @type {!import("ngeo/map/FeatureOverlay.js").default}
+     * @type {!import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
      * @export
      */
     this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();

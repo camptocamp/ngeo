@@ -182,25 +182,22 @@ export function PermalinkService($q, $timeout, $rootScope, $injector, ngeoDeboun
     $injector.get('ngeoFeatureOverlayMgr') : null;
 
   /**
-   * @type {?import("ngeo/map/FeatureOverlay.js").default}
+   * @type {?import("ngeo/map/FeatureOverlay.js").FeatureOverlay}
    * @private
    */
-  this.featureOverlay_ = ngeoFeatureOverlayMgr ?
-    ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
+  this.featureOverlay_ = ngeoFeatureOverlayMgr ? ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
 
   /**
    * @type {?import("ngeo/misc/FeatureHelper.js").FeatureHelper}
    * @private
    */
-  this.featureHelper_ = $injector.has('ngeoFeatureHelper') ?
-    $injector.get('ngeoFeatureHelper') : null;
+  this.featureHelper_ = $injector.has('ngeoFeatureHelper') ? $injector.get('ngeoFeatureHelper') : null;
 
   /**
    * @type {?import("ngeo/query/Querent.js").Querent}
    * @private
    */
-  this.ngeoQuerent_ = $injector.has('ngeoQuerent') ?
-    $injector.get('ngeoQuerent') : null;
+  this.ngeoQuerent_ = $injector.has('ngeoQuerent') ? $injector.get('ngeoQuerent') : null;
 
   /**
    * The options to configure the gmf permalink service with.
