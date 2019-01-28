@@ -177,7 +177,7 @@ Controller.prototype.$onDestroy = function() {
 
 
 /**
- * @param {import("ol/events/Event.js").default} evt Event.
+ * @param {import("ol/Object.js").ObjectEvent} evt Event.
  * @private
  */
 Controller.prototype.handleFeaturePropertyChange_ = function(evt) {

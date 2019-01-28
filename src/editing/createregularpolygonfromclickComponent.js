@@ -176,6 +176,7 @@ Controller.prototype.$onInit = function() {
  * @private
  */
 Controller.prototype.handleDrawEnd_ = function(evt) {
+  // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   const feature = new olFeature(evt.feature.getGeometry());
   this.features.push(feature);
 };
