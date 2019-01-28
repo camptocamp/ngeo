@@ -7,28 +7,34 @@ import olGeomCircle from 'ol/geom/Circle.js';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
-import olInteractionPointer from 'ol/interaction/Pointer.js';
+import olInteractionPointer from 'ol/interaction/Draw.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
+
+
+/**
+ * @typedef {Object} Options
+ * @property {olSourceVector} source
+ * @property {import('ol/style/Style.js').StyleLike} style
+ */
+
 
 /**
  * Interaction dedicated to measure azimut.
  */
 class DrawAzimut extends olInteractionPointer {
   /**
-   * @param {olx.interaction.PointerOptions} options Options.
+   * @param {Options} options Options.
    */
   constructor(options) {
     super({
-      handleDownEvent: handleDownEvent_,
-      handleEvent: handleEvent_,
-      handleUpEvent: handleUpEvent_
+      type: undefined
     });
 
     this.shouldStopEvent = FALSE;
 
     /**
-     * @type {import("ol/Pixel.js").default}
+     * @type {import("ol/pixel.js").Pixel}
      * @private
      */
     this.downPx_ = null;
@@ -114,8 +120,9 @@ class DrawAzimut extends olInteractionPointer {
       this.updateSketchFeatures_();
     } else {
       const sketchPointGeom = this.sketchPoint_.getGeometry();
-      console.assert(sketchPointGeom instanceof olGeomPoint);
-      sketchPointGeom.setCoordinates(coordinates);
+      if (sketchPointGeom instanceof olGeomPoint) {
+        sketchPointGeom.setCoordinates(coordinates);
+      }
     }
   }
 
@@ -131,7 +138,7 @@ class DrawAzimut extends olInteractionPointer {
     if (this.sketchPoint_ !== null) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const source = this.sketchLayer_.getSource();
+    const source = /** @type {olSourceVector} */(this.sketchLayer_.getSource());
     source.clear(true);
     source.addFeatures(sketchFeatures);
   }
@@ -151,7 +158,7 @@ class DrawAzimut extends olInteractionPointer {
     this.sketchFeature_ = new olFeature();
     this.sketchFeature_.setGeometry(geometry);
     this.updateSketchFeatures_();
-    /** @type {DrawEvent} */
+    /** @type {import('ngeo/interaction/common.js').DrawEvent} */
     const evt = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
     this.dispatchEvent(evt);
   }
@@ -163,22 +170,26 @@ class DrawAzimut extends olInteractionPointer {
    */
   modifyDrawing_(event) {
     const coordinate = event.coordinate;
-    const geometry = this.sketchFeature_.getGeometry();
+    const geometry = /** @type {import('ol/geom/GeometryCollection.js').default} */(this.sketchFeature_.getGeometry());
     const geometries = geometry.getGeometriesArray();
     const line = geometries[0];
-    console.assert(line instanceof olGeomLineString);
-    const coordinates = line.getCoordinates();
-    const sketchPointGeom = this.sketchPoint_.getGeometry();
-    console.assert(sketchPointGeom instanceof olGeomPoint);
-    sketchPointGeom.setCoordinates(coordinate);
-    const last = coordinates[coordinates.length - 1];
-    last[0] = coordinate[0];
-    last[1] = coordinate[1];
-    console.assert(line instanceof olGeomLineString);
-    line.setCoordinates(coordinates);
-    const circle = geometries[1];
-    circle.setRadius(line.getLength());
-    this.updateSketchFeatures_();
+    if (line instanceof olGeomLineString) {
+      const coordinates = line.getCoordinates();
+      const sketchPointGeom = this.sketchPoint_.getGeometry();
+      if (sketchPointGeom instanceof olGeomPoint) {
+        sketchPointGeom.setCoordinates(coordinate);
+        const last = coordinates[coordinates.length - 1];
+        last[0] = coordinate[0];
+        last[1] = coordinate[1];
+        console.assert(line instanceof olGeomLineString);
+        line.setCoordinates(coordinates);
+        const circle = geometries[1];
+        if (circle instanceof olGeomCircle) {
+          circle.setRadius(line.getLength());
+          this.updateSketchFeatures_();
+        }
+      }
+    }
   }
 
   /**
@@ -192,7 +203,7 @@ class DrawAzimut extends olInteractionPointer {
     if (sketchFeature !== null) {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
-      this.sketchLayer_.getSource().clear(true);
+      /** @type {olSourceVector} */(this.sketchLayer_.getSource()).clear(true);
     }
     return sketchFeature;
   }
@@ -221,7 +232,7 @@ class DrawAzimut extends olInteractionPointer {
       this.source_.addFeature(sketchFeature);
     }
 
-    /** @type {DrawEvent} */
+    /** @type {import('ngeo/interaction/common.js').DrawEvent} */
     const event = new ngeoCustomEvent('drawend', {feature: this.sketchFeature_});
     this.dispatchEvent(event);
   }
@@ -233,61 +244,52 @@ class DrawAzimut extends olInteractionPointer {
     olInteractionPointer.prototype.setMap.call(this, map);
     this.updateState_();
   }
-}
 
+  /**
+   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
+   * @return {boolean} Start drag sequence?
+   */
+  handleDownEvent(event) {
+    this.downPx_ = event.pixel;
+    return true;
+  }
 
-/**
- * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
- * @return {boolean} Start drag sequence?
- * @this {import("ngeo/interaction/DrawAzimut.js").default}
- * @private
- */
-function handleDownEvent_(event) {
-  this.downPx_ = event.pixel;
-  return true;
-}
-
-
-/**
- * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
- * @return {boolean} Stop drag sequence?
- * @this {import("ngeo/interaction/DrawAzimut.js").default}
- * @private
- */
-function handleUpEvent_(event) {
-  const downPx = this.downPx_;
-  const clickPx = event.pixel;
-  const dx = downPx[0] - clickPx[0];
-  const dy = downPx[1] - clickPx[1];
-  const squaredDistance = dx * dx + dy * dy;
-  let pass = true;
-  if (squaredDistance <= this.squaredClickTolerance_) {
-    this.handlePointerMove_(event);
-    if (!this.started_) {
-      this.startDrawing_(event);
-    } else {
-      this.finishDrawing_();
+  /**
+   * @param {import("ol/MapBrowserPointerEvent.js").default} event Event.
+   * @return {boolean} Stop drag sequence?
+   */
+  handleUpEvent(event) {
+    const downPx = this.downPx_;
+    const clickPx = event.pixel;
+    const dx = downPx[0] - clickPx[0];
+    const dy = downPx[1] - clickPx[1];
+    const squaredDistance = dx * dx + dy * dy;
+    let pass = true;
+    if (squaredDistance <= this.squaredClickTolerance_) {
+      this.handlePointerMove_(event);
+      if (!this.started_) {
+        this.startDrawing_(event);
+      } else {
+        this.finishDrawing_();
+      }
+      pass = false;
     }
-    pass = false;
+    return pass;
   }
-  return pass;
-}
 
-
-/**
- * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
- * @return {boolean} `false` to stop event propagation.
- * @this {import("ngeo/interaction/DrawAzimut.js").default}
- * @private
- */
-function handleEvent_(mapBrowserEvent) {
-  let pass = true;
-  if (mapBrowserEvent.type === 'pointermove') {
-    pass = this.handlePointerMove_(mapBrowserEvent);
-  } else if (mapBrowserEvent.type === 'dblclick') {
-    pass = false;
+  /**
+   * @param {import("ol/MapBrowserEvent.js").default} mapBrowserEvent Map browser event.
+   * @return {boolean} `false` to stop event propagation.
+   */
+  handleEvent(mapBrowserEvent) {
+    let pass = true;
+    if (mapBrowserEvent.type === 'pointermove') {
+      pass = this.handlePointerMove_(mapBrowserEvent);
+    } else if (mapBrowserEvent.type === 'dblclick') {
+      pass = false;
+    }
+    return super.handleEvent(mapBrowserEvent) && pass;
   }
-  return olInteractionPointer.prototype.handleEvent.call(this, mapBrowserEvent) && pass;
 }
 
 export default DrawAzimut;

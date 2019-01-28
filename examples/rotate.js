@@ -127,7 +127,7 @@ function MainController() {
    * @export
    */
   this.interaction = new ngeoInteractionRotate(
-    /** @type {olx.interaction.ModifyOptions} */({
+    /** @type {import('ol/interaction/Modify.js').Options} */({
       features: this.features,
       layers: [vectorLayer],
       style: style

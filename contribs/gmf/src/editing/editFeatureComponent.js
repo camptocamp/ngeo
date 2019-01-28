@@ -527,7 +527,7 @@ Controller.prototype.$onInit = function() {
   this.dirty = this.dirty === true;
   this.editableNode_ = /** @type {import(gmf/themes.js).GmfLayer} */ (
     this.editableTreeCtrl.node);
-  this.features = this.vectorLayer.getSource().getFeaturesCollection();
+  this.features = /** @type {olSourceVector} */(this.vectorLayer.getSource()).getFeaturesCollection();
   this.tolerance = this.tolerance !== undefined ? this.tolerance : 10;
 
   // (1.1) Set editable WMS layer

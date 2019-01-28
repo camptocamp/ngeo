@@ -3,7 +3,7 @@ import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import {TRUE} from 'ol/functions.js';
 import olGeomCircle from 'ol/geom/Circle.js';
-import olGeomPolygon from 'ol/geom/Polygon.js';
+import {fromCircle, makeRegular} from 'ol/geom/Polygon.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 
 
@@ -27,7 +27,9 @@ export default class extends olInteractionInteraction {
    * @param {DrawRegularPolygonFromClickOptions} options Options
    */
   constructor(options) {
-    super();
+    super({
+      handleEvent: TRUE
+    });
 
     /**
      * @type {number}
@@ -52,10 +54,6 @@ export default class extends olInteractionInteraction {
      * @private
      */
     this.listenerKeys_ = [];
-
-    olInteractionInteraction.call(this, {
-      handleEvent: TRUE
-    });
   }
 
   /**
@@ -125,13 +123,13 @@ export default class extends olInteractionInteraction {
    */
   handleMapClick_(evt) {
     const center = evt.coordinate;
-    const geometry = olGeomPolygon.fromCircle(
+    const geometry = fromCircle(
       new olGeomCircle(center), this.sides_
     );
 
-    olGeomPolygon.makeRegular(geometry, center, this.radius_, this.angle_);
+    makeRegular(geometry, center, this.radius_, this.angle_);
 
-    /** @type {DrawEvent} */
+    /** @type {import('ngeo/interaction/common.js').DrawEvent} */
     const event = new ngeoCustomEvent('drawend', {feature: new olFeature(geometry)});
     this.dispatchEvent(event);
   }

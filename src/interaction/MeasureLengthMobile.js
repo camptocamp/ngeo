@@ -6,9 +6,9 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  */
 export default class extends ngeoInteractionMeasureLength {
   /**
-   * @param {!unitPrefix} format The format function
+   * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {MeasureOptions=} opt_options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} opt_options Options
    */
   constructor(format, gettextCatalog, opt_options) {
     const options = opt_options !== undefined ? opt_options : {};
@@ -19,7 +19,10 @@ export default class extends ngeoInteractionMeasureLength {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/style/Style.js").StyleLike|undefined}
+   *     style The sketchStyle used for the drawing interaction.
+   * @param {import("ol/source/Vector.js").default} source Vector source.
+   * @return {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({

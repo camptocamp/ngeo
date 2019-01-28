@@ -29,7 +29,7 @@ import olSourceVector from 'ol/source/Vector.js';
  */
 export default class extends olInteractionPointer {
   /**
-   * @param {olx.interaction.ModifyOptions} options Options.
+   * @param {import('ol/interaction/Modify.js').Options} options Options.
    * @fires import("ngeo/interaction/ModifyCircleEvent.js").default
    */
   constructor(options) {
@@ -86,7 +86,7 @@ export default class extends olInteractionPointer {
     this.feature_ = null;
 
     /**
-     * @type {import("ol/Pixel.js").default}
+     * @type {import("ol/pixel.js").Pixel}
      * @private
      */
     this.coordinate_ = null;
@@ -170,7 +170,7 @@ export default class extends olInteractionPointer {
     const point = new olGeomPoint(this.getCenterCoordinate_(geometry));
     const centerFeature = new olFeature(point);
     this.centerFeatures_[uid] = centerFeature;
-    this.overlay_.getSource().addFeature(centerFeature);
+    /** @type {olSourceVector} */(this.overlay_.getSource()).addFeature(centerFeature);
   }
 
   /**
@@ -180,7 +180,6 @@ export default class extends olInteractionPointer {
   willModifyFeatures_(evt) {
     if (!this.modified_) {
       this.modified_ = true;
-      /** @type {ModifyEvent} */
       const event = new ngeoCustomEvent('modifystart', {features: this.features_});
       this.dispatchEvent(event);
     }
@@ -192,13 +191,12 @@ export default class extends olInteractionPointer {
    */
   removeFeature_(feature) {
     this.feature_ = null;
-    //this.overlay_.getSource().removeFeature(feature);
 
     if (feature) {
       const uid = olUtilGetUid(feature);
 
       if (this.centerFeatures_[uid]) {
-        this.overlay_.getSource().removeFeature(this.centerFeatures_[uid]);
+        /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.centerFeatures_[uid]);
         delete this.centerFeatures_[uid];
       }
     }
@@ -256,7 +254,7 @@ export default class extends olInteractionPointer {
 
     if (feature) {
       this.coordinate_ = evt.coordinate;
-      this.feature_ = feature;
+      this.feature_ = /** @type {olFeature} */(feature);
       const geometry = (this.feature_.getGeometry());
       if (geometry !== undefined) {
         this.centerCoordinate_ = this.getCenterCoordinate_(geometry);

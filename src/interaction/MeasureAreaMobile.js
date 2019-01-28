@@ -6,10 +6,9 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  * Interaction dedicated to measure Area on mobile devices.
  *
  * @constructor
- * @extends {import("ngeo/interaction/MeasureArea.js").default}
- * @param {!unitPrefix} format The format function
+ * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function
  * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {MeasureOptions=} options Options
+ * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
  */
 class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   constructor(format, gettextCatalog, options = {}) {
@@ -18,7 +17,9 @@ class MeasureAreaMobile extends ngeoInteractionMeasureArea {
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/style/Style.js").StyleLike|undefined} style The sketchStyle used for the drawing interaction.
+   * @param {import("ol/source/Vector.js").default} source Vector source.
+   * @return {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
     return new ngeoInteractionMobileDraw({

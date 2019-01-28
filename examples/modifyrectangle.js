@@ -127,7 +127,7 @@ function MainController() {
    * @export
    */
   this.interaction = new ngeoInteractionModifyRectangle(
-    /** @type {olx.interaction.ModifyOptions} */({
+    /** @type {import('ol/interaction/Modify.js').Options} */({
       features: this.features,
       style: style
     }));

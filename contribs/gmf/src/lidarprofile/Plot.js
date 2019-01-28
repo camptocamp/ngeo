@@ -343,7 +343,7 @@ export default class {
 
       this.manager_.cartoHighlight.setElement(el);
       this.manager_.cartoHighlight.setPosition([p.coords[0], p.coords[1]]);
-      this.manager_.lidarPointHighlight.getSource().clear();
+      /** @type {olSourceVector} */(this.manager_.lidarPointHighlight.getSource()).clear();
       const lidarPointGeom = new olGeomPoint([p.coords[0], p.coords[1]]);
       const lidarPointFeature = new olFeature(lidarPointGeom);
       if (typeof (pointClassification.color) !== undefined) {
@@ -358,9 +358,9 @@ export default class {
         }));
       }
 
-      this.manager_.lidarPointHighlight.getSource().addFeature(lidarPointFeature);
+      /** @type {olSourceVector} */(this.manager_.lidarPointHighlight.getSource()).addFeature(lidarPointFeature);
     } else {
-      this.manager_.lidarPointHighlight.getSource().clear();
+      /** @type {olSourceVector} */(this.manager_.lidarPointHighlight.getSource()).clear();
       svg.select('#highlightCircle').remove();
       lidarInfo.html('');
       this.manager_.cartoHighlight.setPosition(undefined);

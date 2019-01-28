@@ -303,7 +303,8 @@ LayertreeController.prototype.getCalculateState = function() {
     childState = child.getCalculateState();
     if (previousChildState) {
       if (previousChildState !== childState) {
-        return childState == 'indeterminate';
+        childState = 'indeterminate';
+        return true;
       }
     }
     previousChildState = childState;

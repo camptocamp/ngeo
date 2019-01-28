@@ -13,9 +13,9 @@ import olGeomPoint from 'ol/geom/Point.js';
  * Options for the mobile geolocations directive.
  *
  * @typedef {Object} MobileGeolocationDirectiveOptions
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [accuracyFeatureStyle] The style to
+ * @property {import("ol/style/Style.js").StyleLike} [accuracyFeatureStyle] The style to
  * use to sketch the accuracy feature, which is a regular polygon.
- * @property {import("ol/style/Style.js").default|Array.<import("ol/style/Style.js").default>|import('ol/style/Style.js').StyleFunction} [positionFeatureStyle] The style to
+ * @property {import("ol/style/Style.js").StyleLike} [positionFeatureStyle] The style to
  * use to sketch the position feature, which is a point.
  * @property {number} [zoom] If set, in addition to recentering the map view at the location, determines
  * the zoom level to set when obtaining a new position

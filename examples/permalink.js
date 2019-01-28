@@ -178,7 +178,7 @@ function DrawComponentController($scope, ngeoLocation) {
 }
 
 DrawComponentController.prototype.$onInit = function() {
-  const vectorSource = this.layer.getSource();
+  const vectorSource = /** @type {olSourceVector} */(this.layer.getSource());
 
   this.interaction = new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
@@ -226,7 +226,7 @@ DrawComponentController.prototype.$onInit = function() {
  * @export
  */
 DrawComponentController.prototype.clearLayer = function() {
-  this.layer.getSource().clear(true);
+  /** @type {olSourceVector} */(this.layer.getSource()).clear(true);
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };

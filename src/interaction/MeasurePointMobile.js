@@ -1,4 +1,4 @@
-import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
+import ngeoInteractionMeasure, {getFormattedPoint} from 'ngeo/interaction/Measure.js';
 import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
 
 
@@ -7,9 +7,9 @@ import ngeoInteractionMobileDraw from 'ngeo/interaction/MobileDraw.js';
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @param {numberCoordinates} format the number formatter
+   * @param {import('ngeo/misc/filters.js').numberCoordinates} format the number formatter
    * @param {string} coordFormat the coordinates formatter
-   * @param {MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
    */
   constructor(format, coordFormat, options = {}) {
     Object.assign(options, {displayHelpTooltip: false});
@@ -17,7 +17,7 @@ export default class extends ngeoInteractionMeasure {
     super(options);
 
     /**
-     * @type {numberCoordinates}
+     * @type {import('ngeo/misc/filters.js').numberCoordinates}
      * @private
      */
     this.format_ = format;
@@ -44,9 +44,9 @@ export default class extends ngeoInteractionMeasure {
    * @inheritDoc
    */
   handleMeasure(callback) {
-    const geom = this.sketchFeature.getGeometry();
+    const geom = /** @type {import('ol/geom/Point.js').default} */(this.sketchFeature.getGeometry());
     const dec = this.decimals;
-    const output = ngeoInteractionMeasure.getFormattedPoint(geom, dec, this.format_, this.coordFormat_);
+    const output = getFormattedPoint(geom, dec, this.format_, this.coordFormat_);
     const coord = geom.getLastCoordinate();
     callback(output, coord);
   }

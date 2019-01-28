@@ -1,4 +1,4 @@
-import ngeoInteractionMeasure from 'ngeo/interaction/Measure.js';
+import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
 
@@ -9,9 +9,9 @@ import olInteractionDraw from 'ol/interaction/Draw.js';
  */
 export default class extends ngeoInteractionMeasure {
   /**
-   * @param {!unitPrefix} format The format function
+   * @param {!import('ngeo/misc/filters.js').unitPrefix} format The format function
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {MeasureOptions=} options Options
+   * @param {import('ngeo/interaction/Measure.js').MeasureOptions=} options Options
    */
   constructor(format, gettextCatalog, options = {}) {
     super(options);
@@ -28,13 +28,15 @@ export default class extends ngeoInteractionMeasure {
 
     /**
      * The format function
-     * @type {unitPrefix}
+     * @type {import('ngeo/misc/filters.js').unitPrefix}
      */
     this.format = format;
   }
 
   /**
-   * @inheritDoc
+   * @param {import("ol/style/Style.js").StyleLike|undefined} style The sketchStyle used for the drawing interaction.
+   * @param {import("ol/source/Vector.js").default} source Vector source.
+   * @return {olInteractionDraw|import("ngeo/interaction/MobileDraw.js").default} The interaction
    */
   createDrawInteraction(style, source) {
     return new olInteractionDraw({
@@ -48,10 +50,10 @@ export default class extends ngeoInteractionMeasure {
    * @inheritDoc
    */
   handleMeasure(callback) {
-    const geom = this.sketchFeature.getGeometry();
+    const geom = /** @type {import("ol/geom/LineString.js").default} */(this.sketchFeature.getGeometry());
     const proj = this.getMap().getView().getProjection();
     console.assert(proj);
-    const output = ngeoInteractionMeasure.getFormattedLength(geom, proj, this.precision, this.format);
+    const output = getFormattedLength(geom, proj, this.precision, this.format);
     const coord = geom.getLastCoordinate();
     callback(output, coord);
   }

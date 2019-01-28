@@ -152,7 +152,7 @@ export class LidarprofileManager {
    */
   clearBuffer() {
     if (this.lidarBuffer) {
-      this.lidarBuffer.getSource().clear();
+      /** @type {olSourceVector} */(this.lidarBuffer.getSource()).clear();
     }
   }
 
@@ -461,8 +461,8 @@ export class LidarprofileManager {
     const clip = this.utils.clipLineByMeasure(this.config, map_resolution,
       this.line_, domainX[0], domainX[1]);
 
-    this.lidarBuffer.getSource().clear();
-    this.lidarBuffer.getSource().addFeature(clip.bufferGeom);
+    /** @type {olSourceVector} */(this.lidarBuffer.getSource()).clear();
+    /** @type {olSourceVector} */(this.lidarBuffer.getSource()).addFeature(clip.bufferGeom);
     this.lidarBuffer.setStyle(clip.bufferStyle);
 
     const span = domainX[1] - domainX[0];
