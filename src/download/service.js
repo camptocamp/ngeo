@@ -4,7 +4,7 @@ import {isSafari} from 'ngeo/utils.js';
 import {saveAs} from 'file-saver';
 
 /**
- * @typedef {function(string, string, string=)} Download
+ * @typedef {function(string, string, string=): void} Download
  */
 
 /**
