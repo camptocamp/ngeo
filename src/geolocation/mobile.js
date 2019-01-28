@@ -128,7 +128,7 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
    */
   this.geolocation_ = new olGeolocation({
     projection: map.getView().getProjection(),
-    trackingOptions: /** @type {GeolocationPositionOptions} */ ({
+    trackingOptions: /** @type {PositionOptions} */ ({
       enableHighAccuracy: true
     })
   });
@@ -287,7 +287,7 @@ Controller.prototype.setPosition_ = function() {
       this.map_.getView().setZoom(this.zoom_);
     } else if (accuracy) {
       const size = /** @type {!import("ol/size.js").Size} */ (this.map_.getSize());
-      this.map_.getView().fit(/** @type {!import("ol/geom/Polygon.js").default} */ (accuracy), size);
+      this.map_.getView().fit(/** @type {!import("ol/geom/Polygon.js").default} */ (accuracy), {size});
     }
     this.viewChangedByMe_ = false;
   }
@@ -295,7 +295,7 @@ Controller.prototype.setPosition_ = function() {
 
 
 /**
- * @param {import("ol/Object/Event.js").default} event Event.
+ * @param {import("ol/events/Event.js").default} event Event.
  * @private
  */
 Controller.prototype.handleViewChange_ = function(event) {
@@ -310,11 +310,14 @@ Controller.prototype.autorotateListener = function() {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
     window.addEventListener('deviceorientationabsolute', (evt) => {
-      currentAlpha = this.handleRotate_(evt.alpha, currentAlpha);
+      const event = /** @type {DeviceOrientationEvent} */(evt);
+      currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
     }, true);
   } else if (window.hasOwnProperty('ondeviceorientation')) {
     window.addEventListener('deviceorientation', (evt) => {
+      // @ts-ignore: ios only
       if (evt.webkitCompassHeading) { // check for iOS property
+        // @ts-ignore: ios only
         currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
       } else { // non iOS
         currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
