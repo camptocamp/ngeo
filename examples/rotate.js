@@ -1,6 +1,3 @@
-/**
- */
-
 import './rotate.css';
 import angular from 'angular';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate.js';

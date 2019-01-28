@@ -50,7 +50,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   this.xsdAttributes_ = gmfXSDAttributes;
 
   /**
-   * @type {?Array.<Attribute>}
+   * @type {?Array.<import('ngeo/format/Attribute.js').Attribute>}
    * @export
    */
   this.attributes = null;
@@ -109,7 +109,7 @@ MainController.prototype.getSetLayers = function(value) {
 
 
 /**
- * @param {Array.<Attribute>} attributes Attributes.
+ * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
  * @export
  */
 MainController.prototype.setAttributes_ = function(attributes) {

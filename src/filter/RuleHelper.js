@@ -76,7 +76,7 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Array.<!Attribute>} attributes Attributes.
+   * @param {!Array.<!import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
    * @param {boolean=} opt_isCustom Whether the created rules should be marked
    *     as custom or not. Defaults to `false`.
    * @return {Array.<!import("ngeo/rule/Rule.js").default>} Rules.
@@ -91,7 +91,7 @@ export class RuleHelper {
   }
 
   /**
-   * @param {!Attribute} attribute Attribute.
+   * @param {!import('ngeo/format/Attribute.js').Attribute} attribute Attribute.
    * @param {boolean=} opt_isCustom Whether the created rule should be marked
    *     as custom or not. Defaults to `false`.
    * @return {!import("ngeo/rule/Rule.js").default} Rule.

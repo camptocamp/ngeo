@@ -196,14 +196,14 @@ class FilterController {
 
     /**
      * List of geometry attributes.
-     * @type {Array.<!Attribute>}
+     * @type {Array.<!import('ngeo/format/Attribute.js').Attribute>}
      * @export
      */
     this.geometryAttributes = [];
 
     /**
      * List of other attribute names.
-     * @type {Array.<!Attribute>}
+     * @type {Array.<!import('ngeo/format/Attribute.js').Attribute>}
      * @export
      */
     this.otherAttributes = [];
@@ -347,7 +347,7 @@ class FilterController {
   /**
    * Create and add a new custom rule using an attribute. The rule is activated
    * after being created.
-   * @param {!Attribute} attribute Attribute to use to create the custom
+   * @param {!import('ngeo/format/Attribute.js').Attribute} attribute Attribute to use to create the custom
    * rule.
    * @export
    */

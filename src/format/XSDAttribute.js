@@ -31,27 +31,26 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Document|Node|string} source Source.
-   * @return {Array.<Attribute>} The parsed result.
+   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} The parsed result.
    * @override
    */
   read(source) {
     return (
-      /** @type {Array.<Attribute>} */ olFormatXML.prototype.read.call(this, source)
+      /** @type {Array.<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(this, source)
     );
   }
 
 
   /**
    * @param {Document} doc Document.
-   * @return {Array.<Attribute>} List of attributes.
+   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
    * @override
    */
   readFromDocument(doc) {
-    console.assert(doc.nodeType == Node.DOCUMENT_NODE,
-      'doc.nodeType should be DOCUMENT');
-    for (let n = doc.firstChild; n; n = n.nextSibling) {
+    console.assert(doc.nodeType == Node.DOCUMENT_NODE, 'doc.nodeType should be DOCUMENT');
+    for (let n = /** @type {Node} */(doc.firstChild); n; n = n.nextSibling) {
       if (n.nodeType == Node.ELEMENT_NODE) {
-        return this.readFromNode(n);
+        return this.readFromNode(/** @type {Element} */(n));
       }
     }
     return null;
@@ -59,15 +58,12 @@ class XSDAttribute extends olFormatXML {
 
 
   /**
-   * @param {Node} node Node.
-   * @return {Array.<Attribute>} List of attributes.
+   * @param {Element} node Node.
+   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} List of attributes.
    * @override
    */
   readFromNode(node) {
-    console.assert(node.nodeType == Node.ELEMENT_NODE,
-      'node.nodeType should be ELEMENT');
-    console.assert(node.localName == 'schema',
-      'localName should be schema');
+    console.assert(node.localName == 'schema', 'localName should be schema');
 
     let elements = node.getElementsByTagName('element');
     if (!elements.length) {
@@ -88,31 +84,35 @@ class XSDAttribute extends olFormatXML {
 
   /**
    * @param {Node} node Node.
-   * @return {?Attribute} An attribute object.
+   * @return {?import('ngeo/format/Attribute.js').Attribute} An attribute object.
    * @private
    */
   readFromElementNode_(node) {
+    console.assert(node.nodeType == Node.ELEMENT_NODE, 'node.nodeType should be ELEMENT');
+    const elementNode = /** @type {Element} */(node);
 
-    const name = node.getAttribute('name');
-    console.assert(typeof name, 'name should be defined in element node.' == 'string');
+    const name = elementNode.getAttribute('name');
+    console.assert(typeof name == 'string', 'name should be defined in element node.');
 
-    const alias = node.getAttribute('alias');
-    const nillable = node.getAttribute('nillable');
-    const required = !(nillable === true || nillable === 'true');
+    const alias = elementNode.getAttribute('alias');
+    const nillable = elementNode.getAttribute('nillable');
+    const required = nillable !== 'true';
 
-    const readonlyEls = node.getElementsByTagName('readonly');
+    const readonlyEls = elementNode.getElementsByTagName('readonly');
     const readonly = readonlyEls[0] ?
       readonlyEls[0].getAttribute('value') === 'true' :
       false;
 
+    /** @type {import('ngeo/format/Attribute.js').Attribute} */
     const attribute = {
+      type: null,
       name,
       alias,
       readonly,
       required
     };
 
-    const type = node.getAttribute('type');
+    const type = elementNode.getAttribute('type');
     if (type) {
       if (!setGeometryType(attribute, type)) {
         this.setAttributeByXsdType_(attribute, type);
@@ -122,9 +122,9 @@ class XSDAttribute extends olFormatXML {
       // Attribute has no type defined on 'element' node.  Try:
 
       // (1) Enumerations
-      let enumerations = node.getElementsByTagName('enumeration');
+      let enumerations = elementNode.getElementsByTagName('enumeration');
       if (!enumerations.length) {
-        enumerations = node.getElementsByTagName('xsd:enumeration');
+        enumerations = elementNode.getElementsByTagName('xsd:enumeration');
       }
       if (enumerations.length) {
         attribute.type = ngeoFormatAttributeType.SELECT;
@@ -135,9 +135,9 @@ class XSDAttribute extends olFormatXML {
         attribute.choices = choices;
       } else {
         // (2) Other types with restrictions
-        let restrictions = node.getElementsByTagName('restriction');
+        let restrictions = elementNode.getElementsByTagName('restriction');
         if (!restrictions.length) {
-          restrictions = node.getElementsByTagName('xsd:restriction');
+          restrictions = elementNode.getElementsByTagName('xsd:restriction');
         }
         if (restrictions.length && restrictions[0]) {
           const restrictionNode = restrictions[0];
@@ -146,9 +146,9 @@ class XSDAttribute extends olFormatXML {
             restrictionNode.getAttribute('base')
           );
           // MaxLength
-          let maxLengths = node.getElementsByTagName('maxLength');
+          let maxLengths = elementNode.getElementsByTagName('maxLength');
           if (!maxLengths.length) {
-            maxLengths = node.getElementsByTagName('xsd:maxLength');
+            maxLengths = elementNode.getElementsByTagName('xsd:maxLength');
           }
           if (maxLengths.length && maxLengths[0]) {
             attribute.maxLength = Number(maxLengths[0].getAttribute('value'));
@@ -171,7 +171,7 @@ class XSDAttribute extends olFormatXML {
    * Set the `type` and `numType` properties of an attribute depending on the
    * given xsdType.
    *
-   * @param {AttributeBase} attribute Attribute.
+   * @param {import('ngeo/format/Attribute.js').AttributeBase} attribute Attribute.
    * @param {string} type The xsd type.
    * @private
    */
@@ -199,8 +199,8 @@ class XSDAttribute extends olFormatXML {
 
 /**
  * Returns the first geometry attribute among a given list of attributes.
- * @param {Array.<Attribute>} attributes The list of attributes.
- * @return {?Attribute} A geometry attribute object.
+ * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes The list of attributes.
+ * @return {?import('ngeo/format/Attribute.js').Attribute} A geometry attribute object.
  */
 export function getGeometryAttribute(attributes) {
   let geomAttribute = null;

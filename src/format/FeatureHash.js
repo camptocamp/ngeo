@@ -2,7 +2,6 @@ import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties.js';
 import ngeoFormatFeatureHashStyleType from 'ngeo/format/FeatureHashStyleType.js';
 import {rgbArrayToHex} from 'ngeo/utils.js';
 import olFeature from 'ol/Feature.js';
-import * as olColor from 'ol/color.js';
 import * as olFormatFeature from 'ol/format/Feature.js';
 import olFormatTextFeature from 'ol/format/TextFeature.js';
 import olGeomGeometryLayout from 'ol/geom/GeometryLayout.js';
@@ -36,6 +35,7 @@ import olStyleText from 'ol/style/Text.js';
  *   B) an object with key:values that defines the style properties set in the feature and for the
  *      `ngeo.misc.FeatureHelper` to use to style the feature with.
  * Default is `true`, i.e. A).
+ * @property {Object.<string, string>} propertiesType
  */
 
 
@@ -181,7 +181,7 @@ export default class extends olFormatTextFeature {
     LegacyProperties_ = (options.propertiesType !== undefined) && options.propertiesType;
 
     /**
-     * @type {Object.<string, function(import("ol/Feature.js").default)>}
+     * @type {Object.<string, function(import("ol/Feature.js").default): void>}
      * @private
      */
     this.defaultValues_ = options.defaultValues !== undefined ? options.defaultValues : {};
@@ -260,7 +260,7 @@ export default class extends olFormatTextFeature {
   /**
    * Read a feature from a logical sequence of characters.
    * @param {string} text Text.
-   * @param {olx.format.ReadOptions=} opt_options Read options.
+   * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {import("ol/Feature.js").default} Feature.
    * @protected
    * @override
@@ -310,7 +310,7 @@ export default class extends olFormatTextFeature {
   /**
    * Read multiple features from a logical sequence of characters.
    * @param {string} text Text.
-   * @param {olx.format.ReadOptions=} opt_options Read options.
+   * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {Array.<import("ol/Feature.js").default>} Features.
    * @protected
    * @override
@@ -346,7 +346,7 @@ export default class extends olFormatTextFeature {
   /**
    * Read a geometry from a logical sequence of characters.
    * @param {string} text Text.
-   * @param {olx.format.ReadOptions=} opt_options Read options.
+   * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {import("ol/geom/Geometry.js").default} Geometry.
    * @protected
    * @override
@@ -360,7 +360,7 @@ export default class extends olFormatTextFeature {
   /**
    * Encode a feature into a logical sequence of characters.
    * @param {import("ol/Feature.js").default} feature Feature.
-   * @param {olx.format.ReadOptions=} opt_options Read options.
+   * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {string} Encoded feature.
    * @protected
    * @override
@@ -433,7 +433,7 @@ export default class extends olFormatTextFeature {
   /**
    * Encode an array of features into a logical sequence of characters.
    * @param {Array.<import("ol/Feature.js").default>} features Feature.
-   * @param {olx.format.ReadOptions=} opt_options Read options.
+   * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {string} Encoded features.
    * @protected
    * @override
@@ -454,7 +454,7 @@ export default class extends olFormatTextFeature {
   /**
    * Encode a geometry into a logical sequence of characters.
    * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
-   * @param {olx.format.ReadOptions=} opt_options Read options.
+   * @param {import('ol/format/Feature.js').ReadOptions=} opt_options Read options.
    * @return {string} Encoded geometry.
    * @protected
    * @override
@@ -616,15 +616,16 @@ function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
     opt_propertyName : 'fillColor';
   const fillColor = fillStyle.getColor();
   if (fillColor !== null) {
-    console.assert(Array.isArray(fillColor), 'only supporting fill colors');
-    const fillColorRgba = olColor.asArray(fillColor);
-    console.assert(Array.isArray(fillColorRgba), 'fill color must be an array');
-    const fillColorHex = rgbArrayToHex(fillColorRgba);
-    if (encodedStyles.length > 0) {
-      encodedStyles.push('\'');
+    if (Array.isArray(fillColor)) {
+      const fillColorHex = rgbArrayToHex(fillColor);
+      if (encodedStyles.length > 0) {
+        encodedStyles.push('\'');
+      }
+      encodedStyles.push(
+        encodeURIComponent(`${propertyName}*${fillColorHex}`));
+    } else {
+      console.assert(false, 'only supporting fill colors');
     }
-    encodedStyles.push(
-      encodeURIComponent(`${propertyName}*${fillColorHex}`));
   }
 }
 
@@ -638,14 +639,13 @@ function encodeStyleFill_(fillStyle, encodedStyles, opt_propertyName) {
 function encodeStyleStroke_(strokeStyle, encodedStyles) {
   const strokeColor = strokeStyle.getColor();
   if (strokeColor !== null) {
-    console.assert(Array.isArray(strokeColor));
-    const strokeColorRgba = olColor.asArray(strokeColor);
-    console.assert(Array.isArray(strokeColorRgba), 'only supporting stroke colors');
-    const strokeColorHex = rgbArrayToHex(strokeColorRgba);
-    if (encodedStyles.length > 0) {
-      encodedStyles.push('\'');
+    if (Array.isArray(strokeColor)) {
+      const strokeColorHex = rgbArrayToHex(strokeColor);
+      if (encodedStyles.length > 0) {
+        encodedStyles.push('\'');
+      }
+      encodedStyles.push(encodeURIComponent(`strokeColor*${strokeColorHex}`));
     }
-    encodedStyles.push(encodeURIComponent(`strokeColor*${strokeColorHex}`));
   }
   const strokeWidth = strokeStyle.getWidth();
   if (strokeWidth !== undefined) {
@@ -912,8 +912,10 @@ function setStyleProperties_(text, feature) {
 
   // Convert font size from px to pt
   if (properties['fontSize']) {
-    let fontSize = parseFloat(properties['fontSize']);
-    if (properties['fontSize'].indexOf('px') !== -1) {
+    const fontSizeStr = /** @type {string} */(properties['fontSize']);
+    /** @type {number} */
+    let fontSize = parseFloat(fontSizeStr);
+    if (fontSizeStr.indexOf('px') !== -1) {
       fontSize = Math.round(fontSize / 1.333333);
     }
     properties['fontSize'] = fontSize;
@@ -984,6 +986,7 @@ function castValue_(key, value) {
  */
 function getStyleProperties_(text, feature) {
   const parts = text.split('\'');
+  /** @type {Object.<string, boolean|number|string>} */
   const properties = {};
 
   for (let i = 0; i < parts.length; ++i) {
@@ -1004,15 +1007,15 @@ function getStyleProperties_(text, feature) {
  * characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 function writeLineStringGeometry_(geometry) {
-  console.assert(geometry instanceof olGeomLineString);
-  const flatCoordinates = geometry.getFlatCoordinates();
-  const stride = geometry.getStride();
-  const end = flatCoordinates.length;
-  return `l(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
+  if (geometry instanceof olGeomLineString) {
+    const flatCoordinates = geometry.getFlatCoordinates();
+    const stride = geometry.getStride();
+    const end = flatCoordinates.length;
+    return `l(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
+  }
 }
 
 /**
@@ -1020,28 +1023,28 @@ function writeLineStringGeometry_(geometry) {
  * of characters.
  * @param {import("ol/geom/Geometry.js").default} geometry Geometry.
  * @return {string} Encoded geometry.
- * @this {import("ngeo/format/FeatureHash.js").default}
  * @private
  */
 function writeMultiLineStringGeometry_(geometry) {
-  console.assert(geometry instanceof olGeomMultiLineString);
-  const ends = geometry.getEnds();
-  const lineStringCount = ends.length;
-  const flatCoordinates = geometry.getFlatCoordinates();
-  const stride = geometry.getStride();
-  let offset = 0;
-  const textArray = ['L('];
-  for (let i = 0; i < lineStringCount; ++i) {
-    const end = ends[i];
-    const text = this.encodeCoordinates_(flatCoordinates, stride, offset, end);
-    if (i !== 0) {
-      textArray.push('\'');
+  if (geometry instanceof olGeomMultiLineString) {
+    const ends = geometry.getEnds();
+    const lineStringCount = ends.length;
+    const flatCoordinates = geometry.getFlatCoordinates();
+    const stride = geometry.getStride();
+    let offset = 0;
+    const textArray = ['L('];
+    for (let i = 0; i < lineStringCount; ++i) {
+      const end = ends[i];
+      const text = this.encodeCoordinates_(flatCoordinates, stride, offset, end);
+      if (i !== 0) {
+        textArray.push('\'');
+      }
+      textArray.push(text);
+      offset = end;
     }
-    textArray.push(text);
-    offset = end;
+    textArray.push(')');
+    return textArray.join('');
   }
-  textArray.push(')');
-  return textArray.join('');
 }
 
 /**
@@ -1053,11 +1056,12 @@ function writeMultiLineStringGeometry_(geometry) {
  * @private
  */
 function writePointGeometry_(geometry) {
-  console.assert(geometry instanceof olGeomPoint);
-  const flatCoordinates = geometry.getFlatCoordinates();
-  const stride = geometry.getStride();
-  const end = flatCoordinates.length;
-  return `p(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
+  if (geometry instanceof olGeomPoint) {
+    const flatCoordinates = geometry.getFlatCoordinates();
+    const stride = geometry.getStride();
+    const end = flatCoordinates.length;
+    return `p(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
+  }
 }
 
 /**
@@ -1069,11 +1073,12 @@ function writePointGeometry_(geometry) {
  * @private
  */
 function writeMultiPointGeometry_(geometry) {
-  console.assert(geometry instanceof olGeomMultiPoint);
-  const flatCoordinates = geometry.getFlatCoordinates();
-  const stride = geometry.getStride();
-  const end = flatCoordinates.length;
-  return `P(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
+  if (geometry instanceof olGeomMultiPoint) {
+    const flatCoordinates = geometry.getFlatCoordinates();
+    const stride = geometry.getStride();
+    const end = flatCoordinates.length;
+    return `P(${this.encodeCoordinates_(flatCoordinates, stride, 0, end)})`;
+  }
 }
 
 /**
@@ -1111,16 +1116,17 @@ function encodeRings_(flatCoordinates, stride, offset, ends, textArray) {
  * @private
  */
 function writePolygonGeometry_(geometry) {
-  console.assert(geometry instanceof olGeomPolygon);
-  const flatCoordinates = geometry.getFlatCoordinates();
-  const stride = geometry.getStride();
-  const ends = geometry.getEnds();
-  const offset = 0;
-  const textArray = ['a('];
-  encodeRings_.call(this,
-    flatCoordinates, stride, offset, ends, textArray);
-  textArray.push(')');
-  return textArray.join('');
+  if (geometry instanceof olGeomPolygon) {
+    const flatCoordinates = geometry.getFlatCoordinates();
+    const stride = geometry.getStride();
+    const ends = geometry.getEnds();
+    const offset = 0;
+    const textArray = ['a('];
+    encodeRings_.call(this,
+      flatCoordinates, stride, offset, ends, textArray);
+    textArray.push(')');
+    return textArray.join('');
+  }
 }
 
 
@@ -1133,19 +1139,22 @@ function writePolygonGeometry_(geometry) {
  * @private
  */
 function writeMultiPolygonGeometry_(geometry) {
-  console.assert(geometry instanceof olGeomMultiPolygon);
-  const flatCoordinates = geometry.getFlatCoordinates();
-  const stride = geometry.getStride();
-  const endss = geometry.getEndss();
-  const polygonCount = endss.length;
-  let offset = 0;
-  const textArray = ['A'];
-  for (let i = 0; i < polygonCount; ++i) {
-    const ends = endss[i];
-    textArray.push('(');
-    offset = encodeRings_.call(this,
-      flatCoordinates, stride, offset, ends, textArray);
-    textArray.push(')');
+  if (geometry instanceof olGeomMultiPolygon) {
+    const flatCoordinates = geometry.getFlatCoordinates();
+    const stride = geometry.getStride();
+    const endss = geometry.getEndss();
+    const polygonCount = endss.length;
+    let offset = 0;
+    const textArray = ['A'];
+    for (let i = 0; i < polygonCount; ++i) {
+      const ends = endss[i];
+      textArray.push('(');
+      offset = encodeRings_.call(this,
+        flatCoordinates, stride, offset, ends, textArray);
+      textArray.push(')');
+    }
+    return textArray.join('');
+  } else {
+    console.assert('Wrong geometry type');
   }
-  return textArray.join('');
 }

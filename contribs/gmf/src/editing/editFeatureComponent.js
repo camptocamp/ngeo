@@ -478,7 +478,7 @@ function Controller($element, $q, $scope, $timeout,
   this.listenerKeys_ = [];
 
   /**
-   * @type {?Array.<!Attribute>}
+   * @type {?Array.<!import('ngeo/format/Attribute.js').Attribute>}
    * @export
    */
   this.attributes = null;
@@ -840,7 +840,7 @@ Controller.prototype.handleEditFeature_ = function(resp) {
 
 
 /**
- * @param {!Array.<Attribute>} attributes Attributes.
+ * @param {!Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
  * @private
  */
 Controller.prototype.setAttributes_ = function(attributes) {

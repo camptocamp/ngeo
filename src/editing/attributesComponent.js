@@ -48,7 +48,7 @@ function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
  *       ngeo-attributes-feature="::ctrl.feature">
  *     </ngeo-attributes>
  *
- * @htmlAttribute {Array.<Attribute>} ngeo-attributes-attributes The
+ * @htmlAttribute {Array.<import('ngeo/format/Attribute.js').Attribute>} ngeo-attributes-attributes The
  *     list of attributes to use.
  * @htmlAttribute {boolean} ngeo-attributes-disabled Whether the fieldset should
  *     be disabled or not.
@@ -86,7 +86,7 @@ function Controller($scope, ngeoEventHelper) {
 
   /**
    * The list of attributes to create the form with.
-   * @type {Array.<Attribute>}
+   * @type {Array.<import('ngeo/format/Attribute.js').Attribute>}
    * @export
    */
   this.attributes;

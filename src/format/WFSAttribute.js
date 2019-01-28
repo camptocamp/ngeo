@@ -14,7 +14,7 @@ export default class {
 
   /**
    * @param {Array.<Object>} complexTypeElements Complex type element
-   * @return {Array.<Attribute>} Attributes
+   * @return {Array.<import('ngeo/format/Attribute.js').Attribute>} Attributes
    */
   read(complexTypeElements) {
     return complexTypeElements.map(this.readFromComplexTypeElement_);
@@ -23,7 +23,7 @@ export default class {
 
   /**
    * @param {Object} object Complex type element
-   * @return {Attribute} Attribute
+   * @return {import('ngeo/format/Attribute.js').Attribute} Attribute
    * @private
    */
   readFromComplexTypeElement_(object) {
@@ -32,7 +32,9 @@ export default class {
     const alias = 'alias' in object ? object['alias'] : null;
     const required = object['minOccurs'] != '0';
 
+    /** @type {import('ngeo/format/Attribute.js').Attribute} */
     const attribute = {
+      type: null,
       name,
       alias,
       required
